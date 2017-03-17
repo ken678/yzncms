@@ -1,12 +1,16 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// | Yzncms [ 御宅男工作室 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2007 http://yzncms.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 流年 <liu21st@gmail.com>
+// | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-
-// 应用公共文件
+return [
+    'action_begin'=> [
+        'app\\admin\\behavior\\CheckLoginStatus'
+    ]
+]
+?>
