@@ -26,9 +26,12 @@ class Index extends Base {
      * 登录验证
      */
     public function checkLogin(){
-
-		    $this->success('登录成功！', url('Index/index'));
-
+        $A = model('Admin');
+        if($A->checkLogin()){
+            $this->success('登录成功！', url('Index/index'));
+        }else{
+            $this->error($A->getError());
+        }
     }
 
 

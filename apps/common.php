@@ -16,6 +16,13 @@
 function GetVerify(){
 	$Verify = new \verify\Verify();
     $Verify->length   = 4;
-    $Verify->fontSize = 600;
     $Verify->entry();
+}
+
+/**
+ * 核对验证码
+ */
+function CheckVerify($code){
+	$verify = new \verify\Verify();
+	return $verify->check($code);
 }
