@@ -1,7 +1,6 @@
 后台登陆界面预览
 ===============
-![登录界面](http://git.oschina.net/uploads/images/2017/0328/112133_e90bac8f_555541.jpeg "登录界面")
-
+![登录界面](http://git.oschina.net/uploads/images/2017/0328/112350_1559e31d_555541.jpeg "登录界面")
 > ThinkPHP5的运行环境要求PHP5.4以上。
 
 详细开发文档参考 [ThinkPHP5完全开发手册](http://www.kancloud.cn/manual/thinkphp5)
