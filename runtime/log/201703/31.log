@@ -1,0 +1,3270 @@
+[ 2017-03-31T16:49:57+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.035002s][吞吐率：28.57req/s] [内存消耗：361.80kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.012001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:50:27+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.033002s][吞吐率：30.30req/s] [内存消耗：325.95kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001001s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.012000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:54:45+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：362.95kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:55:57+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：362.96kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.009001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:56:06+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：362.96kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:56:26+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.035002s][吞吐率：28.57req/s] [内存消耗：362.95kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:05+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.038002s][吞吐率：26.31req/s] [内存消耗：325.95kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:08+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.027002s][吞吐率：37.03req/s] [内存消耗：324.71kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001001s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:18+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.025001s][吞吐率：40.00req/s] [内存消耗：324.71kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.011001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:19+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.038002s][吞吐率：26.31req/s] [内存消耗：324.71kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:19+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.016001s][吞吐率：62.50req/s] [内存消耗：324.71kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:19+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：324.71kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.013000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:20+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.016001s][吞吐率：62.50req/s] [内存消耗：324.71kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.033002s][吞吐率：30.30req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.019001s][吞吐率：52.63req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.018001s][吞吐率：55.55req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.020001s][吞吐率：50.00req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.009000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.033002s][吞吐率：30.30req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.012001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.023001s][吞吐率：43.48req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.025001s][吞吐率：40.00req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.017001s][吞吐率：58.82req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.022001s][吞吐率：45.45req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.009001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.023001s][吞吐率：43.48req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.010001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.028002s][吞吐率：35.71req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T16:57:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.019001s][吞吐率：52.63req/s] [内存消耗：324.85kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=jbbiggbnn7pavimlincd21o065; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:10:14+08:00 ] 127.0.0.1 127.0.0.1 GET /
+[ log ] www.yzncms.com/ [运行时间：0.005000s][吞吐率：200.00req/s] [内存消耗：162.41kb] [文件加载：29]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'pgv_pvi=7585390592; bgColorSelectorPosition=0; workspaceParam=index%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\home\controller\Index->index[ E:\yzncms\apps\home\controller\Index.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2017-03-31T17:10:18+08:00 ] 127.0.0.1 127.0.0.1 GET /admin
+[ log ] www.yzncms.com/admin [运行时间：0.044602s][吞吐率：22.42req/s] [内存消耗：249.13kb] [文件加载：43]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'pgv_pvi=7585390592; bgColorSelectorPosition=0; workspaceParam=index%2Findex; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\public\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2017-03-31T17:10:19+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/login.html
+[ log ] www.yzncms.com/admin/index/login.html [运行时间：0.027601s][吞吐率：36.23req/s] [内存消耗：247.82kb] [文件加载：42]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'login',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'pgv_pvi=7585390592; bgColorSelectorPosition=0; workspaceParam=index%2Findex; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->login[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\login.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2017-03-31T17:10:19+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/getverify.html
+[ log ] www.yzncms.com/admin/index/getverify.html [运行时间：0.033002s][吞吐率：30.30req/s] [内存消耗：217.63kb] [文件加载：39]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'getverify',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'accept' => 'image/webp,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'pgv_pvi=7585390592; bgColorSelectorPosition=0; workspaceParam=index%2Findex; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->getVerify[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2017-03-31T17:10:28+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/getverify.html?0.5131141832098365
+[ log ] www.yzncms.com/admin/index/getverify.html?0.5131141832098365 [运行时间：0.008000s][吞吐率：125.00req/s] [内存消耗：217.98kb] [文件加载：39]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'getverify',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'accept' => 'image/webp,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; workspaceParam=index%2Findex; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  '0_5131141832098365' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->getVerify[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2017-03-31T17:10:35+08:00 ] 127.0.0.1 127.0.0.1 POST /admin/index/login.html
+[ log ] www.yzncms.com/admin/index/login.html [运行时间：0.038002s][吞吐率：26.31req/s] [内存消耗：438.69kb] [文件加载：53]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'login',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'content-length' => '43',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'origin' => 'http://www.yzncms.com',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; workspaceParam=index%2Findex; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'username' => 'admin',
+  'password' => '123456',
+  'captcha' => 'lghw',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->login[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\public\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011001s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_admin` [ RunTime:0.012001s ]
+[ sql ] [ SQL ] SELECT * FROM `yzn_admin` WHERE  `username` = 'admin' LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `yzn_admin`  SET `last_login_time`=1490951435,`last_login_ip`=2130706433  WHERE  `userid` = 1 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:10:36+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.042201s][吞吐率：23.70req/s] [内存消耗：362.52kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; workspaceParam=index%2Findex; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.018600s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:11:15+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.040002s][吞吐率：25.00req/s] [内存消耗：326.16kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=site%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:11:16+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.030002s][吞吐率：33.33req/s] [内存消耗：324.91kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=site%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001001s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:15:03+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：346.27kb] [文件加载：50]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.012001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+[ error ] [8]未定义变量: menu1[E:\yzncms\runtime\temp\0b3dab4bfee5eebbb1f25faa6e580f71.php:85]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:15:26+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.033001s][吞吐率：30.30req/s] [内存消耗：362.63kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.010001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:15:46+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.029002s][吞吐率：34.48req/s] [内存消耗：362.66kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.011001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:16:04+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：362.63kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=site%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.013001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:16:54+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.027001s][吞吐率：37.04req/s] [内存消耗：326.16kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.012001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:16:54+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.028001s][吞吐率：35.71req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:16:55+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.024002s][吞吐率：41.66req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.009000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:16:55+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.031002s][吞吐率：32.26req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.013000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:16:55+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.027001s][吞吐率：37.04req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:16:55+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001001s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:17:06+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.039003s][吞吐率：25.64req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:17:10+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.034002s][吞吐率：29.41req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:17:39+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：361.43kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:17:43+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:17:44+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.033002s][吞吐率：30.30req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.015001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:17:59+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.040002s][吞吐率：25.00req/s] [内存消耗：361.57kb] [文件加载：46]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.028002s][吞吐率：35.71req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.031001s][吞吐率：32.26req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.020001s][吞吐率：50.00req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.030001s][吞吐率：33.33req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001001s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.042002s][吞吐率：23.81req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.039002s][吞吐率：25.64req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.023001s][吞吐率：43.48req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.025002s][吞吐率：40.00req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.008000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.003001s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:00+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.020001s][吞吐率：50.00req/s] [内存消耗：325.07kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.009000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001001s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:02+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.014001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:07+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.029002s][吞吐率：34.48req/s] [内存消耗：326.16kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.013000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:11+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：324.93kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.012000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:21+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：324.91kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=site%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.013001s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:18:21+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.040002s][吞吐率：25.00req/s] [内存消耗：324.91kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; bgColorSelectorPosition=0; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; workspaceParam=site%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011001s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.012000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.001000s ]
+
+---------------------------------------------------------------
+[ 2017-03-31T17:20:32+08:00 ] 127.0.0.1 127.0.0.1 GET /admin/index/index.html
+[ log ] www.yzncms.com/admin/index/index.html [运行时间：0.022002s][吞吐率：45.45req/s] [内存消耗：324.78kb] [文件加载：44]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.yzncms.com',
+  'connection' => 'keep-alive',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
+  'referer' => 'http://www.yzncms.com/admin/index/login.html',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=7585390592; PHPSESSID=pug7ds31oskmouf005hdo4gni7; thinkphp_show_page_trace=0|0; bgColorSelectorPosition=0; workspaceParam=admin_manage%2Findex',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\yzncms\apps\admin\controller\Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\yzncms/apps/admin\view\index\index.html [ array (
+  0 => '__MENU__',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:dbname=yzncms;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `yzn_menu` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `yzn_menu` WHERE  `pid` = 0  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 3 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 1 [ RunTime:0.001000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '相关设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`url`,`tip` FROM `yzn_menu` WHERE  `group` = '管理员设置'  AND `pid` = 1  AND `hide` = 0 ORDER BY sort asc [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT DISTINCT  `group` FROM `yzn_menu` WHERE  `group` <> ''  AND `pid` = 2 [ RunTime:0.000000s ]
+
+---------------------------------------------------------------

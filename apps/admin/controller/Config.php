@@ -8,8 +8,15 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-return [
-    'action_begin'=> [
-    ]
-]
-?>
+namespace app\admin\controller;
+
+/**
+ * 后台配置
+ */
+class Config extends Base {
+
+	public function group() {
+		return $this->fetch("");
+	}
+
+}

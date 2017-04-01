@@ -8,8 +8,13 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-return [
-    'action_begin'=> [
-    ]
-]
-?>
+
+namespace app\admin\Model;
+use think\Model;
+/**
+ * 权限规则模型
+ */
+class AuthRule extends Model{
+    const rule_url = 1;
+    const rule_main = 2;
+}

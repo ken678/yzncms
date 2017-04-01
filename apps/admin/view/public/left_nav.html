@@ -1,0 +1,16 @@
+{volist name="__MENU__" id="menu_top" key="k"}
+<div id="admincpNavTabs_{$key}" class="nav-tabs">
+{volist name="menu_top" id="menu_center" key="k1"}
+<dl>
+<dt><a href="javascript:void(0);"><span class="ico-system-{$k1}"></span><h3>{$key}</h3></a></dt>
+<dd class="sub-menu">
+<ul>
+{foreach name="menu_center" id="menu_bottom" key="k2"}
+<li ><a href="javascript:void(0);" data-param="{$menu_bottom['url']}">{$menu_bottom['title']}</a></li>
+{/foreach}
+</ul>
+</dd>
+</dl>
+{/volist}
+</div>
+{/volist}

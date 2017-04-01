@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:50:"E:\yzncms/apps/admin\view\public\dispatch_jump.tpl";i:1489736835;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:50:"E:\yzncms/apps/admin\view\public\dispatch_jump.tpl";i:1490683402;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -14,7 +14,7 @@
      body, td, input, textarea, select, button {color: #555; font-size: 12px; font-family: "Microsoft Yahei", "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif; }
     .msgpage {background-color: #FFF; width: 100%; height: 100%; }
     .msgbox {background-color: #FFF; width: 480px; height: 200px; margin: 0 0 0 -240px; border: solid 1px #E7E7E7; border-radius: 5px; position: absolute; z-index: 1; top: 20%; left: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-    .msgbox .pic {background: url(__ROOT__/apps/admin/view/images/msg.png) no-repeat 0 0; width: 90px; height: 90px; position: absolute; z-index: 1; top: 30px; left: 40px; }
+    .msgbox .pic {background: url(__STATIC__/admin/images/msg.png) no-repeat 0 0; width: 90px; height: 90px; position: absolute; z-index: 1; top: 30px; left: 40px; }
     .msgbox .button {position: absolute; z-index: 1; top: 115px; left: 140px; }
     .msgbox .con {font-size: 24px; font-weight: lighter; color: #333; position: absolute; z-index: 1; top: 30px; left: 140px; }
     .msgbox .scon {line-height: 16px;font-size: 12px; color: #999; position: absolute; z-index: 1; top: 70px; left: 140px; }
