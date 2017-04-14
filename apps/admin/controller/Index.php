@@ -9,10 +9,15 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
+use app\common\controller\Adminbase;
 
-class Index extends Base {
+class Index extends Adminbase {
+
+	/**
+	 * 后台首页
+	 */
     public function index(){
-		$this->assign('__MENU__', $this->getMenus());
+		$this->assign('__MENU__', model("Admin/Menu")->getMenuList());
         return $this->fetch();
     }
 

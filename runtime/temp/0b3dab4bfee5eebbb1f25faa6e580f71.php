@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1491033576;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1490951877;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1492158979;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1492075503;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -12,10 +12,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Yzncms</title>
 <link href="__STATIC__/admin/css/index.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+<link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <script type="text/javascript">
 var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 </script>
-<script type="text/javascript" src="__STATIC__/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.bgColorSelector.js"></script>
@@ -39,7 +41,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
   <div class="nc-module-menu">
     <ul class="nc-row">
       <?php if(is_array($__MENU__) || $__MENU__ instanceof \think\Collection || $__MENU__ instanceof \think\Paginator): $i = 0; $__LIST__ = $__MENU__;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu): $mod = ($i % 2 );++$i;?>
-          <li data-param="<?php echo $key; ?>" class=""><a href="javascript:void(0);"><?php echo $key; ?></a></li>
+          <li data-param="<?php echo $key; ?>" class=""><a href="javascript:void(0);"><?php echo $menu['title']; ?></a></li>
       <?php endforeach; endif; else: echo "" ;endif; ?>
     </ul>
   </div>
@@ -54,10 +56,13 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
       <img alt="" nctype="admin_avatar" src=""> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
       <div class="manager-menu">
         <div class="title">
-          <h4>最后登录</h4>
+          <h4>上次登录</h4>
           <a href="javascript:void(0);" class="edit-password">修改密码</a> </div>
         <div class="login-date">
-        </div>
+        <?php if(session('last_login_time') > 0) { echo date('Y-m-d H:i:s', session('last_login_time'));} else { echo '--';}?>
+          <span>(IP:
+        <?php if (!empty(session('last_login_ip'))) { echo long2ip(session('last_login_ip'));} else { echo '--';}?>
+                )</span> </div>
         <div class="title">
           <h4>常用操作</h4>
           <a href="javascript:void(0)" class="add-menu">添加菜单</a> </div>
@@ -78,23 +83,23 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 <div class="admincp-container unfold">
   <div class="admincp-container-left">
     <div class="top-border"><span class="nav-side"></span><span class="sub-side"></span></div>
-    <?php if(is_array($__MENU__) || $__MENU__ instanceof \think\Collection || $__MENU__ instanceof \think\Paginator): $k = 0; $__LIST__ = $__MENU__;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu_top): $mod = ($k % 2 );++$k;?>
+    <?php if(is_array($__MENU__) || $__MENU__ instanceof \think\Collection || $__MENU__ instanceof \think\Paginator): $i = 0; $__LIST__ = $__MENU__;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu_top): $mod = ($i % 2 );++$i;?>
 <div id="admincpNavTabs_<?php echo $key; ?>" class="nav-tabs">
-<?php if(is_array($menu_top) || $menu_top instanceof \think\Collection || $menu_top instanceof \think\Paginator): $k1 = 0; $__LIST__ = $menu_top;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu_center): $mod = ($k1 % 2 );++$k1;?>
+<?php if(!(empty($menu_top['items']) || (($menu_top['items'] instanceof \think\Collection || $menu_top['items'] instanceof \think\Paginator ) && $menu_top['items']->isEmpty()))): if(is_array($menu_top['items']) || $menu_top['items'] instanceof \think\Collection || $menu_top['items'] instanceof \think\Paginator): $k1 = 0; $__LIST__ = $menu_top['items'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$menu_center): $mod = ($k1 % 2 );++$k1;?>
 <dl>
-<dt><a href="javascript:void(0);"><span class="ico-system-<?php echo $k1; ?>"></span><h3><?php echo $key; ?></h3></a></dt>
+<dt><a href="javascript:void(0);"><span class="ico-system-<?php echo $k1; ?>"></span><h3><?php echo $menu_center['title']; ?></h3></a></dt>
 <dd class="sub-menu">
 <ul>
-<?php if(is_array($menu_center) || $menu_center instanceof \think\Collection || $menu_center instanceof \think\Paginator): if( count($menu_center)==0 ) : echo "" ;else: foreach($menu_center as $k2=>$menu_bottom): ?>
+<?php if(!(empty($menu_center['items']) || (($menu_center['items'] instanceof \think\Collection || $menu_center['items'] instanceof \think\Paginator ) && $menu_center['items']->isEmpty()))): if(is_array($menu_center['items']) || $menu_center['items'] instanceof \think\Collection || $menu_center['items'] instanceof \think\Paginator): if( count($menu_center['items'])==0 ) : echo "" ;else: foreach($menu_center['items'] as $key=>$menu_bottom): ?>
 <li ><a href="javascript:void(0);" data-param="<?php echo $menu_bottom['url']; ?>"><?php echo $menu_bottom['title']; ?></a></li>
-<?php endforeach; endif; else: echo "" ;endif; ?>
+<?php endforeach; endif; else: echo "" ;endif; endif; ?>
 </ul>
 </dd>
 </dl>
-<?php endforeach; endif; else: echo "" ;endif; ?>
+<?php endforeach; endif; else: echo "" ;endif; endif; ?>
 </div>
 <?php endforeach; endif; else: echo "" ;endif; ?>
-    <div class="about" title="关于系统"><i class="fa fa-copyright"></i><span>33HAO.com</span></div>
+    <div class="about" title="关于系统"><i class="fa fa-copyright"></i><span>Yzncsm v1.0</span></div>
   </div>
   <div class="admincp-container-right">
     <div class="top-border"></div>

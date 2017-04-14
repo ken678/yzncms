@@ -59,6 +59,9 @@ class User extends Model {
             'last_login_time' => $user['last_login_time'],
         );
 
+        session('last_login_time',$user['last_login_time']);
+        session('last_login_ip',$user['last_login_ip']);
+
         session('user_auth', $auth);
         session('user_auth_sign', data_auth_sign($auth));//签名
 

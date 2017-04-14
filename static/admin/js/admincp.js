@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    //使用title内容作为tooltip提示文字
+    $(document).tooltip({
+        track: true
+    });
+
     //布局换色设置
     var bgColorSelectorColors = [{ c: '#981767', cName: '' }, { c: '#AD116B', cName: '' }, { c: '#B61944', cName: '' }, { c: '#AA1815', cName: '' }, { c: '#C4182D', cName: '' }, { c: '#D74641', cName: '' }, { c: '#ED6E4D', cName: '' }, { c: '#D78A67', cName: '' }, { c: '#F5A675', cName: '' }, { c: '#F8C888', cName: '' }, { c: '#F9D39B', cName: '' }, { c: '#F8DB87', cName: '' }, { c: '#FFD839', cName: '' }, { c: '#F9D12C', cName: '' }, { c: '#FABB3D', cName: '' }, { c: '#F8CB3C', cName: '' }, { c: '#F4E47E', cName: '' }, { c: '#F4ED87', cName: '' }, { c: '#DFE05E', cName: '' }, { c: '#CDCA5B', cName: '' }, { c: '#A8C03D', cName: '' }, { c: '#73A833', cName: '' }, { c: '#468E33', cName: '' }, { c: '#5CB147', cName: '' }, { c: '#6BB979', cName: '' }, { c: '#8EC89C', cName: '' }, { c: '#9AD0B9', cName: '' }, { c: '#97D3E3', cName: '' }, { c: '#7CCCEE', cName: '' }, { c: '#5AC3EC', cName: '' }, { c: '#16B8D8', cName: '' }, { c: '#49B4D6', cName: '' }, { c: '#6DB4E4', cName: '' }, { c: '#8DC2EA', cName: '' }, { c: '#BDB8DC', cName: '' }, { c: '#8381BD', cName: '' }, { c: '#7B6FB0', cName: '' }, { c: '#AA86BC', cName: '' }, { c: '#AA7AB3', cName: '' }, { c: '#935EA2', cName: '' }, { c: '#9D559C', cName: '' }, { c: '#C95C9D', cName: '' }, { c: '#DC75AB', cName: '' }, { c: '#EE7DAE', cName: '' }, { c: '#E6A5CA', cName: '' }, { c: '#EA94BE', cName: '' }, { c: '#D63F7D', cName: '' }, { c: '#C1374A', cName: '' }, { c: '#AB3255', cName: '' }, { c: '#A51263', cName: '' }, { c: '#7F285D', cName: ''}];
     $("#trace_show").click(function(){
@@ -82,6 +87,20 @@ $(document).ready(function () {
         openItem($.cookie('workspaceParam'));
     }
 
+    //管理显示与隐藏
+    $("#admin-manager-btn").click(function () {
+        if ($(".manager-menu").css("display") == "none") {
+            $(".manager-menu").css('display', 'block'); 
+            $("#admin-manager-btn").attr("title","关闭快捷管理"); 
+            $("#admin-manager-btn").removeClass().addClass("arrow-close");
+        }
+        else {
+            $(".manager-menu").css('display', 'none');
+            $("#admin-manager-btn").attr("title","显示快捷管理");
+            $("#admin-manager-btn").removeClass().addClass("arrow");
+        }
+    });
+
 
 });
 
@@ -98,6 +117,6 @@ function openItem(param) {
     $('div[id^="admincpNavTabs_"]').hide().find('dl').removeClass('active');
     $('li[data-param="' + data_str + '"]').addClass('active');
     $this.parent().addClass('active').parents('dl:first').addClass('active').parents('div:first').show();
-    $('#workspace').attr('src', '/index.php/admin/'+param);
+    $('#workspace').attr('src', '/index.php/'+param);
     $.cookie('workspaceParam', param, { expires: 1 ,path:"/"});
 }

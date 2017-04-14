@@ -11,10 +11,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Yzncms</title>
 <link href="__STATIC__/admin/css/index.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+<link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <script type="text/javascript">
 var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 </script>
-<script type="text/javascript" src="__STATIC__/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.bgColorSelector.js"></script>
@@ -38,7 +40,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
   <div class="nc-module-menu">
     <ul class="nc-row">
       {volist name="__MENU__" id="menu"}
-          <li data-param="{$key}" class=""><a href="javascript:void(0);">{$key}</a></li>
+          <li data-param="{$key}" class=""><a href="javascript:void(0);">{$menu.title}</a></li>
       {/volist}
     </ul>
   </div>
@@ -53,10 +55,13 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
       <img alt="" nctype="admin_avatar" src=""> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
       <div class="manager-menu">
         <div class="title">
-          <h4>最后登录</h4>
+          <h4>上次登录</h4>
           <a href="javascript:void(0);" class="edit-password">修改密码</a> </div>
         <div class="login-date">
-        </div>
+        <?php if(session('last_login_time') > 0) { echo date('Y-m-d H:i:s', session('last_login_time'));} else { echo '--';}?>
+          <span>(IP:
+        <?php if (!empty(session('last_login_ip'))) { echo long2ip(session('last_login_ip'));} else { echo '--';}?>
+                )</span> </div>
         <div class="title">
           <h4>常用操作</h4>
           <a href="javascript:void(0)" class="add-menu">添加菜单</a> </div>
@@ -78,7 +83,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
   <div class="admincp-container-left">
     <div class="top-border"><span class="nav-side"></span><span class="sub-side"></span></div>
     {include file="public/left_nav" /}
-    <div class="about" title="关于系统"><i class="fa fa-copyright"></i><span>33HAO.com</span></div>
+    <div class="about" title="关于系统"><i class="fa fa-copyright"></i><span>Yzncsm v1.0</span></div>
   </div>
   <div class="admincp-container-right">
     <div class="top-border"></div>
