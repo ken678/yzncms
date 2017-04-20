@@ -12,12 +12,14 @@ namespace app\common\model;
 use think\Model;
 
 class Config extends Model{
+
 	/**
      * 更新网站配置项
      * @param type $data 数据
+     * @param type $type 配置类型 1：系统配置  2：扩展配置
      * @return boolean
      */
-    public function saveConfig($data) {
+    public function saveConfig($data,$type=1) {
         if (empty($data) || !is_array($data)) {
             $this->error = '配置数据不能为空！';
             return false;
@@ -28,7 +30,7 @@ class Config extends Model{
             }
             $saveData = array();
             $saveData["value"] = trim($value);
-            if ($this->where(["name" => $key])->update($saveData)=== false) {
+            if ($this->where(array("name" => $key, 'type' => $type))->update($saveData)=== false) {
                 $this->error = "更新到{$key}项失败！";
                 return false;
             }
@@ -37,30 +39,6 @@ class Config extends Model{
         return true;
     }
 
-    /**
-     * 更新扩展配置项
-     * @param type $data 数据
-     * @return boolean
-     */
-    public function saveExtendConfig($data) {
-        if (empty($data) || !is_array($data)) {
-            $this->error = '配置数据不能为空！';
-            return false;
-        }
-        foreach ($data as $key => $value) {
-            if (empty($key)) {
-                continue;
-            }
-            $saveData = array();
-            $saveData["value"] = trim($value);
-            if ($this->where(array("name" => $key, 'type' => 2))->update($saveData) === false) {
-                $this->error = "更新到{$key}项时，更新失败！";
-                return false;
-            }
-        }
-        cache('DB_CONFIG_DATA',null);//清除配置缓存
-        return true;
-    }
 
     /**
      * 增加扩展配置项
@@ -100,7 +78,7 @@ class Config extends Model{
                 $setting['option'] = $option;
             }
         }
-        $data['setting'] = serialize($setting);//序列化
+        $data['setting'] = trim(serialize($setting));//序列化或者用array2string函数 数组转字符串
         $id = $db->insert($data);
         if ($id) {
             //增加配置项
@@ -110,9 +88,38 @@ class Config extends Model{
                 'type' => 2,
                 'value' => '',
             ));
+            cache('DB_CONFIG_DATA',null);//清除配置缓存
             return $id;
         } else {
             $this->error = '添加失败！';
+            return false;
+        }
+    }
+
+    /**
+     * 删除扩展配置项
+     * @param type $fid 配置项ID
+     * @return boolean
+     */
+    public function extendDel($fid) {
+        if (empty($fid)) {
+            $this->error = '请指定需要删除的扩展配置项！';
+            return false;
+        }
+        $db = M('ConfigField');
+        //扩展字段详情
+        $info = $db->where(array('fid' => $fid))->find();
+        if (empty($info)) {
+            $this->error = '该扩展配置项不存在！';
+            return false;
+        }
+        //删除
+        if ($this->where(array('varname' => $info['name'], 'type' => 2))->delete() !== false) {
+            $db->where(array('fid' => $fid))->delete();//删除配置主表和从表
+            cache('DB_CONFIG_DATA',null);//清除配置缓存
+            return true;
+        } else {
+            $this->error = '删除失败！';
             return false;
         }
     }

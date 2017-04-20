@@ -95,7 +95,7 @@
         <tr class="hover">
           <td><i class="ico-check"></i></td>
           <td>
-          <a class="btn red" href="index.php?act=admin&op=admin_del&admin_id=2" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
+          <a class="btn red" href="{:url('config/extend',array('fid'=>$vo['fid'],'action'=>'delete'))}" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
           </td>
           <td>{$setting.title}</td>
           <td>{$vo.fieldname}</td>

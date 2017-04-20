@@ -28,7 +28,7 @@ class Config extends Adminbase {
      */
 	public function index() {
         if(request()->isPost()){
-            if ($this->Config->saveConfig(input('post.'))) {
+            if ($this->Config->saveConfig(input('post.'),1)) {
                 $this->success("更新成功！");
             } else {
                 $error = $this->Config->getError();
@@ -45,7 +45,8 @@ class Config extends Adminbase {
     public function extend() {
         if(request()->isPost()){
             $action = input('post.action');
-            if ($action == 'add') {//新增
+            //新增扩展配置
+            if ($action == 'add') {
                 $data = array(
                     'fieldname' => trim(input('post.fieldname/s')),
                     'type' => trim(input('post.type/s')),
@@ -60,7 +61,7 @@ class Config extends Adminbase {
                 }
             }else{
                 //更新扩展项配置
-                if ($this->Config->saveExtendConfig($_POST)) {
+                if ($this->Config->saveConfig(input('post.'),2)) {
                     $this->success("更新成功！");
                 } else {
                     $error = $this->Config->getError();
@@ -69,7 +70,20 @@ class Config extends Adminbase {
 
             }
         }else{
-            $extendList = \think\Db::name('ConfigField')->order(array('fid' => 'DESC'))->select();
+            $action = input('action');
+            $db = \think\Db::name('ConfigField');
+            if ($action == 'delete') {
+                $fid = input('get.fid', 0, 'intval');
+                if ($this->Config->extendDel($fid)) {
+                    $this->success("扩展配置项删除成功！");
+                    return true;
+                } else {
+                    $error = $this->Config->getError();
+                    $this->error($error ? $error : "扩展配置项删除失败！");
+                }
+
+            }
+            $extendList = $db->order(array('fid' => 'DESC'))->select();//获取扩展配置
             $this->assign('extendList', $extendList);
             return $this->fetch();
         }

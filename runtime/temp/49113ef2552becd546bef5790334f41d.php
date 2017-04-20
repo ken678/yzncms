@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\config\extend.html";i:1492158882;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1492155695;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\config\extend.html";i:1492505940;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1492155695;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -124,7 +124,7 @@
         <tr class="hover">
           <td><i class="ico-check"></i></td>
           <td>
-          <a class="btn red" href="index.php?act=admin&op=admin_del&admin_id=2" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
+          <a class="btn red" href="<?php echo url('config/extend',array('fid'=>$vo['fid'],'action'=>'delete')); ?>" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
           </td>
           <td><?php echo $setting['title']; ?></td>
           <td><?php echo $vo['fieldname']; ?></td>
