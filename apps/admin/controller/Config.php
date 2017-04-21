@@ -40,7 +40,7 @@ class Config extends Adminbase {
 	}
 
     /**
-     * 扩展配置
+     * 扩展配置（新增，删除，显示，更新）
      */
     public function extend() {
         if(request()->isPost()){
@@ -67,13 +67,12 @@ class Config extends Adminbase {
                     $error = $this->Config->getError();
                     $this->error($error ? $error : "配置更新失败！");
                 }
-
             }
         }else{
             $action = input('action');
-            $db = \think\Db::name('ConfigField');
+            $db = db('ConfigField');
             if ($action == 'delete') {
-                $fid = input('get.fid', 0, 'intval');
+                $fid = input('fid', 0, 'intval');
                 if ($this->Config->extendDel($fid)) {
                     $this->success("扩展配置项删除成功！");
                     return true;
@@ -81,13 +80,11 @@ class Config extends Adminbase {
                     $error = $this->Config->getError();
                     $this->error($error ? $error : "扩展配置项删除失败！");
                 }
-
             }
             $extendList = $db->order(array('fid' => 'DESC'))->select();//获取扩展配置
             $this->assign('extendList', $extendList);
             return $this->fetch();
         }
-
     }
 
 

@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\model;
 use think\Model;
+use think\Validate;
 
 class Config extends Model{
 
@@ -39,7 +40,6 @@ class Config extends Model{
         return true;
     }
 
-
     /**
      * 增加扩展配置项
      * @param type $data
@@ -55,6 +55,21 @@ class Config extends Model{
             return false;
         }
         $db = db('ConfigField');
+        //验证器
+        $rule = [
+            'fieldname'  => 'require|alphaDash',
+            'type' => 'require'
+        ];
+        $msg = [
+            'fieldname.require' => '键名不能为空',
+            'fieldname.alphaDash'     => '键名只支持英文、数字、下划线',
+            'type'        => '类型不能为空！'
+        ];
+        $validate = new Validate($rule,$msg);
+        if (!$validate->check($data)) {
+            $this->error = $validate->getError();
+            return false;
+        }
         $data['fieldname'] = strtolower($data['fieldname']);
         $data['createtime'] = time();
         if ($this->where(array('name' => $data['fieldname']))->count()) {
@@ -106,7 +121,7 @@ class Config extends Model{
             $this->error = '请指定需要删除的扩展配置项！';
             return false;
         }
-        $db = M('ConfigField');
+        $db = db('ConfigField');
         //扩展字段详情
         $info = $db->where(array('fid' => $fid))->find();
         if (empty($info)) {
@@ -114,7 +129,7 @@ class Config extends Model{
             return false;
         }
         //删除
-        if ($this->where(array('varname' => $info['name'], 'type' => 2))->delete() !== false) {
+        if ($this->where(array('name' => $info['fieldname'], 'type' => 2))->delete() !== false) {
             $db->where(array('fid' => $fid))->delete();//删除配置主表和从表
             cache('DB_CONFIG_DATA',null);//清除配置缓存
             return true;
