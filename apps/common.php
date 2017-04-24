@@ -147,3 +147,14 @@ function api($name,$vars=array()){
     }
     return call_user_func_array($callback,$vars);
 }
+
+
+/**
+ * 时间戳格式化
+ * @param int $time
+ * @return string 完整的时间显示
+ */
+function time_format($time = NULL,$format='Y-m-d H:i'){
+    $time = $time === NULL ? NOW_TIME : intval($time);
+    return date($format, $time);
+}

@@ -1,0 +1,65 @@
+{extend name="Public:layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title">
+      <div class="subject">
+        <h3>管理员管理</h3>
+        <h5>网站后台管理员索引及管理</h5>
+      </div>
+      <ul class="tab-base nc-row">
+            {include file="public/nav" /}
+      </ul>
+  </div>
+  </div>
+  <table class="flex-table">
+      <thead>
+        <tr>
+          <th width="24"  align="center" class="sign"><i class="ico-check"></i></th>
+          <th width="150" align="center" class="handle">操作</th>
+          <th width="100" align="center">登录名</th>
+          <th width="120" align="center">所属角色</th>
+          <th width="120" align="center">最后登录IP</th>
+          <th width="120" align="center">最后登录时间</th>
+          <th width="120"  align="center">E-mail</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {volist name="_list" id="vo"}
+        <tr class="hover erow">
+          <td class="sign"><i class="ico-check"></i></td>
+          <td class="handle"><a class="btn red" href="index.php?act=admin&amp;op=admin_del&amp;admin_id=2" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
+          <a class="btn blue" href="index.php?act=admin&amp;op=admin_edit&amp;admin_id=2"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
+          <td>{$vo.username}</td>
+          <td>编辑</td>
+          <td>{:long2ip($vo['last_login_ip'])}</td>
+          <td>{$vo.last_login_time|time_format}</td>
+          <td>{$vo.email}</td>
+          <td></td>
+        </tr>
+      {/volist}
+      </tbody>
+    </table>
+</div>
+<script>
+$('.flex-table').flexigrid({
+  height:'auto',// 高度自动
+  usepager: false,// 不翻页
+  striped: true,// 使用斑马线
+  resizable: false,// 不调节大小
+  reload: false,// 不使用刷新
+  columnControl: false,// 不使用列控制
+  title: '管理员列表',
+  buttons : [
+               {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
+           ]
+  });
+
+function fg_operation(name, grid) {
+    if (name == 'add') {
+        window.location.href = 'index.php?act=admin&op=admin_add';
+    }
+}
+</script>
+{/block}

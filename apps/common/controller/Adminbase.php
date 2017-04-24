@@ -62,41 +62,6 @@ class Adminbase extends Controller {
         return true;
     }
 
-	/**
-     * 获取后台菜单数组
-     */
-    /*final public function getMenus(){
-    	$menus  =   session('admin_menu_list');
-        if(empty($menus)){
-            $where['pid']   =   0;
-            $where['status']  =   1;
-            $main  =   \think\Db::name('Menu')->where($where)->order('listorder asc')->field('id,title')->select();
-            foreach ($main as $key => $item) {
-                $groups = \think\Db::name('Menu')->where(array('group'=>array('neq',''),'pid' =>$item['id']))->distinct(true)->column("group");
-                foreach ($groups as $g) {
-                    $map = array('group'=>$g);
-                    $map['pid']     =   $item['id'];
-                    $map['status']    =   1;
-                    $data = \think\Db::name('Menu')->where($map)->field('id,pid,title,controller,action,tip')->order('listorder asc')->select();
-
-                    foreach ($data as $key => $a) {
-                            $id = $a['id'];
-                            $controller = $a['controller'];
-                            $action = $a['action'];
-                            $array = array(
-                                "id" => $id,
-                                "title" => $a['title'],
-                                "pid" => $a['pid'],
-                                "url" => url("{$controller}/{$action}", array("menuid" => $id)),
-                            );
-                            $ret[$key] = $array;
-                    }
-                    $menus[$item['title']][$g]=$ret;
-                }
-            }
-        }
-    	return $menus;
-    }*/
 
     /**
      * 获取后台分组菜单数组
@@ -104,6 +69,71 @@ class Adminbase extends Controller {
     final public function get_group_menu(){
         $getMenu = isset($Custom)?$Custom:model('Admin/Menu')->getMenu();
         return $getMenu;
+    }
+
+    /**
+     * 通用分页列表数据集获取方法
+     *
+     *  可以通过url参数传递where条件,例如:  index.html?name=asdfasdfasdfddds
+     *  可以通过url空值排序字段和方式,例如: index.html?_field=id&_order=asc
+     *  可以通过url参数r指定每页数据条数,例如: index.html?r=5
+     *
+     * @param sting|Model  $model   模型名或模型实例
+     * @param array        $where   where查询条件(优先级: $where>$_REQUEST>模型设定)
+     * @param array|string $order   排序条件,传入null时使用sql默认排序或模型属性(优先级最高);
+     *                              请求参数中如果指定了_order和_field则据此排序(优先级第二);
+     *                              否则使用$order参数(如果$order参数,且模型也没有设定过order,则取主键降序);
+     *
+     * @param boolean      $field   单表模型用不到该参数,要用在多表join时为field()方法指定参数
+     *
+     * @return array|false
+     * 返回数据集
+     */
+    protected function lists ($model,$where=array(),$order='',$field=true){
+        $options    =   array();
+        $REQUEST    =   (array)input('request.');
+        if(is_string($model)){
+            $model  =   db($model);
+        }
+        $pk         =   $model->getPk();
+        if($order===null){
+            //order置空
+        }else if ( isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']),array('desc','asc')) ) {
+            $options['order'] = '`'.$REQUEST['_field'].'` '.$REQUEST['_order'];
+        }elseif( $order==='' && empty($options['order']) && !empty($pk) ){
+            $options['order'] = $pk.' desc';
+        }elseif($order){
+            $options['order'] = $order;
+        }
+        unset($REQUEST['_order'],$REQUEST['_field']);
+
+        if( empty($options['where'])){
+            unset($options['where']);
+        }
+
+        if( isset($REQUEST['r']) ){
+            $listRows = (int)$REQUEST['r'];
+        }else{
+            $listRows = config('list_rows') > 0 ? config('list_rows') : 10;
+        }
+
+        if( !empty($where)){
+            $options['where']   =   $where;
+            $total        =   $model->where($options['where'])->count();
+            $list = $model->where($options['where'])->order($order)->field($field)->paginate($listRows);
+        }else{
+            $total        =   $model->count();
+            $list = $model->order($order)->field($field)->paginate($listRows);
+        }
+        // 获取分页显示
+        $page = $list->render();
+        // 模板变量赋值
+        $this->assign('_page', $page);
+        $this->assign('_total',$total);
+        if($list && !is_array($list)){
+            $list=$list->toArray();
+        }
+        return $list['data'];
     }
 
 
