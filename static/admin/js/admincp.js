@@ -101,6 +101,18 @@ $(document).ready(function () {
         }
     });
 
+    $('.sub-menu').on('click focus', 'li a', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var data_id = $(this).data('id');
+        try{
+            var menuid = parseInt(data_id);
+        if(menuid){
+            $.cookie("menuid",menuid,{ path: '/' });
+        }
+        }catch(err){}
+    });
+
 
 });
 

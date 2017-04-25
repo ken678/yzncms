@@ -22,6 +22,7 @@ class Menu extends Model {
      */
     public function getMenu() {
         $menuid = input('menuid/d',0);
+        $menuid = $menuid ? $menuid : cookie("menuid");
         $info = $this->where(array("id" => $menuid))->column("id,action,app,controller,pid,title");
         $find = $this->where(array("pid" => $menuid, "status" => 1))->column("id,action,app,controller,pid,title");
         if ($find && $info) {

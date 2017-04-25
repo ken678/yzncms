@@ -67,6 +67,28 @@ class User extends Model {
 
     }
 
+    /**
+     * 创建管理员
+     * @param type $data
+     * @return boolean
+     */
+    public function createManager($data) {
+        if (empty($data)) {
+            $this->error = '没有数据！';
+            return false;
+        }
+        if ($this->create($data)) {
+            $id = $this->add();
+            if ($id) {
+                return $id;
+            }
+            $this->error = '入库失败！';
+            return false;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

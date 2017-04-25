@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-04-24 13:41:01
+Date: 2017-04-25 17:23:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1493010797', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1493110526', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
 -- Table structure for `yzn_config`
@@ -99,7 +99,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -109,6 +109,7 @@ INSERT INTO `yzn_menu` VALUES ('2', '内容', '0', 'Admin', 'Content', 'index', 
 INSERT INTO `yzn_menu` VALUES ('3', '用户', '0', 'Admin', 'Member', 'index', '', '1', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('9', '扩展配置', '5', 'Admin', 'Config', 'extend', '', '1', '', '0', '5');
 INSERT INTO `yzn_menu` VALUES ('5', '站点配置', '10', 'Admin', 'Config', 'index', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('6', '管理员', '1', 'Admin', 'Admin_manage', 'index', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('12', '管理员管理', '6', 'Admin', 'Management', 'manager', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('6', '管理员', '1', 'Admin', 'Manager', 'index', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('12', '管理员管理', '6', 'Admin', 'Manager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('10', '设置', '1', 'Admin', 'Setting', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('13', '添加管理员', '12', 'Admin', 'Manager', 'add', '', '1', '', '0', '0');

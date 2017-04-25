@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1492158979;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1492075503;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1492158979;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -91,7 +91,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 <dd class="sub-menu">
 <ul>
 <?php if(!(empty($menu_center['items']) || (($menu_center['items'] instanceof \think\Collection || $menu_center['items'] instanceof \think\Paginator ) && $menu_center['items']->isEmpty()))): if(is_array($menu_center['items']) || $menu_center['items'] instanceof \think\Collection || $menu_center['items'] instanceof \think\Paginator): if( count($menu_center['items'])==0 ) : echo "" ;else: foreach($menu_center['items'] as $key=>$menu_bottom): ?>
-<li ><a href="javascript:void(0);" data-param="<?php echo $menu_bottom['url']; ?>"><?php echo $menu_bottom['title']; ?></a></li>
+<li ><a href="javascript:void(0);" data-param="<?php echo $menu_bottom['url']; ?>" data-id="<?php echo $menu_bottom['id']; ?>"><?php echo $menu_bottom['title']; ?></a></li>
 <?php endforeach; endif; else: echo "" ;endif; endif; ?>
 </ul>
 </dd>

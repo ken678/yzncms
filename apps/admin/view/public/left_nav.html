@@ -8,7 +8,7 @@
 <ul>
 {notempty name="menu_center.items"}
 {foreach name="menu_center.items" id="menu_bottom"}
-<li ><a href="javascript:void(0);" data-param="{$menu_bottom['url']}">{$menu_bottom.title}</a></li>
+<li ><a href="javascript:void(0);" data-param="{$menu_bottom['url']}" data-id="{$menu_bottom.id}">{$menu_bottom.title}</a></li>
 {/foreach}
 {/notempty}
 </ul>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:49:"E:\yzncms/apps/admin\view\management\manager.html";i:1493024324;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1492155695;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1493098651;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -18,9 +18,9 @@
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admin.js"></script>
-<script type="text/javascript" src="http://v5.33hao.com/admin/resource/js/flexigrid.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/flexigrid.js"></script>
 
-
+<script type="text/javascript" src="__STATIC__/js/jquery.validation.min.js"></script>
 </head>
 <body style="background-color: #FFF; overflow: auto;">
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.picTip.js"></script>
@@ -88,7 +88,7 @@ $('.flex-table').flexigrid({
 
 function fg_operation(name, grid) {
     if (name == 'add') {
-        window.location.href = "<?php echo url('admin/management/adminadd'); ?>";
+        window.location.href = "<?php echo url('admin/manager/add'); ?>";
     }
 }
 </script>

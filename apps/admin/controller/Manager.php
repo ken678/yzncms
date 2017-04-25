@@ -14,20 +14,39 @@ use app\common\controller\Adminbase;
 /**
  * 管理员管理
  */
-class Management extends Adminbase {
+class Manager extends Adminbase {
 
-    //管理员列表
-    public function manager() {
-    	$this->assign('__GROUP_MENU__', $this->get_group_menu());
+    protected function _initialize() {
+        $this->assign('__GROUP_MENU__', $this->get_group_menu());
+    }
 
-
-
-    	
+    /**
+     * 管理员管理列表
+     */
+    public function index() {
         $where = array();
         $list   = $this->lists('Admin', $where);
         $this->assign('_list', $list);
         return $this->fetch();
     }
+
+    /**
+     * 添加管理员
+     */
+    public function add() {
+        if (request()->isPost()) {
+            $this->User = model('Admin/User');
+            if ($this->User->createManager($_POST)) {
+                $this->success("添加管理员成功！", url('manager/index'));
+            } else {
+                $error = $this->User->getError();
+                $this->error($error ? $error : '添加失败！');
+            }
+        } else {
+            return $this->fetch();
+        }
+    }
+
 
 
 
