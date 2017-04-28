@@ -36,7 +36,7 @@ class Manager extends Adminbase {
     public function add() {
         if (request()->isPost()) {
             $this->User = model('Admin/User');
-            if ($this->User->createManager($_POST)) {
+            if ($this->User->createManager(input('post.'))) {
                 $this->success("添加管理员成功！", url('manager/index'));
             } else {
                 $error = $this->User->getError();

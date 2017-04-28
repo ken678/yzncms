@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1493098651;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1493341466;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -63,8 +63,8 @@
           <a class="btn blue" href="index.php?act=admin&amp;op=admin_edit&amp;admin_id=2"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
           <td><?php echo $vo['username']; ?></td>
           <td>编辑</td>
-          <td><?php echo long2ip($vo['last_login_ip']); ?></td>
-          <td><?php echo time_format($vo['last_login_time']); ?></td>
+          <td><?php  echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--'  ?></td>
+          <td><?php  echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--'  ?></td>
           <td><?php echo $vo['email']; ?></td>
           <td></td>
         </tr>

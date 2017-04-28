@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1492158979;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1493341568;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -73,7 +73,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
       <li><a class="sitemap show-option" nctype="map_on" href="javascript:void(0);" title="查看全部管理菜单">&nbsp;</a></li>
       <li><a class="style-color show-option" id="trace_show" href="javascript:void(0);" title="给管理中心换个颜色">&nbsp;</a></li>
       <li><a class="homepage show-option" target="_blank" href="" title="新窗口打开商城首页">&nbsp;</a></li>
-      <li><a class="login-out show-option" href="index.php?act=index&op=logout" title="安全退出管理中心">&nbsp;</a></li>
+      <li><a class="login-out show-option" href="<?php echo url('index/logout'); ?>" title="安全退出管理中心">&nbsp;</a></li>
     </ul>
   </div>
   <div class="clear"></div>

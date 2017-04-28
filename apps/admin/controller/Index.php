@@ -53,9 +53,23 @@ class Index extends Adminbase {
 	        }
 
        }else{
-	        return $this->fetch("/login");
-
+            if(is_login()){
+                $this->redirect('Index/index');
+            }else{
+                return $this->fetch("/login");
+            }
        }
 
+    }
+
+    /* 退出登录 */
+    public function logout(){
+        if(is_login()){
+            session('user_auth', null);
+            session('user_auth_sign', null);
+            $this->success('退出成功！', url('login'));
+        } else {
+            $this->redirect('login');
+        }
     }
 }

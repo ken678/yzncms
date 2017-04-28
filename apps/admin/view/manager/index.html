@@ -33,8 +33,8 @@
           <a class="btn blue" href="index.php?act=admin&amp;op=admin_edit&amp;admin_id=2"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
           <td>{$vo.username}</td>
           <td>编辑</td>
-          <td>{:long2ip($vo['last_login_ip'])}</td>
-          <td>{$vo.last_login_time|time_format}</td>
+          <td>{php} echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--' {/php}</td>
+          <td>{php} echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--' {/php}</td>
           <td>{$vo.email}</td>
           <td></td>
         </tr>
