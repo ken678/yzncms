@@ -47,6 +47,17 @@ class Manager extends Adminbase {
         }
     }
 
+    //管理员删除
+    public function delete() {
+        $id= input('param.id');
+        //执行删除
+        if (model('Admin/User')->deleteUser($id)) {
+            $this->success("删除成功！");
+        } else {
+            $this->error(model('Admin/User')->getError()? : '删除失败！');
+        }
+    }
+
 
 
 

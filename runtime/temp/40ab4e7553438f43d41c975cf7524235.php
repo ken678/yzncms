@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1493341466;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1493350411;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -52,6 +52,7 @@
           <th width="120" align="center">最后登录IP</th>
           <th width="120" align="center">最后登录时间</th>
           <th width="120"  align="center">E-mail</th>
+          <th width="120"  align="center">真实姓名</th>
           <th></th>
         </tr>
       </thead>
@@ -59,13 +60,14 @@
       <?php if(is_array($_list) || $_list instanceof \think\Collection || $_list instanceof \think\Paginator): $i = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
         <tr class="hover erow">
           <td class="sign"><i class="ico-check"></i></td>
-          <td class="handle"><a class="btn red" href="index.php?act=admin&amp;op=admin_del&amp;admin_id=2" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
+          <td class="handle"><a class="btn red" href="<?php echo url('admin/manager/delete',['id'=>$vo['userid']]); ?>" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
           <a class="btn blue" href="index.php?act=admin&amp;op=admin_edit&amp;admin_id=2"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
           <td><?php echo $vo['username']; ?></td>
           <td>编辑</td>
           <td><?php  echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--'  ?></td>
           <td><?php  echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--'  ?></td>
           <td><?php echo $vo['email']; ?></td>
+          <td><?php echo $vo['nickname']; ?></td>
           <td></td>
         </tr>
       <?php endforeach; endif; else: echo "" ;endif; ?>

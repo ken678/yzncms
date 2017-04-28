@@ -22,6 +22,7 @@
           <th width="120" align="center">最后登录IP</th>
           <th width="120" align="center">最后登录时间</th>
           <th width="120"  align="center">E-mail</th>
+          <th width="120"  align="center">真实姓名</th>
           <th></th>
         </tr>
       </thead>
@@ -29,13 +30,14 @@
       {volist name="_list" id="vo"}
         <tr class="hover erow">
           <td class="sign"><i class="ico-check"></i></td>
-          <td class="handle"><a class="btn red" href="index.php?act=admin&amp;op=admin_del&amp;admin_id=2" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
+          <td class="handle"><a class="btn red" href="{:url('admin/manager/delete',['id'=>$vo.userid])}" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
           <a class="btn blue" href="index.php?act=admin&amp;op=admin_edit&amp;admin_id=2"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
           <td>{$vo.username}</td>
           <td>编辑</td>
           <td>{php} echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--' {/php}</td>
           <td>{php} echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--' {/php}</td>
           <td>{$vo.email}</td>
+          <td>{$vo.nickname}</td>
           <td></td>
         </tr>
       {/volist}

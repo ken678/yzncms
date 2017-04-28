@@ -106,6 +106,29 @@ class User extends Model {
         return false;
     }
 
+    /**
+     * 删除管理员
+     * @param type $userId
+     * @return boolean
+     */
+    public function deleteUser($userId) {
+        $userId = (int) $userId;
+        if (empty($userId)) {
+            $this->error = '请指定需要删除的用户ID！';
+            return false;
+        }
+        if ($userId == config('USER_ADMINISTRATOR')) {
+            $this->error = '禁止对超级管理员执行该操作！';
+            return false;
+        }
+        if (false !== $this->where(array('userid' => $userId))->delete()) {
+            return true;
+        } else {
+            $this->error = '删除失败！';
+            return false;
+        }
+    }
+
 
 
 

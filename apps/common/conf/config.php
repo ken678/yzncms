@@ -50,7 +50,6 @@ return [
     'class_suffix'           => false,
     // 控制器类后缀
     'controller_suffix'      => false,
-    'USER_ADMINISTRATOR' => 1, //管理员用户ID
 
     // +----------------------------------------------------------------------
     // | 模块设置

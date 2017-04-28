@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1493341568;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1493350261;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -99,7 +99,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 <?php endforeach; endif; else: echo "" ;endif; endif; ?>
 </div>
 <?php endforeach; endif; else: echo "" ;endif; ?>
-    <div class="about" title="关于系统"><i class="fa fa-copyright"></i><span>Yzncsm v1.0</span></div>
+    <div class="about" title="关于系统"><i class="fa fa-copyright"></i><span>Yzncms v1.0</span></div>
   </div>
   <div class="admincp-container-right">
     <div class="top-border"></div>

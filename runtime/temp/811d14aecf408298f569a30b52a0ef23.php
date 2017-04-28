@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:42:"E:\yzncms/apps/admin\view\manager\add.html";i:1493341026;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:42:"E:\yzncms/apps/admin\view\manager\add.html";i:1493355285;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -50,7 +50,7 @@
     <div class="ncap-form-default">
       <dl class="row">
         <dt class="tit">
-          <label for="username"><em>*</em>登录名</label>
+          <label for="username"><em>*</em>用户名</label>
         </dt>
         <dd class="opt">
           <input type="text" id="username" name="username" class="input-txt">
@@ -80,7 +80,7 @@
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label for="email"><em>*</em>E-mail</label>
+          <label for="email">E-mail</label>
         </dt>
         <dd class="opt">
           <input type="text" id="email" name="email" class="input-txt">
@@ -88,12 +88,20 @@
           <p class="notic">填写完整邮箱，如 yzncms@163.com</p>
         </dd>
       </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="nickname">真实姓名</label>
+        </dt>
+        <dd class="opt">
+          <input type="text" id="nickname" name="nickname" class="input-txt">
+          <span class="err"></span>
+        </dd>
+      </dl>
       <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
     </div>
   </form>
 </div>
 <script>
-//按钮先执行验证再提交表
 $(document).ready(function(){
   //按钮先执行验证再提交表单
   $("#submitBtn").click(function(){
@@ -103,12 +111,49 @@ $(document).ready(function(){
 
   });
 
-
-
-
-
-
-
+  $("#add_form").validate({
+      errorPlacement: function(error, element){
+        error.appendTo(element.parent('dd').children('span.err'));
+      },
+      rules : {
+          username : {
+            required : true,
+            minlength: 3,
+            maxlength: 20,
+          },
+          password : {
+            required : true,
+            minlength: 6,
+            maxlength: 20
+          },
+          password_confirm : {
+            required : true,
+            equalTo  : '#password'
+          },
+          email:{
+            email:true
+          }
+      },
+      messages : {
+          username : {
+              required : '<i class="fa fa-exclamation-circle"></i>用户名不能为空',
+              minlength: '<i class="fa fa-exclamation-circle"></i>用户名长度不正确',
+              maxlength: '<i class="fa fa-exclamation-circle"></i>用户名长度不正确'
+          },
+          password : {
+              required : '<i class="fa fa-exclamation-circle"></i>密码不能为空',
+              minlength: '<i class="fa fa-exclamation-circle"></i>密码长度不正确',
+              maxlength: '<i class="fa fa-exclamation-circle"></i>密码长度不正确'
+          },
+          password_confirm: {
+              required : '<i class="fa fa-exclamation-circle"></i>确认密码不能为空',
+              equalTo  : '<i class="fa fa-exclamation-circle"></i>确认密码不一致'
+          },
+          email:{
+              email    :'<i class="fa fa-exclamation-circle"></i>邮箱格式不正确'
+          }
+      }
+  })
 });
 </script>
 

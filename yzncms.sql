@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-04-28 09:44:19
+Date: 2017-04-28 14:50:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,13 +30,13 @@ CREATE TABLE `yzn_admin` (
   `email` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`userid`),
   KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1493343805', '2130706433', '530765310@qq.com');
-INSERT INTO `yzn_admin` VALUES ('4', 'ken678', '54012e2cf4ed3025fc277230d5cd168d72c95980', '329xOS', '', '0', '0', '');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1493362183', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('6', 'ken678', '11a8f81e410078c937492ff0d299c580bb53dd5c', 'MHHArY', '御宅男', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for `yzn_config`
