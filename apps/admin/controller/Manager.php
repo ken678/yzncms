@@ -17,6 +17,7 @@ use app\common\controller\Adminbase;
 class Manager extends Adminbase {
 
     protected function _initialize() {
+        $this->User = model('Admin/User');
         $this->assign('__GROUP_MENU__', $this->get_group_menu());
     }
 
@@ -35,7 +36,6 @@ class Manager extends Adminbase {
      */
     public function add() {
         if (request()->isPost()) {
-            $this->User = model('Admin/User');
             if ($this->User->createManager(input('post.'))) {
                 $this->success("添加管理员成功！", url('manager/index'));
             } else {
@@ -47,14 +47,33 @@ class Manager extends Adminbase {
         }
     }
 
+    //管理员编辑
+    public function edit() {
+        $id= input('param.id');
+        if (request()->isPost()) {
+	        if ($this->User->editManager(input('post.'))) {
+	            $this->success("修改成功！");
+	        } else {
+	            $this->error($this->User->getError()? : '修改失败！');
+	        }
+        }else{
+            $data = $this->User->where(array("userid" => $id))->find();
+            if (empty($data)) {
+                $this->error('该信息不存在！');
+            }
+            $this->assign("data", $data);
+        	return $this->fetch();
+        }
+    }
+
     //管理员删除
     public function delete() {
         $id= input('param.id');
         //执行删除
-        if (model('Admin/User')->deleteUser($id)) {
+        if ($this->User->deleteManager($id)) {
             $this->success("删除成功！");
         } else {
-            $this->error(model('Admin/User')->getError()? : '删除失败！');
+            $this->error($this->User->getError()? : '删除失败！');
         }
     }
 

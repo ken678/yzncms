@@ -18,6 +18,7 @@ use think\Validate;
 class User extends Model {
     // 设置当前模型对应的完整数据表名称
     protected $table = '__ADMIN__';
+    protected $pk = 'userid';
 
 	/**
 	 * 管理员登录检测
@@ -107,11 +108,52 @@ class User extends Model {
     }
 
     /**
+     * 编辑管理员
+     * @param [type] $data [修改数据]
+     * @return boolean
+     */
+    public function editManager($data) {
+        if (empty($data) || !isset($data['userid']) || !is_array($data)) {
+            $this->error = '没有修改的数据！';
+            return false;
+        }
+        $info = $this->where(array('userid' => $data['userid']))->find();
+        if (empty($info)) {
+            $this->error = '该管理员不存在！';
+            return false;
+        }
+        //验证器
+        $rule = [
+            'password'  => 'length:6,20|confirm'
+        ];
+        $msg = [
+            'password.length'     => '密码长度不正确！',
+            'password.confirm'        => '两次输入的密码不一样！'
+        ];
+        $validate = new Validate($rule,$msg);
+        if (!$validate->check($data)) {
+            $this->error = $validate->getError();
+            return false;
+        }
+        //密码为空，表示不修改密码
+        if (isset($data['password']) && empty($data['password'])) {
+            unset($data['password']);
+            unset($data['encrypt']);
+        }else{
+            $passwordinfo = password($data['password']);//对密码进行处理
+            $data['encrypt'] = $passwordinfo['encrypt'];
+            $data['password'] = $passwordinfo['password'];
+        }
+        $status = $this->allowField(true)->isUpdate(true)->save($data);
+        return $status !== false ? true : false;
+    }
+
+    /**
      * 删除管理员
      * @param type $userId
      * @return boolean
      */
-    public function deleteUser($userId) {
+    public function deleteManager($userId) {
         $userId = (int) $userId;
         if (empty($userId)) {
             $this->error = '请指定需要删除的用户ID！';
