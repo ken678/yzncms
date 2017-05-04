@@ -46,6 +46,9 @@ class User extends Model {
      * 自动登录用户
      */
     private function autoLogin($user){
+         //记录行为
+        action_log('user_login', 'member', $user['userid'], $user['userid']);
+
     	/* 更新登录信息 */
         $data = array(
             'last_login_time' => time(),

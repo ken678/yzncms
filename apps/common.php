@@ -10,6 +10,43 @@
 // +----------------------------------------------------------------------
 // 公用函数
 
+
+/**
+ * 根据用户ID获取用户名
+ * @param  integer $uid 用户ID
+ * @return string       用户名
+ */
+function get_username($uid = 0){
+    static $list;
+    if(!($uid && is_numeric($uid))){ //获取当前登录用户名
+        return session('user_auth.username');
+    }
+    /* 获取缓存数据 */
+    if(empty($list)){
+        $list = cache('sys_active_user_list');
+    }
+    /* 查找用户信息 */
+    $key = "u{$uid}";
+    if(isset($list[$key])){ //已缓存，直接使用
+        $name = $list[$key];
+    } else { //调用接口获取用户信息
+        $info = db('admin')->where('userid',$uid)->value('username');
+        if(!empty($info)){
+            $name = $list[$key] = $info;
+            /* 缓存用户 */
+            $count = count($list);
+            $max   = config('user_max_cache');
+            while ($count-- > $max) {
+                array_shift($list);
+            }
+            cache('sys_active_user_list', $list);
+        } else {
+            $name = '';
+        }
+    }
+    return $name;
+}
+
 /**
  * 生成验证码
  */
@@ -97,6 +134,39 @@ function list_to_tree($list, $pk='id', $pid = 'pid', $child = '_child', $root = 
     }
     return $tree;
 }
+
+/**
+ * select返回的数组进行整数映射转换
+ *
+ * @param array $map  映射关系二维数组  array(
+ *                                          '字段名1'=>array(映射关系数组),
+ *                                          '字段名2'=>array(映射关系数组),
+ *                                           ......
+ *                                       )
+ * @author 朱亚杰 <zhuyajie@topthink.net>
+ * @return array
+ *
+ *  array(
+ *      array('id'=>1,'title'=>'标题','status'=>'1','status_text'=>'正常')
+ *      ....
+ *  )
+ *
+ */
+function int_to_string(&$data,$map=array('status'=>array(1=>'正常',-1=>'删除',0=>'禁用',2=>'未审核',3=>'草稿'))) {
+    if($data === false || $data === null ){
+        return $data;
+    }
+    $data = (array)$data;
+    foreach ($data as $key => $row){
+        foreach ($map as $col=>$pair){
+            if(isset($row[$col]) && isset($pair[$row[$col]])){
+                $data[$key][$col.'_text'] = $pair[$row[$col]];
+            }
+        }
+    }
+    return $data;
+}
+
 
 
 /**

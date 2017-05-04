@@ -27,7 +27,7 @@ class Manager extends Adminbase {
     public function index() {
         $where = array();
         $list   = $this->lists('Admin', $where);
-        $this->assign('_list', $list);
+        $this->assign('_list', $list['data']);
         return $this->fetch();
     }
 
@@ -47,9 +47,10 @@ class Manager extends Adminbase {
         }
     }
 
-    //管理员编辑
+    /**
+     * 管理员编辑
+     */
     public function edit() {
-        $id= input('param.id');
         if (request()->isPost()) {
 	        if ($this->User->editManager(input('post.'))) {
 	            $this->success("修改成功！");
@@ -57,6 +58,7 @@ class Manager extends Adminbase {
 	            $this->error($this->User->getError()? : '修改失败！');
 	        }
         }else{
+        	$id= input('id/d');
             $data = $this->User->where(array("userid" => $id))->find();
             if (empty($data)) {
                 $this->error('该信息不存在！');
@@ -66,10 +68,11 @@ class Manager extends Adminbase {
         }
     }
 
-    //管理员删除
+    /**
+     * 管理员删除
+     */
     public function delete() {
-        $id= input('param.id');
-        //执行删除
+        $id= input('id/d');
         if ($this->User->deleteManager($id)) {
             $this->success("删除成功！");
         } else {

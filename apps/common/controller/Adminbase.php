@@ -133,7 +133,7 @@ class Adminbase extends Controller {
         if($list && !is_array($list)){
             $list=$list->toArray();
         }
-        return $list['data'];
+        return $list;
     }
 
 

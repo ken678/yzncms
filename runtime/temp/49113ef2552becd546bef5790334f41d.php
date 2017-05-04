@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\config\extend.html";i:1492505940;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\config\extend.html";i:1492505940;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493872565;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -21,6 +21,8 @@
 <script type="text/javascript" src="__STATIC__/admin/js/flexigrid.js"></script>
 
 <script type="text/javascript" src="__STATIC__/js/jquery.validation.min.js"></script>
+<script type="text/javascript" src="http://v5.33hao.com/data/resource/js/perfect-scrollbar.min.js"></script>
+
 </head>
 <body style="background-color: #FFF; overflow: auto;">
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.picTip.js"></script>
