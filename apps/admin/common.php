@@ -20,16 +20,15 @@
  * @return boolean
  */
 function action_log($action = null, $model = null, $record_id = null, $user_id = null){
-
     //参数检查
     if(empty($action) || empty($model) || empty($record_id)){
         return '参数不能为空';
     }
     if(empty($user_id)){
         $user_id = is_login();
-    } 
+    }
     //查询行为,判断是否执行
-    $action_info = \think\Db::name('Action')->getByName($action);
+    $action_info = db('Action')->getByName($action);
     if($action_info['status'] != 1){
         return '该行为被禁用或删除';
     }
@@ -65,15 +64,12 @@ function action_log($action = null, $model = null, $record_id = null, $user_id =
         //未定义日志规则，记录操作url
         $data['remark']     =   '操作url：'.$_SERVER['REQUEST_URI'];
     }
-
-    \think\Db::name('ActionLog')->insert($data);
-
+    db('ActionLog')->insert($data); //插入日志
     if(!empty($action_info['rule'])){
         //解析行为
-        $rules = parse_action($action, $user_id);
-
+        //$rules = parse_action($action, $user_id);
         //执行行为
-        $res = execute_action($rules, $action_info['id'], $user_id);
+        //$res = execute_action($rules, $action_info['id'], $user_id);
     }
 }
 
@@ -95,14 +91,12 @@ function parse_action($action , $self){
     if(empty($action)){
         return false;
     }
-
     //参数支持id或者name
     if(is_numeric($action)){
         $map = array('id'=>$action);
     }else{
         $map = array('name'=>$action);
     }
-
     //查询行为信息
     $info = db('Action')->where($map)->find();
     if(!$info || $info['status'] != 1){

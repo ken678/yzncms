@@ -98,32 +98,35 @@ class Adminbase extends Controller {
         $pk         =   $model->getPk();
         if($order===null){
             //order置空
-        }else if ( isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']),array('desc','asc')) ) {
-            $options['order'] = '`'.$REQUEST['_field'].'` '.$REQUEST['_order'];
+        }else if ( isset($REQUEST['sortorder']) && isset($REQUEST['sortname']) && in_array(strtolower($REQUEST['sortorder']),array('desc','asc')) ) {
+            $options['order'] = '`'.$REQUEST['sortname'].'` '.$REQUEST['sortorder'];
         }elseif( $order==='' && empty($options['order']) && !empty($pk) ){
             $options['order'] = $pk.' desc';
         }elseif($order){
             $options['order'] = $order;
         }
-        unset($REQUEST['_order'],$REQUEST['_field']);
+        unset($REQUEST['sortorder'],$REQUEST['sortname']);
 
         if( empty($options['where'])){
             unset($options['where']);
         }
-
-        if( isset($REQUEST['r']) ){
-            $listRows = (int)$REQUEST['r'];
+        if( isset($REQUEST['rp']) ){
+            $listRows = (int)$REQUEST['rp'];
         }else{
             $listRows = config('list_rows') > 0 ? config('list_rows') : 10;
         }
-
+        if( isset($REQUEST['curpage']) ){
+            $curpage= (int)$REQUEST['curpage'];
+        }else{
+            $curpage= 1;
+        }
         if( !empty($where)){
             $options['where']   =   $where;
             $total        =   $model->where($options['where'])->count();
-            $list = $model->where($options['where'])->order($order)->field($field)->paginate($listRows);
+            $list = $model->where($options['where'])->order($options['order'])->field($field)->paginate($listRows,false,['page'=> $curpage]);
         }else{
             $total        =   $model->count();
-            $list = $model->order($order)->field($field)->paginate($listRows);
+            $list = $model->order($options['order'])->field($field)->paginate($listRows,false,['page'=> $curpage]);
         }
         // 获取分页显示
         $page = $list->render();

@@ -30,12 +30,10 @@ class Action extends Adminbase {
 
 
     /**
-     * 获取xml数据
+     * 获取操作日记xml数据
      */
     public function get_xml(){
-        //获取列表数据
-        $map=  array();
-        $list   =   $this->lists('ActionLog', $map);
+        $list   =   $this->lists('ActionLog', array(), 'id desc');
         int_to_string($list['data']);
         $data = array();
         $data['now_page'] = $list['current_page'];//当前页

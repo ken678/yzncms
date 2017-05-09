@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1493874075;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493872994;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1494315114;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493872994;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -100,7 +100,6 @@
     </form>
   </div>
 </div>
-
 <script type="text/javascript">
 $(function(){
     // 高级搜索提交
@@ -115,11 +114,11 @@ $(function(){
     $("#flexigrid").flexigrid({
       url: "<?php echo url('action/get_xml'); ?>",
       colModel : [
-          {display: '操作', name : 'operation', width : 60, sortable : false, align: 'center', className: 'handle-s'},
-          {display: '操作人', name : 'admin_name', width : 120, sortable : true, align: 'left'},
-          {display: '行为', name : 'content', width : 500, sortable : false, align : 'left'},
-          {display: '时间', name : 'id', width : 140, sortable : true, align: 'center'},
-          {display: 'IP', name : 'ip', width : 120, sortable : true, align: 'left'}
+          {display: '操作', name : 'id', width : 60, sortable : false, align: 'center', className: 'handle-s'},
+          {display: '操作人', name : 'user_id', width : 120, sortable : true, align: 'left'},
+          {display: '行为', name : 'remark', width : 500, sortable : false, align : 'left'},
+          {display: '时间', name : 'create_time', width : 140, sortable : true, align: 'center'},
+          {display: 'IP', name : 'action_ip', width : 120, sortable : true, align: 'left'}
           ],
       buttons : [
           {display: '<i class="fa fa-trash"></i>批量删除', name : 'delete', bclass : 'del', title : '将选定行数据批量删除', onpress : fg_operate },
@@ -127,8 +126,8 @@ $(function(){
           {display: '<i class="fa fa-file-excel-o"></i>导出数据', name : 'csv', bclass : 'csv', title : '将选定行数据导出excel文件,如果不选中行，将导出列表所有数据', onpress : fg_operate }
       ],
       searchitems : [
-          {display: '操作人', name : 'admin_name'},
-          {display: '操作内容', name : 'content'}
+          {display: '操作人', name : 'action_id'},
+          {display: '操作内容', name : 'remark'}
       ],
       sortname: "id",
       sortorder: "desc",
