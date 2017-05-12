@@ -156,10 +156,10 @@ function fg_delete(id) {
   $.ajax({
         type: "GET",
         dataType: "json",
-        url: "index.php?act=admin_log&op=list_del",
-        data: "del_id="+id,
+        url: "{:url('action/remove')}",
+        data: "ids="+id,
         success: function(data){
-            if (data.state){
+            if (data.code){
                 $("#flexigrid").flexReload();
             } else {
               alert(data.msg);

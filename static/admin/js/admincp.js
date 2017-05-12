@@ -129,6 +129,6 @@ function openItem(param) {
     $('div[id^="admincpNavTabs_"]').hide().find('dl').removeClass('active');
     //$('li[data-param="' + data_str + '"]').addClass('active');
     $this.parent().addClass('active').parents('dl:first').addClass('active').parents('div:first').show();
-    $('#workspace').attr('src', '/index.php/'+param);
+    $('#workspace').attr('src', param);
     $.cookie('workspaceParam', param, { expires: 1 ,path:"/"});
 }

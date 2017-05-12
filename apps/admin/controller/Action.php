@@ -28,6 +28,28 @@ class Action extends Adminbase {
         return $this->fetch();
     }
 
+    /**
+     * 删除日志
+     * @param mixed $ids
+     * @author 艺品网络  <twothink.cn>
+     */
+    public function remove(){
+        $ids = input('ids','');
+        empty($ids) && $this->error('参数错误！');
+        $array  =   explode(',',$ids);
+        if(is_array($array)){
+            $map['id'] = array('in', $array);
+        }elseif (is_numeric($array)){
+            $map['id'] = $array;
+        }
+        $res = db('ActionLog')->where($map)->delete();
+        if($res !== false){
+            $this->success('删除成功！');
+        }else {
+            $this->error('删除失败！');
+        }
+    }
+
 
     /**
      * 获取操作日记xml数据

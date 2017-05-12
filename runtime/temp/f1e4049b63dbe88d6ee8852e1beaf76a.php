@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1494315114;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493872994;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1494576033;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493872994;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -188,10 +188,10 @@ function fg_delete(id) {
   $.ajax({
         type: "GET",
         dataType: "json",
-        url: "index.php?act=admin_log&op=list_del",
-        data: "del_id="+id,
+        url: "<?php echo url('action/remove'); ?>",
+        data: "ids="+id,
         success: function(data){
-            if (data.state){
+            if (data.code){
                 $("#flexigrid").flexReload();
             } else {
               alert(data.msg);
