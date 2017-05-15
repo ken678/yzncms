@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1494576033;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493872994;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1494837939;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1494838271;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -56,61 +56,9 @@
     </ul>
   </div>
   <div id="flexigrid"></div>
-  <div class="ncap-search-ban-s" id="searchBarOpen"><i class="fa fa-search-plus"></i>高级搜索</div>
-  <div class="ncap-search-bar">
-    <div class="handle-btn" id="searchBarClose"><i class="fa fa-search-minus"></i>收起边栏</div>
-    <div class="title">
-      <h3>高级搜索</h3>
-    </div>
-    <form method="get" name="formSearch" id="formSearch">
-      <div id="searchCon" class="content">
-        <div class="layout-box">
-          <dl>
-            <dt>操作人</dt>
-            <dd>
-             <input type="text" value="" name="admin_name" class="s-input-txt">
-            </dd>
-          </dl>
-          <dl>
-            <dt>操作内容</dt>
-            <dd>
-             <input type="text" value="" name="content" class="s-input-txt">
-            </dd>
-          </dl>
-          <dl>
-            <dt>IP</dt>
-            <dd>
-             <input type="text" value="" name="ip" class="s-input-txt">
-            </dd>
-          </dl>
-          <dl>
-            <dt>操作时间</dt>
-            <dd>
-              <label>
-                <input readonly id="query_start_date" placeholder="请选择起始时间" name=query_start_date value="" type="text" class="s-input-txt" />
-              </label>
-              <label>
-                <input readonly id="query_end_date" placeholder="请选择结束时间" name="query_end_date" value="" type="text" class="s-input-txt" />
-              </label>
-            </dd>
-          </dl>
-        </div>
-      </div>
-      <div class="bottom"> <a href="javascript:void(0);" id="ncsubmit" class="ncap-btn ncap-btn-green mr5">提交查询</a><a href="javascript:void(0);" id="ncreset" class="ncap-btn ncap-btn-orange" title="撤销查询结果，还原列表项所有内容"><i class="fa fa-retweet"></i>撤销</a></div>
-    </form>
-  </div>
 </div>
 <script type="text/javascript">
 $(function(){
-    // 高级搜索提交
-    $('#ncsubmit').click(function(){
-        $("#flexigrid").flexOptions(<?php echo url("","",true,false);?>).flexReload();
-    });
-    // 高级搜索重置
-    $('#ncreset').click(function(){
-        $("#flexigrid").flexOptions(<?php echo url("","",true,false);?>).flexReload();
-        $("#formSearch")[0].reset();
-    });
     $("#flexigrid").flexigrid({
       url: "<?php echo url('action/get_xml'); ?>",
       colModel : [
@@ -122,7 +70,7 @@ $(function(){
           ],
       buttons : [
           {display: '<i class="fa fa-trash"></i>批量删除', name : 'delete', bclass : 'del', title : '将选定行数据批量删除', onpress : fg_operate },
-          {display: '<i class="fa fa-trash"></i>删除6个月前的数据', name : 'delete_ago', bclass : 'del', title : '将选定行数据批量删除', onpress : fg_operate },
+          {display: '<i class="fa fa-trash"></i>删除1个月前的数据', name : 'delete_ago', bclass : 'del', title : '将选定行数据批量删除', onpress : fg_operate },
           {display: '<i class="fa fa-file-excel-o"></i>导出数据', name : 'csv', bclass : 'csv', title : '将选定行数据导出excel文件,如果不选中行，将导出列表所有数据', onpress : fg_operate }
       ],
       searchitems : [
@@ -159,7 +107,7 @@ function fg_operate(name, grid) {
         $.ajax({
               type: "GET",
               dataType: "json",
-              url: "index.php?act=admin_log&op=list_del",
+              url: "<?php echo url('action/remove'); ?>",
               data: "type=ago",
               success: function(data){
                   if (data.state){

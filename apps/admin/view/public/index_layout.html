@@ -17,7 +17,9 @@
 var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 </script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.bgColorSelector.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admincp.js"></script>
@@ -83,7 +85,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
   <div class="admincp-container-left">
     <div class="top-border"><span class="nav-side"></span><span class="sub-side"></span></div>
     {include file="public/left_nav" /}
-    <div class="about" title="关于系统"><i class="fa fa-copyright"></i><span>Yzncms v1.0</span></div>
+    <div class="about" title="关于系统" onclick="ajax_form('about', '', '{:url("admin/aboutus/index")}', 640);"><i class="fa fa-copyright"></i><span>Yzncms v1.0</span></div>
   </div>
   <div class="admincp-container-right">
     <div class="top-border"></div>
