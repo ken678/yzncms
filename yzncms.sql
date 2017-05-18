@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-05-15 17:41:42
+Date: 2017-05-18 13:45:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,11 +64,13 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
 -- ----------------------------
+INSERT INTO `yzn_action_log` VALUES ('35', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-18 12:26登录了后台', '1495081597');
+INSERT INTO `yzn_action_log` VALUES ('34', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-18 08:06登录了后台', '1495065962');
 INSERT INTO `yzn_action_log` VALUES ('3', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-04 16:31登录了后台', '1493886660');
 INSERT INTO `yzn_action_log` VALUES ('4', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-04 17:53登录了后台', '1493891585');
 INSERT INTO `yzn_action_log` VALUES ('5', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:01登录了后台', '1493953314');
@@ -93,6 +95,7 @@ INSERT INTO `yzn_action_log` VALUES ('23', '1', '1', '2130706433', 'member', '1'
 INSERT INTO `yzn_action_log` VALUES ('24', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954354');
 INSERT INTO `yzn_action_log` VALUES ('25', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 17:55登录了后台', '1493978111');
 INSERT INTO `yzn_action_log` VALUES ('32', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-15 17:31登录了后台', '1494840674');
+INSERT INTO `yzn_action_log` VALUES ('33', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-17 16:56登录了后台', '1495011414');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -114,7 +117,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1494840674', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1495081597', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('4', 'ken678', 'bde62a663282b37b72a5371bd1e6d51c72d6df39', 'fCScqr', '御宅男', '1493715593', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -179,7 +182,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -194,3 +197,5 @@ INSERT INTO `yzn_menu` VALUES ('12', '管理员管理', '6', 'Admin', 'Manager',
 INSERT INTO `yzn_menu` VALUES ('13', '添加管理员', '12', 'Admin', 'Manager', 'add', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('14', '编辑管理员', '12', 'Admin', 'Manager', 'edit', '', '0', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('15', '操作日志', '10', 'Admin', 'Action', 'actionlog', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('16', '应用', '1', 'Admin', 'database', 'index', '', '1', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('17', '数据库备份', '16', 'Admin', 'database', 'index', '', '1', '', '0', '0');
