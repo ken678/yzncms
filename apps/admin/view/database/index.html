@@ -31,6 +31,7 @@
           <th width="120" align="center">数据量</th>
           <th width="120" align="center">数据大小</th>
           <th width="150" align="center">创建时间</th>
+          <th width="150" align="center">说明</th>
           <th width="150" align="center">备份状态</th>
           <th></th>
         </tr>
@@ -43,6 +44,7 @@
           <td>{$table.rows}</td>
           <td>{$table.data_length|format_bytes}</td>
           <td>{$table.create_time}</td>
+          <td>{$table.comment}</td>
           <td class="info">未备份</td>
           <td></td>
         </tr>
@@ -125,6 +127,7 @@ $('.flex-table').flexigrid({
                     }
                     backup(data.data.tab, tab.id != data.data.tab.id);
                 } else {
+                	alert(data.msg);
                     $export.html("立即备份");
                     /*updateAlert(data.msg,'alert-error');
                     $export.parent().children().removeClass("disabled");

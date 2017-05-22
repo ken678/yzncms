@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"E:\yzncms/apps/admin\view\database\index.html";i:1495085350;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1494838271;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"E:\yzncms/apps/admin\view\database\index.html";i:1495156929;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1494838271;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -63,6 +63,7 @@
           <th width="120" align="center">数据量</th>
           <th width="120" align="center">数据大小</th>
           <th width="150" align="center">创建时间</th>
+          <th width="150" align="center">说明</th>
           <th width="150" align="center">备份状态</th>
           <th></th>
         </tr>
@@ -75,6 +76,7 @@
           <td><?php echo $table['rows']; ?></td>
           <td><?php echo format_bytes($table['data_length']); ?></td>
           <td><?php echo $table['create_time']; ?></td>
+          <td><?php echo $table['comment']; ?></td>
           <td class="info">未备份</td>
           <td></td>
         </tr>
@@ -157,6 +159,7 @@ $('.flex-table').flexigrid({
                     }
                     backup(data.data.tab, tab.id != data.data.tab.id);
                 } else {
+                	alert(data.msg);
                     $export.html("立即备份");
                     /*updateAlert(data.msg,'alert-error');
                     $export.parent().children().removeClass("disabled");
