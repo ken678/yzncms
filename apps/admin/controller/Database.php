@@ -31,6 +31,72 @@ class Database extends Adminbase {
     }
 
     /**
+     * 优化表
+     * @param  String $tables 表名
+     */
+    public function optimize($tables = null) {
+        if ($tables) {
+            $Db = db();
+            if (is_array($tables)) {
+                $tables = implode('`,`', $tables);
+                $list   = $Db->query("OPTIMIZE TABLE `{$tables}`");
+
+                if ($list) {
+                    return $this->success("数据表优化完成！");
+                } else {
+                    return $this->error("数据表优化出错请重试！");
+                }
+            }
+        } else {
+            return $this->error("请指定要优化的表！");
+        }
+    }
+
+    /**
+     * 修复表
+     * @param  String $tables 表名
+     */
+    public function repair($tables = null) {
+        if ($tables) {
+            $Db = db();
+            if (is_array($tables)) {
+                $tables = implode('`,`', $tables);
+                $list   = $Db->query("REPAIR TABLE `{$tables}`");
+
+                if ($list) {
+                    return $this->success("数据表修复完成！");
+                } else {
+                    return $this->error("数据表修复出错请重试！");
+                }
+            }
+        } else {
+            return $this->error("请指定要修复的表！");
+        }
+    }
+
+     /**
+     * 下载表
+     */
+    public function downfile() {
+        $file = $this->request->param('file');
+        $type = $this->request->param('type');
+        if (empty($file) || empty($type) || !in_array($type, array("zip", "gz", "sql"))) {
+            $this->error("下载地址不存在");
+        }
+        $name = $file . '-*.sql*';
+        $filePath = glob(realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name);
+        if (!is_file($filePath[0])) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($filePath[0]);
+        /* 执行下载 */ //TODO: 大文件断点续传
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($filePath[0]));
+        readfile($filePath[0]);
+    }
+
+    /**
      * 数据库恢复列表
      */
     public function restore() {
@@ -88,12 +154,11 @@ class Database extends Adminbase {
         }
     }
 
-
     /**
      * 还原数据库
      */
     public function import($time = 0, $part = null, $start = null) {
-        if (is_numeric($time) && is_null($part) && is_null($start)) { 
+        if (is_numeric($time) && is_null($part) && is_null($start)) {
             //初始化
             //获取备份文件信息
             $name  = date('Ymd-His', $time) . '-*.sql*';
@@ -152,8 +217,7 @@ class Database extends Adminbase {
      * @param  Integer $start  起始行数
      */
     public function export($tables = null, $id = null, $start = null) {
-        if (request()->isPost() && !empty($tables)) {
-            $tables = explode(',',trim($tables,','));
+        if (request()->isPost() && !empty($tables) && is_array($tables)) {
             //初始化检测
             $path = config('data_backup_path');
             if (!is_dir($path)) {

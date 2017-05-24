@@ -732,6 +732,10 @@ cursor: pointer; }
 .flexigrid .fbutton.fbOver .del:hover { color: #E84C3D; border-color: #E84C3D; }
 .flexigrid .fbutton .csv:hover,
 .flexigrid .fbutton.fbOver .csv:hover { color: #9C59B8; border-color: #9C59B8; }
+.flexigrid .fbutton .repair:hover,
+.flexigrid .fbutton.fbOver .repair:hover { color: #0B2F65; border-color: #0B2F65; }
+.flexigrid .fbutton .optimize:hover,
+.flexigrid .fbutton.fbOver .optimize:hover { color: #C5798E; border-color: #C5798E; }
 /*数据表格内容部分*/
 .flexigrid .bDiv { background: #fff; min-height: 300px; position: relative; z-index: 2; overflow: auto; }
 .flexigrid .bDiv table { width: 100%; }

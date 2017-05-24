@@ -40,7 +40,8 @@
           <td class="handle">
           <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul><li><a href="javascript:if(confirm('您确定要删除吗?')){location.href='{:url('del?time='.$data['time'])}'};">删除</a></li>
-              <li><a class="confirm-on-click" href="{:url('import?time='.$data['time'])}">导入</a></li>
+                <li><a class="confirm-on-click" href="{:url('import?time='.$data['time'])}">导入</a></li>
+                <li><a href="{:url('downFile',array('type'=>'gz','file'=>date('Ymd-His',$data['time'])))}">下载</a></li>
             </ul>
           </span>
           </td>

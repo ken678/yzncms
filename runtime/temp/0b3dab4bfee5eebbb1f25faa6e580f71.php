@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1494839369;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1495511110;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -15,12 +15,12 @@
 <link href="__STATIC__/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 <link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <script type="text/javascript">
-var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
+var SITEURL = '';
 </script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
-<script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.bgColorSelector.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admincp.js"></script>

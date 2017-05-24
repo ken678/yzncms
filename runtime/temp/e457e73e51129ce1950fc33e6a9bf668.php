@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"E:\yzncms/apps/admin\view\database\index.html";i:1495156929;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1494838271;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"E:\yzncms/apps/admin\view\database\index.html";i:1495508446;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -14,10 +14,13 @@
 <link href="__STATIC__/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 <link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">html, body { overflow: visible;}</style>
-
+<script type="text/javascript">
+var SITEURL = '';
+</script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admin.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/flexigrid.js"></script>
 
 <script type="text/javascript" src="__STATIC__/js/jquery.validation.min.js"></script>
@@ -51,7 +54,7 @@
       <span id="explanationZoom" title="网站全局基本设置，网站及其他模块相关内容在其各自栏目设置项内进行操作"></span> </div>
     <ul>
       <li>数据备份功能根据你的选择备份全部数据或指定数据，导出的数据文件可用“数据恢复”功能或 phpMyAdmin 导入</li>
-      <li>建议定期备份数据库</li>
+      <li>建议定期备份,优化和修复数据库</li>
       <li>数据库配置修改请编辑apps/common/conf/admin/config.php</li>
     </ul>
   </div>
@@ -95,39 +98,52 @@ $('.flex-table').flexigrid({
     columnControl: false,// 不使用列控制
     title: '数据库列表',
     buttons : [
-                 {display: '<i class="fa fa-floppy-o"></i>立即备份', name : 'add', bclass : 'add', title : '新增数据', onpress : fg_operation }
+                 {display: '<i class="fa fa-floppy-o"></i>立即备份', name : 'add', bclass : 'add', title : '新增数据', onpress : fg_operation },
+                 {display: '<i class="fa fa fa-magic"></i>优化表', name : 'optimize', bclass : 'optimize', title : '优化表', onpress : fg_operation },
+                 {display: '<i class="fa fa-wrench"></i>修复表', name : 'repair', bclass : 'repair', title : '修复表', onpress : fg_operation }
              ]
     });
 
     var $export = $(".add");
     function fg_operation(name, grid) {
-      if($('.trSelected',grid).length>0){
-          $export.html('<i class="fa fa-spinner fa-spin"></i>正在发送备份请求...');
-          var itemlist = new Array();
-          $('.trSelected',grid).each(function(){
-            itemlist.push($(this).attr('data-table'));
-          });
-          fg_export(itemlist);
-      } else {
-          alert('请选择需要导出的数据库！');
-          return false;
-      }
+        if (name == 'add') {
+            if($('.trSelected',grid).length>0){
+                $export.html('<i class="fa fa-spinner fa-spin"></i>正在发送备份请求...');
+                var itemlist = [];
+                $('.trSelected',grid).each(function(){
+                  itemlist.push($(this).attr('data-table'));
+                });
+                fg_export(itemlist);
+            } else {
+                alert('请选择需要导出的数据库！');
+                return false;
+            }
+        }else if (name == 'optimize' || name == 'repair') {
+            if($('.trSelected',grid).length>0){
+                var itemlist = [];
+                $('.trSelected',grid).each(function(){
+                  itemlist.push($(this).attr('data-table'));
+                });
+                fg_optimize(itemlist,name);
+            } else {
+                alert('请指定操作的的表！');
+                return false;
+            }
+        }
     }
 
     function fg_export(table) {
       if (typeof table == 'number') {
           var table = new Array(table.toString());
       };
-      if(confirm('确认备份这 ' + table.length + ' 项吗？')){
-        table = table.join(',');
-      } else {
-            return false;
+      if(!confirm('确认备份这 ' + table.length + ' 项吗？')){
+          return false;
       }
       $.ajax({
             type: "POST",
             dataType: "json",
             url: "<?php echo url('database/export'); ?>",
-            data: "tables="+table,
+            data: {tables:table},
             success: function(data){
                 if (data.code){
                     tables = data.data.tables;
@@ -135,7 +151,32 @@ $('.flex-table').flexigrid({
                     backup(data.data.tab);
                     window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
                 } else {
+                    showSucc(data.msg);
                     $export.html("立即备份");
+                }
+            }
+        });
+    }
+
+    function fg_optimize(table,name) {
+      if (typeof table == 'number') {
+          var table = new Array(table.toString());
+      };
+      if (name == 'optimize' ) {
+          var url = "<?php echo url('database/optimize'); ?>";
+      }else if(name == 'repair'){
+          var url = "<?php echo url('database/repair'); ?>";
+      }
+      $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            data: {tables:table},
+            success: function(data){
+                if (data.code){
+                  showSucc(data.msg);
+                } else {
+                  showSucc(data.msg);
                 }
             }
         });
@@ -161,13 +202,6 @@ $('.flex-table').flexigrid({
                 } else {
                 	alert(data.msg);
                     $export.html("立即备份");
-                    /*updateAlert(data.msg,'alert-error');
-                    $export.parent().children().removeClass("disabled");
-                    $export.html("立即备份");
-                    setTimeout(function(){
-                    $('#top-alert').find('button').click();
-                    $(that).removeClass('disabled').prop('disabled',false);
-                    },1500);*/
                 }
             }
         });

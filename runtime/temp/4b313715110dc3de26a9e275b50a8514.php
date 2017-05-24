@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\database\restore.html";i:1495421703;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1494838271;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\database\restore.html";i:1495532883;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -14,10 +14,13 @@
 <link href="__STATIC__/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 <link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">html, body { overflow: visible;}</style>
-
+<script type="text/javascript">
+var SITEURL = '';
+</script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admin.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/flexigrid.js"></script>
 
 <script type="text/javascript" src="__STATIC__/js/jquery.validation.min.js"></script>
@@ -72,7 +75,8 @@
           <td class="handle">
           <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul><li><a href="javascript:if(confirm('您确定要删除吗?')){location.href='<?php echo url('del?time='.$data['time']); ?>'};">删除</a></li>
-              <li><a class="confirm-on-click" href="<?php echo url('import?time='.$data['time']); ?>">导入</a></li>
+                <li><a class="confirm-on-click" href="<?php echo url('import?time='.$data['time']); ?>">导入</a></li>
+                <li><a href="<?php echo url('downFile',array('type'=>'gz','file'=>date('Ymd-His',$data['time']))); ?>">下载</a></li>
             </ul>
           </span>
           </td>

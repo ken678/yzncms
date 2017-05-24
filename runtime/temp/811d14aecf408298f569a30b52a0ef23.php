@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:42:"E:\yzncms/apps/admin\view\manager\add.html";i:1493355285;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1493111132;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:42:"E:\yzncms/apps/admin\view\manager\add.html";i:1493355285;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495447065;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -14,13 +14,18 @@
 <link href="__STATIC__/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 <link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">html, body { overflow: visible;}</style>
-
+<script type="text/javascript">
+var SITEURL = '';
+</script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admin.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/flexigrid.js"></script>
 
 <script type="text/javascript" src="__STATIC__/js/jquery.validation.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.mousewheel.js"></script>
 </head>
 <body style="background-color: #FFF; overflow: auto;">
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.picTip.js"></script>
