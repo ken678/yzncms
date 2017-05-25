@@ -25,6 +25,7 @@ ThinkPHP5.09的运行环境要求PHP5.4以上。（注意：PHP5.4dev版本和PH
 任何问题都可以提交到码云的issues里
 ```
 
-[后台登陆界面预览]
+[后台登陆界面预览]  
+
 ![登录界面](http://git.oschina.net/uploads/images/2017/0328/112350_1559e31d_555541.jpeg "登录界面")
 ![管理日志](https://git.oschina.net/uploads/images/2017/0509/154230_04191116_555541.jpeg "管理日志")
