@@ -136,11 +136,11 @@ class Adminbase extends Controller
      *                     url为跳转页面,ajax是否ajax方式(数字则为倒数计时秒数)
      */
     final protected function editRow ( $model ,$data, $where , $msg ){
-        $id    = array_unique((array)input('id/s'));
+        $id    = array_unique((array)input('id/a'));
         $id    = is_array($id) ? implode(',',$id) : $id;
         $where = array_merge( array('id' => array('in', $id )) ,(array)$where );
         $msg   = array_merge( array( 'success'=>'操作成功！', 'error'=>'操作失败！', 'url'=>'' ,'ajax'=>var_export(Request()->isAjax(), true)) , (array)$msg );
-        if( db($model)->where($where)->update($data)!==false ) {
+        if(db($model)->where($where)->update($data)!==false ) {
             $this->success($msg['success'],$msg['url'],$msg['ajax']);
         }else{
             $this->error($msg['error'],$msg['url'],$msg['ajax']);
@@ -196,6 +196,8 @@ class Adminbase extends Controller
         $data['status']  =   -1;
         $this->editRow(   $model , $data, $where, $msg);
     }
+
+
 
 
 

@@ -16,6 +16,6 @@ use think\Model;
  */
 class AuthRule extends Model
 {
-    const rule_url = 1;
-    const rule_main = 2;
+    const RULE_URL = 1;
+    const RULE_MAIN = 2;
 }
