@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1494837939;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495447065;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:47:"E:\yzncms/apps/admin\view\action\actionlog.html";i:1494837939;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>

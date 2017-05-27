@@ -14,34 +14,34 @@ use think\Model;
 /**
  * 菜单模型
  */
-class Menu extends Model {
+class Menu extends Model
+{
     protected $resultSetType = 'collection';
 
      /**
-     * 获取ifame内容中的分组菜单 包含自身和下级菜单
+     * 获取菜单 头部菜单导航
      */
-    public function getMenu() {
+    final public function getMenu()
+    {
         $menuid = input('menuid/d',0);
         $menuid = $menuid ? $menuid : cookie("menuid");
-        $info = $this->where(array("id" => $menuid))->column("id,action,app,controller,pid,title");
-        $find = $this->where(array("pid" => $menuid, "status" => 1))->column("id,action,app,controller,pid,title");
-        if ($find && $info) {
-            array_unshift($find, $info[$menuid]);
-        } else {
-            $find = $info;
+
+        $array = $this->adminMenu($menuid,1);
+        $numbers = count($array);
+        if($numbers==1) return '';
+        foreach ($array as $k => $v) {
+            $array[$k]['url'] = $v['app'].'/'.$v['controller'].'/'.$v['action'];
+            $array[$k]['parameter'] = "menuid={$menuid}&{$array[$k]['parameter']}";
         }
-        foreach ($find as $k => $v) {
-            $find[$k]['url'] = $v['app'].'/'.$v['controller'].'/'.$v['action'];
-            $find[$k]['parameter'] = "menuid={$menuid}";
-        }
-        return $find;
+        return $array;
     }
 
     /**
      * 获取菜单
      * @return type
      */
-    public function getMenuList() {
+    final public function getMenuList()
+    {
         $data = $this->getTree(0);
         return $data;
     }
@@ -51,7 +51,8 @@ class Menu extends Model {
      * @param integer $parentid   父菜单ID
      * @param integer $with_self  是否包括他自己
      */
-    public function adminMenu($parentid, $with_self = false) {
+    final public function adminMenu($parentid, $with_self = false)
+    {
         $parentid = (int) $parentid;
         $result = $this->where(array('pid' => $parentid, 'status' => 1))->order('listorder ASC,id ASC')->select()->toArray();
         if (empty($result)) {
@@ -75,7 +76,8 @@ class Menu extends Model {
      * @param type $Level
      * @return type
      */
-    public function getTree($myid, $parent = "", $Level = 1) {
+    final public function getTree($myid, $parent = "", $Level = 1)
+    {
         $data = $this->adminMenu($myid);
         $Level++;
         if (is_array($data)) {

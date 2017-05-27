@@ -14,9 +14,11 @@ use app\common\controller\Adminbase;
 /**
  * 后台配置
  */
-class Config extends Adminbase {
+class Config extends Adminbase
+{
 
-    protected function _initialize() {
+    protected function _initialize()
+    {
         $this->Config = model('Common/Config');
         $configList  =  $this->Config->column('name,value');//获取配置值
         $this->assign('__GROUP_MENU__', $this->get_group_menu());
@@ -26,7 +28,8 @@ class Config extends Adminbase {
     /**
      * 更新配置参数
      */
-	public function index() {
+	public function index()
+    {
         if(request()->isPost()){
             if ($this->Config->saveConfig(input('post.'),1)) {
                 $this->success("更新成功！");
@@ -42,7 +45,8 @@ class Config extends Adminbase {
     /**
      * 扩展配置（新增，删除，显示，更新）
      */
-    public function extend() {
+    public function extend()
+    {
         if(request()->isPost()){
             $action = input('post.action');
             //新增扩展配置

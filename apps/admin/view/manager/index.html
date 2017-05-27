@@ -30,7 +30,7 @@
       {volist name="_list" id="vo"}
         <tr class="hover erow">
           <td class="sign"><i class="ico-check"></i></td>
-          <td class="handle"><a class="btn red" href="{:url('admin/manager/delete',['id'=>$vo.userid])}" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
+          <td class="handle"><a class="btn red" href="{:url('admin/manager/del',['id'=>$vo.userid])}" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
           <a class="btn blue" href="{:url('admin/manager/edit',['id'=>$vo.userid])}"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
           <td>{$vo.username}</td>
           <td>超级管理员</td>

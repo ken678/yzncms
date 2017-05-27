@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1495845065;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:49:"E:\yzncms/apps/admin\view\auth_manager\index.html";i:1495791663;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -36,43 +36,38 @@ var SITEURL = '';
   <div class="fixed-bar">
     <div class="item-title">
       <div class="subject">
-        <h3>管理员管理</h3>
-        <h5>网站后台管理员索引及管理</h5>
+        <h3>权限设置</h3>
+        <h5>管理中心操作权限及分组设置</h5>
       </div>
-      <ul class="tab-base nc-row">
-            <?php if(is_array($__GROUP_MENU__) || $__GROUP_MENU__ instanceof \think\Collection || $__GROUP_MENU__ instanceof \think\Paginator): $i = 0; $__LIST__ = $__GROUP_MENU__;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$group_menu): $mod = ($i % 2 );++$i;?>
-    <li><a <?php if($group_menu['action'] == \think\Request::instance()->action()): ?> class="current" <?php endif; ?> href="<?php echo url($group_menu['url'],$group_menu['parameter']); ?>" ><span><?php echo $group_menu['title']; ?></span></a></li>
-<?php endforeach; endif; else: echo "" ;endif; ?>
-
-      </ul>
+    </div>
   </div>
-  </div>
-  <table class="flex-table">
+    <table class="flex-table">
       <thead>
         <tr>
-          <th width="24"  align="center" class="sign"><i class="ico-check"></i></th>
+          <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
           <th width="150" align="center" class="handle">操作</th>
-          <th width="100" align="center">登录名</th>
-          <th width="120" align="center">所属角色</th>
-          <th width="120" align="center">最后登录IP</th>
-          <th width="120" align="center">最后登录时间</th>
-          <th width="120"  align="center">E-mail</th>
-          <th width="120"  align="center">真实姓名</th>
+          <th width="150" align="left">权限组</th>
+          <th width="250" align="left">描述</th>
+          <th width="150" align="left">状态</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
       <?php if(is_array($_list) || $_list instanceof \think\Collection || $_list instanceof \think\Paginator): $i = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-        <tr class="hover erow">
+        <tr class="hover">
           <td class="sign"><i class="ico-check"></i></td>
-          <td class="handle"><a class="btn red" href="<?php echo url('admin/manager/del',['id'=>$vo['userid']]); ?>" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
-          <a class="btn blue" href="<?php echo url('admin/manager/edit',['id'=>$vo['userid']]); ?>"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
-          <td><?php echo $vo['username']; ?></td>
-          <td>超级管理员</td>
-          <td><?php  echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--'  ?></td>
-          <td><?php  echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--'  ?></td>
-          <td><?php echo $vo['email']; ?></td>
-          <td><?php echo $vo['nickname']; ?></td>
+          <td class="handle">
+          <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
+            <ul>
+                <li><a class="confirm-on-click" href="<?php echo url('AuthManager/editgroup?id='.$vo['id']); ?>">编辑</a></li>
+                <li><a href="<?php echo url('AuthManager/changeStatus?method=forbidGroup&id='.$vo['id']); ?>">禁用</a></li>
+                <li><a href="javascript:if(confirm('您确定要删除吗?')){location.href='<?php echo url('AuthManager/changeStatus?method=deleteGroup&id='.$vo['id']); ?>'};">删除</a></li>
+            </ul>
+          </span>
+          </td>
+          <td><?php echo $vo['title']; ?></td>
+          <td><?php echo mb_strimwidth($vo['description'],0,60,"...","utf-8"); ?></td>
+          <td>正常</td>
           <td></td>
         </tr>
       <?php endforeach; endif; else: echo "" ;endif; ?>
@@ -81,21 +76,21 @@ var SITEURL = '';
 </div>
 <script>
 $('.flex-table').flexigrid({
-  height:'auto',// 高度自动
-  usepager: false,// 不翻页
-  striped: true,// 使用斑马线
-  resizable: false,// 不调节大小
-  reload: false,// 不使用刷新
-  columnControl: false,// 不使用列控制
-  title: '管理员列表',
-  buttons : [
+	height:'auto',// 高度自动
+	usepager: false,// 不翻页
+	striped: true,// 使用斑马线
+	resizable: false,// 不调节大小
+	reload: false,// 不使用刷新
+	columnControl: false,// 不使用列控制
+	title: '权限组列表',
+	buttons : [
                {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
            ]
-  });
+	});
 
 function fg_operation(name, grid) {
     if (name == 'add') {
-        window.location.href = "<?php echo url('admin/manager/add'); ?>";
+        window.location.href = 'index.php?act=admin&op=gadmin_add';
     }
 }
 </script>

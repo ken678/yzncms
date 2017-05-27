@@ -11,12 +11,14 @@
 namespace app\admin\controller;
 use app\common\controller\Adminbase;
 
-class Index extends Adminbase {
+class Index extends Adminbase
+{
 
 	/**
 	 * 后台首页
 	 */
-    public function index(){
+    public function index()
+    {
 		$this->assign('__MENU__', model("Admin/Menu")->getMenuList());
         return $this->fetch();
     }
@@ -24,14 +26,16 @@ class Index extends Adminbase {
     /**
      * 获取验证码
      */
-    public function getVerify(){
+    public function getVerify()
+    {
         GetVerify();
     }
 
     /**
      * 后台登陆界面
      */
-    public function login(){
+    public function login()
+    {
        if(request()->isPost()){
 	       	$data = $this->request->post();
 	        // 验证数据
@@ -63,7 +67,8 @@ class Index extends Adminbase {
     }
 
     /* 退出登录 */
-    public function logout(){
+    public function logout()
+    {
         if(is_login()){
             session('user_auth', null);
             session('user_auth_sign', null);

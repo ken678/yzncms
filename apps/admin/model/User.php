@@ -15,7 +15,8 @@ use think\Validate;
 /**
  * 管理员模型
  */
-class User extends Model {
+class User extends Model
+{
     // 设置当前模型对应的完整数据表名称
     protected $table = '__ADMIN__';
     protected $pk = 'userid';
@@ -25,7 +26,8 @@ class User extends Model {
      * @param string $username 用户名
      * @param string $password 密码
 	 */
-	public function checkLogin($username = '', $password = ''){
+	public function checkLogin($username = '', $password = '')
+    {
         $condition['username'] = trim($username);
         $condition['password'] = trim($password);
         $admin_info = $this->where(['username'=>$condition['username']]) ->find();
@@ -45,7 +47,8 @@ class User extends Model {
     /**
      * 自动登录用户
      */
-    private function autoLogin($user){
+    private function autoLogin($user)
+    {
          //记录行为
         action_log('user_login', 'member', $user['userid'], $user['userid']);
 
@@ -73,7 +76,8 @@ class User extends Model {
      * @param type $data
      * @return boolean
      */
-    public function createManager($data) {
+    public function createManager($data)
+    {
         if (empty($data)) {
             $this->error = '没有数据！';
             return false;
@@ -115,7 +119,8 @@ class User extends Model {
      * @param [type] $data [修改数据]
      * @return boolean
      */
-    public function editManager($data) {
+    public function editManager($data)
+    {
         if (empty($data) || !isset($data['userid']) || !is_array($data)) {
             $this->error = '没有修改的数据！';
             return false;
@@ -156,7 +161,8 @@ class User extends Model {
      * @param type $userId
      * @return boolean
      */
-    public function deleteManager($userId) {
+    public function deleteManager($userId)
+    {
         $userId = (int) $userId;
         if (empty($userId)) {
             $this->error = '请指定需要删除的用户ID！';

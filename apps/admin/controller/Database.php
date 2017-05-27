@@ -14,16 +14,19 @@ use app\common\controller\Adminbase;
 /**
  * 数据库管理
  */
-class Database extends Adminbase {
+class Database extends Adminbase
+{
 
-    protected function _initialize() {
+    protected function _initialize()
+    {
         $this->assign('__GROUP_MENU__', $this->get_group_menu());
     }
 
     /**
      * 数据库列表
      */
-    public function index() {
+    public function index()
+    {
         $list  = db()->query('SHOW TABLE STATUS');
         $list  = array_map('array_change_key_case', $list);//全部小写
         $this->assign('_list', $list);
@@ -34,7 +37,8 @@ class Database extends Adminbase {
      * 优化表
      * @param  String $tables 表名
      */
-    public function optimize($tables = null) {
+    public function optimize($tables = null)
+    {
         if ($tables) {
             $Db = db();
             if (is_array($tables)) {
@@ -56,7 +60,8 @@ class Database extends Adminbase {
      * 修复表
      * @param  String $tables 表名
      */
-    public function repair($tables = null) {
+    public function repair($tables = null)
+    {
         if ($tables) {
             $Db = db();
             if (is_array($tables)) {
@@ -74,32 +79,12 @@ class Database extends Adminbase {
         }
     }
 
-     /**
-     * 下载表
-     */
-    public function downfile() {
-        $file = $this->request->param('file');
-        $type = $this->request->param('type');
-        if (empty($file) || empty($type) || !in_array($type, array("zip", "gz", "sql"))) {
-            $this->error("下载地址不存在");
-        }
-        $name = $file . '-*.sql*';
-        $filePath = glob(realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name);
-        if (!is_file($filePath[0])) {
-            $this->error("该文件不存在，可能是被删除");
-        }
-        $filename = basename($filePath[0]);
-        /* 执行下载 */ //TODO: 大文件断点续传
-        header("Content-type: application/octet-stream");
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header("Content-Length: " . filesize($filePath[0]));
-        readfile($filePath[0]);
-    }
-
     /**
-     * 数据库恢复列表
+     * 修复表
+     * @param  String $tables 表名
      */
-    public function restore() {
+    public function repair_list()
+    {
         //列出备份文件列表
         $path = config('data_backup_path');
         if (!is_dir($path)) {
@@ -132,14 +117,37 @@ class Database extends Adminbase {
         }
         $this->assign('_list', $list);
         return $this->fetch();
+    }
 
+     /**
+     * 下载表
+     */
+    public function downfile()
+    {
+        $file = $this->request->param('file');
+        $type = $this->request->param('type');
+        if (empty($file) || empty($type) || !in_array($type, array("zip", "gz", "sql"))) {
+            $this->error("下载地址不存在");
+        }
+        $name = $file . '-*.sql*';
+        $filePath = glob(realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name);
+        if (!is_file($filePath[0])) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($filePath[0]);
+        /* 执行下载 */ //TODO: 大文件断点续传
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($filePath[0]));
+        readfile($filePath[0]);
     }
 
     /**
      * 删除备份文件
      * @param  Integer $time 备份时间
      */
-    public function del($time = 0) {
+    public function del($time = 0)
+    {
         if ($time) {
             $name = date('Ymd-His', $time) . '-*.sql*';
             $path = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
@@ -157,7 +165,8 @@ class Database extends Adminbase {
     /**
      * 还原数据库
      */
-    public function import($time = 0, $part = null, $start = null) {
+    public function import($time = 0, $part = null, $start = null)
+    {
         if (is_numeric($time) && is_null($part) && is_null($start)) {
             //初始化
             //获取备份文件信息
@@ -216,7 +225,8 @@ class Database extends Adminbase {
      * @param  Integer $id     表ID
      * @param  Integer $start  起始行数
      */
-    public function export($tables = null, $id = null, $start = null) {
+    public function export($tables = null, $id = null, $start = null)
+    {
         if (request()->isPost() && !empty($tables) && is_array($tables)) {
             //初始化检测
             $path = config('data_backup_path');

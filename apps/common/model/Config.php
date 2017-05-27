@@ -12,7 +12,8 @@ namespace app\common\model;
 use think\Model;
 use think\Validate;
 
-class Config extends Model{
+class Config extends Model
+{
 
 	/**
      * 更新网站配置项
@@ -20,7 +21,8 @@ class Config extends Model{
      * @param type $type 配置类型 1：系统配置  2：扩展配置
      * @return boolean
      */
-    public function saveConfig($data,$type=1) {
+    public function saveConfig($data,$type=1)
+    {
         if (empty($data) || !is_array($data)) {
             $this->error = '配置数据不能为空！';
             return false;
@@ -45,7 +47,8 @@ class Config extends Model{
      * @param type $data
      * @return boolean
      */
-    public function extendAdd($data) {
+    public function extendAdd($data)
+    {
         if (empty($data)) {
             $this->error = '数据不能为空！';
             return false;
@@ -116,7 +119,8 @@ class Config extends Model{
      * @param type $fid 配置项ID
      * @return boolean
      */
-    public function extendDel($fid) {
+    public function extendDel($fid)
+    {
         if (empty($fid)) {
             $this->error = '请指定需要删除的扩展配置项！';
             return false;

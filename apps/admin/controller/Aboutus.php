@@ -11,11 +11,13 @@
 namespace app\admin\controller;
 use think\Controller;
 
-class  Aboutus extends Controller{
+class  Aboutus extends Controller
+{
     /**
      * 关于我们
      */
-    public function index(){
+    public function index()
+    {
         return $this->fetch();
     }
 

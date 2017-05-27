@@ -14,9 +14,11 @@ use app\common\controller\Adminbase;
 /**
  * 行为日记管理
  */
-class Action extends Adminbase {
+class Action extends Adminbase
+{
 
-    protected function _initialize() {
+    protected function _initialize()
+    {
         $this->assign('__GROUP_MENU__', $this->get_group_menu());
     }
 
@@ -24,14 +26,16 @@ class Action extends Adminbase {
      * 行为日志列表
      * @author huajie <banhuajie@163.com>
      */
-    public function actionLog(){
+    public function actionLog()
+    {
         return $this->fetch();
     }
 
     /**
      * 删除日志
      */
-    public function remove(){
+    public function remove()
+    {
         $type = input('type/s','');
         if($type == 'ago'){//删除一个月
             $res = db('ActionLog')->where(array("create_time" => array("lt", time() - (86400 * 30))))->delete();
@@ -56,7 +60,8 @@ class Action extends Adminbase {
     /**
      * 获取操作日记xml数据
      */
-    public function get_xml(){
+    public function get_xml()
+    {
         $list   =   $this->lists('ActionLog', array(), 'id desc');
         int_to_string($list['data']);
         $data = array();

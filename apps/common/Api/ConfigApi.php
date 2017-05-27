@@ -15,7 +15,8 @@ class ConfigApi {
      * 获取数据库中的配置列表
      * @return array 配置数组
      */
-    public static function lists(){
+    public static function lists()
+    {
         $data   = \think\Db::name('Config')->field('name,value')->select();
         return $data;
     }

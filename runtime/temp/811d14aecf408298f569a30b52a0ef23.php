@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:42:"E:\yzncms/apps/admin\view\manager\add.html";i:1493355285;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495447065;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:42:"E:\yzncms/apps/admin\view\manager\add.html";i:1493355285;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
