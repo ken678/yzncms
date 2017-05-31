@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:44:"E:\yzncms/apps/admin\view\aboutus\index.html";i:1494841218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:44:"E:\yzncms/apps/admin\view\aboutus\index.html";i:1496200190;}*/ ?>
 <div class="ncap-about">
   <div class="left-pic"></div>
   <div class="version">
@@ -13,6 +13,7 @@
         <li>
           <h4>源码提供 - 御宅男工作室</h4>
           <p>码云：<a href="http://git.oschina.net/ken678/YZNCMS" target="_blank">http://git.oschina.net/ken678/YZNCMS</a></p>
+          <p>开源中国：<a href="http://www.oschina.net/p/yzncms" target="_blank">http://www.oschina.net/p/yzncms</a></p>
           <p>唯一QQ账号：530765310(御宅男)</p>
           <p>对代码反馈或意见请提交到码云issues</p>
         </li>
