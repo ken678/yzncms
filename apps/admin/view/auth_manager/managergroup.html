@@ -2,9 +2,9 @@
 {block name="content"}
 <div class="page">
   <div class="fixed-bar">
-    <div class="item-title"><a class="back" href="index.php?act=admin&op=gadmin" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+    <div class="item-title"><a class="back" href="{:url('AuthManager/index')}" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
       <div class="subject">
-        <h3>权限设置 - 编辑权限组“编辑”</h3>
+        <h3>权限设置 - 编辑权限组“{$this_group.title}”</h3>
         <h5>管理中心操作权限及分组设置</h5>
       </div>
     </div>
@@ -18,7 +18,7 @@
         <li>可在标题处全选所有功能或根据功能模块逐一选择操作权限，提交保存后生效。</li>
       </ul>
   </div>
-  <form id="add_form" method="post" name="adminForm" style="margin-bottom: 50px;">
+  <form action="{:url('AuthManager/writeGroup')}" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
     <div class="ncap-form-all">
       <div class="title">
         <h3>权限操作设置详情</h3>
@@ -26,16 +26,16 @@
       {volist name="node_list" id="node" }
       <dl class="row">
           <dt class="tit">
-               <span><input class="checkbox" type="checkbox" nctype="modulesAll">{$node.title}模块功能</span>
+               <span><input class="checkbox" type="checkbox" nctype="modulesAll" value="<?php echo $main_rules[$node['url']] ?>" name="rules[]">{$node.title}模块功能</span>
           </dt>
           <dd class="opt nobg nopd nobd nobs">
           {present name="node['child']"}
           {volist name="node['child']" id="child" }
               <div class="ncap-account-container">
-                  <h4><input class="checkbox" type="checkbox" nctype="groupAll">{$child.title}操作</h4>
+                  <h4><input class="checkbox" type="checkbox" nctype="groupAll" value="<?php echo $auth_rules[$child['url']] ?>" name="rules[]">{$child.title}操作</h4>
                   <ul class="ncap-account-container-list">
                   {volist name="child['operator']" id="op"}
-                  <li><input class="checkbox" type="checkbox" value="<?php echo $auth_rules[$op['url']] ?>" rules[]>{$op.title}</li>
+                  <li><input class="checkbox" type="checkbox" value="<?php echo $auth_rules[$op['url']] ?>" name="rules[]">{$op.title}</li>
                   {/volist}
                   </ul>
               </div>
@@ -44,6 +44,8 @@
           </dd>
       </dl>
       {/volist}
+      <input type="hidden" name="id" value="{$this_group.id}" />
+      <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
     </div>
   </form>
 </div>
@@ -61,8 +63,6 @@
         $('input[nctype="groupAll"]').click(function(){
             $(this).parents('h4:first').next().find('input[type="checkbox"]').attr('checked',$(this).attr('checked') == 'checked');
         });
-
-
 
         var rules = [{$this_group.rules}];
         $('.checkbox').each(function(){

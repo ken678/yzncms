@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:56:"E:\yzncms/apps/admin\view\auth_manager\managergroup.html";i:1495877644;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:56:"E:\yzncms/apps/admin\view\auth_manager\managergroup.html";i:1496294541;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -34,9 +34,9 @@ var SITEURL = '';
 
 <div class="page">
   <div class="fixed-bar">
-    <div class="item-title"><a class="back" href="index.php?act=admin&op=gadmin" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+    <div class="item-title"><a class="back" href="<?php echo url('AuthManager/index'); ?>" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
       <div class="subject">
-        <h3>权限设置 - 编辑权限组“编辑”</h3>
+        <h3>权限设置 - 编辑权限组“<?php echo $this_group['title']; ?>”</h3>
         <h5>管理中心操作权限及分组设置</h5>
       </div>
     </div>
@@ -50,7 +50,7 @@ var SITEURL = '';
         <li>可在标题处全选所有功能或根据功能模块逐一选择操作权限，提交保存后生效。</li>
       </ul>
   </div>
-  <form id="add_form" method="post" name="adminForm" style="margin-bottom: 50px;">
+  <form action="<?php echo url('AuthManager/writeGroup'); ?>" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
     <div class="ncap-form-all">
       <div class="title">
         <h3>权限操作设置详情</h3>
@@ -58,15 +58,15 @@ var SITEURL = '';
       <?php if(is_array($node_list) || $node_list instanceof \think\Collection || $node_list instanceof \think\Paginator): $i = 0; $__LIST__ = $node_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$node): $mod = ($i % 2 );++$i;?>
       <dl class="row">
           <dt class="tit">
-               <span><input class="checkbox" type="checkbox" nctype="modulesAll"><?php echo $node['title']; ?>模块功能</span>
+               <span><input class="checkbox" type="checkbox" nctype="modulesAll" value="<?php echo $main_rules[$node['url']] ?>" name="rules[]"><?php echo $node['title']; ?>模块功能</span>
           </dt>
           <dd class="opt nobg nopd nobd nobs">
           <?php if(isset($node['child'])): if(is_array($node['child']) || $node['child'] instanceof \think\Collection || $node['child'] instanceof \think\Paginator): $i = 0; $__LIST__ = $node['child'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$child): $mod = ($i % 2 );++$i;?>
               <div class="ncap-account-container">
-                  <h4><input class="checkbox" type="checkbox" nctype="groupAll"><?php echo $child['title']; ?>操作</h4>
+                  <h4><input class="checkbox" type="checkbox" nctype="groupAll" value="<?php echo $auth_rules[$child['url']] ?>" name="rules[]"><?php echo $child['title']; ?>操作</h4>
                   <ul class="ncap-account-container-list">
                   <?php if(is_array($child['operator']) || $child['operator'] instanceof \think\Collection || $child['operator'] instanceof \think\Paginator): $i = 0; $__LIST__ = $child['operator'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$op): $mod = ($i % 2 );++$i;?>
-                  <li><input class="checkbox" type="checkbox" value="<?php echo $auth_rules[$op['url']] ?>" rules[]><?php echo $op['title']; ?></li>
+                  <li><input class="checkbox" type="checkbox" value="<?php echo $auth_rules[$op['url']] ?>" name="rules[]"><?php echo $op['title']; ?></li>
                   <?php endforeach; endif; else: echo "" ;endif; ?>
                   </ul>
               </div>
@@ -74,6 +74,8 @@ var SITEURL = '';
           </dd>
       </dl>
       <?php endforeach; endif; else: echo "" ;endif; ?>
+      <input type="hidden" name="id" value="<?php echo $this_group['id']; ?>" />
+      <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
     </div>
   </form>
 </div>
@@ -91,8 +93,6 @@ var SITEURL = '';
         $('input[nctype="groupAll"]').click(function(){
             $(this).parents('h4:first').next().find('input[type="checkbox"]').attr('checked',$(this).attr('checked') == 'checked');
         });
-
-
 
         var rules = [<?php echo $this_group['rules']; ?>];
         $('.checkbox').each(function(){

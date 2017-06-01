@@ -120,6 +120,15 @@ class AuthManager extends Adminbase
 
     }
 
+     /**
+     * 编辑管理员用户组
+     */
+    public function editGroup(){
+        $auth_group = db('AuthGroup')->where( array('module'=>'admin','type'=>AuthGroup::TYPE_ADMIN) )->find( (int)input('id') );
+        $this->assign('auth_group',$auth_group);
+        return $this->fetch();
+    }
+
     /**
      * 访问授权页面
      */
@@ -127,13 +136,13 @@ class AuthManager extends Adminbase
     {
         $this->updateRules();//更新节点
         $node_list   = model("Admin/Menu")->returnNodes();
-        $auth_group = \think\Db::name('AuthGroup')
-                    ->where( array('status'=>array('egt','0'),'module'=>'admin','type'=>AuthGroup::type_admin) )
+        $auth_group = db('AuthGroup')
+                    ->where( array('status'=>array('egt','0'),'module'=>'admin','type'=>AuthGroup::TYPE_ADMIN) )
                     ->column('id,id,title,rules');
         $map         = array('module'=>'admin','type'=>AuthRule::RULE_MAIN,'status'=>1);
-        $main_rules  = \think\Db::name('AuthRule')->where($map)->column('name,id');
+        $main_rules  = db('AuthRule')->where($map)->column('name,id');
         $map         = array('module'=>'admin','type'=>AuthRule::RULE_URL,'status'=>1);
-        $child_rules = \think\Db::name('AuthRule')->where($map)->column('name,id');
+        $child_rules = db('AuthRule')->where($map)->column('name,id');
 
         $this->assign('node_list',  $node_list);
         $this->assign('auth_group', $auth_group);
@@ -141,7 +150,40 @@ class AuthManager extends Adminbase
         $this->assign('auth_rules', $child_rules);
         $this->assign('this_group', $auth_group[(int)input('group_id')]);
         return $this->fetch('managergroup');
+    }
 
+
+    /**
+     * 管理员用户组数据写入/更新
+     */
+    public function writeGroup(){
+        $data = input();
+        if(isset($data['rules'])){
+            sort($data['rules']);
+            $data['rules']  = implode( ',' , array_unique($data['rules']));
+        }
+        $AuthGroup       =  model('AuthGroup');
+        $data['module'] =  'admin';
+        $data['type']   =  AuthGroup::TYPE_ADMIN;
+
+        $validate = validate('AuthGroup');
+        if(!$validate->check($data)){
+            return $this->error($validate->getError());
+        }
+        if ( $data ) {
+            if ( isset($data['id']) ) {
+                $r = $AuthGroup->update($data);
+            }else{
+                $r = $AuthGroup->save($data);
+            }
+            if($r===false){
+                $this->error('操作失败'.$AuthGroup->getError());
+            } else{
+                $this->success('操作成功!',url('index'));
+            }
+        }else{
+            $this->error('操作失败');
+        }
     }
 
 

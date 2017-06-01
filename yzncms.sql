@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-05-18 13:45:59
+Date: 2017-06-01 13:34:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -96,6 +96,27 @@ INSERT INTO `yzn_action_log` VALUES ('24', '1', '1', '2130706433', 'member', '1'
 INSERT INTO `yzn_action_log` VALUES ('25', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 17:55登录了后台', '1493978111');
 INSERT INTO `yzn_action_log` VALUES ('32', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-15 17:31登录了后台', '1494840674');
 INSERT INTO `yzn_action_log` VALUES ('33', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-17 16:56登录了后台', '1495011414');
+INSERT INTO `yzn_action_log` VALUES ('36', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-18 16:30登录了后台', '1495096205');
+INSERT INTO `yzn_action_log` VALUES ('37', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-19 08:46登录了后台', '1495154788');
+INSERT INTO `yzn_action_log` VALUES ('38', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-22 11:07登录了后台', '1495422456');
+INSERT INTO `yzn_action_log` VALUES ('39', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-22 14:13登录了后台', '1495433633');
+INSERT INTO `yzn_action_log` VALUES ('40', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-22 16:54登录了后台', '1495443254');
+INSERT INTO `yzn_action_log` VALUES ('41', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-23 08:44登录了后台', '1495500256');
+INSERT INTO `yzn_action_log` VALUES ('42', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-23 10:19登录了后台', '1495505986');
+INSERT INTO `yzn_action_log` VALUES ('43', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-23 10:50登录了后台', '1495507826');
+INSERT INTO `yzn_action_log` VALUES ('44', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-23 11:33登录了后台', '1495510432');
+INSERT INTO `yzn_action_log` VALUES ('45', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-23 17:28登录了后台', '1495531714');
+INSERT INTO `yzn_action_log` VALUES ('46', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-24 08:24登录了后台', '1495585442');
+INSERT INTO `yzn_action_log` VALUES ('47', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-24 17:32登录了后台', '1495618327');
+INSERT INTO `yzn_action_log` VALUES ('48', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-25 08:03登录了后台', '1495670624');
+INSERT INTO `yzn_action_log` VALUES ('49', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-26 11:04登录了后台', '1495767859');
+INSERT INTO `yzn_action_log` VALUES ('50', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-26 16:52登录了后台', '1495788759');
+INSERT INTO `yzn_action_log` VALUES ('53', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-27 09:06登录了后台', '1495847205');
+INSERT INTO `yzn_action_log` VALUES ('55', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-27 14:56登录了后台', '1495868189');
+INSERT INTO `yzn_action_log` VALUES ('56', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-27 17:36登录了后台', '1495877769');
+INSERT INTO `yzn_action_log` VALUES ('57', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-31 11:08登录了后台', '1496200085');
+INSERT INTO `yzn_action_log` VALUES ('58', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-31 11:33登录了后台', '1496201600');
+INSERT INTO `yzn_action_log` VALUES ('59', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-01 11:41登录了后台', '1496288460');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -112,13 +133,65 @@ CREATE TABLE `yzn_admin` (
   `email` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`userid`),
   KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1495081597', '2130706433', '530765310@qq.com');
-INSERT INTO `yzn_admin` VALUES ('4', 'ken678', 'bde62a663282b37b72a5371bd1e6d51c72d6df39', 'fCScqr', '御宅男', '1493715593', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1496288460', '2130706433', '530765310@qq.com');
+
+-- ----------------------------
+-- Table structure for `yzn_auth_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_auth_group`;
+CREATE TABLE `yzn_auth_group` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户组id,自增主键',
+  `module` varchar(20) NOT NULL COMMENT '用户组所属模块',
+  `type` tinyint(4) NOT NULL COMMENT '组类型',
+  `title` char(20) NOT NULL DEFAULT '' COMMENT '用户组中文名称',
+  `description` varchar(80) NOT NULL DEFAULT '' COMMENT '描述信息',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户组状态：为1正常，为0禁用,-1为删除',
+  `rules` varchar(500) NOT NULL DEFAULT '' COMMENT '用户组拥有的规则id，多个规则 , 隔开',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='权限组表';
+
+-- ----------------------------
+-- Records of yzn_auth_group
+-- ----------------------------
+INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '1,2,4,6,7,8,10,12');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '7');
+
+-- ----------------------------
+-- Table structure for `yzn_auth_rule`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_auth_rule`;
+CREATE TABLE `yzn_auth_rule` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
+  `module` varchar(20) NOT NULL COMMENT '规则所属module',
+  `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1-url;2-主菜单',
+  `name` char(80) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识',
+  `title` char(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效(0:无效,1:有效)',
+  `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
+  PRIMARY KEY (`id`),
+  KEY `module` (`module`,`status`,`type`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_auth_rule
+-- ----------------------------
+INSERT INTO `yzn_auth_rule` VALUES ('1', 'Admin', '1', 'Admin/Setting/index', '设置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('2', 'Admin', '1', 'Admin/Manager/index', '管理员', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('3', 'Admin', '1', 'Admin/Manager/add', '添加管理员', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('4', 'Admin', '1', 'Admin/database/index', '应用', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('5', 'Admin', '1', 'Admin/database/repair_list', '数据库恢复', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('6', 'Admin', '2', 'Admin/Setting/index', '设置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('7', 'Admin', '2', 'Admin/Content/index', '内容', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('8', 'Admin', '1', 'Admin/Config/index', '站点配置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('9', 'Admin', '1', 'Admin/Manager/edit', '编辑管理员', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('10', 'Admin', '1', 'Admin/AuthManager/index', '权限设置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('11', 'Admin', '1', 'Admin/Config/extend', '扩展配置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('12', 'Admin', '1', 'Admin/Action/actionlog', '操作日志', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_config`
@@ -133,7 +206,7 @@ CREATE TABLE `yzn_config` (
   `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
 
 -- ----------------------------
 -- Records of yzn_config
@@ -143,7 +216,7 @@ INSERT INTO `yzn_config` VALUES ('2', 'site_keyword', '网站关键字', '1', 'T
 INSERT INTO `yzn_config` VALUES ('3', 'site_description', '网站描述', '1', 'Yzncms内容管理框架,一套简单，易用，面向开发者的内容管理框,采用TP5.0框架开发', '3');
 INSERT INTO `yzn_config` VALUES ('4', 'site_name', '网站名称', '1', 'Yzncms内容管理框架', '0');
 INSERT INTO `yzn_config` VALUES ('5', 'icp', 'icp', '2', '苏ICP备15017030', '0');
-INSERT INTO `yzn_config` VALUES ('6', 'close', '关闭站点', '2', '0', '0');
+INSERT INTO `yzn_config` VALUES ('6', 'close', '关闭站点', '2', '1', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_config_field`
@@ -156,7 +229,7 @@ CREATE TABLE `yzn_config_field` (
   `setting` mediumtext COMMENT '其他设置',
   `createtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`fid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='网站扩展配置表';
 
 -- ----------------------------
 -- Records of yzn_config_field
@@ -182,7 +255,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -196,6 +269,8 @@ INSERT INTO `yzn_menu` VALUES ('10', '设置', '1', 'Admin', 'Setting', 'index',
 INSERT INTO `yzn_menu` VALUES ('12', '管理员管理', '6', 'Admin', 'Manager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('13', '添加管理员', '12', 'Admin', 'Manager', 'add', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('14', '编辑管理员', '12', 'Admin', 'Manager', 'edit', '', '0', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('15', '操作日志', '10', 'Admin', 'Action', 'actionlog', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('15', '操作日志', '10', 'Admin', 'Action', 'actionlog', '', '1', '', '0', '10');
 INSERT INTO `yzn_menu` VALUES ('16', '应用', '1', 'Admin', 'database', 'index', '', '1', '', '0', '3');
 INSERT INTO `yzn_menu` VALUES ('17', '数据库备份', '16', 'Admin', 'database', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('18', '数据库恢复', '17', 'Admin', 'database', 'repair_list', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('19', '权限设置', '10', 'Admin', 'AuthManager', 'index', '', '1', '', '0', '3');

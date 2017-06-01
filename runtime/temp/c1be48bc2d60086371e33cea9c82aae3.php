@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:49:"E:\yzncms/apps/admin\view\auth_manager\index.html";i:1495868695;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:49:"E:\yzncms/apps/admin\view\auth_manager\index.html";i:1496288932;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -60,7 +60,7 @@ var SITEURL = '';
           <td class="handle">
           <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul>
-                <li><a class="confirm-on-click" onclick="fg_editRow(<?php echo $vo['id']; ?>,'editgroup')" href="javascript:;">编辑</a></li>
+                <li><a href="<?php echo url('AuthManager/editgroup?id='.$vo['id']); ?>">编辑</a></li>
                 <?php if($vo['status'] == '1'): ?>
                 <li><a onclick="fg_editRow(<?php echo $vo['id']; ?>,'forbidGroup')" href="javascript:;">禁用</a></li>
                 <?php else: ?>

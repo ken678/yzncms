@@ -28,7 +28,7 @@
           <td class="handle">
           <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul>
-                <li><a class="confirm-on-click" onclick="fg_editRow({$vo['id']},'editgroup')" href="javascript:;">编辑</a></li>
+                <li><a href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a></li>
                 {eq name="vo.status" value="1"}
                 <li><a onclick="fg_editRow({$vo['id']},'forbidGroup')" href="javascript:;">禁用</a></li>
                 {else/}
