@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:53:"E:\yzncms/apps/admin\view\auth_manager\editgroup.html";i:1496294500;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:53:"E:\yzncms/apps/admin\view\auth_manager\editgroup.html";i:1496396025;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -58,7 +58,7 @@ var SITEURL = '';
         </dt>
         <dd class="opt">
           <input type="text"  value="<?php echo $auth_group['title']; ?>" maxlength="40"  name="title" class="input-txt">
-          <p class="notic">如权限组名不变请忽略该选项。</p>
+          <p class="notic">权限组名称</p>
         </dd>
       </dl>
       <dl class="row">
@@ -70,7 +70,7 @@ var SITEURL = '';
           <p class="notic">权限的相关描述</p>
         </dd>
       </dl>
-      <input type="hidden" name="id" value="<?php echo $auth_group['id']; ?>" />
+      <?php if(isset($auth_group['id'])): ?><input type="hidden" name="id" value="<?php echo $auth_group['id']; ?>" /><?php endif; ?>
       <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
     </div>
   </form>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:49:"E:\yzncms/apps/admin\view\auth_manager\index.html";i:1496288932;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:49:"E:\yzncms/apps/admin\view\auth_manager\index.html";i:1496395411;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -106,7 +106,7 @@ $('.flex-table').flexigrid({
 
 function fg_operation(name, grid) {
     if (name == 'add') {
-        window.location.href = 'index.php?act=admin&op=gadmin_add';
+        window.location.href = '<?php echo url("AuthManager/createGroup"); ?>';
     }
 }
 

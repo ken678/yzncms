@@ -120,6 +120,17 @@ class AuthManager extends Adminbase
 
     }
 
+    /**
+     * 创建管理员用户组
+     */
+    public function createGroup(){
+        if ( empty($this->auth_group) ) {
+            //清除编辑权限的值
+            $this->assign('auth_group',array('title'=>null,'id'=>null,'description'=>null,'rules'=>null,));
+        }
+        return $this->fetch('editgroup');
+    }
+
      /**
      * 编辑管理员用户组
      */
@@ -171,7 +182,7 @@ class AuthManager extends Adminbase
             return $this->error($validate->getError());
         }
         if ( $data ) {
-            if ( isset($data['id']) ) {
+            if ( isset($data['id']) && !empty($data['id']) ) {
                 $r = $AuthGroup->update($data);
             }else{
                 $r = $AuthGroup->save($data);

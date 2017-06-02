@@ -74,7 +74,7 @@ $('.flex-table').flexigrid({
 
 function fg_operation(name, grid) {
     if (name == 'add') {
-        window.location.href = 'index.php?act=admin&op=gadmin_add';
+        window.location.href = '{:url("AuthManager/createGroup")}';
     }
 }
 
