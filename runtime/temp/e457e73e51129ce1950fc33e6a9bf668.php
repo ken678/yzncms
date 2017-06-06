@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"E:\yzncms/apps/admin\view\database\index.html";i:1495508446;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"E:\yzncms/apps/admin\view\database\index.html";i:1496719207;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -62,7 +62,7 @@ var SITEURL = '';
       <thead>
         <tr>
           <th width="24"  align="center"><i class="ico-check"></i></th>
-          <th width="120" align="center">表名</th>
+          <th width="150" align="center">表名</th>
           <th width="120" align="center">数据量</th>
           <th width="120" align="center">数据大小</th>
           <th width="150" align="center">创建时间</th>

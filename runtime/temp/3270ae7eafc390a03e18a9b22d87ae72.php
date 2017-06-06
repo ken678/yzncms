@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:43:"E:\yzncms/apps/admin\view\manager\edit.html";i:1493718557;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:43:"E:\yzncms/apps/admin\view\manager\edit.html";i:1496728055;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -99,6 +99,20 @@ var SITEURL = '';
         <dd class="opt">
           <input type="text" id="nickname" name="nickname" class="input-txt" value="<?php echo $data['nickname']; ?>">
           <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="gadmin_name"><em>*</em>权限组</label>
+        </dt>
+        <dd class="opt">
+          <select name="roleid" class="valid">
+              <?php if(is_array($roles) || $roles instanceof \think\Collection || $roles instanceof \think\Paginator): $i = 0; $__LIST__ = $roles;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+                  <option  value="<?php echo $vo['id']; ?>" <?php if($vo['id'] == $data['roleid']): ?>selected<?php endif; ?>><?php echo $vo['title']; ?></option>
+              <?php endforeach; endif; else: echo "" ;endif; ?>
+            </select>
+          <span class="err"></span>
+          <p class="notic">请选择一个权限组，如果还未设置，请先建立权限组后再添加管理员。</p>
         </dd>
       </dl>
       <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>

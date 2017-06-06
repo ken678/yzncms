@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 use app\common\controller\Adminbase;
+use app\admin\model\AuthGroup;
 
 /**
  * 管理员管理
@@ -47,6 +48,7 @@ class Manager extends Adminbase
                 $this->error($error ? $error : '添加失败！');
             }
         } else {
+            $this->assign("roles", model('Admin/AuthGroup')->getGroups());
             return $this->fetch();
         }
     }
@@ -68,7 +70,9 @@ class Manager extends Adminbase
             if (empty($data)) {
                 $this->error('该信息不存在！');
             }
+            $user_groups    =   AuthGroup::getUserGroup($id);
             $this->assign("data", $data);
+            $this->assign("roles", model('Admin/AuthGroup')->getGroups());
         	return $this->fetch();
         }
     }

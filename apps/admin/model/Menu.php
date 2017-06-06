@@ -11,6 +11,8 @@
 namespace app\admin\model;
 use think\Model;
 use \think\Request;
+use app\admin\model\AuthRule;
+use app\admin\model\AuthGroup;
 
 /**
  * 菜单模型
@@ -68,6 +70,33 @@ class Menu extends Model
         if (is_administrator()) {
             return $result;
         }
+        $array = array();
+        foreach ($result as $v) {
+            $rule = $v['app'].'/'.$v['controller'].'/'.$v['action'];
+            if($this->checkRule($rule,array('in','1,2'),null)){
+                 $array[] = $v;
+            }
+        }
+        return $array;
+
+    }
+
+
+    /**
+     * 权限检测
+     * @param string  $rule    检测的规则
+     * @param string  $mode    check模式
+     * @return boolean
+     */
+    final protected function checkRule($rule, $type=AuthRule::RULE_URL, $mode='url'){
+        static $Auth    =   null;
+        if (!$Auth) {
+            $Auth       =   new \com\Auth();
+        }
+        if(!$Auth->check($rule,is_login(),$type,$mode)){
+            return false;
+        }
+        return true;
     }
 
     /**

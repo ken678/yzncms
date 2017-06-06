@@ -9,11 +9,10 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\common\controller;
-use think\Controller;
 use app\admin\model\AuthRule;
 use app\admin\model\AuthGroup;
 
-class Adminbase extends Controller
+class Adminbase extends Base
 {
 	/**
 	 * 后台初始化

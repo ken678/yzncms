@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1495845065;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1496727105;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -68,7 +68,7 @@ var SITEURL = '';
           <td class="handle"><a class="btn red" href="<?php echo url('admin/manager/del',['id'=>$vo['userid']]); ?>" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
           <a class="btn blue" href="<?php echo url('admin/manager/edit',['id'=>$vo['userid']]); ?>"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
           <td><?php echo $vo['username']; ?></td>
-          <td>超级管理员</td>
+          <td><?php  echo model('Admin/AuthGroup')->getRoleIdName($vo['roleid'])  ?></td>
           <td><?php  echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--'  ?></td>
           <td><?php  echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--'  ?></td>
           <td><?php echo $vo['email']; ?></td>

@@ -70,6 +70,20 @@
           <span class="err"></span>
         </dd>
       </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="gadmin_name"><em>*</em>权限组</label>
+        </dt>
+        <dd class="opt">
+          <select name="roleid" class="valid">
+              {volist name="roles" id="vo"}
+                  <option selected="" value="{$vo['id']}">{$vo['title']}</option>
+              {/volist}
+            </select>
+          <span class="err"></span>
+          <p class="notic">请选择一个权限组，如果还未设置，请先建立权限组后再添加管理员。</p>
+        </dd>
+      </dl>
       <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
     </div>
   </form>

@@ -149,7 +149,7 @@ class AuthManager extends Adminbase
         $node_list   = model("Admin/Menu")->returnNodes();
         $auth_group = db('AuthGroup')
                     ->where( array('status'=>array('egt','0'),'module'=>'admin','type'=>AuthGroup::TYPE_ADMIN) )
-                    ->column('id,id,title,rules');
+                    ->column('id,title,rules');
         $map         = array('module'=>'admin','type'=>AuthRule::RULE_MAIN,'status'=>1);
         $main_rules  = db('AuthRule')->where($map)->column('name,id');
         $map         = array('module'=>'admin','type'=>AuthRule::RULE_URL,'status'=>1);
@@ -177,14 +177,14 @@ class AuthManager extends Adminbase
         $data['module'] =  'admin';
         $data['type']   =  AuthGroup::TYPE_ADMIN;
 
-        $validate = validate('AuthGroup');
-        if(!$validate->check($data)){
-            return $this->error($validate->getError());
-        }
         if ( $data ) {
             if ( isset($data['id']) && !empty($data['id']) ) {
                 $r = $AuthGroup->update($data);
             }else{
+                $validate = validate('AuthGroup');
+		        if(!$validate->check($data)){
+		            return $this->error($validate->getError());
+		        }
                 $r = $AuthGroup->save($data);
             }
             if($r===false){

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-06-01 13:34:06
+Date: 2017-06-06 13:51:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,36 +64,20 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
 -- ----------------------------
 INSERT INTO `yzn_action_log` VALUES ('35', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-18 12:26登录了后台', '1495081597');
 INSERT INTO `yzn_action_log` VALUES ('34', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-18 08:06登录了后台', '1495065962');
-INSERT INTO `yzn_action_log` VALUES ('3', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-04 16:31登录了后台', '1493886660');
-INSERT INTO `yzn_action_log` VALUES ('4', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-04 17:53登录了后台', '1493891585');
-INSERT INTO `yzn_action_log` VALUES ('5', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:01登录了后台', '1493953314');
-INSERT INTO `yzn_action_log` VALUES ('6', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:12登录了后台', '1493953935');
-INSERT INTO `yzn_action_log` VALUES ('7', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954350');
-INSERT INTO `yzn_action_log` VALUES ('8', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954351');
-INSERT INTO `yzn_action_log` VALUES ('9', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954352');
-INSERT INTO `yzn_action_log` VALUES ('10', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954352');
-INSERT INTO `yzn_action_log` VALUES ('11', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954352');
-INSERT INTO `yzn_action_log` VALUES ('12', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954352');
-INSERT INTO `yzn_action_log` VALUES ('13', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954352');
-INSERT INTO `yzn_action_log` VALUES ('14', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954353');
-INSERT INTO `yzn_action_log` VALUES ('15', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954353');
-INSERT INTO `yzn_action_log` VALUES ('16', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954353');
-INSERT INTO `yzn_action_log` VALUES ('17', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954353');
-INSERT INTO `yzn_action_log` VALUES ('18', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954353');
-INSERT INTO `yzn_action_log` VALUES ('19', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954354');
-INSERT INTO `yzn_action_log` VALUES ('20', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954354');
-INSERT INTO `yzn_action_log` VALUES ('21', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954354');
-INSERT INTO `yzn_action_log` VALUES ('22', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954354');
-INSERT INTO `yzn_action_log` VALUES ('23', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954354');
-INSERT INTO `yzn_action_log` VALUES ('24', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 11:19登录了后台', '1493954354');
-INSERT INTO `yzn_action_log` VALUES ('25', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-05 17:55登录了后台', '1493978111');
+INSERT INTO `yzn_action_log` VALUES ('69', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 12:57登录了后台', '1496725042');
+INSERT INTO `yzn_action_log` VALUES ('68', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 10:11登录了后台', '1496715109');
+INSERT INTO `yzn_action_log` VALUES ('67', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 10:01登录了后台', '1496714464');
+INSERT INTO `yzn_action_log` VALUES ('66', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 10:00登录了后台', '1496714402');
+INSERT INTO `yzn_action_log` VALUES ('65', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 09:56登录了后台', '1496714179');
+INSERT INTO `yzn_action_log` VALUES ('64', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 09:09登录了后台', '1496711353');
+INSERT INTO `yzn_action_log` VALUES ('63', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-05 17:49登录了后台', '1496656198');
 INSERT INTO `yzn_action_log` VALUES ('32', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-15 17:31登录了后台', '1494840674');
 INSERT INTO `yzn_action_log` VALUES ('33', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-17 16:56登录了后台', '1495011414');
 INSERT INTO `yzn_action_log` VALUES ('36', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-18 16:30登录了后台', '1495096205');
@@ -117,6 +101,9 @@ INSERT INTO `yzn_action_log` VALUES ('56', '1', '1', '2130706433', 'member', '1'
 INSERT INTO `yzn_action_log` VALUES ('57', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-31 11:08登录了后台', '1496200085');
 INSERT INTO `yzn_action_log` VALUES ('58', '1', '1', '2130706433', 'member', '1', 'admin在2017-05-31 11:33登录了后台', '1496201600');
 INSERT INTO `yzn_action_log` VALUES ('59', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-01 11:41登录了后台', '1496288460');
+INSERT INTO `yzn_action_log` VALUES ('60', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-01 13:37登录了后台', '1496295424');
+INSERT INTO `yzn_action_log` VALUES ('61', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-02 17:17登录了后台', '1496395021');
+INSERT INTO `yzn_action_log` VALUES ('62', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-05 17:00登录了后台', '1496653241');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -126,6 +113,7 @@ CREATE TABLE `yzn_admin` (
   `userid` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) DEFAULT NULL COMMENT '管理账号',
   `password` varchar(40) DEFAULT NULL COMMENT '管理密码',
+  `roleid` tinyint(4) unsigned DEFAULT '0',
   `encrypt` varchar(6) DEFAULT NULL COMMENT '加密因子',
   `nickname` char(16) NOT NULL COMMENT '昵称',
   `last_login_time` int(10) unsigned DEFAULT '0' COMMENT '最后登录时间',
@@ -133,12 +121,13 @@ CREATE TABLE `yzn_admin` (
   `email` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`userid`),
   KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', 'djvlfg', '御宅男', '1496288460', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', '1', 'djvlfg', '御宅男', '1496725042', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1496714402', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -153,13 +142,14 @@ CREATE TABLE `yzn_auth_group` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户组状态：为1正常，为0禁用,-1为删除',
   `rules` varchar(500) NOT NULL DEFAULT '' COMMENT '用户组拥有的规则id，多个规则 , 隔开',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='权限组表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='权限组表';
 
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
 INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '1,2,4,6,7,8,10,12');
-INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '7');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '4,6,7');
+INSERT INTO `yzn_auth_group` VALUES ('3', 'admin', '1', '121', '121', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -175,7 +165,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
