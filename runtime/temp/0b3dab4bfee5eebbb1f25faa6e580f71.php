@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1495511110;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1496738584;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -50,8 +50,8 @@ var SITEURL = '';
   <div class="admincp-header-r">
     <div class="manager">
       <dl>
-        <dt class="name">admin</dt>
-        <dd class="group">超级管理员</dd>
+        <dt class="name"><?php echo session('user_auth.username'); ?></dt>
+        <dd class="group"><?php echo $role_name; ?></dd>
       </dl>
       <span class="avatar">
       <input name="_pic" type="file" class="admin-avatar-file" id="_pic" title="设置管理员头像"/>

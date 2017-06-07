@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:43:"E:\yzncms/apps/admin\view\manager\edit.html";i:1496728055;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:43:"E:\yzncms/apps/admin\view\manager\edit.html";i:1496731315;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -148,6 +148,9 @@ $(document).ready(function(){
           },
           email:{
             email:true
+          },
+          roleid:{
+            required : true
           }
       },
       messages : {
@@ -165,6 +168,9 @@ $(document).ready(function(){
           },
           email:{
               email    :'<i class="fa fa-exclamation-circle"></i>邮箱格式不正确'
+          },
+          roleid:{
+              required    :'<i class="fa fa-exclamation-circle"></i>请选择一个权限组'
           }
       }
   })

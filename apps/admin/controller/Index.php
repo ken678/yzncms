@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 use app\common\controller\Adminbase;
+use app\admin\model\AuthGroup;
 
 class Index extends Adminbase
 {
@@ -20,6 +21,7 @@ class Index extends Adminbase
     public function index()
     {
 		$this->assign('__MENU__', model("Admin/Menu")->getMenuList());
+        $this->assign('role_name', model('Admin/AuthGroup')->getRoleIdName(is_login()));
         return $this->fetch();
     }
 

@@ -31,14 +31,18 @@
           <dd class="opt nobg nopd nobd nobs">
           {present name="node['child']"}
           {volist name="node['child']" id="child" }
+          {volist name="child['operator']" id="op"}
               <div class="ncap-account-container">
-                  <h4><input class="checkbox" type="checkbox" nctype="groupAll" value="<?php echo $auth_rules[$child['url']] ?>" name="rules[]">{$child.title}操作</h4>
+                  <h4><input class="checkbox" type="checkbox" nctype="groupAll" value="<?php echo $auth_rules[$op['url']] ?>" name="rules[]">{$op.title}操作</h4>
                   <ul class="ncap-account-container-list">
-                  {volist name="child['operator']" id="op"}
+                  {present name="op['operator']"}
+                  {volist name="op['operator']" id="op"}
                   <li><input class="checkbox" type="checkbox" value="<?php echo $auth_rules[$op['url']] ?>" name="rules[]">{$op.title}</li>
                   {/volist}
+                  {/present}
                   </ul>
               </div>
+          {/volist}
           {/volist}
           {/present}
           </dd>

@@ -61,7 +61,7 @@ class User extends Model
     	/* 记录登录SESSION和COOKIES */
         $auth = array(
             'uid'             => $user['userid'],
-            'username'        => $user['nickname'],
+            'username'        => $user['username'],
             'last_login_time' => $user['last_login_time'],
         );
         session('last_login_time',$user['last_login_time']);
@@ -87,6 +87,7 @@ class User extends Model
             'username'  => 'unique:admin|require|alphaDash|length:3,15',
             'password'  => 'require|length:6,20|confirm',
             'email'     => 'email',
+            'roleid'     => 'require'
         ];
         $msg = [
             'username.unique' => '用户名已经存在！',
@@ -97,6 +98,7 @@ class User extends Model
             'password.length'     => '密码长度不正确！',
             'password.confirm'        => '两次输入的密码不一样！',
             'email.email'        => '邮箱地址有误！',
+            'roleid.require'        => '请选择一个权限组！'
         ];
         $validate = new Validate($rule,$msg);
         if (!$validate->check($data)) {
@@ -132,11 +134,13 @@ class User extends Model
         }
         //验证器
         $rule = [
-            'password'  => 'length:6,20|confirm'
+            'password'  => 'length:6,20|confirm',
+            'roleid'     => 'require'
         ];
         $msg = [
             'password.length'     => '密码长度不正确！',
-            'password.confirm'        => '两次输入的密码不一样！'
+            'password.confirm'        => '两次输入的密码不一样！',
+            'roleid.require'        => '请选择一个权限组！'
         ];
         $validate = new Validate($rule,$msg);
         if (!$validate->check($data)) {

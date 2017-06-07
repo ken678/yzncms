@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:56:"E:\yzncms/apps/admin\view\auth_manager\managergroup.html";i:1496712199;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:56:"E:\yzncms/apps/admin\view\auth_manager\managergroup.html";i:1496737158;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -61,16 +61,16 @@ var SITEURL = '';
                <span><input class="checkbox" type="checkbox" nctype="modulesAll" value="<?php echo $main_rules[$node['url']] ?>" name="rules[]"><?php echo $node['title']; ?>模块功能</span>
           </dt>
           <dd class="opt nobg nopd nobd nobs">
-          <?php if(isset($node['child'])): if(is_array($node['child']) || $node['child'] instanceof \think\Collection || $node['child'] instanceof \think\Paginator): $i = 0; $__LIST__ = $node['child'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$child): $mod = ($i % 2 );++$i;?>
+          <?php if(isset($node['child'])): if(is_array($node['child']) || $node['child'] instanceof \think\Collection || $node['child'] instanceof \think\Paginator): $i = 0; $__LIST__ = $node['child'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$child): $mod = ($i % 2 );++$i;if(is_array($child['operator']) || $child['operator'] instanceof \think\Collection || $child['operator'] instanceof \think\Paginator): $i = 0; $__LIST__ = $child['operator'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$op): $mod = ($i % 2 );++$i;?>
               <div class="ncap-account-container">
-                  <h4><input class="checkbox" type="checkbox" nctype="groupAll" value="<?php echo $auth_rules[$child['url']] ?>" name="rules[]"><?php echo $child['title']; ?>操作</h4>
+                  <h4><input class="checkbox" type="checkbox" nctype="groupAll" value="<?php echo $auth_rules[$op['url']] ?>" name="rules[]"><?php echo $op['title']; ?>操作</h4>
                   <ul class="ncap-account-container-list">
-                  <?php if(is_array($child['operator']) || $child['operator'] instanceof \think\Collection || $child['operator'] instanceof \think\Paginator): $i = 0; $__LIST__ = $child['operator'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$op): $mod = ($i % 2 );++$i;?>
+                  <?php if(isset($op['operator'])): if(is_array($op['operator']) || $op['operator'] instanceof \think\Collection || $op['operator'] instanceof \think\Paginator): $i = 0; $__LIST__ = $op['operator'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$op): $mod = ($i % 2 );++$i;?>
                   <li><input class="checkbox" type="checkbox" value="<?php echo $auth_rules[$op['url']] ?>" name="rules[]"><?php echo $op['title']; ?></li>
-                  <?php endforeach; endif; else: echo "" ;endif; ?>
+                  <?php endforeach; endif; else: echo "" ;endif; endif; ?>
                   </ul>
               </div>
-          <?php endforeach; endif; else: echo "" ;endif; endif; ?>
+          <?php endforeach; endif; else: echo "" ;endif; endforeach; endif; else: echo "" ;endif; endif; ?>
           </dd>
       </dl>
       <?php endforeach; endif; else: echo "" ;endif; ?>

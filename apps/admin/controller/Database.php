@@ -19,6 +19,7 @@ class Database extends Adminbase
 
     protected function _initialize()
     {
+        parent::_initialize();
         $this->assign('__GROUP_MENU__', $this->get_group_menu());
     }
 

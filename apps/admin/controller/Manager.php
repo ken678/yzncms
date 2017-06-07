@@ -20,6 +20,7 @@ class Manager extends Adminbase
 
     protected function _initialize()
     {
+        parent::_initialize();
         $this->User = model('Admin/User');
         $this->assign('__GROUP_MENU__', $this->get_group_menu());
     }
@@ -70,7 +71,6 @@ class Manager extends Adminbase
             if (empty($data)) {
                 $this->error('该信息不存在！');
             }
-            $user_groups    =   AuthGroup::getUserGroup($id);
             $this->assign("data", $data);
             $this->assign("roles", model('Admin/AuthGroup')->getGroups());
         	return $this->fetch();

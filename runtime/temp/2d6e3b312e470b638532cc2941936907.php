@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:53:"E:\yzncms/apps/admin\view\auth_manager\editgroup.html";i:1496396025;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:53:"E:\yzncms/apps/admin\view\auth_manager\editgroup.html";i:1496734636;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -36,7 +36,7 @@ var SITEURL = '';
   <div class="fixed-bar">
     <div class="item-title"><a class="back" href="<?php echo url('AuthManager/index'); ?>" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
       <div class="subject">
-        <h3>权限设置 - 编辑权限组“<?php echo $auth_group['title']; ?>”</h3>
+        <h3>权限设置 - <?php echo !empty($auth_group['id'])?'编辑':'新增'; ?>权限组</h3>
         <h5>管理中心操作权限及分组设置</h5>
       </div>
     </div>
@@ -47,7 +47,7 @@ var SITEURL = '';
       <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
       <span id="explanationZoom" title="收起提示"></span> </div>
       <ul>
-        <li>可编辑一个权限组，并为其更名。</li>
+        <li>添加权限组，方便添加管理员时使用。</li>
       </ul>
   </div>
   <form action="<?php echo url('AuthManager/writeGroup'); ?>" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
@@ -58,7 +58,7 @@ var SITEURL = '';
         </dt>
         <dd class="opt">
           <input type="text"  value="<?php echo $auth_group['title']; ?>" maxlength="40"  name="title" class="input-txt">
-          <p class="notic">权限组名称</p>
+          <p class="notic">权限组名称，用于添加管理员时选择使用。</p>
         </dd>
       </dl>
       <dl class="row">

@@ -41,9 +41,35 @@ class Adminbase extends Base
                 }
                 config($config);//添加配置
                 define('IS_ROOT',   is_administrator());
+
+                // 检测系统权限
+                if(!IS_ROOT){
+                    //检测访问权限
+                    $rule  = strtolower($this->request->module().'/'.$this->request->controller().'/'.$this->request->action());
+                    if ( !$this->checkRule($rule,array('in','1,2')) ){
+                        $this->error('未授权访问!');
+                    }
+                }
             }
         }
 	}
+
+    /**
+     * 权限检测
+     * @param string  $rule    检测的规则
+     * @param string  $mode    check模式
+     * @return boolean
+     */
+    final protected function checkRule($rule, $type=AuthRule::RULE_URL, $mode='url'){
+        static $Auth    =   null;
+        if (!$Auth) {
+            $Auth       =   new \com\Auth();
+        }
+        if(!$Auth->check($rule,UID,$type,$mode)){
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 获取后台分组菜单数组

@@ -49,8 +49,8 @@ var SITEURL = '';
   <div class="admincp-header-r">
     <div class="manager">
       <dl>
-        <dt class="name">admin</dt>
-        <dd class="group">超级管理员</dd>
+        <dt class="name">{:session('user_auth.username')}</dt>
+        <dd class="group">{$role_name}</dd>
       </dl>
       <span class="avatar">
       <input name="_pic" type="file" class="admin-avatar-file" id="_pic" title="设置管理员头像"/>
