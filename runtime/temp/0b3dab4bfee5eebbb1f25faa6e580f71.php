@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1496738584;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1496825325;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -16,6 +16,7 @@
 <link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <script type="text/javascript">
 var SITEURL = '';
+var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 </script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>

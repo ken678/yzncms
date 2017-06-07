@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1496727105;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1491898212;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"E:\yzncms/apps/admin\view\manager\index.html";i:1496727105;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;s:41:"E:\yzncms/apps/admin\view\public\nav.html";i:1496823711;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -40,9 +40,20 @@ var SITEURL = '';
         <h5>网站后台管理员索引及管理</h5>
       </div>
       <ul class="tab-base nc-row">
-            <?php if(is_array($__GROUP_MENU__) || $__GROUP_MENU__ instanceof \think\Collection || $__GROUP_MENU__ instanceof \think\Paginator): $i = 0; $__LIST__ = $__GROUP_MENU__;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$group_menu): $mod = ($i % 2 );++$i;?>
+            <?php $getMenu = isset($Custom)?$Custom:model('Admin/Menu')->getMenu(); if(is_array($getMenu) || $getMenu instanceof \think\Collection || $getMenu instanceof \think\Paginator): $i = 0; $__LIST__ = $getMenu;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$group_menu): $mod = ($i % 2 );++$i;?>
     <li><a <?php if($group_menu['action'] == \think\Request::instance()->action()): ?> class="current" <?php endif; ?> href="<?php echo url($group_menu['url'],$group_menu['parameter']); ?>" ><span><?php echo $group_menu['title']; ?></span></a></li>
 <?php endforeach; endif; else: echo "" ;endif; ?>
+
+
+
+
+
+
+
+
+
+
+
 
       </ul>
   </div>

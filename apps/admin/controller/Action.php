@@ -17,12 +17,6 @@ use app\common\controller\Adminbase;
 class Action extends Adminbase
 {
 
-    protected function _initialize()
-    {
-        parent::_initialize();
-        $this->assign('__GROUP_MENU__', $this->get_group_menu());
-    }
-
     /**
      * 行为日志列表
      * @author huajie <banhuajie@163.com>

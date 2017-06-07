@@ -22,7 +22,6 @@ class Manager extends Adminbase
     {
         parent::_initialize();
         $this->User = model('Admin/User');
-        $this->assign('__GROUP_MENU__', $this->get_group_menu());
     }
 
     /**

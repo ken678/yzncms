@@ -22,7 +22,6 @@ class Config extends Adminbase
         parent::_initialize();
         $this->Config = model('Common/Config');
         $configList  =  $this->Config->column('name,value');//获取配置值
-        $this->assign('__GROUP_MENU__', $this->get_group_menu());
         $this->assign('Site', $configList);
     }
 

@@ -71,14 +71,6 @@ class Adminbase extends Base
         return true;
     }
 
-    /**
-     * 获取后台分组菜单数组
-     */
-    final public function get_group_menu()
-    {
-        $getMenu = isset($Custom)?$Custom:model('Admin/Menu')->getMenu();
-        return $getMenu;
-    }
 
     /**
      * 通用分页列表数据集获取方法
