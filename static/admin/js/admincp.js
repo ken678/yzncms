@@ -86,6 +86,19 @@ $(document).ready(function () {
     } else {
         openItem($.cookie('workspaceParam'));
     }
+    // 导航菜单  显示
+    $('a[nctype="map_on"],a[class="add-menu"]').click(function(){
+        $('div[nctype="map_nav"]').show();
+    });
+    // 导航菜单 隐藏
+    $('a[nctype="map_off"]').click(function(){
+        $('div[nctype="map_nav"]').hide();
+    });
+
+
+    // 导航菜单默认值显示第一组菜单
+    $('div[data-param^="map-"]:first').nextAll().hide();
+    $('A[data-param^="map-"]:first').parent().addClass('selected');
 
     //管理显示与隐藏
     $("#admin-manager-btn").click(function () {

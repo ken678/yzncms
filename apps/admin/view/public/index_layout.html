@@ -26,13 +26,7 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 <script type="text/javascript" src="__STATIC__/admin/js/admincp.js"></script>
 </head>
 <body>
-<div class="admincp-map ui-widget-content" nctype="map_nav" style="display:none;" id="draggable" >
-  <div class="title ui-widget-header" >
-    <h3>管理中心全部菜单</h3>
-    <h5>切换显示全部管理菜单，通过点击勾选可添加菜单为管理常用操作项，最多添加10个</h5>
-    <span><a nctype="map_off" href="JavaScript:void(0);">X</a></span> </div>
-  <div class="content">内容</div>
-</div>
+{include file="public/map_nav" /}
 <!--顶部导航 START-->
 <div class="admincp-header">
   <div class="bgSelector"></div>
@@ -67,7 +61,10 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
                 )</span> </div>
         <div class="title">
           <h4>常用操作</h4>
-          <a href="javascript:void(0)" class="add-menu">添加菜单</a> </div>
+          <a href="javascript:void(0)" class="add-menu">添加菜单</a>
+        </div>
+        <ul class="nc-row" nctype="quick_link">
+        </ul>
       </div>
     </div>
     <ul class="operate nc-row">

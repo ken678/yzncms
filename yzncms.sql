@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-06-07 16:50:30
+Date: 2017-06-13 15:16:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=108 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -130,6 +130,16 @@ INSERT INTO `yzn_action_log` VALUES ('94', '1', '2', '2130706433', 'member', '2'
 INSERT INTO `yzn_action_log` VALUES ('95', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 16:34登录了后台', '1496824465');
 INSERT INTO `yzn_action_log` VALUES ('96', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 16:36登录了后台', '1496824617');
 INSERT INTO `yzn_action_log` VALUES ('97', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 16:37登录了后台', '1496824663');
+INSERT INTO `yzn_action_log` VALUES ('98', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 17:19登录了后台', '1496827196');
+INSERT INTO `yzn_action_log` VALUES ('99', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 17:29登录了后台', '1496827793');
+INSERT INTO `yzn_action_log` VALUES ('100', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-08 08:29登录了后台', '1496881777');
+INSERT INTO `yzn_action_log` VALUES ('101', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-08 08:36登录了后台', '1496882183');
+INSERT INTO `yzn_action_log` VALUES ('102', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-09 15:54登录了后台', '1496994860');
+INSERT INTO `yzn_action_log` VALUES ('103', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-12 08:21登录了后台', '1497226869');
+INSERT INTO `yzn_action_log` VALUES ('104', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-12 16:44登录了后台', '1497257088');
+INSERT INTO `yzn_action_log` VALUES ('105', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-12 17:41登录了后台', '1497260480');
+INSERT INTO `yzn_action_log` VALUES ('106', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-13 10:57登录了后台', '1497322679');
+INSERT INTO `yzn_action_log` VALUES ('107', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-13 11:06登录了后台', '1497323173');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -152,8 +162,27 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', '1', 'djvlfg', '御宅男', '1496824663', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', '1', 'djvlfg', '御宅男', '1497323173', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1496824377', '2130706433', '530765310@qq.com');
+
+-- ----------------------------
+-- Table structure for `yzn_admin_panel`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_admin_panel`;
+CREATE TABLE `yzn_admin_panel` (
+  `menuid` mediumint(8) unsigned NOT NULL,
+  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `name` char(32) DEFAULT NULL,
+  `url` char(255) DEFAULT NULL,
+  UNIQUE KEY `userid` (`userid`,`menuid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_admin_panel
+-- ----------------------------
+INSERT INTO `yzn_admin_panel` VALUES ('19', '1', '权限设置', 'Admin/AuthManager/index');
+INSERT INTO `yzn_admin_panel` VALUES ('17', '1', '数据库备份', 'Admin/database/index');
+INSERT INTO `yzn_admin_panel` VALUES ('12', '1', '管理员管理', 'Admin/Manager/index');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -303,4 +332,4 @@ INSERT INTO `yzn_menu` VALUES ('22', '下载表', '17', 'Admin', 'database', 'do
 INSERT INTO `yzn_menu` VALUES ('23', '删除表', '17', 'Admin', 'database', 'del', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('24', '还原表', '17', 'Admin', 'database', 'import', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('25', '删除管理员', '12', 'Admin', 'Manager', 'del', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('26', '首页', '0', 'Admin', 'index', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('26', '首页', '0', 'Admin', 'index', 'index', '', '1', '', '0', '0');

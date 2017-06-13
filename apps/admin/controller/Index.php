@@ -22,7 +22,48 @@ class Index extends Adminbase
     {
 		$this->assign('__MENU__', model("Admin/Menu")->getMenuList());
         $this->assign('role_name', model('Admin/AuthGroup')->getRoleIdName(is_login()));
+
+
+        /*管理员收藏栏*/
+        $AdminPanel = model("Admin/AdminPanel")->getAllPanel(is_login());
+        if(!empty($AdminPanel)){
+            foreach ($AdminPanel as $key =>$v){
+                $AdminPanel_ids[]=$v['menuid'];
+            }
+            $this->assign('__ADMIN_PANEL_ID__', $AdminPanel_ids);
+        }else{
+            $this->assign('__ADMIN_PANEL_ID__',array());
+        }
+        $this->assign('__ADMIN_PANEL__', $AdminPanel);
+
         return $this->fetch();
+    }
+
+
+    /**
+     * 设置常用菜单
+     */
+    public function common_operations() {
+        $type  = input('type');
+        $mid = input('mid');
+        if (!in_array($type, array('add', 'del')) || empty($mid)) {
+            echo false;exit;
+        }
+        $quicklink = db('menu')->where('id',$mid)->find();
+        if (!$quicklink) {
+            echo false;exit;
+        }
+        $info = array(
+            'menuid' => $quicklink['id'],
+            'userid' => is_login(),
+            'name' => $quicklink['title'],
+            'url' => "{$quicklink['app']}/{$quicklink['controller']}/{$quicklink['action']}",
+        );
+        if (model('Admin/AdminPanel')->addPanel($info)) {
+            echo true;exit;
+        } else {
+            echo false;exit;
+        }
     }
 
     /**
