@@ -18,7 +18,7 @@
 	       <dt>{$left_nav.title}</dt>
 	{present name="left_nav.items"}
 	{volist name="left_nav.items" id="map_nav"}
-	       <dd class="{if in_array($map_nav.mid, $__ADMIN_PANEL_ID__)}selected{/if}"><a href="javascript:void(0);" data-param="{$map_nav.url}" data-mid="{$map_nav.mid}">{$map_nav.title}</a><i class="fa fa-check-square-o"></i></dd>
+	       <dd class="{if in_array($map_nav.menuid, $__ADMIN_PANEL__.ids)}selected{/if}"><a href="javascript:void(0);" data-param="{$map_nav.url}" data-menuid="{$map_nav.menuid}">{$map_nav.title}</a><i class="fa fa-check-square-o"></i></dd>
 	{/volist}
 	{/present}
 	       </dl>
@@ -27,34 +27,4 @@
 	</div>
 	{/volist}
   </div>
-  <script type="text/javascript">
-    // 导航菜单切换
-    $('a[data-param^="map-"]').click(function(){
-        $(this).parent().addClass('selected').siblings().removeClass('selected');
-        $('div[data-param^="map-"]').hide();
-        $('div[data-param="' + $(this).attr('data-param') + '"]').show();
-    });
-    $('div[data-param^="map-"]').find('i').click(function(){
-        var $this = $(this);
-        var _mid = $this.prev().attr('data-mid');
-        if ($this.parent().hasClass('selected')) {
-            $.getJSON('{:url("index/common_operations")}', {type : 'del', mid : _mid}, function(data){
-                if (data) {
-                    $this.parent().removeClass('selected');
-                    $('ul[nctype="quick_link"]').find('a[onclick="openItem(\'' + _mid + '\')"]').parent().remove();
-                }
-            });
-        } else {
-            var _name = $this.prev().html();
-            $.getJSON('{:url("index/common_operations")}', {type : 'add', mid : _mid}, function(data){
-                if (data) {
-                    $this.parent().addClass('selected');
-                    $('ul[nctype="quick_link"]').append('<li><a onclick="openItem(\'' + _mid + '\')" href="javascript:void(0);">' + _name + '</a></li>');
-                }
-            });
-        }
-    }).end().find('a').click(function(){
-        openItem($(this).attr('data-param'));
-    });
-  </script>
 </div>

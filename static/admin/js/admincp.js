@@ -80,6 +80,35 @@ $(document).ready(function () {
         $('#admincpNavTabs_' + _modules).show().find('dl').removeClass('active').first().addClass('active').find('dd').find('li > a:first').click();
     });
 
+    // 导航菜单切换
+    $('a[data-param^="map-"]').click(function(){
+        $(this).parent().addClass('selected').siblings().removeClass('selected');
+        $('div[data-param^="map-"]').hide();
+        $('div[data-param="' + $(this).attr('data-param') + '"]').show();
+    });
+    $('div[data-param^="map-"]').find('i').click(function(){
+        var $this = $(this);
+        var _menuid = $this.prev().attr('data-menuid');
+        if ($this.parent().hasClass('selected')) {
+            $.getJSON(COMMON_OPERATIONS_URL, {type : 'del', menuid : _menuid}, function(data){
+                if (data) {
+                    $this.parent().removeClass('selected');
+                    $('ul[nctype="quick_link"]').find('a[onclick="openItem(\'' + _menuid + '\')"]').parent().remove();
+                }
+            });
+        } else {
+            var _name = $this.prev().html();
+            $.getJSON(COMMON_OPERATIONS_URL, {type : 'add', menuid : _menuid}, function(data){
+                if (data) {
+                    $this.parent().addClass('selected');
+                    $('ul[nctype="quick_link"]').append('<li><a onclick="openItem(\'' + _menuid + '\')" href="javascript:void(0);">' + _name + '</a></li>');
+                }
+            });
+        }
+    }).end().find('a').click(function(){
+        openItem($(this).attr('data-param'));
+    });
+
     if ($.cookie('workspaceParam') == null) {
         // 默认选择第一个菜单
         $('.nc-module-menu').find('li:first > a').click();

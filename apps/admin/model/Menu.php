@@ -74,7 +74,7 @@ class Menu extends Model
                     $fu = "?" . $a['parameter'];
                 }
                 $array = array(
-                    "mid" => $id,
+                    "menuid" => $id,
                     "id" => $id . $name,
                     "title" => $a['title'],
                     "parent" => $parent,

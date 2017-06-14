@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1497338095;s:45:"E:\yzncms/apps/admin\view\public\map_nav.html";i:1497337715;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1497430445;s:45:"E:\yzncms/apps/admin\view\public\map_nav.html";i:1497430416;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -17,6 +17,7 @@
 <script type="text/javascript">
 var SITEURL = '';
 var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
+var COMMON_OPERATIONS_URL = '<?php echo url("index/common_operations"); ?>';//快捷菜单路径
 </script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
@@ -45,43 +46,13 @@ var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 	       <dl>
 	       <dt><?php echo $left_nav['title']; ?></dt>
 	<?php if(isset($left_nav['items'])): if(is_array($left_nav['items']) || $left_nav['items'] instanceof \think\Collection || $left_nav['items'] instanceof \think\Paginator): $i = 0; $__LIST__ = $left_nav['items'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$map_nav): $mod = ($i % 2 );++$i;?>
-	       <dd class="<?php if(in_array($map_nav['mid'], $__ADMIN_PANEL_ID__)): ?>selected<?php endif; ?>"><a href="javascript:void(0);" data-param="<?php echo $map_nav['url']; ?>" data-mid="<?php echo $map_nav['mid']; ?>"><?php echo $map_nav['title']; ?></a><i class="fa fa-check-square-o"></i></dd>
+	       <dd class="<?php if(in_array($map_nav['menuid'], $__ADMIN_PANEL__['ids'])): ?>selected<?php endif; ?>"><a href="javascript:void(0);" data-param="<?php echo $map_nav['url']; ?>" data-menuid="<?php echo $map_nav['menuid']; ?>"><?php echo $map_nav['title']; ?></a><i class="fa fa-check-square-o"></i></dd>
 	<?php endforeach; endif; else: echo "" ;endif; endif; ?>
 	       </dl>
 	<?php endforeach; endif; else: echo "" ;endif; endif; ?>
 	</div>
 	<?php endforeach; endif; else: echo "" ;endif; ?>
   </div>
-  <script type="text/javascript">
-    // 导航菜单切换
-    $('a[data-param^="map-"]').click(function(){
-        $(this).parent().addClass('selected').siblings().removeClass('selected');
-        $('div[data-param^="map-"]').hide();
-        $('div[data-param="' + $(this).attr('data-param') + '"]').show();
-    });
-    $('div[data-param^="map-"]').find('i').click(function(){
-        var $this = $(this);
-        var _mid = $this.prev().attr('data-mid');
-        if ($this.parent().hasClass('selected')) {
-            $.getJSON('<?php echo url("index/common_operations"); ?>', {type : 'del', mid : _mid}, function(data){
-                if (data) {
-                    $this.parent().removeClass('selected');
-                    $('ul[nctype="quick_link"]').find('a[onclick="openItem(\'' + _mid + '\')"]').parent().remove();
-                }
-            });
-        } else {
-            var _name = $this.prev().html();
-            $.getJSON('<?php echo url("index/common_operations"); ?>', {type : 'add', mid : _mid}, function(data){
-                if (data) {
-                    $this.parent().addClass('selected');
-                    $('ul[nctype="quick_link"]').append('<li><a onclick="openItem(\'' + _mid + '\')" href="javascript:void(0);">' + _name + '</a></li>');
-                }
-            });
-        }
-    }).end().find('a').click(function(){
-        openItem($(this).attr('data-param'));
-    });
-  </script>
 </div>
 <!--顶部导航 START-->
 <div class="admincp-header">

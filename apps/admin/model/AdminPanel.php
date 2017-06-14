@@ -17,21 +17,35 @@ use think\Model;
 class AdminPanel extends Model
 {
     protected $resultSetType = 'collection';
-
     /**
-     * 添加常用菜单
+     * 添加快捷菜单
      * @param type $data
      * @return boolean
      */
-    public function addPanel($data) {
+    public function createPanel($data) {
         $info = $this->where(array("menuid" => $data['menuid']))->find();
-        if (!empty($info) || empty($data)) {
+        if (!empty($info->data) || empty($data)) {
             return true;
         }
         return $this->save($data) !== false ? true : false;
-
-
     }
+
+    /**
+     * 删除快捷菜单
+     * @param type $data
+     * @return boolean
+     */
+    public function deletePanel($data) {
+        if(empty($data['menuid']) || empty($data['userid'])){
+           return false;
+        }
+        $info = $this->where($data)->find();
+        if (empty($info->data) || empty($data)) {
+            return true;
+        }
+        return $this->where($data)->delete() !== false ? true : false;
+    }
+
 
     /**
      * 返回某个用户的全部常用菜单
@@ -39,7 +53,15 @@ class AdminPanel extends Model
      * @return type
      */
     public function getAllPanel($userid) {
-        return $this->where(array('userid' => $userid))->select()->toarray();
+        $info['main'] = $this->where(array('userid' => $userid))->select()->toarray();
+        if(empty($info['main'])){
+            $info['ids'] = array();
+            return $info;
+        }
+        foreach ($info['main'] as $key =>$v){
+                $info['ids'][]=$v['menuid'];
+        }
+        return $info;
     }
 
 
