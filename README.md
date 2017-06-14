@@ -28,6 +28,7 @@ ThinkPHP5.09的运行环境要求PHP5.4以上。（注意：PHP5.4dev版本和PH
 [后台登陆界面预览]  
 
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134316_df6a7b60_555541.jpeg "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0613/152302_f2081fba_555541.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134327_f760ee6b_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134335_cd0f4d67_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134344_ce09d530_555541.jpeg "在这里输入图片标题")
