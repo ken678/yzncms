@@ -89,11 +89,12 @@ $(document).ready(function () {
     $('div[data-param^="map-"]').find('i').click(function(){
         var $this = $(this);
         var _menuid = $this.prev().attr('data-menuid');
+        var _param = $this.prev().attr('data-param');
         if ($this.parent().hasClass('selected')) {
             $.getJSON(COMMON_OPERATIONS_URL, {type : 'del', menuid : _menuid}, function(data){
                 if (data) {
                     $this.parent().removeClass('selected');
-                    $('ul[nctype="quick_link"]').find('a[onclick="openItem(\'' + _menuid + '\')"]').parent().remove();
+                    $('ul[nctype="quick_link"]').find('a[onclick="openItem(\'' + _param + '\')"]').parent().remove();
                 }
             });
         } else {
@@ -101,7 +102,7 @@ $(document).ready(function () {
             $.getJSON(COMMON_OPERATIONS_URL, {type : 'add', menuid : _menuid}, function(data){
                 if (data) {
                     $this.parent().addClass('selected');
-                    $('ul[nctype="quick_link"]').append('<li><a onclick="openItem(\'' + _menuid + '\')" href="javascript:void(0);">' + _name + '</a></li>');
+                    $('ul[nctype="quick_link"]').append('<li><a onclick="openItem(\'' + _param + '\')" href="javascript:void(0);">' + _name + '</a></li>');
                 }
             });
         }

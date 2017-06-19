@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1497430445;s:45:"E:\yzncms/apps/admin\view\public\map_nav.html";i:1497430416;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:42:"E:\yzncms/apps/admin\view\index\index.html";i:1491034880;s:50:"E:\yzncms/apps/admin\view\public\index_layout.html";i:1497862977;s:45:"E:\yzncms/apps/admin\view\public\map_nav.html";i:1497430416;s:46:"E:\yzncms/apps/admin\view\public\left_nav.html";i:1493108177;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -76,11 +76,12 @@ var COMMON_OPERATIONS_URL = '<?php echo url("index/common_operations"); ?>';//�
       </dl>
       <span class="avatar">
       <input name="_pic" type="file" class="admin-avatar-file" id="_pic" title="设置管理员头像"/>
-      <img alt="" nctype="admin_avatar" src=""> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
+      <img alt="" nctype="admin_avatar" src="__STATIC__/admin/images/login/admin.png"> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
       <div class="manager-menu">
         <div class="title">
           <h4>上次登录</h4>
-          <a href="javascript:void(0);" class="edit-password">修改密码</a> </div>
+          <a href="javascript:void(0);" onclick="CUR_DIALOG = ajax_form('modifypw', '修改密码', '<?php echo url("manager/modifypw"); ?>');" class="edit-password">修改密码</a>
+          </div>
         <div class="login-date">
         <?php if(session('last_login_time') > 0) { echo date('Y-m-d H:i:s', session('last_login_time'));} else { echo '--';}?>
           <span>(IP:
@@ -91,6 +92,9 @@ var COMMON_OPERATIONS_URL = '<?php echo url("index/common_operations"); ?>';//�
           <a href="javascript:void(0)" class="add-menu">添加菜单</a>
         </div>
         <ul class="nc-row" nctype="quick_link">
+          <?php if(is_array($__ADMIN_PANEL__['main']) || $__ADMIN_PANEL__['main'] instanceof \think\Collection || $__ADMIN_PANEL__['main'] instanceof \think\Paginator): $i = 0; $__LIST__ = $__ADMIN_PANEL__['main'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$quick_menu): $mod = ($i % 2 );++$i;?>
+            <li><a href="javascript:void(0);" onclick="openItem('<?php echo url($quick_menu['url'],array('menuid'=>$quick_menu['menuid'])); ?>')"><?php echo $quick_menu['name']; ?></a></li>
+          <?php endforeach; endif; else: echo "" ;endif; ?>
         </ul>
       </div>
     </div>

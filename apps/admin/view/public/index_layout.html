@@ -50,11 +50,12 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
       </dl>
       <span class="avatar">
       <input name="_pic" type="file" class="admin-avatar-file" id="_pic" title="设置管理员头像"/>
-      <img alt="" nctype="admin_avatar" src=""> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
+      <img alt="" nctype="admin_avatar" src="__STATIC__/admin/images/login/admin.png"> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
       <div class="manager-menu">
         <div class="title">
           <h4>上次登录</h4>
-          <a href="javascript:void(0);" class="edit-password">修改密码</a> </div>
+          <a href="javascript:void(0);" onclick="CUR_DIALOG = ajax_form('modifypw', '修改密码', '{:url("manager/modifypw")}');" class="edit-password">修改密码</a>
+          </div>
         <div class="login-date">
         <?php if(session('last_login_time') > 0) { echo date('Y-m-d H:i:s', session('last_login_time'));} else { echo '--';}?>
           <span>(IP:
@@ -65,6 +66,9 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
           <a href="javascript:void(0)" class="add-menu">添加菜单</a>
         </div>
         <ul class="nc-row" nctype="quick_link">
+          {volist name="__ADMIN_PANEL__.main" id="quick_menu"}
+            <li><a href="javascript:void(0);" onclick="openItem('{:url($quick_menu.url,array('menuid'=>$quick_menu.menuid))}')">{$quick_menu.name}</a></li>
+          {/volist}
         </ul>
       </div>
     </div>

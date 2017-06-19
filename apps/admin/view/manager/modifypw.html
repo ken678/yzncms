@@ -1,0 +1,71 @@
+<script type="text/javascript" src="__STATIC__/js/jquery.validation.min.js"></script>
+<div class="ncap-form-default">
+  <form id="admin_form" method="post" action='{:url("manager/modifypw")}' name="adminForm">
+    <input type="hidden" name="form_submit" value="ok" />
+    <dl class="row">
+      <dt class="tit"><label for="old_pw"><em>*</em>原密码</label><!-- 原密码 --></dt>
+      <dd class="opt"><input id="old_pw" name="old_pw" class="txt" type="password">
+          <span class="err"></span></dd>
+    </dl>
+    <dl class="row">
+      <dt class="tit"><label for="new_pw"><em>*</em>新密码</label><!-- 新密码 --></dt>
+      <dd class="opt"><input id="new_pw" name="new_pw" class="txt" type="password">
+          <span class="err"></span></dd>
+    </dl>
+    <dl class="row">
+      <dt class="tit"><label for="new_pw2"><em>*</em>确认密码</label><!-- 确认密码--></dt>
+      <dd class="opt"><input id="new_pw2" name="new_pw2" class="txt" type="password">
+          <span class="err"></span></dd>
+    </dl>
+    <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green"  id="submitBtn"><span>确认提交</span></a></div>
+  </form>
+</div>
+<script>
+//按钮先执行验证再提交表单
+$(function(){
+    $("#submitBtn").click(function(){
+        if($("#admin_form").valid()){
+            $("#admin_form").submit();
+      }
+  });
+
+  $("#admin_form").validate({
+    errorPlacement: function(error, element){
+      var error_td = element.parent('dd').children('span.err');
+            error_td.append(error);
+        },
+        rules : {
+          old_pw : {
+            required : true
+            },
+          new_pw : {
+                required : true,
+        minlength: 6,
+        maxlength: 20
+            },
+            new_pw2 : {
+                required : true,
+        minlength: 6,
+        maxlength: 20,
+        equalTo: '#new_pw'
+            }
+        },
+        messages : {
+          old_pw : {
+            required : '<i class="fa fa-exclamation-circle"></i>密码不能为空'
+            },
+          new_pw : {
+                required : '<i class="fa fa-exclamation-circle"></i>密码不能为空',
+        minlength: '<i class="fa fa-exclamation-circle"></i>密码长度为6-20',
+        maxlength: '<i class="fa fa-exclamation-circle"></i>密码长度为6-20'
+            },
+            new_pw2 : {
+                required : '<i class="fa fa-exclamation-circle"></i>密码不能为空',
+        minlength: '<i class="fa fa-exclamation-circle"></i>密码长度为6-20',
+        maxlength: '<i class="fa fa-exclamation-circle"></i>密码长度为6-20',
+        equalTo:   '<i class="fa fa-exclamation-circle"></i>两次输入的密码不一致，请重新输入'
+            }
+        }
+  });
+});
+</script>

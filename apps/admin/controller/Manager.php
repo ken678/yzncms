@@ -76,6 +76,16 @@ class Manager extends Adminbase
         }
     }
 
+    public function modifypw()
+    {
+        if (request()->isPost()) {
+
+        }else{
+            return $this->fetch();
+        }
+
+    }
+
     /**
      * 管理员删除
      */
