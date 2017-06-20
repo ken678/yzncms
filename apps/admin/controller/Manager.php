@@ -79,7 +79,23 @@ class Manager extends Adminbase
     public function modifypw()
     {
         if (request()->isPost()) {
-
+            $old_pw = input('old_pw');
+            if (empty($old_pw)) {
+                $this->error("请输入旧密码！");
+            }
+            $new_pw = input('new_pw');
+            $new_pw2 = input('new_pw2');
+            if ($new_pw !== $new_pw2) {
+                $this->error('两次输入的密码不一致！');
+            }
+            if ($this->User->modifypw(is_login(), $new_pw, $old_pw)) {
+                //退出登陆
+                $this->User->logout();
+                $this->success("密码已经更新，请从新登陆！", url("Admin/index/login"));
+            } else {
+                $error = $this->User->getError();
+                $this->error($error ? $error : "密码更新失败！");
+            }
         }else{
             return $this->fetch();
         }

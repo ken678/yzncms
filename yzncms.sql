@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-06-19 17:05:28
+Date: 2017-06-20 09:52:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=116 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=122 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -148,6 +148,12 @@ INSERT INTO `yzn_action_log` VALUES ('112', '1', '2', '2130706433', 'member', '2
 INSERT INTO `yzn_action_log` VALUES ('113', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-14 17:05登录了后台', '1497431143');
 INSERT INTO `yzn_action_log` VALUES ('114', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-16 16:13登录了后台', '1497600812');
 INSERT INTO `yzn_action_log` VALUES ('115', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-19 16:43登录了后台', '1497861801');
+INSERT INTO `yzn_action_log` VALUES ('116', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-19 17:17登录了后台', '1497863876');
+INSERT INTO `yzn_action_log` VALUES ('117', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-20 08:48登录了后台', '1497919721');
+INSERT INTO `yzn_action_log` VALUES ('118', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-20 09:19登录了后台', '1497921542');
+INSERT INTO `yzn_action_log` VALUES ('119', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-20 09:21登录了后台', '1497921664');
+INSERT INTO `yzn_action_log` VALUES ('120', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-20 09:34登录了后台', '1497922482');
+INSERT INTO `yzn_action_log` VALUES ('121', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-20 09:51登录了后台', '1497923477');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -170,7 +176,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '29b2d14df82d7db68dc31faa9af3e7fee7499546', '1', 'djvlfg', '御宅男', '1497861801', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1497923477', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1497431115', '2130706433', '530765310@qq.com');
 
 -- ----------------------------

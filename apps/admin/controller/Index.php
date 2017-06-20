@@ -109,8 +109,8 @@ class Index extends Adminbase
     public function logout()
     {
         if(is_login()){
-            session('user_auth', null);
-            session('user_auth_sign', null);
+            model('Admin/User')->logout();
+            session('[destroy]');
             $this->success('退出成功！', url('login'));
         } else {
             $this->redirect('login');

@@ -72,6 +72,15 @@ class User extends Model
     }
 
     /**
+     * 注销登录状态
+     */
+    public function logout()
+    {
+        session('user_auth', null);
+        session('user_auth_sign', null);
+    }
+
+    /**
      * 创建管理员
      * @param type $data
      * @return boolean
@@ -182,6 +191,55 @@ class User extends Model
             $this->error = '删除失败！';
             return false;
         }
+    }
+
+    /**
+     * 修改密码
+     * @param int $uid 用户ID
+     * @param string $newPass 新密码
+     * @param string $password 旧密码
+     * @return boolean
+     */
+    public function modifypw($uid, $newPass, $password = NULL) {
+        //获取会员信息
+        $userInfo = $this->getUserInfo((int) $uid, $password);
+        if (empty($userInfo)) {
+            $this->error = '旧密码不正确或者该用户不存在！';
+            return false;
+        }
+        $passwordinfo = password($newPass);//对密码进行处理
+        $data['encrypt'] = $passwordinfo['encrypt'];
+        $data['password'] = $passwordinfo['password'];
+        $status = $this->allowField(true)->isUpdate(true)->save($data,array('userid' => $userInfo['userid']));
+        return $status !== false ? true : false;
+    }
+
+
+    /**
+     * 获取用户信息
+     * @param type $identifier 用户名或者用户ID
+     * @return boolean|array
+     */
+    public function getUserInfo($identifier, $password = NULL) {
+        if (empty($identifier)) {
+            return false;
+        }
+        $map = array();
+        //判断是uid还是用户名
+        if (is_int($identifier)) {
+            $map['userid'] = $identifier;
+        } else {
+            $map['username'] = $identifier;
+        }
+        $userInfo = $this->where($map)->find();
+        if (empty($userInfo)) {
+            return false;
+        }
+        //密码验证
+        if (!empty($password) && password($password,$userInfo['encrypt']) != $userInfo['password']) {
+            return false;
+        }
+        return $userInfo;
     }
 
 
