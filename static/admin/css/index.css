@@ -224,6 +224,9 @@ textarea { line-height: 18px; display: inline-block; height: 36px; cursor: text;
 .txt,
 select,
 .vmiddle { vertical-align: middle; }
+.sort input,
+.sort .editable,
+.sort .editable2 { width: 36px; }
 .name input,
 .name .editable,
 .name .editable2 { width: 250px; }

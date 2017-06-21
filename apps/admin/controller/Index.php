@@ -105,12 +105,12 @@ class Index extends Adminbase
 
     }
 
-    /* 退出登录 */
+    /* 手动退出登录 */
     public function logout()
     {
         if(is_login()){
             model('Admin/User')->logout();
-            session('[destroy]');
+            session('[destroy]');//自动退出
             $this->success('退出成功！', url('login'));
         } else {
             $this->redirect('login');
