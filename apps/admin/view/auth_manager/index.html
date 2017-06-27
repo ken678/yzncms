@@ -29,12 +29,7 @@
           <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul>
                 <li><a href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a></li>
-                {eq name="vo.status" value="1"}
-                <li><a onclick="fg_editRow({$vo['id']},'forbidGroup')" href="javascript:;">禁用</a></li>
-                {else/}
-                <li><a onclick="fg_editRow({$vo['id']},'resumeGroup')" href="javascript:;">启用</a></li>
-                {/eq}
-                <li><a onclick="fg_editRow({$vo['id']},'deleteGroup')" href="javascript:;">删除</a></li>
+                <li><a href="{:url('AuthManager/deletegroup?id='.$vo['id'])}">删除</a></li>
             </ul>
           </span>
           </td>
@@ -76,43 +71,6 @@ function fg_operation(name, grid) {
     if (name == 'add') {
         window.location.href = '{:url("AuthManager/createGroup")}';
     }
-}
-
-function fg_editRow(id,methods) {
-  if (typeof id == 'number') {
-      var id = new Array(id.toString());
-  };
-  id = id.join(',');
-  switch(methods){
-  case 'resumegroup':
-  var url = "{:url('AuthManager/changeStatus?method=resumegroup')}";
-  break;
-  case 'forbidGroup':
-  var url = "{:url('AuthManager/changeStatus?method=forbidGroup')}";
-  break;
-  case 'resumeGroup':
-  var url = "{:url('AuthManager/changeStatus?method=resumegroup')}";
-  break;
-  case 'deleteGroup':
-  if(!confirm('删除后将不能恢复，确认删除吗？')){
-    return false;
-  }
-  var url = "{:url('AuthManager/changeStatus?method=deleteGroup')}";
-  break;
-  }
-  $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: url,
-        data: {id:id},
-        success: function(data){
-            if (data.code){
-                window.location.reload();
-            } else {
-                alert(data.msg);
-            }
-        }
-    });
 }
 </script>
 {/block}

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:41:"E:\yzncms/apps/admin\view\menu\index.html";i:1498438237;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:53:"E:\yzncms/apps/admin\view\auth_manager\editgroup.html";i:1496734636;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -34,78 +34,47 @@ var SITEURL = '';
 
 <div class="page">
   <div class="fixed-bar">
-    <div class="item-title">
+    <div class="item-title"><a class="back" href="<?php echo url('AuthManager/index'); ?>" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
       <div class="subject">
-        <h3>后台菜单管理</h3>
-        <h5>所有后台菜单索引及管理</h5>
+        <h3>权限设置 - <?php echo !empty($auth_group['id'])?'编辑':'新增'; ?>权限组</h3>
+        <h5>管理中心操作权限及分组设置</h5>
       </div>
     </div>
   </div>
+  <!-- 操作说明 -->
   <div class="explanation" id="explanation">
     <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
       <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
-      <span id="explanationZoom" title="收起提示"></span>
-    </div>
-    <ul>
-    </ul>
+      <span id="explanationZoom" title="收起提示"></span> </div>
+      <ul>
+        <li>添加权限组，方便添加管理员时使用。</li>
+      </ul>
   </div>
-  <form method='post'>
-    <table class="flex-table">
-      <thead>
-        <tr>
-          <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
-          <th width="60"  align="center">排序</th>
-          <th width="60" align="center">ID</th>
-          <th width="550" align="left">菜单英文名称</th>
-          <th width="60" align="center">状态</th>
-          <th width="150" class="handle" align="center">操作</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php echo $categorys; ?>
-      </tbody>
-    </table>
+  <form action="<?php echo url('AuthManager/writeGroup'); ?>" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
+    <div class="ncap-form-default">
+      <dl class="row">
+        <dt class="tit">
+          <label for="admin_name"><em>*</em>权限组</label>
+        </dt>
+        <dd class="opt">
+          <input type="text"  value="<?php echo $auth_group['title']; ?>" maxlength="40"  name="title" class="input-txt">
+          <p class="notic">权限组名称，用于添加管理员时选择使用。</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="admin_name">描述</label>
+        </dt>
+        <dd class="opt">
+          <textarea name="description" rows="6" class="tarea" ><?php echo $auth_group['description']; ?></textarea>
+          <p class="notic">权限的相关描述</p>
+        </dd>
+      </dl>
+      <?php if(isset($auth_group['id'])): ?><input type="hidden" name="id" value="<?php echo $auth_group['id']; ?>" /><?php endif; ?>
+      <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
+    </div>
   </form>
 </div>
-<script type="text/javascript">
-$(function(){
-    $('.flex-table').flexigrid({
-        height:'auto',// 高度自动
-        usepager: false,// 不翻页
-        striped:false,// 不使用斑马线
-        resizable: false,// 不调节大小
-        title: '后台菜单列表',// 表格标题
-        reload: false,// 不使用刷新
-        columnControl: false,// 不使用列控制
-        buttons : [
-                   {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
-               ]
-    });
-    $('span[nc_type="inline_edit"]').inline_edit({act: 'goods_class',op: 'ajax'});
-});
-
-function fg_operation(name, bDiv) {
-    if (name == 'add') {
-        window.location.href = '<?php echo url("menu/add"); ?>';
-    }
-}
-function fg_del(ids) {
-    if (typeof ids == 'number') {
-        var ids = new Array(ids.toString());
-    };
-    id = ids.join(',');
-    if(confirm('删除后将不能恢复，确认删除这项吗？')){
-        $.getJSON('index.php?act=goods_class&op=goods_class_del', {id:id}, function(data){
-            if (data.state) {
-                location.reload();
-            } else {
-                showError(data.msg)
-            }
-        });
-    }
-}
-</script>
 
 <div id="goTop"> <a href="JavaScript:void(0);" id="btntop"><i class="fa fa-angle-up"></i></a><a href="JavaScript:void(0);" id="btnbottom"><i class="fa fa-angle-down"></i></a></div>
 </body>

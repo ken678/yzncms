@@ -55,18 +55,7 @@ $(function(){
 
 function fg_operation(name, bDiv) {
     if (name == 'add') {
-        window.location.href = 'index.php?act=goods_class&op=goods_class_add';
-    } else if (name == 'del') {
-        if ($('.trSelected', bDiv).length == 0) {
-            showError('请选择要操作的数据项！');
-        }
-        var itemids = new Array();
-        $('.trSelected', bDiv).each(function(i){
-            itemids[i] = $(this).attr('data-id');
-        });
-        fg_del(itemids);
-    } else if (name = 'csv') {
-        window.location.href = 'index.php?act=goods_class&op=goods_class_export';
+        window.location.href = '{:url("menu/add")}';
     }
 }
 function fg_del(ids) {

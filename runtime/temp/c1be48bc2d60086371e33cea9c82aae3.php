@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:49:"E:\yzncms/apps/admin\view\auth_manager\index.html";i:1496395411;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:49:"E:\yzncms/apps/admin\view\auth_manager\index.html";i:1498207173;s:44:"E:\yzncms/apps/admin\view\Public\layout.html";i:1495508374;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -61,12 +61,7 @@ var SITEURL = '';
           <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul>
                 <li><a href="<?php echo url('AuthManager/editgroup?id='.$vo['id']); ?>">编辑</a></li>
-                <?php if($vo['status'] == '1'): ?>
-                <li><a onclick="fg_editRow(<?php echo $vo['id']; ?>,'forbidGroup')" href="javascript:;">禁用</a></li>
-                <?php else: ?>
-                <li><a onclick="fg_editRow(<?php echo $vo['id']; ?>,'resumeGroup')" href="javascript:;">启用</a></li>
-                <?php endif; ?>
-                <li><a onclick="fg_editRow(<?php echo $vo['id']; ?>,'deleteGroup')" href="javascript:;">删除</a></li>
+                <li><a href="<?php echo url('AuthManager/deletegroup?id='.$vo['id']); ?>">删除</a></li>
             </ul>
           </span>
           </td>
@@ -108,43 +103,6 @@ function fg_operation(name, grid) {
     if (name == 'add') {
         window.location.href = '<?php echo url("AuthManager/createGroup"); ?>';
     }
-}
-
-function fg_editRow(id,methods) {
-  if (typeof id == 'number') {
-      var id = new Array(id.toString());
-  };
-  id = id.join(',');
-  switch(methods){
-  case 'resumegroup':
-  var url = "<?php echo url('AuthManager/changeStatus?method=resumegroup'); ?>";
-  break;
-  case 'forbidGroup':
-  var url = "<?php echo url('AuthManager/changeStatus?method=forbidGroup'); ?>";
-  break;
-  case 'resumeGroup':
-  var url = "<?php echo url('AuthManager/changeStatus?method=resumegroup'); ?>";
-  break;
-  case 'deleteGroup':
-  if(!confirm('删除后将不能恢复，确认删除吗？')){
-    return false;
-  }
-  var url = "<?php echo url('AuthManager/changeStatus?method=deleteGroup'); ?>";
-  break;
-  }
-  $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: url,
-        data: {id:id},
-        success: function(data){
-            if (data.code){
-                window.location.reload();
-            } else {
-                alert(data.msg);
-            }
-        }
-    });
 }
 </script>
 

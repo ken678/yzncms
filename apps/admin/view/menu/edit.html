@@ -1,0 +1,140 @@
+{extend name="Public:layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title"><a class="back" href="{:url("menu/index")}" title="返回商品分类列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+      <div class="subject">
+        <h3>后台菜单管理 - 新增</h3>
+        <h5>所有后台菜单索引及管理</h5>
+      </div>
+    </div>
+  </div>
+  <form id="menu_form" method="post" enctype="multipart/form-data">
+      <div class="ncap-form-default">
+<dl class="row">
+        <dt class="tit">
+          <label for="pid">上级菜单</label>
+        </dt>
+        <dd class="opt">
+          <select name="pid" id="pid" class="valid">
+            <option value="0">作为一级菜单</option>
+                {$select_categorys}
+          </select>
+          <span class="err"></span>
+          <p class="notic">如果选择上级分类，那么新增的分类则为被选择上级分类的子分类</p>
+        </dd>
+      </dl>
+        <dl class="row">
+          <dt class="tit">
+            <label for="title">名称</label>
+          </dt>
+          <dd class="opt">
+            <input type="text" class="input-txt" name="title" id="title" value="{$data.title}" />
+            <span class="err"></span>
+          </dd>
+        </dl>
+        <dl class="row">
+          <dt class="tit">
+            <label for="app">模块</label>
+          </dt>
+          <dd class="opt">
+            <input type="text" class="input-txt" name="app" id="app" value="{$data.app}" />
+            <span class="err"></span>
+          </dd>
+        </dl>
+        <dl class="row">
+          <dt class="tit">
+            <label for="controller">控制器</label>
+          </dt>
+          <dd class="opt">
+            <input type="text" class="input-txt" name="controller" id="controller" value="{$data.controller}" />
+            <span class="err"></span>
+          </dd>
+        </dl>
+        <dl class="row">
+          <dt class="tit">
+            <label for="action">方法</label>
+          </dt>
+          <dd class="opt">
+            <input type="text" class="input-txt" name="action" id="action" value="{$data.action}" />
+            <span class="err"></span>
+          </dd>
+        </dl>
+        <dl class="row">
+          <dt class="tit">
+            <label for="parameter">附加参数</label>
+          </dt>
+          <dd class="opt">
+            <input type="text" class="input-txt" name="parameter" id="parameter" value="{$data.parameter}" />
+            <span class="err"></span>
+          </dd>
+        </dl>
+        <dl class="row">
+          <dt class="tit">是否隐藏</dt>
+          <dd class="opt">
+            <div class="onoff">
+              <label for="status1" class="cb-enable {eq name="data.status" value="1"}selected{/eq}">是</label>
+              <label for="status0" class="cb-disable {eq name="data.status" value="0"}selected{/eq}">否</label>
+              <input id="status1" name="status" value="1" type="radio">
+              <input id="status0" name="status" value="0" type="radio">
+            </div>
+            <p class="notic">默认为隐藏，显示请点击【是】</p>
+          </dd>
+        </dl>
+        <input type="hidden" name="id" value="{$data.id}" />
+        <div class="bot"><a id="submitBtn" class="ncap-btn-big ncap-btn-green" href="JavaScript:void(0);">确认提交</a></div>
+      </div>
+  </form>
+</div>
+<script>
+$(function(){
+//按钮先执行验证再提交表单
+  $("#submitBtn").click(function(){
+    if($("#menu_form").valid()){
+      $("#menu_form").submit();
+    }
+  });
+  //表单验证
+  $('#menu_form').validate({
+        errorPlacement: function(error, element){
+      var error_td = element.parent('dd').children('span.err');
+            error_td.append(error);
+        },
+        rules : {
+            pid : {
+              required :true,
+            },
+            title : {
+              required :true,
+            },
+            app : {
+              required :true,
+            },
+            controller : {
+              required :true,
+            },
+            action : {
+              required :true,
+            }
+        },
+        messages : {
+            pid : {
+                required : '<i class="fa fa-exclamation-circle"></i>上级菜单不能为空',
+            },
+            title : {
+                required : '<i class="fa fa-exclamation-circle"></i>菜单名称不能为空',
+            },
+            app : {
+                required : '<i class="fa fa-exclamation-circle"></i>模块不能为空',
+            },
+            controller : {
+                required : '<i class="fa fa-exclamation-circle"></i>控制器不能为空',
+            },
+            action : {
+                required : '<i class="fa fa-exclamation-circle"></i>方法不能为空',
+            }
+        }
+    });
+});
+</script>
+{/block}

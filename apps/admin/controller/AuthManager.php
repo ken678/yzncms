@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\Controller;
+use \think\Request;
 use app\common\controller\Adminbase;
 use app\admin\model\AuthRule;
 use app\admin\model\AuthGroup;
@@ -31,36 +32,13 @@ class AuthManager extends Adminbase
     }
 
     /**
-     * 状态修改
-     */
-    public function changeStatus($method=null)
-    {
-        if ( empty(input('id/a')) ) {
-            $this->error('请选择要操作的数据!');
-        }
-        switch ( strtolower($method) ){
-            case 'forbidgroup':
-                $this->forbid('AuthGroup');
-                break;
-            case 'resumegroup':
-                $this->resume('AuthGroup');
-                break;
-            case 'deletegroup':
-                $this->delete('AuthGroup');
-                break;
-            default:
-                $this->error($method.'参数非法');
-        }
-    }
-
-    /**
      * 后台节点配置的url作为规则存入auth_rule
      * 执行新节点的插入,已有节点的更新,无效规则的删除三项任务
      */
     public function updateRules()
     {
         //需要新增的节点必然位于$nodes
-        $nodes    = model("Admin/Menu")->returnNodes(false);
+        $nodes    = model("common/Menu")->returnNodes(false);
         $AuthRule = model('AuthRule');
         $map      = array('module'=>'admin','type'=>array('in','1,2'));//status全部取出,以进行更新
         //需要更新和删除的节点必然位于$rules
@@ -135,8 +113,24 @@ class AuthManager extends Adminbase
      * 编辑管理员用户组
      */
     public function editGroup(){
-        $auth_group = db('AuthGroup')->where( array('module'=>'admin','type'=>AuthGroup::TYPE_ADMIN) )->find( (int)input('id') );
+        $id = Request::instance()->param('id/d');
+        $auth_group = db('AuthGroup')->where( array('module'=>'admin','type'=>AuthGroup::TYPE_ADMIN) )->find($id);
         $this->assign('auth_group',$auth_group);
+        return $this->fetch();
+    }
+
+    /**
+     * 删除管理员用户组
+     */
+    public function deleteGroup(){
+        $id = Request::instance()->param('id/d');
+        $AuthGroup       =  model('AuthGroup');
+        $r = $AuthGroup ->destroy($id);
+        if($r===false){
+            $this->error('操作失败'.$AuthGroup->getError());
+        } else{
+            $this->success('操作成功!');
+        }
         return $this->fetch();
     }
 
@@ -146,7 +140,8 @@ class AuthManager extends Adminbase
     public function access()
     {
         $this->updateRules();//更新节点
-        $node_list   = model("Admin/Menu")->returnNodes();
+        $group_id = Request::instance()->param('group_id/d');
+        $node_list   = model("common/Menu")->returnNodes();
         $auth_group = db('AuthGroup')
                     ->where( array('status'=>array('egt','0'),'module'=>'admin','type'=>AuthGroup::TYPE_ADMIN) )
                     ->column('id,title,rules');
@@ -159,7 +154,7 @@ class AuthManager extends Adminbase
         $this->assign('auth_group', $auth_group);
         $this->assign('main_rules', $main_rules);
         $this->assign('auth_rules', $child_rules);
-        $this->assign('this_group', $auth_group[(int)input('group_id')]);
+        $this->assign('this_group', $auth_group[$group_id]);
         return $this->fetch('managergroup');
     }
 
@@ -168,7 +163,7 @@ class AuthManager extends Adminbase
      * 管理员用户组数据写入/更新
      */
     public function writeGroup(){
-        $data = input();
+        $data = Request::instance()->param();
         if(isset($data['rules'])){
             sort($data['rules']);
             $data['rules']  = implode( ',' , array_unique($data['rules']));

@@ -28,6 +28,20 @@ $(function() {
         }
     );
 
+    //自定义radio样式
+    $(".cb-enable").click(function(){
+        var parent = $(this).parents('.onoff');
+        $('.cb-disable',parent).removeClass('selected');
+        $(this).addClass('selected');
+        $('.checkbox',parent).attr('checked', true);
+    });
+    $(".cb-disable").click(function(){
+        var parent = $(this).parents('.onoff');
+        $('.cb-enable',parent).removeClass('selected');
+        $(this).addClass('selected');
+        $('.checkbox',parent).attr('checked', false);
+    });
+
 
 
 
