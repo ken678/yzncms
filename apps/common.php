@@ -9,6 +9,86 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 // 公用函数
+use think\Cache;
+/**
+ * 系统缓存缓存管理
+ * @param mixed $name 缓存名称
+ * @param mixed $value 缓存值
+ * @param mixed $options 缓存参数
+ * @return mixed
+ */
+function cache($name, $value = '', $options = null) {
+    static $cache = '';
+    if (empty($cache)) {
+        $cache = new \Cache_factory();
+    }
+    // 获取缓存
+    if ('' === $value) {
+        if (false !== strpos($name, '.')) {
+            $vars = explode('.', $name);
+            $data = $cache->get($vars[0]);
+            return is_array($data) ? $data[$vars[1]] : $data;
+        } else {
+            return $cache->get($name);
+        }
+    } elseif (is_null($value)) {//删除缓存
+        return $cache->remove($name);
+    } else {//缓存数据
+        if (is_array($options)) {
+            $expire = isset($options['expire']) ? $options['expire'] : NULL;
+        } else {
+            $expire = is_numeric($options) ? $options : NULL;
+        }
+        return $cache->set($name, $value, $expire);
+    }
+}
+
+/**
+ * 获取栏目相关信息
+ * @param type $catid 栏目id
+ * @param type $field 返回的字段，默认返回全部，数组
+ * @param type $newCache 是否强制刷新
+ * @return boolean
+ */
+function getCategory($catid, $field = '', $newCache = false) {
+    if (empty($catid)) {
+        return false;
+    }
+    $key = 'getCategory_' . $catid;
+    //强制刷新缓存
+    if ($newCache) {
+        Cache::rm($key, NULL);
+    }
+    $cache = Cache::get($key);
+    if ($cache === 'false') {
+        return false;
+    }
+    if (empty($cache)) {
+        //读取数据
+        $cache = db('Category')->where(array('catid' => $catid))->find();
+        if (empty($cache)) {
+            Cache::set($key, 'false', 60);
+            return false;
+        } else {
+            //扩展配置
+            $cache['setting'] = unserialize($cache['setting']);
+            //栏目扩展字段
+            //$cache['extend'] = $cache['setting']['extend'];
+            Cache::set($key, $cache, 3600);
+        }
+    }
+    if ($field) {
+        //支持var.property，不过只支持一维数组
+        if (false !== strpos($field, '.')) {
+            $vars = explode('.', $field);
+            return $cache[$vars[0]][$vars[1]];
+        } else {
+            return $cache[$field];
+        }
+    } else {
+        return $cache;
+    }
+}
 
 /**
  * 格式化字节大小

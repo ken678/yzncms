@@ -18,7 +18,7 @@
         <li>可在标题处全选所有功能或根据功能模块逐一选择操作权限，提交保存后生效。</li>
       </ul>
   </div>
-  <form action="{:url('AuthManager/writeGroup')}" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
+  <form action="{:url('AuthManager/writeGroup')}" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form" style="margin-bottom: 50px;">
     <div class="ncap-form-all">
       <div class="title">
         <h3>权限操作设置详情</h3>
@@ -31,6 +31,7 @@
           <dd class="opt nobg nopd nobd nobs">
           {present name="node['child']"}
           {volist name="node['child']" id="child" }
+          {present name="child['operator']"}
           {volist name="child['operator']" id="op"}
               <div class="ncap-account-container">
                   <h4><input class="checkbox" type="checkbox" nctype="groupAll" value="<?php echo $auth_rules[$op['url']] ?>" name="rules[]">{$op.title}操作</h4>
@@ -43,6 +44,7 @@
                   </ul>
               </div>
           {/volist}
+          {/present}
           {/volist}
           {/present}
           </dd>

@@ -10,9 +10,10 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 use \think\Request;
-use \think\Db;
 use \think\Loader;
 use app\common\controller\Adminbase;
+use app\admin\logic\Menu as MenuLogic;
+use app\admin\model\Menu as MenuModel;
 
 /**
  * 后台菜单管理
@@ -22,7 +23,7 @@ class Menu extends Adminbase
 	protected function _initialize()
     {
         parent::_initialize();
-        $this->Menu = Loader::model("Admin/Menu");
+        $this->Menu = new MenuLogic();
     }
 
 	/**
@@ -30,33 +31,32 @@ class Menu extends Adminbase
 	 */
     public function index()
     {
-    	$tree = new \Tree();
+        $tree = new \Tree();
         $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ','&nbsp;&nbsp;&nbsp;├─ ','&nbsp;&nbsp;&nbsp;└─ ');
-		$tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-
-        $result = Db::name('menu')->order(array('listorder','id'=>'DESC'))->select();
+        $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+        $result = MenuModel::getList();
         $array = array();
-		foreach($result as $r) {
-			$r['str_manage'] = '<a class="btn red" href="javascript:if(confirm(\'您确定要删除吗?.\')){location.href=\''.url("Menu/delete",array("id" => $r['id'])).'\'};"><i class="fa fa-trash-o"></i>删除</a><span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
+        foreach($result as $r) {
+        $r['str_manage'] = '<a class="btn red" href="javascript:if(confirm(\'您确定要删除吗?.\')){location.href=\''.url("Menu/delete",array("id" => $r['id'])).'\'};"><i class="fa fa-trash-o"></i>删除</a><span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul>
               <li><a href="'.url("Menu/edit", array("id" => $r['id'])).'">编辑菜单</a></li>
               <li><a href="'.url("Menu/add",array("parentid" => $r['id'])).'">添加子菜单</a></li>
             </ul>
             </span>';
             $r['status'] = $r['status'] ? "<span class='on'><i class='fa fa-toggle-on'></i>显示</span>" : "<span class='off'><i class='fa fa-toggle-off'></i>隐藏</span>";
-			$array[] = $r;
-		}
-		$str  = "<tr data-id='1'>
-		            <td class='sign'><i class='ico-check'></i></td>
-		            <td class='sort'><span title='可编辑' column_id='1' fieldname='gc_sort' nc_type='inline_edit' class='editable'>\$listorder</span></td>
-		            <td>\$id</td>
-		            <td>\$spacer\$title</td>
-		            <td>\$status</td>
-					<td class='handle'>\$str_manage</td>
-					<td></td>
-				</tr>";
-		$tree->init($array);
-		$categorys = $tree->get_tree(0, $str);
+        $array[] = $r;
+        }
+        $str  = "<tr data-id='\$id'>
+                <td class='sign'><i class='ico-check'></i></td>
+                <td class='sort'><span title='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable'>\$listorder</span></td>
+                <td>\$id</td>
+                <td>\$spacer\$title</td>
+                <td>\$status</td>
+        	<td class='handle'>\$str_manage</td>
+        	<td></td>
+        </tr>";
+        $tree->init($array);
+        $categorys = $tree->get_tree(0, $str);
         $this->assign('categorys', $categorys);
         return $this->fetch();
     }
@@ -77,7 +77,7 @@ class Menu extends Adminbase
    	   }else{
    	   	    $tree = new \Tree();
    	   	    $parentid = Request::instance()->param('parentid/d','');
-   	   	    $result = Db::name('menu')->order(array('listorder','id'=>'DESC'))->select();
+            $result = MenuModel::getList();
    	   	    $array = array();
    	   	    foreach ($result as $r) {
                 $r['selected'] = $r['id'] == $parentid ? 'selected' : '';
@@ -107,17 +107,17 @@ class Menu extends Adminbase
    	   }else{
    	   	    $tree = new \Tree();
    	   	    $id = Request::instance()->param('id/d','');
-   	   	    $rs = Db::name('menu')->find($id);
-   	   	    $result = Db::name('menu')->order(array('listorder','id'=>'DESC'))->select();
+            $rs = MenuModel::getInfo(array("id" => $id));
+            $result = MenuModel::getList();
    	   	    $array = array();
    	   	    foreach ($result as $r) {
-                $r['selected'] = $r['id'] == $rs['pid'] ? 'selected' : '';
+                $r['selected'] = $r['id'] == $rs['parentid'] ? 'selected' : '';
                 $array[] = $r;
             }
             $str  = "<option value='\$id' \$selected>\$spacer \$title</option>";
-      			$tree->init($array);
-      			$select_categorys = $tree->get_tree(0, $str);
-      		  $this->assign("data", $rs);
+  			$tree->init($array);
+  			$select_categorys = $tree->get_tree(0, $str);
+      		$this->assign("data", $rs);
             $this->assign("select_categorys", $select_categorys);
    	   	    return $this->fetch();
    	   }
@@ -130,15 +130,27 @@ class Menu extends Adminbase
     public function delete()
     {
         $id = Request::instance()->param('id/d');
-        $result = Db::name('menu')->where(array("pid" => $id))->find();
+        $result = MenuModel::getInfo(array("parentid" => $id));
         if ($result) {
             $this->error("含有子菜单，无法删除！");
         }
-        if (Db::name('menu')->delete($id) !== false) {
+        if (MenuModel::remove($id) !== false) {
             $this->success("删除菜单成功！");
         } else {
             $this->error("删除失败！");
         }
+    }
+
+    /**
+     * 菜单排序
+     */
+    public function listorder()
+    {
+      $id = Request::instance()->param('id/d',0);
+      $listorder = Request::instance()->param('value/d',0);
+      MenuModel::edit(['listorder' => $listorder,'id'=>$id]);
+      $return = 'true';
+      exit(json_encode(array('result'=>$return)));
     }
 
 

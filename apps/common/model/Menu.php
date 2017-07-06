@@ -99,7 +99,7 @@ class Menu extends Model
     final public function adminMenu($parentid, $with_self = false)
     {
         $parentid = (int) $parentid;
-        $result = $this->where(array('pid' => $parentid, 'status' => 1))->order('listorder ASC,id ASC')->select()->toArray();
+        $result = $this->where(array('parentid' => $parentid, 'status' => 1))->order('listorder ASC,id ASC')->select()->toArray();
         if (empty($result)) {
             $result = array();
         }
@@ -150,9 +150,9 @@ class Menu extends Model
      * 注意,返回的主菜单节点数组中有'controller'元素,以供区分子节点和主节点
      *
      */
-    final public function returnNodes($tree = true){
+    /*final public function returnNodes($tree = true){
         static $tree_nodes = array();
-        $module_name = Request::instance()->module();
+        //$module_name = Request::instance()->module();
         if ( $tree && !empty($tree_nodes[(int)$tree]) ) {
             return $tree_nodes[$tree];
         }
@@ -176,7 +176,7 @@ class Menu extends Model
         }
         $tree_nodes[(int)$tree]   = $nodes;
         return $nodes;
-    }
+    }*/
 
 
 

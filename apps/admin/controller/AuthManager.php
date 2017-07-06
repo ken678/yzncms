@@ -40,7 +40,7 @@ class AuthManager extends Adminbase
         //需要新增的节点必然位于$nodes
         $nodes    = model("common/Menu")->returnNodes(false);
         $AuthRule = model('AuthRule');
-        $map      = array('module'=>'admin','type'=>array('in','1,2'));//status全部取出,以进行更新
+        $map      = array('type'=>array('in','1,2'));//status全部取出,以进行更新
         //需要更新和删除的节点必然位于$rules
         $rules    = $AuthRule->where($map)->order('name')->select();
 
@@ -143,11 +143,11 @@ class AuthManager extends Adminbase
         $group_id = Request::instance()->param('group_id/d');
         $node_list   = model("common/Menu")->returnNodes();
         $auth_group = db('AuthGroup')
-                    ->where( array('status'=>array('egt','0'),'module'=>'admin','type'=>AuthGroup::TYPE_ADMIN) )
+                    ->where( array('status'=>array('egt','0'),'type'=>AuthGroup::TYPE_ADMIN) )
                     ->column('id,title,rules');
-        $map         = array('module'=>'admin','type'=>AuthRule::RULE_MAIN,'status'=>1);
+        $map         = array('type'=>AuthRule::RULE_MAIN,'status'=>1);
         $main_rules  = db('AuthRule')->where($map)->column('name,id');
-        $map         = array('module'=>'admin','type'=>AuthRule::RULE_URL,'status'=>1);
+        $map         = array('type'=>AuthRule::RULE_URL,'status'=>1);
         $child_rules = db('AuthRule')->where($map)->column('name,id');
 
         $this->assign('node_list',  $node_list);

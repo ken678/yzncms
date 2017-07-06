@@ -62,7 +62,7 @@ class Tree
         $a = $newarr = array();
         if(is_array($this->arr)){
             foreach($this->arr as $id => $a){
-                if($a['pid'] == $myid) $newarr[$id] = $a;
+                if($a['parentid'] == $myid) $newarr[$id] = $a;
             }
         }
         return $newarr ? $newarr : false;
@@ -91,7 +91,7 @@ class Tree
                 $spacer = $adds ? $adds.$j : '';
                 $selected = $id==$sid ? 'selected' : '';
                 @extract($value);
-                $pid == 0 && $str_group ? eval("\$nstr = \"$str_group\";") : eval("\$nstr = \"$str\";");
+                $parentid == 0 && $str_group ? eval("\$nstr = \"$str_group\";") : eval("\$nstr = \"$str\";");
                 $this->ret .= $nstr;
                 $nbsp = $this->nbsp;
                 $this->get_tree($id, $str, $sid, $adds.$k.$nbsp,$str_group);

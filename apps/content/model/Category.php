@@ -8,40 +8,30 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-namespace app\admin\model;
+namespace app\content\model;
 use \think\Model;
-use think\Db;
-
+use \think\Db;
+use \think\Cache;
 /**
- * 菜单基础模型
+ * 栏目模型
  */
-class Menu extends Model
+class Category extends Model
 {
-	//获取菜单列表
-	public static function getList()
+
+    //刷新栏目索引缓存
+    public function category_cache()
     {
-        return Db::name('menu')->order(array('listorder','id'=>'DESC'))->select();
+        $data = Db::name('category')->order("listorder ASC")->select();
+        $CategoryIds = array();
+        foreach ($data as $r) {
+            $CategoryIds[$r['catid']] = array(
+                'catid' => $r['catid'],
+                'parentid' => $r['parentid'],
+            );
+        }
+        Cache::set("Category", $CategoryIds);
+        return $CategoryIds;
     }
-
-    // 获取菜单
-    public static function getInfo($map)
-    {
-        return Db::name('menu')->where($map)->find();
-    }
-
-    // 更新数据
-    public static function edit($data)
-    {
-        return Db::name('menu')->update($data);
-    }
-
-    // 删除数据
-    public static function remove($id)
-    {
-        return Db::name('menu')->delete($id);
-    }
-
-
 
 
 }
