@@ -150,7 +150,7 @@ class Menu extends Model
      * 注意,返回的主菜单节点数组中有'controller'元素,以供区分子节点和主节点
      *
      */
-    /*final public function returnNodes($tree = true){
+    final public function returnNodes($tree = true){
         static $tree_nodes = array();
         //$module_name = Request::instance()->module();
         if ( $tree && !empty($tree_nodes[(int)$tree]) ) {
@@ -161,7 +161,7 @@ class Menu extends Model
             foreach ($list as $key => $value) {
                 $list[$key]['url'] = $value['app'].'/'.$value['controller'].'/'.$value['action'];
             }
-            $nodes = list_to_tree($list,$pk='id',$pid='pid',$child='operator',$root=0);
+            $nodes = list_to_tree($list,$pk='id',$pid='parentid',$child='operator',$root=0);
             foreach ($nodes as $key => $value) {
                 if(!empty($value['operator'])){
                     $nodes[$key]['child'] = $value['operator'];
@@ -176,7 +176,7 @@ class Menu extends Model
         }
         $tree_nodes[(int)$tree]   = $nodes;
         return $nodes;
-    }*/
+    }
 
 
 

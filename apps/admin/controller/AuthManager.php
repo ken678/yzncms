@@ -50,7 +50,7 @@ class AuthManager extends Adminbase
             $temp['name']   = $value['url'];
             $temp['title']  = $value['title'];
             $temp['module'] = $value['app'];
-            if($value['pid'] >0){
+            if($value['parentid'] >0){
                 $temp['type'] = AuthRule::RULE_URL;
             }else{
                 $temp['type'] = AuthRule::RULE_MAIN;

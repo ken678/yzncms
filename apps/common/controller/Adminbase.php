@@ -41,7 +41,6 @@ class Adminbase extends Base
                 }
                 config($config);//添加配置
                 define('IS_ROOT',   is_administrator());
-
                 // 检测系统权限
                 if(!IS_ROOT){
                     //检测访问权限

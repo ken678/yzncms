@@ -44,6 +44,38 @@ function cache($name, $value = '', $options = null) {
 }
 
 /**
+ * 获取模型数据
+ * @param type $modelid 模型ID
+ * @param type $field 返回的字段，默认返回全部，数组
+ * @return boolean
+ */
+function getModel($modelid, $field = '') {
+    if (empty($modelid)) {
+        return false;
+    }
+    $key = 'getModel_' . $modelid;
+    $cache = Cache::get($key);
+    if ($cache === 'false') {
+        return false;
+    }
+    if (empty($cache)) {
+        //读取数据
+        $cache =db('Model')->where(array('modelid' => $modelid))->find();
+        if (empty($cache)) {
+            Cache::set($key, 'false', 60);
+            return false;
+        } else {
+            Cache::set($key, $cache, 3600);
+        }
+    }
+    if ($field) {
+        return $cache[$field];
+    } else {
+        return $cache;
+    }
+}
+
+/**
  * 获取栏目相关信息
  * @param type $catid 栏目id
  * @param type $field 返回的字段，默认返回全部，数组
@@ -173,7 +205,7 @@ function is_login(){
  */
 function is_administrator($uid = null){
     $uid = is_null($uid) ? is_login() : $uid;
-    return $uid && (intval($uid) === config('user_administrator'));
+    return $uid && (intval($uid) === config('USER_ADMINISTRATOR'));
 }
 
 /**
@@ -200,7 +232,7 @@ function data_auth_sign($data) {
  * @return array
  * @author 麦当苗儿 <zuojiazi@vip.qq.com>
  */
-function list_to_tree($list, $pk='id', $pid = 'pid', $child = '_child', $root = 0) {
+function list_to_tree($list, $pk='id', $pid = 'parentid', $child = '_child', $root = 0) {
     // 创建Tree
     $tree = array();
     if(is_array($list)) {

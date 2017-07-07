@@ -9,6 +9,8 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\controller;
+use \think\Url;
+use \think\Request;
 use app\common\controller\Adminbase;
 
 class Category extends Adminbase
@@ -29,19 +31,19 @@ class Category extends Adminbase
         		$r['str_manage'] = '';
         		if ($r['type'] != 2) {
                     if ($r['type'] == 1) {
-                        $r['str_manage'] .= '<a href="' . url("Category/singlepage", array("parentid" => $r['catid'])) . '">添加子栏目</a> | ';
+                        $r['str_manage'] .= '<a href="' . Url::build("Category/singlepage", array("parentid" => $r['catid'])) . '">添加子栏目</a> | ';
                     } else {
-                        $r['str_manage'] .= '<a href="' . url("Category/add", array("parentid" => $r['catid'])) . '">添加子栏目</a> | ';
+                        $r['str_manage'] .= '<a href="' . Url::build("Category/add", array("parentid" => $r['catid'])) . '">添加子栏目</a> | ';
                     }
                 }
                 $r['typename'] = $types[$r['type']];
                 $r['help'] = '';
-                $r['str_manage'] .= '<a href="' . url("Category/edit", array("catid" => $r['catid'])) . '">修改</a> | <a class="J_ajax_del" href="' . url("Category/delete", array("catid" => $r['catid'])) . '">删除</a>';
+                $r['str_manage'] .= '<a href="' . Url::build("Category/edit", array("catid" => $r['catid'])) . '">修改</a> | <a class="J_ajax_del" href="' . Url::build("Category/delete", array("catid" => $r['catid'])) . '">删除</a>';
 
                 if ($r['url']) {
                     $r['url'] = "<a href='" . $r['url'] . "' target='_blank'>访问</a>";
                 } else {
-                    $r['url'] = "<a href='" . url("Category/public_cache") . "'><font color='red'>更新缓存</font></a>";
+                    $r['url'] = "<a href='" . Url::build("Category/public_cache") . "'><font color='red'>更新缓存</font></a>";
                 }
                 $categorys[$r['catid']] = $r;
         	}
@@ -69,6 +71,19 @@ class Category extends Adminbase
 		}
         $this->assign('categorys', $categorydata);
         return $this->fetch();
+    }
+
+    //删除栏目
+    public function delete()
+    {
+        $catid = Request::instance()->param('catid/d');
+        if (!$catid) {
+            $this->error("请指定需要删除的栏目！");
+        }
+        if (false == model("Content/Category")->deleteCatid($catid)) {
+            $this->error("含子栏目，无法删除！");
+        }
+        $this->success("栏目删除成功！", Url::build("Category/public_cache"));
     }
 
 }
