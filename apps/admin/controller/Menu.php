@@ -37,7 +37,7 @@ class Menu extends Adminbase
         $result = MenuModel::getList();
         $array = array();
         foreach($result as $r) {
-        $r['str_manage'] = '<a class="btn red" href="javascript:if(confirm(\'您确定要删除吗?.\')){location.href=\''.url("Menu/delete",array("id" => $r['id'])).'\'};"><i class="fa fa-trash-o"></i>删除</a><span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
+        $r['str_manage'] = '<a class="btn red" href="javascript:if(confirm(\'您确定要删除吗?\')){location.href=\''.url("Menu/delete",array("id" => $r['id'])).'\'};"><i class="fa fa-trash-o"></i>删除</a><span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
             <ul>
               <li><a href="'.url("Menu/edit", array("id" => $r['id'])).'">编辑菜单</a></li>
               <li><a href="'.url("Menu/add",array("parentid" => $r['id'])).'">添加子菜单</a></li>

@@ -22,7 +22,8 @@ class Models extends Model
      * @param type $type
      * @return type
      */
-    public function getModelAll($type = null) {
+    public function getModelAll($type = null)
+    {
         $where = array('disabled' => 0);
         if (!is_null($type)) {
             $where['type'] = $type;
@@ -39,7 +40,8 @@ class Models extends Model
      * 生成模型缓存，以模型ID为下标的数组
      * @return boolean
      */
-    public function model_cache() {
+    public function model_cache()
+    {
         $data = $this->getModelAll();
         Cache::set('Model', $data);
         return $data;

@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 // 公用函数
 use think\Cache;
+
 /**
  * 系统缓存缓存管理
  * @param mixed $name 缓存名称
@@ -20,7 +21,7 @@ use think\Cache;
 function cache($name, $value = '', $options = null) {
     static $cache = '';
     if (empty($cache)) {
-        $cache = new \Cache_factory();
+        $cache = \Libs\System\Cache_factory::getInstance();
     }
     // 获取缓存
     if ('' === $value) {

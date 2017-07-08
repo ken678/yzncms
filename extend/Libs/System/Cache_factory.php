@@ -8,9 +8,25 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
+namespace Libs\System;
 use \think\Cache;
 
-class Cache_factory {
+class Cache_factory
+{
+    /**
+     * 连接缓存系统
+     * @access public
+     * @param string $type 缓存类型
+     * @param array $options  配置数组
+     * @return void
+     */
+    static public function getInstance() {
+        static $systemHandier;
+        if (empty($systemHandier)) {
+            $systemHandier = new Cache_factory();
+        }
+        return $systemHandier;
+    }
 
     /**
      * 获取缓存

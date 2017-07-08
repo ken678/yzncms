@@ -23,13 +23,13 @@
         <tr>
           <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
           <th width="60"  align="center">排序</th>
+          <th width="150" class="handle" align="center">操作</th>
           <th width="60" align="center">栏目ID</th>
           <th width="250" align="left">栏目名称</th>
           <th width="70" align="center">栏目类型</th>
           <th width="70" align="center">所属模型</th>
           <th width="100" align="center">访问</th>
           <th width="100" align="center">域名绑定须知</th>
-          <th width="150" class="handle" align="center">操作</th>
           <th></th>
         </tr>
       </thead>
@@ -54,12 +54,12 @@ $(function(){
                    {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
                ]
     });
-    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("menu/listorder")}'});
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/category/listorder")}'});
 });
 
 function fg_operation(name, bDiv) {
     if (name == 'add') {
-        window.location.href = '{:url("menu/add")}';
+        window.location.href = '{:url("content/category//add")}';
     }
 }
 </script>

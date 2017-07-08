@@ -9,14 +9,18 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\controller;
+use \think\Db;
 use \think\Url;
 use \think\Request;
+use \think\Loader;
 use app\common\controller\Adminbase;
-
+/**
+ * 后台栏目管理
+ */
 class Category extends Adminbase
 {
 	/**
-	 * 管理栏目首页
+	 * 栏目列表
 	 */
     public function index()
     {
@@ -27,19 +31,22 @@ class Category extends Adminbase
         if (!empty($result)) {
         	foreach($result as $r) {
         		$r = getCategory($r['catid']);
-        		$r['modelname'] = $models[$r['modelid']]['name'];
         		$r['str_manage'] = '';
+                $r['str_manage'] .= '<a class="btn red" href="javascript:if(confirm(\'您确定要删除吗?\')){location.href=\'' . Url::build("Category/delete", array("catid" => $r['catid'])) . '\'};"><i class="fa fa-trash-o"></i>删除</a>';
+                $r['str_manage'] .= '<span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em><ul>';
         		if ($r['type'] != 2) {
                     if ($r['type'] == 1) {
-                        $r['str_manage'] .= '<a href="' . Url::build("Category/singlepage", array("parentid" => $r['catid'])) . '">添加子栏目</a> | ';
+                        $r['str_manage'] .= '<li><a href="' . Url::build("Category/singlepage", array("parentid" => $r['catid'])) . '">添加下级栏目</a></li>';
                     } else {
-                        $r['str_manage'] .= '<a href="' . Url::build("Category/add", array("parentid" => $r['catid'])) . '">添加子栏目</a> | ';
+                        $r['str_manage'] .= '<li><a href="' . Url::build("Category/add", array("parentid" => $r['catid'])) . '">添加下级栏目</a></li>';
                     }
                 }
+                $r['str_manage'] .= '<li><a href="' . Url::build("Category/edit", array("catid" => $r['catid'])) . '">修改栏目信息</a></li>';
+                $r['str_manage'] .= '</ul></span>';
+
+                $r['modelname'] = $models[$r['modelid']]['name'];
                 $r['typename'] = $types[$r['type']];
                 $r['help'] = '';
-                $r['str_manage'] .= '<a href="' . Url::build("Category/edit", array("catid" => $r['catid'])) . '">修改</a> | <a class="J_ajax_del" href="' . Url::build("Category/delete", array("catid" => $r['catid'])) . '">删除</a>';
-
                 if ($r['url']) {
                     $r['url'] = "<a href='" . $r['url'] . "' target='_blank'>访问</a>";
                 } else {
@@ -51,13 +58,13 @@ class Category extends Adminbase
 		$str = "<tr data-id='\$id'>
                 <td class='sign'><i class='ico-check'></i></td>
                 <td class='sort'><span title='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable'>\$listorder</span></td>
+                <td class='handle'>\$str_manage</td>
                 <td>\$id</td>
                 <td>\$spacer\$catname</td>
                 <td>\$typename</td>
         		<td>\$modelname</td>
         		<td align='center'>\$url</td>
                 <td>\$help</td>
-        		<td align='center' >\$str_manage</td>
                 <td></td>
         		</tr>";
 		if (!empty($categorys) && is_array($categorys)) {
@@ -80,10 +87,33 @@ class Category extends Adminbase
         if (!$catid) {
             $this->error("请指定需要删除的栏目！");
         }
-        if (false == model("Content/Category")->deleteCatid($catid)) {
-            $this->error("含子栏目，无法删除！");
+        //这里需增加栏目条数item直接判断
+        if (false == Loader::model("Content/Category")->deleteCatid($catid)) {
+            $this->error("栏目含有信息，无法删除！");
         }
         $this->success("栏目删除成功！", Url::build("Category/public_cache"));
+    }
+
+    /**
+     * 栏目排序
+     */
+    public function listorder()
+    {
+      $id = Request::instance()->param('id/d',0);
+      $listorder = Request::instance()->param('value/d',0);
+      Db::name('category')->update(['listorder' => $listorder,'catid'=>$id]);
+      //删除缓存
+      getCategory($id,'',true);
+      $this->cache();
+      $return = 'true';
+      exit(json_encode(array('result'=>$return)));
+    }
+
+    /**
+     * 清除栏目缓存
+     */
+    protected function cache() {
+        cache('Category', NULL);
     }
 
 }
