@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-07-06 23:01:45
+Date: 2017-07-08 22:21:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,36 +64,13 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=148 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
 -- ----------------------------
 INSERT INTO `yzn_action_log` VALUES ('129', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-26 09:52登录了后台', '1498441977');
 INSERT INTO `yzn_action_log` VALUES ('128', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-26 08:19登录了后台', '1498436342');
-INSERT INTO `yzn_action_log` VALUES ('85', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 17:28登录了后台', '1496741283');
-INSERT INTO `yzn_action_log` VALUES ('84', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 17:27登录了后台', '1496741261');
-INSERT INTO `yzn_action_log` VALUES ('83', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 17:24登录了后台', '1496741048');
-INSERT INTO `yzn_action_log` VALUES ('82', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 16:43登录了后台', '1496738624');
-INSERT INTO `yzn_action_log` VALUES ('81', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 16:43登录了后台', '1496738605');
-INSERT INTO `yzn_action_log` VALUES ('80', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 16:35登录了后台', '1496738120');
-INSERT INTO `yzn_action_log` VALUES ('79', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 16:24登录了后台', '1496737497');
-INSERT INTO `yzn_action_log` VALUES ('78', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 16:22登录了后台', '1496737339');
-INSERT INTO `yzn_action_log` VALUES ('77', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 16:21登录了后台', '1496737318');
-INSERT INTO `yzn_action_log` VALUES ('76', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 16:21登录了后台', '1496737265');
-INSERT INTO `yzn_action_log` VALUES ('75', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 16:20登录了后台', '1496737243');
-INSERT INTO `yzn_action_log` VALUES ('74', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 16:20登录了后台', '1496737208');
-INSERT INTO `yzn_action_log` VALUES ('73', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 15:53登录了后台', '1496735596');
-INSERT INTO `yzn_action_log` VALUES ('72', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 15:50登录了后台', '1496735436');
-INSERT INTO `yzn_action_log` VALUES ('71', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 15:26登录了后台', '1496733983');
-INSERT INTO `yzn_action_log` VALUES ('70', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 14:35登录了后台', '1496730903');
-INSERT INTO `yzn_action_log` VALUES ('69', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 12:57登录了后台', '1496725042');
-INSERT INTO `yzn_action_log` VALUES ('68', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 10:11登录了后台', '1496715109');
-INSERT INTO `yzn_action_log` VALUES ('67', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 10:01登录了后台', '1496714464');
-INSERT INTO `yzn_action_log` VALUES ('66', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 10:00登录了后台', '1496714402');
-INSERT INTO `yzn_action_log` VALUES ('65', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 09:56登录了后台', '1496714179');
-INSERT INTO `yzn_action_log` VALUES ('64', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 09:09登录了后台', '1496711353');
-INSERT INTO `yzn_action_log` VALUES ('63', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-05 17:49登录了后台', '1496656198');
 INSERT INTO `yzn_action_log` VALUES ('127', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-23 16:11登录了后台', '1498205480');
 INSERT INTO `yzn_action_log` VALUES ('126', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-21 17:57登录了后台', '1498039079');
 INSERT INTO `yzn_action_log` VALUES ('125', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-21 14:42登录了后台', '1498027366');
@@ -106,21 +83,6 @@ INSERT INTO `yzn_action_log` VALUES ('138', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('137', '1', '2', '2130706433', 'member', '2', 'ken678在2017-07-04 13:49登录了后台', '1499147342');
 INSERT INTO `yzn_action_log` VALUES ('136', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-04 11:47登录了后台', '1499140079');
 INSERT INTO `yzn_action_log` VALUES ('135', '1', '2', '2130706433', 'member', '2', 'ken678在2017-07-04 10:02登录了后台', '1499133722');
-INSERT INTO `yzn_action_log` VALUES ('62', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-05 17:00登录了后台', '1496653241');
-INSERT INTO `yzn_action_log` VALUES ('89', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-06 17:33登录了后台', '1496741610');
-INSERT INTO `yzn_action_log` VALUES ('87', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 17:30登录了后台', '1496741455');
-INSERT INTO `yzn_action_log` VALUES ('88', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-06 17:31登录了后台', '1496741479');
-INSERT INTO `yzn_action_log` VALUES ('91', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 08:25登录了后台', '1496795144');
-INSERT INTO `yzn_action_log` VALUES ('92', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 16:24登录了后台', '1496823848');
-INSERT INTO `yzn_action_log` VALUES ('93', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-07 16:32登录了后台', '1496824340');
-INSERT INTO `yzn_action_log` VALUES ('94', '1', '2', '2130706433', 'member', '2', 'ken678在2017-06-07 16:32登录了后台', '1496824377');
-INSERT INTO `yzn_action_log` VALUES ('95', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 16:34登录了后台', '1496824465');
-INSERT INTO `yzn_action_log` VALUES ('96', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 16:36登录了后台', '1496824617');
-INSERT INTO `yzn_action_log` VALUES ('97', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 16:37登录了后台', '1496824663');
-INSERT INTO `yzn_action_log` VALUES ('98', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 17:19登录了后台', '1496827196');
-INSERT INTO `yzn_action_log` VALUES ('99', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-07 17:29登录了后台', '1496827793');
-INSERT INTO `yzn_action_log` VALUES ('100', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-08 08:29登录了后台', '1496881777');
-INSERT INTO `yzn_action_log` VALUES ('101', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-08 08:36登录了后台', '1496882183');
 INSERT INTO `yzn_action_log` VALUES ('102', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-09 15:54登录了后台', '1496994860');
 INSERT INTO `yzn_action_log` VALUES ('103', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-12 08:21登录了后台', '1497226869');
 INSERT INTO `yzn_action_log` VALUES ('104', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-12 16:44登录了后台', '1497257088');
@@ -150,6 +112,9 @@ INSERT INTO `yzn_action_log` VALUES ('141', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('142', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-06 09:07登录了后台', '1499303235');
 INSERT INTO `yzn_action_log` VALUES ('143', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-06 12:34登录了后台', '1499315668');
 INSERT INTO `yzn_action_log` VALUES ('144', '1', '1', '0', 'member', '1', 'admin在2017-07-06 22:06登录了后台', '1499349992');
+INSERT INTO `yzn_action_log` VALUES ('145', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-07 22:52登录了后台', '1499439158');
+INSERT INTO `yzn_action_log` VALUES ('146', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-07 22:57登录了后台', '1499439475');
+INSERT INTO `yzn_action_log` VALUES ('147', '1', '1', '0', 'member', '1', 'admin在2017-07-08 17:26登录了后台', '1499506011');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -172,7 +137,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1499349992', '0', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1499506011', '0', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -192,6 +157,70 @@ CREATE TABLE `yzn_admin_panel` (
 -- ----------------------------
 INSERT INTO `yzn_admin_panel` VALUES ('19', '1', '权限设置', 'Admin/AuthManager/index');
 INSERT INTO `yzn_admin_panel` VALUES ('17', '1', '数据库备份', 'Admin/database/index');
+
+-- ----------------------------
+-- Table structure for `yzn_article`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_article`;
+CREATE TABLE `yzn_article` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(160) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `style` char(24) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `thumb` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `keywords` varchar(40) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` mediumtext COLLATE utf8_unicode_ci,
+  `url` char(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '1',
+  `sysadd` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `islink` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `username` char(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `inputtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `updatetime` int(10) unsigned NOT NULL DEFAULT '0',
+  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `prefix` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `views` int(11) NOT NULL DEFAULT '0' COMMENT '点击总数',
+  `yesterdayviews` int(11) NOT NULL DEFAULT '0' COMMENT '最日',
+  `dayviews` int(10) NOT NULL DEFAULT '0' COMMENT '今日点击数',
+  `weekviews` int(10) NOT NULL DEFAULT '0' COMMENT '本周访问数',
+  `monthviews` int(10) NOT NULL DEFAULT '0' COMMENT '本月访问',
+  `viewsupdatetime` int(10) NOT NULL DEFAULT '0' COMMENT '点击数更新时间',
+  PRIMARY KEY (`id`),
+  KEY `status` (`status`,`listorder`,`id`),
+  KEY `listorder` (`catid`,`status`,`listorder`,`id`),
+  KEY `catid` (`catid`,`weekviews`,`views`,`dayviews`,`monthviews`,`status`,`id`),
+  KEY `thumb` (`thumb`)
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of yzn_article
+-- ----------------------------
+INSERT INTO `yzn_article` VALUES ('1', '21', '阿里封杀电商导购原因：分流淘宝 易被对手拉拢', '', 'http://www.yzncms.com/demo/file/2013/06/51c51df81df14.jpg', '电商,阿里巴巴,淘宝网,美丽说,马云', '写在前面的话：当阿里巴巴买百度关键字，封杀美丽说、蘑菇街之时，谁还曾记得，彼时，阿里还曾将美丽说、蘑菇街当作心头好。是什么原因使阿...', '/index.php?a=shows&catid=21&id=1', '0', '99', '1', '0', 'admin', '1371872761', '1371872761', '1', '', '马云', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('2', '21', '传网店将收5%营业税 淘宝卖家一年或缴税400亿', '', 'http://www.yzncms.com/demo/file/2013/06/51c51ef3aaeca.jpg', '网店缴税,淘宝开店缴税,网店将收5%营业税', '山雨欲来风满楼。 5月30日，业界传出电商网店将被征收5%营业税的消息，在电商界犹如扔下了一颗原子弹。 日前，《每日经济新闻》记者就此事先后向国家工商总局市场司司长刘红亮、财政部财政科学研究所所长贾康、财政部财政科学研究所副所长刘尚希等求证，但或许基于话题', '/index.php?a=shows&catid=21&id=2', '0', '99', '1', '0', 'admin', '1371873012', '1371873012', '1', '', '淘宝', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('3', '21', '马云：菜鸟让我们对社会、未来有敬畏之心', '', 'http://www.yzncms.com/demo/file/2013/06/51c51f2eefb83.jpg', '马云,菜鸟,电子商务', '新浪科技讯 5月28日上午消息，由阿里巴巴集团牵头的物流项目中国智能骨干网（简称CSN）今日在深圳正式启动。马云在会上表示，这次出来并不是所谓的复出，而是为了实现四五年前的想法，只是今天选择了这个秀，今天的出台，是我们一代人的理想、梦想。 马云同时解释了为', '/index.php?a=shows&catid=21&id=3', '0', '99', '1', '0', 'admin', '1371873071', '1371873071', '1', '', '马云', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('4', '22', '为什么新浪微博广告屡遭骂名而豆瓣广告收获好评？', '', 'http://www.yzncms.com/demo/file/2013/06/51c52009459ad.jpg', '什么,新浪,微博,广告,屡遭,骂名,豆瓣,获好评,橘生,淮南,则为', '橘生淮南则为橘，生于淮北则为枳，这句话在社交网络的广告上同样适用。打开新浪微博和豆瓣，你会看到两种风格完全不同的广告，下面随便拿出一些对比。 前者为新浪微博上的推广广告，后者为豆瓣上的硬广推广。二者的差别？我想不用多做解释了吧。看了二者的广告，你可能', '/index.php?a=shows&catid=22&id=4', '0', '99', '1', '0', 'admin', '1371873289', '1371873289', '1', '', '新浪微博', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('5', '22', '大众点评网遭“黑”手：网页跳转至天猫', '', 'http://www.yzncms.com/demo/file/2013/06/51c52313391d9.jpg', '大众点评,大众点评被黑客攻击,网页跳转至天猫', '昨天凌晨，很多大众点评网的用户登录网站时发现无法打开网页，取而代之的是一个写着QQ号的弹窗，随后跳转至天猫页面，导致一些在点评网团购付款成功的用户订单延误。众多用户纷纷吐槽此次网站被黑事件，而QQ号指向的黑客helen则否认是其所为。', '/index.php?a=shows&catid=22&id=5', '0', '99', '1', '0', 'admin', '1371874073', '1371874073', '1', '', '大众点评', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('6', '22', '狗狗搜索宣布关站 版权问题难解', '', 'http://www.yzncms.com/demo/file/2013/06/51c5236ccba0e.jpg', '狗狗搜索,宣布关站,版权问题', '【搜狐IT消息】（小蕊）5月2日消息，狗狗搜索今日宣布暂停gougou.com网站服务，具体原因未知，版权问题恐怕依旧是难解之痛。 狗狗搜索是提供影视剧、电子书、软件、音乐下载的搜索引擎，2004年由李学凌创办，曾获得雷军100万人民币投资，2007年被卖给迅雷。', '/index.php?a=shows&catid=22&id=6', '0', '99', '1', '0', 'admin', '1371874160', '1371874160', '1', '', '狗狗搜索 迅雷', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('7', '22', '反击易迅 京东欲推一日四送', '', 'http://www.yzncms.com/demo/file/2013/06/51c523a819ded.jpg', '易迅 京东 一日四送', '一日四送 极速达一日四送服务，将实现三个小时商品送达，比之前的211限时达快出两倍 一日三送 早上订单在下午2时之前送达，中午订单在晚上6时之前送达，晚间订单在晚上10时之前送达 继价格战后，一对电商 冤家对头京东和易迅又将竞争的焦点对准到了物流速度上。', '/index.php?a=shows&catid=22&id=7', '0', '99', '1', '0', 'admin', '1371874216', '1371874216', '1', '', '易迅 京东', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('8', '16', '仿数字尾巴官网进度条jquery焦点图效果', '', 'http://www.yzncms.com/demo/file/2013/06/51c52a921a436.jpg', '进度条焦点图,时间轴焦点图,jquery焦点图,jquery插件', '仿数字尾巴官网进度条jquery焦点图效果 效果描述：jquery焦点图插件，带索引按钮，带进度条时间轴，支持自动切换，带入淡出的切换效果', '/index.php?a=shows&catid=16&id=8', '0', '99', '1', '0', 'admin', '1371875986', '1371875986', '0', '', 'jQuery', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('9', '16', 'jquery前后图片预览焦点图效果', '', 'http://www.yzncms.com/demo/file/2013/06/51c52ad03bc3f.jpg', 'jquery焦点图,左右滚动幻灯片,前后图片预览焦点图,jquery插件', 'jquery前后图片预览焦点图效果 效果描述：jquery焦点图效果，鼠标经过左右两边半透明部分显示左右箭头，点击左右滚动切换，支持自动切换！', '/index.php?a=shows&catid=16&id=9', '0', '99', '1', '0', 'admin', '1371876048', '1371876048', '0', '', 'jQuery', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('10', '16', 'jquery全屏左右预览焦点图代码', '', 'http://www.yzncms.com/demo/file/2013/06/51c52b189fa73.jpg', '全屏焦点图,jquery幻灯片,左右箭头焦点图,jquery焦点图', 'jquery全屏左右预览焦点图代码 效果描述：jquery全屏焦点图，带图片前后图片预览效果，鼠标经过左右两边半透明部分显示左右箭头，带索引按钮，支持自动切换！', '/index.php?a=shows&catid=16&id=10', '0', '99', '1', '0', 'admin', '1371876121', '1371876121', '0', '', 'jQuery', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('11', '17', 'zTree 一款基于jquery的超强树形菜单', '', 'http://www.yzncms.com/demo/file/2013/06/51c52e859571e.jpg', 'zTree,树形菜单,树状菜单,jquery树形菜单', 'zTree 一款基于jquery的超强树形菜单，支持无限级别扩展，含API说明！下面是 v3.5.12 的修改记录：  * 【修改】由于 jquery 1.9 ...', '/index.php?a=shows&catid=17&id=11', '0', '99', '1', '0', 'admin', '1371876998', '1371876998', '0', '', 'zTree', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('16', '10', '初学必看：html+css小总结', '', '', 'html+css小总结,html+css教程,div+css', '初学必看：html+css小总结经验教程！', '/index.php?a=shows&catid=10&id=16', '0', '99', '1', '0', 'admin', '1371881631', '1371881631', '0', '', '', '1', '0', '1', '1', '1', '1403154346');
+INSERT INTO `yzn_article` VALUES ('17', '10', '针对IE版本的if表达式', '', '', '针对,版本,表达式,TML,注释,格式,HTML,做了,一些', 'TML 的注释格式是 ， IE 对HTML注释做了一些扩展，使之可以支持条件判断表达式，如何让静态HTML代码在不同IE版本显示不同内容？和编程...', '/index.php?a=shows&catid=10&id=17', '0', '99', '1', '0', 'admin', '1371881683', '1371881683', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('18', '10', '关于input标签的一些小知识和技巧', '', '', '关于,input,标签,些小,知识,技巧,分享,一些,常用,限制,input,', '分享一些常用限制input的方法，可能里面也有一些你需要用的，可能也有一些你值得学习的！1.取消按钮按下时的虚线框,在input里添加属性值 h...', '/index.php?a=shows&catid=10&id=18', '0', '99', '1', '0', 'admin', '1371881732', '1371881732', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('19', '10', '5种实现页面跳转到指定的地址的方法', '', '', 'JS实现页面跳转,html实现页面跳转,实现页面跳转的方法', '下面列了五个例子来详细说明，这几个例子的主要功能是：在5秒后，自动跳转到同目录下的hello.html（根据自己需要自行修改）文件。1) html...', '/index.php?a=shows&catid=10&id=19', '0', '99', '1', '0', 'admin', '1371881773', '1371881773', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('20', '10', 'html注释条件语句!--[if IE]...![endif]--使用详细介绍', '', '', 'html注释语句,条件注释,html教程,[if IE]', '代码如下: 用上面这段代码，只有使用IE时加载97zzw...', '/index.php?a=shows&catid=10&id=20', '0', '99', '1', '0', 'admin', '1371881819', '1371881819', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('25', '10', 'Nofollow标签是什么意思', '', 'http://www.yzncms.com/demo/file/2013/06/51c551df1213e.jpg', 'Nofollow,html标签,html教程,什么是Nofollow', 'nofollow 是一个HTML标签的属性值。这个标签的意义是告诉搜索引擎&quot;不要追踪此网页上的链接&quot;或&quot;不要追踪此特定链接。　　nofollow简介　　n...', '/index.php?a=shows&catid=10&id=25', '0', '99', '1', '0', 'admin', '1371886048', '1371886048', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('21', '11', 'DreamWeaver文件保存时提示＂发生共享违例＂问题分析及解决方法', '', 'http://www.yzncms.com/demo/file/2013/06/51c5419d2489e.png', '文件保存,共享违例,dreamweaver', '问题产生描述：DreamWeaver文件保存时，提示这样的问题&quot;发生共享违例&quot;，具体如图：修改HTML文件后，就是保存不了，一保存就提示&quot;路径+时发...', '/index.php?a=shows&catid=11&id=21', '0', '99', '1', '0', 'admin', '1371881885', '1371881885', '0', '', 'dreamweaver', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('22', '11', 'DreamWeaver中如何批量删除超级链接', '', 'http://www.yzncms.com/demo/file/2013/06/51c541d5c23ae.jpg', 'DreamWeaver,如何,批量,删除,超级链接,问题,提', '问题提出：在线问答网友提问，请问专家DreamWeaver 8中如何批量删除超级链接?   电脑软硬件应用网回答：解决办法，依次打开DreamWeaver...', '/index.php?a=shows&catid=11&id=22', '0', '99', '1', '0', 'admin', '1371881942', '1371881942', '0', '', 'DreamWeaver', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('23', '12', '分享前端开发JavaScript中常用的使用小技巧语句', '', 'http://www.yzncms.com/demo/file/2013/06/51c543b70c703.jpg', 'JavaScript语句,js技巧,前端开发,js教程,js常用语句', '前面我们分享过前端小技巧和JavaScript刷新页面及框架，里面也时不时的提到JavaScript。收集了一些JavaScript小技巧脚本代码。JavaScript是...', '/index.php?a=shows&catid=12&id=23', '0', '99', '1', '0', 'admin', '1371882423', '1371882423', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('24', '14', 'PS结合AI制作钢铁侠面具模型教程', '', 'http://www.yzncms.com/demo/file/2013/06/51c5445ee39c5.jpg', 'PS教程,PS打造钢铁侠面具,PS结合AI教程,ps实例', '教程虽然用到AI，不过绘制的仅是线稿及简单的色块，没有这款软件的完全可以在PS中完成。面具构造并不复杂，不过质感部分刻画比较麻烦，想省...', '/index.php?a=shows&catid=14&id=24', '0', '99', '1', '0', 'admin', '1371882593', '1371882593', '0', '', '', '2', '0', '1', '1', '1', '1435332393');
+INSERT INTO `yzn_article` VALUES ('29', '10', '5种实现页面跳转到指定的地址的方法', '', '', 'JS实现页面跳转,html实现页面跳转,实现页面跳转的方法', '下面列了五个例子来详细说明，这几个例子的主要功能是：在5秒后，自动跳转到同目录下的hello.html（根据自己需要自行修改）文件。1) html...', '/index.php?a=shows&catid=10&id=29', '0', '99', '1', '0', 'admin', '1371907845', '1371907845', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('30', '10', 'alt属性和title属性的区别与介绍', '', '', 'alt,属性,title,性的,区别,介绍,alt,属性', 'alt属性    为不能显示图像、窗体或applets的用户代理（UA），alt属性用来指定替换文字。替换文字的语言由lang属性指定。来源：How to...', '/index.php?a=shows&catid=10&id=30', '0', '99', '1', '0', 'admin', '1371907945', '1371907945', '0', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `yzn_article` VALUES ('34', '24', 'Digital Atelier创意网站开发工作室网站欣赏', '', 'http://www.yzncms.com/demo/file/2013/06/51c5b06e7462d.jpg', 'Digital Atelier,jquery酷站,国外酷站,交互设计酷站', 'Digital studio focused on web, mobile and facebook development', '/index.php?a=shows&catid=24&id=34', '0', '99', '1', '0', 'admin', '1371910261', '1371910261', '0', '', '', '1', '0', '1', '1', '1', '1435332417');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -319,7 +348,7 @@ CREATE TABLE `yzn_category` (
 -- ----------------------------
 -- Records of yzn_category
 -- ----------------------------
-INSERT INTO `yzn_category` VALUES ('1', 'content', '0', '1', '', '0', '0', '1', '1,10,11', '网页教程', '', '网页教程-网页设计基础教程DIV+CSS', '', 'jiaocheng', '', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:12:\"category.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '0', '1', '0', 'wangyejiaocheng');
+INSERT INTO `yzn_category` VALUES ('1', 'content', '0', '1', '', '0', '0', '1', '1,10,11', '网页教程', '', '网页教程-网页设计基础教程DIV+CSS', '', 'jiaocheng', '/index.php?a=lists&catid=1', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:12:\"category.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '0', '1', '0', 'wangyejiaocheng');
 INSERT INTO `yzn_category` VALUES ('2', 'content', '0', '1', '', '0', '0', '1', '2,12,13', '前端开发', '', '前端开发-学习最新前端开发技术', '', 'qianduan', '/index.php?a=lists&catid=2', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:12:\"category.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '0', '1', '0', 'qianduankaifa');
 INSERT INTO `yzn_category` VALUES ('3', 'content', '0', '1', '', '0', '0', '1', '3,14,15', 'PS教程', '', 'PS教程-学习PS技巧,设计更好的页面', '', 'ps', '/index.php?a=lists&catid=3', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:12:\"category.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '0', '1', '0', 'psjiaocheng');
 INSERT INTO `yzn_category` VALUES ('4', 'content', '0', '1', '', '0', '0', '1', '4,16,17', '网页特效', '', '提供各种网页效果,让你的网页更炫丽', '', 'texiao', '/index.php?a=lists&catid=4', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:17:\"category_heng.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '0', '1', '0', 'wangyetexiao');
