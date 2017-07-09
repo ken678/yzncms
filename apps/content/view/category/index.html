@@ -51,7 +51,9 @@ $(function(){
         reload: false,// 不使用刷新
         columnControl: false,// 不使用列控制
         buttons : [
-                   {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
+                   {display: '<i class="fa fa-plus"></i>添加栏目', name : 'add', bclass : 'add', onpress : fg_operation },
+                   {display: '<i class="fa fa-plus"></i>添加单网页', name : 'add', bclass : 'add', onpress : fg_operation },
+                   {display: '<i class="fa fa-plus"></i>添加外部链接', name : 'add', bclass : 'add', onpress : fg_operation }
                ]
     });
     $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/category/listorder")}'});
@@ -59,7 +61,7 @@ $(function(){
 
 function fg_operation(name, bDiv) {
     if (name == 'add') {
-        window.location.href = '{:url("content/category//add")}';
+        window.location.href = '{:url("content/category/add")}';
     }
 }
 </script>

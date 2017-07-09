@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-07-08 22:21:12
+Date: 2017-07-09 20:27:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=148 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=149 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -83,6 +83,7 @@ INSERT INTO `yzn_action_log` VALUES ('138', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('137', '1', '2', '2130706433', 'member', '2', 'ken678在2017-07-04 13:49登录了后台', '1499147342');
 INSERT INTO `yzn_action_log` VALUES ('136', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-04 11:47登录了后台', '1499140079');
 INSERT INTO `yzn_action_log` VALUES ('135', '1', '2', '2130706433', 'member', '2', 'ken678在2017-07-04 10:02登录了后台', '1499133722');
+INSERT INTO `yzn_action_log` VALUES ('148', '1', '1', '0', 'member', '1', 'admin在2017-07-09 18:39登录了后台', '1499596773');
 INSERT INTO `yzn_action_log` VALUES ('102', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-09 15:54登录了后台', '1496994860');
 INSERT INTO `yzn_action_log` VALUES ('103', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-12 08:21登录了后台', '1497226869');
 INSERT INTO `yzn_action_log` VALUES ('104', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-12 16:44登录了后台', '1497257088');
@@ -137,7 +138,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1499506011', '0', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1499596773', '0', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------

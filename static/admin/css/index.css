@@ -329,7 +329,7 @@ position: relative; z-index: 1; }
 
 /* 头部
 ******************************/
-.admincp-header { background-color: transparent; width: 100%; position: relative; z-index: 2; }
+.admincp-header { background-color:#791F1F; width: 100%; position: relative; z-index: 2; }
 .admincp-name { width: 192px; padding: 6px 0 6px 18px; float: left; text-shadow: 0 1px 3px rgba(0,0,0,0.25); }
 .admincp-name h1 { font-family: Verdana, Geneva, sans-serif; font-size: 14px; line-height: 20px; font-weight: 700; color: #FFF; }
 .admincp-name h2 { font-size: 12px; line-height: 16px; color: #FFF; }
@@ -378,7 +378,6 @@ position: relative; z-index: 1; overflow: hidden; }
 filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#26FFFFFF', endColorstr='#26FFFFFF'); background: rgba(255,255,255,0.15); }
 .admincp-header-r .operate li a { font-size: 0; background: url(../images/combine_img.png) no-repeat; display: block; width: 48px; height: 48px; position: relative; z-index: 1; }
 .admincp-header-r .operate li a.sitemap { background-position: 0 -180px; }
-.admincp-header-r .operate li a.style-color { background-position: -50px -180px; }
 .admincp-header-r .operate li a.homepage { background-position: -100px -180px; }
 .admincp-header-r .operate li a.login-out { background-position: -150px -180px; }
 .admincp-header-r .operate li a.toast { background-position: -192px -180px; }
@@ -393,14 +392,6 @@ opacity:1;	/*透明度为1*/
 }
 .admincp-header-r .operate li .sub-menu { position: absolute; z-index: 1; }
 /* 头部样式 */
-div.bgSelector { width: 100%; text-align: left; display: none; }
-div.bgSelector div#bgColorSelector { width: 100%; overflow: hidden; }
-div.bgSelector div#bgColorSelector #bscParent { position: relative; width: 100%; height: 100%; overflow: hidden; z-index: 9998; }
-div.bgSelector div#bgColorSelector #bscParent #bscDrag img { position: relative; z-index: -1; width: 47px; height: 35px; cursor: ew-resize }
-div.bgSelector div#bgColorSelector #bscParent #bscDrag { position: absolute; left: 0; float: left; z-index: 9999; }
-div.bgSelector div#bgColorSelector #bscParent #bscDrop { width: 100%; margin: 0; padding: 0; }
-div.bgSelector div#bgColorSelector #bscParent #bscDrop td { margin: 0; padding: 0; }
-div.bgSelector div#bgColorSelector #bscParent #bscDrop td span { display: block; width: 100%; }
 .alert_img { position: absolute; top: 85px; z-index: 9; left: 736px; }
 div.nav2Panel { width: 890px; height: 38px; padding: 0 30px; z-index: 999; margin: -5px auto 0; background-color: #fcfcfc; border: 1px #dee0df solid; border-top: 0; }
 #foldSidebar { width: 16px; height: 16px; position: absolute; z-index: 99; bottom: 10px; left: 185px; }

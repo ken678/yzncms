@@ -17,6 +17,17 @@ use \think\Cache;
  */
 class Category extends Model
 {
+
+    //新增栏目
+    public function addCategory($post)
+    {
+        if (empty($post)) {
+            $this->error = '添加栏目数据不能为空！';
+            return false;
+        }
+
+    }
+
     /**
      * 删除栏目
      */

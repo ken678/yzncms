@@ -10,7 +10,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 use app\common\controller\Adminbase;
-use app\admin\model\AuthGroup;
 
 class Index extends Adminbase
 {
@@ -21,10 +20,10 @@ class Index extends Adminbase
     public function index()
     {
 		$this->assign('__MENU__', model("common/Menu")->getMenuList());
-        $this->assign('role_name', model('Admin/AuthGroup')->getRoleIdName(is_login()));
+        $this->assign('role_name', model('admin/AuthGroup')->getRoleIdName(is_login()));
 
         /*管理员收藏栏*/
-        $this->assign('__ADMIN_PANEL__', model("Admin/AdminPanel")->getAllPanel(is_login()));
+        $this->assign('__ADMIN_PANEL__', model("admin/AdminPanel")->getAllPanel(is_login()));
         return $this->fetch();
     }
 

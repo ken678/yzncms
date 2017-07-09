@@ -19,9 +19,7 @@ use app\common\controller\Adminbase;
  */
 class Category extends Adminbase
 {
-	/**
-	 * 栏目列表
-	 */
+	//栏目列表
     public function index()
     {
         $models = cache('Model');
@@ -80,6 +78,38 @@ class Category extends Adminbase
         return $this->fetch();
     }
 
+    //新增栏目
+    public function add()
+    {
+        if(Request::instance()->isPost()){
+            $Category = Loader::model("content/Category");
+            $catid = $Category->addCategory(Request::instance()->post());
+            if ($catid) {
+                $this->success("添加成功！", Url::build("Category/index"));
+            } else {
+                $error = $Category->getError();
+                $this->error($error ? $error : '栏目添加失败！');
+            }
+        }else{
+            return $this->fetch();
+
+        }
+
+    }
+
+    //编辑栏目
+    public function edit()
+    {
+
+    }
+
+
+
+
+
+
+
+
     //删除栏目
     public function delete()
     {
@@ -88,15 +118,13 @@ class Category extends Adminbase
             $this->error("请指定需要删除的栏目！");
         }
         //这里需增加栏目条数item直接判断
-        if (false == Loader::model("Content/Category")->deleteCatid($catid)) {
+        if (false == Loader::model("content/Category")->deleteCatid($catid)) {
             $this->error("栏目含有信息，无法删除！");
         }
-        $this->success("栏目删除成功！", Url::build("Category/public_cache"));
+        $this->success("栏目删除成功！", Url::build("category/public_cache"));
     }
 
-    /**
-     * 栏目排序
-     */
+    //栏目排序
     public function listorder()
     {
       $id = Request::instance()->param('id/d',0);
@@ -109,9 +137,7 @@ class Category extends Adminbase
       exit(json_encode(array('result'=>$return)));
     }
 
-    /**
-     * 清除栏目缓存
-     */
+    //清除栏目缓存
     protected function cache() {
         cache('Category', NULL);
     }

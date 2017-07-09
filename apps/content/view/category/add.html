@@ -1,0 +1,49 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title"><a class="back" href="{:url('content/category/index')}" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+
+      <div class="subject">
+        <h3>栏目分类-新增</h3>
+        <h5>所有前台栏目索引及管理</h5>
+      </div>
+      <ul class="tab-base nc-row">
+        <li><a href="JavaScript:void(0);" nctype="index" class="current">基本属性</a></li>
+        <li><a href="JavaScript:void(0);" nctype="group">生成HTML设置</a></li>
+        <li><a href="JavaScript:void(0);" nctype="brand">模板设置</a></li>
+        <li><a href="JavaScript:void(0);" nctype="point">SEO设置</a></li>
+        <li><a href="JavaScript:void(0);" nctype="article">权限设置</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span>
+    </div>
+    <ul>
+    </ul>
+  </div>
+  <form method="post" name="form_index" action="index.php?act=seo&op=seo_update">
+  111
+  </form>
+  <form method="post" name="form_group" action="index.php?act=seo&op=seo_update">
+  22
+  </form>
+</div>
+<script type="text/javascript">
+$(function(){
+  $('.tab-base').find('a').bind('click',function(){
+    $('.tab-base').find('a').removeClass('current');
+    $(this).addClass('current');
+    $('form').css('display','none');
+    $('form[name="form_'+$(this).attr('nctype')+'"]').css('display','');
+  });
+
+  $('form').css('display','none');
+  $('form[name="form_index"]').css('display','');
+  $('.tab-base').find('a').eq(0).click();
+});
+</script>
+{/block}

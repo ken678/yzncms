@@ -15,7 +15,6 @@
 <link href="__STATIC__/admin/font/css/font-awesome.min.css" rel="stylesheet" />
 <script type="text/javascript">
 var SITEURL = '';
-var ADMIN_TEMPLATES_URL = '__STATIC__/admin';
 var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单路径
 </script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
@@ -23,14 +22,12 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
 <script type="text/javascript" src="__STATIC__/admin/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/js/jquery.bgColorSelector.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admincp.js"></script>
 </head>
 <body>
 {include file="public/map_nav" /}
 <!--顶部导航 START-->
 <div class="admincp-header">
-  <div class="bgSelector"></div>
   <div id="foldSidebar"><i class="fa fa-outdent " title="展开/收起侧边导航"></i></div>
   <div class="admincp-name">
     <h2>Yzncms v1.0<br>平台系统管理中心</h2>
@@ -75,7 +72,6 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
     <ul class="operate nc-row">
       <li style="display: none !important;" nctype="pending_matters"><a class="toast show-option" href="javascript:void(0);"  title="查看待处理事项">&nbsp;<em>0</em></a></li>
       <li><a class="sitemap show-option" nctype="map_on" href="javascript:void(0);" title="查看全部管理菜单">&nbsp;</a></li>
-      <li><a class="style-color show-option" id="trace_show" href="javascript:void(0);" title="给管理中心换个颜色">&nbsp;</a></li>
       <li><a class="homepage show-option" target="_blank" href="" title="新窗口打开商城首页">&nbsp;</a></li>
       <li><a class="login-out show-option" href="{:url('index/logout')}" title="安全退出管理中心">&nbsp;</a></li>
     </ul>
