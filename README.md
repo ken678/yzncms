@@ -6,10 +6,18 @@
 Yzncms是完全开源的项目，基于ThinkPHP5.09最新版,框架易于功能扩展，代码维护，方便二次开发  
 帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
 ```
+[使用帮助]
+```
+[使用手册](https://www.kancloud.cn/ken678/yzncms) 过几天写
+[开源中国](http://www.oschina.net/p/yzncms)
+```
 
 [环境要求]
 ```
 ThinkPHP5.09的运行环境要求PHP5.4以上。（注意：PHP5.4dev版本和PHP6均不支持）
+PDO PHP Extension
+MBstring PHP Extension
+CURL PHP Extension
 ```
 
 [安装教程]
