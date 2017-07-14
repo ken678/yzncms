@@ -1,7 +1,7 @@
 # Yzncms内容管理系统V1.0.0
 ![输入图片说明](https://img.shields.io/badge/php-%3E%3D5.4-000.svg "在这里输入图片标题")
 
-####支持Yzncms的用户请给我们一个star ^_^
+>支持Yzncms的用户请给我们一个star ^_^
 
 [项目介绍]
 ```
