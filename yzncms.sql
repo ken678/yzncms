@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-07-15 21:00:30
+Date: 2017-07-15 21:05:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=151 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -85,6 +85,7 @@ INSERT INTO `yzn_action_log` VALUES ('136', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('135', '1', '2', '2130706433', 'member', '2', 'ken678在2017-07-04 10:02登录了后台', '1499133722');
 INSERT INTO `yzn_action_log` VALUES ('149', '1', '1', '0', 'member', '1', 'admin在2017-07-15 11:33登录了后台', '1500089606');
 INSERT INTO `yzn_action_log` VALUES ('148', '1', '1', '0', 'member', '1', 'admin在2017-07-09 18:39登录了后台', '1499596773');
+INSERT INTO `yzn_action_log` VALUES ('151', '1', '1', '0', 'member', '1', 'admin在2017-07-15 21:03登录了后台', '1500123837');
 INSERT INTO `yzn_action_log` VALUES ('150', '1', '1', '0', 'member', '1', 'admin在2017-07-15 20:58登录了后台', '1500123499');
 INSERT INTO `yzn_action_log` VALUES ('114', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-16 16:13登录了后台', '1497600812');
 INSERT INTO `yzn_action_log` VALUES ('115', '1', '1', '2130706433', 'member', '1', 'admin在2017-06-19 16:43登录了后台', '1497861801');
@@ -128,7 +129,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1500123499', '0', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1500123837', '0', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -496,4 +497,4 @@ CREATE TABLE `yzn_model` (
 -- ----------------------------
 INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', '', '1403150253', '0', '1', '0', '', '', '', '', '', '0', '0');
 INSERT INTO `yzn_model` VALUES ('2', '下载模型', '下载模型', 'download', '', '1403153866', '0', '1', '0', '', '', '', '', '', '0', '0');
-INSERT INTO `yzn_model` VALUES ('3', '图片模型', '图片模型', 'photo', '', '1403153881', '0', '1', '1', '', '', '', '', '', '0', '0');
+INSERT INTO `yzn_model` VALUES ('3', '图片模型', '图片模型', 'photo', '', '1403153881', '0', '1', '0', '', '', '', '', '', '0', '0');
