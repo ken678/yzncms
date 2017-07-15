@@ -1,0 +1,82 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title">
+      <div class="subject">
+        <h3>模型分类管理</h3>
+        <h5>所有后台模型索引及管理</h5>
+      </div>
+    </div>
+  </div>
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span>
+    </div>
+    <ul>
+    </ul>
+  </div>
+  <form method='post'>
+    <table class="flex-table">
+      <thead>
+        <tr>
+          <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
+          <th width="50" align="center">模型ID</th>
+          <th width="150" class="handle" align="center">管理操作</th>
+          <th width="130" align="center">模型名称</th>
+          <th width="80" align="center">数据表</th>
+          <th width="300" align="center">描述</th>
+          <th width="70" align="center">数据量</th>
+          <th width="70" align="center">状态</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {volist name="data" id="vo"}
+        <tr data-id='26'>
+          <td class='sign'><i class='ico-check'></i></td>
+          <td>{$vo.modelid}</td>
+          <td class="handle">
+            <a class="btn red" href="javascript:void(0);" onclick="fg_del(1);"><i class="icon iconfont icon-shanchu"></i>删除</a>
+            <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
+            <ul>
+                <li><a href="">字段管理</a></li>
+                <li><a href="">模型修改</a></li>
+                <li><a href="">模型禁用</a></li>
+                <li><a href="">导出模型</a></li>
+            </ul>
+            </span></td>
+          <td>{$vo.name}</td>
+          <td>{$vo.tablename}</td>
+          <td>{$vo.description}</td>
+          <td></td>
+          <td>{if condition="$vo['disabled'] eq '1' "} <span class="no"><i class="icon iconfont icon-iconfontcuowu2"></i>禁用</span> {else /} <span class="on"><i class="icon iconfont icon-zhengque1"></i>正常</span> {/if}</td>
+          <td></td>
+        </tr>
+        {/volist}
+      </tbody>
+    </table>
+  </form>
+</div>
+<script>
+$('.flex-table').flexigrid({
+  height:'auto',// 高度自动
+  usepager: false,// 不翻页
+  striped: true,// 使用斑马线
+  resizable: false,// 不调节大小
+  reload: false,// 不使用刷新
+  columnControl: false,// 不使用列控制
+  title: '管理员列表',
+  buttons : [
+               {display: '<i class="icon iconfont icon-moxing"></i>添加模型', name : 'add', bclass : 'add', onpress : fg_operation }
+           ]
+  });
+
+function fg_operation(name, grid) {
+    if (name == 'add') {
+        window.location.href = "{:url('')}";
+    }
+}
+</script>
+{/block}

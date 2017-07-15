@@ -30,8 +30,8 @@
       {volist name="_list" id="vo"}
         <tr class="hover erow">
           <td class="sign"><i class="ico-check"></i></td>
-          <td class="handle"><a class="btn red" href="{:url('admin/manager/del',['id'=>$vo.userid])}" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="fa fa-trash-o"></i>删除</a>
-          <a class="btn blue" href="{:url('admin/manager/edit',['id'=>$vo.userid])}"><i class="fa fa-pencil-square-o"></i>编辑</a></td>
+          <td class="handle"><a class="btn red" href="{:url('admin/manager/del',['id'=>$vo.userid])}" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="icon iconfont icon-shanchu"></i>删除</a>
+          <a class="btn blue" href="{:url('admin/manager/edit',['id'=>$vo.userid])}"><i class="icon iconfont icon-edit"></i>编辑</a></td>
           <td>{$vo.username}</td>
           <td>{php} echo model('Admin/AuthGroup')->getRoleIdName($vo['roleid']) {/php}</td>
           <td>{php} echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--' {/php}</td>
@@ -54,7 +54,7 @@ $('.flex-table').flexigrid({
   columnControl: false,// 不使用列控制
   title: '管理员列表',
   buttons : [
-               {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
+               {display: '<i class="icon iconfont icon-guanliyuan"></i>添加管理员', name : 'add', bclass : 'add', onpress : fg_operation }
            ]
   });
 

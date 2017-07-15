@@ -17,6 +17,7 @@ use \think\Cache;
  */
 class Category extends Model
 {
+    protected $insert = ['module' => 'content'];
 
     //新增栏目
     public function addCategory($post)
@@ -25,8 +26,25 @@ class Category extends Model
             $this->error = '添加栏目数据不能为空！';
             return false;
         }
+        $data = $post['info'];
+        $data['type'] = (int)$post['type'];
+        //栏目拼音
+        $catname = iconv('utf-8', 'gbk', $data['catname']);
+        $letters = gbk_to_pinyin($catname);
+        $data['letter'] = strtolower(implode('', $letters));
 
+
+        $catid = $this->allowField(true)->save($data);
+        if ($catid) {
+           cache('Category', NULL);
+           return $catid;
+        }else{
+           $this->error = '栏目添加失败！';
+           return false;
+
+        }
     }
+
 
     /**
      * 删除栏目

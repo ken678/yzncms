@@ -10,11 +10,12 @@
     </div>
   </div>
   <div class="explanation" id="explanation">
-    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
       <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
       <span id="explanationZoom" title="收起提示"></span>
     </div>
     <ul>
+      <li>请在添加、修改栏目全部完成后，更新栏目缓存，否则可能出现未知错误</li>
     </ul>
   </div>
   <form method='post'>
@@ -51,9 +52,9 @@ $(function(){
         reload: false,// 不使用刷新
         columnControl: false,// 不使用列控制
         buttons : [
-                   {display: '<i class="fa fa-plus"></i>添加栏目', name : 'add', bclass : 'add', onpress : fg_operation },
-                   {display: '<i class="fa fa-plus"></i>添加单网页', name : 'add', bclass : 'add', onpress : fg_operation },
-                   {display: '<i class="fa fa-plus"></i>添加外部链接', name : 'add', bclass : 'add', onpress : fg_operation }
+                   {display: '<i class="icon iconfont icon-lanmuguanli"></i>添加栏目', name : 'add', bclass : 'add', onpress : fg_operation },
+                   {display: '<i class="icon iconfont icon-danye"></i>添加单网页', name : 'wadd', bclass : 'add', onpress : fg_operation },
+                   {display: '<i class="icon iconfont icon-lianjie"></i>添加外部链接', name : 'singlepage', bclass : 'add', onpress : fg_operation }
                ]
     });
     $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/category/listorder")}'});
@@ -62,6 +63,12 @@ $(function(){
 function fg_operation(name, bDiv) {
     if (name == 'add') {
         window.location.href = '{:url("content/category/add")}';
+    }
+    if (name == 'wadd') {
+        window.location.href = '{:url("content/category/wadd")}';
+    }
+    if (name == 'singlepage') {
+        window.location.href = '{:url("content/category/singlepage")}';
     }
 }
 </script>

@@ -10,7 +10,7 @@ $(function() {
             $("#explanation").animate({
                 color: "#FFF",
                 backgroundColor: "#4FD6BE",
-                width: "80",
+                width: "90",
                 height: "20",
             },300);
             $("#explanationZoom").hide();

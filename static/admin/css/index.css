@@ -23,7 +23,7 @@ em, cite, th { font-style: normal; font-weight: normal; }
 table { border-collapse: collapse; }
 th { text-align: left; }
 input, button, select, textarea { outline: none }
-i.fa { font-size: 14px; vertical-align: middle; margin-right: 4px; }/*字体图标属性*/
+i.iconfont { font-size: 14px; vertical-align: middle; margin-right: 4px; }/*字体图标属性*/
 .tl { text-align: left; }
 .tc { text-align: center; }
 .tr { text-align: right; }
@@ -395,7 +395,7 @@ opacity:1;	/*透明度为1*/
 .alert_img { position: absolute; top: 85px; z-index: 9; left: 736px; }
 div.nav2Panel { width: 890px; height: 38px; padding: 0 30px; z-index: 999; margin: -5px auto 0; background-color: #fcfcfc; border: 1px #dee0df solid; border-top: 0; }
 #foldSidebar { width: 16px; height: 16px; position: absolute; z-index: 99; bottom: 10px; left: 185px; }
-#foldSidebar i { font-size: 14px; color: #FFF; cursor: pointer; text-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
+#foldSidebar i { font-size: 16px; color: #FFF; cursor: pointer; text-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
 /*待处理事项通知*/
 .cp-toast-list { padding: 0 10px; margin: 0 10px 15px 5px; max-height: 480px; overflow: auto; }
 .cp-toast-list li { line-height: 20px; padding: 10px; border-bottom: dotted 1px #E6E6E6; }

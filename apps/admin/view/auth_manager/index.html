@@ -26,7 +26,7 @@
         <tr class="hover">
           <td class="sign"><i class="ico-check"></i></td>
           <td class="handle">
-          <span class="btn"><em><i class="fa fa-cog"></i>设置<i class="arrow"></i></em>
+          <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
             <ul>
                 <li><a href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a></li>
                 <li><a href="{:url('AuthManager/deletegroup?id='.$vo['id'])}">删除</a></li>
@@ -43,9 +43,9 @@
           {/eq}
           </td>
           <td>
-              <a class="btn blue" href="{:url('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}"><i class="fa fa-eye"></i>访问授权</a>
-              <a class="btn blue" href=""><i class="fa fa-sitemap"></i>分类授权</a>
-              <a class="btn blue" href=""><i class="fa fa-user"></i>成员授权</a>
+              <a class="btn blue" href="{:url('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}"><i class="icon iconfont icon-fangwen"></i>访问授权</a>
+              <a class="btn blue" href=""><i class="icon iconfont icon-fenlei"></i>分类授权</a>
+              <a class="btn blue" href=""><i class="icon iconfont icon-chengyuan"></i>成员授权</a>
           </td>
           <td></td>
         </tr>
@@ -63,7 +63,7 @@ $('.flex-table').flexigrid({
 	columnControl: false,// 不使用列控制
 	title: '权限组列表',
 	buttons : [
-               {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
+               {display: '<i class="icon iconfont icon-quanxian"></i>添加权限组', name : 'add', bclass : 'add', onpress : fg_operation }
            ]
 	});
 

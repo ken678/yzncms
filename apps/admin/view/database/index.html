@@ -14,7 +14,7 @@
   </div>
   <!-- 操作说明 -->
   <div class="explanation" id="explanation">
-    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
       <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
       <span id="explanationZoom" title="网站全局基本设置，网站及其他模块相关内容在其各自栏目设置项内进行操作"></span> </div>
     <ul>
@@ -63,9 +63,9 @@ $('.flex-table').flexigrid({
     columnControl: false,// 不使用列控制
     title: '数据库列表',
     buttons : [
-                 {display: '<i class="fa fa-floppy-o"></i>立即备份', name : 'add', bclass : 'add', title : '新增数据', onpress : fg_operation },
-                 {display: '<i class="fa fa fa-magic"></i>优化表', name : 'optimize', bclass : 'optimize', title : '优化表', onpress : fg_operation },
-                 {display: '<i class="fa fa-wrench"></i>修复表', name : 'repair', bclass : 'repair', title : '修复表', onpress : fg_operation }
+                 {display: '<i class="icon iconfont icon-beifenruanjian"></i>立即备份', name : 'add', bclass : 'add', title : '新增数据', onpress : fg_operation },
+                 {display: '<i class="icon iconfont icon-Group"></i>优化表', name : 'optimize', bclass : 'optimize', title : '优化表', onpress : fg_operation },
+                 {display: '<i class="icon iconfont icon-zidongxiufu"></i>修复表', name : 'repair', bclass : 'repair', title : '修复表', onpress : fg_operation }
              ]
     });
 
@@ -73,7 +73,7 @@ $('.flex-table').flexigrid({
     function fg_operation(name, grid) {
         if (name == 'add') {
             if($('.trSelected',grid).length>0){
-                $export.html('<i class="fa fa-spinner fa-spin"></i>正在发送备份请求...');
+                $export.html('<i class="icon iconfont icon-fasong"></i>正在发送备份请求...');
                 var itemlist = [];
                 $('.trSelected',grid).each(function(){
                   itemlist.push($(this).attr('data-table'));
@@ -159,7 +159,7 @@ $('.flex-table').flexigrid({
                     showmsg(tab.id, data.msg);
                     if(!$.isPlainObject(data.data.tab)){
                         //$export.parent().children().removeClass("disabled");
-                        $export.html('<i class="fa fa-check"></i>备份完成，点击重新备份');
+                        $export.html('<i class="icon iconfont icon-wancheng"></i>备份完成，点击重新备份');
                         window.onbeforeunload = function(){ return null }
                         return;
                     }

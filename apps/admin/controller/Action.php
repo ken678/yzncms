@@ -64,7 +64,7 @@ class Action extends Adminbase
         $data['total_num'] = $list['total'];//总页数
         foreach ($list['data'] as $k => $info) {
             $list = array();
-            $list['operation'] = "<a class='btn red' onclick=\"fg_delete({$info['id']})\"><i class='fa fa-trash-o'></i>删除</a>";
+            $list['operation'] = "<a class='btn red' onclick=\"fg_delete({$info['id']})\"><i class='icon iconfont icon-shanchu'></i>删除</a>";
             $list['admin_name'] = get_username($info['user_id']);
             $list['content'] = $info['remark'];
             $list['createtime'] = date('Y-m-d H:i:s',$info['create_time']);

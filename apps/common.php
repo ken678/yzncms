@@ -123,6 +123,7 @@ function getCategory($catid, $field = '', $newCache = false) {
     }
 }
 
+
 /**
  * 格式化字节大小
  * @param  number $size      字节数

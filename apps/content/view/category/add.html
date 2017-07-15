@@ -3,7 +3,6 @@
 <div class="page">
   <div class="fixed-bar">
     <div class="item-title"><a class="back" href="{:url('content/category/index')}" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
-
       <div class="subject">
         <h3>栏目分类-新增</h3>
         <h5>所有前台栏目索引及管理</h5>
@@ -18,18 +17,84 @@
     </div>
   </div>
   <div class="explanation" id="explanation">
-    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
       <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
       <span id="explanationZoom" title="收起提示"></span>
     </div>
     <ul>
     </ul>
   </div>
-  <form method="post" name="form_index" action="index.php?act=seo&op=seo_update">
-  111
-  </form>
-  <form method="post" name="form_group" action="index.php?act=seo&op=seo_update">
-  22
+  <form name="adminForm" id="add_form" action="{:url('content/Category/add')}" method="post">
+  <div class="ncap-form-default">
+  <div nctype="index" class="none">
+      <dl class="row">
+        <dt class="tit">
+          <label for="modelid">请选择模型</label>
+        </dt>
+        <dd class="opt">
+          <select name="info[modelid]" id="modelid" class="valid">
+            <option value="" {if condition="empty($parentid_modelid)"} selected{/if}>请选择模型</option>
+            {volist name="models" id="vo"}
+                <option value="{$vo.modelid}" {if condition="$parentid_modelid eq $vo['modelid']"} selected{/if}>{$vo.name}</option>
+            {/volist}
+          </select>
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="parentid">上级栏目</label>
+        </dt>
+        <dd class="opt">
+          <select name="info[parentid]" id="parentid" class="valid">
+            <option value="0" >≡ 作为一级栏目 ≡</option>
+            {$category}
+          </select>
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="catname">栏目名称</label>
+        </dt>
+        <dd class="opt">
+          <input type="text" class="input-txt" name="info[catname]" id="catname" />
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="catdir">英文目录</label>
+        </dt>
+        <dd class="opt">
+          <input type="text" class="input-txt" name="info[catdir]" id="catdir" />
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="description">栏目简介</label>
+        </dt>
+        <dd class="opt">
+          <textarea name="info[description]" rows="6" class="tarea" ></textarea>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">是否在导航显示</dt>
+        <dd class="opt">
+          <div class="onoff">
+            <label for="status1" class="cb-enable selected">是</label>
+            <label for="status0" class="cb-disable">否</label>
+            <input id="status1" name='info[ismenu]' value="1" type="radio">
+            <input id="status0" name='info[ismenu]' value="0" type="radio">
+          </div>
+          <p class="notic">默认为显示，隐藏请点击【否】</p>
+        </dd>
+      </dl>
+  </div>
+  <input name="type" type="hidden" value="0">
+  <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
+  </div>
   </form>
 </div>
 <script type="text/javascript">
@@ -37,12 +102,12 @@ $(function(){
   $('.tab-base').find('a').bind('click',function(){
     $('.tab-base').find('a').removeClass('current');
     $(this).addClass('current');
-    $('form').css('display','none');
-    $('form[name="form_'+$(this).attr('nctype')+'"]').css('display','');
+    $('div.none').css('display','none');
+    $('div[nctype="'+$(this).attr('nctype')+'"]').css('display','');
   });
 
-  $('form').css('display','none');
-  $('form[name="form_index"]').css('display','');
+  $('div.none').css('display','none');
+  $('div[nctype="'+$(this).attr('nctype')+'"]').css('display','');
   $('.tab-base').find('a').eq(0).click();
 });
 </script>

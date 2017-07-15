@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="explanation" id="explanation">
-    <div class="title" id="checkZoom"><i class="fa fa-lightbulb-o"></i>
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
       <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
       <span id="explanationZoom" title="收起提示"></span>
     </div>
@@ -48,7 +48,7 @@ $(function(){
         reload: false,// 不使用刷新
         columnControl: false,// 不使用列控制
         buttons : [
-                   {display: '<i class="fa fa-plus"></i>新增数据', name : 'add', bclass : 'add', onpress : fg_operation }
+                   {display: '<i class="icon iconfont icon-caidan"></i>添加后台菜单', name : 'add', bclass : 'add', onpress : fg_operation }
                ]
     });
     $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("menu/listorder")}'});
