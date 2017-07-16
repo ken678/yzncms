@@ -23,7 +23,7 @@ em, cite, th { font-style: normal; font-weight: normal; }
 table { border-collapse: collapse; }
 th { text-align: left; }
 input, button, select, textarea { outline: none }
-i.iconfont { font-size: 14px; vertical-align: middle; margin-right: 4px; }/*字体图标属性*/
+i.iconfont { font-size: 14px; vertical-align: middle; margin-right: 4px;line-height: 1;}/*字体图标属性*/
 .tl { text-align: left; }
 .tc { text-align: center; }
 .tr { text-align: right; }

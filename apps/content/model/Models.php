@@ -18,6 +18,38 @@ use \think\Db;
 class Models extends Model
 {
     /**
+     * 创建模型
+     * @param type $data 提交数据
+     * @return boolean
+     */
+    public function addModel($data) {
+        if (empty($data)) {
+            return false;
+        }
+        var_dump($data);
+        exit();
+        //强制表名为小写
+        $data['tablename'] = strtolower($data['tablename']);
+        //添加模型记录
+        $modelid = $this->add($data);
+        if ($modelid) {
+            //创建数据表
+            if ($this->createModel($data['tablename'], $modelid)) {
+                cache("Model", NULL);
+                return $modelid;
+            } else {
+                //表创建失败
+                $this->where(array("modelid" => $modelid))->delete();
+                $this->error = '数据表创建失败！';
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
      * 根据模型类型取得数据用于缓存
      * @param type $type
      * @return type

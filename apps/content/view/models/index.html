@@ -43,7 +43,7 @@
             <ul>
                 <li><a href="">字段管理</a></li>
                 <li><a href="">模型修改</a></li>
-                <li><a href="">模型禁用</a></li>
+                <li><a href="{:url('content/models/disabled',array('modelid'=>$vo['modelid']))}">{if $vo['disabled'] == 0}模型禁用{else}<font color="#FF0000">模型启用</font>{/if}</a></li>
                 <li><a href="">导出模型</a></li>
             </ul>
             </span></td>
@@ -75,7 +75,7 @@ $('.flex-table').flexigrid({
 
 function fg_operation(name, grid) {
     if (name == 'add') {
-        window.location.href = "{:url('')}";
+        window.location.href = "{:url('content/models/add')}";
     }
 }
 </script>
