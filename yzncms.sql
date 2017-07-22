@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
-Source Server Version : 50547
+Source Server         : localhost_3306
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50547
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-07-16 12:53:12
+Date: 2017-07-22 17:14:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=154 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -108,6 +108,7 @@ INSERT INTO `yzn_action_log` VALUES ('144', '1', '1', '0', 'member', '1', 'admin
 INSERT INTO `yzn_action_log` VALUES ('145', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-07 22:52登录了后台', '1499439158');
 INSERT INTO `yzn_action_log` VALUES ('146', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-07 22:57登录了后台', '1499439475');
 INSERT INTO `yzn_action_log` VALUES ('147', '1', '1', '0', 'member', '1', 'admin在2017-07-08 17:26登录了后台', '1499506011');
+INSERT INTO `yzn_action_log` VALUES ('153', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-22 15:57登录了后台', '1500710221');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -130,7 +131,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1500175515', '0', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1500710221', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------

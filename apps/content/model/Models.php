@@ -12,11 +12,24 @@ namespace app\content\model;
 use \think\Model;
 use \think\Cache;
 use \think\Db;
+use \think\Config;
 /**
  * 菜单基础模型
  */
 class Models extends Model
 {
+    private $libPath = ''; //当前模块路径
+    protected $name = 'model';
+    const mainTableSql = 'Data/Sql/lvyecms_zhubiao.sql'; //模型主表SQL模板文件
+    const sideTablesSql = 'Data/Sql/lvyecms_zhubiao_data.sql'; //模型副表SQL模板文件
+    const modelTablesInsert = 'Data/Sql/lvyecms_insert.sql'; //可用默认模型字段
+
+    //初始化
+    protected function initialize() {
+        parent::initialize();
+        $this->libPath = APP_PATH . 'content/';
+    }
+
     /**
      * 创建模型
      * @param type $data 提交数据
@@ -26,12 +39,10 @@ class Models extends Model
         if (empty($data)) {
             return false;
         }
-        var_dump($data);
-        exit();
         //强制表名为小写
         $data['tablename'] = strtolower($data['tablename']);
         //添加模型记录
-        $modelid = $this->add($data);
+        $modelid = $this->save($data);
         if ($modelid) {
             //创建数据表
             if ($this->createModel($data['tablename'], $modelid)) {
@@ -66,6 +77,80 @@ class Models extends Model
             $Cache[$v['modelid']] = $v;
         }
         return $Cache;
+    }
+
+    /**
+     * 创建内容模型
+     * @param type $tableName 模型主表名称（不包含表前缀）
+     * @param type $modelId 模型id
+     * @return boolean
+     */
+    protected function createModel($tableName, $modelId) {
+        if (empty($tableName) || $modelId < 1) {
+            return false;
+        }
+        //表前缀
+        $dbPrefix = Config::get("database.prefix");
+        //读取模型主表SQL模板
+        $mainTableSqll = file_get_contents($this->libPath . self::mainTableSql);
+        //副表
+        $sideTablesSql = file_get_contents($this->libPath . self::sideTablesSql);
+        //字段数据
+        $modelTablesInsert = file_get_contents($this->libPath . self::modelTablesInsert);
+        //表前缀，表名，模型id替换
+        $sqlSplit = str_replace(array('@lvyecms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $mainTableSqll . "\n" . $sideTablesSql . "\n" . $modelTablesInsert);
+        return $this->sql_execute($sqlSplit);
+    }
+
+    /**
+     * 执行SQL
+     * @param type $sqls SQL语句
+     * @return boolean
+     */
+    protected function sql_execute($sqls) {
+        $sqls = $this->sql_split($sqls);
+        if (is_array($sqls)) {
+            foreach ($sqls as $sql) {
+                if (trim($sql) != '') {
+                    Db::execute($sql);
+                }
+            }
+        } else {
+            Db::execute($sqls);
+        }
+        return true;
+    }
+
+    /**
+     * 解析数据库语句函数
+     * @param string $sql
+     *          sql语句 带默认前缀的
+     * @param string $tablepre
+     *          自己的前缀
+     * @return multitype:string 返回最终需要的sql语句
+     */
+    public function sql_split($sql, $tablepre="yzn_") {
+        if ($tablepre != "yzn_")
+            $sql = str_replace ( "yzn_", $tablepre, $sql );
+        $sql = preg_replace ( "/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql );
+
+        $sql = str_replace ( "\r", "\n", $sql );
+        $ret = array ();
+        $num = 0;
+        $queriesarray = explode ( ";\n", trim ( $sql ) );
+        unset ( $sql );
+        foreach ( $queriesarray as $query ) {
+            $ret [$num] = '';
+            $queries = explode ( "\n", trim ( $query ) );
+            $queries = array_filter ( $queries );
+            foreach ( $queries as $query ) {
+                $str1 = substr ( $query, 0, 1 );
+                if ($str1 != '#' && $str1 != '-')
+                    $ret [$num] .= $query;
+            }
+            $num ++;
+        }
+        return $ret;
     }
 
     /**
