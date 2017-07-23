@@ -9,23 +9,34 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\model;
-use \think\Model;
-use \think\Cache;
+use app\common\model\Modelbase;
 use \think\Db;
+use \think\Loader;
 use \think\Config;
+use \think\Model;
+
 /**
  * 菜单基础模型
  */
-class Models extends Model
+class Models extends Modelbase
 {
-    private $libPath = ''; //当前模块路径
+    const ModeSql = 'Data/Sql/model.sql'; //模型SQL模板文件
+
+    private $libPath = '';
     protected $name = 'model';
-    const mainTableSql = 'Data/Sql/lvyecms_zhubiao.sql'; //模型主表SQL模板文件
-    const sideTablesSql = 'Data/Sql/lvyecms_zhubiao_data.sql'; //模型副表SQL模板文件
-    const modelTablesInsert = 'Data/Sql/lvyecms_insert.sql'; //可用默认模型字段
+    protected $auto = ['addtime','tablename'];
+    protected function setAddtimeAttr($value)
+    {
+        return time();
+    }
+    protected function setTablenameAttr($value)
+    {
+        return strtolower($value);//强制表名为小写
+    }
 
     //初始化
-    protected function initialize() {
+    protected function initialize()
+    {
         parent::initialize();
         $this->libPath = APP_PATH . 'content/';
     }
@@ -39,18 +50,22 @@ class Models extends Model
         if (empty($data)) {
             return false;
         }
-        //强制表名为小写
-        $data['tablename'] = strtolower($data['tablename']);
+        //模型添加验证
+        $validate = Loader::validate('Models');
+        if(!$validate->scene('add')->check($data)){
+            $this->error = $validate->getError();
+            return false;
+        }
         //添加模型记录
-        $modelid = $this->save($data);
+        $modelid = $this->allowField(true)->save($data);
         if ($modelid) {
-            //创建数据表
-            if ($this->createModel($data['tablename'], $modelid)) {
+            //创建模型表和模型附表
+            if ($this->createModel($data['tablename'], $this->modelid)) {
                 cache("Model", NULL);
-                return $modelid;
+                return $this->modelid;
             } else {
                 //表创建失败
-                $this->where(array("modelid" => $modelid))->delete();
+                $this->where(array("modelid" => $this->modelid))->delete();
                 $this->error = '数据表创建失败！';
                 return false;
             }
@@ -61,22 +76,45 @@ class Models extends Model
     }
 
     /**
-     * 根据模型类型取得数据用于缓存
-     * @param type $type
-     * @return type
+     * 根据模型ID删除模型
+     * @param type $modelid 模型id
+     * @return boolean
      */
-    public function getModelAll($type = null)
+    public function deleteModel($modelid)
     {
-        $where = array('disabled' => 0);
-        if (!is_null($type)) {
-            $where['type'] = $type;
+        if (empty($modelid)) {
+            return false;
         }
-        $data = Db::name('model')->where($where)->select();
-        $Cache = array();
-        foreach ($data as $v) {
-            $Cache[$v['modelid']] = $v;
+        $modeldata = $this->where(array("modelid" => $modelid))->find();
+        if (!$modeldata) {
+            return false;
         }
-        return $Cache;
+        //表名
+        $model_table = $modeldata['tablename'];
+        //删除模型数据
+        $this->where(array("modelid" => $modelid))->delete();
+        //更新缓存
+        cache("Model", NULL);
+        //删除所有和这个模型相关的字段
+        Db::name("ModelField")->where(array("modelid" => $modelid))->delete();
+        //删除主表
+        $this->deleteTable($model_table);
+        if ((int) $modeldata['type'] == 0) {
+            //删除副表
+            $this->deleteTable($model_table . "_data");
+        }
+        return true;
+    }
+
+    /**
+     * 删除表
+     * $table 不带表前缀
+     */
+    public function deleteTable($table) {
+        if ($this->table_exists($table)) {
+            $this->drop_table($table);
+        }
+        return true;
     }
 
     /**
@@ -91,15 +129,9 @@ class Models extends Model
         }
         //表前缀
         $dbPrefix = Config::get("database.prefix");
-        //读取模型主表SQL模板
-        $mainTableSqll = file_get_contents($this->libPath . self::mainTableSql);
-        //副表
-        $sideTablesSql = file_get_contents($this->libPath . self::sideTablesSql);
-        //字段数据
-        $modelTablesInsert = file_get_contents($this->libPath . self::modelTablesInsert);
-        //表前缀，表名，模型id替换
-        $sqlSplit = str_replace(array('@lvyecms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $mainTableSqll . "\n" . $sideTablesSql . "\n" . $modelTablesInsert);
-        return $this->sql_execute($sqlSplit);
+        $ModeSql = file_get_contents($this->libPath . self::ModeSql);
+        $sqlSplit = str_replace(array('@yzncms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $ModeSql);
+        return $this->sql_execute($sqlSplit,$dbPrefix);
     }
 
     /**
@@ -107,8 +139,8 @@ class Models extends Model
      * @param type $sqls SQL语句
      * @return boolean
      */
-    protected function sql_execute($sqls) {
-        $sqls = $this->sql_split($sqls);
+    protected function sql_execute($sqls, $tablepre) {
+        $sqls = $this->sql_split($sqls, $tablepre);
         if (is_array($sqls)) {
             foreach ($sqls as $sql) {
                 if (trim($sql) != '') {
@@ -129,7 +161,7 @@ class Models extends Model
      *          自己的前缀
      * @return multitype:string 返回最终需要的sql语句
      */
-    public function sql_split($sql, $tablepre="yzn_") {
+    public function sql_split($sql, $tablepre) {
         if ($tablepre != "yzn_")
             $sql = str_replace ( "yzn_", $tablepre, $sql );
         $sql = preg_replace ( "/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql );
@@ -151,6 +183,25 @@ class Models extends Model
             $num ++;
         }
         return $ret;
+    }
+
+    /**
+     * 根据模型类型取得数据用于缓存
+     * @param type $type
+     * @return type
+     */
+    public function getModelAll($type = null)
+    {
+        $where = array('disabled' => 0);
+        if (!is_null($type)) {
+            $where['type'] = $type;
+        }
+        $data = Db::name('model')->where($where)->select();
+        $Cache = array();
+        foreach ($data as $v) {
+            $Cache[$v['modelid']] = $v;
+        }
+        return $Cache;
     }
 
     /**

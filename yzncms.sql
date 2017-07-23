@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-07-22 17:14:43
+Date: 2017-07-23 14:32:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=154 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=155 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -109,6 +109,7 @@ INSERT INTO `yzn_action_log` VALUES ('145', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('146', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-07 22:57登录了后台', '1499439475');
 INSERT INTO `yzn_action_log` VALUES ('147', '1', '1', '0', 'member', '1', 'admin在2017-07-08 17:26登录了后台', '1499506011');
 INSERT INTO `yzn_action_log` VALUES ('153', '1', '1', '2130706433', 'member', '1', 'admin在2017-07-22 15:57登录了后台', '1500710221');
+INSERT INTO `yzn_action_log` VALUES ('154', '1', '1', '0', 'member', '1', 'admin在2017-07-23 10:46登录了后台', '1500778019');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -131,7 +132,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1500710221', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1500778019', '0', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -500,3 +501,43 @@ CREATE TABLE `yzn_model` (
 INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', '', '1403150253', '0', '1', '0', '', '', '', '', '', '0', '0');
 INSERT INTO `yzn_model` VALUES ('2', '下载模型', '下载模型', 'download', '', '1403153866', '0', '1', '0', '', '', '', '', '', '0', '0');
 INSERT INTO `yzn_model` VALUES ('3', '图片模型', '图片模型', 'photo', '', '1403153881', '0', '1', '0', '', '', '', '', '', '0', '0');
+
+-- ----------------------------
+-- Table structure for `yzn_model_field`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_model_field`;
+CREATE TABLE `yzn_model_field` (
+  `fieldid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
+  `field` varchar(20) NOT NULL DEFAULT '' COMMENT '字段名',
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '别名',
+  `tips` text COMMENT '字段提示',
+  `css` varchar(30) NOT NULL DEFAULT '' COMMENT '表单样式',
+  `minlength` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最小值',
+  `maxlength` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大值',
+  `pattern` varchar(255) NOT NULL DEFAULT '' COMMENT '数据校验正则',
+  `errortips` varchar(255) NOT NULL DEFAULT '' COMMENT '数据校验未通过的提示信息',
+  `formtype` varchar(20) NOT NULL DEFAULT '' COMMENT '字段类型',
+  `setting` mediumtext,
+  `formattribute` varchar(255) NOT NULL DEFAULT '',
+  `unsetgroupids` varchar(255) NOT NULL DEFAULT '',
+  `unsetroleids` varchar(255) NOT NULL DEFAULT '',
+  `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否内部字段 1是',
+  `issystem` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否系统字段 1 是',
+  `isunique` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '值唯一',
+  `isbase` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为基本信息',
+  `issearch` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为搜索条件',
+  `isadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '在前台投稿中显示',
+  `isfulltext` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为全站搜索信息',
+  `isposition` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否入库到推荐位',
+  `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1 禁用 0启用',
+  `isomnipotent` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fieldid`),
+  KEY `modelid` (`modelid`,`disabled`),
+  KEY `field` (`field`,`modelid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+
+-- ----------------------------
+-- Records of yzn_model_field
+-- ----------------------------

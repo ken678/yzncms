@@ -38,7 +38,7 @@
           <td class='sign'><i class='ico-check'></i></td>
           <td>{$vo.modelid}</td>
           <td class="handle">
-            <a class="btn red" href="javascript:void(0);" onclick="fg_del(1);"><i class="icon iconfont icon-shanchu"></i>删除</a>
+            <a class="btn red confirm-del" href="{:url('models/delete',array('modelid'=>$vo['modelid']))}"><i class="icon iconfont icon-shanchu"></i>删除</a>
             <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
             <ul>
                 <li><a href="">字段管理</a></li>
@@ -60,18 +60,26 @@
   </form>
 </div>
 <script>
-$('.flex-table').flexigrid({
-  height:'auto',// 高度自动
-  usepager: false,// 不翻页
-  striped: true,// 使用斑马线
-  resizable: false,// 不调节大小
-  reload: false,// 不使用刷新
-  columnControl: false,// 不使用列控制
-  title: '管理员列表',
-  buttons : [
-               {display: '<i class="icon iconfont icon-moxing"></i>添加模型', name : 'add', bclass : 'add', onpress : fg_operation }
-           ]
-  });
+$(function(){
+    $('.flex-table').flexigrid({
+    height:'auto',// 高度自动
+    usepager: false,// 不翻页
+    striped: true,// 使用斑马线
+    resizable: false,// 不调节大小
+    reload: false,// 不使用刷新
+    columnControl: false,// 不使用列控制
+    title: '管理员列表',
+    buttons : [
+                 {display: '<i class="icon iconfont icon-moxing"></i>添加模型', name : 'add', bclass : 'add', onpress : fg_operation }
+             ]
+    });
+
+    $('a.confirm-del').live('click', function() {
+      if (!confirm('确定删除？')) {
+          return false;
+      }
+    });
+});
 
 function fg_operation(name, grid) {
     if (name == 'add') {

@@ -47,6 +47,24 @@ class Models extends Adminbase
     	}
     }
 
+    //模型删除
+    public function delete()
+    {
+        $modelid = Request::instance()->param('modelid/d', 0);
+        //检查该模型是否已经被使用
+        $r = Db::name("Category")->where(array("modelid" => $modelid))->find();
+        if ($r) {
+            $this->error("该模型使用中，删除栏目后再删除！");
+        }
+
+        if (Loader::model("content/Models")->deleteModel($modelid)) {
+            $this->success("删除成功！", url("index"));
+        } else {
+            $this->error("删除失败！");
+        }
+
+    }
+
     //模型禁用
 	public function disabled()
 	{
