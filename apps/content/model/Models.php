@@ -14,6 +14,7 @@ use \think\Db;
 use \think\Loader;
 use \think\Config;
 use \think\Model;
+use \think\Cache;
 
 /**
  * 菜单基础模型

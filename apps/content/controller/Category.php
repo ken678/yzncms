@@ -9,10 +9,10 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\controller;
-use \think\Db;
-use \think\Url;
-use \think\Request;
-use \think\Loader;
+use think\Db;
+use think\Url;
+use think\Request;
+use think\Loader;
 use app\common\controller\Adminbase;
 /**
  * 后台栏目管理
