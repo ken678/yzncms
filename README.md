@@ -5,12 +5,12 @@
 
 [项目介绍]
 ```
-Yzncms是完全开源的项目，基于ThinkPHP5.09最新版,框架易于功能扩展，代码维护，方便二次开发  
+Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.09最新版,框架易于功能扩展，代码维护，方便二次开发  
 帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
 ```
 [使用帮助]
 ```
-[使用手册](https://www.kancloud.cn/ken678/yzncms) 过几天写
+[使用手册](https://www.kancloud.cn/ken678/yzncms) 撰写ing...
 [开源中国](http://www.oschina.net/p/yzncms)
 ```
 
@@ -39,6 +39,7 @@ CURL PHP Extension
 [后台登陆界面预览]  
 
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134316_df6a7b60_555541.jpeg "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0729/203104_a2fab05e_555541.png "Yzncms.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0613/152302_f2081fba_555541.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134327_f760ee6b_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134335_cd0f4d67_555541.jpeg "在这里输入图片标题")
