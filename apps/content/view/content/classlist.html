@@ -1,0 +1,91 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title">
+      <div class="subject">
+        <h3>栏目信息列表管理</h3>
+        <h5>各栏目信息索引及管理</h5>
+      </div>
+    </div>
+  </div>
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span>
+    </div>
+    <ul>
+      <li></li>
+    </ul>
+  </div>
+  <form method='post'>
+    <table class="flex-table">
+      <thead>
+        <tr>
+          <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
+          <th width="60"  align="center">排序</th>
+          <th width="150" class="handle" align="center">操作</th>
+          <th width="60" align="center">ID</th>
+          <th width="250" align="center">标题</th>
+          <th width="70" align="center">点击量</th>
+          <th width="100" align="center">发布人</th>
+          <th width="150" align="center">发帖时间</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {volist name="data" id="vo"}
+        <tr class="hover">
+            <td class='sign'><i class='ico-check'></i></td>
+            <td class='sort'><span title='可编辑' column_id='26' fieldname='gc_sort' nc_type='inline_edit' class='editable'>0</span></td>
+            <td class="handle">
+            <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
+              <ul><li><a href="">删除</a></li>
+                  <li><a class="confirm-on-click" href="">导入</a></li>
+                  <li><a href="">下载</a></li>
+              </ul>
+            </span>
+            </td>
+            <td>{$vo.id}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.views}</td>
+            <td>{$vo.username}</td>
+            <td>{$vo.updatetime|date="Y-m-d H:i:s",###}</td>
+            <td></td>
+        </tr>
+        {/volist}
+      </tbody>
+    </table>
+  </form>
+</div>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.flex-table').flexigrid({
+        height:'auto',// 高度自动
+        usepager: false,// 不翻页
+        striped:false,// 不使用斑马线
+        resizable: false,// 不调节大小
+        title: '栏目信息列表',// 表格标题
+        reload: false,// 不使用刷新
+        columnControl: false,// 不使用列控制
+        buttons : [
+                   {display: '<i class="icon iconfont icon-lanmuguanli"></i>添加内容', name : 'add', bclass : 'add', onpress : fg_operation }
+               ]
+    });
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/category/listorder")}'});
+});
+
+function fg_operation(name, bDiv) {
+    if (name == 'add') {
+        window.location.href = '{:url("content/category/add")}';
+    }
+    if (name == 'wadd') {
+        window.location.href = '{:url("content/category/wadd")}';
+    }
+    if (name == 'singlepage') {
+        window.location.href = '{:url("content/category/singlepage")}';
+    }
+}
+</script>
+{/block}

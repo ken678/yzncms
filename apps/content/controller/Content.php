@@ -11,6 +11,7 @@
 namespace app\content\controller;
 use think\Url;
 use think\Request;
+use app\content\model\ContentModel;
 use app\common\controller\Adminbase;
 
 class Content extends Adminbase
@@ -65,7 +66,26 @@ class Content extends Adminbase
         if (empty($catInfo)) {
             $this->error('该栏目不存在！');
         }
-        var_dump($catid);
+        //查询条件
+        $where = array();
+        $where['catid'] = array('EQ', $catid);
+        $where['status'] = array('EQ', 99);
+        //栏目所属模型
+        $modelid = $catInfo['modelid'];
+        //栏目扩展配置
+        $setting = $catInfo['setting'];
+        //检查模型是否被禁用
+        if (getModel($modelid, 'disabled')) {
+            $this->error('模型被禁用！');
+        }
+        //实例化模型
+        $model = ContentModel::getInstance($modelid);
+        $data = $model->where($where)->order(array("id" => "DESC"))->select();
+
+        $this->assign('data', $data);
+        return $this->fetch();
     }
+
+
 
 }
