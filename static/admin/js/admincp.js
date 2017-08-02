@@ -137,15 +137,15 @@ $(document).ready(function () {
 // 点击菜单，iframe页面跳转
 function openItem(param) {
     $('.sub-menu,.nc-module-menu').find('li').removeClass('active');
-    data_str = param;
+    data_str = param.split('|');
     $this = $('div[id^="admincpNavTabs_"]').find('a[data-param="' + param + '"]');
     if ($('.admincp-container').hasClass('unfold')) {
         $('.sub-menu').hide();
         $this.parents('dd:first').show();
     }
     $('div[id^="admincpNavTabs_"]').hide().find('dl').removeClass('active');
-    //$('li[data-param="' + data_str + '"]').addClass('active');
+    $('li[data-param="' + data_str[0] + '"]').addClass('active');
     $this.parent().addClass('active').parents('dl:first').addClass('active').parents('div:first').show();
-    $('#workspace').attr('src', param);
-    $.cookie('workspaceParam', param, { expires: 1 ,path:"/"});
+    $('#workspace').attr('src', data_str[1]);
+    $.cookie('workspaceParam', data_str[1], { expires: 1 ,path:"/"});
 }
