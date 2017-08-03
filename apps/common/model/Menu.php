@@ -77,6 +77,7 @@ class Menu extends Model
                     "menuid" => $id,
                     "id" => $id . $name,
                     "title" => $a['title'],
+                    "icon" => $a['icon'],
                     "parent" => $parent,
                     "url" => url("{$name}/{$controller}/{$action}{$fu}", array("menuid" => $id)),
                 );

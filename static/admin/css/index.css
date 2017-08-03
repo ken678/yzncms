@@ -466,61 +466,10 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
 .unfold .nav-tabs dl.active { z-index: 2; }
 .unfold .nav-tabs dl dt { }
 .unfold .nav-tabs dl dt a { display: block; width: 70px; height: 70px; }
-.unfold .nav-tabs dl dt a:hover {
-filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#19FFFFFF', endColorstr='#19FFFFFF'); background: rgba(255,255,255,0.1); }
-.unfold .nav-tabs dl dt span { background: url(../images/combine_img.png) no-repeat; display: block; width: 30px; height: 30px; position: absolute; z-index: 1; top: 14px; left: 19px; opacity: 0.5; }
-.unfold .nav-tabs dl dt span.ico-system-0 { background-position: -120px -30px; }
-.unfold .nav-tabs dl dt span.ico-system-1 { background-position: -30px -30px; }
-.unfold .nav-tabs dl dt span.ico-system-2 { background-position: -60px -30px; }
-.unfold .nav-tabs dl dt span.ico-system-3 { background-position: -90px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-0 { background-position: -120px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-1 { background-position: -150px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-2 { background-position: -180px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-3 { background-position: -210px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-4 { background-position: -240px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-5 { background-position: -270px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-6 { background-position: -300px -30px; }
-.unfold .nav-tabs dl dt span.ico-shop-7 { background-position: -330px -30px; }
-.unfold .nav-tabs dl dt span.ico-cms-0 { background-position: -120px -30px; }
-.unfold .nav-tabs dl dt span.ico-cms-1 { background-position: -360px -30px; }
-.unfold .nav-tabs dl dt span.ico-cms-2 { background-position: -390px -30px; }
-.unfold .nav-tabs dl dt span.ico-cms-3 { background-position: -420px -30px; }
-.unfold .nav-tabs dl dt span.ico-circle-0 { background-position: -120px -30px; }
-.unfold .nav-tabs dl dt span.ico-circle-1 { background-position: -210px -30px; }
-.unfold .nav-tabs dl dt span.ico-circle-2 { background-position: -450px -30px; }
-.unfold .nav-tabs dl dt span.ico-microshop-0 { background-position: -120px -30px; }
-.unfold .nav-tabs dl dt span.ico-microshop-1 { background-position: -480px -30px; }
-.unfold .nav-tabs dl dt span.ico-microshop-2 { background-position: -510px -30px; }
-.unfold .nav-tabs dl dt span.ico-microshop-3 { background-position: -180px -30px; }
-.unfold .nav-tabs dl dt span.ico-mobile-0 { background-position: -540px -30px; }
-.unfold .nav-tabs dl dt h3 { font-size: 12px; font-weight: 600; line-height: 22px; color: #AAA; text-align: center; width: 65px; position: absolute; z-index: 2; top: 36px; left: 0; }
 .unfold .nav-tabs dl.active dt a { color: #FFF; background: url(../images/combine_img.png) no-repeat 0 -100px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-.unfold .nav-tabs dl.active dt { padding-bottom: 0; }
-.unfold .nav-tabs dl.active dt span { opacity: 1; }
-.unfold .nav-tabs dl.active dt span.ico-system-0 { background-position: -120px 0; }
-.unfold .nav-tabs dl.active dt span.ico-system-1 { background-position: -30px 0; }
-.unfold .nav-tabs dl.active dt span.ico-system-2 { background-position: -60px 0; }
-.unfold .nav-tabs dl.active dt span.ico-system-3 { background-position: -90px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-0 { background-position: -120px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-1 { background-position: -150px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-2 { background-position: -180px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-3 { background-position: -210px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-4 { background-position: -240px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-5 { background-position: -270px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-6 { background-position: -300px 0; }
-.unfold .nav-tabs dl.active dt span.ico-shop-7 { background-position: -330px 0; }
-.unfold .nav-tabs dl.active dt span.ico-cms-0 { background-position: -120px 0; }
-.unfold .nav-tabs dl.active dt span.ico-cms-1 { background-position: -360px 0; }
-.unfold .nav-tabs dl.active dt span.ico-cms-2 { background-position: -390px 0; }
-.unfold .nav-tabs dl.active dt span.ico-cms-3 { background-position: -420px 0; }
-.unfold .nav-tabs dl.active dt span.ico-circle-0 { background-position: -120px 0; }
-.unfold .nav-tabs dl.active dt span.ico-circle-1 { background-position: -210px 0; }
-.unfold .nav-tabs dl.active dt span.ico-circle-2 { background-position: -450px 0; }
-.unfold .nav-tabs dl.active dt span.ico-microshop-0 { background-position: -120px 0; }
-.unfold .nav-tabs dl.active dt span.ico-microshop-1 { background-position: -480px 0; }
-.unfold .nav-tabs dl.active dt span.ico-microshop-2 { background-position: -510px 0; }
-.unfold .nav-tabs dl.active dt span.ico-microshop-3 { background-position: -180px 0; }
-.unfold .nav-tabs dl.active dt span.ico-mobile-0 { background-position: -540px 0; }
+.unfold .nav-tabs dl dt h3 { font-size: 12px; font-weight: 600; line-height: 22px; color: #AAA; text-align: center; width: 65px; position: absolute; z-index: 2; top: 36px; left: 0; }
+.unfold .nav-tabs dl.active dt span {opacity: 1; }
+.unfold .nav-tabs dl dt span {font-size: 20px; color: #FFF; display: block;position: absolute; z-index: 1; top: 14px; left: 22px; opacity: 0.5; }
 .unfold .nav-tabs dl dd { display: none; width: 140px; height: 100%; position: absolute; z-index: 1; right: 0; top: 0; }
 .unfold .nav-tabs dl.active dd { display: block; }
 .unfold .nav-tabs dl dd ul { }
