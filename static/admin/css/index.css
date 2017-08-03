@@ -488,55 +488,8 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
 .fold .nav-tabs dl dt a { display: block; width: 40px; height: 40px; }
 .fold .nav-tabs dl:hover dt a { width: 42px; }
 .fold .nav-tabs dl dt a:hover { background-color: #333; }
-.fold .nav-tabs dl dt span { background: url(../images/combine_img.png) no-repeat; display: block; width: 20px; height: 20px; position: absolute; z-index: 3; top: 10px; left: 10px; opacity: 0.5; }
-.fold .nav-tabs dl dt span.ico-system-0,
-.fold .nav-tabs .active .ico-system-0 { background-position: -120px -60px; }
-.fold .nav-tabs dl dt span.ico-system-1,
-.fold .nav-tabs .active .ico-system-1 { background-position: -30px -60px; }
-.fold .nav-tabs dl dt span.ico-system-2,
-.fold .nav-tabs .active .ico-system-2 { background-position: -60px -60px; }
-.fold .nav-tabs dl dt span.ico-system-3,
-.fold .nav-tabs .active .ico-system-3 { background-position: -90px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-0,
-.fold .nav-tabs .active .ico-shop-0 { background-position: -120px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-1,
-.fold .nav-tabs dl.active dt span.ico-shop-1 { background-position: -150px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-2,
-.fold .nav-tabs dl.active dt span.ico-shop-2 { background-position: -180px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-3,
-.fold .nav-tabs dl.active dt span.ico-shop-3 { background-position: -210px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-4,
-.fold .nav-tabs dl.active dt span.ico-shop-4 { background-position: -240px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-5,
-.fold .nav-tabs dl.active dt span.ico-shop-5 { background-position: -270px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-6,
-.fold .nav-tabs dl.active dt span.ico-shop-6 { background-position: -300px -60px; }
-.fold .nav-tabs dl dt span.ico-shop-7,
-.fold .nav-tabs dl.active dt span.ico-shop-7 { background-position: -330px -60px; }
-.fold .nav-tabs dl dt span.ico-cms-0,
-.fold .nav-tabs dl.active dt span.ico-cms-0 { background-position: -120px -60px; }
-.fold .nav-tabs dl dt span.ico-cms-1,
-.fold .nav-tabs dl.active dt span.ico-cms-1 { background-position: -360px -60px; }
-.fold .nav-tabs dl dt span.ico-cms-2,
-.fold .nav-tabs dl.active dt span.ico-cms-2 { background-position: -390px -60px; }
-.fold .nav-tabs dl dt span.ico-cms-3,
-.fold .nav-tabs dl.active dt span.ico-cms-3 { background-position: -420px -60px; }
-.fold .nav-tabs dl dt span.ico-circle-0,
-.fold .nav-tabs dl.active dt span.ico-circle-0 { background-position: -120px -60px; }
-.fold .nav-tabs dl dt span.ico-circle-1,
-.fold .nav-tabs dl.active dt span.ico-circle-1 { background-position: -210px -60px; }
-.fold .nav-tabs dl dt span.ico-circle-2,
-.fold .nav-tabs dl.active dt span.ico-circle-2 { background-position: -450px -60px; }
-.fold .nav-tabs dl dt span.ico-microshop-0,
-.fold .nav-tabs dl.active dt span.ico-microshop-0 { background-position: -120px -60px; }
-.fold .nav-tabs dl dt span.ico-microshop-1,
-.fold .nav-tabs dl.active dt span.ico-microshop-1 { background-position: -480px -60px; }
-.fold .nav-tabs dl dt span.ico-microshop-2,
-.fold .nav-tabs dl.active dt span.ico-microshop-2 { background-position: -510px -60px; }
-.fold .nav-tabs dl dt span.ico-microshop-3,
-.fold .nav-tabs dl.active dt span.ico-microshop-3 { background-position: -180px -60px; }
-.fold .nav-tabs dl dt span.ico-mobile-0,
-.fold .nav-tabs dl.active dt span.ico-mobile-0 { background-position: -540px -60px; }
+.fold .nav-tabs dl dt span { display: block; width: 20px; height: 20px; position: absolute; z-index: 3; top: 10px; left: 10px; opacity: 0.5;color: #fff;}
+.fold .nav-tabs dl.active dt span{opacity:1;}
 .fold .nav-tabs dl dt h3 { font-size: 12px; font-weight: 600; line-height: 40px; color: #FFF; display: none; width: 80px; padding-left: 60px; position: absolute; z-index: 2; top: 0; left: 0; }
 .fold .nav-tabs dl dd { background-color: #555; width: 100px; position: absolute; z-index: 1; top: 0; left: 41px; display: none; }
 .fold .nav-tabs dl.active dd { display: none; }
