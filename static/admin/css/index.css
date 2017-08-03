@@ -191,7 +191,7 @@ select,
 .editable,
 .editable2,
 .editable-tarea,
-.editable-tarea2 { padding: 2px 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;/*Firefox\Chrome\Safari\IE9\元素圆角效果*/ resize: none;/*禁止调节元素的尺寸*/ }
+.editable-tarea2 { padding: 2px 4px;resize: none;/*禁止调节元素的尺寸*/ }
 input[type="text"]:focus,
 input[type="text"]:hover,
 input[type="text"]:active,
@@ -263,9 +263,9 @@ opacity: 0; cursor: pointer; }
 /*按钮*/
 a.ncap-btn-mini { font: normal 12px/20px arial; color: #777; background-color: #F5F5F5; text-align: center; vertical-align: middle; display: inline-block; height: 20px; padding: 0 10px; margin-right: 2px; border: solid 1px #DCDCDC; cursor: pointer; }
 a:hover.ncap-btn-mini { text-decoration: none; color: #333; background-color: #E6E6E6; border-color: #CFCFCF #CFCFCF #B3B3B3 #CFCFCF; }
-a.ncap-btn { font: normal 12px/20px "microsoft yahei"; text-decoration: none; color: #777; background-color: #F5F5F5; text-align: center; vertical-align: middle; display: inline-block; height: 20px; padding: 2px 9px; border: solid 1px; border-color: #DCDCDC #DCDCDC #B3B3B3 #DCDCDC; border-radius: 3px; cursor: pointer; }
+a.ncap-btn { font: normal 12px/20px "microsoft yahei"; text-decoration: none; color: #777; background-color: #F5F5F5; text-align: center; vertical-align: middle; display: inline-block; height: 20px; padding: 2px 9px; border: solid 1px; border-color: #DCDCDC #DCDCDC #B3B3B3 #DCDCDC;cursor: pointer; }
 a:hover.ncap-btn { text-decoration: none; color: #333; background-color: #E6E6E6; border-color: #CFCFCF #CFCFCF #B3B3B3 #CFCFCF; }
-a.ncap-btn-big { font: bold 14px/20px "microsoft yahei", arial; color: #777; background-color: #ECF0F1; text-align: center; vertical-align: middle; display: inline-block; height: 20px; padding: 7px 19px; border: solid 1px #BEC3C7; border-radius: 3px; cursor: pointer; }
+a.ncap-btn-big { font: bold 14px/20px "microsoft yahei", arial; color: #777; background-color: #ECF0F1; text-align: center; vertical-align: middle; display: inline-block; height: 20px; padding: 7px 19px; border: solid 1px #BEC3C7;cursor: pointer; }
 a:hover.ncap-btn-big { text-decoration: none; color: #FFF; background-color: #BEC3C7; box-shadow: 0 0 0 2px rgba(82, 168, 236, 0.15); }
 a.ncap-btn-mini i,
 a.ncap-btn i,
@@ -1018,7 +1018,7 @@ min-width: 190px; height: 38px; padding: 6px 0; margin-right: 10px; }
 }
 .tab-base li { height: 35px; margin-right: 2px; }
 .tab-base a { line-height: 20px !important; color: #777 !important; background-color: #E6E6E6 !important; display: block; !important height: 20px !important;
-padding: 7px 20px !important; border: solid 1px #E6E6E6 !important; border-radius: 5px 5px 0 0 !important; cursor: pointer; !important
+padding: 7px 20px !important; border: solid 1px #E6E6E6 !important; cursor: pointer; !important
 }
 .tab-base a:hover { color: #333 !important; }
 .tab-base a.current,
@@ -1108,6 +1108,15 @@ form label.error { font-style: normal; font-weight: normal; color: #E84C3D; marg
 form label.error i { font-size: 14px; margin-right: 4px; }
 form input.error,
 form textarea.error { background-color: #FFF0F0; background-repeat: repeat; border: 1px dashed #E84C3D; }
+/* Used for the Switch effect: */
+.onoff { font-size: 0; position: relative; overflow: hidden; display: block; }
+.onoff label { vertical-align: top; display: inline-block; *display: inline;*zoom: 1;cursor: pointer; }
+.onoff input[type="radio"] { position: absolute; top: 0; left: -999px; }
+.onoff .cb-enable,.onoff .cb-disable { color: #777; font-size: 12px; line-height: 20px; background-color: #ECF0F1; height: 20px; padding: 1px 9px; border-style: solid; border-color: #BEC3C7; }
+.onoff .cb-enable { border-width: 1px 0 1px 1px; border-radius: 4px 0 0 4px; }
+.onoff .cb-disable { border-width: 1px 1px 1px 0; border-radius: 0 4px 4px 0; }
+.onoff .cb-disable.selected { color: #FFF; background-color: #96A6A6; border-color: #808B8D; }
+.onoff .cb-enable.selected { color: #FFF; background-color: #1BBC9D; border-color: #16A086 }
 /* widget */
 big,.big { font-size: 120% !important; line-height: 120%; }
 .checked,
