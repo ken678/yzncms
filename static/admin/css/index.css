@@ -425,29 +425,6 @@ height: 32px; margin-right: 1px; margin-bottom: -1px; }
 .admincp-map-div dd:hover i { color: #333; }
 .admincp-map-div dd i { color: #CCC; font-size: 14px; float: right; margin: 2px 0 0 0; cursor: pointer; }
 .admincp-map-div dd.selected i { color: #2cbca3; }
-/*关于我们*/
-.ncap-about { display: block; height: 350px; position: relative; z-index: 1; }
-.ncap-about .left-pic { background: url(../images/about_bg.jpg) no-repeat 0 0; width: 80px; height: 398px; position: absolute; z-index: 1; left: 0px; top: -48px; box-shadow: 2px 0 3px rgba(0,0,0,0.15) }
-.ncap-about .version { width: 520px; padding: 0 0 10px 0; position: absolute; z-index: 1; top: -40px; left: 100px; }
-.ncap-about .version h2 { color: #333; font-size: 20px; font-weight: normal; line-height: 30px; width: 300px; }
-.ncap-about .version h4 { color: #333; font-size: 14px; font-weight: normal; line-height: 20px; width: 300px; }
-.ncap-about .version h5 { font-family: Arial; color: #777; font-weight: normal; font-size: 12px; line-height: 20px; }
-.ncap-about .version hr { font-size: 0; line-height: 0; background-color: #E6E6E6; height: 1; margin: 1px 0; border: 0 none; }
-.ncap-about .content { background-color: #FFF; width: 520px; height: 240px; position: absolute; z-index: 1; top: 50px; left: 100px; }
-.ncap-about .content .scroll { width: 100%; height: 240px; overflow: hidden; }
-.ncap-about .content .scroll ul { width: 100%; }
-.ncap-about .content li { padding: 10px 0 }
-.ncap-about .content .scroll ul li { height: 40px; }
-.ncap-about .content li h4 { color: #000; font-weight: 600; line-height: 20px; }
-.ncap-about .content li p { color: #555; line-height: 20px; }
-.ncap-about .content .scrollbar { width: 100%; height: 240px; position: relative; z-index: 1; overflow: hidden; }
-.ncap-about .content .law-notice { line-height: 20px; width: 96%; }
-.ncap-about .content .law-notice p { margin-bottom: 10px; text-indent: 24px; }
-.ncap-about .content .law-notice dl { margin: 0 0 10px 10px; }
-.ncap-about .content .law-notice dl dt { font-weight: 600; }
-.ncap-about .content .law-notice dl dd { margin-left: 20px; }
-.ncap-about .btns { position: absolute; z-index: 1; bottom: 10px; right: 20px; }
-.ncap-about .btns a { margin-left: 4px; }
 /* 容器
 ******************************/
 .admincp-container { background-color: transparent; height: 100%; position: relative; z-index: 1; }
@@ -855,23 +832,23 @@ padding: 12px 0; margin-top: -1px; border-style: solid; border-width: 1px 0; bor
 .ncap-order-flow li.current i { color: #2cbca3; }
 .ncap-order-flow li.current time { display: block; }
 
-/*弹出框体下的特殊性*/
-.dialog_content .ncap-form-default,
-.dialog_content .ncap-form-all { width: 96%; margin: 0 auto; padding: 0; }
-.dialog_content .ncap-form-default dt.tit { text-align: right; width: 20%; padding-right: 2%; }
-.dialog_content .ncap-form-default dd.opt { text-align: left; width: 77%; }
-.dialog_content .ncap-form-all dl.row { padding: 8px 0; }
-.dialog_content .ncap-form-all dt.tit { font-size: 12px; font-weight: 600; line-height: 24px; background-color: transparent; height: 24px; padding: 4px; }
-.dialog_content .ncap-form-all dd.opt { font-size: 12px; padding: 0; border: none; }
-.dialog_content .ncap-form-all .search-bar { padding: 4px; }
-.dialog_content .bot { text-align: center; padding: 12px 0 10px 0 !important; }
-.dialog_content .rule-goods-list { position: relative; z-index: 1; overflow: hidden; max-height: 200px; }
-.dialog_content .rule-goods-list ul { font-size: 0; }
-.dialog_content .rule-goods-list ul li { font-size: 12px; vertical-align: top; display: inline-block; width: 48%; padding: 1%; }
-.dialog_content .rule-goods-list ul li img { float: left; width: 32px; height: 32px; margin-right: 5px; }
-.dialog_content .rule-goods-list ul li a,
-.dialog_content .rule-goods-list ul li span { color: #555; line-height: 16px; white-space: nowrap; text-overflow: ellipsis; display: block; float: left; width: 180px; height: 16px; overflow: hidden; }
-.dialog_content .rule-goods-list ul li span { color: #AAA; }
+/*弹出框体下的特殊性--如密码快捷修改*/
+.layui-layer-content .ncap-form-default,
+.layui-layer-content .ncap-form-all { width: 96%; margin: 0 auto; padding: 0; }
+.layui-layer-content .ncap-form-default dt.tit { text-align: right; width: 20%; padding-right: 2%; }
+.layui-layer-content .ncap-form-default dd.opt { text-align: left; width: 77%; }
+.layui-layer-content .ncap-form-all dl.row { padding: 8px 0; }
+.layui-layer-content .ncap-form-all dt.tit { font-size: 12px; font-weight: 600; line-height: 24px; background-color: transparent; height: 24px; padding: 4px; }
+.layui-layer-content .ncap-form-all dd.opt { font-size: 12px; padding: 0; border: none; }
+.layui-layer-content .ncap-form-all .search-bar { padding: 4px; }
+.layui-layer-content .bot { text-align: center; padding: 12px 0 10px 0 !important; }
+.layui-layer-content .rule-goods-list { position: relative; z-index: 1; overflow: hidden; max-height: 200px; }
+.layui-layer-content .rule-goods-list ul { font-size: 0; }
+.layui-layer-content .rule-goods-list ul li { font-size: 12px; vertical-align: top; display: inline-block; width: 48%; padding: 1%; }
+.layui-layer-content .rule-goods-list ul li img { float: left; width: 32px; height: 32px; margin-right: 5px; }
+.layui-layer-content .rule-goods-list ul li a,
+.layui-layer-content .rule-goods-list ul li span { color: #555; line-height: 16px; white-space: nowrap; text-overflow: ellipsis; display: block; float: left; width: 180px; height: 16px; overflow: hidden; }
+.layui-layer-content .rule-goods-list ul li span { color: #AAA; }
 .cou-rule { padding: 5px; border: dotted 1px #E7E7E7; margin-bottom: 10px; overflow: hidden; }
 .cou-rule span { color: #2cbca3; }
 /*整列表单*/

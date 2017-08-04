@@ -18,8 +18,8 @@ var SITEURL = '';
 var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单路径
 </script>
 <script type="text/javascript" src="__STATIC__/js/jquery-1.8.2.min.js"></script>
+<script src="__STATIC__/js/layer/layer.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/js/dialog/dialog.js" id="dialog_js" charset="utf-8"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/admincp.js"></script>
@@ -51,7 +51,7 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
       <div class="manager-menu">
         <div class="title">
           <h4>上次登录</h4>
-          <a href="javascript:void(0);" onclick="CUR_DIALOG = ajax_form('modifypw', '修改密码', '{:url("manager/modifypw")}');" class="edit-password">修改密码</a>
+          <a href="javascript:void(0);" onclick="Modifypw()"  class="edit-password">修改密码</a>
           </div>
         <div class="login-date">
         <?php if(session('last_login_time') > 0) { echo date('Y-m-d H:i:s', session('last_login_time'));} else { echo '--';}?>
@@ -84,7 +84,7 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
   <div class="admincp-container-left">
     <div class="top-border"><span class="nav-side"></span><span class="sub-side"></span></div>
     {include file="public/left_nav" /}
-    <div class="about" title="关于系统" onclick="ajax_form('about', '', '{:url("admin/aboutus/index")}', 640);"><i class="fa fa-copyright"></i><span>Yzncms v1.0</span></div>
+    <div class="about" title="关于系统" onclick="OpenAbout()"><i class="fa fa-copyright"></i><span>Yzncms v1.0</span></div>
   </div>
   <div class="admincp-container-right">
     <div class="top-border"></div>
@@ -92,5 +92,25 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
   </div>
 </div>
 <!--左侧菜单 及 右侧主内容 END-->
+<script>
+function OpenAbout(){
+  layer.open({
+    type: 2,
+    maxmin: true,
+    area: ['640px', '500px'],
+    content: '{:url("admin/aboutus/index")}',
+  });
+};
+function Modifypw(){
+  $.get('{:url("manager/modifypw")}', {}, function(str){
+    layer.open({
+      title:'修改密码',
+      area: ['480px', '300px'],
+      type: 1,
+      content: str
+    });
+  });
+};
+</script>
 </body>
 </html>

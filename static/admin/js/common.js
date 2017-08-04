@@ -1,13 +1,17 @@
 /* 显示Ajax表单 */
-function ajax_form(id, title, url, width, model){
-    if (!width) width = 480;
-    if (!model) model = 1;
-    var d = DialogManager.create(id);
-    d.setTitle(title);
-    d.setContents('ajax', url);
-    d.setWidth(width);
-    d.show('center',model);
-    return d;
+function ajax_form(type, title, url, width,height)
+{
+    if (!width) width = '480px';
+    if (!height) height = '300px';
+    if (!type) type = 1;
+    $.post(url, {}, function(str){
+        layer.open({
+          title:title,
+          area: [width,height],
+          type: type,
+          content: str
+        });
+    });
 }
 /*
  * 为低版本IE添加placeholder效果
