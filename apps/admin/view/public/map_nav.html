@@ -18,7 +18,7 @@
 	       <dt>{$left_nav.title}</dt>
 	{present name="left_nav.items"}
 	{volist name="left_nav.items" id="map_nav"}
-	       <dd class="{if in_array($map_nav.menuid, $__ADMIN_PANEL__.ids)}selected{/if}"><a href="javascript:void(0);" data-param="{$map_nav.url}" data-menuid="{$map_nav.menuid}">{$map_nav.title}</a><i class="fa fa-check-square-o"></i></dd>
+	       <dd class="{if in_array($map_nav.menuid, $__ADMIN_PANEL__.ids)}selected{/if}"><a href="javascript:void(0);" data-param="{$map_nav.url}" data-menuid="{$map_nav.menuid}">{$map_nav.title}</a><i class="icon iconfont icon-dagou"></i></dd>
 	{/volist}
 	{/present}
 	       </dl>
