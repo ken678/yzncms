@@ -1,7 +1,8 @@
 $(document).ready(function () {
-    //使用title内容作为tooltip提示文字
-    $(document).tooltip({
-        track: true
+    //鼠标移动tips提示
+    function itip(msg, selector, ipoint, ifixed){ipoint=ipoint==undefined?1:ipoint;layer.tips(msg,selector,{tips:[ipoint,'#333'],fixed:ifixed,time:6000});}
+    $(".itip").each(function(i,n){
+        $(n).hover(function(){itip($(n).attr("alt"),$(n),undefined,$(n).hasClass("ifixed"));},function(){layer.closeAll('tips');});
     });
 
     // 侧边导航二级菜单切换（展开式）

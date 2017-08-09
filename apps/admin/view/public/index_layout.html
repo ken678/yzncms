@@ -11,7 +11,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Yzncms</title>
 <link href="__STATIC__/admin/css/index.css" rel="stylesheet" type="text/css">
-<link href="__STATIC__/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 <link href="__STATIC__/admin/font/css/iconfont.css" rel="stylesheet" />
 <script type="text/javascript">
 var SITEURL = '';
@@ -28,7 +27,7 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
 {include file="public/map_nav" /}
 <!--顶部导航 START-->
 <div class="admincp-header">
-  <div id="foldSidebar"><i class="icon iconfont icon-icon-indent" title="展开/收起侧边导航"></i></div>
+  <div id="foldSidebar"><i class="icon iconfont icon-icon-indent itip"  alt="展开/收起侧边导航"></i></div>
   <div class="admincp-name">
     <h2>Yzncms v1.0<br>平台系统管理中心</h2>
   </div>
@@ -46,8 +45,8 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
         <dd class="group">{$role_name}</dd>
       </dl>
       <span class="avatar">
-      <input name="_pic" type="file" class="admin-avatar-file" id="_pic" title="设置管理员头像"/>
-      <img alt="" nctype="admin_avatar" src="__STATIC__/admin/images/login/admin.png"> </span><i class="arrow" id="admin-manager-btn" title="显示快捷管理菜单"></i>
+      <input name="_pic" type="file" class="admin-avatar-file itip" id="_pic" alt="设置管理员头像"/>
+      <img alt="" nctype="admin_avatar" src="__STATIC__/admin/images/login/admin.png"> </span><i class="arrow itip" id="admin-manager-btn" alt="显示快捷管理菜单"></i>
       <div class="manager-menu">
         <div class="title">
           <h4>上次登录</h4>
@@ -71,9 +70,9 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
     </div>
     <ul class="operate nc-row">
       <li style="display: none !important;" nctype="pending_matters"><a class="toast show-option" href="javascript:void(0);"  title="查看待处理事项">&nbsp;<em>0</em></a></li>
-      <li><a class="sitemap show-option" nctype="map_on" href="javascript:void(0);" title="查看全部管理菜单">&nbsp;</a></li>
-      <li><a class="homepage show-option" target="_blank" href="" title="新窗口打开商城首页">&nbsp;</a></li>
-      <li><a class="login-out show-option" href="{:url('index/logout')}" title="安全退出管理中心">&nbsp;</a></li>
+      <li><a class="sitemap show-option itip" nctype="map_on" href="javascript:void(0);" alt="查看全部管理菜单">&nbsp;</a></li>
+      <li><a class="homepage show-option itip" target="_blank" href="" alt="新窗口打开商城首页">&nbsp;</a></li>
+      <li><a class="login-out show-option itip" href="{:url('index/logout')}" alt="安全退出管理中心">&nbsp;</a></li>
     </ul>
   </div>
   <div class="clear"></div>
