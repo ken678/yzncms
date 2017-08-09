@@ -66,7 +66,12 @@ class Index extends Adminbase
      */
     public function getVerify()
     {
-        GetVerify();
+        $config =    [
+            'fontSize'    =>    30,
+            'length'      =>    4,
+        ];
+        $captcha = new \think\captcha\Captcha($config);
+        return $captcha->entry();
     }
 
     /**
@@ -82,7 +87,7 @@ class Index extends Adminbase
 	            $this->error($result);
 	        }
 
-	        if(!CheckVerify($data['captcha'])){
+	        if(!captcha_check($data['captcha'])){
 	            $this->error('验证码输入错误！');
 	            return false;
 	        }

@@ -172,23 +172,6 @@ function get_username($uid = 0){
 }
 
 /**
- * 生成验证码
- */
-function GetVerify(){
-	$Verify = new \verify\Verify();
-    $Verify->length   = 4;
-    $Verify->entry();
-}
-
-/**
- * 核对验证码
- */
-function CheckVerify($code){
-	$verify = new \verify\Verify();
-	return $verify->check($code);
-}
-
-/**
  * 检测用户是否登录
  * @return integer 0-未登录，大于0-当前登录用户ID
  */
