@@ -9,28 +9,29 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
+use think\Db;
+use think\Request;
 use app\common\controller\Adminbase;
+use app\common\model\Config as ConfigModel;
 
 /**
  * 后台配置
  */
 class Config extends Adminbase
 {
-
+	//配置初始化
     protected function _initialize()
     {
         parent::_initialize();
-        $this->Config = model('Common/Config');
-        $configList  =  $this->Config->column('name,value');//获取配置值
+        $this->Config = new ConfigModel;
+        $configList  =  $this->Config->column('name,value');//获取系统基本配置值
         $this->assign('Site', $configList);
     }
 
-    /**
-     * 更新配置参数
-     */
+    // 配置参数列表及更新
 	public function index()
     {
-        if(request()->isPost()){
+        if(Request::instance()->isPost()){
             if ($this->Config->saveConfig(input('post.'),1)) {
                 $this->success("更新成功！");
             } else {
@@ -42,19 +43,17 @@ class Config extends Adminbase
         }
 	}
 
-    /**
-     * 扩展配置（新增，删除，显示，更新）
-     */
+    //扩展配置（新增，删除，显示，更新）
     public function extend()
     {
-        if(request()->isPost()){
-            $action = input('post.action');
+        if(Request::instance()->isPost()){
+            $action = Request::instance()->param('action');
             //新增扩展配置
             if ($action == 'add') {
                 $data = array(
-                    'fieldname' => trim(input('post.fieldname/s')),
-                    'type' => trim(input('post.type/s')),
-                    'setting' => input('post.setting/a')
+                    'fieldname' => trim(Request::instance()->param('fieldname/s')),
+                    'type' => trim(Request::instance()->param('type/s')),
+                    'setting' => Request::instance()->param('setting/a')
                 );
                 if ($this->Config->extendAdd($data) !== false) {
                     $this->success('扩展配置项添加成功！');
@@ -65,7 +64,7 @@ class Config extends Adminbase
                 }
             }else{
                 //更新扩展项配置
-                if ($this->Config->saveConfig(input('post.'),2)) {
+                if ($this->Config->saveConfig(Request::instance()->post(),2)) {
                     $this->success("更新成功！");
                 } else {
                     $error = $this->Config->getError();
@@ -73,10 +72,11 @@ class Config extends Adminbase
                 }
             }
         }else{
-            $action = input('action');
-            $db = db('ConfigField');
+            $action = Request::instance()->param('action');
+            $db = Db::name('ConfigField');
+            //删除扩展配置
             if ($action == 'delete') {
-                $fid = input('fid', 0, 'intval');
+                $fid = Request::instance()->param('fid', 0, 'intval');
                 if ($this->Config->extendDel($fid)) {
                     $this->success("扩展配置项删除成功！");
                     return true;
@@ -90,7 +90,4 @@ class Config extends Adminbase
             return $this->fetch();
         }
     }
-
-
-
 }
