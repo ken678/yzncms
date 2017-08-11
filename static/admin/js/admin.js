@@ -1,9 +1,4 @@
 $(function() {
-	//使用title内容作为tooltip提示文字
-    $(document).tooltip({
-        track: true
-    });
-
     //操作提示缩放动画
     $("#checkZoom").toggle(
         function() {

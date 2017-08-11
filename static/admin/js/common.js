@@ -1,6 +1,5 @@
 /* 显示Ajax表单 */
-function ajax_form(type, title, url, width,height)
-{
+function ajax_form(type, title, url, width,height){
     if (!width) width = '480px';
     if (!height) height = '300px';
     if (!type) type = 1;
@@ -13,6 +12,15 @@ function ajax_form(type, title, url, width,height)
         });
     });
 }
+
+$(document).ready(function () {
+    //鼠标移动tips提示
+    $(".itip").each(function(i,n){
+        $(n).hover(function(){itip($(n).attr("alt"),$(n),undefined,$(n).hasClass("ifixed"));},function(){layer.closeAll('tips');});
+    });
+})
+function itip(msg, selector, ipoint, ifixed){ipoint=ipoint==undefined?1:ipoint;layer.tips(msg,selector,{tips:[ipoint,'#333'],fixed:ifixed,time:6000});}
+
 /*
  * 为低版本IE添加placeholder效果
  *
