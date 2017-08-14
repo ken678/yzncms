@@ -9,13 +9,21 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\controller;
+use think\Db;
 use think\Url;
 use think\Request;
-use app\content\model\ContentModel;
+use app\content\logic\Content as ContentLogic;
 use app\common\controller\Adminbase;
 
 class Content extends Adminbase
 {
+
+    protected function _initialize()
+    {
+        parent::_initialize();
+        $this->Content = new ContentLogic;
+    }
+
 	//显示内容管理首页
     public function index()
     {
@@ -78,14 +86,24 @@ class Content extends Adminbase
         if (getModel($modelid, 'disabled')) {
             $this->error('模型被禁用！');
         }
-        //实例化模型
-        $model = ContentModel::getInstance($modelid);
-        $data = $model->where($where)->order(array("id" => "DESC"))->select();
-
+        $modelCache = cache("Model");
+        $tableName = $modelCache[$modelid]['tablename'];
+        $data = Db::name(ucwords($tableName))->where($where)->order(array("id" => "DESC"))->select();;
         $this->assign('data', $data);
         return $this->fetch();
     }
 
+    //删除
+    public function delete() {
+        $catid = Request::instance()->param('catid', 0, 'intval');
+        $id = Request::instance()->param('id', 0, 'intval');
+        if ($this->Content->delete($id, $catid)) {
+            $this->success('删除成功！');
+        } else {
+            $this->error('删除失败！');
+        }
+
+    }
 
 
 }
