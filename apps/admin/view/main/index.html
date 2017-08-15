@@ -1,38 +1,154 @@
-{extend name="Public:layout" /}
-{block name="content"}
-<style type="text/css">
-.admin-index{width: 100%;height: 100px;margin-top: 8px}
-.admin-index dl{width: 23%;margin: 10px 1%;background-color: #fff;float: left;border-radius: 5px;overflow: hidden}
-.admin-index dt{width: 40%;float: left;line-height: 100px;font-size: 45px;text-align: center;color: #FFF}
-.admin-index dd{width: 60%;text-align: center;font-size: 45px;line-height: 45px;float: right;margin-top: 15px;color: #c6cad6}
-.admin-index .f12{font-size: 14px;line-height: 16px;margin-top: 5px}
-.admin-index .qs{background-color: #6ccac9}
-.admin-index .cs{background-color: #ff6c60}
-.admin-index .hs{background-color: #f8d347}
-.admin-index .ls{background-color: #57c8f2}
-</style>
-<div class="admin-index">
-  <dl data-am-scrollspy="{animation: 'slide-right', delay: 100}" class="am-scrollspy-init am-scrollspy-inview am-animation-slide-right">
-    <dt class="qs"><i class="am-icon-users"></i></dt>
-    <dd>455</dd>
-    <dd class="f12">团队数量</dd>
-  </dl>
-  <dl data-am-scrollspy="{animation: 'slide-right', delay: 300}" class="am-scrollspy-init am-scrollspy-inview am-animation-slide-right">
-    <dt class="cs"><i class="am-icon-area-chart"></i></dt>
-    <dd>455</dd>
-    <dd class="f12">今日收入</dd>
-  </dl>
-  <dl data-am-scrollspy="{animation: 'slide-right', delay: 600}" class="am-scrollspy-init am-scrollspy-inview am-animation-slide-right">
-    <dt class="hs"><i class="am-icon-shopping-cart"></i></dt>
-    <dd>455</dd>
-    <dd class="f12">商品数量</dd>
-  </dl>
-  <dl data-am-scrollspy="{animation: 'slide-right', delay: 900}" class="am-scrollspy-init am-scrollspy-inview am-animation-slide-right">
-    <dt class="ls"><i class="am-icon-cny"></i></dt>
-    <dd>455</dd>
-    <dd class="f12">全部收入</dd>
-  </dl>
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- Apple devices fullscreen -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- Apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="__STATIC__/admin/css/index.css" rel="stylesheet" type="text/css">
+</head>
+<body class="iframe_body">
+<div class="warpper">
+    <div class="title">管理中心</div>
+    <div class="content start_content">
+        <div class="contentWarp">
+            <div class="contentWarp_item clearfix">
+                <div class="section_order_select">
+                        <ul>
+                            <li>
+                                <a style="cursor: default;">
+                                    <i class="ice ice_w"></i>
+                                    <div class="t">栏目数量</div>
+                                    <span class="number">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a style="cursor: default;">
+                                    <i class="ice ice_y"></i>
+                                    <div class="t">模型数量</div>
+                                    <span class="number">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a style="cursor: default;">
+                                    <i class="ice ice_f"></i>
+                                    <div class="t">文章数量</div>
+                                    <span class="number">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a style="cursor: default;">
+                                    <i class="ice ice_n"></i>
+                                    <div class="t">会员总数</div>
+                                    <span class="number">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+                <div class="clear"></div>
+                <div class="section section_order_count" style="float: none;width: inherit;">
+                    <div class="system_section_con">
+                        <div class="sc_title">
+                            <i class="sc_icon"></i>
+                            <h3>版本系统</h3>
+                        </div>
+                        <div class="sc_warp" id="system_warp" style="display: block;padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" class="system_table">
+                                <tbody><tr>
+                                    <td class="gray_bg">程序版本:</td>
+                                    <td>Yzncms V1.0.0</td>
+                                    <td class="gray_bg">更新时间:</td>
+                                    <td>2017-08-15</td>
+                                </tr>
+                                <tr>
+                                    <td class="gray_bg">程序开发:</td>
+                                    <td>御宅男（QQ:530765310）</td>
+                                    <td class="gray_bg">版权所有:</td>
+                                    <td>御宅男工作室</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--切割线-->
+        <div class="contentWarp">
+            <div class="section system_section" style="float: none;width: inherit;">
+                <div class="system_section_con">
+                    <div class="sc_title">
+                        <i class="sc_icon"></i>
+                        <h3>系统信息</h3>
+                    </div>
+                    <div class="sc_warp" id="system_warp" style="display: block;padding-bottom: 20px;">
+                        <table cellpadding="0" cellspacing="0" class="system_table">
+                            <tbody><tr>
+                                <td class="gray_bg">服务器操作系统:</td>
+                                <td>{$sys_info.os}</td>
+                                <td class="gray_bg">服务器域名/IP:</td>
+                                <td>{$sys_info.domain} [ {$sys_info.ip} ]</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">服务器环境:</td>
+                                <td>{$sys_info.web_server}</td>
+                                <td class="gray_bg">PHP 版本:</td>
+                                <td>{$sys_info.phpv}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">Mysql 版本:</td>
+                                <td>{$sys_info.mysql_version}</td>
+                                <td class="gray_bg">GD 版本:</td>
+                                <td>{$sys_info.gdinfo}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">文件上传限制:</td>
+                                <td>{$sys_info.fileupload}</td>
+                                <td class="gray_bg">最大占用内存:</td>
+                                <td>{$sys_info.memory_limit}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">最大执行时间:</td>
+                                <td>{$sys_info.max_ex_time}</td>
+                                <td class="gray_bg">安全模式:</td>
+                                <td>{$sys_info.safe_mode}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">Zlib支持:</td>
+                                <td>{$sys_info.zlib}</td>
+                                <td class="gray_bg">Curl支持:</td>
+                                <td>{$sys_info.curl}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">北京时间:</td>
+                                <td>{$sys_info.beijing_time}</td>
+                                <td class="gray_bg">服务器时间:</td>
+                                <td>{$sys_info.time}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">网站目录:</td>
+                                <td>{$sys_info.web_directory}</td>
+                                <td class="gray_bg">THINK版本:</td>
+                                <td>{$sys_info.think_version}</td>
+                            </tr>
+                            <tr>
+                                <td class="gray_bg">剩余空间:</td>
+                                <td>{$sys_info.remaining_space}</td>
+                                <td class="gray_bg">用户IP:</td>
+                                <td>{$sys_info.user_ip}</td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-{/block}
+<div id="footer">
+    <p>版权所有 © 2017 Yzncms All Rights Reserved</p>
+</div>
+</body>
+</html>
