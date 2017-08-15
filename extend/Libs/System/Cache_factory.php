@@ -9,23 +9,24 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace Libs\System;
-use \think\Cache;
+use think\Db;
+use think\Cache;
+use think\Loader;
 
 class Cache_factory
 {
+    protected static $instance = null;
+
     /**
-     * 连接缓存系统
-     * @access public
-     * @param string $type 缓存类型
-     * @param array $options  配置数组
-     * @return void
+     * @param 缓存实例化
+     * @return static
      */
-    static public function getInstance() {
-        static $systemHandier;
-        if (empty($systemHandier)) {
-            $systemHandier = new Cache_factory();
+    public static function instance($options = [])
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new self($options);
         }
-        return $systemHandier;
+        return self::$instance;
     }
 
     /**
@@ -73,14 +74,27 @@ class Cache_factory
         if (empty($name)) {
             return false;
         }
-        $cacheModel = model('Common/Cache');
         //查询缓存key
-        $cacheList = db('cache')->where(array('key' => $name))->order(array('id' => 'DESC'))->select();
+        $cacheList = Db::name('cache')->where(array('key' => $name))->order(array('id' => 'DESC'))->select();
         if (empty($cacheList)) {
             return false;
         }
-        foreach ($cacheList as $cache) {
-            $cacheModel->runUpdate($cache);
+        foreach ($cacheList as $config) {
+            if (empty($config)) {
+                $this->error = '没有可需要更新的缓存信息！';
+                return false;
+            }
+            $mo = '';
+            if (empty($config['module'])) {
+                $mo = "Common/{$config['model']}";
+            } else {
+                $mo = "{$config['module']}/{$config['model']}";
+            }
+            $model = Loader::model($mo);
+            if ($config['action']) {
+                $action = $config['action'];
+                $model->$action();//执行方法
+            }
         }
         //再次加载
         return Cache::get($name);

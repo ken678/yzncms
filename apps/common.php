@@ -13,6 +13,8 @@ use think\Cache;
 
 /**
  * 系统缓存缓存管理
+ * cache('model') 获取model缓存
+ * cache('model',null) 删除model缓存
  * @param mixed $name 缓存名称
  * @param mixed $value 缓存值
  * @param mixed $options 缓存参数
@@ -21,7 +23,7 @@ use think\Cache;
 function cache($name, $value = '', $options = null) {
     static $cache = '';
     if (empty($cache)) {
-        $cache = \Libs\System\Cache_factory::getInstance();
+        $cache = \Libs\System\Cache_factory::instance();
     }
     // 获取缓存
     if ('' === $value) {
