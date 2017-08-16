@@ -981,3 +981,82 @@ big,.big { font-size: 120% !important; line-height: 120%; }
 .clear { clear: both; }
 /*提示保存成功*/
 .web-save-succ { font-size: 14px; color: #060; background: #E8FFE8; padding: 4px 14px; border: solid 1px #339900; box-shadow: 2px 2px 0 rgba(153,153,153,0.5); }
+
+/*=========表格样式=========*/
+.table_list{margin-top: 10px;position: relative;z-index: 1;overflow:hidden;}
+/*表格标题块*/
+.table_list .mDiv { background-color: #FFF; color: #333; white-space: nowrap; display: block; border-bottom: solid 1px #C8C8C8; position: relative; z-index: 4; height: 30px; }
+/*表格标题*/
+.table_list .mDiv .ftitle { font-size: 0; *word-spacing:-1px/*IE6、7*/;height: 24px; float: left; }
+.table_list .mDiv .ftitle h3,
+.table_list .mDiv .ftitle h5 { font-size: 12px; font-weight: normal; line-height: 24px; color: #999; vertical-align: bottom; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;padding: 0; *zoom:1/*IE7*/;}
+.table_list .mDiv .ftitle h3 { font-size: 16px; color: #333; margin-right: 6px; }
+
+
+.table_list tr:hover td {color: #000; background-color: #F4FCFA;}
+.table_list tr:nth-child(even) td{background: #FDFDFD;}
+.table_list td {padding: 7px 10px 9px;text-overflow: ellipsis;white-space: nowrap;text-align: center;border-bottom: solid 1px #F5F5F5;color: #777; }
+
+/*表格表头*/
+.table_list thead tr td,
+.table_list thead tr:hover td{font-weight: 600;padding:5px 9px; background-color: #F5F5F5; border-top:1px solid #fff; border-bottom:1px solid #fff; color:#666 !important; line-height: 22px; height: 22px; }
+
+/*状态颜色*/
+.table_list td .on,
+.table_list td .yes { color: #1BBC9D; cursor: default; }
+.table_list td .off,
+.table_list td .no { color: #BEC3C7; cursor: default; }
+
+/*中间操作条*/
+.table_list .tDiv { background-color: #FAFAFA; border-top: 1px solid #C8C8C8; border-bottom: 1px solid #D7D7D7; position: relative; z-index: 3; overflow: hidden; }
+.table_list .tDiv2 { font-size: 0; *word-spacing:-1px/*IE6、7*/;padding: 6px 0 6px 6px; float: left; overflow: hidden; }
+.table_list .btnseparator { float: left; height: 22px; border-left: 1px solid #ccc; border-right: 1px solid #fff; margin: 1px; }
+.table_list .fbutton { vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;padding-right: 8px; margin-left: 8px; margin-right: -1px; border-right: dotted 1px #D7D7D7; *zoom:1/*IE7*/;cursor: pointer; }
+.table_list .fbutton div { font-size: 12px; line-height: 20px; color: #999; background-color: #FFFFFF; height: 20px; padding: 2px 7px; border: solid 1px #F0F0F0; border-radius: 4px; }
+.table_list .fbutton div a{color: #999;}
+.table_list .fbutton .add:hover,
+.table_list .fbutton .add:hover a{ color: #1BBC9D; border-color: #1BBC9D; }
+.table_list .fbutton .del:hover,
+.table_list .fbutton .del:hover a{ color: #E84C3D; border-color: #E84C3D; }
+.table_list .fbutton .csv:hover,
+.table_list .fbutton .csv:hover a{ color: #9C59B8; border-color: #9C59B8; }
+.table_list .fbutton .repair:hover,
+.table_list .fbutton .repair:hover a{ color: #0B2F65; border-color: #0B2F65; }
+.table_list .fbutton .optimize:hover,
+.table_list .fbutton .optimize:hover a{ color: #C5798E; border-color: #C5798E; }
+
+/*表格操作*/
+.table_list .handle div { font-size: 0; *word-spacing:-1px/*IE6、7*/;}
+.table_list a.btn { font-size: 12px; font-weight: normal; line-height: 20px; color: #999; background: #FFF none; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;
+*zoom:1/*IE7*/;height: 20px; padding: 1px 6px; margin: 0 5px 0 0; border: solid 1px #F5F5F5; border-radius: 4px; cursor: pointer !important; }
+.table_list a.btn:hover { color: #555; text-decoration: none; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list .handle span { font-size: 12px; }
+.table_list span.btn { font-size: 12px; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;*zoom:1/*IE7*/;
+position: relative; z-index: 1; cursor: default; }
+.table_list span.btn:hover { z-index: 3; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list a.btn:hover { color: #555; text-decoration: none; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list a.red:hover { color: #FFF; background-color: #E84C3D; border-color: #C1392B; }
+.table_list a.blue:hover { color: #FFF; background-color: #3598DC; border-color: #2A80B9; }
+.table_list a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
+.table_list a.orange:hover { color: #FFF; background-color: #FFBF40; border-color: #FFBF40; }
+.table_list a.purple:hover { color: #FFF; background-color: #9C59B8; border-color: #8F44AD; }
+.table_list a.pomegranate:hover { }
+.table_list a.belize-hole:hover { color: #FFF; background-color: #E84C3D; border-color: #C1392B; }
+.table_list .handle span { font-size: 12px; }
+.table_list span.btn { font-size: 12px; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;*zoom:1/*IE7*/;
+position: relative; z-index: 1; cursor: default; }
+.table_list span.btn:hover { z-index: 3; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list span.btn em { color: #999; line-height: 20px; background-color: #FFF; display: block; height: 20px; padding: 1px 6px; border: solid 1px #F5F5F5; border-radius: 4px 0 0 4px; position: relative; z-index: 2; }
+.table_list span.btn:hover em { color: #FFF; background-color: #9C59B8; border-color: #8F44AD #9C59B8 #8F44AD #8F44AD; }
+.table_list span.btn em i { font-size: 14px; vertical-align: middle; margin-right: 4px; }
+.table_list span.btn em .arrow { font-size: 0px; line-height: 0; vertical-align: middle; display: inline-block; width: 0px; height: 0px; float: none; margin: 0 0 0 4px; border-width: 4px; border-color: #999 transparent transparent transparent; border-style: solid dashed dashed dashed; -webkit-transition: .2s ease-in; -moz-transition: -webkit-transform .2s ease-in; -o-transition: -webkit-transform .2s ease-in; transition: .2s ease-in; }
+.table_list span.btn:hover .arrow { border-color: #FFF transparent transparent transparent; FILTER: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+-moz-transform: rotate(270deg); -moz-transform-origin: 50% 30%; -webkit-transform: rotate(270deg); -webkit-transform-origin: 50% 30%; -o-transform: rotate(270deg); -o-transform-origin: 50% 30%; transform: rotate(270deg); transform-origin: 50% 30%; }
+.table_list span.btn ul { background-color: #9C59B8; display: none; border: solid 1px #8F44AD; border-radius: 0 4px 4px 0; margin-left: -2px; position: absolute; z-index: 1; top: 0; left: 100%; overflow: hidden; box-shadow: 3px 3px 0 rgba(0,0,0,0.1); }
+.table_list tr:last-child span.btn ul { bottom: 0; top: auto; }
+.table_list tr:first-child span.btn ul { bottom: auto; top: 0; }
+.table_list tr:nth-last-child(2) span.btn ul { bottom: auto; top: 0; }
+.table_list span.btn:hover ul { display: block; padding: 0 5px; }
+.table_list span.btn ul li { border-bottom: dotted 1px #C69FD7; clear: both; margin-bottom: -1px; }
+.table_list span.btn ul li a { color: #FFF; display: block; line-height: 24px; text-align: right; height: 24px; padding: 0 5px; }
+.table_list span.btn ul li a:hover { text-decoration: underline; }

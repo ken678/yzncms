@@ -9,68 +9,82 @@
       </div>
     </div>
   </div>
-    <table class="flex-table">
-      <thead>
-        <tr>
-          <th width="24"  align="center" class="sign"><i class="ico-check"></i></th>
-          <th width="150" align="center" class="handle">操作</th>
-          <th width="150" align="center">权限组</th>
-          <th width="250" align="center">描述</th>
-          <th width="150" align="center">状态</th>
-          <th width="300" align="center">授权</th>
-          <th></th>
-        </tr>
-      </thead>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="网站全局基本设置，网站及其他模块相关内容在其各自栏目设置项内进行操作"></span> </div>
+    <ul>
+      <li>暂无</li>
+    </ul>
+  </div>
+  <!-- 表格 -->
+  <div class="table_list">
+    <div class="mDiv"><div class="ftitle"><h3>权限组列表</h3><h5></h5></div></div>
+    <div class="hDiv">
+        <table width="100%">
+        <colgroup>
+        <col width="100">
+        <col width="150">
+        <col width="300">
+        <col width="100">
+        <col width="300">
+        </colgroup>
+        <thead>
+          <tr>
+            <td class="handle">操作</td>
+            <td>权限组</td>
+            <td>描述</td>
+            <td>状态</td>
+            <td>授权</td>
+          </tr>
+        </thead>
+        </table>
+    </div>
+
+    <div class="tDiv">
+      <div class="tDiv2">
+        <div class="fbutton">
+            <div class="add"><span><i class="icon iconfont icon-quanxian"></i><a href="{:url('AuthManager/createGroup')}">添加权限组</a></span></div>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+
+    <table width="100%">
+      <colgroup>
+      <col width="100">
+      <col width="150">
+      <col width="300">
+      <col width="100">
+      <col width="300">
+      </colgroup>
       <tbody>
-      {volist name="_list" id="vo"}
-        <tr class="hover">
-          <td class="sign"><i class="ico-check"></i></td>
-          <td class="handle">
-          <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
+        {volist name="_list" id="vo"}
+        <tr>
+          <td>
+            <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
             <ul>
-                <li><a href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a></li>
-                <li><a href="{:url('AuthManager/deletegroup?id='.$vo['id'])}">删除</a></li>
+            <li><a href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a></li>
+            <li><a href="{:url('AuthManager/deletegroup?id='.$vo['id'])}">删除</a></li>
             </ul>
-          </span>
+            </span>
           </td>
           <td>{$vo.title}</td>
           <td>{:mb_strimwidth($vo['description'],0,60,"...","utf-8")}</td>
-          <td>
-          {eq name="vo.status" value="1"}
-          <span class="on"><i class="fa fa-toggle-on"></i>{$vo['status_text']}</span>
-          {else/}
-          <span class="off"><i class="fa fa-toggle-off"></i>{$vo['status_text']}</span>
-          {/eq}
+          <td>{eq name="vo.status" value="1"}<span class="on"><i class="icon iconfont icon-zhengque1"></i>{$vo['status_text']}</span>
+               {else/}<span class="off"><i class="icon iconfont icon-iconfontcuowu2"></i>{$vo['status_text']}</span>
+               {/eq}
           </td>
           <td>
-              <a class="btn blue" href="{:url('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}"><i class="icon iconfont icon-fangwen"></i>访问授权</a>
-              <a class="btn blue" href=""><i class="icon iconfont icon-fenlei"></i>分类授权</a>
-              <a class="btn blue" href=""><i class="icon iconfont icon-chengyuan"></i>成员授权</a>
+          <a class="btn blue" href="{:url('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}"><i class="icon iconfont icon-fangwen"></i>访问授权</a>
+          <a class="btn blue" href=""><i class="icon iconfont icon-fenlei"></i>分类授权</a>
+          <a class="btn blue" href=""><i class="icon iconfont icon-chengyuan"></i>成员授权</a>
           </td>
-          <td></td>
         </tr>
-      {/volist}
-      </tbody>
-    </table>
+        {/volist}
+        </tbody>
+      </table>
+  </div>
 </div>
-<script>
-$('.flex-table').flexigrid({
-	height:'auto',// 高度自动
-	usepager: false,// 不翻页
-	striped: true,// 使用斑马线
-	resizable: false,// 不调节大小
-	reload: false,// 不使用刷新
-	columnControl: false,// 不使用列控制
-	title: '权限组列表',
-	buttons : [
-               {display: '<i class="icon iconfont icon-quanxian"></i>添加权限组', name : 'add', bclass : 'add', onpress : fg_operation }
-           ]
-	});
-
-function fg_operation(name, grid) {
-    if (name == 'add') {
-        window.location.href = '{:url("AuthManager/createGroup")}';
-    }
-}
-</script>
 {/block}
