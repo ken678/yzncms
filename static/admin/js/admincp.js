@@ -142,5 +142,5 @@ function openItem(param) {
     $('li[data-param="' + data_str[0] + '"]').addClass('active');
     $this.parent().addClass('active').parents('dl:first').addClass('active').parents('div:first').show();
     $('#workspace').attr('src', data_str[1]);
-    $.cookie('workspaceParam', data_str[1], { expires: 1 ,path:"/"});
+    $.cookie('workspaceParam', param, { expires: 1 ,path:"/"});
 }
