@@ -46,15 +46,13 @@ class Menu extends Adminbase
             $r['status'] = $r['status'] ? "<span class='on'><i class='icon iconfont icon-xianshi'></i>显示</span>" : "<span class='off'><i class='icon iconfont icon-yincang'></i>隐藏</span>";
         $array[] = $r;
         }
-        $str  = "<tr data-id='\$id'>
-                <td class='sign'><i class='ico-check'></i></td>
-                <td class='sort'><span title='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable'>\$listorder</span></td>
-                <td>\$id</td>
-                <td>\$spacer\$title</td>
-                <td>\$status</td>
-        	<td class='handle'>\$str_manage</td>
-        	<td></td>
-        </tr>";
+        $str  = "<tr>
+                <td align='center' class='sort'><span alt='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable itip'>\$listorder</span></td>
+                <td align='center'>\$id</td>
+                <td align='center' class='handle'>\$str_manage</td>
+                <td align='left'>\$spacer\$title</td>
+                <td align='center'>\$status</td>
+                </tr>";
         $tree->init($array);
         $categorys = $tree->get_tree(0, $str);
         $this->assign('categorys', $categorys);

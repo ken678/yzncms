@@ -434,6 +434,12 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
 .admincp-container-right .top-border { font-size: 0; line-height: 0; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#26000000', endColorstr='#26000000');
 background: rgba(0,0,0,0.15); display: block; width: 100%; height: 2px; position: absolute; z-index: 1; top: -2px; left: 0; }
 .fold .admincp-container-right { background-color: #FFF; position: absolute; z-index: 1; top: 2px; right: 0; bottom: 0; left: 40px; }
+
+
+
+
+
+
 .flexigrid { margin-top: 10px; position: relative; z-index: 1; overflow: hidden; }
 /*f表格标题块*/
 .flexigrid .mDiv { background-color: #FFF; color: #333; white-space: nowrap; display: block; border-bottom: solid 1px #C8C8C8; position: relative; z-index: 4; height: 30px; }
@@ -721,6 +727,9 @@ border: medium none; border-radius: 0; *zoom:1/*IE7*/;
 .flex-table-search .sDiv .btn { color: #555; background-color: #E7E7E7; line-height: 22px; height: 22px; border-left: 1px solid #d7d7d7; padding: 0 10px; cursor: pointer; }
 .flex-table-search .sDiv:hover .btn,
 .flex-table-search .sDiv .btn:hover { color: #FFF; text-decoration: none; background-color: #2cbca3; }
+
+
+
 .flexirid-layout { position: relative; z-index: 1; display: block; overflow: hidden; }
 .ncap-search-ban-s { color: #FFF; background-color: #16a086; width: 16px; padding: 8px 3px 8px 5px; margin-top: -80px; border: solid 1px #16a086; border-right: 0 none; position: fixed; display: block; z-index: 99; top: 50%; right: 0; cursor: pointer; box-shadow: 0 0 5px 0 rgba(204,204,204,0.5); }
 .ncap-search-bar-s i { margin: 0 0 5px 0; }
@@ -995,7 +1004,7 @@ big,.big { font-size: 120% !important; line-height: 120%; }
 
 .table_list tr:hover td {color: #000; background-color: #F4FCFA;}
 .table_list tr:nth-child(even) td{background: #FDFDFD;}
-.table_list td {padding: 7px 10px 9px;text-overflow: ellipsis;white-space: nowrap;text-align: center;border-bottom: solid 1px #F5F5F5;color: #777; }
+.table_list td {padding: 7px 10px 9px;text-overflow: ellipsis;white-space: nowrap;border-bottom: solid 1px #F5F5F5;color: #777; }
 
 /*表格表头*/
 .table_list thead tr td,
@@ -1026,37 +1035,39 @@ big,.big { font-size: 120% !important; line-height: 120%; }
 .table_list .fbutton .optimize:hover a{ color: #C5798E; border-color: #C5798E; }
 
 /*表格操作*/
-.table_list .handle div { font-size: 0; *word-spacing:-1px/*IE6、7*/;}
-.table_list a.btn { font-size: 12px; font-weight: normal; line-height: 20px; color: #999; background: #FFF none; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;
+.table_list .bDiv {background: #fff; min-height: 300px; position: relative; z-index: 2; overflow: auto; }
+.table_list .hDiv .handle, .table_list .bDiv .handle{overflow: visible; min-width: 150px !important; max-width: 150px !important; }
+.table_list .hDiv .sort, .table_list .bDiv .sort{overflow: visible; min-width: 20px !important; max-width: 20px !important; }
+.table_list .bDiv a.btn { font-size: 12px; font-weight: normal; line-height: 20px; color: #999; background: #FFF none; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;
 *zoom:1/*IE7*/;height: 20px; padding: 1px 6px; margin: 0 5px 0 0; border: solid 1px #F5F5F5; border-radius: 4px; cursor: pointer !important; }
-.table_list a.btn:hover { color: #555; text-decoration: none; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
-.table_list .handle span { font-size: 12px; }
-.table_list span.btn { font-size: 12px; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;*zoom:1/*IE7*/;
+.table_list .bDiv a.btn:hover { color: #555; text-decoration: none; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list .bDiv .handle span { font-size: 12px; }
+.table_list .bDiv span.btn { font-size: 12px; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;*zoom:1/*IE7*/;
 position: relative; z-index: 1; cursor: default; }
-.table_list span.btn:hover { z-index: 3; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
-.table_list a.btn:hover { color: #555; text-decoration: none; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
-.table_list a.red:hover { color: #FFF; background-color: #E84C3D; border-color: #C1392B; }
-.table_list a.blue:hover { color: #FFF; background-color: #3598DC; border-color: #2A80B9; }
-.table_list a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
-.table_list a.orange:hover { color: #FFF; background-color: #FFBF40; border-color: #FFBF40; }
-.table_list a.purple:hover { color: #FFF; background-color: #9C59B8; border-color: #8F44AD; }
-.table_list a.pomegranate:hover { }
-.table_list a.belize-hole:hover { color: #FFF; background-color: #E84C3D; border-color: #C1392B; }
-.table_list .handle span { font-size: 12px; }
-.table_list span.btn { font-size: 12px; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;*zoom:1/*IE7*/;
+.table_list .bDiv span.btn:hover { z-index: 3; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list .bDiv a.btn:hover { color: #555; text-decoration: none; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list .bDiv a.red:hover { color: #FFF; background-color: #E84C3D; border-color: #C1392B; }
+.table_list .bDiv a.blue:hover { color: #FFF; background-color: #3598DC; border-color: #2A80B9; }
+.table_list .bDiv a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
+.table_list .bDiv a.orange:hover { color: #FFF; background-color: #FFBF40; border-color: #FFBF40; }
+.table_list .bDiv a.purple:hover { color: #FFF; background-color: #9C59B8; border-color: #8F44AD; }
+.table_list .bDiv a.pomegranate:hover { }
+.table_list .bDiv a.belize-hole:hover { color: #FFF; background-color: #E84C3D; border-color: #C1392B; }
+.table_list .bDiv .handle span { font-size: 12px; }
+.table_list .bDiv span.btn { font-size: 12px; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;*zoom:1/*IE7*/;
 position: relative; z-index: 1; cursor: default; }
-.table_list span.btn:hover { z-index: 3; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
-.table_list span.btn em { color: #999; line-height: 20px; background-color: #FFF; display: block; height: 20px; padding: 1px 6px; border: solid 1px #F5F5F5; border-radius: 4px 0 0 4px; position: relative; z-index: 2; }
-.table_list span.btn:hover em { color: #FFF; background-color: #9C59B8; border-color: #8F44AD #9C59B8 #8F44AD #8F44AD; }
-.table_list span.btn em i { font-size: 14px; vertical-align: middle; margin-right: 4px; }
-.table_list span.btn em .arrow { font-size: 0px; line-height: 0; vertical-align: middle; display: inline-block; width: 0px; height: 0px; float: none; margin: 0 0 0 4px; border-width: 4px; border-color: #999 transparent transparent transparent; border-style: solid dashed dashed dashed; -webkit-transition: .2s ease-in; -moz-transition: -webkit-transform .2s ease-in; -o-transition: -webkit-transform .2s ease-in; transition: .2s ease-in; }
-.table_list span.btn:hover .arrow { border-color: #FFF transparent transparent transparent; FILTER: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+.table_list .bDiv span.btn:hover { z-index: 3; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+.table_list .bDiv span.btn em { color: #999; line-height: 20px; background-color: #FFF; display: block; height: 20px; padding: 1px 6px; border: solid 1px #F5F5F5; border-radius: 4px 0 0 4px; position: relative; z-index: 2; }
+.table_list .bDiv span.btn:hover em { color: #FFF; background-color: #9C59B8; border-color: #8F44AD #9C59B8 #8F44AD #8F44AD; }
+.table_list .bDiv span.btn em i { font-size: 14px; vertical-align: middle; margin-right: 4px; }
+.table_list .bDiv span.btn em .arrow { font-size: 0px; line-height: 0; vertical-align: middle; display: inline-block; width: 0px; height: 0px; float: none; margin: 0 0 0 4px; border-width: 4px; border-color: #999 transparent transparent transparent; border-style: solid dashed dashed dashed; -webkit-transition: .2s ease-in; -moz-transition: -webkit-transform .2s ease-in; -o-transition: -webkit-transform .2s ease-in; transition: .2s ease-in; }
+.table_list .bDiv span.btn:hover .arrow { border-color: #FFF transparent transparent transparent; FILTER: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 -moz-transform: rotate(270deg); -moz-transform-origin: 50% 30%; -webkit-transform: rotate(270deg); -webkit-transform-origin: 50% 30%; -o-transform: rotate(270deg); -o-transform-origin: 50% 30%; transform: rotate(270deg); transform-origin: 50% 30%; }
-.table_list span.btn ul { background-color: #9C59B8; display: none; border: solid 1px #8F44AD; border-radius: 0 4px 4px 0; margin-left: -2px; position: absolute; z-index: 1; top: 0; left: 100%; overflow: hidden; box-shadow: 3px 3px 0 rgba(0,0,0,0.1); }
-.table_list tr:last-child span.btn ul { bottom: 0; top: auto; }
-.table_list tr:first-child span.btn ul { bottom: auto; top: 0; }
-.table_list tr:nth-last-child(2) span.btn ul { bottom: auto; top: 0; }
-.table_list span.btn:hover ul { display: block; padding: 0 5px; }
-.table_list span.btn ul li { border-bottom: dotted 1px #C69FD7; clear: both; margin-bottom: -1px; }
-.table_list span.btn ul li a { color: #FFF; display: block; line-height: 24px; text-align: right; height: 24px; padding: 0 5px; }
-.table_list span.btn ul li a:hover { text-decoration: underline; }
+.table_list .bDiv span.btn ul { background-color: #9C59B8; display: none; border: solid 1px #8F44AD; border-radius: 0 4px 4px 0; margin-left: -2px; position: absolute; z-index: 1; top: 0; left: 100%; overflow: hidden; box-shadow: 3px 3px 0 rgba(0,0,0,0.1); }
+.table_list .bDiv tr:last-child span.btn ul { bottom: 0; top: auto; }
+.table_list .bDiv tr:first-child span.btn ul { bottom: auto; top: 0; }
+.table_list .bDiv tr:nth-last-child(2) span.btn ul { bottom: auto; top: 0; }
+.table_list .bDiv span.btn:hover ul { display: block; padding: 0 5px; }
+.table_list .bDiv span.btn ul li { border-bottom: dotted 1px #C69FD7; clear: both; margin-bottom: -1px; }
+.table_list .bDiv span.btn ul li a { color: #FFF; display: block; line-height: 24px; text-align: right; height: 24px; padding: 0 5px; }
+.table_list .bDiv span.btn ul li a:hover { text-decoration: underline; }

@@ -9,55 +9,69 @@
       </div>
     </div>
   </div>
+  <!-- 操作说明 -->
   <div class="explanation" id="explanation">
     <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
-      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
-      <span id="explanationZoom" title="收起提示"></span>
+      <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+      <span id="explanationZoom" alt="收起提示" class="itip"></span>
     </div>
     <ul>
+    <li>暂无</li>
     </ul>
   </div>
-  <form method='post'>
-    <table class="flex-table">
-      <thead>
-        <tr>
-          <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
-          <th width="60"  align="center">排序</th>
-          <th width="60" align="center">ID</th>
-          <th width="550" align="left">菜单英文名称</th>
-          <th width="60" align="center">状态</th>
-          <th width="150" class="handle" align="center">操作</th>
-          <th></th>
-        </tr>
-      </thead>
+  <!-- 表格 -->
+  <div class="table_list">
+    <div class="mDiv"><div class="ftitle"><h3>后台菜单列表</h3><h5></h5></div></div>
+    <div class="hDiv">
+        <table width="100%">
+        <colgroup>
+        <col width="50">
+        <col width="20">
+        <col width="100">
+        <col width="400">
+        <col width="100">
+        </colgroup>
+        <thead>
+          <tr>
+            <td class="sort" align="center">排序</td>
+            <td align="center">ID</td>
+            <td class="handle" align="center">操作</td>
+            <td align="left">菜单英文名称</td>
+            <td align="center">状态</td>
+          </tr>
+        </thead>
+        </table>
+    </div>
+
+    <div class="tDiv">
+      <div class="tDiv2">
+        <div class="fbutton">
+            <div class="add"><span><i class="icon iconfont icon-caidan"></i><a href="{:url('menu/add')}">添加后台菜单</a></span></div>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+
+    <div class="bDiv">
+      <table width="100%">
+      <colgroup>
+      <col width="50">
+      <col width="20">
+      <col width="100">
+      <col width="400">
+      <col width="100">
+      </colgroup>
       <tbody>
-        {$categorys}
+      {$categorys}
       </tbody>
-    </table>
-  </form>
+      </table>
+    </div>
+  </div>
 </div>
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
 <script type="text/javascript">
 $(function(){
-    $('.flex-table').flexigrid({
-        height:'auto',// 高度自动
-        usepager: false,// 不翻页
-        striped:false,// 不使用斑马线
-        resizable: false,// 不调节大小
-        title: '后台菜单列表',// 表格标题
-        reload: false,// 不使用刷新
-        columnControl: false,// 不使用列控制
-        buttons : [
-                   {display: '<i class="icon iconfont icon-caidan"></i>添加后台菜单', name : 'add', bclass : 'add', onpress : fg_operation }
-               ]
-    });
     $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("menu/listorder")}'});
 });
-
-function fg_operation(name, bDiv) {
-    if (name == 'add') {
-        window.location.href = '{:url("menu/add")}';
-    }
-}
 </script>
 {/block}

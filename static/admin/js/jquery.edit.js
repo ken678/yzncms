@@ -32,8 +32,10 @@
                  $.post(settings.act,{branch:s_name,id:column_id,value:new_value},function(data){
                      data = $.parseJSON(data);
                      if(data.result) {
+                        layer.msg('更新成功', {icon: 1});
                          span.show().text(new_value);
                      } else {
+                        layer.msg('更新失败', {icon: 5});
                          span.show().text(old_value);
                          if (typeof(data.message) != 'undefined') alert(data.message);
                      }

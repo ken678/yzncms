@@ -1,4 +1,9 @@
 $(function() {
+    //鼠标移动tips提示
+    $(".itip").each(function(i,n){
+        $(n).hover(function(){itip($(n).attr("alt"),$(n),undefined,$(n).hasClass("ifixed"));},function(){layer.closeAll('tips');});
+    });
+
     //操作提示缩放动画
     $("#checkZoom").toggle(
         function() {
@@ -38,17 +43,5 @@ $(function() {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
+function itip(msg, selector, ipoint, ifixed){ipoint=ipoint==undefined?1:ipoint;layer.tips(msg,selector,{tips:[ipoint,'#333'],fixed:ifixed,time:6000});}
