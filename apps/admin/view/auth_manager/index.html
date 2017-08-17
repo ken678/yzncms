@@ -24,20 +24,13 @@
 		<div class="mDiv"><div class="ftitle"><h3>权限组列表</h3><h5></h5></div></div>
 		<div class="hDiv">
 		    <table width="100%">
-		    <colgroup>
-		    <col width="100">
-		    <col width="150">
-		    <col width="300">
-		    <col width="100">
-		    <col width="300">
-		    </colgroup>
 		    <thead>
 		      <tr>
-		        <td align="center">操作</td>
-		        <td align="center">权限组</td>
-		        <td align="center">描述</td>
-		        <td align="center">状态</td>
-		        <td align="center">授权</td>
+		        <td width="100" align="center">操作</td>
+		        <td width="150" align="center">权限组</td>
+		        <td width="300" align="center">描述</td>
+		        <td width="100" align="center">状态</td>
+		        <td width="300" align="center">授权</td>
 		      </tr>
 		    </thead>
 		    </table>
@@ -54,17 +47,10 @@
 
 		<div class="bDiv">
 			<table width="100%">
-			<colgroup>
-			<col width="100">
-			<col width="150">
-			<col width="300">
-			<col width="100">
-			<col width="300">
-			</colgroup>
 			<tbody>
 			{volist name="_list" id="vo"}
 			<tr>
-			  <td align="center">
+			  <td width="100" align="center">
 			    <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
 			    <ul>
 			    <li><a href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a></li>
@@ -72,13 +58,13 @@
 			    </ul>
 			    </span>
 			  </td>
-			  <td align="center">{$vo.title}</td>
-			  <td align="center">{:mb_strimwidth($vo['description'],0,60,"...","utf-8")}</td>
-			  <td align="center">{eq name="vo.status" value="1"}<span class="on"><i class="icon iconfont icon-zhengque1"></i>{$vo['status_text']}</span>
+			  <td width="150" align="center">{$vo.title}</td>
+			  <td width="300" align="center">{:mb_strimwidth($vo['description'],0,60,"...","utf-8")}</td>
+			  <td width="100" align="center">{eq name="vo.status" value="1"}<span class="on"><i class="icon iconfont icon-zhengque1"></i>{$vo['status_text']}</span>
 			       {else/}<span class="off"><i class="icon iconfont icon-iconfontcuowu2"></i>{$vo['status_text']}</span>
 			       {/eq}
 			  </td>
-			  <td align="center">
+			  <td width="300" align="center">
 			  <a class="btn blue" href="{:url('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}"><i class="icon iconfont icon-fangwen"></i>访问授权</a>
 			  <a class="btn blue" href=""><i class="icon iconfont icon-fenlei"></i>分类授权</a>
 			  <a class="btn blue" href=""><i class="icon iconfont icon-chengyuan"></i>成员授权</a>
