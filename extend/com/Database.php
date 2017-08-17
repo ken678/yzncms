@@ -82,7 +82,7 @@ class Database{
      */
     public function create(){
         $sql  = "-- -----------------------------\n";
-        $sql .= "-- SentCMS MySQL Data Transfer \n";
+        $sql .= "-- Yzncms MySQL Data Transfer \n";
         $sql .= "-- \n";
         $sql .= "-- Host     : " . config('database.hostname') . "\n";
         $sql .= "-- Port     : " . config('database.hostport') . "\n";

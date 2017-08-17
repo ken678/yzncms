@@ -1004,7 +1004,7 @@ big,.big { font-size: 120% !important; line-height: 120%; }
 
 .table_list tr:hover td {color: #000; background-color: #F4FCFA;}
 .table_list tr:nth-child(even) td{background: #FDFDFD;}
-.table_list td {padding: 7px 10px 9px;text-overflow: ellipsis;white-space: nowrap;border-bottom: solid 1px #F5F5F5;color: #777; }
+.table_list td {padding: 7px 10px 9px;text-overflow: ellipsis;white-space: nowrap;border-bottom: solid 1px #F5F5F5;color: #777;line-height: 22px;height: 22px;}
 
 /*表格表头*/
 .table_list thead tr td,
