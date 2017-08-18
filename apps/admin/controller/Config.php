@@ -90,4 +90,9 @@ class Config extends Adminbase
             return $this->fetch();
         }
     }
+
+    public function add()
+    {
+        return $this->fetch();
+    }
 }

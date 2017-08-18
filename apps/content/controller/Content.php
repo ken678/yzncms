@@ -90,7 +90,9 @@ class Content extends Adminbase
         }
         $modelCache = cache("Model");
         $tableName = $modelCache[$modelid]['tablename'];
-        $data = Db::name(ucwords($tableName))->where($where)->order(array("id" => "DESC"))->select();
+        //$data = Db::name(ucwords($tableName))->where($where)->order(array("id" => "DESC"))->select();
+        $data   =   $this->lists(ucwords($tableName), $where, 'id desc');
+
         $this->assign('data', $data);
         $this->assign('catid', $this->catid);
         return $this->fetch();
