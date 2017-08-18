@@ -17,10 +17,12 @@ use app\common\controller\Adminbase;
 
 class Content extends Adminbase
 {
+    public $catid = 0;	//当前栏目id
 
     protected function _initialize()
     {
         parent::_initialize();
+        $this->catid = Request::instance()->param('catid',0, 'intval');
         $this->Content = new ContentLogic;
     }
 
@@ -88,8 +90,9 @@ class Content extends Adminbase
         }
         $modelCache = cache("Model");
         $tableName = $modelCache[$modelid]['tablename'];
-        $data = Db::name(ucwords($tableName))->where($where)->order(array("id" => "DESC"))->select();;
+        $data = Db::name(ucwords($tableName))->where($where)->order(array("id" => "DESC"))->select();
         $this->assign('data', $data);
+        $this->assign('catid', $this->catid);
         return $this->fetch();
     }
 
@@ -104,6 +107,25 @@ class Content extends Adminbase
         }
 
     }
+
+    //文章排序
+    public function listorder()
+    {
+		$id = Request::instance()->param('id/d',0);
+		$listorder = Request::instance()->param('value/d',0);
+
+		$modelid = getCategory($this->catid, 'modelid');
+		if (empty($modelid)) {
+		    $return = 0;
+		    exit(json_encode(array('result'=>$return)));
+		}
+		$db = ContentLogic::getInstance($modelid);
+		$db ->update(['listorder' => $listorder,'id'=>$id]);
+		$return = 'true';
+		exit(json_encode(array('result'=>$return)));
+    }
+
+
 
 
 }

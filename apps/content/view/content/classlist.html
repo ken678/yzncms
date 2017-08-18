@@ -9,75 +9,71 @@
       </div>
     </div>
   </div>
+  <!-- 操作说明 -->
   <div class="explanation" id="explanation">
     <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
-      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
-      <span id="explanationZoom" title="收起提示"></span>
+      <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+      <span id="explanationZoom" alt="收起提示" class="itip"></span>
     </div>
     <ul>
-      <li></li>
+      <li>暂无</li>
     </ul>
   </div>
-  <form method='post'>
-    <table class="flex-table">
-      <thead>
-        <tr>
-          <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
-          <th width="60"  align="center">排序</th>
-          <th width="150" class="handle" align="center">操作</th>
-          <th width="60" align="center">ID</th>
-          <th width="250" align="center">标题</th>
-          <th width="70" align="center">点击量</th>
-          <th width="100" align="center">发布人</th>
-          <th width="150" align="center">发帖时间</th>
-          <th></th>
-        </tr>
-      </thead>
+  <!-- 表格 -->
+  <div class="table_list">
+    <div class="mDiv"><div class="ftitle"><h3>权限组列表</h3><h5></h5></div></div>
+    <div class="hDiv">
+        <table width="100%">
+        <thead>
+          <tr>
+          <td width="50"  align="center" class='sort'>排序</td>
+          <td width="150" class="handle" align="center">操作</td>
+          <td width="60" align="center">ID</td>
+          <td width="250" align="center">标题</td>
+          <td width="70" align="center">点击量</td>
+          <td width="100" align="center">发布人</td>
+          <td width="150" align="center">发帖时间</td>
+          </tr>
+        </thead>
+        </table>
+    </div>
+
+    <div class="tDiv">
+      <div class="tDiv2">
+        <div class="fbutton">
+             <div class="add"><span><i class="icon iconfont icon-lanmuguanli"></i><a href="{:url('content/category/add')}">添加内容</a></span></div></div>
+        </div>
+      <div style="clear:both"></div>
+    </div>
+
+    <div class="bDiv">
+      <table width="100%">
       <tbody>
         {volist name="data" id="vo"}
-        <tr class="hover">
-            <td class='sign'><i class='ico-check'></i></td>
-            <td class='sort'><span title='可编辑' column_id='26' fieldname='gc_sort' nc_type='inline_edit' class='editable'>0</span></td>
-            <td class="handle">
+        <tr>
+            <td width="50"  align="center" class='sort'><span alt='可编辑' column_id='{$vo['id']}' fieldname='gc_sort' nc_type='inline_edit' class='itip editable'>{$vo['listorder']}</span></td>
+            <td width="150" align="center">
             <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
               <ul><li><a href="{:url('Content/delete',array('catid'=>$vo['catid'],'id'=>$vo['id']))}">删除</a></li>
               </ul>
             </span>
             </td>
-            <td>{$vo.id}</td>
-            <td>{$vo.title}</td>
-            <td>{$vo.views}</td>
-            <td>{$vo.username}</td>
-            <td>{$vo.updatetime|date="Y-m-d H:i:s",###}</td>
-            <td></td>
+            <td width="60"  align="center">{$vo.id}</td>
+            <td width="250" align="center">{$vo.title}</td>
+            <td width="70"  align="center">{$vo.views}</td>
+            <td width="100" align="center">{$vo.username}</td>
+            <td width="150" align="center">{$vo.updatetime|date="Y-m-d H:i:s",###}</td>
         </tr>
         {/volist}
       </tbody>
-    </table>
-  </form>
+      </table>
+    </div>
+  </div>
 </div>
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
 <script type="text/javascript">
 $(function(){
-    $('.flex-table').flexigrid({
-        height:'auto',// 高度自动
-        usepager: false,// 不翻页
-        striped:false,// 不使用斑马线
-        resizable: false,// 不调节大小
-        title: '栏目信息列表',// 表格标题
-        reload: false,// 不使用刷新
-        columnControl: false,// 不使用列控制
-        buttons : [
-                   {display: '<i class="icon iconfont icon-lanmuguanli"></i>添加内容', name : 'add', bclass : 'add', onpress : fg_operation }
-               ]
-    });
-    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/category/listorder")}'});
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/listorder",array('catid'=>$catid))}'});
 });
-
-function fg_operation(name, bDiv) {
-    if (name == 'add') {
-        window.location.href = '{:url("content/category/add")}';
-    }
-}
 </script>
 {/block}

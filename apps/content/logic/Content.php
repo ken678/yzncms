@@ -14,6 +14,25 @@ use think\Model;
 
 class Content extends Model
 {
+    //当前模型id
+    public $modelid = 0;
+
+    static public function getInstance($modelid) {
+        //静态成品变量 保存全局实例
+        static $_instance = NULL;
+        if (is_null($_instance[$modelid]) || !isset($_instance[$modelid])) {
+            //内容模型缓存
+            $modelCache = cache("Model");
+            if (empty($modelCache[$modelid])) {
+                return false;
+            }
+            $tableName = $modelCache[$modelid]['tablename'];
+            $_instance[$modelid] = Db::name(ucwords($tableName));
+            //设置模型id
+            $_instance[$modelid]->modelid = $modelid;
+        }
+        return $_instance[$modelid];
+    }
 
 	public function delete($id = '', $catid = '')
 	{

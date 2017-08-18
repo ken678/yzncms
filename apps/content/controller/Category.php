@@ -54,7 +54,7 @@ class Category extends Adminbase
         	}
         }
 		$str = "<tr>
-                <td width='50' align='center' class='sort'><span title='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable'>\$listorder</span></td>
+                <td width='50' align='center' class='sort'><span alt='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='itip editable'>\$listorder</span></td>
                 <td width='150' align='center'>\$str_manage</td>
                 <td width='60' align='center'>\$id</td>
                 <td width='250' align='left'>\$spacer\$catname</td>
