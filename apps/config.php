@@ -21,6 +21,14 @@ return [
     'app_debug'              => true,
     // 应用Trace
     'app_trace'              => true,
+    //
+    'root_namespace' => [
+        'content_form' => RUNTIME_PATH . 'content_form.class.php',
+        'content_input' => RUNTIME_PATH . 'content_input.class.php',
+        'content_output' => RUNTIME_PATH . 'content_output.class.php',
+        'content_update' => RUNTIME_PATH . 'content_update.class.php',
+        'content_delete' => RUNTIME_PATH . 'content_delete.class.php',
+    ],
     // +----------------------------------------------------------------------
     // | 模块设置
     // +----------------------------------------------------------------------

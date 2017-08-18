@@ -41,8 +41,11 @@
     <div class="tDiv">
       <div class="tDiv2">
         <div class="fbutton">
-             <div class="add"><span><i class="icon iconfont icon-lanmuguanli"></i><a href="{:url('content/category/add')}">添加内容</a></span></div></div>
+             <div class="add"><span><i class="icon iconfont icon-lanmuguanli"></i>
+                   <a href="javascript:void(0)" onclick="javascript:openwinx('{:url('content/add',array('catid'=>$catid))}','')">添加内容</a>
+            </span></div>
         </div>
+      </div>
       <div style="clear:both"></div>
     </div>
 

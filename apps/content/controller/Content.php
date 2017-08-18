@@ -32,6 +32,31 @@ class Content extends Adminbase
         return $this->fetch();
     }
 
+    //内容添加
+    public function add()
+    {
+        $category = getCategory($this->catid);
+        if (empty($category)) {
+            $this->error('该栏目不存在！');
+        }
+        //内部模型
+        if ($category['type'] == 0) {
+            $modelid = $category['modelid'];
+            //检查模型是否被禁用
+            if (getModel($modelid, 'disabled') == 1) {
+                $this->error('该模型已被禁用！');
+            }
+            //实例化表单类 传入 模型ID 栏目ID 栏目数组
+            $content_form = new \content_form($modelid, $this->catid);
+            var_dump($content_form);
+
+        }
+
+
+        return $this->fetch();
+
+    }
+
     //显示栏目菜单列表
     public function public_categorys()
     {

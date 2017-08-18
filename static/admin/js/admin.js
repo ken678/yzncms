@@ -183,4 +183,11 @@ $(function() {
 
 
 });
+//tip提示
 function itip(msg, selector, ipoint, ifixed){ipoint=ipoint==undefined?1:ipoint;layer.tips(msg,selector,{tips:[ipoint,'#333'],fixed:ifixed,time:6000});}
+//新窗口打开
+function openwinx(url,name,w,h) {
+    if(!w) w=screen.width;
+    if(!h) h=screen.height;
+    window.open(url,name);
+}
