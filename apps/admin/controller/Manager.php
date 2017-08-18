@@ -31,7 +31,7 @@ class Manager extends Adminbase
     {
         $where = array();
         $list   = $this->lists('Admin', $where);
-        $this->assign('_list', $list['data']);
+        $this->assign('_list', $list);
         return $this->fetch();
     }
 

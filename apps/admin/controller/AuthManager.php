@@ -26,7 +26,7 @@ class AuthManager extends Adminbase
     public function index()
     {
 		$list = $this->lists('AuthGroup',array('module'=>'admin'),'id asc');
-        $list = int_to_string($list['data']);
+        $list = int_to_string($list);
 		$this->assign( '_list', $list );
         return $this->fetch();
     }

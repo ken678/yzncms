@@ -162,41 +162,6 @@ function execute_action($rules = false, $action_id = null, $user_id = null){
     return $return;
 }
 
-/**
- * xml表格输出
- * @param  [type] $flexigridXML [description]
- * @return [type]               [description]
- */
-function flexigridXML($flexigridXML){
-    $page = $flexigridXML['now_page'];
-    $total = $flexigridXML['total_num'];
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
-header("Cache-Control: no-cache, must-revalidate" );
-header("Pragma: no-cache" );
-header("Content-type: text/xml");
-$xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-$xml .= "<rows>";
-$xml .= "<page>$page</page>";
-$xml .= "<total>$total</total>";
-if(empty($flexigridXML['list'])){
-    $xml .= "<row id=''>";
-    $xml .= "<cell></cell>";
-    $xml .= "</row>";
-    }else{
-    foreach ($flexigridXML['list'] as $k => $v){
-        $xml .= "<row id='".$k."'>";
-       foreach ($v as $kk => $vv){
-            $xml .= "<cell><![CDATA[".$v[$kk]."]]></cell>";
-            }
-    $xml .= "</row>";
-    }
-}
-$xml .= "</rows>";
-echo $xml;
-}
-
-
 // 分析枚举类型配置值 格式 a:名称1,b:名称2
 function parse_config_attr($string) {
     $array = preg_split('/[,;\r\n]+/', trim($string, ",;\r\n"));

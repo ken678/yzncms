@@ -149,7 +149,7 @@ function get_username($uid = 0){
     }
     /* 获取缓存数据 */
     if(empty($list)){
-        $list = cache('sys_active_user_list');
+        $list = Cache::get('sys_active_user_list');
     }
     /* 查找用户信息 */
     $key = "u{$uid}";
@@ -161,11 +161,11 @@ function get_username($uid = 0){
             $name = $list[$key] = $info;
             /* 缓存用户 */
             $count = count($list);
-            $max   = config('user_max_cache');
+            $max   = config('USER_MAX_CACHE');
             while ($count-- > $max) {
                 array_shift($list);
             }
-            cache('sys_active_user_list', $list);
+            Cache::set('sys_active_user_list', $list);
         } else {
             $name = '';
         }

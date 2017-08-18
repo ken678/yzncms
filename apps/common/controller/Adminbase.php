@@ -9,6 +9,8 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\common\controller;
+use think\Db;
+use think\Request;
 use app\admin\model\AuthRule;
 use app\admin\model\AuthGroup;
 
@@ -33,13 +35,13 @@ class Adminbase extends Base
             if(!UID){
                 $this->error('请先登陆',url('admin/index/login'));
             }else{
-                /* 读取数据库中的配置 */
+                /* 读取数据库中的配置
                 $config = cache('DB_CONFIG_DATA');
                 if(!$config){
                     $config =   api('Config/lists');
                     cache('DB_CONFIG_DATA', $config);
                 }
-                config($config);//添加配置
+                config($config);//添加配置*/
                 define('IS_ROOT',   is_administrator());
                 // 检测系统权限
                 if(!IS_ROOT){
@@ -84,6 +86,7 @@ class Adminbase extends Base
      *                              请求参数中如果指定了_order和_field则据此排序(优先级第二);
      *                              否则使用$order参数(如果$order参数,且模型也没有设定过order,则取主键降序);
      *
+     * @param array        $base    基本的查询条件
      * @param boolean      $field   单表模型用不到该参数,要用在多表join时为field()方法指定参数
      *
      * @return array|false
@@ -92,21 +95,23 @@ class Adminbase extends Base
     protected function lists ($model,$where=array(),$order='',$field=true)
     {
         $options    =   array();
-        $REQUEST    =   (array)input('request.');
+        $REQUEST    =   (array)Request::instance()->param();
         if(is_string($model)){
-            $model  =   db($model);
+            $model  =   Db::name($model);
         }
         $pk         =   $model->getPk();
+
         if($order===null){
             //order置空
-        }else if ( isset($REQUEST['sortorder']) && isset($REQUEST['sortname']) && in_array(strtolower($REQUEST['sortorder']),array('desc','asc')) ) {
-            $options['order'] = '`'.$REQUEST['sortname'].'` '.$REQUEST['sortorder'];
+        }else if ( isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']),array('desc','asc')) ) {
+            $options['order'] = '`'.$REQUEST['_field'].'` '.$REQUEST['_order'];
         }elseif( $order==='' && empty($options['order']) && !empty($pk) ){
             $options['order'] = $pk.' desc';
         }elseif($order){
             $options['order'] = $order;
         }
-        unset($REQUEST['sortorder'],$REQUEST['sortname']);
+        unset($REQUEST['_order'],$REQUEST['_field']);
+
 
         if( empty($options['where'])){
             unset($options['where']);
@@ -116,28 +121,21 @@ class Adminbase extends Base
         }else{
             $listRows = config('list_rows') > 0 ? config('list_rows') : 10;
         }
-        if( isset($REQUEST['curpage']) ){
-            $curpage= (int)$REQUEST['curpage'];
-        }else{
-            $curpage= 1;
-        }
         if( !empty($where)){
             $options['where']   =   $where;
-            $total        =   $model->where($options['where'])->count();
-            $list = $model->where($options['where'])->order($options['order'])->field($field)->paginate($listRows,false,['page'=> $curpage]);
+            $list = $model->where($options['where'])->order($options['order'])->field($field)->paginate($listRows,false);
         }else{
-            $total        =   $model->count();
-            $list = $model->order($options['order'])->field($field)->paginate($listRows,false,['page'=> $curpage]);
+            $list = $model->order($options['order'])->field($field)->paginate($listRows,false);
         }
         // 获取分页显示
         $page = $list->render();
         // 模板变量赋值
         $this->assign('_page', $page);
-        $this->assign('_total',$total);
+        $this->assign('_total',$list->total());
         if($list && !is_array($list)){
             $list=$list->toArray();
         }
-        return $list;
+        return $list['data'];
     }
 
 
