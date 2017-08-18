@@ -26,16 +26,19 @@ CURL PHP Extension
 ```
 第一步：修改数据库配置 apps/common/conf/database.php  
 第二步：将根目录的yzncms.sql文件导入数据库即可  
-第三步：后台入口 http://您的域名/admin 默认账号密码admin  123456  
+第三步：后台入口 http://您的域名/admin 默认账号密码 admin    123456   
 ```
 
 [PS]
 ```
 本系统持续更新 由于时间关系 更新时间较长
 本系统从0开始发布  TP新手可以看看如何写一个cms
-任何问题都可以提交到码云的issues里
 ```
-
+[有问必答]
+```
+本人非常乐意帮助新手，如果对本产品或者TP5.0有任何的疑问 都可以提交到issues 都会帮忙解决
+工作原因 QQ请不要联系 谢谢！！！
+```
 [后台登陆界面预览]  
 
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134316_df6a7b60_555541.jpeg "在这里输入图片标题")
