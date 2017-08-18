@@ -53,17 +53,15 @@ class Category extends Adminbase
                 $categorys[$r['catid']] = $r;
         	}
         }
-		$str = "<tr data-id='\$id'>
-                <td class='sign'><i class='ico-check'></i></td>
-                <td class='sort'><span title='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable'>\$listorder</span></td>
-                <td class='handle'>\$str_manage</td>
-                <td>\$id</td>
-                <td>\$spacer\$catname</td>
-                <td>\$typename</td>
-        		<td>\$modelname</td>
-        		<td align='center'>\$url</td>
-                <td>\$help</td>
-                <td></td>
+		$str = "<tr>
+                <td width='50' align='center' class='sort'><span title='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable'>\$listorder</span></td>
+                <td width='150' align='center'>\$str_manage</td>
+                <td width='60' align='center'>\$id</td>
+                <td width='250' align='left'>\$spacer\$catname</td>
+                <td width='70' align='center'>\$typename</td>
+        		<td width='70' align='center'>\$modelname</td>
+        		<td width='100' align='center' align='center'>\$url</td>
+                <td width='100' align='center'>\$help</td>
         		</tr>";
 		if (!empty($categorys) && is_array($categorys)) {
 			$tree = new \Tree();

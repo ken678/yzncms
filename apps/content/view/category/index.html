@@ -9,67 +9,58 @@
       </div>
     </div>
   </div>
+  <!-- 操作说明 -->
   <div class="explanation" id="explanation">
     <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
-      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
-      <span id="explanationZoom" title="收起提示"></span>
+      <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+      <span id="explanationZoom" alt="收起提示" class="itip"></span>
     </div>
     <ul>
       <li>请在添加、修改栏目全部完成后，更新栏目缓存，否则可能出现未知错误</li>
     </ul>
   </div>
-  <form method='post'>
-    <table class="flex-table">
-      <thead>
-        <tr>
-          <th width="24" align="center" class="sign"><i class="ico-check"></i></th>
-          <th width="60"  align="center">排序</th>
-          <th width="150" class="handle" align="center">操作</th>
-          <th width="60" align="center">栏目ID</th>
-          <th width="250" align="left">栏目名称</th>
-          <th width="70" align="center">栏目类型</th>
-          <th width="70" align="center">所属模型</th>
-          <th width="100" align="center">访问</th>
-          <th width="100" align="center">域名绑定须知</th>
-          <th></th>
-        </tr>
-      </thead>
+  <!-- 表格 -->
+  <div class="table_list">
+    <div class="mDiv"><div class="ftitle"><h3>权限组列表</h3><h5></h5></div></div>
+    <div class="hDiv">
+        <table width="100%">
+        <thead>
+          <tr>
+          <tD width="50"  align="center" class="sort">排序</tD>
+          <tD width="150" class="handle" align="center">操作</tD>
+          <tD width="60" align="center">栏目ID</tD>
+          <tD width="250" align="left">栏目名称</tD>
+          <tD width="70" align="center">栏目类型</tD>
+          <tD width="70" align="center">所属模型</tD>
+          <tD width="100" align="center">访问</tD>
+          <tD width="100" align="center">域名绑定须知</tD>
+          </tr>
+        </thead>
+        </table>
+    </div>
+
+    <div class="tDiv">
+      <div class="tDiv2">
+        <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-lanmuguanli"></i><a href="{:url('content/category/add')}">添加栏目</a></span></div></div>
+        <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-danye"></i><a href="{:url('content/category/wadd')}">添加单网页</a></span></div></div>
+        <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-lianjie"></i><a href="{:url('content/category/singlepage')}">添加外部链接</a></span></div></div>
+        </div>
+      <div style="clear:both"></div>
+    </div>
+
+    <div class="bDiv">
+      <table width="100%">
       <tbody>
         {$categorys}
       </tbody>
-    </table>
-  </form>
+      </table>
+    </div>
+  </div>
 </div>
 <script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
 <script type="text/javascript">
 $(function(){
-    $('.flex-table').flexigrid({
-        height:'auto',// 高度自动
-        usepager: false,// 不翻页
-        striped:false,// 不使用斑马线
-        resizable: false,// 不调节大小
-        title: '栏目列表',// 表格标题
-        reload: false,// 不使用刷新
-        columnControl: false,// 不使用列控制
-        buttons : [
-                   {display: '<i class="icon iconfont icon-lanmuguanli"></i>添加栏目', name : 'add', bclass : 'add', onpress : fg_operation },
-                   {display: '<i class="icon iconfont icon-danye"></i>添加单网页', name : 'wadd', bclass : 'add', onpress : fg_operation },
-                   {display: '<i class="icon iconfont icon-lianjie"></i>添加外部链接', name : 'singlepage', bclass : 'add', onpress : fg_operation }
-               ]
-    });
     $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/category/listorder")}'});
 });
-
-function fg_operation(name, bDiv) {
-    if (name == 'add') {
-        window.location.href = '{:url("content/category/add")}';
-    }
-    if (name == 'wadd') {
-        window.location.href = '{:url("content/category/wadd")}';
-    }
-    if (name == 'singlepage') {
-        window.location.href = '{:url("content/category/singlepage")}';
-    }
-}
 </script>
 {/block}
