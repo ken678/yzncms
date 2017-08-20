@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE );
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -21,19 +22,14 @@ return [
     'app_debug'              => true,
     // 应用Trace
     'app_trace'              => true,
-    //
-    'root_namespace' => [
-        'content_form' => RUNTIME_PATH . 'content_form.class.php',
-        'content_input' => RUNTIME_PATH . 'content_input.class.php',
-        'content_output' => RUNTIME_PATH . 'content_output.class.php',
-        'content_update' => RUNTIME_PATH . 'content_update.class.php',
-        'content_delete' => RUNTIME_PATH . 'content_delete.class.php',
-    ],
+
     // +----------------------------------------------------------------------
     // | 模块设置
     // +----------------------------------------------------------------------
     // 默认模块名
     'default_module'         => 'home',
+    // 禁止访问模块
+    'deny_module_list'       => ['common','runtime'],
 
     // 默认跳转页面对应的模板文件
     'dispatch_error_tmpl'     =>  APP_PATH .'admin'. DS .'view' . DS . 'public' . DS . 'dispatch_jump.tpl', // 默认错误跳转对应的模板文件

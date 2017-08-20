@@ -14,6 +14,9 @@ use think\Request;
 use app\admin\model\AuthRule;
 use app\admin\model\AuthGroup;
 
+//定义是后台
+define('IN_ADMIN', true);
+
 class Adminbase extends Base
 {
 	/**
@@ -21,6 +24,7 @@ class Adminbase extends Base
 	 */
 	protected function _initialize()
     {
+        parent::_initialize();
         define('UID',is_login());
         //过滤不需要登陆的行为
         $allowUrl = ['admin/index/login',

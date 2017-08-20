@@ -692,9 +692,6 @@ big,.big { font-size: 120% !important; line-height: 120%; }
 .bold { font-weight: 700; }
 .normal { font-weight: 400; }
 .clear { clear: both; }
-/*提示保存成功*/
-/*.web-save-succ { font-size: 14px; color: #060; background: #E8FFE8; padding: 4px 14px; border: solid 1px #339900; box-shadow: 2px 2px 0 rgba(153,153,153,0.5); }*/
-
 /*==========================*/
 /*=========表格样式=========*/
 /*==========================*/

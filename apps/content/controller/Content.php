@@ -48,7 +48,14 @@ class Content extends Adminbase
             }
             //实例化表单类 传入 模型ID 栏目ID 栏目数组
             $content_form = new \content_form($modelid, $this->catid);
-            var_dump($content_form);
+            //生成对应字段的输入表单
+            $forminfos = $content_form->get();
+
+
+            $this->assign("catid", $this->catid);
+            $this->assign("content_form", $content_form);
+            $this->assign("forminfos", $forminfos);
+            $this->assign("category", $category);
 
         }
 
