@@ -42,7 +42,7 @@ function editor($field, $value, $fieldinfo) {
         $allow_empty = '';
     }
     //模块
-    $module = MODULE_NAME;
+    $module = '';
     $form = \util\Form::editor($field, $toolbar, $module, $this->catid, $allowupload, $allowupload, '', 10, $height, $disabled_page);
     //javascript
     $this->formJavascript .= "

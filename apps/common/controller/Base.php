@@ -12,10 +12,27 @@ namespace app\common\controller;
 use think\Controller;
 
 /**
- * 公用控制器
+ * 公用控制器 前后端继承 共用方法 写在此控制器中
  */
 class Base extends Controller
 {
+    public static $Cache = array();//全局配置缓存
+
+	//初始化
+    protected function _initialize()
+    {
+    	$this->initSite();
+    }
+
+
+    //初始化站点配置信息
+    protected function initSite()
+    {
+    	$Config = cache("Config");//获取所有配置名称和值
+        self::$Cache['Config'] = $Config;
+    	$this->assign("Config", $Config);
+
+    }
 
 
     //空操作

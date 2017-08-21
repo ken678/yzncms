@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\common\model;
+use think\Db;
 use think\Model;
 use think\Validate;
 
@@ -141,6 +142,17 @@ class Config extends Model
             $this->error = '删除失败！';
             return false;
         }
+    }
+
+    /**
+     * 更新缓存
+     */
+    public function config_cache()
+    {
+        //$map    = array('status' => 1);
+        $data = Db::name("Config")->column("name,value");
+        cache("Config", $data);
+        return $data;
     }
 
 }
