@@ -24,7 +24,7 @@ class Attachments extends Controller
     {
         switch ($from) {
             case 'ueditor_scrawl':
-                //return $this->saveScrawl();
+                return $this->saveScrawl();
                 break;
             default:
                 $file_input_name = 'file';
@@ -32,7 +32,7 @@ class Attachments extends Controller
         $file = $this->request->file($file_input_name);
 
         // 移动到框架应用根目录/uploads/ 目录下
-        $info = $file->move(config('upload_path') . DS . $dir);
+        $info = $file->move(config('upload_path') . $dir);
         if($info){
         	// 获取附件信息
             $file_info = [
@@ -67,6 +67,40 @@ class Attachments extends Controller
         }
 
 
+
+    }
+
+
+    /**
+     * 保存涂鸦
+     */
+    private function saveScrawl()
+    {
+        $base64Data  = $this->request->post('file');
+        if (empty($base64Data)) {
+            return json(['state' => '没有涂鸦内容']);
+        }
+        $file_content = base64_decode($base64Data);
+        $file_name    = md5($base64Data) . '.jpg';//图片名称
+        $dir          = config('upload_path') . 'images' . '/' . date('Ymd', $this->request->time());
+        $file_path    = $dir . DS . $file_name;
+
+         //创建目录失败
+        if (!file_exists($dir) && !mkdir($dir, 0777, true)) {
+            return json(['state' => '目录创建失败']);
+        } else if (!is_writeable($dir)) {
+            return json(['state' => '目录没有写权限']);
+        }
+
+        if (!(file_put_contents($file_path, $file_content) && file_exists($file_path))) { //移动失败
+            return json(['state' => '涂鸦上传出错']);
+        }
+        // 返回成功信息
+        return json([
+            "state" => "SUCCESS",          // 上传状态，上传成功时必须返回"SUCCESS"
+            "url"   => '/'.$dir. '/' . $file_name, // 返回的地址
+            "title" => $file_name, // 附件名
+        ]);
 
     }
 

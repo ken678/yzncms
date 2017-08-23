@@ -95,6 +95,10 @@ class Ueditor extends Attachments
             case 'uploadimage':
                return $this->saveFile('images', 'ueditor');
                break;
+            //上传涂鸦
+            case 'uploadscrawl':
+               return $this->saveFile('images', 'ueditor_scrawl');
+               break;
             //上传附件
             case 'uploadfile':
                break;
