@@ -29,8 +29,8 @@ class Base extends Controller
     protected function initSite()
     {
     	$Config = cache("Config");//获取所有配置名称和值
-        self::$Cache['Config'] = $Config;
-    	$this->assign("Config", $Config);
+        self::$Cache['Config'] = $Config;//后端调用
+    	$this->assign("Config", $Config);//前端调用
 
     }
 

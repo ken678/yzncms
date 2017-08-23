@@ -9,12 +9,12 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\model;
+use think\Db;
+use think\Loader;
+use think\Config;
+use think\Model;
+use think\Cache;
 use app\common\model\Modelbase;
-use \think\Db;
-use \think\Loader;
-use \think\Config;
-use \think\Model;
-use \think\Cache;
 
 /**
  * 菜单基础模型
@@ -212,7 +212,7 @@ class Models extends Modelbase
     public function model_cache()
     {
         $data = $this->getModelAll();
-        Cache::set('Model', $data);
+        Cache('Model', $data);
         return $data;
     }
 

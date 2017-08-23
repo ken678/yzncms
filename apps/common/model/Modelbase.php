@@ -9,9 +9,9 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\common\model;
-use \think\Model;
-use \think\Config;
-use \think\Db;
+use think\Config;
+use think\Db;
+use think\Model;
 
 /**
  * 公共模型

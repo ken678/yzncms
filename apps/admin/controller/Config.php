@@ -12,7 +12,7 @@ namespace app\admin\controller;
 use think\Db;
 use think\Request;
 use app\common\controller\Adminbase;
-use app\common\model\Config as ConfigModel;
+use app\common\model\Configs as ConfigModel;
 
 /**
  * 后台配置

@@ -60,5 +60,5 @@ function editor($field, $value, $fieldinfo) {
     //验证不通过提示
     $this->formValidateMessages['info[' . $field . ']'] = array("editor$field" => $errortips ? $errortips : $fieldinfo['name'] . "不能为空！");
     // }
-    return "<div id='{$field}_tip'></div>" . '<script type="text/plain" id="' . $field . '" name="info[' . $field . ']">' . $value . '</script>' . $form;
+    return "<div id='{$field}_tip'></div>" . '<script type="text/plain" style="width:1024px;" id="' . $field . '" name="info[' . $field . ']">' . $value . '</script>' . $form;
 }

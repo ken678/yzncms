@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-08-21 13:05:32
+Date: 2017-08-23 13:08:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=203 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=210 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -119,6 +119,13 @@ INSERT INTO `yzn_action_log` VALUES ('199', '1', '1', '0', 'member', '1', 'admin
 INSERT INTO `yzn_action_log` VALUES ('200', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 11:35登录了后台', '1503286556');
 INSERT INTO `yzn_action_log` VALUES ('201', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 12:31登录了后台', '1503289862');
 INSERT INTO `yzn_action_log` VALUES ('202', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 12:49登录了后台', '1503290949');
+INSERT INTO `yzn_action_log` VALUES ('203', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 13:12登录了后台', '1503292321');
+INSERT INTO `yzn_action_log` VALUES ('204', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 13:30登录了后台', '1503293433');
+INSERT INTO `yzn_action_log` VALUES ('205', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 17:35登录了后台', '1503308145');
+INSERT INTO `yzn_action_log` VALUES ('206', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-22 08:07登录了后台', '1503360453');
+INSERT INTO `yzn_action_log` VALUES ('207', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-22 12:34登录了后台', '1503376460');
+INSERT INTO `yzn_action_log` VALUES ('208', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-22 15:29登录了后台', '1503386953');
+INSERT INTO `yzn_action_log` VALUES ('209', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-23 10:24登录了后台', '1503455044');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -141,7 +148,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1503290949', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1503455044', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -358,7 +365,7 @@ CREATE TABLE `yzn_cache` (
 INSERT INTO `yzn_cache` VALUES ('1', 'Model', '模型列表', 'Content', 'Models', 'model_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('2', 'Category', '栏目索引', 'Content', 'Category', 'category_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'Content', 'ModelField', 'model_field_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Config', 'config_cache', '1');
+INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_category`

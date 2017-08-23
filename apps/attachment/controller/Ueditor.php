@@ -21,7 +21,7 @@ class Ueditor extends Attachments
     private $confing = array(
         /* 上传图片配置项 */
         'imageActionName' => 'uploadimage',
-        'imageFieldName' => 'upfilesss',
+        'imageFieldName' => 'file',
         'imageMaxSize' => 0, /* 上传大小限制，单位B */
         'imageAllowFiles' => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
         'imageCompressEnable' => true,
@@ -31,7 +31,7 @@ class Ueditor extends Attachments
         'imagePathFormat' => '',
         /* 涂鸦图片上传配置项 */
         'scrawlActionName' => 'uploadscrawl',
-        'scrawlFieldName' => 'upfile',
+        'scrawlFieldName' => 'file',
         'scrawlPathFormat' => '',
         'scrawlMaxSize' => 0,
         'scrawlUrlPrefix' => '',
@@ -51,14 +51,14 @@ class Ueditor extends Attachments
         'catcherAllowFiles' => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
         /* 上传视频配置 */
         'videoActionName' => 'uploadvideo',
-        'videoFieldName' => 'upfile',
+        'videoFieldName' => 'file',
         'videoPathFormat' => '',
         'videoUrlPrefix' => '',
         'videoMaxSize' => 0,
         'videoAllowFiles' => array(".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg", ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid"),
         /* 上传文件配置 */
         'fileActionName' => 'uploadfile',
-        'fileFieldName' => 'upfile',
+        'fileFieldName' => 'file',
         'filePathFormat' => '',
         'fileUrlPrefix' => '',
         'fileMaxSize' => 0,
@@ -88,11 +88,23 @@ class Ueditor extends Attachments
         $action = Request::instance()->param('action');//上传类型
         $result = array();
         switch ($action) {
-           case 'config':
-           $result = $this->confing;
-           break;
+            case 'config':
+               $result = $this->confing;
+               break;
+            //上传图片
+            case 'uploadimage':
+               return $this->saveFile('images', 'ueditor');
+               break;
+            //上传附件
+            case 'uploadfile':
+               break;
+            default:
+                $result = array(
+                    'state' => '请求地址出错'
+                );
+                break;
        }
-        exit(json_encode($result));
+       return json($result);
     }
 
 }
