@@ -66,13 +66,61 @@ class Attachments extends Controller
             }
         }
 
+    }
+
+    /**
+     * 显示附件列表(ueditor)
+     */
+    public function showFile($type = '', $config)
+    {
+        /* 判断类型 */
+        switch ($type) {
+            case 'listimage':
+            default:
+                $allowFiles = $config['imageManagerAllowFiles'];
+                $listSize = $config['imageManagerListSize'];
+                $path = realpath(config('upload_path') .'/images/');
+        }
+        $allowFiles = substr(str_replace(".", "|", join("", $allowFiles)), 1);
+
+        /* 获取参数 */
+        $size = isset($_GET['size']) ? htmlspecialchars($_GET['size']) : $listSize;
+        $start = isset($_GET['start']) ? htmlspecialchars($_GET['start']) : 0;
+        $end = $start + $size;
+
+        /* 获取附件列表 */
+        $files = $this->getfiles($path, $allowFiles);
+        if (!count($files)) {
+            return json(array(
+                "state" => "no match file",
+                "list" => array(),
+                "start" => $start,
+                "total" => count($files)
+            ));
+        }
+        /* 获取指定范围的列表 */
+        $len = count($files);
+        for ($i = min($end, $len) - 1, $list = array(); $i < $len && $i >= 0 && $i >= $start; $i--){
+            $list[] = $files[$i];
+        }
+
+        /* 返回数据 */
+        $result = array(
+            "state" => "SUCCESS",
+            "list"  => $list,
+            "start" => $start,
+            "total" => count($files)
+        );
+
+        return json($result);
+
 
 
     }
 
 
     /**
-     * 保存涂鸦
+     * 保存涂鸦(ueditor)
      */
     private function saveScrawl()
     {
@@ -101,7 +149,36 @@ class Attachments extends Controller
             "url"   => '/'.$dir. '/' . $file_name, // 返回的地址
             "title" => $file_name, // 附件名
         ]);
+    }
 
+    /**
+     * 遍历获取目录下的指定类型的附件
+     * @param string $path 路径
+     * @param string $allowFiles 允许查看的类型
+     * @param array $files 文件列表
+     * @return array|null
+     */
+    public function getfiles($path = '', $allowFiles = '', &$files = array())
+    {
+        if (!is_dir($path)) return null;
+        if(substr($path, strlen($path) - 1) != '/') $path .= '/';
+        $handle = opendir($path);
+        while (false !== ($file = readdir($handle))) {
+            if ($file != '.' && $file != '..') {
+                $path2 = $path . $file;
+                if (is_dir($path2)) {
+                    $this->getfiles($path2, $allowFiles, $files);
+                } else {
+                    if (preg_match("/\.(".$allowFiles.")$/i", $file)) {
+                        $files[] = array(
+                            'url'=> str_replace("\\", "/", substr($path2, strlen($_SERVER['DOCUMENT_ROOT']))),
+                            'mtime'=> filemtime($path2)
+                        );
+                    }
+                }
+            }
+        }
+        return $files;
     }
 
 

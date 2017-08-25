@@ -102,6 +102,10 @@ class Ueditor extends Attachments
             //上传附件
             case 'uploadfile':
                break;
+            //列出图片
+            case 'listimage':
+                return $this->showFile('listimage',$this->confing);
+                break;
             default:
                 $result = array(
                     'state' => '请求地址出错'
