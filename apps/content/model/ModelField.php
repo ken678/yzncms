@@ -17,6 +17,27 @@ use think\Model;
  */
 class ModelField extends Model
 {
+    //不显示的字段类型（字段类型）
+    public $not_allow_fields = array('catid', 'typeid', 'title', 'keyword', 'template', 'username', 'tags');
+
+    //允许添加但必须唯一的字段（字段名）
+    public $unique_fields = array('pages', 'readpoint', 'author', 'copyfrom', 'islink', 'posid');
+
+     //禁止被禁用（隐藏）的字段列表（字段名）
+    public $forbid_fields = array('catid', 'title', /* 'updatetime', 'inputtime', 'url', 'listorder', 'status', 'template', 'username', 'allow_comment', 'tags' */);
+
+    //禁止被删除的字段列表（字段名）
+    public $forbid_delete = array('catid', 'title', 'thumb', 'keyword', 'keywords', 'updatetime', 'tags', 'inputtime', 'posid', 'url', 'listorder', 'status', 'template', 'username', 'allow_comment');
+
+    //可以追加 JS和CSS 的字段（字段名）
+    public $att_css_js = array('text', 'textarea', 'box', 'number', 'keyword', 'typeid');
+    /**
+     * 根据模型ID读取全部字段信息
+     */
+    public function getModelField($modelid) {
+        return $this->where(array("modelid" => $modelid))->order(array("listorder" => "ASC"))->select();
+    }
+
     //生成模型字段缓存
     public function model_field_cache() {
         $cache = array();

@@ -57,7 +57,7 @@
 		            <a class="btn red confirm-del" href="{:url('models/delete',array('modelid'=>$vo['modelid']))}"><i class="icon iconfont icon-shanchu"></i>删除</a>
 		            <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
 		            <ul>
-		                <li><a href="">字段管理</a></li>
+		                <li><a href="{:url('field/index',array('modelid'=>$vo['modelid']))}">字段管理</a></li>
 		                <li><a href="">模型修改</a></li>
 		                <li><a href="{:url('content/models/disabled',array('modelid'=>$vo['modelid']))}">{if $vo['disabled'] == 0}模型禁用{else}<font color="#FF0000">模型启用</font>{/if}</a></li>
 		                <li><a href="">导出模型</a></li>
