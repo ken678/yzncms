@@ -14,16 +14,20 @@ use think\Url;
 use think\Request;
 use app\content\logic\Content as ContentLogic;
 use app\common\controller\Adminbase;
+use app\common\Model\ContentModel;
 
 class Content extends Adminbase
 {
     public $catid = 0;	//当前栏目id
+    //模型缓存
+    protected $model = array();
 
     protected function _initialize()
     {
         parent::_initialize();
         $this->catid = Request::instance()->param('catid',0, 'intval');
         $this->Content = new ContentLogic;
+        $this->model = cache('Model');
     }
 
 	//显示内容管理首页
@@ -35,33 +39,61 @@ class Content extends Adminbase
     //内容添加
     public function add()
     {
-        $category = getCategory($this->catid);
-        if (empty($category)) {
-            $this->error('该栏目不存在！');
-        }
-        //内部模型
-        if ($category['type'] == 0) {
-            $modelid = $category['modelid'];
-            //检查模型是否被禁用
-            if (getModel($modelid, 'disabled') == 1) {
-                $this->error('该模型已被禁用！');
+        if (Request::instance()->isPost()) {
+             //栏目ID
+            $catid = intval($_POST['info']['catid']);
+            if (empty($catid)) {
+                $this->error("请指定栏目ID！");
             }
-            //实例化表单类 传入 模型ID 栏目ID 栏目数组
-            $content_form = new \content_form($modelid, $this->catid);
-            //生成对应字段的输入表单
-            $forminfos = $content_form->get();
+            if (trim($_POST['info']['title']) == '') {
+                $this->error("标题不能为空！");
+            }
+
+            //获取当前栏目配置
+            $category = getCategory($catid);
+            //栏目类型为0
+            if ($category['type'] == 0) {
+                //模型ID
+                $modelid = getCategory($catid, 'modelid');
+                //检查模型是否被禁用
+                if ($this->model[$modelid]['disabled'] == 1) {
+                    $this->error("模型被禁用！");
+                }
+                $status = ContentModel::add($_POST['info']);
+                if ($status) {
+                    $this->success("添加成功！");
+                } else {
+                    $error = $this->Content->getError();
+                    $this->error($error ? $error : '添加失败！');
+                }
+            }
+
+        }else{
+            $category = getCategory($this->catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！');
+            }
+            //内部模型
+            if ($category['type'] == 0) {
+                $modelid = $category['modelid'];
+                //检查模型是否被禁用
+                if (getModel($modelid, 'disabled') == 1) {
+                    $this->error('该模型已被禁用！');
+                }
+                //实例化表单类 传入 模型ID 栏目ID 栏目数组
+                $content_form = new \content_form($modelid, $this->catid);
+                //生成对应字段的输入表单
+                $forminfos = $content_form->get();
 
 
-            $this->assign("catid", $this->catid);
-            $this->assign("content_form", $content_form);
-            $this->assign("forminfos", $forminfos);
-            $this->assign("category", $category);
+                $this->assign("catid", $this->catid);
+                $this->assign("content_form", $content_form);
+                $this->assign("forminfos", $forminfos);
+                $this->assign("category", $category);
 
+            }
+            return $this->fetch();
         }
-
-
-        return $this->fetch();
-
     }
 
     //显示栏目菜单列表

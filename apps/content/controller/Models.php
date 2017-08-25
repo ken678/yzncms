@@ -9,9 +9,10 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\controller;
-use \think\Db;
-use \think\Request;
-use \think\Loader;
+use think\Db;
+use think\Request;
+use think\Loader;
+use think\Cookie;
 use app\common\controller\Adminbase;
 
 /**
@@ -19,10 +20,15 @@ use app\common\controller\Adminbase;
  */
 class Models extends Adminbase
 {
-	//模型列表
+	/**
+     * 模型列表首页
+     * @author 御宅男  <530765310@qq.com>
+     */
 	public function index()
 	{
 		$data = Db::name("Model")->where(array("type" => 0))->select();
+        // 记录当前列表页的cookie
+        Cookie::set('__forward__',$_SERVER['REQUEST_URI']);
 		$this->assign("data", $data);
 		return $this->fetch();
 	}
@@ -47,10 +53,14 @@ class Models extends Adminbase
     	}
     }
 
-    //模型删除
+    /**
+     * 模型删除
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function delete()
     {
-        $modelid = Request::instance()->param('modelid/d', 0);
+        $modelid = Request::instance()->param('modelid/d');
+        empty($modelid) && $this->error('参数不能为空！');
         //检查该模型是否已经被使用
         $r = Db::name("Category")->where(array("modelid" => $modelid))->find();
         if ($r) {
@@ -65,10 +75,14 @@ class Models extends Adminbase
 
     }
 
-    //模型禁用
+    /**
+     * 模型禁用
+     * @author 御宅男  <530765310@qq.com>
+     */
 	public function disabled()
 	{
-		$modelid = Request::instance()->param('modelid/d', 0);
+		$modelid = Request::instance()->param('modelid/d');
+        empty($modelid) && $this->error('参数不能为空！');
 		$r = Db::name('Model')->where((array('modelid'=>$modelid)))->value('disabled');
 		$status = $r == '1' ? '0' : '1';
 		Db::name('Model')->where((array('modelid'=>$modelid)))->update(array('disabled'=>$status));
