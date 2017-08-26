@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-08-26 14:30:29
+Date: 2017-08-26 19:56:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=213 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=214 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -129,6 +129,7 @@ INSERT INTO `yzn_action_log` VALUES ('209', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('210', '1', '1', '0', 'member', '1', 'admin在2017-08-25 18:59登录了后台', '1503658754');
 INSERT INTO `yzn_action_log` VALUES ('211', '1', '1', '0', 'member', '1', 'admin在2017-08-25 21:10登录了后台', '1503666655');
 INSERT INTO `yzn_action_log` VALUES ('212', '1', '1', '0', 'member', '1', 'admin在2017-08-26 10:57登录了后台', '1503716238');
+INSERT INTO `yzn_action_log` VALUES ('213', '1', '1', '0', 'member', '1', 'admin在2017-08-26 14:34登录了后台', '1503729251');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -151,7 +152,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1503716238', '0', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1503729251', '0', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -593,7 +594,7 @@ CREATE TABLE `yzn_model_field` (
   PRIMARY KEY (`fieldid`),
   KEY `modelid` (`modelid`,`disabled`),
   KEY `field` (`field`,`modelid`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
 
 -- ----------------------------
 -- Records of yzn_model_field

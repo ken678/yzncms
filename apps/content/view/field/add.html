@@ -2,7 +2,7 @@
 {block name="content"}
 <div class="page">
   <div class="fixed-bar">
-    <div class="item-title"><a class="back" href="{:url('models/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+    <div class="item-title"><a class="back" href="{:url('field/index',['modelid'=>$modelid])}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
       <div class="subject">
         <h3>模型分类管理 - 新增字段</h3>
         <h5>所有后台模型索引及管理</h5>
@@ -95,6 +95,17 @@
         </dt>
         <dd class="opt">
           <input id="errortips" name="errortips" value="" type="text" class="input-txt">
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">作为基本信息</dt>
+        <dd class="opt">
+          <label class="mr10">
+            <input name="isbase" type="radio" value="1" checked>是</label>
+          <label class="mr10">
+            <input name="isbase" type="radio" value="0">否</label>
+          <span class="err"></span>
+          <p class="notic">基本信息将在添加页面左侧显示</p>
         </dd>
       </dl>
       <div class="clear" style="height: 50px;"></div>

@@ -57,7 +57,7 @@
 					{in name="vo.field" value="$forbid_delete"}
 					<a class="btn" href="javascript:;" style="text-decoration:line-through;"><i class="icon iconfont icon-shanchu"></i>删除</a>
 					{else}
-					<a class="btn red" href="javascript:if(confirm('您确定要删除吗?')){location.href=''};"><i class="icon iconfont icon-shanchu"></i>删除</a>
+					<a class="btn red" href="javascript:if(confirm('您确定要删除吗?')){location.href='{:url('field/delete',['fieldid'=>$vo.fieldid,'modelid'=>$vo.modelid])}'};"><i class="icon iconfont icon-shanchu"></i>删除</a>
 					{/in}
 
 					<span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
