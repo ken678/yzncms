@@ -1,4 +1,4 @@
-# Yzncms内容管理系统V1.0.0
+# Yzncms内容管理系统V1.0.0测试版
 ![输入图片说明](https://img.shields.io/badge/php-%3E%3D5.4-000.svg "在这里输入图片标题")
 
 >支持Yzncms的用户请给我们一个star
@@ -27,6 +27,7 @@ CURL PHP Extension
 第一步：修改数据库配置 apps/common/conf/database.php  
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 admin    123456   
+PS 如果已经安装过了 拷贝的时候记得数据库 换成新的 因为目前还是测试版 数据库跨度比较大 需要换成新的数据库SQL文件
 ```
 
 [PS]
@@ -40,7 +41,7 @@ CURL PHP Extension
 工作原因 QQ请不要联系 谢谢！！！
 ```
 [后台登陆界面预览]  
-
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0826/193657_ccc8a8f7_555541.png "Yzncms.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134316_df6a7b60_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0729/203104_a2fab05e_555541.png "Yzncms.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0613/152302_f2081fba_555541.png "在这里输入图片标题")
@@ -49,4 +50,3 @@ CURL PHP Extension
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134344_ce09d530_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134350_bd811af9_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0715/212221_2809862f_555541.png "Yzncms.png")
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0715/212230_59d583e9_555541.png "Yzncms1.png")
