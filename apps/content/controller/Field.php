@@ -23,10 +23,14 @@ class Field extends Adminbase
     	$this->modelfield = new ModelField;
 
     }
-	//显示字段列表
+
+    /**
+     * 显示字段列表
+     * @author 御宅男  <530765310@qq.com>
+     */
 	public function index()
 	{
-		$modelid = Request::instance()->param('modelid','');
+		$modelid = Request::instance()->param('modelid/d','');
         if (empty($modelid)) {
             $this->error('参数错误！');
         }
@@ -46,5 +50,49 @@ class Field extends Adminbase
         $this->assign("data", $data);
         return $this->fetch();
 	}
+
+    /**
+     * 增加字段
+     * @author 御宅男  <530765310@qq.com>
+     */
+    public function add()
+    {
+        $modelid = Request::instance()->param('modelid/d','');
+        if (empty($modelid)) {
+            $this->error('参数错误！');
+        }
+
+        if(Request::instance()->isPost()){
+            $res = $this->modelfield->addField();
+            if(!$res){
+                $this->error($this->modelfield->getError());
+            }else{
+                $this->success('新增成功');
+            }
+        }else{
+            //获取并过滤可用字段类型
+            foreach ($this->modelfield->getFieldTypeList() as $formtype => $name) {
+                if (!$this->modelfield->isAddField($formtype, $formtype, $modelid)) {
+                    continue;
+                }
+                $all_field[$formtype] = $name;
+            }
+
+            $this->assign("modelid", $modelid);
+            $this->assign("all_field", $all_field);
+            return $this->fetch();
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

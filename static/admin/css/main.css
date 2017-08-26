@@ -185,7 +185,7 @@ textarea { resize: vertical !important;/*Textarea支持调节元素的高度*/ }
 .editable,
 .editable2,
 input[type="text"],
-input[type="password"] { line-height: 20px; white-space: nowrap; display: inline-block; height: 20px; overflow: hidden; cursor: text; }
+input[type="password"] { line-height: 20px; white-space: nowrap; display: inline-block; height: 20px; overflow: hidden; cursor: text;vertical-align: middle;}
 .editable-tarea,
 .editable-tarea2,
 textarea { line-height: 18px; display: inline-block; height: 36px; cursor: text; overflow: auto; }
