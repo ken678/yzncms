@@ -44,4 +44,27 @@ class Modelbase extends Model
         $tables = $this->getTables();
         return in_array(Config::get("database.prefix") . $table, $tables) ? true : false;
     }
+
+    /**
+     * 检查字段是否存在
+     * $table 不带表前缀
+     */
+    public function field_exists($table, $field) {
+        $fields = $this->get_fields($table);
+        return array_key_exists($field, $fields);
+    }
+
+    /**
+     * 获取表字段
+     * $table 不带表前缀
+     */
+    public function get_fields($table) {
+        $fields = array();
+        $table = Config::get("database.prefix") . $table;
+        $data = Db::query("SHOW COLUMNS FROM $table");
+        foreach ($data as $v) {
+            $fields[$v['Field']] = $v['Type'];
+        }
+        return $fields;
+    }
 }

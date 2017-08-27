@@ -74,6 +74,7 @@ class Field extends Adminbase
             }
         }else{
             //获取并过滤可用字段类型
+            $all_field = array();
             foreach ($this->modelfield->getFieldTypeList() as $formtype => $name) {
                 if (!$this->modelfield->isAddField($formtype, $formtype, $modelid)) {
                     continue;
@@ -85,6 +86,62 @@ class Field extends Adminbase
             $this->assign("all_field", $all_field);
             return $this->fetch();
         }
+
+    }
+
+    /**
+     * 修改字段
+     * @author 御宅男  <530765310@qq.com>
+     */
+    public function edit()
+    {
+        //模型ID
+        $modelid = Request::instance()->param('modelid/d', 0);
+        //字段ID
+        $fieldid = Request::instance()->param('fieldid/d', 0);
+        if (empty($modelid)) {
+            $this->error('模型ID不能为空！');
+        }
+        if (empty($fieldid)) {
+            $this->error('字段ID不能为空！');
+        }
+        if(Request::instance()->isPost()){
+            if ($this->modelfield->editField('',$fieldid)) {
+                $this->success("更新成功！", Cookie::get('__forward__'));
+            } else {
+                $error = $this->modelfield->getError();
+                $this->error($error ? $error : '更新失败！');
+            }
+        }else{
+            //模型信息
+            $modedata = Db::name("Model")->where(array("modelid" => $modelid))->find();
+            if (empty($modedata)) {
+                $this->error('该模型不存在！');
+            }
+            //字段信息
+            $fieldData = $this->modelfield->where(array("fieldid" => $fieldid, "modelid" => $modelid))->find();
+            if (empty($fieldData)) {
+                $this->error('该字段信息不存在！');
+            }
+            //======获取字段类型的表单编辑界面===========
+            //======获取字段类型的表单编辑界面===END====
+            //字段类型过滤
+            $all_field = array();
+            foreach ($this->modelfield->getFieldTypeList() as $formtype => $name) {
+                if (!$this->modelfield->isEditField($formtype)) {
+                    continue;
+                }
+                $all_field[$formtype] = $name;
+            }
+            $this->assign('isEditField', $this->modelfield->isEditField($fieldData['field']));
+            $this->assign("all_field", $all_field);
+            $this->assign("data", $fieldData);
+            $this->assign("modelid", $modelid);
+            $this->assign("fieldid", $fieldid);
+            return $this->fetch();
+        }
+
+
 
     }
 
@@ -104,6 +161,22 @@ class Field extends Adminbase
         } else {
             $error = $this->modelfield->getError();
             $this->error($error ? $error : "删除字段失败！");
+        }
+    }
+
+    /**
+     * 字段排序
+     * @author 御宅男  <530765310@qq.com>
+     */
+    public function listorder() {
+        $id = Request::instance()->param('id/d',0);
+        $listorder = Request::instance()->param('value/d',0);
+        $rs = $this->modelfield->allowField(true)->where(array('fieldid' => $id))->update(array('listorder' => $listorder));
+        cache('ModelField', NULL);
+        if($rs){
+            $this->success("排序更新成功！");
+        }else{
+            $this->error("排序失败！");
         }
     }
 

@@ -59,11 +59,13 @@ class Content extends Adminbase
                 if ($this->model[$modelid]['disabled'] == 1) {
                     $this->error("模型被禁用！");
                 }
-                $status = ContentModel::add($_POST['info']);
-                if ($status) {
+
+                $logic = logic($modelid);
+                $res = $logic->updates();
+                if ($res) {
                     $this->success("添加成功！");
                 } else {
-                    $error = $this->Content->getError();
+                    $error = $logic->getError();
                     $this->error($error ? $error : '添加失败！');
                 }
             }
@@ -186,9 +188,12 @@ class Content extends Adminbase
 		    exit(json_encode(array('result'=>$return)));
 		}
 		$db = ContentLogic::getInstance($modelid);
-		$db ->update(['listorder' => $listorder,'id'=>$id]);
-		$return = 'true';
-		exit(json_encode(array('result'=>$return)));
+		$rs = $db ->update(['listorder' => $listorder,'id'=>$id]);
+		if($rs){
+            $this->success("排序更新成功！");
+        }else{
+            $this->error("排序失败！");
+        }
     }
 
 

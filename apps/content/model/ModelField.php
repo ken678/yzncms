@@ -12,6 +12,7 @@ namespace app\content\model;
 use think\Db;
 use think\Model;
 use think\Loader;
+use think\Request;
 use app\common\Model\Modelbase;
 
 /**
@@ -21,19 +22,14 @@ class ModelField extends Modelbase
 {
     //字段类型存放路径
     private $fieldPath = '';
-
     //不显示的字段类型（字段类型）
     public $not_allow_fields = array('catid', 'typeid', 'title', 'keyword', 'template', 'username', 'tags');
-
     //允许添加但必须唯一的字段（字段名）
     public $unique_fields = array('pages', 'readpoint', 'author', 'copyfrom', 'islink', 'posid');
-
      //禁止被禁用（隐藏）的字段列表（字段名）
     public $forbid_fields = array('catid', 'title', /* 'updatetime', 'inputtime', 'url', 'listorder', 'status', 'template', 'username', 'allow_comment', 'tags' */);
-
     //禁止被删除的字段列表（字段名）
     public $forbid_delete = array('catid', 'title', 'thumb', 'keyword', 'keywords', 'updatetime', 'tags', 'inputtime', 'posid', 'url', 'listorder', 'status', 'template', 'username', 'allow_comment');
-
     //可以追加 JS和CSS 的字段（字段名）
     public $att_css_js = array('text', 'textarea', 'box', 'number', 'keyword', 'typeid');
 
@@ -45,11 +41,104 @@ class ModelField extends Modelbase
         $this->fieldPath = APP_PATH . 'content/fields/';
     }
 
+    /**
+     *  编辑字段
+     * @param type $data 编辑字段数据
+     * @param type $fieldid 字段id
+     * @return boolean
+     */
+    public function editField($data, $fieldid = 0)
+    {
+        /* 获取数据对象 */
+        $oldData = $data = empty($data) ? Request::instance()->post() : $data;
+        if (!$fieldid && !isset($data['fieldid'])) {
+            $this->error = '缺少字段id！';
+            return false;
+        } else {
+            $fieldid = $fieldid ? $fieldid : (int) $data['fieldid'];
+        }
+        //原字段信息
+        $info = $this->where(array("fieldid" => $fieldid))->find();
+        if (empty($info)) {
+            $this->error = '该字段不存在！';
+            return false;
+        }
+        //字段主表副表不能修改
+        unset($data['issystem']);
+        //字段类型
+        if (empty($data['formtype'])) {
+            $data['formtype'] = $info['formtype'];
+        }
+        //模型id
+        $modelid = $info['modelid'];
+        //完整表名获取 判断主表 还是副表
+        $tablename = $this->getModelTableName($modelid, $info['issystem']);
+        if (!$this->table_exists($tablename)) {
+            $this->error = '数据表不存在！';
+            return false;
+        }
+
+         //数据验证
+        $validate = Loader::validate('ModelField');
+        if(!$validate->scene('edit')->check($data)){
+            $this->error = $validate->getError();
+            return false;
+        }
+        /**
+         * 对应字段配置
+         * $field_type = 'varchar'; //字段数据库类型
+         * $field_basic_table = 1; //是否允许作为主表字段
+         * $field_allow_index = 1; //是否允许建立索引
+         * $field_minlength = 0; //字符长度默认最小值
+         * $field_maxlength = ''; //字符长度默认最大值
+         * $field_allow_search = 1; //作为搜索条件
+         * $field_allow_fulltext = 0; //作为全站搜索信息
+         * $field_allow_isunique = 1; //是否允许值唯一
+         */
+        require $this->fieldPath . "{$data['formtype']}/config.php";
+
+        if (false !== $this->where(array("fieldid" => $fieldid))->update($data)) {
+            //清理缓存
+            cache('ModelField', NULL);
+            //如果字段名变更 需要继续执行
+            if ($data['field'] && $info['field']) {
+                //检查字段是否存在，只有当字段名改变才检测 不允许存在相同字段
+                if ($data['field'] != $info['field'] && $this->field_exists($tablename, $data['field'])) {
+                    $this->error = '该字段已经存在！';
+                    //回滚
+                    $this->where(array("fieldid" => $fieldid))->update($info);
+                    return false;
+                }
+                $field = array(
+                    'tablename' => config('database.prefix') . $tablename,
+                    'newfilename' => $data['field'],
+                    'oldfilename' => $info['field'],
+                    'maxlength' => '',
+                    'minlength' => '',
+                    'defaultvalue' => '',
+                    'minnumber' => 0,
+                    'decimaldigits' => '',
+                );
+                if (false === $this->editFieldSql($field_type, $field)) {
+                    $this->error = '数据库字段结构更改失败！';
+                    //回滚
+                    $this->where(array("fieldid" => $fieldid))->update($info);
+                    return false;
+                }
+            }
+            return true;
+        }else {
+            $this->error = '数据库更新失败！';
+            return false;
+        }
+
+    }
+
     //添加字段
     public function addField($data = null)
     {
         /* 获取数据对象 */
-        $oldData = $data = empty($data) ? \think\Request::instance()->post() : $data;
+        $oldData = $data = empty($data) ? Request::instance()->post() : $data;
         //字段附加配置
         //$setting = $data['setting'];
         //附加属性值
@@ -100,6 +189,8 @@ class ModelField extends Modelbase
         if ($this->addFieldSql($field_type, $field)) {
             $fieldid = $this->allowField(true)->insert($data);
             if ($fieldid) {
+                //清理缓存
+                cache('ModelField', NULL);
                 return $fieldid;
             } else {
                 $this->error = '字段信息入库失败！';
@@ -184,6 +275,27 @@ class ModelField extends Modelbase
      * @return boolean
      */
     public function isDelField($field) {
+        //禁止被删除的字段列表（字段名）
+        if (in_array($field, $this->forbid_delete)) {
+            return false;
+        }
+        return true;
+    }
+
+     /**
+     * 判断字段是否允许被编辑
+     * @param type $field 字段名称
+     * @return boolean
+     */
+    public function isEditField($field) {
+        //判断是否唯一字段
+        if (in_array($field, $this->unique_fields)) {
+            return false;
+        }
+        //禁止被禁用的字段列表（字段名）
+        if (in_array($field, $this->forbid_fields)) {
+            return false;
+        }
         //禁止被删除的字段列表（字段名）
         if (in_array($field, $this->forbid_delete)) {
             return false;
@@ -405,6 +517,194 @@ class ModelField extends Modelbase
                 return true;
                 break;
             default:
+                return false;
+                break;
+        }
+        return true;
+    }
+
+    /**
+     * 执行数据库表结构更改
+     * @param type $field_type 字段类型
+     * @param type $field 相关配置
+     * $field = array(
+     *      'tablename' 表名(完整表名)
+     *      'newfilename' 新字段名
+     *      'oldfilename' 原字段名
+     *      'maxlength' 最大长度
+     *      'minlength' 最小值
+     *      'defaultvalue' 默认值
+     *      'minnumber' 是否正整数 和整数 1为正整数，-1是为整数
+     *      'decimaldigits' 小数位数
+     * )
+     */
+    protected function editFieldSql($field_type, $field) {
+        //表名
+        $tablename = $field['tablename'];
+        //原字段名
+        $oldfilename = $field['oldfilename'];
+        //新字段名
+        $newfilename = $field['newfilename'] ? $field['newfilename'] : $oldfilename;
+        //最大长度
+        $maxlength = $field['maxlength'];
+        //最小值
+        $minlength = $field['minlength'];
+        //默认值
+        $defaultvalue = isset($field['defaultvalue']) ? $field['defaultvalue'] : '';
+        //是否正整数 和整数 1为正整数，-1是为整数
+        $minnumber = isset($field['minnumber']) ? $field['minnumber'] : 1;
+        //小数位数
+        $decimaldigits = isset($field['decimaldigits']) ? $field['decimaldigits'] : '';
+
+        if (empty($tablename) || empty($newfilename)) {
+            $this->error = '表名或者字段名不能为空！';
+            return false;
+        }
+
+        switch ($field_type) {
+            case 'varchar':
+                //最大值
+                if (!$maxlength) {
+                    $maxlength = 255;
+                }
+                $maxlength = min($maxlength, 255);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` VARCHAR( {$maxlength} ) NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'tinyint':
+                $minnumber = intval($minnumber);
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` TINYINT " . ($minnumber >= 0 ? 'UNSIGNED' : '') . " NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'number'://特殊字段类型，数字类型，如果小数位是0字段类型为 INT,否则是FLOAT
+                $minnumber = intval($minnumber);
+                $defaultvalue = $decimaldigits == 0 ? intval($defaultvalue) : floatval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` " . ($decimaldigits == 0 ? 'INT' : 'FLOAT') . " " . ($minnumber >= 0 ? 'UNSIGNED' : '') . " NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'smallint':
+                $minnumber = intval($minnumber);
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` SMALLINT " . ($minnumber >= 0 ? 'UNSIGNED' : '') . " NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'mediumint':
+                $minnumber = intval($minnumber);
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` MEDIUMINT " . ($minnumber >= 0 ? 'UNSIGNED' : '') . " NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'int':
+                $minnumber = intval($minnumber);
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` INT " . ($minnumber >= 0 ? 'UNSIGNED' : '') . " NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'mediumtext':
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` MEDIUMTEXT";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'text':
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` TEXT";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'date':
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` DATE";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'datetime':
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'timestamp':
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case 'readpoint'://特殊字段类型
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `readpoint` SMALLINT(5) unsigned NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case "double":
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` DOUBLE NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case "float":
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` FLOAT NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case "bigint":
+                $defaultvalue = intval($defaultvalue);
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}`  BIGINT NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case "longtext":
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}`  LONGTEXT";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            case "char":
+                $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}`  CHAR(255) NOT NULL DEFAULT '{$defaultvalue}'";
+                if (false === Db::connect()->execute($sql)) {
+                    $this->error = '字段结构更改失败！';
+                    return false;
+                }
+                break;
+            //特殊自定义字段
+            case 'pages':
+                break;
+            default:
+                $this->error = "字段类型" . $field_type . "不存在相应信息！";
                 return false;
                 break;
         }

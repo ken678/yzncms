@@ -52,19 +52,19 @@
 			<tbody>
 			{volist name="data" id="vo"}
 			  <tr>
-					<td width="20"  align="center" class="sort"><span alt="可编辑" column_id="{$vo['modelid']}" fieldname="gc_sort" nc_type="inline_edit" class="itip editable">{$vo['listorder']}</span></td>
+					<td width="20"  align="center" class="sort"><span alt="可编辑" column_id="{$vo['fieldid']}" fieldname="gc_sort" nc_type="inline_edit" class="itip editable">{$vo['listorder']}</span></td>
 					<td width="150" align="center">
 					{in name="vo.field" value="$forbid_delete"}
-					<a class="btn" href="javascript:;" style="text-decoration:line-through;"><i class="icon iconfont icon-shanchu"></i>删除</a>
+					<a class="btn itip" href="javascript:;" style="text-decoration:line-through;" alt="禁止删除"><i class="icon iconfont icon-shanchu"></i>删除</a>
 					{else}
 					<a class="btn red" href="javascript:if(confirm('您确定要删除吗?')){location.href='{:url('field/delete',['fieldid'=>$vo.fieldid,'modelid'=>$vo.modelid])}'};"><i class="icon iconfont icon-shanchu"></i>删除</a>
 					{/in}
 
 					<span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
 					<ul>
-					<li><a href="">修改</a></li>
+					<li><a href="{:url('field/edit',['fieldid'=>$vo.fieldid,'modelid'=>$vo.modelid])}'}">修改</a></li>
 					{in name="vo.field" value="$forbid_fields"}
-					<li><a href="" style="text-decoration:line-through;">隐藏</a></li>
+					<li><a href="javascript:;" class="itip" alt="禁止隐藏" style="text-decoration:line-through;">隐藏</a></li>
 					{else}
 					{eq name="vo.disabled" value="0"}
 					<li><a href="">隐藏</a></li>
@@ -87,4 +87,10 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("field/listorder")}'});
+});
+</script>
 {/block}

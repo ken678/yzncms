@@ -171,12 +171,15 @@ class Category extends Adminbase
     {
         $id = Request::instance()->param('id/d',0);
         $listorder = Request::instance()->param('value/d',0);
-        Db::name('category')->update(['listorder' => $listorder,'catid'=>$id]);
+        $rs = Db::name('category')->update(['listorder' => $listorder,'catid'=>$id]);
         //删除缓存
         getCategory($id,'',true);
         $this->cache();
-        $return = 'true';
-        exit(json_encode(array('result'=>$return)));
+        if($rs){
+            $this->success("排序更新成功！");
+        }else{
+            $this->error("排序失败！");
+        }
     }
 
     //清除栏目缓存

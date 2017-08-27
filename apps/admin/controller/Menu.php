@@ -146,9 +146,12 @@ class Menu extends Adminbase
     {
       $id = Request::instance()->param('id/d',0);
       $listorder = Request::instance()->param('value/d',0);
-      MenuModel::edit(['listorder' => $listorder,'id'=>$id]);
-      $return = 'true';
-      exit(json_encode(array('result'=>$return)));
+      $rs = MenuModel::edit(['listorder' => $listorder,'id'=>$id]);
+      if($rs){
+          $this->success("排序更新成功！");
+      }else{
+          $this->error("排序失败！");
+      }
     }
 
 
