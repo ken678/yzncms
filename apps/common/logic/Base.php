@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\logic;
+use think\Db;
 use think\Request;
 use think\Model;
 use think\Validate;
@@ -45,15 +46,21 @@ class Base extends Model
         };*/
 		$data = $this->FormData;
         $data['status'] = 99;
-		$id = $this->data($data)->allowField(true)->save();
-
-
-        if (!$id) {
-            $this->error = '新增数据失败！';
+        if ($rs = $this->data($data)->allowField(true)->save()) {
+                $data['id'] = $rs['id'];
+                if (false === Db::table('yzn_article_data')->insert($data)) {
+                     //删除已添加的主表内容
+                    $this->delete($rs['id']);
+                    $this->error = '新增附表内容出错';
+                    return false;
+                }
+            return true;
+        } else {
+            $this->error = '新增基础内容出错';
             return false;
-        }else{
-            return $this->id;
         }
+
+
 
 	}
 

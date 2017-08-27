@@ -16,6 +16,9 @@ use app\content\logic\Content as ContentLogic;
 use app\common\controller\Adminbase;
 use app\common\Model\ContentModel;
 
+/**
+ * 内容管理
+ */
 class Content extends Adminbase
 {
     public $catid = 0;	//当前栏目id
