@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
-Source Server Version : 50547
+Source Server         : localhost_3306
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50547
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-08-27 17:25:26
+Date: 2017-08-28 13:29:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=216 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=220 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -132,6 +132,10 @@ INSERT INTO `yzn_action_log` VALUES ('212', '1', '1', '0', 'member', '1', 'admin
 INSERT INTO `yzn_action_log` VALUES ('213', '1', '1', '0', 'member', '1', 'admin在2017-08-26 14:34登录了后台', '1503729251');
 INSERT INTO `yzn_action_log` VALUES ('214', '1', '1', '0', 'member', '1', 'admin在2017-08-26 20:42登录了后台', '1503751328');
 INSERT INTO `yzn_action_log` VALUES ('215', '1', '1', '0', 'member', '1', 'admin在2017-08-27 11:43登录了后台', '1503805428');
+INSERT INTO `yzn_action_log` VALUES ('216', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:20登录了后台', '1503879651');
+INSERT INTO `yzn_action_log` VALUES ('217', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:24登录了后台', '1503879879');
+INSERT INTO `yzn_action_log` VALUES ('218', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:43登录了后台', '1503880985');
+INSERT INTO `yzn_action_log` VALUES ('219', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 09:38登录了后台', '1503884323');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -154,7 +158,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1503805428', '0', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1503884324', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -209,7 +213,7 @@ CREATE TABLE `yzn_article` (
   KEY `listorder` (`catid`,`status`,`listorder`,`id`),
   KEY `catid` (`catid`,`weekviews`,`views`,`dayviews`,`monthviews`,`status`,`id`),
   KEY `thumb` (`thumb`)
-) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of yzn_article

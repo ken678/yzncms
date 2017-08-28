@@ -9,8 +9,10 @@ error_reporting(E_ERROR | E_PARSE );
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
+
 use think\Url;
-class content_form {
+class content_form
+{
 
     //validate表单验证
     public $formValidateRules, $formValidateMessages, $formJavascript;

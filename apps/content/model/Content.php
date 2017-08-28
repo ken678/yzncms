@@ -24,11 +24,11 @@ class Content extends Model
         //字段类型存放目录
         $fields_path = APP_PATH . 'content/fields/';
         //内置字段类型列表
-        $fields = include $fields_path . 'fields.inc.php';
+        $fields = include $fields_path . 'fields.php';
         $fields = $fields? : array();
         //更新内容模型类：表单生成、入库、更新、输出
         //$classtypes = array('form', 'input', 'output', 'update', 'delete');
-        $classtypes = array('form');
+        $classtypes = array('form', 'input');
         //缓存生成路径
         $cachemodepath = RUNTIME_PATH;
         foreach ($classtypes as $classtype) {
@@ -37,9 +37,9 @@ class Content extends Model
             //循环字段列表，把各个字段的 form.inc.php 文件合并到 缓存 content_form.php 文件
             foreach ($fields as $field => $fieldvalue) {
                 //检查文件是否存在
-                if (file_exists($fields_path . $field . DIRECTORY_SEPARATOR . $classtype . '.inc.php')) {
+                if (file_exists($fields_path . $field . DIRECTORY_SEPARATOR . $classtype . '.php')) {
                     //读取文件，$classtype.inc.php
-                    $ca = file_get_contents($fields_path . $field . DIRECTORY_SEPARATOR . $classtype . '.inc.php');
+                    $ca = file_get_contents($fields_path . $field . DIRECTORY_SEPARATOR . $classtype . '.php');
                     $cache_data .= str_replace(array("<?php", "?>"), "", $ca);
                 }
             }
