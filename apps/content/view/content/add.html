@@ -30,7 +30,29 @@ body{font-family: Arial; color: #333; font-size: 12px; background: #f3f3f3; line
 </style>
 <div class="wrap J_check_wrap">
 	<form name="myform" id="myform" action="{:url('content/add')}" method="post" class="J_ajaxForms" enctype="multipart/form-data">
-	    <div class="col-right"></div>
+	    <div class="col-right">
+			<div class="table_full">
+				<table width="100%">
+				<tbody>
+				{php}
+				if(is_array($forminfos['senior'])) {
+				   foreach($forminfos['senior'] as $field=>$info) {
+				       if($info['isomnipotent']) continue;//万能字段跳出
+				{/php}
+					<tr>
+					   <td width="80">{$info['name']}</td>
+			        </tr>
+			        <tr>
+			           <td>{if $info['star']}<span class="must_red">*</span>{/if}{$info['form']} <span>{$info['tips']}</span></td>
+			        </tr>
+				{php}
+				   }
+				}
+				{/php}
+				</tbody>
+				</table>
+			</div>
+	    </div>
 		<div class="col-auto">
 			<div class="h_a">信息发布</div>
 			<div class="table_full">

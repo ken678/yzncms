@@ -63,4 +63,50 @@ class Form {
         $str .= "\r\n</script>";
         return $str;
     }
+
+    /**
+     * 单选框
+     * @param $array 选项 二维数组
+     * @param $id 默认选中值
+     * @param $str 属性
+     */
+    public static function radio($array = array(), $id = 0, $str = '', $width = 0, $field = '') {
+        $string = '';
+        foreach ($array as $key => $value) {
+            $checked = trim($id) == trim($key) ? 'checked' : '';
+            if ($width)
+                $string .= '<label class="ib" style="width:' . $width . 'px">';
+            $string .= '<input type="radio" ' . $str . ' id="' . $field . '_' . htmlspecialchars($key) . '" ' . $checked . ' value="' . $key . '"> ' . $value;
+            if ($width)
+                $string .= '</label>';
+        }
+        return $string;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

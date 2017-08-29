@@ -331,7 +331,7 @@ class ModelField extends Modelbase
      * @return array
      */
     public function getFieldTypeList() {
-        $fields = include $this->fieldPath . 'fields.inc.php';
+        $fields = include $this->fieldPath . 'fields.php';
         $fields = $fields? : array();
         return $fields;
     }
