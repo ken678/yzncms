@@ -69,8 +69,9 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
     </div>
     <ul class="operate nc-row">
       <li style="display: none !important;" nctype="pending_matters"><a class="toast show-option" href="javascript:void(0);"  title="查看待处理事项">&nbsp;<em>0</em></a></li>
+      <li><a class="itip" href="https://www.kancloud.cn/ken678/yzncms/352683" alt="文档手册" target="_blank"><span class="icon iconfont icon-bangzhushouce"></span></a></li>
       <li><a class="sitemap show-option itip" nctype="map_on" href="javascript:void(0);" alt="查看全部管理菜单"><span class="icon iconfont icon-moxing"></span></a></li>
-      <li><a class="homepage show-option itip" target="_blank" href="" alt="打开首页"><span class="icon iconfont icon-shouye"></span></a></li>
+      <li><a class="homepage show-option itip"  onclick="go_home();" href="javascript:void(0);" alt="打开首页"><span class="icon iconfont icon-shouye"></span></a></li>
       <li><a class="login-out show-option itip" href="{:url('index/logout')}" alt="安全退出管理中心"><span class="icon iconfont icon-tuichu"></span></a></li>
     </ul>
   </div>
@@ -109,6 +110,9 @@ function Modifypw(){
     });
   });
 };
+function go_home() {
+  window.open("{:url('/')}");
+}
 </script>
 </body>
 </html>

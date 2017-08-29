@@ -66,11 +66,7 @@ class Index extends Adminbase
      */
     public function getVerify()
     {
-        $config =    [
-            'fontSize'    =>    30,
-            'length'      =>    4,
-        ];
-        $captcha = new \think\captcha\Captcha($config);
+        $captcha = new \think\captcha\Captcha(config('captcha'));
         return $captcha->entry();
     }
 

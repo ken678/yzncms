@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1503978691773'); /* IE9*/
-  src: url('iconfont.eot?t=1503978691773#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1503978691773') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1503978691773') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1503978691773#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1503982579900'); /* IE9*/
+  src: url('iconfont.eot?t=1503982579900#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1503982579900') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1503982579900') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1503982579900#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -46,6 +46,8 @@
 .icon-yingyong:before { content: "\e608"; }
 
 .icon-dengpao:before { content: "\e611"; }
+
+.icon-bangzhushouce:before { content: "\e604"; }
 
 .icon-icon-indent:before { content: "\e61e"; }
 
