@@ -42,7 +42,7 @@ class Base extends Model
         parent::initialize();
     }
 
-	public function updates($data = null)
+	public function add($data = null)
 	{
 		//自动验证及自动完成
         /*if(!$check = $this->checkModelAttr()){
@@ -101,6 +101,15 @@ class Base extends Model
             return false;
         }
 	}
+
+    public function edit($data = null)
+    {
+        //表单数据
+        $data = $this->FormData;
+        var_dump($data);
+        exit();
+
+    }
 
 	/**
      * 检测属性的自动验证和自动完成属性 并进行验证

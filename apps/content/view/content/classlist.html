@@ -57,7 +57,9 @@
             <td width="50"  align="center" class='sort'><span alt='可编辑' column_id='{$vo['id']}' fieldname='gc_sort' nc_type='inline_edit' class='itip editable'>{$vo['listorder']}</span></td>
             <td width="150" align="center">
             <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
-              <ul><li><a href="{:url('Content/delete',array('catid'=>$vo['catid'],'id'=>$vo['id']))}">删除</a></li>
+              <ul>
+                  <li><a href="javascript:;" onClick="javascript:openwinx('{:url('content/edit',array('catid'=>$vo['catid'],'id'=>$vo['id']))}','')">编辑</a></li>
+                  <li><a href="{:url('content/delete',array('catid'=>$vo['catid'],'id'=>$vo['id']))}">删除</a></li>
               </ul>
             </span>
             </td>

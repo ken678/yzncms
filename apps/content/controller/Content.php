@@ -15,7 +15,7 @@ use think\Request;
 use app\content\logic\Content as ContentLogic;
 use app\common\controller\Adminbase;
 use app\common\Model\ContentModel;
-
+error_reporting(E_ERROR | E_PARSE );
 /**
  * 内容管理
  */
@@ -64,7 +64,7 @@ class Content extends Adminbase
                 }
 
                 $logic = logic($modelid);
-                $res = $logic->updates();
+                $res = $logic->add();
                 if ($res) {
                     $this->success("添加成功！");
                 } else {
@@ -99,6 +99,73 @@ class Content extends Adminbase
             }
             return $this->fetch();
         }
+    }
+
+    //内容编辑
+    public function edit()
+    {
+        $this->catid = (int)$_POST['info']['catid'] ?: $this->catid;
+        $Categorys = getCategory($this->catid);
+         //信息ID
+        $id = Request::instance()->param('id/d', 0);
+        //模型ID
+         //检查模型是否被禁用
+        if ($this->model[$Categorys['modelid']]['disabled'] == 1) {
+            $this->error("模型被禁用！");
+        }
+
+        if (Request::instance()->isPost()) {
+            if (trim($_POST['info']['title']) == '') {
+                $this->error("标题不能为空！");
+            }
+            $modelid = getCategory($this->catid, 'modelid');
+            $logic = logic($modelid);
+            $res = $logic->edit();
+            if ($res) {
+                $this->success("修改成功！");
+            } else {
+                $error = $logic->getError();
+                $this->error($error ? $error : '修改失败！');
+            }
+        }else{
+            $modelid = $Categorys['modelid'];
+            if (empty($Categorys)) {
+                $this->error("该栏目不存在！");
+            }
+            $tablename = $this->model[$modelid]['tablename'];
+            $r= Db::name($tablename)->where(['id'=>$id])->find();
+            $r2= Db::name($tablename.'_data')->where(['id'=>$id])->find();
+            $data = array_merge($r,$r2);
+            //引入输入表单处理类
+            $content_form = new \content_form($modelid, $this->catid);
+            //字段内容
+            $forminfos = $content_form->get($data);
+            $this->assign("category", $Categorys);
+            $this->assign("data", $data);
+            $this->assign("catid", $this->catid);
+            $this->assign("id", $id);
+            $this->assign("content_form", $content_form);
+            $this->assign("forminfos", $forminfos);
+            return $this->fetch();
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     //显示栏目菜单列表
