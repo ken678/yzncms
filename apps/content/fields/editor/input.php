@@ -7,7 +7,7 @@
  * @return type
  */
 function editor($field, $value) {
-    $setting = unserialize($this->fields[$field]['setting']);
+    /*$setting = unserialize($this->fields[$field]['setting']);
     $isadmin = 0;
     //是否保存远程图片
     $enablesaveimage = (int) $setting['enablesaveimage'];
@@ -22,6 +22,6 @@ function editor($field, $value) {
         ));
         //下载远程图片
         $value = $Attachment->download($value);
-    }
+    }*/
     return $value;
 }

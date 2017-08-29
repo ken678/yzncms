@@ -75,6 +75,13 @@ class content_input
         $this->data = $data;
         $info = array();
         foreach($data as $field=>$value) {
+            //字段类型
+            $func = $this->fields[$field]['formtype'];
+            //检测对应字段方法是否存在，存在则执行此方法，并传入字段名和字段值
+            if (method_exists($this, $func)) {
+                $value = $this->$func($field, $value);
+            }
+
             //主表附表数据分离
             if($this->fields[$field]['issystem']) {
                 $info['system'][$field] = $value;

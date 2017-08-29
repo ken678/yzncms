@@ -7,5 +7,5 @@
  * @return string
  */
 function copyfrom($field, $value) {
-    return \Input::forTag($value);
+    return \util\Input::forTag($value);
 }

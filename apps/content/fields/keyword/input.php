@@ -10,5 +10,5 @@ function keyword($field, $value) {
     if ($value == '') {
         return $value;
     }
-    return \Input::forTag($value);
+    return \util\Input::forTag($value);
 }

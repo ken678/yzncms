@@ -7,5 +7,5 @@
  * @return int
  */
 function title($field, $value) {
-    return \Input::forTag($value);
+    return \util\Input::forTag($value);
 }

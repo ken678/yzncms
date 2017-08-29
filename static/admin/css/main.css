@@ -313,10 +313,10 @@ position: relative; z-index: 1; overflow: hidden; }
 .admincp-header-r .manager-menu .title h4 { font-weight: 600; font-size: 12px; color: #333; display: inline-block; }
 .admincp-header-r .manager-menu .title a { font-size: 0; background: transparent url(../images/combine_img.png) no-repeat; width: 60px; height: 16px; float: right; margin-top: 4px; border-radius: 2px; }
 .admincp-header-r .manager-menu .title a:hover { background-color: #999; }
-.admincp-header-r .manager-menu .title a.edit-password { background-position: 0px -260px; }
-.admincp-header-r .manager-menu .title a.add-menu { background-position: -60px -260px; }
-.admincp-header-r .manager-menu .title a:hover.edit-password { background-position: -0px -240px; }
-.admincp-header-r .manager-menu .title a:hover.add-menu { background-position: -60px -240px; }
+.admincp-header-r .manager-menu .title a.edit-password { background-position: 0px -160px; }
+.admincp-header-r .manager-menu .title a.add-menu { background-position: -60px -160px; }
+.admincp-header-r .manager-menu .title a:hover.edit-password { background-position: -0px -140px; }
+.admincp-header-r .manager-menu .title a:hover.add-menu { background-position: -60px -140px; }
 .admincp-header-r .manager-menu .login-date { font-size: 11px; font-family: Tahoma; color: #555; padding: 0 8px; }
 .admincp-header-r .manager-menu .login-date span { color: #999; margin-left: 10px; }
 .admincp-header-r .manager-menu li { width: 50%; }
@@ -324,11 +324,8 @@ position: relative; z-index: 1; overflow: hidden; }
 .admincp-header-r .operate { height: 48px; border-left: solid 1px rgba(255,255,255,0.25); box-shadow: -1px 0 0 rgba(0,0,0,0.15); }
 .admincp-header-r .operate li { width: 48px; position: relative; z-index: 1; }
 .admincp-header-r .operate li:hover {filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#26FFFFFF', endColorstr='#26FFFFFF'); background: rgba(255,255,255,0.15); }
-.admincp-header-r .operate li a { font-size: 0; background: url(../images/combine_img.png) no-repeat; display: block; width: 48px; height: 48px; position: relative; z-index: 1; }
-.admincp-header-r .operate li a.sitemap { background-position: 0 -180px; }
-.admincp-header-r .operate li a.homepage { background-position: -100px -180px; }
-.admincp-header-r .operate li a.login-out { background-position: -150px -180px; }
-.admincp-header-r .operate li a.toast { background-position: -192px -180px; }
+.admincp-header-r .operate li a { font-size: 0; display: block; width: 48px; height: 48px; position: relative; z-index: 1; }
+.admincp-header-r .operate li a span{font-size: 20px; color: #FFF; display: block; position: absolute; z-index: 1; top: 14px; left: 14px; }
 .admincp-header-r .operate li a em { font-size: 10px; font-weight: 600; line-height: 14px; color: #FFF; background-color: #F30; text-align: center; display: block; min-width: 10px; height: 14px; padding: 0 2px; border: solid 2px #FFF; border-radius: 9px; position: absolute; z-index: 1; top: 2px; right: 1px; -webkit-animation: twinkling 1s infinite ease-in-out; }
  @-webkit-keyframes 'twinkling' { /*透明度由0到1*/
 0% {
@@ -394,7 +391,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
 .unfold .nav-tabs dl.active { z-index: 2; }
 .unfold .nav-tabs dl dt { }
 .unfold .nav-tabs dl dt a { display: block; width: 70px; height: 70px; }
-.unfold .nav-tabs dl.active dt a { color: #FFF; background: url(../images/combine_img.png) no-repeat 0 -100px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+.unfold .nav-tabs dl.active dt a { color: #FFF; background: url(../images/combine_img.png) no-repeat 0 0px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 .unfold .nav-tabs dl dt h3 { font-size: 12px; font-weight: 600; line-height: 22px; color: #AAA; text-align: center; width: 65px; position: absolute; z-index: 2; top: 36px; left: 0; }
 .unfold .nav-tabs dl.active dt span {opacity: 1; }
 .unfold .nav-tabs dl dt span {font-size: 20px; color: #FFF; display: block;position: absolute; z-index: 1; top: 14px; left: 22px; opacity: 0.5; }
@@ -404,8 +401,8 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=
 .unfold .nav-tabs dl dd li.ui-corner-left { height: auto; padding: 0; }
 .unfold .nav-tabs dl dd li:hover {
 filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#7FFFFFFF', endColorstr='#7FFFFFFF'); background: rgba(255,255,255,0.5); }
-.unfold .nav-tabs dl dd li a { font-weight: normal; color: #777 !important; line-height: 36px; background: url(../images/combine_img.png) no-repeat -70px -140px !important; text-align: left; display: block; width: 115px; height: 36px; padding: 0 0 0 25px; text-shadow: 1px 1px 0 rgba(255,255,255,0.75); }
-.unfold .nav-tabs dl dd li.active a { color: #333 !important; font-weight: 700; background: url(../images/combine_img.png) no-repeat -70px -100px !important; display: block; }
+.unfold .nav-tabs dl dd li a { font-weight: normal; color: #777 !important; line-height: 36px; background: url(../images/combine_img.png) no-repeat -70px -40px !important; text-align: left; display: block; width: 115px; height: 36px; padding: 0 0 0 25px; text-shadow: 1px 1px 0 rgba(255,255,255,0.75); }
+.unfold .nav-tabs dl dd li.active a { color: #333 !important; font-weight: 700; background: url(../images/combine_img.png) no-repeat -70px 0px !important; display: block; }
 .fold .admincp-container-left { background: url(../images/repeat_y_bg.png) repeat-y 0 0; width: 40px; position: absolute; z-index: 2; top: 2px; left: 0; bottom: 0; }
 .fold .top-border { font-size: 0; line-height: 0; width: 40px; height: 2px; position: absolute; z-index: 1; top: -2px; left: 0; }
 .fold .top-border .nav-side {
@@ -573,7 +570,7 @@ padding: 7px 20px !important; border: solid 1px #E6E6E6 !important; cursor: poin
 .explanation .title { white-space: nowrap; margin-bottom: 8px; position: relative; cursor: pointer; }
 .explanation .title h4 { font-size: 14px; font-weight: normal; line-height: 20px; height: 20px; display: inline-block; }
 .explanation .title i { font-size: 18px; vertical-align: middle; margin-right: 6px; }
-.explanation .title span { background: url(../images/combine_img.png) no-repeat -580px -200px; width: 20px; height: 20px; position: absolute; z-index: 1; top: -6px; right: -9px; }
+.explanation .title span { background: url(../images/combine_img.png) no-repeat -580px -100px; width: 20px; height: 20px; position: absolute; z-index: 1; top: -6px; right: -9px; }
 .explanation ul { color: #748A8F; margin-left: 10px; }
 .explanation li { line-height: 20px; background: url(../images/macro_arrow.gif) no-repeat 0 10px; padding-left: 10px; margin-bottom: 4px; text-shadow: 1px 1px 0 rgba(255,255,255,0.5); }
 /* 宽度\高度\尺寸
