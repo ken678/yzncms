@@ -8,50 +8,29 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-namespace app\home\controller;
-use app\common\controller\Homebase;
+namespace app\common\controller;
 
 /**
- * 前台
+ * 前台总控制器
  */
-class Index extends Homebase{
+class Homebase extends Base
+{
+    public function __construct()
+    {
+        $Theme = empty(self::$Cache["Config"]['theme']) ? 'Default' : self::$Cache["Config"]['theme'];
+        $config['template']['view_path'] = APP_PATH.'admin/view/'.$Theme.'/'; //模板主题
+        config($config);//添加配置
+        parent::__construct();
+    }
 
 	/**
-	 * 首页
+	 * 前台初始化
 	 */
-    public function index(){
-
-        return '首页暂无 请进后台 当前后缀加admin';
-    }
-
-    /**
-     * 列表页
-     */
-    public function lists()
+	protected function _initialize()
     {
-    	return $this->fetch();
+    	parent::_initialize();
+
     }
-
-    /**
-     * 内容页
-     */
-    public function shows()
-    {
-    	return $this->fetch();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

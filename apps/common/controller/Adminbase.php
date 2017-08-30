@@ -17,6 +17,9 @@ use app\admin\model\AuthGroup;
 //定义是后台
 define('IN_ADMIN', true);
 
+/**
+ * 后台总控制器
+ */
 class Adminbase extends Base
 {
 	/**
