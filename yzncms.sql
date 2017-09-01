@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-08-28 13:29:10
+Date: 2017-09-01 11:21:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=220 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=233 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -136,6 +136,9 @@ INSERT INTO `yzn_action_log` VALUES ('216', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('217', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:24登录了后台', '1503879879');
 INSERT INTO `yzn_action_log` VALUES ('218', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:43登录了后台', '1503880985');
 INSERT INTO `yzn_action_log` VALUES ('219', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 09:38登录了后台', '1503884323');
+INSERT INTO `yzn_action_log` VALUES ('220', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 17:37登录了后台', '1503913021');
+INSERT INTO `yzn_action_log` VALUES ('221', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-29 11:32登录了后台', '1503977545');
+INSERT INTO `yzn_action_log` VALUES ('222', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-29 12:31登录了后台', '1503981074');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -153,12 +156,12 @@ CREATE TABLE `yzn_admin` (
   `email` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`userid`),
   KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1503884324', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504233711', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -213,7 +216,7 @@ CREATE TABLE `yzn_article` (
   KEY `listorder` (`catid`,`status`,`listorder`,`id`),
   KEY `catid` (`catid`,`weekviews`,`views`,`dayviews`,`monthviews`,`status`,`id`),
   KEY `thumb` (`thumb`)
-) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of yzn_article
@@ -235,10 +238,6 @@ INSERT INTO `yzn_article` VALUES ('18', '10', '关于input标签的一些小知�
 INSERT INTO `yzn_article` VALUES ('19', '10', '5种实现页面跳转到指定的地址的方法', '', '', 'JS实现页面跳转,html实现页面跳转,实现页面跳转的方法', '下面列了五个例子来详细说明，这几个例子的主要功能是：在5秒后，自动跳转到同目录下的hello.html（根据自己需要自行修改）文件。1) html...', '/index.php?a=shows&catid=10&id=19', '0', '99', '1', '0', 'admin', '1371881773', '1371881773', '0', '', '', '0', '0', '0', '0', '0', '0');
 INSERT INTO `yzn_article` VALUES ('20', '10', 'html注释条件语句!--[if IE]...![endif]--使用详细介绍', '', '', 'html注释语句,条件注释,html教程,[if IE]', '代码如下: 用上面这段代码，只有使用IE时加载97zzw...', '/index.php?a=shows&catid=10&id=20', '0', '99', '1', '0', 'admin', '1371881819', '1371881819', '0', '', '', '0', '0', '0', '0', '0', '0');
 INSERT INTO `yzn_article` VALUES ('25', '10', 'Nofollow标签是什么意思', '', 'http://www.yzncms.com/demo/file/2013/06/51c551df1213e.jpg', 'Nofollow,html标签,html教程,什么是Nofollow', 'nofollow 是一个HTML标签的属性值。这个标签的意义是告诉搜索引擎&quot;不要追踪此网页上的链接&quot;或&quot;不要追踪此特定链接。　　nofollow简介　　n...', '/index.php?a=shows&catid=10&id=25', '0', '99', '1', '0', 'admin', '1371886048', '1371886048', '0', '', '', '0', '0', '0', '0', '0', '0');
-INSERT INTO `yzn_article` VALUES ('21', '11', 'DreamWeaver文件保存时提示＂发生共享违例＂问题分析及解决方法', '', 'http://www.yzncms.com/demo/file/2013/06/51c5419d2489e.png', '文件保存,共享违例,dreamweaver', '问题产生描述：DreamWeaver文件保存时，提示这样的问题&quot;发生共享违例&quot;，具体如图：修改HTML文件后，就是保存不了，一保存就提示&quot;路径+时发...', '/index.php?a=shows&catid=11&id=21', '0', '99', '1', '0', 'admin', '1371881885', '1371881885', '0', '', 'dreamweaver', '0', '0', '0', '0', '0', '0');
-INSERT INTO `yzn_article` VALUES ('22', '11', 'DreamWeaver中如何批量删除超级链接', '', 'http://www.yzncms.com/demo/file/2013/06/51c541d5c23ae.jpg', 'DreamWeaver,如何,批量,删除,超级链接,问题,提', '问题提出：在线问答网友提问，请问专家DreamWeaver 8中如何批量删除超级链接?   电脑软硬件应用网回答：解决办法，依次打开DreamWeaver...', '/index.php?a=shows&catid=11&id=22', '0', '99', '1', '0', 'admin', '1371881942', '1371881942', '0', '', 'DreamWeaver', '0', '0', '0', '0', '0', '0');
-INSERT INTO `yzn_article` VALUES ('23', '12', '分享前端开发JavaScript中常用的使用小技巧语句', '', 'http://www.yzncms.com/demo/file/2013/06/51c543b70c703.jpg', 'JavaScript语句,js技巧,前端开发,js教程,js常用语句', '前面我们分享过前端小技巧和JavaScript刷新页面及框架，里面也时不时的提到JavaScript。收集了一些JavaScript小技巧脚本代码。JavaScript是...', '/index.php?a=shows&catid=12&id=23', '0', '99', '1', '0', 'admin', '1371882423', '1371882423', '0', '', '', '0', '0', '0', '0', '0', '0');
-INSERT INTO `yzn_article` VALUES ('24', '14', 'PS结合AI制作钢铁侠面具模型教程', '', 'http://www.yzncms.com/demo/file/2013/06/51c5445ee39c5.jpg', 'PS教程,PS打造钢铁侠面具,PS结合AI教程,ps实例', '教程虽然用到AI，不过绘制的仅是线稿及简单的色块，没有这款软件的完全可以在PS中完成。面具构造并不复杂，不过质感部分刻画比较麻烦，想省...', '/index.php?a=shows&catid=14&id=24', '0', '99', '1', '0', 'admin', '1371882593', '1371882593', '0', '', '', '2', '0', '1', '1', '1', '1435332393');
 INSERT INTO `yzn_article` VALUES ('29', '10', '5种实现页面跳转到指定的地址的方法', '', '', 'JS实现页面跳转,html实现页面跳转,实现页面跳转的方法', '下面列了五个例子来详细说明，这几个例子的主要功能是：在5秒后，自动跳转到同目录下的hello.html（根据自己需要自行修改）文件。1) html...', '/index.php?a=shows&catid=10&id=29', '0', '99', '1', '0', 'admin', '1371907845', '1371907845', '0', '', '', '0', '0', '0', '0', '0', '0');
 INSERT INTO `yzn_article` VALUES ('34', '24', 'Digital Atelier创意网站开发工作室网站欣赏', '', 'http://www.yzncms.com/demo/file/2013/06/51c5b06e7462d.jpg', 'Digital Atelier,jquery酷站,国外酷站,交互设计酷站', 'Digital studio focused on web, mobile and facebook development', '/index.php?a=shows&catid=24&id=34', '0', '99', '1', '0', 'admin', '1371910261', '1371910261', '0', '', '', '1', '0', '1', '1', '1', '1435332417');
 
@@ -406,7 +405,7 @@ CREATE TABLE `yzn_category` (
   PRIMARY KEY (`catid`),
   KEY `module` (`module`,`parentid`,`listorder`,`catid`),
   KEY `siteid` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='栏目表';
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='栏目表';
 
 -- ----------------------------
 -- Records of yzn_category
@@ -496,7 +495,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -557,7 +556,7 @@ CREATE TABLE `yzn_model` (
   `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
   PRIMARY KEY (`modelid`),
   KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 -- ----------------------------
 -- Records of yzn_model
@@ -600,7 +599,7 @@ CREATE TABLE `yzn_model_field` (
   PRIMARY KEY (`fieldid`),
   KEY `modelid` (`modelid`,`disabled`),
   KEY `field` (`field`,`modelid`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
 
 -- ----------------------------
 -- Records of yzn_model_field

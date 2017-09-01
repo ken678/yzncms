@@ -12,6 +12,7 @@ namespace app\content\model;
 use \think\Model;
 use \think\Db;
 use \think\Cache;
+use \think\Loader;
 /**
  * 栏目模型
  */
@@ -32,6 +33,13 @@ class Category extends Model
         $catname = iconv('utf-8', 'gbk', $data['catname']);
         $letters = gbk_to_pinyin($catname);
         $data['letter'] = strtolower(implode('', $letters));
+
+        //数据验证
+        $validate = Loader::validate('Category');
+        if(!$validate->scene('add')->check($data)){
+            $this->error = $validate->getError();
+            return false;
+        }
 
 
         $catid = $this->allowField(true)->save($data);

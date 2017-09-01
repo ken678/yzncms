@@ -95,9 +95,9 @@ class Category extends Adminbase
                 if (empty($Ca)) {
                     $this->error("父栏目不存在！");
                 }
-                if ($Ca['child'] == '0') {
+                /*if ($Ca['child'] == '0') {
                     $this->error("终极栏目不能添加子栏目！");
-                }
+                }*/
             }else{$Ca=null;}
 
             //输出可用模型
