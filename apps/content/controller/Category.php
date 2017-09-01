@@ -46,7 +46,7 @@ class Category extends Adminbase
                 $r['typename'] = $types[$r['type']];
                 $r['help'] = '';
                 if ($r['url']) {
-                    $r['url'] = "<a href='" . $r['url'] . "' target='_blank'>访问</a>";
+                    $r['url'] = "<a href='" . Url::build($r['url']) . "' target='_blank'>访问</a>";
                 } else {
                     $r['url'] = "<a href='" . Url::build("Category/public_cache") . "'><font color='red'>更新缓存</font></a>";
                 }
@@ -223,8 +223,28 @@ class Category extends Adminbase
                 $letters = gbk_to_pinyin($catname);
                 $letter = strtolower(implode('', $letters));//获取拼音
                 $listorder = $cat['listorder'] ? $cat['listorder'] : $catid;
+
+                $save = array();
+
+
+                //取得栏目相关地址和分页规则
+                $this->Url = new \util\Url;
+                $category_url = $this->Url->category_url($catid);
+                if (false == $category_url) {
+                    return false;
+                }
+                $url = $category_url['url'];
+                //更新URL
+                if ($cat['url'] != $url) {
+                    $save['url'] = $url;
+                }
                 if($categorys[$catid]['parentdir']!=$parentdir  || $categorys[$catid]['letter']!=$letter || $categorys[$catid]['listorder']!=$listorder){
-                    Db::name("Category")->where(array('catid' => $catid))->update(array('parentdir'=>$parentdir,'letter'=>$letter,'listorder'=>$listorder));
+                    $save['parentdir'] = $parentdir;
+                    $save['letter'] = $letter;
+                    $save['listorder'] = $listorder;
+                }
+                if (count($save) > 0) {
+                    Db::name("Category")->where(array('catid' => $catid))->update($save);
                 }
                 getCategory($catid, '', true);
             }
