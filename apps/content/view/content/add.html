@@ -15,12 +15,15 @@
 <script type="text/javascript" src="__STATIC__/js/layer/layer.js"></script>
 </head>
 <body>
+<script type="text/javascript">
+    var upurl ="{:url('attachment/attachments/WebUploader','','')}";
+</script>
 <style type="text/css">
 body{ color: #666; font-size: 12px;background-color: #F6F7FB; line-height: 1.5; overflow-x: hidden; overflow-y: auto;}
-.ncsc-layout {overflow: hidden; flex: 1 0 auto; padding: 20px 0px 70px;}
+.ncsc-layout { flex: 1 0 auto; padding: 20px 0px 70px;}
 .wrapper {width: 1200px; margin: auto; }
-.ncsc-layout-left {background-color: #FFF; width: 950px; min-height: 640px; float: left; position: relative; z-index: 1; }
-.ncsc-layout-right{float: right;width: 240px;background-color: #FFF;}
+.ncsc-layout-left {background-color: #FFF; width: 950px; min-height: 640px; float: left; position: relative; z-index: 1;box-shadow: 0 0 10px #ccc;}
+.ncsc-layout-right{float: right;width: 240px;background-color: #FFF;box-shadow: 0 0 10px #ccc;}
 .ncsc-form-zhu {border: solid #E6E6E6; border-width: 1px 1px 0 1px; }
 .ncsc-form-fu {border: solid #E6E6E6; border-width: 1px 1px 0 1px; }
 .ncsc-form-zhu h3 {font-size: 14px; font-weight: 600; line-height: 22px; color: #000; clear: both; background-color: #F5F5F5; padding: 5px 0 5px 12px; border-bottom: solid 1px #E7E7E7; font-weight: normal; }
@@ -92,6 +95,7 @@ i.required {font: 12px/16px Tahoma; color: #F30; vertical-align: middle; margin-
 		</div>
     </div>
 	<input type="hidden" name="catid" value="{$catid}"/>
+	<div class="clear" style="height: 10px;"></div>
     <div class="fix-bot">
           <a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.myform.submit()">确认提交</a>
           <a class="ncap-btn-big ncap-btn-red ml10 Close_btn">关闭</a>

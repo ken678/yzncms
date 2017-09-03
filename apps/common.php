@@ -373,3 +373,11 @@ function time_format($time = NULL,$format='Y-m-d H:i'){
     $time = $time === NULL ? NOW_TIME : intval($time);
     return date($format, $time);
 }
+
+/**
+ * 生成上传附件验证
+ * @param $args   参数
+ */
+function upload_key($args) {
+    return md5($args . md5(config("AUTHCODE") . $_SERVER['HTTP_USER_AGENT']));
+}

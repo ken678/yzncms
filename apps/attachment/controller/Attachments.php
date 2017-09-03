@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
+use think\Request;
 use think\Controller;
 
 class Attachments extends Controller
@@ -180,6 +181,19 @@ class Attachments extends Controller
         }
         return $files;
     }
+
+    //WebUploader上传界面
+    public function WebUploader()
+    {
+        //上传个数,允许上传的文件类型,是否允许从已上传中选择,图片高度,图片高度,是否添加水印1是
+        $args = Request::instance()->param('args');
+        //具体配置参数
+        $info = explode(",", $args);
+        $this->assign("file_upload_limit", (int) $info[0]);
+        return $this->fetch();
+    }
+
+
 
 
 
