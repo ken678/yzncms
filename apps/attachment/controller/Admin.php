@@ -13,24 +13,11 @@ use app\common\controller\Adminbase;
 
 class Admin extends Adminbase
 {
-    const isadmin = 1; //是否后台
 
     //WebUploader上传
     public function WebUploader($dir = 'images',$from='')
     {
         if ($this->request->isPost()){
-
-            /*$key = md5(config("AUTHCODE") . $sess_id . self::isadmin);
-            //密钥验证
-            if (I("post.swf_auth_key") != $key) {
-                exit("0,权限认证失败！" . I("post.swf_auth_key") . "|" . C("AUTHCODE"));
-            }*/
-
-
-
-
-
-
         	$file = $this->request->file('upfile');
             // 移动到框架应用根目录/uploads/ 目录下
             $info = $file->move(config('upload_path') . $dir);
@@ -39,7 +26,7 @@ class Admin extends Adminbase
                 $file_info = [
                     'name'   => $file->getInfo('name'),//原文件名
                     'mime'   => $file->getInfo('type'),//文件类型
-                    'path'   => '/uploads/' . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
+                    'path'   => WEB_PATH.'uploads/' . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
                     'ext'    => $info->getExtension(),//文件后缀
                     'size'   => $info->getSize()//文件大小
                 ];

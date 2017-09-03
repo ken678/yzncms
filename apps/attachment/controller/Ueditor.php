@@ -79,9 +79,9 @@ class Ueditor extends Attachments
     );
 
     //初始化
-    protected function _initialize() {
+    /*protected function _initialize() {
         //上传文件类型
-    }
+    }*/
 
     //编辑器配置
     public function run() {

@@ -11,8 +11,9 @@
 namespace app\attachment\controller;
 use think\Request;
 use think\Controller;
+use app\common\controller\Adminbase;
 
-class Attachments extends Controller
+class Attachments extends Adminbase
 {
 	/**
      * 保存附件
@@ -39,7 +40,7 @@ class Attachments extends Controller
             $file_info = [
                 'name'   => $file->getInfo('name'),//原文件名
                 'mime'   => $file->getInfo('type'),//文件类型
-                'path'   => '/uploads/' . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
+                'path'   => WEB_PATH.'uploads/' . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
                 'ext'    => $info->getExtension(),//文件后缀
                 'size'   => $info->getSize()//文件大小
             ];
