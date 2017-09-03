@@ -46,7 +46,7 @@ class Category extends Adminbase
                 $r['typename'] = $types[$r['type']];
                 $r['help'] = '';
                 if ($r['url']) {
-                    $r['url'] = "<a href='" . Url::build($r['url']) . "' target='_blank'>访问</a>";
+                    $r['url'] = "<a href='" . $r['url'] . "' target='_blank'>访问</a>";
                 } else {
                     $r['url'] = "<a href='" . Url::build("Category/public_cache") . "'><font color='red'>更新缓存</font></a>";
                 }

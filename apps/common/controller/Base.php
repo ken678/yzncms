@@ -21,7 +21,6 @@ class Base extends Controller
 	//初始化
     protected function _initialize()
     {
-        define('WEB_PATH',  request()->root(). '/');
     	$this->initSite();
     }
 

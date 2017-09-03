@@ -78,12 +78,12 @@ ol, ul, li {list-style: none; }
 $(function(){
 	window.config = {
 			"swf":"/public/plugins/webuploader/Uploader.swf",
-			"server":"{:url('attachment/admin/webuploader')}",
+			"server":"{:url('attachment/attachments/saveFile',['dir'=>'images','form'=>'webuploader'])}",
 			"filelistPah":"/index.php/Admin/Uploadify/fileList/path/category",
 			"delPath":"/index.php/admin/Uploadify/delupload",
 			"chunked":false,
 			"chunkSize":524288,
-			"fileNumLimit":1,
+			"fileNumLimit":{$file_upload_limit},
 			"fileSizeLimit":209715200,
 			"fileSingleSizeLimit":2097152,
 			"fileVal":"upfile",

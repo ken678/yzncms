@@ -18,7 +18,7 @@ class Homebase extends Base
     public function __construct()
     {
         $Theme = empty(self::$Cache["Config"]['theme']) ? 'Default' : self::$Cache["Config"]['theme'];
-        $config['template']['view_path'] = APP_PATH.'admin/view/'.$Theme.'/'; //模板主题
+        $config['template']['view_path'] = TEMPLATE_PATH.$Theme.'/content/'; //模板主题
         config($config);//添加配置
         parent::__construct();
     }

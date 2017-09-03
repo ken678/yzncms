@@ -1,9 +1,9 @@
 <?php
 /**
- * 转向链接 字段类型相关配置
+ * 作者字段类型相关配置
  */
 //字段数据库类型
-$field_type = 'number';
+$field_type = 'varchar';
 //是否允许作为主表字段
 $field_basic_table = 1;
 //是否允许建立索引

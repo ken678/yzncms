@@ -28,8 +28,14 @@ class Attachments extends Adminbase
             case 'ueditor_scrawl':
                 return $this->saveScrawl();
                 break;
-            default:
+            case 'ueditor':
                 $file_input_name = 'file';
+                break;
+            case 'webuploader':
+                $file_input_name = 'upfile';
+                break;
+            default:
+                $file_input_name = 'upfile';
         }
         $file = $this->request->file($file_input_name);
 
@@ -40,7 +46,7 @@ class Attachments extends Adminbase
             $file_info = [
                 'name'   => $file->getInfo('name'),//原文件名
                 'mime'   => $file->getInfo('type'),//文件类型
-                'path'   => WEB_PATH.'uploads/' . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
+                'path'   => '/uploads/' . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
                 'ext'    => $info->getExtension(),//文件后缀
                 'size'   => $info->getSize()//文件大小
             ];
@@ -56,6 +62,15 @@ class Attachments extends Adminbase
 						"size" => $file_info['size'],           //文件大小
 				    ]);
 				    break;
+                default:
+                    return json([
+                        "state" => "SUCCESS",          //上传状态，上传成功时必须返回"SUCCESS"
+                        "url" => $file_info['path'],            //返回的地址
+                        "title" => $info->getFilename(),          //新文件名
+                        "original" => $file_info['name'],       //原始文件名
+                        "type" => $file_info['mime'],           //文件类型
+                        "size" => $file_info['size'],           //文件大小
+                    ]);
         	}
         }else{
         	//上传失败

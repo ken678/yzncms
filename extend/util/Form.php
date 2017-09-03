@@ -83,6 +83,84 @@ class Form {
         return $string;
     }
 
+    /**
+     * 日期时间控件
+     * @param $name 控件name，id
+     * @param $value 选中值
+     * @param $isdatetime 是否显示时间
+     * @param $loadjs 是否重复加载js，防止页面程序加载不规则导致的控件无法显示
+     * @param $showweek 是否显示周，使用，true | false
+     */
+    public static function date($name, $value = '', $isdatetime = 0, $loadjs = 0, $showweek = 'true', $timesystem = 1) {
+        if ($value == '0000-00-00 00:00:00')
+            $value = '';
+        $id = preg_match("/\[(.*)\]/", $name, $m) ? $m[1] : $name;
+        if ($isdatetime) {
+            $size = 21;
+            $format = '%Y-%m-%d %H:%M:%S';
+            if ($timesystem) {
+                $showsTime = 'true';
+            } else {
+                $showsTime = '12';
+            }
+        } else {
+            $size = 10;
+            $format = '%Y-%m-%d';
+            $showsTime = 'false';
+        }
+        $str = '';
+        $str .= '<input type="text" name="' . $name . '" id="' . $id . '" value="' . $value . '" size="' . $size . '" class="input length_3 J_datetime ">';
+        return $str;
+    }
+
+    /**
+     * 下拉选择框
+     * @param type $array 数据
+     * @param type $id 默认选择
+     * @param type $str 属性
+     * @param type $default_option 默认选项
+     * @return boolean|string
+     */
+    public static function select($array = array(), $id = 0, $str = '', $default_option = '') {
+        $string = '<select ' . $str . '>';
+        $default_selected = (empty($id) && $default_option) ? 'selected' : '';
+        if ($default_option)
+            $string .= "<option value=\"\" $default_selected>$default_option</option>";
+        if (!is_array($array) || count($array) == 0)
+            return false;
+        $ids = array();
+        if (isset($id))
+            $ids = explode(',', $id);
+        foreach ($array as $key => $value) {
+            $selected = in_array($key, $ids) ? 'selected' : '';
+            $string .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+        }
+        $string .= '</select>';
+        return $string;
+    }
+
+    /**
+     * 模板选择
+     * @param $style  风格
+     * @param $module 模块
+     * @param $id 默认选中值
+     * @param $str 属性
+     * @param $pre 模板前缀
+     */
+    public static function select_template($style, $module, $id = '', $str = '', $pre = '') {
+        $config = cache("Config");
+        if (empty($config['theme'])) {
+            $config['theme'] = "Default";
+        }
+        $filepath =  TEMPLATE_PATH. $config['theme'] . "/Content" . DIRECTORY_SEPARATOR;
+        $tp_show = str_replace($filepath . "Show" . DIRECTORY_SEPARATOR, "", glob($filepath . "Show" . DIRECTORY_SEPARATOR . 'show*'));
+        foreach ($tp_show as $k => $v) {
+            $tp_show[$v] = $v;
+            unset($tp_show[$k]);
+        }
+        return self::select($tp_show, $id, $str, "请选择");
+    }
+
 
 
 
