@@ -27,7 +27,10 @@ CURL PHP Extension
 第一步：修改数据库配置 apps/common/conf/database.php  
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 admin    123456   
-PS 如果已经安装过了 拷贝的时候记得数据库 换成新的 因为目前还是测试版 数据库跨度比较大 需要换成新的数据库SQL文件
+
+PS 几个注意点
+1.如果已经安装过了 拷贝的时候记得数据库 换成新的 因为目前还是测试版 数据库跨度比较大 需要换成新的数据库SQL文件
+2.本地测试请绑定虚拟域名 类似www.yzncms.com   不能使用localhost/yzncms这种带目录的域名 一般虚拟主机都带绑定域名的功能
 ```
 
 [PS]
