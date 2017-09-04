@@ -42,11 +42,11 @@ PS 如果已经安装过了 拷贝的时候记得数据库 换成新的 因为�
 ```
 [后台登陆界面预览]  
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0826/193657_ccc8a8f7_555541.png "Yzncms.png")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0904/091039_830d8119_555541.png "添加内容.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134316_df6a7b60_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0729/203104_a2fab05e_555541.png "Yzncms.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0613/152302_f2081fba_555541.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134327_f760ee6b_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134335_cd0f4d67_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134344_ce09d530_555541.jpeg "在这里输入图片标题")
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134350_bd811af9_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0715/212221_2809862f_555541.png "Yzncms.png")
