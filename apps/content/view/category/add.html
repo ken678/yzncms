@@ -11,7 +11,7 @@
         <li><a href="JavaScript:void(0);" nctype="index" class="current">基本属性</a></li>
         <li><a href="JavaScript:void(0);" nctype="group">生成HTML设置</a></li>
         <li><a href="JavaScript:void(0);" nctype="template">模板设置</a></li>
-        <li><a href="JavaScript:void(0);" nctype="point">SEO设置</a></li>
+        <li><a href="JavaScript:void(0);" nctype="seo">SEO设置</a></li>
         <li><a href="JavaScript:void(0);" nctype="article">权限设置</a></li>
       </ul>
     </div>
@@ -92,7 +92,7 @@
         </dd>
       </dl>
   </div>
-
+  <!--模板-->
   <div nctype="template" class="none">
       <dl class="row">
         <dt class="tit">
@@ -140,13 +140,36 @@
         </dd>
       </dl>
   </div>
-
-
-
-
-
-
-
+  <!--seo-->
+  <div nctype="seo" class="none">
+    <dl class="row">
+        <dt class="tit">
+          <label>META Title</label>
+        </dt>
+        <dd class="opt">
+          <input name="setting[meta_title]" type="text" value="" maxlength="40"  class="input-txt">
+          <p class="notic">针对搜索引擎设置的标题  </p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>META Keywords</label>
+        </dt>
+        <dd class="opt">
+          <textarea name="setting[meta_keywords]" rows="4" class="tarea"></textarea>
+          <p class="notic">关键字中间用半角逗号隔开</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>META Description</label>
+        </dt>
+        <dd class="opt">
+          <textarea name="setting[meta_description]" rows="4" class="tarea"></textarea>
+          <p class="notic">针对搜索引擎设置的网页描述</p>
+        </dd>
+      </dl>
+  </div>
 
   <input name="type" type="hidden" value="0">
   <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>

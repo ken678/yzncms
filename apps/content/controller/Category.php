@@ -60,6 +60,7 @@ class Category extends Adminbase
 
                 $r['modelname'] = $models[$r['modelid']]['name'];
                 $r['typename'] = $types[$r['type']];
+                $r['display_icon'] = $r['ismenu'] ? '' : '&nbsp;<i class="icon iconfont icon-shezhi itip" alt="不在导航显示"></i>';
                 $r['help'] = '';
                 if ($r['url']) {
                     $r['url'] = "<a href='" . $r['url'] . "' target='_blank'>访问</a>";
@@ -73,7 +74,7 @@ class Category extends Adminbase
                 <td width='50' align='center' class='sort'><span alt='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='itip editable'>\$listorder</span></td>
                 <td width='150' align='center'>\$str_manage</td>
                 <td width='60' align='center'>\$id</td>
-                <td width='250' align='left'>\$spacer\$catname</td>
+                <td width='250' align='left'>\$spacer\$catname\$display_icon</td>
                 <td width='70' align='center'>\$typename</td>
         		<td width='70' align='center'>\$modelname</td>
         		<td width='100' align='center' align='center'>\$url</td>
