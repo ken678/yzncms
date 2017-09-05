@@ -22,6 +22,7 @@ class Category extends Validate
         'catname'  =>  'require',
         'catdir'   =>  'require',
         'type'     =>  'require|in:0,1,2',
+        'url'   =>  'require',
 
     ];
 
@@ -34,11 +35,14 @@ class Category extends Validate
         'catdir.require'    => '英文目录不得为空',
         'type.require'      => '栏目类型不得为空',
         'type.in'           => '栏目类型不存在！',
+        'url.require'       => '链接地址不得为空',
     ];
 
     protected $scene = [
         'add'  =>  ['modelid','parentid','catname','catdir','type'],
+        'wadd'  =>  ['parentid','catname','type','url'],
         'edit'  =>  ['modelid','parentid','catname','catdir'],
+        'wedit'  =>  ['parentid','catname','url'],
     ];
 
 }

@@ -9,7 +9,7 @@
       </div>
     </div>
   </div>
-  <form name="adminForm" id="add_form" action="{:url('category/add')}" method="post">
+  <form name="adminForm" id="add_form" action="{:url('category/edit')}" method="post">
   <div class="ncap-form-default">
   <div nctype="index" class="none">
       <dl class="row">
@@ -29,7 +29,7 @@
           <em>*</em><label for="catname">栏目名称</label>
         </dt>
         <dd class="opt">
-          <input type="text" class="input-txt" name="info[catname]"/>
+          <input type="text" class="input-txt" name="info[catname]" value="{$data.catname}" />
           <span class="err"></span>
         </dd>
       </dl>
@@ -38,7 +38,7 @@
           <label for="description">栏目简介</label>
         </dt>
         <dd class="opt">
-          <textarea name="info[description]" rows="6" class="tarea" ></textarea>
+          <textarea name="info[description]" rows="6" class="tarea" >{$data.description}</textarea>
         </dd>
       </dl>
       <dl class="row">
@@ -46,12 +46,13 @@
           <em>*</em><label for="catname">链接地址</label>
         </dt>
         <dd class="opt">
-          <input type="text" class="input-txt" name="info[url]"/>
+          <input type="text" class="input-txt" name="info[url]" value="{$data.url}" />
           <span class="err"></span>
         </dd>
       </dl>
   </div>
   <input name="type" type="hidden" value="2">
+  <input name="catid" type="hidden" value="{$data.catid}">
   <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
   </div>
   </form>

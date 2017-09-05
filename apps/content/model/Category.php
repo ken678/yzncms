@@ -42,7 +42,13 @@ class Category extends Model
 
         //数据验证
         $validate = Loader::validate('Category');
-        if(!$validate->scene('add')->check($data)){
+
+        if($data['type']==2){
+           $add_type='wadd';
+        }else{
+           $add_type='add';
+        }
+        if(!$validate->scene($add_type)->check($data)){
             $this->error = $validate->getError();
             return false;
         }
@@ -67,6 +73,10 @@ class Category extends Model
         }
         $catid = $post['catid'];
         $data = $post['info'];
+
+        //栏目类型
+        $data['type'] = (int)$post['type'];
+
         //查询该栏目是否存在
         $info = $this->where(array('catid' => $catid))->find();
         if (empty($info)) {
@@ -86,14 +96,22 @@ class Category extends Model
         $data['setting'] = serialize($data['setting']);
         //数据验证
         $validate = Loader::validate('Category');
-        if(!$validate->scene('edit')->check($data)){
+
+        if($data['type']==2){
+           $edit_type='wedit';
+        }else{
+           $edit_type='edit';
+        }
+        if(!$validate->scene($edit_type)->check($data)){
             $this->error = $validate->getError();
             return false;
         }
-        $catid = $this->isUpdate(true)->allowField(true)->save($data,['catid' => $catid]);
-        if ($catid) {
+        //更新数据
+        if ($this->isUpdate(true)->allowField(true)->save($data,['catid' => $catid])!== false) {
+           //更新栏目缓存
            cache('Category', NULL);
-           return $catid;
+           getCategory($catid, '', true);
+           return true;
         }else{
            $this->error = '栏目添加失败！';
            return false;
