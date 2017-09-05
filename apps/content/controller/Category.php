@@ -19,6 +19,22 @@ use app\common\controller\Adminbase;
  */
 class Category extends Adminbase
 {
+    //初始化
+    protected function _initialize()
+    {
+        parent::_initialize();
+        //取得当前内容模型模板存放目录
+        $this->filepath = TEMPLATE_PATH . (empty(self::$Cache["Config"]['theme']) ? "default" : self::$Cache["Config"]['theme']) . "/content/";
+        //取得栏目频道模板列表
+        $this->tp_category = str_replace($this->filepath, '', glob($this->filepath . 'category*'));
+        //取得栏目列表模板列表
+        $this->tp_list = str_replace($this->filepath, '', glob($this->filepath . 'list*'));
+        //取得内容页模板列表
+        $this->tp_show = str_replace($this->filepath, '', glob($this->filepath . 'show*'));
+        //取得单页模板
+        $this->tp_page = str_replace($this->filepath, '', glob($this->filepath . 'page*'));
+    }
+
 	//栏目列表
     public function index()
     {
@@ -124,6 +140,11 @@ class Category extends Adminbase
             } else {
                 $categorydata = '';
             }
+            $this->assign("tp_category", $this->tp_category);
+            $this->assign("tp_list", $this->tp_list);
+            $this->assign("tp_show", $this->tp_show);
+            $this->assign("tp_page", $this->tp_page);
+
             $this->assign("category", $categorydata);
             $this->assign("models", $models);
             $this->assign('parentid_modelid', $Ca['modelid']);

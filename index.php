@@ -19,7 +19,7 @@ if (version_compare(PHP_VERSION, '5.4.0', '<')) {
 define('APP_PATH', __DIR__ . '/apps/');
 
 //定义模板目录
-define('TEMPLATE_PATH', __DIR__ . '/Template/');
+define('TEMPLATE_PATH', __DIR__ . '/templates/');
 
 // 加载框架引导文件
 require __DIR__ . '/thinkphp/start.php';

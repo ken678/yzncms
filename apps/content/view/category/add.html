@@ -10,7 +10,7 @@
       <ul class="tab-base nc-row">
         <li><a href="JavaScript:void(0);" nctype="index" class="current">基本属性</a></li>
         <li><a href="JavaScript:void(0);" nctype="group">生成HTML设置</a></li>
-        <li><a href="JavaScript:void(0);" nctype="brand">模板设置</a></li>
+        <li><a href="JavaScript:void(0);" nctype="template">模板设置</a></li>
         <li><a href="JavaScript:void(0);" nctype="point">SEO设置</a></li>
         <li><a href="JavaScript:void(0);" nctype="article">权限设置</a></li>
       </ul>
@@ -18,8 +18,8 @@
   </div>
   <div class="explanation" id="explanation">
     <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
-      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
-      <span id="explanationZoom" title="收起提示"></span>
+      <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+      <span id="explanationZoom" alt="收起提示" class="itip"></span>
     </div>
     <ul>
     </ul>
@@ -92,6 +92,62 @@
         </dd>
       </dl>
   </div>
+
+  <div nctype="template" class="none">
+      <dl class="row">
+        <dt class="tit">
+          <label for="modelid">栏目首页模板</label>
+        </dt>
+        <dd class="opt">
+          <select name="setting[category_template]">
+            <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
+            {volist name="tp_category" id="vo"}
+                <option value="{$vo}">{$vo}</option>
+            {/volist}
+          </select>
+          <p class="notic">新增模板以category_xx.{:config('template.view_suffix')}形式</p>
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="modelid">栏目列表页模板</label>
+        </dt>
+        <dd class="opt">
+          <select name="setting[list_template]">
+            <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
+            {volist name="tp_list" id="vo"}
+                <option value="{$vo}">{$vo}</option>
+            {/volist}
+          </select>
+          <p class="notic">新增模板以list_xx.{:config('template.view_suffix')}形式</p>
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="modelid">内容页模板</label>
+        </dt>
+        <dd class="opt">
+          <select name="setting[show_template]">
+            <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
+            {volist name="tp_show" id="vo"}
+                <option value="{$vo}">{$vo}</option>
+            {/volist}
+          </select>
+          <p class="notic">新增模板以show_xx.{:config('template.view_suffix')}形式</p>
+          <span class="err"></span>
+        </dd>
+      </dl>
+  </div>
+
+
+
+
+
+
+
+
   <input name="type" type="hidden" value="0">
   <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
   </div>
