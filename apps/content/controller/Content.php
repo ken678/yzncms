@@ -15,7 +15,6 @@ use think\Request;
 use app\content\logic\Content as ContentLogic;
 use app\common\controller\Adminbase;
 use app\common\Model\ContentModel;
-error_reporting(E_ERROR | E_PARSE );
 /**
  * 内容管理
  */

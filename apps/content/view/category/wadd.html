@@ -1,0 +1,72 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title"><a class="back" href="{:url('category/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+      <div class="subject">
+        <h3>栏目分类-新增</h3>
+        <h5>所有前台栏目索引及管理</h5>
+      </div>
+    </div>
+  </div>
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+      <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+      <span id="explanationZoom" alt="收起提示" class="itip"></span>
+    </div>
+    <ul>
+    </ul>
+  </div>
+  <form name="adminForm" id="add_form" action="{:url('category/add')}" method="post">
+  <div class="ncap-form-default">
+  <div nctype="index" class="none">
+      <dl class="row">
+        <dt class="tit">
+          <label for="parentid">上级栏目</label>
+        </dt>
+        <dd class="opt">
+          <select name="info[parentid]" id="parentid" class="valid">
+            <option value="0" >≡ 作为一级栏目 ≡</option>
+            {$category}
+          </select>
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="catname">栏目名称</label>
+        </dt>
+        <dd class="opt">
+          <input type="text" class="input-txt" name="info[catname]"/>
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="description">栏目简介</label>
+        </dt>
+        <dd class="opt">
+          <textarea name="info[description]" rows="6" class="tarea" ></textarea>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label for="catname">链接地址</label>
+        </dt>
+        <dd class="opt">
+          <input type="text" class="input-txt" name="info[url]"/>
+          <span class="err"></span>
+        </dd>
+      </dl>
+  </div>
+  <input name="type" type="hidden" value="2">
+  <input name="info[child]" type="hidden"  value="0">
+  <input name="info[modelid]" type="hidden"  value="0">
+  <input name="info[catdir]" type="hidden"  value="0">
+  <input name="catid" type="hidden" value="">
+  <input name="setting" type="hidden" value="">
+  <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
+  </div>
+  </form>
+</div>
+{/block}
