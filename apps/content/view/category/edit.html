@@ -4,7 +4,7 @@
   <div class="fixed-bar">
     <div class="item-title"><a class="back" href="{:url('category/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
       <div class="subject">
-        <h3>栏目分类-新增</h3>
+        <h3>栏目分类-编辑</h3>
         <h5>所有前台栏目索引及管理</h5>
       </div>
       <ul class="tab-base nc-row">
@@ -24,7 +24,7 @@
     <ul>
     </ul>
   </div>
-  <form name="adminForm" id="add_form" action="{:url('category/add')}" method="post">
+  <form name="adminForm" id="add_form" action="{:url('category/edit')}" method="post">
   <div class="ncap-form-default">
   <div nctype="index" class="none">
       <dl class="row">
@@ -33,9 +33,9 @@
         </dt>
         <dd class="opt">
           <select name="info[modelid]" id="modelid" class="valid">
-            <option value="" {if condition="empty($parentid_modelid)"} selected{/if}>请选择模型</option>
+            <option value="">请选择模型</option>
             {volist name="models" id="vo"}
-                <option value="{$vo.modelid}" {if condition="$parentid_modelid eq $vo['modelid']"} selected{/if}>{$vo.name}</option>
+                <option value="{$vo.modelid}" {eq name="vo.modelid" value="$data['modelid']"}selected{/eq}>{$vo.name}</option>
             {/volist}
           </select>
           <span class="err"></span>
@@ -58,7 +58,7 @@
           <label for="catname">栏目名称</label>
         </dt>
         <dd class="opt">
-          <input type="text" class="input-txt" name="info[catname]" id="catname" />
+          <input type="text" class="input-txt" name="info[catname]" id="catname" value="{$data.catname}" />
           <span class="err"></span>
         </dd>
       </dl>
@@ -67,7 +67,7 @@
           <label for="catdir">英文目录</label>
         </dt>
         <dd class="opt">
-          <input type="text" class="input-txt" name="info[catdir]" id="catdir" />
+          <input type="text" class="input-txt" name="info[catdir]" id="catdir" value="{$data.catdir}" />
           <span class="err"></span>
         </dd>
       </dl>
@@ -76,19 +76,19 @@
           <label for="description">栏目简介</label>
         </dt>
         <dd class="opt">
-          <textarea name="info[description]" rows="6" class="tarea" ></textarea>
+          <textarea name="info[description]" rows="6" class="tarea" >{$data.description}</textarea>
         </dd>
       </dl>
       <dl class="row">
         <dt class="tit">是否在导航显示</dt>
         <dd class="opt">
           <div class="onoff">
-            <label for="status1" class="cb-enable selected">是</label>
-            <label for="status0" class="cb-disable">否</label>
-            <input id="status1" name='info[ismenu]' value="1" type="radio">
-            <input id="status0" name='info[ismenu]' value="0" type="radio">
+            <label for="status1" class="cb-enable {eq name="data.ismenu" value="1"}selected{/eq}">是</label>
+            <label for="status0" class="cb-disable {eq name="data.ismenu" value="0"}selected{/eq}">否</label>
+            <input id="status1" name='info[ismenu]' {eq name="data.ismenu" value="1"}checked="checked"{/eq} value="1" type="radio">
+            <input id="status0" name='info[ismenu]' {eq name="data.ismenu" value="0"}checked="checked"{/eq} value="0" type="radio">
           </div>
-          <p class="notic">默认为显示，隐藏请点击【否】</p>
+          <p class="notic">隐藏请点击【否】</p>
         </dd>
       </dl>
   </div>
@@ -147,8 +147,8 @@
           <label>META Title</label>
         </dt>
         <dd class="opt">
-          <input name="setting[meta_title]" type="text" value="" maxlength="40"  class="input-txt">
-          <p class="notic">针对搜索引擎设置的标题  </p>
+          <input name="setting[meta_title]" type="text" value="{$data['setting']['meta_title']}" maxlength="40"  class="input-txt">
+          <p class="notic">针对搜索引擎设置的标题</p>
         </dd>
       </dl>
       <dl class="row">
@@ -156,7 +156,7 @@
           <label>META Keywords</label>
         </dt>
         <dd class="opt">
-          <textarea name="setting[meta_keywords]" rows="4" class="tarea"></textarea>
+          <textarea name="setting[meta_keywords]" rows="4" class="tarea">{$data['setting']['meta_keywords']}</textarea>
           <p class="notic">关键字中间用半角逗号隔开</p>
         </dd>
       </dl>
@@ -165,13 +165,12 @@
           <label>META Description</label>
         </dt>
         <dd class="opt">
-          <textarea name="setting[meta_description]" rows="4" class="tarea"></textarea>
+          <textarea name="setting[meta_description]" rows="4" class="tarea">{$data['setting']['meta_description']}</textarea>
           <p class="notic">针对搜索引擎设置的网页描述</p>
         </dd>
       </dl>
   </div>
-
-  <input name="type" type="hidden" value="0">
+  <input name="catid" type="hidden" value="{$data.catid}">
   <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
   </div>
   </form>

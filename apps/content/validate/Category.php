@@ -38,6 +38,7 @@ class Category extends Validate
 
     protected $scene = [
         'add'  =>  ['modelid','parentid','catname','catdir','type'],
+        'edit'  =>  ['modelid','parentid','catname','catdir'],
     ];
 
 }

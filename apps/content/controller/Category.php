@@ -55,7 +55,7 @@ class Category extends Adminbase
                         $r['str_manage'] .= '<li><a href="' . Url::build("Category/add", array("parentid" => $r['catid'])) . '">添加下级栏目</a></li>';
                     }
                 }
-                $r['str_manage'] .= '<li><a href="' . Url::build("Category/edit", array("catid" => $r['catid'])) . '">修改栏目信息</a></li>';
+                $r['str_manage'] .= '<li><a href="' . Url::build("Category/edit", array("catid" => $r['catid'])) . '">编辑栏目信息</a></li>';
                 $r['str_manage'] .= '</ul></span>';
 
                 $r['modelname'] = $models[$r['modelid']]['name'];
@@ -155,6 +155,76 @@ class Category extends Adminbase
 
     }
 
+    //编辑栏目
+    public function edit()
+    {
+        if(Request::instance()->isPost()){
+            $catid = Request::instance()->param('catid/d', 0);
+            if (empty($catid)) {
+                $this->error('请选择需要修改的栏目！');
+            }
+            $Category = Loader::model("content/Category");
+            $status = $Category->editCategory(Request::instance()->post());
+            if ($status) {
+                $this->success("修改成功！", Url::build("Category/index"));
+            } else {
+                $error = $Category->getError();
+                $this->error($error ? $error : '栏目修改失败！');
+            }
+        }else{
+            $catid = Request::instance()->param('catid/d', 0);
+            $array = cache("Category");
+            foreach ($array as $k => $v) {
+                $array[$k] = getCategory($v['catid']);
+                if ($array[$k]['child'] == "0") {
+                    $array[$k]['disabled'] = "disabled";
+                } else {
+                    $array[$k]['disabled'] = "";
+                }
+            }
+            $data = getCategory($catid);
+            $setting = $data['setting'];
+             //输出可用模型
+            $modelsdata = cache("Model");
+            $models = array();
+            foreach ($modelsdata as $v) {
+                if ($v['disabled'] == 0 && $v['type'] == 0) {
+                    $models[] = $v;
+                }
+            }
+
+            if (!empty($array) && is_array($array)) {
+                $tree = new \Tree();
+                $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
+                $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+                $str = "<option value='\$catid' \$selected>\$spacer \$catname</option>";
+                $tree->init($array);
+                $categorydata = $tree->get_tree(0, $str,$data['parentid']);
+            } else {
+                $categorydata = '';
+            }
+
+            $this->assign("tp_category", $this->tp_category);
+            $this->assign("tp_list", $this->tp_list);
+            $this->assign("tp_show", $this->tp_show);
+            $this->assign("tp_page", $this->tp_page);
+
+            $this->assign("category", $categorydata);
+            $this->assign("models", $models);
+            $this->assign("data", $data);
+            $this->assign("setting", $setting);
+
+            if ($data['type'] == 1) {//单页栏目
+                return $this->fetch("singlepage_edit");
+            } else if ($data['type'] == 2) {//外部栏目
+                return $this->fetch("wedit");
+            } else {
+                return $this->fetch();
+            }
+        }
+
+    }
+
     //添加外部链接栏目
     public function wadd()
     {
@@ -165,12 +235,6 @@ class Category extends Adminbase
     public function singlepage()
     {
         $this->add();
-    }
-
-    //编辑栏目
-    public function edit()
-    {
-
     }
 
     //删除栏目

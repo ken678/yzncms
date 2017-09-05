@@ -47,7 +47,6 @@ class Category extends Model
             return false;
         }
 
-
         $catid = $this->allowField(true)->save($data);
         if ($catid) {
            cache('Category', NULL);
@@ -56,6 +55,48 @@ class Category extends Model
            $this->error = '栏目添加失败！';
            return false;
 
+        }
+    }
+
+    //编辑栏目
+    public function editCategory($post)
+    {
+        if (empty($post)) {
+            $this->error = '编辑栏目数据不能为空！';
+            return false;
+        }
+        $catid = $post['catid'];
+        $data = $post['info'];
+        //查询该栏目是否存在
+        $info = $this->where(array('catid' => $catid))->find();
+        if (empty($info)) {
+            $this->error = '该栏目不存在！';
+            return false;
+        }
+        unset($data['catid'], $info['catid'], $data['module'], $data['child']);
+
+        //栏目设置
+        $data['setting'] = $post['setting'];
+        //栏目拼音
+        $catname = iconv('utf-8', 'gbk', $data['catname']);
+        $letters = gbk_to_pinyin($catname);
+        $data['letter'] = strtolower(implode('', $letters));
+
+        //序列化setting数据
+        $data['setting'] = serialize($data['setting']);
+        //数据验证
+        $validate = Loader::validate('Category');
+        if(!$validate->scene('edit')->check($data)){
+            $this->error = $validate->getError();
+            return false;
+        }
+        $catid = $this->isUpdate(true)->allowField(true)->save($data,['catid' => $catid]);
+        if ($catid) {
+           cache('Category', NULL);
+           return $catid;
+        }else{
+           $this->error = '栏目添加失败！';
+           return false;
         }
     }
 
