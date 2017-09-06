@@ -73,6 +73,17 @@
       </dl>
       <dl class="row">
         <dt class="tit">
+          <label for="catdir">栏目缩略图</label>
+        </dt>
+        <dd class="opt">
+          <div class="input-file-show">
+          {php} echo \util\Form::images('info[image]', 'image',$data['image'], 'content'); {/php}
+          </div>
+          <span class="err"></span>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
           <label for="description">栏目简介</label>
         </dt>
         <dd class="opt">

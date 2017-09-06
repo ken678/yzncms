@@ -161,6 +161,43 @@ class Form {
         return self::select($tp_show, $id, $str, "请选择");
     }
 
+    /**
+     * 单张图片上传
+     * @param string $name 表单名称
+     * @param int $id 表单id
+     * @param string $value 表单默认值
+     * @param string $moudle 模块名称
+     * @param int $catid 栏目id
+     * @param int $size 表单大小
+     * @param string $class 表单风格
+     * @param string $ext 表单扩展属性 如果 js事件等
+     * @param string $alowexts 允许图片格式
+     * @param array $thumb_setting
+     * @param int $watermark_setting  0或1
+     */
+    public static function images($name, $id = '', $value = '', $moudle = '', $catid = '', $size = 50, $class = 'input', $ext = '', $alowexts = '', $thumb_setting = array(), $watermark_setting = 0) {
+        if (!$id)
+            $id = $name;
+        if (!$size)
+            $size = 50;
+        if (!empty($thumb_setting) && count($thumb_setting))
+            $thumb_ext = $thumb_setting[0] . ',' . $thumb_setting[1];
+        else
+            $thumb_ext = ',';
+        if (!$alowexts)
+            $alowexts = 'jpg|jpeg|gif|bmp|png';
+        //1, 允许上传的文件类型, 是否允许从已上传中选择, 图片高度, 图片宽度,是否添加水印1是
+        $authkey = upload_key("1,$alowexts,1,$thumb_ext,$watermark_setting");
+        return "<span class=\"show\"><a class=\"nyroModal\" rel=\"gal\" href=\"http://v5.33hao.com/data/upload/shop/common/user_center.png\"> <i class=\"fa fa-picture-o\" onMouseOver=\"toolTip('<img src=http://v5.33hao.com/data/upload/shop/common/user_center.png>')\" onMouseOut=\"toolTip()\"/></i> </a></span><span class=\"type-file-box\"><input type=\"text\" name=\"$name\" id=\"$id\" value=\"$value\" size=\"$size\" class=\"$class type-file-text\" $ext /><input type=\"button\" class=\"type-file-button\" onclick=\"javascript:flashupload('{$id}_images', '附件上传','{$id}',submit_images,'1,{$alowexts},1,{$thumb_ext},{$watermark_setting}','{$moudle}','{$catid}','{$authkey}')\"/ value=\"上传图片\"/></span>";
+
+
+
+
+
+
+
+    }
+
 
 
 

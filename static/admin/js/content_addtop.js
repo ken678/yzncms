@@ -151,8 +151,7 @@ function thumb_images(uploadid, returnid) {
 
 //图片上传回调
 function submit_images(uploadid, returnid) {
-    var d = uploadid.iframe.contentWindow;
-    var in_content = d.$("#att-status").html().substring(1);
+    var in_content = layer.getChildFrame("#att-status").html().substring(1);
     var in_content = in_content.split('|');
     IsImg(in_content[0]) ? $('#' + returnid).attr("value", in_content[0]) : alert('选择的类型必须为图片类型');
 }
