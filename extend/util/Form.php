@@ -188,13 +188,7 @@ class Form {
             $alowexts = 'jpg|jpeg|gif|bmp|png';
         //1, 允许上传的文件类型, 是否允许从已上传中选择, 图片高度, 图片宽度,是否添加水印1是
         $authkey = upload_key("1,$alowexts,1,$thumb_ext,$watermark_setting");
-        return "<span class=\"show\"><a class=\"nyroModal\" rel=\"gal\" href=\"http://v5.33hao.com/data/upload/shop/common/user_center.png\"> <i class=\"fa fa-picture-o\" onMouseOver=\"toolTip('<img src=http://v5.33hao.com/data/upload/shop/common/user_center.png>')\" onMouseOut=\"toolTip()\"/></i> </a></span><span class=\"type-file-box\"><input type=\"text\" name=\"$name\" id=\"$id\" value=\"$value\" size=\"$size\" class=\"$class type-file-text\" $ext /><input type=\"button\" class=\"type-file-button\" onclick=\"javascript:flashupload('{$id}_images', '附件上传','{$id}',submit_images,'1,{$alowexts},1,{$thumb_ext},{$watermark_setting}','{$moudle}','{$catid}','{$authkey}')\"/ value=\"上传图片\"/></span>";
-
-
-
-
-
-
+        return "<span class=\"show\"><a class=\"nyroModal\" rel=\"gal\" href=\"\"> <i class=\"fa fa-picture-o\" onMouseOver=\"toolTip('<img src=http://v5.33hao.com/data/upload/shop/common/user_center.png>')\" onMouseOut=\"toolTip()\"/></i> </a></span><span class=\"type-file-box\"><input type=\"text\" name=\"$name\" id=\"$id\" value=\"$value\" size=\"$size\" class=\"$class type-file-text\" $ext /><input type=\"button\" class=\"type-file-button\" value=\"选择上传...\"/><input class=\"type-file-file itip\" onclick=\"javascript:flashupload('{$id}_images', '附件上传','{$id}',submit_images,'1,{$alowexts},1,{$thumb_ext},{$watermark_setting}','{$moudle}','{$catid}','{$authkey}')\" alt=\"点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效\"></span>";
 
     }
 
