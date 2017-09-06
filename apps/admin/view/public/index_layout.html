@@ -94,12 +94,27 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
 <script>
 function OpenAbout(){
   layer.open({
-    type: 2,
-    maxmin: true,
-    area: ['640px', '500px'],
-    content: '{:url("admin/aboutus/index")}',
+    type: 1
+    ,title: false //不显示标题栏
+    ,closeBtn: false
+    ,area: '300px;'
+    ,shade: 0.8
+    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+    ,resize: false
+    ,btn: ['给我一颗星', '残忍拒绝']
+    ,btnAlign: 'c'
+    ,moveType: 1 //拖拽模式，0或者1
+    ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.09最新版,框架易于功能扩展，代码维护，方便二次开发,帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。</div>'
+    ,success: function(layero){
+      var btn = layero.find('.layui-layer-btn');
+      btn.find('.layui-layer-btn0').attr({
+        href: 'https://git.oschina.net/ken678/YZNCMS/tree/master'
+        ,target: '_blank'
+      });
+    }
   });
 };
+
 function Modifypw(){
   $.get('{:url("manager/modifypw")}', {}, function(str){
     layer.open({
