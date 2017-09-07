@@ -272,6 +272,12 @@ a:hover.ncap-btn-green { background-color: #16A086; }
 a:hover.ncap-btn-orange { background-color: #F89406; border-color: #DF8505 #DF8505 #BA6F04 #DF8505; }
 a:hover.ncap-btn-red { background-color: #BD362F; border-color: #AA312A #AA312A #8E2823 #AA312A; }
 a:hover.ncap-btn-black { background-color: #222222; border-color: #1F1F1F #1F1F1F #191919 #1F1F1F; }
+/*普通按钮*/
+input.btn{display: inline-block; font-size: 14px;line-height: 1.5; margin-bottom: 0; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent;}
+.btn-primary {background-color: #1BBC9D; border-color: #16A086;  color: #FFF; }
+.btn-primary:hover{ background-color: #16A086; color: #FFF;}
+.btn-danger{background-color: #ec4758; border-color: #ec4758; color: #FFF; }
+.btn-danger:hover {color: #fff; background-color: #c9302c; border-color: #ac2925; }
 /*上传按钮*/
 .ncap-upload-btn { vertical-align: top; display: inline-block; *display: inline/*IE7*/;
 margin-right: 10px; *zoom:1;

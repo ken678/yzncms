@@ -251,4 +251,23 @@ class Content extends Adminbase
         }
     }
 
+    //检测标题是否存在
+    public function public_check_title()
+    {
+        $title = Request::instance()->param('data');
+        $catid = $this->catid;
+        if (empty($title)) {
+            return json(array('status' => 1, 'info' => '标题没有重复！'));
+        }
+        $modelid = getCategory($this->catid, 'modelid');
+        $logic = logic($modelid);
+        $rs = $logic->where(array('title' => $title))->find();
+        if ($rs) {
+            return json(array('status' => 0, 'info' => '标题有重复！'));
+        } else {
+            return json(array('status' => 1, 'info' => '标题没有重复！'));
+        }
+
+    }
+
 }
