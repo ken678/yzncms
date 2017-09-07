@@ -219,16 +219,20 @@ class Content extends Adminbase
     }
 
     //删除
-    public function delete()
+    public function delete($ids = 0)
     {
-        $catid = Request::instance()->param('catid', 0, 'intval');
-        $id = Request::instance()->param('id', 0, 'intval');
-        if ($this->Content->delete($id, $catid)) {
-            $this->success('删除成功！');
-        } else {
-            $this->error('删除失败！');
+        if (empty($ids) || !$this->catid) {
+            $this->error('参数错误！');
         }
-
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        $modelid = getCategory($this->catid, 'modelid');
+        $logic = logic($modelid);
+        foreach ($ids as $id) {
+            $logic->rmove($id, $this->catid);
+        }
+        $this->success('删除成功！');
     }
 
     //文章排序

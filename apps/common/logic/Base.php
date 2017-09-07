@@ -117,6 +117,30 @@ class Base extends Model
     }
 
     /**
+     * 删除文档
+     * @param  [type] $id 文档ID
+     * @param  [type] $catid 栏目ID
+     * @return
+     */
+    public function rmove($id, $catid)
+    {
+        if (empty($id) || empty($catid)) {
+            $this->error = '参数错误！';
+            return false;
+        }
+        if ($rs = $this->where(['id' => $id])->delete()) {
+            if (false === Db::name($this->name . '_data')->delete($id)) {
+                $this->error = '删除附表内容出错';
+                return false;
+            }
+        } else {
+            $this->error = '删除基础内容出错';
+            return false;
+        }
+
+    }
+
+    /**
      * 检测属性的自动验证和自动完成属性 并进行验证
      * 验证场景  insert和update二个个场景，可以分别在新增和编辑
      * @return boolean
