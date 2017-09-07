@@ -221,7 +221,7 @@ input.readonly:hover { backgorund: #FFF; border: solid 1px; border-color: #EEE #
 .input-file-show span.show a { color: #AAA; display: block; width: 22px; height: 22px; }
 .input-file-show:hover span.show a,
 .input-file-show span.show a:hover { color: #2CBCA3; text-decoration: none; }
-.input-file-show span.show i { font-size: 14px; line-height: 22px; display: block; }
+.input-file-show span.show i { font-size: 16px; line-height: 22px; display: block; }
 .input-file-show span.show img { max-width: 22px; max-height: 22px; }
 .type-file-box { display: block; width: 262px; height: 26px; position: relative; z-index: 1; }
 .type-file-text { line-height: 26px !important; display: block; width: 163px; height: 26px !important; float: left !important; padding: 0 !important; margin: 0 !important; border: none 0 !important; border-radius: 0 !important; }
@@ -585,12 +585,13 @@ padding: 7px 20px !important; border: solid 1px #E6E6E6 !important; cursor: poin
 .orange { color: #F60; }
 .bold { font-weight: bold; color: #545454 }
 /* tip提示 */
-.tip-yellowsimple { color: #000; background-color: #fff9c9; text-align: left; min-width: 50px; max-width: 300px; border: 1px solid #c7bf93; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; z-index: 1000; padding: 6px 8px; }
+/*.tip-yellowsimple { color: #000; background-color: #fff9c9; text-align: left; min-width: 50px; max-width: 300px; border: 1px solid #c7bf93; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; z-index: 1000; padding: 6px 8px; }
 .tip-yellowsimple .tip-inner { font: 12px/16px arial, helvetica, sans-serif; }
 .tip-yellowsimple .tip-arrow-top { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat; width: 9px; height: 6px; margin-top: -6px; margin-left: -5px; top: 0; left: 50%; }
 .tip-yellowsimple .tip-arrow-right { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat -9px 0; width: 6px; height: 9px; margin-top: -4px; margin-left: 0; top: 50%; left: 100%; }
 .tip-yellowsimple .tip-arrow-bottom { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat -18px 0; width: 9px; height: 6px; margin-top: 0; margin-left: -5px; top: 100%; left: 50%; }
 .tip-yellowsimple .tip-arrow-left { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat -27px 0; width: 6px; height: 9px; margin-top: -4px; margin-left: -6px; top: 50%; left: 0; }
+*/
 /* table
 ------------------------------------------------------------------- */
 #gcategory select { margin-right: 3px; }
@@ -628,7 +629,6 @@ tr.no_data td { font-size: 14px; line-height: 120px; color: #09C; text-align: ce
 .normal { font-weight: normal; }
 .file { width: 330px; }
 .floatleft { float: left; padding-left: 15px; }
-.clear { clear: both; }
 .mt10 { margin-top: 10px; }
 .mr10 { margin-right: 10px; }
 .sort_order { width: 50px; height: 17px; line-height: 17px; text-align: center }
