@@ -9,11 +9,12 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\model;
-use think\Db;
-use think\Model;
-use think\Loader;
-use think\Request;
+
 use app\common\Model\Modelbase;
+use think\Db;
+use think\Loader;
+use think\Model;
+use think\Request;
 
 /**
  * 字段模型
@@ -26,8 +27,8 @@ class ModelField extends Modelbase
     public $not_allow_fields = array('catid', 'typeid', 'title', 'keyword', 'template', 'username', 'tags');
     //允许添加但必须唯一的字段（字段名）
     public $unique_fields = array('pages', 'readpoint', 'author', 'copyfrom', 'islink', 'posid');
-     //禁止被禁用（隐藏）的字段列表（字段名）
-    public $forbid_fields = array('catid', 'title', /* 'updatetime', 'inputtime', 'url', 'listorder', 'status', 'template', 'username', 'allow_comment', 'tags' */);
+    //禁止被禁用（隐藏）的字段列表（字段名）
+    public $forbid_fields = array('catid', 'title' /* 'updatetime', 'inputtime', 'url', 'listorder', 'status', 'template', 'username', 'allow_comment', 'tags' */);
     //禁止被删除的字段列表（字段名）
     public $forbid_delete = array('catid', 'title', 'thumb', 'keyword', 'keywords', 'updatetime', 'tags', 'inputtime', 'posid', 'url', 'listorder', 'status', 'template', 'username', 'allow_comment');
     //可以追加 JS和CSS 的字段（字段名）
@@ -78,9 +79,9 @@ class ModelField extends Modelbase
             return false;
         }
 
-         //数据验证
+        //数据验证
         $validate = Loader::validate('ModelField');
-        if(!$validate->scene('edit')->check($data)){
+        if (!$validate->scene('edit')->check($data)) {
             $this->error = $validate->getError();
             return false;
         }
@@ -99,7 +100,7 @@ class ModelField extends Modelbase
 
         if (false !== $this->where(array("fieldid" => $fieldid))->update($data)) {
             //清理缓存
-            cache('ModelField', NULL);
+            cache('ModelField', null);
             //如果字段名变更 需要继续执行
             if ($data['field'] && $info['field']) {
                 //检查字段是否存在，只有当字段名改变才检测 不允许存在相同字段
@@ -127,7 +128,7 @@ class ModelField extends Modelbase
                 }
             }
             return true;
-        }else {
+        } else {
             $this->error = '数据库更新失败！';
             return false;
         }
@@ -153,7 +154,7 @@ class ModelField extends Modelbase
         }
         //数据验证
         $validate = Loader::validate('ModelField');
-        if(!$validate->scene('add')->check($data)){
+        if (!$validate->scene('add')->check($data)) {
             $this->error = $validate->getError();
             return false;
         }
@@ -190,7 +191,7 @@ class ModelField extends Modelbase
             $fieldid = $this->allowField(true)->insert($data);
             if ($fieldid) {
                 //清理缓存
-                cache('ModelField', NULL);
+                cache('ModelField', null);
                 return $fieldid;
             } else {
                 $this->error = '字段信息入库失败！';
@@ -198,9 +199,9 @@ class ModelField extends Modelbase
                 Db::connect()->execute("ALTER TABLE  `{$field['tablename']}` DROP  `{$field['fieldname']}`");
                 return false;
             }
-        }else {
-                $this->error = '数据库字段添加失败！';
-                return false;
+        } else {
+            $this->error = '数据库字段添加失败！';
+            return false;
         }
 
     }
@@ -248,7 +249,8 @@ class ModelField extends Modelbase
      * @param type $modelid 模型
      * @return boolean
      */
-    public function isAddField($field, $field_type, $modelid) {
+    public function isAddField($field, $field_type, $modelid)
+    {
         //判断是否唯一字段 已经有了就不能添加
         if (in_array($field, $this->unique_fields)) {
             $f_datas = Db::name('ModelField')->where(array("modelid" => $modelid))->column("field,formtype,name");
@@ -274,7 +276,8 @@ class ModelField extends Modelbase
      * @param type $field 字段名称
      * @return boolean
      */
-    public function isDelField($field) {
+    public function isDelField($field)
+    {
         //禁止被删除的字段列表（字段名）
         if (in_array($field, $this->forbid_delete)) {
             return false;
@@ -282,12 +285,13 @@ class ModelField extends Modelbase
         return true;
     }
 
-     /**
+    /**
      * 判断字段是否允许被编辑
      * @param type $field 字段名称
      * @return boolean
      */
-    public function isEditField($field) {
+    public function isEditField($field)
+    {
         //判断是否唯一字段
         if (in_array($field, $this->unique_fields)) {
             return false;
@@ -309,7 +313,8 @@ class ModelField extends Modelbase
      * @param type $modelid
      * @return string
      */
-    protected function getModelTableName($modelid, $issystem = 1) {
+    protected function getModelTableName($modelid, $issystem = 1)
+    {
         //读取模型配置 以后优化缓存形式
         $model_cache = cache("Model");
         //表名获取
@@ -322,7 +327,8 @@ class ModelField extends Modelbase
     /**
      * 根据模型ID读取全部字段信息
      */
-    public function getModelField($modelid) {
+    public function getModelField($modelid)
+    {
         return $this->where(array("modelid" => $modelid))->order(array("listorder" => "ASC"))->select();
     }
 
@@ -330,12 +336,12 @@ class ModelField extends Modelbase
      * 获取可用字段类型列表
      * @return array
      */
-    public function getFieldTypeList() {
+    public function getFieldTypeList()
+    {
         $fields = include $this->fieldPath . 'fields.php';
-        $fields = $fields? : array();
+        $fields = $fields ?: array();
         return $fields;
     }
-
 
     /**
      * 根据字段类型，增加对应的字段到相应表里面
@@ -351,7 +357,8 @@ class ModelField extends Modelbase
      *      'decimaldigits' 小数位数
      * )
      */
-    protected function addFieldSql($field_type, $field){
+    protected function addFieldSql($field_type, $field)
+    {
         //表名
         $tablename = $field['tablename'];
         //字段名
@@ -379,7 +386,7 @@ class ModelField extends Modelbase
                     return false;
                 }
                 break;
-             case "tinyint":
+            case "tinyint":
                 if (!$maxlength) {
                     $maxlength = 3;
                 }
@@ -391,7 +398,7 @@ class ModelField extends Modelbase
                     return false;
                 }
                 break;
-            case "number"://特殊字段类型，数字类型，如果小数位是0字段类型为 INT,否则是FLOAT
+            case "number": //特殊字段类型，数字类型，如果小数位是0字段类型为 INT,否则是FLOAT
                 $minnumber = intval($minnumber);
                 $defaultvalue = $decimaldigits == 0 ? intval($defaultvalue) : floatval($defaultvalue);
                 $sql = "ALTER TABLE `{$tablename}` ADD `{$fieldname}` " . ($decimaldigits == 0 ? 'INT' : 'FLOAT') . " " . ($minnumber >= 0 ? 'UNSIGNED' : '') . " NOT NULL DEFAULT '{$defaultvalue}'";
@@ -462,7 +469,7 @@ class ModelField extends Modelbase
                     return false;
                 }
                 break;
-            case 'readpoint'://特殊字段类型
+            case 'readpoint': //特殊字段类型
                 $defaultvalue = intval($defaultvalue);
                 $sql = "ALTER TABLE `{$tablename}` ADD  `readpoint` SMALLINT(5) unsigned NOT NULL DEFAULT '{$defaultvalue}'";
                 if (false === Db::connect()->execute($sql)) {
@@ -511,7 +518,7 @@ class ModelField extends Modelbase
                     return false;
                 }
                 break;
-            case "pages"://特殊字段类型
+            case "pages": //特殊字段类型
                 Db::connect()->execute("ALTER TABLE `{$tablename}` ADD `paginationtype` TINYINT( 1 ) NOT NULL DEFAULT '0'");
                 Db::connect()->execute("ALTER TABLE `{$tablename}` ADD `maxcharperpage` MEDIUMINT( 6 ) NOT NULL DEFAULT '0'");
                 return true;
@@ -538,7 +545,8 @@ class ModelField extends Modelbase
      *      'decimaldigits' 小数位数
      * )
      */
-    protected function editFieldSql($field_type, $field) {
+    protected function editFieldSql($field_type, $field)
+    {
         //表名
         $tablename = $field['tablename'];
         //原字段名
@@ -583,7 +591,7 @@ class ModelField extends Modelbase
                     return false;
                 }
                 break;
-            case 'number'://特殊字段类型，数字类型，如果小数位是0字段类型为 INT,否则是FLOAT
+            case 'number': //特殊字段类型，数字类型，如果小数位是0字段类型为 INT,否则是FLOAT
                 $minnumber = intval($minnumber);
                 $defaultvalue = $decimaldigits == 0 ? intval($defaultvalue) : floatval($defaultvalue);
                 $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `{$newfilename}` " . ($decimaldigits == 0 ? 'INT' : 'FLOAT') . " " . ($minnumber >= 0 ? 'UNSIGNED' : '') . " NOT NULL DEFAULT '{$defaultvalue}'";
@@ -654,7 +662,7 @@ class ModelField extends Modelbase
                     return false;
                 }
                 break;
-            case 'readpoint'://特殊字段类型
+            case 'readpoint': //特殊字段类型
                 $defaultvalue = intval($defaultvalue);
                 $sql = "ALTER TABLE `{$tablename}` CHANGE `{$oldfilename}` `readpoint` SMALLINT(5) unsigned NOT NULL DEFAULT '{$defaultvalue}'";
                 if (false === Db::connect()->execute($sql)) {
@@ -716,7 +724,8 @@ class ModelField extends Modelbase
      * @param type $filename 字段名称
      * @param type $tablename 完整表名
      */
-    protected function deleteFieldSql($filename, $tablename) {
+    protected function deleteFieldSql($filename, $tablename)
+    {
         //不带表前缀的表名
         $noprefixTablename = str_replace(config('database.prefix'), '', $tablename);
         if (empty($tablename) || empty($filename)) {
@@ -729,7 +738,7 @@ class ModelField extends Modelbase
             return false;
         }
         switch ($filename) {
-            case 'readpoint'://特殊字段类型
+            case 'readpoint': //特殊字段类型
                 $sql = "ALTER TABLE `{$tablename}` DROP `readpoint`;";
                 if (false === Db::connect()->execute($sql)) {
                     $this->error = '字段删除失败！';
@@ -757,7 +766,8 @@ class ModelField extends Modelbase
     }
 
     //生成模型字段缓存
-    public function model_field_cache() {
+    public function model_field_cache()
+    {
         $cache = array();
         $modelList = Db::name("Model")->select();
         foreach ($modelList as $info) {
@@ -773,6 +783,5 @@ class ModelField extends Modelbase
         cache('ModelField', $cache);
         return $cache;
     }
-
 
 }

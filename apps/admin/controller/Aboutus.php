@@ -9,9 +9,10 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
+
 use think\Controller;
 
-class  Aboutus extends Controller
+class Aboutus extends Controller
 {
     /**
      * 关于我们
@@ -20,7 +21,5 @@ class  Aboutus extends Controller
     {
         return $this->fetch();
     }
-
-
 
 }

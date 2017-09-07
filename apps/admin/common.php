@@ -18,53 +18,54 @@
  * @param int $user_id 执行行为的用户id
  * @return boolean
  */
-function action_log($action = null, $model = null, $record_id = null, $user_id = null){
+function action_log($action = null, $model = null, $record_id = null, $user_id = null)
+{
     //参数检查
-    if(empty($action) || empty($model) || empty($record_id)){
+    if (empty($action) || empty($model) || empty($record_id)) {
         return '参数不能为空';
     }
-    if(empty($user_id)){
+    if (empty($user_id)) {
         $user_id = is_login();
     }
     //查询行为,判断是否执行
     $action_info = db('Action')->getByName($action);
-    if($action_info['status'] != 1){
+    if ($action_info['status'] != 1) {
         return '该行为被禁用或删除';
     }
-    $now_time=time();
+    $now_time = time();
     //插入行为日志
-    $data['action_id']      =   $action_info['id'];
-    $data['user_id']        =   $user_id;
-    $data['action_ip']      =   ip2long(get_client_ip());
-    $data['model']          =   $model;
-    $data['record_id']      =   $record_id;
-    $data['create_time']    =   $now_time;
+    $data['action_id'] = $action_info['id'];
+    $data['user_id'] = $user_id;
+    $data['action_ip'] = ip2long(get_client_ip());
+    $data['model'] = $model;
+    $data['record_id'] = $record_id;
+    $data['create_time'] = $now_time;
     //解析日志规则,生成日志备注
-    if(!empty($action_info['log'])){
-        if(preg_match_all('/\[(\S+?)\]/', $action_info['log'], $match)){
-            $log['user']    =   $user_id;
-            $log['record']  =   $record_id;
-            $log['model']   =   $model;
-            $log['time']    =   $now_time;
-            $log['data']    =   array('user'=>$user_id,'model'=>$model,'record'=>$record_id,'time'=>$now_time);
-            foreach ($match[1] as $value){
+    if (!empty($action_info['log'])) {
+        if (preg_match_all('/\[(\S+?)\]/', $action_info['log'], $match)) {
+            $log['user'] = $user_id;
+            $log['record'] = $record_id;
+            $log['model'] = $model;
+            $log['time'] = $now_time;
+            $log['data'] = array('user' => $user_id, 'model' => $model, 'record' => $record_id, 'time' => $now_time);
+            foreach ($match[1] as $value) {
                 $param = explode('|', $value);
-                if(isset($param[1])){
-                    $replace[] = call_user_func($param[1],$log[$param[0]]);
-                }else{
+                if (isset($param[1])) {
+                    $replace[] = call_user_func($param[1], $log[$param[0]]);
+                } else {
                     $replace[] = $log[$param[0]];
                 }
             }
-            $data['remark'] =   str_replace($match[0], $replace, $action_info['log']);
-        }else{
-            $data['remark'] =   $action_info['log'];
+            $data['remark'] = str_replace($match[0], $replace, $action_info['log']);
+        } else {
+            $data['remark'] = $action_info['log'];
         }
-    }else{
+    } else {
         //未定义日志规则，记录操作url
-        $data['remark']     =   '操作url：'.$_SERVER['REQUEST_URI'];
+        $data['remark'] = '操作url：' . $_SERVER['REQUEST_URI'];
     }
     db('ActionLog')->insert($data); //插入日志
-    if(!empty($action_info['rule'])){
+    if (!empty($action_info['rule'])) {
         //解析行为
         //$rules = parse_action($action, $user_id);
         //执行行为
@@ -86,19 +87,20 @@ function action_log($action = null, $model = null, $record_id = null, $user_id =
  * @param int $self 替换规则里的变量为执行用户的id
  * @return boolean|array: false解析出错 ， 成功返回规则数组
  */
-function parse_action($action , $self){
-    if(empty($action)){
+function parse_action($action, $self)
+{
+    if (empty($action)) {
         return false;
     }
     //参数支持id或者name
-    if(is_numeric($action)){
-        $map = array('id'=>$action);
-    }else{
-        $map = array('name'=>$action);
+    if (is_numeric($action)) {
+        $map = array('id' => $action);
+    } else {
+        $map = array('name' => $action);
     }
     //查询行为信息
     $info = db('Action')->where($map)->find();
-    if(!$info || $info['status'] != 1){
+    if (!$info || $info['status'] != 1) {
         return false;
     }
 
@@ -107,19 +109,21 @@ function parse_action($action , $self){
     $rules = str_replace('{$self}', $self, $rules);
     $rules = explode(';', $rules);
     $return = array();
-    foreach ($rules as $key=>&$rule){
-        if(empty($rule))
+    foreach ($rules as $key => &$rule) {
+        if (empty($rule)) {
             continue;
+        }
+
         $rule = explode('|', $rule);
-        foreach ($rule as $k=>$fields){
+        foreach ($rule as $k => $fields) {
             $field = empty($fields) ? array() : explode(':', $fields);
-            if(!empty($field)){
+            if (!empty($field)) {
                 $return[$key][$field[0]] = $field[1];
             }
         }
         //cycle(检查周期)和max(周期内最大执行次数)必须同时存在，否则去掉这两个条件
-        if(!array_key_exists('cycle', $return[$key]) || !array_key_exists('max', $return[$key])){
-            unset($return[$key]['cycle'],$return[$key]['max']);
+        if (!array_key_exists('cycle', $return[$key]) || !array_key_exists('max', $return[$key])) {
+            unset($return[$key]['cycle'], $return[$key]['max']);
         }
     }
 
@@ -133,19 +137,20 @@ function parse_action($action , $self){
  * @param array $user_id 执行的用户id
  * @return boolean false 失败 ， true 成功
  */
-function execute_action($rules = false, $action_id = null, $user_id = null){
-    if(!$rules || empty($action_id) || empty($user_id)){
+function execute_action($rules = false, $action_id = null, $user_id = null)
+{
+    if (!$rules || empty($action_id) || empty($user_id)) {
         return false;
     }
 
     $return = true;
-    foreach ($rules as $rule){
+    foreach ($rules as $rule) {
 
         //检查执行周期
-        $map = array('action_id'=>$action_id, 'user_id'=>$user_id);
+        $map = array('action_id' => $action_id, 'user_id' => $user_id);
         $map['create_time'] = array('gt', time() - intval($rule['cycle']) * 3600);
         $exec_count = db('ActionLog')->where($map)->count();
-        if($exec_count > $rule['max']){
+        if ($exec_count > $rule['max']) {
             continue;
         }
 
@@ -154,7 +159,7 @@ function execute_action($rules = false, $action_id = null, $user_id = null){
         $field = $rule['field'];
         $res = $Model->where($rule['condition'])->setField($field, array('exp', $rule['rule']));
 
-        if(!$res){
+        if (!$res) {
             $return = false;
         }
     }
@@ -162,16 +167,17 @@ function execute_action($rules = false, $action_id = null, $user_id = null){
 }
 
 // 分析枚举类型配置值 格式 a:名称1,b:名称2
-function parse_config_attr($string) {
+function parse_config_attr($string)
+{
     $array = preg_split('/[,;\r\n]+/', trim($string, ",;\r\n"));
-    if(strpos($string,':')){
-        $value  =   array();
+    if (strpos($string, ':')) {
+        $value = array();
         foreach ($array as $val) {
             list($k, $v) = explode(':', $val);
-            $value[$k]   = $v;
+            $value[$k] = $v;
         }
-    }else{
-        $value  =   $array;
+    } else {
+        $value = $array;
     }
     return $value;
 }
@@ -182,17 +188,18 @@ function parse_config_attr($string) {
  * @param string $condition 条件字段
  * @param string $field 需要返回的字段，不传则返回整个数据
  */
-function get_document_field($value = null, $condition = 'id', $field = null){
-    if(empty($value)){
+function get_document_field($value = null, $condition = 'id', $field = null)
+{
+    if (empty($value)) {
         return false;
     }
 
     //拼接参数
     $map[$condition] = $value;
     $info = db('Model')->where($map);
-    if(empty($field)){
+    if (empty($field)) {
         $info = $info->field(true)->find();
-    }else{
+    } else {
         $info = $info->value($field);
     }
     return $info;
@@ -204,10 +211,11 @@ function get_document_field($value = null, $condition = 'id', $field = null){
  * @param $encrypt //传入加密串，在修改密码时做认证
  * @return array/password
  */
-function password($password, $encrypt='') {
+function password($password, $encrypt = '')
+{
     $pwd = array();
-    $pwd['encrypt'] =  $encrypt ? $encrypt : genRandomString();
-    $pwd['password'] = sha1(trim($password).$pwd['encrypt']);
+    $pwd['encrypt'] = $encrypt ? $encrypt : genRandomString();
+    $pwd['password'] = sha1(trim($password) . $pwd['encrypt']);
     return $encrypt ? $pwd['password'] : $pwd;
 }
 
@@ -216,14 +224,15 @@ function password($password, $encrypt='') {
  * @param type $len 产生字符串的长度
  * @return string 随机字符串
  */
-function genRandomString($len = 6) {
+function genRandomString($len = 6)
+{
     $chars = array(
         "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
         "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
         "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G",
         "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
         "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2",
-        "3", "4", "5", "6", "7", "8", "9"
+        "3", "4", "5", "6", "7", "8", "9",
     );
     $charsLen = count($chars) - 1;
     // 将数组打乱

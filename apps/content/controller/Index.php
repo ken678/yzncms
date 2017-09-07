@@ -12,7 +12,7 @@ namespace app\content\controller;
 
 class Index
 {
-	//首页
+    //首页
     public function index()
     {
         return 'Yzncms内容管理系统V1.0.0<br>

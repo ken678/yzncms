@@ -9,8 +9,8 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
+
 use app\common\controller\Adminbase;
-use app\admin\model\AuthGroup;
 
 /**
  * 管理员管理
@@ -30,7 +30,7 @@ class Manager extends Adminbase
     public function index()
     {
         $where = array();
-        $list   = $this->lists('Admin', $where);
+        $list = $this->lists('Admin', $where);
         $this->assign('_list', $list);
         return $this->fetch();
     }
@@ -59,20 +59,20 @@ class Manager extends Adminbase
     public function edit()
     {
         if (request()->isPost()) {
-	        if ($this->User->editManager(input('post.'))) {
-	            $this->success("修改成功！");
-	        } else {
-	            $this->error($this->User->getError()? : '修改失败！');
-	        }
-        }else{
-        	$id= input('id/d');
+            if ($this->User->editManager(input('post.'))) {
+                $this->success("修改成功！");
+            } else {
+                $this->error($this->User->getError() ?: '修改失败！');
+            }
+        } else {
+            $id = input('id/d');
             $data = $this->User->where(array("userid" => $id))->find();
             if (empty($data)) {
                 $this->error('该信息不存在！');
             }
             $this->assign("data", $data);
             $this->assign("roles", model('Admin/AuthGroup')->getGroups());
-        	return $this->fetch();
+            return $this->fetch();
         }
     }
 
@@ -96,7 +96,7 @@ class Manager extends Adminbase
                 $error = $this->User->getError();
                 $this->error($error ? $error : "密码更新失败！");
             }
-        }else{
+        } else {
             return $this->fetch();
         }
 
@@ -107,20 +107,12 @@ class Manager extends Adminbase
      */
     public function del()
     {
-        $id= input('id/d');
+        $id = input('id/d');
         if ($this->User->deleteManager($id)) {
             $this->success("删除成功！");
         } else {
-            $this->error($this->User->getError()? : '删除失败！');
+            $this->error($this->User->getError() ?: '删除失败！');
         }
     }
-
-
-
-
-
-
-
-
 
 }

@@ -8,8 +8,8 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-
 use think\Url;
+
 class content_form
 {
 
@@ -37,7 +37,8 @@ class content_form
      * @param type $modelid 模型ID
      * @param type $catid 栏目id
      */
-    public function __construct($modelid, $catid) {
+    public function __construct($modelid, $catid)
+    {
         $this->model = cache("Model");
         if ($modelid) {
             $this->setModelid($modelid, $catid);
@@ -49,7 +50,8 @@ class content_form
      * @param type $modelid
      * @return boolean
      */
-    public function setModelid($modelid, $catid) {
+    public function setModelid($modelid, $catid)
+    {
         if (empty($modelid)) {
             return false;
         }
@@ -68,8 +70,9 @@ class content_form
      * @param type $name
      * @return type
      */
-    public function __get($name) {
-        return isset($this->data[$name]) ? $this->data[$name] : (isset($this->$name) ? $this->$name : NULL);
+    public function __get($name)
+    {
+        return isset($this->data[$name]) ? $this->data[$name] : (isset($this->$name) ? $this->$name : null);
     }
 
     /**
@@ -77,20 +80,22 @@ class content_form
      * @param type $name
      * @param type $value
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->data[$name] = $value;
     }
 
     /**
      * 获取模型字段信息
      * @param type $data
-     * @return type 
+     * @return type
      */
-    public function get($data = array()) {
+    public function get($data = array())
+    {
         $this->data = $data;
         $info = array();
         foreach ($this->fields as $fieldInfo) {
-            $field = $fieldInfo['field'];//字段名
+            $field = $fieldInfo['field']; //字段名
             //判断是否后台
             if (defined('IN_ADMIN') && IN_ADMIN) {
                 //判断是否内部字段，如果是，跳过
@@ -128,7 +133,7 @@ class content_form
                     'form' => $form,
                     'star' => $star,
                     'isomnipotent' => $fieldInfo['isomnipotent'],
-                    'formtype' => $fieldInfo['formtype']
+                    'formtype' => $fieldInfo['formtype'],
                 );
                 //作为基本信息
                 if ($fieldInfo['isbase']) {
@@ -145,7 +150,8 @@ class content_form
      * 转换为validate表单验证相关的json数据
      * @param type $ValidateRules
      */
-    public function ValidateRulesJson($ValidateRules, $suang = false) {
+    public function ValidateRulesJson($ValidateRules, $suang = false)
+    {
         foreach ($ValidateRules as $formname => $value) {
             $va = array();
             if (is_array($value)) {

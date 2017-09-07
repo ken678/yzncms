@@ -9,18 +9,19 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\model;
-use \think\Model;
+
 use think\Db;
+use \think\Model;
 
 /**
  * 菜单基础模型
  */
 class Menu extends Model
 {
-	//获取菜单列表
-	public static function getList()
+    //获取菜单列表
+    public static function getList()
     {
-        return Db::name('menu')->order(array('listorder','id'=>'DESC'))->select();
+        return Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
     }
 
     // 获取菜单
@@ -40,8 +41,5 @@ class Menu extends Model
     {
         return Db::name('menu')->delete($id);
     }
-
-
-
 
 }

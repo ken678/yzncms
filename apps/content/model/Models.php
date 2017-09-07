@@ -9,12 +9,13 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\model;
+
+use app\common\model\Modelbase;
+use think\Cache;
+use think\Config;
 use think\Db;
 use think\Loader;
-use think\Config;
 use think\Model;
-use think\Cache;
-use app\common\model\Modelbase;
 
 /**
  * 菜单基础模型
@@ -25,14 +26,14 @@ class Models extends Modelbase
 
     private $libPath = '';
     protected $name = 'model';
-    protected $auto = ['addtime','tablename'];
+    protected $auto = ['addtime', 'tablename'];
     protected function setAddtimeAttr($value)
     {
         return time();
     }
     protected function setTablenameAttr($value)
     {
-        return strtolower($value);//强制表名为小写
+        return strtolower($value); //强制表名为小写
     }
 
     //初始化
@@ -47,13 +48,14 @@ class Models extends Modelbase
      * @param type $data 提交数据
      * @return boolean
      */
-    public function addModel($data) {
+    public function addModel($data)
+    {
         if (empty($data)) {
             return false;
         }
         //模型添加验证
         $validate = Loader::validate('Models');
-        if(!$validate->scene('add')->check($data)){
+        if (!$validate->scene('add')->check($data)) {
             $this->error = $validate->getError();
             return false;
         }
@@ -62,7 +64,7 @@ class Models extends Modelbase
         if ($modelid) {
             //创建模型表和模型附表
             if ($this->createModel($data['tablename'], $this->modelid)) {
-                cache("Model", NULL);
+                cache("Model", null);
                 return $this->modelid;
             } else {
                 //表创建失败
@@ -95,7 +97,7 @@ class Models extends Modelbase
         //删除模型数据
         $this->where(array("modelid" => $modelid))->delete();
         //更新缓存
-        cache("Model", NULL);
+        cache("Model", null);
         //删除所有和这个模型相关的字段
         Db::name("ModelField")->where(array("modelid" => $modelid))->delete();
         //删除主表
@@ -111,7 +113,8 @@ class Models extends Modelbase
      * 删除表
      * $table 不带表前缀
      */
-    public function deleteTable($table) {
+    public function deleteTable($table)
+    {
         if ($this->table_exists($table)) {
             $this->drop_table($table);
         }
@@ -124,7 +127,8 @@ class Models extends Modelbase
      * @param type $modelId 模型id
      * @return boolean
      */
-    protected function createModel($tableName, $modelId) {
+    protected function createModel($tableName, $modelId)
+    {
         if (empty($tableName) || $modelId < 1) {
             return false;
         }
@@ -132,7 +136,7 @@ class Models extends Modelbase
         $dbPrefix = Config::get("database.prefix");
         $ModeSql = file_get_contents($this->libPath . self::ModeSql);
         $sqlSplit = str_replace(array('@yzncms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $ModeSql);
-        return $this->sql_execute($sqlSplit,$dbPrefix);
+        return $this->sql_execute($sqlSplit, $dbPrefix);
     }
 
     /**
@@ -140,7 +144,8 @@ class Models extends Modelbase
      * @param type $sqls SQL语句
      * @return boolean
      */
-    protected function sql_execute($sqls, $tablepre) {
+    protected function sql_execute($sqls, $tablepre)
+    {
         $sqls = $this->sql_split($sqls, $tablepre);
         if (is_array($sqls)) {
             foreach ($sqls as $sql) {
@@ -162,26 +167,31 @@ class Models extends Modelbase
      *          自己的前缀
      * @return multitype:string 返回最终需要的sql语句
      */
-    public function sql_split($sql, $tablepre) {
-        if ($tablepre != "yzn_")
-            $sql = str_replace ( "yzn_", $tablepre, $sql );
-        $sql = preg_replace ( "/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql );
+    public function sql_split($sql, $tablepre)
+    {
+        if ($tablepre != "yzn_") {
+            $sql = str_replace("yzn_", $tablepre, $sql);
+        }
 
-        $sql = str_replace ( "\r", "\n", $sql );
-        $ret = array ();
+        $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
+
+        $sql = str_replace("\r", "\n", $sql);
+        $ret = array();
         $num = 0;
-        $queriesarray = explode ( ";\n", trim ( $sql ) );
-        unset ( $sql );
-        foreach ( $queriesarray as $query ) {
-            $ret [$num] = '';
-            $queries = explode ( "\n", trim ( $query ) );
-            $queries = array_filter ( $queries );
-            foreach ( $queries as $query ) {
-                $str1 = substr ( $query, 0, 1 );
-                if ($str1 != '#' && $str1 != '-')
-                    $ret [$num] .= $query;
+        $queriesarray = explode(";\n", trim($sql));
+        unset($sql);
+        foreach ($queriesarray as $query) {
+            $ret[$num] = '';
+            $queries = explode("\n", trim($query));
+            $queries = array_filter($queries);
+            foreach ($queries as $query) {
+                $str1 = substr($query, 0, 1);
+                if ($str1 != '#' && $str1 != '-') {
+                    $ret[$num] .= $query;
+                }
+
             }
-            $num ++;
+            $num++;
         }
         return $ret;
     }
@@ -215,6 +225,5 @@ class Models extends Modelbase
         Cache('Model', $data);
         return $data;
     }
-
 
 }

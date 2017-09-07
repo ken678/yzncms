@@ -9,10 +9,12 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\model;
-use \think\Model;
-use \think\Db;
+
 use \think\Cache;
+use \think\Db;
 use \think\Loader;
+use \think\Model;
+
 /**
  * 栏目模型
  */
@@ -29,7 +31,7 @@ class Category extends Model
         }
         $data = $post['info'];
         //栏目类型
-        $data['type'] = (int)$post['type'];
+        $data['type'] = (int) $post['type'];
         //栏目设置
         $data['setting'] = $post['setting'];
         //栏目拼音
@@ -43,23 +45,23 @@ class Category extends Model
         //数据验证
         $validate = Loader::validate('Category');
 
-        if($data['type']==2){
-           $add_type='wadd';
-        }else{
-           $add_type='add';
+        if ($data['type'] == 2) {
+            $add_type = 'wadd';
+        } else {
+            $add_type = 'add';
         }
-        if(!$validate->scene($add_type)->check($data)){
+        if (!$validate->scene($add_type)->check($data)) {
             $this->error = $validate->getError();
             return false;
         }
 
         $catid = $this->allowField(true)->save($data);
         if ($catid) {
-           cache('Category', NULL);
-           return $catid;
-        }else{
-           $this->error = '栏目添加失败！';
-           return false;
+            cache('Category', null);
+            return $catid;
+        } else {
+            $this->error = '栏目添加失败！';
+            return false;
 
         }
     }
@@ -75,7 +77,7 @@ class Category extends Model
         $data = $post['info'];
 
         //栏目类型
-        $data['type'] = (int)$post['type'];
+        $data['type'] = (int) $post['type'];
 
         //查询该栏目是否存在
         $info = $this->where(array('catid' => $catid))->find();
@@ -97,27 +99,26 @@ class Category extends Model
         //数据验证
         $validate = Loader::validate('Category');
 
-        if($data['type']==2){
-           $edit_type='wedit';
-        }else{
-           $edit_type='edit';
+        if ($data['type'] == 2) {
+            $edit_type = 'wedit';
+        } else {
+            $edit_type = 'edit';
         }
-        if(!$validate->scene($edit_type)->check($data)){
+        if (!$validate->scene($edit_type)->check($data)) {
             $this->error = $validate->getError();
             return false;
         }
         //更新数据
-        if ($this->isUpdate(true)->allowField(true)->save($data,['catid' => $catid])!== false) {
-           //更新栏目缓存
-           cache('Category', NULL);
-           getCategory($catid, '', true);
-           return true;
-        }else{
-           $this->error = '栏目添加失败！';
-           return false;
+        if ($this->isUpdate(true)->allowField(true)->save($data, ['catid' => $catid]) !== false) {
+            //更新栏目缓存
+            cache('Category', null);
+            getCategory($catid, '', true);
+            return true;
+        } else {
+            $this->error = '栏目添加失败！';
+            return false;
         }
     }
-
 
     /**
      * 删除栏目
@@ -135,29 +136,29 @@ class Category extends Model
             $where['catid'] = array("IN", $catid);
         }
         if (is_array($catid)) {
-              $modeid = array();
-              foreach ($catid as $cid) {
-                  $catinfo = getCategory($cid);
-                  if ($catinfo['modelid'] && $catinfo['type'] == 0) {
-                      $modeid[$catinfo['modelid']] = $catinfo['modelid'];
-                  }
-                  foreach ($modeid as $mid) {
-                      $tbname = ucwords(getModel($mid, 'tablename'));
-                      if ($tbname && Db::name($tbname)->where(array("catid" => array("IN", $catid)))->find()) {
-                          return false;
-                      }
-                  }
-              }
-        }else{
-              $catinfo = getCategory($catid);
-              $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
-              if ($tbname && $catinfo['type'] == 0 && Db::name($tbname)->where(array("catid" => $catid))->find()) {
-                  return false;
-              }
+            $modeid = array();
+            foreach ($catid as $cid) {
+                $catinfo = getCategory($cid);
+                if ($catinfo['modelid'] && $catinfo['type'] == 0) {
+                    $modeid[$catinfo['modelid']] = $catinfo['modelid'];
+                }
+                foreach ($modeid as $mid) {
+                    $tbname = ucwords(getModel($mid, 'tablename'));
+                    if ($tbname && Db::name($tbname)->where(array("catid" => array("IN", $catid)))->find()) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            $catinfo = getCategory($catid);
+            $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
+            if ($tbname && $catinfo['type'] == 0 && Db::name($tbname)->where(array("catid" => $catid))->find()) {
+                return false;
+            }
         }
         $status = $this->where($where)->delete();
         //更新缓存
-        cache('Category', NULL);
+        cache('Category', null);
         if (false !== $status) {
             //TD
             return true;
@@ -180,6 +181,5 @@ class Category extends Model
         Cache::set("Category", $CategoryIds);
         return $CategoryIds;
     }
-
 
 }

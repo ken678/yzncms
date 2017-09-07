@@ -9,30 +9,31 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\controller;
-use think\Db;
-use think\Url;
-use think\Request;
-use app\content\logic\Content as ContentLogic;
+
 use app\common\controller\Adminbase;
-use app\common\Model\ContentModel;
+use app\content\logic\Content as ContentLogic;
+use think\Db;
+use think\Request;
+use think\Url;
+
 /**
  * 内容管理
  */
 class Content extends Adminbase
 {
-    public $catid = 0;	//当前栏目id
+    public $catid = 0; //当前栏目id
     //模型缓存
     protected $model = array();
 
     protected function _initialize()
     {
         parent::_initialize();
-        $this->catid = Request::instance()->param('catid',0, 'intval');
+        $this->catid = Request::instance()->param('catid', 0, 'intval');
         $this->Content = new ContentLogic;
         $this->model = cache('Model');
     }
 
-	//显示内容管理首页
+    //显示内容管理首页
     public function index()
     {
         return $this->fetch();
@@ -42,7 +43,7 @@ class Content extends Adminbase
     public function add()
     {
         if (Request::instance()->isPost()) {
-             //栏目ID
+            //栏目ID
             $catid = intval($_POST['info']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
@@ -72,7 +73,7 @@ class Content extends Adminbase
                 }
             }
 
-        }else{
+        } else {
             $category = getCategory($this->catid);
             if (empty($category)) {
                 $this->error('该栏目不存在！');
@@ -89,7 +90,6 @@ class Content extends Adminbase
                 //生成对应字段的输入表单
                 $forminfos = $content_form->get();
 
-
                 $this->assign("catid", $this->catid);
                 $this->assign("content_form", $content_form);
                 $this->assign("forminfos", $forminfos);
@@ -103,12 +103,12 @@ class Content extends Adminbase
     //内容编辑
     public function edit()
     {
-        $this->catid = (int)$_POST['info']['catid'] ?: $this->catid;
+        $this->catid = (int) $_POST['info']['catid'] ?: $this->catid;
         $Categorys = getCategory($this->catid);
-         //信息ID
+        //信息ID
         $id = Request::instance()->param('id/d', 0);
         //模型ID
-         //检查模型是否被禁用
+        //检查模型是否被禁用
         if ($this->model[$Categorys['modelid']]['disabled'] == 1) {
             $this->error("模型被禁用！");
         }
@@ -126,15 +126,15 @@ class Content extends Adminbase
                 $error = $logic->getError();
                 $this->error($error ? $error : '修改失败！');
             }
-        }else{
+        } else {
             $modelid = $Categorys['modelid'];
             if (empty($Categorys)) {
                 $this->error("该栏目不存在！");
             }
             $tablename = $this->model[$modelid]['tablename'];
-            $r= Db::name($tablename)->where(['id'=>$id])->find();
-            $r2= Db::name($tablename.'_data')->where(['id'=>$id])->find();
-            $data = array_merge($r,$r2);
+            $r = Db::name($tablename)->where(['id' => $id])->find();
+            $r2 = Db::name($tablename . '_data')->where(['id' => $id])->find();
+            $data = array_merge($r, $r2);
             //引入输入表单处理类
             $content_form = new \content_form($modelid, $this->catid);
             //字段内容
@@ -148,22 +148,6 @@ class Content extends Adminbase
             return $this->fetch();
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
@@ -184,7 +168,7 @@ class Content extends Adminbase
                 'type' => $rs['type'],
             );
 
-             //终极栏目
+            //终极栏目
             if ($rs['child'] == 0) {
                 $data['target'] = 'right';
                 $data['url'] = Url::build('Content/classlist', array('catid' => $rs['catid']));
@@ -200,11 +184,12 @@ class Content extends Adminbase
             $json[] = $data;
         }
         $this->assign('json', json_encode($json));
-    	return $this->fetch();
+        return $this->fetch();
     }
 
     //栏目信息列表
-    public function classlist() {
+    public function classlist()
+    {
         $catid = Request::instance()->param('catid/d', 0);
         //当前栏目信息
         $catInfo = getCategory($catid);
@@ -226,7 +211,7 @@ class Content extends Adminbase
         $modelCache = cache("Model");
         $tableName = $modelCache[$modelid]['tablename'];
         //$data = Db::name(ucwords($tableName))->where($where)->order(array("id" => "DESC"))->select();
-        $data   =   $this->lists(ucwords($tableName), $where, 'id desc');
+        $data = $this->lists(ucwords($tableName), $where, 'id desc');
 
         $this->assign('data', $data);
         $this->assign('catid', $this->catid);
@@ -234,7 +219,8 @@ class Content extends Adminbase
     }
 
     //删除
-    public function delete() {
+    public function delete()
+    {
         $catid = Request::instance()->param('catid', 0, 'intval');
         $id = Request::instance()->param('id', 0, 'intval');
         if ($this->Content->delete($id, $catid)) {
@@ -248,24 +234,21 @@ class Content extends Adminbase
     //文章排序
     public function listorder()
     {
-		$id = Request::instance()->param('id/d',0);
-		$listorder = Request::instance()->param('value/d',0);
+        $id = Request::instance()->param('id/d', 0);
+        $listorder = Request::instance()->param('value/d', 0);
 
-		$modelid = getCategory($this->catid, 'modelid');
-		if (empty($modelid)) {
-		    $return = 0;
-		    exit(json_encode(array('result'=>$return)));
-		}
-		$db = ContentLogic::getInstance($modelid);
-		$rs = $db ->update(['listorder' => $listorder,'id'=>$id]);
-		if($rs){
+        $modelid = getCategory($this->catid, 'modelid');
+        if (empty($modelid)) {
+            $return = 0;
+            exit(json_encode(array('result' => $return)));
+        }
+        $db = ContentLogic::getInstance($modelid);
+        $rs = $db->update(['listorder' => $listorder, 'id' => $id]);
+        if ($rs) {
             $this->success("排序更新成功！");
-        }else{
+        } else {
             $this->error("排序失败！");
         }
     }
-
-
-
 
 }

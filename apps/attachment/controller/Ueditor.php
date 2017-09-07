@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
+
 use think\Request;
 
 /**
@@ -62,7 +63,7 @@ class Ueditor extends Attachments
         'filePathFormat' => '',
         'fileUrlPrefix' => '',
         'fileMaxSize' => 0,
-        'fileAllowFiles' => array(".flv", ".swf",),
+        'fileAllowFiles' => array(".flv", ".swf"),
         /* 列出指定目录下的图片 */
         'imageManagerActionName' => 'listimage',
         'imageManagerListPath' => '',
@@ -75,44 +76,45 @@ class Ueditor extends Attachments
         'fileManagerListPath' => '',
         'fileManagerUrlPrefix' => '',
         'fileManagerListSize' => '',
-        'fileManagerAllowFiles' => array(".flv", ".swf",),
+        'fileManagerAllowFiles' => array(".flv", ".swf"),
     );
 
     //初始化
     /*protected function _initialize() {
-        //上传文件类型
+    //上传文件类型
     }*/
 
     //编辑器配置
-    public function run() {
-        $action = Request::instance()->param('action');//上传类型
+    public function run()
+    {
+        $action = Request::instance()->param('action'); //上传类型
         $result = array();
         switch ($action) {
             case 'config':
-               $result = $this->confing;
-               break;
+                $result = $this->confing;
+                break;
             //上传图片
             case 'uploadimage':
-               return $this->saveFile('images', 'ueditor');
-               break;
+                return $this->saveFile('images', 'ueditor');
+                break;
             //上传涂鸦
             case 'uploadscrawl':
-               return $this->saveFile('images', 'ueditor_scrawl');
-               break;
+                return $this->saveFile('images', 'ueditor_scrawl');
+                break;
             //上传附件
             case 'uploadfile':
-               break;
+                break;
             //列出图片
             case 'listimage':
-                return $this->showFile('listimage',$this->confing);
+                return $this->showFile('listimage', $this->confing);
                 break;
             default:
                 $result = array(
-                    'state' => '请求地址出错'
+                    'state' => '请求地址出错',
                 );
                 break;
-       }
-       return json($result);
+        }
+        return json($result);
     }
 
 }

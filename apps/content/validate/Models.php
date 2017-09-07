@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\validate;
+
 use think\Validate;
 
 /**
@@ -17,11 +18,11 @@ use think\Validate;
 class Models extends Validate
 {
     protected $rule = [
-        'name'  =>  'require|max:30|unique:model',
-        'tablename'  =>  'require|max:20|unique:model|alpha',
+        'name' => 'require|max:30|unique:model',
+        'tablename' => 'require|max:20|unique:model|alpha',
     ];
 
-    protected $message  =   [
+    protected $message = [
         'name.require' => '模型名称不得为空',
         'name.max' => '模型名称长度错误',
         'tablename.require' => '表键名不得为空',
@@ -33,7 +34,7 @@ class Models extends Validate
     ];
 
     protected $scene = [
-        'add'  =>  ['name','tablename'],
+        'add' => ['name', 'tablename'],
     ];
 
 }

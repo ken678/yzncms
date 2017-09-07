@@ -24,7 +24,7 @@ class content_input
     //处理后的数据
     protected $infoData = array();
     //内容模型对象
-    protected $ContentModel = NULL;
+    protected $ContentModel = null;
     //最近错误信息
     protected $error = '';
     // 数据表名（不包含表前缀）
@@ -73,7 +73,7 @@ class content_input
         //数据
         $this->data = $data;
         $info = array();
-        foreach($data as $field=>$value) {
+        foreach ($data as $field => $value) {
             //字段类型
             $func = $this->fields[$field]['formtype'];
             //检测对应字段方法是否存在，存在则执行此方法，并传入字段名和字段值
@@ -82,7 +82,7 @@ class content_input
             }
 
             //主表附表数据分离
-            if($this->fields[$field]['issystem']) {
+            if ($this->fields[$field]['issystem']) {
                 $info['system'][$field] = $value;
             } else {
                 $info['model'][$field] = $value;
@@ -91,31 +91,6 @@ class content_input
         return $info;
     }
 
-
     ##{字段处理函数}##
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

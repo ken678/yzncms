@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
+
 use app\common\controller\Adminbase;
 
 /**
@@ -21,8 +22,8 @@ class Database extends Adminbase
      */
     public function index()
     {
-        $list  = db()->query('SHOW TABLE STATUS');
-        $list  = array_map('array_change_key_case', $list);//全部小写
+        $list = db()->query('SHOW TABLE STATUS');
+        $list = array_map('array_change_key_case', $list); //全部小写
         $this->assign('_list', $list);
         return $this->fetch();
     }
@@ -37,7 +38,7 @@ class Database extends Adminbase
             $Db = db();
             if (is_array($tables)) {
                 $tables = implode('`,`', $tables);
-                $list   = $Db->query("OPTIMIZE TABLE `{$tables}`");
+                $list = $Db->query("OPTIMIZE TABLE `{$tables}`");
 
                 if ($list) {
                     return $this->success("数据表优化完成！");
@@ -60,7 +61,7 @@ class Database extends Adminbase
             $Db = db();
             if (is_array($tables)) {
                 $tables = implode('`,`', $tables);
-                $list   = $Db->query("REPAIR TABLE `{$tables}`");
+                $list = $Db->query("REPAIR TABLE `{$tables}`");
 
                 if ($list) {
                     return $this->success("数据表修复完成！");
@@ -95,16 +96,16 @@ class Database extends Adminbase
                 $time = "{$name[3]}:{$name[4]}:{$name[5]}";
                 $part = $name[6];
                 if (isset($list["{$date} {$time}"])) {
-                    $info         = $list["{$date} {$time}"];
+                    $info = $list["{$date} {$time}"];
                     $info['part'] = max($info['part'], $part);
                     $info['size'] = $info['size'] + $file->getSize();
                 } else {
                     $info['part'] = $part;
                     $info['size'] = $file->getSize();
                 }
-                $extension        = strtoupper(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
+                $extension = strtoupper(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
                 $info['compress'] = ($extension === 'SQL') ? '-' : $extension;
-                $info['time']     = strtotime("{$date} {$time}");
+                $info['time'] = strtotime("{$date} {$time}");
 
                 $list["{$date} {$time}"] = $info;
             }
@@ -113,7 +114,7 @@ class Database extends Adminbase
         return $this->fetch();
     }
 
-     /**
+    /**
      * 下载表
      */
     public function downfile()
@@ -129,7 +130,7 @@ class Database extends Adminbase
             $this->error("该文件不存在，可能是被删除");
         }
         $filename = basename($filePath[0]);
-        /* 执行下载 */ //TODO: 大文件断点续传
+        /* 执行下载 *///TODO: 大文件断点续传
         header("Content-type: application/octet-stream");
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header("Content-Length: " . filesize($filePath[0]));
@@ -164,14 +165,14 @@ class Database extends Adminbase
         if (is_numeric($time) && is_null($part) && is_null($start)) {
             //初始化
             //获取备份文件信息
-            $name  = date('Ymd-His', $time) . '-*.sql*';
-            $path  = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
+            $name = date('Ymd-His', $time) . '-*.sql*';
+            $path = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
             $files = glob($path);
-            $list  = array();
+            $list = array();
             foreach ($files as $name) {
-                $basename        = basename($name);
-                $match           = sscanf($basename, '%4s%2s%2s-%2s%2s%2s-%d');
-                $gz              = preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql.gz$/', $basename);
+                $basename = basename($name);
+                $match = sscanf($basename, '%4s%2s%2s-%2s%2s%2s-%d');
+                $gz = preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql.gz$/', $basename);
                 $list[$match[6]] = array($match[6], $name, $gz);
             }
             ksort($list);
@@ -232,7 +233,7 @@ class Database extends Adminbase
                 'path' => realpath($path) . DIRECTORY_SEPARATOR,
                 'part' => config('data_backup_part_size'),
                 'compress' => config('data_backup_compress'),
-                'level' => config('data_backup_compress_level')
+                'level' => config('data_backup_compress_level'),
             );
             //检查是否有正在执行的任务
             $lock = "{$config['path']}backup.lock";
@@ -250,7 +251,7 @@ class Database extends Adminbase
             //生成备份文件信息
             $file = array(
                 'name' => date('Ymd-His', time()),
-                'part' => 1
+                'part' => 1,
             );
             session('backup_file', $file);
             //缓存要备份的表
@@ -263,12 +264,12 @@ class Database extends Adminbase
             } else {
                 return $this->error('初始化失败，备份文件创建失败！');
             }
-        }elseif (request()->isGet() && is_numeric($id) && is_numeric($start)) {
+        } elseif (request()->isGet() && is_numeric($id) && is_numeric($start)) {
             //备份数据
             $tables = session('backup_tables');
             //备份指定表
             $Database = new \com\Database(session('backup_file'), session('backup_config'));
-            $start    = $Database->backup($tables[$id], $start);
+            $start = $Database->backup($tables[$id], $start);
             if (false === $start) {
                 //出错
                 return $this->error('备份出错！');
@@ -286,22 +287,13 @@ class Database extends Adminbase
                     return $this->success('备份完成！');
                 }
             } else {
-                $tab  = array('id' => $id, 'start' => $start[0]);
+                $tab = array('id' => $id, 'start' => $start[0]);
                 $rate = floor(100 * ($start[0] / $start[1]));
                 return $this->success("正在备份...({$rate}%)", '', array('tab' => $tab));
             }
-        }else {
+        } else {
             return $this->error('参数错误！');
         }
     }
-
-
-
-
-
-
-
-
-
 
 }

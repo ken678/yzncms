@@ -18,22 +18,18 @@ class Homebase extends Base
     public function __construct()
     {
         $Theme = empty(self::$Cache["Config"]['theme']) ? 'Default' : self::$Cache["Config"]['theme'];
-        $config['template']['view_path'] = TEMPLATE_PATH.$Theme.'/content/'; //模板主题
-        config($config);//添加配置
+        $config['template']['view_path'] = TEMPLATE_PATH . $Theme . '/content/'; //模板主题
+        config($config); //添加配置
         parent::__construct();
     }
 
-	/**
-	 * 前台初始化
-	 */
-	protected function _initialize()
+    /**
+     * 前台初始化
+     */
+    protected function _initialize()
     {
-    	parent::_initialize();
+        parent::_initialize();
 
     }
-
-
-
-
 
 }

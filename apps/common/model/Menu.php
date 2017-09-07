@@ -9,10 +9,9 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\common\model;
-use \think\Model;
-use \think\Request;
+
 use app\admin\model\AuthRule;
-use app\admin\model\AuthGroup;
+use \think\Model;
 
 /**
  * 菜单模型
@@ -21,19 +20,22 @@ class Menu extends Model
 {
     protected $resultSetType = 'collection';
 
-     /**
+    /**
      * 获取菜单 头部菜单导航
      */
     final public function getMenu()
     {
-        $menuid = input('menuid/d',0);
+        $menuid = input('menuid/d', 0);
         $menuid = $menuid ? $menuid : cookie("menuid");
 
-        $array = $this->adminMenu($menuid,1);
+        $array = $this->adminMenu($menuid, 1);
         $numbers = count($array);
-        if($numbers==1) return '';
+        if ($numbers == 1) {
+            return '';
+        }
+
         foreach ($array as $k => $v) {
-            $array[$k]['url'] = $v['app'].'/'.$v['controller'].'/'.$v['action'];
+            $array[$k]['url'] = $v['app'] . '/' . $v['controller'] . '/' . $v['action'];
             $array[$k]['parameter'] = "menuid={$menuid}&{$array[$k]['parameter']}";
         }
         return $array;
@@ -49,7 +51,6 @@ class Menu extends Model
         return $data;
     }
 
-
     /**
      * 取得树形结构的菜单
      * @param type $myid
@@ -62,7 +63,7 @@ class Menu extends Model
         $data = $this->adminMenu($myid);
         $Level++;
         if (is_array($data)) {
-            $ret = NULL;
+            $ret = null;
             foreach ($data as $a) {
                 $id = $a['id'];
                 $name = $a['app'];
@@ -92,7 +93,7 @@ class Menu extends Model
         return $ret;
     }
 
-     /**
+    /**
      * 按父ID查找菜单子项
      * @param integer $parentid   父菜单ID
      * @param integer $with_self  是否包括他自己
@@ -115,15 +116,14 @@ class Menu extends Model
         }
         $array = array();
         foreach ($result as $v) {
-            $rule = $v['app'].'/'.$v['controller'].'/'.$v['action'];
-            if($this->checkRule($rule,array('in','1,2'),null)){
-                 $array[] = $v;
+            $rule = $v['app'] . '/' . $v['controller'] . '/' . $v['action'];
+            if ($this->checkRule($rule, array('in', '1,2'), null)) {
+                $array[] = $v;
             }
         }
         return $array;
 
     }
-
 
     /**
      * 权限检测
@@ -131,17 +131,17 @@ class Menu extends Model
      * @param string  $mode    check模式
      * @return boolean
      */
-    final protected function checkRule($rule, $type=AuthRule::RULE_URL, $mode='url'){
-        static $Auth    =   null;
+    final protected function checkRule($rule, $type = AuthRule::RULE_URL, $mode = 'url')
+    {
+        static $Auth = null;
         if (!$Auth) {
-            $Auth       =   new \com\Auth();
+            $Auth = new \com\Auth();
         }
-        if(!$Auth->check($rule,is_login(),$type,$mode)){
+        if (!$Auth->check($rule, is_login(), $type, $mode)) {
             return false;
         }
         return true;
     }
-
 
     /**
      * 返回后台节点数据
@@ -151,48 +151,33 @@ class Menu extends Model
      * 注意,返回的主菜单节点数组中有'controller'元素,以供区分子节点和主节点
      *
      */
-    final public function returnNodes($tree = true){
+    final public function returnNodes($tree = true)
+    {
         static $tree_nodes = array();
         //$module_name = Request::instance()->module();
-        if ( $tree && !empty($tree_nodes[(int)$tree]) ) {
+        if ($tree && !empty($tree_nodes[(int) $tree])) {
             return $tree_nodes[$tree];
         }
-        if((int)$tree){
+        if ((int) $tree) {
             $list = $this->order('listorder ASC,id ASC')->select()->toArray();
             foreach ($list as $key => $value) {
-                $list[$key]['url'] = $value['app'].'/'.$value['controller'].'/'.$value['action'];
+                $list[$key]['url'] = $value['app'] . '/' . $value['controller'] . '/' . $value['action'];
             }
-            $nodes = list_to_tree($list,$pk='id',$pid='parentid',$child='operator',$root=0);
+            $nodes = list_to_tree($list, $pk = 'id', $pid = 'parentid', $child = 'operator', $root = 0);
             foreach ($nodes as $key => $value) {
-                if(!empty($value['operator'])){
+                if (!empty($value['operator'])) {
                     $nodes[$key]['child'] = $value['operator'];
                     unset($nodes[$key]['operator']);
                 }
             }
-        }else{
+        } else {
             $nodes = $this->order('listorder ASC,id ASC')->select()->toArray();
             foreach ($nodes as $key => $value) {
-                    $nodes[$key]['url'] = $value['app'].'/'.$value['controller'].'/'.$value['action'];
+                $nodes[$key]['url'] = $value['app'] . '/' . $value['controller'] . '/' . $value['action'];
             }
         }
-        $tree_nodes[(int)$tree]   = $nodes;
+        $tree_nodes[(int) $tree] = $nodes;
         return $nodes;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\model;
+
 use \think\Model;
 
 /**
@@ -20,12 +21,13 @@ class Content extends Model
     /**
      * 内容模型处理类生成
      */
-    public static function classGenerate() {
+    public static function classGenerate()
+    {
         //字段类型存放目录
         $fields_path = APP_PATH . 'content/fields/';
         //内置字段类型列表
         $fields = include $fields_path . 'fields.php';
-        $fields = $fields? : array();
+        $fields = $fields ?: array();
         //更新内容模型类：表单生成、入库、更新、输出
         //$classtypes = array('form', 'input', 'output', 'update', 'delete');
         $classtypes = array('form', 'input');

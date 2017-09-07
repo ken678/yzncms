@@ -9,17 +9,20 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\home\controller;
+
 use app\common\controller\Homebase;
 
 /**
  * 前台
  */
-class Index extends Homebase{
+class Index extends Homebase
+{
 
-	/**
-	 * 首页
-	 */
-    public function index(){
+    /**
+     * 首页
+     */
+    public function index()
+    {
 
         return '首页暂无 请进后台 当前后缀加admin';
     }
@@ -29,7 +32,7 @@ class Index extends Homebase{
      */
     public function lists()
     {
-    	return $this->fetch();
+        return $this->fetch();
     }
 
     /**
@@ -37,24 +40,7 @@ class Index extends Homebase{
      */
     public function shows()
     {
-    	return $this->fetch();
+        return $this->fetch();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\common\model;
+
 use think\Db;
 use think\Model;
 use think\Validate;
@@ -16,13 +17,13 @@ use think\Validate;
 class Configs extends Model
 {
     protected $name = 'config';
-	/**
+    /**
      * 更新网站配置项
      * @param type $data 数据
      * @param type $type 配置类型 1：系统配置  2：扩展配置
      * @return boolean
      */
-    public function saveConfig($data,$type=1)
+    public function saveConfig($data, $type = 1)
     {
         if (empty($data) || !is_array($data)) {
             $this->error = '配置数据不能为空！';
@@ -34,7 +35,7 @@ class Configs extends Model
             }
             $saveData = array();
             $saveData["value"] = trim($value);
-            if ($this->where(array("name" => $key, 'type' => $type))->update($saveData)=== false) {
+            if ($this->where(array("name" => $key, 'type' => $type))->update($saveData) === false) {
                 $this->error = "更新到{$key}项失败！";
                 return false;
             }
@@ -61,15 +62,15 @@ class Configs extends Model
         $db = db('ConfigField');
         //验证器
         $rule = [
-            'fieldname'  => 'require|alphaDash',
-            'type' => 'require'
+            'fieldname' => 'require|alphaDash',
+            'type' => 'require',
         ];
         $msg = [
             'fieldname.require' => '键名不能为空',
-            'fieldname.alphaDash'     => '键名只支持英文、数字、下划线',
-            'type'        => '类型不能为空！'
+            'fieldname.alphaDash' => '键名只支持英文、数字、下划线',
+            'type' => '类型不能为空！',
         ];
-        $validate = new Validate($rule,$msg);
+        $validate = new Validate($rule, $msg);
         if (!$validate->check($data)) {
             $this->error = $validate->getError();
             return false;
@@ -77,8 +78,8 @@ class Configs extends Model
         $data['fieldname'] = strtolower($data['fieldname']);
         $data['createtime'] = time();
         if ($this->where(array('name' => $data['fieldname']))->count()) {
-                $this->error = '该键名已经存在！';
-                return false;
+            $this->error = '该键名已经存在！';
+            return false;
         }
         $setting = $data['setting'];
         if ($data['type'] == 'radio' || $data['type'] == 'select') {
@@ -97,7 +98,7 @@ class Configs extends Model
                 $setting['option'] = $option;
             }
         }
-        $data['setting'] = trim(serialize($setting));//序列化或者用array2string函数 数组转字符串
+        $data['setting'] = trim(serialize($setting)); //序列化或者用array2string函数 数组转字符串
         $id = $db->insert($data);
         if ($id) {
             //增加配置项
@@ -135,7 +136,7 @@ class Configs extends Model
         }
         //删除
         if ($this->where(array('name' => $info['fieldname'], 'type' => 2))->delete() !== false) {
-            $db->where(array('fid' => $fid))->delete();//删除配置主表和从表
+            $db->where(array('fid' => $fid))->delete(); //删除配置主表和从表
             //cache('DB_CONFIG_DATA',null);//清除配置缓存
             return true;
         } else {

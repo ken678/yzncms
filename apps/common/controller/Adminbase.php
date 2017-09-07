@@ -9,10 +9,10 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\common\controller;
+
+use app\admin\model\AuthRule;
 use think\Db;
 use think\Request;
-use app\admin\model\AuthRule;
-use app\admin\model\AuthGroup;
 
 //定义是后台
 define('IN_ADMIN', true);
@@ -22,45 +22,45 @@ define('IN_ADMIN', true);
  */
 class Adminbase extends Base
 {
-	/**
-	 * 后台初始化
-	 */
-	protected function _initialize()
+    /**
+     * 后台初始化
+     */
+    protected function _initialize()
     {
         parent::_initialize();
-        define('UID',is_login());
+        define('UID', is_login());
         //过滤不需要登陆的行为
         $allowUrl = ['admin/index/login',
-                     'admin/index/logout',
-                     'admin/index/getverify'
-                    ];
+            'admin/index/logout',
+            'admin/index/getverify',
+        ];
         $request = request();
-        $visit = strtolower($request->module()."/".$request->controller()."/".$request->action());
-        if(in_array($visit,$allowUrl)){
+        $visit = strtolower($request->module() . "/" . $request->controller() . "/" . $request->action());
+        if (in_array($visit, $allowUrl)) {
 
-        }else{
-            if(!UID){
-                $this->error('请先登陆',url('admin/index/login'));
-            }else{
+        } else {
+            if (!UID) {
+                $this->error('请先登陆', url('admin/index/login'));
+            } else {
                 /* 读取数据库中的配置
                 $config = cache('DB_CONFIG_DATA');
                 if(!$config){
-                    $config =   api('Config/lists');
-                    cache('DB_CONFIG_DATA', $config);
+                $config =   api('Config/lists');
+                cache('DB_CONFIG_DATA', $config);
                 }
                 config($config);//添加配置*/
-                define('IS_ROOT',   is_administrator());
+                define('IS_ROOT', is_administrator());
                 // 检测系统权限
-                if(!IS_ROOT){
+                if (!IS_ROOT) {
                     //检测访问权限
-                    $rule  = strtolower($this->request->module().'/'.$this->request->controller().'/'.$this->request->action());
-                    if ( !$this->checkRule($rule,array('in','1,2')) ){
+                    $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+                    if (!$this->checkRule($rule, array('in', '1,2'))) {
                         $this->error('未授权访问!');
                     }
                 }
             }
         }
-	}
+    }
 
     /**
      * 权限检测
@@ -68,17 +68,17 @@ class Adminbase extends Base
      * @param string  $mode    check模式
      * @return boolean
      */
-    final protected function checkRule($rule, $type=AuthRule::RULE_URL, $mode='url'){
-        static $Auth    =   null;
+    final protected function checkRule($rule, $type = AuthRule::RULE_URL, $mode = 'url')
+    {
+        static $Auth = null;
         if (!$Auth) {
-            $Auth       =   new \com\Auth();
+            $Auth = new \com\Auth();
         }
-        if(!$Auth->check($rule,UID,$type,$mode)){
+        if (!$Auth->check($rule, UID, $type, $mode)) {
             return false;
         }
         return true;
     }
-
 
     /**
      * 通用分页列表数据集获取方法
@@ -99,53 +99,49 @@ class Adminbase extends Base
      * @return array|false
      * 返回数据集
      */
-    protected function lists ($model,$where=array(),$order='',$field=true)
+    protected function lists($model, $where = array(), $order = '', $field = true)
     {
-        $options    =   array();
-        $REQUEST    =   (array)Request::instance()->param();
-        if(is_string($model)){
-            $model  =   Db::name($model);
+        $options = array();
+        $REQUEST = (array) Request::instance()->param();
+        if (is_string($model)) {
+            $model = Db::name($model);
         }
-        $pk         =   $model->getPk();
+        $pk = $model->getPk();
 
-        if($order===null){
+        if ($order === null) {
             //order置空
-        }else if ( isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']),array('desc','asc')) ) {
-            $options['order'] = '`'.$REQUEST['_field'].'` '.$REQUEST['_order'];
-        }elseif( $order==='' && empty($options['order']) && !empty($pk) ){
-            $options['order'] = $pk.' desc';
-        }elseif($order){
+        } else if (isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']), array('desc', 'asc'))) {
+            $options['order'] = '`' . $REQUEST['_field'] . '` ' . $REQUEST['_order'];
+        } elseif ($order === '' && empty($options['order']) && !empty($pk)) {
+            $options['order'] = $pk . ' desc';
+        } elseif ($order) {
             $options['order'] = $order;
         }
-        unset($REQUEST['_order'],$REQUEST['_field']);
+        unset($REQUEST['_order'], $REQUEST['_field']);
 
-
-        if( empty($options['where'])){
+        if (empty($options['where'])) {
             unset($options['where']);
         }
-        if( isset($REQUEST['rp']) ){
-            $listRows = (int)$REQUEST['rp'];
-        }else{
+        if (isset($REQUEST['rp'])) {
+            $listRows = (int) $REQUEST['rp'];
+        } else {
             $listRows = config('list_rows') > 0 ? config('list_rows') : 10;
         }
-        if( !empty($where)){
-            $options['where']   =   $where;
-            $list = $model->where($options['where'])->order($options['order'])->field($field)->paginate($listRows,false);
-        }else{
-            $list = $model->order($options['order'])->field($field)->paginate($listRows,false);
+        if (!empty($where)) {
+            $options['where'] = $where;
+            $list = $model->where($options['where'])->order($options['order'])->field($field)->paginate($listRows, false);
+        } else {
+            $list = $model->order($options['order'])->field($field)->paginate($listRows, false);
         }
         // 获取分页显示
         $page = $list->render();
         // 模板变量赋值
         $this->assign('_page', $page);
-        $this->assign('_total',$list->total());
-        if($list && !is_array($list)){
-            $list=$list->toArray();
+        $this->assign('_total', $list->total());
+        if ($list && !is_array($list)) {
+            $list = $list->toArray();
         }
         return $list['data'];
     }
-
-
-
 
 }

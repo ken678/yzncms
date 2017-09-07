@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR | E_PARSE );
+error_reporting(E_ERROR | E_PARSE);
 // +----------------------------------------------------------------------
 // | Yzncms [ 御宅男工作室 ]
 // +----------------------------------------------------------------------
@@ -15,9 +15,9 @@ return [
     // | 系统相关设置
     // +----------------------------------------------------------------------
     // 文件上传路径
-    'upload_path'        => 'uploads/',
+    'upload_path' => 'uploads/',
     //最大缓存用户数
-    'USER_MAX_CACHE'     => 1000,
+    'USER_MAX_CACHE' => 1000,
     //管理员用户ID
     'USER_ADMINISTRATOR' => 1,
 
@@ -25,37 +25,36 @@ return [
     // | 应用设置
     // +----------------------------------------------------------------------
     // 应用命名空间
-    'app_namespace'          => 'app',
+    'app_namespace' => 'app',
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug' => true,
     // 应用Trace
-    'app_trace'              => true,
+    'app_trace' => true,
 
     // +----------------------------------------------------------------------
     // | 模块设置
     // +----------------------------------------------------------------------
     // 默认模块名
-    'default_module'         => 'home',
+    'default_module' => 'home',
     // 禁止访问模块
-    'deny_module_list'       => ['common','runtime'],
+    'deny_module_list' => ['common', 'runtime'],
 
     // 默认跳转页面对应的模板文件
-    'dispatch_error_tmpl'     =>  APP_PATH .'admin'. DS .'view' . DS . 'public' . DS . 'dispatch_jump.tpl', // 默认错误跳转对应的模板文件
-    'dispatch_success_tmpl'   =>  APP_PATH .'admin'. DS .'view' . DS . 'public' . DS . 'dispatch_jump.tpl', // 默认成功跳转对应的模板文件
+    'dispatch_error_tmpl' => APP_PATH . 'admin' . DS . 'view' . DS . 'public' . DS . 'dispatch_jump.tpl', // 默认错误跳转对应的模板文件
+    'dispatch_success_tmpl' => APP_PATH . 'admin' . DS . 'view' . DS . 'public' . DS . 'dispatch_jump.tpl', // 默认成功跳转对应的模板文件
 
     // +----------------------------------------------------------------------
     // | 验证码设置
     // +----------------------------------------------------------------------
-    'captcha'               => [
+    'captcha' => [
         // 验证码字体大小(px)
         'fontSize' => 15,
-         // 验证码图片高度
-        'imageH'   => 40,
+        // 验证码图片高度
+        'imageH' => 40,
         // 验证码图片宽度
-        'imageW'   => 110,
+        'imageW' => 110,
         // 验证码位数
-        'length'   => 4,
+        'length' => 4,
     ],
-
 
 ];

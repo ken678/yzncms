@@ -9,19 +9,20 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\content\controller;
+
+use app\common\controller\Adminbase;
+use app\content\model\ModelField;
+use think\Cookie;
 use think\Db;
 use think\Request;
-use think\Cookie;
-use app\content\model\ModelField;
-use app\common\controller\Adminbase;
 
 class Field extends Adminbase
 {
-	//初始化
+    //初始化
     protected function _initialize()
     {
-    	parent::_initialize();
-    	$this->modelfield = new ModelField;
+        parent::_initialize();
+        $this->modelfield = new ModelField;
 
     }
 
@@ -29,9 +30,9 @@ class Field extends Adminbase
      * 显示字段列表
      * @author 御宅男  <530765310@qq.com>
      */
-	public function index()
-	{
-		$modelid = Request::instance()->param('modelid/d','');
+    public function index()
+    {
+        $modelid = Request::instance()->param('modelid/d', '');
         if (empty($modelid)) {
             $this->error('参数错误！');
         }
@@ -40,7 +41,7 @@ class Field extends Adminbase
             $this->error('该模型不存在！');
         }
         // 记录当前列表页的cookie
-        Cookie::set('__forward__',       $_SERVER['REQUEST_URI']);
+        Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
 
         //根据模型读取字段列表
         $data = $this->modelfield->getModelField($modelid);
@@ -52,7 +53,7 @@ class Field extends Adminbase
         $this->assign("modelid", $modelid);
         $this->assign("data", $data);
         return $this->fetch();
-	}
+    }
 
     /**
      * 增加字段
@@ -60,19 +61,19 @@ class Field extends Adminbase
      */
     public function add()
     {
-        $modelid = Request::instance()->param('modelid/d','');
+        $modelid = Request::instance()->param('modelid/d', '');
         if (empty($modelid)) {
             $this->error('参数错误！');
         }
-        if(Request::instance()->isPost()){
+        if (Request::instance()->isPost()) {
             //增加字段
             $res = $this->modelfield->addField();
-            if(!$res){
+            if (!$res) {
                 $this->error($this->modelfield->getError());
-            }else{
+            } else {
                 $this->success('新增成功', Cookie::get('__forward__'));
             }
-        }else{
+        } else {
             //获取并过滤可用字段类型
             $all_field = array();
             foreach ($this->modelfield->getFieldTypeList() as $formtype => $name) {
@@ -105,14 +106,14 @@ class Field extends Adminbase
         if (empty($fieldid)) {
             $this->error('字段ID不能为空！');
         }
-        if(Request::instance()->isPost()){
-            if ($this->modelfield->editField('',$fieldid)) {
+        if (Request::instance()->isPost()) {
+            if ($this->modelfield->editField('', $fieldid)) {
                 $this->success("更新成功！", Cookie::get('__forward__'));
             } else {
                 $error = $this->modelfield->getError();
                 $this->error($error ? $error : '更新失败！');
             }
-        }else{
+        } else {
             //模型信息
             $modedata = Db::name("Model")->where(array("modelid" => $modelid))->find();
             if (empty($modedata)) {
@@ -141,8 +142,6 @@ class Field extends Adminbase
             return $this->fetch();
         }
 
-
-
     }
 
     /**
@@ -152,7 +151,7 @@ class Field extends Adminbase
     public function delete()
     {
         //字段ID
-        $fieldid = Request::instance()->param('fieldid/d','');
+        $fieldid = Request::instance()->param('fieldid/d', '');
         if (empty($fieldid)) {
             $this->error('字段ID不能为空！');
         }
@@ -168,25 +167,17 @@ class Field extends Adminbase
      * 字段排序
      * @author 御宅男  <530765310@qq.com>
      */
-    public function listorder() {
-        $id = Request::instance()->param('id/d',0);
-        $listorder = Request::instance()->param('value/d',0);
+    public function listorder()
+    {
+        $id = Request::instance()->param('id/d', 0);
+        $listorder = Request::instance()->param('value/d', 0);
         $rs = $this->modelfield->allowField(true)->where(array('fieldid' => $id))->update(array('listorder' => $listorder));
-        cache('ModelField', NULL);
-        if($rs){
+        cache('ModelField', null);
+        if ($rs) {
             $this->success("排序更新成功！");
-        }else{
+        } else {
             $this->error("排序失败！");
         }
     }
-
-
-
-
-
-
-
-
-
 
 }

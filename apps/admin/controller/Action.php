@@ -9,6 +9,7 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
+
 use app\common\controller\Adminbase;
 
 /**
@@ -22,7 +23,7 @@ class Action extends Adminbase
      */
     public function actionLog()
     {
-        $list   =   $this->lists('ActionLog', array(), 'id desc');
+        $list = $this->lists('ActionLog', array(), 'id desc');
         $this->assign('_list', $list);
         return $this->fetch();
     }
@@ -33,15 +34,15 @@ class Action extends Adminbase
     public function remove($ids = 0)
     {
         empty($ids) && $this->error('参数错误！');
-        if(is_array($ids)){
+        if (is_array($ids)) {
             $map['id'] = array('in', $ids);
-        }elseif (is_numeric($ids)){
+        } elseif (is_numeric($ids)) {
             $map['id'] = $ids;
         }
         $res = db('ActionLog')->where($map)->delete();
-        if($res !== false){
+        if ($res !== false) {
             $this->success('删除成功！');
-        }else {
+        } else {
             $this->error('删除失败！');
         }
     }
@@ -50,22 +51,11 @@ class Action extends Adminbase
     public function clear()
     {
         $res = db('ActionLog')->where(array("create_time" => array("lt", time() - (86400 * 30))))->delete();
-        if($res !== false){
+        if ($res !== false) {
             $this->success('删除成功！');
-        }else {
+        } else {
             $this->error('删除失败！');
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
