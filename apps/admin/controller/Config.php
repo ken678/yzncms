@@ -44,6 +44,17 @@ class Config extends Adminbase
         }
     }
 
+    //邮箱配置
+    public function mail()
+    {
+        if (Request::instance()->isPost()) {
+            $this->index();
+        } else {
+            return $this->fetch();
+        }
+
+    }
+
     //扩展配置（新增，删除，显示，更新）
     public function extend()
     {

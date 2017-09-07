@@ -1,0 +1,76 @@
+{extend name="Public:layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title">
+      <div class="subject">
+        <h3>网站设置</h3>
+        <h5>网站全局内容基本选项设置</h5>
+      </div>
+      <ul class="tab-base nc-row">
+            {include file="public/nav" /}
+      </ul>
+  </div>
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+      <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+      <span id="explanationZoom" alt="收起提示" class="itip"></span>
+    </div>
+    <ul>
+      <li>填写邮件服务器相关参数，并点击“测试”按钮进行效验，保存后生效。</li>
+    </ul>
+  </div>
+  <form action="{:url('config/index')}" method="post" class="form-horizontal" name="form">
+    <div class="ncap-form-default">
+    <dl class="row">
+      <dt class="tit">
+        <label for="mail_server">邮件服务器</label>
+      </dt>
+      <dd class="opt">
+        <input id="mail_server" name="mail_server" value="{$Site.mail_server}" class="input-txt" type="text">
+        <p class="notic">设置服务器的地址，如 smtp.163.com; 不建议使用QQ个人邮箱，有所限制</p>
+      </dd>
+    </dl>
+    <dl class="row">
+      <dt class="tit">
+        <label for="mail_port">邮件发送端口</label>
+      </dt>
+      <dd class="opt">
+        <input id="mail_port" name="mail_port" value="{$Site.mail_port}" class="input-txt" type="text">
+        <p class="notic">设置服务器的端口，默认为 25</p>
+      </dd>
+    </dl>
+    <dl class="row">
+      <dt class="tit">
+        <label for="mail_from">发件人地址</label>
+      </dt>
+      <dd class="opt">
+        <input id="mail_from" name="mail_from" value="{$Site.mail_from}" class="input-txt" type="text">
+        <p class="notic">发送的邮件地址，如 yzncms@163.com</p>
+      </dd>
+    </dl>
+    <dl class="row">
+      <dt class="tit">
+        <label for="mail_user">身份验证用户名</label>
+      </dt>
+      <dd class="opt">
+        <input id="mail_user" name="mail_user" value="{$Site.mail_user}" class="input-txt" type="text">
+        <p class="notic">如果使用163或126邮箱，填写完整，如 yzncms@163.com</p>
+      </dd>
+    </dl>
+    <dl class="row">
+      <dt class="tit">
+        <label for="mail_password">身份验证密码</label>
+      </dt>
+      <dd class="opt">
+        <input id="mail_password" name="mail_password" value="{$Site.mail_password}" class="input-txt" type="text">
+        <p class="notic">邮件的密码，如果使用163或126邮箱，填写授权码</p>
+      </dd>
+    </dl>
+    <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.form.submit()">确认提交</a></div>
+    </div>
+  </form>
+</div>
+{/block}
