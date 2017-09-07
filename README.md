@@ -43,6 +43,24 @@ PS 几个注意点
 本人非常乐意帮助新手，如果对本产品或者TP5.0有任何的疑问 都可以提交到issues 都会帮忙解决
 工作原因 QQ请不要联系 谢谢！！！
 ```
+
+[目录结构]
+```
+www  WEB部署目录（或者子目录）
+├─apps                  应用目录
+├─extend                扩展类库目录
+├─static                前后台资源目录
+├─runtime               应用的运行时目录（可写，可定制）
+├─templates             前台模板目录
+├─thinkphp              框架系统目录
+├─uploads               文件上传目录
+├─vendor                第三方类库目录（Composer依赖库）
+├─composer.json         composer 定义文件
+├─composer.lock         composer 锁文件
+├─LICENSE.txt           授权说明文件
+├─README.md             README 文件
+```
+
 [后台登陆界面预览]  
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0826/193657_ccc8a8f7_555541.png "Yzncms.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0904/091039_830d8119_555541.png "添加内容.png")
