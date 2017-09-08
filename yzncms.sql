@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-09-08 17:58:22
+Date: 2017-09-08 22:32:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=266 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=267 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -148,6 +148,7 @@ INSERT INTO `yzn_action_log` VALUES ('262', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('263', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 10:43登录了后台', '1504838587');
 INSERT INTO `yzn_action_log` VALUES ('264', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 15:46登录了后台', '1504856764');
 INSERT INTO `yzn_action_log` VALUES ('265', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 17:04登录了后台', '1504861484');
+INSERT INTO `yzn_action_log` VALUES ('266', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 19:55登录了后台', '1504871752');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -170,7 +171,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504861485', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504871752', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -373,7 +374,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -382,6 +383,7 @@ INSERT INTO `yzn_cache` VALUES ('1', 'Model', '模型列表', 'Content', 'Models
 INSERT INTO `yzn_cache` VALUES ('2', 'Category', '栏目索引', 'Content', 'Category', 'category_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'Content', 'ModelField', 'model_field_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
+INSERT INTO `yzn_cache` VALUES ('5', 'Module', '可用模块列表', '', 'Module', 'module_cache', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_category`
@@ -458,7 +460,7 @@ INSERT INTO `yzn_config` VALUES ('7', 'mail_server', '邮件服务器', '1', 'sm
 INSERT INTO `yzn_config` VALUES ('8', 'mail_port', '邮件发送端口', '1', '25', '0');
 INSERT INTO `yzn_config` VALUES ('9', 'mail_from', '发件人地址', '1', 'o0mcw_ken0o@163.com', '0');
 INSERT INTO `yzn_config` VALUES ('10', 'mail_user', '邮箱用户名', '1', 'o0mcw_ken0o@163.com', '0');
-INSERT INTO `yzn_config` VALUES ('11', 'mail_password', '邮箱密码', '1', '66552432a', '0');
+INSERT INTO `yzn_config` VALUES ('11', 'mail_password', '邮箱密码', '1', '', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_config_field`
@@ -656,7 +658,7 @@ CREATE TABLE `yzn_module` (
 -- Records of yzn_module
 -- ----------------------------
 INSERT INTO `yzn_module` VALUES ('Addons', '插件管理', '912b7e22bd9d86dddb1d460ca90581eb', '0', '1', '1.1.3', '', '1494567322', '1494567322', '0');
-INSERT INTO `yzn_module` VALUES ('Formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.1', '', '1494567345', '1494567345', '0');
+INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.1', '', '1494567345', '1494567345', '0');
 INSERT INTO `yzn_module` VALUES ('Wap', 'WAP手机版', '4B7B06DA1101821D6AAE4B51BC96E6AF', '0', '1', '1.0.2', '', '1494567391', '1494567391', '0');
 INSERT INTO `yzn_module` VALUES ('Links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1497515182', '1497515182', '0');
 INSERT INTO `yzn_module` VALUES ('Templates', '模板管理', '7df96b18c230f90ada0a9e2307226338', '0', '1', '1.0.0', '', '1497582828', '1497582828', '0');

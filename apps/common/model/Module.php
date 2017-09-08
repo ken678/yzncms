@@ -8,37 +8,28 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
+namespace app\common\model;
 
-namespace app\admin\controller;
+use think\Model;
 
-use app\admin\model\Module as ModuleModel;
-use think\Controller;
-use app\common\controller\Adminbase;
-
-class Module extends Adminbase
+class Module extends Model
 {
-
-    //本地模块
-    public function index()
-    {
-        $ModuleModel = new ModuleModel();
-        $list = $ModuleModel->getAll();
-
-        $this->assign("data", $list['modules']);
-        return $this->fetch();
+    /**
+     * 更新缓存
+     * @return type
+     */
+    public function module_cache() {
+        $data = $this->column(true, 'module');
+        if (empty($data)) {
+            return false;
+        }
+        $module = array();
+        foreach ($data as $v) {
+            $module[$v['module']] = $v;
+        }
+        cache('Module', $module);
+        return $module;
     }
 
-    //模块安装
-    public function install()
-    {
-    	if($this->request->isPost()){
-
-    	}else{
-    		//模块安装检查界面
-    		return $this->fetch();
-
-    	}
-
-    }
 
 }
