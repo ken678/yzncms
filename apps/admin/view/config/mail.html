@@ -22,7 +22,7 @@
       <li>填写邮件服务器相关参数，并点击“测试”按钮进行效验，保存后生效。</li>
     </ul>
   </div>
-  <form action="{:url('config/index')}" method="post" class="form-horizontal" name="form">
+  <form action="{:url('config/index')}" id="handlepost" method="post" class="form-horizontal" name="form">
     <div class="ncap-form-default">
     <dl class="row">
       <dt class="tit">
@@ -39,7 +39,7 @@
       </dt>
       <dd class="opt">
         <input id="mail_port" name="mail_port" value="{$Site.mail_port}" class="input-txt" type="text">
-        <p class="notic">设置服务器的端口，默认为 25</p>
+        <p class="notic">设置服务器的端口，默认为 25（如果使用Gmail，请将端口设为465）</p>
       </dd>
     </dl>
     <dl class="row">
@@ -65,12 +65,42 @@
         <label for="mail_password">身份验证密码</label>
       </dt>
       <dd class="opt">
-        <input id="mail_password" name="mail_password" value="{$Site.mail_password}" class="input-txt" type="text">
-        <p class="notic">邮件的密码，如果使用163或126邮箱，填写授权码</p>
+        <input id="mail_password" name="mail_password" value="{$Site.mail_password}" class="input-txt" type="password">
+        <p class="notic">邮件的密码，如果使用163或126邮箱，填写授权码。具体请参看各STMP服务商的设置说明</p>
       </dd>
     </dl>
+    <dl class="row">
+        <dt class="tit">测试接收的邮件地址</dt>
+        <dd class="opt">
+          <input type="text" value="" name="mail_to" id="mail_to" class="input-txt">
+          <input type="button" onClick="javascript:test_mail();" value="测试" name="send_test_email" class="input-btn" id="send_test_email">
+        </dd>
+      </dl>
     <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.form.submit()">确认提交</a></div>
     </div>
   </form>
 </div>
+<script>
+function test_mail() {
+    var email = $('#mail_to').val();
+    if (email == '') {
+        layer.alert("请填写正确的测试邮箱账号！",{icon:2});
+        return;
+    } else {
+        $.ajax({
+            type: "post",
+            data: $('#handlepost').serialize(),
+            dataType: 'json',
+            url: "{:url('config/public_test_mail','','')}",
+            success: function (res) {
+                if (res.status == 1) {
+                    layer.msg('发送成功', {icon: 1});
+                } else {
+                    layer.msg(res.msg, {icon: 2, time: 2000});
+                }
+            }
+        })
+    }
+}
+</script>
 {/block}

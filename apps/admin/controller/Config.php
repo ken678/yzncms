@@ -55,6 +55,28 @@ class Config extends Adminbase
 
     }
 
+    //测试邮件配置
+    public function public_test_mail()
+    {
+        $data = Request::instance()->param();
+        $subject = 'yznccms test mail';
+        $message = 'this is a test mail from yzncms team';
+        $mail = array(
+            'mailsend' => 2,
+            'maildelimiter' => 1,
+            'mailusername' => 1,
+            'server' => $data['mail_server'],
+            'port' => intval($data['mail_port']),
+            'mail_type' => 1,
+            'auth' => 1,
+            'from' => $data['mail_from'],
+            'auth_username' => $data['mail_user'],
+            'auth_password' => $data['mail_password'],
+        );
+        $res = send_email($data['mail_to'], $subject, $message, $data['mail_from'], $mail);
+        return json($res);
+    }
+
     //扩展配置（新增，删除，显示，更新）
     public function extend()
     {

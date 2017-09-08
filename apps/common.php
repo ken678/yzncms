@@ -9,6 +9,8 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 // 公用函数
+//use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use think\Cache;
 /**
  * 系统缓存缓存管理
@@ -408,4 +410,49 @@ function time_format($time = null, $format = 'Y-m-d H:i')
 function upload_key($args)
 {
     return md5($args . md5(config("AUTHCODE") . $_SERVER['HTTP_USER_AGENT']));
+}
+
+/**
+ * 发送邮件
+ * @param $toemail 收件人email
+ * @param $subject 邮件主题
+ * @param $message 正文
+ * @param $from 发件人
+ * @param $cfg 邮件配置信息
+ * @param $sitename 邮件站点名称
+ */
+function send_email($toemail, $subject, $message, $from = '', $cfg = array(), $sitename = '')
+{
+    if ($cfg && is_array($cfg)) {
+        $from = $cfg['from'];
+        $email = $cfg;
+    }
+    $mail = new PHPMailer(true);
+    //Server settings
+    $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+    $mail->SMTPDebug = 0; // Enable verbose debug output
+    $mail->isSMTP(); // Set mailer to use SMTP
+    $mail->Host = $email['server']; // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true; // Enable SMTP authentication
+    $mail->Username = $email['auth_username']; // SMTP username
+    $mail->Password = $email['auth_password']; // SMTP password
+    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = $email['port']; //端口 - likely to be 25, 465 or 587
+
+    //Recipients
+    $mail->setFrom($from, 'Mailer'); //发送方地址和昵称
+    $mail->addAddress($toemail, 'Joe User'); // Add a recipient
+    //$mail->addReplyTo('info@example.com', 'Information'); //回复地址
+
+    //Content
+    $mail->isHTML(true); // Set email format to HTML
+    $mail->Subject = $subject; //标题
+    $mail->Body = $message; //内容
+    //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    if (!$mail->send()) {
+        return array('status' => -1, 'msg' => '发送失败: ' . $mail->ErrorInfo);
+    } else {
+        return array('status' => 1, 'msg' => '发送成功');
+    }
+
 }

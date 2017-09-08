@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-07 18:17:38
+Date: 2017-09-08 10:21:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=262 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=263 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -144,6 +144,7 @@ INSERT INTO `yzn_action_log` VALUES ('244', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('245', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-05 15:06登录了后台', '1504595204');
 INSERT INTO `yzn_action_log` VALUES ('256', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-07 11:39登录了后台', '1504755592');
 INSERT INTO `yzn_action_log` VALUES ('261', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-07 16:55登录了后台', '1504774542');
+INSERT INTO `yzn_action_log` VALUES ('262', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 08:44登录了后台', '1504831462');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -166,7 +167,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504774542', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504831462', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -450,10 +451,10 @@ INSERT INTO `yzn_config` VALUES ('3', 'site_description', '网站描述', '1', '
 INSERT INTO `yzn_config` VALUES ('4', 'site_name', '网站名称', '1', 'Yzncms内容管理框架', '0');
 INSERT INTO `yzn_config` VALUES ('5', 'icp', 'icp', '2', '苏ICP备15017030', '0');
 INSERT INTO `yzn_config` VALUES ('6', 'close', '关闭站点', '2', '0', '0');
-INSERT INTO `yzn_config` VALUES ('7', 'mail_server', '邮件服务器', '1', 'smtp.qq.com', '0');
+INSERT INTO `yzn_config` VALUES ('7', 'mail_server', '邮件服务器', '1', 'smtp.163.com', '0');
 INSERT INTO `yzn_config` VALUES ('8', 'mail_port', '邮件发送端口', '1', '25', '0');
-INSERT INTO `yzn_config` VALUES ('9', 'mail_from', '发件人地址', '1', '530765310@qq.com', '0');
-INSERT INTO `yzn_config` VALUES ('10', 'mail_user', '邮箱用户名', '1', '', '0');
+INSERT INTO `yzn_config` VALUES ('9', 'mail_from', '发件人地址', '1', 'o0mcw_ken0o@163.com', '0');
+INSERT INTO `yzn_config` VALUES ('10', 'mail_user', '邮箱用户名', '1', 'o0mcw_ken0o@163.com', '0');
 INSERT INTO `yzn_config` VALUES ('11', 'mail_password', '邮箱密码', '1', '', '0');
 
 -- ----------------------------

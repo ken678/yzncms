@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
 );
