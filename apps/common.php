@@ -426,10 +426,15 @@ function send_email($toemail, $subject, $message, $from = '', $cfg = array(), $s
     if (!$openssl_funcs) {
         return array('status' => -1, 'msg' => '请先开启openssl扩展');
     }
+    //表单提交 测试发送
     if ($cfg && is_array($cfg)) {
         $from = $cfg['from'];
         $email = $cfg;
+    } else {
+        $config = cache('Config');
+
     }
+
     $mail = new \PHPMailer\PHPMailer\PHPMailer();
     //Server settings
     $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
