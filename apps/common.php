@@ -9,8 +9,6 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 // 公用函数
-//use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
 use think\Cache;
 /**
  * 系统缓存缓存管理
@@ -423,11 +421,16 @@ function upload_key($args)
  */
 function send_email($toemail, $subject, $message, $from = '', $cfg = array(), $sitename = '')
 {
+    //判断openssl是否开启
+    $openssl_funcs = get_extension_funcs('openssl');
+    if (!$openssl_funcs) {
+        return array('status' => -1, 'msg' => '请先开启openssl扩展');
+    }
     if ($cfg && is_array($cfg)) {
         $from = $cfg['from'];
         $email = $cfg;
     }
-    $mail = new PHPMailer(true);
+    $mail = new \PHPMailer\PHPMailer\PHPMailer();
     //Server settings
     $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
     $mail->SMTPDebug = 0; // Enable verbose debug output
