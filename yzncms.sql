@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-08 10:21:36
+Date: 2017-09-08 17:58:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=263 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=266 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -145,6 +145,9 @@ INSERT INTO `yzn_action_log` VALUES ('245', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('256', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-07 11:39登录了后台', '1504755592');
 INSERT INTO `yzn_action_log` VALUES ('261', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-07 16:55登录了后台', '1504774542');
 INSERT INTO `yzn_action_log` VALUES ('262', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 08:44登录了后台', '1504831462');
+INSERT INTO `yzn_action_log` VALUES ('263', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 10:43登录了后台', '1504838587');
+INSERT INTO `yzn_action_log` VALUES ('264', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 15:46登录了后台', '1504856764');
+INSERT INTO `yzn_action_log` VALUES ('265', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 17:04登录了后台', '1504861484');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -167,7 +170,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504831462', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504861485', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -455,7 +458,7 @@ INSERT INTO `yzn_config` VALUES ('7', 'mail_server', '邮件服务器', '1', 'sm
 INSERT INTO `yzn_config` VALUES ('8', 'mail_port', '邮件发送端口', '1', '25', '0');
 INSERT INTO `yzn_config` VALUES ('9', 'mail_from', '发件人地址', '1', 'o0mcw_ken0o@163.com', '0');
 INSERT INTO `yzn_config` VALUES ('10', 'mail_user', '邮箱用户名', '1', 'o0mcw_ken0o@163.com', '0');
-INSERT INTO `yzn_config` VALUES ('11', 'mail_password', '邮箱密码', '1', '', '0');
+INSERT INTO `yzn_config` VALUES ('11', 'mail_password', '邮箱密码', '1', '66552432a', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_config_field`
@@ -495,7 +498,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -533,6 +536,9 @@ INSERT INTO `yzn_menu` VALUES ('36', '栏目列表', '', '35', 'Content', 'Categ
 INSERT INTO `yzn_menu` VALUES ('37', '模型管理', '', '35', 'Content', 'Models', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('38', '管理内容', '', '34', 'Content', 'Content', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('39', '邮箱配置', '', '5', 'Admin', 'Config', 'mail', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('40', '模块', '', '0', 'Admin', 'Module', 'index', '', '1', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('41', '本地模块', 'icon iconfont icon-yingyong', '40', 'Admin', 'Module', 'local', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('42', '模块管理', '', '41', 'Admin', 'Module', 'index', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -626,3 +632,34 @@ INSERT INTO `yzn_model_field` VALUES ('19', '1', 'updatetime', '发布时间', '
 INSERT INTO `yzn_model_field` VALUES ('20', '1', 'content', '内容', '<style type=\"text/css\">.content_attr{ border:1px solid #CCC; padding:5px 8px; background:#FFC; margin-top:6px}</style><div class=\"content_attr\"><label><input name=\"add_introduce\" type=\"checkbox\"  value=\"1\" checked>是否截取内容</label><input type=\"text\" name=\"introcude_length\" value=\"200\" size=\"3\">字符至内容摘要\n<label><input type=\'checkbox\' name=\'auto_thumb\' value=\"1\" checked>是否获取内容第</label><input type=\"text\" name=\"auto_thumb_no\" value=\"1\" size=\"2\" class=\"\">张图片作为标题图片\n</div>', '', '1', '999999', '', '内容不能为空', 'editor', 'a:7:{s:7:\"toolbar\";s:4:\"full\";s:12:\"defaultvalue\";s:0:\"\";s:15:\"enablesaveimage\";s:1:\"1\";s:6:\"height\";s:0:\"\";s:9:\"fieldtype\";s:10:\"mediumtext\";s:12:\"backstagefun\";s:0:\"\";s:8:\"frontfun\";s:0:\"\";}', '', '', '', '0', '0', '0', '1', '0', '1', '1', '0', '6', '0', '0', '', '');
 INSERT INTO `yzn_model_field` VALUES ('21', '1', 'copyfrom', '来源', '', '', '0', '0', '', '', 'copyfrom', 'a:4:{s:12:\"defaultvalue\";s:0:\"\";s:5:\"width\";s:0:\"\";s:12:\"backstagefun\";s:0:\"\";s:8:\"frontfun\";s:0:\"\";}', '', '', '', '0', '0', '0', '1', '0', '1', '0', '0', '5', '0', '0', '', '');
 INSERT INTO `yzn_model_field` VALUES ('24', '1', 'prefix', '自定义文件名', '', '', '0', '255', '', '', 'text', 'a:5:{s:4:\"size\";s:3:\"200\";s:12:\"defaultvalue\";s:0:\"\";s:10:\"ispassword\";s:1:\"0\";s:12:\"backstagefun\";s:0:\"\";s:8:\"frontfun\";s:0:\"\";}', '', '', '', '0', '1', '0', '0', '0', '0', '0', '0', '17', '0', '0', '', '');
+
+-- ----------------------------
+-- Table structure for `yzn_module`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_module`;
+CREATE TABLE `yzn_module` (
+  `module` varchar(15) NOT NULL COMMENT '模块',
+  `modulename` varchar(20) NOT NULL DEFAULT '' COMMENT '模块名称',
+  `sign` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
+  `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '内置模块',
+  `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否可用',
+  `version` varchar(50) NOT NULL DEFAULT '' COMMENT '版本',
+  `setting` mediumtext COMMENT '设置信息',
+  `installtime` int(10) NOT NULL DEFAULT '0' COMMENT '安装时间',
+  `updatetime` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`module`),
+  KEY `sign` (`sign`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='已安装模块列表';
+
+-- ----------------------------
+-- Records of yzn_module
+-- ----------------------------
+INSERT INTO `yzn_module` VALUES ('Addons', '插件管理', '912b7e22bd9d86dddb1d460ca90581eb', '0', '1', '1.1.3', '', '1494567322', '1494567322', '0');
+INSERT INTO `yzn_module` VALUES ('Formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.1', '', '1494567345', '1494567345', '0');
+INSERT INTO `yzn_module` VALUES ('Wap', 'WAP手机版', '4B7B06DA1101821D6AAE4B51BC96E6AF', '0', '1', '1.0.2', '', '1494567391', '1494567391', '0');
+INSERT INTO `yzn_module` VALUES ('Links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1497515182', '1497515182', '0');
+INSERT INTO `yzn_module` VALUES ('Templates', '模板管理', '7df96b18c230f90ada0a9e2307226338', '0', '1', '1.0.0', '', '1497582828', '1497582828', '0');
+INSERT INTO `yzn_module` VALUES ('Comments', '评论模块', '54d4717144d5ed6e415af8249190cc8b', '0', '1', '1.0.1', '', '1498718038', '1498718038', '0');
+INSERT INTO `yzn_module` VALUES ('Wxshare', '微信分享', 'a19cbbbaa211a2026659a1b06b64043c', '0', '1', '1.0.2', '', '1498718046', '1498718046', '0');
+INSERT INTO `yzn_module` VALUES ('Member', '会员中心', '858ba4765e53c712ef672a9570474b1d', '0', '1', '1.0.1', 'a:29:{s:9:\"interface\";s:5:\"Local\";s:13:\"allowregister\";s:1:\"1\";s:14:\"defaultmodelid\";s:1:\"5\";s:15:\"enablemailcheck\";s:1:\"0\";s:14:\"registerverify\";s:1:\"0\";s:12:\"showapppoint\";s:1:\"1\";s:14:\"rmb_point_rate\";s:1:\"1\";s:12:\"defualtpoint\";s:1:\"0\";s:13:\"defualtamount\";s:1:\"0\";s:15:\"showregprotocol\";s:1:\"1\";s:16:\"openverification\";s:1:\"1\";s:11:\"regprotocol\";s:1733:\"欢迎您注册成为LvyeCMS用户,请仔细阅读下面的协议，只有接受协议才能继续进行注册。\n      1)从中国境内向外传输技术性资料时必须符合中国有关法规。 \n　　2)使用网站服务不作非法用途。 \n　　3)不干扰或混乱网络服务。 \n　　4)不在论坛BBS或留言簿发表任何与政治相关的信息。 \n　　5)遵守所有使用网站服务的网络协议、规定、程序和惯例。\n　　6)不得利用本站危害国家安全、泄露国家秘密，不得侵犯国家社会集体的和公民的合法权益。\n　　7)不得利用本站制作、复制和传播下列信息： \n　　　1、煽动抗拒、破坏宪法和法律、行政法规实施的；\n　　　2、煽动颠覆国家政权，推翻社会主义制度的；\n　　　3、煽动分裂国家、破坏国家统一的；\n　　　4、煽动民族仇恨、民族歧视，破坏民族团结的；\n　　　5、捏造或者歪曲事实，散布谣言，扰乱社会秩序的；\n　　　6、宣扬封建迷信、淫秽、色情、赌博、暴力、凶杀、恐怖、教唆犯罪的；\n　　　7、公然侮辱他人或者捏造事实诽谤他人的，或者进行其他恶意攻击的；\n　　　8、损害国家机关信誉的；\n　　　9、其他违反宪法和法律行政法规的；\n　　　10、进行商业广告行为的。\n　　用户不能传输任何教唆他人构成犯罪行为的资料；不能传输长国内不利条件和涉及国家安全的资料；不能传输任何不符合当地法规、国家法律和国际法 律的资料。未经许可而非法进入其它电脑系统是禁止的。若用户的行为不符合以上的条款，LvyeCMS将取消用户服务帐号。 \";s:21:\"registerverifymessage\";s:305:\"Hi，{$username}:\n\n欢迎您注册成为LvyeCMS用户，您的账号需要邮箱认证，点击下面链接进行认证：\n\n<a href=\"{$url}\" target=\"_blank\">{$url}</a>\n\n如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。\n\n邮件服务器自动发送邮件请勿回信 {$date}\";s:14:\"forgetpassword\";s:315:\"Hi，{$username}:\n\n你申请了重设密码，请在24小时内点击下面的链接，然后根据页面提示完成密码重设：\n\n<a href=\"{$url}\" target=\"_blank\">{$url}</a>\n\n如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。\n\n邮件服务器自动发送邮件请勿回信 {$date}\";s:10:\"uc_connect\";s:0:\"\";s:6:\"uc_api\";s:0:\"\";s:5:\"uc_ip\";s:0:\"\";s:9:\"uc_dbhost\";s:0:\"\";s:9:\"uc_dbuser\";s:0:\"\";s:7:\"uc_dbpw\";s:0:\"\";s:9:\"uc_dbname\";s:0:\"\";s:13:\"uc_dbtablepre\";s:0:\"\";s:12:\"uc_dbcharset\";s:0:\"\";s:8:\"uc_appid\";s:0:\"\";s:6:\"uc_key\";s:0:\"\";s:11:\"sinawb_akey\";s:0:\"\";s:11:\"sinawb_skey\";s:0:\"\";s:7:\"qq_akey\";s:0:\"\";s:7:\"qq_skey\";s:0:\"\";}', '1498718058', '1498718058', '0');
