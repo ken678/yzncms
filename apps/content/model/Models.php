@@ -16,6 +16,7 @@ use think\Config;
 use think\Db;
 use think\Loader;
 use think\Model;
+use util\Sql;
 
 /**
  * 菜单基础模型
@@ -146,7 +147,7 @@ class Models extends Modelbase
      */
     protected function sql_execute($sqls, $tablepre)
     {
-        $sqls = $this->sql_split($sqls, $tablepre);
+        $sqls = Sql::parseSql($sqls);
         if (is_array($sqls)) {
             foreach ($sqls as $sql) {
                 if (trim($sql) != '') {
@@ -167,7 +168,7 @@ class Models extends Modelbase
      *          自己的前缀
      * @return multitype:string 返回最终需要的sql语句
      */
-    public function sql_split($sql, $tablepre)
+    /*public function sql_split($sql, $tablepre)
     {
         if ($tablepre != "yzn_") {
             $sql = str_replace("yzn_", $tablepre, $sql);
@@ -194,7 +195,7 @@ class Models extends Modelbase
             $num++;
         }
         return $ret;
-    }
+    }*/
 
     /**
      * 根据模型类型取得数据用于缓存

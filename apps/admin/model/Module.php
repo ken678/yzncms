@@ -11,6 +11,7 @@
 
 namespace app\admin\model;
 
+use think\Db;
 use util\Sql;
 use think\Model;
 
@@ -83,7 +84,6 @@ class Module extends Model
     /**
      * 从文件获取模块信息
      * @param string $name 模块名称
-     * @author 蔡伟明 <314013107@qq.com>
      * @return array|mixed
      */
     public  function getInfoFromFile($moduleName = '')
@@ -207,6 +207,11 @@ class Module extends Model
         }
         //执行数据库脚本安装
         $this->runSQL($moduleName);
+        //执行菜单项安装
+        if ($this->installMenu($moduleName) !== true) {
+            $this->installRollback($moduleName);
+            return false;
+        }
 
         //更新缓存
         cache('Module', NULL);
@@ -252,6 +257,8 @@ class Module extends Model
 
         //执行数据库脚本卸载
         $this->runSQL($moduleName, 'uninstall');
+        //删除菜单项
+        $this->uninstallMenu($moduleName);
 
         //更新缓存
         cache('Module', NULL);
@@ -277,6 +284,79 @@ class Module extends Model
         }
         $moduleList = cache('Module');
         return (isset($moduleList[$moduleName]) && $moduleList[$moduleName]) ? true : false;
+    }
+
+    /**
+     * 安装菜单项
+     * @param type $moduleName 模块名称
+     * @param type $file 文件
+     * @return boolean
+     */
+    private function installMenu($moduleName = '', $file = 'menu')
+    {
+        if (empty($moduleName)) {
+            if ($this->moduleName) {
+                $moduleName = $this->moduleName;
+            } else {
+                $this->error = '模块名称不能为空！';
+                return false;
+            }
+        }
+        $path = $this->appPath . "{$moduleName}/install/{$file}.php";
+        //检查是否有安装脚本
+        /*if (!file_exists($path)) {
+            return true;
+        }*/
+        $menu = include $path;
+        if (empty($menu)) {
+            return true;
+        }
+        $status = model('admin/Menu')->installModuleMenu($menu, $this->getInfoFromFile($moduleName));
+        if ($status === true) {
+            return true;
+        } else {
+            $this->error = model('admin/Menu')->getError() ?: '安装菜单项出现错误！';
+            return false;
+        }
+    }
+
+    /**
+     * 卸载菜单项项
+     * @param type $moduleName
+     * @return boolean
+     */
+    private function uninstallMenu($moduleName = '')
+    {
+        if (empty($moduleName)) {
+            if ($this->moduleName) {
+                $moduleName = $this->moduleName;
+            } else {
+                $this->error = '模块名称不能为空！';
+                return false;
+            }
+        }
+        Db::name('Menu')->where(array('app' => ucwords($moduleName)))->delete();
+        return true;
+    }
+
+    /**
+     * 安装回滚
+     * @param type $moduleName 模块名(目录名)
+     */
+    private function installRollback($moduleName = '')
+    {
+        if (empty($moduleName)) {
+            if ($this->moduleName) {
+                $moduleName = $this->moduleName;
+            } else {
+                $this->error = '模块名称不能为空！';
+                return false;
+            }
+        }
+        //删除安装状态
+        $this->where(array('module' => $moduleName))->delete();
+        //更新缓存
+        cache('Module', NULL);
     }
 
     /**

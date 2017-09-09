@@ -28,7 +28,6 @@ class Module extends Adminbase
     public function index()
     {
         $list = $this->ModuleModel->getAll();
-
         $this->assign("data", $list['modules']);
         return $this->fetch();
     }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-09-09 13:01:45
+Date: 2017-09-09 19:59:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=268 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=270 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -150,6 +150,8 @@ INSERT INTO `yzn_action_log` VALUES ('264', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('265', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 17:04登录了后台', '1504861484');
 INSERT INTO `yzn_action_log` VALUES ('266', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-08 19:55登录了后台', '1504871752');
 INSERT INTO `yzn_action_log` VALUES ('267', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-09 10:49登录了后台', '1504925360');
+INSERT INTO `yzn_action_log` VALUES ('268', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-09 13:13登录了后台', '1504933980');
+INSERT INTO `yzn_action_log` VALUES ('269', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-09 18:00登录了后台', '1504951234');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -172,7 +174,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504925360', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1504951234', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -501,7 +503,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
