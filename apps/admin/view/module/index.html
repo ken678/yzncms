@@ -51,8 +51,12 @@
 			   {volist name="data" id="vo"}
 			      <tr>
 			      	<td width="120" align="center">
-			      	    {empty name="vo.installtime"}
-			      	    <a class="btn red" href="{:url('install',array('module'=>$vo['module']))}"><i class="icon iconfont icon-shanchu"></i>安装<a>
+			      	    {empty name="vo['installtime']"}
+			      	    <a class="btn red" href="{:url('install',array('module'=>$vo['module']))}"><i class="icon iconfont icon-zidongxiufu"></i>安装<a>
+			      	    {else /}
+				      	    {eq name="vo['iscore']" value="0"}
+				      	    <a class="btn red ajax-get confirm" url="{:url('uninstall',array('module'=>$vo['module']))}"><i class="icon iconfont icon-shanchu"></i>卸载<a>
+				      	    {/eq}
 			      	    {/empty}
 			      	</td>
 			      	<td width="150" align="center">{$vo['modulename']}</td>

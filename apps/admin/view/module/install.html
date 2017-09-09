@@ -1,0 +1,39 @@
+{extend name="Public:layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title"><a class="back" href="{:url('module/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+      <div class="subject">
+        <h3>模块管理 - 模块检查</h3>
+        <h5>本地模块管理中心</h5>
+      </div>
+    </div>
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+    <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+    <span id="explanationZoom" alt="收起提示" class="itip"></span>
+    </div>
+    <ul>
+      <li></li>
+    </ul>
+  </div>
+  <form action="{:url('module/install')}" method="post" class="form-horizontal" name="form">
+      <div class="ncap-form-default">
+      这里是模块的检查结果...
+
+
+
+
+
+
+
+
+      
+      <input type="hidden" name="module" value="{$config.module}">
+      <div class="fix-bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.form.submit()">确认提交</a></div>
+      </div>
+    </form>
+</div>
+{/block}

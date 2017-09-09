@@ -11,6 +11,7 @@
 
 namespace app\admin\model;
 
+use util\Sql;
 use think\Model;
 
 /**
@@ -25,6 +26,20 @@ class Module extends Model
     protected $moduleList = array();
     //系统模块，隐藏
     protected $systemModuleList = array('admin', 'attachment', 'common', 'content', 'home');
+    //当前模块名称
+    private $moduleName = NULL;
+    //自动完成
+    protected $auto = ['iscore'=>0,'disabled' => 1];
+    protected $insert = ['installtime','updatetime'];
+    protected function setInstalltimeAttr($value)
+    {
+        return time();
+    }
+    protected function setUpdatetimeAttr($value)
+    {
+        return time();
+    }
+
     /**
      * 获取所有模块信息
      */
@@ -107,8 +122,8 @@ class Module extends Model
         );
 
         // 从配置文件获取
-        if (is_file($this->appPath. $moduleName . '/info.php')) {
-            $moduleConfig = include $this->appPath. $moduleName . '/info.php';
+        if (is_file($this->appPath. $moduleName . '/config.php')) {
+            $moduleConfig = include $this->appPath. $moduleName . '/config.php';
             $config = array_merge($config, $moduleConfig);
         }
 
@@ -119,6 +134,132 @@ class Module extends Model
         }
         return $config;
     }
+
+
+    /**
+     * 执行模块安装
+     * @param type $moduleName 模块名(目录名)
+     * @return boolean
+     */
+    public function install($moduleName = '')
+    {
+        defined('INSTALL') or define("INSTALL", true);
+        if (empty($moduleName)) {
+            if ($this->moduleName) {
+                $moduleName = $this->moduleName;
+            } else {
+                $this->error = '请选择需要安装的模块！';
+                return false;
+            }
+        }
+        //已安装模块列表
+        $moduleList = cache('Module');
+        //设置脚本最大执行时间
+        set_time_limit(0);
+        if ($this->competence($moduleName) !== true) {
+            return false;
+        }
+        //加载模块基本配置
+        $config = $this->getInfoFromFile($moduleName);
+        //版本检查
+        if ($config['adaptation']) {
+            if (version_compare('1.0.0', $config['adaptation'], '>=') == false) {
+                $this->error = '该模块要求系统最低版本为：' . $config['adaptation'] . '！';
+                return false;
+            }
+        }
+        //依赖模块检测
+        if (!empty($config['depend']) && is_array($config['depend'])) {
+            foreach ($config['depend'] as $mod) {
+                if ('Content' == $mod) {
+                    continue;
+                }
+                if (!isset($moduleList[$mod])) {
+                    $this->error = "安装该模块，需要安装依赖模块 {$mod} !";
+                    return false;
+                }
+            }
+        }
+        //检查模块是否已经安装
+        if ($this->isInstall($moduleName)) {
+            $this->error = '模块已经安装，无法重复安装！';
+            return false;
+        }
+        // 检查数据表
+        /*if (isset($module_info['tables']) && !empty($module_info['tables'])) {
+            foreach ($module_info['tables'] as $table) {
+                if (Db::query("SHOW TABLES LIKE '".config('database.prefix')."{$table}'")) {
+                    $table_check[] = [
+                        'table' => config('database.prefix')."{$table}",
+                        'result' => '<span class="text-danger">存在同名</span>'
+                    ];
+                } else {
+                    $table_check[] = [
+                        'table' => config('database.prefix')."{$table}",
+                        'result' => '<i class="fa fa-check text-success"></i>'
+                    ];
+                }
+            }
+        }*/
+        if ($this->allowField(true)->save($config) == false) {
+            $this->error = '安装失败！';
+            return false;
+        }
+        //执行数据库脚本安装
+        $this->runSQL($moduleName);
+
+        //更新缓存
+        cache('Module', NULL);
+        return true;
+    }
+
+    /**
+     * 模块卸载
+     * @param type $moduleName 模块名(目录名)
+     * @return boolean
+     */
+    public function uninstall($moduleName = '')
+    {
+        defined('UNINSTALL') or define("UNINSTALL", true);
+        if (empty($moduleName)) {
+            if ($this->moduleName) {
+                $moduleName = $this->moduleName;
+            } else {
+                $this->error = '请选择需要卸载的模块！';
+                return false;
+            }
+        }
+        //设置脚本最大执行时间
+        set_time_limit(0);
+        if ($this->competence($moduleName) !== true) {
+            return false;
+        }
+        //取得该模块数据库中记录的安装信息
+        $info = $this->where(array('module' => $moduleName))->find();
+        if (empty($info)) {
+            $this->error = '该模块未安装，无需卸载！';
+            return false;
+        }
+        if ($info['iscore']) {
+            $this->error = '内置模块，不能卸载！';
+            return false;
+        }
+        //删除
+        if ($this->where(array('module' => $moduleName))->delete() == false) {
+            $this->error = '卸载失败！';
+            return false;
+        }
+
+        //执行数据库脚本卸载
+        $this->runSQL($moduleName, 'uninstall');
+
+        //更新缓存
+        cache('Module', NULL);
+        return true;
+    }
+
+
+
 
     /**
      * 是否已经安装
@@ -137,5 +278,72 @@ class Module extends Model
         $moduleList = cache('Module');
         return (isset($moduleList[$moduleName]) && $moduleList[$moduleName]) ? true : false;
     }
+
+    /**
+     * 执行安装数据库脚本
+     * @param type $moduleName 模块名(目录名)
+     * @return boolean
+     */
+    private function runSQL($moduleName = '', $Dir = 'install')
+    {
+        if (empty($moduleName)) {
+            if ($this->moduleName) {
+                $moduleName = $this->moduleName;
+            } else {
+                $this->error = '模块名称不能为空！';
+                return false;
+            }
+        }
+        $sql_file = $this->appPath . "{$moduleName}/{$Dir}/{$moduleName}.sql";
+        if (file_exists($sql_file)) {
+               $sql_statement = Sql::getSqlFromFile($sql_file);
+            if (!empty($sql_statement)) {
+                foreach ($sql_statement as $value) {
+                    try{
+                        $this->db()->execute($value);
+                    }catch(\Exception $e){
+                        $this->error('导入SQL失败，请检查install.sql的语句是否正确');
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 目录权限检查
+     * @param type $moduleName 模块名称
+     * @return boolean
+     */
+    public function competence($moduleName = '')
+    {
+        //模板目录权限检测
+        /*if ($this->chechmod($this->templatePath) == false) {
+            $this->error = '目录 ' . $this->templatePath . ' 没有可写权限！';
+            return false;
+        }
+        if ($moduleName && file_exists($this->extresPath . $moduleName)) {
+            if ($this->chechmod($this->extresPath . $moduleName) == false) {
+                $this->error = '目录 ' . $this->extresPath . $moduleName . ' 没有可写权限！';
+                return false;
+            }
+        }
+        //静态资源目录权限检测
+        if (!file_exists($this->extresPath)) {
+            //创建目录
+            if (mkdir($this->extresPath, 0777, true) == false) {
+                $this->error = '目录 ' . $this->extresPath . ' 创建失败，请检查是否有可写权限！';
+                return false;
+            }
+        }
+        //权限检测
+        if ($this->chechmod($this->extresPath) == false) {
+            $this->error = '目录 ' . $this->extresPath . ' 没有可写权限！';
+            return false;
+        }*/
+        return true;
+    }
+
+
 
 }
