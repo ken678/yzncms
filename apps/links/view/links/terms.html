@@ -1,0 +1,63 @@
+{extend name="Admin@Public:layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title">
+      <div class="subject">
+        <h3>友情链接</h3>
+        <h5>友情链接中心管理链接操作</h5>
+      </div>
+    </div>
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+        <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+        <span id="explanationZoom" alt="收起提示" class="itip"></span>
+    </div>
+    <ul>
+      <li></li>
+    </ul>
+  </div>
+  <!-- 表格 -->
+    <div class="table_list">
+    <div class="mDiv"><div class="ftitle"><h3>分类列表</h3><h5></h5></div></div>
+    <div class="hDiv">
+        <table width="100%">
+        <thead>
+          <tr>
+            <td width="150" align="center">操作</td>
+            <td width="100"  align="center">ID</td>
+            <td width="300" align="left">分类名称</td>
+          </tr>
+        </thead>
+        </table>
+    </div>
+
+    <div class="tDiv">
+      <div class="tDiv2">
+        <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-icon02"></i><a href="{:url('links/addTerms')}">添加分类</a></span></div></div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+
+    <div class="bDiv">
+      <table width="100%">
+      <tbody>
+          {volist name="data" id="vo"}
+              <tr>
+              <td width="150" align="center">
+                 <a class="btn blue ajax-get confirm" url="{:url('links/termsedit',array('id'=>$vo['id']))}"><i class="icon iconfont icon-edit"></i>编辑<a>
+                 <a class="btn red ajax-get confirm" url="{:url('links/termsdelete',array('id'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a>
+              </td>
+              <td width="100"  align="center">{$vo['id']}</td>
+              <td width="300" align="left">{$vo['name']}</td>
+              </tr>
+          {/volist}
+      </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{/block}

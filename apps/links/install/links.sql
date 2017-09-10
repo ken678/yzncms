@@ -12,9 +12,9 @@ CREATE TABLE IF NOT EXISTS `yzn_links` (
   `visible` tinyint(1) NOT NULL COMMENT '链接是否可见',
   `rating` int(11) NOT NULL DEFAULT '0' COMMENT '链接等级',
   `updated` int(11) NOT NULL COMMENT '链接最后更新时间',
-  `notes` mediumtext NOT NULL COMMENT '链接详细介绍',
   `rss` varchar(255) NOT NULL DEFAULT '' COMMENT '链接RSS地址',
   `termsid` int(4) NOT NULL COMMENT '分类id',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   KEY `visible` (`visible`),
   KEY `termsid` (`termsid`)
