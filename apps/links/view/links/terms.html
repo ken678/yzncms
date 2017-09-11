@@ -47,7 +47,7 @@
           {volist name="data" id="vo"}
               <tr>
               <td width="150" align="center">
-                 <a class="btn blue ajax-get confirm" url="{:url('links/termsedit',array('id'=>$vo['id']))}"><i class="icon iconfont icon-edit"></i>编辑<a>
+                 <a href="{:url('links/termsedit',array('id'=>$vo['id']))}" class="btn blue"><i class="icon iconfont icon-edit"></i>编辑<a>
                  <a class="btn red ajax-get confirm" url="{:url('links/termsdelete',array('id'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a>
               </td>
               <td width="100"  align="center">{$vo['id']}</td>

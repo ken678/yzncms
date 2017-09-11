@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-11 10:38:56
+Date: 2017-09-11 13:24:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=274 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=276 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -156,6 +156,8 @@ INSERT INTO `yzn_action_log` VALUES ('270', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('271', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-10 15:36登录了后台', '1505028961');
 INSERT INTO `yzn_action_log` VALUES ('272', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 08:36登录了后台', '1505090212');
 INSERT INTO `yzn_action_log` VALUES ('273', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 10:24登录了后台', '1505096669');
+INSERT INTO `yzn_action_log` VALUES ('274', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 12:48登录了后台', '1505105289');
+INSERT INTO `yzn_action_log` VALUES ('275', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 13:23登录了后台', '1505107402');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -178,7 +180,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505096669', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505107402', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -508,7 +510,7 @@ CREATE TABLE `yzn_links` (
   PRIMARY KEY (`id`),
   KEY `visible` (`visible`),
   KEY `termsid` (`termsid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='友情链接';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='友情链接';
 
 -- ----------------------------
 -- Records of yzn_links
@@ -714,8 +716,9 @@ CREATE TABLE `yzn_terms` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `module` (`module`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='分类表';
 
 -- ----------------------------
 -- Records of yzn_terms
 -- ----------------------------
+INSERT INTO `yzn_terms` VALUES ('1', '0', '122', 'links', null);

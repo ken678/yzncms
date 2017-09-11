@@ -59,6 +59,47 @@ class Links extends Adminbase
         }
     }
 
+    //编辑友情链接
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
+            //验证器
+            $rule = [
+                'name' => 'require',
+                'url' => 'require',
+            ];
+            $msg = [
+                'name.require' => '网站名称不得为空',
+                'url.require' => '网站链接不得为空',
+            ];
+            $validate = new \think\Validate($rule, $msg);
+            if (!$validate->check($data)) {
+                $this->error($validate->getError());
+            }
+            $status = Db::name('Links')->update($data);
+            if ($status) {
+                $this->success("编辑成功！", url("Links/index"));
+            } else {
+                $this->error("编辑失败！");
+            }
+
+        } else {
+            $id = $this->request->param('id', 0);
+            $data = Db::name("Links")->where(array("id" => $id))->find();
+            if (!$data) {
+                $this->error("该信息不存在！");
+            }
+
+            $Terms = Db::name('Terms')->where(array("module" => "links"))->column("id,name");
+            $this->assign("Terms", $Terms);
+            $this->assign("data", $data);
+            return $this->fetch();
+
+        }
+
+    }
+
     //删除友情链接
     public function delete($ids = 0)
     {
@@ -99,13 +140,25 @@ class Links extends Adminbase
             }
             $status = Db::name('Terms')->insert(array("name" => $name, "module" => "links"));
             if ($status) {
-                $this->success('添加成功！');
+                $this->success('添加成功！', url("Links/terms"));
             } else {
                 $this->error("分类添加失败！");
             }
         } else {
             return $this->fetch();
         }
+    }
+
+    //分类编辑
+    public function termsedit()
+    {
+
+    }
+
+    //分类删除
+    public function termsdelete()
+    {
+
     }
 
 }

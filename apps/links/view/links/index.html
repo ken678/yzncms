@@ -53,7 +53,7 @@
 	              <tr>
 	              <td width="20"><input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['id']}"></td>
 	              <td width="150" align="center">
-	                 <a class="btn blue ajax-get confirm" url="{:url('links/edit',array('id'=>$vo['id']))}"><i class="icon iconfont icon-edit"></i>编辑<a>
+	                 <a href="{:url('links/edit',array('id'=>$vo['id']))}" class="btn blue"><i class="icon iconfont icon-edit"></i>编辑<a>
 	                 <a class="btn red ajax-get confirm" url="{:url('links/delete',array('ids'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a>
 	              </td>
 	              <td width="60"  align="center">{$vo['id']}</td>

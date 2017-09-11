@@ -4,7 +4,7 @@
   <div class="fixed-bar">
     <div class="item-title"><a class="back" href="{:url('links/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
       <div class="subject">
-        <h3>链接设置 - 新增链接</h3>
+        <h3>链接设置 - 编辑链接</h3>
         <h5>友情链接中心及分类管理操作</h5>
       </div>
     </div>
@@ -19,7 +19,7 @@
       <li></li>
     </ul>
   </div>
-  <form action="{:url('links/add')}" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
+  <form action="{:url('links/edit')}" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
     <div class="ncap-form-default">
       <dl class="row">
         <dt class="tit">
@@ -29,11 +29,11 @@
             <select name="termsid" class="valid">
                 <option value="0">==默认分类==</option>
                 {volist name="Terms" id="vo"}
-                <option value="{$vo.id}">{$vo.name}</option>
+                <option value="{$vo.id}" {eq name="vo[id]" value="$data['termsid']"}selected{/eq}>{$vo.name}</option>
                 {/volist}
             </select>
           <span class="err"></span>
-          <p class="notic">请选择一个分类，如果不设置，则为默认分类。</p>
+          <p class="notic">请选择一个分类，如果还未设置，请在分类管理建立分类。</p>
         </dd>
       </dl>
       <dl class="row">
@@ -41,7 +41,7 @@
           <label for="name"><em>*</em>网站名称</label>
         </dt>
         <dd class="opt">
-          <input type="text"  value="" maxlength="40"  name="name" class="input-txt">
+          <input type="text"  value="{$data['name']}" maxlength="40"  name="name" class="input-txt">
         </dd>
       </dl>
       <dl class="row">
@@ -49,7 +49,7 @@
           <label for="url"><em>*</em>网站链接</label>
         </dt>
         <dd class="opt">
-          <input type="text"  value="" maxlength="40"  name="url" class="input-txt">
+          <input type="text"  value="{$data['url']}" maxlength="40"  name="url" class="input-txt">
         </dd>
       </dl>
       <dl class="row">
@@ -58,7 +58,7 @@
         </dt>
         <dd class="opt">
           <div class="input-file-show">
-          {php} echo \util\Form::images('image', 'image','', 'links'); {/php}
+          {php} echo \util\Form::images('image', 'image',$data['image'], 'links'); {/php}
           </div>
           <span class="err"></span>
         </dd>
@@ -68,9 +68,10 @@
           <label for="description">链接描述</label>
         </dt>
         <dd class="opt">
-          <textarea name="description" rows="6" class="tarea" ></textarea>
+          <textarea name="description" rows="6" class="tarea">{$data['description']}</textarea>
         </dd>
       </dl>
+      <input name="id" type="hidden" value="{$data['id']}" />
       <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
     </div>
   </form>
