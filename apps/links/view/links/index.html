@@ -5,7 +5,7 @@
 		<div class="item-title">
 		  <div class="subject">
 		    <h3>友情链接</h3>
-		    <h5>友情链接中心管理链接操作</h5>
+		    <h5>友情链接中心及分类管理操作</h5>
 		  </div>
 		</div>
 	</div>
@@ -54,7 +54,7 @@
 	              <td width="20"><input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['id']}"></td>
 	              <td width="150" align="center">
 	                 <a class="btn blue ajax-get confirm" url="{:url('links/edit',array('id'=>$vo['id']))}"><i class="icon iconfont icon-edit"></i>编辑<a>
-	                 <a class="btn red ajax-get confirm" url="{:url('links/delete',array('id'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a>
+	                 <a class="btn red ajax-get confirm" url="{:url('links/delete',array('ids'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a>
 	              </td>
 	              <td width="60"  align="center">{$vo['id']}</td>
 	              <td width="100" align="center">暂无logo</td>

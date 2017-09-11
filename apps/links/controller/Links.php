@@ -10,8 +10,8 @@
 // +----------------------------------------------------------------------
 namespace app\links\controller;
 
-use think\Db;
 use app\common\controller\Adminbase;
+use think\Db;
 
 /**
  * 友情链接管理
@@ -30,16 +30,16 @@ class Links extends Adminbase
     //新增友情链接
     public function add()
     {
-        if($this->request->isPost()){
+        if ($this->request->isPost()) {
             $data = $this->request->param();
             //验证器
             $rule = [
-            'name'  => 'require',
-            'url'   => 'require'
+                'name' => 'require',
+                'url' => 'require',
             ];
             $msg = [
-            'name.require' => '网站名称不得为空',
-            'url.require'     => '网站链接不得为空',
+                'name.require' => '网站名称不得为空',
+                'url.require' => '网站链接不得为空',
             ];
             $validate = new \think\Validate($rule, $msg);
             if (!$validate->check($data)) {
@@ -47,11 +47,11 @@ class Links extends Adminbase
             }
             $status = Db::name('Links')->insert($data);
             if ($status) {
-               $this->success("添加成功！", url("Links/index"));
+                $this->success("添加成功！", url("Links/index"));
             } else {
-               $this->error("添加失败！");
+                $this->error("添加失败！");
             }
-        }else{
+        } else {
             $Terms = Db::name('Terms')->where(array("module" => "links"))->column("id,name");
             $this->assign("Terms", $Terms);
             return $this->fetch();
@@ -59,18 +59,36 @@ class Links extends Adminbase
         }
     }
 
+    //删除友情链接
+    public function delete($ids = 0)
+    {
+        empty($ids) && $this->error('参数错误！');
+        if (is_array($ids)) {
+            $map['id'] = array('in', $ids);
+        } elseif (is_numeric($ids)) {
+            $map['id'] = $ids;
+        }
+        $res = Db::name('Links')->where($map)->delete();
+        if ($res !== false) {
+            $this->success('删除成功！');
+        } else {
+            $this->error('删除失败！');
+        }
+
+    }
+
     //分类管理
     public function terms()
     {
         $data = Db::name('Terms')->where(array("module" => "links"))->select();
         $this->assign("data", $data);
-    	return $this->fetch();
+        return $this->fetch();
     }
 
     //新增分类
     public function addTerms()
     {
-        if($this->request->isPost()){
+        if ($this->request->isPost()) {
             $name = $this->request->param('name');
             if (empty($name)) {
                 $this->error("分类名称不能为空！");
@@ -85,10 +103,9 @@ class Links extends Adminbase
             } else {
                 $this->error("分类添加失败！");
             }
-        }else{
+        } else {
             return $this->fetch();
         }
     }
-
 
 }

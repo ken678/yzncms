@@ -19,14 +19,15 @@ use \think\Model;
 class Menu extends Model
 {
 
-     /**
+    /**
      * 模块安装时进行菜单注册
      * @param array $data 菜单数据
      * @param array $config 模块配置
      * @param type $parentid 父菜单ID
      * @return boolean
      */
-    public function installModuleMenu(array $data, array $config, $parentid = 0) {
+    public function installModuleMenu(array $data, array $config, $parentid = 0)
+    {
         if (empty($data) || !is_array($data)) {
             $this->error = '没有数据！';
             return false;
@@ -36,7 +37,7 @@ class Menu extends Model
             return false;
         }
         //默认安装时父级ID
-        $defaultMenuParentid = $this->where(array('app' => 'Admin', 'controller' => 'Module', 'action' => 'local'))->value('id')? : 41;
+        $defaultMenuParentid = $this->where(array('app' => 'Admin', 'controller' => 'Module', 'action' => 'list'))->value('id') ?: 43;
         //安装模块名称
         $moduleNama = $config['module'];
         foreach ($data as $rs) {
@@ -45,22 +46,25 @@ class Menu extends Model
                 return false;
             }
             $route = $this->menuRoute($rs['route']);
-            $pid = $parentid ? : ((is_null($rs['parentid']) || !isset($rs['parentid'])) ? (int) $defaultMenuParentid : $rs['parentid']);
+            $pid = $parentid ?: ((is_null($rs['parentid']) || !isset($rs['parentid'])) ? (int) $defaultMenuParentid : $rs['parentid']);
             $newData = array_merge(array(
                 'title' => $rs['name'],
                 'parentid' => $pid,
                 'status' => isset($rs['status']) ? $rs['status'] : 0,
-                'tip' => $rs['remark']? : '',
-                'listorder' => $rs['listorder']? : 0,
-                    ), $route);
+                'tip' => $rs['remark'] ?: '',
+                'listorder' => $rs['listorder'] ?: 0,
+            ), $route);
 
             /*if (!$this->create($newData)) {
-                $this->error = '菜单信息配置有误，' . $this->error;
-                return false;
+            $this->error = '菜单信息配置有误，' . $this->error;
+            return false;
             }*/
 
             $result = self::create($newData);
-            if (!$result) return false;
+            if (!$result) {
+                return false;
+            }
+
             //是否有子菜单
             if (!empty($rs['child'])) {
                 if ($this->installModuleMenu($rs['child'], $config, $result['id']) !== true) {
@@ -69,7 +73,7 @@ class Menu extends Model
             }
         }
         //清除缓存
-        cache('Menu', NULL);
+        cache('Menu', null);
         return true;
     }
 
@@ -79,7 +83,8 @@ class Menu extends Model
      * @param type $moduleNama 安装模块名称
      * @return array
      */
-    private function menuRoute($route, $moduleNama) {
+    private function menuRoute($route, $moduleNama)
+    {
         $route = explode('/', $route, 3);
         if (count($route) < 3) {
             array_unshift($route, $moduleNama);
