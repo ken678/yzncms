@@ -12,8 +12,8 @@
 namespace app\admin\model;
 
 use think\Db;
-use util\Sql;
 use think\Model;
+use util\Sql;
 
 /**
  * 模块模型
@@ -28,10 +28,10 @@ class Module extends Model
     //系统模块，隐藏
     protected $systemModuleList = array('admin', 'attachment', 'common', 'content', 'home');
     //当前模块名称
-    private $moduleName = NULL;
+    private $moduleName = null;
     //自动完成
-    protected $auto = ['iscore'=>0,'disabled' => 1];
-    protected $insert = ['installtime','updatetime'];
+    protected $auto = ['iscore' => 0, 'disabled' => 1];
+    protected $insert = ['installtime', 'updatetime'];
     protected function setInstalltimeAttr($value)
     {
         return time();
@@ -70,7 +70,7 @@ class Module extends Model
 
         //数量
         //$count = count($dirs_arr);
-        
+
         foreach ($dirs_arr as $module) {
             $list[$module] = $this->getInfoFromFile($module);
         }
@@ -86,7 +86,7 @@ class Module extends Model
      * @param string $name 模块名称
      * @return array|mixed
      */
-    public  function getInfoFromFile($moduleName = '')
+    public function getInfoFromFile($moduleName = '')
     {
         if (empty($moduleName)) {
             $this->error = '模块名称不能为空！';
@@ -97,8 +97,6 @@ class Module extends Model
             'module' => $moduleName,
             //模块名称
             'modulename' => $moduleName,
-            //模块介绍地址
-            'address' => '',
             //模块简介
             'introduce' => '',
             //模块作者
@@ -122,8 +120,8 @@ class Module extends Model
         );
 
         // 从配置文件获取
-        if (is_file($this->appPath. $moduleName . '/config.php')) {
-            $moduleConfig = include $this->appPath. $moduleName . '/config.php';
+        if (is_file($this->appPath . $moduleName . '/config.php')) {
+            $moduleConfig = include $this->appPath . $moduleName . '/config.php';
             $config = array_merge($config, $moduleConfig);
         }
 
@@ -134,7 +132,6 @@ class Module extends Model
         }
         return $config;
     }
-
 
     /**
      * 执行模块安装
@@ -186,21 +183,15 @@ class Module extends Model
             return false;
         }
         // 检查数据表
-        /*if (isset($module_info['tables']) && !empty($module_info['tables'])) {
-            foreach ($module_info['tables'] as $table) {
-                if (Db::query("SHOW TABLES LIKE '".config('database.prefix')."{$table}'")) {
-                    $table_check[] = [
-                        'table' => config('database.prefix')."{$table}",
-                        'result' => '<span class="text-danger">存在同名</span>'
-                    ];
-                } else {
-                    $table_check[] = [
-                        'table' => config('database.prefix')."{$table}",
-                        'result' => '<i class="fa fa-check text-success"></i>'
-                    ];
+        if (isset($config['tables']) && !empty($config['tables'])) {
+            foreach ($config['tables'] as $table) {
+                if ($this->db()->query("SHOW TABLES LIKE '{$table}'")) {
+                    $this->error = $table . '数据表已存在，无法安装！';
+                    return false;
                 }
             }
-        }*/
+        }
+        //保存在安装表
         if ($this->allowField(true)->save($config) == false) {
             $this->error = '安装失败！';
             return false;
@@ -214,7 +205,7 @@ class Module extends Model
         }
 
         //更新缓存
-        cache('Module', NULL);
+        cache('Module', null);
         return true;
     }
 
@@ -261,12 +252,9 @@ class Module extends Model
         $this->uninstallMenu($moduleName);
 
         //更新缓存
-        cache('Module', NULL);
+        cache('Module', null);
         return true;
     }
-
-
-
 
     /**
      * 是否已经安装
@@ -305,7 +293,7 @@ class Module extends Model
         $path = $this->appPath . "{$moduleName}/install/{$file}.php";
         //检查是否有安装脚本
         /*if (!file_exists($path)) {
-            return true;
+        return true;
         }*/
         $menu = include $path;
         if (empty($menu)) {
@@ -356,7 +344,7 @@ class Module extends Model
         //删除安装状态
         $this->where(array('module' => $moduleName))->delete();
         //更新缓存
-        cache('Module', NULL);
+        cache('Module', null);
     }
 
     /**
@@ -376,12 +364,12 @@ class Module extends Model
         }
         $sql_file = $this->appPath . "{$moduleName}/{$Dir}/{$moduleName}.sql";
         if (file_exists($sql_file)) {
-               $sql_statement = Sql::getSqlFromFile($sql_file);
+            $sql_statement = Sql::getSqlFromFile($sql_file);
             if (!empty($sql_statement)) {
                 foreach ($sql_statement as $value) {
-                    try{
+                    try {
                         $this->db()->execute($value);
-                    }catch(\Exception $e){
+                    } catch (\Exception $e) {
                         $this->error('导入SQL失败，请检查install.sql的语句是否正确');
                     }
                 }
@@ -399,31 +387,29 @@ class Module extends Model
     {
         //模板目录权限检测
         /*if ($this->chechmod($this->templatePath) == false) {
-            $this->error = '目录 ' . $this->templatePath . ' 没有可写权限！';
-            return false;
+        $this->error = '目录 ' . $this->templatePath . ' 没有可写权限！';
+        return false;
         }
         if ($moduleName && file_exists($this->extresPath . $moduleName)) {
-            if ($this->chechmod($this->extresPath . $moduleName) == false) {
-                $this->error = '目录 ' . $this->extresPath . $moduleName . ' 没有可写权限！';
-                return false;
-            }
+        if ($this->chechmod($this->extresPath . $moduleName) == false) {
+        $this->error = '目录 ' . $this->extresPath . $moduleName . ' 没有可写权限！';
+        return false;
+        }
         }
         //静态资源目录权限检测
         if (!file_exists($this->extresPath)) {
-            //创建目录
-            if (mkdir($this->extresPath, 0777, true) == false) {
-                $this->error = '目录 ' . $this->extresPath . ' 创建失败，请检查是否有可写权限！';
-                return false;
-            }
+        //创建目录
+        if (mkdir($this->extresPath, 0777, true) == false) {
+        $this->error = '目录 ' . $this->extresPath . ' 创建失败，请检查是否有可写权限！';
+        return false;
+        }
         }
         //权限检测
         if ($this->chechmod($this->extresPath) == false) {
-            $this->error = '目录 ' . $this->extresPath . ' 没有可写权限！';
-            return false;
+        $this->error = '目录 ' . $this->extresPath . ' 没有可写权限！';
+        return false;
         }*/
         return true;
     }
-
-
 
 }

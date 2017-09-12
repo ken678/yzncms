@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-12 12:34:44
+Date: 2017-09-12 18:10:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=279 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=280 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -161,6 +161,7 @@ INSERT INTO `yzn_action_log` VALUES ('275', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('276', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 18:01登录了后台', '1505124083');
 INSERT INTO `yzn_action_log` VALUES ('277', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 18:07登录了后台', '1505124456');
 INSERT INTO `yzn_action_log` VALUES ('278', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-12 11:04登录了后台', '1505185475');
+INSERT INTO `yzn_action_log` VALUES ('279', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-12 17:54登录了后台', '1505210073');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -183,7 +184,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505185475', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505210073', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -494,32 +495,6 @@ INSERT INTO `yzn_config_field` VALUES ('1', 'icp', 'input', 'a:4:{s:5:\"title\";
 INSERT INTO `yzn_config_field` VALUES ('2', 'close', 'select', 'a:4:{s:5:\"title\";s:12:\"关闭站点\";s:4:\"tips\";s:0:\"\";s:5:\"style\";s:0:\"\";s:6:\"option\";a:2:{i:0;a:2:{s:5:\"title\";s:6:\"关闭\";s:5:\"value\";s:2:\"0\r\";}i:1;a:2:{s:5:\"title\";s:6:\"开启\";s:5:\"value\";s:1:\"1\";}}}', '1492741857');
 
 -- ----------------------------
--- Table structure for `yzn_links`
--- ----------------------------
-DROP TABLE IF EXISTS `yzn_links`;
-CREATE TABLE `yzn_links` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '链接id',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '链接名称',
-  `image` varchar(255) NOT NULL DEFAULT '' COMMENT '链接图片',
-  `target` varchar(25) NOT NULL DEFAULT '' COMMENT '链接打开方式',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '链接描述',
-  `visible` tinyint(1) NOT NULL COMMENT '链接是否可见',
-  `rating` int(11) NOT NULL DEFAULT '0' COMMENT '链接等级',
-  `updated` int(11) NOT NULL COMMENT '链接最后更新时间',
-  `rss` varchar(255) NOT NULL DEFAULT '' COMMENT '链接RSS地址',
-  `termsid` int(4) NOT NULL COMMENT '分类id',
-  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`id`),
-  KEY `visible` (`visible`),
-  KEY `termsid` (`termsid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='友情链接';
-
--- ----------------------------
--- Records of yzn_links
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `yzn_menu`
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_menu`;
@@ -538,7 +513,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -580,15 +555,6 @@ INSERT INTO `yzn_menu` VALUES ('40', '模块', '', '0', 'Admin', 'Module', 'inde
 INSERT INTO `yzn_menu` VALUES ('41', '本地模块', 'icon iconfont icon-yingyong', '40', 'Admin', 'Module', 'local', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('42', '模块管理', '', '41', 'Admin', 'Module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('43', '模块列表', 'icon iconfont icon-liebiao', '40', 'Admin', 'Module', 'list', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('44', '友情链接', '', '43', 'Links', 'Links', 'index', '', '1', '友情链接！', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('45', '添加友情链接', '', '44', 'Links', 'Links', 'add', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('46', '链接编辑', '', '44', 'Links', 'Links', 'edit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('47', '链接删除', '', '44', 'Links', 'Links', 'delete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('48', '链接排序', '', '44', 'Links', 'Links', 'listorder', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('49', '分类管理', '', '44', 'Links', 'Links', 'terms', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('50', '分类新增', '', '44', 'Links', 'Links', 'addTerms', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('51', '分类修改', '', '44', 'Links', 'Links', 'termsedit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('52', '分类删除', '', '44', 'Links', 'Links', 'termsdelete', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -705,7 +671,6 @@ CREATE TABLE `yzn_module` (
 -- ----------------------------
 -- Records of yzn_module
 -- ----------------------------
-INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', null, '1505190071', '1505190071', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_terms`
@@ -720,7 +685,7 @@ CREATE TABLE `yzn_terms` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `module` (`module`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='分类表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类表';
 
 -- ----------------------------
 -- Records of yzn_terms
