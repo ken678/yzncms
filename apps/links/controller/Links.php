@@ -15,19 +15,27 @@ use think\Db;
 
 /**
  * 友情链接管理
+ * @author 御宅男  <530765310@qq.com>
  */
 class Links extends Adminbase
 {
-
-    //友情链接列表
+    /**
+     * [友情链接列表]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function index()
     {
         $list = $this->lists('Links', array(), array("id" => "DESC"));
+        $Terms = Db::name('Terms')->where(array("module" => "links"))->column("id,name");
+        $this->assign("Terms", $Terms);
         $this->assign("list", $list);
         return $this->fetch();
     }
 
-    //新增友情链接
+    /**
+     * [新增友情链接]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function add()
     {
         if ($this->request->isPost()) {
@@ -59,7 +67,10 @@ class Links extends Adminbase
         }
     }
 
-    //编辑友情链接
+    /**
+     * [编辑友情链接]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function edit()
     {
         if ($this->request->isPost()) {
@@ -100,7 +111,11 @@ class Links extends Adminbase
 
     }
 
-    //删除友情链接
+    /**
+     * [删除友情链接]
+     * @param  integer $ids [description]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function delete($ids = 0)
     {
         empty($ids) && $this->error('参数错误！');
@@ -118,7 +133,26 @@ class Links extends Adminbase
 
     }
 
-    //分类管理
+    /**
+     * [友情链接排序]
+     * @author 御宅男  <530765310@qq.com>
+     */
+    public function listorder()
+    {
+        $id = $this->request->param('id/d', 0);
+        $listorder = $this->request->param('value/d', 0);
+        $rs = Db::name('Links')->where(['id' => $id])->setField(['listorder' => $listorder]);
+        if ($rs !== false) {
+            $this->success("排序更新成功！");
+        } else {
+            $this->error("排序失败！");
+        }
+    }
+
+    /**
+     * [分类管理]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function terms()
     {
         $data = Db::name('Terms')->where(array("module" => "links"))->select();
@@ -126,7 +160,10 @@ class Links extends Adminbase
         return $this->fetch();
     }
 
-    //新增分类
+    /**
+     * [新增分类]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function addTerms()
     {
         if ($this->request->isPost()) {
@@ -142,22 +179,52 @@ class Links extends Adminbase
             if ($status) {
                 $this->success('添加成功！', url("Links/terms"));
             } else {
-                $this->error("分类添加失败！");
+                $this->error("添加失败！");
             }
         } else {
             return $this->fetch();
         }
     }
 
-    //分类编辑
+    /**
+     * [分类编辑]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function termsedit()
     {
-
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
+            $status = Db::name('Terms')->update($data);
+            if ($status) {
+                $this->success('更新成功！', url("Links/terms"));
+            } else {
+                $this->error("更新失败！");
+            }
+        } else {
+            $id = $this->request->param('id', 0);
+            $data = Db::name('Terms')->where(array("id" => $id, "module" => "links"))->find();
+            if (!$data) {
+                $this->error("该分类不存在！");
+            }
+            $this->assign("data", $data);
+            return $this->fetch();
+        }
     }
 
-    //分类删除
+    /**
+     * [分类删除]
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function termsdelete()
     {
+        $id = $this->request->param('id/d', 0);
+        $res = Db::name('Terms')->where(array("id" => $id, "module" => "links"))->delete();
+        if ($res !== false) {
+            Db::name('Links')->where(array("termsid" => $id))->delete();
+            $this->success('删除成功！');
+        } else {
+            $this->error('删除失败！');
+        }
 
     }
 

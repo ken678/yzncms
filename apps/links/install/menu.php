@@ -2,7 +2,7 @@
 return array(
     array(
         //父菜单ID，NULL或者不写系统默认，0为顶级菜单
-        "parentid" => NULL,
+        "parentid" => null,
         //地址，[模块/]控制器/方法
         "route" => "Links/Links/index",
         //类型，1：权限认证+菜单，0：只作为菜单
@@ -32,6 +32,12 @@ return array(
                 "type" => 1,
                 "status" => 0,
                 "name" => "链接删除",
+            ),
+            array(
+                "route" => "Links/Links/listorder",
+                "type" => 1,
+                "status" => 0,
+                "name" => "链接排序",
             ),
             array(
                 "route" => "Links/Links/terms",

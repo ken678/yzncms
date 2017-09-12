@@ -137,14 +137,28 @@ article, aside, dialog, footer, header, section, footer, nav, figure, menu { dis
 .pr30 { padding-right: 30px; }
 .pr50 { padding-right: 50px; }
 .pr100 { padding-right: 100px; }
+/*字体
+******************************/
+.ft20{font-size: 20px !important;}
+/* 宽度\高度\尺寸
+******************************/
+.w18pre { width: 18%; }
+.size-64x64 { width: 64px; height: 64px; }
+.size-88x29 { width: 88px; height: 29px; }
+.size-72x72 { width: 72px; height: 72px; }
+.size-106x106 { width: 106px; height: 106px; }
+.red { color: red; }
+.blue { color: #06C; }
+.orange { color: #F60; }
+.bold { font-weight: bold; color: #545454 }
 /*msg*/
-.msgpage { background-color: #FFF; width: 100%; height: 100%; }
+/*.msgpage { background-color: #FFF; width: 100%; height: 100%; }
 .msgbox { background-color: #FFF; width: 480px; height: 200px; margin: 0 0 0 -240px; border: solid 1px #E7E7E7; border-radius: 5px; position: absolute; z-index: 1; top: 20%; left: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
 .msgbox .pic { background: url(../images/msg.png) no-repeat 0 0; width: 90px; height: 90px; position: absolute; z-index: 1; top: 30px; left: 40px; }
 .msgbox .con { font-size: 24px; font-weight: lighter; color: #333; position: absolute; z-index: 1; top: 30px; left: 140px; }
 .msgbox .scon { font-size: 12px; color: #999; position: absolute; z-index: 1; top: 65px; left: 140px; }
 .msgbox .button { position: absolute; z-index: 1; top: 90px; left: 140px; }
-.msgbox .powerby { font-size: 10px; font-style: italic; font-family: Tahoma; font-weight: 600; color: #000; position: absolute; z-index: 1; right: 10px; bottom: 10px; }
+.msgbox .powerby { font-size: 10px; font-style: italic; font-family: Tahoma; font-weight: 600; color: #000; position: absolute; z-index: 1; right: 10px; bottom: 10px; }*/
 /*debug*/
 .nc-row { font-size: 0!important; *word-spacing:-1px/*IE6、7*/;}
 .nc-row li { font-size: 12px; vertical-align: top; letter-spacing: normal; display: inline-block!important; *display: inline/*IE7*/; *zoom:1/*IE7*/;}
@@ -579,25 +593,6 @@ padding: 7px 20px !important; border: solid 1px #E6E6E6 !important; cursor: poin
 .explanation .title span { background: url(../images/combine_img.png) no-repeat -580px -100px; width: 20px; height: 20px; position: absolute; z-index: 1; top: -6px; right: -9px; }
 .explanation ul { color: #748A8F; margin-left: 10px; }
 .explanation li { line-height: 20px; background: url(../images/macro_arrow.gif) no-repeat 0 10px; padding-left: 10px; margin-bottom: 4px; text-shadow: 1px 1px 0 rgba(255,255,255,0.5); }
-/* 宽度\高度\尺寸
-------------------------------------------------------------------- */
-.w18pre { width: 18%; }
-.size-64x64 { width: 64px; height: 64px; }
-.size-88x29 { width: 88px; height: 29px; }
-.size-72x72 { width: 72px; height: 72px; }
-.size-106x106 { width: 106px; height: 106px; }
-.red { color: red; }
-.blue { color: #06C; }
-.orange { color: #F60; }
-.bold { font-weight: bold; color: #545454 }
-/* tip提示 */
-/*.tip-yellowsimple { color: #000; background-color: #fff9c9; text-align: left; min-width: 50px; max-width: 300px; border: 1px solid #c7bf93; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; z-index: 1000; padding: 6px 8px; }
-.tip-yellowsimple .tip-inner { font: 12px/16px arial, helvetica, sans-serif; }
-.tip-yellowsimple .tip-arrow-top { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat; width: 9px; height: 6px; margin-top: -6px; margin-left: -5px; top: 0; left: 50%; }
-.tip-yellowsimple .tip-arrow-right { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat -9px 0; width: 6px; height: 9px; margin-top: -4px; margin-left: 0; top: 50%; left: 100%; }
-.tip-yellowsimple .tip-arrow-bottom { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat -18px 0; width: 9px; height: 6px; margin-top: 0; margin-left: -5px; top: 100%; left: 50%; }
-.tip-yellowsimple .tip-arrow-left { background: url(../images/tip-yellowsimple_arrows.gif) no-repeat -27px 0; width: 6px; height: 9px; margin-top: -4px; margin-left: -6px; top: 50%; left: 0; }
-*/
 /* table
 ------------------------------------------------------------------- */
 #gcategory select { margin-right: 3px; }

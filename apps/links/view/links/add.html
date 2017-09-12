@@ -29,7 +29,7 @@
             <select name="termsid" class="valid">
                 <option value="0">==默认分类==</option>
                 {volist name="Terms" id="vo"}
-                <option value="{$vo.id}">{$vo.name}</option>
+                <option value="{$key}">{$vo}</option>
                 {/volist}
             </select>
           <span class="err"></span>

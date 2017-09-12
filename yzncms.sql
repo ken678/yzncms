@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-11 13:24:34
+Date: 2017-09-12 12:34:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=276 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=279 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -158,6 +158,9 @@ INSERT INTO `yzn_action_log` VALUES ('272', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('273', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 10:24登录了后台', '1505096669');
 INSERT INTO `yzn_action_log` VALUES ('274', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 12:48登录了后台', '1505105289');
 INSERT INTO `yzn_action_log` VALUES ('275', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 13:23登录了后台', '1505107402');
+INSERT INTO `yzn_action_log` VALUES ('276', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 18:01登录了后台', '1505124083');
+INSERT INTO `yzn_action_log` VALUES ('277', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 18:07登录了后台', '1505124456');
+INSERT INTO `yzn_action_log` VALUES ('278', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-12 11:04登录了后台', '1505185475');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -180,7 +183,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505107402', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505185475', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -510,7 +513,7 @@ CREATE TABLE `yzn_links` (
   PRIMARY KEY (`id`),
   KEY `visible` (`visible`),
   KEY `termsid` (`termsid`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='友情链接';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='友情链接';
 
 -- ----------------------------
 -- Records of yzn_links
@@ -535,7 +538,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -581,10 +584,11 @@ INSERT INTO `yzn_menu` VALUES ('44', '友情链接', '', '43', 'Links', 'Links',
 INSERT INTO `yzn_menu` VALUES ('45', '添加友情链接', '', '44', 'Links', 'Links', 'add', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('46', '链接编辑', '', '44', 'Links', 'Links', 'edit', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('47', '链接删除', '', '44', 'Links', 'Links', 'delete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('48', '分类管理', '', '44', 'Links', 'Links', 'terms', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('49', '分类新增', '', '44', 'Links', 'Links', 'addTerms', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('50', '分类修改', '', '44', 'Links', 'Links', 'termsedit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('51', '分类删除', '', '44', 'Links', 'Links', 'termsdelete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('48', '链接排序', '', '44', 'Links', 'Links', 'listorder', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('49', '分类管理', '', '44', 'Links', 'Links', 'terms', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('50', '分类新增', '', '44', 'Links', 'Links', 'addTerms', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('51', '分类修改', '', '44', 'Links', 'Links', 'termsedit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('52', '分类删除', '', '44', 'Links', 'Links', 'termsdelete', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -701,7 +705,7 @@ CREATE TABLE `yzn_module` (
 -- ----------------------------
 -- Records of yzn_module
 -- ----------------------------
-INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', null, '1505090562', '1505090562', '0');
+INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', null, '1505190071', '1505190071', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_terms`
@@ -721,4 +725,3 @@ CREATE TABLE `yzn_terms` (
 -- ----------------------------
 -- Records of yzn_terms
 -- ----------------------------
-INSERT INTO `yzn_terms` VALUES ('1', '0', '122', 'links', null);

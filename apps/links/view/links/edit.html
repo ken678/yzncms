@@ -29,7 +29,7 @@
             <select name="termsid" class="valid">
                 <option value="0">==默认分类==</option>
                 {volist name="Terms" id="vo"}
-                <option value="{$vo.id}" {eq name="vo[id]" value="$data['termsid']"}selected{/eq}>{$vo.name}</option>
+                <option value="{$key}" {eq name="key" value="$data['termsid']"}selected{/eq}>{$vo}</option>
                 {/volist}
             </select>
           <span class="err"></span>

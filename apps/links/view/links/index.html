@@ -26,13 +26,14 @@
 		    <table width="100%">
 		    <thead>
 		      <tr>
-            <td width="20"><label><input class="check-all" checked="chedked" type="checkbox" value=""></label></td>
+                <td width="20"><label><input class="check-all" checked="chedked" type="checkbox" value=""></label></td>
+                <td width="50" class="sort" align="center">排序</td>
             	<td width="150" align="center">操作</td>
 		        <td width="60"  align="center">ID</td>
 		        <td width="100" align="center">LOGO</td>
-		        <td width="300" align="center">名称</td>
-		        <td width="140" align="center">分类</td>
-		        <td width="140" align="center">描述</td>
+		        <td width="150" align="center">名称</td>
+		        <td width="100" align="center">分类</td>
+		        <td width="250" align="center">描述</td>
 		      </tr>
 		    </thead>
 		    </table>
@@ -52,15 +53,16 @@
 	          {volist name="list" id="vo"}
 	              <tr>
 	              <td width="20"><input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['id']}"></td>
+	              <td width="50" align="center" class="sort"><span alt="可编辑" column_id="{$vo['id']}" fieldname="gc_sort" nc_type="inline_edit" class="editable itip">{$vo['listorder']}</span></td>
 	              <td width="150" align="center">
 	                 <a href="{:url('links/edit',array('id'=>$vo['id']))}" class="btn blue"><i class="icon iconfont icon-edit"></i>编辑<a>
 	                 <a class="btn red ajax-get confirm" url="{:url('links/delete',array('ids'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a>
 	              </td>
 	              <td width="60"  align="center">{$vo['id']}</td>
-	              <td width="100" align="center">暂无logo</td>
-	              <td width="300" align="center">{$vo['name']}</td>
-	              <td width="140" align="center">{$vo['termsid']}</td>
-	              <td width="140" align="center">{$vo['description']}</td>
+	              <td width="100" align="center">{empty name="vo['image']"}暂无logo{else /}<i class="icon iconfont icon-tupian ft20" ></i>{/empty}</td>
+	              <td width="150" align="center">{$vo['name']}</td>
+	              <td width="100" align="center">{notempty name="vo['termsid']"}{$Terms[$vo['termsid']]}{/notempty}</td>
+	              <td width="250" align="center">{$vo['description']}</td>
 	              </tr>
 	          {/volist}
 			</tbody>
@@ -69,4 +71,10 @@
 
 	</div>
 </div>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("links/links/listorder")}'});
+});
+</script>
 {/block}
