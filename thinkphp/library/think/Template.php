@@ -65,7 +65,6 @@ class Template
     {
         $this->config['cache_path'] = TEMP_PATH;
         $this->config = array_merge($this->config, $config);
-        var_dump($this->config);
         $this->config['taglib_begin'] = $this->stripPreg($this->config['taglib_begin']);
         $this->config['taglib_end'] = $this->stripPreg($this->config['taglib_end']);
         $this->config['tpl_begin'] = $this->stripPreg($this->config['tpl_begin']);

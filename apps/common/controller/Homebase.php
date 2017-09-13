@@ -19,6 +19,7 @@ class Homebase extends Base
     {
         $Theme = empty(self::$Cache["Config"]['theme']) ? 'default' : self::$Cache["Config"]['theme'];
         $config['template']['view_path'] = TEMPLATE_PATH . $Theme . '/content/'; //模板主题
+        $config['template']['taglib_pre_load'] = 'app\common\taglib\Yzn';
         config($config); //添加配置
         parent::__construct();
     }

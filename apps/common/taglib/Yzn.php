@@ -15,7 +15,7 @@ use think\template\TagLib;
 /**
  * 文档模型标签库
  */
-class Demo extends TagLib
+class Yzn extends TagLib
 {
     /**
      * 定义标签列表
