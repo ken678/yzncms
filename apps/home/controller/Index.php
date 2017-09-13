@@ -23,7 +23,10 @@ class Index extends Homebase
      */
     public function index()
     {
-        return '首页暂无 请进后台 当前后缀加admin';
+        $this->assign('demo_time', $this->request->time());
+        $SEO = seo();
+        $this->assign("SEO", $SEO);
+        return $this->fetch();
     }
 
     /**

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-12 18:10:13
+Date: 2017-09-13 17:59:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=280 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=282 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -162,6 +162,8 @@ INSERT INTO `yzn_action_log` VALUES ('276', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('277', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 18:07登录了后台', '1505124456');
 INSERT INTO `yzn_action_log` VALUES ('278', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-12 11:04登录了后台', '1505185475');
 INSERT INTO `yzn_action_log` VALUES ('279', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-12 17:54登录了后台', '1505210073');
+INSERT INTO `yzn_action_log` VALUES ('280', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-13 12:32登录了后台', '1505277134');
+INSERT INTO `yzn_action_log` VALUES ('281', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-13 15:00登录了后台', '1505286042');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -184,7 +186,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505210073', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505286042', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
