@@ -14,7 +14,7 @@ return [
     // +----------------------------------------------------------------------
     'template' => [
         // 预先加载的标签库
-        'taglib_pre_load' => 'app\common\taglib\Demo',
+        'taglib_pre_load' => 'app\common\taglib\Yzn',
     ],
 
 ];

@@ -10,17 +10,20 @@
 // +----------------------------------------------------------------------
 namespace app\common\controller;
 
+use think\Config;
+
 /**
  * 前台总控制器
  */
 class Homebase extends Base
 {
+    //加载template动态配置
     public function __construct()
     {
+        $config['template'] = Config::get('template');
         $Theme = empty(self::$Cache["Config"]['theme']) ? 'default' : self::$Cache["Config"]['theme'];
         $config['template']['view_path'] = TEMPLATE_PATH . $Theme . '/content/'; //模板主题
-        $config['template']['taglib_pre_load'] = 'app\common\taglib\Yzn';
-        config($config); //添加配置
+        Config::set($config); //添加配置
         parent::__construct();
     }
 
