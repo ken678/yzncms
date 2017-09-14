@@ -17,43 +17,117 @@ use think\template\TagLib;
  */
 class Yzn extends TagLib
 {
+    // 数据库where表达式
+    protected $comparison = array(
+        '{eq}' => '=',
+        '{neq}' => '<>',
+        '{elt}' => '<=',
+        '{egt}' => '>=',
+        '{gt}' => '>',
+        '{lt}' => '<',
+    );
     /**
      * 定义标签列表
      */
     protected $tags = [
-        // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'close' => ['attr' => 'time,format', 'close' => 0], //闭合标签，默认为不闭合
-        'open' => ['attr' => 'name,type', 'close' => 1],
-
+        //内容标签
+        'content' => ['attr' => 'action,catid,num,page,pagefun,return,where'],
     ];
 
     /**
-     * 这是一个闭合标签的简单演示
+     * 内容标签
      */
-    public function tagClose($tag)
+    public function tagContent($tag, $content)
     {
-        $format = empty($tag['format']) ? 'Y-m-d H:i:s' : $tag['format'];
-        $time = empty($tag['time']) ? time() : $tag['time'];
-        $parse = '<?php ';
-        $parse .= 'echo date("' . $format . '",' . $time . ');';
-        $parse .= ' ?>';
-        return $parse;
+        //栏目ID
+        $tag['catid'] = $catid = $tag['catid'];
+        //每页显示总数
+        $tag['num'] = $num = (int) $tag['num'];
+        //当前分页参数
+        $tag['page'] = $page = (isset($tag['page'])) ? ((substr($tag['page'], 0, 1) == '$') ? $tag['page'] : (int) $tag['page']) : 0;
+        //分页函数，默认page
+        $tag['pagefun'] = $pagefun = empty($tag['pagefun']) ? "page" : trim($tag['pagefun']);
+        //数据返回变量
+        $tag['return'] = $return = empty($tag['return']) ? "data" : $tag['return'];
+        //方法
+        $tag['action'] = $action = trim($tag['action']);
+        //sql语句的where部分
+        if (isset($tag['where']) && $tag['where']) {
+            $tag['where'] = $this->parseSqlCondition($tag['where']);
+        }
+        //拼接php代码
+        $parseStr = '<?php';
+        $parseStr .= ' $content_tag = new \app\content\taglib\Content;' . "\r\n";
+
+        $parseStr .= ' if(method_exists($content_tag, "' . $action . '")){';
+        $parseStr .= ' $' . $return . ' = $content_tag->' . $action . '(' . self::arr_to_html($tag) . ');';
+        $parseStr .= ' }';
+        $parseStr .= ' ?>';
+        $parseStr .= $content;
+        return $parseStr;
+
     }
 
     /**
-     * 这是一个非闭合标签的简单演示
+     * 解析条件表达式
+     * @access public
+     * @param string $condition 表达式标签内容
+     * @return array
      */
-    public function tagOpen($tag, $content)
+    protected function parseSqlCondition($condition)
     {
-        $type = empty($tag['type']) ? 0 : 1; // 这个type目的是为了区分类型，一般来源是数据库
-        $name = $tag['name']; // name是必填项，这里不做判断了
-        $parse = '<?php ';
-        $parse .= '$test_arr=[[1,3,5,7,9],[2,4,6,8,10]];'; // 这里是模拟数据
-        $parse .= '$__LIST__ = $test_arr[' . $type . '];';
-        $parse .= ' ?>';
-        $parse .= '{volist name="__LIST__" id="' . $name . '"}';
-        $parse .= $content;
-        $parse .= '{/volist}';
-        return $parse;
+        $condition = str_ireplace(array_keys($this->comparison), array_values($this->comparison), $condition);
+        return $condition;
     }
+
+    /**
+     * 转换数据为HTML代码
+     * @param array $data 数组
+     */
+    private static function arr_to_html($data)
+    {
+        if (is_array($data)) {
+            $str = 'array(';
+            foreach ($data as $key => $val) {
+                if (is_array($val)) {
+                    $str .= "'$key'=>" . self::arr_to_html($val) . ",";
+                } else {
+                    //如果是变量的情况
+                    if (strpos($val, '$') === 0) {
+                        $str .= "'$key'=>$val,";
+                    } else if (preg_match("/^([a-zA-Z_].*)\(/i", $val, $matches)) {
+                        //判断是否使用函数
+                        if (function_exists($matches[1])) {
+                            $str .= "'$key'=>$val,";
+                        } else {
+                            $str .= "'$key'=>'" . self::newAddslashes($val) . "',";
+                        }
+                    } else {
+                        $str .= "'$key'=>'" . self::newAddslashes($val) . "',";
+                    }
+                }
+            }
+            return $str . ')';
+        }
+        return false;
+    }
+
+    /**
+     * 返回经addslashes处理过的字符串或数组
+     * @param $string 需要处理的字符串或数组
+     * @return mixed
+     */
+    protected static function newAddslashes($string)
+    {
+        if (!is_array($string)) {
+            return addslashes($string);
+        }
+
+        foreach ($string as $key => $val) {
+            $string[$key] = $this->newAddslashes($val);
+        }
+
+        return $string;
+    }
+
 }

@@ -23,7 +23,6 @@ class Index extends Homebase
      */
     public function index()
     {
-        $this->assign('demo_time', $this->request->time());
         $SEO = seo();
         $this->assign("SEO", $SEO);
         return $this->fetch();
