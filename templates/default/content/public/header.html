@@ -1,38 +1,39 @@
-{yzn:content action="category" catid="0"  }
-{volist name="data" id="vo"}
-{$vo.catid}:{$vo.catname}<br/>
-{/volist}
-{/yzn:content}
-<div class="head" >
-<div class=" am-topbar-fixed-top am-topbar" >
-  <div class=" am-container" >
-    <div class="am-topbar-brand app-logo">
-      <a href="/">
-        <img src="__HOME_IMG__/logo.png" alt="" />
-      </a>
+<div class="header">
+    <div class="header-box clearfix">
+        <a href="/"><img class="logo" src="__IMG_PATH__/logo.png" alt="" width="200"></a>
+        <div class="header-nav">
+            <ul>
+                <li data-name="/" class="active"><a href="/">首页</a></li>
+                {yzn:content action="category" catid="0" num="6" order="listorder ASC" return="data"}
+                {volist name="data" id="vo"}
+                <li><a href="{$vo['url']}">{$vo['catname']}</a></li>
+                {/volist}
+                {/yzn:content}
+            </ul>
+        </div>
     </div>
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm  am-show-sm-only" data-am-collapse="{target:'#doc-topbar-collapse'}">
-    <span class="am-sr-only">导航切换</span>
-    <span class="am-icon-bars"></span>
-    </button>
-    <div class="am-collapse am-topbar-collapse am-fr" id="doc-topbar-collapse">
-      <ul class="am-nav am-nav-pills am-topbar-nav">
-        <li  class='am-active'><a href="/">首页</a></li>
-        <li><a href='/a/anlixinshang/1500yina/' > 案例 <span></span> </a></li>
-        <li><a href='/a/wangluoyingxiao/fuwufanwei/' > 服务 <span></span> </a></li>
-        <li><a href='/a/zuixinzixun/' > 资讯 <span></span> </a></li>
-        <li><a href='/a/about/' > 关于 <span></span> </a></li>
-        <li><a href='/a/lianxiwomen/' > 联系 <span></span> </a></li>
-        <li class="search am-hide-md-only"> <form class="am-form"   action="/plus/search.php">
-          <div class="am-form-icon am-form-feedback">
-            <input name="q" type="text" class="am-form-field" id="search-keyword" value="在这里搜索..." onfocus="if(this.value=='在这里搜索...'){this.value='';}" onblur="if(this.value==''){this.value='在这里搜索...';}">
-            <button class="am-icon-search " type="submit"></button>
-          </div>
-        </form>
-      </li>
-    </ul>
-  </div>
 </div>
+
+<div class="bodyer">
+    <div class="main-pic">
+        <div class="cover"></div>
+        <div class="main-inner">
+            <div style="position: relative;">
+            <h1>YZN<font>CMS</font>内容管理系统</h1>
+            <h2>基于ThinkPHP5.011最新版,框架易于功能扩展，代码维护，方便二次开发  
+帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求</h2>
+            <div class="btns">
+                <a href="https://git.oschina.net/ken678/YZNCMS" target="_blank" class="btn btn-introduce"><i class="iconfont"></i>源码下载</a>
+                <a href="https://www.kancloud.cn/ken678/yzncms" target="_blank" class="btn btn-downcode"><i class="iconfont"></i>文档说明</a>
+            </div>
+            <div class="downcount">
+                下载<em>1500+</em>次
+            </div>
+            <div class="joinus">
+                <span>当前版本：V1.0 测试版</span>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-<div class="clear"></div>
+

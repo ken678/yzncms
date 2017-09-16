@@ -5,9 +5,9 @@ return [
     // | 模板替换
     // +----------------------------------------------------------------------
     'view_replace_str' => [
-        '__HOME_IMG__' => '/static/home/image',
-        '__HOME_CSS__' => '/static/home/css',
-        '__HOME_JS__' => '/static/home/js',
+        '__IMG_PATH__' => '/static/home/image',
+        '__CSS_PATH__' => '/static/home/css',
+        '__JS_PATH__' => '/static/home/js',
     ],
     // +----------------------------------------------------------------------
     // | 模板设置
@@ -15,6 +15,7 @@ return [
     'template' => [
         // 预先加载的标签库
         'taglib_pre_load' => 'app\common\taglib\Yzn',
+
     ],
 
 ];
