@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\taglib;
 
+use think\config;
 use think\template\TagLib;
 
 /**
@@ -32,6 +33,8 @@ class Yzn extends TagLib
     protected $tags = [
         //内容标签
         'content' => ['attr' => 'action,catid,num,page,pagefun,return,where'],
+        //SQL标签
+        'get' => ['attr' => 'sql,cache,page,dbsource,return,num,pagetp,pagefun,table,order,where'],
     ];
 
     /**
@@ -62,6 +65,70 @@ class Yzn extends TagLib
         $parseStr .= ' if(method_exists($content_tag, "' . $action . '")){';
         $parseStr .= ' $' . $return . ' = $content_tag->' . $action . '(' . self::arr_to_html($tag) . ');';
         $parseStr .= ' }';
+        $parseStr .= ' ?>';
+        $parseStr .= $content;
+        return $parseStr;
+
+    }
+
+    /**
+     * GET标签
+     */
+    public function tagGet($tag, $content)
+    {
+        //数据返回变量
+        $tag['return'] = $return = empty($tag['return']) ? "data" : $tag['return'];
+        //缓存时间
+        $tag['cache'] = $cache = (int) $tag['cache'];
+        //每页显示总数
+        $tag['num'] = $num = isset($tag['num']) && intval($tag['num']) > 0 ? intval($tag['num']) : 20;
+        //SQL语句
+        if ($tag['sql']) {
+            $tag['sql'] = $this->parseSqlCondition($tag['sql']);
+        }
+        $tag['sql'] = $sql = str_replace(array("think_", "yzn_"), Config::get('database.prefix'), strtolower($tag['sql']));
+        //表名
+        $table = str_replace(Config::get('database.prefix'), '', $tag['table']);
+        if (!$sql && !$table) {
+            return false;
+        }
+        //删除，插入不执行！这样处理感觉有点鲁莽了，，，-__,-!
+        if (strpos($tag['sql'], "delete") || strpos($tag['sql'], "insert")) {
+            return false;
+        }
+        //如果使用table参数方式，使用类似tp的查询语言效果
+        if ($table) {
+            $table = strtolower($table);
+            //条件
+            $tableWhere = array();
+            foreach ($tag as $key => $val) {
+                if (!in_array($key, explode(',', $this->tags['get']['attr']))) {
+                    $tableWhere[$key] = $this->parseSqlCondition($val);
+                }
+            }
+            if ($tag['where']) {
+                $tableWhere['_string'] = $this->parseSqlCondition($tag['where']);
+            }
+        }
+        //拼接php代码
+        $parseStr = '<?php';
+
+        $parseStr .= ' $cache = ' . $cache . ';';
+        if ($table) {
+            $parseStr .= ' $cacheID = to_guid_string(' . self::arr_to_html($tableWhere) . ');';
+            $parseStr .= ' if( ' . $cache . ' && $_return = cache( $cacheID ) ){ ';
+            $parseStr .= '      $' . $return . '=$_return;';
+            $parseStr .= ' }else{ ';
+            $parseStr .= ' $get_db = think\Db::name(ucwords("' . $table . '"));';
+            if ($tag['order']) {
+                $parseStr .= ' $get_db->order("' . $tag['order'] . '"); ';
+            }
+            $parseStr .= '$' . $return . '=$get_db->limit(' . $num . ')->select();';
+        } else {
+
+        }
+        $parseStr .= ' if(' . $cache . '){ cache( $cacheID  ,$' . $return . ',$cache); };';
+        $parseStr .= ' } ';
         $parseStr .= ' ?>';
         $parseStr .= $content;
         return $parseStr;

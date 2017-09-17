@@ -8,16 +8,11 @@
                 </div>
                 <div class="footer-websites">
                     <ul class="clearfix">
-                        <li><a href="" target="_blank">
-                                海口租房 </a></li>
-                        <li><a href="" target="_blank">
-                                苏州结婚网 </a></li>
-                        <li><a href="" target="_blank">
-                                中国石材城 </a></li>
-                        <li><a href="" target="_blank">
-                                苏州易修网 </a></li>
-                        <li><a href="" target="_blank">
-                                宜昌房产 </a></li>
+                        {yzn:get table="links" cache="3600"  return="data"}
+                        {volist name="data" id="vo"}
+                        <li><a href="{$vo['url']}" target="_blank">{$vo['name']}</a></li>
+                        {/volist}
+                        {/yzn:get}
                     </ul>
                 </div>
             </div>
