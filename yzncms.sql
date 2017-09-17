@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-09-13 17:59:05
+Date: 2017-09-17 14:05:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=282 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=284 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -72,36 +72,7 @@ CREATE TABLE `yzn_action_log` (
 INSERT INTO `yzn_action_log` VALUES ('260', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-07 15:23登录了后台', '1504769020');
 INSERT INTO `yzn_action_log` VALUES ('259', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-07 14:36登录了后台', '1504766202');
 INSERT INTO `yzn_action_log` VALUES ('258', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-07 13:14登录了后台', '1504761251');
-INSERT INTO `yzn_action_log` VALUES ('166', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-08 13:14登录了后台', '1502169297');
-INSERT INTO `yzn_action_log` VALUES ('167', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-08 14:36登录了后台', '1502174161');
-INSERT INTO `yzn_action_log` VALUES ('168', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-08 15:26登录了后台', '1502177191');
-INSERT INTO `yzn_action_log` VALUES ('169', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 09:16登录了后台', '1502241393');
-INSERT INTO `yzn_action_log` VALUES ('170', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 09:16登录了后台', '1502241418');
-INSERT INTO `yzn_action_log` VALUES ('171', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 10:02登录了后台', '1502244133');
-INSERT INTO `yzn_action_log` VALUES ('172', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 10:30登录了后台', '1502245815');
-INSERT INTO `yzn_action_log` VALUES ('173', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 11:36登录了后台', '1502249794');
-INSERT INTO `yzn_action_log` VALUES ('174', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 17:06登录了后台', '1502269573');
-INSERT INTO `yzn_action_log` VALUES ('175', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 17:31登录了后台', '1502271105');
-INSERT INTO `yzn_action_log` VALUES ('176', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-09 18:15登录了后台', '1502273740');
-INSERT INTO `yzn_action_log` VALUES ('177', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-10 16:46登录了后台', '1502354803');
-INSERT INTO `yzn_action_log` VALUES ('178', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-10 17:37登录了后台', '1502357828');
-INSERT INTO `yzn_action_log` VALUES ('179', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-11 13:34登录了后台', '1502429679');
-INSERT INTO `yzn_action_log` VALUES ('180', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-11 14:06登录了后台', '1502431566');
-INSERT INTO `yzn_action_log` VALUES ('181', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-11 15:24登录了后台', '1502436254');
-INSERT INTO `yzn_action_log` VALUES ('182', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-11 15:40登录了后台', '1502437257');
-INSERT INTO `yzn_action_log` VALUES ('183', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-11 17:45登录了后台', '1502444713');
-INSERT INTO `yzn_action_log` VALUES ('184', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 08:17登录了后台', '1502669839');
-INSERT INTO `yzn_action_log` VALUES ('185', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 11:18登录了后台', '1502680715');
-INSERT INTO `yzn_action_log` VALUES ('186', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 12:56登录了后台', '1502686605');
-INSERT INTO `yzn_action_log` VALUES ('187', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 15:28登录了后台', '1502695721');
-INSERT INTO `yzn_action_log` VALUES ('188', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 17:37登录了后台', '1502703452');
-INSERT INTO `yzn_action_log` VALUES ('189', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 17:52登录了后台', '1502704342');
-INSERT INTO `yzn_action_log` VALUES ('190', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 18:00登录了后台', '1502704831');
-INSERT INTO `yzn_action_log` VALUES ('191', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-14 18:21登录了后台', '1502706083');
-INSERT INTO `yzn_action_log` VALUES ('192', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-15 08:15登录了后台', '1502756132');
-INSERT INTO `yzn_action_log` VALUES ('193', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-15 09:17登录了后台', '1502759868');
-INSERT INTO `yzn_action_log` VALUES ('194', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-15 10:43登录了后台', '1502765018');
-INSERT INTO `yzn_action_log` VALUES ('195', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-15 12:58登录了后台', '1502773115');
+INSERT INTO `yzn_action_log` VALUES ('283', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-17 11:31登录了后台', '1505619099');
 INSERT INTO `yzn_action_log` VALUES ('196', '1', '1', '0', 'member', '1', 'admin在2017-08-18 19:57登录了后台', '1503057476');
 INSERT INTO `yzn_action_log` VALUES ('197', '1', '1', '0', 'member', '1', 'admin在2017-08-19 10:32登录了后台', '1503109929');
 INSERT INTO `yzn_action_log` VALUES ('198', '1', '1', '0', 'member', '1', 'admin在2017-08-19 17:51登录了后台', '1503136274');
@@ -155,15 +126,6 @@ INSERT INTO `yzn_action_log` VALUES ('269', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('270', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-10 11:11登录了后台', '1505013111');
 INSERT INTO `yzn_action_log` VALUES ('271', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-10 15:36登录了后台', '1505028961');
 INSERT INTO `yzn_action_log` VALUES ('272', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 08:36登录了后台', '1505090212');
-INSERT INTO `yzn_action_log` VALUES ('273', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 10:24登录了后台', '1505096669');
-INSERT INTO `yzn_action_log` VALUES ('274', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 12:48登录了后台', '1505105289');
-INSERT INTO `yzn_action_log` VALUES ('275', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 13:23登录了后台', '1505107402');
-INSERT INTO `yzn_action_log` VALUES ('276', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 18:01登录了后台', '1505124083');
-INSERT INTO `yzn_action_log` VALUES ('277', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 18:07登录了后台', '1505124456');
-INSERT INTO `yzn_action_log` VALUES ('278', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-12 11:04登录了后台', '1505185475');
-INSERT INTO `yzn_action_log` VALUES ('279', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-12 17:54登录了后台', '1505210073');
-INSERT INTO `yzn_action_log` VALUES ('280', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-13 12:32登录了后台', '1505277134');
-INSERT INTO `yzn_action_log` VALUES ('281', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-13 15:00登录了后台', '1505286042');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -186,7 +148,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505286042', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505619099', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -435,8 +397,8 @@ CREATE TABLE `yzn_category` (
 -- Records of yzn_category
 -- ----------------------------
 INSERT INTO `yzn_category` VALUES ('1', 'content', '0', '1', '', '0', '0', '1', '1,10,11', '网页教程', '', '网页教程-网页设计基础教程DIV+CSS', '', 'jiaocheng', '/home/index/lists/catid/1', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '1', '1', '0', 'wangyejiaocheng');
-INSERT INTO `yzn_category` VALUES ('4', 'content', '0', '1', '', '0', '0', '1', '4,16,17', '网页特效', '', '提供各种网页效果,让你的网页更炫丽', '', 'texiao', '/home/index/lists/catid/4', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:17:\"category_heng.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '4', '1', '0', 'wangyetexiao');
-INSERT INTO `yzn_category` VALUES ('6', 'content', '0', '1', '', '0', '0', '1', '6,20,21', '网站运营', '', '各种运营知识分享,助站长一臂之力', '', 'yunying', '/home/index/lists/catid/6', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:12:\"category.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '6', '1', '0', 'wangzhanyunying');
+INSERT INTO `yzn_category` VALUES ('4', 'content', '0', '1', '', '0', '0', '1', '4,16,17', '网页特效', '', '提供各种网页效果,让你的网页更炫丽', '', 'texiao', '/home/index/lists/catid/4', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '4', '1', '0', 'wangyetexiao');
+INSERT INTO `yzn_category` VALUES ('6', 'content', '0', '1', '', '0', '0', '1', '6,20,21', '网站运营', '', '各种运营知识分享,助站长一臂之力', '', 'yunying', '/home/index/lists/catid/6', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '6', '1', '0', 'wangzhanyunying');
 INSERT INTO `yzn_category` VALUES ('7', 'content', '0', '1', '', '0', '0', '1', '7,22,23', '站长杂谈', '', '站长杂谈-了解互联网第一手资讯', '', 'zatan', '/home/index/lists/catid/7', '0', 'a:12:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:12:\"category.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";N;}', '7', '1', '0', 'zhanchangzatan');
 INSERT INTO `yzn_category` VALUES ('10', 'content', '0', '1', '', '1', '0,1', '0', '10,30', 'HTML/XHTML', '', '', 'jiaocheng/', 'html', '/home/index/lists/catid/10', '0', 'a:14:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"list_template\";s:8:\"list.php\";s:13:\"show_template\";s:8:\"show.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:14:\"content_ishtml\";s:1:\"0\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";s:1:\"4\";}', '10', '1', '0', 'html/xhtml');
 INSERT INTO `yzn_category` VALUES ('11', 'content', '0', '1', '', '1', '0,1', '0', '11', 'Dreamweaver', '', '', 'jiaocheng/', 'dw', '/home/index/lists/catid/11', '0', 'a:14:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"list_template\";s:8:\"list.php\";s:13:\"show_template\";s:8:\"show.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:14:\"content_ishtml\";s:1:\"0\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";s:1:\"4\";}', '11', '1', '0', 'dreamweaver');

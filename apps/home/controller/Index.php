@@ -33,7 +33,35 @@ class Index extends Homebase
      */
     public function lists()
     {
-        return $this->fetch();
+        //栏目ID
+        $catid = $this->request->param('catid/d', 0);
+        //获取栏目数据
+        $category = getCategory($catid);
+        //栏目扩展配置信息
+        $setting = $category['setting'];
+        //生成类型为0的栏目
+        if ($category['type'] == 0) {
+            //栏目首页模板
+            $template = $setting['category_template'] ? $setting['category_template'] : 'category';
+            //栏目列表页模板
+            $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
+            //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
+            $template = $category['child'] ? "{$template}" : "{$template_list}";
+            //去除后缀开始
+            $tpar = explode(".", $template, 2);
+            //去除完后缀的模板
+            $template = $tpar[0];
+            unset($tpar);
+            //单页
+        } else if ($category['type'] == 1) {
+
+        }
+
+        //分配变量到模板
+        $this->assign($category);
+        $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+        $this->assign("SEO", $seo);
+        return $this->fetch($template);
     }
 
     /**

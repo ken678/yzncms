@@ -20,6 +20,11 @@ del,ins,u,s,a,a:hover{text-decoration:none;}
 body,textarea,input,button,select,keygen,legend{font-family: "Century Gothic","Microsoft yahei";color:#333;outline:0;font-size: 14px;}
 body{background:#fff;}
 a,a:hover{color:#333;}
+/*common*/
+a{ -webkit-transition: all .3s linear; -moz-transition: all .3s linear; -o-transition: all .3s linear; transition: all .3s linear;}
+.clear{clear: both;}
+.clearfix:after {display: block; clear: both; content: "\0020"; visibility: hidden; height: 0; }
+.w_1200{width: 1200px;margin: 0 auto;position: relative;}
 /*header*/
 .header {background: #323436; height: 60px; position: fixed; z-index: 1000; top: 0; width: 100%; border-bottom: 4px solid #ff5402; }
 .header .header-box {width: 1200px; height: 100%; margin: 0 auto; position: relative; }
@@ -45,3 +50,27 @@ a,a:hover{color:#333;}
 .main-pic .main-inner .downcount em {color: #ff7800; font-size: 32px; padding: 0 10px; }
 .main-pic .main-inner .joinus {padding-top: 20px; }
 .main-pic .main-inner .joinus span {background: rgba(0, 0, 0, 0.2); padding: 2px 10px; border-radius: 2px; color: #fff; display: inline-block; }
+
+/*footer*/
+.content-wrapper {width: 1200px; margin: 0 auto; }
+.footer-bottom{padding-top: 1px; background-color: #1f1f1f; }
+.footer-websites-box{padding-top: 40px; border-bottom: 1px solid #313131; }
+.footer-city-list{height: 35px; overflow: hidden; }
+.footer-city-list a{float: right; height: 34px; line-height: 34px; font-size: 13px; color: #828789; }
+.footer-city-list span{float: left; width: 90px; height: 34px; margin-right: 10px; font-size: 13px; line-height: 34px; background-color: #121212; color: #828789; text-align: center; cursor: pointer; }
+.footer-city-list span.on{color: #fff; background-color: #384144; }
+.footer-websites{margin-top: 21px; }
+.footer-websites ul li{float: left; margin: 0 14px 11px 0; font-size: 12px; color: #83888a; white-space: nowrap; }
+.footer-websites ul li a{color: #83888a; white-space: nowrap; }
+.footer-websites ul li a:hover{color: #fff;}
+.footer-company-box{padding-top: 30px; overflow: hidden;border-top: 1px solid #0c0c0c;}
+.footer-qr-code{float: right;}
+.footer-qr-code p{font-size: 12px; color: #fff; text-align: center; }
+.footer-qr-code div{margin-left: 30px; height: 130px; width: 100px; float: right; }
+.footer-qr-code div img{width: 100px; height: 100px; }
+.footer-company-info{float: left;width: 940px;}
+.footer-company-info ul {overflow: hidden; }
+.footer-company-info ul li{float: left; margin-right: 17px; font-size: 13px; color: #fff; }
+.footer-company-info ul li a{color: #fff;}
+.footer-company-info ul li a:hover{color: #ff7800;}
+.footer-company-info p{margin-top: 23px; font-size: 12px; text-align: left; color: #83888a;line-height: 25px;}
