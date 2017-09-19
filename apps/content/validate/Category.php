@@ -18,7 +18,6 @@ use think\Validate;
 class Category extends Validate
 {
     protected $rule = [
-        'modelid' => 'require|number',
         'parentid' => 'require|number',
         'catname' => 'require',
         'catdir' => 'require',
@@ -28,7 +27,6 @@ class Category extends Validate
     ];
 
     protected $message = [
-        'modelid.require' => '模型名称不得为空',
         'modelid.number' => '模型类型错误！',
         'parentid.require' => '上级栏目不得为空',
         'parentid.number' => '上级栏目类型错误！',
@@ -40,9 +38,9 @@ class Category extends Validate
     ];
 
     protected $scene = [
-        'add' => ['modelid', 'parentid', 'catname', 'catdir', 'type'],
+        'add' => ['parentid', 'catname', 'catdir', 'type'],
         'wadd' => ['parentid', 'catname', 'type', 'url'],
-        'edit' => ['modelid', 'parentid', 'catname', 'catdir'],
+        'edit' => ['parentid', 'catname', 'catdir'],
         'wedit' => ['parentid', 'catname', 'url'],
     ];
 

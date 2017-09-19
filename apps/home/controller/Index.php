@@ -11,6 +11,7 @@
 namespace app\home\controller;
 
 use app\common\controller\Homebase;
+use think\Loader;
 
 /**
  * 前台
@@ -54,6 +55,16 @@ class Index extends Homebase
             unset($tpar);
             //单页
         } else if ($category['type'] == 1) {
+            $template = $setting['page_template'] ? $setting['page_template'] : 'page';
+            //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
+            $template = "{$template}";
+            //去除后缀开始
+            $tpar = explode(".", $template, 2);
+            //去除完后缀的模板
+            $template = $tpar[0];
+            unset($tpar);
+            $info = Loader::model('content/page')->getPage($catid);
+            $this->assign($info);
 
         }
 

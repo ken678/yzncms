@@ -126,7 +126,7 @@ class Yzn extends TagLib
             if ($tag['where']) {
                 $parseStr .= ' $get_db->where("' . $tag['where'] . '"); ';
             }
-            $parseStr .= '$' . $return . '=$get_db->limit(' . $num . ')->select();';
+            $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
         } else {
 
         }

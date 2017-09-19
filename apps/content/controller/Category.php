@@ -217,10 +217,10 @@ class Category extends Adminbase
             $this->assign("setting", $setting);
 
             if ($data['type'] == 1) {
-//单页栏目
+                //单页栏目
                 return $this->fetch("singlepage_edit");
             } else if ($data['type'] == 2) {
-//外部栏目
+                //外部栏目
                 return $this->fetch("wedit");
             } else {
                 return $this->fetch();
