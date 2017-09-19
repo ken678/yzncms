@@ -8,7 +8,7 @@
                 </div>
                 <div class="footer-websites">
                     <ul class="clearfix">
-                        {yzn:get table="links" cache="3600"  return="data"}
+                        {yzn:get table="links" cache="3600" order="listorder ASC" return="data"}
                         {volist name="data" id="vo"}
                         <li><a href="{$vo['url']}" target="_blank">{$vo['name']}</a></li>
                         {/volist}

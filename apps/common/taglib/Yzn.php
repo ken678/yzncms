@@ -106,9 +106,9 @@ class Yzn extends TagLib
                     $tableWhere[$key] = $this->parseSqlCondition($val);
                 }
             }
-            if ($tag['where']) {
-                $tableWhere['_string'] = $this->parseSqlCondition($tag['where']);
-            }
+            /*if ($tag['where']) {
+        $tableWhere['_string'] = $this->parseSqlCondition($tag['where']);
+        }*/
         }
         //拼接php代码
         $parseStr = '<?php';
@@ -122,6 +122,9 @@ class Yzn extends TagLib
             $parseStr .= ' $get_db = think\Db::name(ucwords("' . $table . '"));';
             if ($tag['order']) {
                 $parseStr .= ' $get_db->order("' . $tag['order'] . '"); ';
+            }
+            if ($tag['where']) {
+                $parseStr .= ' $get_db->where("' . $tag['where'] . '"); ';
             }
             $parseStr .= '$' . $return . '=$get_db->limit(' . $num . ')->select();';
         } else {
