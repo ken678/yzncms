@@ -4,9 +4,9 @@
         <div class="header-nav">
             <ul>
                 <li class="{empty name="catid"} active{/empty}"><a href="/">首页</a></li>
-                {yzn:content action="category" catid="0" num="6" order="listorder ASC" cache="3600" return="data"}
+                {yzn:content action="category" catid="0" cache="3600" num="6" order="listorder ASC"  return="data"}
                 {volist name="data" id="vo"}
-                <li class="{if condition="in_array($catid,explode(',',$vo['arrchildid']))"} active{/if}"><a href="{$vo['url']}">{$vo['catname']}</a></li>
+                <li class="{if condition=" in_array($catid,explode( ',',$vo[ 'arrchildid'])) "} active{/if}"><a href="{$vo['url']}">{$vo['catname']}</a></li>
                 {/volist}
                 {/yzn:content}
             </ul>
