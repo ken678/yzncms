@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\content\model;
 
+use think\Loader;
 use think\Model;
 
 /**
@@ -45,11 +46,19 @@ class Page extends Model
         $catid = $data['catid'];
         //单页内容
         $info = $this->where(array('catid' => $catid))->find();
+        $validate = Loader::validate('Page');
         if ($info) {
             unset($data['catid']);
+            if (!$validate->scene('edit')->check($data)) {
+                $this->error = $validate->getError();
+                return false;
+            }
+        } else {
+            if (!$validate->scene('add')->check($data)) {
+                $this->error = $validate->getError();
+                return false;
+            }
         }
-        //$data = $this->token(false)->create($data, isset($data['catid']) ? 1 : 2);
-
         //取得标题颜色
         if (isset($post['style_color'])) {
             //颜色选择为隐藏域 在这里进行取值

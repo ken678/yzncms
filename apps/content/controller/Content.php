@@ -44,12 +44,13 @@ class Content extends Adminbase
     public function add()
     {
         if (Request::instance()->isPost()) {
+            $data = $this->request->param();
             //栏目ID
-            $catid = intval($_POST['info']['catid']);
+            $catid = intval($data['info']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
             }
-            if (trim($_POST['info']['title']) == '') {
+            if (trim($data['info']['title']) == '') {
                 $this->error("标题不能为空！");
             }
 
@@ -75,7 +76,7 @@ class Content extends Adminbase
             } else if ($category['type'] == 1) {
                 //单页栏目
                 $db = Loader::model('content/Page');
-                if ($db->savePage($_POST)) {
+                if ($db->savePage($data)) {
                     $this->success('操作成功！');
                 } else {
                     $error = $db->getError();
