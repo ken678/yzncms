@@ -13,6 +13,7 @@ namespace app\content\controller;
 use app\common\controller\Adminbase;
 use app\content\logic\Content as ContentLogic;
 use think\Db;
+use think\Loader;
 use think\Request;
 use think\Url;
 
@@ -71,6 +72,18 @@ class Content extends Adminbase
                     $error = $logic->getError();
                     $this->error($error ? $error : '添加失败！');
                 }
+            } else if ($category['type'] == 1) {
+                //单页栏目
+                $db = Loader::model('content/Page');
+                if ($db->savePage($_POST)) {
+                    $this->success('操作成功！');
+                } else {
+                    $error = $db->getError();
+                    $this->error($error ? $error : '操作失败！');
+                }
+
+            } else {
+                $this->error("该栏目类型无法发布！");
             }
 
         } else {
@@ -94,9 +107,29 @@ class Content extends Adminbase
                 $this->assign("content_form", $content_form);
                 $this->assign("forminfos", $forminfos);
                 $this->assign("category", $category);
+                return $this->fetch();
+
+            } else if ($category['type'] == 1) {
+                //单网页模型
+                $info = Loader::model('content/page')->getPage($this->catid);
+                if ($info && $info['style']) {
+                    $style = explode(';', $info['style']);
+                    $info['style_color'] = $style[0];
+                    if ($style[1]) {
+                        $info['style_font_weight'] = $style[1];
+                    }
+                }
+                $extend = $category['setting']['extend'];
+
+                $this->assign("catid", $this->catid);
+                $this->assign("setting", $setting);
+                $this->assign('extend', $extend);
+                $this->assign('info', $info);
+                $this->assign("category", $category);
+                return $this->fetch('singlepage');
 
             }
-            return $this->fetch();
+
         }
     }
 

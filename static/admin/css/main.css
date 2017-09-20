@@ -485,7 +485,7 @@ padding: 12px 0; margin-top: -1px; border-style: solid; border-width: 1px 0; bor
 .ncap-form-all dd.opt:hover { color: #000; background-color: #FFF; border-style: dotted; border-color: #D7D7D7; z-index: 2; box-shadow: 0 0 4px rgba(0,0,0,0.05); }
 .ncap-form-default dt.tit,
 .ncap-form-default dd.opt { font-size: 12px; line-height: 24px; vertical-align: top; letter-spacing: normal; display: inline-block; *display: inline/*IE7*/;*zoom:1/*IE7*/;}
-.ncap-form-default dt.tit { text-align: right; width: 14%; padding-right: 2%; }
+.ncap-form-default dt.tit { text-align: right; width: 10%; padding-right: 2%; }
 .ncap-form-default dd.opt { text-align: left; width: 83%; }
 .ncap-form-default dt.tit em { font: bold 14px/20px tahoma, verdana; color: #F60; vertical-align: middle; display: inline-block; margin-right: 5px; }
 .ncap-form-default .input-txt,

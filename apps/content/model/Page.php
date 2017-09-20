@@ -29,4 +29,48 @@ class Page extends Model
         }
         return $this->where(array('catid' => $catid))->find();
     }
+
+    /**
+     * 更新单页内容
+     * @param type $post 表单数据
+     * @return boolean
+     */
+    public function savePage($post)
+    {
+        if (empty($post)) {
+            $this->error = '内容不能为空！';
+            return false;
+        }
+        $data = $post['info'];
+        $catid = $data['catid'];
+        //单页内容
+        $info = $this->where(array('catid' => $catid))->find();
+        if ($info) {
+            unset($data['catid']);
+        }
+        //$data = $this->token(false)->create($data, isset($data['catid']) ? 1 : 2);
+
+        //取得标题颜色
+        if (isset($post['style_color'])) {
+            //颜色选择为隐藏域 在这里进行取值
+            $data['style'] = $post['style_color'] ? strip_tags($post['style_color']) : '';
+            //标题加粗等样式
+            if (isset($post['style_font_weight'])) {
+                $data['style'] = $data['style'] . ($post['style_font_weight'] ? ';' : '') . strip_tags($post['style_font_weight']);
+            }
+        }
+        //新增或修改
+        if ($info) {
+            if ($this->allowField(true)->isUpdate(true)->save($data, ['catid' => $catid]) !== false) {
+                return true;
+            }
+        } else {
+            if ($this->allowField(true)->save($data) !== false) {
+                return true;
+            }
+        }
+        $this->error = '操作失败！';
+        return false;
+
+    }
 }
