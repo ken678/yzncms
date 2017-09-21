@@ -1,0 +1,7 @@
+<nav class="about-nav">
+    {yzn:content action="category" catid="18" cache="3600" num="6" order="listorder ASC"  return="data"}
+    {volist name="data" id="vo"}
+    <a {if $catid==$vo['catid']} class="active" {/if} href="{$vo['url']}">{$vo['catname']}</a>
+    {/volist}
+    {/yzn:content}
+</nav>

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-09-21 18:10:47
+Date: 2017-09-21 20:04:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=290 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=291 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -132,6 +132,7 @@ INSERT INTO `yzn_action_log` VALUES ('272', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('287', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-20 15:14登录了后台', '1505891684');
 INSERT INTO `yzn_action_log` VALUES ('288', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-21 13:07登录了后台', '1505970458');
 INSERT INTO `yzn_action_log` VALUES ('289', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-21 17:44登录了后台', '1505987094');
+INSERT INTO `yzn_action_log` VALUES ('290', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-21 19:16登录了后台', '1505992604');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -154,7 +155,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505987094', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505992604', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -682,6 +683,9 @@ CREATE TABLE `yzn_page` (
 -- ----------------------------
 -- Records of yzn_page
 -- ----------------------------
+INSERT INTO `yzn_page` VALUES ('19', '关于我们', '', '', '<p>关于我们</p>', '', '0');
+INSERT INTO `yzn_page` VALUES ('20', '加入我们', '', '', '<p>加入我们</p>', '', '0');
+INSERT INTO `yzn_page` VALUES ('21', '联系我们', '', '', '<p>联系我们</p>', '', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_terms`

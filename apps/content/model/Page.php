@@ -28,7 +28,12 @@ class Page extends Model
         if (empty($catid)) {
             return false;
         }
-        return $this->where(array('catid' => $catid))->find();
+        $list = $this->where(array('catid' => $catid))->find();
+        if ($list) {
+            return $list->toArray();
+        }
+        return false;
+
     }
 
     /**

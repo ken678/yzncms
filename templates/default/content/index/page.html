@@ -7,12 +7,10 @@
         <br> 帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
     </p>
 </header>
-<nav class="about-nav">
-    {yzn:content action="category" catid="18" cache="3600" num="6" order="listorder ASC"  return="data"}
-    {volist name="data" id="vo"}
-    <a {if $catid==$vo['catid']} class="active" {/if} href="{$vo['url']}">{$vo['catname']}</a>
-    {/volist}
-    {/yzn:content}
-</nav>
-<div class="" style="height: 500px;"></div>
+{include file="public/ot_page_sider" /}
+<div class="" style="height: 500px;width: 1200px;margin: 0 auto;text-align: center;">
+标题：{$title}<br/>
+关键字：{$keywords}<br/>
+内容：{$content}<br/>
+</div>
 {/block}
