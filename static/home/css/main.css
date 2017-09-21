@@ -21,7 +21,7 @@ body,textarea,input,button,select,keygen,legend{font-family: "Century Gothic","M
 body{background:#fff;}
 a,a:hover{color:#333;}
 /*common*/
-a{ -webkit-transition: all .3s linear; -moz-transition: all .3s linear; -o-transition: all .3s linear; transition: all .3s linear;}
+/*a{ -webkit-transition: all .3s linear; -moz-transition: all .3s linear; -o-transition: all .3s linear; transition: all .3s linear;}*/
 .clear{clear: both;}
 .clearfix:after {display: block; clear: both; content: "\0020"; visibility: hidden; height: 0; }
 .w_1200{width: 1200px;margin: 0 auto;position: relative;}
@@ -74,3 +74,11 @@ a{ -webkit-transition: all .3s linear; -moz-transition: all .3s linear; -o-trans
 .footer-company-info ul li a{color: #fff;}
 .footer-company-info ul li a:hover{color: #ff7800;}
 .footer-company-info p{margin-top: 23px; font-size: 12px; text-align: left; color: #83888a;line-height: 25px;}
+
+/*page*/
+.about-intro {padding: 45px 15px 50px;background: url(../image/anlibg.gif);text-align: center; color: #fff; font-size: 18px; }
+.about-intro h1 {margin: 0 0 25px; font-size: 36px;font-weight: normal; }
+.about-nav {padding: 0 15px; background: #ffff; text-align: center; font-size: 16px;    box-shadow: 0 1px 3px rgba(0,0,0,0.07);}
+.about-nav a {display: inline-block; margin: 0 5px; border-bottom: 2px solid trasparent; width: 120px; height: 44px; line-height: 44px; color: #333; }
+.about-nav a.active {border-bottom: 2px solid #ff5402; }
+.about-nav a:hover{border-bottom:2px solid #ddd;text-decoration:none}
