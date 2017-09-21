@@ -39,9 +39,9 @@ class Content
             //$where['ismenu'] = 1;
             //$where['parentid'] = $data['catid'];
             if ($where) {
-                $where .= " AND ismenu=1 AND parentid=0";
+                $where .= " AND `ismenu` = 1 AND `parentid` = '" . intval($data['catid']) . "'";
             } else {
-                $where .= " ismenu=1 AND parentid=0";
+                $where .= " `ismenu` = 1 AND `parentid` = '" . intval($data['catid']) . "'";
             }
         }
         //如果条件不为空，进行查库

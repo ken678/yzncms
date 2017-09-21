@@ -8,12 +8,11 @@
     </p>
 </header>
 <nav class="about-nav">
-    <a class="active" href="/about">关于我们</a>
-    <a href="/hiring">加入我们</a>
-    <a href="/link">合作伙伴</a>
-    <a href="/press">媒体报道</a>
-    <a href="/contact">联系我们</a>
-    <a href="/faq">帮助中心</a>
+    {yzn:content action="category" catid="18" cache="3600" num="6" order="listorder ASC"  return="data"}
+    {volist name="data" id="vo"}
+    <a {if $catid==$vo['catid']} class="active" {/if} href="{$vo['url']}">{$vo['catname']}</a>
+    {/volist}
+    {/yzn:content}
 </nav>
 <div class="" style="height: 500px;"></div>
 {/block}

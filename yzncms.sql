@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-21 13:39:49
+Date: 2017-09-21 18:10:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=289 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=290 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -131,6 +131,7 @@ INSERT INTO `yzn_action_log` VALUES ('271', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('272', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-11 08:36登录了后台', '1505090212');
 INSERT INTO `yzn_action_log` VALUES ('287', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-20 15:14登录了后台', '1505891684');
 INSERT INTO `yzn_action_log` VALUES ('288', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-21 13:07登录了后台', '1505970458');
+INSERT INTO `yzn_action_log` VALUES ('289', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-21 17:44登录了后台', '1505987094');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -153,7 +154,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505970458', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1505987094', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -382,7 +383,7 @@ CREATE TABLE `yzn_category` (
   PRIMARY KEY (`catid`),
   KEY `module` (`module`,`parentid`,`listorder`,`catid`),
   KEY `siteid` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='栏目表';
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='栏目表';
 
 -- ----------------------------
 -- Records of yzn_category
@@ -393,6 +394,10 @@ INSERT INTO `yzn_category` VALUES ('10', 'content', '0', '1', '', '1', '0,1', '0
 INSERT INTO `yzn_category` VALUES ('11', 'content', '0', '1', '', '1', '0,1', '0', '11', 'Dreamweaver', '', '', 'jiaocheng/', 'dw', '/home/index/lists/catid/11', '0', 'a:14:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"list_template\";s:8:\"list.php\";s:13:\"show_template\";s:8:\"show.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:14:\"content_ishtml\";s:1:\"0\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";s:1:\"4\";}', '11', '1', '0', 'dreamweaver');
 INSERT INTO `yzn_category` VALUES ('16', 'content', '0', '1', '', '4', '0,4', '0', '16', 'JS幻灯片', '', '', 'texiao/', 'adjs', '/home/index/lists/catid/16', '0', 'a:14:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"list_template\";s:8:\"list.php\";s:13:\"show_template\";s:8:\"show.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:14:\"content_ishtml\";s:1:\"0\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";s:1:\"4\";}', '16', '1', '0', 'jshuandengpian');
 INSERT INTO `yzn_category` VALUES ('17', 'content', '0', '1', '', '4', '0,4', '0', '17', '导航菜单', '', '', 'texiao/', 'nav', '/home/index/lists/catid/17', '0', 'a:14:{s:6:\"seturl\";s:0:\"\";s:12:\"generatehtml\";s:1:\"1\";s:12:\"generatelish\";s:1:\"0\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"list_template\";s:8:\"list.php\";s:13:\"show_template\";s:8:\"show.php\";s:19:\"list_customtemplate\";s:0:\"\";s:6:\"ishtml\";s:1:\"0\";s:9:\"repagenum\";s:2:\"10\";s:14:\"content_ishtml\";s:1:\"0\";s:15:\"category_ruleid\";s:1:\"1\";s:11:\"show_ruleid\";s:1:\"4\";}', '17', '1', '0', 'daohangcaidan');
+INSERT INTO `yzn_category` VALUES ('18', 'content', '1', '0', '', '0', '0', '0', '18,19,20,21', '底部链接', '', '', '', 'bottom_nav', '/home/index/lists/catid/18', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '18', '0', '0', 'dibulianjie');
+INSERT INTO `yzn_category` VALUES ('19', 'content', '1', '0', '', '18', '0,18', '0', '19', '关于我们', '', '', 'bottom_nav/', 'about', '/home/index/lists/catid/19', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '19', '1', '0', 'guanyuwomen');
+INSERT INTO `yzn_category` VALUES ('20', 'content', '1', '0', '', '18', '0,18', '0', '20', '加入我们', '', '', 'bottom_nav/', 'join\n', '/home/index/lists/catid/20', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '20', '1', '0', 'jiaruwomen');
+INSERT INTO `yzn_category` VALUES ('21', 'content', '1', '0', '', '18', '0,18', '0', '21', '联系我们', '', '', 'bottom_nav/', 'contact', '/home/index/lists/catid/21', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '21', '1', '0', 'lianxiwomen');
 
 -- ----------------------------
 -- Table structure for `yzn_config`
