@@ -38,6 +38,9 @@ class Index extends Homebase
         $catid = $this->request->param('catid/d', 0);
         //获取栏目数据
         $category = getCategory($catid);
+        if (empty($category)) {
+            $this->error('栏目不存在！');
+        }
         //栏目扩展配置信息
         $setting = $category['setting'];
         //生成类型为0的栏目
@@ -46,9 +49,8 @@ class Index extends Homebase
             $template = $setting['category_template'] ? $setting['category_template'] : 'category';
             //栏目列表页模板
             $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
-            //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
+            //判断使用模板类型，如果有子栏目使用频道页模板
             $template = $category['child'] ? "{$template}" : "{$template_list}";
-            //去除后缀开始
             $tpar = explode(".", $template, 2);
             //去除完后缀的模板
             $template = $tpar[0];
@@ -58,16 +60,17 @@ class Index extends Homebase
             $template = $setting['page_template'] ? $setting['page_template'] : 'page';
             //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
             $template = "{$template}";
-            //去除后缀开始
+            //去除后缀
             $tpar = explode(".", $template, 2);
-            //去除完后缀的模板
             $template = $tpar[0];
             unset($tpar);
             $info = Loader::model('content/page')->getPage($catid);
             $this->assign($info);
-
         }
-
+        //获取顶级栏目ID
+        $arrparentid = explode(',', $category['arrparentid']);
+        $top_parentid = $arrparentid[1] ? $arrparentid[1] : $catid;
+        $this->assign("top_parentid", $top_parentid);
         //分配变量到模板
         $this->assign($category);
         $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
