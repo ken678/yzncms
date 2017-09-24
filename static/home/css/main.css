@@ -17,9 +17,10 @@ label,summary{cursor:default;}
 a,button{cursor:pointer;}
 h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
 del,ins,u,s,a,a:hover{text-decoration:none;}
-body,textarea,input,button,select,keygen,legend{font-family: "Century Gothic","Microsoft yahei";color:#333;outline:0;font-size: 14px;}
+body,textarea,input,button,select,keygen,legend{font-family: Roboto,"PingFang SC",微软雅黑;color:#333;outline:0;font-size: 14px;}
 body{background:#fff;}
-a,a:hover{color:#333;}
+a{color:#333;}
+a:hover, a:focus {color: #ff5402;}
 /*common*/
 /*a{ -webkit-transition: all .3s linear; -moz-transition: all .3s linear; -o-transition: all .3s linear; transition: all .3s linear;}*/
 .clear{clear: both;}
@@ -75,6 +76,28 @@ a,a:hover{color:#333;}
 .footer-company-info ul li a:hover{color: #ff7800;}
 .footer-company-info p{margin-top: 23px; font-size: 12px; text-align: left; color: #83888a;line-height: 25px;}
 
+/*news-category*/
+.news-foot-h1{ height:40px; background:url(../image/line1.png) no-repeat 0 bottom; line-height:40px;}
+.news-foot-h1 strong{ font-size:17px;font-family:'Microsoft YaHei Light','Microsoft YaHei';  }
+.news-foot-h1 span{ float:right; font-size:12px; color:#ccc;}
+.news-foot-h1 span a{ color:#999;}
+
+.topic-box {background: #fff; padding: 20px 35px; }
+.topic-boxs {width: 1200px; overflow: hidden; }
+.topic-box1 {width: 370px; float: left; margin-right: 30px; padding-bottom: 30px; }
+.topic-img{padding:20px 0;}
+.topic-img img{display:block;}
+.topic-box1 ul{padding:0; margin:0; list-style:none;}
+.topic-box1 li{overflow: hidden;white-space: nowrap;-o-text-overflow: ellipsis;text-overflow: ellipsis; height:26px; line-height:26px;padding-left:10px; background:url(../image/d1.png) no-repeat 0 center;}
+.topic-ad{ margin-bottom:30px;}
+
+.foot1 {width: 100%; padding: 60px 0; background: url(../image/x.png) no-repeat center center #fff; position: relative; }
+.foot1 .txt {width: 425px; text-align: center; position: relative; margin: 0 auto; }
+.foot1 .txt strong {font-size: 25px; font-weight: normal; font-family: 'Microsoft YaHei'; }
+.foot1 .txt p {font-size: 14px; font-family: 'Microsoft YaHei'; }
+.foot1 .txt a {display: block; height: 68px; font-size: 28px; color: #fff; margin: 10px 0; background-color: #ff5402; font-family: 'Microsoft YaHei'; font-weight: normal; line-height: 68px; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; }
+.foot1 .txt a:hover {color: #fff; text-decoration: none; background-color: #dc4f0b; border-color: #ff5402; }
+
 /*page*/
 .about-intro {padding: 45px 15px 50px;background: url(../image/anlibg.gif);text-align: center; color: #fff; font-size: 18px; }
 .about-intro h1 {margin: 0 0 25px; font-size: 36px;font-weight: normal; }
@@ -82,3 +105,5 @@ a,a:hover{color:#333;}
 .about-nav a {display: inline-block; margin: 0 5px; border-bottom: 2px solid trasparent; width: 120px; height: 44px; line-height: 44px; color: #333; }
 .about-nav a.active {border-bottom: 2px solid #ff5402; }
 .about-nav a:hover{border-bottom:2px solid #ddd;text-decoration:none}
+.about{padding: 56px 0;}
+

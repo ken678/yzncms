@@ -10,6 +10,41 @@
 // +----------------------------------------------------------------------
 // 公用函数
 use think\Cache;
+
+/**
+ * 获取表名（不含表前缀）
+ * @param string $model_id
+ * @return string 表名
+ */
+function get_table_name($modelid = null)
+{
+    if (empty($modelid)) {
+        return false;
+    }
+    $modelCache = cache("Model");
+    if (empty($modelCache[$modelid])) {
+        return false;
+    }
+    ;
+    $tableName = $modelCache[$modelid]['tablename'];
+    return ucwords($tableName);
+}
+/**
+ * 获取扩展模型对象
+ * @param  integer $model_id 模型编号
+ * @param string   默认公共模型 base基础模型 Independent独立模型公共模型 Document 继承模型公共模型
+ * @return object         模型对象
+ */
+function logic($model_id, $Base = 'Base')
+{
+    $modelCache = cache("Model");
+    if (empty($modelCache[$model_id])) {
+        return false;
+    }
+    $tableName = $modelCache[$model_id]['tablename'];
+    $class = 'app\common\logic\\' . $Base;
+    return new $class(['table_name' => $tableName]);
+}
 /**
  * 系统缓存缓存管理
  * cache('model') 获取model缓存

@@ -62,7 +62,6 @@ class Base extends Model
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         $this->description($data);
         $data['status'] = 99;
-
         //对数据进行入库前的处理 STAT
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data, 1);
@@ -93,13 +92,23 @@ class Base extends Model
             $systeminfo['sysadd'] = 1;
         }
         if ($rs = $this->data($systeminfo)->allowField(true)->save()) {
-            $modelinfo['id'] = $this->id;
+            $modelinfo['id'] = $data['id'] = $this->id;
             if (false === Db::name($this->name . '_data')->insert($modelinfo)) {
                 //删除已添加的主表内容
                 $this->delete($systeminfo['id']);
                 $this->error = '新增附表内容出错';
                 return false;
             }
+            $urls = array();
+            if ($data['islink'] == 1) {
+                $urls['url'] = $data['linkurl'];
+            } else {
+                //生成该篇地址
+                $urls = $this->generateUrl($data);
+            }
+            $data['url'] = $urls['url'];
+            //更新url
+            $this->save(array('url' => $data['url']), ['id' => $modelinfo['id']]);
             return true;
         } else {
             $this->error = '新增基础内容出错';
@@ -111,8 +120,65 @@ class Base extends Model
     {
         //表单数据
         $data = $this->FormData;
-        var_dump($data);
-        exit();
+        if (empty($data)) {
+            if (!empty($this->data)) {
+                $data = $this->data;
+                // 重置数据
+                $this->data = array();
+            } else {
+                $this->error = '数据不存在';
+                return false;
+            }
+        }
+        $this->id = (int) $data['id'];
+        $this->catid = (int) $data['catid'];
+        $this->modelid = getCategory($this->catid, 'modelid');
+        //栏目数据
+        $catidinfo = getCategory($this->catid);
+        if (empty($catidinfo)) {
+            $this->error = '获取不到栏目数据！';
+            return false;
+        }
+        //setting配置
+        $catidsetting = $catidinfo['setting'];
+        //真实发布时间
+        $data['inputtime'] = $inputtime = $this->where(array("id" => $this->id))->column('inputtime');
+        //更新时间处理
+        if ($data['updatetime'] && !is_numeric($data['updatetime'])) {
+            $data['updatetime'] = strtotime($data['updatetime']);
+        } elseif (!$data['updatetime']) {
+            $data['updatetime'] = time();
+        }
+        //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
+        $this->description($data);
+        //转向地址
+        if ($data['islink'] == 1) {
+            $urls["url"] = $data['linkurl'];
+        } else {
+            //生成该篇地址
+            $urls = $this->generateUrl($data);
+        }
+        $data['url'] = $urls["url"];
+
+        $content_input = new \content_input($this->modelid);
+        $inputinfo = $content_input->get($data, 2);
+        //对数据进行入库前的处理 END
+        $systeminfo = $inputinfo['system']; //主表
+        $modelinfo = $inputinfo['model']; //附表
+
+        if ($rs = $this->allowField(true)->save($systeminfo, ['id' => $this->id])) {
+            if (false === Db::name($this->name . '_data')->update($modelinfo)) {
+                //删除已添加的主表内容
+                $this->delete($data['id']);
+                $this->error = '新增附表内容出错';
+                return false;
+            }
+            return true;
+
+        } else {
+            $this->error = $this->getError();
+            return false;
+        }
 
     }
 
@@ -159,6 +225,17 @@ class Base extends Model
             return false;
         }
         return true;
+    }
+
+    /**
+     * 获取URL规则处理后的
+     * @param type $data
+     * @return type
+     */
+    protected function generateUrl($data)
+    {
+        $this->Url = new \util\Url;
+        return $this->Url->show($data);
     }
 
     /**

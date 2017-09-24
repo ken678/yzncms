@@ -17,7 +17,6 @@ class Content extends Model
 {
     //当前模型id
     public $modelid = 0;
-
     public static function getInstance($modelid)
     {
         //静态成品变量 保存全局实例
@@ -27,7 +26,7 @@ class Content extends Model
             $modelCache = cache("Model");
             if (empty($modelCache[$modelid])) {
                 return false;
-            }
+            };
             $tableName = $modelCache[$modelid]['tablename'];
             $_instance[$modelid] = Db::name(ucwords($tableName));
             //设置模型id

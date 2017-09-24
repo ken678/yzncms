@@ -28,13 +28,13 @@ class Category extends Adminbase
         //取得当前内容模型模板存放目录
         $this->filepath = TEMPLATE_PATH . (empty(self::$Cache["Config"]['theme']) ? "default" : self::$Cache["Config"]['theme']) . "/content/";
         //取得栏目频道模板列表
-        $this->tp_category = str_replace($this->filepath, '', glob($this->filepath . 'category*'));
+        $this->tp_category = str_replace($this->filepath . "index/", '', glob($this->filepath . 'index/category*'));
         //取得栏目列表模板列表
-        $this->tp_list = str_replace($this->filepath, '', glob($this->filepath . 'list*'));
+        $this->tp_list = str_replace($this->filepath . "index/", '', glob($this->filepath . 'index/list*'));
         //取得内容页模板列表
-        $this->tp_show = str_replace($this->filepath, '', glob($this->filepath . 'show*'));
+        $this->tp_show = str_replace($this->filepath . "index/", '', glob($this->filepath . 'index/show*'));
         //取得单页模板
-        $this->tp_page = str_replace($this->filepath, '', glob($this->filepath . 'page*'));
+        $this->tp_page = str_replace($this->filepath . "index/", '', glob($this->filepath . 'index/page*'));
     }
 
     //栏目列表
@@ -306,9 +306,10 @@ class Category extends Adminbase
                 $arrparentid = $this->get_arrparentid($catid); //父栏目组
                 $setting = unserialize($cat['setting']); //栏目配置
                 $arrchildid = $this->get_arrchildid($catid); //子栏目组
+                $child = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
                 //检查所有父id 子栏目id 等相关数据是否正确，不正确更新
-                if ($categorys[$catid]['arrparentid'] != $arrparentid || $categorys[$catid]['arrchildid'] != $arrchildid) {
-                    Db::name("Category")->where(array('catid' => $catid))->update(array('arrparentid' => $arrparentid, 'arrchildid' => $arrchildid));
+                if ($categorys[$catid]['arrparentid'] != $arrparentid || $categorys[$catid]['arrchildid'] != $arrchildid || $categorys[$catid]['child'] != $child) {
+                    Db::name("Category")->where(array('catid' => $catid))->update(array('arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child));
                 }
 
                 $parentdir = $this->get_categorydir($catid); //父栏目路径

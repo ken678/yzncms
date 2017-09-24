@@ -11,6 +11,7 @@
 namespace app\home\controller;
 
 use app\common\controller\Homebase;
+use think\Db;
 use think\Loader;
 
 /**
@@ -83,6 +84,36 @@ class Index extends Homebase
      */
     public function shows()
     {
+        $catid = $this->request->param('catid/d', 0);
+        $id = $this->request->param('id/d', 0);
+        //获取当前栏目数据
+        $category = getCategory($catid);
+        if (empty($category)) {
+            $this->error('栏目不存在！');
+        }
+        $modelid = $category['modelid'];
+        $table_name = get_table_name($modelid);
+        //$data = ContentModel::getInstance($modelid)->relation(true)->where(array("id" => $id, 'status' => 99))->find();
+        $r = Db::name($table_name)->where(array('id' => $id))->find();
+        $r2 = Db::name($table_name . '_data')->where(array('id' => $id))->find();
+        $rs = $r2 ? array_merge($r, $r2) : $r;
+
+        /*$content_output = new \content_output($modelid);
+        //获取字段类型处理以后的数据
+        $output_data = $content_output->get($data);
+        $output_data['id'] = $id;
+        $output_data['title'] = strip_tags($output_data['title']);
+        //SEO
+        $seo_keywords = '';
+        if (!empty($output_data['keywords'])) {
+        $seo_keywords = implode(',', $output_data['keywords']);
+        }
+        $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+        $this->assign("SEO", $seo);
+         */
+
+        $this->assign($rs);
+
         return $this->fetch();
     }
 

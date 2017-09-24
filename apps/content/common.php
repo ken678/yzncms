@@ -10,24 +10,6 @@
 // +----------------------------------------------------------------------
 // 内容管理函数
 define('CODETABLEDIR', APP_PATH . 'Content/Data/');
-
-/**
- * 获取扩展模型对象
- * @param  integer $model_id 模型编号
- * @param string   默认公共模型 base基础模型 Independent独立模型公共模型 Document 继承模型公共模型
- * @return object         模型对象
- */
-function logic($model_id, $Base = 'Base')
-{
-    $modelCache = cache("Model");
-    if (empty($modelCache[$model_id])) {
-        return false;
-    }
-    $tableName = $modelCache[$model_id]['tablename'];
-    $class = 'app\common\logic\\' . $Base;
-    return new $class(['table_name' => $tableName]);
-}
-
 /**
  * gbk转拼音
  */
