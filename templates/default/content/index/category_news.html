@@ -8,11 +8,11 @@
                     <strong>{:getCategory(2,'catname')}</strong>
                     <span><a href="{:getCategory(2,'url')}">更多&gt;&gt;</a></span>
                 </div>
-                <div class="topic-img"><img src="/Images/05/1.png" width="370" height="100"></div>
+                <div class="topic-img"><img src="{:getCategory(2,'image')}" width="360" height="100"></div>
                 <ul>
                     {yzn:content action="lists" catid="2"  num="5" order="listorder ASC" cache="3600" return="data"}
                     {volist name="data" id="vo"}
-                    <li><a href="{$vo[url]}" title="{$vo['title']}">{$vo['title']}</a></li>
+                    <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
                     {/volist}
                     {/yzn:content}
                 </ul>
@@ -22,11 +22,11 @@
                     <strong>{:getCategory(3,'catname')}</strong>
                     <span><a href="{:getCategory(3,'url')}">更多&gt;&gt;</a></span>
                 </div>
-                <div class="topic-img"><img src="/Images/05/2.png" width="370" height="100"></div>
+                <div class="topic-img"><img src="{:getCategory(3,'image')}" width="360" height="100"></div>
                 <ul>
                     {yzn:content action="lists" catid="3"  num="5" order="listorder ASC" cache="3600"  return="data"}
                     {volist name="data" id="vo"}
-                    <li><a href="{$vo[url]}" title="{$vo['title']}">{$vo['title']}</a></li>
+                    <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
                     {/volist}
                     {/yzn:content}
                 </ul>
@@ -36,11 +36,11 @@
                     <strong>{:getCategory(4,'catname')}</strong>
                     <span><a href="{:getCategory(4,'url')}">更多&gt;&gt;</a></span>
                 </div>
-                <div class="topic-img"><img src="/Images/05/3.png" width="370" height="100"></div>
+                <div class="topic-img"><img src="{:getCategory(4,'image')}" width="360" height="100"></div>
                 <ul>
                     {yzn:content action="lists" catid="4"  num="5" order="listorder ASC" cache="3600" return="data"}
                     {volist name="data" id="vo"}
-                    <li><a href="{$vo[url]}" title="{$vo['title']}">{$vo['title']}</a></li>
+                    <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
                     {/volist}
                     {/yzn:content}
                 </ul>

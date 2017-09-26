@@ -84,7 +84,7 @@ a:hover, a:focus {color: #ff5402;}
 
 .topic-box {background: #fff; padding: 20px 35px; }
 .topic-boxs {width: 1200px; overflow: hidden; }
-.topic-box1 {width: 370px; float: left; margin-right: 30px; padding-bottom: 30px; }
+.topic-box1 {width: 360px; float: left; margin-right: 30px; padding-bottom: 30px; }
 .topic-img{padding:20px 0;}
 .topic-img img{display:block;}
 .topic-box1 ul{padding:0; margin:0; list-style:none;}
