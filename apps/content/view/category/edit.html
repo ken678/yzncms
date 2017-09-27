@@ -113,7 +113,7 @@
           <select name="setting[category_template]">
             <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
             {volist name="tp_category" id="vo"}
-                <option value="{$vo}">{$vo}</option>
+                <option value="{$vo}" {eq name="data['setting']['category_template']" value="$vo"}selected{/eq}>{$vo}</option>
             {/volist}
           </select>
           <p class="notic">新增模板以category_xx.{:config('template.view_suffix')}形式</p>
@@ -128,7 +128,7 @@
           <select name="setting[list_template]">
             <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
             {volist name="tp_list" id="vo"}
-                <option value="{$vo}">{$vo}</option>
+                <option value="{$vo}" {eq name="data['setting']['list_template']" value="$vo"}selected{/eq}>{$vo}</option>
             {/volist}
           </select>
           <p class="notic">新增模板以list_xx.{:config('template.view_suffix')}形式</p>
@@ -143,7 +143,7 @@
           <select name="setting[show_template]">
             <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
             {volist name="tp_show" id="vo"}
-                <option value="{$vo}">{$vo}</option>
+                <option value="{$vo}" {eq name="data['setting']['show_template']" value="$vo"}selected{/eq}>{$vo}</option>
             {/volist}
           </select>
           <p class="notic">新增模板以show_xx.{:config('template.view_suffix')}形式</p>

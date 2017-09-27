@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-09-24 21:18:22
+Date: 2017-09-27 20:47:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=294 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=296 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -136,6 +136,8 @@ INSERT INTO `yzn_action_log` VALUES ('290', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('291', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-22 19:49登录了后台', '1506080965');
 INSERT INTO `yzn_action_log` VALUES ('292', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-23 11:35登录了后台', '1506137737');
 INSERT INTO `yzn_action_log` VALUES ('293', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-24 17:18登录了后台', '1506244687');
+INSERT INTO `yzn_action_log` VALUES ('294', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-26 21:18登录了后台', '1506431907');
+INSERT INTO `yzn_action_log` VALUES ('295', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-27 20:19登录了后台', '1506514780');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -158,7 +160,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1506244687', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1506514780', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -399,7 +401,7 @@ CREATE TABLE `yzn_category` (
 -- ----------------------------
 -- Records of yzn_category
 -- ----------------------------
-INSERT INTO `yzn_category` VALUES ('1', 'content', '0', '1', '', '0', '0', '1', '1,3,4,2', '新闻资讯', '', '', '', 'news', '/home/index/lists/catid/1', '0', 'a:6:{s:17:\"category_template\";s:18:\"category_news.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '1', '1', '0', 'xinwenzixun');
+INSERT INTO `yzn_category` VALUES ('1', 'content', '0', '1', '', '0', '0', '1', '1,3,4,2', '新闻资讯', '', '', '', 'news', '/home/index/lists/catid/1', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '1', '1', '0', 'xinwenzixun');
 INSERT INTO `yzn_category` VALUES ('2', 'content', '0', '1', '', '1', '0,1', '0', '2', '网站知识', '', '', 'news/', 'knowledge', '/home/index/lists/catid/2', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '2', '1', '0', 'wangzhanzhishi');
 INSERT INTO `yzn_category` VALUES ('3', 'content', '0', '1', '', '1', '0,1', '0', '3', '网络营销', '', '', 'news/', 'marketing', '/home/index/lists/catid/3', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '3', '1', '0', 'wangluoyingxiao');
 INSERT INTO `yzn_category` VALUES ('4', 'content', '0', '1', '', '1', '0,1', '0', '4', '备案知识', '', '', 'news/', 'record', '/home/index/lists/catid/4', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '4', '1', '0', 'beianzhishi');

@@ -1,2 +1,58 @@
 {extend name="public/base" /}
-{block name="body"}频道页{/block}
+{block name="body"}
+<div class="w_1200">
+    <div class="topic-box">
+        <div class="topic-boxs">
+            <div class="topic-box1">
+                <div class="news-foot-h1">
+                    <strong>{:getCategory(2,'catname')}</strong>
+                    <span><a href="{:getCategory(2,'url')}">更多&gt;&gt;</a></span>
+                </div>
+                <div class="topic-img"><img src="{:getCategory(2,'image')}" width="360" height="100"></div>
+                <ul>
+                    {yzn:content action="lists" catid="2"  num="5" order="listorder ASC" cache="3600" return="data"}
+                    {volist name="data" id="vo"}
+                    <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
+                    {/volist}
+                    {/yzn:content}
+                </ul>
+            </div>
+            <div class="topic-box1">
+                <div class="news-foot-h1">
+                    <strong>{:getCategory(3,'catname')}</strong>
+                    <span><a href="{:getCategory(3,'url')}">更多&gt;&gt;</a></span>
+                </div>
+                <div class="topic-img"><img src="{:getCategory(3,'image')}" width="360" height="100"></div>
+                <ul>
+                    {yzn:content action="lists" catid="3"  num="5" order="listorder ASC" cache="3600"  return="data"}
+                    {volist name="data" id="vo"}
+                    <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
+                    {/volist}
+                    {/yzn:content}
+                </ul>
+            </div>
+            <div class="topic-box1">
+                <div class="news-foot-h1">
+                    <strong>{:getCategory(4,'catname')}</strong>
+                    <span><a href="{:getCategory(4,'url')}">更多&gt;&gt;</a></span>
+                </div>
+                <div class="topic-img"><img src="{:getCategory(4,'image')}" width="360" height="100"></div>
+                <ul>
+                    {yzn:content action="lists" catid="4"  num="5" order="listorder ASC" cache="3600" return="data"}
+                    {volist name="data" id="vo"}
+                    <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
+                    {/volist}
+                    {/yzn:content}
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<section class="foot1" id="foot">
+    <div class="txt"><strong>您需要我们建站服务吗？</strong><a href="javascript:;">请与我们联系</a>
+        <p>我们将在<span>24小时</span>之内与您取得联系
+            <br>或致电010-12345678 400-888-8888咨询</p>
+    </div>
+</section>
+{/block}

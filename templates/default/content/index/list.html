@@ -1,4 +1,21 @@
 {extend name="public/base" /}
 {block name="body"}
-列表页
+<div class="new_list">
+    <div class="w_1200">
+        <div class="new_left">
+        	{yzn:content action="lists" catid="$catid"  num="10" order="listorder ASC" return="data"}
+            {volist name="data" id="vo"}
+            <div class="news-li">
+                <div class="news-img"><a href="{$vo['url']}"><img src="{$vo['thumb']}"></a></div>
+                <div class="news-pp">
+                    <small>{$vo['inputtime']|date="Y.m.d",###}</small>
+                    <a href="{$vo['url']}"><strong>{$vo['title']}</strong><p>{$vo['description']|strip_tags|str_cut=70}</p><span>详细信息</span></a>
+                </div>
+            </div>
+            {/volist}
+            {/yzn:content}
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
 {/block}
