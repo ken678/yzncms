@@ -22,16 +22,16 @@ AUTH权限：用户权限
 
 [使用帮助]
 ```
-[使用手册](https://www.kancloud.cn/ken678/yzncms) 撰写ing...
+[使用手册](https://www.kancloud.cn/ken678/yzncms) 完成度5%
 [开源中国](http://www.oschina.net/p/yzncms)
 ```
 
 [环境要求]
 ```
 ThinkPHP5.09的运行环境要求PHP5.4以上。（注意：PHP5.4dev版本和PHP6均不支持）
-PDO PHP Extension
-MBstring PHP Extension
-CURL PHP Extension
+PDO拓展
+MBstring拓展
+CURL拓展
 ```
 
 [安装教程]
