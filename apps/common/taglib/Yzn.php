@@ -35,7 +35,38 @@ class Yzn extends TagLib
         'content' => ['attr' => 'action,catid,num,page,pagefun,return,where'],
         //SQL标签
         'get' => ['attr' => 'sql,cache,page,dbsource,return,num,pagetp,pagefun,table,order,where'],
+        //面包屑标签
+        'catpos' => ['attr' => 'cache,catid,space,blank', 'close' => 0],
     ];
+
+    /**
+     * 面包屑标签
+     */
+    public function tagCatpos($tag, $content)
+    {
+        $key = to_guid_string(array($tag, $content));
+        $cache = (int) $tag['cache'];
+        if ($cache) {
+            $data = Cache::get($key);
+            if ($data) {
+                return $data;
+            }
+        }
+        //分隔符，支持html代码
+        $space = !empty($tag['space']) ? $tag['space'] : '&gt;';
+        //是否新窗口打开
+        $target = !empty($tag['blank']) ? ' target="_blank" ' : '';
+        $catid = $tag['catid'];
+        $parsestr = '';
+        $parsestr .= '<?php';
+        $parsestr .= '  $arrparentid = array_filter(explode(\',\', getCategory(' . $catid . ',"arrparentid") . \',\' . ' . $catid . ')); ';
+        $parsestr .= '  foreach ($arrparentid as $cid) {';
+        $parsestr .= '      $parsestr[] = \'<a href="\' . getCategory($cid,\'url\')  . \'" ' . $target . '>\' . getCategory($cid,\'catname\') . \'</a>\';';
+        $parsestr .= '  }';
+        $parsestr .= '  echo  implode("' . $space . '", $parsestr);';
+        $parsestr .= '?>';
+        return $parsestr;
+    }
 
     /**
      * 内容标签
