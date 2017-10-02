@@ -93,28 +93,32 @@ class Index extends Homebase
         }
         $modelid = $category['modelid'];
         $table_name = get_table_name($modelid);
-        //$data = ContentModel::getInstance($modelid)->relation(true)->where(array("id" => $id, 'status' => 99))->find();
-        $r = Db::name($table_name)->where(array('id' => $id))->find();
+        $r = Db::name($table_name)->where(array('id' => $id, 'status' => 99))->find();
         $r2 = Db::name($table_name . '_data')->where(array('id' => $id))->find();
         $rs = $r2 ? array_merge($r, $r2) : $r;
 
-        /*$content_output = new \content_output($modelid);
+        $content_output = new \content_output($modelid);
         //获取字段类型处理以后的数据
-        $output_data = $content_output->get($data);
+        $output_data = $content_output->get($rs);
         $output_data['id'] = $id;
         $output_data['title'] = strip_tags($output_data['title']);
         //SEO
         $seo_keywords = '';
         if (!empty($output_data['keywords'])) {
-        $seo_keywords = implode(',', $output_data['keywords']);
+            $seo_keywords = implode(',', $output_data['keywords']);
         }
         $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+
+        //内容页模板
+        $template = $output_data['template'] ? $output_data['template'] : $category['setting']['show_template'];
+        //去除模板文件后缀
+        $newstempid = explode(".", $template);
+        $template = $newstempid[0];
+        unset($newstempid);
         $this->assign("SEO", $seo);
-         */
-
-        $this->assign($rs);
-
-        return $this->fetch();
+        //分配解析后的文章数据到模板
+        $this->assign($output_data);
+        return $this->fetch($template);
     }
 
 }

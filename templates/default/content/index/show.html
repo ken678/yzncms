@@ -1,0 +1,25 @@
+{extend name="public/base" /}
+{block name="body"}
+<div class="new_main">
+<div class="w_1200">
+    <div class="news_con">
+        <div class="new_left">
+            {Yzn:catpos catid="4" space=" &gt; " /}
+            <div class="new_title">
+                <h1>{$title}</h1>
+            </div>
+            <div class="new_info">
+                <span class="b-time">{$inputtime}</span> <span class="b-watch">浏览160</span>
+                <span class="b-comment">评论0</span>
+            </div>
+            <p class="new_summary">
+                <em>摘要：</em>{$description}
+            </p>
+            <div class="content_detail">
+                {$content}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{/block}

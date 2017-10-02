@@ -15,7 +15,7 @@ q:before,q:after{content:none;}
 textarea{overflow:auto;resize:none;}
 label,summary{cursor:default;}
 a,button{cursor:pointer;}
-h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
+h1,h2,h3,h4,h5,h6,strong,b{font-weight:bold;}
 del,ins,u,s,a,a:hover{text-decoration:none;}
 body,textarea,input,button,select,keygen,legend{font-family: Roboto,"PingFang SC",微软雅黑;color:#333;outline:0;font-size: 14px;}
 body{background:#fff;}
@@ -26,6 +26,8 @@ a:hover, a:focus {color: #ff5402;}
 .clear{clear: both;}
 .clearfix:after {display: block; clear: both; content: "\0020"; visibility: hidden; height: 0; }
 .w_1200{width: 1200px;margin: 0 auto;position: relative;}
+.fl{float: left;}
+.fr{float: right;}
 /*header*/
 .header {background: #323436; height: 60px; position: fixed; z-index: 1000; top: 0; width: 100%; border-bottom: 4px solid #ff5402; }
 .header .header-box {width: 1200px; height: 100%; margin: 0 auto; position: relative; }
@@ -109,6 +111,49 @@ a:hover, a:focus {color: #ff5402;}
 .news-pp strong {color: #333; }
 .news-pp p {line-height:1.4; color: #444; padding-top: 5px; margin-bottom: 10px; }
 .news-pp span {border: 1px solid #ff5402; font-size: 12px; padding: 4px 10px; color: #ff5402; font-family: 'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+
+
+/*news_show*/
+.new_main{margin-top: 30px;}
+.new_left{float: left;width: 870px;}
+.new_title h1{font-size: 28px;
+    line-height: 38px;
+    color: #000;
+    margin: 0;font-weight: 500;
+}
+.new_info{padding: 12px 0;
+    font-size: 12px;
+    color: #999;}
+
+.new_info .b-time {
+    margin-right:18px;
+}
+.new_info .b-comment {
+    margin-left: 10px;
+}
+.new_summary {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 28px;
+    color: #333;
+    padding: 10px 20px;
+    background: #f9f9f9;
+    table-layout: fixed;
+    word-break: break-all;
+    overflow: hidden;
+}
+.new_summary em {
+    font-weight: 700;
+}
+.content_detail {
+    padding: 40px 0;
+    font-size: 16px;
+    line-height: 32px;
+    position: relative;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
 
 
 
