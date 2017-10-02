@@ -99,6 +99,9 @@ class Base extends Model
                 $this->error = '新增附表内容出错';
                 return false;
             }
+            //添加统计
+            $hitsid = 'c-' . $this->modelid . '-' . $this->id;
+            Db::name('Hits')->insert(array('hitsid' => $hitsid, 'catid' => $this->catid, 'updatetime' => time()));
             $urls = array();
             if ($data['islink'] == 1) {
                 $urls['url'] = $data['linkurl'];

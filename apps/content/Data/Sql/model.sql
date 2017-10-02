@@ -18,16 +18,10 @@ CREATE TABLE `@yzncms@@zhubiao@` (
   `username` char(20) NOT NULL DEFAULT '',
   `inputtime` int(10) unsigned NOT NULL DEFAULT '0',
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0',
-  `views` int(11) NOT NULL DEFAULT '0' COMMENT '点击总数',
-  `yesterdayviews` int(11) NOT NULL DEFAULT '0' COMMENT '最日',
-  `dayviews` int(10) NOT NULL DEFAULT '0' COMMENT '今日点击数',
-  `weekviews` int(10) NOT NULL DEFAULT '0' COMMENT '本周访问数',
-  `monthviews` int(10) NOT NULL DEFAULT '0' COMMENT '本月访问',
-  `viewsupdatetime` int(10) NOT NULL DEFAULT '0' COMMENT '点击数更新时间',
   PRIMARY KEY  (`id`),
   KEY `status` (`status`,`listorder`,`id`),
   KEY `listorder` (`catid`,`status`,`listorder`,`id`),
-  KEY `catid` (`catid`,`weekviews`,`views`,`dayviews`,`monthviews`,`status`,`id`),
+  KEY `catid` (`catid`,`status`,`id`),
   KEY `thumb` (`thumb`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

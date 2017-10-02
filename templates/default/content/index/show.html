@@ -9,11 +9,11 @@
                 <h1>{$title}</h1>
             </div>
             <div class="new_info">
-                <span class="b-time">{$inputtime}</span> <span class="b-watch">浏览160</span>
+                <span class="b-time">{$inputtime}</span> 浏览&nbsp;<span class="b-watch" id="hits">0</span>
                 <span class="b-comment">评论0</span>
             </div>
             <p class="new_summary">
-                <em>摘要：</em>{$description}
+                <em>摘要：</em>{$description|strip_tags|str_cut=180}
             </p>
             <div class="content_detail">
                 {$content}
@@ -22,4 +22,12 @@
     </div>
 </div>
 </div>
+<script type="text/javascript">
+$(function (){
+    //点击
+    $.get("{:url('api/hits/index',['catid'=>$catid,'id'=>$id])}", function (data) {
+        $("#hits").html(data.views);
+    }, "json");
+});
+</script>
 {/block}
