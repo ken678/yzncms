@@ -61,7 +61,7 @@ class Yzn extends TagLib
         $parsestr .= '<?php';
         $parsestr .= '  $arrparentid = array_filter(explode(\',\', getCategory(' . $catid . ',"arrparentid") . \',\' . ' . $catid . ')); ';
         $parsestr .= '  foreach ($arrparentid as $cid) {';
-        $parsestr .= '      $parsestr[] = \'<a href="\' . getCategory($cid,\'url\')  . \'" ' . $target . '>\' . getCategory($cid,\'catname\') . \'</a>\';';
+        $parsestr .= '      $parsestr[] = \'<li><a href="\' . getCategory($cid,\'url\')  . \'" ' . $target . '>\' . getCategory($cid,\'catname\') . \'</a></li>\';';
         $parsestr .= '  }';
         $parsestr .= '  echo  implode("' . $space . '", $parsestr);';
         $parsestr .= '?>';

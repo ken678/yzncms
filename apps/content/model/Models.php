@@ -80,6 +80,73 @@ class Models extends Modelbase
     }
 
     /**
+     * 编辑模型
+     * @param type $data 提交数据
+     * @return boolean
+     */
+    public function editModel($data, $modelid = 0)
+    {
+        if (empty($data)) {
+            return false;
+        }
+        //模型ID
+        $modelid = $modelid ? $modelid : (int) $data['modelid'];
+        if (!$modelid) {
+            $this->error = '模型ID不能为空！';
+            return false;
+        }
+        //查询模型数据
+        $info = $this->where(array("modelid" => $modelid))->find();
+        if (empty($info)) {
+            $this->error = '该模型不存在！';
+            return false;
+        }
+        $data['modelid'] = $modelid;
+        //数据验证
+        //$data = $this->create($data, 2);
+        //强制表名为小写
+        $data['tablename'] = strtolower($data['tablename']);
+        //是否更改表名
+        if ($info['tablename'] != $data['tablename'] && !empty($data['tablename'])) {
+            //检查新表名是否存在
+            if ($this->table_exists($data['tablename']) || $this->table_exists($data['tablename'] . '_data')) {
+                $this->error = '该表名已经存在！';
+                return false;
+            }
+            if (false !== $this->allowField(true)->save($data, array("modelid" => $modelid))) {
+                //表前缀
+                $dbPrefix = Config::get("database.prefix");
+                //表名更改
+                if (!$this->sql_execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}` TO  `{$dbPrefix}{$data['tablename']}` ;")) {
+                    $this->error = '数据库修改表名失败！';
+                    return false;
+                }
+                //修改副表
+                if (!$this->sql_execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}_data` TO  `{$dbPrefix}{$data['tablename']}_data` ;")) {
+                    //主表已经修改，进行回滚
+                    $this->sql_execute("RENAME TABLE  `{$dbPrefix}{$data['tablename']}` TO  `{$dbPrefix}{$info['tablename']}` ;");
+                    $this->error = '数据库修改副表表名失败！';
+                    return false;
+                }
+                //更新缓存
+                cache("Model", null);
+                return true;
+            } else {
+                $this->error = '模型更新失败！';
+                return false;
+            }
+        } else {
+            if (false !== $this->allowField(true)->save($data, array("modelid" => $modelid))) {
+                return true;
+            } else {
+                $this->error = '模型更新失败！';
+                return false;
+            }
+        }
+
+    }
+
+    /**
      * 根据模型ID删除模型
      * @param type $modelid 模型id
      * @return boolean
@@ -170,31 +237,31 @@ class Models extends Modelbase
      */
     /*public function sql_split($sql, $tablepre)
     {
-        if ($tablepre != "yzn_") {
-            $sql = str_replace("yzn_", $tablepre, $sql);
-        }
+    if ($tablepre != "yzn_") {
+    $sql = str_replace("yzn_", $tablepre, $sql);
+    }
 
-        $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
+    $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
 
-        $sql = str_replace("\r", "\n", $sql);
-        $ret = array();
-        $num = 0;
-        $queriesarray = explode(";\n", trim($sql));
-        unset($sql);
-        foreach ($queriesarray as $query) {
-            $ret[$num] = '';
-            $queries = explode("\n", trim($query));
-            $queries = array_filter($queries);
-            foreach ($queries as $query) {
-                $str1 = substr($query, 0, 1);
-                if ($str1 != '#' && $str1 != '-') {
-                    $ret[$num] .= $query;
-                }
+    $sql = str_replace("\r", "\n", $sql);
+    $ret = array();
+    $num = 0;
+    $queriesarray = explode(";\n", trim($sql));
+    unset($sql);
+    foreach ($queriesarray as $query) {
+    $ret[$num] = '';
+    $queries = explode("\n", trim($query));
+    $queries = array_filter($queries);
+    foreach ($queries as $query) {
+    $str1 = substr($query, 0, 1);
+    if ($str1 != '#' && $str1 != '-') {
+    $ret[$num] .= $query;
+    }
 
-            }
-            $num++;
-        }
-        return $ret;
+    }
+    $num++;
+    }
+    return $ret;
     }*/
 
     /**

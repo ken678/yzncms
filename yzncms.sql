@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-02 12:25:04
+Date: 2017-10-02 19:09:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=298 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=299 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -140,6 +140,7 @@ INSERT INTO `yzn_action_log` VALUES ('294', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('295', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-27 20:19登录了后台', '1506514780');
 INSERT INTO `yzn_action_log` VALUES ('296', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-02 10:12登录了后台', '1506910354');
 INSERT INTO `yzn_action_log` VALUES ('297', '1', '1', '0', 'member', '1', 'admin在2017-10-02 11:43登录了后台', '1506915795');
+INSERT INTO `yzn_action_log` VALUES ('298', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-02 18:45登录了后台', '1506941143');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -162,7 +163,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1506915795', '0', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1506941143', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -472,19 +473,19 @@ CREATE TABLE `yzn_hits` (
 -- ----------------------------
 -- Records of yzn_hits
 -- ----------------------------
-INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '18', '0', '16', '16', '16', '1506918280');
+INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '45', '0', '43', '43', '43', '1506940958');
 INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '0', '0', '0', '0', '0', '1506917580');
+INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '1', '0', '1', '1', '1', '1506940813');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '0', '0', '0', '0', '0', '1506917580');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '2', '0', '2', '2', '2', '1506917965');
-INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '0', '0', '0', '0', '0', '1506917580');
+INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '3', '0', '3', '3', '3', '1506941099');
 INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '0', '0', '0', '0', '0', '1506917580');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '6', '0', '6', '6', '6', '1506917960');
-INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '0', '0', '0', '0', '0', '1506917580');
+INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '2', '0', '2', '2', '2', '1506940863');
 INSERT INTO `yzn_hits` VALUES ('c-1-10', '3', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-11', '4', '0', '0', '0', '0', '0', '1506917580');
+INSERT INTO `yzn_hits` VALUES ('c-1-11', '4', '3', '0', '3', '3', '3', '1506940954');
 INSERT INTO `yzn_hits` VALUES ('c-1-12', '4', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-13', '4', '0', '0', '0', '0', '0', '1506917580');
+INSERT INTO `yzn_hits` VALUES ('c-1-13', '4', '1', '0', '1', '1', '1', '1506940822');
 INSERT INTO `yzn_hits` VALUES ('c-1-14', '4', '0', '0', '0', '0', '0', '1506917580');
 INSERT INTO `yzn_hits` VALUES ('c-1-15', '4', '0', '0', '0', '0', '0', '1506917580');
 
@@ -615,7 +616,7 @@ CREATE TABLE `yzn_model` (
 -- ----------------------------
 -- Records of yzn_model
 -- ----------------------------
-INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', null, '1506137784', '0', '1', '0', '', '', '', '', '', '0', '0');
+INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', null, '1506942539', '0', '1', '0', '', '', '', '', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model_field`

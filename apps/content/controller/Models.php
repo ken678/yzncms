@@ -34,6 +34,30 @@ class Models extends Adminbase
         return $this->fetch();
     }
 
+    //模型修改
+    public function edit()
+    {
+        if (Request::instance()->isPost()) {
+            $data = Request::instance()->param();
+            if (empty($data)) {
+                $this->error('提交数据不能为空！');
+            }
+            if (Loader::model("content/Models")->editModel($data)) {
+                $this->success('模型修改成功！', url('index'));
+            } else {
+                $error = Loader::model("content/Models")->getError();
+                $this->error($error ? $error : '修改失败！');
+            }
+        } else {
+            $modelid = Request::instance()->param('modelid/d', 0);
+            $data = Loader::model("content/Models")->where(array("modelid" => $modelid))->find();
+            $this->assign("data", $data);
+            return $this->fetch();
+
+        }
+
+    }
+
     //添加模型
     public function add()
     {

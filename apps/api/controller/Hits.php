@@ -18,8 +18,6 @@ use think\Db;
  */
 class Hits extends Base
 {
-    //内容模型
-    protected $db;
     //获取点击数
     public function index()
     {
@@ -33,7 +31,7 @@ class Hits extends Base
             exit;
         }
         $hitsid = 'c-' . $modelid . '-' . $id;
-        $r = $this->get_count($hitsid);
+        $r = Db::name('hits')->where(array('hitsid' => $hitsid))->find();
         if (!$r) {
             exit;
         }
@@ -41,20 +39,6 @@ class Hits extends Base
         //增加点击率
         $this->hits($hitsid);
         echo json_encode($r);
-    }
-
-    /**
-     * 获取点击数量
-     * @param $hitsid
-     */
-    private function get_count($hitsid)
-    {
-        $r = Db::name('hits')->where(array('hitsid' => $hitsid))->find();
-        if (!$r) {
-            return false;
-        }
-
-        return $r;
     }
 
     /**

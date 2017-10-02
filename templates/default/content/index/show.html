@@ -4,13 +4,13 @@
 <div class="w_1200">
     <div class="news_con">
         <div class="new_left">
-            {Yzn:catpos catid="4" space=" &gt; " /}
+            {include file="public/ot_crumb" /}
             <div class="new_title">
                 <h1>{$title}</h1>
             </div>
             <div class="new_info">
                 <span class="b-time">{$inputtime}</span> 浏览&nbsp;<span class="b-watch" id="hits">0</span>
-                <span class="b-comment">评论0</span>
+                <span class="b-comment"></span>
             </div>
             <p class="new_summary">
                 <em>摘要：</em>{$description|strip_tags|str_cut=180}
