@@ -102,13 +102,13 @@ class Index extends Homebase
         $output_data = $content_output->get($rs);
         $output_data['id'] = $id;
         $output_data['title'] = strip_tags($output_data['title']);
+
         //SEO
         $seo_keywords = '';
         if (!empty($output_data['keywords'])) {
             $seo_keywords = implode(',', $output_data['keywords']);
         }
-        $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
-
+        $seo = seo($catid, $output_data['title'], $output_data['description'], $seo_keywords);
         //内容页模板
         $template = $output_data['template'] ? $output_data['template'] : $category['setting']['show_template'];
         //去除模板文件后缀

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-03 18:24:17
+Date: 2017-10-03 19:53:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -475,15 +475,15 @@ CREATE TABLE `yzn_hits` (
 -- ----------------------------
 -- Records of yzn_hits
 -- ----------------------------
-INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '47', '43', '2', '45', '45', '1507023678');
-INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '18', '1', '17', '18', '18', '1507024654');
-INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '0', '0', '0', '0', '0', '1506917580');
+INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '66', '43', '21', '64', '64', '1507029382');
+INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '1', '0', '1', '1', '1', '1507027589');
+INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '20', '1', '19', '20', '20', '1507031530');
+INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '2', '0', '2', '2', '2', '1506917965');
-INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '8', '3', '5', '8', '8', '1507023552');
-INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '6', '0', '6', '6', '6', '1506917960');
-INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '2', '0', '2', '2', '2', '1506940863');
+INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '33', '3', '30', '33', '33', '1507031353');
+INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '21', '0', '21', '21', '21', '1507029365');
+INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '9', '6', '3', '9', '9', '1507029586');
+INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '4', '2', '2', '4', '4', '1507029399');
 INSERT INTO `yzn_hits` VALUES ('c-1-10', '3', '0', '0', '0', '0', '0', '1506917580');
 INSERT INTO `yzn_hits` VALUES ('c-1-11', '4', '6', '3', '3', '6', '6', '1507024777');
 INSERT INTO `yzn_hits` VALUES ('c-1-12', '4', '0', '0', '0', '0', '0', '1506917580');
