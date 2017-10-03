@@ -1,31 +1,47 @@
 {extend name="public/base" /}
 {block name="body"}
 <div class="new_main">
-<div class="w_1200">
-    <div class="news_con">
-        <div class="new_left">
-            {include file="public/ot_crumb" /}
-            <div class="new_title">
-                <h1>{$title}</h1>
-            </div>
-            <div class="new_info">
-                <span class="b-time">{$inputtime}</span> 浏览&nbsp;<span class="b-watch" id="hits">0</span>
-                <span class="b-comment"></span>
-            </div>
-            <p class="new_summary">
-                <em>摘要：</em>{$description|strip_tags|str_cut=180}
-            </p>
-            <div class="content_detail">
-                {$content}
+    <div class="w_1200">
+        <div class="news_con">
+            <div class="new_left">
+                {include file="public/ot_crumb" /}
+                <div class="new_title">
+                    <h1>{$title}</h1>
+                </div>
+                <div class="new_info">
+                    <span class="b-time">{$inputtime}</span> 浏览&nbsp;<span class="b-watch" id="hits">0</span>
+                    <span class="b-comment"></span>
+                </div>
+                <p class="new_summary">
+                    <em>摘要：</em>{$description|strip_tags|str_cut=180}
+                </p>
+                <div class="content_detail">
+                    {$content}
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div class="clear"></div>
+<div class="w_1200">
+    <div class="news_next">
+        <div class="news_next_left">
+            <ul>
+                <li>上一篇：{Yzn:pre  msg="已经没有了" /}</li>
+                <li>下一篇：{Yzn:next  msg="已经没有了" /}</li>
+            </ul>
+        </div>
+        <div class="news_next_right">
+            <a href="{:getCategory($catid,'url')}" class="news_black">返回列表</a>
+        </div>
+        <div class="clear"></div>
+    </div>
 </div>
+<div class="black_50"></div>
 <script type="text/javascript">
-$(function (){
+$(function() {
     //点击
-    $.get("{:url('api/hits/index',['catid'=>$catid,'id'=>$id])}", function (data) {
+    $.get("{:url('api/hits/index',['catid'=>$catid,'id'=>$id])}", function(data) {
         $("#hits").html(data.views);
     }, "json");
 });

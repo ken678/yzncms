@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-02 19:09:40
+Date: 2017-10-03 18:24:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=299 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=300 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -141,6 +141,7 @@ INSERT INTO `yzn_action_log` VALUES ('295', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('296', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-02 10:12登录了后台', '1506910354');
 INSERT INTO `yzn_action_log` VALUES ('297', '1', '1', '0', 'member', '1', 'admin在2017-10-02 11:43登录了后台', '1506915795');
 INSERT INTO `yzn_action_log` VALUES ('298', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-02 18:45登录了后台', '1506941143');
+INSERT INTO `yzn_action_log` VALUES ('299', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-03 17:27登录了后台', '1507022869');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -163,7 +164,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1506941143', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507022869', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -393,7 +394,7 @@ CREATE TABLE `yzn_category` (
   PRIMARY KEY (`catid`),
   KEY `module` (`module`,`parentid`,`listorder`,`catid`),
   KEY `siteid` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='栏目表';
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='栏目表';
 
 -- ----------------------------
 -- Records of yzn_category
@@ -402,8 +403,9 @@ INSERT INTO `yzn_category` VALUES ('1', 'content', '0', '1', '', '0', '0', '1', 
 INSERT INTO `yzn_category` VALUES ('2', 'content', '0', '1', '', '1', '0,1', '0', '2', '网站知识', '', '', 'news/', 'knowledge', '/home/index/lists/catid/2', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '2', '1', '0', 'wangzhanzhishi');
 INSERT INTO `yzn_category` VALUES ('3', 'content', '0', '1', '', '1', '0,1', '0', '3', '网络营销', '', '', 'news/', 'marketing', '/home/index/lists/catid/3', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '3', '1', '0', 'wangluoyingxiao');
 INSERT INTO `yzn_category` VALUES ('4', 'content', '0', '1', '', '1', '0,1', '0', '4', '备案知识', '', '', 'news/', 'record', '/home/index/lists/catid/4', '0', 'a:6:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '4', '1', '0', 'beianzhishi');
-INSERT INTO `yzn_category` VALUES ('5', 'content', '1', '0', '', '0', '0', '1', '5,6', '底部导航', '', '', '', 'bottom_nav', '/home/index/lists/catid/5', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '5', '0', '0', 'dibudaohang');
+INSERT INTO `yzn_category` VALUES ('5', 'content', '1', '0', '', '0', '0', '1', '5,7,6', '底部导航', '', '', '', 'bottom_nav', '/home/index/lists/catid/5', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '5', '0', '0', 'dibudaohang');
 INSERT INTO `yzn_category` VALUES ('6', 'content', '1', '0', '', '5', '0,5', '0', '6', '关于我们', '', '', 'bottom_nav/', 'about', '/home/index/lists/catid/6', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '6', '1', '0', 'guanyuwomen');
+INSERT INTO `yzn_category` VALUES ('7', 'content', '1', '0', '', '5', '0,5', '0', '7', '联系我们', '', '', 'bottom_nav/', 'contact', '/home/index/lists/catid/7', '0', 'a:4:{s:13:\"page_template\";s:9:\"page.html\";s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";}', '7', '1', '0', 'lianxiwomen');
 
 -- ----------------------------
 -- Table structure for `yzn_config`
@@ -473,21 +475,21 @@ CREATE TABLE `yzn_hits` (
 -- ----------------------------
 -- Records of yzn_hits
 -- ----------------------------
-INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '45', '0', '43', '43', '43', '1506940958');
+INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '47', '43', '2', '45', '45', '1507023678');
 INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '1', '0', '1', '1', '1', '1506940813');
+INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '18', '1', '17', '18', '18', '1507024654');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '0', '0', '0', '0', '0', '1506917580');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '2', '0', '2', '2', '2', '1506917965');
-INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '3', '0', '3', '3', '3', '1506941099');
+INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '8', '3', '5', '8', '8', '1507023552');
 INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '0', '0', '0', '0', '0', '1506917580');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '6', '0', '6', '6', '6', '1506917960');
 INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '2', '0', '2', '2', '2', '1506940863');
 INSERT INTO `yzn_hits` VALUES ('c-1-10', '3', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-11', '4', '3', '0', '3', '3', '3', '1506940954');
+INSERT INTO `yzn_hits` VALUES ('c-1-11', '4', '6', '3', '3', '6', '6', '1507024777');
 INSERT INTO `yzn_hits` VALUES ('c-1-12', '4', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-13', '4', '1', '0', '1', '1', '1', '1506940822');
-INSERT INTO `yzn_hits` VALUES ('c-1-14', '4', '0', '0', '0', '0', '0', '1506917580');
-INSERT INTO `yzn_hits` VALUES ('c-1-15', '4', '0', '0', '0', '0', '0', '1506917580');
+INSERT INTO `yzn_hits` VALUES ('c-1-13', '4', '2', '1', '1', '2', '2', '1507026230');
+INSERT INTO `yzn_hits` VALUES ('c-1-14', '4', '11', '0', '11', '11', '11', '1507026231');
+INSERT INTO `yzn_hits` VALUES ('c-1-15', '4', '9', '0', '9', '9', '9', '1507026233');
 
 -- ----------------------------
 -- Table structure for `yzn_links`
@@ -722,6 +724,8 @@ CREATE TABLE `yzn_page` (
 -- ----------------------------
 -- Records of yzn_page
 -- ----------------------------
+INSERT INTO `yzn_page` VALUES ('6', '关于我们', '', '', '<p style=\"margin-top: 0px; margin-bottom: 15px; padding: 0px; white-space: normal; box-sizing: inherit; line-height: 25px; word-break: break-word; color: rgb(64, 72, 91); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Liberation Sans&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Wenquanyi Micro Hei&quot;, &quot;WenQuanYi Zen Hei&quot;, &quot;ST Heiti&quot;, SimHei, &quot;WenQuanYi Zen Hei Sharp&quot;, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);\">[项目介绍]</p><pre style=\"margin-top: 0px; margin-bottom: 15px; padding: 6px 10px; font-family: Menlo, &quot;Liberation Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, &quot;andale mono&quot;, &quot;lucida console&quot;, monospace; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); box-sizing: inherit; overflow: auto; border: 1px solid rgb(238, 238, 238); font-size: 13px; line-height: 19px; border-radius: 3px;\">Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.011最新版,框架易于功能扩展，代码维护，方便二次开发&nbsp;&nbsp;\r\n帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。</pre><p style=\"margin-top: 0px; margin-bottom: 15px; padding: 0px; white-space: normal; box-sizing: inherit; line-height: 25px; word-break: break-word; color: rgb(64, 72, 91); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Liberation Sans&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Wenquanyi Micro Hei&quot;, &quot;WenQuanYi Zen Hei&quot;, &quot;ST Heiti&quot;, SimHei, &quot;WenQuanYi Zen Hei Sharp&quot;, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);\">[功能介绍]</p><pre style=\"margin-top: 0px; margin-bottom: 15px; padding: 6px 10px; font-family: Menlo, &quot;Liberation Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, &quot;andale mono&quot;, &quot;lucida console&quot;, monospace; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); box-sizing: inherit; overflow: auto; border: 1px solid rgb(238, 238, 238); font-size: 13px; line-height: 19px; border-radius: 3px;\">核心版本的YZNCMS会完成如下功能&nbsp;具体请下载体验\r\nAUTH权限：用户权限\r\n数据库管理：备份导入下载数据库等功能\r\n网站设置：设置网站基本设置邮箱设置等&nbsp;可用自定义设置几种字段\r\n自定义模型：可用创建下载模型，文章模型里面字段都可以自定义&nbsp;如编辑器，多图片，多附件...十几种字段选择\r\n*模块安装：如友情链接，自定义表单，论坛，商城,会员模块等\r\n*插件安装：如返回顶部，留言系统插件等</pre><p><br/></p>', '', '0');
+INSERT INTO `yzn_page` VALUES ('7', '联系我们', '', '', '<p>联系我们<br/></p>', '', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_terms`

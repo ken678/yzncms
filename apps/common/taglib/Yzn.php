@@ -31,6 +31,10 @@ class Yzn extends TagLib
      * 定义标签列表
      */
     protected $tags = [
+        //上一篇
+        'pre' => ['attr' => 'catid,id,blank,msg,field', 'close' => 0],
+        //下一篇
+        'next' => ['attr' => 'catid,id,blank,msg,field', 'close' => 0],
         //内容标签
         'content' => ['attr' => 'action,catid,num,page,pagefun,return,where'],
         //SQL标签
@@ -38,6 +42,63 @@ class Yzn extends TagLib
         //面包屑标签
         'catpos' => ['attr' => 'cache,catid,space,blank', 'close' => 0],
     ];
+
+    /**
+     * 获取上一篇标签
+     */
+    public function tagPre($tag, $content)
+    {
+        //当没有内容时的提示语
+        $msg = !empty($tag['msg']) ? $tag['msg'] : '已经没有了';
+        //是否新窗口打开
+        $target = !empty($tag['blank']) ? ' target=\"_blank\" ' : '';
+        //返回对应字段内容
+        $field = $tag['field'] && in_array($tag['field'], array('id', 'title', 'url')) ? $tag['field'] : '';
+        if (!$tag['catid']) {
+            $tag['catid'] = '$catid';
+        }
+        if (!$tag['id']) {
+            $tag['id'] = '$id';
+        }
+        $parsestr = '<?php ';
+        $parsestr .= ' $_pre_r = think\Db::name( get_table_name(getCategory(' . $tag['catid'] . ', "modelid")))->where(array("catid"=>' . $tag['catid'] . ',"status"=>99,"id"=>array("LT",' . $tag['id'] . ')))->order(array("id" => "DESC"))->field("id,title,url")->find(); ';
+        if ($field) {
+            $parsestr .= ' echo $_pre_r?$_pre_r["' . $field . '"]:""';
+        } else {
+            $parsestr .= ' echo $_pre_r?"<a class=\"pre_a\" href=\"".$_pre_r["url"]."\" ' . $target . '>".$_pre_r["title"]."</a>":"' . str_replace('"', '\"', $msg) . '";';
+        }
+        $parsestr .= ' ?>';
+        return $parsestr;
+    }
+
+    /**
+     * 获取下一篇标签
+     */
+    public function tagNext($tag, $content)
+    {
+        //当没有内容时的提示语
+        $msg = !empty($tag['msg']) ? $tag['msg'] : '已经没有了';
+        //是否新窗口打开
+        $target = !empty($tag['blank']) ? ' target=\"_blank\" ' : '';
+        //返回对应字段内容
+        $field = $tag['field'] && in_array($tag['field'], array('id', 'title', 'url')) ? $tag['field'] : '';
+        if (!$tag['catid']) {
+            $tag['catid'] = '$catid';
+        }
+        if (!$tag['id']) {
+            $tag['id'] = '$id';
+        }
+
+        $parsestr = '<?php ';
+        $parsestr .= ' $_pre_n = think\Db::name( get_table_name(getCategory(' . $tag['catid'] . ', "modelid")))->where(array("catid"=>' . $tag['catid'] . ',"status"=>99,"id"=>array("GT",' . $tag['id'] . ')))->order(array("id" => "ASC"))->field("id,title,url")->find(); ';
+        if ($field) {
+            $parsestr .= ' echo $_pre_n?$_pre_n["' . $field . '"]:""';
+        } else {
+            $parsestr .= ' echo $_pre_n?"<a class=\"pre_a\" href=\"".$_pre_n["url"]."\" ' . $target . '>".$_pre_n["title"]."</a>":"' . str_replace('"', '\"', $msg) . '";';
+        }
+        $parsestr .= ' ?>';
+        return $parsestr;
+    }
 
     /**
      * 面包屑标签

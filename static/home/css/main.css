@@ -26,6 +26,7 @@ a:hover, a:focus {color: #ff5402;}
 .clear{clear: both;}
 .clearfix:after {display: block; clear: both; content: "\0020"; visibility: hidden; height: 0; }
 .w_1200{width: 1200px;margin: 0 auto;position: relative;}
+.black_50 {height: 50px; display: block; }
 .fl{float: left;}
 .fr{float: right;}
 /*header*/
@@ -127,6 +128,31 @@ a:hover, a:focus {color: #ff5402;}
 .new_summary {margin-top: 20px; font-size: 14px; line-height: 28px; color: #333; padding: 10px 20px; background: #f9f9f9; table-layout: fixed; word-break: break-all; overflow: hidden; }
 .new_summary em {font-weight: 700; }
 .content_detail {padding: 30px 0; font-size: 16px; line-height: 32px; position: relative; word-wrap: break-word; overflow: hidden; }
+
+
+.news_next {
+    border: 1px solid #999;
+    border-left: none;
+    border-right: none;
+    padding: 15px 0;
+}
+.news_next_left{float: left;width: 80%;}
+.news_next_right{float: left;width: 20%;}
+.news_next li {
+    height: 30px;
+    line-height: 30px;
+}
+.news_next li a {
+    color: #333;
+}
+.news_next a.news_black {
+    border: 1px solid #ff5402;
+    padding: 4px 10px;
+    color: #ff5402;
+    font-family: 'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    float: right;
+    margin-top: 10px;
+}
 
 /*page*/
 .about-intro {padding: 45px 15px 50px;background: url(../image/anlibg.gif);text-align: center; color: #fff; font-size: 18px; }
