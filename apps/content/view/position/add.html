@@ -1,0 +1,87 @@
+{extend name="Admin@Public:layout" /}
+{block name="content"}
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title"><a class="back" href="{:url('position/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+      <div class="subject">
+        <h3>推荐位管理 - 新增</h3>
+        <h5>推荐位新增及修改管理</h5>
+      </div>
+    </div>
+  </div>
+  <!-- 操作说明 -->
+  <div class="explanation" id="explanation">
+    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+      <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+      <span id="explanationZoom" title="收起提示"></span> </div>
+      <ul>
+        <li></li>
+      </ul>
+  </div>
+  <form action="{:url('position/add')}" method="POST" name="adminForm">
+    <div class="ncap-form-default">
+      <dl class="row">
+        <dt class="tit">
+          <label><em>*</em>推荐位名称</label>
+        </dt>
+        <dd class="opt">
+          <input type="text"  value="" name="info[name]" class="input-txt">
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>所属模型</label>
+        </dt>
+        <dd class="opt">
+          <?php echo \util\Form::checkbox($modelinfo,$modelid,'name="info[modelid][]" onchange="category_load();"','');?>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>所属栏目</label>
+        </dt>
+        <dd class="opt" id="load_catid">
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>排序</label>
+        </dt>
+        <dd class="opt">
+          <input type="text"  value="0" name="info[listorder]" class="input-txt">
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="tit">
+          <label>最大保存条数</label>
+        </dt>
+        <dd class="opt">
+          <input type="text"  value="10" name="info[maxnum]" class="input-txt">
+        </dd>
+      </dl>
+
+      <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+$(function(){
+  category_load();
+});
+function category_load(){
+  var modelid = '';
+  $('input[name="info[modelid][]"]').each(function() {
+    if ($(this).attr("checked")) {
+      if(modelid){
+        modelid += ','+$(this).val();
+      }else{
+        modelid = $(this).val();
+      }
+    }
+  });
+  $.get("{:url('position/public_category_load',['modelid'=>modelid])}",function(data){
+    $('#load_catid').html(data);
+  });
+}
+</script>
+{/block}

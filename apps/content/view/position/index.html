@@ -1,0 +1,90 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+	<div class="fixed-bar">
+		<div class="item-title">
+		  <div class="subject">
+		    <h3>推荐位管理</h3>
+		    <h5>推荐位新增及修改管理</h5>
+		  </div>
+		</div>
+	</div>
+	<!-- 操作说明 -->
+	<div class="explanation" id="explanation">
+		<div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+		  <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+		  <span id="explanationZoom" alt="收起提示" class="itip"></span>
+		</div>
+		<ul>
+		   <li>如果您已经修改模型字段管理中“在推荐位标签中调用”这个选项，可以使用“数据重建”功能进行数据重建！</li>
+		</ul>
+	</div>
+	<!-- 表格 -->
+	<div class="table_list">
+		<div class="mDiv"><div class="ftitle"><h3>推荐位列表</h3><h5></h5></div></div>
+		<div class="hDiv">
+		    <table width="100%">
+		    <thead>
+		      <tr>
+		      	  <td width="50"  align="center" class="sort">排序</td>
+		          <td width="50" align="center">ID</td>
+		          <td width="150" class="handle" align="center">管理操作</td>
+		          <td width="130" align="center">推荐位名称</td>
+		          <td width="80" align="center">所属栏目</td>
+		          <td width="80" align="center">所属模型</td>
+		      </tr>
+		    </thead>
+		    </table>
+		</div>
+
+		<div class="tDiv">
+		  <div class="tDiv2">
+		    <div class="fbutton">
+		        <div class="add"><span><i class="icon iconfont icon-tuijian"></i><a href="{:url('position/add')}">添加推荐位</a></span></div>
+		    </div>
+		  </div>
+		  <div style="clear:both"></div>
+		</div>
+
+		<div class="bDiv">
+			<table width="100%">
+			<tbody>
+				{volist name="data" id="vo"}
+				<tr>
+					<td width="50" align="center" class="sort"><span alt="可编辑" column_id="{$vo['posid']}" fieldname="gc_sort" nc_type="inline_edit" class="itip editable">{$vo['listorder']}</span></td>
+					<td width="50" align="center">{$vo['posid']}</td>
+					<td width="150" align="center" class="handle">
+						<a class="btn blue confirm-del" href="{:url()}"><i class="icon iconfont icon-neirongguanli"></i>信息管理</a>
+						<a class="btn orange confirm-del" href="{:url()}"><i class="icon iconfont icon-lanmuguanli"></i>数据重建</a>
+						<a class="btn green confirm-del" href="{:url('position/edit',['posid'=>$vo['posid']])}"><i class="icon iconfont icon-edit"></i>修改</a>
+						<a class="btn red confirm-del" href="{:url()}"><i class="icon iconfont icon-shanchu"></i>删除</a>
+					</td>
+					<td width="130" align="center">{$vo['name']}</td>
+					<td width="80" align="center">
+						{empty name="vo['catid']"}
+						<font color="#FF0000">无限制</font>
+						{else /}
+						多栏目
+						{/empty}
+					</td>
+					<td width="80" align="center">
+						{empty name="vo['modelid']"}
+						<font color="#FF0000">无限制</font>
+						{else /}
+						多模型
+						{/empty}
+					</td>
+				</tr>
+				{/volist}
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("content/position/listorder")}'});
+});
+</script>
+{/block}

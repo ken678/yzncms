@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-03 19:53:19
+Date: 2017-10-04 14:11:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=300 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=301 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -76,42 +76,6 @@ INSERT INTO `yzn_action_log` VALUES ('286', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('285', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-19 19:15登录了后台', '1505819735');
 INSERT INTO `yzn_action_log` VALUES ('284', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-17 20:33登录了后台', '1505651635');
 INSERT INTO `yzn_action_log` VALUES ('283', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-17 11:31登录了后台', '1505619099');
-INSERT INTO `yzn_action_log` VALUES ('196', '1', '1', '0', 'member', '1', 'admin在2017-08-18 19:57登录了后台', '1503057476');
-INSERT INTO `yzn_action_log` VALUES ('197', '1', '1', '0', 'member', '1', 'admin在2017-08-19 10:32登录了后台', '1503109929');
-INSERT INTO `yzn_action_log` VALUES ('198', '1', '1', '0', 'member', '1', 'admin在2017-08-19 17:51登录了后台', '1503136274');
-INSERT INTO `yzn_action_log` VALUES ('199', '1', '1', '0', 'member', '1', 'admin在2017-08-20 12:22登录了后台', '1503202955');
-INSERT INTO `yzn_action_log` VALUES ('200', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 11:35登录了后台', '1503286556');
-INSERT INTO `yzn_action_log` VALUES ('201', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 12:31登录了后台', '1503289862');
-INSERT INTO `yzn_action_log` VALUES ('202', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 12:49登录了后台', '1503290949');
-INSERT INTO `yzn_action_log` VALUES ('203', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 13:12登录了后台', '1503292321');
-INSERT INTO `yzn_action_log` VALUES ('204', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 13:30登录了后台', '1503293433');
-INSERT INTO `yzn_action_log` VALUES ('205', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-21 17:35登录了后台', '1503308145');
-INSERT INTO `yzn_action_log` VALUES ('206', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-22 08:07登录了后台', '1503360453');
-INSERT INTO `yzn_action_log` VALUES ('207', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-22 12:34登录了后台', '1503376460');
-INSERT INTO `yzn_action_log` VALUES ('208', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-22 15:29登录了后台', '1503386953');
-INSERT INTO `yzn_action_log` VALUES ('209', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-23 10:24登录了后台', '1503455044');
-INSERT INTO `yzn_action_log` VALUES ('210', '1', '1', '0', 'member', '1', 'admin在2017-08-25 18:59登录了后台', '1503658754');
-INSERT INTO `yzn_action_log` VALUES ('211', '1', '1', '0', 'member', '1', 'admin在2017-08-25 21:10登录了后台', '1503666655');
-INSERT INTO `yzn_action_log` VALUES ('212', '1', '1', '0', 'member', '1', 'admin在2017-08-26 10:57登录了后台', '1503716238');
-INSERT INTO `yzn_action_log` VALUES ('213', '1', '1', '0', 'member', '1', 'admin在2017-08-26 14:34登录了后台', '1503729251');
-INSERT INTO `yzn_action_log` VALUES ('214', '1', '1', '0', 'member', '1', 'admin在2017-08-26 20:42登录了后台', '1503751328');
-INSERT INTO `yzn_action_log` VALUES ('215', '1', '1', '0', 'member', '1', 'admin在2017-08-27 11:43登录了后台', '1503805428');
-INSERT INTO `yzn_action_log` VALUES ('216', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:20登录了后台', '1503879651');
-INSERT INTO `yzn_action_log` VALUES ('217', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:24登录了后台', '1503879879');
-INSERT INTO `yzn_action_log` VALUES ('218', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 08:43登录了后台', '1503880985');
-INSERT INTO `yzn_action_log` VALUES ('219', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 09:38登录了后台', '1503884323');
-INSERT INTO `yzn_action_log` VALUES ('220', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-28 17:37登录了后台', '1503913021');
-INSERT INTO `yzn_action_log` VALUES ('221', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-29 11:32登录了后台', '1503977545');
-INSERT INTO `yzn_action_log` VALUES ('222', '1', '1', '2130706433', 'member', '1', 'admin在2017-08-29 12:31登录了后台', '1503981074');
-INSERT INTO `yzn_action_log` VALUES ('233', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-01 15:47登录了后台', '1504252033');
-INSERT INTO `yzn_action_log` VALUES ('234', '1', '1', '0', 'member', '1', 'admin在2017-09-02 18:17登录了后台', '1504347443');
-INSERT INTO `yzn_action_log` VALUES ('235', '1', '1', '0', 'member', '1', 'admin在2017-09-03 15:19登录了后台', '1504423140');
-INSERT INTO `yzn_action_log` VALUES ('236', '1', '1', '0', 'member', '1', 'admin在2017-09-03 15:50登录了后台', '1504425031');
-INSERT INTO `yzn_action_log` VALUES ('237', '1', '1', '0', 'member', '1', 'admin在2017-09-03 16:42登录了后台', '1504428132');
-INSERT INTO `yzn_action_log` VALUES ('238', '1', '1', '0', 'member', '1', 'admin在2017-09-03 17:48登录了后台', '1504432092');
-INSERT INTO `yzn_action_log` VALUES ('239', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-03 18:10登录了后台', '1504433456');
-INSERT INTO `yzn_action_log` VALUES ('240', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-04 09:03登录了后台', '1504486988');
-INSERT INTO `yzn_action_log` VALUES ('241', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-04 09:14登录了后台', '1504487662');
 INSERT INTO `yzn_action_log` VALUES ('242', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-05 09:06登录了后台', '1504573600');
 INSERT INTO `yzn_action_log` VALUES ('243', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-05 11:01登录了后台', '1504580476');
 INSERT INTO `yzn_action_log` VALUES ('244', '1', '1', '2130706433', 'member', '1', 'admin在2017-09-05 13:28登录了后台', '1504589303');
@@ -142,6 +106,7 @@ INSERT INTO `yzn_action_log` VALUES ('296', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('297', '1', '1', '0', 'member', '1', 'admin在2017-10-02 11:43登录了后台', '1506915795');
 INSERT INTO `yzn_action_log` VALUES ('298', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-02 18:45登录了后台', '1506941143');
 INSERT INTO `yzn_action_log` VALUES ('299', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-03 17:27登录了后台', '1507022869');
+INSERT INTO `yzn_action_log` VALUES ('300', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-04 11:49登录了后台', '1507088992');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -164,7 +129,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507022869', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507088992', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -354,7 +319,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -364,6 +329,7 @@ INSERT INTO `yzn_cache` VALUES ('2', 'Category', '栏目索引', 'Content', 'Cat
 INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'Content', 'ModelField', 'model_field_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('5', 'Module', '可用模块列表', '', 'Module', 'module_cache', '1');
+INSERT INTO `yzn_cache` VALUES ('6', 'Position', '推荐位', 'Content', 'Position', 'position_cache', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_category`
@@ -538,7 +504,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -589,6 +555,7 @@ INSERT INTO `yzn_menu` VALUES ('49', '分类管理', '', '44', 'Links', 'Links',
 INSERT INTO `yzn_menu` VALUES ('50', '分类新增', '', '44', 'Links', 'Links', 'addTerms', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('51', '分类修改', '', '44', 'Links', 'Links', 'termsedit', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('52', '分类删除', '', '44', 'Links', 'Links', 'termsdelete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('53', '推荐位管理', '', '35', 'Content', 'Position', 'index', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -726,6 +693,50 @@ CREATE TABLE `yzn_page` (
 -- ----------------------------
 INSERT INTO `yzn_page` VALUES ('6', '关于我们', '', '', '<p style=\"margin-top: 0px; margin-bottom: 15px; padding: 0px; white-space: normal; box-sizing: inherit; line-height: 25px; word-break: break-word; color: rgb(64, 72, 91); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Liberation Sans&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Wenquanyi Micro Hei&quot;, &quot;WenQuanYi Zen Hei&quot;, &quot;ST Heiti&quot;, SimHei, &quot;WenQuanYi Zen Hei Sharp&quot;, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);\">[项目介绍]</p><pre style=\"margin-top: 0px; margin-bottom: 15px; padding: 6px 10px; font-family: Menlo, &quot;Liberation Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, &quot;andale mono&quot;, &quot;lucida console&quot;, monospace; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); box-sizing: inherit; overflow: auto; border: 1px solid rgb(238, 238, 238); font-size: 13px; line-height: 19px; border-radius: 3px;\">Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.011最新版,框架易于功能扩展，代码维护，方便二次开发&nbsp;&nbsp;\r\n帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。</pre><p style=\"margin-top: 0px; margin-bottom: 15px; padding: 0px; white-space: normal; box-sizing: inherit; line-height: 25px; word-break: break-word; color: rgb(64, 72, 91); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Liberation Sans&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Wenquanyi Micro Hei&quot;, &quot;WenQuanYi Zen Hei&quot;, &quot;ST Heiti&quot;, SimHei, &quot;WenQuanYi Zen Hei Sharp&quot;, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);\">[功能介绍]</p><pre style=\"margin-top: 0px; margin-bottom: 15px; padding: 6px 10px; font-family: Menlo, &quot;Liberation Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, &quot;andale mono&quot;, &quot;lucida console&quot;, monospace; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); box-sizing: inherit; overflow: auto; border: 1px solid rgb(238, 238, 238); font-size: 13px; line-height: 19px; border-radius: 3px;\">核心版本的YZNCMS会完成如下功能&nbsp;具体请下载体验\r\nAUTH权限：用户权限\r\n数据库管理：备份导入下载数据库等功能\r\n网站设置：设置网站基本设置邮箱设置等&nbsp;可用自定义设置几种字段\r\n自定义模型：可用创建下载模型，文章模型里面字段都可以自定义&nbsp;如编辑器，多图片，多附件...十几种字段选择\r\n*模块安装：如友情链接，自定义表单，论坛，商城,会员模块等\r\n*插件安装：如返回顶部，留言系统插件等</pre><p><br/></p>', '', '0');
 INSERT INTO `yzn_page` VALUES ('7', '联系我们', '', '', '<p>联系我们<br/></p>', '', '0');
+
+-- ----------------------------
+-- Table structure for `yzn_position`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_position`;
+CREATE TABLE `yzn_position` (
+  `posid` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '推荐位id',
+  `modelid` char(30) NOT NULL DEFAULT '' COMMENT '模型id',
+  `catid` varchar(255) NOT NULL DEFAULT '' COMMENT '栏目id',
+  `name` char(30) NOT NULL DEFAULT '' COMMENT '推荐位名称',
+  `maxnum` smallint(5) NOT NULL DEFAULT '20' COMMENT '最大存储数据量',
+  `extention` char(100) DEFAULT NULL,
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`posid`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='推荐位';
+
+-- ----------------------------
+-- Records of yzn_position
+-- ----------------------------
+INSERT INTO `yzn_position` VALUES ('1', '1', '2,3,4', '内容页新闻推荐位', '10', null, '0');
+
+-- ----------------------------
+-- Table structure for `yzn_position_data`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_position_data`;
+CREATE TABLE `yzn_position_data` (
+  `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `posid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位ID',
+  `module` char(20) DEFAULT NULL COMMENT '模型',
+  `modelid` smallint(6) unsigned DEFAULT '0' COMMENT '模型ID',
+  `thumb` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有缩略图',
+  `data` mediumtext COMMENT '数据信息',
+  `listorder` mediumint(8) DEFAULT '0' COMMENT '排序',
+  `expiration` int(10) NOT NULL,
+  `extention` char(30) DEFAULT NULL,
+  `synedit` tinyint(1) DEFAULT '0' COMMENT '是否同步编辑',
+  KEY `posid` (`posid`),
+  KEY `listorder` (`listorder`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='推荐位数据表';
+
+-- ----------------------------
+-- Records of yzn_position_data
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_terms`
