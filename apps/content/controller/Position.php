@@ -80,6 +80,18 @@ class Position extends Adminbase
 
     }
 
+    //删除推荐位
+    public function delete()
+    {
+        $posid = $this->request->param('posid/d', 0);
+        $Position = new PositionModel;
+        if ($Position->positionDel($posid)) {
+            $this->success('删除成功！<font color=\"#FF0000\">请更新缓存！</font>', url('position/index'));
+        } else {
+            $this->error($Position->getError() ?: '删除失败');
+        }
+    }
+
     //栏目排序
     public function listorder()
     {

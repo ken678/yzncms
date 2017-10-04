@@ -62,6 +62,8 @@ class Base extends Model
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         $this->description($data);
         $data['status'] = 99;
+        //保存一份旧数据
+        $oldata = $data;
         //对数据进行入库前的处理 STAT
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data, 1);
@@ -99,6 +101,9 @@ class Base extends Model
                 $this->error = '新增附表内容出错';
                 return false;
             }
+            //调用回调更新
+            $content_update = new \content_update($this->modelid);
+            $content_update->update($oldata);
             //添加统计
             $hitsid = 'c-' . $this->modelid . '-' . $this->id;
             Db::name('Hits')->insert(array('hitsid' => $hitsid, 'catid' => $this->catid, 'updatetime' => time()));
@@ -162,13 +167,13 @@ class Base extends Model
             $urls = $this->generateUrl($data);
         }
         $data['url'] = $urls["url"];
-
+        //保存一份旧数据
+        $oldata = $data;
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data, 2);
         //对数据进行入库前的处理 END
         $systeminfo = $inputinfo['system']; //主表
         $modelinfo = $inputinfo['model']; //附表
-
         if ($rs = $this->allowField(true)->save($systeminfo, ['id' => $this->id])) {
             if (false === Db::name($this->name . '_data')->update($modelinfo)) {
                 //删除已添加的主表内容
@@ -176,6 +181,9 @@ class Base extends Model
                 $this->error = '新增附表内容出错';
                 return false;
             }
+            //调用回调更新
+            $content_update = new \content_update($this->modelid);
+            $content_update->update($oldata);
             return true;
 
         } else {

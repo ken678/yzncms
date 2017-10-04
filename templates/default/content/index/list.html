@@ -2,6 +2,7 @@
 {block name="body"}
 <div class="new_list">
     <div class="w_1200">
+        {include file="public/ot_crumb" /}
         <div class="new_left">
         	{yzn:content action="lists" catid="$catid"  num="10" order="listorder ASC" return="data"}
             {volist name="data" id="vo"}
@@ -15,7 +16,8 @@
             {/volist}
             {/yzn:content}
         </div>
+        <div class="clear"></div>
     </div>
 </div>
-<div class="clear"></div>
+<div class="black_50"></div>
 {/block}

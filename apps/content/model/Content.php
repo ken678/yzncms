@@ -30,7 +30,7 @@ class Content extends Model
         $fields = $fields ?: array();
         //更新内容模型类：表单生成、入库、更新、输出
         //$classtypes = array('form', 'input', 'output', 'update', 'delete');
-        $classtypes = array('form', 'input', 'output');
+        $classtypes = array('form', 'input', 'output', 'update');
         //缓存生成路径
         $cachemodepath = RUNTIME_PATH;
         foreach ($classtypes as $classtype) {
