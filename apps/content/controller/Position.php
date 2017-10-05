@@ -105,6 +105,51 @@ class Position extends Adminbase
         }
     }
 
+    //信息排序
+    public function item_listorder()
+    {
+        $id = $this->request->param('id/s');
+        $posid = $this->request->param('posid/d', 0);
+        $listorder = $this->request->param('value/d', 0);
+        $pos = explode('-', $id);
+        $rs = Db::name('PositionData')->where(['id' => $pos[1], 'catid' => $pos[0], 'posid' => $posid])->update(['listorder' => $listorder]);
+        if ($rs) {
+            $this->success("排序更新成功！");
+        } else {
+            $this->error("排序失败！");
+        }
+    }
+
+    //信息管理
+    public function item()
+    {
+        if ($this->request->isPost()) {
+            $items = count($_POST['items']) > 0 ? $_POST['items'] : $this->error("没有信息被选择！");
+            $Position = new PositionModel;
+            if (is_array($items)) {
+                foreach ($items as $item) {
+                    $_v = explode('-', $item);
+                    $Position->deleteItem((int) $_POST['posid'], (int) $_v[0], (int) $_v[1]);
+                }
+            }
+            $this->success("移除成功！");
+        } else {
+            $posid = $this->request->param('posid/d', 0);
+            $Position = Db::name('PositionData');
+            $where = array();
+            $where['posid'] = $posid;
+            $data = $this->lists('PositionData', $where, ["listorder" => "DESC", "id" => "DESC"]);
+            foreach ($data as $k => $v) {
+                $data[$k]['data'] = unserialize($v['data']);
+                //$tab = get_table_name(getCategory($v['catid'], 'modelid'));
+                //$data[$k]['data']['url'] = Db::name($tab)->where(array("id" => $v['id']))->column("url");
+            }
+            $this->assign("data", $data);
+            $this->assign("posid", $posid);
+            return $this->fetch();
+        }
+    }
+
     //推荐位添加栏目加载
     public function public_category_load()
     {

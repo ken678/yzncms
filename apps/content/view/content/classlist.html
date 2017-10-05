@@ -67,7 +67,11 @@
             </span>
             </td>
             <td width="60"  align="center">{$vo.id}</td>
-            <td width="250" align="center">{$vo.title}</td>
+            <td width="250" align="center">{$vo.title}
+              {notempty name="vo['posid']"}
+              <i class="icon iconfont icon-jian itip" alt="推荐位"></i>
+              {/notempty}
+            </td>
             <td width="70"  align="center">{$vo.views}</td>
             <td width="100" align="center">{$vo.username}</td>
             <td width="150" align="center">{$vo.updatetime|date="Y-m-d H:i:s",###}</td>

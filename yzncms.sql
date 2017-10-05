@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-04 22:01:22
+Date: 2017-10-05 12:24:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=302 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=303 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -108,6 +108,7 @@ INSERT INTO `yzn_action_log` VALUES ('297', '1', '1', '0', 'member', '1', 'admin
 INSERT INTO `yzn_action_log` VALUES ('298', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-02 18:45登录了后台', '1506941143');
 INSERT INTO `yzn_action_log` VALUES ('299', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-03 17:27登录了后台', '1507022869');
 INSERT INTO `yzn_action_log` VALUES ('300', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-04 11:49登录了后台', '1507088992');
+INSERT INTO `yzn_action_log` VALUES ('302', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-05 10:23登录了后台', '1507170205');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -130,7 +131,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507107607', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507170205', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -446,7 +447,7 @@ INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '68', '21', '2', '66', '66', '15071
 INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '2', '1', '1', '2', '2', '1507107131');
 INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '20', '1', '19', '20', '20', '1507031530');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
-INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '2', '0', '2', '2', '2', '1506917965');
+INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '5', '0', '3', '5', '5', '1507177340');
 INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '33', '3', '30', '33', '33', '1507031353');
 INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '21', '0', '21', '21', '21', '1507029365');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '9', '6', '3', '9', '9', '1507029586');
@@ -738,7 +739,7 @@ CREATE TABLE `yzn_position_data` (
 -- ----------------------------
 -- Records of yzn_position_data
 -- ----------------------------
-INSERT INTO `yzn_position_data` VALUES ('5', '2', '1', 'content', '1', '0', 'a:6:{s:5:\"title\";s:36:\"如何加快网站建设的进度？\";s:11:\"description\";s:602:\"在网站建设中我们都会对每一个用户的网站规划一下建站的进度管理，并把每一个建站的进程分解成不同的阶段，然后把每一个建站阶段所需要的时间都列出来，并写入网站建设的协议中，以便让用户明白我们在建站的整个进度中各个阶段都是在做什么。通常来说，我们规划网站建设进度的时候，主要考虑三方面的因素：第一是用户对网站建设要求的急切程度;第二是要根据网站的复杂程度及其难度;第三就是我们技术人员的人手分配因素。这三个因素...\";s:9:\"inputtime\";a:1:{i:0;i:1506252329;}s:5:\"posid\";a:2:{i:0;s:2:\"-1\";i:1;s:1:\"1\";}s:3:\"url\";s:30:\"/home/index/shows/catid/2/id/5\";s:5:\"style\";s:0:\"\";}', '5', '0', '', '0');
+INSERT INTO `yzn_position_data` VALUES ('5', '2', '1', 'content', '1', '0', 'a:6:{s:5:\"title\";s:36:\"如何加快网站建设的进度？\";s:11:\"description\";s:602:\"在网站建设中我们都会对每一个用户的网站规划一下建站的进度管理，并把每一个建站的进程分解成不同的阶段，然后把每一个建站阶段所需要的时间都列出来，并写入网站建设的协议中，以便让用户明白我们在建站的整个进度中各个阶段都是在做什么。通常来说，我们规划网站建设进度的时候，主要考虑三方面的因素：第一是用户对网站建设要求的急切程度;第二是要根据网站的复杂程度及其难度;第三就是我们技术人员的人手分配因素。这三个因素...\";s:9:\"inputtime\";i:1506252329;s:5:\"posid\";a:2:{i:0;s:2:\"-1\";i:1;s:1:\"1\";}s:3:\"url\";s:30:\"/home/index/shows/catid/2/id/5\";s:5:\"style\";s:0:\"\";}', '5', '0', '', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_terms`

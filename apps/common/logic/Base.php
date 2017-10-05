@@ -150,7 +150,7 @@ class Base extends Model
         //setting配置
         $catidsetting = $catidinfo['setting'];
         //真实发布时间
-        $data['inputtime'] = $inputtime = $this->where(array("id" => $this->id))->column('inputtime');
+        $data['inputtime'] = $inputtime = $this->where(array("id" => $this->id))->value('inputtime');
         //更新时间处理
         if ($data['updatetime'] && !is_numeric($data['updatetime'])) {
             $data['updatetime'] = strtotime($data['updatetime']);
