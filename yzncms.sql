@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-05 12:24:11
+Date: 2017-10-05 22:20:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=303 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=304 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -109,6 +109,7 @@ INSERT INTO `yzn_action_log` VALUES ('298', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('299', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-03 17:27登录了后台', '1507022869');
 INSERT INTO `yzn_action_log` VALUES ('300', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-04 11:49登录了后台', '1507088992');
 INSERT INTO `yzn_action_log` VALUES ('302', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-05 10:23登录了后台', '1507170205');
+INSERT INTO `yzn_action_log` VALUES ('303', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-05 18:09登录了后台', '1507198154');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -131,7 +132,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507170205', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507198154', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -331,7 +332,7 @@ INSERT INTO `yzn_cache` VALUES ('2', 'Category', '栏目索引', 'Content', 'Cat
 INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'Content', 'ModelField', 'model_field_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('5', 'Module', '可用模块列表', '', 'Module', 'module_cache', '1');
-INSERT INTO `yzn_cache` VALUES ('6', 'Position', '推荐位', 'Content', 'Position', 'position_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('6', 'Model_form', '自定义表单模型', 'formguide', 'Formguide', 'formguide_cache', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_category`
@@ -425,6 +426,23 @@ INSERT INTO `yzn_config_field` VALUES ('1', 'icp', 'input', 'a:4:{s:5:\"title\";
 INSERT INTO `yzn_config_field` VALUES ('2', 'close', 'select', 'a:4:{s:5:\"title\";s:12:\"关闭站点\";s:4:\"tips\";s:0:\"\";s:5:\"style\";s:0:\"\";s:6:\"option\";a:2:{i:0;a:2:{s:5:\"title\";s:6:\"关闭\";s:5:\"value\";s:2:\"0\r\";}i:1;a:2:{s:5:\"title\";s:6:\"开启\";s:5:\"value\";s:1:\"1\";}}}', '1492741857');
 
 -- ----------------------------
+-- Table structure for `yzn_form_message`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_form_message`;
+CREATE TABLE `yzn_form_message` (
+  `dataid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `userid` mediumint(8) unsigned NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `datetime` int(10) unsigned NOT NULL,
+  `ip` char(15) NOT NULL,
+  PRIMARY KEY (`dataid`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of yzn_form_message
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `yzn_hits`
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_hits`;
@@ -443,7 +461,7 @@ CREATE TABLE `yzn_hits` (
 -- ----------------------------
 -- Records of yzn_hits
 -- ----------------------------
-INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '68', '21', '2', '66', '66', '1507107406');
+INSERT INTO `yzn_hits` VALUES ('c-1-1', '2', '72', '2', '4', '70', '70', '1507197896');
 INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '2', '1', '1', '2', '2', '1507107131');
 INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '20', '1', '19', '20', '20', '1507031530');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
@@ -506,7 +524,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -558,6 +576,17 @@ INSERT INTO `yzn_menu` VALUES ('50', '分类新增', '', '44', 'Links', 'Links',
 INSERT INTO `yzn_menu` VALUES ('51', '分类修改', '', '44', 'Links', 'Links', 'termsedit', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('52', '分类删除', '', '44', 'Links', 'Links', 'termsdelete', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('53', '推荐位管理', '', '35', 'Content', 'Position', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('54', '表单管理', '', '43', 'Formguide', 'Formguide', 'index', '', '1', '自定义表单管理！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('55', '添加表单', '', '54', 'Formguide', 'Formguide', 'add', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('56', '编辑', '', '54', 'Formguide', 'Formguide', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('57', '删除', '', '54', 'Formguide', 'Formguide', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('58', '禁用', '', '54', 'Formguide', 'Formguide', 'status', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('59', '信息列表', '', '54', 'Formguide', 'Info', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('60', '信息删除', '', '59', 'Formguide', 'Info', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('61', '管理字段', '', '54', 'Formguide', 'Field', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('62', '添加字段', '', '61', 'Formguide', 'Field', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('63', '编辑字段', '', '61', 'Formguide', 'Field', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('64', '删除字段', '', '61', 'Formguide', 'Field', 'delete', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -582,12 +611,13 @@ CREATE TABLE `yzn_model` (
   `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
   PRIMARY KEY (`modelid`),
   KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 -- ----------------------------
 -- Records of yzn_model
 -- ----------------------------
 INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', '', '1506942539', '0', '1', '0', '', '', '', '', '', '0', '0');
+INSERT INTO `yzn_model` VALUES ('2', '用户留言表', '', 'form_message', 'a:11:{s:7:\"forward\";s:0:\"\";s:10:\"enabletime\";s:1:\"0\";s:8:\"sendmail\";s:1:\"0\";s:16:\"allowmultisubmit\";s:1:\"0\";s:10:\"allowunreg\";s:1:\"0\";s:8:\"isverify\";s:1:\"0\";s:8:\"interval\";s:0:\"\";s:13:\"show_template\";s:9:\"show.html\";s:16:\"show_js_template\";s:12:\"js_show.html\";s:9:\"starttime\";b:0;s:7:\"endtime\";b:0;}', '1507211791', '0', '1', '0', '', '', '', '', '', '0', '3');
 
 -- ----------------------------
 -- Table structure for `yzn_model_field`
@@ -674,6 +704,7 @@ CREATE TABLE `yzn_module` (
 -- Records of yzn_module
 -- ----------------------------
 INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1505651640', '1505651640', '0');
+INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1507204730', '1507204730', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_page`
@@ -709,7 +740,7 @@ CREATE TABLE `yzn_position` (
   `extention` char(100) DEFAULT NULL,
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`posid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='推荐位';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='推荐位';
 
 -- ----------------------------
 -- Records of yzn_position

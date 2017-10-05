@@ -12,6 +12,7 @@
 namespace app\admin\model;
 
 use think\Db;
+use think\Loader;
 use think\Model;
 use util\Sql;
 
@@ -23,6 +24,8 @@ class Module extends Model
 {
     //模块所处目录路径
     protected $appPath = APP_PATH;
+    //模块模板安装路径
+    protected $templatePath;
     //已安装模块列表
     protected $moduleList = array();
     //系统模块，隐藏
@@ -39,6 +42,12 @@ class Module extends Model
     protected function setUpdatetimeAttr($value)
     {
         return time();
+    }
+    //初始化
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->templatePath = TEMPLATE_PATH . 'default/';
     }
 
     /**
@@ -168,7 +177,7 @@ class Module extends Model
         //依赖模块检测
         if (!empty($config['depend']) && is_array($config['depend'])) {
             foreach ($config['depend'] as $mod) {
-                if ('Content' == $mod) {
+                if ('content' == $mod) {
                     continue;
                 }
                 if (!isset($moduleList[$mod])) {
@@ -203,7 +212,20 @@ class Module extends Model
             $this->installRollback($moduleName);
             return false;
         }
-
+        //缓存注册
+        if (!empty($config['cache'])) {
+            if (Loader::model('common/Cache')->installModuleCache($config['cache'], $config) !== true) {
+                $this->error = Loader::model('common/Cache')->getError();
+                $this->installRollback($moduleName);
+                return false;
+            }
+        }
+        $Dir = new \util\Dir();
+        //前台模板
+        if (file_exists($this->appPath . "{$moduleName}/install/template/")) {
+            //拷贝模板到前台模板目录中去
+            $Dir->copyDir($this->appPath . "{$moduleName}/install/template/", $this->templatePath);
+        }
         //更新缓存
         cache('Module', null);
         return true;
@@ -245,11 +267,16 @@ class Module extends Model
             $this->error = '卸载失败！';
             return false;
         }
+        //注销缓存
+        Loader::model('common/Cache')->deleteCacheModule($moduleName);
 
         //执行数据库脚本卸载
         $this->runSQL($moduleName, 'uninstall');
         //删除菜单项
         $this->uninstallMenu($moduleName);
+        $Dir = new \util\Dir();
+        //删除模块前台模板
+        $Dir->delDir($this->templatePath . $moduleName . DIRECTORY_SEPARATOR);
 
         //更新缓存
         cache('Module', null);

@@ -1,0 +1,91 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>表单管理</h3>
+                <h5>表单新增及修改管理</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+            <li>暂无</li>
+        </ul>
+    </div>
+    <!-- 表格 -->
+    <div class="table_list">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>表单列表</h3>
+                <h5></h5></div>
+        </div>
+        <div class="hDiv">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td width="20">
+                            <label>
+                                <input class="check-all" checked="chedked" type="checkbox" value="">
+                            </label>
+                        </td>
+                        <td width="250" align="center" class='sort'>名称(信息数)</td>
+                        <td width="250" align="center">操作</td>
+                        <td width="150" align="center">表名</td>
+                        <td width="150" align="center">简介</td>
+                        <td width="150" align="center">创建时间</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tDiv">
+            <div class="tDiv2">
+                <div class="fbutton">
+                    <div class="add"><span><i class="icon iconfont icon-danye"></i><a href="{:url('formguide/add')}">添加表单</a></span></div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="bDiv">
+            <table width="100%">
+                <tbody>
+                    {volist name="data" id="vo"}
+                    <tr>
+                        <td width="20">
+                            <input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['id']}">
+                        </td>
+                        <td width="250" align="center">{$vo.name}<a href=" {:url('home/formguide/Index')}" target="_blank">[访问前台]</a> ({$vo.items})</td>
+                        <td width="250" align="center">
+                            <a class="btn red" href=""><i class="icon iconfont icon-shanchu"></i>删除</a>
+                            <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
+                          <ul>
+                            <li><a href="">添加字段</a></li>
+                            <li><a href="">管理字段</a></li>
+                            <li><a href="">表单修改</a></li>
+                            <li><a href="">表单禁用</a></li>
+                          </ul>
+                        </span>
+                            <a class="btn red" href=""><i class="icon iconfont icon-shanchu"></i>调用</a>
+                        </td>
+                        <td width="150" align="center">
+                            <font color=blue>{$vo['tablename']}</font>
+                        </td>
+                        <td width="150" align="center">{$vo['description']}</td>
+                        <td width="150" align="center">{$vo['addtime']|date="Y-m-d H:i:s",###}</td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+        <div class="pDiv">
+            <div class="pDiv2">{$_page}</div>
+        </div>
+    </div>
+</div>
+{/block}
