@@ -3,8 +3,8 @@
 <div class="new_list">
     <div class="w_1200">
         {include file="public/ot_crumb" /}
-        <div class="new_left">
-        	{yzn:content action="lists" catid="$catid"  num="10" order="listorder ASC" return="data"}
+        <div class="new_list_left">
+        	{yzn:content action="lists" catid="$catid"  num="4" order="listorder ASC" return="data" page="$page"}
             {volist name="data" id="vo"}
             <div class="news-li">
                 <div class="news-img"><a href="{$vo['url']}"><img src="{$vo['thumb']}"></a></div>
@@ -16,6 +16,8 @@
             {/volist}
             {/yzn:content}
         </div>
+        <div class="clear"></div>
+        <div id="pages">{$pages}</div>
         <div class="clear"></div>
     </div>
 </div>

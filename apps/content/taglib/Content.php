@@ -54,6 +54,37 @@ class Content
         $this->where = $where;
         return $this->where;
     }
+
+    /**
+     * 初始化模型
+     * @param $catid
+     */
+    public function set_modelid($catid = 0, $isModelid = false)
+    {
+        if ($catid && !$isModelid) {
+            if (getCategory($catid, 'type') && getCategory($catid, 'type') != 0) {
+                return false;
+            }
+            $this->modelid = getCategory($catid, 'modelid');
+        } else {
+            $this->modelid = $catid;
+        }
+        return $this->db = Db::name(get_table_name($this->modelid));
+    }
+
+    /**
+     * 统计
+     */
+    public function count($data)
+    {
+        if ($data['action'] == 'lists') {
+            if (!$this->set_modelid($data['catid'])) {
+                return false;
+            }
+            return $this->db->where($this->where($data))->count();
+        }
+    }
+
     /**
      * 内容列表（lists）
      * 参数名   是否必须    默认值     说明
@@ -119,30 +150,6 @@ class Content
             Cache::set($cacheID, $return, $cache);
         }
         return $return;
-
-    }
-
-    /**
-     * 初始化模型
-     * @param $catid
-     */
-    public function set_modelid($catid = 0, $isModelid = false)
-    {
-        if ($catid && !$isModelid) {
-            if (getCategory($catid, 'type') && getCategory($catid, 'type') != 0) {
-                return false;
-            }
-            $this->modelid = getCategory($catid, 'modelid');
-        } else {
-            $this->modelid = $catid;
-        }
-
-        $modelCache = cache("Model");
-        if (empty($modelCache[$this->modelid])) {
-            return false;
-        };
-        $this->table_name = ucwords($modelCache[$this->modelid]['tablename']);
-        return $this->db = Db::name($this->table_name);
 
     }
 

@@ -154,6 +154,25 @@ class Yzn extends TagLib
         $parseStr = '<?php';
         $parseStr .= ' $content_tag = new \app\content\taglib\Content;' . "\r\n";
 
+        //如果有传入$page参数，则启用分页。
+        if ($page && in_array($action, array('lists'))) {
+            //分页配置处理
+            $pageConfig = $this->resolvePageParameter($tag);
+            //进行信息数量统计 需要 action catid where
+            $parseStr .= ' $count = $content_tag->count(' . self::arr_to_html($tag) . ');' . "\r\n";
+            //分页函数
+            $parseStr .= ' $_page_ = ' . $pagefun . '($count ,' . $num . ',' . $page . ',' . self::arr_to_html($pageConfig) . ');';
+            $tag['count'] = '$count';
+            $tag['limit'] = '$_page_->firstRow.",".$_page_->listRows';
+            //总分页数，生成静态时需要
+            $parseStr .= ' $GLOBALS["Total_Pages"] = $_page_->Total_Pages;';
+            //显示分页导航
+            $parseStr .= ' $pages = $_page_->show("default");';
+            //分页总数
+            $parseStr .= ' $pagetotal = $_page_->Total_Pages;';
+            //总信息数
+            $parseStr .= ' $totalsize = $_page_->Total_Size;';
+        }
         $parseStr .= ' if(method_exists($content_tag, "' . $action . '")){';
         $parseStr .= ' $' . $return . ' = $content_tag->' . $action . '(' . self::arr_to_html($tag) . ');';
         $parseStr .= ' }';
@@ -290,6 +309,39 @@ class Yzn extends TagLib
         }
 
         return $string;
+    }
+
+    /**
+     * 解析分页参数
+     * @param type $tag
+     * @return type\
+     */
+    protected function resolvePageParameter(&$tag)
+    {
+        if (empty($tag)) {
+            return array();
+        }
+        //分页设置
+        $config = array();
+        foreach ($tag as $key => $value) {
+            if ($key && substr($key, 0, 5) == "page_") {
+                //配置名称
+                $name = str_replace('page_', '', $key);
+                if (substr($value, 0, 1) == '$') {
+                    $config[$name] = $value;
+                } else {
+                    $config[$name] = $this->parseSqlCondition($value);
+                }
+                unset($tag[$key]);
+            }
+        }
+        //兼容 pagetp 参数
+        if (!empty($tag['pagetp'])) {
+            $config['tpl'] = (substr($tag['pagetp'], 0, 1) == '$') ? $tag['pagetp'] : '';
+        }
+        //标签默认开启自定义分页规则
+        $config['isrule'] = false;
+        return $config;
     }
 
 }
