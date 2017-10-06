@@ -2,10 +2,10 @@
 {block name="content"}
 <div class="page">
   <div class="fixed-bar">
-    <div class="item-title"><a class="back" href="{:url('field/index',['modelid'=>$modelid])}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+    <div class="item-title"><a class="back" href="{:url('formguide/index',['modelid'=>$modelid])}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
       <div class="subject">
-        <h3>模型分类管理 - 编辑字段</h3>
-        <h5>所有后台模型索引及管理</h5>
+        <h3>表单管理 - 编辑字段</h3>
+        <h5>表单新增及修改管理</h5>
       </div>
     </div>
   </div>
@@ -27,7 +27,6 @@
       <dl class="row">
         <dt class="tit"><em>*</em>字段类型</dt>
         <dd class="opt">
-          {if condition="$isEditField"}
           <select name="formtype">
                 <option value=''>请选择字段类型</option>
                 {volist name="all_field" id="vo"}
@@ -35,9 +34,6 @@
                 {/volist}
 
           </select>
-          {else}
-          该字段类型不允许修改
-          {/if}
         </dd>
       </dl>
 
@@ -92,19 +88,19 @@
         </dd>
       </dl>
       <dl class="row">
-        <dt class="tit">作为基本信息</dt>
+        <dt class="tit">是否显示</dt>
         <dd class="opt">
           <label class="mr10">
-            <input name="isbase" type="radio" value="1" {eq name="data.isbase" value="1"} checked{/eq}>是</label>
+            <input name="isadd" type="radio" value="1" {eq name="data.isadd" value="1"} checked{/eq}>是</label>
           <label class="mr10">
-            <input name="isbase" type="radio" value="0" {eq name="data.isbase" value="0"} checked{/eq}>否</label>
+            <input name="isadd" type="radio" value="0" {eq name="data.isadd" value="0"} checked{/eq}>否</label>
           <span class="err"></span>
           <p class="notic">基本信息将在添加页面左侧显示</p>
         </dd>
       </dl>
       <div class="clear" style="height: 50px;"></div>
-      <input name="modelid" type="hidden" value="{$modelid}" />
-      <input name="fieldid" type="hidden" value="{$fieldid}" />
+        <input name="modelid" type="hidden" value="{$modelid}">
+        <input name="fieldid" type="hidden" value="{$fieldid}">
       <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
       </div>
     </form>

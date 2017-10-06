@@ -73,4 +73,14 @@ class Formguide extends Models
         return $this->modelType;
     }
 
+    //缓存生成
+    public function formguide_cache()
+    {
+        $formguide_cache = $this->getModelAll($this->modelType);
+        if (!empty($formguide_cache)) {
+            cache('Model_form', $formguide_cache);
+        }
+        return $formguide_cache;
+    }
+
 }

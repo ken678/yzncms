@@ -1,0 +1,101 @@
+{extend name="Admin@Public/layout" /} {block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="{:url('formguide/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+            <div class="subject">
+                <h3>表单管理 - 新增字段</h3>
+                <h5>表单新增及修改管理</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+            <li>暂无</li>
+        </ul>
+    </div>
+    <form action="{:url('field/add')}" method="post" class="form-horizontal">
+        <div class="ncap-form-default">
+            <div class="title">
+                <h3>添加字段</h3>
+            </div>
+            <dl class="row">
+                <dt class="tit"><em>*</em>字段类型</dt>
+                <dd class="opt">
+                    <select name="formtype">
+                        <option value='' selected>请选择字段类型</option>
+                        {volist name="all_field" id="vo"}
+                        <option value="{$key}">{$vo}</option>
+                        {/volist}
+                    </select>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit"><em>*</em>字段名</dt>
+                <dd class="opt">
+                    <input id="field" name="field" value="" type="text" class="input-txt">
+                    <p class="notic">只能由英文字母、数字和下划线组成，并且仅能字母开头，不以下划线结尾</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit"><em>*</em>字段别名</dt>
+                <dd class="opt">
+                    <input id="name" name="name" value="" type="text" class="input-txt">
+                    <p class="notic">例如：文章标题</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>字段提示</label>
+                </dt>
+                <dd class="opt">
+                    <textarea name="tips" rows="6" class="tarea"></textarea>
+                    <p class="notic">显示在字段别名下方作为表单输入提示</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>是否显示</label>
+                </dt>
+                <dd class="opt">
+                    <input type="radio" name="isadd" value="1" checked/> 是
+                    <input type="radio" name="isadd" value="0" /> 否
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">数据校验正则</dt>
+                <dd class="opt">
+                    <input id="validate_rule" name="validate_rule" value="" type="text" class="input-txt">
+                    <select name="validate_type">
+                        <option value='' selected>请选择验证方式</option>
+                        <option value="regex">正则验证</option>
+                        <option value="function">函数验证</option>
+                        <option value="unique">唯一验证</option>
+                        <option value="length">长度验证</option>
+                        <option value="in">验证在范围内</option>
+                        <option value="notin">验证不在范围内</option>
+                        <option value="between">区间验证</option>
+                        <option value="notbetween">不在区间验证</option>
+                    </select>
+                    <p class="notic">系统将通过此正则校验表单提交的数据合法性，如果不想校验数据请留空</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="tips">数据校验未通过提示</label>
+                </dt>
+                <dd class="opt">
+                    <input id="errortips" name="errortips" value="" type="text" class="input-txt">
+                </dd>
+            </dl>
+            <div class="clear" style="height: 50px;"></div>
+            <input name="modelid" type="hidden" value="{$formid}" />
+            <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
+        </div>
+    </form>
+</div>
+{/block}

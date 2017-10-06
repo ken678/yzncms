@@ -1,0 +1,94 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+	<div class="fixed-bar">
+		<div class="item-title">
+		  <div class="subject">
+		    <h3>表单管理</h3>
+		    <h5>表单新增及修改管理</h5>
+		  </div>
+		</div>
+	</div>
+	<!-- 操作说明 -->
+	<div class="explanation" id="explanation">
+		<div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+		  <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+		  <span id="explanationZoom" alt="收起提示" class="itip"></span>
+		</div>
+		<ul>
+		   <li>暂无</li>
+		</ul>
+	</div>
+	<!-- 表格 -->
+	<div class="table_list">
+		<div class="mDiv"><div class="ftitle"><h3>表单字段列表</h3><h5></h5></div></div>
+		<div class="hDiv">
+		    <table width="100%">
+		    <thead>
+		      <tr>
+		          <td width="20"  align="center" class="sort">排序</td>
+		          <td width="150" align="center" class="handle">操作</td>
+		          <td width="100" align="left">字段名</td>
+		          <td width="50"  align="left">别名</td>
+		          <td width="130" align="center">字段类型</td>
+		          <td width="50" align="center">必填</td>
+		      </tr>
+		    </thead>
+		    </table>
+		</div>
+
+		<div class="tDiv">
+		  <div class="tDiv2">
+		    <div class="fbutton">
+		        <div class="add"><span><i class="icon iconfont icon-moxing"></i><a href="{:url('field/add',['formid'=>$formid])}">添加字段</a></span></div>
+		    </div>
+		  </div>
+		  <div style="clear:both"></div>
+		</div>
+
+		<div class="bDiv">
+			<table width="100%">
+			<tbody>
+			{volist name="data" id="vo"}
+			  <tr>
+					<td width="20"  align="center" class="sort"><span alt="可编辑" column_id="{$vo['fieldid']}" fieldname="gc_sort" nc_type="inline_edit" class="itip editable">{$vo['listorder']}</span></td>
+					<td width="150" align="center">
+					{in name="vo.field" value="$forbid_delete"}
+					<a class="btn itip" href="javascript:;" style="text-decoration:line-through;" alt="禁止删除"><i class="icon iconfont icon-shanchu"></i>删除</a>
+					{else}
+					<a class="btn red ajax-get confirm" url="{:url('field/delete',['fieldid'=>$vo.fieldid,'modelid'=>$vo.modelid])}"><i class="icon iconfont icon-shanchu"></i>删除</a>
+					{/in}
+
+					<span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
+					<ul>
+					<li><a href="{:url('field/edit',['fieldid'=>$vo.fieldid,'modelid'=>$vo.modelid])}'}">修改</a></li>
+					{in name="vo.field" value="$forbid_fields"}
+					<li><a href="javascript:;" class="itip" alt="禁止隐藏" style="text-decoration:line-through;">隐藏</a></li>
+					{else}
+					{eq name="vo.disabled" value="0"}
+					<li><a href="">隐藏</a></li>
+					{else/}
+					<li><a href="">显示</a></li>
+					{/eq}
+					{/in}
+					</ul>
+					</span>
+					</td>
+					<td width="100" align="left">{$vo['field']}</td>
+					<td width="50"  align="left">{$vo['name']}</td>
+					<td width="130" align="center">{$vo['formtype']}</td>
+					<td width="50" align="center">{eq name="vo.minlength" value="1"}<font color="blue">√</font>{else/}<font color="red">╳</font>{/eq}</td>
+			  </tr>
+			{/volist}
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("field/listorder")}'});
+});
+</script>
+{/block}

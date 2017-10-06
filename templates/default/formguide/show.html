@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>{$name}- 反馈表单</title>
+</head>
+<body>
+<form name="myform" id="myform" action="{:url('index/post')}" method="post" class="J_ajaxForms" enctype="multipart/form-data">
+<table width="100%">
+    <tbody>
+        {if condition="is_array($forminfos)"}
+        {foreach name="forminfos" item="info"}
+        {php}if($info['isomnipotent']) continue;{/php}
+        <tr>
+            <th width="80">{if $info['star']}<i class="required">*</i>{/if}{$info['name']}</th>
+            <td>
+                {$info['form']}
+                <span id="err_goods_name"></span>
+                <p class="hint">{$info['tips']}</p>
+            </td>
+        </tr>
+        {/foreach}
+        {/if}
+    </tbody>
+</table>
+</form>
+</body>
+</html>

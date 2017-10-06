@@ -28,7 +28,6 @@ class Formguide extends Adminbase
         $this->db = Loader::model("formguide/Formguide");
         //模块安装后，模板安装在default主题下！
         $this->filepath = TEMPLATE_PATH . "default/formguide/";
-        //C('HTML_FILE_SUFFIX', "");
     }
 
     //表单列表
@@ -84,5 +83,24 @@ class Formguide extends Adminbase
             return $this->fetch();
         }
 
+    }
+
+    //调用
+    public function public_call()
+    {
+        $formid = $this->request->param('formid/d');
+        $this->assign("formid", $formid);
+        return $this->fetch("call");
+    }
+
+    //删除表单
+    public function delete()
+    {
+        $formid = $this->request->param('formid/d', 0);
+        if ($this->db->deleteModel($formid)) {
+            $this->success("删除成功！");
+        } else {
+            $this->error('删除失败！');
+        }
     }
 }

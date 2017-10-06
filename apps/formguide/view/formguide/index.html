@@ -60,18 +60,18 @@
                         <td width="20">
                             <input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['id']}">
                         </td>
-                        <td width="250" align="center">{$vo.name}<a href=" {:url('home/formguide/Index')}" target="_blank">[访问前台]</a> ({$vo.items})</td>
+                        <td width="250" align="center">{$vo.name}<a href=" {:url('formguide/index/index',['formid'=>$vo['modelid']])}" target="_blank">[访问前台]</a> ({$vo.items})</td>
                         <td width="250" align="center">
-                            <a class="btn red" href=""><i class="icon iconfont icon-shanchu"></i>删除</a>
+                            <a class="btn red ajax-get confirm" url="{:url('formguide/delete',['formid'=>$vo['modelid']])}"><i class="icon iconfont icon-shanchu"></i>删除</a>
                             <span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
                           <ul>
-                            <li><a href="">添加字段</a></li>
-                            <li><a href="">管理字段</a></li>
+                            <li><a href="{:url('field/add',['formid'=>$vo['modelid']])}">添加字段</a></li>
+                            <li><a href="{:url('field/index',['formid'=>$vo['modelid']])}">管理字段</a></li>
                             <li><a href="">表单修改</a></li>
                             <li><a href="">表单禁用</a></li>
                           </ul>
                         </span>
-                            <a class="btn red" href=""><i class="icon iconfont icon-shanchu"></i>调用</a>
+                            <a class="btn red" href="javascript:call('{:url('formguide/public_call',['formid'=>$vo['modelid']])}')"><i class="icon iconfont icon-shanchu"></i>调用</a>
                         </td>
                         <td width="150" align="center">
                             <font color=blue>{$vo['tablename']}</font>
@@ -88,4 +88,17 @@
         </div>
     </div>
 </div>
+<script>
+//调用
+function call(url) {
+    layer.open({
+        type: 2,
+        title: '调用方式',
+        shadeClose: true,
+        shade: 0.8,
+        area: ['700px', '300px'],
+        content:url
+    });
+}
+</script>
 {/block}

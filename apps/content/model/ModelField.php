@@ -42,6 +42,12 @@ class ModelField extends Modelbase
         $this->fieldPath = APP_PATH . 'content/fields/';
     }
 
+    //返回字段存放路径
+    public function getFieldPath()
+    {
+        return $this->fieldPath;
+    }
+
     /**
      *  编辑字段
      * @param type $data 编辑字段数据
@@ -78,9 +84,12 @@ class ModelField extends Modelbase
             $this->error = '数据表不存在！';
             return false;
         }
-
+        //字段附加配置
+        $setting = $data['setting'];
+        //附加属性值
+        $data['setting'] = serialize($setting);
         //数据验证
-        $validate = Loader::validate('ModelField');
+        $validate = Loader::validate('content/ModelField');
         if (!$validate->scene('edit')->check($data)) {
             $this->error = $validate->getError();
             return false;
@@ -141,9 +150,9 @@ class ModelField extends Modelbase
         /* 获取数据对象 */
         $oldData = $data = empty($data) ? Request::instance()->post() : $data;
         //字段附加配置
-        //$setting = $data['setting'];
+        $setting = $data['setting'];
         //附加属性值
-        //$data['setting'] = serialize($setting);
+        $data['setting'] = serialize($setting);
         //模型id
         $modelid = $data['modelid'];
         //完整表名获取 判断主表 还是副表
@@ -153,7 +162,7 @@ class ModelField extends Modelbase
             return false;
         }
         //数据验证
-        $validate = Loader::validate('ModelField');
+        $validate = Loader::validate('content/ModelField');
         if (!$validate->scene('add')->check($data)) {
             $this->error = $validate->getError();
             return false;
