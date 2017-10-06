@@ -24,7 +24,6 @@ use util\Sql;
 class Models extends Modelbase
 {
     const ModeSql = 'Data/Sql/model.sql'; //模型SQL模板文件
-
     private $libPath = '';
     protected $name = 'model';
     protected $auto = ['addtime', 'tablename'];
@@ -102,10 +101,12 @@ class Models extends Modelbase
             return false;
         }
         $data['modelid'] = $modelid;
-        //数据验证
-        //$data = $this->create($data, 2);
-        //强制表名为小写
-        $data['tablename'] = strtolower($data['tablename']);
+        //模型添加验证
+        $validate = Loader::validate('Models');
+        if (!$validate->scene('edit')->check($data)) {
+            $this->error = $validate->getError();
+            return false;
+        }
         //是否更改表名
         if ($info['tablename'] != $data['tablename'] && !empty($data['tablename'])) {
             //检查新表名是否存在
@@ -137,6 +138,8 @@ class Models extends Modelbase
             }
         } else {
             if (false !== $this->allowField(true)->save($data, array("modelid" => $modelid))) {
+                //更新缓存
+                cache("Model", null);
                 return true;
             } else {
                 $this->error = '模型更新失败！';
@@ -170,6 +173,7 @@ class Models extends Modelbase
         Db::name("ModelField")->where(array("modelid" => $modelid))->delete();
         //删除主表
         $this->deleteTable($model_table);
+        //type不为0则无附表 不需要删除
         if ((int) $modeldata['type'] == 0) {
             //删除副表
             $this->deleteTable($model_table . "_data");
@@ -203,6 +207,7 @@ class Models extends Modelbase
         //表前缀
         $dbPrefix = Config::get("database.prefix");
         $ModeSql = file_get_contents($this->libPath . self::ModeSql);
+        //创建一张主表和附表并插入进模型基础字段数据
         $sqlSplit = str_replace(array('@yzncms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $ModeSql);
         return $this->sql_execute($sqlSplit, $dbPrefix);
     }
@@ -226,43 +231,6 @@ class Models extends Modelbase
         }
         return true;
     }
-
-    /**
-     * 解析数据库语句函数
-     * @param string $sql
-     *          sql语句 带默认前缀的
-     * @param string $tablepre
-     *          自己的前缀
-     * @return multitype:string 返回最终需要的sql语句
-     */
-    /*public function sql_split($sql, $tablepre)
-    {
-    if ($tablepre != "yzn_") {
-    $sql = str_replace("yzn_", $tablepre, $sql);
-    }
-
-    $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
-
-    $sql = str_replace("\r", "\n", $sql);
-    $ret = array();
-    $num = 0;
-    $queriesarray = explode(";\n", trim($sql));
-    unset($sql);
-    foreach ($queriesarray as $query) {
-    $ret[$num] = '';
-    $queries = explode("\n", trim($query));
-    $queries = array_filter($queries);
-    foreach ($queries as $query) {
-    $str1 = substr($query, 0, 1);
-    if ($str1 != '#' && $str1 != '-') {
-    $ret[$num] .= $query;
-    }
-
-    }
-    $num++;
-    }
-    return $ret;
-    }*/
 
     /**
      * 根据模型类型取得数据用于缓存

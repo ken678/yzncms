@@ -690,6 +690,10 @@ big,.big { font-size: 120% !important; line-height: 120%; }
 .bold { font-weight: 700; }
 .normal { font-weight: 400; }
 .clear { clear: both; }
+/*字段拓展属性*/
+.scrollbar-box {background-color: #FFF;margin: 8px 0; border: dashed 1px #E6E6E6; position: relative; z-index: 1; overflow: hidden; }
+.ncap-type-spec-list {padding: 9px; }
+.ncap-type-spec-list td{padding: 6px;}
 /*==========================*/
 /*=========表格样式=========*/
 /*==========================*/

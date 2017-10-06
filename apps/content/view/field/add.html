@@ -1,117 +1,180 @@
 {extend name="Admin@Public/layout" /}
 {block name="content"}
 <div class="page">
-  <div class="fixed-bar">
-    <div class="item-title"><a class="back" href="{:url('field/index',['modelid'=>$modelid])}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
-      <div class="subject">
-        <h3>模型分类管理 - 新增字段</h3>
-        <h5>所有后台模型索引及管理</h5>
-      </div>
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="{:url('field/index',['modelid'=>$modelid])}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+            <div class="subject">
+                <h3>模型分类管理 - 新增字段</h3>
+                <h5>所有后台模型索引及管理</h5>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- 操作说明 -->
-  <div class="explanation" id="explanation">
-    <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
-    <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
-    <span id="explanationZoom" alt="收起提示" class="itip"></span>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+            <li>暂无</li>
+        </ul>
     </div>
-    <ul>
-      <li>暂无</li>
-    </ul>
-  </div>
-  <form action="{:url('field/add')}" method="post" class="form-horizontal">
-      <div class="ncap-form-default">
-      <div class="title">
-          <h3>添加字段</h3>
-      </div>
-      <dl class="row">
-        <dt class="tit"><em>*</em>字段类型</dt>
-        <dd class="opt">
-          <select name="formtype">
-                <option value='' selected>请选择字段类型</option>
-                {volist name="all_field" id="vo"}
-                <option value="{$key}">{$vo}</option>
-                {/volist}
-
-          </select>
-        </dd>
-      </dl>
-      <dl class="row">
-        <dt class="tit">作为主表字段</dt>
-        <dd class="opt">
-          <label class="mr10">
-            <input name="issystem" type="radio" value="1">是</label>
-          <label class="mr10">
-            <input name="issystem" type="radio" value="0" checked>否</label>
-          <span class="err"></span>
-          <p class="notic">建议使用附表</p>
-        </dd>
-      </dl>
-      <dl class="row">
-        <dt class="tit"><em>*</em>字段名</dt>
-        <dd class="opt">
-          <input id="field" name="field" value="" type="text" class="input-txt">
-          <p class="notic">只能由英文字母、数字和下划线组成，并且仅能字母开头，不以下划线结尾</p>
-        </dd>
-      </dl>
-      <dl class="row">
-        <dt class="tit"><em>*</em>字段别名</dt>
-        <dd class="opt">
-          <input id="name" name="name" value="" type="text" class="input-txt">
-          <p class="notic">例如：文章标题</p>
-        </dd>
-      </dl>
-      <dl class="row">
-        <dt class="tit">
-          <label for="tips">字段提示</label>
-        </dt>
-        <dd class="opt">
-          <textarea name="tips" rows="6" class="tarea"></textarea>
-          <p class="notic">显示在字段别名下方作为表单输入提示</p>
-        </dd>
-      </dl>
-      <dl class="row">
-        <dt class="tit">数据校验正则</dt>
-        <dd class="opt">
-          <input id="validate_rule" name="validate_rule" value="" type="text" class="input-txt">
-          <select name="validate_type">
-                <option value='' selected>请选择验证方式</option>
-                <option value="regex">正则验证</option>
-                <option value="function">函数验证</option>
-                <option value="unique">唯一验证</option>
-                <option value="length">长度验证</option>
-                <option value="in">验证在范围内</option>
-                <option value="notin">验证不在范围内</option>
-                <option value="between">区间验证</option>
-                <option value="notbetween">不在区间验证</option>
-
-          </select>
-          <p class="notic">系统将通过此正则校验表单提交的数据合法性，如果不想校验数据请留空</p>
-        </dd>
-      </dl>
-      <dl class="row">
-        <dt class="tit">
-          <label for="tips">数据校验未通过的提示信息</label>
-        </dt>
-        <dd class="opt">
-          <input id="errortips" name="errortips" value="" type="text" class="input-txt">
-        </dd>
-      </dl>
-      <dl class="row">
-        <dt class="tit">作为基本信息</dt>
-        <dd class="opt">
-          <label class="mr10">
-            <input name="isbase" type="radio" value="1" checked>是</label>
-          <label class="mr10">
-            <input name="isbase" type="radio" value="0">否</label>
-          <span class="err"></span>
-          <p class="notic">基本信息将在添加页面左侧显示</p>
-        </dd>
-      </dl>
-      <div class="clear" style="height: 50px;"></div>
-      <input name="modelid" type="hidden" value="{$modelid}" />
-      <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
-      </div>
+    <form action="{:url('field/add')}" method="post" class="form-horizontal">
+        <div class="ncap-form-default">
+            <div class="title">
+                <h3>添加字段</h3>
+            </div>
+            <dl class="row">
+                <dt class="tit"><em>*</em>字段类型</dt>
+                <dd class="opt">
+                    <select name="formtype" onChange="javascript:field_setting(this.value);">
+                        <option value='' selected>请选择字段类型</option>
+                        {volist name="all_field" id="vo"}
+                        <option value="{$key}">{$vo}</option>
+                        {/volist}
+                    </select>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">作为主表字段</dt>
+                <dd class="opt">
+                    <label class="mr10">
+                        <input name="issystem" id="field_basic_table1" type="radio" value="1">是</label>
+                    <label class="mr10">
+                        <input name="issystem" id="field_basic_table0" type="radio" value="0" checked>否</label>
+                    <span class="err"></span>
+                    <p class="notic">建议使用附表</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit"><em>*</em>字段名</dt>
+                <dd class="opt">
+                    <input id="field" name="field" value="" type="text" class="input-txt">
+                    <p class="notic">只能由英文字母、数字和下划线组成，并且仅能字母开头，不以下划线结尾</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit"><em>*</em>字段别名</dt>
+                <dd class="opt">
+                    <input id="name" name="name" value="" type="text" class="input-txt">
+                    <p class="notic">例如：文章标题</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="tips">字段提示</label>
+                </dt>
+                <dd class="opt">
+                    <textarea name="tips" rows="6" class="tarea"></textarea>
+                    <p class="notic">显示在字段别名下方作为表单输入提示</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="tips">相关参数</label>
+                </dt>
+                <dd class="opt">
+                    <div class="scrollbar-box ps-container">
+                        <div class="ncap-type-spec-list">
+                           <div id="setting"> </div>
+                        </div>
+                    </div>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">数据校验正则</dt>
+                <dd class="opt">
+                    <input id="validate_rule" name="validate_rule" value="" type="text" class="input-txt">
+                    <select name="validate_type">
+                        <option value='' selected>请选择验证方式</option>
+                        <option value="regex">正则验证</option>
+                        <option value="function">函数验证</option>
+                        <option value="unique">唯一验证</option>
+                        <option value="length">长度验证</option>
+                        <option value="in">验证在范围内</option>
+                        <option value="notin">验证不在范围内</option>
+                        <option value="between">区间验证</option>
+                        <option value="notbetween">不在区间验证</option>
+                    </select>
+                    <p class="notic">系统将通过此正则校验表单提交的数据合法性，如果不想校验数据请留空</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="tips">数据校验未通过的提示信息</label>
+                </dt>
+                <dd class="opt">
+                    <input id="errortips" name="errortips" value="" type="text" class="input-txt">
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">作为基本信息</dt>
+                <dd class="opt">
+                    <label class="mr10">
+                        <input name="isbase" type="radio" value="1" checked>是</label>
+                    <label class="mr10">
+                        <input name="isbase" type="radio" value="0">否</label>
+                    <span class="err"></span>
+                    <p class="notic">基本信息将在添加页面左侧显示</p>
+                </dd>
+            </dl>
+            <div class="clear" style="height: 50px;"></div>
+            <input name="modelid" type="hidden" value="{$modelid}" />
+            <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
+        </div>
     </form>
 </div>
+<script type="text/javascript">
+function field_setting(fieldtype) {
+    //$('#formattribute').css('display', 'none');
+    //$('#css').css('display', 'none');
+    if (fieldtype == "") {
+        return false;
+    }
+    /*$.each(['text', 'textarea', 'box', 'number', 'keyword', 'typeid'], function (i, n) {
+        if (fieldtype == n) {
+            $('#formattribute').css('display', '');
+            $('#css').css('display', '');
+        }
+    });*/
+    $.getJSON("{:url('field/public_field_setting')}",{fieldtype:fieldtype}, function (data) {
+        //主表
+        if (data.field_basic_table == '1') {
+            $('#field_basic_table0').attr("disabled", false);
+            $('#field_basic_table1').attr("disabled", false);
+        } else {
+            $('#field_basic_table0').attr("checked", true);
+            $('#field_basic_table0').attr("disabled", true);
+            $('#field_basic_table1').attr("disabled", true);
+        }
+        /*if (data.field_allow_search == '1') {
+            $('#field_allow_search0').attr("disabled", false);
+            $('#field_allow_search1').attr("disabled", false);
+        } else {
+            $('#field_allow_search0').attr("checked", true);
+            $('#field_allow_search0').attr("disabled", true);
+            $('#field_allow_search1').attr("disabled", true);
+        }
+        if (data.field_allow_fulltext == '1') {
+            $('#field_allow_fulltext0').attr("disabled", false);
+            $('#field_allow_fulltext1').attr("disabled", false);
+        } else {
+            $('#field_allow_fulltext0').attr("checked", true);
+            $('#field_allow_fulltext0').attr("disabled", true);
+            $('#field_allow_fulltext1').attr("disabled", true);
+        }
+        if (data.field_allow_isunique == '1') {
+            $('#field_allow_isunique0').attr("disabled", false);
+            $('#field_allow_isunique1').attr("disabled", false);
+        } else {
+            $('#field_allow_isunique0').attr("checked", true);
+            $('#field_allow_isunique0').attr("disabled", true);
+            $('#field_allow_isunique1').attr("disabled", true);
+        }*/
+        /*$('#field_minlength').val(data.field_minlength);
+        $('#field_maxlength').val(data.field_maxlength);*/
+        $('#setting').html(data.setting);
+    });
+}
+</script>
 {/block}

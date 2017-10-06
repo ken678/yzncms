@@ -18,7 +18,7 @@
         <li></li>
       </ul>
   </div>
-  <form action="{:url('models/edit')}" method="POST" name="adminForm">
+  <form action="{:url('models/edit')}" method="POST" class="form-horizontal">
     <div class="ncap-form-default">
       <dl class="row">
         <dt class="tit">
@@ -47,7 +47,7 @@
         </dd>
       </dl>
       <input type="hidden" value="{$data.modelid}" name="modelid" />
-      <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
+      <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
     </div>
   </form>
 </div>

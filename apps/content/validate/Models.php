@@ -35,6 +35,7 @@ class Models extends Validate
 
     protected $scene = [
         'add' => ['name', 'tablename'],
+        'edit' => ['name' => 'require|max:30', 'tablename' => 'require|max:20|alpha'],
     ];
 
 }

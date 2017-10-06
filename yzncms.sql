@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-06 17:37:26
+Date: 2017-10-06 20:50:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -474,7 +474,7 @@ INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '26', '1', '6', '26', '26', '150721
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '5', '0', '3', '5', '5', '1507177340');
 INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '33', '3', '30', '33', '33', '1507031353');
-INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '21', '0', '21', '21', '21', '1507029365');
+INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '22', '0', '1', '22', '22', '1507282720');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '9', '6', '3', '9', '9', '1507029586');
 INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '4', '2', '2', '4', '4', '1507029399');
 INSERT INTO `yzn_hits` VALUES ('c-1-10', '3', '0', '0', '0', '0', '0', '1506917580');
@@ -623,7 +623,7 @@ CREATE TABLE `yzn_model` (
 -- ----------------------------
 -- Records of yzn_model
 -- ----------------------------
-INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', '', '1506942539', '0', '1', '0', '', '', '', '', '', '0', '0');
+INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', '', '1507284550', '0', '1', '0', '', '', '', '', '', '0', '0');
 INSERT INTO `yzn_model` VALUES ('2', '用户留言表单', '', 'form_message', 'a:11:{s:7:\"forward\";s:0:\"\";s:10:\"enabletime\";s:1:\"0\";s:8:\"sendmail\";s:1:\"0\";s:16:\"allowmultisubmit\";s:1:\"0\";s:10:\"allowunreg\";s:1:\"0\";s:8:\"isverify\";s:1:\"0\";s:8:\"interval\";s:0:\"\";s:13:\"show_template\";s:9:\"show.html\";s:16:\"show_js_template\";s:12:\"js_show.html\";s:9:\"starttime\";b:0;s:7:\"endtime\";b:0;}', '1507265648', '0', '1', '0', '', '', '', '', '', '0', '3');
 
 -- ----------------------------
@@ -715,7 +715,7 @@ CREATE TABLE `yzn_module` (
 -- Records of yzn_module
 -- ----------------------------
 INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1505651640', '1505651640', '0');
-INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1507204730', '1507204730', '0');
+INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', '', '1507204730', '1507204730', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_page`
@@ -751,7 +751,7 @@ CREATE TABLE `yzn_position` (
   `extention` char(100) DEFAULT NULL,
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`posid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='推荐位';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='推荐位';
 
 -- ----------------------------
 -- Records of yzn_position

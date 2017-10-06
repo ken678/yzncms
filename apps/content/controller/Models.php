@@ -11,70 +11,78 @@
 namespace app\content\controller;
 
 use app\common\controller\Adminbase;
+use app\content\model\Models as M_models;
 use think\Cookie;
 use think\Db;
-use think\Loader;
-use think\Request;
 
 /**
  * 后台模型管理
+ * @author 御宅男  <530765310@qq.com>
  */
 class Models extends Adminbase
 {
+    protected function _initialize()
+    {
+        parent::_initialize();
+        $this->Models = new M_models;
+    }
     /**
      * 模型列表首页
      * @author 御宅男  <530765310@qq.com>
      */
     public function index()
     {
-        $data = Db::name("Model")->where(array("type" => 0))->select();
+        $data = $this->Models->where(array("type" => 0))->select();
         // 记录当前列表页的cookie
         Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
         $this->assign("data", $data);
         return $this->fetch();
     }
 
-    //模型修改
+    /**
+     * 模型修改
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function edit()
     {
-        if (Request::instance()->isPost()) {
-            $data = Request::instance()->param();
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
             if (empty($data)) {
                 $this->error('提交数据不能为空！');
             }
-            if (Loader::model("content/Models")->editModel($data)) {
+            if ($this->Models->editModel($data)) {
                 $this->success('模型修改成功！', url('index'));
             } else {
-                $error = Loader::model("content/Models")->getError();
+                $error = $this->Models->getError();
                 $this->error($error ? $error : '修改失败！');
             }
         } else {
-            $modelid = Request::instance()->param('modelid/d', 0);
-            $data = Loader::model("content/Models")->where(array("modelid" => $modelid))->find();
+            $modelid = $this->request->param('modelid/d', 0);
+            $data = $this->Models->where(array("modelid" => $modelid))->find();
             $this->assign("data", $data);
             return $this->fetch();
-
         }
-
     }
 
-    //添加模型
+    /**
+     * 添加模型
+     * @author 御宅男  <530765310@qq.com>
+     */
     public function add()
     {
-        if (Request::instance()->isPost()) {
-            $data = Request::instance()->param();
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
             if (empty($data)) {
                 $this->error('提交数据不能为空！');
             }
-            if (Loader::model("content/Models")->addModel($data)) {
-                $this->success("添加模型成功！");
+            if ($this->Models->addModel($data)) {
+                $this->success("添加模型成功！", url('models/index'));
             } else {
-                $error = Loader::model("content/Models")->getError();
+                $error = $this->Models->getError();
                 $this->error($error ? $error : '添加失败！');
             }
         } else {
             return $this->fetch();
-
         }
     }
 
@@ -84,20 +92,23 @@ class Models extends Adminbase
      */
     public function delete()
     {
-        $modelid = Request::instance()->param('modelid/d');
+        $modelid = $this->request->param('modelid/d');
         empty($modelid) && $this->error('参数不能为空！');
         //检查该模型是否已经被使用
         $r = Db::name("Category")->where(array("modelid" => $modelid))->find();
         if ($r) {
             $this->error("该模型使用中，删除栏目后再删除！");
         }
-
-        if (Loader::model("content/Models")->deleteModel($modelid)) {
+        //这里可以根据缓存获取表名
+        $modeldata = $this->Models->where(array("modelid" => $modelid))->find();
+        if (!$modeldata) {
+            $this->error("要删除的模型不存在！");
+        }
+        if ($this->Models->deleteModel($modelid)) {
             $this->success("删除成功！", url("index"));
         } else {
             $this->error("删除失败！");
         }
-
     }
 
     /**
@@ -106,11 +117,11 @@ class Models extends Adminbase
      */
     public function disabled()
     {
-        $modelid = Request::instance()->param('modelid/d');
+        $modelid = $this->request->param('modelid/d');
         empty($modelid) && $this->error('参数不能为空！');
-        $r = Db::name('Model')->where((array('modelid' => $modelid)))->value('disabled');
+        $r = $this->Models->where((array('modelid' => $modelid)))->value('disabled');
         $status = $r == '1' ? '0' : '1';
-        Db::name('Model')->where((array('modelid' => $modelid)))->update(array('disabled' => $status));
+        $this->Models->where((array('modelid' => $modelid)))->update(array('disabled' => $status));
         $this->success("操作成功！");
     }
 
