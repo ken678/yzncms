@@ -49,8 +49,8 @@ class Formguide extends Models
         return $this->sql_execute($sql);
     }
 
-    //返回模型类型
-    public function Formsave($info)
+    //新增表单
+    public function FormAdd($info)
     {
         $result = $this->validate(
             ['name' => 'require|unique:model',
@@ -58,12 +58,32 @@ class Formguide extends Models
             ['name.require' => '表单名称不能为空',
                 'tablename.require' => '表名不能为空',
                 'name.unique' => '表单名称已经存在']
-        )->save($info);
+        )->allowField(true)->save($info);
         if (false === $result) {
             $this->error = $this->getError();
             return false;
         } else {
+            //更新缓存
+            cache("Model", null);
             return $this->getAttr('modelid');
+        }
+    }
+
+    //编辑表单
+    public function FormSave($info, $modelid)
+    {
+        if (empty($info['name']) || empty($modelid)) {
+            $this->error = "参数不得为空";
+            return false;
+        }
+        $result = $this->where(['modelid' => $modelid, 'type' => $this->getModelType()])->update($info);
+        if (false === $result) {
+            $this->error = $this->getError();
+            return false;
+        } else {
+            //更新缓存
+            cache("Model", null);
+            return true;
         }
     }
 

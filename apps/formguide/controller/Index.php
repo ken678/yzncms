@@ -92,6 +92,13 @@ class Index extends Homebase
         return $this->fetch(TEMPLATE_PATH . 'default/formguide/' . $show_template);
     }
 
+    //表单提交
+    public function post()
+    {
+        dump('表单提交');
+        exit();
+    }
+
     /**
      * 将文本格式成适合js输出的字符串
      * @param string $string 需要处理的字符串
@@ -115,6 +122,7 @@ class Index extends Homebase
             }
         }
         $reString = join("", $str);
+        //$string = addslashes(str_replace(array("\r", "\n", "\t"), array('', '', ''), $string));
         return $isjs ? 'document.write(unescape("' . $reString . '"));' : $reString;
     }
 

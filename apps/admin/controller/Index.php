@@ -29,6 +29,15 @@ class Index extends Adminbase
     }
 
     /**
+     * 获取验证码
+     */
+    public function getVerify()
+    {
+        $captcha = new \think\captcha\Captcha(config('captcha'));
+        return $captcha->entry();
+    }
+
+    /**
      * 设置常用菜单
      */
     public function common_operations()
@@ -59,15 +68,6 @@ class Index extends Adminbase
         } else {
             echo false;exit;
         }
-    }
-
-    /**
-     * 获取验证码
-     */
-    public function getVerify()
-    {
-        $captcha = new \think\captcha\Captcha(config('captcha'));
-        return $captcha->entry();
     }
 
     /**

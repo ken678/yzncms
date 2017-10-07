@@ -6,24 +6,36 @@
 <title>{$name}- 反馈表单</title>
 </head>
 <body>
+<style type="text/css">
+#myform .form-group{margin-bottom: 10px;}
+#myform .form-group:after {clear: both; content: " "; display: table; }
+#myform .form-form-label{float: left;width: 20%;}
+#myform .form-input{float: right;width: 80%;}
+</style>
 <form name="myform" id="myform" action="{:url('index/post')}" method="post" class="J_ajaxForms" enctype="multipart/form-data">
-<table width="100%">
-    <tbody>
-        {if condition="is_array($forminfos)"}
-        {foreach name="forminfos" item="info"}
-        {php}if($info['isomnipotent']) continue;{/php}
-        <tr>
-            <th width="80">{if $info['star']}<i class="required">*</i>{/if}{$info['name']}</th>
-            <td>
-                {$info['form']}
-                <span id="err_goods_name"></span>
-                <p class="hint">{$info['tips']}</p>
-            </td>
-        </tr>
-        {/foreach}
-        {/if}
-    </tbody>
-</table>
+    {if condition="is_array($forminfos)"}
+    {foreach name="forminfos" item="info"}
+    {php}if($info['isomnipotent']) continue;{/php}
+    <div class="form-group">
+        <label class="form-label">{if $info['star']}<i class="required">*</i>{/if}{$info['name']}</label>
+        <div class="form-input">
+            {$info['form']}
+            <span id="form-err-message"></span>
+            <p class="form-tips">{$info['tips']}</p>
+        </div>
+    </div>
+    {/foreach}
+    {/if}
+    {eq name="setting['isverify']" value="1"}
+    <div class="form-group">
+    <label class="form-label">验证码</label>
+    <div class="form-input verifycode"><img src="{:url('admin/index/getVerify')}" name="codeimage" id="codeimage" border="0"/></div>
+    </div>
+    {/eq}
+    <div class="form-submit">
+        <input type="hidden" name="formid" value="{$formid}"/>
+        <input type="submit" name="dosubmit" id="dosubmit" value=" 提交 ">
+    </div>
 </form>
 </body>
 </html>

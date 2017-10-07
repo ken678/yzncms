@@ -1,0 +1,139 @@
+{extend name="Admin@Public:layout" /}
+{block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="{:url('formguide/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+            <div class="subject">
+                <h3>表单管理 - 修改</h3>
+                <h5>表单新增及修改管理</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            <span id="explanationZoom" title="收起提示"></span> </div>
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+    <form action="{:url('formguide/edit')}" method="POST" name="adminForm">
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$data['name']}" name="info[name]" class="input-txt">
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>表名</label>
+                </dt>
+                <dd class="opt">
+                    form_{$data['tablename']}
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="admin_name">简介</label>
+                </dt>
+                <dd class="opt">
+                    <textarea name="info[description]" rows="6" class="tarea">{$data['description']}</textarea>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>提交后跳转地址</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$data['setting']['forward']}" name="setting[forward]" class="input-txt">
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>表单有效时间限制</label>
+                </dt>
+                <dd class="opt">
+                    <label>
+                        <input type="radio" name="setting[enabletime]" value="1" {eq name="data['setting']['enabletime']" value="1"}checked{/eq}> 启用</label>
+                    <label>
+                        <input type="radio" name="setting[enabletime]" value="0" {eq name="data['setting']['enabletime']" value="0"}checked{/eq}> 不启用</label>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>允许发送邮件</label>
+                </dt>
+                <dd class="opt">
+                    <label>
+                        <input name="setting[sendmail]" type="radio" value="1" {eq name="data['setting']['sendmail']" value="1"}checked{/eq}>&nbsp;是</label>&nbsp;&nbsp;
+                    <label>
+                        <input name="setting[sendmail]" type="radio" value="0" {eq name="data['setting']['sendmail']" value="0"}checked{/eq}>&nbsp;否</label>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>允许同一IP多次提交</label>
+                </dt>
+                <dd class="opt">
+                    <label>
+                        <input type="radio" name="setting[allowmultisubmit]" value="1" {eq name="data['setting']['allowmultisubmit']" value="1"}checked{/eq}> 是</label>&nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="setting[allowmultisubmit]" value="0" {eq name="data['setting']['allowmultisubmit']" value="0"}checked{/eq}> 否</label>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>允许游客提交表单</label>
+                </dt>
+                <dd class="opt">
+                    <label>
+                        <input type="radio" name="setting[allowunreg]" value="1" {eq name="data['setting']['allowunreg']" value="1"}checked{/eq}> 是</label>&nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="setting[allowunreg]" value="0" {eq name="data['setting']['allowunreg']" value="0"}checked{/eq}> 否</label>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>开启验证码</label>
+                </dt>
+                <dd class="opt">
+                    <label>
+                        <input type="radio" name="setting[isverify]" value="1" {eq name="data['setting']['isverify']" value="1"}checked{/eq}> 是</label>&nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="setting[isverify]" value="0" {eq name="data['setting']['isverify']" value="0"}checked{/eq}> 否</label>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>提交间隔</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$data['setting']['interval']}" name="setting[interval]" class="input-txt">&nbsp;单位秒，0为不限
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>模板选择</label>
+                </dt>
+                <dd class="opt">
+                    {php} echo \util\Form::select($show_template,$data['setting']['show_template'],'name="setting[show_template]" id="show_template"'); {/php} 添加模板，文件名请以“show”开头
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>js调用使用的模板</label>
+                </dt>
+                <dd class="opt">
+                    {php} echo \util\Form::select($show_js_template,$data['setting']['show_js_template'],'name="setting[show_js_template]" id="show_js_template"'); {/php} 添加模板，文件名请以“js”开头
+                </dd>
+            </dl>
+            <input type="hidden" name="modelid" value="{$data['modelid']}">
+            <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
+        </div>
+    </form>
+</div>
+{/block}

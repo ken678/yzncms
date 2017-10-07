@@ -56,7 +56,7 @@ class Formguide extends Adminbase
             $setting['endtime'] = strtotime($setting['endtime']);
             $info['setting'] = serialize($setting);
             $info['type'] = $this->db->getModelType(); //类型
-            $modelid = $this->db->Formsave($info);
+            $modelid = $this->db->FormAdd($info);
             if (false === $modelid) {
                 $this->error($this->db->getError());
             }
@@ -75,6 +75,58 @@ class Formguide extends Adminbase
             }
             $this->tpl = str_replace($this->filepath, "", glob($this->filepath . 'js*'));
             //$this->tpl = str_replace(Config::get("template.view_suffix"), "", $this->tpl);
+            foreach ($this->tpl as $v) {
+                $show_js_template[$v] = $v;
+            }
+            $this->assign('show_template', $show_template);
+            $this->assign("show_js_template", $show_js_template);
+            return $this->fetch();
+        }
+
+    }
+
+    //表单编辑
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            $modelid = $this->request->param('modelid/d', 0);
+            $info = $this->request->param('info/a');
+            $setting = $this->request->param('setting/a');
+            $setting['starttime'] = strtotime($setting['starttime']);
+            $setting['endtime'] = strtotime($setting['endtime']);
+            $info['setting'] = serialize($setting);
+            unset($info['type'], $info['tablename']);
+            /*if ($this->request->param('post._name') == $info['name']) {
+            unset($info['name']);
+            }*/
+            //$data = $this->db->create($info, 2);
+            $rs = $this->db->FormSave($info, $modelid);
+            if (false === $rs) {
+                $this->error($this->db->getError());
+            }
+            $this->success("更新表单成功！", url("formguide/index"));
+
+            /*if ($this->db->where(array('modelid' => $modelid, 'type' => $this->db->getModelType()))->update($data) !== false) {
+        $this->success("更新模型成功！", url("formguide/index"));
+        } else {
+        $this->error("更新失败！");
+        }*/
+        } else {
+            $formid = $this->request->param('formid/d', 0);
+            $r = $this->db->where(array("modelid" => $formid))->find();
+            if (!$r) {
+                $this->error("该表单不存在！");
+            }
+            $r['setting'] = unserialize($r['setting']);
+            $r['tablename'] = str_replace("form_", "", $r['tablename']);
+            $this->assign("data", $r);
+            $this->tpl = str_replace($this->filepath, "", glob($this->filepath . 'show*'));
+            //$this->tpl = str_replace(array("Show" . DIRECTORY_SEPARATOR, C("TMPL_TEMPLATE_SUFFIX")), "", $this->tpl);
+            foreach ($this->tpl as $v) {
+                $show_template[$v] = $v;
+            }
+            $this->tpl = str_replace($this->filepath, "", glob($this->filepath . 'js*'));
+            //$this->tpl = str_replace(array("Show" . DIRECTORY_SEPARATOR, C("TMPL_TEMPLATE_SUFFIX")), "", $this->tpl);
             foreach ($this->tpl as $v) {
                 $show_js_template[$v] = $v;
             }
