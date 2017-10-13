@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-06 20:50:55
+Date: 2017-10-13 21:17:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=306 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=308 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -112,6 +112,8 @@ INSERT INTO `yzn_action_log` VALUES ('302', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('303', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-05 18:09登录了后台', '1507198154');
 INSERT INTO `yzn_action_log` VALUES ('304', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-06 10:14登录了后台', '1507256046');
 INSERT INTO `yzn_action_log` VALUES ('305', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-06 17:11登录了后台', '1507281105');
+INSERT INTO `yzn_action_log` VALUES ('306', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-07 19:30登录了后台', '1507375826');
+INSERT INTO `yzn_action_log` VALUES ('307', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-13 18:52登录了后台', '1507891938');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -134,7 +136,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507281105', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507891938', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -274,7 +276,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
@@ -309,6 +311,33 @@ INSERT INTO `yzn_auth_rule` VALUES ('27', 'Content', '1', 'Content/Content/index
 INSERT INTO `yzn_auth_rule` VALUES ('28', 'Content', '1', 'Content/Category/index', '栏目列表', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('29', 'Content', '2', 'Content/index/index', '内容', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('30', 'Content', '1', 'Content/Models/index', '模型管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('31', 'Admin', '1', 'Admin/Config/mail', '邮箱配置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('32', 'Admin', '1', 'Admin/Module/local', '本地模块', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('33', 'Admin', '1', 'Admin/Module/index', '模块管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('34', 'Links', '1', 'Links/Links/index', '友情链接', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('35', 'Links', '1', 'Links/Links/add', '添加友情链接', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('36', 'Links', '1', 'Links/Links/edit', '链接编辑', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('37', 'Links', '1', 'Links/Links/delete', '链接删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('38', 'Links', '1', 'Links/Links/listorder', '链接排序', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('39', 'Links', '1', 'Links/Links/terms', '分类管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('40', 'Links', '1', 'Links/Links/addTerms', '分类新增', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('41', 'Links', '1', 'Links/Links/termsedit', '分类修改', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('42', 'Links', '1', 'Links/Links/termsdelete', '分类删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('43', 'Content', '1', 'Content/Position/index', '推荐位管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('44', 'Formguide', '1', 'Formguide/Formguide/index', '表单管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('45', 'Formguide', '1', 'Formguide/Formguide/add', '添加表单', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('46', 'Formguide', '1', 'Formguide/Formguide/edit', '编辑', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('47', 'Formguide', '1', 'Formguide/Formguide/delete', '删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('48', 'Formguide', '1', 'Formguide/Formguide/status', '禁用', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('49', 'Formguide', '1', 'Formguide/Info/index', '信息列表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('50', 'Formguide', '1', 'Formguide/Info/delete', '信息删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('51', 'Formguide', '1', 'Formguide/Field/index', '管理字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('52', 'Formguide', '1', 'Formguide/Field/add', '添加字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('53', 'Formguide', '1', 'Formguide/Field/edit', '编辑字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('54', 'Formguide', '1', 'Formguide/Field/delete', '删除字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('55', 'Admin', '1', 'Admin/Module/list', '模块列表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('56', 'Admin', '2', 'Admin/Module/index', '模块', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('57', 'Admin', '1', 'Admin/Cache/index', '缓存更新', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -473,8 +502,8 @@ INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '2', '1', '1', '2', '2', '150710713
 INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '26', '1', '6', '26', '26', '1507213335');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '5', '0', '3', '5', '5', '1507177340');
-INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '33', '3', '30', '33', '33', '1507031353');
-INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '22', '0', '1', '22', '22', '1507282720');
+INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '38', '3', '5', '38', '38', '1507372124');
+INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '23', '1', '1', '23', '23', '1507380791');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '9', '6', '3', '9', '9', '1507029586');
 INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '4', '2', '2', '4', '4', '1507029399');
 INSERT INTO `yzn_hits` VALUES ('c-1-10', '3', '0', '0', '0', '0', '0', '1506917580');
@@ -531,7 +560,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -594,6 +623,7 @@ INSERT INTO `yzn_menu` VALUES ('61', '管理字段', '', '54', 'Formguide', 'Fie
 INSERT INTO `yzn_menu` VALUES ('62', '添加字段', '', '61', 'Formguide', 'Field', 'add', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('63', '编辑字段', '', '61', 'Formguide', 'Field', 'edit', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('64', '删除字段', '', '61', 'Formguide', 'Field', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('65', '缓存更新', '', '10', 'Admin', 'Cache', 'index', '', '1', '', '0', '100');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -624,7 +654,7 @@ CREATE TABLE `yzn_model` (
 -- Records of yzn_model
 -- ----------------------------
 INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', '', '1507284550', '0', '1', '0', '', '', '', '', '', '0', '0');
-INSERT INTO `yzn_model` VALUES ('2', '用户留言表单', '', 'form_message', 'a:11:{s:7:\"forward\";s:0:\"\";s:10:\"enabletime\";s:1:\"0\";s:8:\"sendmail\";s:1:\"0\";s:16:\"allowmultisubmit\";s:1:\"0\";s:10:\"allowunreg\";s:1:\"0\";s:8:\"isverify\";s:1:\"0\";s:8:\"interval\";s:0:\"\";s:13:\"show_template\";s:9:\"show.html\";s:16:\"show_js_template\";s:12:\"js_show.html\";s:9:\"starttime\";b:0;s:7:\"endtime\";b:0;}', '1507265648', '0', '1', '0', '', '', '', '', '', '0', '3');
+INSERT INTO `yzn_model` VALUES ('2', '用户留言表单', '用户留言表单', 'form_message', 'a:11:{s:7:\"forward\";s:0:\"\";s:10:\"enabletime\";s:1:\"0\";s:8:\"sendmail\";s:1:\"0\";s:16:\"allowmultisubmit\";s:1:\"0\";s:10:\"allowunreg\";s:1:\"0\";s:8:\"isverify\";s:1:\"1\";s:8:\"interval\";s:0:\"\";s:13:\"show_template\";s:9:\"show.html\";s:16:\"show_js_template\";s:12:\"js_show.html\";s:9:\"starttime\";b:0;s:7:\"endtime\";b:0;}', '1507380061', '0', '1', '0', '', '', '', '', '', '0', '3');
 
 -- ----------------------------
 -- Table structure for `yzn_model_field`

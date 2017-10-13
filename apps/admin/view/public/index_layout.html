@@ -72,6 +72,7 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
       <li><a class="itip" href="https://www.kancloud.cn/ken678/yzncms/352683" alt="文档手册" target="_blank"><span class="icon iconfont icon-bangzhushouce"></span></a></li>
       <li><a class="sitemap show-option itip" nctype="map_on" href="javascript:void(0);" alt="查看全部管理菜单"><span class="icon iconfont icon-moxing"></span></a></li>
       <li><a class="homepage show-option itip"  onclick="go_home();" href="javascript:void(0);" alt="打开首页"><span class="icon iconfont icon-shouye"></span></a></li>
+      <li><a class="show-option itip" data-param="1Admin|{:url('cache/index')}" id="deletecache" href="javascript:;" alt="缓存更新"><span class="icon iconfont icon-richangqingli"></span></a></li>
       <li><a class="login-out show-option itip" href="{:url('index/logout')}" alt="安全退出管理中心"><span class="icon iconfont icon-tuichu"></span></a></li>
     </ul>
   </div>
@@ -92,6 +93,14 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
 </div>
 <!--左侧菜单 及 右侧主内容 END-->
 <script>
+$("#deletecache").on('click',function(e){
+    openItem($(this).attr('data-param'));
+    /*iframeJudge({
+        elem: $(this),
+        href: "{:url('index/cache')}",
+        id: "deletecache"
+    });*/
+});
 function OpenAbout(){
   layer.open({
     type: 1

@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 namespace app\common\model;
 
+use think\Loader;
+use \think\Db;
 use \think\Model;
 
 /**
@@ -34,6 +36,48 @@ class Cache extends Model
             $this->error = '删除失败！';
             return false;
         }
+    }
+
+    /**
+     * 获取需要更新缓存列队
+     * @param type $isup 是否强制获取最新
+     * @return type
+     */
+    public function getCacheList($isup = false)
+    {
+        $cache = Cache('cache_list');
+        if (empty($cache) || $isup) {
+            //取得现在全部需要更新缓存的队列
+            $cache = Db::name('Cache')->order(array('id' => 'ASC'))->select();
+            Cache('cache_list', $cache, 600);
+        }
+        return $cache;
+    }
+
+    /**
+     * 执行更新缓存
+     * @param array $config 缓存配置
+     * @return boolean
+     */
+    public function runUpdate(array $config)
+    {
+        if (empty($config)) {
+            $this->error = '没有可需要更新的缓存信息！';
+            return false;
+        }
+        $mo = '';
+        if (empty($config['module'])) {
+            $mo = "Common/{$config['model']}";
+        } else {
+            $mo = "{$config['module']}/{$config['model']}";
+        }
+        $model = Loader::model($mo);
+        if ($config['action']) {
+            $action = $config['action'];
+            $model->$action();
+            return true;
+        }
+        return false;
     }
 
     /**

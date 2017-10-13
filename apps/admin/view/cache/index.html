@@ -1,0 +1,60 @@
+{extend name="Public:layout" /} {block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>清理缓存</h3>
+                <h5>清理网站缓存使设置类操作生效</h5>
+            </div>
+            <ul class="tab-base nc-row">
+                {include file="public/nav" /}
+            </ul>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+            <li>当系统修改设置后，前后台部分内容需及时更新缓存方可显示正常。</li>
+        </ul>
+    </div>
+    <form method="POST" class="form-horizontal">
+        <div class="ncap-form-all">
+            <dl class="row">
+                <dt class="tit"><span>选择要更新的缓存数据</span></dt>
+                <dd class="opt nobg nopd nobd nobs">
+                    <div class="ncap-account-container">
+                        <h4>更新站点数据缓存</h4>
+                        <ul class="ncap-account-container-list">
+                            <a href="{:url('cache/index',array('type'=>'site'))}" class="ncap-btn-mini ncap-btn-green">提交</a>
+                        </ul>
+                    </div>
+                    <div class="ncap-account-container">
+                        <h4>更新站点模板缓存</h4>
+                        <ul class="ncap-account-container-list">
+                            <a href="{:url('cache/index',array('type'=>'template'))}" class="ncap-btn-mini ncap-btn-green">提交</a>
+                        </ul>
+                    </div>
+                    <div class="ncap-account-container">
+                        <h4>清除网站运行日志</h4>
+                        <ul class="ncap-account-container-list">
+                            <a href="{:url('cache/index',array('type'=>'logs'))}" class="ncap-btn-mini ncap-btn-green">提交</a>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </form>
+</div>
+<script>
+//按钮先执行验证再提交表
+$(function() {
+    $('#cls_full').click(function() {
+        $('input[name="cache[]"]').attr('checked', $(this).attr('checked') == 'checked');
+    });
+});
+</script>
+{/block}
