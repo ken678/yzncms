@@ -9,8 +9,9 @@
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
 namespace Libs\System;
-use think\Db;
+
 use think\Cache;
+use think\Db;
 use think\Loader;
 
 class Cache_factory
@@ -34,7 +35,8 @@ class Cache_factory
      * @param type $name 缓存名称
      * @return null
      */
-    public function get($name) {
+    public function get($name)
+    {
         $cache = Cache::get($name);
         if (!empty($cache)) {
             return $cache;
@@ -52,7 +54,8 @@ class Cache_factory
      * @param type $expire 有效时间（秒）
      * @return boolean
      */
-    public function set($name, $value, $expire = null) {
+    public function set($name, $value, $expire = null)
+    {
         return Cache::set($name, $value, $expire);
     }
 
@@ -61,8 +64,9 @@ class Cache_factory
      * @param string $name 缓存变量名
      * @return boolean
      */
-    public function remove($name) {
-        return Cache::rm($name, NULL);
+    public function remove($name)
+    {
+        return Cache::rm($name, null);
     }
 
     /**
@@ -70,7 +74,8 @@ class Cache_factory
      * @param type $name 缓存key
      * @return boolean
      */
-    public function runUpdate($name) {
+    public function runUpdate($name)
+    {
         if (empty($name)) {
             return false;
         }
@@ -93,7 +98,7 @@ class Cache_factory
             $model = Loader::model($mo);
             if ($config['action']) {
                 $action = $config['action'];
-                $model->$action();//执行方法
+                $model->$action(); //执行方法
             }
         }
         //再次加载

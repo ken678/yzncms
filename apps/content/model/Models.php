@@ -24,6 +24,8 @@ use util\Sql;
 class Models extends Modelbase
 {
     const ModeSql = 'Data/Sql/model.sql'; //模型SQL模板文件
+    const membershipModelSql = 'Data/Sql/member.sql'; //会员模型
+
     private $libPath = '';
     protected $name = 'model';
     protected $auto = ['addtime', 'tablename'];
@@ -209,6 +211,26 @@ class Models extends Modelbase
         $ModeSql = file_get_contents($this->libPath . self::ModeSql);
         //创建一张主表和附表并插入进模型基础字段数据
         $sqlSplit = str_replace(array('@yzncms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $ModeSql);
+        return $this->sql_execute($sqlSplit, $dbPrefix);
+    }
+
+    /**
+     * 创建会员模型
+     * @param type $tableName 模型主表名称（不包含表前缀）
+     * @param type $modelId 所属模型id
+     * @return boolean
+     */
+    public function AddModelMember($tableName, $modelId)
+    {
+        if (empty($tableName)) {
+            return false;
+        }
+        //表前缀
+        $dbPrefix = Config::get("database.prefix");
+        //读取会员模型SQL模板
+        $membershipModelSql = file_get_contents($this->libPath . self::membershipModelSql);
+        //表前缀，表名，模型id替换
+        $sqlSplit = str_replace(array('@yzncms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $membershipModelSql);
         return $this->sql_execute($sqlSplit, $dbPrefix);
     }
 

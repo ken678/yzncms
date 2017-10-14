@@ -17,9 +17,31 @@ use app\common\controller\Adminbase;
  */
 class Member extends Adminbase
 {
+    //会员用户组缓存
+    protected $groupCache = array();
+    //会员模型
+    protected $groupsModel = array();
+    //会员数据模型
+    protected $member = null;
+
+    //初始化
+    protected function _initialize()
+    {
+        parent::_initialize();
+        $this->groupCache = cache("Member_group");
+        $this->groupsModel = cache("Model_Member");
+    }
+
     public function manage()
     {
         return $this->fetch();
+    }
+
+    //添加会员
+    public function add()
+    {
+        return $this->fetch();
+
     }
 
 }

@@ -1,0 +1,116 @@
+{extend name="Admin@Public:layout" /}
+{block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="{:url('member/manage')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+            <div class="subject">
+                <h3>会员管理 - 添加会员</h3>
+                <h5>网站所有注册会员索引及管理</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+            <li>无</li>
+        </ul>
+    </div>
+    <form id="add_form" method="post" class="form-horizontal">
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label>用户名</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="username" name="info[username]" class="input-txt">
+                    <span class="err"></span>
+                    <p class="notic">3-15位字符，可由字母和数字，下划线"_"及破折号"-"组成。</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>密码</label>
+                </dt>
+                <dd class="opt">
+                    <input type="password" id="password" name="info[password]" class="input-txt">
+                    <span class="err"></span>
+                    <p class="notic">6-20位字符，可由英文、数字及标点符号组成。</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>确认密码</label>
+                </dt>
+                <dd class="opt">
+                    <input type="password" id="pwdconfirm" name="info[pwdconfirm]" class="input-txt">
+                    <span class="err"></span>
+                    <p class="notic">请再次输入您的密码。</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>昵称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="nickname" name="info[nickname]" class="input-txt">
+                    <span class="err"></span>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>E-mail</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="email" name="info[email]" class="input-txt">
+                    <span class="err"></span>
+                    <p class="notic">填写完整邮箱，如 yzncms@163.com</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>手机号码</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="mobile" name="info[mobile]" class="input-txt">
+                    <span class="err"></span>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>会员模型</label>
+                </dt>
+                <dd class="opt">
+                    <select name="info[groupid]" class="valid">
+                    </select>
+                    <span class="err"></span>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>积分点数</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="point" name="info[point]" class="input-txt">
+                    <span class="err"></span>
+                    <p class="notic">积分点数将影响会员用户组</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>会员模型</label>
+                </dt>
+                <dd class="opt">
+                    <select name="info[modelid]" class="valid">
+                    </select>
+                    <span class="err"></span>
+                </dd>
+            </dl>
+            <div class="bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
+        </div>
+    </form>
+</div>
+{/block}
