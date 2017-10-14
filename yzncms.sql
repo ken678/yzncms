@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-13 21:17:46
+Date: 2017-10-14 14:20:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=308 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=310 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -114,6 +114,8 @@ INSERT INTO `yzn_action_log` VALUES ('304', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('305', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-06 17:11登录了后台', '1507281105');
 INSERT INTO `yzn_action_log` VALUES ('306', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-07 19:30登录了后台', '1507375826');
 INSERT INTO `yzn_action_log` VALUES ('307', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-13 18:52登录了后台', '1507891938');
+INSERT INTO `yzn_action_log` VALUES ('308', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-14 11:30登录了后台', '1507951840');
+INSERT INTO `yzn_action_log` VALUES ('309', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-14 13:54登录了后台', '1507960460');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -136,7 +138,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507891938', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1507960460', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -502,7 +504,7 @@ INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '2', '1', '1', '2', '2', '150710713
 INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '26', '1', '6', '26', '26', '1507213335');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '5', '0', '3', '5', '5', '1507177340');
-INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '38', '3', '5', '38', '38', '1507372124');
+INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '39', '3', '1', '1', '39', '1507956106');
 INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '23', '1', '1', '23', '23', '1507380791');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '9', '6', '3', '9', '9', '1507029586');
 INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '4', '2', '2', '4', '4', '1507029399');
@@ -540,6 +542,31 @@ CREATE TABLE `yzn_links` (
 -- ----------------------------
 INSERT INTO `yzn_links` VALUES ('1', 'https://git.oschina.net/ken678/YZNCMS', '御宅男工作室', '', '', '', '0', '0', '0', '', '0', '0');
 INSERT INTO `yzn_links` VALUES ('2', 'https://hao.360.cn/?s0001', '360导航', '', '', '', '0', '0', '0', '', '0', '0');
+
+-- ----------------------------
+-- Table structure for `yzn_member`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_member`;
+CREATE TABLE `yzn_member` (
+  `uid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `nickname` char(16) NOT NULL DEFAULT '' COMMENT '昵称',
+  `sex` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '性别',
+  `birthday` date NOT NULL DEFAULT '0000-00-00' COMMENT '生日',
+  `qq` char(10) NOT NULL DEFAULT '' COMMENT 'qq号',
+  `score` mediumint(8) NOT NULL DEFAULT '0' COMMENT '用户积分',
+  `login` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录次数',
+  `reg_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '注册IP',
+  `reg_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
+  `last_login_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '最后登录IP',
+  `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '会员状态',
+  PRIMARY KEY (`uid`),
+  KEY `status` (`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员表';
+
+-- ----------------------------
+-- Records of yzn_member
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
@@ -624,6 +651,9 @@ INSERT INTO `yzn_menu` VALUES ('62', '添加字段', '', '61', 'Formguide', 'Fie
 INSERT INTO `yzn_menu` VALUES ('63', '编辑字段', '', '61', 'Formguide', 'Field', 'edit', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('64', '删除字段', '', '61', 'Formguide', 'Field', 'delete', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('65', '缓存更新', '', '10', 'Admin', 'Cache', 'index', '', '1', '', '0', '100');
+INSERT INTO `yzn_menu` VALUES ('3', '用户', '', '0', 'Member', 'index', 'index', '', '1', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('4', '会员管理', 'icon iconfont icon-yonghu', '3', 'Member', 'index', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('7', '会员管理', '', '4', 'Member', 'member', 'manage', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -830,4 +860,30 @@ CREATE TABLE `yzn_terms` (
 
 -- ----------------------------
 -- Records of yzn_terms
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `yzn_ucenter_member`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_ucenter_member`;
+CREATE TABLE `yzn_ucenter_member` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `username` char(16) NOT NULL COMMENT '用户名',
+  `password` char(32) NOT NULL COMMENT '密码',
+  `email` char(32) NOT NULL COMMENT '用户邮箱',
+  `mobile` char(15) NOT NULL COMMENT '用户手机',
+  `reg_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
+  `reg_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '注册IP',
+  `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
+  `last_login_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '最后登录IP',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `status` tinyint(4) DEFAULT '0' COMMENT '用户状态',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`),
+  KEY `status` (`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+-- ----------------------------
+-- Records of yzn_ucenter_member
 -- ----------------------------
