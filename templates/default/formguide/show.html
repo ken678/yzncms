@@ -29,7 +29,9 @@
     {eq name="setting['isverify']" value="1"}
     <div class="form-group">
     <label class="form-label">验证码</label>
-    <div class="form-input verifycode"><img src="{:url('admin/index/getVerify')}" name="codeimage" id="codeimage" border="0"/></div>
+    <div class="form-input verifycode">
+        <input type="text" name="verify" id="verify" value="" class="input">&nbsp;
+        <img src="{:url('api/Checkcode/getVerify','type=formguide&length=4&font_size=14&imageW=100&imageH=33&font_color=&background=')}" name="codeimage" id="codeimage" border="0"/></div>
     </div>
     {/eq}
     <div class="form-submit">
@@ -37,5 +39,15 @@
         <input type="submit" name="dosubmit" id="dosubmit" value=" 提交 ">
     </div>
 </form>
+<script>
+$(function(){
+    $('#codeimage').click(function(){
+        var num = new Date().getTime();
+        var rand = Math.round(Math.random() * 10000);
+        var num = num + rand;
+        $("#codeimage").attr('src', $("#codeimage").attr('src') + "&t=" + num);
+    });
+});
+</script>
 </body>
 </html>

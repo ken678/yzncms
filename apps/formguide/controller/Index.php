@@ -95,7 +95,29 @@ class Index extends Homebase
     //表单提交
     public function post()
     {
-        dump('表单提交');
+        //提交间隔
+        if ($this->setting['interval']) {
+            $formguide = cookie('formguide_' . $this->formid);
+            if ($formguide) {
+                $this->error("操作过快，请歇息后再次提交！");
+            }
+        }
+        //开启验证码
+        if ($this->setting['isverify']) {
+            $verify = $this->request->param('verify');
+            if (empty($verify)) {
+                $this->error('请输入验证码！');
+            }
+
+            if (!captcha_check($verify)) {
+                $this->error('验证码输入错误！');
+                return false;
+            }
+        }
+        $info = $this->request->param('info/a');
+        $content_input = new \content_input($this->formid);
+        $inputinfo = $content_input->get($info);
+        dump($inputinfo);
         exit();
     }
 

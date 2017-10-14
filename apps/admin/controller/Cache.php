@@ -14,7 +14,6 @@ use app\common\controller\Adminbase;
 
 class Cache extends Adminbase
 {
-
     /**
      * 缓存更新首页
      */
@@ -49,6 +48,7 @@ class Cache extends Adminbase
                                 $dirList[] = $dirName;
                                 //删除目录
                                 $Dir->delDir($path);
+                                //$this->assign("wait", 200);
                                 $this->success("清理缓存目录[{$dirName}]成功！", url('cache/index', array('type' => 'site', 'dir' => implode(',', $dirList))), '', 1);
                                 exit;
                             }
@@ -70,7 +70,7 @@ class Cache extends Adminbase
                             exit;
                         }
                     }
-                    $this->success("即将更新站点缓存！", url('cache/index', array('type' => 'site', 'stop' => 1)));
+                    $this->success("即将更新站点缓存！", url('cache/index', array('type' => 'site', 'stop' => 1)), '', 1);
                     break;
                 case "template":
                     //删除缓存目录下的文件
