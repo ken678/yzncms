@@ -1,0 +1,93 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>会员组管理</h3>
+                <h5>前台会员设定及获取管理</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+            <li>暂无</li>
+        </ul>
+    </div>
+    <!-- 表格 -->
+    <div class="table_list">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>会员组列表</h3>
+                <h5></h5></div>
+        </div>
+        <div class="hDiv">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td width="20"  align="center">ID</td>
+                        <td width="50"  align="center" class='sort'>排序</td>
+                        <td width="110" align="center" >操作</td>
+                        <td width="100"  align="center">用户组名</td>
+                        <td width="70" align="center">系统组</td>
+                        <td width="70"  align="center">会员数</td>
+                        <td width="70" align="center">星星数</td>
+                        <td width="80" align="center">积分小于</td>
+                        <td width="100" align="center">允许上传附件</td>
+                        <td width="80" align="center">投稿权限</td>
+                        <td width="100" align="center">投稿不需审核</td>
+                        <td width="80" align="center">搜索权限</td>
+                        <td width="80" align="center">自助升级</td>
+                        <td width="80" align="center">发短消息</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tDiv">
+            <div class="tDiv2">
+                <div class="fbutton">
+                    <div class="add">
+                      <span><i class="icon iconfont icon-lanmuguanli"></i><a href="javascript:void(0)">添加会员组</a></span>
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="bDiv">
+            <table width="100%">
+                <tbody>
+                    {volist name="data" id="vo"}
+                    <tr>
+                        <td width="20" align="center">{$vo.groupid}</td>
+                        <td width="50" align="center" class="sort"><span alt="可编辑" column_id="{$vo.groupid}" fieldname="gc_sort" nc_type="inline_edit" class="itip editable">{$vo['sort']}</span></td>
+                        <td width="80" align="center" ><a class="btn blue" href=""><i class="icon iconfont icon-shanchu"></i>修改</a></td>
+                        <td width="100"  align="center">{$vo.name}</td>
+                        <td width="70" align="center"><font color="red">√</font></td>
+                        <td width="70"  align="center">{$vo._count}</td>
+                        <td width="70" align="center">{$vo.starnum}</td>
+                        <td width="80" align="center">{$vo.point}</td>
+                        <td width="100" align="center">{eq name="vo.allowattachment" value="1"}<font color="red">√</font>{else/}<font color="blue">×</font>{/eq}</td>
+                        <td width="80" align="center">{eq name="vo.allowpost" value="1"}<font color="red">√</font>{else/}<font color="blue">×</font>{/eq}</td>
+                        <td width="100" align="center">{eq name="vo.allowpostverify" value="1"}<font color="red">√</font>{else/}<font color="blue">×</font>{/eq}</td>
+                        <td width="80" align="center">{eq name="vo.allowsearch" value="1"}<font color="red">√</font>{else/}<font color="blue">×</font>{/eq}</td>
+                        <td width="80" align="center">{eq name="vo.allowupgrade" value="1"}<font color="red">√</font>{else/}<font color="blue">×</font>{/eq}</td>
+                        <td width="80" align="center">{eq name="vo.allowsendmessage" value="1"}<font color="red">√</font>{else/}<font color="blue">×</font>{/eq}</td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('span[nc_type="inline_edit"]').inline_edit({ act: '{:url("")}' });
+});
+</script>
+{/block}

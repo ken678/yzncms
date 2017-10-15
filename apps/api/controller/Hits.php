@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-namespace app\Api\controller;
+namespace app\api\controller;
 
 use app\common\controller\Base;
 use think\Db;
