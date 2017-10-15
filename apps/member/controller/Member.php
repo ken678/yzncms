@@ -12,6 +12,7 @@ namespace app\member\controller;
 
 use app\common\controller\Adminbase;
 use app\user\api\UserApi;
+use \think\Loader;
 
 /**
  * 会员管理
@@ -43,8 +44,12 @@ class Member extends Adminbase
     {
         if ($this->request->isPost()) {
             $post = $this->request->param();
-            dump($post);
-            exit();
+            //数据验证
+            $validate = Loader::validate('member/Member');
+            if (!$validate->scene('add')->check($post)) {
+                $this->error($validate->getError());
+                return false;
+            }
             /* 调用注册接口注册用户 */
             $User = new UserApi;
             $uid = $User->register($username, $password, $email, '', 'admin');
