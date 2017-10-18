@@ -75,7 +75,7 @@ www  WEB部署目录（或者子目录）
 ```
 
 [后台登陆界面预览]  
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0929/171926_8898a2ab_555541.jpeg "QQ截图20170929171324.jpg")
+![输入图片说明](https://gitee.com/uploads/images/2017/1018/172222_58368544_555541.jpeg "QQ截图20171018171622.jpg")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0904/091039_830d8119_555541.png "添加内容.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134316_df6a7b60_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0905/175949_bc011124_555541.png "Yzncms.png")
