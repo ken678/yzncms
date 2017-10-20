@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-15 13:13:09
+Date: 2017-10-20 21:06:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=313 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=315 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -119,6 +119,8 @@ INSERT INTO `yzn_action_log` VALUES ('309', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('310', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-14 17:06登录了后台', '1507971984');
 INSERT INTO `yzn_action_log` VALUES ('311', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-14 18:37登录了后台', '1507977452');
 INSERT INTO `yzn_action_log` VALUES ('312', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-15 10:52登录了后台', '1508035979');
+INSERT INTO `yzn_action_log` VALUES ('313', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-15 20:24登录了后台', '1508070293');
+INSERT INTO `yzn_action_log` VALUES ('314', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-20 19:18登录了后台', '1508498297');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -141,7 +143,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1508035979', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1508498297', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -559,20 +561,23 @@ CREATE TABLE `yzn_member` (
   `sex` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '性别',
   `birthday` date NOT NULL DEFAULT '0000-00-00' COMMENT '生日',
   `qq` char(10) NOT NULL DEFAULT '' COMMENT 'qq号',
-  `score` mediumint(8) NOT NULL DEFAULT '0' COMMENT '用户积分',
+  `point` mediumint(8) NOT NULL DEFAULT '0' COMMENT '用户积分',
+  `amount` decimal(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '钱金总额',
   `login` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录次数',
   `groupid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '用户组ID',
+  `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '用户模型ID',
   `reg_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '注册IP',
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
   `last_login_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '最后登录IP',
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '会员状态',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
+INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0000-00-00', '', '100', '0.00', '0', '2', '3', '0', '0', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -649,7 +654,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -720,6 +725,10 @@ INSERT INTO `yzn_menu` VALUES ('11', '会员模型', 'icon iconfont icon-guanliy
 INSERT INTO `yzn_menu` VALUES ('66', '模型管理', '', '11', 'Member', 'Model', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('67', '会员组', 'icon iconfont icon-chengyuan', '3', 'Member', 'Group', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('68', '会员组管理', '', '67', 'Member', 'Group', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('8', '扩展', '', '0', 'Addons', 'Addons', 'index', '', '1', '', '0', '5');
+INSERT INTO `yzn_menu` VALUES ('69', '插件拓展', 'icon iconfont icon-chajian', '8', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('70', '插件管理', '', '69', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('71', '钩子管理', '', '69', 'Addons', 'Addons', 'hooks', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -949,8 +958,9 @@ CREATE TABLE `yzn_ucenter_member` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `status` (`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
+INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', 'e5e764feb83f21f7c578c6741dd148b0', '530765310@qq.com', '13402503587', '1508501243', '2130706433', '0', '0', '1508501243', '1');

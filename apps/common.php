@@ -449,7 +449,7 @@ function api($name, $vars = array())
  */
 function time_format($time = null, $format = 'Y-m-d H:i')
 {
-    $time = $time === null ? NOW_TIME : intval($time);
+    $time = $time === null ? $_SERVER['REQUEST_TIME'] : intval($time);
     return date($format, $time);
 }
 

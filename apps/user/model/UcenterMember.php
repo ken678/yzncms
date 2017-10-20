@@ -100,11 +100,10 @@ class UcenterMember extends Model
         if (empty($scene)) {
             $scene = true;
         }
-
-        $validate = \think\Loader::validate('UcenterMember');
+        /*$validate = \think\Loader::validate('UcenterMember');
         if (!$validate->scene($scene)->check($data)) {
-            return $validate->getError();
-        }
+        return $validate->getError();
+        }*/
         /* 添加用户 */
         if ($user_data = $this->create($data)) {
             $user_data = $user_data->toArray();

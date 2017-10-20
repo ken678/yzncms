@@ -12,7 +12,8 @@ namespace app\member\controller;
 
 use app\common\controller\Adminbase;
 use app\user\api\UserApi;
-use \think\Loader;
+use think\Db;
+use think\Loader;
 
 /**
  * 会员管理
@@ -23,19 +24,29 @@ class Member extends Adminbase
     protected $groupCache = array();
     //会员模型
     protected $groupsModel = array();
-    //会员数据模型
-    protected $member = null;
 
     //初始化
     protected function _initialize()
     {
         parent::_initialize();
-        $this->groupCache = cache("Member_group");
-        $this->groupsModel = cache("Model_Member");
+        $this->groupCache = cache("Member_group"); //会员模型
+        $this->groupsModel = cache("Model_Member"); //会员组
     }
 
     public function manage()
     {
+        $map['status'] = array('egt', 0);
+        $list = $this->lists('Member', $map);
+        int_to_string($list);
+        foreach ($this->groupCache as $g) {
+            $groupCache[$g['groupid']] = $g['name'];
+        }
+        foreach ($this->groupsModel as $m) {
+            $groupsModel[$m['modelid']] = $m['name'];
+        }
+        $this->assign('groupCache', $groupCache);
+        $this->assign('groupsModel', $groupsModel);
+        $this->assign('_list', $list);
         return $this->fetch();
     }
 
@@ -52,14 +63,15 @@ class Member extends Adminbase
             }
             /* 调用注册接口注册用户 */
             $User = new UserApi;
-            $uid = $User->register($username, $password, $email, '', 'admin');
+            $uid = $User->register($post['username'], $post['password'], $post['email'], $post['mobile'], 'admin');
             if (0 < $uid) {
                 //注册成功
-                $user = array('uid' => $uid, 'nickname' => $username, 'status' => 1);
-                if (!db('Member', [], false)->insert($user)) {
+                $post['uid'] = $uid;
+                $post['status'] = 1;
+                if (!Db::name('Member')->strict(false)->insert($post)) {
                     $this->error('用户添加失败！');
                 } else {
-                    $this->success('用户添加成功！', url('index'));
+                    $this->success('用户添加成功！', url('manage'));
                 }
             } else {
                 //注册失败，显示错误信息
@@ -79,6 +91,21 @@ class Member extends Adminbase
             $this->assign('groupsModel', $groupsModel);
             return $this->fetch();
         }
+    }
+
+    //删除会员
+    public function delete()
+    {
+        $uid = $this->request->param('uid/d');
+        if (!$uid) {
+            $this->error("请选择需要删除的会员！");
+        }
+        $info = Db::name('Member')->where(array("uid" => $uid))->find();
+        if (!empty($info)) {
+            //删除会员信息，且删除投稿相关
+            //$User->userDelete($uid))
+        }
+        $this->success("删除成功！");
     }
 
     /**
