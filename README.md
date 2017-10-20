@@ -23,13 +23,13 @@ AUTH权限：用户权限
 
 [使用帮助]
 ```
-[使用手册](https://www.kancloud.cn/ken678/yzncms) 完成度5%
-[开源中国](http://www.oschina.net/p/yzncms)
+[使用手册](https://www.kancloud.cn/ken678/yzncms) 完成度10%
+[视频教程](暂无，正式版后放送...)
 ```
 
 [环境要求]
 ```
-ThinkPHP5.09的运行环境要求PHP5.4以上。（注意：PHP5.4dev版本和PHP6均不支持）
+ThinkPHP5.011的运行环境要求PHP5.4以上。（注意：PHP5.4dev版本和PHP6均不支持）
 PDO拓展
 MBstring拓展
 CURL拓展
@@ -53,7 +53,7 @@ PS 几个注意点
 ```
 [有问必答]
 ```
-本人非常乐意帮助新手，如果对本产品或者TP5.0有任何的疑问 都可以提交到issues 都会帮忙解决
+本人非常乐意帮助新手，如果对本产品或者TP5.011有任何的疑问 都可以提交到issues 都会帮忙解决
 工作原因 QQ请不要联系 谢谢！！！
 ```
 
