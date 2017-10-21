@@ -1,0 +1,34 @@
+{extend name="Admin@Public/layout" /}
+{block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="{:url('index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+            <div class="subject">
+                <h3>插件配置-{$data.title}</h3>
+                <h5>插件配置及管理</h5>
+            </div>
+        </div>
+    </div>
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+        </ul>
+    </div>
+    <form action="{:url('saveConfig')}" method="post" class="form-horizontal">
+        <div class="ncap-form-default">
+            {empty name="custom_config"}
+
+            {else /}
+               {present name="custom_config"}
+                  {$custom_config}
+               {/present}
+            {/empty}
+            <input type="hidden" name="id" value="{:input('id')}" readonly>
+            <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
+        </div>
+    </form>
+</div>
+{/block}

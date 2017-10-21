@@ -23,6 +23,10 @@ class Addons extends Adminbase
     public function _initialize()
     {
         parent::_initialize();
+        //动态拓展菜单
+        $this->assign('_extra_menu', array(
+            '已装插件后台' => Loader::model('Addons')->getAdminList(),
+        ));
         $this->addons = Loader::model('Addons');
     }
 
@@ -42,6 +46,75 @@ class Addons extends Adminbase
         // 记录当前列表页的cookie
         Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
         return $this->fetch();
+    }
+
+    /**
+     * 设置插件页面
+     */
+    public function config()
+    {
+        $addonId = $this->request->param('id/d');
+        if (empty($addonId)) {
+            $this->error('请选择需要操作的插件！');
+        }
+        //获取插件信息
+        $addon = $this->addons->where(array('id' => $addonId))->find()->toArray();
+        if (empty($addon)) {
+            $this->error('该插件没有安装！');
+        }
+        //实例化插件入口类
+        $addon_class = get_addon_class($addon['name']);
+        if (!class_exists($addon_class)) {
+            trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
+        }
+        $addonObj = new $addon_class();
+        $addon['addon_path'] = $addonObj->addon_path;
+        $addon['custom_config'] = isset($addonObj->custom_config) ? $addonObj->custom_config : '';
+        $db_config = $addon['config'];
+        //载入插件配置数组
+        $addon['config'] = include $addonObj->config_file;
+        if ($db_config) {
+            $db_config = json_decode($db_config, true);
+            foreach ($addon['config'] as $key => $value) {
+                if ($value['type'] != 'group') {
+                    $addon['config'][$key]['value'] = isset($db_config[$key]) ? $db_config[$key] : '';
+                } else {
+                    foreach ($value['options'] as $gourp => $options) {
+                        foreach ($options['options'] as $gkey => $value) {
+                            $addon['config'][$key]['options'][$gourp]['options'][$gkey]['value'] = $db_config[$gkey];
+                        }
+                    }
+                }
+            }
+        }
+        $this->assign('data', $addon);
+        if ($addon['custom_config']) {
+            //加载配置文件config.html
+            $this->assign('custom_config', $this->fetch($addon['addon_path'] . $addon['custom_config']));
+        }
+        return $this->fetch();
+    }
+
+    /**
+     * 保存插件设置
+     */
+    public function saveConfig()
+    {
+        $id = $this->request->param('id/d');
+        //获取插件信息
+        $info = $this->addons->where(array('id' => $id))->find();
+        if (empty($info)) {
+            $this->error('该插件没有安装！');
+        }
+        $config = $this->request->param('config/a');
+        $flag = Db::name('Addons')->where(['id' => $id])->setField('config', json_encode($config));
+        if ($flag !== false) {
+            //更新插件缓存
+            $this->addons->addons_cache();
+            $this->success('保存成功', Cookie('__forward__'));
+        } else {
+            $this->error('保存失败');
+        }
     }
 
     /**

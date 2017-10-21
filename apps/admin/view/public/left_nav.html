@@ -1,3 +1,7 @@
+{notempty name="_extra_menu"}
+{// 动态扩展菜单 //}
+{:extra_menu($_extra_menu,$__MENU__)}
+{/notempty}
 {volist name="__MENU__" id="menu_top" }
 {php}$key1=$key;{/php}
 <div id="admincpNavTabs_{$key}" class="nav-tabs">

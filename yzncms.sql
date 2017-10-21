@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-21 15:48:56
+Date: 2017-10-21 23:09:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=316 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=317 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -122,6 +122,7 @@ INSERT INTO `yzn_action_log` VALUES ('312', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('313', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-15 20:24登录了后台', '1508070293');
 INSERT INTO `yzn_action_log` VALUES ('314', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-20 19:18登录了后台', '1508498297');
 INSERT INTO `yzn_action_log` VALUES ('315', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 11:39登录了后台', '1508557186');
+INSERT INTO `yzn_action_log` VALUES ('316', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 20:45登录了后台', '1508589942');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -139,11 +140,12 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
+INSERT INTO `yzn_addons` VALUES ('10', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"1\",\"current\":\"1\"}', '御宅男', '1.0.0', '1508592233', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -166,7 +168,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1508557186', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1508589942', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -566,7 +568,7 @@ CREATE TABLE `yzn_hooks` (
 -- Records of yzn_hooks
 -- ----------------------------
 INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '0', '');
-INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '0', '');
+INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '0', 'returntop');
 INSERT INTO `yzn_hooks` VALUES ('3', 'documentEditForm', '添加编辑表单的 扩展内容钩子', '1', '0', '');
 INSERT INTO `yzn_hooks` VALUES ('4', 'documentDetailAfter', '文档末尾显示', '1', '0', '');
 INSERT INTO `yzn_hooks` VALUES ('5', 'documentDetailBefore', '页面内容前显示用钩子', '1', '0', '');

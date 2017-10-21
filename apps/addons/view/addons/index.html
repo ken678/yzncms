@@ -56,7 +56,7 @@
                         <td width="170" align="center">
                         {empty name="vo.uninstall"}
                             {present name="vo.config"}
-                            <a class="btn blue" href=""><i class="icon iconfont icon-shezhi"></i>设置</a>
+                            <a class="btn blue" href="{:url('config',array('id'=>$vo['id']))}"><i class="icon iconfont icon-shezhi"></i>设置</a>
                             {/present}
                             {gt name="vo.status" value="0"}
                             	{eq name="vo.status" value="0"}
