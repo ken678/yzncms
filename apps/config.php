@@ -37,6 +37,8 @@ return [
     'app_debug' => true,
     // 应用Trace
     'app_trace' => true,
+    // 注册的根命名空间
+    'root_namespace' => ['addons' => ROOT_PATH . 'addons' . DS],
 
     // +----------------------------------------------------------------------
     // | 模块设置

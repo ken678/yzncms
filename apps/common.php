@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
+define('YZN_ADDON_PATH', ROOT_PATH . 'addons/');
 // 公用函数
 use think\Cache;
 use think\Config;
@@ -45,6 +46,34 @@ function logic($model_id, $Base = 'Base')
     $class = 'app\common\logic\\' . $Base;
     return new $class(['table_name' => $tableName]);
 }
+
+/**
+ * 字符串转换为数组，主要用于把分隔符调整到第二个参数
+ * @param  string $str  要分割的字符串
+ * @param  string $glue 分割符
+ * @return array
+ */
+function str2arr($str, $glue = ',')
+{
+    return explode($glue, $str);
+}
+
+/**
+ * 数组转换为字符串，主要用于把分隔符调整到第二个参数
+ * @param  array  $arr  要连接的数组
+ * @param  string $glue 分割符
+ * @return string
+ * @author 艺品网络  <twothink.cn>
+ */
+function arr2str($arr, $glue = ',')
+{
+    if (is_string($arr)) {
+        return $arr;
+    }
+
+    return implode($glue, $arr);
+}
+
 /**
  * 系统缓存缓存管理
  * cache('model') 获取model缓存
@@ -81,6 +110,64 @@ function cache($name, $value = '', $options = null)
         }
         return $cache->set($name, $value, $expire);
     }
+}
+
+/**
+ * 获取插件类的类名
+ * @param $name 插件名
+ * @param string $type 返回命名空间类型
+ * @param string $class 当前类名
+ * @return string
+ */
+function get_addon_class($name, $type = 'hook', $class = null)
+{
+    $name = \think\Loader::parseName($name);
+    $class = \think\Loader::parseName(is_null($class) ? $name : $class, 1);
+    switch ($type) {
+        case 'controller':
+            $namespace = "\\addons\\" . $name . "\\controller\\" . $class;
+            break;
+        default:
+            $namespace = "\\addons\\" . $name . "\\" . $class;
+    }
+    return $namespace;
+}
+
+/**
+ * 对查询结果集进行排序
+ * @access public
+ * @param array $list 查询结果
+ * @param string $field 排序的字段名
+ * @param array $sortby 排序类型
+ * asc正向排序 desc逆向排序 nat自然排序
+ * @return array
+ */
+function list_sort_by($list, $field, $sortby = 'asc')
+{
+    if (is_array($list)) {
+        $refer = $resultSet = array();
+        foreach ($list as $i => $data) {
+            $refer[$i] = &$data[$field];
+        }
+
+        switch ($sortby) {
+            case 'asc': // 正向排序
+                asort($refer);
+                break;
+            case 'desc': // 逆向排序
+                arsort($refer);
+                break;
+            case 'nat': // 自然排序
+                natcasesort($refer);
+                break;
+        }
+        foreach ($refer as $key => $val) {
+            $resultSet[] = &$list[$key];
+        }
+
+        return $resultSet;
+    }
+    return false;
 }
 
 /**

@@ -1,58 +1,58 @@
 {extend name="Public:layout" /}
 {block name="content"}
 <div class="page">
-	<div class="fixed-bar">
-		<div class="item-title">
-		  <div class="subject">
-		    <h3>模块管理</h3>
-		    <h5>本地模块管理中心</h5>
-		  </div>
-		</div>
-	</div>
-	<!-- 操作说明 -->
-	<div class="explanation" id="explanation">
-		<div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
-			  <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
-			  <span id="explanationZoom" alt="收起提示" class="itip"></span>
-		</div>
-		<ul>
-		  <li>模块管理可以很好的扩展网站运营中所需功能！</li>
-		</ul>
-	</div>
-	<!-- 表格 -->
-		<div class="table_list">
-		<div class="mDiv"><div class="ftitle"><h3>管理员操作日志列表</h3><h5></h5></div></div>
-		<div class="hDiv">
-		    <table width="100%">
-		    <thead>
-		      <tr>
-		        <td width="120" align="center">操作</td>
-		        <td width="150" align="center">名称</td>
-		        <td width="50"  align="center ">版本</td>
-		        <td width="60"  align="center">作者</td>
-		        <td width="300" align="center">简介</td>
-		        <td width="180" align="center">安装时间</td>
-		      </tr>
-		    </thead>
-		    </table>
-		</div>
-
-		<div class="tDiv">
-		  <div class="tDiv2">
-		    <!--<div class="fbutton"><div class="add ajax-post confirm" target-form="ids" url="{:url('action/remove')}"><span><i class="icon iconfont icon-shanchu"></i>批量删除</span></div></div>
-		    <div class="fbutton"><div class="add ajax-get confirm" url="{:url('action/clear')}"><span><i class="icon iconfont icon-yue"></i>删除1个月前的数据</span></div></div>-->
-		  </div>
-		  <div style="clear:both"></div>
-		</div>
-
-		<div class="bDiv">
-			<table width="100%">
-			<tbody>
-			   {volist name="data" id="vo"}
-			      <tr>
-			      	<td width="120" align="center">
-			      	    {empty name="vo['installtime']"}
-			      	    <a class="btn red" href="{:url('install',array('module'=>$vo['module']))}"><i class="icon iconfont icon-zidongxiufu"></i>安装<a>
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>模块管理</h3>
+                <h5>本地模块管理中心</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+            <span id="explanationZoom" alt="收起提示" class="itip"></span>
+        </div>
+        <ul>
+            <li>模块管理可以很好的扩展网站运营中所需功能！</li>
+        </ul>
+    </div>
+    <!-- 表格 -->
+    <div class="table_list">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>管理员操作日志列表</h3>
+                <h5></h5></div>
+        </div>
+        <div class="hDiv">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td width="120" align="center">操作</td>
+                        <td width="150" align="center">名称</td>
+                        <td width="50" align="center ">版本</td>
+                        <td width="60" align="center">作者</td>
+                        <td width="300" align="center">简介</td>
+                        <td width="180" align="center">安装时间</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tDiv">
+            <div class="tDiv2">
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="bDiv">
+            <table width="100%">
+                <tbody>
+                    {volist name="data" id="vo"}
+                    <tr>
+                        <td width="120" align="center">
+                            {empty name="vo['installtime']"}
+                            <a class="btn red" href="{:url('install',array('module'=>$vo['module']))}"><i class="icon iconfont icon-zidongxiufu"></i>安装<a>
 			      	    {else /}
 				      	    {eq name="vo['iscore']" value="0"}
 				      	    <a class="btn red ajax-get confirm" url="{:url('uninstall',array('module'=>$vo['module']))}"><i class="icon iconfont icon-shanchu"></i>卸载<a>
