@@ -49,6 +49,91 @@ class Addons extends Adminbase
     }
 
     /**
+     * 钩子列表
+     */
+    public function hooks()
+    {
+        $list = $this->lists('Hooks', array());
+        int_to_string($list, array(
+            'type' => [1 => '视图', 2 => '控制器'],
+        ));
+        // 记录当前列表页的cookie
+        Cookie('__forward__', $_SERVER['REQUEST_URI']);
+        $this->assign('_list', $list);
+        return $this->fetch();
+    }
+
+    /**
+     * 新增钩子页面
+     * @return [type] [description]
+     */
+    public function addhook()
+    {
+        $this->assign('data', null);
+        return $this->fetch('edithook');
+    }
+
+    /**
+     * 编辑插件页面
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function edithook($id)
+    {
+        $hook = Db::name('Hooks')->field(true)->find($id);
+        $this->assign('data', $hook);
+        return $this->fetch('edithook');
+    }
+
+    /**
+     * 编辑钩子
+     * @return [type] [description]
+     */
+    public function updateHook()
+    {
+        $hookModel = Loader::model('admin/Hooks');
+        $data = $this->request->param();
+        $result = $this->validate($data, [
+            ['name', 'require|unique:hooks', '钩子名称必须|钩子已存在'],
+            ['description', 'require', '钩子描述必须'],
+        ]);
+        if (true !== $result) {
+            $this->error($result);
+        }
+        if (!empty($data['id'])) {
+            $flag = $hookModel->allowField(true)->update($data);
+            if ($flag !== false) {
+                //cache('hooks', null);
+                $this->success('更新成功', Cookie('__forward__'));
+            } else {
+                $this->error('更新失败');
+            }
+        } else {
+            $flag = $hookModel->allowField(true)->save($data);
+            if ($flag) {
+                //cache('hooks', null);
+                $this->success('新增成功', Cookie('__forward__'));
+            } else {
+                $this->error('新增失败');
+            }
+        }
+    }
+
+    /**
+     * 删除钩子
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function delhook($id)
+    {
+        if (Db::name('Hooks')->delete($id) !== false) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
+
+    /**
      * 设置插件页面
      */
     public function config()

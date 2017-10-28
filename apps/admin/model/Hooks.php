@@ -121,4 +121,28 @@ class Hooks extends Model
         }
         return $flag;
     }
+
+    public function hook_cache()
+    {
+        $hooks = \think\Db::name('Hooks')->column('name,addons');
+        if (empty($hooks)) {
+            return false;
+        }
+        foreach ($hooks as $key => $value) {
+            if ($value) {
+                $map['status'] = 1;
+                $names = explode(',', $value);
+                $map['name'] = array('IN', $names);
+                $data = \think\Db::name('Addons')->where($map)->column('id,name');
+                if ($data) {
+                    $addons_arr = array_intersect($names, $data);
+                    $addons[$key] = array_map('get_addon_class', $addons_arr);
+                }
+            }
+        }
+        cache('hooks', $addons);
+        cache('Hooks', $addons);
+        return $addons;
+
+    }
 }

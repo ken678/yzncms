@@ -12,5 +12,5 @@
 // 应用行为扩展定义文件
 return [
     // 应用初始化
-    'app_init' => ['app\common\behavior\AppInit'],
+    'app_init' => ['app\common\behavior\AppInit', 'app\common\behavior\InitHook'],
 ];

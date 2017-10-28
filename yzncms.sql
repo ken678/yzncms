@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-10-21 23:09:29
+Date: 2017-10-28 17:18:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=317 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=320 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -123,6 +123,9 @@ INSERT INTO `yzn_action_log` VALUES ('313', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('314', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-20 19:18登录了后台', '1508498297');
 INSERT INTO `yzn_action_log` VALUES ('315', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 11:39登录了后台', '1508557186');
 INSERT INTO `yzn_action_log` VALUES ('316', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 20:45登录了后台', '1508589942');
+INSERT INTO `yzn_action_log` VALUES ('317', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 23:10登录了后台', '1508598648');
+INSERT INTO `yzn_action_log` VALUES ('318', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-22 21:24登录了后台', '1508678667');
+INSERT INTO `yzn_action_log` VALUES ('319', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-28 14:09登录了后台', '1509170997');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -145,7 +148,7 @@ CREATE TABLE `yzn_addons` (
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
-INSERT INTO `yzn_addons` VALUES ('10', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"1\",\"current\":\"1\"}', '御宅男', '1.0.0', '1508592233', '0');
+INSERT INTO `yzn_addons` VALUES ('10', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"0\",\"current\":\"94\"}', '御宅男', '1.0.0', '1508592233', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -168,7 +171,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1508589942', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1509170997', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -385,7 +388,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -400,6 +403,7 @@ INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'Member', 
 INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'Member', 'MemberGroup', 'membergroup_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'Member', 'Member', 'member_model_cahce', '0');
 INSERT INTO `yzn_cache` VALUES ('10', 'Addons', '插件列表', 'Addons', 'Addons', 'addons_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('11', 'Hooks', '钩子列表', 'Admin', 'Hooks', 'hook_cache', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_category`
@@ -457,7 +461,7 @@ CREATE TABLE `yzn_config` (
   `sort` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='网站配置表';
 
 -- ----------------------------
 -- Records of yzn_config
@@ -473,6 +477,7 @@ INSERT INTO `yzn_config` VALUES ('8', 'mail_port', '邮件发送端口', '1', '2
 INSERT INTO `yzn_config` VALUES ('9', 'mail_from', '发件人地址', '1', 'o0mcw_ken0o@163.com', '0');
 INSERT INTO `yzn_config` VALUES ('10', 'mail_user', '邮箱用户名', '1', 'o0mcw_ken0o@163.com', '0');
 INSERT INTO `yzn_config` VALUES ('11', 'mail_password', '邮箱密码', '1', '', '0');
+INSERT INTO `yzn_config` VALUES ('12', 'hooks_type', '钩子的类型', '1', '1:视图\r\n2:控制器', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_config_field`
@@ -562,22 +567,14 @@ CREATE TABLE `yzn_hooks` (
   `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
 INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '0', '');
-INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '0', 'returntop');
-INSERT INTO `yzn_hooks` VALUES ('3', 'documentEditForm', '添加编辑表单的 扩展内容钩子', '1', '0', '');
-INSERT INTO `yzn_hooks` VALUES ('4', 'documentDetailAfter', '文档末尾显示', '1', '0', '');
-INSERT INTO `yzn_hooks` VALUES ('5', 'documentDetailBefore', '页面内容前显示用钩子', '1', '0', '');
-INSERT INTO `yzn_hooks` VALUES ('6', 'documentSaveComplete', '保存文档数据后的扩展钩子', '2', '0', '');
-INSERT INTO `yzn_hooks` VALUES ('7', 'documentEditFormContent', '添加编辑表单的内容显示钩子', '1', '0', '');
-INSERT INTO `yzn_hooks` VALUES ('8', 'adminArticleEdit', '后台内容编辑页编辑器', '1', '1378982734', '');
-INSERT INTO `yzn_hooks` VALUES ('13', 'AdminIndex', '首页小格子个性化显示', '1', '1382596073', '');
-INSERT INTO `yzn_hooks` VALUES ('14', 'topicComment', '评论提交方式扩展钩子。', '1', '1380163518', '');
-INSERT INTO `yzn_hooks` VALUES ('16', 'app_begin', '应用开始', '2', '1384481614', '');
+INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', 'returntop');
+INSERT INTO `yzn_hooks` VALUES ('3', 'app_begin', '应用开始', '2', '1384481614', '');
 
 -- ----------------------------
 -- Table structure for `yzn_links`
@@ -784,7 +781,7 @@ INSERT INTO `yzn_menu` VALUES ('68', '会员组管理', '', '67', 'Member', 'Gro
 INSERT INTO `yzn_menu` VALUES ('8', '扩展', '', '0', 'Addons', 'Addons', 'index', '', '1', '', '0', '5');
 INSERT INTO `yzn_menu` VALUES ('69', '插件拓展', 'icon iconfont icon-chajian', '8', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('70', '插件管理', '', '69', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('71', '钩子管理', '', '69', 'Addons', 'Addons', 'hooks', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('71', '行为管理', '', '69', 'Addons', 'Addons', 'hooks', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`

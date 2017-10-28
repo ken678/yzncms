@@ -30,6 +30,18 @@ function get_table_name($modelid = null)
     $tableName = $modelCache[$modelid]['tablename'];
     return ucwords($tableName);
 }
+
+/**
+ * 处理插件钩子
+ * @param string $hook 钩子名称
+ * @param mixed $params 传入参数
+ * @return void
+ */
+function hook($hook, $params = [])
+{
+    \think\Hook::listen($hook, $params);
+}
+
 /**
  * 获取扩展模型对象
  * @param  integer $model_id 模型编号

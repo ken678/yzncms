@@ -31,7 +31,6 @@ class Base extends Controller
         $Config = cache("Config"); //获取所有配置名称和值
         self::$Cache['Config'] = $Config; //后端调用
         $this->assign("Config", $Config); //前端调用
-
     }
 
     //空操作

@@ -15,7 +15,6 @@ use app\common\controller\Addon;
 /**
  * 返回顶部插件
  */
-
 class ReturnTop extends Addon
 {
 
@@ -47,11 +46,10 @@ class ReturnTop extends Addon
     public function pageFooter($data)
     {
         $this->assign('addons_data', $data);
-        $config = $this->getConfig();
+        $config = $this->getAddonConfig();
         if ($config['random']) {
             $config['current'] = rand(1, 99);
         }
-
         $this->assign('addons_config', $config);
         return $this->fetch('content');
     }
