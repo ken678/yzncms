@@ -133,6 +133,30 @@ class Addons extends Adminbase
         }
     }
 
+    //启用插件
+    public function enable()
+    {
+        $id = $this->request->param('id/d');
+        cache('Hooks', null);
+        if ($this->addons->save(['status' => 1], ['id' => $id])) {
+            $this->success('启用成功');
+        } else {
+            $this->error('启用失败');
+        }
+    }
+
+    //禁用插件
+    public function disable()
+    {
+        $id = $this->request->param('id/d');
+        cache('Hooks', null);
+        if ($this->addons->save(['status' => 0], ['id' => $id])) {
+            $this->success('禁用成功');
+        } else {
+            $this->error('禁用失败');
+        }
+    }
+
     /**
      * 设置插件页面
      */

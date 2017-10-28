@@ -30,7 +30,7 @@
             <table width="100%">
                 <thead>
                     <tr>
-                        <td width="170" align="center" class="handle">操作</td>
+                        <td width="190" align="center" class="handle">操作</td>
                         <td width="80" align="center">名称</td>
                         <td width="80" align="center">标识</td>
                         <td width="400" align="center ">描述</td>
@@ -44,7 +44,7 @@
         <div class="tDiv">
             <div class="tDiv2">
                 <!--<div class="fbutton"><div class="add ajax-post confirm" target-form="ids" url="{:url('action/remove')}"><span><i class="icon iconfont icon-shanchu"></i>批量删除</span></div></div>
-				    <div class="fbutton"><div class="add ajax-get confirm" url="{:url('action/clear')}"><span><i class="icon iconfont icon-yue"></i>删除1个月前的数据</span></div></div>-->
+                    <div class="fbutton"><div class="add ajax-get confirm" url="{:url('action/clear')}"><span><i class="icon iconfont icon-yue"></i>删除1个月前的数据</span></div></div>-->
             </div>
             <div style="clear:both"></div>
         </div>
@@ -53,34 +53,34 @@
                 <tbody>
                     {volist name="_list" id="vo"}
                     <tr>
-                        <td width="170" align="center">
+                        <td width="190" align="center">
                         {empty name="vo.uninstall"}
-                            {present name="vo.config"}
+                        {present name="vo.config"}
                             <a class="btn blue" href="{:url('config',array('id'=>$vo['id']))}"><i class="icon iconfont icon-shezhi"></i>设置</a>
-                            {/present}
-                            {gt name="vo.status" value="0"}
-                            	{eq name="vo.status" value="0"}
-                            <a class="btn red" href="">启用</a>
+                        {/present}
+
+                        {eq name="vo.status" value="0"}
+                            <a class="btn blue ajax-get confirm" url="{:url('enable',array('id'=>$vo['id']))}"><i class="icon iconfont icon-qiyong"></i>启用</a>
                             {else /}
-                            <a class="btn red" href="">禁用</a>
-                            {/eq}
-                            {/gt}
+                            <a class="btn red ajax-get confirm" url="{:url('disable',array('id'=>$vo['id']))}"><i class="icon iconfont icon-jinyong"></i>禁用</a>
+                        {/eq}
+
                             <a class="btn red ajax-get confirm" url="{:url('uninstall?id='.$vo['id'])}"><i class="icon iconfont icon-shanchu"></i>卸载</a>
-                            {else /}
+                        {else /}
                             <a class="btn red" href="{:url('install?addon_name='.$vo['name'])}"><i class="icon iconfont icon-zidongxiufu"></i>安装<a>
-			      	    {/empty}
-			      	</td>
-			      	<td width="80" align="center">{$vo.title}</td>
-			      	<td width="80" align="center">{$vo.name}</td>
-			      	<td width="400" align="center">{$vo.description}</td>
-			      	<td width="50" align="center">{$vo.status_text|default="未安装"}</td>
-			      	<td width="50" align="center">{$vo.author}</td>
-			      	<td width="50" align="center">{$vo.version}</td>
-			      </tr>
-			   {/volist}
-			</tbody>
-			</table>
-		</div>
-	</div>
+                        {/empty}
+                    </td>
+                    <td width="80" align="center">{$vo.title}</td>
+                    <td width="80" align="center">{$vo.name}</td>
+                    <td width="400" align="center">{$vo.description}</td>
+                    <td width="50" align="center">{$vo.status_text|default="未安装"}</td>
+                    <td width="50" align="center">{$vo.author}</td>
+                    <td width="50" align="center">{$vo.version}</td>
+                  </tr>
+               {/volist}
+            </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {/block}
