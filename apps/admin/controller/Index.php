@@ -20,6 +20,7 @@ class Index extends Adminbase
      */
     public function index()
     {
+        //action_log('user_login', 'member', 1, 1);
         $this->assign('__MENU__', model("common/Menu")->getMenuList());
         $this->assign('role_name', model('admin/AuthGroup')->getRoleIdName(is_login()));
         /*管理员收藏栏*/

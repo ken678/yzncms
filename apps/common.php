@@ -46,11 +46,12 @@ function action_log($action = null, $model = null, $record_id = null, $user_id =
     //解析日志规则,生成日志备注
     if (!empty($action_info['log'])) {
         if (preg_match_all('/\[(\S+?)\]/', $action_info['log'], $match)) {
-            $log['user'] = $user_id;
+            $userInfo = model('admin/user')->getUserInfo($user_id);
+            $log['user'] = $userInfo['username'];
             $log['record'] = $record_id;
             $log['model'] = $model;
             $log['time'] = $now_time;
-            $log['data'] = array('user' => $user_id, 'model' => $model, 'record' => $record_id, 'time' => $now_time);
+            $log['data'] = array('user' => $userInfo['username'], 'model' => $model, 'record' => $record_id, 'time' => $now_time);
             foreach ($match[1] as $value) {
                 $param = explode('|', $value);
                 if (isset($param[1])) {
