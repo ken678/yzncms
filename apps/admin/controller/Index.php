@@ -22,7 +22,6 @@ class Index extends Adminbase
     {
         $this->assign('__MENU__', model("common/Menu")->getMenuList());
         $this->assign('role_name', model('admin/AuthGroup')->getRoleIdName(is_login()));
-
         /*管理员收藏栏*/
         $this->assign('__ADMIN_PANEL__', model("admin/AdminPanel")->getAllPanel(is_login()));
         return $this->fetch();

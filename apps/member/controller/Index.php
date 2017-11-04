@@ -11,6 +11,7 @@
 namespace app\member\controller;
 
 use app\user\api\UserApi;
+use think\Cookie;
 
 /**
  * 会员中心首页
@@ -20,7 +21,8 @@ class Index extends Memberbase
     //会员中心首页
     public function index()
     {
-        //$this->redirect('Index/home');
+        return $this->fetch();
+
     }
 
     //登录页面
@@ -74,6 +76,17 @@ class Index extends Memberbase
             return $this->fetch();
         }
 
+    }
+
+    //退出
+    public function logout()
+    {
+        if (is_login()) {
+            model('Member')->logout();
+            $this->success('退出成功！', url('member/Index/login'));
+        } else {
+            $this->redirect('member/Index/login');
+        }
     }
 
 }

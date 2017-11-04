@@ -55,7 +55,7 @@ class Member extends Model
     private function autoLogin($user)
     {
         //记录行为
-        action_log('user_login', 'member',, $user['uid'], $user['uid']);
+        action_log('user_login', 'member', $user['uid'], $user['uid']);
         /* 更新登录信息 */
         $data = array(
             'uid' => $user['uid'],

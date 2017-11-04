@@ -53,7 +53,7 @@
 			    <tr>
                     <td width="20"><input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['id']}"></td>
 					<td width="60" align="center"><a class="btn red ajax-get confirm" url="{:url('action/remove',array('ids'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a></td>
-					<td width="100" align="left">{$vo['user_id']|get_username}</td>
+					<td width="100" align="left">{$vo['user_id']}</td>
 					<td width="300" align="left">{$vo['remark']}</td>
 					<td width="140" align="center">{$vo['create_time']|date="Y-m-d H:i:s",###}</td>
 					<td width="120" align="center">{$vo['action_ip']|long2ip}</td>
