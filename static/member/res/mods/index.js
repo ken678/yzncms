@@ -1,19 +1,28 @@
 ﻿/**
  @Name: Fly社区主入口
  */
-layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports) {
+layui.define(['layer', 'laytpl', 'form', 'upload', 'util','element'], function(exports) {
 
     var $ = layui.jquery,
         layer = layui.layer,
         laytpl = layui.laytpl,
         form = layui.form,
         util = layui.util,
-        device = layui.device()
+        device = layui.device(),
+        element = layui.element
 
     //阻止IE7以下访问
     if (device.ie && device.ie < 8) {
-        layer.alert('如果您非得使用ie浏览Fly社区，那么请使用ie8+');
+        layer.alert('如果您非得使用ie浏览，那么请使用ie8+');
     }
+
+    //Hash地址的定位
+    var layid = location.hash.replace(/^#test1=/, '');
+    element.tabChange('user', layid);
+
+    element.on('tab(user)', function(elem) {
+        location.hash = '' + $(this).attr('lay-id');
+    });
 
     layui.focusInsert = function(obj, str) {
         var result, val = obj.value;
@@ -274,10 +283,13 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports) {
         cookie: function(e, o, t) {
             e = e || "";
             var n, i, r, a, c, p, s, d, u;
-            if ("undefined" == typeof o) { if (p = null, document.cookie && "" != document.cookie)
+            if ("undefined" == typeof o) {
+                if (p = null, document.cookie && "" != document.cookie)
                     for (s = document.cookie.split(";"), d = 0; d < s.length; d++)
                         if (u = $.trim(s[d]), u.substring(0, e.length + 1) == e + "=") { p = decodeURIComponent(u.substring(e.length + 1)); break }
-                return p } t = t || {}, null === o && (o = "", t.expires = -1), n = "", t.expires && ("number" == typeof t.expires || t.expires.toUTCString) && ("number" == typeof t.expires ? (i = new Date, i.setTime(i.getTime() + 864e5 * t.expires)) : i = t.expires, n = "; expires=" + i.toUTCString()), r = t.path ? "; path=" + t.path : "", a = t.domain ? "; domain=" + t.domain : "", c = t.secure ? "; secure" : "", document.cookie = [e, "=", encodeURIComponent(o), n, r, a, c].join("");
+                return p
+            }
+            t = t || {}, null === o && (o = "", t.expires = -1), n = "", t.expires && ("number" == typeof t.expires || t.expires.toUTCString) && ("number" == typeof t.expires ? (i = new Date, i.setTime(i.getTime() + 864e5 * t.expires)) : i = t.expires, n = "; expires=" + i.toUTCString()), r = t.path ? "; path=" + t.path : "", a = t.domain ? "; domain=" + t.domain : "", c = t.secure ? "; secure" : "", document.cookie = [e, "=", encodeURIComponent(o), n, r, a, c].join("");
         }
 
     };
@@ -402,8 +414,6 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports) {
     layui.use('flow', function(flow){
       flow.lazyimg();
     });*/
-
-
-    exports('fly', gather);
+    exports('index', gather);
 
 });
