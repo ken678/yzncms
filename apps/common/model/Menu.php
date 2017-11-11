@@ -11,6 +11,7 @@
 namespace app\common\model;
 
 use app\admin\model\AuthRule;
+use app\admin\service\User;
 use \think\Model;
 
 /**
@@ -111,7 +112,7 @@ class Menu extends Model
             $result = array_merge($result2, $result);
         }
         //是否超级管理员
-        if (is_administrator()) {
+        if (User::getInstance()->isAdministrator()) {
             return $result;
         }
         $array = array();

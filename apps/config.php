@@ -20,6 +20,8 @@ return [
     'USER_MAX_CACHE' => 1000,
     //管理员用户ID
     'USER_ADMINISTRATOR' => 1,
+    /* 站点安全设置 */
+    "AUTHCODE" => 'kB4Clw2jTZmbRetSui', //密钥
 
     // +----------------------------------------------------------------------
     // | UCenter客户端配置

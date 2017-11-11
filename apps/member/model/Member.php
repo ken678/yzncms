@@ -86,6 +86,15 @@ class Member extends Model
         session('user_auth_sign', null);
     }
 
+    //会员配置缓存
+    public function member_cache()
+    {
+        $data = unserialize(db('Module')->where(array('module' => 'Member'))->column('setting'));
+        cache("Member_Config", $data);
+        $this->member_model_cahce();
+        return $data;
+    }
+
     //会员模型缓存
     public function member_model_cahce()
     {

@@ -51,9 +51,9 @@ class Index extends Memberbase
                 if ($Member->login($uid)) {
                     //登录用户
                     //TODO:跳转到登录前页面
-                    if (!$cookie_url = Cookie::get('__forward__')) {
-                        $cookie_url = url('member/Index/index');
-                    }
+                    //if (!$cookie_url = Cookie::get('__forward__')) {
+                    $cookie_url = url('member/Index/index');
+                    //}
                     $this->success('登录成功！', $cookie_url);
                 } else {
                     $this->error($Member->getError());

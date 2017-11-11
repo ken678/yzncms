@@ -23,68 +23,6 @@ class User extends Model
     protected $pk = 'userid';
 
     /**
-     * 管理员登录检测
-     * @param string $username 用户名
-     * @param string $password 密码
-     */
-    public function checkLogin($username = '', $password = '')
-    {
-        $condition['username'] = trim($username);
-        $condition['password'] = trim($password);
-        $admin_info = $this->where(['username' => $condition['username']])->find();
-        if ($admin_info) {
-            $admin_info = $admin_info->toArray();
-        }
-
-        if (is_array($admin_info)) {
-            /* 验证用户密码 */
-            if ($admin_info['password'] == sha1($condition['password'] . $admin_info['encrypt'])) {
-                /* 密码正确 自动登录用户 */
-                $this->autoLogin($admin_info);
-                return true;
-            }
-        }
-        $this->error = '账号密码不正确！';
-        return false;
-    }
-
-    /**
-     * 自动登录用户
-     */
-    private function autoLogin($user)
-    {
-        //记录行为
-        action_log('user_login', 'member', $user['userid'], $user['userid']);
-
-        /* 更新登录信息 */
-        $data = array(
-            'last_login_time' => time(),
-            'last_login_ip' => get_client_ip(1),
-        );
-        $this->where(array('userid' => $user['userid']))->update($data);
-        /* 记录登录SESSION和COOKIES */
-        $auth = array(
-            'uid' => $user['userid'],
-            'username' => $user['username'],
-            'last_login_time' => $user['last_login_time'],
-        );
-        session('last_login_time', $user['last_login_time']);
-        session('last_login_ip', $user['last_login_ip']);
-
-        session('user_auth', $auth);
-        session('user_auth_sign', data_auth_sign($auth)); //签名
-    }
-
-    /**
-     * 注销登录状态
-     */
-    public function logout()
-    {
-        session('user_auth', null);
-        session('user_auth_sign', null);
-    }
-
-    /**
      * 创建管理员
      * @param type $data
      * @return boolean

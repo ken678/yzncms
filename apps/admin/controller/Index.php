@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\service\User;
 use app\common\controller\Adminbase;
 
 class Index extends Adminbase
@@ -20,11 +21,14 @@ class Index extends Adminbase
      */
     public function index()
     {
-        //action_log('user_login', 'member', 1, 1);
+        //后台菜单
         $this->assign('__MENU__', model("common/Menu")->getMenuList());
-        $this->assign('role_name', model('admin/AuthGroup')->getRoleIdName(is_login()));
+        //当前登录管理员信息
+        $this->assign('userInfo', User::getInstance()->getInfo());
+        //dump(User::getInstance()->getInfo());
+        $this->assign('role_name', model('admin/AuthGroup')->getRoleIdName(User::getInstance()->isLogin()));
         /*管理员收藏栏*/
-        $this->assign('__ADMIN_PANEL__', model("admin/AdminPanel")->getAllPanel(is_login()));
+        $this->assign('__ADMIN_PANEL__', model("admin/AdminPanel")->getAllPanel(User::getInstance()->isLogin()));
         return $this->fetch();
     }
 
@@ -53,7 +57,7 @@ class Index extends Adminbase
         }
         $info = array(
             'menuid' => $quicklink['id'],
-            'userid' => is_login(),
+            'userid' => User::getInstance()->isLogin(),
             'name' => $quicklink['title'],
             'url' => "{$quicklink['app']}/{$quicklink['controller']}/{$quicklink['action']}",
         );
@@ -87,16 +91,14 @@ class Index extends Adminbase
                 $this->error('验证码输入错误！');
                 return false;
             }
-
-            $A = model('admin/user');
-            if ($A->checkLogin($data['username'], $data['password'])) {
+            if (User::getInstance()->checkLogin($data['username'], $data['password'])) {
                 $this->success('登录成功！', url('Index/index'));
             } else {
-                $this->error($A->getError());
+                $this->error('登陆失败', url('login'));
             }
 
         } else {
-            if (is_login()) {
+            if (User::getInstance()->userid) {
                 $this->redirect('Index/index');
             } else {
                 return $this->fetch("/login");
@@ -108,12 +110,10 @@ class Index extends Adminbase
     /* 手动退出登录 */
     public function logout()
     {
-        if (is_login()) {
-            model('Admin/User')->logout();
-            session('[destroy]'); //自动退出
-            $this->success('退出成功！', url('login'));
-        } else {
-            $this->redirect('login');
+        if (User::getInstance()->logout()) {
+            //手动登出时，清空forward
+            //cookie("forward", NULL);
+            $this->success('注销成功！', url("login"));
         }
     }
 }

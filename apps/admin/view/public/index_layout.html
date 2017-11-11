@@ -40,7 +40,7 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
   <div class="admincp-header-r">
     <div class="manager">
       <dl>
-        <dt class="name">{:session('user_auth.username')}</dt>
+        <dt class="name">{$userInfo.username}</dt>
         <dd class="group">{$role_name}</dd>
       </dl>
       <span class="avatar">
@@ -52,10 +52,9 @@ var COMMON_OPERATIONS_URL = '{:url("index/common_operations")}';//快捷菜单�
           <a href="javascript:void(0);" onclick="Modifypw()"  class="edit-password">修改密码</a>
           </div>
         <div class="login-date">
-        <?php if(session('last_login_time') > 0) { echo date('Y-m-d H:i:s', session('last_login_time'));} else { echo '--';}?>
+        <?php if($userInfo['last_login_time'] > 0) { echo date('Y-m-d H:i:s',$userInfo['last_login_time']);} else { echo '--';}?>
           <span>(IP:
-        <?php if (!empty(session('last_login_ip'))) { echo long2ip(session('last_login_ip'));} else { echo '--';}?>
-                )</span> </div>
+        <?php if (!empty($userInfo['last_login_ip'])) { echo long2ip($userInfo['last_login_ip']);} else { echo '--';}?>)</span> </div>
         <div class="title">
           <h4>常用操作</h4>
           <a href="javascript:void(0)" class="add-menu">添加菜单</a>
