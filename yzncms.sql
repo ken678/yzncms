@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
-Source Server Version : 50547
+Source Server         : localhost_3306
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50547
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-28 17:18:33
+Date: 2017-11-15 18:34:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=320 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=321 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -126,6 +126,7 @@ INSERT INTO `yzn_action_log` VALUES ('316', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('317', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 23:10登录了后台', '1508598648');
 INSERT INTO `yzn_action_log` VALUES ('318', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-22 21:24登录了后台', '1508678667');
 INSERT INTO `yzn_action_log` VALUES ('319', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-28 14:09登录了后台', '1509170997');
+INSERT INTO `yzn_action_log` VALUES ('320', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 16:03登录了后台', '1510732985');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -393,9 +394,9 @@ CREATE TABLE `yzn_cache` (
 -- ----------------------------
 -- Records of yzn_cache
 -- ----------------------------
-INSERT INTO `yzn_cache` VALUES ('1', 'Model', '模型列表', 'Content', 'Models', 'model_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('2', 'Category', '栏目索引', 'Content', 'Category', 'category_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'Content', 'ModelField', 'model_field_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('1', 'Model', '模型列表', 'content', 'Models', 'model_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('2', 'Category', '栏目索引', 'content', 'Category', 'category_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'content', 'ModelField', 'model_field_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('5', 'Module', '可用模块列表', '', 'Module', 'module_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('6', 'Model_form', '自定义表单模型', 'formguide', 'Formguide', 'formguide_cache', '0');
@@ -403,7 +404,7 @@ INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'Member', 
 INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'Member', 'MemberGroup', 'membergroup_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'Member', 'Member', 'member_model_cahce', '0');
 INSERT INTO `yzn_cache` VALUES ('10', 'Addons', '插件列表', 'Addons', 'Addons', 'addons_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('11', 'Hooks', '钩子列表', 'Admin', 'Hooks', 'hook_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('11', 'Hooks', '钩子列表', 'admin', 'Hooks', 'hook_cache', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_category`
