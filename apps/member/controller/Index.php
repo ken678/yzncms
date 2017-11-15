@@ -78,6 +78,12 @@ class Index extends Memberbase
 
     }
 
+    public function profile()
+    {
+        return $this->fetch();
+
+    }
+
     //退出
     public function logout()
     {
