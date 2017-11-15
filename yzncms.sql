@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-11-15 18:34:42
+Date: 2017-11-15 21:46:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -400,9 +400,9 @@ INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'content', 'M
 INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('5', 'Module', '可用模块列表', '', 'Module', 'module_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('6', 'Model_form', '自定义表单模型', 'formguide', 'Formguide', 'formguide_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'Member', 'Member', 'member_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'Member', 'MemberGroup', 'membergroup_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'Member', 'Member', 'member_model_cahce', '0');
+INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'member', 'Member', 'member_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'member', 'MemberGroup', 'membergroup_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'member', 'Member', 'member_model_cahce', '0');
 INSERT INTO `yzn_cache` VALUES ('10', 'Addons', '插件列表', 'Addons', 'Addons', 'addons_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('11', 'Hooks', '钩子列表', 'admin', 'Hooks', 'hook_cache', '0');
 

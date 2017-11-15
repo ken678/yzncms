@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\content\model;
 
-use app\common\Model\Modelbase;
+use app\common\model\Modelbase;
 use think\Db;
 use think\Loader;
 use think\Model;

@@ -45,7 +45,7 @@
 				  <td width="150" align="center"><a class="btn red" href="{:url('admin/manager/del',['id'=>$vo.userid])}" onclick="if(confirm('删除后将不能恢复，确认删除这  1 项吗？')){return true;} else {return false;}"><i class="icon iconfont icon-shanchu"></i>删除</a>
 				  <a class="btn blue" href="{:url('admin/manager/edit',['id'=>$vo.userid])}"><i class="icon iconfont icon-edit"></i>编辑</a></td>
 				  <td width="150" align="center">{$vo.username}</td>
-				  <td width="120" align="center">{php} echo model('Admin/AuthGroup')->getRoleIdName($vo['roleid']) {/php}</td>
+				  <td width="120" align="center">{php} echo model('admin/AuthGroup')->getRoleIdName($vo['roleid']) {/php}</td>
 				  <td width="120" align="center">{php} echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--' {/php}</td>
 				  <td width="120" align="center">{php} echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--' {/php}</td>
 				  <td width="120" align="center">{$vo.email}</td>

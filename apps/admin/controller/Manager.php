@@ -21,7 +21,7 @@ class Manager extends Adminbase
     protected function _initialize()
     {
         parent::_initialize();
-        $this->User = model('Admin/User');
+        $this->User = model('admin/User');
     }
 
     /**
@@ -48,7 +48,7 @@ class Manager extends Adminbase
                 $this->error($error ? $error : '添加失败！');
             }
         } else {
-            $this->assign("roles", model('Admin/AuthGroup')->getGroups());
+            $this->assign("roles", model('admin/AuthGroup')->getGroups());
             return $this->fetch();
         }
     }
@@ -71,7 +71,7 @@ class Manager extends Adminbase
                 $this->error('该信息不存在！');
             }
             $this->assign("data", $data);
-            $this->assign("roles", model('Admin/AuthGroup')->getGroups());
+            $this->assign("roles", model('admin/AuthGroup')->getGroups());
             return $this->fetch();
         }
     }
