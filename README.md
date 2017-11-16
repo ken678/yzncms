@@ -33,6 +33,7 @@ ThinkPHP5.011的运行环境要求PHP5.4以上。（注意：PHP5.4dev版本和P
 PDO拓展
 MBstring拓展
 CURL拓展
+服务器支持伪静态（能够隐藏index.php入口文件）
 ```
 
 [安装教程]
