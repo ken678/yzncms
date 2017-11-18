@@ -158,6 +158,17 @@ class User extends Model
     }
 
     /**
+     * 更新登录状态信息
+     * @param type $userId
+     * @return type
+     */
+    public function loginStatus($userId)
+    {
+        $data = ['last_login_time' => time(), 'last_login_ip' => get_client_ip(1)];
+        return $this->save($data, ['userid' => $userId]);
+    }
+
+    /**
      * 获取用户信息
      * @param type $identifier 用户名或者用户ID
      * @return boolean|array

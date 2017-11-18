@@ -10,28 +10,27 @@
 // +----------------------------------------------------------------------
 namespace app\admin\service;
 
+use think\Session;
+
 class User
 {
-    //存储用户uid的Key
-    const userUidKey = 'yzn_userid';
     //超级管理员角色id
     const administratorRoleId = 1;
+
+    protected static $instance = null;
 
     //当前登录会员详细信息
     private static $userInfo = array();
 
     /**
      * 连接后台用户服务
-     * @staticvar \Admin\Service\Cache $systemHandier
-     * @return \Admin\Service\Cache
      */
-    public static function getInstance()
+    public static function getInstance($options = [])
     {
-        static $handier = null;
-        if (empty($handier)) {
-            $handier = new User();
+        if (is_null(self::$instance)) {
+            self::$instance = new self($options);
         }
-        return $handier;
+        return self::$instance;
     }
 
     /**
@@ -94,15 +93,22 @@ class User
     {
         //记录行为
         action_log('user_login', 'member', $userInfo['userid'], $userInfo['userid']);
-
         /* 更新登录信息 */
-        /*$data = array(
-        'last_login_time' => time(),
-        'last_login_ip' => get_client_ip(1),
+        $data = array(
+            'uid' => $userInfo['userid'],
+            'last_login_time' => time(),
+            'last_login_ip' => get_client_ip(1),
         );
-        $this->where(array('userid' => $userInfo['userid']))->update($data);*/
-        //写入session
-        session(self::userUidKey, \util\Encrypt::authcode((int) $userInfo['userid'], ''));
+        model('admin/User')->loginStatus((int) $userInfo['userid']);
+        /* 记录登录SESSION和COOKIES */
+        $auth = [
+            'uid' => $userInfo['userid'],
+            'username' => $userInfo['username'],
+            'last_login_time' => $userInfo['last_login_time'],
+        ];
+        Session::set('admin_user_auth', $auth);
+        Session::set('admin_user_auth_sign', data_auth_sign($auth));
+
     }
 
     /**
@@ -120,15 +126,15 @@ class User
 
     /**
      * 检验用户是否已经登陆
-     * @return boolean 失败返回false，成功返回当前登陆用户基本信息
      */
     public function isLogin()
     {
-        $userId = \util\Encrypt::authcode(session(self::userUidKey), 'DECODE');
-        if (empty($userId)) {
-            return false;
+        $user = Session::get('admin_user_auth');
+        if (empty($user)) {
+            return 0;
+        } else {
+            return Session::get('admin_user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
         }
-        return (int) $userId;
     }
 
     /**

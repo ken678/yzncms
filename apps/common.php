@@ -563,16 +563,6 @@ function is_login()
 }
 
 /**
- * 检测当前用户是否为管理员
- * @return boolean true-管理员，false-非管理员
- */
-function is_administrator($uid = null)
-{
-    $uid = is_null($uid) ? is_login() : $uid;
-    return $uid && (intval($uid) === config('USER_ADMINISTRATOR'));
-}
-
-/**
  * 数据签名认证
  * @param  array  $data 被认证的数据
  * @return string       签名
