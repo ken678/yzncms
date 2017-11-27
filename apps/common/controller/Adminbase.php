@@ -36,48 +36,24 @@ class Adminbase extends Base
             'admin/index/getverify',
         ];
         $request = request();
-        $visit = strtolower($request->module() . "/" . $request->controller() . "/" . $request->action());
+        $visit = strtolower($this->request->module() . "/" . $this->request->controller() . "/" . $this->request->action());
         if (in_array($visit, $allowUrl)) {
 
         } else {
             if (false == $this->competence()) {
                 //跳转到登录界面
                 $this->error('请先登陆', url('admin/index/login'));
+            } else {
+                //是否超级管理员
+                if (!User::getInstance()->isAdministrator()) {
+                    //检测访问权限
+                    $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+                    if (!$this->checkRule($rule, array('in', '1,2'))) {
+                        $this->error('未授权访问!');
+                    }
+                }
             }
         }
-
-        /*define('UID', is_login());
-    //过滤不需要登陆的行为
-    $allowUrl = ['admin/index/login',
-    'admin/index/logout',
-    'admin/index/getverify',
-    ];
-    $request = request();
-    $visit = strtolower($request->module() . "/" . $request->controller() . "/" . $request->action());
-    if (in_array($visit, $allowUrl)) {
-
-    } else {
-    if (!UID) {
-    $this->error('请先登陆', url('admin/index/login'));
-    } else {
-    /* 读取数据库中的配置
-    $config = cache('DB_CONFIG_DATA');
-    if(!$config){
-    $config =   api('Config/lists');
-    cache('DB_CONFIG_DATA', $config);
-    }
-    config($config);
-    define('IS_ROOT', is_administrator());
-    // 检测系统权限
-    if (!IS_ROOT) {
-    //检测访问权限
-    $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
-    if (!$this->checkRule($rule, array('in', '1,2'))) {
-    $this->error('未授权访问!');
-    }
-    }
-    }
-    }*/
     }
 
     /**
@@ -118,7 +94,7 @@ class Adminbase extends Base
         if (!$Auth) {
             $Auth = new \com\Auth();
         }
-        if (!$Auth->check($rule, UID, $type, $mode)) {
+        if (!$Auth->check($rule, User::getInstance()->userid, $type, $mode)) {
             return false;
         }
         return true;

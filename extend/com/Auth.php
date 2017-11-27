@@ -15,19 +15,19 @@ class Auth
 
     //默认配置
     protected $_config = array(
-        'auth_on'           => true, // 认证开关
-        'auth_type'         => 1, // 认证方式，1为实时认证；2为登录认证。
-        'auth_group'        => 'auth_group', // 用户组数据表名
-        'auth_rule'         => 'auth_rule', // 权限规则表
-        'auth_user'         => 'admin', // 用户信息表
+        'auth_on' => true, // 认证开关
+        'auth_type' => 1, // 认证方式，1为实时认证；2为登录认证。
+        'auth_group' => 'auth_group', // 用户组数据表名
+        'auth_rule' => 'auth_rule', // 权限规则表
+        'auth_user' => 'admin', // 用户信息表
     );
 
     public function __construct()
     {
-        $prefix                             = config('database.prefix');
-        $this->_config['auth_group']        = $prefix . $this->_config['auth_group'];
-        $this->_config['auth_rule']         = $prefix . $this->_config['auth_rule'];
-        $this->_config['auth_user']         = $prefix . $this->_config['auth_user'];
+        $prefix = config('database.prefix');
+        $this->_config['auth_group'] = $prefix . $this->_config['auth_group'];
+        $this->_config['auth_rule'] = $prefix . $this->_config['auth_rule'];
+        $this->_config['auth_user'] = $prefix . $this->_config['auth_user'];
         if (config('auth_config')) {
             //可设置配置项 AUTH_CONFIG, 此配置项为数组。
             $this->_config = array_merge($this->_config, config('auth_config'));
@@ -66,7 +66,7 @@ class Auth
             if ('url' == $mode && $query != $auth) {
                 parse_str($query, $param); //解析规则中的param
                 $intersect = array_intersect_assoc($REQUEST, $param);
-                $auth      = preg_replace('/\?.*$/U', '', $auth);
+                $auth = preg_replace('/\?.*$/U', '', $auth);
                 if (in_array($auth, $name) && $intersect == $param) {
                     //如果节点相符且url参数满足
                     $list[] = $auth;
@@ -101,7 +101,7 @@ class Auth
 
         $user_groups = \think\Db::table($this->_config['auth_user'])
             ->alias('a')
-            ->join($this->_config['auth_group']." g", "g.id=a.roleid")
+            ->join($this->_config['auth_group'] . " g", "g.id=a.roleid")
             ->where("a.userid='$uid' and g.status='1'")
             ->field('userid,roleid,title,rules')->select();
         $groups[$uid] = $user_groups ?: array();
@@ -116,17 +116,17 @@ class Auth
     protected function getAuthList($uid, $type)
     {
         static $_authList = array(); //保存用户验证通过的权限列表
-        $t                = implode(',', (array) $type);
+        $t = implode(',', (array) $type);
         if (isset($_authList[$uid . $t])) {
             return $_authList[$uid . $t];
         }
-    	if( $this->_config['auth_type']==2 && isset($_SESSION['_auth_list_'.$uid.$t])){
-            return $_SESSION['_auth_list_'.$uid.$t];
+        if ($this->_config['auth_type'] == 2 && isset($_SESSION['_auth_list_' . $uid . $t])) {
+            return $_SESSION['_auth_list_' . $uid . $t];
         }
 
         //读取用户所属用户组
         $groups = $this->getGroups($uid);
-        $ids    = array(); //保存用户所属用户组设置的所有权限规则id
+        $ids = array(); //保存用户所属用户组设置的所有权限规则id
         foreach ($groups as $g) {
             $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
         }
@@ -137,8 +137,8 @@ class Auth
         }
 
         $map = array(
-            'id'     => array('in', $ids),
-            'type'   => $type,
+            'id' => array('in', $ids),
+            'type' => $type,
             'status' => 1,
         );
         //读取用户组所有权限规则
@@ -177,7 +177,7 @@ class Auth
     {
         static $userinfo = array();
         if (!isset($userinfo[$uid])) {
-            $userinfo[$uid] = \think\Db::table($this->_config['auth_user'])->where(array('uid' => $uid))->find();
+            $userinfo[$uid] = \think\Db::table($this->_config['auth_user'])->where(array('userid' => $uid))->find();
         }
         return $userinfo[$uid];
     }

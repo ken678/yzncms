@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-11-27 17:23:55
+Date: 2017-11-27 20:09:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=336 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=342 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -73,7 +73,7 @@ INSERT INTO `yzn_action_log` VALUES ('335', '1', '2', '2130706433', 'member', '2
 INSERT INTO `yzn_action_log` VALUES ('334', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 13:41登录了后台', '1511761306');
 INSERT INTO `yzn_action_log` VALUES ('333', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 13:41登录了后台', '1511761277');
 INSERT INTO `yzn_action_log` VALUES ('332', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 12:58登录了后台', '1511758729');
-INSERT INTO `yzn_action_log` VALUES ('319', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-28 14:09登录了后台', '1509170997');
+INSERT INTO `yzn_action_log` VALUES ('338', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:03登录了后台', '1511784195');
 INSERT INTO `yzn_action_log` VALUES ('320', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 16:03登录了后台', '1510732985');
 INSERT INTO `yzn_action_log` VALUES ('321', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 18:36登录了后台', '1510742203');
 INSERT INTO `yzn_action_log` VALUES ('322', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 18:45登录了后台', '1510742720');
@@ -86,6 +86,11 @@ INSERT INTO `yzn_action_log` VALUES ('328', '1', '2', '2130706433', 'member', '2
 INSERT INTO `yzn_action_log` VALUES ('329', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 12:34登录了后台', '1511757267');
 INSERT INTO `yzn_action_log` VALUES ('330', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 12:34登录了后台', '1511757296');
 INSERT INTO `yzn_action_log` VALUES ('331', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 12:38登录了后台', '1511757486');
+INSERT INTO `yzn_action_log` VALUES ('336', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 19:27登录了后台', '1511782063');
+INSERT INTO `yzn_action_log` VALUES ('337', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 19:32登录了后台', '1511782365');
+INSERT INTO `yzn_action_log` VALUES ('339', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 20:07登录了后台', '1511784444');
+INSERT INTO `yzn_action_log` VALUES ('340', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:08登录了后台', '1511784489');
+INSERT INTO `yzn_action_log` VALUES ('341', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:08登录了后台', '1511784536');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -131,8 +136,8 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1511761306', '2130706433', '530765310@qq.com');
-INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1511761350', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1511784536', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1511784444', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
 -- Table structure for `yzn_admin_panel`
@@ -255,7 +260,7 @@ CREATE TABLE `yzn_auth_group` (
 -- Records of yzn_auth_group
 -- ----------------------------
 INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '');
-INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,48,49,50,51,53,54,55,56,57,58,59,60');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,48,49,50,51,53,54,55,56,57,58,59,60,61');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -271,7 +276,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
@@ -300,7 +305,7 @@ INSERT INTO `yzn_auth_rule` VALUES ('21', 'Member', '1', 'Member/index/index', '
 INSERT INTO `yzn_auth_rule` VALUES ('22', 'Member', '1', 'Member/member/manage', '会员管理', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('23', 'Member', '1', 'Member/Group/index', '会员组管理', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('24', 'Member', '1', 'Member/Model/index', '会员模型', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('25', 'Admin', '1', 'Admin/Module/index', '模块管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('25', 'Admin', '1', 'Admin/Module/index', '模块列表', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('26', 'Addons', '1', 'Addons/Addons/index', '插件管理', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('27', 'Addons', '1', 'Addons/Addons/hooks', '行为管理', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('28', 'Links', '1', 'Links/Links/index', '友情链接', '1', '');
@@ -327,7 +332,7 @@ INSERT INTO `yzn_auth_rule` VALUES ('48', 'Admin', '2', 'Admin/Setting/index', '
 INSERT INTO `yzn_auth_rule` VALUES ('49', 'Admin', '1', 'Admin/Config/index', '站点配置', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('50', 'Admin', '1', 'Admin/Config/mail', '邮箱配置', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('51', 'Admin', '1', 'Admin/Manager/edit', '编辑管理员', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('52', 'Admin', '1', 'Admin/Module/list', '模块列表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('52', 'Admin', '1', 'Admin/Module/list', '模块列表', '-1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('53', 'Content', '2', 'Content/index/index', '内容', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('54', 'Member', '2', 'Member/index/index', '用户', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('55', 'Admin', '2', 'Admin/Module/index', '模块', '1', '');
@@ -336,6 +341,7 @@ INSERT INTO `yzn_auth_rule` VALUES ('57', 'Admin', '1', 'Admin/Config/extend', '
 INSERT INTO `yzn_auth_rule` VALUES ('58', 'Admin', '1', 'Admin/Action/actionlog', '操作日志', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('59', 'Admin', '1', 'Admin/Menu/index', '后台菜单', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('60', 'Admin', '1', 'Admin/cache/index', '缓存更新', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('61', 'Admin', '2', 'Admin/index/index', '首页', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -720,7 +726,7 @@ INSERT INTO `yzn_menu` VALUES ('150', '会员模型', 'icon iconfont icon-guanli
 INSERT INTO `yzn_menu` VALUES ('151', '模型管理', '', '150', 'Member', 'Model', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('170', '本地模块', 'icon iconfont icon-yingyong', '4', 'Admin', 'Module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('171', '模块管理', '', '170', 'Admin', 'Module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('172', '模块列表', 'icon iconfont icon-liebiao', '4', 'Admin', 'Module', 'list', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('172', '模块列表', 'icon iconfont icon-liebiao', '4', 'Admin', 'Module', 'index', '', '1', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('190', '插件拓展', 'icon iconfont icon-chajian', '8', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('191', '插件管理', '', '190', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('192', '行为管理', '', '190', 'Addons', 'Addons', 'hooks', '', '1', '', '0', '0');
@@ -744,6 +750,7 @@ INSERT INTO `yzn_menu` VALUES ('216', '信息删除', '', '214', 'Formguide', 'I
 INSERT INTO `yzn_menu` VALUES ('217', '添加字段', '', '215', 'Formguide', 'Field', 'add', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('218', '编辑字段', '', '215', 'Formguide', 'Field', 'edit', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('219', '删除字段', '', '215', 'Formguide', 'Field', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('10', '首页', '', '0', 'Admin', 'index', 'index', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
