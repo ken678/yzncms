@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
-Source Server Version : 50547
+Source Server         : localhost_3306
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50547
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-18 19:15:19
+Date: 2017-11-27 17:23:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,26 +64,28 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=329 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=336 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
 -- ----------------------------
-INSERT INTO `yzn_action_log` VALUES ('314', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-20 19:18登录了后台', '1508498297');
-INSERT INTO `yzn_action_log` VALUES ('315', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 11:39登录了后台', '1508557186');
-INSERT INTO `yzn_action_log` VALUES ('316', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 20:45登录了后台', '1508589942');
-INSERT INTO `yzn_action_log` VALUES ('317', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-21 23:10登录了后台', '1508598648');
-INSERT INTO `yzn_action_log` VALUES ('318', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-22 21:24登录了后台', '1508678667');
+INSERT INTO `yzn_action_log` VALUES ('335', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 13:42登录了后台', '1511761350');
+INSERT INTO `yzn_action_log` VALUES ('334', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 13:41登录了后台', '1511761306');
+INSERT INTO `yzn_action_log` VALUES ('333', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 13:41登录了后台', '1511761277');
+INSERT INTO `yzn_action_log` VALUES ('332', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 12:58登录了后台', '1511758729');
 INSERT INTO `yzn_action_log` VALUES ('319', '1', '1', '2130706433', 'member', '1', 'admin在2017-10-28 14:09登录了后台', '1509170997');
 INSERT INTO `yzn_action_log` VALUES ('320', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 16:03登录了后台', '1510732985');
-INSERT INTO `yzn_action_log` VALUES ('321', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 21:47登录了后台', '1510753661');
-INSERT INTO `yzn_action_log` VALUES ('322', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-18 18:18登录了后台', '1511000280');
-INSERT INTO `yzn_action_log` VALUES ('323', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-18 18:32登录了后台', '1511001179');
-INSERT INTO `yzn_action_log` VALUES ('324', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-18 18:54登录了后台', '1511002484');
-INSERT INTO `yzn_action_log` VALUES ('325', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-18 18:56登录了后台', '1511002576');
-INSERT INTO `yzn_action_log` VALUES ('326', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-18 19:11登录了后台', '1511003501');
-INSERT INTO `yzn_action_log` VALUES ('327', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-18 19:13登录了后台', '1511003606');
-INSERT INTO `yzn_action_log` VALUES ('328', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-18 19:14登录了后台', '1511003643');
+INSERT INTO `yzn_action_log` VALUES ('321', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 18:36登录了后台', '1510742203');
+INSERT INTO `yzn_action_log` VALUES ('322', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-15 18:45登录了后台', '1510742720');
+INSERT INTO `yzn_action_log` VALUES ('323', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-20 15:53登录了后台', '1511164419');
+INSERT INTO `yzn_action_log` VALUES ('324', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-23 14:30登录了后台', '1511418653');
+INSERT INTO `yzn_action_log` VALUES ('325', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-23 14:37登录了后台', '1511419042');
+INSERT INTO `yzn_action_log` VALUES ('326', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-24 16:29登录了后台', '1511512192');
+INSERT INTO `yzn_action_log` VALUES ('327', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 11:25登录了后台', '1511753122');
+INSERT INTO `yzn_action_log` VALUES ('328', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 12:34登录了后台', '1511757245');
+INSERT INTO `yzn_action_log` VALUES ('329', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 12:34登录了后台', '1511757267');
+INSERT INTO `yzn_action_log` VALUES ('330', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 12:34登录了后台', '1511757296');
+INSERT INTO `yzn_action_log` VALUES ('331', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 12:38登录了后台', '1511757486');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -106,7 +108,7 @@ CREATE TABLE `yzn_addons` (
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
-INSERT INTO `yzn_addons` VALUES ('10', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"0\",\"current\":\"94\"}', '御宅男', '1.0.0', '1508592233', '0');
+INSERT INTO `yzn_addons` VALUES ('10', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"0\",\"current\":\"94\"}', '御宅男', '1.0.0', '1510742217', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -129,8 +131,8 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1511003643', '2130706433', '530765310@qq.com');
-INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1499147342', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1511761306', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1511761350', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
 -- Table structure for `yzn_admin_panel`
@@ -252,8 +254,8 @@ CREATE TABLE `yzn_auth_group` (
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
-INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,24,25,26,28,29');
-INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,4,5,6,8,10,11,12,13,14,15,19,20,28,29');
+INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,48,49,50,51,53,54,55,56,57,58,59,60');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -269,68 +271,71 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
 -- ----------------------------
 INSERT INTO `yzn_auth_rule` VALUES ('1', 'Admin', '1', 'Admin/Setting/index', '设置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('2', 'Admin', '1', 'Admin/Manager/index', '管理员', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('3', 'Admin', '1', 'Admin/Manager/add', '添加管理员', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('4', 'Admin', '1', 'Admin/database/index', '应用', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('5', 'Admin', '1', 'Admin/database/repair_list', '数据库恢复', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('6', 'Admin', '2', 'Admin/Setting/index', '设置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('7', 'Admin', '2', 'Admin/Content/index', '内容', '-1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('8', 'Admin', '1', 'Admin/Config/index', '站点配置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('9', 'Admin', '1', 'Admin/Manager/edit', '编辑管理员', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('10', 'Admin', '1', 'Admin/AuthManager/index', '权限设置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('11', 'Admin', '1', 'Admin/Config/extend', '扩展配置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('12', 'Admin', '1', 'Admin/Action/actionlog', '操作日志', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('13', 'Admin', '1', 'Admin/database/optimize', '优化表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('14', 'Admin', '1', 'Admin/database/repair', '修复表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('15', 'Admin', '1', 'Admin/database/downfile', '下载表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('16', 'Admin', '1', 'Admin/database/del', '删除表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('17', 'Admin', '1', 'Admin/database/import', '还原表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('18', 'Admin', '1', 'Admin/Manager/del', '删除管理员', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('19', 'Admin', '2', 'Admin/index/index', '首页', '-1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('20', 'Admin', '1', 'Admin/Action/get_xml', '浏览操作日志', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('21', 'Admin', '1', 'Admin/Action/remove', '删除操作日志', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('22', 'Admin', '1', 'Admin/AuthManager/writeGroup', '编辑/创建权限组', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('23', 'Admin', '1', 'Admin/AuthManager/changeStatus', '权限组状态修改', '-1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('24', 'Admin', '1', 'Admin/AuthManager/access', '访问授权', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('25', 'Admin', '1', 'Admin/Menu/index', '后台菜单', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('26', 'Admin', '1', 'Admin/AuthManager/deleteGroup', '删除权限组', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('27', 'Content', '1', 'Content/Content/index', '管理内容', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('28', 'Content', '1', 'Content/Category/index', '栏目列表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('29', 'Content', '2', 'Content/index/index', '内容', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('30', 'Content', '1', 'Content/Models/index', '模型管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('31', 'Admin', '1', 'Admin/Config/mail', '邮箱配置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('32', 'Admin', '1', 'Admin/Module/local', '本地模块', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('33', 'Admin', '1', 'Admin/Module/index', '模块管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('34', 'Links', '1', 'Links/Links/index', '友情链接', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('35', 'Links', '1', 'Links/Links/add', '添加友情链接', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('36', 'Links', '1', 'Links/Links/edit', '链接编辑', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('37', 'Links', '1', 'Links/Links/delete', '链接删除', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('38', 'Links', '1', 'Links/Links/listorder', '链接排序', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('39', 'Links', '1', 'Links/Links/terms', '分类管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('40', 'Links', '1', 'Links/Links/addTerms', '分类新增', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('41', 'Links', '1', 'Links/Links/termsedit', '分类修改', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('42', 'Links', '1', 'Links/Links/termsdelete', '分类删除', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('43', 'Content', '1', 'Content/Position/index', '推荐位管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('44', 'Formguide', '1', 'Formguide/Formguide/index', '表单管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('45', 'Formguide', '1', 'Formguide/Formguide/add', '添加表单', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('46', 'Formguide', '1', 'Formguide/Formguide/edit', '编辑', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('47', 'Formguide', '1', 'Formguide/Formguide/delete', '删除', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('48', 'Formguide', '1', 'Formguide/Formguide/status', '禁用', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('49', 'Formguide', '1', 'Formguide/Info/index', '信息列表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('50', 'Formguide', '1', 'Formguide/Info/delete', '信息删除', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('51', 'Formguide', '1', 'Formguide/Field/index', '管理字段', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('52', 'Formguide', '1', 'Formguide/Field/add', '添加字段', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('53', 'Formguide', '1', 'Formguide/Field/edit', '编辑字段', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('54', 'Formguide', '1', 'Formguide/Field/delete', '删除字段', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('55', 'Admin', '1', 'Admin/Module/list', '模块列表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('56', 'Admin', '2', 'Admin/Module/index', '模块', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('57', 'Admin', '1', 'Admin/Cache/index', '缓存更新', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('2', 'Admin', '1', 'Admin/AuthManager/index', '权限设置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('3', 'Admin', '1', 'Admin/AuthManager/deleteGroup', '删除权限组', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('4', 'Admin', '1', 'Admin/AuthManager/writeGroup', '编辑/创建权限组', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('5', 'Admin', '1', 'Admin/AuthManager/access', '访问授权', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('6', 'Admin', '1', 'Admin/Action/remove', '删除操作日志', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('7', 'Admin', '1', 'Admin/Manager/index', '管理员', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('8', 'Admin', '1', 'Admin/Manager/add', '添加管理员', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('9', 'Admin', '1', 'Admin/Manager/del', '删除管理员', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('10', 'Admin', '1', 'Admin/database/index', '应用', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('11', 'Admin', '1', 'Admin/database/repair_list', '数据库恢复', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('12', 'Admin', '1', 'Admin/database/optimize', '优化表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('13', 'Admin', '1', 'Admin/database/repair', '修复表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('14', 'Admin', '1', 'Admin/database/downfile', '下载表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('15', 'Admin', '1', 'Admin/database/del', '删除表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('16', 'Admin', '1', 'Admin/database/import', '还原表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('17', 'Content', '1', 'Content/Content/index', '管理内容', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('18', 'Content', '1', 'Content/Category/index', '栏目列表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('19', 'Content', '1', 'Content/Models/index', '模型管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('20', 'Content', '1', 'Content/Position/index', '推荐位管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('21', 'Member', '1', 'Member/index/index', '会员管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('22', 'Member', '1', 'Member/member/manage', '会员管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('23', 'Member', '1', 'Member/Group/index', '会员组管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('24', 'Member', '1', 'Member/Model/index', '会员模型', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('25', 'Admin', '1', 'Admin/Module/index', '模块管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('26', 'Addons', '1', 'Addons/Addons/index', '插件管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('27', 'Addons', '1', 'Addons/Addons/hooks', '行为管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('28', 'Links', '1', 'Links/Links/index', '友情链接', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('29', 'Links', '1', 'Links/Links/add', '添加友情链接', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('30', 'Links', '1', 'Links/Links/edit', '链接编辑', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('31', 'Links', '1', 'Links/Links/delete', '链接删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('32', 'Links', '1', 'Links/Links/listorder', '链接排序', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('33', 'Links', '1', 'Links/Links/terms', '分类管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('34', 'Links', '1', 'Links/Links/addTerms', '分类新增', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('35', 'Links', '1', 'Links/Links/termsedit', '分类修改', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('36', 'Links', '1', 'Links/Links/termsdelete', '分类删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('37', 'Formguide', '1', 'Formguide/Formguide/index', '表单管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('38', 'Formguide', '1', 'Formguide/Formguide/add', '添加表单', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('39', 'Formguide', '1', 'Formguide/Formguide/edit', '编辑', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('40', 'Formguide', '1', 'Formguide/Formguide/delete', '删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('41', 'Formguide', '1', 'Formguide/Formguide/status', '禁用', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('42', 'Formguide', '1', 'Formguide/Info/index', '信息列表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('43', 'Formguide', '1', 'Formguide/Field/index', '管理字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('44', 'Formguide', '1', 'Formguide/Info/delete', '信息删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('45', 'Formguide', '1', 'Formguide/Field/add', '添加字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('46', 'Formguide', '1', 'Formguide/Field/edit', '编辑字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('47', 'Formguide', '1', 'Formguide/Field/delete', '删除字段', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('48', 'Admin', '2', 'Admin/Setting/index', '设置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('49', 'Admin', '1', 'Admin/Config/index', '站点配置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('50', 'Admin', '1', 'Admin/Config/mail', '邮箱配置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('51', 'Admin', '1', 'Admin/Manager/edit', '编辑管理员', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('52', 'Admin', '1', 'Admin/Module/list', '模块列表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('53', 'Content', '2', 'Content/index/index', '内容', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('54', 'Member', '2', 'Member/index/index', '用户', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('55', 'Admin', '2', 'Admin/Module/index', '模块', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('56', 'Addons', '2', 'Addons/Addons/index', '扩展', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('57', 'Admin', '1', 'Admin/Config/extend', '扩展配置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('58', 'Admin', '1', 'Admin/Action/actionlog', '操作日志', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('59', 'Admin', '1', 'Admin/Menu/index', '后台菜单', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('60', 'Admin', '1', 'Admin/cache/index', '缓存更新', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -357,9 +362,9 @@ INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'content', 'M
 INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('5', 'Module', '可用模块列表', '', 'Module', 'module_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('6', 'Model_form', '自定义表单模型', 'formguide', 'Formguide', 'formguide_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'member', 'Member', 'member_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'member', 'MemberGroup', 'membergroup_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'member', 'Member', 'member_model_cahce', '0');
+INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'Member', 'Member', 'member_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'Member', 'MemberGroup', 'membergroup_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'Member', 'Member', 'member_model_cahce', '0');
 INSERT INTO `yzn_cache` VALUES ('10', 'Addons', '插件列表', 'Addons', 'Addons', 'addons_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('11', 'Hooks', '钩子列表', 'admin', 'Hooks', 'hook_cache', '0');
 
@@ -501,7 +506,7 @@ INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '2', '1', '1', '2', '2', '150710713
 INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '26', '1', '6', '26', '26', '1507213335');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '5', '0', '3', '5', '5', '1507177340');
-INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '39', '3', '1', '1', '39', '1507956106');
+INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '40', '3', '1', '1', '1', '1510742656');
 INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '23', '1', '1', '23', '23', '1507380791');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '9', '6', '3', '9', '9', '1507029586');
 INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '4', '2', '2', '4', '4', '1507029399');
@@ -588,7 +593,7 @@ CREATE TABLE `yzn_member` (
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0000-00-00', '', '100', '0.00', '2', '2', '3', '0', '0', '2130706433', '1511003606', '1');
+INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0000-00-00', '', '100', '0.00', '2', '2', '3', '0', '0', '2130706433', '1511419042', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -665,81 +670,80 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=220 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
 INSERT INTO `yzn_menu` VALUES ('1', '设置', '', '0', 'Admin', 'Setting', 'index', '', '1', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('2', '内容', '', '0', 'Content', 'index', 'index', '', '1', '', '0', '2');
-INSERT INTO `yzn_menu` VALUES ('5', '站点配置', '', '10', 'Admin', 'Config', 'index', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('6', '管理员', 'icon iconfont icon-guanliyuan', '1', 'Admin', 'Manager', 'index', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('9', '扩展配置', '', '5', 'Admin', 'Config', 'extend', '', '1', '', '0', '5');
-INSERT INTO `yzn_menu` VALUES ('10', '设置', 'icon iconfont icon-zidongxiufu', '1', 'Admin', 'Setting', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('12', '管理员管理', '', '6', 'Admin', 'Manager', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('13', '添加管理员', '', '12', 'Admin', 'Manager', 'add', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('14', '编辑管理员', '', '12', 'Admin', 'Manager', 'edit', '', '0', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('15', '操作日志', '', '10', 'Admin', 'Action', 'actionlog', '', '1', '', '0', '10');
-INSERT INTO `yzn_menu` VALUES ('16', '应用', 'icon iconfont icon-yingyong', '1', 'Admin', 'database', 'index', '', '1', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('17', '数据库备份', '', '16', 'Admin', 'database', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('18', '数据库恢复', '', '17', 'Admin', 'database', 'repair_list', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('19', '权限设置', '', '10', 'Admin', 'AuthManager', 'index', '', '1', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('20', '优化表', '', '17', 'Admin', 'database', 'optimize', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('21', '修复表', '', '17', 'Admin', 'database', 'repair', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('22', '下载表', '', '17', 'Admin', 'database', 'downfile', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('23', '删除表', '', '17', 'Admin', 'database', 'del', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('24', '还原表', '', '17', 'Admin', 'database', 'import', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('25', '删除管理员', '', '12', 'Admin', 'Manager', 'del', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('27', '浏览操作日志', '', '15', 'Admin', 'Action', 'get_xml', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('28', '删除操作日志', '', '15', 'Admin', 'Action', 'remove', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('29', '查看权限组', '', '19', 'Admin', 'AuthManager', 'index', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('31', '删除权限组', '', '19', 'Admin', 'AuthManager', 'deleteGroup', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('30', '编辑/创建权限组', '', '19', 'Admin', 'AuthManager', 'writeGroup', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('32', '访问授权', '', '19', 'Admin', 'AuthManager', 'access', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('33', '后台菜单', '', '10', 'Admin', 'Menu', 'index', '', '1', '', '0', '10');
-INSERT INTO `yzn_menu` VALUES ('34', '内容管理', 'icon iconfont icon-neirongguanli', '2', 'Content', 'Content', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('35', '相关设置', 'icon iconfont icon-zidongxiufu', '2', 'Content', 'Category', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('36', '栏目列表', '', '35', 'Content', 'Category', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('37', '模型管理', '', '35', 'Content', 'Models', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('38', '管理内容', '', '34', 'Content', 'Content', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('39', '邮箱配置', '', '5', 'Admin', 'Config', 'mail', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('40', '模块', '', '0', 'Admin', 'Module', 'index', '', '1', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('41', '本地模块', 'icon iconfont icon-yingyong', '40', 'Admin', 'Module', 'local', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('42', '模块管理', '', '41', 'Admin', 'Module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('43', '模块列表', 'icon iconfont icon-liebiao', '40', 'Admin', 'Module', 'list', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('44', '友情链接', '', '43', 'Links', 'Links', 'index', '', '1', '友情链接！', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('45', '添加友情链接', '', '44', 'Links', 'Links', 'add', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('46', '链接编辑', '', '44', 'Links', 'Links', 'edit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('47', '链接删除', '', '44', 'Links', 'Links', 'delete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('48', '链接排序', '', '44', 'Links', 'Links', 'listorder', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('49', '分类管理', '', '44', 'Links', 'Links', 'terms', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('50', '分类新增', '', '44', 'Links', 'Links', 'addTerms', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('51', '分类修改', '', '44', 'Links', 'Links', 'termsedit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('52', '分类删除', '', '44', 'Links', 'Links', 'termsdelete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('53', '推荐位管理', '', '35', 'Content', 'Position', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('54', '表单管理', '', '43', 'Formguide', 'Formguide', 'index', '', '1', '自定义表单管理！', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('55', '添加表单', '', '54', 'Formguide', 'Formguide', 'add', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('56', '编辑', '', '54', 'Formguide', 'Formguide', 'edit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('57', '删除', '', '54', 'Formguide', 'Formguide', 'delete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('58', '禁用', '', '54', 'Formguide', 'Formguide', 'status', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('59', '信息列表', '', '54', 'Formguide', 'Info', 'index', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('60', '信息删除', '', '59', 'Formguide', 'Info', 'delete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('61', '管理字段', '', '54', 'Formguide', 'Field', 'index', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('62', '添加字段', '', '61', 'Formguide', 'Field', 'add', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('63', '编辑字段', '', '61', 'Formguide', 'Field', 'edit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('64', '删除字段', '', '61', 'Formguide', 'Field', 'delete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('65', '缓存更新', '', '10', 'Admin', 'Cache', 'index', '', '1', '', '0', '100');
 INSERT INTO `yzn_menu` VALUES ('3', '用户', '', '0', 'Member', 'index', 'index', '', '1', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('4', '会员管理', 'icon iconfont icon-yonghu', '3', 'Member', 'index', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('7', '会员管理', '', '4', 'Member', 'member', 'manage', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('11', '会员模型', 'icon iconfont icon-guanliyuan', '3', 'Member', 'Model', 'index', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('66', '模型管理', '', '11', 'Member', 'Model', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('67', '会员组', 'icon iconfont icon-chengyuan', '3', 'Member', 'Group', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('68', '会员组管理', '', '67', 'Member', 'Group', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('4', '模块', '', '0', 'Admin', 'Module', 'index', '', '1', '', '0', '3');
 INSERT INTO `yzn_menu` VALUES ('8', '扩展', '', '0', 'Addons', 'Addons', 'index', '', '1', '', '0', '5');
-INSERT INTO `yzn_menu` VALUES ('69', '插件拓展', 'icon iconfont icon-chajian', '8', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('70', '插件管理', '', '69', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('71', '行为管理', '', '69', 'Addons', 'Addons', 'hooks', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('11', '设置', 'icon iconfont icon-zidongxiufu', '1', 'Admin', 'Setting', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('12', '站点配置', '', '11', 'Admin', 'Config', 'index', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('13', '邮箱配置', '', '12', 'Admin', 'Config', 'mail', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('14', '扩展配置', '', '12', 'Admin', 'Config', 'extend', '', '1', '', '0', '5');
+INSERT INTO `yzn_menu` VALUES ('20', '权限设置', '', '11', 'Admin', 'AuthManager', 'index', '', '1', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('21', '查看权限组', '', '20', 'Admin', 'AuthManager', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('22', '删除权限组', '', '20', 'Admin', 'AuthManager', 'deleteGroup', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('23', '编辑/创建权限组', '', '20', 'Admin', 'AuthManager', 'writeGroup', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('24', '访问授权', '', '20', 'Admin', 'AuthManager', 'access', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('30', '操作日志', '', '11', 'Admin', 'Action', 'actionlog', '', '1', '', '0', '10');
+INSERT INTO `yzn_menu` VALUES ('31', '删除操作日志', '', '30', 'Admin', 'Action', 'remove', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('35', '后台菜单', '', '11', 'Admin', 'Menu', 'index', '', '1', '', '0', '10');
+INSERT INTO `yzn_menu` VALUES ('40', '缓存更新', '', '11', 'Admin', 'cache', 'index', '', '1', '', '0', '10');
+INSERT INTO `yzn_menu` VALUES ('50', '管理员', 'icon iconfont icon-guanliyuan', '1', 'Admin', 'Manager', 'index', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('51', '管理员管理', '', '50', 'Admin', 'Manager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('52', '添加管理员', '', '51', 'Admin', 'Manager', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('53', '编辑管理员', '', '51', 'Admin', 'Manager', 'edit', '', '0', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('54', '删除管理员', '', '51', 'Admin', 'Manager', 'del', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('70', '应用', 'icon iconfont icon-yingyong', '1', 'Admin', 'database', 'index', '', '1', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('71', '数据库备份', '', '70', 'Admin', 'database', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('72', '数据库恢复', '', '71', 'Admin', 'database', 'repair_list', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('73', '优化表', '', '71', 'Admin', 'database', 'optimize', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('74', '修复表', '', '71', 'Admin', 'database', 'repair', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('75', '下载表', '', '71', 'Admin', 'database', 'downfile', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('76', '删除表', '', '71', 'Admin', 'database', 'del', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('77', '还原表', '', '71', 'Admin', 'database', 'import', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('80', '内容管理', 'icon iconfont icon-neirongguanli', '2', 'Content', 'Content', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('81', '管理内容', '', '80', 'Content', 'Content', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('90', '相关设置', 'icon iconfont icon-zidongxiufu', '2', 'Content', 'Category', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('91', '栏目列表', '', '90', 'Content', 'Category', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('92', '模型管理', '', '90', 'Content', 'Models', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('93', '推荐位管理', '', '90', 'Content', 'Position', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('110', '会员管理', 'icon iconfont icon-yonghu', '3', 'Member', 'index', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('111', '会员管理', '', '110', 'Member', 'member', 'manage', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('130', '会员组', 'icon iconfont icon-chengyuan', '3', 'Member', 'Group', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('131', '会员组管理', '', '130', 'Member', 'Group', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('150', '会员模型', 'icon iconfont icon-guanliyuan', '3', 'Member', 'Model', 'index', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('151', '模型管理', '', '150', 'Member', 'Model', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('170', '本地模块', 'icon iconfont icon-yingyong', '4', 'Admin', 'Module', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('171', '模块管理', '', '170', 'Admin', 'Module', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('172', '模块列表', 'icon iconfont icon-liebiao', '4', 'Admin', 'Module', 'list', '', '1', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('190', '插件拓展', 'icon iconfont icon-chajian', '8', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('191', '插件管理', '', '190', 'Addons', 'Addons', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('192', '行为管理', '', '190', 'Addons', 'Addons', 'hooks', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('200', '友情链接', '', '172', 'Links', 'Links', 'index', '', '1', '友情链接！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('201', '添加友情链接', '', '200', 'Links', 'Links', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('202', '链接编辑', '', '200', 'Links', 'Links', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('203', '链接删除', '', '200', 'Links', 'Links', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('204', '链接排序', '', '200', 'Links', 'Links', 'listorder', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('205', '分类管理', '', '200', 'Links', 'Links', 'terms', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('206', '分类新增', '', '200', 'Links', 'Links', 'addTerms', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('207', '分类修改', '', '200', 'Links', 'Links', 'termsedit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('208', '分类删除', '', '200', 'Links', 'Links', 'termsdelete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('209', '表单管理', '', '172', 'Formguide', 'Formguide', 'index', '', '1', '自定义表单管理！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('210', '添加表单', '', '209', 'Formguide', 'Formguide', 'add', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('211', '编辑', '', '209', 'Formguide', 'Formguide', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('212', '删除', '', '209', 'Formguide', 'Formguide', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('213', '禁用', '', '209', 'Formguide', 'Formguide', 'status', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('214', '信息列表', '', '209', 'Formguide', 'Info', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('215', '管理字段', '', '209', 'Formguide', 'Field', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('216', '信息删除', '', '214', 'Formguide', 'Info', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('217', '添加字段', '', '215', 'Formguide', 'Field', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('218', '编辑字段', '', '215', 'Formguide', 'Field', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('219', '删除字段', '', '215', 'Formguide', 'Field', 'delete', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -974,4 +978,4 @@ CREATE TABLE `yzn_ucenter_member` (
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', 'e5e764feb83f21f7c578c6741dd148b0', '530765310@qq.com', '13402503587', '1508501243', '2130706433', '1511003606', '2130706433', '1508501243', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', 'e5e764feb83f21f7c578c6741dd148b0', '530765310@qq.com', '13402503587', '1508501243', '2130706433', '1511419042', '2130706433', '1508501243', '1');

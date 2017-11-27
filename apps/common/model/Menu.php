@@ -117,6 +117,7 @@ class Menu extends Model
         }
         $array = array();
         foreach ($result as $v) {
+
             $rule = $v['app'] . '/' . $v['controller'] . '/' . $v['action'];
             if ($this->checkRule($rule, array('in', '1,2'), null)) {
                 $array[] = $v;
@@ -138,7 +139,7 @@ class Menu extends Model
         if (!$Auth) {
             $Auth = new \com\Auth();
         }
-        if (!$Auth->check($rule, is_login(), $type, $mode)) {
+        if (!$Auth->check($rule, User::getInstance()->userid, $type, $mode)) {
             return false;
         }
         return true;
