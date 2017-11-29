@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
-Source Server Version : 50547
+Source Server         : localhost_3306
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50547
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-27 20:09:46
+Date: 2017-11-29 17:17:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=342 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -91,6 +91,7 @@ INSERT INTO `yzn_action_log` VALUES ('337', '1', '2', '2130706433', 'member', '2
 INSERT INTO `yzn_action_log` VALUES ('339', '1', '2', '2130706433', 'member', '2', 'ken678在2017-11-27 20:07登录了后台', '1511784444');
 INSERT INTO `yzn_action_log` VALUES ('340', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:08登录了后台', '1511784489');
 INSERT INTO `yzn_action_log` VALUES ('341', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:08登录了后台', '1511784536');
+INSERT INTO `yzn_action_log` VALUES ('342', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-29 17:06登录了后台', '1511946398');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -136,7 +137,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1511784536', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1511946398', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1511784444', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -357,7 +358,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -368,11 +369,12 @@ INSERT INTO `yzn_cache` VALUES ('3', 'ModelField', '模型字段', 'content', 'M
 INSERT INTO `yzn_cache` VALUES ('4', 'Config', '网站配置', '', 'Configs', 'config_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('5', 'Module', '可用模块列表', '', 'Module', 'module_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('6', 'Model_form', '自定义表单模型', 'formguide', 'Formguide', 'formguide_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'Member', 'Member', 'member_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'Member', 'MemberGroup', 'membergroup_cache', '0');
-INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'Member', 'Member', 'member_model_cahce', '0');
-INSERT INTO `yzn_cache` VALUES ('10', 'Addons', '插件列表', 'Addons', 'Addons', 'addons_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('7', 'Member_Config', '会员配置', 'member', 'Member', 'member_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('8', 'Member_group', '会员组', 'member', 'MemberGroup', 'membergroup_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('9', 'Model_Member', '会员模型', 'member', 'Member', 'member_model_cahce', '0');
+INSERT INTO `yzn_cache` VALUES ('10', 'Addons', '插件列表', 'addons', 'Addons', 'addons_cache', '0');
 INSERT INTO `yzn_cache` VALUES ('11', 'Hooks', '钩子列表', 'admin', 'Hooks', 'hook_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('12', 'Position', '推荐位', 'content', 'Position', 'position_cache', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_category`
