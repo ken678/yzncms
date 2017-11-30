@@ -12,6 +12,7 @@ namespace app\member\controller;
 
 use app\user\api\UserApi;
 use think\Cookie;
+use think\Db;
 
 /**
  * 会员中心首页
@@ -80,7 +81,23 @@ class Index extends Memberbase
 
     public function profile()
     {
-        return $this->fetch();
+        if ($this->request->isPost()) {
+            $this->error('登录成功！', url('/'));
+
+        } else {
+            //====基本资料表单======
+            $modelid = $this->userinfo['modelid'];
+            //会员模型数据表名
+            $tablename = $this->memberModel[$modelid]['tablename'];
+            //相应会员模型数据
+            $modeldata = Db::name(ucwords($tablename))->where(array("userid" => $this->userid))->find();
+            if (!is_array($modeldata)) {
+                $modeldata = array();
+            }
+            $data = array_merge($this->userinfo, $modeldata);
+            $this->assign("userinfo", $data);
+            return $this->fetch();
+        }
 
     }
 

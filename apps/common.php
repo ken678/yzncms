@@ -517,7 +517,7 @@ function get_username($uid = 0)
     static $list;
     if (!($uid && is_numeric($uid))) {
         //获取当前登录用户名
-        return session('user_auth.username');
+        return session('home_user_auth.username');
     }
     /* 获取缓存数据 */
     if (empty($list)) {

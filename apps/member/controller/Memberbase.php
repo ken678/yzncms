@@ -38,8 +38,10 @@ class Memberbase extends Base
     protected function _initialize()
     {
         parent::_initialize();
+        $this->memberModel = cache("Model_Member");
         //登陆检测
         $this->check_member();
+        //============全局模板变量==============
 
     }
 

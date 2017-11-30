@@ -51,7 +51,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util','element'], function(e
                     data: data,
                     url: url,
                     success: function(res) {
-                        if (res.status === 0) {
+                        if (res.code === 1) {
                             success && success(res);
                         } else {
                             layer.msg(res.msg || res.code, { shift: 6 });
@@ -352,13 +352,13 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util','element'], function(e
             button = $(data.elem);
         gather.json(action, data.field, function(res) {
             var end = function() {
-                if (res.action) {
-                    location.href = res.action;
+                if (res.url) {
+                    location.href = res.url;
                 } else {
                     gather.form[action || button.attr('key')](data.field, data.form);
                 }
             };
-            if (res.status == 0) {
+            if (res.code == 1) {
                 button.attr('alert') ? layer.alert(res.msg, {
                     icon: 1,
                     time: 10 * 1000,
