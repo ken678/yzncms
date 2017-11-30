@@ -71,8 +71,8 @@ class Member extends Model
             'last_login_time' => $user['last_login_time'],
         ];
 
-        session('user_auth', $auth);
-        session('user_auth_sign', data_auth_sign($auth));
+        session('home_user_auth', $auth);
+        session('home_user_auth_sign', data_auth_sign($auth));
 
     }
 
@@ -82,8 +82,8 @@ class Member extends Model
      */
     public function logout()
     {
-        session('user_auth', null);
-        session('user_auth_sign', null);
+        session('home_user_auth', null);
+        session('hone_user_auth_sign', null);
     }
 
     //会员配置缓存

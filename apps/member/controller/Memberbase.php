@@ -12,6 +12,7 @@ namespace app\member\controller;
 
 use app\common\controller\Base;
 use think\Config;
+use think\Db;
 use think\Request;
 
 /**
@@ -21,6 +22,8 @@ class Memberbase extends Base
 {
     //用户id
     protected $userid = 0;
+    //用户信息
+    protected $userinfo = array();
 
     public function __construct()
     {
@@ -43,7 +46,7 @@ class Memberbase extends Base
     /**
      * 检测用户是否已经登陆
      */
-    public function check_member()
+    final public function check_member()
     {
         $this->userid = is_login();
         $request = Request::instance();
@@ -52,8 +55,12 @@ class Memberbase extends Base
             return true;
         };
         if ($this->userid) {
-            //禁止访问会员组
-            //锁定用户
+            //  获取用户信息
+            $this->userinfo = Db::name('Member')->find($this->userid);
+            //  判断用户是否被锁定
+            if ($this->userinfo['status'] !== 1) {
+                $this->error("您的帐号已经被锁定！", url('/'));
+            }
             return true;
         } else {
             // 还没登录 跳转到登录页面

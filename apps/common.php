@@ -554,11 +554,11 @@ function get_username($uid = 0)
  */
 function is_login()
 {
-    $user = session('user_auth');
+    $user = session('home_user_auth');
     if (empty($user)) {
         return 0;
     } else {
-        return session('user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
+        return session('home_user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
     }
 }
 

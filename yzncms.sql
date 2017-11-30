@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-30 11:35:54
+Date: 2017-11-30 16:10:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=345 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=351 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -93,6 +93,12 @@ INSERT INTO `yzn_action_log` VALUES ('340', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('341', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:08登录了后台', '1511784536');
 INSERT INTO `yzn_action_log` VALUES ('342', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-29 17:06登录了后台', '1511946398');
 INSERT INTO `yzn_action_log` VALUES ('343', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 10:41登录了后台', '1512009694');
+INSERT INTO `yzn_action_log` VALUES ('345', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 11:43登录了后台', '1512013439');
+INSERT INTO `yzn_action_log` VALUES ('346', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 14:02登录了后台', '1512021771');
+INSERT INTO `yzn_action_log` VALUES ('347', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 14:54登录了后台', '1512024867');
+INSERT INTO `yzn_action_log` VALUES ('348', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:21登录了后台', '1512026487');
+INSERT INTO `yzn_action_log` VALUES ('349', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:50登录了后台', '1512028250');
+INSERT INTO `yzn_action_log` VALUES ('350', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:57登录了后台', '1512028665');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -138,7 +144,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512009694', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512028250', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -522,7 +528,7 @@ INSERT INTO `yzn_hits` VALUES ('c-1-2', '2', '2', '1', '1', '2', '2', '150710713
 INSERT INTO `yzn_hits` VALUES ('c-1-3', '2', '26', '1', '6', '26', '26', '1507213335');
 INSERT INTO `yzn_hits` VALUES ('c-1-4', '2', '1', '0', '1', '1', '1', '1507027592');
 INSERT INTO `yzn_hits` VALUES ('c-1-5', '2', '5', '0', '3', '5', '5', '1507177340');
-INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '40', '3', '1', '1', '1', '1510742656');
+INSERT INTO `yzn_hits` VALUES ('c-1-6', '3', '42', '3', '2', '2', '3', '1512013238');
 INSERT INTO `yzn_hits` VALUES ('c-1-7', '3', '23', '1', '1', '23', '23', '1507380791');
 INSERT INTO `yzn_hits` VALUES ('c-1-8', '3', '9', '6', '3', '9', '9', '1507029586');
 INSERT INTO `yzn_hits` VALUES ('c-1-9', '3', '4', '2', '2', '4', '4', '1507029399');
@@ -590,12 +596,11 @@ DROP TABLE IF EXISTS `yzn_member`;
 CREATE TABLE `yzn_member` (
   `uid` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `nickname` char(16) NOT NULL DEFAULT '' COMMENT '昵称',
-  `sex` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '性别',
-  `birthday` date NOT NULL DEFAULT '0000-00-00' COMMENT '生日',
-  `qq` char(10) NOT NULL DEFAULT '' COMMENT 'qq号',
   `point` mediumint(8) NOT NULL DEFAULT '0' COMMENT '用户积分',
   `amount` decimal(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '钱金总额',
   `login` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录次数',
+  `email` char(32) NOT NULL,
+  `mobile` char(15) NOT NULL,
   `groupid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '用户组ID',
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '用户模型ID',
   `reg_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '注册IP',
@@ -609,7 +614,7 @@ CREATE TABLE `yzn_member` (
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0000-00-00', '', '100', '0.00', '2', '2', '3', '0', '0', '2130706433', '1511419042', '1');
+INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '1', '530765310@qq.com', '13402503587', '2', '3', '0', '0', '2130706433', '1512028665', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -1002,4 +1007,4 @@ CREATE TABLE `yzn_ucenter_member` (
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', 'e5e764feb83f21f7c578c6741dd148b0', '530765310@qq.com', '13402503587', '1508501243', '2130706433', '1511419042', '2130706433', '1508501243', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1512028665', '2130706433', '1512028633', '1');
