@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-29 17:17:06
+Date: 2017-11-30 11:35:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=345 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -92,6 +92,7 @@ INSERT INTO `yzn_action_log` VALUES ('339', '1', '2', '2130706433', 'member', '2
 INSERT INTO `yzn_action_log` VALUES ('340', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:08登录了后台', '1511784489');
 INSERT INTO `yzn_action_log` VALUES ('341', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-27 20:08登录了后台', '1511784536');
 INSERT INTO `yzn_action_log` VALUES ('342', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-29 17:06登录了后台', '1511946398');
+INSERT INTO `yzn_action_log` VALUES ('343', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 10:41登录了后台', '1512009694');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -137,8 +138,8 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1511946398', '2130706433', '530765310@qq.com');
-INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1511784444', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512009694', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
 -- Table structure for `yzn_admin_panel`
@@ -261,7 +262,7 @@ CREATE TABLE `yzn_auth_group` (
 -- Records of yzn_auth_group
 -- ----------------------------
 INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '');
-INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,48,49,50,51,53,54,55,56,57,58,59,60,61');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,48,49,50,51,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -277,7 +278,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
@@ -343,6 +344,13 @@ INSERT INTO `yzn_auth_rule` VALUES ('58', 'Admin', '1', 'Admin/Action/actionlog'
 INSERT INTO `yzn_auth_rule` VALUES ('59', 'Admin', '1', 'Admin/Menu/index', '后台菜单', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('60', 'Admin', '1', 'Admin/cache/index', '缓存更新', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('61', 'Admin', '2', 'Admin/index/index', '首页', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('62', 'Content', '1', 'Content/Content/public_categorys', '栏目菜单列表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('63', 'Admin', '1', 'Admin/Action/clear', '删除一个月', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('64', 'Admin', '1', 'Admin/Menu/add', '新增菜单', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('65', 'Admin', '1', 'Admin/Menu/edit', '编辑菜单', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('66', 'Admin', '1', 'Admin/Menu/delete', '菜单删除', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('67', 'Admin', '1', 'Admin/Menu/listorder', '菜单排序', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('68', 'Admin', '1', 'Admin/database/export', '备份表', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -707,13 +715,13 @@ INSERT INTO `yzn_menu` VALUES ('52', '添加管理员', '', '51', 'Admin', 'Mana
 INSERT INTO `yzn_menu` VALUES ('53', '编辑管理员', '', '51', 'Admin', 'Manager', 'edit', '', '0', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('54', '删除管理员', '', '51', 'Admin', 'Manager', 'del', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('70', '应用', 'icon iconfont icon-yingyong', '1', 'Admin', 'database', 'index', '', '1', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('71', '数据库备份', '', '70', 'Admin', 'database', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('71', '数据库列表', '', '70', 'Admin', 'database', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('72', '数据库恢复', '', '71', 'Admin', 'database', 'repair_list', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('73', '优化表', '', '71', 'Admin', 'database', 'optimize', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('74', '修复表', '', '71', 'Admin', 'database', 'repair', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('75', '下载表', '', '71', 'Admin', 'database', 'downfile', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('76', '删除表', '', '71', 'Admin', 'database', 'del', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('77', '还原表', '', '71', 'Admin', 'database', 'import', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('74', '优化表', '', '71', 'Admin', 'database', 'optimize', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('75', '修复表', '', '71', 'Admin', 'database', 'repair', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('77', '下载表', '', '71', 'Admin', 'database', 'downfile', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('78', '删除表', '', '71', 'Admin', 'database', 'del', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('79', '还原表', '', '71', 'Admin', 'database', 'import', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('80', '内容管理', 'icon iconfont icon-neirongguanli', '2', 'Content', 'Content', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('81', '管理内容', '', '80', 'Content', 'Content', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('90', '相关设置', 'icon iconfont icon-zidongxiufu', '2', 'Content', 'Category', 'index', '', '1', '', '0', '0');
@@ -753,6 +761,13 @@ INSERT INTO `yzn_menu` VALUES ('217', '添加字段', '', '215', 'Formguide', 'F
 INSERT INTO `yzn_menu` VALUES ('218', '编辑字段', '', '215', 'Formguide', 'Field', 'edit', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('219', '删除字段', '', '215', 'Formguide', 'Field', 'delete', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('10', '首页', '', '0', 'Admin', 'index', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('82', '栏目菜单列表', '', '81', 'Content', 'Content', 'public_categorys', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('32', '删除一个月', '', '30', 'Admin', 'Action', 'clear', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('36', '新增菜单', '', '35', 'Admin', 'Menu', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('37', '编辑菜单', '', '35', 'Admin', 'Menu', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('38', '菜单删除', '', '35', 'Admin', 'Menu', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('39', '菜单排序', '', '35', 'Admin', 'Menu', 'listorder', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('73', '备份表', '', '71', 'Admin', 'database', 'export', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
