@@ -40,7 +40,7 @@ CURL拓展
 ```
 第一步：修改数据库配置 apps/common/conf/database.php  
 第二步：将根目录的yzncms.sql文件导入数据库即可  
-第三步：后台入口 http://您的域名/admin 默认账号密码 admin    123456   
+第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin  123456 普通管理员：ken678  123456 前台会员：ken678  123456）
 
 PS 几个注意点
 1.如果已经安装过了 拷贝的时候记得数据库 换成新的 因为目前还是测试版 数据库跨度比较大 需要换成新的数据库SQL文件
@@ -76,7 +76,7 @@ www  WEB部署目录（或者子目录）
 ```
 
 [后台登陆界面预览]  
-![输入图片说明](https://gitee.com/uploads/images/2017/1018/172222_58368544_555541.jpeg "QQ截图20171018171622.jpg")
+![输入图片说明](https://gitee.com/uploads/images/2017/1130/105332_f775fbeb_555541.jpeg "QQ截图20171130104354.jpg")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0904/091039_830d8119_555541.png "添加内容.png")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0601/134316_df6a7b60_555541.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0905/175949_bc011124_555541.png "Yzncms.png")
