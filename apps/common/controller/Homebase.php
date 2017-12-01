@@ -27,6 +27,7 @@ class Homebase extends Base
             '__IMG_PATH__' => $base_dir . 'static/home/image',
             '__CSS_PATH__' => $base_dir . 'static/home/css',
             '__JS_PATH__' => $base_dir . 'static/home/js',
+            '__HOME_PATH__' => $base_dir . 'static/home',
         ];
 
         $config['template'] = Config::get('template');

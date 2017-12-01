@@ -25,7 +25,7 @@ a:hover, a:focus {color: #ff5402;}
 /*a{ -webkit-transition: all .3s linear; -moz-transition: all .3s linear; -o-transition: all .3s linear; transition: all .3s linear;}*/
 .clear{clear: both;}
 .clearfix:after {display: block; clear: both; content: "\0020"; visibility: hidden; height: 0; }
-.w_1200{width: 1200px;margin: 0 auto;position: relative;}
+.container{width: 1200px;margin: 0 auto;position: relative;}
 .black_50 {height: 50px; display: block; }
 .fl{float: left;}
 .fr{float: right;}
@@ -59,6 +59,19 @@ a:hover, a:focus {color: #ff5402;}
 .main-pic .main-inner .downcount em {color: #ff7800; font-size: 32px; padding: 0 10px; }
 .main-pic .main-inner .joinus {padding-top: 20px; }
 .main-pic .main-inner .joinus span {background: rgba(0, 0, 0, 0.2); padding: 2px 10px; border-radius: 2px; color: #fff; display: inline-block; }
+
+/*youshi*/
+.youshi{background: #fff; padding: 42px 0; }
+.youshi .column{width: 23%;position: relative;float: left; text-align: left; font-size: 14px; padding-left: 1%; padding-right: 1%; vertical-align: top;cursor: pointer;}
+.youshi .column .featurette {text-align: center; height: 250px; padding: 47px 0 0 0; }
+.youshi .column .featurette .icon {height: 68px; margin-bottom: 28px; font-size: 64px; line-height: 68px; color: #fe7300;                transition:All 0.4s ease-in-out;
+                -webkit-transition:All 0.4s ease-in-out;
+                -moz-transition:All 0.4s ease-in-out;
+                -o-transition:All 0.4s ease-in-out;
+}
+.youshi .column:hover .featurette .icon {font-size: 80px;}
+.youshi .column .featurette h3 {font-size: 24px; margin: 28px 0 15px 0; }
+.youshi .column .text-muted {color: #8c92a4; }
 
 /*footer*/
 .footer .bar {background: #ff5402; height: 35px; line-height: 35px; overflow: hidden; }
