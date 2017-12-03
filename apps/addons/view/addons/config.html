@@ -20,15 +20,168 @@
     <form action="{:url('saveConfig')}" method="post" class="form-horizontal">
         <div class="ncap-form-default">
             {empty name="custom_config"}
-
+            {foreach name="data['config']" item="form" key="o_key"}
+            <dl class="row">
+                <dt class="tit">
+                    <label for="site_title">{$form.title|default=''}</label>
+                </dt>
+                <dd class="opt">
+                    {switch name="form.type"}
+                        {case value="text"}
+                            <input name="config[{$o_key}]" value="{$form.value}" class="input-txt" type="text">
+                        {/case}
+                        {case value="password"}
+                            <input  name="config[{$o_key}]" value="{$form.value}" class="input-txt"  type="password">
+                        {/case}
+                        {case value="hidden"}
+                            <input type="hidden" name="config[{$o_key}]" value="{$form.value}">
+                        {/case}
+                        {case value="radio"}
+                            {foreach name="form.options" item="opt" key="opt_k"}
+                                <label class="radio">
+                                    <input type="radio" name="config[{$o_key}]" value="{$opt_k}" {eq name="form.value" value="$opt_k"} checked{/eq}>{$opt}
+                                </label>
+                            {/foreach}
+                        {/case}
+                        {case value="checkbox"}
+                            {foreach name="form.options" item="opt" key="opt_k"}
+                                <label class="checkbox">
+                                    {php}
+                                        is_null($form["value"]) && $form["value"] = array();
+                                    {/php}
+                                    <input type="checkbox" name="config[{$o_key}][]" value="{$opt_k}" {in name="opt_k" value="$form.value"} checked{/in}>{$opt}
+                                </label>
+                            {/foreach}
+                        {/case}
+                        {case value="textarea"}
+                        <textarea name="config[{$o_key}]" rows="6" class="tarea">{$form.value}</textarea>
+                        {/case}
+                        <!--GROUP-->
+                        {case value="group"}
+                            <ul class="tab-nav nav nav-tabs">
+                                {volist name="form.options" id="li"}
+                                    <li data-tab="tab{$i}" {eq name="i" value="1"}class="current"{/eq}><a href="javascript:void(0);">{$li.title}</a></li>
+                                {/volist}
+                                <div class="clear"></div>
+                            </ul>
+                            <div class="two-tab-content">
+                                {volist name="form.options" id="tab"}
+                                <div id="tab{$i}" class="tab-pane {eq name="i" value="1"}in{/eq} tab{$i}">
+                                    {foreach name="tab['options']" item="tab_form" key="o_tab_key"}
+                                        <dl class="row">
+                                            <dt class="tit">
+                                                <label for="site_title">{$tab_form.title|default=''}</label>
+                                            </dt>
+                                            <dd class="opt">
+                                                {switch name="tab_form.type"}
+                                                {case value="text"}
+                                                    <input name="config[{o_tab_key}]" value="{$tab_form.value}" class="input-txt" type="text">
+                                                {/case}
+                                                {case value="password"}
+                                                    <input  name="config[{o_tab_key}]" value="{$tab_form.value}" class="input-txt"  type="password">
+                                                {/case}
+                                                {case value="hidden"}
+                                                    <input type="hidden" name="config[{o_tab_key}]" value="{$tab_form.value}">
+                                                {/case}
+                                                {case value="radio"}
+                                                    {foreach name="form.options" item="opt" key="opt_k"}
+                                                        <label class="radio">
+                                                            <input type="radio" name="config[{o_tab_key}]" value="{$opt_k}" {eq name="form.value" value="$opt_k"} checked{/eq}>{$opt}
+                                                        </label>
+                                                    {/foreach}
+                                                {/case}
+                                                {case value="checkbox"}
+                                                    {foreach name="form.options" item="opt" key="opt_k"}
+                                                        <label class="checkbox">
+                                                            {php}
+                                                                is_null($form["value"]) && $form["value"] = array();
+                                                            {/php}
+                                                            <input type="checkbox" name="config[{o_tab_key}][]" value="{$opt_k}" {in name="opt_k" value="$tab_form.value"} checked{/in}>{$opt}
+                                                        </label>
+                                                    {/foreach}
+                                                {/case}
+                                                {case value="textarea"}
+                                                <textarea name="config[{o_tab_key}]" rows="6" class="tarea">{$tab_form.value}</textarea>
+                                                {/case}
+                                                {/switch}
+                                            </dd>
+                                        </dl>
+                                    {/foreach}
+                                </div>
+                                {/volist}
+                            </div>
+                        {/case}
+                        <!--GROUP-->
+                    {/switch}
+                    {present name="form.tip"}
+                        <p class="notic">{$form.tip}</p>
+                    {/present}
+                </dd>
+            </dl>
+            {/foreach}
             {else /}
-               {present name="custom_config"}
-                  {$custom_config}
-               {/present}
+            {present name="custom_config"}
+            {$custom_config}
+            {/present}
             {/empty}
             <input type="hidden" name="id" value="{:input('id')}" readonly>
             <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
         </div>
     </form>
 </div>
+<style type="text/css">
+/*tab-tage*/
+.tab-nav {
+    margin-bottom: 15px;
+    padding-left: 1px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.tab-nav li {
+    margin-bottom: -1px;
+    margin-left: -1px;
+}
+.tab-nav li a, .tab-nav li a:hover {
+    padding: 0 20px;
+    height: 35px;
+    line-height: 35px;
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid transparent;
+    border-top-width: 2px;
+}
+.tab-nav .current a, .tab-nav .current a:hover {
+    border-color: #34b4e0 #e0e0e0 #F1F4F5;
+    background-color: #F1F4F5;
+}
+.two-tab-content .tab-pane{
+    display: none;
+}
+.two-tab-content .in{
+    display: block;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+}
+</style>
+<script type="text/javascript">
+    if($('ul.tab-nav').length){
+        //当有tab时，返回按钮不显示
+        $('.btn-return').hide();
+    }
+    $(function(){
+        //支持tab
+        showTab();
+    })
+//标签页切换(无下一步)
+function showTab() {
+    $(".tab-nav li").click(function(){
+        var self = $(this), target = self.data("tab");
+        self.addClass("current").siblings(".current").removeClass("current");
+        window.location.hash = "#" + target.substr(3);
+        $(".two-tab-content .tab-pane.in").removeClass("in");
+        $("." + target).addClass("in");
+    }).filter("[data-tab=tab" + window.location.hash.substr(1) + "]").click();
+}
+</script>
 {/block}

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-11-30 16:10:14
+Date: 2017-12-03 17:59:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=351 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=352 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -99,6 +99,7 @@ INSERT INTO `yzn_action_log` VALUES ('347', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('348', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:21登录了后台', '1512026487');
 INSERT INTO `yzn_action_log` VALUES ('349', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:50登录了后台', '1512028250');
 INSERT INTO `yzn_action_log` VALUES ('350', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:57登录了后台', '1512028665');
+INSERT INTO `yzn_action_log` VALUES ('351', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-03 16:36登录了后台', '1512290177');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -116,12 +117,13 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
 INSERT INTO `yzn_addons` VALUES ('10', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"0\",\"current\":\"94\"}', '御宅男', '1.0.0', '1510742217', '0');
+INSERT INTO `yzn_addons` VALUES ('12', 'Synclogin', '同步登陆', '同步登陆', '1', '{\"role\":\"1\",\"type\":[\"Qq\",\"Sina\",\"Weixin\"],\"meta\":\"\",\"bind\":\"0\",\"{o_tab_key}\":\"\"}', '御宅男', '1.0.0', '1512292047', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -144,7 +146,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512028250', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512290177', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -962,6 +964,27 @@ CREATE TABLE `yzn_position_data` (
 -- Records of yzn_position_data
 -- ----------------------------
 INSERT INTO `yzn_position_data` VALUES ('5', '2', '1', 'content', '1', '0', 'a:6:{s:5:\"title\";s:36:\"如何加快网站建设的进度？\";s:11:\"description\";s:602:\"在网站建设中我们都会对每一个用户的网站规划一下建站的进度管理，并把每一个建站的进程分解成不同的阶段，然后把每一个建站阶段所需要的时间都列出来，并写入网站建设的协议中，以便让用户明白我们在建站的整个进度中各个阶段都是在做什么。通常来说，我们规划网站建设进度的时候，主要考虑三方面的因素：第一是用户对网站建设要求的急切程度;第二是要根据网站的复杂程度及其难度;第三就是我们技术人员的人手分配因素。这三个因素...\";s:9:\"inputtime\";i:1506252329;s:5:\"posid\";a:2:{i:0;s:2:\"-1\";i:1;s:1:\"1\";}s:3:\"url\";s:30:\"/home/index/shows/catid/2/id/5\";s:5:\"style\";s:0:\"\";}', '5', '0', '', '0');
+
+-- ----------------------------
+-- Table structure for `yzn_sync_login`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_sync_login`;
+CREATE TABLE `yzn_sync_login` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `type_uid` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `oauth_token` varchar(255) NOT NULL,
+  `oauth_token_secret` varchar(255) NOT NULL,
+  `is_sync` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态描述',
+  `open_id` varchar(255) NOT NULL COMMENT '微信公众号open_id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_sync_login
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_terms`
