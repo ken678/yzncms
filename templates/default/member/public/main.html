@@ -12,24 +12,9 @@
 </head>
 
 <body>
-    <div class="main fly-user-main layui-clear">
-        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
-            <li class="layui-nav-item"><a href="{:url('member/index/index')}"><i class="layui-icon">&#xe68e;</i>我的主页</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;"><i class="layui-icon">&#xe620;</i>账号管理</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="{:url('member/index/profile')}">账号设置</a></dd>
-                    <dd><a href="{:url('member/index/profile')}">账户余额</a></dd>
-                    <dd><a href="{:url('member/index/profile')}">账户积分</a></dd>
-                </dl>
-            </li>
-        </ul>
-        <div class="site-tree-mobile layui-hide">
-            <i class="layui-icon">&#xe602;</i>
-        </div>
-        <div class="site-mobile-shade"></div>
-        {block name="content"}内容主体{/block}
-    </div>
+    {include file='public/nav' /}
+    {block name="content"}内容主体{/block}
+    {block name="js"}
     <script src="__STATIC__/js/layui/layui.js"></script>
     <script>
     //layui.cache.page = 'user';
@@ -41,10 +26,13 @@
         sex: '男'
     };
     layui.config({
-        version: "2.0.0",
+        version: "3.0.0",
         base: '__STATIC__/member/res/mods/'
-    }).use('index');
+    }).extend({
+        fly: 'index'
+    }).use('fly');
     </script>
+    {/block}
 </body>
 
 </html>

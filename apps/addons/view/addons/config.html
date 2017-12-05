@@ -64,7 +64,7 @@
                                 {/volist}
                                 <div class="clear"></div>
                             </ul>
-                            <div class="two-tab-content">
+                            <div class="tab-content">
                                 {volist name="form.options" id="tab"}
                                 <div id="tab{$i}" class="tab-pane {eq name="i" value="1"}in{/eq} tab{$i}">
                                     {foreach name="tab['options']" item="tab_form" key="o_tab_key"}
@@ -131,55 +131,24 @@
 </div>
 <style type="text/css">
 /*tab-tage*/
-.tab-nav {
-    margin-bottom: 15px;
-    padding-left: 1px;
-    border-bottom: 1px solid #e0e0e0;
-}
-.tab-nav li {
-    margin-bottom: -1px;
-    margin-left: -1px;
-}
-.tab-nav li a, .tab-nav li a:hover {
-    padding: 0 20px;
-    height: 35px;
-    line-height: 35px;
-    font-weight: bold;
-    font-size: 16px;
-    border: 1px solid transparent;
-    border-top-width: 2px;
-}
-.tab-nav .current a, .tab-nav .current a:hover {
-    border-color: #34b4e0 #e0e0e0 #F1F4F5;
-    background-color: #F1F4F5;
-}
-.two-tab-content .tab-pane{
-    display: none;
-}
-.two-tab-content .in{
-    display: block;
-}
-.nav-tabs>li {
-    float: left;
-    margin-bottom: -1px;
-}
+.tab-nav {margin-bottom: 15px; padding-left: 1px; border-bottom: 1px solid #e0e0e0; }
+.tab-nav li {margin-bottom: -1px; margin-left: -1px; }
+.tab-nav li a, .tab-nav li a:hover {display: block; padding: 0 20px; height: 35px; line-height: 35px; font-size: 14px; border: 1px solid transparent; border-top-width: 2px; }
+.tab-nav .current a, .tab-nav .current a:hover {border-color: #34b4e0 #e0e0e0 #F1F4F5; background-color: #F1F4F5; }
+.tab-content .tab-pane{display: none; }
+.tab-content .in{display: block; }
+.nav-tabs>li {float: left; margin-bottom: -1px; }
 </style>
 <script type="text/javascript">
-    if($('ul.tab-nav').length){
-        //当有tab时，返回按钮不显示
-        $('.btn-return').hide();
-    }
-    $(function(){
-        //支持tab
-        showTab();
-    })
-//标签页切换(无下一步)
+$(function(){
+    showTab();
+})
 function showTab() {
     $(".tab-nav li").click(function(){
         var self = $(this), target = self.data("tab");
         self.addClass("current").siblings(".current").removeClass("current");
         window.location.hash = "#" + target.substr(3);
-        $(".two-tab-content .tab-pane.in").removeClass("in");
+        $(".tab-content .tab-pane.in").removeClass("in");
         $("." + target).addClass("in");
     }).filter("[data-tab=tab" + window.location.hash.substr(1) + "]").click();
 }

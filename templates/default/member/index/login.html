@@ -1,100 +1,51 @@
-<!doctype html>
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>会员登录 - Yzncms内容管理系统</title>
-    <meta name="keywords" content="Yzncms" />
-    <meta name="description" content="Yzncms" />
-    <meta name="author" content="Yzncms">
-    <meta name="copyright" content="Yzncms Inc. All Rights Reserved">
-    <link href="__STATIC__/home/css/base.css" rel="stylesheet" type="text/css">
-    <link href="__STATIC__/home/css/login.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-    <div class="header-wrap">
-        <header class="public-head-layout wrapper">
-            <h1 class="site-logo"><a href="{:url('/')}"><img src="__STATIC__/home/image/logo_user.png" class="pngFix"></a></h1>
-            <div class="nc-regist-now">
-                <span class="avatar"><img src="__STATIC__/home/image/default_user_portrait.gif"></span>
-                <span>您好，欢迎来到Yzncms内容管理系统<br/>已注册的会员请登录，或立即<a title="" href="javascript:;" class="register">注册新会员</a></span></div>
-        </header>
-    </div>
-    <div class="nc-login-layout">
-        <div class="left-pic"><img src="__STATIC__/home/image/2.jpg" border="0"></div>
-        <div class="nc-login">
-            <div class="arrow"></div>
-            <div class="nc-login-mode">
-                <ul class="tabs-nav">
-                    <li><a href="#default" class="tabulous_active">用户登录<i></i></a></li>
-                </ul>
-                <div id="tabs_container" class="tabs-container">
-                    <div id="default" class="tabs-content">
-                        <form id="login_form" class="nc-login-form" method="post" action="">
-                            <dl>
-                                <dt>账&nbsp;&nbsp;&nbsp;号：</dt>
-                                <dd>
-                                    <input type="text" class="text"  name="username" >
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>密&nbsp;&nbsp;&nbsp;码：</dt>
-                                <dd>
-                                    <input type="password" class="text" name="password">
-                                </dd>
-                            </dl>
-                            <div class="code-div mt15">
-                                <dl>
-                                    <dt>验证码：</dt>
-                                    <dd>
-                                        <input type="text" name="captcha" class="text w100" />
-                                    </dd>
-                                </dl>
-                                <span><img src="{:url('api/Checkcode/getVerify','type=userlogin&length=4&font_size=18&imageW=120&imageH=52&font_color=&background=')}" name="codeimage" id="codeimage"> <a class="makecode" href="javascript:void(0)">看不清，换一张</a></span></div>
-                            <div class="handle-div">
-                                <span class="auto"><input type="checkbox" class="checkbox" name="auto_login" value="1">七天自动登录<em style="display: none;">请勿在公用电脑上使用</em></span>
-                                <a class="forget" href="javascript:;">忘记密码？</a>
+{extend name="public/main" /}
+{block name="content"}
+<div class="layui-container fly-marginTop">
+    <div class="fly-panel fly-panel-user" pad20>
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title">
+                <li class="layui-this">登入</li>
+                <li><a href="reg.html">注册</a></li>
+            </ul>
+            <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form layui-form-pane">
+                        <form method="post">
+                            <div class="layui-form-item">
+                                <label for="L_email" class="layui-form-label">账号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="L_email" name="username" required lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
                             </div>
-                            <div class="submit-div">
-                                <input type="submit" class="submit" value="登&nbsp;&nbsp;&nbsp;录">
+                            <div class="layui-form-item">
+                                <label for="L_pass" class="layui-form-label">密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" id="L_pass" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <!--<div class="layui-form-item">
+                                <label for="L_vercode" class="layui-form-label">人类验证</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid">
+                                    <span style="color: #c00;">{{d.vercode}}</span>
+                                </div>
+                            </div>-->
+                            <div class="layui-form-item">
+                                <button class="layui-btn" lay-filter="*" lay-submit>立即登录</button>
+                                <span style="padding-left:20px;"><a href="">忘记密码？</a></span>
+                            </div>
+                            <div class="layui-form-item fly-form-app">
+                                <span>或者使用社交账号登入</span>
+                                <a href="" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>
+                                <a href="" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-weibo" title="微博登入"></a>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="clear"></div>
     </div>
-    <div id="footer" class="wrapper">
-        <p>
-            <a href="javascript:;">首页</a> |
-            <a href="javascript:;">招聘英才</a> |
-            <a href="javascript:;">合作及洽谈</a> |
-            <a href="javascript:;">联系我们</a> |
-            <a href="javascript:;">关于我们</a> |
-            <a href="javascript:;">友情链接</a>
-        </p>
-        <br> Copyright 2017 <a href="javascript:;" target="_blank">Yzncms</a> All rights reserved.
-    </div>
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="__STATIC__/js/jquery-1.10.2.min.js"></script>
-    <![endif]-->
-    <!--[if gte IE 9]><!-->
-    <script type="text/javascript" src="__STATIC__/js/jquery-2.0.3.min.js"></script>
-    <!--<![endif]-->
-    <script type="text/javascript">
-    $(function() {
-        $('.makecode').click(function() {
-            var num = new Date().getTime();
-            var rand = Math.round(Math.random() * 10000);
-            var num = num + rand;
-            $("#codeimage").attr('src', $("#codeimage").attr('src') + "&t=" + num);
-        });
-    });
-    </script>
-</body>
-</html>
+</div>
+{/block}

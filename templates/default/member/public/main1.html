@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>用户中心 - {$Config.site_name}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="{$Config.site_keyword}">
+    <meta name="description" content="{$Config.site_description}">
+    <link rel="stylesheet" href="__STATIC__/js/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/member/css/global.css">
+</head>
+
+<body>
+    <div class="main fly-user-main layui-clear">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+            <li class="layui-nav-item"><a href="{:url('member/index/index')}"><i class="layui-icon">&#xe68e;</i>我的主页</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="layui-icon">&#xe620;</i>账号管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{:url('member/index/profile')}">账号设置</a></dd>
+                    <dd><a href="{:url('member/index/profile')}">账户余额</a></dd>
+                    <dd><a href="{:url('member/index/profile')}">账户积分</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon">&#xe602;</i>
+        </div>
+        <div class="site-mobile-shade"></div>
+        {block name="content"}内容主体{/block}
+    </div>
+    <script src="__STATIC__/js/layui/layui.js"></script>
+    <script>
+    //layui.cache.page = 'user';
+    layui.cache.user = {
+        username: '游客',
+        uid: -1,
+        avatar: '../../res/images/avatar/00.jpg',
+        experience: 83,
+        sex: '男'
+    };
+    layui.config({
+        version: "2.0.0",
+        base: '__STATIC__/member/res/mods/'
+    }).use('index');
+    </script>
+</body>
+
+</html>

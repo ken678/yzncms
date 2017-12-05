@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
-Source Server Version : 50547
+Source Server         : localhost_3306
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50547
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-03 17:59:23
+Date: 2017-12-05 10:59:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=352 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=366 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -100,6 +100,20 @@ INSERT INTO `yzn_action_log` VALUES ('348', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('349', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:50登录了后台', '1512028250');
 INSERT INTO `yzn_action_log` VALUES ('350', '1', '1', '2130706433', 'member', '1', 'admin在2017-11-30 15:57登录了后台', '1512028665');
 INSERT INTO `yzn_action_log` VALUES ('351', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-03 16:36登录了后台', '1512290177');
+INSERT INTO `yzn_action_log` VALUES ('352', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-04 17:34登录了后台', '1512380095');
+INSERT INTO `yzn_action_log` VALUES ('353', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:38登录了后台', '1512437900');
+INSERT INTO `yzn_action_log` VALUES ('354', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:42登录了后台', '1512438125');
+INSERT INTO `yzn_action_log` VALUES ('355', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:45登录了后台', '1512438308');
+INSERT INTO `yzn_action_log` VALUES ('356', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:47登录了后台', '1512438479');
+INSERT INTO `yzn_action_log` VALUES ('357', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:48登录了后台', '1512438524');
+INSERT INTO `yzn_action_log` VALUES ('358', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:49登录了后台', '1512438583');
+INSERT INTO `yzn_action_log` VALUES ('359', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:51登录了后台', '1512438681');
+INSERT INTO `yzn_action_log` VALUES ('360', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:52登录了后台', '1512438746');
+INSERT INTO `yzn_action_log` VALUES ('361', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:52登录了后台', '1512438768');
+INSERT INTO `yzn_action_log` VALUES ('362', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 09:53登录了后台', '1512438830');
+INSERT INTO `yzn_action_log` VALUES ('363', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 10:08登录了后台', '1512439707');
+INSERT INTO `yzn_action_log` VALUES ('364', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 10:32登录了后台', '1512441148');
+INSERT INTO `yzn_action_log` VALUES ('365', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-05 10:38登录了后台', '1512441534');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -146,7 +160,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512290177', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512380095', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -616,7 +630,7 @@ CREATE TABLE `yzn_member` (
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '1', '530765310@qq.com', '13402503587', '2', '3', '0', '0', '2130706433', '1512028665', '1');
+INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '14', '530765310@qq.com', '13402503587', '2', '3', '0', '0', '2130706433', '1512441534', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -1030,4 +1044,4 @@ CREATE TABLE `yzn_ucenter_member` (
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1512028665', '2130706433', '1512028633', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1512441534', '2130706433', '1512028633', '1');

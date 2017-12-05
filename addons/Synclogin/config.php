@@ -44,13 +44,13 @@ return array(
                 'title' => 'QQ配置',
                 'options' => array(
                     'QqKEY' => array(
-                        'title' => 'QQ互联APP ID：',
+                        'title' => 'QQ互联ID：',
                         'type' => 'text',
                         'value' => '',
                         'tip' => '申请地址：http://connect.qq.com',
                     ),
                     'QqSecret' => array(
-                        'title' => 'QQ互联APP KEY：',
+                        'title' => 'QQ互联KEY：',
                         'type' => 'text',
                         'value' => '',
                         'tip' => '申请地址：http://connect.qq.com',
