@@ -76,6 +76,28 @@ class Index extends Memberbase
         } else {
             return $this->fetch();
         }
+    }
+
+    public function register($username = '', $password = '', $repassword = '', $email = '', $verify = '')
+    {
+        if (!empty($this->userid)) {
+            $this->success("您已经是登陆状态！", url("Index/index"));
+        }
+        if ($this->request->isPost()) {
+            /* 调用注册接口注册用户 */
+            $User = new UserApi;
+            $uid = $User->register($username, $password, $email);
+            if (0 < $uid) {
+                //注册成功
+                //TODO: 发送验证邮件
+                $this->success('注册成功！', url('member/index/login'));
+            } else {
+                //注册失败，显示错误信息
+                $this->error($uid);
+            }
+        } else {
+            return $this->fetch();
+        }
 
     }
 

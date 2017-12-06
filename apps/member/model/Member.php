@@ -30,15 +30,15 @@ class Member extends Model
         /* 检测是否在当前应用注册 */
         $user = $this->field(true)->find($uid);
         if (!$user) {
-            //未注册
             /* 在当前应用中注册用户 */
             $Api = new UserApi();
             $info = $Api->info($uid);
-            $map = ['uid' => $uid, 'nickname' => $info[1], 'status' => 1];
+            $map = ['uid' => $uid, 'nickname' => $info[1], 'email' => $info[2], 'status' => 1];
             if (!$this->create($map)) {
                 $this->error = '前台用户信息注册失败，请重试！';
                 return false;
             }
+            $user = $this->field(true)->find($uid);
         } elseif (1 != $user['status']) {
             $this->error = '用户未激活或已禁用！'; //应用级别禁用
             return false;
