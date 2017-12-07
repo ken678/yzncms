@@ -75,18 +75,18 @@
                                             <dd class="opt">
                                                 {switch name="tab_form.type"}
                                                 {case value="text"}
-                                                    <input name="config[{o_tab_key}]" value="{$tab_form.value}" class="input-txt" type="text">
+                                                    <input name="config[{$o_tab_key}]" value="{$tab_form.value}" class="input-txt" type="text">
                                                 {/case}
                                                 {case value="password"}
-                                                    <input  name="config[{o_tab_key}]" value="{$tab_form.value}" class="input-txt"  type="password">
+                                                    <input  name="config[{$o_tab_key}]" value="{$tab_form.value}" class="input-txt"  type="password">
                                                 {/case}
                                                 {case value="hidden"}
-                                                    <input type="hidden" name="config[{o_tab_key}]" value="{$tab_form.value}">
+                                                    <input type="hidden" name="config[{$o_tab_key}]" value="{$tab_form.value}">
                                                 {/case}
                                                 {case value="radio"}
                                                     {foreach name="form.options" item="opt" key="opt_k"}
                                                         <label class="radio">
-                                                            <input type="radio" name="config[{o_tab_key}]" value="{$opt_k}" {eq name="form.value" value="$opt_k"} checked{/eq}>{$opt}
+                                                            <input type="radio" name="config[{$o_tab_key}]" value="{$opt_k}" {eq name="form.value" value="$opt_k"} checked{/eq}>{$opt}
                                                         </label>
                                                     {/foreach}
                                                 {/case}
@@ -96,12 +96,12 @@
                                                             {php}
                                                                 is_null($form["value"]) && $form["value"] = array();
                                                             {/php}
-                                                            <input type="checkbox" name="config[{o_tab_key}][]" value="{$opt_k}" {in name="opt_k" value="$tab_form.value"} checked{/in}>{$opt}
+                                                            <input type="checkbox" name="config[{$o_tab_key}][]" value="{$opt_k}" {in name="opt_k" value="$tab_form.value"} checked{/in}>{$opt}
                                                         </label>
                                                     {/foreach}
                                                 {/case}
                                                 {case value="textarea"}
-                                                <textarea name="config[{o_tab_key}]" rows="6" class="tarea">{$tab_form.value}</textarea>
+                                                <textarea name="config[{$o_tab_key}]" rows="6" class="tarea">{$tab_form.value}</textarea>
                                                 {/case}
                                                 {/switch}
                                             </dd>

@@ -226,6 +226,26 @@ class Addons extends Adminbase
         }
     }
 
+    //解析插件地址
+    public function execute($_addons = null, $_controller = null, $_action = null)
+    {
+        if (!empty($_addons) && !empty($_controller) && !empty($_action)) {
+            // 获取类的命名空间
+            $class = get_addon_class($_addons, 'controller', $_controller);
+            if (class_exists($class)) {
+                $model = new $class();
+                if ($model === false) {
+                    $this->error(lang('addon init fail'));
+                }
+                // 调用操作
+                return \think\App::invokeMethod([$class, $_action]);
+            } else {
+                $this->error(lang('控制器不存在' . $class));
+            }
+        }
+        $this->error(lang('没有指定插件名称，控制器或操作！'));
+    }
+
     /**
      * 安装插件
      */

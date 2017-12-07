@@ -201,6 +201,35 @@ function hook($hook, $params = [])
 }
 
 /**
+ * 插件显示内容里生成访问插件的url
+ * @param string $url url
+ * @param array $param 参数
+ */
+function addons_url($url, $param = [])
+{
+    $url = parse_url($url);
+    $case = config('url_convert');
+    $addons = $case ? \think\Loader::parseName($url['scheme']) : $url['scheme'];
+    $controller = $case ? \think\Loader::parseName($url['host']) : $url['host'];
+    $action = trim($case ? strtolower($url['path']) : $url['path'], '/');
+
+    /* 解析URL带的参数 */
+    if (isset($url['query'])) {
+        parse_str($url['query'], $query);
+        $param = array_merge($query, $param);
+    }
+    /* 基础参数 */
+    $params = array(
+        '_addons' => $addons,
+        '_controller' => $controller,
+        '_action' => $action,
+    );
+    $params = array_merge($params, $param); //添加额外参数
+
+    return url("addons/addons/execute", $params);
+}
+
+/**
  * 获取扩展模型对象
  * @param  integer $model_id 模型编号
  * @param string   默认公共模型 base基础模型 Independent独立模型公共模型 Document 继承模型公共模型

@@ -54,7 +54,7 @@ class Synclogin extends Addon
     }
 
     //登录按钮钩子
-    public function synclogin($param)
+    public function syncLogin($param)
     {
         $this->assign($param);
         $config = $this->getAddonConfig();

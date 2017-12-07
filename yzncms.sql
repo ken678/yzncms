@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-07 11:37:30
+Date: 2017-12-07 15:33:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=375 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=376 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -123,6 +123,7 @@ INSERT INTO `yzn_action_log` VALUES ('371', '1', '2', '2130706433', 'member', '2
 INSERT INTO `yzn_action_log` VALUES ('372', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 10:43登录了后台', '1512614629');
 INSERT INTO `yzn_action_log` VALUES ('373', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 11:31登录了后台', '1512617466');
 INSERT INTO `yzn_action_log` VALUES ('374', '1', '3', '2130706433', 'member', '3', '在2017-12-07 11:36登录了后台', '1512617799');
+INSERT INTO `yzn_action_log` VALUES ('375', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 13:36登录了后台', '1512625013');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -140,13 +141,13 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
 INSERT INTO `yzn_addons` VALUES ('10', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"0\",\"current\":\"94\"}', '御宅男', '1.0.0', '1510742217', '0');
-INSERT INTO `yzn_addons` VALUES ('12', 'Synclogin', '同步登陆', '同步登陆', '1', '{\"role\":\"1\",\"type\":[\"Qq\",\"Sina\",\"Weixin\"],\"meta\":\"\",\"bind\":\"0\",\"{o_tab_key}\":\"\"}', '御宅男', '1.0.0', '1512292047', '0');
+INSERT INTO `yzn_addons` VALUES ('14', 'Synclogin', '同步登陆', '同步登陆', '1', '{\"role\":\"1\",\"type\":[\"Qq\",\"Sina\",\"Weixin\"],\"meta\":\"\",\"bind\":\"0\",\"QqKEY\":\"101294053\",\"QqSecret\":\"0338017b0013ee405acf53b11ae8df6e\",\"SinaKEY\":\"\",\"SinaSecret\":\"\",\"WeixinKEY\":\"\",\"WeixinSecret\":\"\"}', '御宅男', '1.0.0', '1512625629', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -169,7 +170,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512614629', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512625013', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -577,7 +578,7 @@ CREATE TABLE `yzn_hooks` (
   `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_hooks
@@ -585,6 +586,7 @@ CREATE TABLE `yzn_hooks` (
 INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '0', '');
 INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', 'returntop');
 INSERT INTO `yzn_hooks` VALUES ('3', 'app_begin', '应用开始', '2', '1384481614', '');
+INSERT INTO `yzn_hooks` VALUES ('4', 'syncLogin', '第三方登陆位置', '1', '1403700579', 'Synclogin');
 
 -- ----------------------------
 -- Table structure for `yzn_links`
@@ -634,7 +636,7 @@ CREATE TABLE `yzn_member` (
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '会员状态',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of yzn_member
@@ -1048,7 +1050,7 @@ CREATE TABLE `yzn_ucenter_member` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of yzn_ucenter_member
