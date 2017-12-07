@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-06 15:40:23
+Date: 2017-12-07 11:37:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=370 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=375 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -118,6 +118,11 @@ INSERT INTO `yzn_action_log` VALUES ('366', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('367', '1', '4', '2130706433', 'member', '4', '在2017-12-06 15:21登录了后台', '1512544891');
 INSERT INTO `yzn_action_log` VALUES ('368', '1', '5', '2130706433', 'member', '5', '在2017-12-06 15:23登录了后台', '1512544982');
 INSERT INTO `yzn_action_log` VALUES ('369', '1', '7', '2130706433', 'member', '7', '在2017-12-06 15:37登录了后台', '1512545872');
+INSERT INTO `yzn_action_log` VALUES ('370', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 10:33登录了后台', '1512613999');
+INSERT INTO `yzn_action_log` VALUES ('371', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-07 10:40登录了后台', '1512614405');
+INSERT INTO `yzn_action_log` VALUES ('372', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 10:43登录了后台', '1512614629');
+INSERT INTO `yzn_action_log` VALUES ('373', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 11:31登录了后台', '1512617466');
+INSERT INTO `yzn_action_log` VALUES ('374', '1', '3', '2130706433', 'member', '3', '在2017-12-07 11:36登录了后台', '1512617799');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -164,7 +169,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512380095', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512614629', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -629,12 +634,12 @@ CREATE TABLE `yzn_member` (
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '会员状态',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '15', '530765310@qq.com', '13402503587', '2', '3', '0', '0', '2130706433', '1512541476', '1');
+INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '17', '530765310@qq.com', '13402503587', '2', '2', '0', '0', '2130706433', '1512617466', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -817,14 +822,14 @@ CREATE TABLE `yzn_model` (
   `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
   PRIMARY KEY (`modelid`),
   KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 -- ----------------------------
 -- Records of yzn_model
 -- ----------------------------
 INSERT INTO `yzn_model` VALUES ('1', '文章模型', '文章模型', 'article', '', '1507284550', '0', '1', '0', '', '', '', '', '', '0', '0');
-INSERT INTO `yzn_model` VALUES ('2', '用户留言表单', '用户留言表单', 'form_message', 'a:11:{s:7:\"forward\";s:0:\"\";s:10:\"enabletime\";s:1:\"0\";s:8:\"sendmail\";s:1:\"0\";s:16:\"allowmultisubmit\";s:1:\"0\";s:10:\"allowunreg\";s:1:\"0\";s:8:\"isverify\";s:1:\"1\";s:8:\"interval\";s:0:\"\";s:13:\"show_template\";s:9:\"show.html\";s:16:\"show_js_template\";s:12:\"js_show.html\";s:9:\"starttime\";b:0;s:7:\"endtime\";b:0;}', '1507380061', '0', '1', '0', '', '', '', '', '', '0', '3');
-INSERT INTO `yzn_model` VALUES ('3', '普通会员', '普通会员', 'member_detail', null, '1507984836', '0', '1', '0', '', '', '', '', '', '0', '2');
+INSERT INTO `yzn_model` VALUES ('3', '用户留言表单', '用户留言表单', 'form_message', 'a:11:{s:7:\"forward\";s:0:\"\";s:10:\"enabletime\";s:1:\"0\";s:8:\"sendmail\";s:1:\"0\";s:16:\"allowmultisubmit\";s:1:\"0\";s:10:\"allowunreg\";s:1:\"0\";s:8:\"isverify\";s:1:\"1\";s:8:\"interval\";s:0:\"\";s:13:\"show_template\";s:9:\"show.html\";s:16:\"show_js_template\";s:12:\"js_show.html\";s:9:\"starttime\";b:0;s:7:\"endtime\";b:0;}', '1507380061', '0', '1', '0', '', '', '', '', '', '0', '3');
+INSERT INTO `yzn_model` VALUES ('2', '普通会员', '普通会员', 'member_detail', null, '1507984836', '0', '1', '0', '', '', '', '', '', '0', '2');
 
 -- ----------------------------
 -- Table structure for `yzn_model_field`
@@ -887,10 +892,10 @@ INSERT INTO `yzn_model_field` VALUES ('17', '1', 'tags', 'TAGS', '多关之间�
 INSERT INTO `yzn_model_field` VALUES ('18', '1', 'description', '摘要', '', '', '0', '255', '', '', 'textarea', 'a:4:{s:5:\"width\";s:2:\"98\";s:6:\"height\";s:2:\"46\";s:12:\"defaultvalue\";s:0:\"\";s:10:\"enablehtml\";s:1:\"0\";}', '', '', '', '0', '1', '0', '1', '0', '1', '1', '1', '5', '0', '0', '', '');
 INSERT INTO `yzn_model_field` VALUES ('19', '1', 'updatetime', '发布时间', '', '', '0', '0', '', '', 'datetime', 'a:3:{s:9:\"fieldtype\";s:3:\"int\";s:6:\"format\";s:11:\"Y-m-d H:i:s\";s:11:\"defaulttype\";s:1:\"0\";}', '', '', '', '0', '1', '0', '0', '0', '0', '0', '0', '10', '0', '0', '', '');
 INSERT INTO `yzn_model_field` VALUES ('20', '1', 'content', '内容', '<style type=\"text/css\">.content_attr{ border:1px solid #CCC; padding:5px 8px; background:#FFC; margin-top:6px}</style><div class=\"content_attr\"><label><input name=\"add_introduce\" type=\"checkbox\"  value=\"1\" checked>是否截取内容</label><input type=\"text\" name=\"introcude_length\" value=\"200\" size=\"3\">字符至内容摘要\r\n<label><input type=\'checkbox\' name=\'auto_thumb\' value=\"1\" checked>是否获取内容第</label><input type=\"text\" name=\"auto_thumb_no\" value=\"1\" size=\"2\" class=\"\">张图片作为标题图片\r\n</div>', '', '1', '999999', '', '内容不能为空', 'editor', 'a:6:{s:7:\"toolbar\";s:4:\"full\";s:12:\"defaultvalue\";s:0:\"\";s:13:\"enablekeylink\";s:1:\"1\";s:10:\"replacenum\";s:1:\"2\";s:9:\"link_mode\";s:1:\"0\";s:15:\"enablesaveimage\";s:1:\"1\";}', '', '', '', '0', '0', '0', '1', '0', '1', '1', '0', '6', '0', '0', '', '');
-INSERT INTO `yzn_model_field` VALUES ('22', '2', 'name', '姓名', '', '', '0', '0', '', '', 'text', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
-INSERT INTO `yzn_model_field` VALUES ('23', '2', 'phone', '手机号码', '', '', '0', '0', '', '', 'text', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
-INSERT INTO `yzn_model_field` VALUES ('24', '2', 'email', '邮箱', '', '', '0', '0', '', '', 'text', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
-INSERT INTO `yzn_model_field` VALUES ('25', '2', 'message_content', '留言内容', '', '', '0', '0', '', '', 'textarea', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
+INSERT INTO `yzn_model_field` VALUES ('22', '3', 'name', '姓名', '', '', '0', '0', '', '', 'text', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
+INSERT INTO `yzn_model_field` VALUES ('23', '3', 'phone', '手机号码', '', '', '0', '0', '', '', 'text', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
+INSERT INTO `yzn_model_field` VALUES ('24', '3', 'email', '邮箱', '', '', '0', '0', '', '', 'text', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
+INSERT INTO `yzn_model_field` VALUES ('25', '3', 'message_content', '留言内容', '', '', '0', '0', '', '', 'textarea', 'N;', '', '', '', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '', '');
 
 -- ----------------------------
 -- Table structure for `yzn_module`
@@ -1043,9 +1048,9 @@ CREATE TABLE `yzn_ucenter_member` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1512541476', '2130706433', '1512028633', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1512617466', '2130706433', '1512028633', '1');

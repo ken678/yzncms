@@ -96,14 +96,11 @@ class UcenterMember extends Model
             unset($data['mobile']);
         }
 
-        // /* 规则验证 */
-        if (empty($scene)) {
-            $scene = true;
-        }
-        /*$validate = \think\Loader::validate('UcenterMember');
+        $validate = \think\Loader::validate('user/UcenterMember');
         if (!$validate->scene($scene)->check($data)) {
-        return $validate->getError();
-        }*/
+            return $validate->getError();
+        }
+
         /* 添加用户 */
         if ($user_data = $this->create($data)) {
             $user_data = $user_data->toArray();

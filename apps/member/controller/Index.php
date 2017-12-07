@@ -23,7 +23,6 @@ class Index extends Memberbase
     public function index()
     {
         return $this->fetch();
-
     }
 
     //登录页面
@@ -101,24 +100,29 @@ class Index extends Memberbase
 
     }
 
+    //会员设置界面
     public function profile()
     {
-        if ($this->request->isPost()) {
-            $this->error('登录成功！', url('/'));
+        //====基本资料表单======
+        $modelid = $this->userinfo['modelid'];
+        //会员模型数据表名
+        $tablename = $this->memberModel[$modelid]['tablename'];
+        //相应会员模型数据
+        $modeldata = Db::name(ucwords($tablename))->where(array("userid" => $this->userid))->find();
+        if (!is_array($modeldata)) {
+            $modeldata = array();
+        }
+        $data = array_merge($this->userinfo, $modeldata);
+        $this->assign("userinfo", $data);
+        return $this->fetch();
+    }
 
-        } else {
-            //====基本资料表单======
-            $modelid = $this->userinfo['modelid'];
-            //会员模型数据表名
-            $tablename = $this->memberModel[$modelid]['tablename'];
-            //相应会员模型数据
-            $modeldata = Db::name(ucwords($tablename))->where(array("userid" => $this->userid))->find();
-            if (!is_array($modeldata)) {
-                $modeldata = array();
-            }
-            $data = array_merge($this->userinfo, $modeldata);
-            $this->assign("userinfo", $data);
-            return $this->fetch();
+    //保存基本信息
+    public function doprofile()
+    {
+        if ($this->request->isPost()) {
+            var_dump(111);
+
         }
 
     }

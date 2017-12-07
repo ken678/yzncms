@@ -33,7 +33,10 @@ class Member extends Model
             /* 在当前应用中注册用户 */
             $Api = new UserApi();
             $info = $Api->info($uid);
-            $map = ['uid' => $uid, 'nickname' => $info[1], 'email' => $info[2], 'status' => 1];
+            //TODO 会员模型暂时默认吧
+            $map = ['uid' => $uid, 'nickname' => $info[1], 'email' => $info[2], 'status' => 1, 'modelid' => 2];
+            //计算用户组
+            $map['groupid'] = $this->_get_usergroup_bypoint();
             if (!$this->create($map)) {
                 $this->error = '前台用户信息注册失败，请重试！';
                 return false;
@@ -74,6 +77,41 @@ class Member extends Model
         session('home_user_auth', $auth);
         session('home_user_auth_sign', data_auth_sign($auth));
 
+    }
+
+    /**
+     *根据积分算出用户组
+     * @param $point int 积分数
+     */
+    protected function _get_usergroup_bypoint($point = 0)
+    {
+        $groupid = 2;
+        if (empty($point)) {
+            $member_setting = cache("Member_Config");
+            //新会员默认点数
+            $point = $member_setting['defualtpoint'] ? $member_setting['defualtpoint'] : 0;
+        }
+        //获取会有组缓存
+        $grouplist = cache("Member_group");
+
+        foreach ($grouplist as $k => $v) {
+            $grouppointlist[$k] = $v['point'];
+        }
+        //对数组进行逆向排序
+        arsort($grouppointlist);
+        //如果超出用户组积分设置则为积分最高的用户组
+        if ($point > max($grouppointlist)) {
+            $groupid = key($grouppointlist);
+        } else {
+            foreach ($grouppointlist as $k => $v) {
+                if ($point >= $v) {
+                    $groupid = $tmp_k;
+                    break;
+                }
+                $tmp_k = $k;
+            }
+        }
+        return $groupid;
     }
 
     /**
