@@ -102,6 +102,14 @@
         $('body').removeClass('site-mobile');
     });
 
+    //验证码切换
+    $('#codeimage').click(function() {
+        var num = new Date().getTime();
+        var rand = Math.round(Math.random() * 10000);
+        var num = num + rand;
+        $("#codeimage").attr('src', $("#codeimage").attr('src') + "&t=" + num);
+    });
+
     exports('fly', fly);
 
 });

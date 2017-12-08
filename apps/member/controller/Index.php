@@ -36,6 +36,12 @@ class Index extends Memberbase
             $username = $this->request->param('username');
             $password = $this->request->param('password');
             $captcha = $this->request->param('captcha');
+            if (empty($captcha) && $this->memberConfig['openverification']) {
+                $this->showMessage(20031, array(), 'error');
+            }
+            if ($this->memberConfig['openverification'] && !captcha_check($captcha)) {
+                $this->showMessage(20031, array(), 'error');
+            }
             if (empty($username)) {
                 $this->showMessage(10005, array(), 'error');
             }

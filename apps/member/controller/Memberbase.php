@@ -40,9 +40,13 @@ class Memberbase extends Base
         parent::_initialize();
         //登陆检测
         $this->check_member();
+        $this->memberModel = cache("Model_Member");
+        $this->memberConfig = cache("Member_Config");
         //============全局模板变量==============
-        $this->memberModel = cache("Model_Member"); //会员模型
-        $this->memberConfig = cache("Member_Config"); //会员配置
+        //会员模型配置
+        $this->assign("Member_config", $this->memberConfig);
+        //会员模型数组
+        $this->assign("Model_member", $this->memberModel);
     }
 
     /**
@@ -174,7 +178,7 @@ class Memberbase extends Base
             $message = $info;
             $data['error'] = $error;
         }
-        if ('success' == $type || $type == true) {
+        if ('success' == $type) {
             $this->success($message);
         } else {
             $this->error($message);

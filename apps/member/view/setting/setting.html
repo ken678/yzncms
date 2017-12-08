@@ -25,10 +25,21 @@
                 <dt class="tit">允许新会员注册</dt>
                 <dd class="opt">
                     <div class="onoff">
-                        <label for="status1" class="cb-enable {eq name="setting['allowregister']" value="1"}selected{/eq}">是</label>
-                        <label for="status0" class="cb-disable {eq name="setting['allowregister']" value="0"}selected{/eq}">否</label>
-                        <input id="status1" name='setting[allowregister]' {eq name="setting['allowregister']" value="1"}checked="checked"{/eq} value="1" type="radio">
-                        <input id="status0" name='setting[allowregister]' {eq name="setting['allowregister']" value="0"}checked="checked"{/eq} value="0" type="radio">
+                        <label for="status01" class="cb-enable {eq name="setting['allowregister']" value="1"}selected{/eq}">是</label>
+                        <label for="status02" class="cb-disable {eq name="setting['allowregister']" value="0"}selected{/eq}">否</label>
+                        <input id="status01" name='setting[allowregister]' {eq name="setting['allowregister']" value="1"}checked="checked"{/eq} value="1" type="radio">
+                        <input id="status02" name='setting[allowregister]' {eq name="setting['allowregister']" value="0"}checked="checked"{/eq} value="0" type="radio">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">是否开启登陆验证码</dt>
+                <dd class="opt">
+                    <div class="onoff">
+                        <label for="status03" class="cb-enable {eq name="setting['openverification']" value="1"}selected{/eq}">是</label>
+                        <label for="status04" class="cb-disable {eq name="setting['openverification']" value="0"}selected{/eq}">否</label>
+                        <input id="status03" name='setting[openverification]' {eq name="setting['openverification']" value="1"}checked="checked"{/eq} value="1" type="radio">
+                        <input id="status04" name='setting[openverification]' {eq name="setting['openverification']" value="0"}checked="checked"{/eq} value="0" type="radio">
                     </div>
                 </dd>
             </dl>
