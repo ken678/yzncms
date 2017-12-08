@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-07 15:33:46
+Date: 2017-12-08 10:55:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=376 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=378 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -124,6 +124,8 @@ INSERT INTO `yzn_action_log` VALUES ('372', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('373', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 11:31登录了后台', '1512617466');
 INSERT INTO `yzn_action_log` VALUES ('374', '1', '3', '2130706433', 'member', '3', '在2017-12-07 11:36登录了后台', '1512617799');
 INSERT INTO `yzn_action_log` VALUES ('375', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 13:36登录了后台', '1512625013');
+INSERT INTO `yzn_action_log` VALUES ('376', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-07 18:17登录了后台', '1512641822');
+INSERT INTO `yzn_action_log` VALUES ('377', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-08 09:36登录了后台', '1512696996');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -170,7 +172,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512625013', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512696996', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -294,7 +296,7 @@ CREATE TABLE `yzn_auth_group` (
 -- Records of yzn_auth_group
 -- ----------------------------
 INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '');
-INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,48,49,50,51,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '测试用户', '部分低级权限', '1', '2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,48,49,50,51,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -310,7 +312,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
@@ -383,6 +385,7 @@ INSERT INTO `yzn_auth_rule` VALUES ('65', 'Admin', '1', 'Admin/Menu/edit', '编�
 INSERT INTO `yzn_auth_rule` VALUES ('66', 'Admin', '1', 'Admin/Menu/delete', '菜单删除', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('67', 'Admin', '1', 'Admin/Menu/listorder', '菜单排序', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('68', 'Admin', '1', 'Admin/database/export', '备份表', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('69', 'Member', '1', 'Member/Setting/setting', '会员模块配置', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -800,6 +803,7 @@ INSERT INTO `yzn_menu` VALUES ('37', '编辑菜单', '', '35', 'Admin', 'Menu', 
 INSERT INTO `yzn_menu` VALUES ('38', '菜单删除', '', '35', 'Admin', 'Menu', 'delete', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('39', '菜单排序', '', '35', 'Admin', 'Menu', 'listorder', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('73', '备份表', '', '71', 'Admin', 'database', 'export', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('112', '会员模块配置', '', '110', 'Member', 'Setting', 'setting', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -923,6 +927,7 @@ CREATE TABLE `yzn_module` (
 -- ----------------------------
 INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1505651640', '1505651640', '0');
 INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', '', '1507204730', '1507204730', '0');
+INSERT INTO `yzn_module` VALUES ('member', '会员中心', '858ba4765e53c712ef672a9570474b1d', '0', '1', '1.0.0', 'a:1:{s:13:\"allowregister\";s:1:\"0\";}', '1498718058', '1498718058', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_page`

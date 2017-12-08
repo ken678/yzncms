@@ -79,6 +79,9 @@ class Index extends Memberbase
 
     public function register($username = '', $password = '', $repassword = '', $email = '', $verify = '')
     {
+        if (empty($this->memberConfig['allowregister'])) {
+            $this->error("系统不允许新会员注册！");
+        }
         if (!empty($this->userid)) {
             $this->success("您已经是登陆状态！", url("Index/index"));
         }

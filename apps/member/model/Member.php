@@ -127,7 +127,7 @@ class Member extends Model
     //会员配置缓存
     public function member_cache()
     {
-        $data = unserialize(db('Module')->where(array('module' => 'Member'))->column('setting'));
+        $data = unserialize(db('Module')->where(array('module' => 'Member'))->value('setting'));
         cache("Member_Config", $data);
         $this->member_model_cahce();
         return $data;
