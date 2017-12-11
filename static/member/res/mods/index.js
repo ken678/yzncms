@@ -62,10 +62,13 @@
     form.on('submit(*)', function(data) {
         var action = $(data.form).attr('action'),
             button = $(data.elem);
-        fly.json(action, data.field, function(res) {
+            fly.json(action, data.field, function(res) {
             var end = function() {
                 if (res.url) {
-                    location.href = res.url;
+                    layer.msg(res.msg , {icon: 1});
+                    setTimeout(function(){
+                        location.href=res.url;
+                    },1500);
                 } else {
                     fly.form[action || button.attr('key')](data.field, data.form);
                 }
@@ -82,12 +85,12 @@
     });
 
     //加载特定模块
-    if (layui.cache.page && layui.cache.page !== 'index') {
+    /*if (layui.cache.page && layui.cache.page !== 'index') {
         var extend = {};
         extend[layui.cache.page] = layui.cache.page;
         layui.extend(extend);
         layui.use(layui.cache.page);
-    }
+    }*/
 
 
     //手机设备的简单适配

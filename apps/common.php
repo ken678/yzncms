@@ -769,28 +769,29 @@ function send_email($toemail, $subject, $message, $from = '', $cfg = array(), $s
         return array('status' => -1, 'msg' => '请先开启openssl扩展');
     }
     //表单提交 测试发送
-    if ($cfg && is_array($cfg)) {
-        $from = $cfg['from'];
-        $email = $cfg;
+    /*if ($cfg && is_array($cfg)) {
+    $from = $cfg['from'];
+    $email = $cfg;
     } else {
-        $config = cache('Config');
+    $config = cache('Config');
 
-    }
+    }*/
 
+    $config = cache('Config');
     $mail = new \PHPMailer\PHPMailer\PHPMailer();
     //Server settings
     $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
     $mail->SMTPDebug = 0; // Enable verbose debug output
     $mail->isSMTP(); // Set mailer to use SMTP
-    $mail->Host = $email['server']; // Specify main and backup SMTP servers
+    $mail->Host = $config['mail_server']; // Specify main and backup SMTP servers
     $mail->SMTPAuth = true; // Enable SMTP authentication
-    $mail->Username = $email['auth_username']; // SMTP username
-    $mail->Password = $email['auth_password']; // SMTP password
+    $mail->Username = $config['mail_user']; // SMTP username
+    $mail->Password = $config['mail_password']; // SMTP password
     $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = $email['port']; //端口 - likely to be 25, 465 or 587
+    $mail->Port = $config['mail_port']; //端口 - likely to be 25, 465 or 587
 
     //Recipients
-    $mail->setFrom($from, 'Mailer'); //发送方地址和昵称
+    $mail->setFrom($config['mail_from'], 'Mailer'); //发送方地址和昵称
     $mail->addAddress($toemail, 'Joe User'); // Add a recipient
     //$mail->addReplyTo('info@example.com', 'Information'); //回复地址
 

@@ -56,8 +56,12 @@ class Memberbase extends Base
     {
         $this->userid = is_login();
         $request = Request::instance();
+        if (substr($request->action(), 0, 7) == 'public_') {
+            //所有以public_开头的方法都无需检测是否登陆
+            return true;
+        }
         //该类方法不需要验证是否登陆
-        if ($request->module() == 'member' && $request->controller() == 'Index' && in_array($request->action(), array('login', 'register', 'logout'))) {
+        if ($request->module() == 'member' && $request->controller() == 'Index' && in_array($request->action(), array('login', 'register', 'logout', 'lostpassword'))) {
             return true;
         };
         if ($this->userid) {

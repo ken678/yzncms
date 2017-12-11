@@ -34,6 +34,7 @@ class Config extends Adminbase
     {
         if (Request::instance()->isPost()) {
             if ($this->Config->saveConfig(input('post.'), 1)) {
+                cache("Config", null);
                 $this->success("更新成功！");
             } else {
                 $error = $this->Config->getError();
@@ -61,19 +62,19 @@ class Config extends Adminbase
         $data = Request::instance()->param();
         $subject = 'yznccms test mail';
         $message = 'this is a test mail from yzncms team';
-        $mail = array(
-            'mailsend' => 2,
-            'maildelimiter' => 1,
-            'mailusername' => 1,
-            'server' => $data['mail_server'],
-            'port' => intval($data['mail_port']),
-            'mail_type' => 1,
-            'auth' => 1,
-            'from' => $data['mail_from'],
-            'auth_username' => $data['mail_user'],
-            'auth_password' => $data['mail_password'],
-        );
-        $res = send_email($data['mail_to'], $subject, $message, $data['mail_from'], $mail);
+        /*$mail = array(
+        'mailsend' => 2,
+        'maildelimiter' => 1,
+        'mailusername' => 1,
+        'server' => $data['mail_server'],
+        'port' => intval($data['mail_port']),
+        'mail_type' => 1,
+        'auth' => 1,
+        'from' => $data['mail_from'],
+        'auth_username' => $data['mail_user'],
+        'auth_password' => $data['mail_password'],
+        );*/
+        $res = send_email($data['mail_to'], $subject, $message, $data['mail_from']);
         return json($res);
     }
 

@@ -83,7 +83,7 @@ class Index extends Memberbase
         }
     }
 
-    public function register($username = '', $password = '', $repassword = '', $email = '', $verify = '')
+    public function register($username = '', $password = '', $repassword = '', $email = '', $captcha = '')
     {
         if (empty($this->memberConfig['allowregister'])) {
             $this->error("系统不允许新会员注册！");
@@ -92,6 +92,9 @@ class Index extends Memberbase
             $this->success("您已经是登陆状态！", url("Index/index"));
         }
         if ($this->request->isPost()) {
+            if (!captcha_check($captcha)) {
+                $this->error('验证码错误，请重新输入！');
+            }
             /* 调用注册接口注册用户 */
             $User = new UserApi;
             $uid = $User->register($username, $password, $email);
@@ -132,6 +135,58 @@ class Index extends Memberbase
         if ($this->request->isPost()) {
             var_dump(111);
 
+        }
+
+    }
+
+    //忘记密码界面
+    public function lostpassword()
+    {
+        return $this->fetch();
+    }
+
+    //重置密码
+    public function public_forget_password()
+    {
+        if ($this->request->isPost()) {
+            $email = $this->request->param('email');
+            $captcha = $this->request->param('captcha');
+            /*if (!captcha_check($captcha)) {
+            $this->error('验证码错误，请重新输入！');
+            }*/
+            //取得用户资料
+            $userInfo = Db::name('UcenterMember')->where(['email' => $email])->find();
+            if (!empty($userInfo['email'])) {
+                $email = $userInfo['email'];
+            } else {
+                $this->error('用户邮箱异常');
+            }
+            //邮箱找回信息发送
+            $forgetpassword = $this->memberConfig['forgetpassword'];
+            $LostPassUrl = url('member/index/resetpassword', '', true, true);
+            $forgetpassword = str_replace(array(
+                '{$username}',
+                '{$userid}',
+                '{$email}',
+                '{$url}',
+                '{$date}',
+            ), array(
+                $userInfo['username'],
+                $userInfo['id'],
+                $userInfo['email'],
+                $LostPassUrl,
+                date('Y-m-d H:i:s'),
+            ), \util\Input::nl2Br($forgetpassword));
+
+            $send = send_email($email, '密码找回', $forgetpassword);
+            if ($send['status'] == 1) {
+                $this->success('发送成功，注意查收!', url('member/index/login'));
+            } else {
+                $this->error($send['msg']);
+            }
+
+        } else {
+            return $this->fetch();
         }
 
     }

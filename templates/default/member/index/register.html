@@ -36,6 +36,13 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
+                                <label for="L_vercode" class="layui-form-label">验证码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="L_vercode" name="captcha" required lay-verify="required" autocomplete="off" class="layui-input">
+                                </div>
+                                <img src="{:url('api/Checkcode/getVerify','type=member&length=4&font_size=16&imageW=120&imageH=38&font_color=&background=')}" name="codeimage" id="codeimage" border="0" style="cursor: pointer;" /></div>
+                            </div>
+                            <div class="layui-form-item">
                                 <button class="layui-btn" lay-filter="*" lay-submit>立即注册</button>
                             </div>
                             {include file='public/quick_login' /}
