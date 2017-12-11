@@ -119,14 +119,16 @@ class UserApi
     /**
      * 更新用户信息
      * @param int $uid 用户id
-     * @param string $password 密码，用来验证
+     * @param type $oldpw 旧密码
+     * @param type $newpw 新密码，如不修改为空
+     * @param type $email Email，如不修改为空
+     * @param type $ignoreoldpw 是否忽略旧密码
      * @param array $data 修改的字段数组
      * @return true 修改成功，false 修改失败
-     * @author 艺品网络  <twothink.cn>
      */
-    public function updateInfo($uid, $password, $data)
+    public function updateInfo($uid, $oldpw, $newpw, $email, $ignoreoldpw, $data)
     {
-        if ($this->model->updateUserFields($uid, $password, $data) !== false) {
+        if ($this->model->updateUserFields($uid, $oldpw, $newpw, $email, $ignoreoldpw, $data) !== false) {
             $return['status'] = true;
         } else {
             $return['status'] = false;

@@ -145,15 +145,15 @@ class Index extends Memberbase
         return $this->fetch();
     }
 
-    //重置密码
+    //发送重置密码
     public function public_forget_password()
     {
         if ($this->request->isPost()) {
             $email = $this->request->param('email');
             $captcha = $this->request->param('captcha');
-            /*if (!captcha_check($captcha)) {
-            $this->error('验证码错误，请重新输入！');
-            }*/
+            if (!captcha_check($captcha)) {
+                $this->error('验证码错误，请重新输入！');
+            }
             //取得用户资料
             $userInfo = Db::name('UcenterMember')->where(['email' => $email])->find();
             if (!empty($userInfo['email'])) {
@@ -163,7 +163,7 @@ class Index extends Memberbase
             }
             //邮箱找回信息发送
             $forgetpassword = $this->memberConfig['forgetpassword'];
-            $LostPassUrl = url('member/index/resetpassword', '', true, true);
+            $LostPassUrl = url('member/index/public_reset_password', ['key' => think_encrypt(implode('|', $userInfo), '', 86400)], true, true);
             $forgetpassword = str_replace(array(
                 '{$username}',
                 '{$userid}',
@@ -187,6 +187,57 @@ class Index extends Memberbase
 
         } else {
             return $this->fetch();
+        }
+
+    }
+
+    //重置密码
+    public function public_reset_password()
+    {
+        if ($this->request->isPost()) {
+            //密码重置
+            $postKey = $this->request->param('key');
+            $key = think_decrypt($postKey);
+            if (empty($key)) {
+                $this->error('本次请求已经失效，请从新提交密码找回申请');
+            }
+            $userinfo = explode('|', $key);
+            //密码
+            $password = $this->request->param('password');
+            $repassword = $this->request->param('repassword');
+            if (empty($password)) {
+                $this->error('请输入新密码！');
+            }
+            //密码确认
+            if ($password != $repassword) {
+                $this->error('两次输入密码不相同，请从新输入！');
+            }
+            $User = new UserApi;
+            $res = $User->updateInfo($userinfo[0], $userinfo[2], $password);
+            if ($res['status']) {
+                $this->success('重置密码成功！', url('member/Index/login'));
+            } else {
+                $this->error($res['info']);
+            }
+
+        } else {
+            //设置新密码界面
+            $getKey = $this->request->param('key');
+            if ($getKey) {
+                $getKey = str_replace(array('+', '%23', '%2F', '%3F', '%26', '%3D', '%2B'), array(' ', '#', '/', '?', '&', '=', '+'), $getKey);
+            }
+            $key = think_decrypt($getKey);
+            if (empty($key)) {
+                $this->error('验证失败，请重新提交密码找回申请！', url('index/lostpassword'));
+            }
+            $userinfo = explode('|', $key);
+            $this->assign('userinfo', array(
+                'id' => $userinfo[0],
+                'username' => $userinfo[1],
+                'email' => $userinfo[3],
+            ));
+            $this->assign('key', $getKey);
+            return $this->fetch('resetpassword');
         }
 
     }

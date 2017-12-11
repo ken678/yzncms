@@ -230,24 +230,41 @@ class UcenterMember extends Model
     /**
      * 更新用户信息
      * @param int $uid 用户id
-     * @param string $password 密码，用来验证
-     * @param array $data 修改的字段数组
+     * @param type $oldpw 旧密码
+     * @param type $newpw 新密码，如不修改为空
+     * @param type $email Email，如不修改为空
+     * @param type $ignoreoldpw 是否忽略旧密码
+     * @param type $data 其他信息
      * @return true 修改成功，false 修改失败
      */
-    public function updateUserFields($uid, $password, $data)
+    public function updateUserFields($uid, $oldpw, $newpw = '', $email = '', $ignoreoldpw = 0, $data)
     {
-        if (empty($uid) || empty($password) || empty($data)) {
+
+        if (empty($uid)) {
             $this->error = '参数错误！';
             return false;
         }
-
-        //更新前检查用户密码
-        if (!$this->verifyUser($uid, $password)) {
-            $this->error = '验证出错：密码不正确！';
-            return false;
+        //如果有新密码 则更新密码
+        if ($newpw) {
+            $data['password'] = $newpw;
+        }
+        //如果有新邮箱 则更新邮箱
+        if ($email) {
+            $data['email'] = $email;
+        }
+        if (empty($data)) {
+            return true;
+        }
+        //验证旧密码是否正确
+        if ($ignoreoldpw == 0) {
+            //更新前检查用户密码
+            if (!$this->verifyUser($uid, $oldpw)) {
+                $this->error = '验证出错：密码不正确！';
+                return false;
+            }
         }
         //更新用户信息
-        return $this->allowField(true)->isUpdate($data, ['id' => $uid])->save($data);
+        return $this->allowField(true)->isUpdate(true)->save($data, ['id' => $uid]);
     }
 
     /**
@@ -259,9 +276,16 @@ class UcenterMember extends Model
     protected function verifyUser($uid, $password_in)
     {
         $password = $this->getFieldById($uid, 'password');
-        if (think_ucenter_md5($password_in, UC_AUTH_KEY) === $password) {
-            return true;
+        if (strlen($password_in) > 20) {
+            if ($password_in === $password) {
+                return true;
+            }
+        } else {
+            if (think_ucenter_md5($password_in, UC_AUTH_KEY) === $password) {
+                return true;
+            }
         }
+
         return false;
     }
 
