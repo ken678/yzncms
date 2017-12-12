@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-12 17:08:05
+Date: 2017-12-12 18:44:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=409 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=413 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -157,6 +157,10 @@ INSERT INTO `yzn_action_log` VALUES ('405', '1', '2', '2130706433', 'member', '2
 INSERT INTO `yzn_action_log` VALUES ('406', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 15:46登录了后台', '1513064789');
 INSERT INTO `yzn_action_log` VALUES ('407', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 15:47登录了后台', '1513064853');
 INSERT INTO `yzn_action_log` VALUES ('408', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 15:57登录了后台', '1513065457');
+INSERT INTO `yzn_action_log` VALUES ('409', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 17:21登录了后台', '1513070513');
+INSERT INTO `yzn_action_log` VALUES ('410', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 18:32登录了后台', '1513074748');
+INSERT INTO `yzn_action_log` VALUES ('411', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 18:37登录了后台', '1513075024');
+INSERT INTO `yzn_action_log` VALUES ('412', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 18:39登录了后台', '1513075184');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -203,7 +207,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513047977', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513075184', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -677,7 +681,7 @@ CREATE TABLE `yzn_member` (
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '33', '530765310@qq.com', '13402503587', '2', '2', '0', '0', '2130706433', '1513065457', '1');
+INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '35', '530765310@qq.com', '13402503587', '2', '2', '0', '0', '2130706433', '1513075024', '1');
 INSERT INTO `yzn_member` VALUES ('2', 'ken1234', '0', '0.00', '12', '695477967@qq.com', '', '2', '2', '0', '0', '2130706433', '1513064853', '1');
 
 -- ----------------------------
@@ -961,7 +965,7 @@ CREATE TABLE `yzn_module` (
 -- ----------------------------
 INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1505651640', '1505651640', '0');
 INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', '', '1507204730', '1507204730', '0');
-INSERT INTO `yzn_module` VALUES ('member', '会员中心', '858ba4765e53c712ef672a9570474b1d', '0', '1', '1.0.0', 'a:3:{s:13:\"allowregister\";s:1:\"1\";s:16:\"openverification\";s:1:\"1\";s:14:\"forgetpassword\";s:323:\"Hi，{$username}:\r\n\r\n你申请了重设密码，请在24小时内点击下面的链接，然后根据页面提示完成密码重设：\r\n\r\n<a href=\"{$url}\" target=\"_blank\">{$url}</a>\r\n\r\n如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。\r\n\r\n邮件服务器自动发送邮件请勿回信 {$date}\";}', '1498718058', '1498718058', '0');
+INSERT INTO `yzn_module` VALUES ('member', '会员中心', '858ba4765e53c712ef672a9570474b1d', '0', '1', '1.0.0', 'a:4:{s:13:\"allowregister\";s:1:\"1\";s:12:\"defualtpoint\";s:1:\"0\";s:16:\"openverification\";s:1:\"1\";s:14:\"forgetpassword\";s:323:\"Hi，{$username}:\r\n\r\n你申请了重设密码，请在24小时内点击下面的链接，然后根据页面提示完成密码重设：\r\n\r\n<a href=\"{$url}\" target=\"_blank\">{$url}</a>\r\n\r\n如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。\r\n\r\n邮件服务器自动发送邮件请勿回信 {$date}\";}', '1498718058', '1498718058', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_page`
@@ -1094,5 +1098,5 @@ CREATE TABLE `yzn_ucenter_member` (
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1513065456', '2130706433', '1513065466', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1513075024', '2130706433', '1513065466', '1');
 INSERT INTO `yzn_ucenter_member` VALUES ('2', 'ken123', '2cce3a35f75ac2ed89596d7181c40ebb', '695477967@qq.com', '', '1513048418', '2130706433', '1513064853', '2130706433', '1513065359', '1');

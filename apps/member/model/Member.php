@@ -70,7 +70,7 @@ class Member extends Model
         /* 记录登录SESSION和COOKIES */
         $auth = [
             'uid' => $user['uid'],
-            'username' => get_username($user['uid']),
+            'username' => $user['nickname'],
             'last_login_time' => $user['last_login_time'],
         ];
         session('home_user_auth', $auth);
