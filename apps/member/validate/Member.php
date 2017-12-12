@@ -18,54 +18,17 @@ use think\Validate;
 class Member extends Validate
 {
     protected $rule = [
-        'username' => 'require|unique:UcenterMember|alphaDash|length:3,15',
-        'password' => 'require|confirm:pwdconfirm|length:6,30',
-        'email' => 'require|unique:UcenterMember|email|length:1,32',
-        'mobile' => 'unique:UcenterMember',
-        'groupid' => 'checkGroupid:',
-        'modelid' => 'checkModelid:',
+        'nickname' => 'require|unique:Member,nickname^uid|length:3,15',
     ];
 
     protected $message = [
-        'username.require' => '用户名不得为空',
-        'username.unique' => '用户名已经存在',
-        'username.alphaDash' => '用户名不合法',
-        'username.length' => '用户名长度3-15',
-        'password.require' => '密码不能为空',
-        'password.confirm' => '两次输入的密码不一样！',
-        'password.length' => '密码长度6-30',
-        'email.require' => '邮箱不得为空',
-        'email.unique' => '邮箱已存在',
-        'email.email' => '邮箱格式不正确',
-        'email.length' => '邮箱长度不合法',
-        'mobile.unique' => '手机号码已经存在',
-        'groupid.checkGroupid' => '该会员组不存在！',
-        'modelid.checkModelid' => '该会员模型不存在！',
+        'nickname.require' => '昵称不得为空',
+        'nickname.unique' => '昵称已经存在',
+        'nickname.length' => '昵称长度3-20',
     ];
 
     protected $scene = [
-        'add' => ['username', 'password', 'email', 'mobile', 'groupid', 'modelid'],
-        'edit' => ['name' => 'require|max:30'],
+        'edit' => ['nickname'],
     ];
-
-    //检查会员组
-    public function checkGroupid($value)
-    {
-        $Member_group = cache('Member_group');
-        if (!$Member_group[$value]) {
-            return '该会员组不存在！';
-        }
-        return true;
-    }
-
-    //检查会员模型
-    public function checkModelid($value)
-    {
-        $Model_Member = cache("Model_Member");
-        if (!$Model_Member[$value]) {
-            return '该会员模型不存在！';
-        }
-        return true;
-    }
 
 }

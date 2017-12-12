@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-11 18:32:43
+Date: 2017-12-12 12:59:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=389 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=404 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -137,6 +137,21 @@ INSERT INTO `yzn_action_log` VALUES ('385', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('386', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-11 16:24登录了后台', '1512980645');
 INSERT INTO `yzn_action_log` VALUES ('387', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-11 16:24登录了后台', '1512980661');
 INSERT INTO `yzn_action_log` VALUES ('388', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-11 18:24登录了后台', '1512987896');
+INSERT INTO `yzn_action_log` VALUES ('389', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 09:40登录了后台', '1513042808');
+INSERT INTO `yzn_action_log` VALUES ('390', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 09:44登录了后台', '1513043058');
+INSERT INTO `yzn_action_log` VALUES ('391', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 09:50登录了后台', '1513043409');
+INSERT INTO `yzn_action_log` VALUES ('392', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 10:32登录了后台', '1513045921');
+INSERT INTO `yzn_action_log` VALUES ('393', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 11:06登录了后台', '1513047977');
+INSERT INTO `yzn_action_log` VALUES ('394', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 11:14登录了后台', '1513048440');
+INSERT INTO `yzn_action_log` VALUES ('395', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:32登录了后台', '1513053169');
+INSERT INTO `yzn_action_log` VALUES ('396', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:33登录了后台', '1513053186');
+INSERT INTO `yzn_action_log` VALUES ('397', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:33登录了后台', '1513053226');
+INSERT INTO `yzn_action_log` VALUES ('398', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:47登录了后台', '1513054020');
+INSERT INTO `yzn_action_log` VALUES ('399', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:47登录了后台', '1513054032');
+INSERT INTO `yzn_action_log` VALUES ('400', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:47登录了后台', '1513054058');
+INSERT INTO `yzn_action_log` VALUES ('401', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:48登录了后台', '1513054107');
+INSERT INTO `yzn_action_log` VALUES ('402', '1', '2', '2130706433', 'member', '2', 'ken678在2017-12-12 12:49登录了后台', '1513054172');
+INSERT INTO `yzn_action_log` VALUES ('403', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-12 12:54登录了后台', '1513054462');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -183,7 +198,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1512960438', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513047977', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -649,13 +664,16 @@ CREATE TABLE `yzn_member` (
   `last_login_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '最后登录IP',
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '会员状态',
-  PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员表';
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `nickname` (`nickname`),
+  KEY `email` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '26', '530765310@qq.com', '13402503587', '2', '2', '0', '0', '2130706433', '1512987896', '1');
+INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '31', '530765310@qq.com', '13402503587', '2', '2', '0', '0', '2130706433', '1513054462', '1');
+INSERT INTO `yzn_member` VALUES ('2', 'ken1234', '0', '0.00', '9', '695477967@qq.com', '', '2', '2', '0', '0', '2130706433', '1513054172', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -1066,9 +1084,10 @@ CREATE TABLE `yzn_ucenter_member` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1512987896', '2130706433', '1512987879', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1513054462', '2130706433', '1513043048', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('2', 'ken123', '2cce3a35f75ac2ed89596d7181c40ebb', '695477967@qq.com', '', '1513048418', '2130706433', '1513048440', '2130706433', '1513048418', '1');

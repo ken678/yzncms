@@ -56,7 +56,7 @@ class Member extends Adminbase
         if ($this->request->isPost()) {
             $post = $this->request->param();
             //数据验证
-            $validate = Loader::validate('member/Member');
+            $validate = Loader::validate('member/UcenterMember');
             if (!$validate->scene('add')->check($post)) {
                 $this->error($validate->getError());
                 return false;

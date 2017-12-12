@@ -13,16 +13,64 @@ namespace app\member\controller;
 use app\user\api\UserApi;
 use think\Cookie;
 use think\Db;
+use think\Loader;
 
 /**
  * 会员中心首页
  */
 class Index extends Memberbase
 {
+    protected $UserApi = null;
+
+    protected function _initialize()
+    {
+        parent::_initialize();
+        $this->UserApi = new UserApi;
+    }
+
     //会员中心首页
     public function index()
     {
         return $this->fetch();
+    }
+
+    //会员设置界面
+    public function profile()
+    {
+        //====基本资料表单======
+        $modelid = $this->userinfo['modelid'];
+        //会员模型数据表名
+        $tablename = $this->memberModel[$modelid]['tablename'];
+        //相应会员模型数据
+        $modeldata = Db::name(ucwords($tablename))->where(array("userid" => $this->userid))->find();
+        if (!is_array($modeldata)) {
+            $modeldata = array();
+        }
+        $data = array_merge($this->userinfo, $modeldata);
+        $this->assign("userinfo", $data);
+        return $this->fetch();
+    }
+
+    //保存基本信息
+    public function account_manage_info()
+    {
+        if ($this->request->isPost()) {
+            //获取用户信息
+            $userinfo = $this->UserApi->info($this->userid);
+            if (empty($userinfo)) {
+                $this->error('该会员不存在！');
+            }
+            $post = $this->request->param();
+            //验证信息
+            $validate = Loader::validate('member/Member');
+            if (!$validate->scene('edit')->check($post)) {
+                $this->error($validate->getError());
+                return false;
+            }
+            //昵称更新需要同步更新COOKIES
+
+        }
+
     }
 
     //登录页面
@@ -49,8 +97,7 @@ class Index extends Memberbase
                 $this->showMessage(10006, array(), 'error');
             }
             /* 调用接口登录用户 */
-            $User = new UserApi;
-            $uid = $User->login($username, $password, 1);
+            $uid = $this->UserApi->login($username, $password, 1);
             if (0 < $uid) {
                 //UC登录成功
                 $Member = model('Member');
@@ -96,8 +143,7 @@ class Index extends Memberbase
                 $this->error('验证码错误，请重新输入！');
             }
             /* 调用注册接口注册用户 */
-            $User = new UserApi;
-            $uid = $User->register($username, $password, $email);
+            $uid = $this->UserApi->register($username, $password, $email);
             if (0 < $uid) {
                 //注册成功
                 //TODO: 发送验证邮件
@@ -108,33 +154,6 @@ class Index extends Memberbase
             }
         } else {
             return $this->fetch();
-        }
-
-    }
-
-    //会员设置界面
-    public function profile()
-    {
-        //====基本资料表单======
-        $modelid = $this->userinfo['modelid'];
-        //会员模型数据表名
-        $tablename = $this->memberModel[$modelid]['tablename'];
-        //相应会员模型数据
-        $modeldata = Db::name(ucwords($tablename))->where(array("userid" => $this->userid))->find();
-        if (!is_array($modeldata)) {
-            $modeldata = array();
-        }
-        $data = array_merge($this->userinfo, $modeldata);
-        $this->assign("userinfo", $data);
-        return $this->fetch();
-    }
-
-    //保存基本信息
-    public function doprofile()
-    {
-        if ($this->request->isPost()) {
-            var_dump(111);
-
         }
 
     }
@@ -159,10 +178,22 @@ class Index extends Memberbase
             if (!empty($userInfo['email'])) {
                 $email = $userInfo['email'];
             } else {
-                $this->error('用户邮箱异常');
+                $this->error('用户邮箱不存在');
             }
             //邮箱找回信息发送
             $forgetpassword = $this->memberConfig['forgetpassword'];
+            if (empty($forgetpassword)) {
+                $forgetpassword = 'Hi，{$username}:
+
+你申请了重设密码，请在24小时内点击下面的链接，然后根据页面提示完成密码重设：
+
+<a href="{$url}" target="_blank">{$url}</a>
+
+如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。
+
+邮件服务器自动发送邮件请勿回信 {$date}';
+            };
+
             $LostPassUrl = url('member/index/public_reset_password', ['key' => think_encrypt(implode('|', $userInfo), '', 86400)], true, true);
             $forgetpassword = str_replace(array(
                 '{$username}',
@@ -194,6 +225,7 @@ class Index extends Memberbase
     //重置密码
     public function public_reset_password()
     {
+        //提交新密码
         if ($this->request->isPost()) {
             //密码重置
             $postKey = $this->request->param('key');
@@ -205,6 +237,10 @@ class Index extends Memberbase
             //密码
             $password = $this->request->param('password');
             $repassword = $this->request->param('repassword');
+            $captcha = $this->request->param('captcha');
+            if (!captcha_check($captcha)) {
+                $this->error('验证码错误，请重新输入！');
+            }
             if (empty($password)) {
                 $this->error('请输入新密码！');
             }
@@ -212,8 +248,7 @@ class Index extends Memberbase
             if ($password != $repassword) {
                 $this->error('两次输入密码不相同，请从新输入！');
             }
-            $User = new UserApi;
-            $res = $User->updateInfo($userinfo[0], $userinfo[2], $password);
+            $res = $this->UserApi->updateInfo($userinfo[0], $userinfo[2], $password);
             if ($res['status']) {
                 $this->success('重置密码成功！', url('member/Index/login'));
             } else {

@@ -73,7 +73,6 @@ class Member extends Model
             'username' => get_username($user['uid']),
             'last_login_time' => $user['last_login_time'],
         ];
-
         session('home_user_auth', $auth);
         session('home_user_auth_sign', data_auth_sign($auth));
 
