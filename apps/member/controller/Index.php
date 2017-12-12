@@ -57,7 +57,7 @@ class Index extends Memberbase
         if ($this->request->isPost()) {
             //获取用户信息
             $userinfo = $this->UserApi->info($this->userid);
-            if (empty($userinfo)) {
+            if ($userinfo && !isset($userinfo[1])) {
                 $this->error('该会员不存在！');
             }
             $post = $this->request->param();
@@ -68,6 +68,41 @@ class Index extends Memberbase
                 return false;
             }
             //昵称更新需要同步更新COOKIES
+            $res = model('Member')->isUpdate(true)->allowField(['nickname'])->save($post);
+            $this->success("修改成功");
+        }
+    }
+
+    //密码修改
+    public function account_manage_password()
+    {
+        if ($this->request->isPost()) {
+            $post = $this->request->param();
+            //旧密码
+            $oldpassword = $post['oldpassword'];
+            //根据当前密码取得用户资料
+            $userinfo = $this->UserApi->info($this->userid, false, $oldpassword);
+            if ($userinfo && !isset($userinfo[1])) {
+                $this->error('旧密码不正确');
+            }
+            //设置密码
+            $password = $post['password'];
+            if (empty($password)) {
+                $this->showMessage(20024);
+            }
+            //再次密码确认
+            $password2 = $post['repassword'];
+            if ($password != $password2) {
+                $this->showMessage(20021);
+            }
+            $res = $this->UserApi->updateInfo($this->userid, $oldpassword, $password);
+            if ($res['status']) {
+                //注销
+                model('Member')->logout();
+                $this->success('重置密码成功！', url('member/Index/login'));
+            } else {
+                $this->error($res['info']);
+            }
 
         }
 

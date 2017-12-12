@@ -163,9 +163,10 @@ class UcenterMember extends Model
      * 获取用户信息
      * @param  string  $uid         用户ID或用户名
      * @param  boolean $is_username 是否使用用户名查询
+     * @param type $password 明文密码，填写表示验证密码
      * @return array                用户信息
      */
-    public function info($uid, $is_username = false)
+    public function info($uid, $is_username = false, $password = null)
     {
         $map = array();
         if ($is_username) {
@@ -179,12 +180,18 @@ class UcenterMember extends Model
         if (is_object($user)) {
             $user = $user->toArray();
         }
-
+        //是否需要进行密码验证
+        if (!empty($password)) {
+            if (!$this->verifyUser($uid, $password)) {
+                return -2;
+            }
+        }
         if (is_array($user) && $user['status'] == 1) {
             return [$user['id'], $user['username'], $user['email'], $user['mobile']];
         } else {
-            return -1; //用户不存在或被禁用
+            return -1;
         }
+
     }
 
     /**

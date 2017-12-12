@@ -79,11 +79,12 @@ class UserApi
      * 获取用户信息
      * @param  string  $uid         用户ID或用户名
      * @param  boolean $is_username 是否使用用户名查询
+     * @param type $password 明文密码，填写表示验证密码
      * @return array                用户信息
      */
-    public function info($uid, $is_username = false)
+    public function info($uid, $is_username = false, $password = null)
     {
-        return $this->model->info($uid, $is_username);
+        return $this->model->info($uid, $is_username, $password);
     }
 
     /**
