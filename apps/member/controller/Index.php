@@ -31,6 +31,8 @@ class Index extends Memberbase
     //会员中心首页
     public function index()
     {
+        $memberinfo = $this->userinfo;
+        $this->assign("memberinfo", $memberinfo);
         return $this->fetch();
     }
 

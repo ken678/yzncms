@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-13 12:21:56
+Date: 2017-12-13 16:29:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=420 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=424 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -168,6 +168,10 @@ INSERT INTO `yzn_action_log` VALUES ('416', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('417', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-13 09:55登录了后台', '1513130102');
 INSERT INTO `yzn_action_log` VALUES ('418', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-13 09:58登录了后台', '1513130283');
 INSERT INTO `yzn_action_log` VALUES ('419', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-13 10:09登录了后台', '1513130974');
+INSERT INTO `yzn_action_log` VALUES ('420', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-13 15:29登录了后台', '1513150185');
+INSERT INTO `yzn_action_log` VALUES ('421', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-13 15:33登录了后台', '1513150407');
+INSERT INTO `yzn_action_log` VALUES ('422', '1', '3', '2130706433', 'member', '3', '在2017-12-13 16:19登录了后台', '1513153160');
+INSERT INTO `yzn_action_log` VALUES ('423', '1', '3', '2130706433', 'member', '3', '在2017-12-13 16:20登录了后台', '1513153213');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -214,7 +218,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513130974', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513150185', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -683,13 +687,12 @@ CREATE TABLE `yzn_member` (
   PRIMARY KEY (`uid`),
   UNIQUE KEY `nickname` (`nickname`),
   KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('1', '御宅男', '0', '0.00', '41', '530765310@qq.com', '13402503587', '2', '2', '0', '0', '2130706433', '1513130283', '1');
-INSERT INTO `yzn_member` VALUES ('2', 'ken1234', '0', '0.00', '12', '695477967@qq.com', '', '2', '2', '0', '0', '2130706433', '1513064853', '1');
+INSERT INTO `yzn_member` VALUES ('3', 'ken678', '0', '0.00', '2', '530765310@qq.com', '', '2', '2', '2130706433', '1513153160', '2130706433', '1513153213', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -1080,10 +1083,9 @@ CREATE TABLE `yzn_ucenter_member` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('1', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '13402503587', '1512028633', '2130706433', '1513130283', '2130706433', '1513130294', '1');
-INSERT INTO `yzn_ucenter_member` VALUES ('2', 'ken123', '2cce3a35f75ac2ed89596d7181c40ebb', '695477967@qq.com', '', '1513048418', '2130706433', '1513064853', '2130706433', '1513065359', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('3', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '', '1513153023', '2130706433', '1513153213', '2130706433', '1513153023', '1');

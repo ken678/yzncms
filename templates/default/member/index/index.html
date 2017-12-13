@@ -1,8 +1,36 @@
 {extend name="public/main" /}
 {block name="content"}
 <div class="layui-container fly-marginTop fly-user-main">
-	{include file='public/sider' /}
-	<div class="fly-panel fly-panel-user" pad20>
-	</div>
+    {include file='public/sider' /}
+    <div class="fly-panel fly-panel-user" pad20 style="padding-top:20px;">
+        <div class="fly-msg" style="margin-bottom: 20px;"> 您的邮箱尚未验证，这比较影响您的帐号安全，<a href="">立即去激活？</a> </div>
+        <div class="layui-row layui-col-space20">
+            <div class="layui-col-md6">
+                <div class="fly-panel fly-panel-border">
+                    <div class="fly-panel-title"> 个人信息 </div>
+                    <div class="fly-panel-main layui-text" style="padding: 18px 15px; height: 150px; line-height: 26px;">
+                        <p>昵称：{$memberinfo['nickname']}</p>
+                        <p>邮箱：{$memberinfo['email']}</p>
+                        <p>会员组：{$Member_group[$memberinfo['groupid']]['name']}</p>
+                        <p>账户余额：{$memberinfo['amount']}</p>
+                        <p>积分点数：{$memberinfo['point']}</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="fly-panel fly-panel-border">
+                    <div class="fly-panel-title"> 详细信息 </div>
+                    <div class="fly-panel-main layui-text" style="padding: 18px 15px; height: 150px; line-height: 26px;">
+                        <p>所属模型：{$Model_member[$memberinfo['modelid']]['name']}</p>
+                        <p>注册时间：{php} echo $memberinfo['reg_time'] ? time_format($memberinfo['reg_time']) : '--' {/php}</p>
+                        <p>最后登录：{php} echo $memberinfo['last_login_time'] ? time_format($memberinfo['last_login_time']) : '--' {/php}</p>
+                        <p>注册ip：{php} echo $memberinfo['reg_ip'] ? long2ip($memberinfo['reg_ip']) : '--' {/php}</p>
+                        <p>上次登录ip：{php} echo $memberinfo['last_login_ip'] ? long2ip($memberinfo['last_login_ip']) : '--' {/php}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {/block}

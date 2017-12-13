@@ -42,7 +42,10 @@ class Memberbase extends Base
         $this->check_member();
         $this->memberModel = cache("Model_Member");
         $this->memberConfig = cache("Member_Config");
+        $this->memberGroup = cache("Member_group");
         //============全局模板变量==============
+        //会员组数组
+        $this->assign("Member_group", $this->memberGroup);
         //会员模型配置
         $this->assign("Member_config", $this->memberConfig);
         //会员模型数组

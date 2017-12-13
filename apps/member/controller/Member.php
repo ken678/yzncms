@@ -107,7 +107,7 @@ class Member extends Adminbase
         foreach ($uidarr as $uid) {
             //UC会员删除
             if ($User->delete_member($uid)) {
-
+                model('Member')->destroy($uid);
             }
         }
         $this->success("删除成功！");

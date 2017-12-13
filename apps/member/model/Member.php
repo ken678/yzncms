@@ -20,6 +20,15 @@ use think\Model;
  */
 class Member extends Model
 {
+    protected $autoWriteTimestamp = true;
+    protected $updateTime = false;
+    protected $createTime = 'reg_time';
+
+    protected $insert = ['status' => 1, 'reg_ip'];
+    protected function setRegIpAttr($value, $data)
+    {
+        return get_client_ip(1);
+    }
     /**
      * 登录指定用户
      * @param  integer $uid 用户ID
