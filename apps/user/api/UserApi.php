@@ -138,4 +138,14 @@ class UserApi
         return $return;
     }
 
+    /**
+     * 删除用户
+     * @param type $uid 用户UID
+     * @return boolean
+     */
+    public function delete_member($uid)
+    {
+        return $this->model->delete_member($uid);
+    }
+
 }

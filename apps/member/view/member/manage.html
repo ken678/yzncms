@@ -20,6 +20,11 @@
             <table width="100%">
                 <thead>
                     <tr>
+                        <td width="20">
+                            <label>
+                                <input class="check-all" checked="chedked" type="checkbox" value="">
+                            </label>
+                        </td>
                         <td width="150" align="center">操作</td>
                         <td width="50" align="center">用户ID</td>
                         <td width="150" align="center">昵称</td>
@@ -37,6 +42,9 @@
                 <div class="fbutton">
                     <div class="add"><span><i class="icon iconfont icon-guanliyuan"></i><a href="{:url('member/member/add')}">添加会员</a></span></div>
                 </div>
+                <div class="fbutton">
+                    <div class="add ajax-post confirm" target-form="ids" url="{:url('member/member/delete')}"><span><i class="icon iconfont icon-shanchu"></i>批量删除</span></div>
+                </div>
             </div>
             <div style="clear:both"></div>
         </div>
@@ -45,19 +53,21 @@
                 <tbody>
                     {volist name="_list" id="vo"}
                     <tr>
+                        <td width="20">
+                            <input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['uid']}">
+                        </td>
                         <td width="150" align="center">
-                            <a class="btn red ajax-get confirm" url="{:url('member/delete',['uid'=>$vo.uid])}"><i class="icon iconfont icon-shanchu"></i>删除</a>
                             <a class="btn blue" href=""><i class="icon iconfont icon-edit"></i>编辑</a></td>
                         <td width="50" align="center">{$vo.uid}</td>
                         <td width="150" align="center">{$vo.nickname}</td>
                         <td width="120" align="center">{$groupsModel[$vo['modelid']]}</td>
                         <td width="120" align="center">{:long2ip($vo['last_login_ip'])}</td>
                         <td width="120" align="center">
-						{eq name="vo.last_login_time" value="0"}
-						还没有登录过
-						{else/}
-						{$vo.last_login_time|time_format}
-						{/eq}
+                            {eq name="vo.last_login_time" value="0"}
+                            还没有登录过
+                            {else/}
+                            {$vo.last_login_time|time_format}
+                            {/eq}
                         </td>
                         <td width="120" align="center">{$vo.amount}</td>
                         <td width="120" align="center">{$vo.point}</td>

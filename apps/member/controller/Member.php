@@ -94,16 +94,21 @@ class Member extends Adminbase
     }
 
     //删除会员
-    public function delete()
+    public function delete($ids = 0)
     {
-        $uid = $this->request->param('uid/d');
-        if (!$uid) {
+        if (empty($ids)) {
             $this->error("请选择需要删除的会员！");
         }
-        $info = Db::name('Member')->where(array("uid" => $uid))->find();
-        if (!empty($info)) {
-            //删除会员信息，且删除投稿相关
-            //$User->userDelete($uid))
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        $uidarr = array_map('intval', $ids);
+        $User = new UserApi;
+        foreach ($uidarr as $uid) {
+            //UC会员删除
+            if ($User->delete_member($uid)) {
+
+            }
         }
         $this->success("删除成功！");
     }

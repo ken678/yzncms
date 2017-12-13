@@ -46,6 +46,7 @@ class UcenterMember extends Validate
     protected $scene = [
         'add' => ['username', 'password', 'email', 'mobile', 'groupid', 'modelid'],
         'edit' => [],
+        'password' => ['password'],
     ];
 
     //检查会员组

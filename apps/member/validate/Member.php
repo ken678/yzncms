@@ -18,7 +18,7 @@ use think\Validate;
 class Member extends Validate
 {
     protected $rule = [
-        'nickname' => 'require|unique:Member,nickname^uid|length:3,15',
+        'nickname' => 'require|unique:Member|length:3,15',
     ];
 
     protected $message = [

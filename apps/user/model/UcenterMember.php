@@ -296,4 +296,22 @@ class UcenterMember extends Model
         return false;
     }
 
+    /**
+     * 删除用户
+     * @param type $uid 用户UID
+     * @return boolean
+     */
+    public function delete_member($uid)
+    {
+        $userinfo = $this->info($uid);
+        if ($userinfo && !isset($userinfo[1])) {
+            return false;
+        }
+        if ($this->destroy($uid)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
