@@ -69,6 +69,16 @@ class Member extends Model
         //记录行为
         action_log('user_login', 'member', $user['uid'], $user['uid']);
         /* 更新登录信息 */
+        //检查用户积分，更新新用户组，除去邮箱认证、禁止访问、游客组用户、vip用户，如果该用户组不允许自助升级则不进行该操作
+        if ($user['point'] >= 0 && !in_array($user['groupid'], array('1', '7', '8'))) {
+            $grouplist = cache("Member_group");
+            if (!empty($grouplist[$user['groupid']]['allowupgrade'])) {
+                $check_groupid = $this->_get_usergroup_bypoint($user['point']);
+                if ($check_groupid != $user['groupid']) {
+                    $data['groupid'] = $check_groupid;
+                }
+            }
+        }
         $data = array(
             'uid' => $user['uid'],
             'login' => array('exp', '`login`+1'),
