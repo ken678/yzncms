@@ -32,7 +32,15 @@ class Index extends Memberbase
     public function index()
     {
         $memberinfo = $this->userinfo;
+        //安全等级
+        $safe_level = 1; //低
+        if ($memberinfo['ischeck_mobile'] && $memberinfo['groupid'] > 2) {
+            $safe_level = 3; //高
+        } elseif ($memberinfo['ischeck_mobile'] || $memberinfo['groupid'] > 2) {
+            $safe_level = 2; //中
+        }
         $this->assign("memberinfo", $memberinfo);
+        $this->assign("safe_level", $safe_level);
         return $this->fetch();
     }
 

@@ -62,13 +62,13 @@
     form.on('submit(*)', function(data) {
         var action = $(data.form).attr('action'),
             button = $(data.elem);
-            fly.json(action, data.field, function(res) {
+        fly.json(action, data.field, function(res) {
             var end = function() {
                 if (res.url) {
-                    layer.msg(res.msg , {icon: 1});
-                    setTimeout(function(){
-                        location.href=res.url;
-                    },1500);
+                    layer.msg(res.msg, { icon: 1 });
+                    setTimeout(function() {
+                        location.href = res.url;
+                    }, 1500);
                 } else {
                     fly.form[action || button.attr('key')](data.field, data.form);
                 }
@@ -91,6 +91,19 @@
         layui.extend(extend);
         layui.use(layui.cache.page);
     }*/
+
+    //显示当前tab
+    if (location.hash) {
+        element.tabChange('user', location.hash.replace(/^#/, ''));
+    }
+
+    element.on('tab(user)', function() {
+        var othis = $(this),
+            layid = othis.attr('lay-id');
+        if (layid) {
+            location.hash = layid;
+        }
+    });
 
 
     //手机设备的简单适配

@@ -3,7 +3,6 @@
 <div class="layui-container fly-marginTop fly-user-main">
     {include file='public/sider' /}
     <div class="fly-panel fly-panel-user" pad20 style="padding-top:20px;">
-        <div class="fly-msg" style="margin-bottom: 20px;"> 您的邮箱尚未验证，这比较影响您的帐号安全，<a href="">立即去激活？</a> </div>
         <div class="layui-row layui-col-space20">
             <div class="layui-col-md6">
                 <div class="fly-panel fly-panel-border">
@@ -31,6 +30,44 @@
                 </div>
             </div>
         </div>
+        <blockquote class="layui-elem-quote">安全等级：
+        {switch name="safe_level" }
+            {case value="1"}<a href="#" style="color:#FF5722;">低</a>{/case}
+            {case value="2"}<a href="#" style="color:#1E9FFF;">中</a>{/case}
+            {case value="3"}<a href="#" style="color:#1E9FFF;">高</a>{/case}
+            {default /}<a href="#" style="color:#1E9FFF;">未知</a>
+        {/switch}
+        &nbsp;&nbsp;建议您通过以下方式提高安全级别！</blockquote>
+        <ul class="app-bind">
+            <li class="fly-msg  app-havebind">
+                <i class="iconfont icon-zhengque" style="font-size: 28px; color: #009688;"></i>
+                <h2>登录密码</h2>
+                <span>互联网账户存在被盗风险，建议您定期更改密码以确保账户安全。</span>
+                <a href="{:url('member/index/profile#pass')}" class="layui-btn layui-right">立即修改</a>
+            </li>
+            <li class="fly-msg  app-havebind">
+                {eq name="memberinfo['ischeck_email']" value="1"}
+                <i class="iconfont icon-zhengque" style="font-size: 28px; color: #009688;"></i>
+                {else/}
+                <i class="iconfont icon-cuowu" style="font-size: 30px; color: #FF5722;"></i>
+                {/eq}
+                <h2>邮箱验证</h2>
+                <span>您的邮箱：{$memberinfo['email']} 验证后可用于登录，找回密码，接受订单通知等服务。</span>
+                <a href="" class="layui-btn layui-right {eq name="memberinfo['ischeck_email']" value="0"}layui-btn-warm{/eq}" >立即修改</a>
+            </li>
+            <li class="fly-msg  app-havebind">
+                {eq name="memberinfo['ischeck_mobile']" value="1"}
+                <i class="iconfont icon-zhengque" style="font-size: 28px; color: #009688;"></i>
+                {else/}
+                <i class="iconfont icon-cuowu" style="font-size: 30px; color: #FF5722;"></i>
+                {/eq}
+                <h2>手机验证</h2>
+                <span>
+                {notempty name="memberinfo['mobile']"} 当前绑定手机号为：{$memberinfo['mobile']}{/notempty}
+                验证后可用于登录，找回密码，接受订单通知等服务。</span>
+                <a href="" class="layui-btn layui-right {eq name="memberinfo['ischeck_mobile']" value="0"}layui-btn-warm{/eq}">立即修改</a>
+            </li>
+        </ul>
     </div>
 </div>
 {/block}
