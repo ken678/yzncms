@@ -1,0 +1,79 @@
+{extend name="admin@public:layout" /}
+{block name="content"}
+<div class="page">
+	<div class="fixed-bar">
+		<div class="item-title">
+		  <div class="subject">
+		    <h3>系统公告</h3>
+		    <h5>系统公告管理操作</h5>
+		  </div>
+		</div>
+	</div>
+	<!-- 操作说明 -->
+	<div class="explanation" id="explanation">
+		<div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+			  <h4 alt="提示相关设置操作时应注意的要点" class="itip">操作提示</h4>
+			  <span id="explanationZoom" alt="收起提示" class="itip"></span>
+		</div>
+		<ul>
+		  <li></li>
+		</ul>
+	</div>
+	<!-- 表格 -->
+		<div class="table_list">
+		<div class="mDiv"><div class="ftitle"><h3>系统公告列表</h3><h5></h5></div></div>
+		<div class="hDiv">
+		    <table width="100%">
+		    <thead>
+		      <tr>
+                <td width="20"><label><input class="check-all" checked="chedked" type="checkbox" value=""></label></td>
+            	<td width="150" align="center">操作</td>
+		        <td width="350"  align="center">标题</td>
+		        <td width="100" align="center">起始日期</td>
+		        <td width="100" align="center">截止日期</td>
+		        <td width="100" align="center">录入者</td>
+		        <td width="50" align="center">浏览次数</td>
+		        <td width="200" align="center">发表时间</td>
+		      </tr>
+		    </thead>
+		    </table>
+		</div>
+
+		<div class="tDiv">
+		  <div class="tDiv2">
+		    <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-lianjie"></i><a href="{:url('links/add')}">添加公告</a></span></div></div>
+		  </div>
+		  <div style="clear:both"></div>
+		</div>
+
+		<div class="bDiv">
+			<table width="100%">
+			<tbody>
+	          {volist name="list" id="vo"}
+	              <tr>
+	              <td width="20"><input class="ids" checked="chedked" type="checkbox" name="ids[]" value="{$vo['id']}"></td>
+	              <td width="150" align="center">
+	                 <a href="{:url('links/edit',array('id'=>$vo['id']))}" class="btn blue"><i class="icon iconfont icon-edit"></i>编辑<a>
+	                 <a class="btn red ajax-get confirm" url="{:url('links/delete',array('ids'=>$vo['id']))}"><i class="icon iconfont icon-shanchu"></i>删除<a>
+	              </td>
+	              <td width="350"  align="center">{$vo['id']}</td>
+	              <td width="100" align="center">{empty name="vo['image']"}暂无logo{else /}<i class="icon iconfont icon-tupian ft20" ></i>{/empty}</td>
+	              <td width="100" align="center">{$vo['name']}</td>
+	              <td width="100" align="center">{notempty name="vo['termsid']"}{$Terms[$vo['termsid']]}{/notempty}</td>
+	              <td width="50" align="center">{$vo['description']}</td>
+	              <td width="200" align="center">{$vo['description']}</td>
+	              </tr>
+	          {/volist}
+			</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+<script type="text/javascript" src="__STATIC__/admin/js/jquery.edit.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('span[nc_type="inline_edit"]').inline_edit({act: '{:url("links/links/listorder")}'});
+});
+</script>
+{/block}

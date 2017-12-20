@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-15 11:48:24
+Date: 2017-12-20 18:53:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=431 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=437 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -179,6 +179,12 @@ INSERT INTO `yzn_action_log` VALUES ('427', '1', '3', '2130706433', 'member', '3
 INSERT INTO `yzn_action_log` VALUES ('428', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-14 12:32登录了后台', '1513225963');
 INSERT INTO `yzn_action_log` VALUES ('429', '1', '3', '2130706433', 'member', '3', '在2017-12-14 12:38登录了后台', '1513226320');
 INSERT INTO `yzn_action_log` VALUES ('430', '1', '3', '2130706433', 'member', '3', '在2017-12-15 09:45登录了后台', '1513302305');
+INSERT INTO `yzn_action_log` VALUES ('431', '1', '3', '2130706433', 'member', '3', '在2017-12-15 13:10登录了后台', '1513314603');
+INSERT INTO `yzn_action_log` VALUES ('432', '1', '3', '2130706433', 'member', '3', '在2017-12-15 16:39登录了后台', '1513327150');
+INSERT INTO `yzn_action_log` VALUES ('433', '1', '3', '2130706433', 'member', '3', '在2017-12-15 18:39登录了后台', '1513334377');
+INSERT INTO `yzn_action_log` VALUES ('434', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-18 15:48登录了后台', '1513583320');
+INSERT INTO `yzn_action_log` VALUES ('435', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-20 17:51登录了后台', '1513763513');
+INSERT INTO `yzn_action_log` VALUES ('436', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-20 18:26登录了后台', '1513765615');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -225,7 +231,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513225963', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513765615', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -245,6 +251,29 @@ CREATE TABLE `yzn_admin_panel` (
 -- ----------------------------
 INSERT INTO `yzn_admin_panel` VALUES ('19', '1', '权限设置', 'Admin/AuthManager/index');
 INSERT INTO `yzn_admin_panel` VALUES ('17', '1', '数据库备份', 'Admin/database/index');
+
+-- ----------------------------
+-- Table structure for `yzn_announce`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_announce`;
+CREATE TABLE `yzn_announce` (
+  `aid` smallint(4) unsigned NOT NULL AUTO_INCREMENT COMMENT '公告ID',
+  `title` char(80) NOT NULL COMMENT '公告标题',
+  `content` text NOT NULL COMMENT '公告内容',
+  `starttime` date NOT NULL DEFAULT '0000-00-00' COMMENT '有效起始时间',
+  `endtime` date NOT NULL DEFAULT '0000-00-00' COMMENT '有效结束时间',
+  `username` varchar(40) NOT NULL COMMENT '添加者',
+  `addtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `hits` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '浏览次数',
+  `passed` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否通过1：通过；0：为通过',
+  `style` char(15) NOT NULL COMMENT '样式',
+  PRIMARY KEY (`aid`),
+  KEY `siteid` (`passed`,`endtime`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_announce
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_article`
@@ -702,7 +731,7 @@ CREATE TABLE `yzn_member` (
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('3', 'ken678', '0', '0.00', '7', '530765310@qq.com', '', '2', '2', '2130706433', '1513153160', '2130706433', '1513302305', '0', '0', '1');
+INSERT INTO `yzn_member` VALUES ('3', 'ken678', '0', '0.00', '10', '530765310@qq.com', '', '2', '2', '2130706433', '1513153160', '2130706433', '1513334377', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -779,7 +808,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=220 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=225 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -862,6 +891,11 @@ INSERT INTO `yzn_menu` VALUES ('38', '菜单删除', '', '35', 'Admin', 'Menu', 
 INSERT INTO `yzn_menu` VALUES ('39', '菜单排序', '', '35', 'Admin', 'Menu', 'listorder', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('73', '备份表', '', '71', 'Admin', 'database', 'export', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('112', '会员模块配置', '', '110', 'Member', 'Setting', 'setting', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('220', '系统公告', '', '172', 'announce', 'announce', 'index', '', '1', '系统公告！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('221', '添加公告', '', '220', 'announce', 'announce', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('222', '编辑公告', '', '220', 'announce', 'announce', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('223', '公告删除', '', '220', 'announce', 'announce', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('224', '链接排序', '', '220', 'announce', 'announce', 'listorder', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -986,6 +1020,7 @@ CREATE TABLE `yzn_module` (
 INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1505651640', '1505651640', '0');
 INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', '', '1507204730', '1507204730', '0');
 INSERT INTO `yzn_module` VALUES ('member', '会员中心', '858ba4765e53c712ef672a9570474b1d', '0', '1', '1.0.0', 'a:4:{s:13:\"allowregister\";s:1:\"1\";s:12:\"defualtpoint\";s:1:\"0\";s:16:\"openverification\";s:1:\"1\";s:14:\"forgetpassword\";s:323:\"Hi，{$username}:\r\n\r\n你申请了重设密码，请在24小时内点击下面的链接，然后根据页面提示完成密码重设：\r\n\r\n<a href=\"{$url}\" target=\"_blank\">{$url}</a>\r\n\r\n如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。\r\n\r\n邮件服务器自动发送邮件请勿回信 {$date}\";}', '1498718058', '1498718058', '0');
+INSERT INTO `yzn_module` VALUES ('announce', '公告', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1513766333', '1513766333', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_page`
@@ -1118,4 +1153,4 @@ CREATE TABLE `yzn_ucenter_member` (
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('3', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '', '1513153023', '2130706433', '1513302305', '2130706433', '1513153023', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('3', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '', '1513153023', '2130706433', '1513334377', '2130706433', '1513153023', '1');

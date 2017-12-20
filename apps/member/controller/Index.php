@@ -111,9 +111,7 @@ class Index extends Memberbase
             } else {
                 $this->error($res['info']);
             }
-
         }
-
     }
 
     //登录页面
