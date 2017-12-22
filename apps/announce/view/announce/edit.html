@@ -1,11 +1,12 @@
 {extend name="admin@public:layout" /}
 {block name="content"}
+<script type="text/javascript" src="__STATIC__/js/laydate/laydate.js"></script>
 <div class="page">
   <div class="fixed-bar">
-    <div class="item-title"><a class="back" href="{:url('links/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
+    <div class="item-title"><a class="back" href="{:url('announce/index')}" title="返回列表"><i class="icon iconfont icon-fanhui"></i></a>
       <div class="subject">
-        <h3>链接设置 - 编辑链接</h3>
-        <h5>友情链接中心及分类管理操作</h5>
+        <h3>系统公告设置 - 新增公告</h3>
+        <h5>系统公告管理操作</h5>
       </div>
     </div>
   </div>
@@ -19,65 +20,65 @@
       <li></li>
     </ul>
   </div>
-  <form action="{:url('links/edit')}" name="adminForm" id="add_form" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
+  <form action="{:url('announce/edit')}" method="post" class="form-horizontal">
     <div class="ncap-form-default">
       <dl class="row">
         <dt class="tit">
-          <label for="termsid"><em>*</em>所属分类</label>
+          <label>公告标题</label>
         </dt>
         <dd class="opt">
-            <select name="termsid" class="valid">
-                <option value="0">==默认分类==</option>
-                {volist name="Terms" id="vo"}
-                <option value="{$key}" {eq name="key" value="$data['termsid']"}selected{/eq}>{$vo}</option>
-                {/volist}
-            </select>
-          <span class="err"></span>
-          <p class="notic">请选择一个分类，如果还未设置，请在分类管理建立分类。</p>
+          <input type="text" name="announce[title]" class="input-txt" value="{$list['title']}">
         </dd>
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label for="name"><em>*</em>网站名称</label>
+          <label>起始日期</label>
         </dt>
         <dd class="opt">
-          <input type="text"  value="{$data['name']}" maxlength="40"  name="name" class="input-txt">
+          <?php echo \util\Form::date('announce[starttime]',$list['starttime'], 1);?>
         </dd>
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label for="url"><em>*</em>网站链接</label>
+          <label>截止日期</label>
         </dt>
         <dd class="opt">
-          <input type="text"  value="{$data['url']}" maxlength="100"  name="url" class="input-txt">
+          <?php echo \util\Form::date('announce[endtime]',$list['endtime'], 1);?>
         </dd>
       </dl>
       <dl class="row">
         <dt class="tit">
-          <label for="catdir">LOGO</label>
+          <label>公告内容</label>
         </dt>
         <dd class="opt">
-          <div class="input-file-show">
-          {php} echo \util\Form::images('image', 'image',$data['image'], 'links'); {/php}
-          </div>
-          <span class="err"></span>
+          <script type="text/plain" id="content" name="announce[content]">{$list['content']}</script>
+          <?php echo \util\Form::editor('content');?>
         </dd>
       </dl>
       <dl class="row">
-        <dt class="tit">
-          <label for="description">链接描述</label>
-        </dt>
-        <dd class="opt">
-          <textarea name="description" rows="6" class="tarea">{$data['description']}</textarea>
-        </dd>
+          <dt class="tit">公告状态</dt>
+          <dd class="opt">
+              <div class="onoff">
+                  <label for="status01" class="cb-enable  {eq name="list['passed']" value="1"} selected{/eq}">通过</label>
+                  <label for="status02" class="cb-disable {eq name="list['passed']" value="0"} selected{/eq}">待审核</label>
+                  <input id="status01" name='announce[passed]' {eq name="list['passed']" value="1"} checked="checked"{/eq} value="1" type="radio">
+                  <input id="status02" name='announce[passed]' {eq name="list['passed']" value="0"} checked="checked"{/eq} value="0" type="radio">
+              </div>
+          </dd>
       </dl>
-      <input name="id" type="hidden" value="{$data['id']}" />
-      <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.adminForm.submit()">确认提交</a></div>
+      <input name="announce[aid]" type="hidden" value="{$list['aid']}" />
+      <div class="fix-bot"><a href="JavaScript:void(0);" type="submit" class="ajax-post ncap-btn-big ncap-btn-green" target-form="form-horizontal">确认提交</a></div>
     </div>
   </form>
 </div>
 <script type="text/javascript">
-    var upurl ="{:url('attachment/attachments/WebUploader','','')}";
+$(function () {
+  //执行一个laydate实例
+  lay('.J_datetime').each(function(){
+    laydate.render({
+      elem: this,trigger: 'click',type: 'datetime'
+    });
+  });
+});
 </script>
-<script type="text/javascript" src="__STATIC__/admin/js/content_addtop.js"></script>
 {/block}

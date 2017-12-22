@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 namespace app\announce\controller;
 
+use app\admin\service\User;
+use app\announce\model\Announce as AnnounceModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -19,6 +21,13 @@ use think\Db;
  */
 class Announce extends Adminbase
 {
+    //初始化
+    protected function _initialize()
+    {
+        parent::_initialize();
+        $this->Announce = new AnnounceModel;
+    }
+
     /**
      * [系统公告列表]
      * @author 御宅男  <530765310@qq.com>
@@ -38,8 +47,39 @@ class Announce extends Adminbase
      */
     public function add()
     {
-        return $this->fetch();
-
+        if ($this->request->isPost()) {
+            $data = $this->request->param('announce/a');
+            //验证器
+            $rule = [
+                'title' => 'require',
+                'content' => 'require',
+            ];
+            $msg = [
+                'title.require' => '公告标题不得为空',
+                'content.require' => '公告内容不得为空',
+            ];
+            $validate = new \think\Validate($rule, $msg);
+            if (!$validate->check($data)) {
+                $this->error($validate->getError());
+            }
+            $userInfo = User::getInstance()->getInfo();
+            $data['username'] = $userInfo['username'];
+            //不允许结束时间大于开始时间
+            if (strtotime($data['endtime']) < strtotime($data['starttime'])) {
+                $data['endtime'] = '';
+            }
+            if ($data['starttime'] == '') {
+                $announce['starttime'] = date('Y-m-d');
+            }
+            //新增
+            if ($this->Announce->allowField(true)->save($data)) {
+                $this->success('新增成功');
+            } else {
+                $this->error($this->Announce->getError());
+            }
+        } else {
+            return $this->fetch();
+        }
     }
 
     /**
@@ -48,6 +88,35 @@ class Announce extends Adminbase
      */
     public function edit()
     {
+        if ($this->request->isPost()) {
+            $data = $this->request->param('announce/a');
+            //验证器
+            $rule = [
+                'aid' => 'require',
+                'title' => 'require',
+                'content' => 'require',
+            ];
+            $msg = [
+                'aid.require' => 'ID不得为空',
+                'title.require' => '公告标题不得为空',
+                'content.require' => '公告内容不得为空',
+            ];
+            $validate = new \think\Validate($rule, $msg);
+            if (!$validate->check($data)) {
+                $this->error($validate->getError());
+            }
+            //编辑
+            if (false !== $this->Announce->isUpdate(true)->allowField(true)->save($data)) {
+                $this->success('编辑成功');
+            } else {
+                $this->error($this->Announce->getError());
+            }
+        } else {
+            $aid = $this->request->param('aid');
+            $list = $this->Announce->find($aid);
+            $this->assign("list", $list);
+            return $this->fetch();
+        }
 
     }
 

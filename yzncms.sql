@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-21 13:12:15
+Date: 2017-12-22 13:01:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=441 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=442 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -189,6 +189,7 @@ INSERT INTO `yzn_action_log` VALUES ('437', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('438', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-21 09:06登录了后台', '1513818386');
 INSERT INTO `yzn_action_log` VALUES ('439', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-21 12:29登录了后台', '1513830592');
 INSERT INTO `yzn_action_log` VALUES ('440', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-21 12:32登录了后台', '1513830760');
+INSERT INTO `yzn_action_log` VALUES ('441', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-22 11:04登录了后台', '1513911874');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -235,7 +236,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513830760', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513911874', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -273,11 +274,12 @@ CREATE TABLE `yzn_announce` (
   `style` char(15) NOT NULL COMMENT '样式',
   PRIMARY KEY (`aid`),
   KEY `siteid` (`passed`,`endtime`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_announce
 -- ----------------------------
+INSERT INTO `yzn_announce` VALUES ('9', '这里是公告这里是公告', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2017-12-22', 'admin', '1513914810', '0', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_article`
