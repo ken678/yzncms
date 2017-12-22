@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    {include file='public/nav' /}
+    {block name="nav"}{include file='public:nav' /}{/block}
     {block name="content"}内容主体{/block}
     {block name="js"}
     <script src="__STATIC__/js/layui/layui.js"></script>

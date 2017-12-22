@@ -11,7 +11,6 @@
 namespace app\member\controller;
 
 use app\common\controller\Base;
-use think\Config;
 use think\Db;
 use think\Request;
 
@@ -24,16 +23,6 @@ class Memberbase extends Base
     protected $userid = 0;
     //用户信息
     protected $userinfo = array();
-
-    public function __construct()
-    {
-        //会员模板
-        $config['template'] = Config::get('template');
-        $Theme = empty(self::$Cache["Config"]['theme']) ? 'default' : self::$Cache["Config"]['theme'];
-        $config['template']['view_path'] = TEMPLATE_PATH . $Theme . '/member/';
-        Config::set($config);
-        parent::__construct();
-    }
 
     protected function _initialize()
     {
