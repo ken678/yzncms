@@ -1,16 +1,35 @@
-﻿layui.define(['layer', 'laytpl', 'form', 'element', 'util'], function(exports) {
+﻿layui.define(['layer', 'laytpl', 'form', 'element', 'util','table'], function(exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         laytpl = layui.laytpl,
         form = layui.form,
         element = layui.element,
         util = layui.util,
+        table = layui.table,
         device = layui.device()
 
     //阻止IE7以下访问
     if (device.ie && device.ie < 8) {
         layer.alert('如果您非得使用 IE 浏览器访问Fly社区，那么请使用 IE8+');
     }
+
+
+    //第一个实例
+    table.render({
+        elem: '#LAY_mySendCard',
+        url: "/announce/member/index/",
+        page: true,
+        height:490,
+        cols: [
+            [ //表头
+                { field: 'title', title: '公告标题', width: 640 },
+                { field: 'addtime', title: '发布时间', width: 200, templet: '<div>{{ layui.util.timeAgo(d.addtime*1000,1) }}</div>' },
+                { field: 'look', title: '操作', width: 73, templet: '<div><a class="layui-btn layui-btn-xs" href="/announce/member/show/aid/{{ d.aid }}">查看</a></div>' }
+            ]
+        ],
+        skin: 'line'
+    });
+
 
     var fly = {
         //Ajax

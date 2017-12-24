@@ -12,6 +12,7 @@ namespace app\announce\controller;
 
 use app\member\Controller\Memberbase;
 use think\Config;
+use think\Db;
 
 /**
  * 会员系统公告管理
@@ -31,8 +32,16 @@ class Member extends Memberbase
 
     public function index()
     {
-        return $this->fetch(TEMPLATE_PATH . 'default/announce/member/index.html');
-
+        if ($this->request->isAjax()) {
+            $page = $this->request->param('page/d');
+            $limit = $this->request->param('limit/d');
+            $num = Db::name('Announce')->where(['passed' => 1])->whereTime('endtime', '>', time())->count('aid');
+            $result = Db::name('Announce')->where(['passed' => 1])->whereTime('endtime', '>', time())->field(['aid', 'title', 'addtime'])->page($page, $limit)->select();
+            $res = array('code' => 0, 'count' => $num, 'data' => $result);
+            exit(json_encode($res));
+        } else {
+            return $this->fetch();
+        }
     }
 
     public function show()

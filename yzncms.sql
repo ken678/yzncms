@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-12-22 16:36:08
+Date: 2017-12-24 18:44:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=444 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=446 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -192,6 +192,8 @@ INSERT INTO `yzn_action_log` VALUES ('440', '1', '1', '2130706433', 'member', '1
 INSERT INTO `yzn_action_log` VALUES ('441', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-22 11:04登录了后台', '1513911874');
 INSERT INTO `yzn_action_log` VALUES ('442', '1', '3', '2130706433', 'member', '3', '在2017-12-22 14:15登录了后台', '1513923335');
 INSERT INTO `yzn_action_log` VALUES ('443', '1', '3', '2130706433', 'member', '3', '在2017-12-22 16:28登录了后台', '1513931331');
+INSERT INTO `yzn_action_log` VALUES ('444', '1', '3', '2130706433', 'member', '3', '在2017-12-23 21:34登录了后台', '1514036060');
+INSERT INTO `yzn_action_log` VALUES ('445', '1', '3', '2130706433', 'member', '3', '在2017-12-24 18:31登录了后台', '1514111515');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -276,12 +278,22 @@ CREATE TABLE `yzn_announce` (
   `style` char(15) NOT NULL COMMENT '样式',
   PRIMARY KEY (`aid`),
   KEY `siteid` (`passed`,`endtime`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_announce
 -- ----------------------------
-INSERT INTO `yzn_announce` VALUES ('9', '这里是公告这里是公告', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2017-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('9', '这里是公告这里是公告1', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('11', '这里是公告这里是公告2', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('12', '这里是公告这里是公告3', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('13', '这里是公告这里是公告4', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('14', '这里是公告这里是公告5', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('15', '这里是公告这里是公告6', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('16', '这里是公告这里是公告7', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('17', '这里是公告这里是公告8', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('18', '这里是公告这里是公告9', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('19', '这里是公告这里是公告10', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
+INSERT INTO `yzn_announce` VALUES ('20', '这里是公告这里是公告11', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_article`
@@ -739,7 +751,7 @@ CREATE TABLE `yzn_member` (
 -- ----------------------------
 -- Records of yzn_member
 -- ----------------------------
-INSERT INTO `yzn_member` VALUES ('3', 'ken678', '0', '0.00', '12', '530765310@qq.com', '', '2', '2', '2130706433', '1513153160', '2130706433', '1513931331', '0', '0', '1');
+INSERT INTO `yzn_member` VALUES ('3', 'ken678', '0', '0.00', '14', '530765310@qq.com', '', '2', '2', '2130706433', '1513153160', '2130706433', '1514111515', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_member_detail`
@@ -1161,4 +1173,4 @@ CREATE TABLE `yzn_ucenter_member` (
 -- ----------------------------
 -- Records of yzn_ucenter_member
 -- ----------------------------
-INSERT INTO `yzn_ucenter_member` VALUES ('3', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '', '1513153023', '2130706433', '1513931331', '2130706433', '1513153023', '1');
+INSERT INTO `yzn_ucenter_member` VALUES ('3', 'ken678', '2cce3a35f75ac2ed89596d7181c40ebb', '530765310@qq.com', '', '1513153023', '2130706433', '1514111515', '2130706433', '1513153023', '1');
