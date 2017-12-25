@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-12-24 18:44:03
+Date: 2017-12-25 20:12:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=446 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=447 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -194,6 +194,7 @@ INSERT INTO `yzn_action_log` VALUES ('442', '1', '3', '2130706433', 'member', '3
 INSERT INTO `yzn_action_log` VALUES ('443', '1', '3', '2130706433', 'member', '3', '在2017-12-22 16:28登录了后台', '1513931331');
 INSERT INTO `yzn_action_log` VALUES ('444', '1', '3', '2130706433', 'member', '3', '在2017-12-23 21:34登录了后台', '1514036060');
 INSERT INTO `yzn_action_log` VALUES ('445', '1', '3', '2130706433', 'member', '3', '在2017-12-24 18:31登录了后台', '1514111515');
+INSERT INTO `yzn_action_log` VALUES ('446', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-25 19:20登录了后台', '1514200855');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -240,7 +241,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1513911874', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1514200855', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -278,22 +279,11 @@ CREATE TABLE `yzn_announce` (
   `style` char(15) NOT NULL COMMENT '样式',
   PRIMARY KEY (`aid`),
   KEY `siteid` (`passed`,`endtime`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_announce
 -- ----------------------------
-INSERT INTO `yzn_announce` VALUES ('9', '这里是公告这里是公告1', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('11', '这里是公告这里是公告2', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('12', '这里是公告这里是公告3', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('13', '这里是公告这里是公告4', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('14', '这里是公告这里是公告5', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('15', '这里是公告这里是公告6', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('16', '这里是公告这里是公告7', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('17', '这里是公告这里是公告8', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('18', '这里是公告这里是公告9', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('19', '这里是公告这里是公告10', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
-INSERT INTO `yzn_announce` VALUES ('20', '这里是公告这里是公告11', '<p><img src=\"http://img.baidu.com/hi/jx2/j_0001.gif\"/></p>', '2017-12-22', '2018-12-22', 'admin', '1513914810', '0', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_article`
@@ -828,7 +818,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=225 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=233 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -911,11 +901,14 @@ INSERT INTO `yzn_menu` VALUES ('38', '菜单删除', '', '35', 'Admin', 'Menu', 
 INSERT INTO `yzn_menu` VALUES ('39', '菜单排序', '', '35', 'Admin', 'Menu', 'listorder', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('73', '备份表', '', '71', 'Admin', 'database', 'export', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('112', '会员模块配置', '', '110', 'Member', 'Setting', 'setting', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('220', '系统公告', '', '172', 'announce', 'announce', 'index', '', '1', '系统公告！', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('221', '添加公告', '', '220', 'announce', 'announce', 'add', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('222', '编辑公告', '', '220', 'announce', 'announce', 'edit', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('223', '公告删除', '', '220', 'announce', 'announce', 'delete', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('224', '链接排序', '', '220', 'announce', 'announce', 'listorder', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('228', '公告删除', '', '225', 'announce', 'announce', 'delete', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('227', '编辑公告', '', '225', 'announce', 'announce', 'edit', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('226', '添加公告', '', '225', 'announce', 'announce', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('225', '系统公告', '', '172', 'announce', 'announce', 'index', '', '1', '系统公告！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('229', '链接排序', '', '225', 'announce', 'announce', 'listorder', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('230', '在线充值', '', '172', 'pay', 'index', 'list', '', '1', '在线充值！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('231', '充值入帐', '', '230', 'pay', 'index', 'add', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('232', '支付配置', '', '230', 'pay', 'pay_config', 'list', '', '0', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -1040,7 +1033,8 @@ CREATE TABLE `yzn_module` (
 INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a31867441c82', '0', '1', '1.0.0', '', '1505651640', '1505651640', '0');
 INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', '', '1507204730', '1507204730', '0');
 INSERT INTO `yzn_module` VALUES ('member', '会员中心', '858ba4765e53c712ef672a9570474b1d', '0', '1', '1.0.0', 'a:4:{s:13:\"allowregister\";s:1:\"1\";s:12:\"defualtpoint\";s:1:\"0\";s:16:\"openverification\";s:1:\"1\";s:14:\"forgetpassword\";s:323:\"Hi，{$username}:\r\n\r\n你申请了重设密码，请在24小时内点击下面的链接，然后根据页面提示完成密码重设：\r\n\r\n<a href=\"{$url}\" target=\"_blank\">{$url}</a>\r\n\r\n如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。\r\n\r\n邮件服务器自动发送邮件请勿回信 {$date}\";}', '1498718058', '1498718058', '0');
-INSERT INTO `yzn_module` VALUES ('announce', '公告', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1513766333', '1513766333', '0');
+INSERT INTO `yzn_module` VALUES ('announce', '公告', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1514203688', '1514203688', '0');
+INSERT INTO `yzn_module` VALUES ('pay', '支付', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1514203893', '1514203893', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_page`
@@ -1062,6 +1056,95 @@ CREATE TABLE `yzn_page` (
 -- ----------------------------
 INSERT INTO `yzn_page` VALUES ('6', '关于我们', '', '', '<p style=\"margin-top: 0px; margin-bottom: 15px; padding: 0px; white-space: normal; box-sizing: inherit; line-height: 25px; word-break: break-word; color: rgb(64, 72, 91); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Liberation Sans&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Wenquanyi Micro Hei&quot;, &quot;WenQuanYi Zen Hei&quot;, &quot;ST Heiti&quot;, SimHei, &quot;WenQuanYi Zen Hei Sharp&quot;, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);\">[项目介绍]</p><pre style=\"margin-top: 0px; margin-bottom: 15px; padding: 6px 10px; font-family: Menlo, &quot;Liberation Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, &quot;andale mono&quot;, &quot;lucida console&quot;, monospace; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); box-sizing: inherit; overflow: auto; border: 1px solid rgb(238, 238, 238); font-size: 13px; line-height: 19px; border-radius: 3px;\">Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.011最新版,框架易于功能扩展，代码维护，方便二次开发&nbsp;&nbsp;\r\n帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。</pre><p style=\"margin-top: 0px; margin-bottom: 15px; padding: 0px; white-space: normal; box-sizing: inherit; line-height: 25px; word-break: break-word; color: rgb(64, 72, 91); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Liberation Sans&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Hiragino Sans GB&quot;, &quot;Wenquanyi Micro Hei&quot;, &quot;WenQuanYi Zen Hei&quot;, &quot;ST Heiti&quot;, SimHei, &quot;WenQuanYi Zen Hei Sharp&quot;, sans-serif; font-size: 15px; background-color: rgb(255, 255, 255);\">[功能介绍]</p><pre style=\"margin-top: 0px; margin-bottom: 15px; padding: 6px 10px; font-family: Menlo, &quot;Liberation Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Courier New&quot;, &quot;andale mono&quot;, &quot;lucida console&quot;, monospace; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); box-sizing: inherit; overflow: auto; border: 1px solid rgb(238, 238, 238); font-size: 13px; line-height: 19px; border-radius: 3px;\">核心版本的YZNCMS会完成如下功能&nbsp;具体请下载体验\r\nAUTH权限：用户权限\r\n数据库管理：备份导入下载数据库等功能\r\n网站设置：设置网站基本设置邮箱设置等&nbsp;可用自定义设置几种字段\r\n自定义模型：可用创建下载模型，文章模型里面字段都可以自定义&nbsp;如编辑器，多图片，多附件...十几种字段选择\r\n*模块安装：如友情链接，自定义表单，论坛，商城,会员模块等\r\n*插件安装：如返回顶部，留言系统插件等</pre><p><br/></p>', '', '0');
 INSERT INTO `yzn_page` VALUES ('7', '联系我们', '', '', '<p>联系我们<br/></p>', '', '0');
+
+-- ----------------------------
+-- Table structure for `yzn_pay_account`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_pay_account`;
+CREATE TABLE `yzn_pay_account` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `trade_sn` char(50) NOT NULL,
+  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `username` char(20) NOT NULL,
+  `contactname` char(50) NOT NULL,
+  `email` char(40) NOT NULL,
+  `telephone` char(20) NOT NULL,
+  `discount` float(8,2) NOT NULL DEFAULT '0.00',
+  `money` char(8) NOT NULL,
+  `quantity` int(8) unsigned NOT NULL DEFAULT '1',
+  `addtime` int(10) NOT NULL DEFAULT '0',
+  `paytime` int(10) NOT NULL DEFAULT '0',
+  `usernote` char(255) NOT NULL,
+  `pay_id` tinyint(3) NOT NULL,
+  `pay_type` enum('offline','recharge','selfincome','online') NOT NULL DEFAULT 'recharge',
+  `payment` char(90) NOT NULL,
+  `type` tinyint(3) NOT NULL DEFAULT '1',
+  `ip` char(15) NOT NULL DEFAULT '0.0.0.0',
+  `status` enum('succ','failed','error','progress','timeout','cancel','waitting','unpay') NOT NULL DEFAULT 'unpay',
+  `adminnote` char(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `status` (`status`),
+  KEY `userid` (`userid`),
+  KEY `trade_sn` (`trade_sn`,`money`,`status`,`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_pay_account
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `yzn_pay_payment`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_pay_payment`;
+CREATE TABLE `yzn_pay_payment` (
+  `pay_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) NOT NULL,
+  `pay_name` varchar(120) NOT NULL,
+  `pay_code` varchar(20) NOT NULL,
+  `pay_desc` text NOT NULL,
+  `pay_method` tinyint(1) DEFAULT NULL,
+  `pay_fee` varchar(10) NOT NULL,
+  `config` text NOT NULL,
+  `is_cod` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_online` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `pay_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `author` varchar(100) NOT NULL,
+  `website` varchar(100) NOT NULL,
+  `version` varchar(20) NOT NULL,
+  PRIMARY KEY (`pay_id`),
+  KEY `pay_code` (`pay_code`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_pay_payment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `yzn_pay_spend`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_pay_spend`;
+CREATE TABLE `yzn_pay_spend` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `creat_at` int(10) unsigned NOT NULL DEFAULT '0',
+  `userid` int(10) unsigned NOT NULL DEFAULT '0',
+  `username` varchar(20) NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `logo` varchar(20) NOT NULL,
+  `value` int(5) NOT NULL,
+  `op_userid` int(10) unsigned NOT NULL DEFAULT '0',
+  `op_username` char(20) NOT NULL,
+  `msg` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`),
+  KEY `creat_at` (`creat_at`),
+  KEY `logo` (`logo`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_pay_spend
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_position`
