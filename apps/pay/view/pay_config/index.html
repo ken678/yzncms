@@ -1,0 +1,68 @@
+{extend name="admin@public:layout" /}
+{block name="content"}
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>支付配置</h3>
+                <h5>用户充值及金额管理</h5>
+            </div>
+            <ul class="tab-base nc-row">
+                {include file="admin@public/nav" /}
+            </ul>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom"><i class="icon iconfont icon-dengpao"></i>
+            <h4 class="itip" alt="提示相关设置操作时应注意的要点">操作提示</h4>
+            <span id="explanationZoom" class="itip" alt="收起提示"></span> </div>
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+    <!-- 表格 -->
+    <div class="table_list">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>支付方式列表</h3>
+                <h5></h5></div>
+        </div>
+        <div class="hDiv">
+            <table width="100%">
+                <thead>
+                    <tr>
+                    	<td width="150" align="center" >操作</td>
+                        <td width="150" align="center">支付方式</td>
+                        <td width="600" align="center">描述</td>
+                        <td width="50" align="center">状态</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="tDiv">
+            <div class="tDiv2">
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="bDiv">
+            <table width="100%">
+                <tbody>
+                    {volist name="_list" id="list"}
+                    <tr>
+                    	<td width="150" align="center" class="handle">
+                        <a class="btn blue ajax-get confirm" url=""><i class="icon iconfont icon-shanchu"></i>配置</a>
+                        <a class="btn red ajax-get confirm" url=""><i class="icon iconfont icon-shanchu"></i>禁用</a>
+                        </td>
+                        <td width="150" align="center">{$list.name}</td>
+                        <td width="600" align="center">{$list.pay_desc|str_cut=###,50}</td>
+                        <td width="50" align="center">{$list.status_text}</td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{/block}

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-12-26 15:18:06
+Date: 2017-12-26 17:01:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=448 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=449 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -196,6 +196,7 @@ INSERT INTO `yzn_action_log` VALUES ('444', '1', '3', '2130706433', 'member', '3
 INSERT INTO `yzn_action_log` VALUES ('445', '1', '3', '2130706433', 'member', '3', '在2017-12-24 18:31登录了后台', '1514111515');
 INSERT INTO `yzn_action_log` VALUES ('446', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-25 19:20登录了后台', '1514200855');
 INSERT INTO `yzn_action_log` VALUES ('447', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-26 14:41登录了后台', '1514270514');
+INSERT INTO `yzn_action_log` VALUES ('448', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-26 15:46登录了后台', '1514274388');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -242,7 +243,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1514270514', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1514274388', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -827,7 +828,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=240 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=246 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -913,10 +914,10 @@ INSERT INTO `yzn_menu` VALUES ('227', '编辑公告', '', '225', 'announce', 'an
 INSERT INTO `yzn_menu` VALUES ('226', '添加公告', '', '225', 'announce', 'announce', 'add', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('225', '系统公告', '', '172', 'announce', 'announce', 'index', '', '1', '系统公告！', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('229', '链接排序', '', '225', 'announce', 'announce', 'listorder', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('230', '在线充值', '', '172', 'pay', 'index', 'list', '', '1', '在线充值！', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('231', '充值入帐', '', '230', 'pay', 'index', 'add', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('232', '支付配置', '', '230', 'pay', 'pay_config', 'list', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('244', '充值入帐', '', '243', 'pay', 'index', 'add', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('245', '支付配置', '', '243', 'pay', 'pay_config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('239', '还原表', '', '233', 'database', 'index', 'import', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('243', '在线充值', '', '172', 'pay', 'index', 'lists', '', '1', '在线充值！', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -1042,7 +1043,7 @@ INSERT INTO `yzn_module` VALUES ('links', '友情链接', '960c30f9b119fa6c39a4a
 INSERT INTO `yzn_module` VALUES ('formguide', '表单', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', '', '1507204730', '1507204730', '0');
 INSERT INTO `yzn_module` VALUES ('member', '会员中心', '858ba4765e53c712ef672a9570474b1d', '0', '1', '1.0.0', 'a:4:{s:13:\"allowregister\";s:1:\"1\";s:12:\"defualtpoint\";s:1:\"0\";s:16:\"openverification\";s:1:\"1\";s:14:\"forgetpassword\";s:323:\"Hi，{$username}:\r\n\r\n你申请了重设密码，请在24小时内点击下面的链接，然后根据页面提示完成密码重设：\r\n\r\n<a href=\"{$url}\" target=\"_blank\">{$url}</a>\r\n\r\n如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问。\r\n\r\n邮件服务器自动发送邮件请勿回信 {$date}\";}', '1498718058', '1498718058', '0');
 INSERT INTO `yzn_module` VALUES ('announce', '公告', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1514203688', '1514203688', '0');
-INSERT INTO `yzn_module` VALUES ('pay', '支付', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1514203893', '1514203893', '0');
+INSERT INTO `yzn_module` VALUES ('pay', '支付', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1514278444', '1514278444', '0');
 INSERT INTO `yzn_module` VALUES ('database', '数据库', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1514271196', '1514271196', '0');
 
 -- ----------------------------
@@ -1107,27 +1108,26 @@ CREATE TABLE `yzn_pay_account` (
 DROP TABLE IF EXISTS `yzn_pay_payment`;
 CREATE TABLE `yzn_pay_payment` (
   `pay_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(120) NOT NULL,
-  `pay_name` varchar(120) NOT NULL,
+  `name` varchar(120) NOT NULL COMMENT '方式名称',
+  `pay_name` varchar(120) NOT NULL COMMENT '方式模块名称',
   `pay_code` varchar(20) NOT NULL,
-  `pay_desc` text NOT NULL,
+  `pay_desc` text NOT NULL COMMENT '支付描述',
   `pay_method` tinyint(1) DEFAULT NULL,
   `pay_fee` varchar(10) NOT NULL,
-  `config` text NOT NULL,
+  `config` text NOT NULL COMMENT '配置信息',
   `is_cod` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `is_online` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `pay_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `author` varchar(100) NOT NULL,
-  `website` varchar(100) NOT NULL,
-  `version` varchar(20) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '可用',
   PRIMARY KEY (`pay_id`),
   KEY `pay_code` (`pay_code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_pay_payment
 -- ----------------------------
+INSERT INTO `yzn_pay_payment` VALUES ('1', '支付宝', '支付宝', 'Alipay', '支付宝是国内领先的独立第三方支付平台，由阿里巴巴集团创办。致力于为中国电子商务提供&ldquo;简单、安全、快速&rdquo;的在线支付解决方案。', '0', '0', '', '0', '1', '0', '1');
+INSERT INTO `yzn_pay_payment` VALUES ('2', '微信支付', '微信支付', 'Weixin', '微信支付是集成在微信客户端的支付功能，用户可以通过手机完成快速的支付流程。微信支付以绑定银行卡的快捷支付为基础，向用户提供安全、快捷、高效的支付服务。', '0', '0', '', '0', '1', '0', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_pay_spend`
