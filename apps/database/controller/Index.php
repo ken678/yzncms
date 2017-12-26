@@ -8,14 +8,14 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\database\controller;
 
 use app\common\controller\Adminbase;
 
 /**
  * 数据库管理
  */
-class Database extends Adminbase
+class Index extends Adminbase
 {
     /**
      * 数据库列表

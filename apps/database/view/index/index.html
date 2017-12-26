@@ -1,4 +1,4 @@
-{extend name="public:layout" /}
+{extend name="admin@public:layout" /}
 {block name="content"}
 <div class="page">
 	<div class="fixed-bar">
@@ -8,7 +8,7 @@
 		    <h5>数据库恢复与备份</h5>
 		  </div>
 		  <ul class="tab-base nc-row">
-		        {include file="public/nav" /}
+		        {include file="admin@public/nav" /}
 		  </ul>
 		</div>
 	</div>
@@ -24,7 +24,7 @@
 		</ul>
 	</div>
 	<!-- 表格 -->
-	<form id="export-form" method="post" action="{:url('database/export')}">
+	<form id="export-form" method="post" action="{:url('database/index/export')}">
 	<div class="table_list">
 		<div class="mDiv"><div class="ftitle"><h3>数据库列表</h3><h5></h5></div></div>
 		<div class="hDiv">
@@ -46,8 +46,8 @@
 		<div class="tDiv">
 		  <div class="tDiv2">
              <div class="fbutton"><div class="add" id="export"><span><i class="icon iconfont icon-beifenruanjian"></i>立即备份</span></div></div>
-             <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-Group"></i><a id="optimize" href="{:url('database/optimize')}">优化表</a></span></div></div>
-             <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-zidongxiufu"></i><a id="repair" href="{:url('database/repair')}">修复表</a></span></div></div>
+             <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-Group"></i><a id="optimize" href="{:url('database/index/optimize')}">优化表</a></span></div></div>
+             <div class="fbutton"><div class="add"><span><i class="icon iconfont icon-zidongxiufu"></i><a id="repair" href="{:url('database/index/repair')}">修复表</a></span></div></div>
 		  </div>
 		  <div style="clear:both"></div>
 		</div>
