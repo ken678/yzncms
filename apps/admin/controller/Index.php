@@ -24,7 +24,8 @@ class Index extends Adminbase
         //后台菜单
         $this->assign('__MENU__', model("common/Menu")->getMenuList());
         //当前登录管理员信息
-        $this->assign('userInfo', User::getInstance()->getInfo());
+        //$this->assign('userInfo', User::getInstance()->getInfo());
+        $this->assign('userInfo', $this->_userinfo);
         //dump(User::getInstance()->getInfo());
         $this->assign('role_name', model('admin/AuthGroup')->getRoleIdName(User::getInstance()->isLogin()));
         /*管理员收藏栏*/

@@ -46,6 +46,8 @@ return [
     'app_trace' => true,
     // 注册的根命名空间
     'root_namespace' => ['addons' => ROOT_PATH . 'addons' . DS],
+    // 默认全局过滤方法 用逗号分隔多个
+    'default_filter' => 'htmlspecialchars,trim',
 
     // +----------------------------------------------------------------------
     // | 模块设置

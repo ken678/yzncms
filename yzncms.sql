@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50553
+Source Server         : 本地链接
+Source Server Version : 50547
 Source Host           : localhost:3306
 Source Database       : yzncms
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-12-26 17:01:50
+Date: 2017-12-30 19:27:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_action_log` (
   KEY `action_ip_ix` (`action_ip`),
   KEY `action_id_ix` (`action_id`),
   KEY `user_id_ix` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=449 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
+) ENGINE=MyISAM AUTO_INCREMENT=450 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='行为日志表';
 
 -- ----------------------------
 -- Records of yzn_action_log
@@ -197,6 +197,7 @@ INSERT INTO `yzn_action_log` VALUES ('445', '1', '3', '2130706433', 'member', '3
 INSERT INTO `yzn_action_log` VALUES ('446', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-25 19:20登录了后台', '1514200855');
 INSERT INTO `yzn_action_log` VALUES ('447', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-26 14:41登录了后台', '1514270514');
 INSERT INTO `yzn_action_log` VALUES ('448', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-26 15:46登录了后台', '1514274388');
+INSERT INTO `yzn_action_log` VALUES ('449', '1', '1', '2130706433', 'member', '1', 'admin在2017-12-30 17:28登录了后台', '1514626131');
 
 -- ----------------------------
 -- Table structure for `yzn_addons`
@@ -243,7 +244,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1514274388', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1514626131', '2130706433', '530765310@qq.com');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
 
 -- ----------------------------
@@ -917,7 +918,7 @@ INSERT INTO `yzn_menu` VALUES ('229', '链接排序', '', '225', 'announce', 'an
 INSERT INTO `yzn_menu` VALUES ('244', '充值入帐', '', '243', 'pay', 'index', 'add', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('245', '支付配置', '', '243', 'pay', 'pay_config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('239', '还原表', '', '233', 'database', 'index', 'import', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('243', '在线充值', '', '172', 'pay', 'index', 'lists', '', '1', '在线充值！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('243', '在线充值', '', '172', 'pay', 'index', 'pay_list', '', '1', '在线充值！', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`

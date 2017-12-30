@@ -23,13 +23,13 @@ define('IN_ADMIN', true);
  */
 class Adminbase extends Base
 {
+    public $_userinfo; //当前登录账号信息
     /**
      * 后台初始化
      */
     protected function _initialize()
     {
         parent::_initialize();
-
         //过滤不需要登陆的行为
         $allowUrl = ['admin/index/login',
             'admin/index/logout',
@@ -73,6 +73,7 @@ class Adminbase extends Base
             User::getInstance()->logout();
             return false;
         }
+        $this->_userinfo = $userInfo;
         //是否锁定
         /*if (!$userInfo['status']) {
         User::getInstance()->logout();
