@@ -1,6 +1,0 @@
-{
-    "require": {
-        "topthink/think-captcha": "^1.0",
-        "phpmailer/phpmailer": "^6.0"
-    }
-}
