@@ -8,9 +8,9 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-namespace app\common\taglib;
+namespace app\home\taglib;
 
-use config;
+use Config;
 use think\template\TagLib;
 
 /**
@@ -134,8 +134,6 @@ class Yzn extends TagLib
      */
     public function tagContent($tag, $content)
     {
-        var_dump(11);
-        exit();
         //栏目ID
         $tag['catid'] = $catid = $tag['catid'];
         //每页显示总数

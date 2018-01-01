@@ -275,7 +275,7 @@ function get_table_name($modelid = null)
  */
 function hook($hook, $params = [])
 {
-    \think\Hook::listen($hook, $params);
+    \think\facade\Hook::listen($hook, $params);
 }
 
 /**
