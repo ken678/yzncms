@@ -1,0 +1,30 @@
+{extend name="public/base" /}
+{block name="body"}
+<style type="text/css">
+.page_message{min-height: 550px;}
+.page_message h2.ts {text-align: center; font-size: 22px; color: #ff5402; margin: 50px 0 20px;}
+.page_message h2.ts small{font-size: 16px;color: #999;font-weight: normal;}
+.page_message p.ts{line-height: 30px; color: #585858; text-align: center; font-size: 13px; margin-bottom: 30px; }
+.page_message_box {width: 490px; margin: 0 auto; font-size: 13px; }
+.page_message .form-label{height: 31px; line-height: 31px;}
+.page_message .input{border: 1px solid #e8e8e8; border-radius: 3px; padding: 0px 5px; width: 196px; height: 31px; line-height: 31px; float: left;}
+.page_message textarea {width: 361px; height: 130px; border: 1px solid #e8e8e8; border-radius: 3px; padding: 2px; }
+.page_message #dosubmit{margin-left: 97px; width: 145px; height: 33px; line-height: 30px; text-align: center; background-color: #ff5402; font-size: 14px; color: #fff; border: none; border: 0; border-radius: 3px;cursor: pointer;}
+</style>
+<header class="about-intro">
+    <h1>Yzncms</h1>
+    <p>Yzncms(又名御宅男cms)是完全开源的项目。
+        <br> 基于ThinkPHP5.011最新版,框架易于功能扩展，代码维护，方便二次开发，
+        <br> 帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
+    </p>
+</header>
+<div class="w_1200">
+    <div class="page_message">
+        <h2 class="ts">温馨提示<small>(自定义表单演示)</small></h2>
+        <p class="ts">感谢您填写信息。为了我们能及时与您取得联系，信息填写后，请保证您的电话处于正常开机状态，我们会有专员第一时间和您取得联系。<br>若您还有疑问，您可以致电客服专线电话,我们将会有最专业的客服为您解答疑虑。</p>
+        <div class="page_message_box">
+            <script language="javascript" src="/formguide/index/index/action/js/formid/3.html"></script>
+        </div>
+    </div>
+</div>
+{/block}
