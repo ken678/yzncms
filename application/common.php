@@ -10,8 +10,8 @@
 // +----------------------------------------------------------------------
 define('YZN_ADDON_PATH', Env::get('ROOT_PATH') . 'addons/');
 // 公用函数
-use think\Cache;
-use think\Config;
+use think\facade\Cache;
+use think\facade\Config;
 
 /**
  * 记录行为日志，并执行该行为的规则

@@ -10,11 +10,11 @@
                 </div>
                 <div class="topic-img"><img src="{:getCategory(2,'image')}" width="360" height="100"></div>
                 <ul>
-                    {yzn:content action="lists" catid="2"  num="5" order="listorder ASC" cache="3600" return="data"}
+                    {Yzn:content action="lists" catid="2"  num="5" order="listorder ASC" cache="3600" return="data"}
                     {volist name="data" id="vo"}
                     <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
                     {/volist}
-                    {/yzn:content}
+                    {/Yzn:content}
                 </ul>
             </div>
             <div class="topic-box1">
@@ -24,11 +24,11 @@
                 </div>
                 <div class="topic-img"><img src="{:getCategory(3,'image')}" width="360" height="100"></div>
                 <ul>
-                    {yzn:content action="lists" catid="3"  num="5" order="listorder ASC" cache="3600"  return="data"}
+                    {Yzn:content action="lists" catid="3"  num="5" order="listorder ASC" cache="3600"  return="data"}
                     {volist name="data" id="vo"}
                     <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
                     {/volist}
-                    {/yzn:content}
+                    {/Yzn:content}
                 </ul>
             </div>
             <div class="topic-box1">
@@ -38,11 +38,11 @@
                 </div>
                 <div class="topic-img"><img src="{:getCategory(4,'image')}" width="360" height="100"></div>
                 <ul>
-                    {yzn:content action="lists" catid="4"  num="5" order="listorder ASC" cache="3600" return="data"}
+                    {Yzn:content action="lists" catid="4"  num="5" order="listorder ASC" cache="3600" return="data"}
                     {volist name="data" id="vo"}
                     <li><a href="{$vo['url']}" title="{$vo['title']}">{$vo['title']}</a></li>
                     {/volist}
-                    {/yzn:content}
+                    {/Yzn:content}
                 </ul>
             </div>
             <div class="clear"></div>

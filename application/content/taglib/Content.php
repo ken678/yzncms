@@ -10,8 +10,8 @@
 // +----------------------------------------------------------------------
 namespace app\content\taglib;
 
-use Cache;
 use think\Db;
+use think\facade\Cache;
 
 class Content
 {
