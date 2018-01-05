@@ -15,6 +15,9 @@
 return [
     // 预先加载的标签库
     'taglib_pre_load' => 'app\\home\\taglib\\Yzn',
+    'tpl_replace_string' => [
+        '__STATIC__' => '/static',
+    ],
     'view_path' => TEMPLATE_PATH . 'default/content/', //TODO：默认前台模板路径
     'PAGE_LISTROWS' => '10',
     'VAR_PAGE' => 'page',
