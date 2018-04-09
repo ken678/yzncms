@@ -10,24 +10,11 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 后台首页
+// | 后台控制模块
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\common\controller;
 
-use app\common\controller\Adminbase;
-
-class Index extends Adminbase
+class Adminbase extends Base
 {
-    //后台首页
-    public function index()
-    {
-        return '1111';
-    }
-
-    //后台登陆界面
-    public function login()
-    {
-
-    }
 
 }

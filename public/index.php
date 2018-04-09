@@ -12,6 +12,10 @@
 // [ 应用入口文件 ]
 namespace think;
 
+if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+    header("Content-type: text/html; charset=utf-8");
+    die('PHP 5.6.0 及以上版本系统才可运行~ ');
+}
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
 

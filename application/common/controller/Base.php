@@ -10,24 +10,17 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 后台首页
+// | 公共控制模块
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\common\controller;
 
-use app\common\controller\Adminbase;
+use think\Controller;
 
-class Index extends Adminbase
+class Base extends Controller
 {
-    //后台首页
-    public function index()
+    //空操作
+    public function _empty()
     {
-        return '1111';
+        $this->error('该页面不存在！');
     }
-
-    //后台登陆界面
-    public function login()
-    {
-
-    }
-
 }
