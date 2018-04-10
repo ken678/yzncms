@@ -1,0 +1,1134 @@
+---------------------------------------------------------------
+[ 2018-04-10T18:55:00+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.046003s][吞吐率：21.74req/s] [内存消耗：1,333.03kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=46',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T18:55:04+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.038003s][吞吐率：26.31req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=46',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T18:55:04+08:00 ] 127.0.0.1 GET /public/static/admin/css/style.css
+[ info ] www.yzncms.com/public/static/admin/css/style.css [运行时间：0.039002s][吞吐率：25.64req/s] [内存消耗：991.35kb] [文件加载：54]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T18:55:05+08:00 ] 127.0.0.1 GET /public/static/admin/frame/layui/layui.js
+[ info ] www.yzncms.com/public/static/admin/frame/layui/layui.js [运行时间：0.054003s][吞吐率：18.52req/s] [内存消耗：991.38kb] [文件加载：54]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T18:58:48+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.053003s][吞吐率：18.87req/s] [内存消耗：1,329.66kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=47',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T18:59:28+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：1,214.47kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=48',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T18:59:59+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.030002s][吞吐率：33.33req/s] [内存消耗：1,214.51kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=49',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:00:24+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.030001s][吞吐率：33.33req/s] [内存消耗：1,214.47kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=50',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:02:07+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.044002s][吞吐率：22.73req/s] [内存消耗：1,378.80kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=51',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:02:30+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.032001s][吞吐率：31.25req/s] [内存消耗：1,328.39kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=52',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:02:36+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.030002s][吞吐率：33.33req/s] [内存消耗：1,328.20kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=53',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:03:17+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.033002s][吞吐率：30.30req/s] [内存消耗：1,328.48kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=54',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:03:56+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.031002s][吞吐率：32.26req/s] [内存消耗：1,214.68kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=55',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:04:18+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.031002s][吞吐率：32.26req/s] [内存消耗：1,214.68kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=56',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:04:21+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.029001s][吞吐率：34.48req/s] [内存消耗：1,214.68kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=57',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:04:56+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.028002s][吞吐率：35.71req/s] [内存消耗：1,214.68kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=58',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:05:32+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：1,328.75kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=59',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:06:14+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：1,328.83kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=60',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:07:30+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.041002s][吞吐率：24.39req/s] [内存消耗：1,328.99kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=61',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:07:53+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.035002s][吞吐率：28.57req/s] [内存消耗：1,214.46kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=62',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:08:14+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：1,329.76kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=63',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:08:39+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.055003s][吞吐率：18.18req/s] [内存消耗：1,214.50kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=64',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:09:04+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：1,329.82kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=65',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:10:39+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.030001s][吞吐率：33.33req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=66',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:13:16+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.028002s][吞吐率：35.71req/s] [内存消耗：1,214.48kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=67',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:13:17+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.031002s][吞吐率：32.26req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=68',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:13:32+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.031002s][吞吐率：32.26req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=69',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:14:07+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=70',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:15:17+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.030002s][吞吐率：33.33req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=71',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:15:18+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.030002s][吞吐率：33.33req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=72',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:15:18+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.028002s][吞吐率：35.71req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=73',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:15:36+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.037002s][吞吐率：27.03req/s] [内存消耗：1,330.13kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=74',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:15:58+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=75',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:15:59+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.028002s][吞吐率：35.71req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=76',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:17:48+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.032002s][吞吐率：31.25req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=77',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:19:28+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.028001s][吞吐率：35.71req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=78',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:20:08+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.036002s][吞吐率：27.78req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=79',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:20:10+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.042003s][吞吐率：23.81req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=80',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:20:35+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.029002s][吞吐率：34.48req/s] [内存消耗：1,214.73kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=81',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:20:36+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.035002s][吞吐率：28.57req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=82',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:13+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.029002s][吞吐率：34.48req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=83',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:19+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.025001s][吞吐率：40.00req/s] [内存消耗：1,214.79kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=84',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'no-cache',
+  'pragma' => 'no-cache',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:22+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.031001s][吞吐率：32.26req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=85',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:22+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.034002s][吞吐率：29.41req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=86',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:23+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.052003s][吞吐率：19.23req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=87',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:32+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.027002s][吞吐率：37.03req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=88',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:33+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.040003s][吞吐率：25.00req/s] [内存消耗：1,214.45kb] [文件加载：59]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=89',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-04-10T19:21:59+08:00 ] 127.0.0.1 GET /admin/login
+[ info ] www.yzncms.com/admin/login [运行时间：0.031001s][吞吐率：32.26req/s] [内存消耗：1,329.81kb] [文件加载：61]
+[ info ] [ LANG ] E:\yzncms\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'thinkphp_show_page_trace=0|4; __guid=212003858.4351666911742233600.1520937282260.0269; pgv_pvi=6474056704; pgv_si=s7498210304; thinkphp_show_page_trace=0|0; Hm_lvt_949408a720a47a228aa719c955232f9c=1523355475; Hm_lpvt_949408a720a47a228aa719c955232f9c=1523355475; monitor_count=90',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate, sdch',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'close',
+  'host' => 'www.yzncms.com',
+)
+[ info ] [ PARAM ] array (
+  '/admin/login' => '',
+)
+[ info ] [ VIEW ] E:\yzncms\application\admin\view\login\index.html [ array (
+) ]
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File

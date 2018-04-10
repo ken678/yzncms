@@ -1,0 +1,20 @@
+/*login*/
+.login-main {position: fixed; top: 0; right: 0; bottom: 0; left: 0; width: 350px; margin: 0 auto; }
+.login-main header {margin-top: 30%;height: 35px; line-height: 35px; font-size: 30px; font-weight: 100; text-align: center; }
+.login-main header span.version {font-size: 12px; }
+.login-main form .layui-input-inline,.login-main form .layui-input-inline button{width: 100%; }
+.login-main form .verify-box input {display: inline-block; width: 60%; }
+.login-main header, .login-main form .layui-input-inline {margin-bottom: 15px; }
+.login-main form .verify-box img {display: inline-block; margin-left: 2%; width: 36%; height: 38px; }
+@media screen and (max-width: 450px) {
+    .layui-form-item .layui-input-inline {
+        margin: 0 0 10px 0px;
+    }
+    .login-main header {
+        font-size: 20px;
+    }
+    .login-main {
+        width: auto;
+        padding: 0 10px;
+    }
+}

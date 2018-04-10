@@ -10,22 +10,17 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 公共控制模块
+// | 后台登录页
 // +----------------------------------------------------------------------
-namespace app\common\controller;
+namespace app\admin\controller;
 
 use think\Controller;
 
-class Base extends Controller
+class Login extends Controller
 {
-    //初始化
-    protected function initialize()
+    public function index()
     {
+        return $this->fetch();
     }
 
-    //空操作
-    public function _empty()
-    {
-        $this->error('该页面不存在！');
-    }
 }

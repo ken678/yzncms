@@ -16,5 +16,22 @@ namespace app\common\controller;
 
 class Adminbase extends Base
 {
+    //初始化
+    protected function initialize()
+    {
+        parent::initialize();
+        //验证登录
+        if (false == $this->competence()) {
+
+        } else {
+
+        }
+    }
+
+    //验证登录
+    private function competence()
+    {
+
+    }
 
 }

@@ -24,10 +24,4 @@ class Index extends Adminbase
         return '1111';
     }
 
-    //后台登陆界面
-    public function login()
-    {
-
-    }
-
 }
