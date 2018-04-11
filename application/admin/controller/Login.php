@@ -20,7 +20,12 @@ class Login extends Controller
 {
     public function index()
     {
-        return $this->fetch();
+        if ($this->request->isPost()) {
+            $this->success('登录成功！', url('Index/index'));
+        } else {
+            return $this->fetch();
+        }
+
     }
 
 }

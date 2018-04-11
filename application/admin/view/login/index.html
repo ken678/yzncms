@@ -14,24 +14,29 @@
 <body>
     <div class="login-main">
         <header class="layui-elip">YZNCMS管理系统&nbsp;<span class="version">v1.0.0</span></header>
-        <form class="layui-form" action="">
+        <form class="layui-form" action="{:url('admin/login/index')}">
             <div class="layui-form-item">
-                <div class="layui-input-inline">
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="账号" class="layui-input">
+                <div class="layui-input-inline input-item">
+                    <label for="userName">用户名</label>
+                    <input type="text" name="userName" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
                 </div>
-                <div class="layui-input-inline">
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="密码" class="layui-input">
+                <div class="layui-input-inline input-item">
+                    <label for="password">密码</label>
+                    <input type="text" name="password"  lay-verify="required"  autocomplete="off" placeholder="密码" class="layui-input">
                 </div>
-                <div class="layui-input-inline verify-box">
-                    <input type="text" name="verify" required="" lay-verify="required|verify" placeholder="验证码" autocomplete="off" class="layui-input layui-form-danger">
+                <div class="layui-input-inline input-item verify-box">
+                    <label for="verify">验证码</label>
+                    <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                     <img id="verify" src="http://web.vip-admin.com/captcha.html" alt="验证码" onclick="this.src = this.src+'?'" class="captcha">
                 </div>
                 <div class="layui-input-inline login-btn">
-                    <button type="button" class="layui-btn" lay-submit="" lay-filter="sub">登录</button>
+                    <button type="button" class="layui-btn" lay-submit lay-filter="*">登录</button>
                 </div>
             </div>
         </form>
     </div>
+    <script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
+    <script type="text/javascript" src="__STATIC__/admin/js/login.js"></script>
 </body>
 
 </html>
