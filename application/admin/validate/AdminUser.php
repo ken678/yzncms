@@ -10,29 +10,31 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 后台登录页
+// | 登录验证
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\admin\validate;
 
-use think\Controller;
+use think\Validate;
 
-class Login extends Controller
+class AdminUser extends Validate
 {
-    //登录判断
-    public function index()
-    {
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-            // 验证数据
-            $result = $this->validate($data, 'AdminUser.checklogin');
-            if (true !== $result) {
-                $this->error($result);
-            }
-            $this->success('登录成功！', url('Index/index'));
-        } else {
-            return $this->fetch();
-        }
 
-    }
+    //定义验证规则
+    protected $rule = [
+        'username' => 'require',
+        'password' => 'require',
+
+    ];
+    //定义验证提示
+    protected $message = [
+        'username.require' => '用户名不得为空',
+        'password.require' => '密码不得为空',
+
+    ];
+    //定义验证场景
+    protected $scene = [
+        //登录
+        'checklogin' => ['username', 'password'],
+    ];
 
 }

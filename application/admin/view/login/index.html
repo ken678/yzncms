@@ -12,13 +12,17 @@
 </head>
 
 <body>
+	<style type="text/css">
+	body{background-color: #2D2D2D}
+	</style>
+	<div id="mydiv">
     <div class="login-main">
         <header class="layui-elip">YZNCMS管理系统&nbsp;<span class="version">v1.0.0</span></header>
         <form class="layui-form" action="{:url('admin/login/index')}">
             <div class="layui-form-item">
                 <div class="layui-input-inline input-item">
-                    <label for="userName">用户名</label>
-                    <input type="text" name="userName" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
+                    <label for="username">用户名</label>
+                    <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
                 </div>
                 <div class="layui-input-inline input-item">
                     <label for="password">密码</label>
@@ -35,8 +39,10 @@
             </div>
         </form>
     </div>
+    </div>
     <script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
     <script type="text/javascript" src="__STATIC__/admin/js/login.js"></script>
+    <script type="text/javascript" src="http://www.jq22.com/demo/CanvasParticles-master20160907/canvas-particle.js"></script>
 </body>
 
 </html>
