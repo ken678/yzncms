@@ -6,12 +6,11 @@ layui.use(['form', 'layer', 'jquery'], function() {
         var action = $(data.form).attr('action');
         $.post(action, $(data.form).serialize(), success, "json");
         return false;
-
         function success(data) {
             if (data.code) {
-                //window.location.href = data.url;
+                window.location.href = data.url;
             } else {
-                //layer.msg(data.msg, { icon: 5 });
+                layer.msg(data.msg, { icon: 5 });
                 //刷新验证码
                 //$(".verifyimg img").click();
             }

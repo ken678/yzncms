@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\model\AdminUser;
 use think\Controller;
 
 class Login extends Controller
@@ -28,7 +29,18 @@ class Login extends Controller
             if (true !== $result) {
                 $this->error($result);
             }
-            $this->success('登录成功！', url('Index/index'));
+            //验证码
+            /*if (!captcha_check($data['captcha'])) {
+            $this->error('验证码输入错误！');
+            return false;
+            }*/
+            $AdminUser = new AdminUser;
+            if ($AdminUser->login($data['username'], $data['password'])) {
+                $this->success('恭喜您，登陆成功', url('admin/Index/index'));
+            } else {
+                $this->error($AdminUser->getError(), url('admin/Login/login'));
+            }
+
         } else {
             return $this->fetch();
         }
