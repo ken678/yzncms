@@ -31,7 +31,7 @@
                 <div class="layui-input-inline input-item verify-box">
                     <label for="verify">验证码</label>
                     <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
-                    <img id="verify" src="http://web.vip-admin.com/captcha.html" alt="验证码" onclick="this.src = this.src+'?'" class="captcha">
+                    <img id="verify" src="{:url('api/checkcode/getVerify','font_size=18&imageW=130&imageH=38')}" alt="验证码" class="captcha">
                 </div>
                 <div class="layui-input-inline login-btn">
                     <button type="button" class="layui-btn" lay-submit lay-filter="*">登录</button>

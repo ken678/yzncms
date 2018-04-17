@@ -23,11 +23,6 @@ class AdminUser extends Model
     protected $table = '__ADMIN__';
     protected $pk = 'userid';
 
-    protected function checkPassword($password, $codepassword)
-    {
-        return Hash::check((string) $password, $codepassword);
-    }
-
     /**
      * 用户登录
      * @param string $username 用户名
