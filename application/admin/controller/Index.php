@@ -21,7 +21,7 @@ class Index extends Adminbase
     //后台首页
     public function index()
     {
-        return '1111';
+        return $this->fetch();
     }
 
 }
