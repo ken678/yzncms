@@ -21,6 +21,8 @@ class Index extends Adminbase
     //后台首页
     public function index()
     {
+        //后台菜单
+        $this->assign('__MENU__', model("common/Menu")->getMenuList());
         return $this->fetch();
     }
 

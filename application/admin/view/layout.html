@@ -25,12 +25,10 @@
                     </dl>
                 </li>
             </ul>
-            <!-- 头部区域（可配合layui已有的水平导航） -->
             <ul class="layui-nav layui-layout-left topLevelMenus">
-                <li class="layui-nav-item" data-menu="contentManagement"><a href="javascript:;">控制台</a></li>
-                <li class="layui-nav-item" data-menu="contentManagement"><a href="javascript:;">商品管理</a></li>
-                <li class="layui-nav-item" data-menu="contentManagement"><a href="javascript:;">用户</a></li>
-                <li class="layui-nav-item" data-menu="contentManagement"><a href="javascript:;">其它系统</a></li>
+            	{volist name="__MENU__" id="menu"}
+                <li class="layui-nav-item" data-menu="{$key}"><a href="javascript:;">{$menu.title}</a></li>
+                {/volist}
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
