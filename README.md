@@ -1,3 +1,10 @@
+[环境要求]
+```
+PHP >= 5.6.0
+PDO PHP Extension
+MBstring PHP Extension
+```
+
 # 此YZNCMS版本将去除所有模块和插件 仅保留核心功能  
 # 此版本暂未发布 重构中...  进度实时更新...
 ```
