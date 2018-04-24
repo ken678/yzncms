@@ -22,7 +22,8 @@ class Index extends Adminbase
     public function index()
     {
         //后台菜单
-        $this->assign('__MENU__', model("common/Menu")->getMenuList());
+        //$this->assign('__MENU__', model("common/Menu")->getMenuList());
+        $this->assign("SUBMENU_CONFIG", json_encode(model("admin/Menu")->getMenuList()));
         return $this->fetch();
     }
 

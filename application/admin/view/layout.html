@@ -25,10 +25,7 @@
                     </dl>
                 </li>
             </ul>
-            <ul class="layui-nav layui-layout-left topLevelMenus">
-            	{volist name="__MENU__" id="menu"}
-                <li class="layui-nav-item" data-menu="{$key}"><a href="javascript:;">{$menu.title}</a></li>
-                {/volist}
+            <ul class="layui-nav layui-layout-left topLevelMenus" id="J_B_main_block">
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
@@ -47,7 +44,11 @@
             <div class="navBar layui-side-scroll" id="navBar">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree">
-                    <li class="layui-nav-item"><a class="" href="javascript:;"><cite>后台首页</cite></a></li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;">
+                            <cite>后台首页</cite>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -64,7 +65,78 @@
         </div>
     </div>
     <script src="__STATIC__/layui/layui.js"></script>
-    <script src="__STATIC__/admin/js/index.js"></script>
+    <script type="text/javascript">
+    layui.use(['form', 'element', 'layer', 'jquery'], function() {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var element = layui.element;
+        var layer = layui.layer;
+
+
+
+        var USUALL = [],
+            /*常用的功能模块*/
+            TEMP = [],
+            /*SUALL = USUALL.concat('-', [{
+                title: '最近操作',
+                disabled: true
+            }], TEMP),*/
+            SUBMENU_CONFIG = <?php echo $SUBMENU_CONFIG; ?>,
+            /*主菜单区*/
+            imgpath = '',
+            times = 0,
+            getdescurl = '',
+            searchurl = '',
+            token = "";
+
+        //顶部菜单展示
+        $(function() {
+            var html = [];
+            //iframe_height();
+            //console.log(SUBMENU_CONFIG);
+            $.each(SUBMENU_CONFIG, function(i, o) {
+                html.push('<li class="layui-nav-item"><a href="javascript:;" title="' + o.title + '" data-id="' + o.id + '">' + o.title + '</a></li>');
+            });
+            $('#J_B_main_block').html(html.join(''));
+            //后台位在第一个导航
+            $('#J_B_main_block li:first > a').click();
+            //维持在线
+            setInterval(function() {
+                online();
+            }, 60000);
+        });
+
+
+
+
+
+
+
+
+
+        //手机设备的简单适配
+        var treeMobile = $('.site-tree-mobile'),
+            shadeMobile = $('.site-mobile-shade')
+        treeMobile.on('click', function() {
+            $('body').addClass('site-mobile');
+        });
+        shadeMobile.on('click', function() {
+            $('body').removeClass('site-mobile');
+        });
+
+        //用于维持在线
+        function online() {}
+
+        //iframe高度
+        function iframe_height() {
+            /*def_iframe_height = $("body").height() - $("#B_history").height() - $(".head th").height();
+            $("#B_frame").height(def_iframe_height);*/
+        }
+
+
+
+    })
+    </script>
 </body>
 
 </html>
