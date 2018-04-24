@@ -9,12 +9,32 @@
     <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
     <link rel="stylesheet" href="__STATIC__/admin/css/global.css">
 </head>
+<style type="text/css">
+.layui-tab-content {
+    top: 0px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+}
+.layui-show {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+iframe {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+</style>
 
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
             <a href="#" class="logo">YZNCMS后台</a>
-            <ul class="layui-nav mobileTopLevelMenus">
+            <!--<ul class="layui-nav mobileTopLevelMenus">
                 <li class="layui-nav-item">
                     <a href="javascript:;">导航分类<span class="layui-nav-more"></span></a>
                     <dl class="layui-nav-child">
@@ -24,15 +44,12 @@
                         <dd><a href="javascript:;">使用文档</a></dd>
                     </dl>
                 </li>
-            </ul>
+            </ul>-->
             <ul class="layui-nav layui-layout-left topLevelMenus" id="J_B_main_block">
+                <!--AJAX数据-->
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">
-          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          贤心
-        </a>
+                <li class="layui-nav-item"><a href="javascript:;"><img src="" class="layui-nav-img">贤心</a>
                     <dl class="layui-nav-child">
                         <dd><a href="">基本资料</a></dd>
                         <dd><a href="">安全设置</a></dd>
@@ -42,13 +59,8 @@
         </div>
         <div class="layui-side layui-bg-black">
             <div class="navBar layui-side-scroll" id="navBar">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree">
-                    <li class="layui-nav-item">
-                        <a class="" href="javascript:;">
-                            <cite>后台首页</cite>
-                        </a>
-                    </li>
+                <ul class="layui-nav layui-nav-tree" id="B_menubar">
+                    <!--AJAX数据-->
                 </ul>
             </div>
         </div>
@@ -56,9 +68,12 @@
             <i class="layui-icon">&#xe602;</i>
         </div>
         <div class="site-mobile-shade"></div>
-        <div class="layui-body">
-            <!-- 内容主体区域 -->
-            <div style="padding: 15px;">内容主体区域</div>
+        <div class="layui-body" id="B_frame">
+            <div class="layui-tab-content clildFrame">
+                <div class="layui-tab-item layui-show">
+                    <iframe id="iframe_default" src="{:url('main/index')}" style="height: 100%; width: 100%;display:none;" data-id="default" frameborder="0" scrolling="auto"></iframe>
+                </div>
+            </div>
         </div>
         <div class="layui-footer">
             © YZNCMS V1.0.0
@@ -71,8 +86,6 @@
         var form = layui.form;
         var element = layui.element;
         var layer = layui.layer;
-
-
 
         var USUALL = [],
             /*常用的功能模块*/
@@ -89,6 +102,17 @@
             searchurl = '',
             token = "";
 
+
+        //iframe 加载事件
+        var iframe_default = document.getElementById('iframe_default');
+         var def_iframe_height = 0;
+         $(iframe_default.contentWindow.document).ready(function() {
+             /*setTimeout(function() {
+                 $('#loading').hide();
+             }, 500);*/
+             $(iframe_default).show();
+         });
+
         //顶部菜单展示
         $(function() {
             var html = [];
@@ -98,6 +122,7 @@
                 html.push('<li class="layui-nav-item"><a href="javascript:;" title="' + o.title + '" data-id="' + o.id + '">' + o.title + '</a></li>');
             });
             $('#J_B_main_block').html(html.join(''));
+            element.render(); //重新渲染
             //后台位在第一个导航
             $('#J_B_main_block li:first > a').click();
             //维持在线
@@ -106,12 +131,102 @@
             }, 60000);
         });
 
+        //顶部导航点击
+        $('#J_B_main_block').on('click', 'a', function(e) {
+            //取消事件的默认动作
+            e.preventDefault();
+            //终止事件 不再派发事件
+            e.stopPropagation();
+            $(this).parent().addClass('current').siblings().removeClass('current');
+            var data_id = $(this).attr('data-id'),
+                data_list = SUBMENU_CONFIG[data_id],
+                html = [],
+                child_html = [],
+                child_index = 0,
+                B_menubar = $('#B_menubar');
 
+            if (B_menubar.attr('data-id') == data_id) {
+                return false;
+            };
+            //显示左侧菜单
+            //console.log(data_list['items']);
+            show_left_menu(data_list['items']);
+            B_menubar.html(html.join('')).attr('data-id', data_id);
+            element.render(); //重新渲染
+            //左侧导航复位
+            //$("#B_menunav").css({ "margin-top": "0px" });
+            //检查是否应该出现上一页、下一页
+            //checkMenuNext();
+            //
+            //显示左侧菜单
+            function show_left_menu(data) {
+                for (var attr in data) {
+                    if (data[attr] && typeof(data[attr]) === 'object') {
+                        //循环子对象
+                        if (!data[attr].url && attr === 'items') {
+                            //子菜单添加识别属性
+                            $.each(data[attr], function(i, o) {
+                                child_index++;
+                                o.isChild = true;
+                                o.child_index = child_index;
+                            });
+                        }
+                        show_left_menu(data[attr]); //继续执行循环(筛选子菜单)
+                    } else {
+                        if (attr === 'title') {
+                            data.url = data.url ? data.url : '#';
+                            if (!(data['isChild'])) {
+                                //一级菜单
+                                html.push('<li class="layui-nav-item"><a href="' + data.url + '" data-id="' + data.id + '"><b>' + data.title + '</b></a>');
+                            } else {
+                                //二级菜单
+                                child_html.push('<dd><a href="' + data.url + '" data-id="' + data.id + '">' + data.title + '</a></dd>');
+                                //二级菜单全部push完毕
+                                if (data.child_index == child_index) {
+                                    html.push('<dl class="layui-nav-child">' + child_html.join('') + '</dl></li>');
+                                    child_html = [];
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        });
 
+        //左边菜单点击
+        $('#B_menubar').on('click', 'a', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            //iframe_height();
+            /*var $this = $(this),
+                _dt = $this.parent(),
+                _dd = _dt.next('dd');
+            $("#B_menubar li").removeClass('current');
+            //当前菜单状态
+            _dt.addClass('current').siblings('dt.current').removeClass('current');
 
+            //子菜单显示&隐藏
+            if (_dd.length) {
+                _dt.toggleClass('current');
+                _dd.toggle();
+                //检查上下分页
+                checkMenuNext();
+                return false;
+            };
 
+            $('#loading').show().focus(); //显示loading
+            $('#B_history li').removeClass('current');
+            var data_id = $(this).attr('data-id'),
+                li = $('#B_history li[data-id=' + data_id + ']');
+            var href = this.href;
 
+            iframeJudge({
+                elem: $this,
+                href: href,
+                id: data_id
+            });*/
 
+        });
 
 
         //手机设备的简单适配
@@ -126,13 +241,6 @@
 
         //用于维持在线
         function online() {}
-
-        //iframe高度
-        function iframe_height() {
-            /*def_iframe_height = $("body").height() - $("#B_history").height() - $(".head th").height();
-            $("#B_frame").height(def_iframe_height);*/
-        }
-
 
 
     })
