@@ -4,6 +4,11 @@ PHP >= 5.6.0
 PDO PHP Extension
 MBstring PHP Extension
 ```
+[空间要求]
+```
+系统支持 Windows/mac/linux
+服务器需支持将域名绑定public目录
+```
 [安装教程]
 ```
 第一步：修改数据库配置 更目录/config/database.php  
