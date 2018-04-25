@@ -70,8 +70,7 @@ iframe {
         <div class="site-mobile-shade"></div>
         <div class="layui-body" id="B_frame">
             <ul class="layui-tab-title top_tab" id="B_history">
-                <li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i>
-                    后台首页
+                <li class="layui-this" data-id="default"><i class="layui-icon">&#xe68e;</i> 后台首页
                 </li>
             </ul>
             <div class="layui-tab-content clildFrame">
@@ -91,21 +90,7 @@ iframe {
         var element = layui.element;
         var layer = layui.layer;
 
-        var USUALL = [],
-            /*常用的功能模块*/
-            TEMP = [],
-            /*SUALL = USUALL.concat('-', [{
-                title: '最近操作',
-                disabled: true
-            }], TEMP),*/
-            SUBMENU_CONFIG = <?php echo $SUBMENU_CONFIG; ?>,
-            /*主菜单区*/
-            imgpath = '',
-            times = 0,
-            getdescurl = '',
-            searchurl = '',
-            token = "";
-
+        var SUBMENU_CONFIG = <?php echo $SUBMENU_CONFIG; ?>;
 
         //iframe 加载事件
         var iframe_default = document.getElementById('iframe_default');
@@ -208,7 +193,6 @@ iframe {
             //$("#B_menubar li").removeClass('current');
             //当前菜单状态
             //_dt.addClass('current').siblings('dt.current').removeClass('current');
-            console.log(_dl);
             //子菜单显示&隐藏
             if (_dl.length) {
                 //_dt.toggleClass('current');
@@ -263,20 +247,70 @@ iframe {
                     width: '100%'
                 };
                 var iframe = $('<iframe/>').prop(iframeAttr).appendTo('#B_frame .layui-tab-content .layui-show');
-                console.log(iframe[0]);
 
                 $(iframe[0].contentWindow.document).ready(function() {
                     $('#B_frame iframe').hide();
                     setTimeout(function() {
                         $('#loading').hide();
                     }, 500);
-                    var li = $('<li tabindex="0">' + elem.html() + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i></li>').attr('data-id', id);
+                    var li = $('<li>' + elem.html() + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i></li>').attr('data-id', id);
                     li.appendTo('#B_history');
                     showTab(li); //计算此tab的位置，如果不在屏幕内，则移动导航位置
                     //$(this).show().unbind('load');
                 });
             }
         }
+
+        //顶部点击一个tab页
+        $('#B_history').on('click focus', 'li', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var data_id = $(this).data('id');
+            if (data_id) {
+                //选择顶部菜单
+                var curid = data_id;
+                if (curid == "default") curid = "changyong";
+                var topmenu = getTopMenuByID(curid);
+                var objtopmenu = $('#J_B_main_block').find("a[data-id=" + topmenu.id + "]");
+                if (objtopmenu.parent().attr("class") != "layui-this") {
+                    //选中当前顶部菜单
+                    objtopmenu.parent().addClass('layui-this').siblings().removeClass('layui-this');
+                    //触发事件
+                    objtopmenu.click();
+                }
+                //选择左边菜单
+                $("#B_menubar").find(".layui-this").removeClass('layui-this');
+                $("#B_menubar").find("a[data-id=" + data_id + "]").parent().addClass('layui-this');
+            }
+
+            $(this).addClass('layui-this').siblings('li').removeClass('layui-this');
+            try {
+                var menuid = parseInt(data_id);
+                if (menuid) {
+                    setCookie("menuid", menuid);
+                }
+            } catch (err) {}
+            $('#iframe_' + data_id).show().siblings('iframe').hide(); //隐藏其它iframe
+        });
+
+        //顶部关闭一个tab页
+        $('#B_history').on('click', '.layui-tab-close', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var li = $(this).parent(),
+                prev_li = li.prev('li'),
+                data_id = li.attr('data-id');
+            li.hide(60, function() {
+                $(this).remove(); //移除选项卡
+                $('#iframe_' + data_id).remove(); //移除iframe页面
+                var current_li = $('#B_history li.layui-this');
+                //找到关闭后当前应该显示的选项卡
+                current_li = current_li.length ? current_li : prev_li;
+                current_li.addClass('layui-this');
+                cur_data_id = current_li.attr('data-id');
+                $('#iframe_' + cur_data_id).show();
+            });
+        });
 
         //显示顶部导航时作位置判断，点击左边菜单、上一tab、下一tab时公用
         function showTab(li) {
@@ -299,6 +333,46 @@ iframe {
                 }*/
                 li.trigger('click');
             }
+        }
+
+        //通过菜单id查找菜单配置对象
+        function getMenuByID(mid, menugroup) {
+            var ret = {};
+            mid = parseInt(mid);
+            if (!menugroup) menugroup = SUBMENU_CONFIG;
+            if (isNaN(mid)) {
+                ret = menugroup['changyong'];
+            } else {
+                $.each(menugroup, function(i, o) {
+                    if (o.id && parseInt(o.id) == mid) {
+                        ret = o;
+                        return false
+                    } else if (o.items) {
+                        var tmp = getMenuByID(mid, o.items);
+                        if (tmp.id && parseInt(tmp.id) == mid) {
+                            ret = tmp;
+                            return false
+                        }
+                    }
+                });
+            }
+            return ret;
+        }
+
+        function getTopMenuByID(mid) {
+            var ret = {};
+            var menu = getMenuByID(mid);
+            if (menu) {
+                if (menu.parent) {
+                    var tmp = getTopMenuByID(menu.parent);
+                    if (tmp && tmp.id) {
+                        ret = tmp;
+                    }
+                } else {
+                    ret = menu;
+                }
+            }
+            return ret;
         }
 
 
