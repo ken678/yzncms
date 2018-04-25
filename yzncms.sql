@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-04-23 19:21:47
+Date: 2018-04-25 16:37:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,7 +58,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -67,3 +67,6 @@ INSERT INTO `yzn_menu` VALUES ('1', '我的面板', '', '0', 'admin', 'public_ma
 INSERT INTO `yzn_menu` VALUES ('2', '设置', '', '0', 'admin', 'setting', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('3', '模块', '', '0', 'admin', 'module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('4', '扩展', '', '0', 'admin', 'addons', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('10', '个人信息', '', '1', 'admin', 'manage', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('11', '修改个人信息', '', '10', 'admin', 'manage', 'myinfo', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('12', '修改密码', '', '10', 'admin', 'manage', 'chanpass', '', '1', '', '0', '0');

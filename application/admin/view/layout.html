@@ -11,7 +11,7 @@
 </head>
 <style type="text/css">
 .layui-tab-content {
-    top: 0px;
+    top: 40px;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -69,6 +69,11 @@ iframe {
         </div>
         <div class="site-mobile-shade"></div>
         <div class="layui-body" id="B_frame">
+            <ul class="layui-tab-title top_tab" id="B_history">
+                <li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i>
+                    后台首页
+                </li>
+            </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
                     <iframe id="iframe_default" src="{:url('main/index')}" style="height: 100%; width: 100%;display:none;" data-id="default" frameborder="0" scrolling="auto"></iframe>
@@ -81,9 +86,8 @@ iframe {
     </div>
     <script src="__STATIC__/layui/layui.js"></script>
     <script type="text/javascript">
-    layui.use(['form', 'element', 'layer', 'jquery'], function() {
+    layui.use(['element', 'layer', 'jquery'], function() {
         var $ = layui.jquery;
-        var form = layui.form;
         var element = layui.element;
         var layer = layui.layer;
 
@@ -105,13 +109,13 @@ iframe {
 
         //iframe 加载事件
         var iframe_default = document.getElementById('iframe_default');
-         var def_iframe_height = 0;
-         $(iframe_default.contentWindow.document).ready(function() {
-             /*setTimeout(function() {
-                 $('#loading').hide();
-             }, 500);*/
-             $(iframe_default).show();
-         });
+        var def_iframe_height = 0;
+        $(iframe_default.contentWindow.document).ready(function() {
+            /*setTimeout(function() {
+                $('#loading').hide();
+            }, 500);*/
+            $(iframe_default).show();
+        });
 
         //顶部菜单展示
         $(function() {
@@ -198,24 +202,24 @@ iframe {
             e.preventDefault();
             e.stopPropagation();
             //iframe_height();
-            /*var $this = $(this),
+            var $this = $(this),
                 _dt = $this.parent(),
-                _dd = _dt.next('dd');
-            $("#B_menubar li").removeClass('current');
+                _dl = $this.next('dl');
+            //$("#B_menubar li").removeClass('current');
             //当前菜单状态
-            _dt.addClass('current').siblings('dt.current').removeClass('current');
-
+            //_dt.addClass('current').siblings('dt.current').removeClass('current');
+            console.log(_dl);
             //子菜单显示&隐藏
-            if (_dd.length) {
-                _dt.toggleClass('current');
-                _dd.toggle();
+            if (_dl.length) {
+                //_dt.toggleClass('current');
+                //_dl.toggle();
                 //检查上下分页
-                checkMenuNext();
+                //checkMenuNext();
                 return false;
             };
 
-            $('#loading').show().focus(); //显示loading
-            $('#B_history li').removeClass('current');
+            //$('#loading').show().focus(); //显示loading
+            //$('#B_history li').removeClass('current');
             var data_id = $(this).attr('data-id'),
                 li = $('#B_history li[data-id=' + data_id + ']');
             var href = this.href;
@@ -224,9 +228,78 @@ iframe {
                 elem: $this,
                 href: href,
                 id: data_id
-            });*/
+            });
 
         });
+
+        //判断显示或创建iframe
+        function iframeJudge(options) {
+            var elem = options.elem,
+                href = options.href,
+                id = options.id,
+                li = $('#B_history li[data-id=' + id + ']');
+
+            //如果iframe标签是已经存在的，则显示并让选项卡高亮,并不显示loading
+            if (li.length > 0) {
+                var iframe = $('#iframe_' + id);
+                setTimeout(function() {
+                    $('#loading').hide();
+                }, 500);
+                li.addClass('current');
+                if (iframe[0].contentWindow && iframe[0].contentWindow.location.href !== href) {
+                    iframe[0].contentWindow.location.href = href;
+                }
+                $('#B_frame iframe').hide();
+                $('#iframe_' + id).show();
+                showTab(li); //计算此tab的位置，如果不在屏幕内，则移动导航位置
+            } else {
+                //创建一个并加以标识
+                var iframeAttr = {
+                    src: href,
+                    id: 'iframe_' + id,
+                    frameborder: '0',
+                    scrolling: 'auto',
+                    height: '100%',
+                    width: '100%'
+                };
+                var iframe = $('<iframe/>').prop(iframeAttr).appendTo('#B_frame .layui-tab-content .layui-show');
+                console.log(iframe[0]);
+
+                $(iframe[0].contentWindow.document).ready(function() {
+                    $('#B_frame iframe').hide();
+                    setTimeout(function() {
+                        $('#loading').hide();
+                    }, 500);
+                    var li = $('<li tabindex="0">' + elem.html() + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i></li>').attr('data-id', id);
+                    li.appendTo('#B_history');
+                    showTab(li); //计算此tab的位置，如果不在屏幕内，则移动导航位置
+                    //$(this).show().unbind('load');
+                });
+            }
+        }
+
+        //显示顶部导航时作位置判断，点击左边菜单、上一tab、下一tab时公用
+        function showTab(li) {
+            if (li.length) {
+                /*var ul = $('#B_history'),
+                    li_offset = li.offset(),
+                    li_width = li.outerWidth(true),
+                    next_left = $('#J_next').offset().left - 9, //右边按钮的界限位置
+                    prev_right = $('#J_prev').offset().left + $('#J_prev').outerWidth(true); //左边按钮的界限位置
+                if (li_offset.left + li_width > next_left) { //如果将要移动的元素在不可见的右边，则需要移动
+                    var distance = li_offset.left + li_width - next_left; //计算当前父元素的右边距离，算出右移多少像素
+                    ul.animate({
+                        left: '-=' + distance
+                    }, 200, 'swing');
+                } else if (li_offset.left < prev_right) { //如果将要移动的元素在不可见的左边，则需要移动
+                    var distance = prev_right - li_offset.left; //计算当前父元素的左边距离，算出左移多少像素
+                    ul.animate({
+                        left: '+=' + distance
+                    }, 200, 'swing');
+                }*/
+                li.trigger('click');
+            }
+        }
 
 
         //手机设备的简单适配
