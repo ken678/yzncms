@@ -9,26 +9,6 @@
     <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
     <link rel="stylesheet" href="__STATIC__/admin/css/global.css">
 </head>
-<style type="text/css">
-.layui-tab-content {
-    top: 40px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 0;
-}
-.layui-show {
-    position: relative;
-    height: 100%;
-    overflow: auto;
-}
-iframe {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border: none;
-}
-</style>
 
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
@@ -74,7 +54,7 @@ iframe {
                 </li>
             </ul>
             <div class="layui-tab-content clildFrame">
-                <div class="layui-tab-item layui-show">
+                <div class="iframe_box">
                     <iframe id="iframe_default" src="{:url('main/index')}" style="height: 100%; width: 100%;display:none;" data-id="default" frameborder="0" scrolling="auto"></iframe>
                 </div>
             </div>
@@ -112,6 +92,7 @@ iframe {
             });
             $('#J_B_main_block').html(html.join(''));
             element.render(); //重新渲染
+            alert(111);
             //后台位在第一个导航
             $('#J_B_main_block li:first > a').click();
             //维持在线
@@ -246,7 +227,7 @@ iframe {
                     height: '100%',
                     width: '100%'
                 };
-                var iframe = $('<iframe/>').prop(iframeAttr).appendTo('#B_frame .layui-tab-content .layui-show');
+                var iframe = $('<iframe/>').prop(iframeAttr).appendTo('#B_frame .layui-tab-content .iframe_box');
 
                 $(iframe[0].contentWindow.document).ready(function() {
                     $('#B_frame iframe').hide();

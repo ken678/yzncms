@@ -1,8 +1,14 @@
 .logo {color: #fff; float: left; line-height: 60px; font-size: 18px; padding: 0 25px; text-align: center; width: 150px; }
 .mobileTopLevelMenus{display: none;float: left;}
-.layui-nav cite {margin-left: 5px; }
+
+.layui-tab-title .layui-this {background-color: #009688; color: #fff; }
+.layui-tab-title .layui-this:after {border: none; }
+.topLevelMenus .layui-nav-item.layui-this {background-color: rgba(0,0,0,0.5); }
 
 
+.layui-tab-content {top: 40px; position: absolute; bottom: 0; width: 100%; padding: 0; }
+.iframe_box{position: relative; height: 100%; overflow: auto; }
+iframe {position: absolute; height: 100%; width: 100%; border: none; }
 
 
 
