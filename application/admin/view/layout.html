@@ -82,24 +82,18 @@
             $(iframe_default).show();
         });
 
-        //顶部菜单展示
-        $(function() {
-            var html = [];
-            //iframe_height();
-            //console.log(SUBMENU_CONFIG);
-            $.each(SUBMENU_CONFIG, function(i, o) {
-                html.push('<li class="layui-nav-item"><a href="javascript:;" title="' + o.title + '" data-id="' + o.id + '">' + o.title + '</a></li>');
-            });
-            $('#J_B_main_block').html(html.join(''));
-            element.render(); //重新渲染
-            alert(111);
-            //后台位在第一个导航
-            $('#J_B_main_block li:first > a').click();
-            //维持在线
-            setInterval(function() {
-                online();
-            }, 60000);
+        var html = [];
+        //iframe_height();
+        //console.log(SUBMENU_CONFIG);
+        $.each(SUBMENU_CONFIG, function(i, o) {
+            html.push('<li class="layui-nav-item"><a href="javascript:;" title="' + o.title + '" data-id="' + o.id + '">' + o.title + '</a></li>');
         });
+        $('#J_B_main_block').html(html.join(''));
+        element.render(); //重新渲染
+        //维持在线
+        setInterval(function() {
+            online();
+        }, 60000);
 
         //顶部导航点击
         $('#J_B_main_block').on('click', 'a', function(e) {
@@ -162,6 +156,9 @@
                 }
             };
         });
+
+        //后台位在第一个导航
+        $('#J_B_main_block li:first > a').trigger("click");
 
         //左边菜单点击
         $('#B_menubar').on('click', 'a', function(e) {
