@@ -3,18 +3,39 @@
 
 .layui-tab-title .layui-this {background-color: #009688; color: #fff; }
 .layui-tab-title .layui-this:after {border: none; }
+.topLevelMenus {float: left; }
 .topLevelMenus .layui-nav-item.layui-this {background-color: rgba(0,0,0,0.5); }
+.showMenu.layui-layout-admin .layui-side {
+    left: -300px;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.showMenu .layui-body,.showMenu .layui-layout-admin .layui-footer {
+    left: -2px;
+}
 
 
 .layui-tab-content {top: 40px; position: absolute; bottom: 0; width: 100%; padding: 0; }
 .iframe_box{position: relative; height: 100%; overflow: auto; }
 iframe {position: absolute; height: 100%; width: 100%; border: none; }
 
+.hideMenu {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-top: 15px;
+    font-size: 17px;
+    line-height: 20px;
+    text-align: center;
+    padding: 5px 5px;
+    color: #fff;
+    background-color: #1AA094;
+}
 
 
 @media screen and (max-width:1080px){
-	.layui-layout-left{display:none !important;}
-    .mobileTopLevelMenus{display: inline-block; }
+  .mobileTopLevelMenus{display: inline-block; }
+  .topLevelMenus{display: none !important; }
 }
 @media screen and (max-width: 768px) {
   .layui-layout-admin .layui-side{left: -300px; transition: all .3s; -webkit-transition: all .3s;}
@@ -25,6 +46,7 @@ iframe {position: absolute; height: 100%; width: 100%; border: none; }
   .layui-body,.layui-layout-admin .layui-footer{ left:-2px; }
 }
 @media screen and (max-width: 720px){
+  .hideMenu {display: none !important; }
 	.mobileTopLevelMenus{ padding:0;}
 }
 @media screen and (max-width:480px){

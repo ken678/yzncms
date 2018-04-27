@@ -14,6 +14,7 @@
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
             <a href="#" class="logo">YZNCMS后台</a>
+            <a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
             <!--<ul class="layui-nav mobileTopLevelMenus">
                 <li class="layui-nav-item">
                     <a href="javascript:;">导航分类<span class="layui-nav-more"></span></a>
@@ -25,7 +26,7 @@
                     </dl>
                 </li>
             </ul>-->
-            <ul class="layui-nav layui-layout-left topLevelMenus" id="J_B_main_block">
+            <ul class="layui-nav topLevelMenus" id="J_B_main_block">
                 <!--AJAX数据-->
             </ul>
             <ul class="layui-nav layui-layout-right">
@@ -239,7 +240,7 @@
             }
         }
 
-        //顶部点击一个tab页
+        //点击一个tab页
         $('#B_history').on('click focus', 'li', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -262,16 +263,16 @@
             }
 
             $(this).addClass('layui-this').siblings('li').removeClass('layui-this');
-            try {
+            /*try {
                 var menuid = parseInt(data_id);
                 if (menuid) {
                     setCookie("menuid", menuid);
                 }
-            } catch (err) {}
+            } catch (err) {}*/
             $('#iframe_' + data_id).show().siblings('iframe').hide(); //隐藏其它iframe
         });
 
-        //顶部关闭一个tab页
+        //关闭一个tab页
         $('#B_history').on('click', '.layui-tab-close', function(e) {
             e.stopPropagation();
             e.preventDefault();
@@ -352,6 +353,12 @@
             }
             return ret;
         }
+
+        //隐藏左侧导航
+        $(".hideMenu").click(function() {
+            $(".layui-layout-admin").toggleClass("showMenu");
+
+        })
 
 
         //手机设备的简单适配
