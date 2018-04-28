@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\service\AdminUser;
 use app\common\controller\Adminbase;
 
 class Index extends Adminbase
@@ -21,10 +22,19 @@ class Index extends Adminbase
     //后台首页
     public function index()
     {
-        //后台菜单
-        //$this->assign('__MENU__', model("common/Menu")->getMenuList());
+        $this->assign('userInfo', AdminUser::getInstance()->getInfo());
         $this->assign("SUBMENU_CONFIG", json_encode(model("admin/Menu")->getMenuList()));
         return $this->fetch();
+    }
+
+    //手动退出登录
+    public function logout()
+    {
+        if (AdminUser::getInstance()->logout()) {
+            //手动登出时，清空forward
+            //cookie("forward", NULL);
+            $this->success('注销成功！', url("admin/login/index"));
+        }
     }
 
 }

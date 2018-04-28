@@ -19,18 +19,8 @@
 .iframe_box{position: relative; height: 100%; overflow: auto; }
 iframe {position: absolute; height: 100%; width: 100%; border: none; }
 
-.hideMenu {
-    float: left;
-    width: 20px;
-    height: 20px;
-    margin-top: 15px;
-    font-size: 17px;
-    line-height: 20px;
-    text-align: center;
-    padding: 5px 5px;
-    color: #fff;
-    background-color: #1AA094;
-}
+.hideMenu {float: left; width: 20px; height: 20px; margin-top: 15px; font-size: 17px; line-height: 20px; text-align: center; padding: 5px 5px; color: #fff; background-color: #1AA094; }
+.hideMenu:hover{ color:#fff; }
 
 
 @media screen and (max-width:1080px){

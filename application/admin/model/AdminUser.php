@@ -42,7 +42,7 @@ class AdminUser extends Model
             if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {
                 $this->error = '密码错误！';
             } else {
-                $this->autoLogin((int) $userInfo['userid']);
+                $this->autoLogin($userInfo);
                 return true;
             }
         }
@@ -82,6 +82,34 @@ class AdminUser extends Model
     {
         $data = ['last_login_time' => time(), 'last_login_ip' => get_client_ip(1)];
         return $this->save($data, ['userid' => $userId]);
+    }
+
+    /**
+     * 获取用户信息
+     * @param type $identifier 用户名或者用户ID
+     * @return boolean|array
+     */
+    public function getUserInfo($identifier, $password = null)
+    {
+        if (empty($identifier)) {
+            return false;
+        }
+        $map = array();
+        //判断是uid还是用户名
+        if (is_int($identifier)) {
+            $map['userid'] = $identifier;
+        } else {
+            $map['username'] = $identifier;
+        }
+        $userInfo = $this->where($map)->find();
+        if (empty($userInfo)) {
+            return false;
+        }
+        //密码验证
+        if (!empty($password) && password($password, $userInfo['encrypt']) != $userInfo['password']) {
+            return false;
+        }
+        return $userInfo;
     }
 
 }
