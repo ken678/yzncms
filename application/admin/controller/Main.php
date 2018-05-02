@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\service\AdminUser;
 use app\common\controller\Adminbase;
 
 class Main extends Adminbase
@@ -21,7 +22,8 @@ class Main extends Adminbase
     //欢迎首页
     public function index()
     {
-        return "1";
+        $this->assign('userInfo', AdminUser::getInstance()->getInfo());
+        return $this->fetch();
     }
 
 }

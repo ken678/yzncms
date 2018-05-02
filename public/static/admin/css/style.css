@@ -1,3 +1,4 @@
+@charset "utf-8";
 /*login*/
 .login-main {padding: 0 20px; width: 400px;height: 335px; position: absolute; left: 50%; top: 50%; margin: -200px 0 0 -200px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; background: #fff; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; box-shadow: 0 0 50px #000;}
 .login-main .layui-elip {margin-top: 10%;height: 35px; line-height: 35px; font-size: 30px; font-weight: 100; text-align: center; }
