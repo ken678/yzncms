@@ -41,31 +41,31 @@
             <tbody>
             <tr>
                 <td>当前版本</td>
-                <td class="version"></td>
+                <td class="version">yzncms v{$Think.config.version.yzncms_version}</td>
             </tr>
             <tr>
-                <td>开发作者</td>
-                <td class="author"></td>
+                <td>PHP 版本</td>
+                <td class="phpv">{$sys_info.phpv}</td>
             </tr>
             <tr>
-                <td>网站首页</td>
-                <td class="homePage"></td>
+                <td>服务器域名/IP</td>
+                <td class="domains">{$sys_info.domain} [ {$sys_info.ip} ]</td>
             </tr>
             <tr>
                 <td>服务器环境</td>
-                <td class="server"></td>
+                <td class="server">{$sys_info.web_server}</td>
             </tr>
             <tr>
                 <td>数据库版本</td>
-                <td class="dataBase"></td>
+                <td class="dataBase">{$sys_info.mysql_version}</td>
             </tr>
             <tr>
                 <td>最大上传限制</td>
-                <td class="maxUpload"></td>
+                <td class="maxUpload">{$sys_info.fileupload}</td>
             </tr>
             <tr>
-                <td>当前用户权限</td>
-                <td class="userRights"></td>
+                <td>服务器时间</td>
+                <td class="time">{$sys_info.time}</td>
             </tr>
             </tbody>
         </table>
