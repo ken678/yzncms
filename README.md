@@ -13,6 +13,7 @@ Apache / Nginx / Windows / Linux
 [空间要求]
 ```
 服务器需支持将域名绑定public目录
+如果您的服务器不支持绑定目录 请查看public目录下的index.php入口文件 有详细具体操作
 ```
 [安装教程]
 ```
