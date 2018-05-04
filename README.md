@@ -7,13 +7,11 @@ Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.1.X和layui
 ```
 [环境要求]
 ```
-PHP >= 5.6.0
-PDO PHP Extension
-MBstring PHP Extension
+php >= 5.6 (支持php7) / MySQL >= 5.0
+Apache / Nginx / Windows / Linux
 ```
 [空间要求]
 ```
-系统支持 Windows/mac/linux
 服务器需支持将域名绑定public目录
 ```
 [安装教程]
