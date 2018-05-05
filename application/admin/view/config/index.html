@@ -1,0 +1,67 @@
+{extend name="index_layout"/}
+{block name="main"}
+<table lay-filter="demo">
+    <thead>
+        <tr>
+            <th lay-data="{field:'username', width:200}">名称</th>
+            <th lay-data="{field:'experience1', width:200}">标题</th>
+            <th lay-data="{field:'sign1',width:100}">类型</th>
+            <th lay-data="{field:'experience2', width:200}">更新时间</th>
+            <th lay-data="{field:'experience3', width:100}">排序</th>
+            <th lay-data="{field:'sign2', width:100}">状态</th>
+            <th lay-data="{fixed:'right', width:120, align:'center', toolbar: '#barDemo'}">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td>{$vo.name}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.ftitle}</td>
+            <td>{:date('Y-m-d H:i:s',$vo.update_time)}</td>
+            <td>{$vo.listorder}</td>
+            <td>
+                <input type="checkbox" {if $vo.status} checked="checked" {/if} name="available" lay-skin="switch" lay-text="启用|停用" lay-filter="switchTest" data-id="{$vo.id}">
+            </td>
+        </tr>
+        {/volist}
+    </tbody>
+</table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+{/block} {block name="script"}
+<script>
+layui.use('table', function() {
+    var $ = layui.jquery,form = layui.form,
+        table = layui.table;
+    //转换静态表格
+    table.init('demo', {
+        limit: 10
+    });
+    form.on('switch(switchTest)', function(data) {
+        var _this = $(this);
+        if (data.elem.checked) {
+            var value = 1;
+        } else {
+            var value = 0;
+        }
+        $.ajax({
+            url: "{:url('admin/config/setstate')}",
+            data: {
+                id: _this.data('id'),
+                status: value
+            },
+            success: function(data) {
+                if (data.status==1) {
+                  layer.msg(data.msg, { icon: 1 });
+                }else{
+                  layer.msg(data.msg, { icon: 1 });
+                }
+            }
+        });
+    })
+});
+</script>
+{/block}
