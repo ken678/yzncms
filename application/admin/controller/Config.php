@@ -33,6 +33,21 @@ class Config extends Adminbase
         return $this->fetch();
     }
 
+    //删除配置
+    public function del()
+    {
+        $id = (int) input('id/d');
+        if (!is_numeric($id) || $id < 0) {
+            return '参数错误';
+        }
+        if (model('Config')->get($id)->delete()) {
+            ////cache('system_config', null);
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败！');
+        }
+    }
+
     //设置配置状态
     public function setstate($id, $status)
     {

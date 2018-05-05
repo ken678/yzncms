@@ -1,20 +1,21 @@
-{extend name="index_layout"/}
-{block name="main"}
-<table lay-filter="demo">
+{extend name="index_layout"/} {block name="main"}
+<table lay-filter="newsList">
     <thead>
         <tr>
-            <th lay-data="{field:'username', width:200}">名称</th>
-            <th lay-data="{field:'experience1', width:200}">标题</th>
-            <th lay-data="{field:'sign1',width:100}">类型</th>
-            <th lay-data="{field:'experience2', width:200}">更新时间</th>
-            <th lay-data="{field:'experience3', width:100}">排序</th>
-            <th lay-data="{field:'sign2', width:100}">状态</th>
+            <th lay-data="{field:'id', width:50}">ID</th>
+            <th lay-data="{field:'name', width:200}">名称</th>
+            <th lay-data="{field:'title', width:200}">标题</th>
+            <th lay-data="{field:'type',width:100}">类型</th>
+            <th lay-data="{field:'update_time', width:200}">更新时间</th>
+            <th lay-data="{field:'listorder', width:80}">排序</th>
+            <th lay-data="{field:'status', width:100}">状态</th>
             <th lay-data="{fixed:'right', width:120, align:'center', toolbar: '#barDemo'}">操作</th>
         </tr>
     </thead>
     <tbody>
         {volist name="list" id="vo"}
         <tr>
+            <td>{$vo.id}</td>
             <td>{$vo.name}</td>
             <td>{$vo.title}</td>
             <td>{$vo.ftitle}</td>
@@ -29,19 +30,21 @@
 </table>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs confirm" lay-event="del" url="{:url('admin/config/del')}">删除</a>
 </script>
 {/block} {block name="script"}
 <script>
 layui.use('table', function() {
-    var $ = layui.jquery,form = layui.form,
+    var $ = layui.jquery,
+        layer = parent.layer === undefined ? layui.layer : top.layer,
+        form = layui.form,
         table = layui.table;
     //转换静态表格
-    table.init('demo', {
+    table.init('newsList', {
         limit: 10
     });
     form.on('switch(switchTest)', function(data) {
-        var _this = $(this);
+        var _this = $(this),target;
         if (data.elem.checked) {
             var value = 1;
         } else {
@@ -54,14 +57,45 @@ layui.use('table', function() {
                 status: value
             },
             success: function(data) {
-                if (data.status==1) {
-                  layer.msg(data.msg, { icon: 1 });
-                }else{
-                  layer.msg(data.msg, { icon: 1 });
+                if (data.status == 1) {
+                    layer.msg(data.msg, { icon: 1 });
+                } else {
+                    layer.msg(data.msg, { icon: 1 });
                 }
             }
         });
     })
+    //列表操作
+    table.on('tool(newsList)', function(obj) {
+        var layEvent = obj.event,
+            tr = obj.tr,
+            data = obj.data,
+            target;
+        if (layEvent === 'edit') {
+            //addNews(data);
+        } else if (layEvent === 'del') {
+            if ((target = $(this).attr('href')) || (target = $(this).attr('url'))) {
+                layer.confirm('确认要执行该操作吗?', { icon: 3, title: '提示信息' }, function(index) {
+                    obj.del();
+                    layer.close(index);
+                    $.ajax({
+                        url: target,
+                        data: {
+                            id: data.id
+                        },
+                        success: function(data) {
+                            if (data.status == 1) {
+                                layer.msg(data.msg, { icon: 1 });
+                            } else {
+                                layer.msg(data.msg, { icon: 1 });
+                            }
+                        }
+                    });
+                });
+            }
+            return false;
+        }
+    });
 });
 </script>
 {/block}
