@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
+Source Server         : 本地链接
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-04-25 16:37:26
+Date: 2018-05-05 10:48:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,6 +29,7 @@ CREATE TABLE `yzn_admin` (
   `last_login_time` int(10) unsigned DEFAULT '0' COMMENT '最后登录时间',
   `last_login_ip` bigint(20) unsigned DEFAULT '0' COMMENT '最后登录IP',
   `email` varchar(40) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '会员状态',
   PRIMARY KEY (`userid`),
   KEY `username` (`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
@@ -36,8 +37,8 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1523528524', '2130706433', '530765310@qq.com');
-INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1525488471', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
@@ -63,10 +64,6 @@ CREATE TABLE `yzn_menu` (
 -- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
-INSERT INTO `yzn_menu` VALUES ('1', '我的面板', '', '0', 'admin', 'public_main', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('2', '设置', '', '0', 'admin', 'setting', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('3', '模块', '', '0', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('4', '扩展', '', '0', 'admin', 'addons', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('10', '个人信息', '', '1', 'admin', 'manage', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('11', '修改个人信息', '', '10', 'admin', 'manage', 'myinfo', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('12', '修改密码', '', '10', 'admin', 'manage', 'chanpass', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('1', '设置', '', '0', 'admin', 'setting', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('2', '模块', '', '0', 'admin', 'module', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('3', '扩展', '', '0', 'admin', 'addons', 'index', '', '1', '', '0', '0');

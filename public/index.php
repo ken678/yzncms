@@ -24,8 +24,8 @@ define('ROOT_URL', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/') . '/');
 
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
-
-// 支持事先使用静态方法设置Request对象和Config对象
-
 // 执行应用并响应
 Container::get('app')->run()->send();
+
+/*如果你的服务器不支持域名绑定目录
+1.请将index.php放置根目录 2.注释上面代码 3.解开下面的代码注释*/

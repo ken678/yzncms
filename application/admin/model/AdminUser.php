@@ -37,6 +37,8 @@ class AdminUser extends Model
         $userInfo = self::get($map);
         if (!$userInfo) {
             $this->error = '用户不存在！';
+        } elseif (!$userInfo['status']) {
+            $this->error = '用户已被禁用！';
         } else {
             //密码判断
             if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {

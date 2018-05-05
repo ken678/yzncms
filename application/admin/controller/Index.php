@@ -22,7 +22,7 @@ class Index extends Adminbase
     //后台首页
     public function index()
     {
-        $this->assign('userInfo', AdminUser::getInstance()->getInfo());
+        $this->assign('userInfo', $this->_userinfo);
         $this->assign("SUBMENU_CONFIG", json_encode(model("admin/Menu")->getMenuList()));
         return $this->fetch();
     }
