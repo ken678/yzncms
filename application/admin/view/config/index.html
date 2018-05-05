@@ -1,51 +1,39 @@
-{extend name="index_layout"/} {block name="main"}
-<table lay-filter="newsList">
-    <thead>
-        <tr>
-            <th lay-data="{field:'id', width:50}">ID</th>
-            <th lay-data="{field:'name', width:200}">名称</th>
-            <th lay-data="{field:'title', width:200}">标题</th>
-            <th lay-data="{field:'type',width:100}">类型</th>
-            <th lay-data="{field:'update_time', width:200}">更新时间</th>
-            <th lay-data="{field:'listorder', width:80}">排序</th>
-            <th lay-data="{field:'status', width:100}">状态</th>
-            <th lay-data="{fixed:'right', width:120, align:'center', toolbar: '#barDemo'}">操作</th>
-        </tr>
-    </thead>
-    <tbody>
-        {volist name="list" id="vo"}
-        <tr>
-            <td>{$vo.id}</td>
-            <td>{$vo.name}</td>
-            <td>{$vo.title}</td>
-            <td>{$vo.ftitle}</td>
-            <td>{:date('Y-m-d H:i:s',$vo.update_time)}</td>
-            <td>{$vo.listorder}</td>
-            <td>
-                <input type="checkbox" {if $vo.status} checked="checked" {/if} name="available" lay-skin="switch" lay-text="启用|停用" lay-filter="switchTest" data-id="{$vo.id}">
-            </td>
-        </tr>
-        {/volist}
-    </tbody>
-</table>
-<script type="text/html" id="barDemo">
+{extend name="index_layout"/}
+{block name="main"}
+<table class="layui-hide" id="list" lay-filter="list"></table>
+<script type="text/html" id="barTool">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs confirm" lay-event="del" url="{:url('admin/config/del')}">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" url="{:url('admin/config/del')}">删除</a>
+</script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 {/block} {block name="script"}
 <script>
 layui.use('table', function() {
-    var $ = layui.jquery,
-        layer = parent.layer === undefined ? layui.layer : top.layer,
+    var table = layui.table,
         form = layui.form,
-        table = layui.table;
-    //转换静态表格
-    table.init('newsList', {
-        limit: 10
+        $ = layui.jquery;
+    //方法级渲染
+    var tableObj = table.render({
+        elem: '#list',
+        url: "{:url('admin/config/index')}",
+        method: 'post',
+        cols: [
+            [
+                { field: 'name', title: '名称',width: 200 },
+                { field: 'title', title: '标题'},
+                { field: 'type', title: '类型', width: 120 },
+                { field: 'listorder', title: '排序', width: 100,edit: 'text'},
+                { field: 'status', title: '状态', width: 100, templet: '#switchTpl', unresize: true },
+                { width: 120,fixed: 'right', align: 'center', toolbar: '#barTool' }
+            ]
+        ],
+        id: 'testReload'
     });
-    form.on('switch(switchTest)', function(data) {
-        var _this = $(this),target;
-        if (data.elem.checked) {
+
+    form.on('switch(status)', function(obj) {
+        if (obj.elem.checked) {
             var value = 1;
         } else {
             var value = 0;
@@ -53,7 +41,7 @@ layui.use('table', function() {
         $.ajax({
             url: "{:url('admin/config/setstate')}",
             data: {
-                id: _this.data('id'),
+                id: this.value,
                 status: value
             },
             success: function(data) {
@@ -62,38 +50,50 @@ layui.use('table', function() {
                 } else {
                     layer.msg(data.msg, { icon: 1 });
                 }
+                tableObj.reload(); //重载表格
             }
         });
-    })
-    //列表操作
-    table.on('tool(newsList)', function(obj) {
-        var layEvent = obj.event,
-            tr = obj.tr,
-            data = obj.data,
+    });
+
+
+      table.on('edit(list)', function(obj){
+        var value = obj.value //得到修改后的值
+        ,data = obj.data //得到所在行所有键值
+        ,field = obj.field; //得到字段
+        layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+      });
+
+
+    table.on('tool(list)', function(obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        var tr = obj.tr,
             target;
-        if (layEvent === 'edit') {
-            //addNews(data);
+        if (layEvent === 'detail') {
+            //do somehing
         } else if (layEvent === 'del') {
             if ((target = $(this).attr('href')) || (target = $(this).attr('url'))) {
                 layer.confirm('确认要执行该操作吗?', { icon: 3, title: '提示信息' }, function(index) {
-                    obj.del();
-                    layer.close(index);
-                    $.ajax({
-                        url: target,
-                        data: {
-                            id: data.id
-                        },
-                        success: function(data) {
-                            if (data.status == 1) {
-                                layer.msg(data.msg, { icon: 1 });
-                            } else {
-                                layer.msg(data.msg, { icon: 1 });
+                        obj.del();
+                        layer.close(index);
+                        $.ajax({
+                            url: target,
+                            data: {
+                                id: data.id
+                            },
+                            success: function(data) {
+                                if (data.status == 1) {
+                                    layer.msg(data.msg, { icon: 1 });
+                                } else {
+                                    layer.msg(data.msg, { icon: 1 });
+                                }
+                                tableObj.reload(); //重载表格
                             }
-                        }
+                        });
                     });
-                });
-            }
-            return false;
+                };
+        } else if(layEvent === 'edit') {
+            //do somehing
         }
     });
 });

@@ -22,14 +22,13 @@ class Config extends Adminbase
     //配置首页
     public function index()
     {
-        $list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
-            ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
-            ->order('listorder,id desc')
-            ->paginate(15);
-        $this->assign([
-            'list' => $list,
-            'page' => $list->render(),
-        ]);
+        if ($this->request->isPost()) {
+            $list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
+                ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
+                ->order('listorder,id desc')
+                ->select();
+            return $result = ['code' => 0, 'msg' => '获取成功!', 'data' => $list];
+        }
         return $this->fetch();
     }
 
