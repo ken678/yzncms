@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
+Source Server         : localhost_3306
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-05-05 15:29:32
+Date: 2018-05-07 12:52:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,8 +37,29 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1525488471', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1525665101', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1512010110', '2130706433', '530765310@qq.com', '1');
+
+-- ----------------------------
+-- Table structure for `yzn_cache`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_cache`;
+CREATE TABLE `yzn_cache` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `key` char(100) NOT NULL DEFAULT '' COMMENT '缓存KEY值',
+  `name` char(100) NOT NULL DEFAULT '' COMMENT '名称',
+  `module` char(20) NOT NULL DEFAULT '' COMMENT '模块名称',
+  `model` char(30) NOT NULL DEFAULT '' COMMENT '模型名称',
+  `action` char(30) NOT NULL DEFAULT '' COMMENT '方法名',
+  `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
+  PRIMARY KEY (`id`),
+  KEY `ckey` (`key`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+
+-- ----------------------------
+-- Records of yzn_cache
+-- ----------------------------
+INSERT INTO `yzn_cache` VALUES ('1', 'Config', '网站配置', 'Admin', 'Config', 'config_cache', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_config`
@@ -61,18 +82,19 @@ CREATE TABLE `yzn_config` (
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_config
 -- ----------------------------
 INSERT INTO `yzn_config` VALUES ('1', 'web_site_status', 'switch', '站点开关', 'base', '', '站点关闭后前台将不能访问', '1494408414', '1494408414', '1', '1', '1');
 INSERT INTO `yzn_config` VALUES ('2', 'web_site_title', 'text', '站点标题', 'base', '', '', '1494408414', '1494408414', '1', 'YznCMS网站管理系统', '2');
-INSERT INTO `yzn_config` VALUES ('3', 'web_site_keywords', 'text', '站点关键词', 'base', '', '', '0', '0', '1', null, '3');
-INSERT INTO `yzn_config` VALUES ('4', 'web_site_description', 'text', '站点描述', 'base', '', '', '0', '0', '1', null, '4');
-INSERT INTO `yzn_config` VALUES ('5', 'web_site_logo', 'image', '站点LOGO', 'base', '', '', '0', '0', '1', null, '5');
-INSERT INTO `yzn_config` VALUES ('6', 'web_site_icp', 'text', '备案信息', 'base', '', '', '0', '0', '1', null, '6');
-INSERT INTO `yzn_config` VALUES ('7', 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', '0', '0', '1', null, '7');
+INSERT INTO `yzn_config` VALUES ('3', 'web_site_keywords', 'text', '站点关键词', 'base', '', '', '1494408414', '1494408414', '1', null, '3');
+INSERT INTO `yzn_config` VALUES ('4', 'web_site_description', 'text', '站点描述', 'base', '', '', '1494408414', '1494408414', '1', null, '4');
+INSERT INTO `yzn_config` VALUES ('5', 'web_site_logo', 'image', '站点LOGO', 'base', '', '', '1494408414', '1494408414', '1', null, '5');
+INSERT INTO `yzn_config` VALUES ('6', 'web_site_icp', 'text', '备案信息', 'base', '', '', '1494408414', '1494408414', '1', null, '6');
+INSERT INTO `yzn_config` VALUES ('7', 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', '1494408414', '1494408414', '1', null, '7');
+INSERT INTO `yzn_config` VALUES ('8', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\nsystem:系统\nupload:上传\ndevelop:开发', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`

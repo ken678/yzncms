@@ -18,5 +18,71 @@ use \think\Model;
 
 class Config extends Model
 {
+    /**
+     * 更新缓存
+     */
+    public function config_cache()
+    {
+        $data = $this->getConfig();
+        cache("Config", $data);
+        return $data;
+    }
+
+    /**
+     * 获取配置信息
+     * @param  string $name 配置名
+     * @return mixed
+     */
+    public static function getConfig($where = "status='1'", $fields = 'name,value,type,extra', $order = 'listorder,id desc')
+    {
+        $configs = self::where($where)->order($order)->column($fields);
+        $newConfigs = [];
+        foreach ($configs as $key => $value) {
+            if ($value['extra'] != '') {
+                $value['extra'] = parse_attr($value['extra']);
+            }
+            switch ($value['type']) {
+                case 'array':
+                    $newConfigs[$key] = parse_attr($value['value']);
+                    break;
+                case 'radio':
+                    $newConfigs[$key] = isset($value['extra'][$value['value']]) ? ['key' => $value['value'], 'value' => $value['extra'][$value['value']]] : ['key' => $value['value'], 'value' => $value['value']];
+                    break;
+                case 'select':
+                    $newConfigs[$key] = isset($value['extra'][$value['value']]) ? ['key' => $value['value'], 'value' => $value['extra'][$value['value']]] : ['key' => $value['value'], 'value' => $value['value']];
+                    break;
+                case 'checkbox':
+                    if (empty($value['value'])) {
+                        $newConfigs[$key] = [];
+                    } else {
+                        $valueArr = explode(',', $value['value']);
+                        foreach ($valueArr as $v) {
+                            if (isset($value['extra'][$v])) {
+                                $newConfigs[$key][$v] = $value['extra'][$v];
+                            } elseif ($v) {
+                                $newConfigs[$key][$v] = $v;
+                            }
+                        }
+                    }
+                    break;
+                case 'image':
+                    $newConfigs[$key] = empty($value['value']) ? ['path' => '', 'thumb' => ''] : Attachmentconfig::getFileInfo($value['value'], 'path,thumb');
+                    if ('' == $newConfigs[$key]['thumb']) {
+                        $newConfigs[$key]['thumb'] = $newConfigs[$key]['path'];
+                    }
+                    break;
+                case 'images':
+                    $newConfigs[$key] = empty($value['value']) ? [] : Attachmentconfig::getFileInfo($value['value'], 'id,path,thumb');
+                    break;
+                case 'Ueditor':
+                    $newConfigs[$key] = htmlspecialchars_decode($value['value']);
+                    break;
+                default:
+                    $newConfigs[$key] = $value['value'];
+                    break;
+            }
+        }
+        return $newConfigs;
+    }
 
 }

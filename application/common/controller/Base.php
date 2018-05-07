@@ -18,9 +18,20 @@ use think\Controller;
 
 class Base extends Controller
 {
+    public static $Cache = array(); //全局配置缓存
+
     //初始化
     protected function initialize()
     {
+        $this->initSite();
+    }
+
+    //初始化站点配置信息
+    protected function initSite()
+    {
+        $Config = cache("Config"); //获取所有配置名称和值
+        self::$Cache['Config'] = $Config; //后端调用
+        $this->assign("Config", $Config); //前端调用
     }
 
     //空操作
