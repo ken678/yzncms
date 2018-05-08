@@ -19,12 +19,11 @@
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
-{/block} {block name="script"}
+{/block}
+{block name="script"}
 <script>
 layui.use('table', function() {
-    var table = layui.table,
-        form = layui.form,
-        $ = layui.jquery;
+    var table = layui.table,form = layui.form,$ = layui.jquery;
     //方法级渲染
     var tableObj = table.render({
         elem: '#list',
@@ -32,9 +31,10 @@ layui.use('table', function() {
         method: 'post',
         cols: [
             [
-                { field: 'name', title: '名称', width: 200 },
+                { fixed: 'left',field: 'name', title: '名称', width: 200 },
                 { field: 'title', title: '标题' },
                 { field: 'type', title: '类型', width: 120 },
+                { field: 'update_time', title: '更新时间', width: 250 ,templet:function(d){return new Date(parseInt(d.update_time) * 1000).toLocaleString()}},
                 { field: 'listorder', title: '排序', width: 100, edit: 'text' },
                 { field: 'status', title: '状态', width: 100, templet: '#switchTpl', unresize: true },
                 { width: 120, fixed: 'right', align: 'center', toolbar: '#barTool' }

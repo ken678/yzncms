@@ -35,6 +35,53 @@ class Config extends Adminbase
         return $this->fetch();
     }
 
+    //配置设置
+    public function setting($group = 'base')
+    {
+        $configList = model('Config')->where('group', $group)
+            ->where('status', 1)
+            ->order('listorder,id desc')
+            ->column('name,title,remark,type,value,extra');
+        foreach ($configList as &$value) {
+            if ($value['extra'] != '') {
+                $value['extra'] = parse_attr($value['extra']);
+            }
+            if ($value['type'] == 'checkbox') {
+                $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
+            }
+            if ($value['type'] == 'datetime') {
+                $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
+            }
+            if ($value['type'] == 'date') {
+                $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
+            }
+            if ($value['type'] == 'image') {
+                $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
+            }
+            if ($value['type'] == 'images') {
+                $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
+                if (!empty($value['value'])) {
+                    $value['value'] .= ',';
+                }
+            }
+            if ($value['type'] == 'files') {
+                $value['param'] = ['dir' => 'files', 'module' => 'admin'];
+                if (!empty($value['value'])) {
+                    $value['value'] .= ',';
+                }
+            }
+            if ($value['type'] == 'Ueditor') {
+                $value['value'] = htmlspecialchars_decode($value['value']);
+            }
+            $value['fieldArr'] = 'modelField';
+        }
+        $this->assign('groupArray', self::$Cache['Config']['config_group']);
+        $this->assign('fieldList', $configList);
+        $this->assign('group', $group);
+        return $this->fetch();
+
+    }
+
     //删除配置
     public function del()
     {
