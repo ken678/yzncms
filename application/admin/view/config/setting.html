@@ -20,8 +20,12 @@
 {/block} {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
-layui.use(['element'], function() {
-
+layui.use(['element','form',], function() {
+var form = layui.form,element = layui.element,$=layui.jquery;
+    //开关兼容
+	form.on('switch', function(data) {
+	    $(data.elem).attr('type', 'hidden').val(this.checked ? 1 : 0);
+	});
 
 });
 </script>
