@@ -7,6 +7,11 @@
         {/volist}
     </ul>
     <div class="layui-tab-content">
+        <blockquote class="layui-elem-quote news_search">
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-sm com_add_btn" url="{:url('admin/config/add')}">新增配置项</a>
+        </div>
+        </blockquote>
         <div class="layui-tab-item layui-show">
             <table class="layui-hide" id="list" lay-filter="list"></table>
         </div>
@@ -21,6 +26,7 @@
 </script>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use('table', function() {
     var table = layui.table,form = layui.form,$ = layui.jquery;

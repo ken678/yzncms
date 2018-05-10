@@ -5,9 +5,10 @@
 {case value="text"}
 <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-inline">
-      <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}" {if $vo.remark} title="{$vo.remark|raw}" {/if}>
+    <div class="layui-input-block">
+      <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
     </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
   </div>
 {/case}
 
@@ -17,6 +18,7 @@
     <div class="layui-input-block">
       <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}"  {if 1==$vo['value']}checked=''{/if}>
     </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
   </div>
 {/case}
 
@@ -24,8 +26,19 @@
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">{$vo.title}</label>
     <div class="layui-input-block">
-      <textarea name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" class="layui-textarea" {if $vo.remark} title="{$vo.remark|raw}" {/if}>{$vo.value}</textarea>
+      <textarea name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" class="layui-textarea">{$vo.value}</textarea>
     </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+  </div>
+{/case}
+
+{case value="textarea"}
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">{$vo.title}</label>
+    <div class="layui-input-block">
+      <textarea placeholder="请输入{$vo.title}" class="layui-textarea" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
   </div>
 {/case}
 

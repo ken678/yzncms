@@ -49,7 +49,7 @@
         </div>
         <div class="site-mobile-shade"></div>
         <div class="layui-body" id="B_frame">
-            <div class="layui-tab mag0" id="top_tabs_box" lay-filter="Tab" lay-allowClose="true">
+            <div class="layui-tab mag0" id="top_tabs_box" lay-filter="Tab">
                 <ul class="layui-tab-title top_tab" id="B_history">
                     <li class="layui-this" lay-id="default"><i class="layui-icon">&#xe68e;</i> 后台首页
                     </li>
@@ -347,26 +347,15 @@
                         //$(this).remove(); //移除选项卡
                         element.tabDelete("Tab",data_id);
                         $('#iframe_' + data_id).remove(); //移除iframe页面
+                        $('#iframe_default').show();
                     }
                 })
 
             }else{
                 layer.msg("没有可以关闭的窗口了@_@");
             }
-            /*if($("#top_tabs li").length > 1){
-                $("#top_tabs li").each(function(){
-                    if($(this).attr("lay-id") != ''){
-                        element.tabDelete("bodyTab",$(this).attr("lay-id")).init();
-                        window.sessionStorage.removeItem("menu");
-                        menu = [];
-                        window.sessionStorage.removeItem("curmenu");
-                    }
-                })
-            }else{
-                layer.msg("没有可以关闭的窗口了@_@");
-            }
             //渲染顶部窗口
-            tab.tabMove();*/
+            tab.tabMove();
         })
 
 
