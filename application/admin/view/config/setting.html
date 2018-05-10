@@ -22,10 +22,6 @@
 <script>
 layui.use(['element','form',], function() {
 var form = layui.form,element = layui.element,$=layui.jquery;
-    //开关兼容
-	form.on('switch', function(data) {
-	    $(data.elem).attr('type', 'hidden').val(this.checked ? 1 : 0);
-	});
 
 });
 </script>

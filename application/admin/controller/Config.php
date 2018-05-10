@@ -38,47 +38,84 @@ class Config extends Adminbase
     //配置设置
     public function setting($group = 'base')
     {
-        $configList = model('Config')->where('group', $group)
-            ->where('status', 1)
-            ->order('listorder,id desc')
-            ->column('name,title,remark,type,value,extra');
-        foreach ($configList as &$value) {
-            if ($value['extra'] != '') {
-                $value['extra'] = parse_attr($value['extra']);
-            }
-            if ($value['type'] == 'checkbox') {
-                $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
-            }
-            if ($value['type'] == 'datetime') {
-                $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
-            }
-            if ($value['type'] == 'date') {
-                $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
-            }
-            if ($value['type'] == 'image') {
-                $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
-            }
-            if ($value['type'] == 'images') {
-                $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
-                if (!empty($value['value'])) {
-                    $value['value'] .= ',';
+        if ($this->request->isPost()) {
+            $data = $this->request->post('modelField/a');
+            $Config = model('Config');
+            // 查询该分组下所有的配置项名和类型
+            $items = $Config->where('group', $group)->where('status', 1)->column('name,type');
+            foreach ($items as $name => $type) {
+                if (!isset($data[$name])) {
+                    switch ($type) {
+                        // 开关
+                        case 'switch':
+                            $data[$name] = 0;
+                            break;
+                        case 'checkbox':
+                            $data[$name] = '';
+                            break;
+                    }
+                } else {
+                    // 如果值是数组则转换成字符串，适用于复选框等类型
+                    if (is_array($data[$name])) {
+                        $data[$name] = implode(',', $data[$name]);
+                    }
+                    switch ($type) {
+                        // 开关
+                        case 'switch':
+                            $data[$name] = 1;
+                            break;
+                    }
+                }
+                if (isset($data[$name])) {
+                    $map = array('name' => $name);
+                    $Config->where($map)->setField('value', $data[$name]);
                 }
             }
-            if ($value['type'] == 'files') {
-                $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                if (!empty($value['value'])) {
-                    $value['value'] .= ',';
+            //cache('system_config', null);
+            return $this->success('设置更新成功', url('index', ['group' => $group]));
+        } else {
+            $configList = model('Config')->where('group', $group)
+                ->where('status', 1)
+                ->order('listorder,id desc')
+                ->column('name,title,remark,type,value,extra');
+            foreach ($configList as &$value) {
+                if ($value['extra'] != '') {
+                    $value['extra'] = parse_attr($value['extra']);
                 }
+                if ($value['type'] == 'checkbox') {
+                    $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
+                }
+                if ($value['type'] == 'datetime') {
+                    $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
+                }
+                if ($value['type'] == 'date') {
+                    $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
+                }
+                if ($value['type'] == 'image') {
+                    $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
+                }
+                if ($value['type'] == 'images') {
+                    $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
+                    if (!empty($value['value'])) {
+                        $value['value'] .= ',';
+                    }
+                }
+                if ($value['type'] == 'files') {
+                    $value['param'] = ['dir' => 'files', 'module' => 'admin'];
+                    if (!empty($value['value'])) {
+                        $value['value'] .= ',';
+                    }
+                }
+                if ($value['type'] == 'Ueditor') {
+                    $value['value'] = htmlspecialchars_decode($value['value']);
+                }
+                $value['fieldArr'] = 'modelField';
             }
-            if ($value['type'] == 'Ueditor') {
-                $value['value'] = htmlspecialchars_decode($value['value']);
-            }
-            $value['fieldArr'] = 'modelField';
+            $this->assign('groupArray', self::$Cache['Config']['config_group']);
+            $this->assign('fieldList', $configList);
+            $this->assign('group', $group);
+            return $this->fetch();
         }
-        $this->assign('groupArray', self::$Cache['Config']['config_group']);
-        $this->assign('fieldList', $configList);
-        $this->assign('group', $group);
-        return $this->fetch();
 
     }
 
