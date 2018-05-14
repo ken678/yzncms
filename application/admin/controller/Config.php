@@ -72,7 +72,7 @@ class Config extends Adminbase
                 }
             }
             //cache('system_config', null);
-            return $this->success('设置更新成功', url('index', ['group' => $group]));
+            return $this->success('设置更新成功');
         } else {
             $configList = model('Config')->where('group', $group)
                 ->where('status', 1)
@@ -117,6 +117,18 @@ class Config extends Adminbase
             return $this->fetch();
         }
 
+    }
+
+    //新增配置
+    public function add()
+    {
+        $groupArray = self::$Cache['Config']['config_group'];
+        $fieldType = Db::name('field_type')->order('listorder')->column('name,title');
+        $this->assign([
+            'groupArray' => $groupArray,
+            'fieldType' => $fieldType,
+        ]);
+        return $this->fetch();
     }
 
     //删除配置
