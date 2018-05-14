@@ -77,10 +77,10 @@ class Config extends Adminbase
             $configList = model('Config')->where('group', $group)
                 ->where('status', 1)
                 ->order('listorder,id desc')
-                ->column('name,title,remark,type,value,extra');
+                ->column('name,title,remark,type,value,options');
             foreach ($configList as &$value) {
-                if ($value['extra'] != '') {
-                    $value['extra'] = parse_attr($value['extra']);
+                if ($value['options'] != '') {
+                    $value['options'] = parse_attr($value['options']);
                 }
                 if ($value['type'] == 'checkbox') {
                     $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
@@ -122,13 +122,27 @@ class Config extends Adminbase
     //新增配置
     public function add()
     {
-        $groupArray = self::$Cache['Config']['config_group'];
-        $fieldType = Db::name('field_type')->order('listorder')->column('name,title');
-        $this->assign([
-            'groupArray' => $groupArray,
-            'fieldType' => $fieldType,
-        ]);
-        return $this->fetch();
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            $data['status'] = isset($data['status']) ? intval($data['status']) : 1;
+            $result = $this->validate($data, 'Config');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            $Config = model('Config');
+            $result = $Config->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'orders', 'status'])->save($data);
+            //cache('system_config', null);
+            $this->success('配置添加成功~');
+        } else {
+            $groupArray = self::$Cache['Config']['config_group'];
+            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifoption,ifstring');
+            $this->assign([
+                'groupArray' => $groupArray,
+                'fieldType' => $fieldType,
+            ]);
+            return $this->fetch();
+        }
+
     }
 
     //删除配置
