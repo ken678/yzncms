@@ -14,11 +14,18 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\model\Config as ConfigModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
 class Config extends Adminbase
 {
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->ConfigModel = new ConfigModel;
+    }
+
     //配置首页
     public function index($group = 'base')
     {
@@ -40,9 +47,8 @@ class Config extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post('modelField/a');
-            $Config = model('Config');
             // 查询该分组下所有的配置项名和类型
-            $items = $Config->where('group', $group)->where('status', 1)->column('name,type');
+            $items = $this->ConfigModel->where('group', $group)->where('status', 1)->column('name,type');
             foreach ($items as $name => $type) {
                 if (!isset($data[$name])) {
                     switch ($type) {
@@ -68,13 +74,13 @@ class Config extends Adminbase
                 }
                 if (isset($data[$name])) {
                     $map = array('name' => $name);
-                    $Config->where($map)->setField('value', $data[$name]);
+                    $this->ConfigModel->where($map)->setField('value', $data[$name]);
                 }
             }
             //cache('system_config', null);
             return $this->success('设置更新成功');
         } else {
-            $configList = model('Config')->where('group', $group)
+            $configList = $this->ConfigModel->where('group', $group)
                 ->where('status', 1)
                 ->order('listorder,id desc')
                 ->column('name,title,remark,type,value,options');
@@ -129,8 +135,7 @@ class Config extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $Config = model('Config');
-            $result = $Config->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'orders', 'status'])->save($data);
+            $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data);
             //cache('system_config', null);
             $this->success('配置添加成功~');
         } else {
@@ -152,7 +157,7 @@ class Config extends Adminbase
         if (!is_numeric($id) || $id < 0) {
             return '参数错误';
         }
-        if (model('Config')->get($id)->delete()) {
+        if ($this->ConfigModel->get($id)->delete()) {
             //cache('system_config', null);
             $this->success('删除成功');
         } else {
@@ -166,7 +171,7 @@ class Config extends Adminbase
         if (($status != 0 && $status != 1) || !is_numeric($id) || $id < 0) {
             return '参数错误';
         }
-        if (model('Config')->where('id', $id)->update(['status' => $status])) {
+        if ($this->ConfigModel->where('id', $id)->update(['status' => $status])) {
             //cache('system_config', null);
             $this->error('更新成功');
         } else {
