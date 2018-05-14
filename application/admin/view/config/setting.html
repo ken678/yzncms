@@ -7,7 +7,7 @@
         {/volist}
     </ul>
     <div class="layui-tab-content">
-        <form class="layui-form form-horizontal" action="{:url('admin/config/setting')}" method="post">
+        <form class="layui-form form-horizontal" action="{:url('admin/config/setting',['group'=>$group])}" method="post">
             {include file="inputItem" /}
             <div class="layui-form-item">
                 <div class="layui-input-block">
