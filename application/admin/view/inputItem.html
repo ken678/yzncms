@@ -56,6 +56,33 @@
   </div>
 {/case}
 
+{case value="select"}
+  <div class="layui-form-item">
+    <label class="layui-form-label">{$vo.title}</label>
+    <div class="layui-input-block">
+      <select name="{$vo.fieldArr}[{$vo.name}]">
+        <option value=""></option>
+        {volist name="vo.options" id="v"}
+        <option  value="{$key}"  {if $key==$vo['value']}selected=""{/if}>{$v}</option>
+        {/volist}
+      </select>
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+  </div>
+{/case}
+
+{case value="datetime"}
+<div class="layui-form">
+  <div class="layui-form-item">
+    <label class="layui-form-label">{$vo.title}</label>
+    <div class="layui-input-block">
+      <input type="text" class="layui-input test-item" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}">
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+  </div>
+</div>
+{/case}
+
 {case value="textarea"}
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">{$vo.title}</label>

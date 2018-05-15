@@ -20,8 +20,15 @@
 {/block} {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
-layui.use(['element','form',], function() {
-var form = layui.form,element = layui.element,$=layui.jquery;
+layui.use(['element','form','laydate'], function() {
+var form = layui.form,element = layui.element,$=layui.jquery,laydate = layui.laydate;;
+  //同时绑定多个
+  lay('.test-item').each(function(){
+    laydate.render({
+      elem: this
+      ,trigger: 'click'
+    });
+  });
 
 });
 </script>
