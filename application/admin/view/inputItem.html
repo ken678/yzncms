@@ -44,6 +44,18 @@
   </div>
 {/case}
 
+{case value="radio"}
+  <div class="layui-form-item">
+    <label class="layui-form-label">{$vo.title}</label>
+    <div class="layui-input-block">
+      {volist name="vo.options" id="v"}
+      <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}"  {if $key==$vo ['value']}checked=''{/if}>
+      {/volist}
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+  </div>
+{/case}
+
 {case value="textarea"}
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">{$vo.title}</label>

@@ -18,8 +18,12 @@ use \think\Model;
 
 class Config extends Model
 {
+    // 自动写入时间戳
+    protected $autoWriteTimestamp = true;
+
     /**
-     * 更新缓存
+     * 获取配置信息
+     * @return mixed
      */
     public function config_cache()
     {
@@ -28,11 +32,6 @@ class Config extends Model
         return $data;
     }
 
-    /**
-     * 获取配置信息
-     * @param  string $name 配置名
-     * @return mixed
-     */
     public static function getConfig($where = "status='1'", $fields = 'name,value,type,options', $order = 'listorder,id desc')
     {
         $configs = self::where($where)->order($order)->column($fields);
