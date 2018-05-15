@@ -104,3 +104,23 @@ function data_auth_sign($data)
     $sign = sha1($code); //生成签名
     return $sign;
 }
+
+/**
+ * 解析配置
+ * @param string $value 配置值
+ * @return array|string
+ */
+function parse_attr($value = '')
+{
+    $array = preg_split('/[,;\r\n]+/', trim($value, ",;\r\n"));
+    if (strpos($value, ':')) {
+        $value = array();
+        foreach ($array as $val) {
+            list($k, $v) = explode(':', $val);
+            $value[$k] = $v;
+        }
+    } else {
+        $value = $array;
+    }
+    return $value;
+}
