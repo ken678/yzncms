@@ -92,7 +92,7 @@ class Config extends Adminbase
                     $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
                 }
                 if ($value['type'] == 'datetime') {
-                    $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
+                    $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : $value['value'];
                 }
                 if ($value['type'] == 'date') {
                     $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
