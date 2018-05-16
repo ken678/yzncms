@@ -20,9 +20,12 @@ use think\Db;
 
 class Config extends Adminbase
 {
+    public $banfie;
     protected function initialize()
     {
         parent::initialize();
+        //允许使用的字段列表
+        $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "Ueditor", "datetime", "files", "image", "images", "array", "switch", "select");
         $this->ConfigModel = new ConfigModel;
     }
 
@@ -140,7 +143,7 @@ class Config extends Adminbase
             $this->success('配置添加成功~');
         } else {
             $groupArray = self::$Cache['Config']['config_group'];
-            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifoption,ifstring');
+            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
             $this->assign([
                 'groupArray' => $groupArray,
                 'fieldType' => $fieldType,
