@@ -87,7 +87,8 @@ layui.use('table', function() {
         var layEvent = obj.event;
         var tr = obj.tr,
             target;
-        if (layEvent === 'detail') {
+        if (layEvent === 'edit') {
+        	console.log(data);
             //do somehing
         } else if (layEvent === 'del') {
             if ((target = $(this).attr('href')) || (target = $(this).attr('url'))) {
