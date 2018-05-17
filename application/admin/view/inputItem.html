@@ -5,7 +5,7 @@
 {case value="text"}
 <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -15,7 +15,7 @@
 {case value="number"}
 <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       <input type="number" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -25,7 +25,7 @@
 {case value="switch"}
   <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}"  {if 1==$vo['value']}checked=''{/if}>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -35,7 +35,7 @@
 {case value="array"}
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       <textarea name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" class="layui-textarea">{$vo.value}</textarea>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -45,7 +45,7 @@
 {case value="checkbox"}
   <div class="layui-form-item" pane="">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       {volist name="vo.options" id="v"}
       <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo['value'])}checked=''{/if}>
       {/volist}
@@ -57,7 +57,7 @@
 {case value="radio"}
   <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       {volist name="vo.options" id="v"}
       <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}"  {if $key==$vo ['value']}checked=''{/if}>
       {/volist}
@@ -69,7 +69,7 @@
 {case value="select"}
   <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       <select name="{$vo.fieldArr}[{$vo.name}]">
         <option value=""></option>
         {volist name="vo.options" id="v"}
@@ -85,7 +85,7 @@
 <div class="layui-form">
   <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       <input type="text" class="layui-input test-item" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}"  value="{$vo.value}">
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -96,7 +96,7 @@
 {case value="textarea"}
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">{$vo.title}</label>
-    <div class="layui-input-block">
+    <div class="layui-input-inline w300">
       <textarea placeholder="请输入{$vo.title}" class="layui-textarea" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
