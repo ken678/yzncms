@@ -5,17 +5,74 @@ layui.use(['element', 'layer', 'form'], function() {
         form = layui.form;
 
 
-    $('[title]').hover(function() {
+    /*$('[title]').hover(function() {
         var title = $(this).attr('title');
         layer.tips(title, $(this))
     }, function() {
         layer.closeAll('tips')
-    })
+    })*/
 
     //通用添加
     $(".com_add_btn").click(function() {
         addNews('', $(this).attr('url'));
     })
+    
+    /* 监听状态设置开关 */
+    form.on('switch(switchStatus)', function(data) {
+        var that = $(this), status = 0;
+        if (!that.attr('data-href')) {
+            layer.msg('请设置data-href参数');
+            return false;
+        }
+        if (this.checked) {
+            status = 1;
+        }
+        $.get(that.attr('data-href'), {status:status}, function(res) {
+            layer.msg(res.msg);
+            if (res.code == 1) {
+                that.trigger('click');
+                form.render('checkbox');
+            }
+        });
+    });
+
+    //ajax get请求
+    $('.ajax-get').click(function() {
+        var target;
+        var that = this;
+        if ($(this).hasClass('confirm')) {
+            layer.confirm('确认要执行该操作吗?', { icon: 3, title: '提示' }, function(index) {
+                if ((target = $(that).attr('href')) || (target = $(that).attr('url'))) {
+                    $.get(target).success(function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
+                    });
+
+                }
+                layer.close(index);
+            });
+        };
+        return false;
+    });
 
     //添加文章
     function addNews(edit, url) {

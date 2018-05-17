@@ -8,12 +8,51 @@
     </ul>
     <div class="layui-tab-content">
         <blockquote class="layui-elem-quote news_search">
-        <div class="layui-inline">
-            <a class="layui-btn layui-btn-sm com_add_btn" url="{:url('admin/config/add')}">新增配置项</a>
-        </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-sm com_add_btn" url="{:url('admin/config/add')}">新增配置项</a>
+            </div>
         </blockquote>
         <div class="layui-tab-item layui-show">
-            <table class="layui-hide" id="list" lay-filter="list"></table>
+            <table class="layui-table layui-form layui-table-view">
+                <colgroup>
+                    <col width="200">
+                    <col>
+                    <col width="120">
+                    <col width="250">
+                    <col width="100">
+                    <col width="100">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>标题</th>
+                        <th>类型</th>
+                        <th>更新时间</th>
+                        <th>排序</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.title}</td>
+                        <td>{$vo.ftitle}</td>
+                        <td>{:date('Y-m-d H:i:s',$vo.update_time)}</td>
+                        <td>{$vo.listorder}</td>
+                        <td>
+                            <input type="checkbox" {if $vo.status}checked{/if} lay-skin="switch" lay-filter="switchStatus" lay-text="开启|关闭" value="{$vo.status}" data-href="{:url('admin/config/setstate',['id'=>$vo.id])}">
+                        </td>
+                        <td>
+                            <a class="layui-btn layui-btn-xs">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('admin/config/del',['id'=>$vo.id])}">删除</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -24,96 +63,6 @@
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
-{/block}
-{block name="script"}
+{/block} {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
-<script>
-layui.use('table', function() {
-    var table = layui.table,form = layui.form,$ = layui.jquery;
-    //方法级渲染
-    var tableObj = table.render({
-        elem: '#list',
-        url: "{:url('admin/config/index',['group'=>$group])}",
-        method: 'post',
-        cols: [
-            [
-                { fixed: 'left',field: 'name', title: '名称', width: 200 },
-                { field: 'title', title: '标题' },
-                { field: 'type', title: '类型', width: 120 },
-                { field: 'update_time', title: '更新时间', width: 250 ,templet:function(d){return new Date(parseInt(d.update_time) * 1000).toLocaleString()}},
-                { field: 'listorder', title: '排序', width: 100, edit: 'text' },
-                { field: 'status', title: '状态', width: 100, templet: '#switchTpl', unresize: true },
-                { width: 120, fixed: 'right', align: 'center', toolbar: '#barTool' }
-            ]
-        ],
-        id: 'testReload'
-    });
-
-    form.on('switch(status)', function(obj) {
-        if (obj.elem.checked) {
-            var value = 1;
-        } else {
-            var value = 0;
-        }
-        $.ajax({
-            url: "{:url('admin/config/setstate')}",
-            data: {
-                id: this.value,
-                status: value
-            },
-            success: function(data) {
-                if (data.status == 1) {
-                    layer.msg(data.msg, { icon: 1 });
-                } else {
-                    layer.msg(data.msg, { icon: 1 });
-                }
-            }
-        });
-    });
-
-
-    table.on('edit(list)', function(obj) {
-        var value = obj.value //得到修改后的值
-            ,
-            data = obj.data //得到所在行所有键值
-            ,
-            field = obj.field; //得到字段
-        layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
-    });
-
-
-    table.on('tool(list)', function(obj) {
-        var data = obj.data;
-        var layEvent = obj.event;
-        var tr = obj.tr,
-            target;
-        if (layEvent === 'edit') {
-        	console.log(data);
-            //do somehing
-        } else if (layEvent === 'del') {
-            if ((target = $(this).attr('href')) || (target = $(this).attr('url'))) {
-                layer.confirm('确认要执行该操作吗?', { icon: 3, title: '提示信息' }, function(index) {
-                    obj.del();
-                    layer.close(index);
-                    $.ajax({
-                        url: target,
-                        data: {
-                            id: data.id
-                        },
-                        success: function(data) {
-                            if (data.status == 1) {
-                                layer.msg(data.msg, { icon: 1 });
-                            } else {
-                                layer.msg(data.msg, { icon: 1 });
-                            }
-                        }
-                    });
-                });
-            };
-        } else if (layEvent === 'edit') {
-            //do somehing
-        }
-    });
-});
-</script>
 {/block}

@@ -23,3 +23,5 @@ code {
 .panel_word span{ font-size:25px; display:block; height:34px; }
 .panel .loginTime{ font-size:15px; color:#1E9FFF; line-height:34px;}
 .panel em{ font-style:normal;}
+
+.layui-table-view{overflow: auto;}
