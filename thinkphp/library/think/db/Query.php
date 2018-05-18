@@ -29,12 +29,6 @@ use think\Paginator;
 class Query
 {
     /**
-     * 数据库连接对象列表
-     * @var array
-     */
-    protected static $connections = [];
-
-    /**
      * 当前数据库连接对象
      * @var Connection
      */
@@ -300,29 +294,6 @@ class Query
         $name = $name ?: $this->name;
 
         return $this->prefix . Loader::parseName($name);
-    }
-
-    /**
-     * 切换数据库连接
-     * @access public
-     * @param  mixed         $config 连接配置
-     * @param  bool|string   $name 连接标识 true 强制重新连接
-     * @return $this|object
-     * @throws Exception
-     */
-    public function connect($config = [], $name = false)
-    {
-        $this->connection = Connection::instance($config, $name);
-
-        $query = $this->connection->getConfig('query');
-
-        if (__CLASS__ != trim($query, '\\')) {
-            return new $query($this->connection);
-        }
-
-        $this->prefix = $this->connection->getConfig('prefix');
-
-        return $this;
     }
 
     /**
@@ -653,7 +624,7 @@ class Query
         if (!empty($this->options['fetch_sql'])) {
             return $result;
         } elseif ($force) {
-            $result += 0;
+            $result = (float) $result;
         }
 
         return $result;
