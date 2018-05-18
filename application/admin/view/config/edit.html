@@ -1,0 +1,85 @@
+{extend name="index_layout"/}
+{block name="main"}
+<form class="layui-form form-horizontal" action="{:url('admin/config/edit',['id'=>$info.id])}" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分组</label>
+        <div class="layui-input-inline w300">
+            <select name="group">
+                <option value=""></option>
+                {volist name="groupArray" id="vo"}
+                <option value="{$key}" {if $info.group==$key}selected{/if}>{$vo}[{$key}]</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">配置类型</label>
+        <div class="layui-input-inline w300">
+            <select name="type">
+                <option value=""></option>
+                {volist name="fieldType" id="vo"}
+                <option value="{$vo.name}" {if $info.type==$vo.name}selected{/if}>{$vo.title}[{$vo.name}]</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">配置标题</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="title" value="{$info.title}" lay-verify="title" autocomplete="off" placeholder="字段中文标题" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">一般由中文组成，仅用于显示</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">配置名称</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="name" value="{$info.name}" autocomplete="off" placeholder="字段英文名称" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">由英文字母开头和下划线组成，如 <code>web_site_title</code>，前端调用方法：<code>{literal}{$Config['web_site_title']}{/literal}</code></div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">配置默认值</label>
+        <div class="layui-input-inline w300">
+            <textarea name="value" placeholder="未指定值时默认插入字段的值" class="layui-textarea">{$info.value}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">配置项</label>
+        <div class="layui-input-inline w300">
+            <textarea name="options" placeholder="键值:键名
+键值:键名
+键值:键名
+....." class="layui-textarea">{$info.options}</textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux">配置类型为数组时请按如下格式填写：<br>键值:键名<br>键值:键名</div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">配置备注</label>
+        <div class="layui-input-inline w300">
+            <textarea name="remark" placeholder="填写字段说明" class="layui-textarea">{$info.remark}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline w300">
+            <input type="number" name="listorder" lay-verify="title" autocomplete="off" placeholder="只能是正整数" class="layui-input" value="{$info.listorder}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id}">
+</form>
+{/block} {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+<script>
+layui.use(['element', 'form', ], function() {
+    var form = layui.form,
+        element = layui.element,
+        $ = layui.jquery;
+
+});
+</script>
+{/block}

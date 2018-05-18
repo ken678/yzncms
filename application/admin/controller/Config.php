@@ -32,14 +32,6 @@ class Config extends Adminbase
     //配置首页
     public function index($group = 'base')
     {
-        /*if ($this->request->isPost()) {
-        $list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
-        ->where('group', $group)
-        ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
-        ->order('listorder,id desc')
-        ->select();
-        return $result = ['code' => 0, 'msg' => '获取成功!', 'data' => $list];
-        }*/
         $list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
             ->where('group', $group)
             ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
@@ -161,12 +153,21 @@ class Config extends Adminbase
     //编辑配置
     public function edit()
     {
-        $id = (int) input('id/d');
-        var_dump($id);
-        exit();
         if ($this->request->isPost()) {
+            $data = $this->request->post();
+            $result = $this->validate($data, 'Config');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data, ['id' => $data['id']]);
+            //cache('system_config', null);
+            $this->success('配置编辑成功~');
 
         } else {
+            $id = $this->request->param('id/d');
+            if (!is_numeric($id) || $id < 0) {
+                return '参数错误';
+            }
             $groupArray = self::$Cache['Config']['config_group'];
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
             $info = model('Config')->where('id', $id)->find();
