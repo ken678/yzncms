@@ -156,7 +156,27 @@ class Config extends Adminbase
             ]);
             return $this->fetch();
         }
+    }
 
+    //编辑配置
+    public function edit()
+    {
+        $id = (int) input('id/d');
+        var_dump($id);
+        exit();
+        if ($this->request->isPost()) {
+
+        } else {
+            $groupArray = self::$Cache['Config']['config_group'];
+            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
+            $info = model('Config')->where('id', $id)->find();
+            $this->assign([
+                'groupArray' => $groupArray,
+                'fieldType' => $fieldType,
+                'info' => $info,
+            ]);
+            return $this->fetch();
+        }
     }
 
     //删除配置

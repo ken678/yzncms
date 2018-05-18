@@ -14,7 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\AdminUser;
+use app\admin\model\AdminUser as AdminUser_m;
+use app\admin\service\AdminUser as AdminUser_s;
 use think\Controller;
 
 class Login extends Controller
@@ -34,7 +35,7 @@ class Login extends Controller
             $this->error('验证码输入错误！');
             return false;
             }*/
-            $AdminUser = new AdminUser;
+            $AdminUser = new AdminUser_m;
             if ($AdminUser->login($data['username'], $data['password'])) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
@@ -42,7 +43,12 @@ class Login extends Controller
             }
 
         } else {
-            return $this->fetch();
+            if (AdminUser_s::getInstance()->isLogin()) {
+                $this->redirect('admin/index/index');
+            } else {
+                return $this->fetch();
+            }
+
         }
 
     }

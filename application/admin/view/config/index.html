@@ -9,7 +9,7 @@
     <div class="layui-tab-content">
         <blockquote class="layui-elem-quote news_search">
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-sm com_add_btn" url="{:url('admin/config/add')}">新增配置项</a>
+                <a class="layui-btn layui-btn-sm ajax-jump" url="{:url('admin/config/add')}">新增配置项</a>
             </div>
         </blockquote>
         <div class="layui-tab-item layui-show">
@@ -46,7 +46,7 @@
                             <input type="checkbox" {if $vo.status}checked{/if} lay-skin="switch" lay-filter="switchStatus" lay-text="开启|关闭" value="{$vo.status}" data-href="{:url('admin/config/setstate',['id'=>$vo.id])}">
                         </td>
                         <td>
-                            <a class="layui-btn layui-btn-xs">编辑</a>
+                            <a class="layui-btn layui-btn-xs ajax-jump" url="{:url('admin/config/edit',['id'=>$vo.id])}">编辑</a>
                             <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('admin/config/del',['id'=>$vo.id])}">删除</a>
                         </td>
                     </tr>
