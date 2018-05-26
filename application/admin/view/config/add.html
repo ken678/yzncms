@@ -15,10 +15,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label">配置类型</label>
         <div class="layui-input-inline w300">
-            <select name="type">
+            <select name="type" lay-filter="type">
                 <option value=""></option>
                 {volist name="fieldType" id="vo"}
-                <option value="{$vo.name}">{$vo.title}[{$vo.name}]</option>
+                <option value="{$vo.name}" data-ifoption="{$vo.ifoption}">{$vo.title}[{$vo.name}]</option>
                 {/volist}
             </select>
         </div>
@@ -43,7 +43,7 @@
             <textarea name="value" placeholder="未指定值时默认插入字段的值" class="layui-textarea"></textarea>
         </div>
     </div>
-    <div class="layui-form-item layui-form-text">
+    <div class="layui-form-item layui-form-text" id="options" style="display:none">
         <label class="layui-form-label">配置项</label>
         <div class="layui-input-inline w300">
             <textarea name="options" placeholder="键值:键名
@@ -51,7 +51,9 @@
 键值:键名
 ....." class="layui-textarea"></textarea>
         </div>
-        <div class="layui-form-mid layui-word-aux">配置类型为数组时请按如下格式填写：<br>键值:键名<br>键值:键名</div>
+        <div class="layui-form-mid layui-word-aux">配置类型为数组时请按如下格式填写：
+            <br>键值:键名
+            <br>键值:键名</div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">配置备注</label>
@@ -78,6 +80,14 @@ layui.use(['element', 'form', ], function() {
     var form = layui.form,
         element = layui.element,
         $ = layui.jquery;
+    form.on('select(type)', function(data) {
+        var ifoption = $(data.elem).find("option:selected").attr("data-ifoption");
+        if (ifoption == '1') {
+            $('#options').show();
+        } else {
+            $('#options').hide();
+        }
+    });
 
 });
 </script>
