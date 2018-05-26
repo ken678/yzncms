@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="__STATIC__/admin/css/global.css">
     <link rel="stylesheet" href="__STATIC__/admin/font/iconfont.css">
 </head>
+
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
@@ -50,24 +51,24 @@
         <div class="site-mobile-shade"></div>
         <div class="layui-body" id="B_frame">
             <div class="layui-tab mag0" id="top_tabs_box" lay-filter="Tab">
-            	<div class="tab-go-left" id="page-prev"><i class="layui-icon">&#xe603;</i></div>
+                <div class="tab-go-left" id="page-prev"><i class="layui-icon">&#xe603;</i></div>
                 <ul class="layui-tab-title top_tab" id="B_history">
                     <li class="layui-this" lay-id="default"><i class="layui-icon">&#xe68e;</i> 后台首页
                     </li>
                 </ul>
                 <div class="tab-right">
-                <div class="tab-go-right" id="page-next"><i class="layui-icon">&#xe602;</i></div>
-                <ul class="layui-nav closeBox">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="layui-icon caozuo">&#xe643;</i> 页面操作</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" class="refresh" id="J_refresh"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>
-                            <dd><a href="javascript:;" class="closePageAll"><i class="seraph icon-guanbi"></i> 关闭全部</a></dd>
-                            <!--<dd><a href="javascript:;" class="closePageOther"><i class="seraph icon-prohibit"></i> 关闭其他</a></dd>
+                    <div class="tab-go-right" id="page-next"><i class="layui-icon">&#xe602;</i></div>
+                    <ul class="layui-nav closeBox">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;"><i class="layui-icon caozuo">&#xe643;</i> 页面操作</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;" class="refresh" id="J_refresh"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>
+                                <dd><a href="javascript:;" class="closePageAll"><i class="seraph icon-guanbi"></i> 关闭全部</a></dd>
+                                <!--<dd><a href="javascript:;" class="closePageOther"><i class="seraph icon-prohibit"></i> 关闭其他</a></dd>
                         -->
-                        </dl>
-                    </li>
-                </ul>
+                            </dl>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="layui-tab-content clildFrame">
@@ -83,11 +84,20 @@
     <script src="__STATIC__/layui/layui.js"></script>
     <script type="text/javascript">
     layui.use(['element', 'layer', 'jquery'], function() {
-        var $ = layui.jquery,element = layui.element,layer = layui.layer;
+        var $ = layui.jquery,
+            element = layui.element,
+            layer = layui.layer;
         var SUBMENU_CONFIG = <?php echo $SUBMENU_CONFIG; ?>;
-        var openTabNum = 5;  //最大可打开窗口数量
+        var openTabNum = 5; //最大可打开窗口数量
         //iframe 加载事件
         var iframe_default = document.getElementById('iframe_default');
+        var def_iframe_height = 0;
+        $(iframe_default.contentWindow.document).ready(function() {
+            /*setTimeout(function() {
+                $('#loading').hide();
+            }, 500);*/
+            $(iframe_default).show();
+        });
         var html = [];
         $.each(SUBMENU_CONFIG, function(i, o) {
             html.push('<li class="layui-nav-item"><a href="javascript:;" title="' + o.title + '" lay-id="' + o.id + '">' + o.title + '</a></li>');
@@ -183,8 +193,8 @@
                 //checkMenuNext();
                 return false;
             };
-            if($("#B_history li").length == openTabNum){
-                layer.msg('只能同时打开'+openTabNum+'个选项卡哦。不然系统会卡的！');
+            if ($("#B_history li").length == openTabNum) {
+                layer.msg('只能同时打开' + openTabNum + '个选项卡哦。不然系统会卡的！');
                 return;
             }
 
@@ -333,19 +343,19 @@
         });
 
         //关闭全部选项卡
-        $(".closePageAll").on("click",function(){
-            if($("#B_history li").length > 1){
-                $("#B_history li").each(function(){
+        $(".closePageAll").on("click", function() {
+            if ($("#B_history li").length > 1) {
+                $("#B_history li").each(function() {
                     data_id = $(this).attr('lay-id');
-                    if(data_id != '' && data_id != 'default'){
+                    if (data_id != '' && data_id != 'default') {
                         //$(this).remove(); //移除选项卡
-                        element.tabDelete("Tab",data_id);
+                        element.tabDelete("Tab", data_id);
                         $('#iframe_' + data_id).remove(); //移除iframe页面
                         $('#iframe_default').show();
                     }
                 })
 
-            }else{
+            } else {
                 layer.msg("没有可以关闭的窗口了@_@");
             }
 
