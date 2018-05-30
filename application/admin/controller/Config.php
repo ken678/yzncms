@@ -51,6 +51,7 @@ class Config extends Adminbase
             // 查询该分组下所有的配置项名和类型
             $items = $this->ConfigModel->where('group', $group)->where('status', 1)->column('name,type');
             foreach ($items as $name => $type) {
+                //查看是否赋值
                 if (!isset($data[$name])) {
                     switch ($type) {
                         // 开关
