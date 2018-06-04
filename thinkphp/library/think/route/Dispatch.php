@@ -15,7 +15,6 @@ use think\Container;
 use think\exception\ValidateException;
 use think\Request;
 use think\Response;
-use think\route\dispatch\ResponseDispatch;
 
 abstract class Dispatch
 {
@@ -33,9 +32,9 @@ abstract class Dispatch
 
     /**
      * 路由规则
-     * @var RuleItem
+     * @var Rule
      */
-    protected $router;
+    protected $rule;
 
     /**
      * 调度信息
@@ -61,10 +60,10 @@ abstract class Dispatch
      */
     protected $convert;
 
-    public function __construct(Request $request, RuleItem $router, $dispatch, $param = [], $code = null)
+    public function __construct(Request $request, Rule $rule, $dispatch, $param = [], $code = null)
     {
         $this->request  = $request;
-        $this->router   = $router;
+        $this->rule     = $rule;
         $this->app      = Container::get('app');
         $this->dispatch = $dispatch;
         $this->param    = $param;
@@ -73,35 +72,39 @@ abstract class Dispatch
         if (isset($param['convert'])) {
             $this->convert = $param['convert'];
         }
-
-        // 设置请求的路由信息
-        $this->request->routeInfo([
-            'rule'   => $this->router->getRule(),
-            'route'  => $this->router->getRoute(),
-            'option' => $this->router->getOption(),
-            'var'    => $this->router->getVars(),
-        ]);
-
-        // 执行路由后置操作
-        $this->routeAfter();
-
-        // 初始化
-        $this->init();
     }
 
-    protected function init()
-    {}
+    public function init()
+    {
+        // 执行路由后置操作
+        if ($this->rule->doAfter()) {
+            // 设置请求的路由信息
+
+            // 设置当前请求的参数
+            $this->request->route($this->rule->getVars());
+            $this->request->routeInfo([
+                'rule'   => $this->rule->getRule(),
+                'route'  => $this->rule->getRoute(),
+                'option' => $this->rule->getOption(),
+                'var'    => $this->rule->getVars(),
+            ]);
+
+            $this->doRouteAfter();
+        }
+
+        return $this;
+    }
 
     /**
      * 检查路由后置操作
      * @access protected
      * @return void
      */
-    protected function routeAfter()
+    protected function doRouteAfter()
     {
         // 记录匹配的路由信息
-        $option  = $this->router->getOption();
-        $matches = $this->router->getVars();
+        $option  = $this->rule->getOption();
+        $matches = $this->rule->getVars();
 
         // 添加中间件
         if (!empty($option['middleware'])) {
@@ -127,7 +130,7 @@ abstract class Dispatch
         }
 
         // 开启请求缓存
-        if (isset($option['cache']) && $request->isGet()) {
+        if (isset($option['cache']) && $this->request->isGet()) {
             $this->parseRequestCache($option['cache']);
         }
 
@@ -143,7 +146,7 @@ abstract class Dispatch
      */
     public function run()
     {
-        $option = $this->router->getOption();
+        $option = $this->rule->getOption();
 
         // 检测路由after行为
         if (!empty($option['after'])) {
@@ -156,7 +159,7 @@ abstract class Dispatch
 
         // 数据自动验证
         if (isset($option['validate'])) {
-            $this->autoValidate($option['validate'], $request);
+            $this->autoValidate($option['validate']);
         }
 
         return $this->exec();
@@ -186,7 +189,7 @@ abstract class Dispatch
 
         // 路由规则重定向
         if ($result instanceof Response) {
-            return new ResponseDispatch($result, $this->router);
+            return $result;
         }
 
         return false;
@@ -196,11 +199,10 @@ abstract class Dispatch
      * 验证数据
      * @access protected
      * @param  array             $option
-     * @param  \think\Request    $request
      * @return void
      * @throws ValidateException
      */
-    protected function autoValidate($option, $request)
+    protected function autoValidate($option)
     {
         list($validate, $scene, $message, $batch) = $option;
 
@@ -225,7 +227,7 @@ abstract class Dispatch
             $v->batch(true);
         }
 
-        if (!$v->check($request->param())) {
+        if (!$v->check($this->request->param())) {
             throw new ValidateException($v->getError());
         }
     }
@@ -316,4 +318,14 @@ abstract class Dispatch
 
     abstract public function exec();
 
+    public function __sleep()
+    {
+        return ['rule', 'dispatch', 'convert', 'param', 'code', 'controller', 'actionName'];
+    }
+
+    public function __wakeup()
+    {
+        $this->app     = Container::get('app');
+        $this->request = $this->app['request'];
+    }
 }

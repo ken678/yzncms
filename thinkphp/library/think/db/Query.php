@@ -14,6 +14,7 @@ namespace think\db;
 use PDO;
 use think\Collection;
 use think\Container;
+use think\Db;
 use think\db\exception\BindParamException;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
@@ -116,7 +117,7 @@ class Query
     public function __construct(Connection $connection = null)
     {
         if (is_null($connection)) {
-            $this->connection = Connection::instance();
+            $this->connection = Db::connect();
         } else {
             $this->connection = $connection;
         }
@@ -2449,10 +2450,19 @@ class Query
                 if ($relation instanceof \Closure) {
                     $closure  = $relation;
                     $relation = $key;
+                } elseif (!is_int($key)) {
+                    $aggregateField = $relation;
+                    $relation       = $key;
                 }
+
+                if (!isset($aggregateField)) {
+                    $aggregateField = Loader::parseName($relation) . '_' . $aggregate;
+                }
+
                 $relation = Loader::parseName($relation, 1, false);
                 $count    = '(' . $this->model->$relation()->getRelationCountQuery($closure, $aggregate, $field) . ')';
-                $this->field([$count => Loader::parseName($relation) . '_' . $aggregate]);
+
+                $this->field([$count => $aggregateField]);
             }
         }
 

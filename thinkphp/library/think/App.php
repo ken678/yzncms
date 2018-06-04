@@ -20,7 +20,7 @@ use think\route\Dispatch;
  */
 class App extends Container
 {
-    const VERSION = '5.1.14';
+    const VERSION = '5.1.15';
 
     /**
      * 当前模块路径
@@ -376,12 +376,13 @@ class App extends Container
         $this->log->init($config['log']);
         $this->session->setConfig($config['session']);
         $this->debug->setConfig($config['trace']);
+        $this->cache->init($config['cache'], true);
 
         // 加载当前模块语言包
         $this->lang->load($this->appPath . $module . DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR . $this->request->langset() . '.php');
 
         // 模块请求缓存检查
-        $this->request->cache(
+        $this->checkRequestCache(
             $config['app']['request_cache'],
             $config['app']['request_cache_expire'],
             $config['app']['request_cache_except']
@@ -414,26 +415,11 @@ class App extends Container
             // 监听app_dispatch
             $this->hook->listen('app_dispatch');
 
-            // 获取应用调度信息
-            if (!$this->appDebug && $this->config->get('route_check_cache')) {
-                $routeKey = $this->getRouteCacheKey();
-
-                if ($this->cache->has($routeKey)) {
-                    $this->dispatch = $this->cache->get($routeKey);
-                }
-            }
-
             $dispatch = $this->dispatch;
 
             if (empty($dispatch)) {
                 // 路由检测
-                $dispatch = $this->routeCheck();
-
-                try {
-                    if (isset($routeKey)) {
-                        $this->cache->tag('route_cache')->set($routeKey, $dispatch);
-                    }
-                } catch (\Exception $e) {}
+                $dispatch = $this->routeCheck()->init();
             }
 
             // 记录当前调度信息
@@ -450,7 +436,7 @@ class App extends Container
             $this->hook->listen('app_begin');
 
             // 请求缓存检查
-            $this->request->cache(
+            $this->checkRequestCache(
                 $this->config('request_cache'),
                 $this->config('request_cache_expire'),
                 $this->config('request_cache_except')
@@ -482,7 +468,9 @@ class App extends Container
 
                 $response = Response::create($data, $type);
             } else {
-                $response = Response::create();
+                $data     = ob_get_clean();
+                $status   = empty($data) ? 204 : 200;
+                $response = Response::create($data, '', $status);
             }
             return $response;
         });
@@ -527,6 +515,34 @@ class App extends Container
     }
 
     /**
+     * 设置当前地址的请求缓存
+     * @access public
+     * @param  string $key 缓存标识，支持变量规则 ，例如 item/:name/:id
+     * @param  mixed  $expire 缓存有效期
+     * @param  array  $except 缓存排除
+     * @param  string $tag    缓存标签
+     * @return void
+     */
+    public function checkRequestCache($key, $expire = null, $except = [], $tag = null)
+    {
+        $cache = $this->request->cache($key, $expire, $except, $tag);
+
+        if ($cache) {
+            list($key, $expire, $tag) = $cache;
+            if (strtotime($this->request->server('HTTP_IF_MODIFIED_SINCE')) + $expire > $this->request->server('REQUEST_TIME')) {
+                // 读取缓存
+                $response = Response::create()->code(304);
+                throw new HttpResponseException($response);
+            } elseif ($this->cache->has($key)) {
+                list($content, $header) = $this->cache->get($key);
+
+                $response = Response::create($content)->header($header);
+                throw new HttpResponseException($response);
+            }
+        }
+    }
+
+    /**
      * 设置当前请求的调度信息
      * @access public
      * @param  Dispatch  $dispatch 调度信息
@@ -568,6 +584,17 @@ class App extends Container
      */
     public function routeCheck()
     {
+        // 检测路由缓存
+        if (!$this->appDebug && $this->config->get('route_check_cache')) {
+            $routeKey = $this->getRouteCacheKey();
+            $option   = $this->config->get('route_cache_option') ?: $this->cache->getConfig();
+
+            if ($this->cache->connect($option)->has($routeKey)) {
+                return $this->cache->connect($option)->get($routeKey);
+            }
+        }
+
+        // 获取应用调度信息
         $path = $this->request->path();
 
         // 路由检测
@@ -596,15 +623,24 @@ class App extends Container
             }
         }
 
-        if (is_file($this->runtimePath . 'rule_regex.php')) {
-            $this->route->setRuleRegexs(include $this->runtimePath . 'rule_regex.php');
-        }
-
         // 是否强制路由模式
         $must = !is_null($this->routeMust) ? $this->routeMust : $this->route->config('url_route_must');
 
         // 路由检测 返回一个Dispatch对象
-        return $this->route->check($path, $must);
+        $dispatch = $this->route->check($path, $must);
+
+        if (!empty($routeKey)) {
+            try {
+                $this->cache
+                    ->connect($option)
+                    ->tag('route_cache')
+                    ->set($routeKey, $dispatch);
+            } catch (\Exception $e) {
+                // 存在闭包的时候缓存无效
+            }
+        }
+
+        return $dispatch;
     }
 
     /**

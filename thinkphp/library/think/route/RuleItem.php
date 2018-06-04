@@ -18,38 +18,14 @@ use think\Route;
 class RuleItem extends Rule
 {
     /**
-     * 路由规则
-     * @var string
-     */
-    protected $rule;
-
-    /**
-     * 路由地址
-     * @var string|\Closure
-     */
-    protected $route;
-
-    /**
-     * 请求类型
-     * @var string
-     */
-    protected $method;
-
-    /**
-     * 路由变量
-     * @var array
-     */
-    protected $vars = [];
-
-    /**
      * 架构函数
      * @access public
      * @param  Route             $router 路由实例
      * @param  RuleGroup         $parent 上级对象
      * @param  string            $name 路由标识
      * @param  string|array      $rule 路由规则
-     * @param  string            $method 请求类型
      * @param  string|\Closure   $route 路由地址
+     * @param  string            $method 请求类型
      * @param  array             $option 路由参数
      * @param  array             $pattern 变量规则
      */
@@ -102,46 +78,6 @@ class RuleItem extends Rule
     }
 
     /**
-     * 获取当前路由规则
-     * @access public
-     * @return string
-     */
-    public function getRule()
-    {
-        return $this->rule;
-    }
-
-    /**
-     * 获取当前路由地址
-     * @access public
-     * @return mixed
-     */
-    public function getRoute()
-    {
-        return $this->route;
-    }
-
-    /**
-     * 获取当前路由的请求类型
-     * @access public
-     * @return string
-     */
-    public function getMethod()
-    {
-        return strtolower($this->method);
-    }
-
-    /**
-     * 获取当前路由的变量
-     * @access public
-     * @return array
-     */
-    public function getVars()
-    {
-        return $this->vars;
-    }
-
-    /**
      * 检查后缀
      * @access public
      * @param  string     $ext
@@ -189,7 +125,7 @@ class RuleItem extends Rule
                 $suffix = null;
             }
 
-            $value = [$this->rule, $vars, $this->parent->getDomain(), $suffix];
+            $value = [$this->rule, $vars, $this->parent->getDomain(), $suffix, $this->method];
 
             Container::get('rule_name')->set($name, $value, $first);
         }
@@ -290,6 +226,7 @@ class RuleItem extends Rule
         }
 
         $pattern = array_merge($this->parent->getPattern(), $this->pattern);
+        $depr    = $this->router->config('pathinfo_depr');
 
         // 检查完整规则定义
         if (isset($pattern['__url__']) && !preg_match(0 === strpos($pattern['__url__'], '/') ? $pattern['__url__'] : '/^' . $pattern['__url__'] . '/', str_replace('|', $depr, $url))) {
@@ -297,7 +234,6 @@ class RuleItem extends Rule
         }
 
         $var  = [];
-        $depr = $this->router->config('pathinfo_depr');
         $url  = $depr . str_replace('|', $depr, $url);
         $rule = $depr . str_replace('/', $depr, $this->rule);
 
