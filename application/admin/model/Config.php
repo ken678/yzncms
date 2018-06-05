@@ -65,16 +65,16 @@ class Config extends Model
                     }
                     break;
                 case 'image':
-                    $newConfigs[$key] = empty($value['value']) ? ['path' => '', 'thumb' => ''] : Attachmentconfig::getFileInfo($value['value'], 'path,thumb');
+                    /*$newConfigs[$key] = empty($value['value']) ? ['path' => '', 'thumb' => ''] : Attachmentconfig::getFileInfo($value['value'], 'path,thumb');
                     if ('' == $newConfigs[$key]['thumb']) {
-                        $newConfigs[$key]['thumb'] = $newConfigs[$key]['path'];
-                    }
+                    $newConfigs[$key]['thumb'] = $newConfigs[$key]['path'];
+                    }*/
                     break;
                 case 'images':
-                    $newConfigs[$key] = empty($value['value']) ? [] : Attachmentconfig::getFileInfo($value['value'], 'id,path,thumb');
+                    /*$newConfigs[$key] = empty($value['value']) ? [] : Attachmentconfig::getFileInfo($value['value'], 'id,path,thumb');*/
                     break;
                 case 'Ueditor':
-                    $newConfigs[$key] = htmlspecialchars_decode($value['value']);
+                    /*$newConfigs[$key] = htmlspecialchars_decode($value['value']);*/
                     break;
                 default:
                     $newConfigs[$key] = $value['value'];
