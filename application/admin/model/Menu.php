@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
+use \think\Db;
 use \think\Model;
 
 class Menu extends Model
@@ -102,4 +103,29 @@ class Menu extends Model
         return $array;
 
     }
+
+    //获取菜单列表
+    public static function getList()
+    {
+        return self::order(array('listorder', 'id' => 'DESC'))->column(true);
+    }
+
+// 获取菜单
+    public static function getInfo($map)
+    {
+        return Db::name('menu')->where($map)->find();
+    }
+
+// 更新数据
+    public static function edit($data)
+    {
+        return Db::name('menu')->update($data);
+    }
+
+// 删除数据
+    public static function remove($id)
+    {
+        return Db::name('menu')->delete($id);
+    }
+
 }

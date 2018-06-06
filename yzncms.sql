@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-05-14 12:55:59
+Date: 2018-06-06 18:39:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -151,7 +151,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -162,3 +162,4 @@ INSERT INTO `yzn_menu` VALUES ('3', '扩展', '', '0', 'admin', 'addons', 'index
 INSERT INTO `yzn_menu` VALUES ('10', '系统配置', '', '1', 'admin', 'config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('11', '配置管理', '', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('13', '网站设置', '', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', '', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
