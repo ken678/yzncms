@@ -28,25 +28,19 @@ class Menu extends Adminbase
         $result = MenuModel::getList();
         $array = array();
         foreach ($result as $r) {
-            $r['str_manage'] = '<a class="btn red" href="javascript:if(confirm(\'您确定要删除吗?\')){location.href=\'' . url("Menu/delete", array("id" => $r['id'])) . '\'};"><i class="icon iconfont icon-shanchu"></i>删除</a><span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em>
-        <ul>
-        <li><a href="' . url("Menu/edit", array("id" => $r['id'])) . '">编辑菜单</a></li>
-        <li><a href="' . url("Menu/add", array("parentid" => $r['id'])) . '">添加子菜单</a></li>
-        </ul>
-        </span>';
+            $r['str_manage'] = '<a class="layui-btn layui-btn-xs ajax-jump layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a><a class="layui-btn layui-btn-xs ajax-jump" url=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs ajax-jump layui-btn-normal" url=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a>';
             $r['status'] = $r['status'] ? "<span class='on'><i class='icon iconfont icon-xianshi'></i>显示</span>" : "<span class='off'><i class='icon iconfont icon-yincang'></i>隐藏</span>";
             $array[] = $r;
         }
         $str = "<tr>
-        <td align='center' class='sort'><span alt='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='editable itip'>\$listorder</span></td>
-        <td align='center'>\$id</td>
-        <td align='center' class='handle'>\$str_manage</td>
-        <td align='left'>\$spacer\$title</td>
-        <td align='center'>\$status</td>
+        <td>\$listorder</td>
+        <td>\$id</td>
+        <td>\$str_manage</td>
+        <td>\$spacer\$title</td>
+        <td>\$status</td>
         </tr>";
         $tree->init($array);
         $categorys = $tree->get_tree(0, $str);
-        var_dump($categorys);
         $this->assign('categorys', $categorys);
         return $this->fetch();
     }
