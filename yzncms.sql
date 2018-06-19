@@ -59,7 +59,7 @@ CREATE TABLE `yzn_cache` (
 -- ----------------------------
 -- Records of yzn_cache
 -- ----------------------------
-INSERT INTO `yzn_cache` VALUES ('1', 'Config', '网站配置', 'Admin', 'Config', 'config_cache', '1');
+INSERT INTO `yzn_cache` VALUES ('1', 'Config', '网站配置', 'admin', 'Config', 'config_cache', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_config`

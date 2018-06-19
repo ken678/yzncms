@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "topthink/framework",
-            "version": "v5.1.16",
+            "version": "v5.1.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "e0a8bdc52957a8f9774353fbfa0b9fd6ee206188"
+                "reference": "b851761979a219c92285fee691030aca50bcb5bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/framework/e0a8bdc52957a8f9774353fbfa0b9fd6ee206188.zip",
-                "reference": "e0a8bdc52957a8f9774353fbfa0b9fd6ee206188",
+                "url": "https://files.phpcomposer.com/files/top-think/framework/b851761979a219c92285fee691030aca50bcb5bc.zip",
+                "reference": "b851761979a219c92285fee691030aca50bcb5bc",
                 "shasum": ""
             },
             "require": {
@@ -55,7 +55,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2018-06-08T04:10:59+00:00"
+            "time": "2018-06-17T14:11:40+00:00"
         },
         {
             "name": "topthink/think-captcha",
