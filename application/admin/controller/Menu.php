@@ -16,6 +16,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Menu as MenuModel;
 use app\common\controller\Adminbase;
+use think\Db;
 
 class Menu extends Adminbase
 {
@@ -43,6 +44,35 @@ class Menu extends Adminbase
         $categorys = $tree->get_tree(0, $str);
         $this->assign('categorys', $categorys);
         return $this->fetch();
+    }
+
+    //添加后台菜单
+    public function add()
+    {
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
+            /*if ($this->Menu->add($data)) {
+        $this->success("添加成功！", url("Menu/index"));
+        } else {
+        $error = $this->Menu->getError();
+        $this->error($error ? $error : '添加失败！');
+        }*/
+        } else {
+            $tree = new \util\Tree();
+            $parentid = $this->request->param('parentid/d', '');
+            $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
+            $array = array();
+            foreach ($result as $r) {
+                $r['selected'] = $r['id'] == $parentid ? 'selected' : '';
+                $array[] = $r;
+            }
+            $str = "<option value='\$id' \$selected>\$spacer \$title</option>";
+            $tree->init($array);
+            $select_categorys = $tree->get_tree(0, $str);
+            $this->assign("select_categorys", $select_categorys);
+            return $this->fetch();
+        }
+
     }
 
 }

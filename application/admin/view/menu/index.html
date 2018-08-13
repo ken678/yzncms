@@ -1,6 +1,11 @@
 {extend name="index_layout"/}
 {block name="main"}
 <div class="layui-form">
+  <blockquote class="layui-elem-quote news_search">
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-sm ajax-jump" url="/admin/menu/add.html">新增后台菜单</a>
+    </div>
+  </blockquote>
   <table class="layui-table">
     <colgroup>
       <col width="80">
@@ -21,4 +26,7 @@
     </tbody>
   </table>
 </div>
+{/block}
+{block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}
