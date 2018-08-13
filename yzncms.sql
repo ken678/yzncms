@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-06-06 18:39:32
+Date: 2018-08-13 12:37:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `yzn_admin`;
 CREATE TABLE `yzn_admin` (
   `userid` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) DEFAULT NULL COMMENT '管理账号',
-  `password` varchar(40) DEFAULT NULL COMMENT '管理密码',
+  `password` varchar(32) DEFAULT NULL COMMENT '管理密码',
   `roleid` tinyint(4) unsigned DEFAULT '0',
   `encrypt` varchar(6) DEFAULT NULL COMMENT '加密因子',
   `nickname` char(16) NOT NULL COMMENT '昵称',
@@ -37,8 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '4459f1e16266d94ab6436a6743c838d97e9dca1f', '1', 'Wo0bAa', '御宅男', '1526271367', '2130706433', '530765310@qq.com', '1');
-INSERT INTO `yzn_admin` VALUES ('2', 'ken678', 'abbcdc6e46d13db19e5b7e64ebcf44e625407165', '2', 'ILHWqH', '御宅男', '1525682570', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1534134959', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -59,7 +58,7 @@ CREATE TABLE `yzn_cache` (
 -- ----------------------------
 -- Records of yzn_cache
 -- ----------------------------
-INSERT INTO `yzn_cache` VALUES ('1', 'Config', '网站配置', 'admin', 'Config', 'config_cache', '1');
+INSERT INTO `yzn_cache` VALUES ('1', 'Config', '网站配置', 'Admin', 'Config', 'config_cache', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_config`

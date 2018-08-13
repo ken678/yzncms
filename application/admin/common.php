@@ -23,7 +23,7 @@ function encrypt_password($password, $encrypt = '')
 {
     $pwd = array();
     $pwd['encrypt'] = $encrypt ? $encrypt : genRandomString();
-    $pwd['password'] = sha1(trim($password) . $pwd['encrypt']);
+    $pwd['password'] = md5(trim($password) . $pwd['encrypt']);
     return $encrypt ? $pwd['password'] : $pwd;
 }
 
