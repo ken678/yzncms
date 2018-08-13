@@ -109,6 +109,7 @@
             online();
         }, 60000);
 
+
         //顶部导航点击
         $('#J_B_main_block').on('click', 'a', function(e) {
             //取消事件的默认动作
@@ -307,14 +308,35 @@
             });
         });
 
+        //上一个选项卡
+        $('#page-prev').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var ul = $('#B_history'),
+                current = ul.find('.layui-this'),
+                li = current.prev('li');
+            showTab(li);
+        });
+
+
+        //下一个选项卡
+        $('#page-next').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var ul = $('#B_history'),
+                current = ul.find('.layui-this'),
+                li = current.next('li');
+            showTab(li);
+        });
+
         //显示顶部导航时作位置判断，点击左边菜单、上一tab、下一tab时公用
         function showTab(li) {
             if (li.length) {
-                /*var ul = $('#B_history'),
+                var ul = $('#B_history'),
                     li_offset = li.offset(),
                     li_width = li.outerWidth(true),
-                    next_left = $('#J_next').offset().left - 9, //右边按钮的界限位置
-                    prev_right = $('#J_prev').offset().left + $('#J_prev').outerWidth(true); //左边按钮的界限位置
+                    next_left = $('#page-next').offset().left, //右边按钮的界限位置
+                    prev_right = $('#page-prev').offset().left + $('#page-prev').outerWidth(true); //左边按钮的界限位置
                 if (li_offset.left + li_width > next_left) { //如果将要移动的元素在不可见的右边，则需要移动
                     var distance = li_offset.left + li_width - next_left; //计算当前父元素的右边距离，算出右移多少像素
                     ul.animate({
@@ -325,7 +347,7 @@
                     ul.animate({
                         left: '+=' + distance
                     }, 200, 'swing');
-                }*/
+                }
                 li.trigger('click');
             }
         }
