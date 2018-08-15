@@ -14,19 +14,25 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\Menu as MenuModel;
+use app\admin\model\Menu as Menu_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 
 class Menu extends Adminbase
 {
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->Menu = new Menu_Model;
+    }
+
     //后台菜单首页
     public function index()
     {
         $tree = new \util\Tree();
         $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-        $result = MenuModel::getList();
+        $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
         $array = array();
         foreach ($result as $r) {
             $r['str_manage'] = '<a class="layui-btn layui-btn-xs ajax-jump layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a><a class="layui-btn layui-btn-xs ajax-jump" url=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs ajax-jump layui-btn-normal" url=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a>';
@@ -51,12 +57,12 @@ class Menu extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->param();
-            /*if ($this->Menu->add($data)) {
-        $this->success("添加成功！", url("Menu/index"));
-        } else {
-        $error = $this->Menu->getError();
-        $this->error($error ? $error : '添加失败！');
-        }*/
+            if ($this->Menu->add($data)) {
+                $this->success("添加成功！", url("Menu/index"));
+            } else {
+                $error = $this->Menu->getError();
+                $this->error($error ? $error : '添加失败！');
+            }
         } else {
             $tree = new \util\Tree();
             $parentid = $this->request->param('parentid/d', '');

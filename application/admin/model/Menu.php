@@ -104,28 +104,32 @@ class Menu extends Model
 
     }
 
-    //获取菜单列表
-    public static function getList()
+    /**
+     * 添加后台菜单
+     */
+    public function add($data)
     {
-        return self::order(array('listorder', 'id' => 'DESC'))->column(true);
+        $validate = new \app\admin\validate\Menu;
+        $result = $validate->scene('add')->check($data);
+        if (!$result) {
+            $this->error = $validate->getError();
+            return false;
+        }
+        return $this->allowField(true)->save($data) !== false ? true : false;
     }
 
-// 获取菜单
-    public static function getInfo($map)
+    /**
+     * 修改后台菜单
+     */
+    public function edit($data)
     {
-        return Db::name('menu')->where($map)->find();
-    }
-
-// 更新数据
-    public static function edit($data)
-    {
-        return Db::name('menu')->update($data);
-    }
-
-// 删除数据
-    public static function remove($id)
-    {
-        return Db::name('menu')->delete($id);
+        $validate = new \app\admin\validate\Menu;
+        $result = $validate->scene('edit')->check($data);
+        if (!$result) {
+            $this->error = $validate->getError();
+            return false;
+        }
+        return $this->allowField(true)->isUpdate(true)->save($data) !== false ? true : false;
     }
 
 }

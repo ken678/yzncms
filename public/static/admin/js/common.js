@@ -97,7 +97,8 @@ layui.use(['element', 'layer', 'form'], function() {
             if ($(this).attr('url') !== undefined) {
                 target = $(this).attr('url');
             } else {
-                target = form1.get(0).action;
+                //target = form1.get(0).action;
+                target = form1.attr("action");
             }
             query = form1.serialize();
         } else if (form1.get(0).nodeName == 'INPUT' || form1.get(0).nodeName == 'SELECT' || form1.get(0).nodeName == 'TEXTAREA') {
@@ -120,6 +121,7 @@ layui.use(['element', 'layer', 'form'], function() {
             }
             query = form1.find('input,select,textarea').serialize();
         }
+
 
         $.post(target, query).success(function(data) {
             if (data.code == 1) {

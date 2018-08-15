@@ -1,9 +1,10 @@
-{extend name="index_layout"/} {block name="main"}
+{extend name="index_layout"/}
+{block name="main"}
 <form class="layui-form form-horizontal" action="{:url('admin/menu/add')}" method="post">
     <div class="layui-form-item">
         <label class="layui-form-label">上级菜单</label>
         <div class="layui-input-inline w300">
-            <select name="group">
+            <select name="pid">
                 <option value="0">作为一级菜单</option>
                 {$select_categorys|raw}
             </select>
@@ -52,6 +53,7 @@
         </div>
     </div>
 </form>
-{/block} {block name="script"}
+{/block}
+{block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}
