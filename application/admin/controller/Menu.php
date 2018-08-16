@@ -35,7 +35,7 @@ class Menu extends Adminbase
         $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
         $array = array();
         foreach ($result as $r) {
-            $r['str_manage'] = '<a class="layui-btn layui-btn-xs ajax-jump layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a><a class="layui-btn layui-btn-xs ajax-jump" url=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs ajax-jump layui-btn-normal" url=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a>';
+            $r['str_manage'] = '<a class="layui-btn layui-btn-xs ajax-get confirm layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a><a class="layui-btn layui-btn-xs ajax-jump" url=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs ajax-jump layui-btn-normal" url=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a>';
             $r['status'] = $r['status'] ? "<span class='on'><i class='icon iconfont icon-xianshi'></i>显示</span>" : "<span class='off'><i class='icon iconfont icon-yincang'></i>隐藏</span>";
             $array[] = $r;
         }
@@ -58,7 +58,7 @@ class Menu extends Adminbase
         if ($this->request->isPost()) {
             $data = $this->request->param();
             if ($this->Menu->add($data)) {
-                $this->success("添加成功！", url("Menu/index"));
+                $this->success("添加成功！");
             } else {
                 $error = $this->Menu->getError();
                 $this->error($error ? $error : '添加失败！');
@@ -78,7 +78,23 @@ class Menu extends Adminbase
             $this->assign("select_categorys", $select_categorys);
             return $this->fetch();
         }
+    }
 
+    /**
+     * 菜单删除
+     */
+    public function delete()
+    {
+        $id = $this->request->param('id/d');
+        $result = Db::name('menu')->order(array("parentid" => $id))->find();
+        if ($result) {
+            $this->error("含有子菜单，无法删除！");
+        }
+        if ($this->Menu->del($id) !== false) {
+            $this->success("删除菜单成功！");
+        } else {
+            $this->error("删除失败！");
+        }
     }
 
 }

@@ -132,4 +132,16 @@ class Menu extends Model
         return $this->allowField(true)->isUpdate(true)->save($data) !== false ? true : false;
     }
 
+    /**
+     * 删除菜单
+     */
+    public function del($id)
+    {
+        $result = $this->where(['id' => $id])->delete();
+        var_dump($result);
+        exit();
+        return false;
+
+    }
+
 }
