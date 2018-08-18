@@ -86,7 +86,10 @@ class Menu extends Adminbase
     public function delete()
     {
         $id = $this->request->param('id/d');
-        $result = Db::name('menu')->order(array("parentid" => $id))->find();
+        if (empty($id)) {
+            $this->error('ID错误');
+        }
+        $result = Db::name('menu')->where(["parentid" => $id])->find();
         if ($result) {
             $this->error("含有子菜单，无法删除！");
         }

@@ -19,7 +19,7 @@ class Menu extends Validate
 {
     //定义验证规则
     protected $rule = [
-        'pid|上级菜单' => 'require|number',
+        'parentid|上级菜单' => 'require|number',
         'title|名称' => 'require',
         'app|模块' => 'require',
         'controller|控制器' => 'require',
@@ -28,8 +28,8 @@ class Menu extends Validate
 
     //定义验证提示
     protected $message = [
-        'pid.require' => '上级菜单不能为空',
-        'pid.number' => '上级菜单格式错误',
+        'parentid.require' => '上级菜单不能为空',
+        'parentid.number' => '上级菜单格式错误',
         'title.require' => '菜单名称不能为空',
         'app.require' => '模块不能为空',
         'controller.require' => '控制器不能为空',
@@ -38,7 +38,7 @@ class Menu extends Validate
 
     //定义验证场景
     protected $scene = [
-        'add' => ['pid', 'title', 'app', 'controller', 'action'],
-        'edit' => ['pid', 'title', 'app', 'controller', 'action'],
+        'add' => ['parentid', 'title', 'app', 'controller', 'action'],
+        'edit' => ['parentid', 'title', 'app', 'controller', 'action'],
     ];
 }

@@ -138,10 +138,12 @@ class Menu extends Model
     public function del($id)
     {
         $result = $this->where(['id' => $id])->delete();
-        var_dump($result);
-        exit();
-        return false;
-
+        if ($result) {
+            return true;
+        } else {
+            $this->error = "删除失败";
+            return false;
+        }
     }
 
 }
