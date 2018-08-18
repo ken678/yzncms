@@ -35,7 +35,7 @@ class Menu extends Adminbase
         $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
         $array = array();
         foreach ($result as $r) {
-            $r['str_manage'] = '<a class="layui-btn layui-btn-xs ajax-get confirm layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a><a class="layui-btn layui-btn-xs" href=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs layui-btn-normal" href=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a>';
+            $r['str_manage'] = '<a class="layui-btn layui-btn-xs" href=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs layui-btn-normal" href=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a><a class="layui-btn layui-btn-xs ajax-get confirm layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a>';
             $r['status'] = $r['status'] ? "<span class='on'><i class='icon iconfont icon-xianshi'></i>显示</span>" : "<span class='off'><i class='icon iconfont icon-yincang'></i>隐藏</span>";
             $array[] = $r;
         }

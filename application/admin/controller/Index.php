@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\service\AdminUser;
+use app\admin\model\AdminUser as AdminUser_model;
 use app\common\controller\Adminbase;
 
 class Index extends Adminbase
@@ -30,7 +30,8 @@ class Index extends Adminbase
     //手动退出登录
     public function logout()
     {
-        if (AdminUser::getInstance()->logout()) {
+        $AdminUser_model = new AdminUser_model;
+        if ($AdminUser_model->logout()) {
             //手动登出时，清空forward
             //cookie("forward", NULL);
             $this->success('注销成功！', url("admin/login/index"));

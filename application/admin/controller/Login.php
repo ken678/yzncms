@@ -14,8 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\AdminUser as AdminUser_m;
-use app\admin\service\AdminUser as AdminUser_s;
+use app\admin\model\AdminUser as AdminUser_model;
 use think\Controller;
 
 class Login extends Controller
@@ -23,6 +22,10 @@ class Login extends Controller
     //登录判断
     public function index()
     {
+        $AdminUser_model = new AdminUser_model;
+        if ($AdminUser_model->isLogin()) {
+            $this->redirect('admin/index/index');
+        }
         if ($this->request->isPost()) {
             $data = $this->request->post();
             // 验证数据
@@ -35,20 +38,14 @@ class Login extends Controller
             $this->error('验证码输入错误！');
             return false;
             }*/
-            $AdminUser = new AdminUser_m;
-            if ($AdminUser->login($data['username'], $data['password'])) {
+            if ($AdminUser_model->login($data['username'], $data['password'])) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
-                $this->error($AdminUser->getError(), url('admin/Login/login'));
+                $this->error($AdminUser_model->getError(), url('admin/Login/login'));
             }
 
         } else {
-            if (AdminUser_s::getInstance()->isLogin()) {
-                $this->redirect('admin/index/index');
-            } else {
-                return $this->fetch();
-            }
-
+            return $this->fetch();
         }
 
     }

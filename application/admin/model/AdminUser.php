@@ -114,4 +114,27 @@ class AdminUser extends Model
         return $userInfo;
     }
 
+    /**
+     * 检验用户是否已经登陆
+     */
+    public function isLogin()
+    {
+        $user = session('admin_user_auth');
+        if (empty($user)) {
+            return 0;
+        } else {
+            return session('admin_user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
+        }
+    }
+
+    /**
+     * 注销登录状态
+     * @return boolean
+     */
+    public function logout()
+    {
+        session(null);
+        return true;
+    }
+
 }

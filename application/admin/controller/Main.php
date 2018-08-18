@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\service\AdminUser;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -23,7 +22,7 @@ class Main extends Adminbase
     //欢迎首页
     public function index()
     {
-        $this->assign('userInfo', AdminUser::getInstance()->getInfo());
+        $this->assign('userInfo', $this->_userinfo);
         $this->assign('sys_info', $this->get_sys_info());
         return $this->fetch();
     }

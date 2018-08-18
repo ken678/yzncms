@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\controller;
 
-use app\admin\service\AdminUser;
+use app\admin\model\AdminUser as AdminUser_model;
 
 class Adminbase extends Base
 {
@@ -35,15 +35,16 @@ class Adminbase extends Base
     //验证登录
     private function competence()
     {
+        $AdminUser_model = new AdminUser_model;
         //检查是否登录
-        $uid = (int) AdminUser::getInstance()->isLogin();
+        $uid = (int) $AdminUser_model->isLogin();
         if (empty($uid)) {
             return false;
         }
         //获取当前登录用户信息
-        $userInfo = AdminUser::getInstance()->getInfo();
+        $userInfo = $AdminUser_model->getUserInfo($uid);
         if (empty($userInfo)) {
-            AdminUser::getInstance()->logout();
+            $AdminUser_model->logout();
             return false;
         }
         $this->_userinfo = $userInfo;
