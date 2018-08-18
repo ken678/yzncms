@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-08-18 15:51:00
+Date: 2018-08-18 17:08:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -117,7 +117,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1534575779', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1534581901', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -270,7 +270,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -284,3 +284,4 @@ INSERT INTO `yzn_menu` VALUES ('13', '网站设置', '', '10', 'admin', 'config'
 INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', '', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('15', '管理员设置', '', '1', 'admin', 'manager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', '', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('17', '角色管理', '', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
