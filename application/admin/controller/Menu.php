@@ -35,7 +35,7 @@ class Menu extends Adminbase
         $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
         $array = array();
         foreach ($result as $r) {
-            $r['str_manage'] = '<a class="layui-btn layui-btn-xs ajax-get confirm layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a><a class="layui-btn layui-btn-xs ajax-jump" url=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs ajax-jump layui-btn-normal" url=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a>';
+            $r['str_manage'] = '<a class="layui-btn layui-btn-xs ajax-get confirm layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a><a class="layui-btn layui-btn-xs" href=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs layui-btn-normal" href=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a>';
             $r['status'] = $r['status'] ? "<span class='on'><i class='icon iconfont icon-xianshi'></i>显示</span>" : "<span class='off'><i class='icon iconfont icon-yincang'></i>隐藏</span>";
             $array[] = $r;
         }
@@ -57,8 +57,13 @@ class Menu extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->param();
+            if (!isset($data['status'])) {
+                $data['status'] = 0;
+            } else {
+                $data['status'] = 1;
+            }
             if ($this->Menu->add($data)) {
-                $this->success("添加成功！");
+                $this->success("添加成功！", url("Menu/index"));
             } else {
                 $error = $this->Menu->getError();
                 $this->error($error ? $error : '添加失败！');
@@ -78,6 +83,42 @@ class Menu extends Adminbase
             $this->assign("select_categorys", $select_categorys);
             return $this->fetch();
         }
+    }
+
+    //编辑后台菜单
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
+            if (!isset($data['status'])) {
+                $data['status'] = 0;
+            } else {
+                $data['status'] = 1;
+            }
+            if ($this->Menu->edit($data)) {
+                $this->success("编辑成功！", url("Menu/index"));
+            } else {
+                $error = $this->Menu->getError();
+                $this->error($error ? $error : '编辑失败！');
+            }
+        } else {
+            $tree = new \util\Tree();
+            $id = $this->request->param('id/d', '');
+            $rs = Db::name('menu')->where(["id" => $id])->find();
+            $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
+            $array = array();
+            foreach ($result as $r) {
+                $r['selected'] = $r['id'] == $rs['parentid'] ? 'selected' : '';
+                $array[] = $r;
+            }
+            $str = "<option value='\$id' \$selected>\$spacer \$title</option>";
+            $tree->init($array);
+            $select_categorys = $tree->get_tree(0, $str);
+            $this->assign("data", $rs);
+            $this->assign("select_categorys", $select_categorys);
+            return $this->fetch();
+        }
+
     }
 
     /**

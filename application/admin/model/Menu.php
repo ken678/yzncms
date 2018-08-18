@@ -19,6 +19,7 @@ use \think\Model;
 
 class Menu extends Model
 {
+
     /**
      * 获取菜单
      * @return type
