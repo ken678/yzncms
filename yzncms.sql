@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-08-18 17:08:34
+Date: 2018-08-18 18:15:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -117,7 +117,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1534581901', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1534584413', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -153,11 +153,19 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=146 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
 -- ----------------------------
+INSERT INTO `yzn_auth_rule` VALUES ('138', 'admin', '2', 'admin/setting/index', '设置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('139', 'admin', '2', 'admin/module/index', '模块', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('140', 'admin', '2', 'admin/addons/index', '扩展', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('141', 'admin', '1', 'admin/config/index', '配置管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('142', 'admin', '1', 'admin/config/setting', '网站设置', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('143', 'admin', '1', 'admin/menu/index', '菜单管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('144', 'admin', '1', 'admin/manager/index', '管理员管理', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('145', 'admin', '1', 'admin/authManager/index', '角色管理', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
