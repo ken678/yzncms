@@ -1,0 +1,44 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-form">
+  <blockquote class="layui-elem-quote news_search">
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-sm" href="{:url('admin/manager/add')}">添加管理员</a>
+    </div>
+  </blockquote>
+  <table class="layui-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>操作</th>
+        <th>登录名</th>
+        <th>所属角色</th>
+        <th>最后登录IP</th>
+        <th>最后登录时间</th>
+        <th>E-mail</th>
+        <th>真实姓名</th>
+      </tr>
+    </thead>
+    <tbody>
+        {volist name="Userlist" id="vo"}
+        <tr>
+          <td>{$vo['userid']}</td>
+          <td>
+              <a class="layui-btn layui-btn-xs" href="{:url('admin/manager/edit',['id'=>$vo.userid])}">编辑</a>
+              <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('admin/manager/del',['id'=>$vo.userid])}">删除</a>
+          </td>
+          <td>{$vo.username}</td>
+          <td>{php} echo model('admin/AuthGroup')->getRoleIdName($vo['roleid']) {/php}</td>
+          <td>{php} echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--' {/php}</td>
+          <td>{php} echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--' {/php}</td>
+          <td>{$vo.email}</td>
+          <td>{$vo.nickname}</td>
+        </tr>
+        {/volist}
+    </tbody>
+  </table>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+{/block}

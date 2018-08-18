@@ -124,3 +124,14 @@ function parse_attr($value = '')
     }
     return $value;
 }
+
+/**
+ * 时间戳格式化
+ * @param int $time
+ * @return string 完整的时间显示
+ */
+function time_format($time = null, $format = 'Y-m-d H:i')
+{
+    $time = $time === null ? $_SERVER['REQUEST_TIME'] : intval($time);
+    return date($format, $time);
+}
