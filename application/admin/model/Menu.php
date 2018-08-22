@@ -120,7 +120,7 @@ class Menu extends Model
             return $tree_nodes[$tree];
         }
         if ((int) $tree) {
-            $list = $this->order('listorder ASC,id ASC')->select();
+            $list = $this->order('listorder ASC,id ASC')->select()->toArray();
             foreach ($list as $key => $value) {
                 $list[$key]['url'] = $value['app'] . '/' . $value['controller'] . '/' . $value['action'];
             }
@@ -132,7 +132,7 @@ class Menu extends Model
                 }
             }
         } else {
-            $nodes = $this->order('listorder ASC,id ASC')->select();
+            $nodes = $this->order('listorder ASC,id ASC')->select()->toArray();
             foreach ($nodes as $key => $value) {
                 $nodes[$key]['url'] = $value['app'] . '/' . $value['controller'] . '/' . $value['action'];
             }
