@@ -183,4 +183,23 @@ class Menu extends Model
         }
     }
 
+    /**
+     * 更新缓存
+     * @param type $data
+     * @return type
+     */
+    public function menu_cache()
+    {
+        $data = $this->select()->toArray();
+        if (empty($data)) {
+            return false;
+        }
+        $cache = array();
+        foreach ($data as $rs) {
+            $cache[$rs['id']] = $rs;
+        }
+        cache('Menu', $cache);
+        return $cache;
+    }
+
 }

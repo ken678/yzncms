@@ -37,23 +37,44 @@ class AuthManager extends Adminbase
     public function access()
     {
         $this->updateRules(); //更新节点
+
+        $result = model('admin/Menu')->returnNodes(false);
+
         $group_id = $this->request->param('group_id/d');
-        $node_list = model("admin/Menu")->returnNodes();
-        $auth_group = Db::name('AuthGroup')
-            ->where(array('status' => 1, 'type' => AuthGroup::TYPE_ADMIN))
-            ->column('id,title,rules');
+        $rules = Db::name('AuthGroup')
+            ->where('status', '<>', 0)
+            ->where(['type' => AuthGroup::TYPE_ADMIN])
+            ->value('rules');
 
-        $map = array('type' => AuthRule::RULE_MAIN, 'status' => 1);
-        $main_rules = db('AuthRule')->where($map)->column('name,id');
-        $map = array('type' => AuthRule::RULE_URL, 'status' => 1);
-        $child_rules = db('AuthRule')->where($map)->column('name,id');
+        $map = array('module' => 'admin', 'status' => 1);
+        $main_rules = Db::name('AuthRule')->where($map)->column('name,id');
 
-        $this->assign('node_list', $node_list);
-        $this->assign('auth_group', $auth_group);
-        $this->assign('main_rules', $main_rules);
-        $this->assign('auth_rules', $child_rules);
-        $this->assign('this_group', $auth_group[$group_id]);
+        $json = array();
+        foreach ($result as $rs) {
+            $data = array(
+                'id' => $rs['id'],
+                'checked' => $rs['id'],
+                'parentid' => $rs['parentid'],
+                'name' => $rs['title'],
+                'value' => $main_rules[$rs['url']],
+                'checked' => $this->isCompetence($main_rules[$rs['url']], $rules) ? true : false,
+            );
+            $json[] = $data;
+        }
+        $this->assign('json', json_encode($json));
         return $this->fetch('managergroup');
+    }
+
+    public function isCompetence($id, $ids)
+    {
+        $ids = explode(',', $ids);
+        $info = in_array($id, $ids);
+        if ($info) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**
