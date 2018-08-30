@@ -52,15 +52,16 @@ class AuthManager extends Adminbase
         $json = array();
         foreach ($result as $rs) {
             $data = array(
-                'id' => $rs['id'],
+                'nid' => $rs['id'],
                 'checked' => $rs['id'],
                 'parentid' => $rs['parentid'],
                 'name' => $rs['title'],
-                'value' => $main_rules[$rs['url']],
+                'id' => $main_rules[$rs['url']],
                 'checked' => $this->isCompetence($main_rules[$rs['url']], $rules) ? true : false,
             );
             $json[] = $data;
         }
+        $this->assign('group_id', $group_id);
         $this->assign('json', json_encode($json));
         return $this->fetch('managergroup');
     }
@@ -73,6 +74,49 @@ class AuthManager extends Adminbase
             return true;
         } else {
             return false;
+        }
+
+    }
+
+    /**
+     * 创建管理员用户组
+     */
+    public function createGroup()
+    {
+
+    }
+
+    /**
+     * 编辑管理员用户组
+     */
+    public function editGroup()
+    {
+
+    }
+
+    /**
+     * 管理员用户组数据写入/更新
+     */
+    public function writeGroup()
+    {
+        $data = $this->request->post();
+        $data['module'] = 'admin';
+        $data['type'] = AuthGroup::TYPE_ADMIN;
+        $AuthGroup = new AuthGroup;
+        if (isset($data['id']) && !empty($data['id'])) {
+            //更新
+            $r = $AuthGroup->allowField(true)->save($data, ['id' => $data['id']]);
+        } else {
+            $result = $this->validate($data, 'AuthGroup');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            $r = $AuthGroup->allowField(true)->save($data);
+        }
+        if ($r === false) {
+            $this->error('操作失败' . $AuthGroup->getError());
+        } else {
+            $this->success('操作成功!');
         }
 
     }

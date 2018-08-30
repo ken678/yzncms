@@ -1,9 +1,11 @@
-{extend name="index_layout"/} {block name="main"}
+{extend name="index_layout"/}
+{block name="main"}
 <form class="layui-form form-horizontal" action="{:url('admin/AuthManager/writeGroup')}" method="post">
     <div class="zTreeDemoBackground left">
         <ul id="treeDemo" class="ztree"></ul>
     </div>
-    <input type="hidden" name="menuid" value="" />
+    <input type="hidden" name="rules" value="" />
+    <input type="hidden" name="id" value="{$group_id}" />
     <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
 </form>
 {/block} {block name="script"}
@@ -21,7 +23,7 @@ var setting = {
     data: {
         simpleData: {
             enable: true,
-            idKey: "id",
+            idKey: "nid",
             pIdKey: "parentid",
         }
     },
@@ -65,7 +67,7 @@ layui.use(['element', 'layer', 'form'], function() {
 
         form1 = $('.' + target_form);
         //处理被选中的数据
-        form1.find('input[name="menuid"]').val("");
+        form1.find('input[name="rules"]').val("");
         var nodes = zTree.getCheckedNodes(true);
         var str = "";
         $.each(nodes, function(i, value) {
@@ -74,7 +76,7 @@ layui.use(['element', 'layer', 'form'], function() {
             }
             str += value.id;
         });
-        form1.find('input[name="menuid"]').val(str);
+        form1.find('input[name="rules"]').val(str);
 
         if (form1.get(0).nodeName == 'FORM') {
             if ($(this).hasClass('confirm')) {
