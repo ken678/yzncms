@@ -76,6 +76,30 @@ class AdminUser extends Model
     }
 
     /**
+     * 删除管理员
+     * @param type $userId
+     * @return boolean
+     */
+    public function deleteManager($userId)
+    {
+        $userId = (int) $userId;
+        if (empty($userId)) {
+            $this->error = '请指定需要删除的用户ID！';
+            return false;
+        }
+        /*if ($userId == config('USER_ADMINISTRATOR')) {
+        $this->error = '禁止对超级管理员执行该操作！';
+        return false;
+        }*/
+        if (false !== $this->where(array('userid' => $userId))->delete()) {
+            return true;
+        } else {
+            $this->error = '删除失败！';
+            return false;
+        }
+    }
+
+    /**
      * 用户登录
      * @param string $username 用户名
      * @param string $password 密码

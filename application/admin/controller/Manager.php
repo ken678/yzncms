@@ -77,4 +77,17 @@ class Manager extends Adminbase
         }
     }
 
+    /**
+     * 管理员删除
+     */
+    public function del()
+    {
+        $id = $this->request->param('id/d');
+        if ($this->AdminUser->deleteManager($id)) {
+            $this->success("删除成功！");
+        } else {
+            $this->error($this->AdminUser->getError() ?: '删除失败！');
+        }
+    }
+
 }
