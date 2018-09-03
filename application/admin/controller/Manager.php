@@ -54,4 +54,27 @@ class Manager extends Adminbase
         }
     }
 
+    /**
+     * 管理员编辑
+     */
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            if ($this->AdminUser->editManager($this->request->post(''))) {
+                $this->success("修改成功！");
+            } else {
+                $this->error($this->User->getError() ?: '修改失败！');
+            }
+        } else {
+            $id = $this->request->param('id/d');
+            $data = $this->AdminUser->where(array("userid" => $id))->find();
+            if (empty($data)) {
+                $this->error('该信息不存在！');
+            }
+            $this->assign("data", $data);
+            $this->assign("roles", model('admin/AuthGroup')->getGroups());
+            return $this->fetch();
+        }
+    }
+
 }
