@@ -22,6 +22,29 @@ class AdminUser extends Model
     // 设置当前模型对应的完整数据表名称
     protected $table = '__ADMIN__';
     protected $pk = 'userid';
+    protected $insert = ['status' => 1];
+
+    /**
+     * 创建管理员
+     * @param type $data
+     * @return boolean
+     */
+    public function createManager($data)
+    {
+        if (empty($data)) {
+            $this->error = '没有数据！';
+            return false;
+        }
+        $passwordinfo = encrypt_password($data['password']); //对密码进行处理
+        $data['password'] = $passwordinfo['password'];
+        $data['encrypt'] = $passwordinfo['encrypt'];
+        $id = $this->allowField(true)->save($data);
+        if ($id) {
+            return $id;
+        }
+        $this->error = '入库失败！';
+        return false;
+    }
 
     /**
      * 用户登录

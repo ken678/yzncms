@@ -37,7 +37,7 @@ class AuthGroup extends Model
     {
         $map = array('status' => 1, 'type' => self::TYPE_ADMIN, 'module' => 'admin');
         $map = array_merge($map, $where);
-        return $this->where($map)->select()->toArray();
+        return $this->where($map)->select();
     }
 
     /**
