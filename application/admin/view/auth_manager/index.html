@@ -1,42 +1,44 @@
 {extend name="index_layout"/}
 {block name="main"}
-<div class="layui-form">
-  <blockquote class="layui-elem-quote news_search">
-    <div class="layui-inline">
-        <a class="layui-btn layui-btn-sm" href="{:url('AuthManager/createGroup')}">添加角色</a>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <blockquote class="layui-elem-quote news_search">
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-sm" href="{:url('AuthManager/createGroup')}">添加角色</a>
+                </div>
+            </blockquote>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th>权限组</th>
+                        <th>描述</th>
+                        <th>状态</th>
+                        <th>授权</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="_list" id="vo"}
+                    <tr>
+                        <td>
+                            <a class="layui-btn layui-btn-xs" href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('AuthManager/deletegroup?id='.$vo['id'])}">删除</a>
+                        </td>
+                        <td>{$vo.title}</td>
+                        <td>{:mb_strimwidth($vo['description'],0,60,"...","utf-8")}</td>
+                        <td>{eq name="vo.status" value="1"}<span class="on"><i class="icon iconfont icon-zhengque1"></i>{$vo['status_text']}</span> {else/}
+                            <span class="off"><i class="icon iconfont icon-iconfontcuowu2"></i>{$vo['status_text']}</span> {/eq}
+                        </td>
+                        <td>
+                            <a class="layui-btn layui-btn-xs" href="{:url('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}">访问授权</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
     </div>
-  </blockquote>
-  <table class="layui-table">
-    <thead>
-      <tr>
-        <th>操作</th>
-        <th>权限组</th>
-        <th>描述</th>
-        <th>状态</th>
-        <th>授权</th>
-      </tr>
-    </thead>
-    <tbody>
-        {volist name="_list" id="vo"}
-        <tr>
-          <td>
-              <a class="layui-btn layui-btn-xs" href="{:url('AuthManager/editgroup?id='.$vo['id'])}">编辑</a>
-              <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('AuthManager/deletegroup?id='.$vo['id'])}">删除</a>
-          </td>
-          <td>{$vo.title}</td>
-          <td>{:mb_strimwidth($vo['description'],0,60,"...","utf-8")}</td>
-          <td>{eq name="vo.status" value="1"}<span class="on"><i class="icon iconfont icon-zhengque1"></i>{$vo['status_text']}</span>
-             {else/}<span class="off"><i class="icon iconfont icon-iconfontcuowu2"></i>{$vo['status_text']}</span>
-             {/eq}
-          </td>
-          <td>
-              <a class="layui-btn layui-btn-xs" href="{:url('AuthManager/access?group_name='.$vo['title'].'&group_id='.$vo['id'])}">访问授权</a>
-          </td>
-
-        </tr>
-        {/volist}
-    </tbody>
-  </table>
 </div>
 {/block}
 {block name="script"}

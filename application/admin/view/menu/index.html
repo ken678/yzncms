@@ -1,30 +1,34 @@
 {extend name="index_layout"/}
 {block name="main"}
-<div class="layui-form">
-  <blockquote class="layui-elem-quote news_search">
-    <div class="layui-inline">
-        <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <blockquote class="layui-elem-quote news_search">
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
+                </div>
+            </blockquote>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="80">
+                    <col width="80">
+                    <col width="160">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>排序</th>
+                        <th>ID</th>
+                        <th>操作</th>
+                        <th>菜单名称</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {$categorys|raw}
+                </tbody>
+            </table>
+        </div>
     </div>
-  </blockquote>
-  <table class="layui-table">
-    <colgroup>
-      <col width="80">
-      <col width="80">
-      <col width="160">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>排序</th>
-        <th>ID</th>
-        <th>操作</th>
-        <th>菜单名称</th>
-        <th>状态</th>
-      </tr>
-    </thead>
-    <tbody>
-      {$categorys|raw}
-    </tbody>
-  </table>
 </div>
 {/block}
 {block name="script"}

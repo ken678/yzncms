@@ -1,58 +1,62 @@
 {extend name="index_layout"/}
 {block name="main"}
-<div class="layui-tab layui-tab-card">
-    <ul class="layui-tab-title">
-        {volist name="$groupArray" id="vo"}
-        <li class="{if $key==$group}layui-this{/if}"><a href="{:url('index',['group'=>$key])}">{$vo}</a></li>
-        {/volist}
-    </ul>
-    <div class="layui-tab-content">
-        <blockquote class="layui-elem-quote news_search">
-            <div class="layui-inline">
-                <a class="layui-btn layui-btn-sm ajax-jump" url="{:url('admin/config/add')}">新增配置项</a>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                {volist name="$groupArray" id="vo"}
+                <li class="{if $key==$group}layui-this{/if}"><a href="{:url('index',['group'=>$key])}">{$vo}</a></li>
+                {/volist}
+            </ul>
+            <div class="layui-tab-content">
+                <blockquote class="layui-elem-quote news_search">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-sm ajax-jump" url="{:url('admin/config/add')}">新增配置项</a>
+                    </div>
+                </blockquote>
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table layui-form layui-table-view">
+                        <colgroup>
+                            <col width="200">
+                            <col>
+                            <col width="120">
+                            <col width="250">
+                            <col width="100">
+                            <col width="100">
+                            <col width="150">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>标题</th>
+                                <th>类型</th>
+                                <th>更新时间</th>
+                                <th>排序</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name="list" id="vo"}
+                            <tr>
+                                <td>{$vo.name}</td>
+                                <td>{$vo.title}</td>
+                                <td>{$vo.ftitle}</td>
+                                <td>{:date('Y-m-d H:i:s',$vo.update_time)}</td>
+                                <td>{$vo.listorder}</td>
+                                <td>
+                                    <input type="checkbox" {if $vo.status}checked{/if} lay-skin="switch" lay-filter="switchStatus" lay-text="开启|关闭" value="{$vo.status}" data-href="{:url('admin/config/setstate',['id'=>$vo.id])}">
+                                </td>
+                                <td>
+                                    <a class="layui-btn layui-btn-xs ajax-jump" url="{:url('admin/config/edit',['id'=>$vo.id])}">编辑</a>
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('admin/config/del',['id'=>$vo.id])}">删除</a>
+                                </td>
+                            </tr>
+                            {/volist}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </blockquote>
-        <div class="layui-tab-item layui-show">
-            <table class="layui-table layui-form layui-table-view">
-                <colgroup>
-                    <col width="200">
-                    <col>
-                    <col width="120">
-                    <col width="250">
-                    <col width="100">
-                    <col width="100">
-                    <col width="150">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>名称</th>
-                        <th>标题</th>
-                        <th>类型</th>
-                        <th>更新时间</th>
-                        <th>排序</th>
-                        <th>状态</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {volist name="list" id="vo"}
-                    <tr>
-                        <td>{$vo.name}</td>
-                        <td>{$vo.title}</td>
-                        <td>{$vo.ftitle}</td>
-                        <td>{:date('Y-m-d H:i:s',$vo.update_time)}</td>
-                        <td>{$vo.listorder}</td>
-                        <td>
-                            <input type="checkbox" {if $vo.status}checked{/if} lay-skin="switch" lay-filter="switchStatus" lay-text="开启|关闭" value="{$vo.status}" data-href="{:url('admin/config/setstate',['id'=>$vo.id])}">
-                        </td>
-                        <td>
-                            <a class="layui-btn layui-btn-xs ajax-jump" url="{:url('admin/config/edit',['id'=>$vo.id])}">编辑</a>
-                            <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('admin/config/del',['id'=>$vo.id])}">删除</a>
-                        </td>
-                    </tr>
-                    {/volist}
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
@@ -63,6 +67,7 @@
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
-{/block} {block name="script"}
+{/block}
+{block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}

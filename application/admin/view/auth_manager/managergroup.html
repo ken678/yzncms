@@ -1,14 +1,25 @@
 {extend name="index_layout"/}
 {block name="main"}
-<form class="layui-form form-horizontal" action="{:url('admin/AuthManager/writeGroup')}" method="post">
-    <div class="zTreeDemoBackground left">
-        <ul id="treeDemo" class="ztree"></ul>
+<div class="layui-card">
+    <div class="layui-card-header">编辑访问权限</div>
+    <div class="layui-card-body">
+        <form class="layui-form form-horizontal" action="{:url('admin/AuthManager/writeGroup')}" method="post">
+            <div class="zTreeDemoBackground left">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+            <input type="hidden" name="rules" value="" />
+            <input type="hidden" name="id" value="{$group_id}" />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <input type="hidden" name="rules" value="" />
-    <input type="hidden" name="id" value="{$group_id}" />
-    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-</form>
-{/block} {block name="script"}
+</div>
+{/block}
+{block name="script"}
 <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" href="__STATIC__/zTree/metroStyle.css">
 <script type="text/javascript" src="__STATIC__/zTree/jquery.ztree.all.min.js"></script>
@@ -55,7 +66,7 @@ $(document).ready(function() {
 });
 
 layui.use(['element', 'layer', 'form'], function() {
-     var element = layui.element,
+    var element = layui.element,
         layer = layui.layer,
         form = layui.form;
     //通用表单post提交
