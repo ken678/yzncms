@@ -41,7 +41,12 @@ class Manager extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            if ($this->AdminUser->createManager($this->request->post(''))) {
+            $data = $this->request->post('');
+            $result = $this->validate($data, 'AdminUser.insert');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            if ($this->AdminUser->createManager($data)) {
                 $this->success("添加管理员成功！", url('admin/manager/index'));
             } else {
                 $error = $this->AdminUser->getError();
@@ -60,7 +65,12 @@ class Manager extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            if ($this->AdminUser->editManager($this->request->post(''))) {
+            $data = $this->request->post('');
+            $result = $this->validate($data, 'AdminUser.update');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            if ($this->AdminUser->editManager($data)) {
                 $this->success("修改成功！");
             } else {
                 $this->error($this->User->getError() ?: '修改失败！');
