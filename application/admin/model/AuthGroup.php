@@ -33,12 +33,12 @@ class AuthGroup extends Model
      * 默认返回正常状态的管理员用户组列表
      * @param array $where   查询条件,供where()方法使用
      */
-    public function getGroups($where = array())
+    /*public function getGroups($where = array())
     {
-        $map = array('status' => 1, 'type' => self::TYPE_ADMIN, 'module' => 'admin');
-        $map = array_merge($map, $where);
-        return $this->where($map)->select();
-    }
+    $map = array('status' => 1, 'type' => self::TYPE_ADMIN, 'module' => 'admin');
+    $map = array_merge($map, $where);
+    return $this->where($map)->select();
+    }*/
 
     /**
      * 返回用户所属用户组信息
@@ -47,32 +47,32 @@ class AuthGroup extends Model
      * array('uid'=>'用户id','group_id'=>'用户组id','title'=>'用户组名称','rules'=>'用户组拥有的规则id,多个,号隔开'),
      * ...)
      */
-    public static function getUserGroup($uid)
+    /*public static function getUserGroup($uid)
     {
-        static $groups = array();
-        if (isset($groups[$uid])) {
-            return $groups[$uid];
-        }
-
-        $prefix = config('database.prefix');
-        $user_groups = \think\Db::table($prefix . self::MEMBER)
-            ->alias('a')
-            ->field('userid,roleid,title,description,rules')
-            ->join($prefix . self::AUTH_GROUP . " g", " g.id=a.roleid")
-            ->where("a.userid='$uid' and g.status='1'")
-            ->select();
-        $groups[$uid] = $user_groups ? $user_groups : array();
-        return $groups[$uid];
+    static $groups = array();
+    if (isset($groups[$uid])) {
+    return $groups[$uid];
     }
+
+    $prefix = config('database.prefix');
+    $user_groups = \think\Db::table($prefix . self::MEMBER)
+    ->alias('a')
+    ->field('userid,roleid,title,description,rules')
+    ->join($prefix . self::AUTH_GROUP . " g", " g.id=a.roleid")
+    ->where("a.userid='$uid' and g.status='1'")
+    ->select();
+    $groups[$uid] = $user_groups ? $user_groups : array();
+    return $groups[$uid];
+    }*/
 
     /**
      * 根据角色Id获取角色名
      * @param int $roleId 角色id
      * @return string 返回角色名
      */
-    public function getRoleIdName($roleId)
-    {
-        return $this->where(array('id' => $roleId))->value('title');
-    }
+    /*public function getRoleIdName($roleId)
+{
+return $this->where(array('id' => $roleId))->value('title');
+}*/
 
 }

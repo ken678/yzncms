@@ -1,0 +1,32 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">{$auth_group['id']?'编辑':'新增'}权限组</div>
+    <div class="layui-card-body">
+        <form class="layui-form form-horizontal" action="{:url('admin/AuthManager/writeGroup')}" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">权限组</label>
+                <div class="layui-input-block w300">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="权限组" class="layui-input" value="{$auth_group.title}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block w300">
+                    <textarea name="description" required lay-verify="required" placeholder="权限的相关描述" class="layui-textarea">{$auth_group.description}</textarea>
+                </div>
+            </div>
+            {present name="auth_group.id"}<input type="hidden" name="id" value="{$auth_group.id}" />{/present}
+            <div class="layui-form-item">
+                <div class="layui-input-block w300">
+                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="script" }
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+{/block}
