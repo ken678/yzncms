@@ -23,11 +23,24 @@ class Adminbase extends Base
     protected function initialize()
     {
         parent::initialize();
+        $this->AdminUser_model = new AdminUser_model;
+        if (defined('UID')) {
+            return;
+        }
+        define('UID', (int) $this->AdminUser_model->isLogin());
         //验证登录
         if (false == $this->competence()) {
             //跳转到登录界面
             $this->error('请先登陆', url('admin/login/index'));
         } else {
+            //是否超级管理员
+            if (!$this->AdminUser_model->isAdministrator()) {
+                //检测访问权限
+                $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+                /*if (!$this->checkRule($rule, array('in', '1,2'))) {
+            $this->error('未授权访问!');
+            }*/
+            }
 
         }
     }
@@ -35,16 +48,15 @@ class Adminbase extends Base
     //验证登录
     private function competence()
     {
-        $AdminUser_model = new AdminUser_model;
         //检查是否登录
-        $uid = (int) $AdminUser_model->isLogin();
+        $uid = (int) $this->AdminUser_model->isLogin();
         if (empty($uid)) {
             return false;
         }
         //获取当前登录用户信息
-        $userInfo = $AdminUser_model->getUserInfo($uid);
+        $userInfo = $this->AdminUser_model->getUserInfo($uid);
         if (empty($userInfo)) {
-            $AdminUser_model->logout();
+            $this->AdminUser_model->logout();
             return false;
         }
         $this->_userinfo = $userInfo;
@@ -56,6 +68,24 @@ class Adminbase extends Base
         }*/
         return $userInfo;
 
+    }
+
+    /**
+     * 权限检测
+     * @param string  $rule    检测的规则
+     * @param string  $mode    check模式
+     * @return boolean
+     */
+    final protected function checkRule($rule, $type = AuthRule::RULE_URL, $mode = 'url')
+    {
+        static $Auth = null;
+        if (!$Auth) {
+            $Auth = new \libs\Auth();
+        }
+        if (!$Auth->check($rule, User::getInstance()->userid, $type, $mode)) {
+            return false;
+        }
+        return true;
     }
 
 }

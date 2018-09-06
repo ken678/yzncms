@@ -26,7 +26,7 @@ function cache($name, $value = '', $options = null)
 {
     static $cache = '';
     if (empty($cache)) {
-        $cache = \Libs\System\Cache_factory::instance();
+        $cache = \libs\Cache_factory::instance();
     }
     // 获取缓存
     if ('' === $value) {

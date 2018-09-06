@@ -19,6 +19,9 @@ use think\Model;
 
 class AdminUser extends Model
 {
+    //超级管理员角色id
+    const administratorRoleId = 1;
+
     // 设置当前模型对应的完整数据表名称
     protected $table = '__ADMIN__';
     protected $pk = 'userid';
@@ -201,6 +204,19 @@ class AdminUser extends Model
         } else {
             return session('admin_user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
         }
+    }
+
+    /**
+     * 检查当前用户是否超级管理员
+     * @return boolean
+     */
+    public function isAdministrator()
+    {
+        $userInfo = $this->getUserInfo($this->isLogin());
+        if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
+            return true;
+        }
+        return false;
     }
 
     /**
