@@ -39,10 +39,10 @@ class AuthManager extends Adminbase
         $this->updateRules(); //更新节点
 
         $result = model('admin/Menu')->returnNodes(false);
-
         $group_id = $this->request->param('group_id/d');
         $rules = Db::name('AuthGroup')
             ->where('status', '<>', 0)
+            ->where('id', '=', $group_id)
             ->where(['type' => AuthGroup::TYPE_ADMIN])
             ->value('rules');
 
