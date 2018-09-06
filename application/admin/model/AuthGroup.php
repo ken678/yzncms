@@ -33,12 +33,12 @@ class AuthGroup extends Model
      * 默认返回正常状态的管理员用户组列表
      * @param array $where   查询条件,供where()方法使用
      */
-    /*public function getGroups($where = array())
+    public function getGroups($where = array())
     {
-    $map = array('status' => 1, 'type' => self::TYPE_ADMIN, 'module' => 'admin');
-    $map = array_merge($map, $where);
-    return $this->where($map)->select();
-    }*/
+        $map = array('status' => 1, 'type' => self::TYPE_ADMIN, 'module' => 'admin');
+        $map = array_merge($map, $where);
+        return $this->where($map)->select();
+    }
 
     /**
      * 返回用户所属用户组信息
@@ -70,9 +70,9 @@ class AuthGroup extends Model
      * @param int $roleId 角色id
      * @return string 返回角色名
      */
-    /*public function getRoleIdName($roleId)
-{
-return $this->where(array('id' => $roleId))->value('title');
-}*/
+    public function getRoleIdName($roleId)
+    {
+        return $this->where(array('id' => $roleId))->value('title');
+    }
 
 }
