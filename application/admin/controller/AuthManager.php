@@ -25,7 +25,7 @@ class AuthManager extends Adminbase
      */
     public function index()
     {
-        $list = Db::name('AuthGroup')->where(['module' => 'admin'])->order(['id' => 'DESC'])->select();
+        $list = Db::name('AuthGroup')->where(['module' => 'admin'])->order(['id' => 'ASC'])->select();
         $list = int_to_string($list);
         $this->assign('_list', $list);
         return $this->fetch();

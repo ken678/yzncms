@@ -30,7 +30,7 @@ class Manager extends Adminbase
      */
     public function index()
     {
-        $User = Db::name("admin")->order(array('userid' => 'DESC'))->select();
+        $User = Db::name("admin")->order(array('userid' => 'ASC'))->select();
         $this->assign("Userlist", $User);
         return $this->fetch();
     }

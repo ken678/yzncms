@@ -37,9 +37,9 @@ class Adminbase extends Base
             if (!$this->AdminUser_model->isAdministrator()) {
                 //检测访问权限
                 $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
-                /*if (!$this->checkRule($rule, array('in', '1,2'))) {
-            $this->error('未授权访问!');
-            }*/
+                if (!$this->checkRule($rule, [1, 2])) {
+                    $this->error('未授权访问!');
+                }
             }
 
         }
@@ -82,7 +82,7 @@ class Adminbase extends Base
         if (!$Auth) {
             $Auth = new \libs\Auth();
         }
-        if (!$Auth->check($rule, User::getInstance()->userid, $type, $mode)) {
+        if (!$Auth->check($rule, UID, $type, $mode)) {
             return false;
         }
         return true;
