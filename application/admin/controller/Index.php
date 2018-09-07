@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\AdminUser as AdminUser_model;
 use app\common\controller\Adminbase;
 
 class Index extends Adminbase
@@ -25,17 +24,6 @@ class Index extends Adminbase
         $this->assign('userInfo', $this->_userinfo);
         $this->assign("SUBMENU_CONFIG", json_encode(model("admin/Menu")->getMenuList()));
         return $this->fetch();
-    }
-
-    //手动退出登录
-    public function logout()
-    {
-        $AdminUser_model = new AdminUser_model;
-        if ($AdminUser_model->logout()) {
-            //手动登出时，清空forward
-            //cookie("forward", NULL);
-            $this->success('注销成功！', url("admin/login/index"));
-        }
     }
 
 }

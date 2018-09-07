@@ -50,4 +50,15 @@ class Login extends Controller
 
     }
 
+    //手动退出登录
+    public function logout()
+    {
+        $AdminUser_model = new AdminUser_model;
+        if ($AdminUser_model->logout()) {
+            //手动登出时，清空forward
+            //cookie("forward", NULL);
+            $this->success('注销成功！', url("admin/login/index"));
+        }
+    }
+
 }
