@@ -108,9 +108,17 @@ class AuthManager extends Adminbase
      */
     public function deleteGroup()
     {
-        $id = $this->request->param('id/d');
+        $roleid = $this->request->param('id/d');
+        //判断是否可删除
+        if (empty($roleid) || $roleid == 1) {
+            $this->error('超级管理员角色不能被删除!');
+        }
+        $res = Db::name("admin")->where('roleid', $roleid)->find();
+        if ($res) {
+            $this->error('删除失败，当前角色含有用户');
+        }
         $AuthGroup = new AuthGroup();
-        $r = $AuthGroup->destroy($id);
+        $r = $AuthGroup->destroy($roleid);
         if ($r === false) {
             $this->error('操作失败' . $AuthGroup->getError());
         } else {
