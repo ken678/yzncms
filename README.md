@@ -4,6 +4,10 @@
 近期放出 （超级管理员：admin admin)
 ```
 
+[使用教程]
+```
+手册地址 https://www.kancloud.cn/ken678/yzncms
+```
 
 [项目介绍]
 ```
