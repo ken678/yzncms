@@ -11,6 +11,8 @@
  * email: hunter.z@263.net
  * Date: 2018-06-26
  */
+layui.define(['jquery'],function(exports) {
+var jQuery=layui.$;
 (function(q){var H,I,J,K,L,M,u,s={},v={},w={},N={treeId:"",treeObj:null,view:{addDiyDom:null,autoCancelSelected:!0,dblClickExpand:!0,expandSpeed:"fast",fontCss:{},nameIsHTML:!1,selectedMulti:!0,showIcon:!0,showLine:!0,showTitle:!0,txtSelectedEnable:!1},data:{key:{isParent:"isParent",children:"children",name:"name",title:"",url:"url",icon:"icon"},simpleData:{enable:!1,idKey:"id",pIdKey:"pId",rootPId:null},keep:{parent:!1,leaf:!1}},async:{enable:!1,contentType:"application/x-www-form-urlencoded",type:"post",
 dataType:"text",headers:{},xhrFields:{},url:"",autoParam:[],otherParam:[],dataFilter:null},callback:{beforeAsync:null,beforeClick:null,beforeDblClick:null,beforeRightClick:null,beforeMouseDown:null,beforeMouseUp:null,beforeExpand:null,beforeCollapse:null,beforeRemove:null,onAsyncError:null,onAsyncSuccess:null,onNodeCreated:null,onClick:null,onDblClick:null,onRightClick:null,onMouseDown:null,onMouseUp:null,onExpand:null,onCollapse:null,onRemove:null}},x=[function(a){var b=a.treeObj,c=f.event;b.bind(c.NODECREATED,
 function(b,c,h){j.apply(a.callback.onNodeCreated,[b,c,h])});b.bind(c.CLICK,function(b,c,h,e,m){j.apply(a.callback.onClick,[c,h,e,m])});b.bind(c.EXPAND,function(b,c,h){j.apply(a.callback.onExpand,[b,c,h])});b.bind(c.COLLAPSE,function(b,c,h){j.apply(a.callback.onCollapse,[b,c,h])});b.bind(c.ASYNC_SUCCESS,function(b,c,h,e){j.apply(a.callback.onAsyncSuccess,[b,c,h,e])});b.bind(c.ASYNC_ERROR,function(b,c,h,e,m,f){j.apply(a.callback.onAsyncError,[b,c,h,e,m,f])});b.bind(c.REMOVE,function(b,c,h){j.apply(a.callback.onRemove,
@@ -165,3 +167,5 @@ a;return this.refresh()}});var N=e.cancelPreSelectedNode;e.cancelPreSelectedNode
 function(a,b){var c=i.getRoot(a);if(c.curEditNode===b)c.curEditNode=null;K&&K.apply(e,arguments)};var P=e.selectNode;e.selectNode=function(a,b,c){var d=i.getRoot(a);if(i.isSelectedNode(a,b)&&d.curEditNode==b&&b.editNameFlag)return!1;P&&P.apply(e,arguments);e.addHoverDom(a,b);return!0};var U=k.uCanDo;k.uCanDo=function(a,b){var c=i.getRoot(a);if(b&&(k.eqs(b.type,"mouseover")||k.eqs(b.type,"mouseout")||k.eqs(b.type,"mousedown")||k.eqs(b.type,"mouseup")))return!0;if(c.curEditNode)e.editNodeBlur=!1,c.curEditInput.focus();
 return!c.curEditNode&&(U?U.apply(e,arguments):!0)}})(jQuery);
 
+	exports('ztree',{});
+});
