@@ -8,17 +8,23 @@
     "packages": [
         {
             "name": "topthink/framework",
-            "version": "v5.1.23",
+            "version": "v5.1.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "7b7f1b6b23897e7f0c7a98a56e61723a61fa27ce"
+                "reference": "03ee17d1ea9c432a698fa1d2411df53974420187"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/7b7f1b6b23897e7f0c7a98a56e61723a61fa27ce",
-                "reference": "7b7f1b6b23897e7f0c7a98a56e61723a61fa27ce",
-                "shasum": ""
+                "url": "https://api.github.com/repos/top-think/framework/zipball/03ee17d1ea9c432a698fa1d2411df53974420187",
+                "reference": "03ee17d1ea9c432a698fa1d2411df53974420187",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "php": ">=5.6.0",
@@ -55,7 +61,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2018-08-24T07:25:03+00:00"
+            "time": "2018-09-05T03:37:46+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -69,7 +75,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/top-think/think-captcha/zipball/54c8a51552f99ff9ea89ea9c272383a8f738ceee",
                 "reference": "54c8a51552f99ff9ea89ea9c272383a8f738ceee",
-                "shasum": ""
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "topthink/framework": "5.1.*"
@@ -108,7 +120,13 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/top-think/think-installer/zipball/f5400a12c60e513911aef41fe443fa6920952675",
                 "reference": "f5400a12c60e513911aef41fe443fa6920952675",
-                "shasum": ""
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "composer-plugin-api": "^1.0"
