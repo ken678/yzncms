@@ -10,7 +10,134 @@
             </ul>
             <div class="layui-tab-content">
                 <form class="layui-form form-horizontal" action="{:url('admin/config/setting',['group'=>$group])}" method="post">
-                    {include file="inputItem" /} {if count($fieldList)}
+                    <div class="layui-form">
+                      <table class="layui-table">
+                        <colgroup>
+                          <col width="200">
+                          <col >
+                          <col width="200">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th>参数说明</th>
+                            <th>参数值</th>
+                            <th>变量名</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {volist name="fieldList" id="vo"}
+                            {switch name="vo.type"}
+                            {case value="text"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="number"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                <input type="number" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="switch"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value']}checked='' {/if}>
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="array"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                <textarea name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" class="layui-textarea">{$vo.value}</textarea>
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="checkbox"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                {volist name="vo.options" id="v"}
+                                    <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value'])}checked='' {/if}>
+                                {/volist}
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="radio"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                {volist name="vo.options" id="v"}
+                                    <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value']}checked='' {/if}>
+                                {/volist}
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="select"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                <select name="{$vo.fieldArr}[{$vo.name}]">
+                                    <option value=""></option>
+                                    {volist name="vo.options" id="v"}
+                                    <option value="{$key}" {if $key==$vo[ 'value']}selected="" {/if}>{$v}</option>
+                                    {/volist}
+                                </select>
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="datetime"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                <input type="text" class="layui-input test-item" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}">
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {case value="textarea"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                                <textarea placeholder="请输入{$vo.title}" class="layui-textarea" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
+                            {/switch}
+                            {/volist}
+
+                        </tbody>
+                      </table>
+                    </div>
+
+
+
+
+
+                    {if count($fieldList)}
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
