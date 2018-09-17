@@ -23,26 +23,35 @@ class Adminbase extends Base
     protected function initialize()
     {
         parent::initialize();
-        $this->AdminUser_model = new AdminUser_model;
-        if (defined('UID')) {
-            return;
-        }
-        define('UID', (int) $this->AdminUser_model->isLogin());
         //验证登录
-        if (false == $this->competence()) {
-            //跳转到登录界面
-            $this->error('请先登陆', url('admin/login/index'));
-        } else {
-            //是否超级管理员
-            if (!$this->AdminUser_model->isAdministrator()) {
-                //检测访问权限
-                $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
-                if (!$this->checkRule($rule, [1, 2])) {
-                    $this->error('未授权访问!');
-                }
-            }
+        //过滤不需要登陆的行为
+        $allowUrl = ['admin/index/login',
+            'admin/index/logout',
+        ];
+        $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+        if (in_array($rule, $allowUrl)) {
 
+        } else {
+            $this->AdminUser_model = new AdminUser_model;
+            if (defined('UID')) {
+                return;
+            }
+            define('UID', (int) $this->AdminUser_model->isLogin());
+            if (false == $this->competence()) {
+                //跳转到登录界面
+                $this->error('请先登陆', url('admin/index/login'));
+            } else {
+                //是否超级管理员
+                if (!$this->AdminUser_model->isAdministrator()) {
+                    //检测访问权限
+                    if (!$this->checkRule($rule, [1, 2])) {
+                        $this->error('未授权访问!');
+                    }
+                }
+
+            }
         }
+
     }
 
     //验证登录
@@ -68,6 +77,24 @@ class Adminbase extends Base
         }*/
         return $userInfo;
 
+    }
+
+    /**
+     * 操作错误跳转的快捷方法
+     */
+    final public function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
+    {
+        model('admin/Adminlog')->record($msg, 0);
+        parent::error($msg, $url, $data, $wait, $header);
+    }
+
+    /**
+     * 操作成功跳转的快捷方法
+     */
+    final public function success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
+    {
+        model('admin/Adminlog')->record($msg, 1);
+        parent::success($msg, $url, $data, $wait, $header);
     }
 
     /**

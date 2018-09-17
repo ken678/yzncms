@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
-use think\helper\Hash;
 use think\Model;
 
 class AdminUser extends Model
