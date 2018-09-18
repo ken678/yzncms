@@ -31,8 +31,8 @@ class Adminlog extends Model
         $data = array(
             'uid' => (int) $this->AdminUser_model->isLogin(),
             'status' => $status,
-            'info' => "提示语：{$message}",
-            'get' => $_SERVER['HTTP_REFERER'],
+            'info' => "提示语:{$message}",
+            'get' => request()->url(),
             'ip' => request()->ip(1),
         );
         return $this->save($data) !== false ? true : false;
