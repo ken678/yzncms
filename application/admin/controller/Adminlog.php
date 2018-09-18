@@ -10,32 +10,18 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 后台用户管理
+// | 日志首页
 // +----------------------------------------------------------------------
-namespace app\admin\model;
+namespace app\admin\controller;
 
-use app\admin\model\AdminUser as AdminUser_model;
-use think\Model;
+use app\common\controller\Adminbase;
 
-class Adminlog extends Model
+class Adminlog extends Adminbase
 {
-    protected $autoWriteTimestamp = true;
-
-    /**
-     * 记录日志
-     * @param type $message 说明
-     */
-    public function record($message, $status = 0)
+    //日志首页
+    public function index()
     {
-        $this->AdminUser_model = new AdminUser_model;
-        $data = array(
-            'uid' => (int) $this->AdminUser_model->isLogin(),
-            'status' => $status,
-            'info' => "提示语：{$message}",
-            'get' => $_SERVER['HTTP_REFERER'],
-            'ip' => request()->ip(1),
-        );
-        return $this->save($data) !== false ? true : false;
-    }
+        return $this->fetch();
 
+    }
 }
