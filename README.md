@@ -30,3 +30,5 @@ Apache / Nginx / Windows / Linux
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 ```
+[截图预览]
+![输入图片说明](https://images.gitee.com/uploads/images/2018/0918/083701_3484dae9_555541.png "YZNCMS后台管理系统.png")
