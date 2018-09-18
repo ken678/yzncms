@@ -1,0 +1,65 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">管理日志</div>
+    <div class="layui-card-body">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-warm delAll_btn">标记删除</button>
+            <button class="layui-btn layui-btn-sm  layui-btn-danger">删除一个月前日志</button>
+        </div>
+        <table class="layui-hide" id="table"></table>
+    </div>
+</div>
+{/block} {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+<script>
+layui.use('table', function() {
+    var table = layui.table,$ = layui.$;
+    table.render({
+        elem: '#table',
+        url: '{:url("admin/adminlog/index")}',
+        cols: [
+            [
+                { type: 'checkbox' },
+                { field: 'id', width: 80, title: 'ID', sort: true },
+                { field: 'uid', width: 80, title: '用户ID' },
+                { field: 'info', title: '提示' },
+                { field: 'get', title: '操作URL' },
+                { field: 'create_time', width: 200, title: '时间' },
+                { field: 'ip', width: 200, title: 'IP' },
+            ]
+        ],
+        page: true
+    });
+
+    $(".delAll_btn").on('click', function () {
+        let checkStatus = table.checkStatus('table'),
+            data = checkStatus.data,
+            ids = [];
+        if (data.length > 0) {
+            for (let i in data) {
+                ids.push(data[i].id);
+            }
+            layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index) {
+                $.post("/admin/Test/delete", {'id': ids}, function (data) {
+                    window.parent.toast(data.info, data.code);
+                    if (data.code === 0)
+                        tablist.reload();
+                });
+                layer.close(index);
+            })
+        } else {
+            layer.msg("请选择需要删除的数据");
+        }
+    });
+
+
+
+
+
+
+
+
+});
+</script>
+{/block}

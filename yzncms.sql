@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-18 08:49:06
+Date: 2018-09-18 19:01:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537230599', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537265266', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1536315120', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -53,12 +53,13 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
 -- ----------------------------
-INSERT INTO `yzn_adminlog` VALUES ('8', '1', '1', '提示语：恭喜您，登陆成功', '1537230599', '2130706433', 'http://www.yzncms.com/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('12', '1', '1', '提示语:恭喜您，登陆成功', '1537265266', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('13', '1', '1', '提示语:设置更新成功', '1537265278', '2130706433', '/admin/config/setting/group/base.html');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`

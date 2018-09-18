@@ -20,7 +20,10 @@ use think\Model;
 class Adminlog extends Model
 {
     protected $autoWriteTimestamp = true;
-
+    public function getIpAttr($value)
+    {
+        return long2ip($value);
+    }
     /**
      * 记录日志
      * @param type $message 说明
