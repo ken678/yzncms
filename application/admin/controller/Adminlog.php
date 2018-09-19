@@ -23,8 +23,10 @@ class Adminlog extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $data = model("adminlog")->select();
-            $total = count($data);
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 10);
+            $data = model("adminlog")->page($page, $limit)->order('id', 'desc')->select();
+            $total = model("adminlog")->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $data);
             return json($result);
         }
