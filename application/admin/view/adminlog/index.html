@@ -5,7 +5,7 @@
     <div class="layui-card-body">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" id="Table-Refresh">刷新</button>
-            <button class="layui-btn layui-btn-sm  layui-btn-danger">删除一个月前日志</button>
+            <button class="layui-btn layui-btn-sm  layui-btn-danger ajax-get confirm" url="{:url('admin/adminlog/deletelog')}">删除一个月前日志</button>
         </div>
         <table class="layui-hide" id="table"></table>
     </div>
