@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-18 19:01:45
+Date: 2018-09-20 11:26:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537265266', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537413432', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1536315120', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -46,6 +46,7 @@ INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16
 DROP TABLE IF EXISTS `yzn_adminlog`;
 CREATE TABLE `yzn_adminlog` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID',
+  `username` varchar(20) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `uid` smallint(3) NOT NULL DEFAULT '0' COMMENT '操作者ID',
   `info` text COMMENT '说明',
@@ -53,13 +54,13 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
 -- ----------------------------
-INSERT INTO `yzn_adminlog` VALUES ('12', '1', '1', '提示语:恭喜您，登陆成功', '1537265266', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('13', '1', '1', '提示语:设置更新成功', '1537265278', '2130706433', '/admin/config/setting/group/base.html');
+INSERT INTO `yzn_adminlog` VALUES ('1', 'admin', '1', '1', '提示语:删除日志成功！', '1537413945', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('2', 'admin', '1', '1', '提示语:操作成功!', '1537413960', '2130706433', '/admin/auth_manager/writegroup.html');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -79,7 +80,7 @@ CREATE TABLE `yzn_auth_group` (
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
-INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '146,149,149,150,151,152,152,153,147,148,154,155');
+INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '154,155,146,149,149,150,151,152,152,153,147,148');
 INSERT INTO `yzn_auth_group` VALUES ('4', 'admin', '1', '编辑', '编辑', '1', '154,155,146,149,149,150,151,152,152,153,147,148');
 
 -- ----------------------------
@@ -96,7 +97,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=156 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=157 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
@@ -111,6 +112,7 @@ INSERT INTO `yzn_auth_rule` VALUES ('152', 'admin', '1', 'admin/manager/index', 
 INSERT INTO `yzn_auth_rule` VALUES ('153', 'admin', '1', 'admin/authManager/index', '角色管理', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('154', 'admin', '2', 'admin/index/index', '首页', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('155', 'admin', '2', 'admin/main/index', '控制面板', '1', '');
+INSERT INTO `yzn_auth_rule` VALUES ('156', 'admin', '1', 'admin/adminlog/index', '管理日志', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`

@@ -84,7 +84,7 @@ class Adminbase extends Base
      */
     final public function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
-        model('admin/Adminlog')->record($msg, 0);
+        model('admin/Adminlog')->record($msg, 0, UID, $this->_userinfo['username']);
         parent::error($msg, $url, $data, $wait, $header);
     }
 
@@ -93,7 +93,7 @@ class Adminbase extends Base
      */
     final public function success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
-        model('admin/Adminlog')->record($msg, 1);
+        model('admin/Adminlog')->record($msg, 1, UID, $this->_userinfo['username']);
         parent::success($msg, $url, $data, $wait, $header);
     }
 

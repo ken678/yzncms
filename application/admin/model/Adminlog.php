@@ -28,11 +28,12 @@ class Adminlog extends Model
      * 记录日志
      * @param type $message 说明
      */
-    public function record($message, $status = 0)
+    public function record($message, $status = 0, $uid, $username)
     {
-        $this->AdminUser_model = new AdminUser_model;
+        //$this->AdminUser_model = new AdminUser_model;
         $data = array(
-            'uid' => (int) $this->AdminUser_model->isLogin(),
+            'uid' => $uid,
+            'username' => $username,
             'status' => $status,
             'info' => "提示语:{$message}",
             'get' => request()->url(),
