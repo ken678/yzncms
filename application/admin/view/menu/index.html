@@ -1,5 +1,4 @@
-{extend name="index_layout"/}
-{block name="main"}
+{extend name="index_layout"/} {block name="main"}
 <div class="layui-card">
     <div class="layui-card-body">
         <div class="layui-form">
@@ -8,29 +7,98 @@
                     <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
                 </div>
             </blockquote>
-            <table class="layui-table">
-                <colgroup>
-                    <col width="80">
-                    <col width="80">
-                    <col width="160">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>排序</th>
-                        <th>ID</th>
-                        <th>操作</th>
-                        <th>菜单名称</th>
-                        <th>状态</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {$categorys|raw}
-                </tbody>
-            </table>
+            <table class="layui-hide" id="table" lay-filter="table"></table>
+            <script type="text/html" id="barTool">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
         </div>
     </div>
 </div>
-{/block}
-{block name="script"}
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+{/block} {block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$;
+    table.render({
+        elem: '#table',
+        url: '{:url("admin/menu/index")}',
+        cols: [
+            [
+                { field: 'listorder', width: 70, title: '排序', edit: 'text' },
+                { field: 'id', width: 70, title: 'ID', sort: true },
+                { field: 'title', title: '菜单名称' },
+                { field: 'status', title: '状态', templet: '<div>{{#  if(d.status){ }} 显示 {{#  } else { }} <font color="#FF0000">隐藏</font> {{#  } }} </div>' },
+                { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+    });
+    $('#Table-Refresh').on('click', function() {
+        table.reload("table");
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        //console.log(obj);
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("Menu/delete")}', { 'id': data.id }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });
+        } else if (obj.event === 'add') {
+            addoredit('{:url("Menu/add")}' + "?id=" + data.id);
+
+        } else if (obj.event === 'edit') {
+            addoredit('{:url("Menu/edit")}' + "?id=" + data.id);
+        }
+    });
+
+    //添加文章
+    function addoredit(url) {
+        var index = layer.open({
+            title: "新增数据",
+            type: 2,
+            content: url,
+            success: function(layero, index) {
+                var body = layer.getChildFrame('body', index);
+                setTimeout(function() {
+                    layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
+                        tips: 3
+                    });
+                }, 500)
+            }
+        })
+        layer.full(index);
+        //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
+        $(window).on("resize", function() {
+            layer.full(index);
+        })
+    }
+});
+</script>
 {/block}

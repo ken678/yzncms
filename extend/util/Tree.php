@@ -108,4 +108,64 @@ class Tree
         return $this->ret;
     }
 
+    /**
+     *
+     * 获取树状数组
+     * @param string $myid 要查询的ID
+     * @param string $nametpl 名称条目模板
+     * @param string $itemprefix 前缀
+     * @return string
+     */
+    public function getTreeArray($myid, $itemprefix = '')
+    {
+        $child = $this->get_Child($myid);
+        $n = 0;
+        $data = [];
+        $number = 1;
+        if (is_array($child)) {
+            $total = count($child);
+            foreach ($child as $id => $value) {
+                $j = $k = '';
+                if ($number == $total) {
+                    $j .= $this->icon[2];
+                    $k = $itemprefix ? $this->nbsp : '';
+                } else {
+                    $j .= $this->icon[1];
+                    $k = $itemprefix ? $this->icon[0] : '';
+                }
+                $spacer = $itemprefix ? $itemprefix . $j : '';
+                $value['spacer'] = $spacer;
+                $data[$n] = $value;
+                $data[$n]['childlist'] = $this->getTreeArray($value['id'], $itemprefix . $k . $this->nbsp);
+                $n++;
+                $number++;
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * 将getTreeArray的结果返回为二维数组
+     * @param array $data
+     * @return array
+     */
+    public function getTreeList($data = [], $field = 'name')
+    {
+        $arr = [];
+        foreach ($data as $k => $v) {
+            $childlist = isset($v['childlist']) ? $v['childlist'] : [];
+            unset($v['childlist']);
+            $v[$field] = $v['spacer'] . ' ' . $v[$field];
+            $v['haschild'] = $childlist ? 1 : 0;
+            if ($v['id']) {
+                $arr[] = $v;
+            }
+
+            if ($childlist) {
+                $arr = array_merge($arr, $this->getTreeList($childlist, $field));
+            }
+        }
+        return $arr;
+    }
+
 }

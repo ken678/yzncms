@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-20 11:26:38
+Date: 2018-09-20 13:20:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,13 +54,18 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
 -- ----------------------------
 INSERT INTO `yzn_adminlog` VALUES ('1', 'admin', '1', '1', '提示语:删除日志成功！', '1537413945', '2130706433', '/admin/adminlog/deletelog.html');
 INSERT INTO `yzn_adminlog` VALUES ('2', 'admin', '1', '1', '提示语:操作成功!', '1537413960', '2130706433', '/admin/auth_manager/writegroup.html');
+INSERT INTO `yzn_adminlog` VALUES ('3', 'admin', '0', '1', '提示语:该页面不存在！', '1537419887', '2130706433', '/admin/menu/edit.html5');
+INSERT INTO `yzn_adminlog` VALUES ('4', 'admin', '0', '1', '提示语:该页面不存在！', '1537419890', '2130706433', '/admin/menu/edit.html5');
+INSERT INTO `yzn_adminlog` VALUES ('5', 'admin', '0', '1', '提示语:该页面不存在！', '1537419891', '2130706433', '/admin/menu/edit.html5');
+INSERT INTO `yzn_adminlog` VALUES ('6', 'admin', '1', '1', '提示语:编辑成功！', '1537419929', '2130706433', '/admin/menu/edit.html');
+INSERT INTO `yzn_adminlog` VALUES ('7', 'admin', '1', '1', '提示语:编辑成功！', '1537419955', '2130706433', '/admin/menu/edit.html');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`

@@ -29,27 +29,36 @@ class Menu extends Adminbase
     //后台菜单首页
     public function index()
     {
-        $tree = new \util\Tree();
-        $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
-        $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-        $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
-        $array = array();
-        foreach ($result as $r) {
+        if ($this->request->isAjax()) {
+            $tree = new \util\Tree();
+            $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
+            $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+            $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
+            /*$array = array();
+            foreach ($result as $r) {
             $r['str_manage'] = '<a class="layui-btn layui-btn-xs" href=' . url("Menu/edit", array("id" => $r['id'])) . '>编辑</a><a class="layui-btn layui-btn-xs layui-btn-normal" href=' . url("Menu/add", array("parentid" => $r['id'])) . '>添加</a><a class="layui-btn layui-btn-xs ajax-get confirm layui-btn-danger" url=' . url("Menu/delete", array("id" => $r['id'])) . '>删除</a>';
             $r['status'] = $r['status'] ? "<span class='on'><i class='icon iconfont icon-xianshi'></i>显示</span>" : "<span class='off'><i class='icon iconfont icon-yincang'></i>隐藏</span>";
             $array[] = $r;
+            }
+            $str = "<tr>
+            <td>\$listorder</td>
+            <td>\$id</td>
+            <td>\$str_manage</td>
+            <td>\$spacer\$title</td>
+            <td>\$status</td>
+            </tr>";
+            $tree->init($array);
+            $categorys = $tree->get_tree(0, $str);
+            $this->assign('categorys', $categorys);
+            return $this->fetch();*/
+            $tree->init($result);
+            $_list = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            $total = count($_list);
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
         }
-        $str = "<tr>
-        <td>\$listorder</td>
-        <td>\$id</td>
-        <td>\$str_manage</td>
-        <td>\$spacer\$title</td>
-        <td>\$status</td>
-        </tr>";
-        $tree->init($array);
-        $categorys = $tree->get_tree(0, $str);
-        $this->assign('categorys', $categorys);
         return $this->fetch();
+
     }
 
     //添加后台菜单

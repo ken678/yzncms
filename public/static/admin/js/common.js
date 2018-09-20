@@ -14,7 +14,7 @@ layui.use(['element', 'layer', 'form'], function() {
 
     //通用添加
     $(".ajax-jump").click(function() {
-        addNews('', $(this).attr('url'));
+        addoredit($(this).attr('url'));
     })
 
     /* 监听状态设置开关 */
@@ -148,25 +148,14 @@ layui.use(['element', 'layer', 'form'], function() {
         });
         return false;
     });
-
     //添加文章
-    function addNews(edit, url) {
+    function addoredit(url) {
         var index = layer.open({
             title: "新增数据",
             type: 2,
             content: url,
             success: function(layero, index) {
                 var body = layer.getChildFrame('body', index);
-                if (edit) {
-                    body.find(".newsName").val(edit.newsName);
-                    body.find(".abstract").val(edit.abstract);
-                    body.find(".thumbImg").attr("src", edit.newsImg);
-                    body.find("#news_content").val(edit.content);
-                    body.find(".newsStatus select").val(edit.newsStatus);
-                    body.find(".openness input[name='openness'][title='" + edit.newsLook + "']").prop("checked", "checked");
-                    body.find(".newsTop input[name='newsTop']").prop("checked", edit.newsTop);
-                    form.render();
-                }
                 setTimeout(function() {
                     layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
@@ -180,4 +169,5 @@ layui.use(['element', 'layer', 'form'], function() {
             layer.full(index);
         })
     }
+
 });
