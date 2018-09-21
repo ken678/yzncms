@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-20 13:20:40
+Date: 2018-09-21 08:24:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537413432', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537489386', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1536315120', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -46,7 +46,6 @@ INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16
 DROP TABLE IF EXISTS `yzn_adminlog`;
 CREATE TABLE `yzn_adminlog` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID',
-  `username` varchar(20) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `uid` smallint(3) NOT NULL DEFAULT '0' COMMENT '操作者ID',
   `info` text COMMENT '说明',
@@ -54,18 +53,24 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
 -- ----------------------------
-INSERT INTO `yzn_adminlog` VALUES ('1', 'admin', '1', '1', '提示语:删除日志成功！', '1537413945', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('2', 'admin', '1', '1', '提示语:操作成功!', '1537413960', '2130706433', '/admin/auth_manager/writegroup.html');
-INSERT INTO `yzn_adminlog` VALUES ('3', 'admin', '0', '1', '提示语:该页面不存在！', '1537419887', '2130706433', '/admin/menu/edit.html5');
-INSERT INTO `yzn_adminlog` VALUES ('4', 'admin', '0', '1', '提示语:该页面不存在！', '1537419890', '2130706433', '/admin/menu/edit.html5');
-INSERT INTO `yzn_adminlog` VALUES ('5', 'admin', '0', '1', '提示语:该页面不存在！', '1537419891', '2130706433', '/admin/menu/edit.html5');
-INSERT INTO `yzn_adminlog` VALUES ('6', 'admin', '1', '1', '提示语:编辑成功！', '1537419929', '2130706433', '/admin/menu/edit.html');
-INSERT INTO `yzn_adminlog` VALUES ('7', 'admin', '1', '1', '提示语:编辑成功！', '1537419955', '2130706433', '/admin/menu/edit.html');
+INSERT INTO `yzn_adminlog` VALUES ('1', '1', '1', '提示语:删除日志成功！', '1537413945', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('2', '1', '1', '提示语:操作成功!', '1537413960', '2130706433', '/admin/auth_manager/writegroup.html');
+INSERT INTO `yzn_adminlog` VALUES ('3', '0', '1', '提示语:该页面不存在！', '1537419887', '2130706433', '/admin/menu/edit.html5');
+INSERT INTO `yzn_adminlog` VALUES ('4', '0', '1', '提示语:该页面不存在！', '1537419890', '2130706433', '/admin/menu/edit.html5');
+INSERT INTO `yzn_adminlog` VALUES ('5', '0', '1', '提示语:该页面不存在！', '1537419891', '2130706433', '/admin/menu/edit.html5');
+INSERT INTO `yzn_adminlog` VALUES ('6', '1', '1', '提示语:编辑成功！', '1537419929', '2130706433', '/admin/menu/edit.html');
+INSERT INTO `yzn_adminlog` VALUES ('7', '1', '1', '提示语:编辑成功！', '1537419955', '2130706433', '/admin/menu/edit.html');
+INSERT INTO `yzn_adminlog` VALUES ('8', '0', '0', '提示语:请先登陆', '1537438192', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('9', '0', '0', '提示语:请先登陆', '1537438665', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('10', '0', '0', '提示语:请先登陆', '1537438878', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('11', '0', '0', '提示语:请先登陆', '1537438901', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('12', '0', '0', '提示语:请先登陆', '1537489380', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('13', '1', '1', '提示语:恭喜您，登陆成功', '1537489386', '2130706433', '/admin/index/login.html');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`

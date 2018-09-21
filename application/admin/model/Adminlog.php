@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
-use app\admin\model\AdminUser as AdminUser_model;
 use think\Model;
 
 class Adminlog extends Model
@@ -28,12 +27,10 @@ class Adminlog extends Model
      * 记录日志
      * @param type $message 说明
      */
-    public function record($message, $status = 0, $uid, $username)
+    public function record($message, $status = 0)
     {
-        //$this->AdminUser_model = new AdminUser_model;
         $data = array(
-            'uid' => $uid,
-            'username' => $username,
+            'uid' => (int) model('AdminUser')->isLogin(),
             'status' => $status,
             'info' => "提示语:{$message}",
             'get' => request()->url(),

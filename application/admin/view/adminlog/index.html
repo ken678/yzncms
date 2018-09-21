@@ -23,12 +23,12 @@ layui.use('table', function() {
         cols: [
             [
                 { field: 'id', width: 80, title: 'ID', sort: true },
-                { field: 'username', width: 100, title: '操作者' },
+                { field: 'uid', width: 100, title: '用户ID' },
                 { field: 'info', title: '提示' },
                 { field: 'get', title: '操作URL' },
                 { field: 'create_time', width: 160, title: '时间' },
                 { field: 'ip', width: 100, title: 'IP' },
-                { field: 'status', width: 80, title: '状态', templet: '<div>{{#  if(d.status){ }} 成功 {{#  } else { }} <font color="#FF0000">失败</font> {{#  } }} </div>' },
+                { field: 'status', width: 80, title: '状态', templet: '<div>{{#  if(d.status){ }} success {{#  } else { }} <font color="#FF0000">error</font> {{#  } }} </div>' },
             ]
         ],
         page: {}

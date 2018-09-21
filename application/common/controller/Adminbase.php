@@ -84,11 +84,7 @@ class Adminbase extends Base
      */
     final public function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
-        if (UID) {
-            model('admin/Adminlog')->record($msg, 0, UID, $this->_userinfo['username']);
-        } else {
-            model('admin/Adminlog')->record($msg, 0, 0, "");
-        }
+        model('admin/Adminlog')->record($msg, 0);
         parent::error($msg, $url, $data, $wait, $header);
     }
 
@@ -97,11 +93,7 @@ class Adminbase extends Base
      */
     final public function success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
-        if (UID) {
-            model('admin/Adminlog')->record($msg, 1, UID, $this->_userinfo['username']);
-        } else {
-            model('admin/Adminlog')->record($msg, 1, 0, "");
-        }
+        model('admin/Adminlog')->record($msg, 1);
         parent::success($msg, $url, $data, $wait, $header);
     }
 
