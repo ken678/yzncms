@@ -11,63 +11,98 @@
             <div class="layui-tab-content">
                 <blockquote class="layui-elem-quote news_search">
                     <div class="layui-inline">
-                        <a class="layui-btn layui-btn-sm ajax-jump" url="{:url('admin/config/add')}">新增配置项</a>
+                        <a class="layui-btn layui-btn-sm" href="{:url('admin/config/add')}">新增配置项</a>
                     </div>
                 </blockquote>
-                <div class="layui-tab-item layui-show">
-                    <table class="layui-table layui-form layui-table-view">
-                        <colgroup>
-                            <col width="200">
-                            <col>
-                            <col width="120">
-                            <col width="250">
-                            <col width="100">
-                            <col width="100">
-                            <col width="150">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>名称</th>
-                                <th>标题</th>
-                                <th>类型</th>
-                                <th>更新时间</th>
-                                <th>排序</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {volist name="list" id="vo"}
-                            <tr>
-                                <td>{$vo.name}</td>
-                                <td>{$vo.title}</td>
-                                <td>{$vo.ftitle}</td>
-                                <td>{:date('Y-m-d H:i:s',$vo.update_time)}</td>
-                                <td>{$vo.listorder}</td>
-                                <td>
-                                    <input type="checkbox" {if $vo.status}checked{/if} lay-skin="switch" lay-filter="switchStatus" lay-text="开启|关闭" value="{$vo.status}" data-href="{:url('admin/config/setstate',['id'=>$vo.id])}">
-                                </td>
-                                <td>
-                                    <a class="layui-btn layui-btn-xs ajax-jump" url="{:url('admin/config/edit',['id'=>$vo.id])}">编辑</a>
-                                    <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('admin/config/del',['id'=>$vo.id])}">删除</a>
-                                </td>
-                            </tr>
-                            {/volist}
-                        </tbody>
-                    </table>
-                </div>
+                <table class="layui-hide" id="table" lay-filter="table"></table>
+                <script type="text/html" id="barTool">
+                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                </script>
+                <script type="text/html" id="switchTpl">
+                    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+                </script>
             </div>
         </div>
     </div>
 </div>
-<script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" url="{:url('admin/config/del')}">删除</a>
-</script>
-<script type="text/html" id="switchTpl">
-    <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
-</script>
-{/block}
-{block name="script"}
+{/block} {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#table',
+        url: '{:url("admin/config/index")}',
+        cols: [
+            [
+                { field: 'name', title: '名称' },
+                { field: 'title', title: '标题' },
+                { field: 'ftitle', width: 150, title: '类型' },
+                { field: 'update_time', width: 200, title: '更新时间' },
+                { field: 'status', title: '状态', width: 100, templet: '#switchTpl', unresize: true },
+                { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+    });
+
+    //监听状态操作
+    form.on('switch(status)', function(obj) {
+        //layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
+        var id=this.value;
+        if(obj.elem.checked){
+           var checked=1;
+        }else{
+           var checked=0;
+        }
+        $.post('{:url("admin/config/setstate")}', { 'id': id,'status':checked }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        });
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        //console.log(obj);
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("admin/config/delete")}', { 'id': data.id }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });
+        } else if (obj.event === 'edit') {
+            window.open('{:url("admin/config/edit")}' + "?id=" + data.id, '_self')
+        }
+    });
+});
+</script>
 {/block}

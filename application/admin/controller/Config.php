@@ -33,12 +33,19 @@ class Config extends Adminbase
     //配置首页
     public function index($group = 'base')
     {
-        $list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
-            ->where('group', $group)
-            ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
-            ->order('listorder,id desc')
-            ->select();
-        $this->assign('list', $list);
+        if ($this->request->isAjax()) {
+            $_list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
+                ->where('group', $group)
+                ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
+                ->order('listorder,id desc')
+                ->withAttr('update_time', function ($value, $data) {
+                    return date('Y-m-d H:i:s', $value);
+                })
+                ->select();
+            $total = count($_list);
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+        }
         $this->assign('groupArray', self::$Cache['Config']['config_group']);
         $this->assign('group', $group);
         return $this->fetch();
@@ -185,7 +192,7 @@ class Config extends Adminbase
     //删除配置
     public function del()
     {
-        $id = (int) input('id/d');
+        $id = $this->request->param('id/d');
         if (!is_numeric($id) || $id < 0) {
             return '参数错误';
         }
@@ -200,8 +207,8 @@ class Config extends Adminbase
     //设置配置状态
     public function setstate($id, $status)
     {
-        $id = (int) input('id/d');
-        $status = (int) input('status/d');
+        $id = $this->request->param('id/d');
+        $status = $this->request->param('status/d');
         if (($status != 0 && $status != 1) || !is_numeric($id) || $id < 0) {
             return '参数错误';
         }
