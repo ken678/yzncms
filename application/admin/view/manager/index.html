@@ -1,13 +1,12 @@
 {extend name="index_layout"/}
 {block name="main"}
 <div class="layui-card">
+    <div class="layui-card-header">管理员管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <blockquote class="layui-elem-quote news_search">
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-sm" href="{:url('admin/manager/add')}">添加管理员</a>
-                </div>
-            </blockquote>
+            <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-sm" href="{:url('admin/manager/add')}">添加管理员</a>
+            </div>
             <table class="layui-table">
                 <thead>
                     <tr>

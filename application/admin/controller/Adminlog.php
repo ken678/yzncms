@@ -31,8 +31,17 @@ class Adminlog extends Adminbase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 10);
-            $data = $this->Adminlog_Model->page($page, $limit)->order('id', 'desc')->select();
-            $total = $this->Adminlog_Model->order('id', 'desc')->count();
+            $data = Db::name("adminlog")
+                ->page($page, $limit)
+                ->order('id', 'desc')
+                ->withAttr('create_time', function ($value, $data) {
+                    return date('Y-m-d H:i:s', $value);
+                })
+                ->withAttr('ip', function ($value, $data) {
+                    return long2ip($value);
+                })
+                ->select();
+            $total = Db::name("adminlog")->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $data);
             return json($result);
         }

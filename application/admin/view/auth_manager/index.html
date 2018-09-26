@@ -1,13 +1,12 @@
 {extend name="index_layout"/}
 {block name="main"}
 <div class="layui-card">
+    <div class="layui-card-header">角色管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <blockquote class="layui-elem-quote news_search">
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-sm" href="{:url('AuthManager/createGroup')}">添加角色</a>
-                </div>
-            </blockquote>
+            <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-sm" href="{:url('AuthManager/createGroup')}">添加角色</a>
+            </div>
             <table class="layui-table">
                 <thead>
                     <tr>
@@ -40,7 +39,6 @@
         </div>
     </div>
 </div>
-{/block}
-{block name="script"}
+{/block} {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}

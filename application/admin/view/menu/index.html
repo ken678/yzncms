@@ -1,13 +1,12 @@
 {extend name="index_layout"/}
 {block name="main"}
 <div class="layui-card">
+    <div class="layui-card-header">菜单管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <blockquote class="layui-elem-quote news_search">
-                <div class="layui-inline">
-                    <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
-                </div>
-            </blockquote>
+            <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
+            </div>
             <table class="layui-hide" id="table" lay-filter="table"></table>
             <script type="text/html" id="barTool">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -85,7 +84,7 @@ layui.use('table', function() {
                 });
             });
         } else if (obj.event === 'add') {
-            window.open('{:url("menu/add")}' + "?id=" + data.id, '_self')
+            window.open('{:url("menu/add")}' + "?parentid=" + data.id, '_self')
 
         } else if (obj.event === 'edit') {
             window.open('{:url("menu/edit")}' + "?id=" + data.id, '_self')

@@ -35,7 +35,7 @@ layui.use('table', function() {
         form = layui.form;
     table.render({
         elem: '#table',
-        url: '{:url("admin/config/index")}',
+        url: '{:url("admin/config/index",["group"=>$group])}',
         cols: [
             [
                 { field: 'name', title: '名称' },
