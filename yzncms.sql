@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-21 08:24:13
+Date: 2018-09-26 16:51:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537489386', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1537950513', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1536315120', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -71,6 +71,40 @@ INSERT INTO `yzn_adminlog` VALUES ('10', '0', '0', '提示语:请先登陆', '15
 INSERT INTO `yzn_adminlog` VALUES ('11', '0', '0', '提示语:请先登陆', '1537438901', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('12', '0', '0', '提示语:请先登陆', '1537489380', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('13', '1', '1', '提示语:恭喜您，登陆成功', '1537489386', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('14', '0', '0', '提示语:请先登陆', '1537515198', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('15', '1', '1', '提示语:恭喜您，登陆成功', '1537515202', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('16', '1', '1', '提示语:删除日志成功！', '1537515295', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('17', '0', '0', '提示语:请先登陆', '1537852961', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('18', '1', '1', '提示语:恭喜您，登陆成功', '1537852968', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('19', '0', '0', '提示语:请先登陆', '1537921953', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('20', '1', '1', '提示语:恭喜您，登陆成功', '1537921959', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('21', '0', '0', '提示语:请先登陆', '1537950507', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('22', '1', '1', '提示语:恭喜您，登陆成功', '1537950513', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('23', '1', '1', '提示语:删除日志成功！', '1537950521', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('24', '0', '1', '提示语:该页面不存在！', '1537951249', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('25', '0', '1', '提示语:该页面不存在！', '1537951305', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('26', '0', '1', '提示语:该页面不存在！', '1537951307', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('27', '0', '1', '提示语:该页面不存在！', '1537951313', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('28', '1', '1', '提示语:菜单排序成功！', '1537951638', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('29', '1', '1', '提示语:菜单排序成功！', '1537951661', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('30', '1', '1', '提示语:删除菜单成功！', '1537951666', '2130706433', '/admin/menu/delete.html');
+INSERT INTO `yzn_adminlog` VALUES ('31', '1', '1', '提示语:删除菜单成功！', '1537951670', '2130706433', '/admin/menu/delete.html');
+INSERT INTO `yzn_adminlog` VALUES ('32', '1', '1', '提示语:菜单排序成功！', '1537951700', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('33', '1', '1', '提示语:菜单排序成功！', '1537951705', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('34', '1', '1', '提示语:菜单排序成功！', '1537951710', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('35', '1', '1', '提示语:菜单排序成功！', '1537951712', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('36', '1', '1', '提示语:菜单排序成功！', '1537951716', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('37', '1', '1', '提示语:菜单排序成功！', '1537951717', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('38', '1', '1', '提示语:菜单排序成功！', '1537951718', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('39', '1', '1', '提示语:菜单排序成功！', '1537951721', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('40', '1', '1', '提示语:菜单排序成功！', '1537951722', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('41', '1', '1', '提示语:菜单排序成功！', '1537951732', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('42', '1', '1', '提示语:菜单排序成功！', '1537951733', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('43', '1', '1', '提示语:菜单排序成功！', '1537951736', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('44', '1', '1', '提示语:菜单排序成功！', '1537951744', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('45', '1', '1', '提示语:菜单排序成功！', '1537951745', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('46', '1', '1', '提示语:菜单排序成功！', '1537951760', '2130706433', '/admin/menu/listorder.html');
+INSERT INTO `yzn_adminlog` VALUES ('47', '1', '1', '提示语:菜单排序成功！', '1537951761', '2130706433', '/admin/menu/listorder.html');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -236,14 +270,14 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
-INSERT INTO `yzn_menu` VALUES ('3', '设置', '', '0', 'admin', 'setting', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('4', '模块', '', '0', 'admin', 'module', 'index', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('5', '扩展', '', '0', 'admin', 'addons', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('3', '设置', '', '0', 'admin', 'setting', 'index', '', '1', '', '0', '2');
+INSERT INTO `yzn_menu` VALUES ('4', '模块', '', '0', 'admin', 'module', 'index', '', '0', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('5', '扩展', '', '0', 'admin', 'addons', 'index', '', '1', '', '0', '4');
 INSERT INTO `yzn_menu` VALUES ('10', '系统配置', '', '3', 'admin', 'config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('11', '配置管理', '', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('13', '网站设置', '', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
@@ -253,4 +287,4 @@ INSERT INTO `yzn_menu` VALUES ('20', '管理日志', '', '15', 'admin', 'adminlo
 INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', '', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('17', '角色管理', '', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('1', '首页', '', '0', 'admin', 'index', 'index', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('2', '控制面板', '', '0', 'admin', 'main', 'index', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('2', '控制面板', '', '0', 'admin', 'main', 'index', '', '0', '', '0', '1');

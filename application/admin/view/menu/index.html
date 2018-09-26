@@ -1,4 +1,5 @@
-{extend name="index_layout"/} {block name="main"}
+{extend name="index_layout"/}
+{block name="main"}
 <div class="layui-card">
     <div class="layui-card-body">
         <div class="layui-form">
@@ -27,7 +28,7 @@ layui.use('table', function() {
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
-                { field: 'id', width: 70, title: 'ID', sort: true },
+                { field: 'id', width: 70, title: 'ID' },
                 { field: 'title', title: '菜单名称' },
                 { field: 'status', title: '状态', templet: '<div>{{#  if(d.status){ }} 显示 {{#  } else { }} <font color="#FF0000">隐藏</font> {{#  } }} </div>' },
                 { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
@@ -38,6 +39,19 @@ layui.use('table', function() {
         table.reload("table");
     });
 
+    //监听单元格编辑
+    table.on('edit(table)', function(obj) {
+        var value = obj.value,data = obj.data;
+        $.post('{:url("menu/listorder")}', { 'id': data.id,'value':value }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        })
+    });
+
     //监听行工具事件
     table.on('tool(table)', function(obj) {
         var data = obj.data;
@@ -45,7 +59,7 @@ layui.use('table', function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("Menu/delete")}', { 'id': data.id }, function(data) {
+                $.post('{:url("menu/delete")}', { 'id': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -71,10 +85,10 @@ layui.use('table', function() {
                 });
             });
         } else if (obj.event === 'add') {
-            window.open('{:url("Menu/add")}' + "?id=" + data.id,'_self')
+            window.open('{:url("menu/add")}' + "?id=" + data.id, '_self')
 
         } else if (obj.event === 'edit') {
-            window.open('{:url("Menu/edit")}' + "?id=" + data.id,'_self')
+            window.open('{:url("menu/edit")}' + "?id=" + data.id, '_self')
         }
     });
 });
