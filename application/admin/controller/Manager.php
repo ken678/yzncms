@@ -30,8 +30,12 @@ class Manager extends Adminbase
      */
     public function index()
     {
-        $User = Db::name("admin")->order(array('userid' => 'ASC'))->select();
-        $this->assign("Userlist", $User);
+        if ($this->request->isAjax()) {
+            $_list = Db::name("admin")->order(array('userid' => 'ASC'))->select();
+            $total = count($_list);
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+        }
         return $this->fetch();
     }
 

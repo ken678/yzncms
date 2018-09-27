@@ -7,40 +7,73 @@
             <div class="layui-btn-container">
                 <a class="layui-btn layui-btn-sm" href="{:url('admin/manager/add')}">添加管理员</a>
             </div>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>操作</th>
-                        <th>登录名</th>
-                        <th>所属角色</th>
-                        <th>最后登录IP</th>
-                        <th>最后登录时间</th>
-                        <th>E-mail</th>
-                        <th>真实姓名</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {volist name="Userlist" id="vo"}
-                    <tr>
-                        <td>{$vo['userid']}</td>
-                        <td>
-                            <a class="layui-btn layui-btn-xs" href="{:url('admin/manager/edit',['id'=>$vo.userid])}">编辑</a>
-                            <a class="layui-btn layui-btn-danger layui-btn-xs ajax-get confirm" url="{:url('admin/manager/del',['id'=>$vo.userid])}">删除</a>
-                        </td>
-                        <td>{$vo.username}</td>
-                        <td>{php} echo model('admin/AuthGroup')->getRoleIdName($vo['roleid']) {/php}</td>
-                        <td>{php} echo $vo['last_login_ip'] ? long2ip($vo['last_login_ip']) : '--' {/php}</td>
-                        <td>{php} echo $vo['last_login_time'] ? time_format($vo['last_login_time']) : '--' {/php}</td>
-                        <td>{$vo.email}</td>
-                        <td>{$vo.nickname}</td>
-                    </tr>
-                    {/volist}
-                </tbody>
-            </table>
+            <table class="layui-hide" id="table" lay-filter="table"></table>
+            <script type="text/html" id="barTool">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
         </div>
     </div>
 </div>
-{/block} {block name="script"}
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$;
+    table.render({
+        elem: '#table',
+        url: '{:url("admin/manager/index")}',
+        cols: [
+            [
+                { field: 'userid', width: 80, title: 'ID'},
+                { field: 'username', width: 80, title: '登录名'},
+                { field: 'roleid', width: 200, title: '所属角色'},
+                { field: 'last_login_ip', title: '最后登录IP' },
+                { field: 'last_login_time', title: '最后登录时间' },
+                { field: 'email', title: 'E-mail' },
+                { field: 'nickname', title: '真实姓名' },
+                { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        //console.log(obj);
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("admin/manager/del")}', { 'id': data.userid }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });
+        }else if (obj.event === 'edit') {
+            window.open('{:url("admin/manager/edit")}' + "?id=" + data.userid, '_self')
+        }
+    });
+});
+</script>
 {/block}
