@@ -140,7 +140,7 @@ class AdminUser extends Model
         $data = array(
             'uid' => $userInfo['userid'],
             'last_login_time' => time(),
-            'last_login_ip' => get_client_ip(1),
+            'last_login_ip' => request()->ip(1),
         );
         $this->loginStatus((int) $userInfo['userid']);
         /* 记录登录SESSION和COOKIES */
@@ -160,7 +160,7 @@ class AdminUser extends Model
      */
     public function loginStatus($userId)
     {
-        $data = ['last_login_time' => time(), 'last_login_ip' => get_client_ip(1)];
+        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip(1)];
         return $this->save($data, ['userid' => $userId]);
     }
 
