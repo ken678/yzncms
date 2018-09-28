@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-28 16:55:58
+Date: 2018-09-28 17:06:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -168,6 +168,8 @@ INSERT INTO `yzn_adminlog` VALUES ('107', '0', '0', '提示语:请先登陆', '1
 INSERT INTO `yzn_adminlog` VALUES ('108', '1', '1', '提示语:恭喜您，登陆成功', '1538112756', '2130706433', '/admin/index/login.html');
 INSERT INTO `yzn_adminlog` VALUES ('109', '0', '0', '提示语:请先登陆', '1538123469', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('110', '1', '1', '提示语:恭喜您，登陆成功', '1538123474', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('111', '1', '1', '提示语:设置更新成功', '1538125180', '2130706433', '/admin/config/setting/group/base.html');
+INSERT INTO `yzn_adminlog` VALUES ('112', '1', '1', '提示语:设置更新成功', '1538125184', '2130706433', '/admin/config/setting/group/base.html');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -342,12 +344,12 @@ INSERT INTO `yzn_menu` VALUES ('3', '设置', 'icon-shezhi', '0', 'admin', 'sett
 INSERT INTO `yzn_menu` VALUES ('4', '模块', '', '0', 'admin', 'module', 'index', '', '0', '', '0', '3');
 INSERT INTO `yzn_menu` VALUES ('5', '扩展', 'icon-yingyong', '0', 'admin', 'addons', 'index', '', '1', '', '0', '4');
 INSERT INTO `yzn_menu` VALUES ('10', '系统配置', 'icon-zidongxiufu', '3', 'admin', 'config', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('11', '配置管理', 'icon-shezhi', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('11', '配置管理', 'icon-peizhi', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('13', '网站设置', 'icon-shezhi', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', 'icon-shezhi', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', 'icon-liebiao', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('15', '权限管理', 'icon-guanliyuan', '3', 'admin', 'manager', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('20', '管理日志', 'icon-shezhi', '15', 'admin', 'adminlog', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', 'icon-shezhi', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('17', '角色管理', 'icon-shezhi', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('20', '管理日志', 'icon-rizhi', '15', 'admin', 'adminlog', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', 'icon-guanliyuan', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('17', '角色管理', 'icon-chengyuan', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('1', '首页', '', '0', 'admin', 'index', 'index', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('2', '控制面板', '', '0', 'admin', 'main', 'index', '', '0', '', '0', '1');
