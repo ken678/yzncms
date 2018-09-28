@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-27 10:59:24
+Date: 2018-09-28 16:55:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,8 +37,8 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1538015673', '2130706433', '530765310@qq.com', '1');
-INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1536315120', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1538123474', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1538036501', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -146,6 +146,28 @@ INSERT INTO `yzn_adminlog` VALUES ('85', '1', '1', '提示语:恭喜您，登陆
 INSERT INTO `yzn_adminlog` VALUES ('86', '0', '1', '提示语:超级管理员角色不能被删除!', '1538016227', '2130706433', '/admin/auth_manager/deletegroup.html');
 INSERT INTO `yzn_adminlog` VALUES ('87', '1', '1', '提示语:操作成功!', '1538017090', '2130706433', '/admin/auth_manager/writegroup.html');
 INSERT INTO `yzn_adminlog` VALUES ('88', '1', '1', '提示语:操作成功!', '1538017097', '2130706433', '/admin/auth_manager/writegroup.html');
+INSERT INTO `yzn_adminlog` VALUES ('89', '0', '0', '提示语:请先登陆', '1538036109', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('90', '1', '1', '提示语:恭喜您，登陆成功', '1538036114', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('91', '1', '1', '提示语:删除日志成功！', '1538036126', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('92', '0', '1', '提示语:禁止对超级管理员执行该操作！', '1538036130', '2130706433', '/admin/manager/del/id/1.html');
+INSERT INTO `yzn_adminlog` VALUES ('93', '1', '1', '提示语:修改成功！', '1538036136', '2130706433', '/admin/manager/edit.html');
+INSERT INTO `yzn_adminlog` VALUES ('94', '0', '0', '提示语:请先登陆', '1538036464', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('95', '1', '1', '提示语:恭喜您，登陆成功', '1538036469', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('96', '1', '0', '提示语:注销成功！', '1538036488', '2130706433', '/admin/index/logout.html');
+INSERT INTO `yzn_adminlog` VALUES ('97', '0', '0', '提示语:密码错误！', '1538036495', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('98', '0', '0', '提示语:密码错误！', '1538036498', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('99', '1', '2', '提示语:恭喜您，登陆成功', '1538036501', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('100', '0', '0', '提示语:请先登陆', '1538038549', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('101', '1', '1', '提示语:恭喜您，登陆成功', '1538038554', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('102', '0', '1', '提示语:该信息不存在！', '1538039356', '2130706433', '/admin/manager/edit.html?id=undefined');
+INSERT INTO `yzn_adminlog` VALUES ('103', '0', '0', '提示语:请先登陆', '1538041871', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('104', '1', '1', '提示语:恭喜您，登陆成功', '1538041878', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('105', '0', '0', '提示语:请先登陆', '1538100996', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('106', '1', '1', '提示语:恭喜您，登陆成功', '1538101001', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('107', '0', '0', '提示语:请先登陆', '1538112751', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('108', '1', '1', '提示语:恭喜您，登陆成功', '1538112756', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('109', '0', '0', '提示语:请先登陆', '1538123469', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('110', '1', '1', '提示语:恭喜您，登陆成功', '1538123474', '2130706433', '/admin/index/login.html');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -316,16 +338,16 @@ CREATE TABLE `yzn_menu` (
 -- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
-INSERT INTO `yzn_menu` VALUES ('3', '设置', '', '0', 'admin', 'setting', 'index', '', '1', '', '0', '2');
+INSERT INTO `yzn_menu` VALUES ('3', '设置', 'icon-shezhi', '0', 'admin', 'setting', 'index', '', '1', '', '0', '2');
 INSERT INTO `yzn_menu` VALUES ('4', '模块', '', '0', 'admin', 'module', 'index', '', '0', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('5', '扩展', '', '0', 'admin', 'addons', 'index', '', '1', '', '0', '4');
-INSERT INTO `yzn_menu` VALUES ('10', '系统配置', '', '3', 'admin', 'config', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('11', '配置管理', '', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('13', '网站设置', '', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', '', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('15', '权限管理', '', '3', 'admin', 'manager', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('20', '管理日志', '', '15', 'admin', 'adminlog', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', '', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('17', '角色管理', '', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('5', '扩展', 'icon-yingyong', '0', 'admin', 'addons', 'index', '', '1', '', '0', '4');
+INSERT INTO `yzn_menu` VALUES ('10', '系统配置', 'icon-zidongxiufu', '3', 'admin', 'config', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('11', '配置管理', 'icon-shezhi', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('13', '网站设置', 'icon-shezhi', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', 'icon-shezhi', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('15', '权限管理', 'icon-guanliyuan', '3', 'admin', 'manager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('20', '管理日志', 'icon-shezhi', '15', 'admin', 'adminlog', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', 'icon-shezhi', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('17', '角色管理', 'icon-shezhi', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('1', '首页', '', '0', 'admin', 'index', 'index', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('2', '控制面板', '', '0', 'admin', 'main', 'index', '', '0', '', '0', '1');

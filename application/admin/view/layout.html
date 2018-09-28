@@ -31,7 +31,14 @@
                 <!--AJAX数据-->
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item"><a href="javascript:;">{$userInfo.username}</a>
+                <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-richangqingli"></i>&nbsp;清理缓存</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">一键清理缓存</a></dd>
+                        <dd><a href="">清理数据缓存</a></dd>
+                        <dd><a href="">清理模板缓存</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;"><img src="__STATIC__/admin/img/avatar.png" class="layui-nav-img userAvatar" width="35" height="35">{$userInfo.username}</a>
                     <dl class="layui-nav-child">
                         <dd><a href="{:url('admin/index/logout')}">安全退出</a></dd>
                     </dl>
@@ -100,7 +107,7 @@
         });
         var html = [];
         $.each(SUBMENU_CONFIG, function(i, o) {
-            html.push('<li class="layui-nav-item"><a href="javascript:;" title="' + o.title + '" lay-id="' + o.id + '">' + o.title + '</a></li>');
+            html.push('<li class="layui-nav-item"><a href="javascript:;" title="' + o.title + '" lay-id="' + o.id + '"><i class="iconfont ' + o.icon + '"></i>&nbsp;' + o.title + '</a></li>');
         });
         $('#J_B_main_block').html(html.join(''));
         element.render(); //重新渲染
@@ -156,10 +163,10 @@
                             data.url = data.url ? data.url : '#';
                             if (!(data['isChild'])) {
                                 //一级菜单
-                                html.push('<li class="layui-nav-item"><a href="' + data.url + '" lay-id="' + data.id + '"><b>' + data.title + '</b></a>');
+                                html.push('<li class="layui-nav-item"><a href="' + data.url + '" lay-id="' + data.id + '"><i class="iconfont ' + data.icon + '"></i>&nbsp;<b>' + data.title + '</b></a>');
                             } else {
                                 //二级菜单
-                                child_html.push('<dd><a href="' + data.url + '" lay-id="' + data.id + '">' + data.title + '</a></dd>');
+                                child_html.push('<dd><a href="' + data.url + '" lay-id="' + data.id + '"><i class="iconfont ' + data.icon + '"></i>&nbsp;' + data.title + '</a></dd>');
                                 //二级菜单全部push完毕
                                 if (data.child_index == child_index) {
                                     html.push('<dl class="layui-nav-child">' + child_html.join('') + '</dl></li>');
