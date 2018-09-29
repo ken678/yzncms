@@ -115,6 +115,19 @@
                             <td>
                                 <input type="text" class="layui-input test-item" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}">
                             </td>
+							<script>
+							layui.use(['laydate'], function() {
+							    var laydate = layui.laydate;;
+							    lay('.test-item').each(function() {
+							        laydate.render({
+							            elem: this,
+							            trigger: 'click',
+							            type: 'datetime'
+							        });
+							    });
+
+							});
+							</script>
                             <td>{$vo.name}</td>
                             </tr>
                             {/case}
@@ -156,20 +169,10 @@
 {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
-layui.use(['element', 'form', 'laydate'], function() {
+layui.use(['element', 'form'], function() {
     var form = layui.form,
         element = layui.element,
-        $ = layui.jquery,
-        laydate = layui.laydate;;
-    //同时绑定多个
-    lay('.test-item').each(function() {
-        laydate.render({
-            elem: this,
-            trigger: 'click',
-            type: 'datetime'
-        });
-    });
-
+        $ = layui.jquery;
 });
 </script>
 {/block}

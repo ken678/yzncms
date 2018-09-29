@@ -32,10 +32,10 @@
             </ul>
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-richangqingli"></i>&nbsp;清理缓存</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">一键清理缓存</a></dd>
-                        <dd><a href="">清理数据缓存</a></dd>
-                        <dd><a href="">清理模板缓存</a></dd>
+                    <dl class="layui-nav-child" id="deletecache">
+                        <dd><a href="javascript:;" data-type="all">一键清理缓存</a></dd>
+                        <dd><a href="javascript:;" data-type="data">清理数据缓存</a></dd>
+                        <dd><a href="javascript:;" data-type="template">清理模板缓存</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="javascript:;"><img src="__STATIC__/admin/img/avatar.png" class="layui-nav-img userAvatar" width="35" height="35">{$userInfo.username}</a>
@@ -456,6 +456,30 @@
 
         //用于维持在线
         function online() {}
+
+        //清除缓存
+        $(document).on('click', "dl#deletecache dd a", function() {
+            $.ajax({
+                url: '{:url("admin/index/cache")}',
+                dataType: 'json',
+                data: { type: $(this).data("type") },
+                cache: false,
+                success: function(res) {
+                    if (res.code == 1) {
+                        var index = layer.msg('清除缓存中，请稍候', { icon: 16, time: false, shade: 0.8 });
+                        setTimeout(function() {
+                            layer.close(index);
+                            layer.msg("缓存清除成功！");
+                        }, 1000);
+                    }else{
+                        layer.msg('清除缓存失败');
+                    }
+                },
+                error: function() {
+                    layer.msg('清除缓存失败');
+                }
+            });
+        });
 
 
     })

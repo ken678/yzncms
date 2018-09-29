@@ -16,6 +16,7 @@ namespace app\admin\controller;
 
 use app\admin\model\AdminUser as AdminUser_model;
 use app\common\controller\Adminbase;
+use think\facade\Cache;
 
 class Index extends Adminbase
 {
@@ -67,6 +68,27 @@ class Index extends Adminbase
             //cookie("forward", NULL);
             $this->success('注销成功！', url("admin/index/login"));
         }
+    }
+
+    //缓存更新
+    public function cache()
+    {
+        $type = $this->request->request("type");
+        switch ($type) {
+            case 'data' || 'all':
+                \util\Dir::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'cache');
+                Cache::clear();
+                if ($type == 'content') {
+                    break;
+                }
+
+            case 'template' || 'all':
+                \util\Dir::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'temp');
+                if ($type == 'template') {
+                    break;
+                }
+        }
+        $this->success();
     }
 
 }
