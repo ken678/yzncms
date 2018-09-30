@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-30 09:08:39
+Date: 2018-09-30 17:39:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1538267829', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1538297831', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1538036501', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=150 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -207,6 +207,39 @@ INSERT INTO `yzn_adminlog` VALUES ('146', '1', '1', '提示语:恭喜您，登�
 INSERT INTO `yzn_adminlog` VALUES ('147', '1', '1', '提示语:配置添加成功~', '1538212563', '2130706433', '/admin/config/add.html');
 INSERT INTO `yzn_adminlog` VALUES ('148', '0', '0', '提示语:请先登陆', '1538267823', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('149', '1', '1', '提示语:恭喜您，登陆成功', '1538267829', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('150', '0', '0', '提示语:请先登陆', '1538287398', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('151', '1', '1', '提示语:恭喜您，登陆成功', '1538287403', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('152', '0', '0', '提示语:请先登陆', '1538297790', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('153', '1', '1', '提示语:恭喜您，登陆成功', '1538297831', '2130706433', '/admin/index/login.html');
+
+-- ----------------------------
+-- Table structure for `yzn_attachment`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_attachment`;
+CREATE TABLE `yzn_attachment` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `name` char(50) NOT NULL DEFAULT '' COMMENT '文件名',
+  `module` char(15) NOT NULL DEFAULT '' COMMENT '模块名，由哪个模块上传的',
+  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
+  `mime` varchar(64) NOT NULL DEFAULT '' COMMENT '文件mime类型',
+  `ext` char(4) NOT NULL DEFAULT '' COMMENT '文件类型',
+  `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
+  `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',
+  `sha1` char(40) NOT NULL DEFAULT '' COMMENT 'sha1 散列值',
+  `driver` varchar(16) NOT NULL DEFAULT 'local' COMMENT '上传驱动',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `listorders` int(5) NOT NULL DEFAULT '100' COMMENT '排序',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='附件表';
+
+-- ----------------------------
+-- Records of yzn_attachment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
