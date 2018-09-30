@@ -135,4 +135,9 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle' => '',
 
+    //公开路径
+    'public_url' => ROOT_URL . (defined('IF_PUBLIC') ? '' : 'public/'),
+    // 文件上传路径
+    'upload_path' => ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'uploads',
+
 ];
