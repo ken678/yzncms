@@ -142,9 +142,30 @@
                             </tr>
                             {/case}
 
+                            {case value="Ueditor"}
+                            <tr>
+                            <td>{$vo.title}</td>
+                            <td>
+                            <script type="text/javascript" src="__STATIC__/ueditor/ueditor.config.js"></script>
+                            <script type="text/javascript" src="__STATIC__/ueditor/ueditor.all.js"></script>
+                            <script type="text/javascript">
+                            layui.use([], function() {
+                                $ = layui.jquery;
+                                var {$vo.fieldArr}{$vo.name} = UE.getEditor('{$vo.fieldArr}{$vo.name}',{
+                                    initialFrameWidth: null,
+                                    initialFrameHeight: 250,
+                                    serverUrl: "{:url('attachment/Ueditor/run')}"
+                                });
+                            })
+                            </script>
+                            <script type="text/plain" id="{$vo.fieldArr}{$vo.name}" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</script>
+                            </td>
+                            <td>{$vo.name}</td>
+                            </tr>
+                            {/case}
+
                             {/switch}
                             {/volist}
-
                         </tbody>
                       </table>
                     </div>
