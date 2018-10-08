@@ -14,9 +14,11 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
 
-use app\common\controller\Base;
+use app\admin\model\AdminUser as AdminUser_model;
+use app\attachment\model\Attachment as Attachment_Model;
+use app\common\controller\Adminbase;
 
-class Attachments extends Base
+class Attachments extends Adminbase
 {
 
     private $uploadUrl = '';
@@ -73,6 +75,7 @@ class Attachments extends Base
         if ($info) {
             // 获取附件信息
             $file_info = [
+                'uid' => $this->AdminUser_model->isLogin(),
                 'name' => $file->getInfo('name'),
                 'mime' => $file->getInfo('type'),
                 'path' => $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
@@ -82,23 +85,40 @@ class Attachments extends Base
                 'sha1' => $info->hash('sha1'),
                 'module' => $module,
             ];
-            switch ($from) {
-                case 'ueditor':
-                    return json([
-                        "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
-                        "url" => $this->uploadUrl . $file_info['path'], // 返回的地址
-                        "title" => $file_info['name'], // 附件名
-                    ]);
-                    break;
-                default:
-                    return json([
-                        'status' => 1,
-                        'info' => $file_info['name'] . '上传成功',
-                        'id' => $file_add['id'],
-                        'path' => empty($file_info['thumb']) ? $this->uploadUrl . $file_info['path'] : $this->uploadUrl . $file_info['thumb'],
-                    ]);
+            if ($file_add = Attachment_Model::create($file_info)) {
+                switch ($from) {
+                    case 'ueditor':
+                        return json([
+                            "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
+                            "url" => $this->uploadUrl . $file_info['path'], // 返回的地址
+                            "title" => $file_info['name'], // 附件名
+                        ]);
+                        break;
+                    default:
+                        return json([
+                            'status' => 1,
+                            'info' => $file_info['name'] . '上传成功',
+                            'id' => $file_add['id'],
+                            'path' => empty($file_info['thumb']) ? $this->uploadUrl . $file_info['path'] : $this->uploadUrl . $file_info['thumb'],
+                        ]);
+                }
+            } else {
+                switch ($from) {
+                    case 'ueditor':
+                        return json(['state' => '上传失败']);
+                        break;
+                    default:
+                        return json(['status' => 0, 'info' => '上传成功,写入数据库失败']);
+                }
             }
         } else {
+            switch ($from) {
+                case 'ueditor':
+                    return json(['state' => '上传失败']);
+                    break;
+                default:
+                    return json(['status' => 0, 'info' => $file->getError()]);
+            }
 
         }
 

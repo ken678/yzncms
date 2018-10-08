@@ -74,7 +74,7 @@ class Config extends Model
                     /*$newConfigs[$key] = empty($value['value']) ? [] : Attachmentconfig::getFileInfo($value['value'], 'id,path,thumb');*/
                     break;
                 case 'Ueditor':
-                    /*$newConfigs[$key] = htmlspecialchars_decode($value['value']);*/
+                    $newConfigs[$key] = htmlspecialchars_decode($value['value']);
                     break;
                 default:
                     $newConfigs[$key] = $value['value'];
