@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-30 17:39:40
+Date: 2018-10-08 13:15:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1538297831', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1538972203', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1538036501', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=166 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -211,6 +211,18 @@ INSERT INTO `yzn_adminlog` VALUES ('150', '0', '0', '提示语:请先登陆', '1
 INSERT INTO `yzn_adminlog` VALUES ('151', '1', '1', '提示语:恭喜您，登陆成功', '1538287403', '2130706433', '/admin/index/login.html');
 INSERT INTO `yzn_adminlog` VALUES ('152', '0', '0', '提示语:请先登陆', '1538297790', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('153', '1', '1', '提示语:恭喜您，登陆成功', '1538297831', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('154', '0', '0', '提示语:请先登陆', '1538957873', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('155', '1', '1', '提示语:恭喜您，登陆成功', '1538957879', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('156', '1', '1', '提示语:删除日志成功！', '1538957897', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('157', '1', '1', '提示语:删除日志成功！', '1538957903', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('158', '0', '0', '提示语:请先登陆', '1538972199', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('159', '1', '1', '提示语:恭喜您，登陆成功', '1538972203', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('160', '1', '1', '提示语:设置更新成功', '1538972337', '2130706433', '/admin/config/setting/group/base.html');
+INSERT INTO `yzn_adminlog` VALUES ('161', '1', '1', '提示语:设置更新成功', '1538972446', '2130706433', '/admin/config/setting/group/base.html');
+INSERT INTO `yzn_adminlog` VALUES ('162', '1', '1', '提示语:', '1538974055', '2130706433', '/admin/index/cache.html?type=all&_=1538974033013');
+INSERT INTO `yzn_adminlog` VALUES ('163', '1', '1', '提示语:设置更新成功', '1538974064', '2130706433', '/admin/config/setting/group/base.html');
+INSERT INTO `yzn_adminlog` VALUES ('164', '1', '1', '提示语:', '1538974129', '2130706433', '/admin/index/cache.html?type=all&_=1538974057560');
+INSERT INTO `yzn_adminlog` VALUES ('165', '1', '1', '提示语:', '1538975266', '2130706433', '/admin/index/cache.html?type=all&_=1538975263302');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -235,11 +247,13 @@ CREATE TABLE `yzn_attachment` (
   `listorders` int(5) NOT NULL DEFAULT '100' COMMENT '排序',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='附件表';
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='附件表';
 
 -- ----------------------------
 -- Records of yzn_attachment
 -- ----------------------------
+INSERT INTO `yzn_attachment` VALUES ('50', '1', 'ico07.png', '', 'images/20181008/1844fb19801c94518296cf5b3543b5f1.png', '', '', 'image/png', 'png', '1218', 'f539a23c5b781b6a65c444c5ab12210d', 'dd2c921643a6a5b7bda8fc3955e2dee802054bd4', 'local', '0', '0', '100', '1');
+INSERT INTO `yzn_attachment` VALUES ('51', '1', 'logo.jpg', '', 'images/20181008/57784850181fd366b30e19969cf305dd.jpg', '', '', 'image/jpeg', 'jpg', '26199', '34658a4f12fbce0cc7183d108416c934', '99b8eb819c9d1cca902478002dadb361c30cb12d', 'local', '0', '0', '100', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -349,7 +363,7 @@ INSERT INTO `yzn_config` VALUES ('5', 'web_site_logo', 'image', '站点LOGO', 'b
 INSERT INTO `yzn_config` VALUES ('6', 'web_site_icp', 'text', '备案信息', 'base', '', '', '1494408414', '1494408414', '1', '', '6');
 INSERT INTO `yzn_config` VALUES ('7', 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', '1494408414', '1494408414', '1', '', '7');
 INSERT INTO `yzn_config` VALUES ('8', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\nsystem:系统\nupload:上传\ndevelop:开发', '0');
-INSERT INTO `yzn_config` VALUES ('9', 'ueditor', 'Ueditor', '第三方代码', 'base', '', '', '1538212563', '1538212563', '1', '', '100');
+INSERT INTO `yzn_config` VALUES ('9', 'ueditor', 'Ueditor', '第三方代码', 'base', '', '', '1538212563', '1538212563', '1', '&lt;p&gt;1111111&lt;/p&gt;', '100');
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`
@@ -406,7 +420,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -424,3 +438,4 @@ INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', 'icon-guanliyuan', '15',
 INSERT INTO `yzn_menu` VALUES ('17', '角色管理', 'icon-chengyuan', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('1', '首页', '', '0', 'admin', 'index', 'index', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('2', '控制面板', '', '0', 'admin', 'main', 'index', '', '0', '', '0', '1');
+INSERT INTO `yzn_menu` VALUES ('23', '附件管理', 'icon-fujian', '10', 'attachment', 'attachments', 'index', '', '1', '', '0', '1');

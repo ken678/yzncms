@@ -30,6 +30,12 @@ class Attachments extends Adminbase
         $this->uploadUrl = config('public_url') . 'uploads/';
         $this->uploadPath = config('upload_path');
     }
+
+    public function index()
+    {
+        return $this->fetch();
+    }
+
     /**
      * 保存附件
      * @param string $dir 附件存放的目录
