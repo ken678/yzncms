@@ -88,7 +88,7 @@ class Index extends Adminbase
                     break;
                 }
         }
-        $this->success();
+        $this->success('清理缓存');
     }
 
 }

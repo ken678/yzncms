@@ -1,0 +1,31 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">附件管理</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table"></table>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$;
+    table.render({
+        elem: '#table',
+        url: '{:url("attachment/attachments/index")}',
+        cols: [
+            [
+                { field: 'id', width: 80, title: 'ID', sort: true },
+                { field: 'uid', width: 80, title: '用户ID' },
+                { field: 'name', title: '名称' },
+                { field: 'size', title: '大小',sort: true },
+                { field: 'create_time', width: 180, title: '上传时间' },
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}

@@ -17,6 +17,7 @@ namespace app\attachment\controller;
 use app\admin\model\AdminUser as AdminUser_model;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Adminbase;
+use think\Db;
 
 class Attachments extends Adminbase
 {
@@ -33,6 +34,23 @@ class Attachments extends Adminbase
 
     public function index()
     {
+        $limit = $this->request->param('limit/d', 10);
+        $page = $this->request->param('page/d', 10);
+        if ($this->request->isAjax()) {
+            $_list = Db::name("attachment")
+                ->page($page, $limit)
+                ->order('id', 'desc')
+                ->withAttr('size', function ($value, $data) {
+                    return format_bytes($value);
+                })
+                ->withAttr('create_time', function ($value, $data) {
+                    return date('Y-m-d H:i:s', $value);
+                })
+                ->select();
+            $total = Db::name("attachment")->order('id', 'desc')->count();
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+        }
         return $this->fetch();
     }
 
@@ -76,6 +94,10 @@ class Attachments extends Adminbase
                     ]);
             }
         }
+        // 判断附件是否已存在
+        /*if ($file_exists = AttachmentModel::get(['md5' => $file->hash('md5')])) {
+
+        }*/
         // 移动到框架应用根目录指定目录下
         $info = $file->move($this->uploadPath . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
