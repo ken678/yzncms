@@ -31,4 +31,4 @@ Apache / Nginx / Windows / Linux
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 ```
 [截图预览]
-![输入图片说明](https://images.gitee.com/uploads/images/2018/0918/083701_3484dae9_555541.png "YZNCMS后台管理系统.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1008/131345_22a1268c_555541.png "YZNCMS后台管理系统.png")
