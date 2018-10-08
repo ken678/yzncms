@@ -49,7 +49,7 @@ class AuthManager extends Adminbase
             ->where(['type' => AuthGroup::TYPE_ADMIN])
             ->value('rules');
 
-        $map = array('module' => 'admin', 'status' => 1);
+        $map = array('status' => 1);
         $main_rules = Db::name('AuthRule')->where($map)->column('name,id');
 
         $json = array();
