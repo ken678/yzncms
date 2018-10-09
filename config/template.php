@@ -23,6 +23,7 @@ return [
     //模板输出替换
     'tpl_replace_string' => [
         '__STATIC__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static'),
+        '__UPLOAD__' => ROOT_URL . (defined('IF_PUBLIC') ? 'uploads' : 'public/uploads'),
     ],
     // 模板文件名分隔符
     'view_depr' => DIRECTORY_SEPARATOR,

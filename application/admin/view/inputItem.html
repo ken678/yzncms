@@ -103,10 +103,10 @@ layui.use(['laydate'], function() {
     <label class="layui-form-label">{$vo.title}</label>
     <div class="layui-input-block">
         <div class="layui-upload">
-            <button type="button" class="layui-btn" id="{$vo.fieldArr}{$vo.name}">上传图片</button>
+            <button type="button" class="layui-btn" id="{$vo.fieldArr}{$vo.name}"><i class="layui-icon layui-icon-upload"></i>  上传图片</button>
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]"  value="{$vo.value}" >
             <div class="layui-upload-list">
-                <img class="layui-upload-img" id="demo1">
+                <img class="layui-upload-img" id="demo1" style="max-width: 300px;max-height: 300px;">
                 <p id="demoText"></p>
             </div>
         </div>
@@ -118,8 +118,24 @@ layui.use(['laydate'], function() {
         var $ = layui.jquery,upload = layui.upload;
         var thisdom = $('#{$vo.fieldArr}{$vo.name}');
         var inputdom = thisdom.next('input');
+        var nowPicid=inputdom.val();
+        var files={};
         if(''!=inputdom.val()){
-            alert("图片不为空");
+            $.ajax({
+                url : "{:url('attachment/attachments/ajaxgetfileinfo')}",
+                type : 'post',
+                dataType: "json",
+                async: false,
+                data : {ids: nowPicid},
+                success : function(data){
+                   if (''!=data) {
+                      files=data;
+                   }
+                }
+            });
+        }
+        if (!$.isEmptyObject(files)) {
+            $('#demo1').attr('src', '__UPLOAD__/'+files.path); //图片链接（base64）
         }
         var uploadInst = upload.render({
             elem: '#{$vo.fieldArr}{$vo.name}',

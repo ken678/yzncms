@@ -221,4 +221,14 @@ class Attachments extends Adminbase
 
     }
 
+    /**
+     * ajax获取文件信息
+     * @param string $ids html代码
+     */
+    public function ajaxGetFileInfo()
+    {
+        $fileInfo = model('attachment')->getFileInfo($this->request->post('ids'), 'id,name,path,size');
+        return json($fileInfo);
+    }
+
 }
