@@ -100,6 +100,15 @@ class Ueditor extends Attachments
             case 'uploadfile':
                 return $this->saveFile('files', 'ueditor');
                 break;
+            /* 列出图片 */
+            case 'listimage':
+                return $this->showFileList('listimage');
+                break;
+
+            /* 列出附件 */
+            case 'listfile':
+                return $this->showFileList('listfile');
+                break;
             default:
                 $result = array(
                     'state' => '请求地址出错',
