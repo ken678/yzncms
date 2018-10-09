@@ -24,10 +24,7 @@
 <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title}</label>
     <div class="layui-input-block">
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value']}checked='' {/if}>
-    </div>
-    {if $vo.remark}
-    <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value' ]}checked='' {/if}> </div> {if $vo.remark} <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="array"}
@@ -45,10 +42,7 @@
     <label class="layui-form-label">{$vo.title}</label>
     <div class="layui-input-block">
         {volist name="vo.options" id="v"}
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value'])}checked='' {/if}> {/volist}
-    </div>
-    {if $vo.remark}
-    <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked='' {/if}> {/volist} </div> {if $vo.remark} <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="radio"}
@@ -56,10 +50,7 @@
     <label class="layui-form-label">{$vo.title}</label>
     <div class="layui-input-block">
         {volist name="vo.options" id="v"}
-        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value']}checked='' {/if}> {/volist}
-    </div>
-    {if $vo.remark}
-    <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value' ]}checked='' {/if}> {/volist} </div> {if $vo.remark} <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="select"}
@@ -69,12 +60,7 @@
         <select name="{$vo.fieldArr}[{$vo.name}]">
             <option value=""></option>
             {volist name="vo.options" id="v"}
-            <option value="{$key}" {if $key==$vo[ 'value']}selected="" {/if}>{$v}</option>
-            {/volist}
-        </select>
-    </div>
-    {if $vo.remark}
-    <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v} </option> {/volist} </select> </div> {if $vo.remark} <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="datetime"}
@@ -88,6 +74,19 @@
         <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
     </div>
 </div>
+<script type="text/javascript">
+layui.use(['laydate'], function() {
+    var laydate = layui.laydate;
+    lay('.test-item').each(function() {
+        laydate.render({
+            elem: this,
+            trigger: 'click',
+            type: 'datetime'
+        });
+    });
+
+});
+</script>
 {/case}
 {case value="textarea"}
 <div class="layui-form-item layui-form-text">
@@ -99,6 +98,53 @@
     <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
+{case value="image"}
+<div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">{$vo.title}</label>
+    <div class="layui-input-block">
+        <div class="layui-upload">
+            <button type="button" class="layui-btn" id="{$vo.fieldArr}{$vo.name}">上传图片</button>
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]"  value="{$vo.value}" >
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="demo1">
+                <p id="demoText"></p>
+            </div>
+        </div>
+    </div>
+    {if $vo.remark}
+    <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    <script type="text/javascript">
+    layui.use('upload', function(){
+        var $ = layui.jquery,upload = layui.upload;
+        var thisdom = $('#{$vo.fieldArr}{$vo.name}');
+        var inputdom = thisdom.next('input');
+        if(''!=inputdom.val()){
+            alert("图片不为空");
+        }
+        var uploadInst = upload.render({
+            elem: '#{$vo.fieldArr}{$vo.name}',
+            url: "{:url('attachment/attachments/upload',$vo['param'])}",
+            //上传回调
+            choose: function(obj){
+                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                })
+            },
+            //上传成功
+            done: function(res){
+                if(res.code < 0){
+                    return layer.msg('上传失败');
+                }
+                console.log(res);
+                inputdom.attr('value', res.id);
+                return layer.msg('上传成功');
+            }
+        })
+    })
+    </script>
+</div>
+{/case}
 {case value="Ueditor"}
 <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">{$vo.title}</label>
@@ -108,7 +154,7 @@
         <script type="text/javascript">
         layui.use([], function() {
             $ = layui.jquery;
-            var {$vo.fieldArr}{$vo.name} = UE.getEditor('{$vo.fieldArr}{$vo.name}',{
+            var {$vo.fieldArr}{$vo.name} = UE.getEditor('{$vo.fieldArr}{$vo.name}', {
                 initialFrameWidth: null,
                 initialFrameHeight: 250,
                 serverUrl: "{:url('attachment/Ueditor/run')}"

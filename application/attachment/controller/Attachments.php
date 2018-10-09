@@ -113,6 +113,16 @@ class Attachments extends Adminbase
 
     }
 
+    public function upload($dir = '', $from = '', $module = '', $thumb = 0, $thumbsize = '', $thumbtype = '', $watermark = 1, $sizelimit = -1, $extlimit = '')
+    {
+        // 临时取消执行时间限制
+        //@set_time_limit(0);
+        if ($dir == '') {
+            return $this->error('没有指定上传目录');
+        }
+        return $this->saveFile($dir, $from, $module, $thumb, $thumbsize, $thumbtype, $watermark, $sizelimit, $extlimit);
+    }
+
     /**
      * 保存附件
      * @param string $dir 附件存放的目录
@@ -128,7 +138,7 @@ class Attachments extends Adminbase
                     return json(['state' => '检测到环境未开启php_fileinfo拓展']);
                 default:
                     return json([
-                        'status' => 0,
+                        'code' => -1,
                         'info' => '检测到环境未开启php_fileinfo拓展',
                     ]);
             }
@@ -148,7 +158,7 @@ class Attachments extends Adminbase
                     return json(['state' => '获取不到文件信息']);
                 default:
                     return json([
-                        'status' => 0,
+                        'code' => -1,
                         'info' => '获取不到文件信息',
                     ]);
             }
@@ -183,7 +193,7 @@ class Attachments extends Adminbase
                         break;
                     default:
                         return json([
-                            'status' => 1,
+                            'code' => 0,
                             'info' => $file_info['name'] . '上传成功',
                             'id' => $file_add['id'],
                             'path' => empty($file_info['thumb']) ? $this->uploadUrl . $file_info['path'] : $this->uploadUrl . $file_info['thumb'],
@@ -195,7 +205,7 @@ class Attachments extends Adminbase
                         return json(['state' => '上传失败']);
                         break;
                     default:
-                        return json(['status' => 0, 'info' => '上传成功,写入数据库失败']);
+                        return json(['code' => 0, 'info' => '上传成功,写入数据库失败']);
                 }
             }
         } else {
@@ -204,7 +214,7 @@ class Attachments extends Adminbase
                     return json(['state' => '上传失败']);
                     break;
                 default:
-                    return json(['status' => 0, 'info' => $file->getError()]);
+                    return json(['code' => -1, 'info' => $file->getError()]);
             }
 
         }
