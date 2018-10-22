@@ -190,10 +190,16 @@ jQuery(document).ready(function() {
     // 当前上传对象
     var curr_uploader = {};
     // 注册WebUploader事件，实现秒传
+    // 在文件开始发送前做些异步操作。
+    // WebUploader会等待此异步操作完成后，开始发送文件。
     if (window.WebUploader) {
         WebUploader.Uploader.register({
-
-        })
+        "before-send-file": "beforeSendFile"
+        }, {
+            beforeSendFile:function(file){
+                alert(111);
+            }
+        });
     }
     $('.js-upload-image,.js-upload-images').each(function() {
         var $input_file = $(this).find('input');
