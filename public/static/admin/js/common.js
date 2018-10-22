@@ -4,7 +4,6 @@ layui.use(['element', 'layer', 'form'], function() {
         $ = layui.jquery,
         form = layui.form;
 
-
     /*$('[title]').hover(function() {
         var title = $(this).attr('title');
         layer.tips(title, $(this))

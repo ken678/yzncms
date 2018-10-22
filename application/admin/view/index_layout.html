@@ -10,9 +10,17 @@
     <link rel="stylesheet" href="__STATIC__/admin/css/admin.css">
     <link rel="stylesheet" href="__STATIC__/admin/font/iconfont.css">
     <script src="__STATIC__/layui/layui.js"></script>
+    <script src="__STATIC__/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+//全局变量
+var GV = {
+    'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/attachments/upload", ["dir" => "images", "module" => request()->module()])}',
+    'WebUploader_swf': '__STATIC__/webuploader/Uploader.swf',
+};
+</script>
 </head>
-
 <body class="childrenBody">
+
     {block name="main"}主内容{/block}
     {block name="script"}{/block}
 </body>
