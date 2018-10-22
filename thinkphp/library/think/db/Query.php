@@ -628,6 +628,9 @@ class Query
             $result = (float) $result;
         }
 
+        // 查询完成后清空聚合字段信息
+        $this->removeOption('field');
+
         return $result;
     }
 
@@ -658,7 +661,7 @@ class Query
             $count = $this->aggregate('COUNT', $field);
         }
 
-        return (int) $count;
+        return is_string($count) ? $count : (int) $count;
     }
 
     /**
@@ -1884,10 +1887,21 @@ class Query
      * 表达式方式指定Field排序
      * @access public
      * @param  string $field 排序字段
+     * @param  array  $bind  参数绑定
      * @return $this
      */
-    public function orderRaw($field)
+    public function orderRaw($field, $bind = [])
     {
+        if ($bind) {
+            foreach ($bind as $key => $value) {
+                if (!is_numeric($key)) {
+                    $field = str_replace(':' . $key, '?', $field);
+                }
+            }
+
+            $this->bind(array_values($bind));
+        }
+
         $this->options['order'][] = $this->raw($field);
 
         return $this;
