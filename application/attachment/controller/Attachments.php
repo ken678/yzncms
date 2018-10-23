@@ -221,6 +221,35 @@ class Attachments extends Adminbase
 
     }
 
+    public function delete($id = '')
+    {
+        if ($this->request->isPost()) {
+            $ids = input('post.ids/a', null, 'intval');
+            if (empty($ids)) {
+                $this->error('没有勾选需要删除的文件~');
+            }
+            $Attachment = model('Attachment');
+            try {
+                $Attachment->deleteFile($ids);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+            $this->success('文件删除成功~');
+        } else {
+            $id = intval($id);
+            if ($id <= 0) {
+                $this->error('参数错误~');
+            }
+            $Attachment = model('Attachment');
+            try {
+                $Attachment->deleteFile($id);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+            $this->success('文件删除成功~');
+        }
+    }
+
     /**
      * ajax获取文件信息
      * @param string $ids html代码

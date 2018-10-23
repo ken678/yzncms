@@ -3,7 +3,10 @@
 <div class="layui-card">
     <div class="layui-card-header">附件管理</div>
     <div class="layui-card-body">
-        <table class="layui-hide" id="table"></table>
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <script type="text/html" id="barTool">
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
     </div>
 </div>
 {/block}
@@ -22,10 +25,54 @@ layui.use('table', function() {
                 { field: 'name', title: '名称' },
                 { field: 'size', title: '大小',sort: true },
                 { field: 'create_time', width: 180, title: '上传时间' },
+                { fixed: 'right', width: 70, title: '操作', toolbar: '#barTool' }
             ]
         ],
         page: {}
     });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        //console.log(obj);
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.ajax({
+                	url: '{:url("attachment/attachments/delete")}',
+                	type: "GET",
+                    data: {
+                        id: data.id
+                    },
+                    success: function (data) {
+	                    if (data.code == 1) {
+	                        if (data.url) {
+	                            layer.msg(data.msg + ' 页面即将自动跳转~');
+	                        } else {
+	                            layer.msg(data.msg);
+	                        }
+	                        setTimeout(function() {
+	                            if (data.url) {
+	                                location.href = data.url;
+	                            } else {
+	                                location.reload();
+	                            }
+	                        }, 1500);
+	                    } else {
+	                        layer.msg(data.msg);
+	                        setTimeout(function() {
+	                            if (data.url) {
+	                                location.href = data.url;
+	                            }
+	                        }, 1500);
+	                    }
+                    }
+                });
+            });
+        }
+    });
+
+
 });
 </script>
 {/block}

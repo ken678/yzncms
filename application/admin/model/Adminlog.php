@@ -26,7 +26,7 @@ class Adminlog extends Model
     public function record($message, $status = 0)
     {
         $data = array(
-            'uid' => (int) model('AdminUser')->isLogin(),
+            'uid' => (int) model('admin/AdminUser')->isLogin(),
             'status' => $status,
             'info' => "提示语:{$message}",
             'get' => request()->url(),
