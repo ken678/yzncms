@@ -106,57 +106,24 @@ layui.use(['laydate'], function() {
             <div id="file_list_{$vo.name}" class="uploader-list"></div>
             <input type="hidden" name="{$vo.name}" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
             <div class="layui-clear"></div>
-            <div id="picker_web_site_logo">上传单张图片</div>
+            <div id="picker_{$vo.name}">上传单张图片</div>
         </div>
     </div>
-    {if $vo.remark}
-    <div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
-    <!--<script type="text/javascript">
-    layui.use('upload', function(){
-        var $ = layui.jquery,upload = layui.upload;
-        var thisdom = $('#{$vo.fieldArr}{$vo.name}');
-        var inputdom = thisdom.next('input');
-        var nowPicid=inputdom.val();
-        var files={};
-        if(''!=inputdom.val()){
-            $.ajax({
-                url : "{:url('attachment/attachments/ajaxgetfileinfo')}",
-                type : 'post',
-                dataType: "json",
-                async: false,
-                data : {ids: nowPicid},
-                success : function(data){
-                   if (''!=data) {
-                      files=data;
-                   }
-                }
-            });
-        }
-        if (!$.isEmptyObject(files)) {
-            $('#demo1').attr('src', '__UPLOAD__/'+files.path); //图片链接（base64）
-        }
-        var uploadInst = upload.render({
-            elem: '#{$vo.fieldArr}{$vo.name}',
-            url: "{:url('attachment/attachments/upload',$vo['param'])}",
-            //上传回调
-            choose: function(obj){
-                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-                obj.preview(function(index, file, result){
-                    $('#demo1').attr('src', result); //图片链接（base64）
-                })
-            },
-            //上传成功
-            done: function(res){
-                if(res.code < 0){
-                    return layer.msg('上传失败');
-                }
-                console.log(res);
-                inputdom.attr('value', res.id);
-                return layer.msg('上传成功');
-            }
-        })
-    })
-    </script>-->
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+</div>
+{/case}
+{case value="images"}
+<div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">{$vo.title}</label>
+    <div class="layui-input-block">
+        <div class="js-upload-images">
+            <div id="file_list_{$vo.name}" class="uploader-list"></div>
+            <input type="hidden" name="{$vo.name}" data-multiple="true" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
+            <div class="layui-clear"></div>
+            <div id="picker_{$vo.name}">上传多张图片</div>
+        </div>
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="Ueditor"}
