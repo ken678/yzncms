@@ -40,7 +40,6 @@ class Attachment extends Model
 
     public function deleteFile($id)
     {
-        //throw new \Exception("测试");
         $path = config('upload_path');
         $isAdministrator = model('admin/AdminUser')->isAdministrator();
         $uid = (int) model('admin/AdminUser')->isLogin();

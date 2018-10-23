@@ -4,9 +4,10 @@
     <div class="layui-card-header">附件管理</div>
     <div class="layui-card-body">
         <table class="layui-hide" id="table" lay-filter="table"></table>
-		<script type="text/html" id="toolbarDemo">
-		  <div class="layui-btn-container">
-		    <button class="layui-btn layui-btn-sm" lay-event="delAll">批量删除</button>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+		  	<button class="layui-btn layui-btn-sm" lay-event="refresh"><i class="iconfont icon-shuaxin"></i>&nbsp;刷新</button>
+		    <button class="layui-btn layui-btn-sm" lay-event="delAll"><i class="iconfont icon-shanchu"></i>&nbsp;批量删除</button>
 		  </div>
 		</script>
         <script type="text/html" id="barTool">
@@ -26,11 +27,11 @@ layui.use('table', function() {
         url: '{:url("attachment/attachments/index")}',
         cols: [
             [
-                {type: 'checkbox', fixed: 'left'},
+                { type: 'checkbox', fixed: 'left' },
                 { field: 'id', width: 80, title: 'ID', sort: true },
                 { field: 'uid', width: 80, title: '用户ID' },
                 { field: 'name', title: '名称' },
-                { field: 'size', title: '大小',sort: true },
+                { field: 'size', title: '大小', sort: true },
                 { field: 'create_time', width: 180, title: '上传时间' },
                 { fixed: 'right', width: 70, title: '操作', toolbar: '#barTool' }
             ]
@@ -38,44 +39,48 @@ layui.use('table', function() {
         page: {}
     });
 
-    table.on('toolbar(table)', function(obj){
-    	var checkStatus = table.checkStatus('table'),
-            data = checkStatus.data,
-            ids = [];
-        if (data.length > 0) {
-            for (let i in data) {
-                ids.push(data[i].id);
+    table.on('toolbar(table)', function(obj) {
+        if (obj.event === 'delAll') {
+            var checkStatus = table.checkStatus('table'),
+                data = checkStatus.data,
+                ids = [];
+            if (data.length > 0) {
+                for (let i in data) {
+                    ids.push(data[i].id);
+                }
+                layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
+                    $.post('{:url("attachment/attachments/delete")}', { 'ids': ids }, function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
+                    });
+                    layer.close(index);
+                })
+            } else {
+                layer.msg("请选择需要删除的数据");
             }
-            layer.confirm('确定删除选中的数据？', {icon: 3, title: '提示信息'}, function (index) {
-                $.post('{:url("attachment/attachments/delete")}',{'ids':ids},function(data){
-	            	if (data.code == 1) {
-	                    if (data.url) {
-	                        layer.msg(data.msg + ' 页面即将自动跳转~');
-	                    } else {
-	                        layer.msg(data.msg);
-	                    }
-	                    setTimeout(function() {
-	                        if (data.url) {
-	                            location.href = data.url;
-	                        } else {
-	                            location.reload();
-	                        }
-	                    }, 1500);
-	                } else {
-	                    layer.msg(data.msg);
-	                    setTimeout(function() {
-	                        if (data.url) {
-	                            location.href = data.url;
-	                        }
-	                    }, 1500);
-	                }
-                });
-                layer.close(index);
-            })
-        } else {
-            layer.msg("请选择需要删除的数据");
+        }else{
+        	table.reload('table');
         }
-    })
+    });
 
 
     //监听行工具事件
@@ -86,33 +91,33 @@ layui.use('table', function() {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
                 $.ajax({
-                	url: '{:url("attachment/attachments/delete")}',
-                	type: "GET",
+                    url: '{:url("attachment/attachments/delete")}',
+                    type: "GET",
                     data: {
                         id: data.id
                     },
-                    success: function (data) {
-	                    if (data.code == 1) {
-	                        if (data.url) {
-	                            layer.msg(data.msg + ' 页面即将自动跳转~');
-	                        } else {
-	                            layer.msg(data.msg);
-	                        }
-	                        setTimeout(function() {
-	                            if (data.url) {
-	                                location.href = data.url;
-	                            } else {
-	                                location.reload();
-	                            }
-	                        }, 1500);
-	                    } else {
-	                        layer.msg(data.msg);
-	                        setTimeout(function() {
-	                            if (data.url) {
-	                                location.href = data.url;
-	                            }
-	                        }, 1500);
-	                    }
+                    success: function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
                     }
                 });
             });

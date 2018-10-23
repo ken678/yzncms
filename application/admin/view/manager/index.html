@@ -4,10 +4,12 @@
     <div class="layui-card-header">管理员管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{:url('admin/manager/add')}">添加管理员</a>
-            </div>
             <table class="layui-hide" id="table" lay-filter="table"></table>
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-sm" href="{:url('admin/manager/add')}">添加管理员</a>
+              </div>
+            </script>
             <script type="text/html" id="barTool">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -23,6 +25,7 @@ layui.use('table', function() {
         $ = layui.$;
     table.render({
         elem: '#table',
+        toolbar: '#toolbarDemo',
         url: '{:url("admin/manager/index")}',
         cols: [
             [

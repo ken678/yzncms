@@ -9,12 +9,12 @@
                 {/volist}
             </ul>
             <div class="layui-tab-content">
-                <blockquote class="layui-elem-quote news_search">
-                    <div class="layui-inline">
-                        <a class="layui-btn layui-btn-sm" href="{:url('admin/config/add')}">新增配置项</a>
-                    </div>
-                </blockquote>
                 <table class="layui-hide" id="table" lay-filter="table"></table>
+                <script type="text/html" id="toolbarDemo">
+                    <div class="layui-btn-container">
+                    <a class="layui-btn layui-btn-sm" href="{:url('admin/config/add')}">新增配置项</a>
+                  </div>
+                </script>
                 <script type="text/html" id="barTool">
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -26,7 +26,8 @@
         </div>
     </div>
 </div>
-{/block} {block name="script"}
+{/block}
+{block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use('table', function() {
@@ -35,6 +36,7 @@ layui.use('table', function() {
         form = layui.form;
     table.render({
         elem: '#table',
+        toolbar: '#toolbarDemo',
         url: '{:url("admin/config/index",["group"=>$group])}',
         cols: [
             [

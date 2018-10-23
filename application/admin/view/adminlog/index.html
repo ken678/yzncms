@@ -3,22 +3,24 @@
 <div class="layui-card">
     <div class="layui-card-header">管理日志</div>
     <div class="layui-card-body">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" id="Table-Refresh">刷新</button>
-            <button class="layui-btn layui-btn-sm  layui-btn-danger ajax-get confirm" url="{:url('admin/adminlog/deletelog')}">删除一个月前日志</button>
-        </div>
-        <table class="layui-hide" id="table"></table>
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="refresh"><i class="iconfont icon-shuaxin"></i>&nbsp;刷新</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="dellog"><i class="iconfont icon-shanchu"></i>&nbsp;删除一个月前日志</button>
+          </div>
+        </script>
     </div>
 </div>
 {/block}
 {block name="script"}
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use('table', function() {
     var table = layui.table,
         $ = layui.$;
     table.render({
         elem: '#table',
+        toolbar: '#toolbarDemo',
         url: '{:url("admin/adminlog/index")}',
         cols: [
             [
@@ -33,9 +35,43 @@ layui.use('table', function() {
         ],
         page: {}
     });
-    $('#Table-Refresh').on('click', function() {
-        table.reload("table");
-    });
+
+    table.on('toolbar(table)', function(obj) {
+        if (obj.event === 'dellog') {
+            layer.confirm('确定删除这些数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.ajax({
+                    url: '{:url('admin/adminlog/deletelog')}',
+                    type: "GET",
+                    success: function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
+                    }
+                });
+            });
+        }else{
+            table.reload('table');
+        }
+    })
 });
 </script>
 {/block}
