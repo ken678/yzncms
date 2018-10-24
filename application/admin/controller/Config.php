@@ -118,9 +118,9 @@ class Config extends Adminbase
                 }
                 if ($value['type'] == 'files') {
                     $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                    if (!empty($value['value'])) {
-                        $value['value'] .= ',';
-                    }
+                    /*if (!empty($value['value'])) {
+                $value['value'] .= ',';
+                }*/
                 }
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
