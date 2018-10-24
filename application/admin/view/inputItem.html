@@ -103,8 +103,16 @@ layui.use(['laydate'], function() {
     <label class="layui-form-label">{$vo.title}</label>
     <div class="layui-input-block">
         <div class="js-upload-image">
-            <div id="file_list_{$vo.name}" class="uploader-list"></div>
-            <input type="hidden" name="{$vo.name}" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
+            <div id="file_list_{$vo.name}" class="uploader-list">
+                {notempty name="$vo.value"}
+                    <div class="file-item thumbnail">
+                        <img data-original="{$vo.value|get_file_path}" src="{$vo.value|get_thumb}" width="100" style="max-height: 100px;">
+                        <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
+                        <i class="fa fa-fw fa-arrows move-picture"></i>
+                    </div>
+                {/notempty}
+            </div>
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}">上传单张图片</div>
         </div>
@@ -117,8 +125,18 @@ layui.use(['laydate'], function() {
     <label class="layui-form-label">{$vo.title}</label>
     <div class="layui-input-block">
         <div class="js-upload-images">
-            <div id="file_list_{$vo.name}" class="uploader-list"></div>
-            <input type="hidden" name="{$vo.name}" data-multiple="true" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
+            <div id="file_list_{$vo.name}" class="uploader-list">
+                {notempty name="$vo.value"}
+                  {volist name="$vo.value|explode=',',###" id="v"}
+                    <div class="file-item thumbnail">
+                        <img data-original="{$vo.value|get_file_path}" src="{$vo.value|get_thumb}" width="100" style="max-height: 100px;">
+                        <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
+                        <i class="fa fa-fw fa-arrows move-picture"></i>
+                    </div>
+                  {/volist}
+                {/notempty}
+            </div>
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}">上传多张图片</div>
         </div>
@@ -159,7 +177,7 @@ jQuery(document).ready(function() {
     var curr_uploader = {};
     $('.js-upload-image,.js-upload-images').each(function() {
         var $input_file = $(this).find('input');
-        var $input_file_name = $input_file.attr('name');
+        var $input_file_name = $input_file.attr('id');
         // 图片列表
         var $file_list = $('#file_list_' + $input_file_name);
         // 缩略图参数

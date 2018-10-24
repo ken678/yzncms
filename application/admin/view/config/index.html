@@ -76,7 +76,7 @@ layui.use('table', function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("admin/config/delete")}', { 'id': data.id }, function(data) {
+                $.post('{:url("admin/config/del")}', { 'id': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');

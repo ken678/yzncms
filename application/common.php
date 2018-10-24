@@ -148,3 +148,26 @@ function format_bytes($size, $delimiter = '')
 
     return round($size, 2) . $delimiter . $units[$i];
 }
+
+/**
+ * 获取附件路径
+ * @param int $id 附件id
+ * @return string
+ */
+function get_file_path($id = 0)
+{
+    $path = model('attachment/Attachment')->getFilePath($id);
+    if (!$path) {
+        return __STATIC__ . 'admin/img/none.png';
+    }
+    return $path;
+}
+
+function get_thumb($id = 0)
+{
+    $path = model('attachment/Attachment')->getThumbPath($id);
+    if (!$path) {
+        return __STATIC__ . 'admin/img/none.png';
+    }
+    return $path;
+}
