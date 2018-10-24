@@ -112,9 +112,9 @@ class Config extends Adminbase
                 }
                 if ($value['type'] == 'images') {
                     $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
-                    if (!empty($value['value'])) {
-                        $value['value'] .= ',';
-                    }
+                    /*if (!empty($value['value'])) {
+                $value['value'] .= ',';
+                }*/
                 }
                 if ($value['type'] == 'files') {
                     $value['param'] = ['dir' => 'files', 'module' => 'admin'];

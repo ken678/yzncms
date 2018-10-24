@@ -112,7 +112,7 @@ layui.use(['laydate'], function() {
                     </div>
                 {/notempty}
             </div>
-            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}">上传单张图片</div>
         </div>
@@ -129,14 +129,14 @@ layui.use(['laydate'], function() {
                 {notempty name="$vo.value"}
                   {volist name="$vo.value|explode=',',###" id="v"}
                     <div class="file-item thumbnail">
-                        <img data-original="{$vo.value|get_file_path}" src="{$vo.value|get_thumb}" width="100" style="max-height: 100px;">
+                        <img data-original="{$v|get_file_path}" src="{$v|get_thumb}" width="100" style="max-height: 100px;">
                         <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
                         <i class="fa fa-fw fa-arrows move-picture"></i>
                     </div>
                   {/volist}
                 {/notempty}
             </div>
-            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="">
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}">上传多张图片</div>
         </div>

@@ -75,6 +75,7 @@ class Attachment extends Model
         }
     }
 
+    //获取图片路径
     public static function getFileInfo($id = '', $field = 'path', $ifstatus = false)
     {
         if ('' == $id) {
