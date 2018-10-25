@@ -46,7 +46,7 @@ class Config extends Adminbase
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
-        $this->assign('groupArray', self::$Cache['Config']['config_group']);
+        $this->assign('groupArray', config('config_group'));
         $this->assign('group', $group);
         return $this->fetch();
     }
@@ -127,7 +127,7 @@ class Config extends Adminbase
                 }
                 $value['fieldArr'] = 'modelField';
             }
-            $this->assign('groupArray', self::$Cache['Config']['config_group']);
+            $this->assign('groupArray', config('config_group'));
             $this->assign('fieldList', $configList);
             $this->assign('group', $group);
             return $this->fetch();
