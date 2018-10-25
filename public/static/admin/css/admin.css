@@ -70,6 +70,9 @@ code {
     border-radius: 50%;
     display: none;
     z-index: 5;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
 }
 .file-item.thumbnail:hover .remove-picture,
 .file-item.thumbnail:hover .move-picture{

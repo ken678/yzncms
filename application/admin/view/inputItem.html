@@ -108,13 +108,12 @@ layui.use(['laydate'], function() {
                     <div class="file-item thumbnail">
                         <img data-original="{$vo.value|get_file_path}" src="{$vo.value|get_thumb}" width="100" style="max-height: 100px;">
                         <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
-                        <i class="fa fa-fw fa-arrows move-picture"></i>
                     </div>
                 {/notempty}
             </div>
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
-            <div id="picker_{$vo.name}">上传单张图片</div>
+            <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
         </div>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -131,14 +130,14 @@ layui.use(['laydate'], function() {
                     <div class="file-item thumbnail">
                         <img data-original="{$v|get_file_path}" src="{$v|get_thumb}" width="100" style="max-height: 100px;">
                         <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
-                        <i class="fa fa-fw fa-arrows move-picture"></i>
+                        <i class="iconfont icon-yidong move-picture"></i>
                     </div>
                   {/volist}
                 {/notempty}
             </div>
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
-            <div id="picker_{$vo.name}">上传多张图片</div>
+            <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传多张图片</div>
         </div>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -235,7 +234,7 @@ jQuery(document).ready(function() {
                     '<div class="info">' + file.name + '</div>' +
                     '<i class="iconfont icon-close remove-picture"></i>' +
                     ($multiple ? '<i class="fa fa-fw fa-arrows move-picture"></i>' : '') +
-                    '<div class="progress progress-mini remove-margin active" style="display: none">' +
+                    '<div class="progress progress-mini remove-margin active">' +
                     '<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>' +
                     '</div>' +
                     '<div class="file-state img-state"><div class="layui-bg-blue">正在读取...</div>' +
@@ -266,6 +265,7 @@ jQuery(document).ready(function() {
         // 文件上传过程中创建进度条实时显示。
         uploader.on( 'uploadProgress', function( file, percentage ) {
             var $percent = $( '#'+file.id ).find('.progress-bar');
+            console.log($percent);
             $percent.css( 'width', percentage * 100 + '%' );
         });
 
