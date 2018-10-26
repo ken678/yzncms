@@ -143,6 +143,15 @@ class Attachments extends Adminbase
                     ]);
             }
         }
+        // 附件大小限制
+        $size_limit = $dir == 'images' ? config('upload_image_size') : config('upload_file_size');
+        if (-1 != $sizelimit) {
+            $sizelimit = intval($sizelimit);
+            if ($sizelimit >= 0 && (0 == $size_limit || ($size_limit > 0 && $sizelimit > 0 && $size_limit > $sizelimit))) {
+                $size_limit = $sizelimit;
+            }
+        }
+        $size_limit = $size_limit * 1024;
         // 获取附件数据
         switch ($from) {
             case 'ueditor':
@@ -167,6 +176,21 @@ class Attachments extends Adminbase
         /*if ($file_exists = AttachmentModel::get(['md5' => $file->hash('md5')])) {
 
         }*/
+
+        // 判断附件大小是否超过限制
+        if ($size_limit > 0 && ($file->getInfo('size') > $size_limit * 1024)) {
+            switch ($from) {
+                case 'ueditor':
+                    return json(['state' => '附件过大']);
+                    break;
+                default:
+                    return json([
+                        'status' => 0,
+                        'info' => '附件过大',
+                    ]);
+            }
+        }
+
         // 移动到框架应用根目录指定目录下
         $info = $file->move($this->uploadPath . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
