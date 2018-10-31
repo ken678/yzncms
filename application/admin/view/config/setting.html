@@ -10,7 +10,7 @@
             </ul>
             <div class="layui-tab-content">
                 <blockquote class="layui-elem-quote news_search">
-                    模板调用方法：{literal}{$Config['变量名']}{/literal}
+                    模板调用方法：{literal}config('变量名'){/literal}
                 </blockquote>
                 <form class="layui-form form-horizontal" action="{:url('admin/config/setting',['group'=>$group])}" method="post">
                     {include file="inputItem"  /}
