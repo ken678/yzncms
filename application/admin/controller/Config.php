@@ -87,7 +87,7 @@ class Config extends Adminbase
                     $this->ConfigModel->where($map)->setField('value', $data[$name]);
                 }
             }
-            //cache('system_config', null);
+            cache('Config', null); //清空缓存配置
             return $this->success('设置更新成功');
         } else {
             $configList = $this->ConfigModel->where('group', $group)
@@ -146,13 +146,12 @@ class Config extends Adminbase
                 return $this->error($result);
             }
             $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data);
-            //cache('system_config', null);
+            cache('Config', null); //清空缓存配置
             $this->success('配置添加成功~');
         } else {
-            $groupArray = self::$Cache['Config']['config_group'];
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
             $this->assign([
-                'groupArray' => $groupArray,
+                'groupArray' => config('config_group'),
                 'fieldType' => $fieldType,
             ]);
             return $this->fetch();
@@ -169,7 +168,7 @@ class Config extends Adminbase
                 return $this->error($result);
             }
             $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data, ['id' => $data['id']]);
-            //cache('system_config', null);
+            cache('Config', null); //清空缓存配置
             $this->success('配置编辑成功~');
 
         } else {
@@ -177,11 +176,10 @@ class Config extends Adminbase
             if (!is_numeric($id) || $id < 0) {
                 return '参数错误';
             }
-            $groupArray = self::$Cache['Config']['config_group'];
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
             $info = model('Config')->where('id', $id)->find();
             $this->assign([
-                'groupArray' => $groupArray,
+                'groupArray' => config('config_group'),
                 'fieldType' => $fieldType,
                 'info' => $info,
             ]);
@@ -197,7 +195,7 @@ class Config extends Adminbase
             return '参数错误';
         }
         if ($this->ConfigModel->where(['id' => $id])->delete()) {
-            //cache('system_config', null);
+            cache('Config', null); //清空缓存配置
             $this->success('删除成功');
         } else {
             $this->error('删除失败！');
@@ -213,7 +211,7 @@ class Config extends Adminbase
             return '参数错误';
         }
         if ($this->ConfigModel->where('id', $id)->update(['status' => $status])) {
-            //cache('system_config', null);
+            cache('Config', null); //清空缓存配置
             $this->error('更新成功');
         } else {
             $this->error('更新失败');

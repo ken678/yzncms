@@ -178,7 +178,7 @@ class Attachments extends Adminbase
         }*/
 
         // 判断附件大小是否超过限制
-        if ($size_limit > 0 && ($file->getInfo('size') > $size_limit * 1024)) {
+        if ($size_limit > 0 && ($file->getInfo('size') > $size_limit)) {
             switch ($from) {
                 case 'ueditor':
                     return json(['state' => '附件过大']);
