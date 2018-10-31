@@ -111,7 +111,7 @@ layui.use(['laydate'], function() {
                     </div>
                 {/notempty}
             </div>
-            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
         </div>
@@ -135,7 +135,7 @@ layui.use(['laydate'], function() {
                   {/volist}
                 {/notempty}
             </div>
-            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="0" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传多张图片</div>
         </div>
@@ -310,10 +310,10 @@ jQuery(document).ready(function() {
         uploader.on('error', function (type) {
             switch (type) {
                 case 'Q_TYPE_DENIED':
-                    //Dolphin.notify('图片类型不正确，只允许上传后缀名为：'+$ext+'，请重新上传！', 'danger');
+                    layer.alert('图片类型不正确，只允许上传后缀名为：'+$ext+'，请重新上传！', {icon: 5})
                     break;
                 case 'F_EXCEED_SIZE':
-                    //Dolphin.notify('图片不得超过'+ ($size/1024) +'kb，请重新上传！', 'danger');
+                    layer.alert('图片不得超过'+ $size +'kb，请重新上传！', {icon: 5})
                     break;
             }
         });
