@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-11-09 17:20:47
+Date: 2018-11-09 17:49:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1541752238', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1541756806', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1538036501', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=345 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=351 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -70,6 +70,12 @@ INSERT INTO `yzn_adminlog` VALUES ('210', '1', '1', '提示语:恭喜您，登�
 INSERT INTO `yzn_adminlog` VALUES ('209', '0', '0', '提示语:请先登陆', '1540203399', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('208', '1', '1', '提示语:删除日志成功！', '1540170964', '2130706433', '/admin/adminlog/deletelog.html');
 INSERT INTO `yzn_adminlog` VALUES ('207', '1', '1', '提示语:删除日志成功！', '1540170960', '2130706433', '/admin/adminlog/deletelog.html');
+INSERT INTO `yzn_adminlog` VALUES ('350', '1', '1', '提示语:配置编辑成功~', '1541756888', '2130706433', '/admin/config/edit/id/151.html');
+INSERT INTO `yzn_adminlog` VALUES ('349', '1', '1', '提示语:配置编辑成功~', '1541756875', '2130706433', '/admin/config/edit/id/14.html');
+INSERT INTO `yzn_adminlog` VALUES ('348', '1', '1', '提示语:配置编辑成功~', '1541756856', '2130706433', '/admin/config/edit/id/13.html');
+INSERT INTO `yzn_adminlog` VALUES ('347', '1', '1', '提示语:配置编辑成功~', '1541756842', '2130706433', '/admin/config/edit/id/12.html');
+INSERT INTO `yzn_adminlog` VALUES ('346', '1', '1', '提示语:恭喜您，登陆成功', '1541756806', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('345', '0', '0', '提示语:请先登陆', '1541756800', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('344', '1', '1', '提示语:配置编辑成功~', '1541755158', '2130706433', '/admin/config/edit/id/151.html');
 INSERT INTO `yzn_adminlog` VALUES ('343', '1', '1', '提示语:配置编辑成功~', '1541755151', '2130706433', '/admin/config/edit/id/151.html');
 INSERT INTO `yzn_adminlog` VALUES ('342', '1', '1', '提示语:配置编辑成功~', '1541755146', '2130706433', '/admin/config/edit/id/151.html');
@@ -339,11 +345,11 @@ INSERT INTO `yzn_config` VALUES ('7', 'web_site_statistics', 'textarea', '站点
 INSERT INTO `yzn_config` VALUES ('8', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\nsystem:系统\nupload:上传\ndevelop:开发', '0');
 INSERT INTO `yzn_config` VALUES ('9', 'ueditor', 'Ueditor', '第三方代码', 'base', '', '', '1538212563', '1538212563', '1', '', '100');
 INSERT INTO `yzn_config` VALUES ('11', 'pics', 'images', 'pics', 'base', '', '', '1540341793', '1540341793', '1', '', '100');
-INSERT INTO `yzn_config` VALUES ('14', 'upload_file_size', 'text', '文件上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457658', '1540457800', '1', '0', '100');
-INSERT INTO `yzn_config` VALUES ('12', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1540457800', '1', '0', '100');
+INSERT INTO `yzn_config` VALUES ('14', 'upload_file_size', 'text', '文件上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457658', '1541756875', '1', '0', '99');
+INSERT INTO `yzn_config` VALUES ('12', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1541756842', '1', '0', '97');
 INSERT INTO `yzn_config` VALUES ('15', 'upload_file_ext', 'text', '允许上传的文件后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457659', '1540457800', '1', 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z', '100');
-INSERT INTO `yzn_config` VALUES ('13', 'upload_image_ext', 'text', '允许上传的图片后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457657', '1540457800', '1', 'gif,jpg,jpeg,bmp,png', '100');
-INSERT INTO `yzn_config` VALUES ('151', 'upload_driver', 'radio', '上传驱动', 'upload', 'local:本地\r\nqiniu:七牛云', '图片或文件上传驱动', '1541752781', '1541755158', '1', 'local', '101');
+INSERT INTO `yzn_config` VALUES ('13', 'upload_image_ext', 'text', '允许上传的图片后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457657', '1541756856', '1', 'gif,jpg,jpeg,bmp,png', '98');
+INSERT INTO `yzn_config` VALUES ('151', 'upload_driver', 'radio', '上传驱动', 'upload', 'local:本地', '图片或文件上传驱动', '1541752781', '1541756888', '1', 'local', '101');
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`
