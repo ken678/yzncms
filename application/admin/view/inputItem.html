@@ -117,7 +117,7 @@ layui.use(['laydate'], function() {
                     </div>
                 {/notempty}
             </div>
-            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
         </div>
@@ -141,7 +141,7 @@ layui.use(['laydate'], function() {
                   {/volist}
                 {/notempty}
             </div>
-            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext='' id="{$vo.name}" value="{$vo.value|default=''}">
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传多张图片</div>
         </div>

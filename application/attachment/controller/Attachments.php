@@ -152,6 +152,25 @@ class Attachments extends Adminbase
             }
         }
         $size_limit = $size_limit * 1024;
+        // 附件类型限制
+        $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
+        if ('' != $extlimit) {
+            $extArr = explode(',', $ext_limit);
+            $extArrPara = explode(',', $extlimit);
+            $ext_limit = '';
+            foreach ($extArrPara as $vo) {
+                if (in_array($vo, $extArr) && $vo) {
+                    $ext_limit .= $vo . ',';
+                }
+            }
+            if ($ext_limit) {
+                $ext_limit = substr($ext_limit, 0, -1);
+            }
+        }
+        $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
+        foreach (['php', 'html', 'htm', 'js'] as $vo) {
+            unset($ext_limit[$vo]);
+        }
         // 获取附件数据
         switch ($from) {
             case 'ueditor':
@@ -190,7 +209,42 @@ class Attachments extends Adminbase
                     ]);
             }
         }
-
+        // 判断附件格式是否符合
+        $file_name = $file->getInfo('name');
+        $file_ext = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
+        $error_msg = '';
+        if ($ext_limit == '') {
+            $error_msg = '获取文件后缀限制信息失败！';
+        }
+        try {
+            $fileMine = $file->getMime();
+        } catch (\Exception $ex) {
+            $error_msg = $ex->getMessage();
+        }
+        if ($fileMine == 'text/x-php' || $fileMine == 'text/html') {
+            $error_msg = '禁止上传非法文件！';
+        }
+        if (preg_grep("/php/i", $ext_limit)) {
+            $error_msg = '禁止上传非法文件！';
+        }
+        if (!preg_grep("/$file_ext/i", $ext_limit)) {
+            $error_msg = '附件类型不正确！';
+        }
+        if (!in_array($file_ext, $ext_limit)) {
+            $error_msg = '附件类型不正确！';
+        }
+        if ($error_msg != '') {
+            switch ($from) {
+                case 'ueditor':
+                    return json(['state' => $error_msg]);
+                    break;
+                default:
+                    return json([
+                        'code' => -1,
+                        'info' => $error_msg,
+                    ]);
+            }
+        }
         // 移动到框架应用根目录指定目录下
         $info = $file->move($this->uploadPath . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
