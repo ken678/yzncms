@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-11-21 14:45:34
+Date: 2018-11-24 13:54:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1542780457', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1542869084', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=424 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=430 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -72,6 +72,12 @@ INSERT INTO `yzn_adminlog` VALUES ('423', '0', '2', '提示语:未授权访问!'
 INSERT INTO `yzn_adminlog` VALUES ('420', '1', '0', '提示语:注销成功！', '1542781143', '2130706433', '/admin/index/logout.html');
 INSERT INTO `yzn_adminlog` VALUES ('421', '1', '2', '提示语:恭喜您，登陆成功', '1542781151', '2130706433', '/admin/index/login.html');
 INSERT INTO `yzn_adminlog` VALUES ('422', '0', '2', '提示语:未授权访问!', '1542781157', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542781157366');
+INSERT INTO `yzn_adminlog` VALUES ('429', '0', '1', '提示语:该页面不存在！', '1542869351', '2130706433', '/addons/addons/hooks/menuid/34.html');
+INSERT INTO `yzn_adminlog` VALUES ('428', '0', '1', '提示语:该页面不存在！', '1542869342', '2130706433', '/addons/addons/hooks/menuid/34.html');
+INSERT INTO `yzn_adminlog` VALUES ('427', '1', '1', '提示语:恭喜您，登陆成功', '1542869084', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('426', '0', '0', '提示语:请先登陆', '1542869079', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('425', '1', '1', '提示语:恭喜您，登陆成功', '1542868987', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('424', '0', '0', '提示语:请先登陆', '1542868981', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('418', '1', '1', '提示语:恭喜您，登陆成功', '1542780457', '2130706433', '/admin/index/login.html');
 INSERT INTO `yzn_adminlog` VALUES ('417', '0', '0', '提示语:请先登陆', '1542780450', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('416', '0', '2', '提示语:未授权访问!', '1542155338', '2130706433', '/admin/manager/add.html');
