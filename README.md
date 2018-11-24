@@ -1,7 +1,7 @@
 ### 本项目为最新项目  旧版本完整CMS 请选择分支5.0下载
 [演示地址]  
 ```
-近期放出 （超级管理员：admin admin)
+http://demo.szqipaipai.com/admin/ （超级管理员：admin admin)
 ```
 
 [使用教程]
