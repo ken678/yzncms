@@ -1,24 +1,14 @@
 ### 本项目为最新项目  旧版本完整CMS 请选择分支5.0下载
-[官网地址]  
-
-```
-近期放出
-```
-
-[演示地址]  
-```
-http://demo.szqipaipai.com/admin/ （超级管理员：admin admin)
-```
-
-[使用教程]
-```
-手册地址 https://www.kancloud.cn/ken678/yzncms
-```
 
 [项目介绍]
 ```
 Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.1.X和layui2.x最新版,框架易于功能扩展，代码维护，方便二次开发  
 帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
+
+演示地址：http://demo.szqipaipai.com/admin/ （超级管理员：admin admin)
+手册地址：https://www.kancloud.cn/ken678/yzncms
+官网地址：近期放出
+社区地址：近期放出
 ```
 [环境要求]
 ```
