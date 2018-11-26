@@ -29,4 +29,4 @@ Container::get('app')->run()->send();
 
 /*如果你的服务器不支持域名绑定目录
 1.请将index.php放置根目录
-2.注释上面代码define('IF_PUBLIC', true);
+2.注释上面代码define('IF_PUBLIC', true);*/
