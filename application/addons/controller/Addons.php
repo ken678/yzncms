@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\addons\controller;
 
+use app\addons\model\Addons as Addons_model;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -22,12 +23,14 @@ class Addons extends Adminbase
     protected function initialize()
     {
         parent::initialize();
+        $this->addons = new Addons_model;
     }
 
     //显示插件列表
     public function index()
     {
-        var_dump(111);
+        $addons = $this->addons->getAddonList();
+        var_dump($addons);
 
     }
 

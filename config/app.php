@@ -29,7 +29,7 @@ return [
     // 入口自动绑定模块
     'auto_bind_module' => false,
     // 注册的根命名空间
-    'root_namespace' => [],
+    'root_namespace' => ['addons' => ROOT_PATH . 'addons/'],
     // 默认输出类型
     'default_return_type' => 'html',
     // 默认AJAX 数据返回格式,可选json xml ...

@@ -20,6 +20,7 @@ if (version_compare(PHP_VERSION, '5.6.0', '<')) {
 define('IF_PUBLIC', true);
 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 define('APP_PATH', ROOT_PATH . 'application' . DIRECTORY_SEPARATOR);
+define('ADDON_PATH', ROOT_PATH . 'addons' . DIRECTORY_SEPARATOR);
 define('ROOT_URL', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/') . '/');
 
 // 加载基础文件

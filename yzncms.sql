@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
+Source Server         : 本地链接
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
@@ -10,10 +10,32 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-11-24 13:54:22
+Date: 2018-11-26 22:03:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `yzn_addons`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_addons`;
+CREATE TABLE `yzn_addons` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(40) NOT NULL COMMENT '插件名或标识',
+  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '中文名',
+  `description` text COMMENT '插件描述',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `config` text COMMENT '配置',
+  `author` varchar(40) DEFAULT '' COMMENT '作者',
+  `version` varchar(20) DEFAULT '' COMMENT '版本号',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
+  `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='插件表';
+
+-- ----------------------------
+-- Records of yzn_addons
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -37,7 +59,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1542869084', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543237083', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -53,7 +75,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=430 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=432 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -279,6 +301,8 @@ INSERT INTO `yzn_adminlog` VALUES ('327', '1', '1', '提示语:设置更新成�
 INSERT INTO `yzn_adminlog` VALUES ('328', '1', '1', '提示语:设置更新成功', '1540976343', '2130706433', '/admin/config/setting/group/upload.html');
 INSERT INTO `yzn_adminlog` VALUES ('329', '0', '0', '提示语:请先登陆', '1541721953', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('330', '1', '1', '提示语:恭喜您，登陆成功', '1541721959', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('430', '0', '0', '提示语:请先登陆', '1543237075', '2130706433', '/admin');
+INSERT INTO `yzn_adminlog` VALUES ('431', '1', '1', '提示语:恭喜您，登陆成功', '1543237083', '2130706433', '/admin/index/login.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
