@@ -12,16 +12,16 @@
 <script type="text/html" id="titleTpl">
     {{#  if(d.uninstall == "" || d.uninstall == null || d.uninstall == undefined){ }}
     {{#  if(d.configl == "" || d.configl == null || d.configl == undefined){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-shezhi"></i>&nbsp;设置</a>
+    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/config")}' lay-event="config"><i class="icon iconfont icon-shezhi"></i>&nbsp;设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-qiyong"></i>&nbsp;启用</a>
+    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/enable")}' lay-event="enable"><i class="icon iconfont icon-qiyong"></i>&nbsp;启用</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-jinyong"></i>&nbsp;禁用</a>
+    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/disable")}' lay-event="disable"><i class="icon iconfont icon-jinyong"></i>&nbsp;禁用</a>
     {{#  } }}
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-shanchu"></i>&nbsp;卸载</a>
+    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/uninstall")}' lay-event="uninstall"><i class="icon iconfont icon-shanchu"></i>&nbsp;卸载</a>
 {{#  } else { }}
-    <a class="layui-btn layui-btn-xs" lay-event="install"><i class="icon iconfont icon-zidongxiufu"></i>&nbsp;安装</a>
+    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/install")}' lay-event="install"><i class="icon iconfont icon-zidongxiufu"></i>&nbsp;安装</a>
 {{#  } }}
 </script>
 {/block}
@@ -39,7 +39,7 @@ layui.use('table', function() {
                 { field: 'title', width: 150, title: '名称' },
                 { field: 'name', width: 150, title: '标识' },
                 { field: 'description', title: '描述' },
-                { field: 'status_text', width: 100, title: '状态', templet: '<div>{{#  if(!d.status_text){ }} 未安装 {{#  } }}</div>' },
+                { field: 'status_text', width: 80, title: '状态', templet: '<div>{{#  if(d.status_text){ }} {{d.status_text}} {{#  } else { }} 未安装 {{#  } }}</div>' },
                 { field: 'author', width: 100, title: '作者' },
                 { field: 'version', width: 100, title: '版本' },
                 { field: 'version', title: '操作', templet: '#titleTpl' }
@@ -50,39 +50,43 @@ layui.use('table', function() {
     //监听行工具事件
     table.on('tool(table)', function(obj) {
         var data = obj.data;
-        //console.log(obj);
-        if (obj.event === 'install') {
-            layer.confirm('确定安装此插件吗？', { icon: 3, title: '提示' }, function(index) {
-                layer.close(index);
-                $.post('{:url("addons/addons/install")}', { 'addon_name': data.name }, function(data) {
-                    if (data.code == 1) {
-                        if (data.url) {
-                            layer.msg(data.msg + ' 页面即将自动跳转~');
-                        } else {
-                            layer.msg(data.msg);
-                        }
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            } else {
-                                location.reload();
-                            }
-                        }, 1500);
-                    } else {
-                        layer.msg(data.msg);
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            }
-                        }, 1500);
-                    }
-
-                });
-            });
-        }
+        var url = $(this).data('url');
+        layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
+            layer.close(index);
+            if (obj.event === 'install') {
+                x_request(url, { 'addon_name': data.name });
+            } else {
+                x_request(url, { 'id': data.id });
+            }
+        });
     });
-
-
 });
+
+function x_request(url, params) {
+    $.post(url, params, function(data) {
+        if (data.code == 1) {
+            if (data.url) {
+                layer.msg(data.msg + ' 页面即将自动跳转~');
+            } else {
+                layer.msg(data.msg);
+            }
+            setTimeout(function() {
+                if (data.url) {
+                    location.href = data.url;
+                } else {
+                    location.reload();
+                }
+            }, 1500);
+        } else {
+            layer.msg(data.msg);
+            setTimeout(function() {
+                if (data.url) {
+                    location.href = data.url;
+                }
+            }, 1500);
+        }
+
+    });
+}
 </script>
 {/block}
