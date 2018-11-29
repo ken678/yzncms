@@ -29,8 +29,12 @@ class Addons extends Adminbase
     //显示插件列表
     public function index()
     {
-        $addons = $this->addons->getAddonList();
-        var_dump($addons);
+        if ($this->request->isAjax()) {
+            $addons = $this->addons->getAddonList();
+            $result = array("code" => 0, "data" => $addons);
+            return json($result);
+        }
+        return $this->fetch();
 
     }
 

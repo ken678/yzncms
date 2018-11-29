@@ -1,0 +1,51 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">插件管理</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container"></div>
+        </script>
+    </div>
+</div>
+<script type="text/html" id="titleTpl">
+{{#  if(d.uninstall == "" || d.uninstall == null || d.uninstall == undefined){ }}
+    {{#  if(d.configl == "" || d.configl == null || d.configl == undefined){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-shezhi"></i>&nbsp;设置</a>
+    {{#  } }}
+    {{#  if(d.status == 0){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-qiyong"></i>&nbsp;启用</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-jinyong"></i>&nbsp;禁用</a>
+    {{#  } }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-shanchu"></i>&nbsp;卸载</a>
+{{#  } else { }}
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="icon iconfont icon-zidongxiufu"></i>&nbsp;安装</a>
+{{#  } }}
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$;
+    table.render({
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("addons/addons/index")}',
+        cols: [
+            [
+                { field: 'title', width: 150, title: '名称' },
+                { field: 'name', width: 150, title: '标识' },
+                { field: 'description', title: '描述' },
+                { field: 'status_text', width: 100, title: '状态', templet: '<div>{{#  if(!d.status_text){ }} 未安装 {{#  } }}</div>' },
+                { field: 'author', width: 100, title: '作者' },
+                { field: 'version', width: 100, title: '版本' },
+                { field: 'version',title: '操作', templet: '#titleTpl' }
+            ]
+        ]
+    });
+});
+</script>
+{/block}
