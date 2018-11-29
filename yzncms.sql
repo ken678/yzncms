@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
+Source Server         : localhost_3306
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-11-26 22:03:08
+Date: 2018-11-29 14:21:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,11 +31,12 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
+INSERT INTO `yzn_addons` VALUES ('16', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"0\",\"current\":\"1\"}', '御宅男', '1.0.0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -59,7 +60,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543237083', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543470979', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -75,7 +76,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=432 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=452 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -303,6 +304,26 @@ INSERT INTO `yzn_adminlog` VALUES ('329', '0', '0', '提示语:请先登陆', '1
 INSERT INTO `yzn_adminlog` VALUES ('330', '1', '1', '提示语:恭喜您，登陆成功', '1541721959', '2130706433', '/admin/index/login.html');
 INSERT INTO `yzn_adminlog` VALUES ('430', '0', '0', '提示语:请先登陆', '1543237075', '2130706433', '/admin');
 INSERT INTO `yzn_adminlog` VALUES ('431', '1', '1', '提示语:恭喜您，登陆成功', '1543237083', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('432', '0', '0', '提示语:请先登陆', '1543391624', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('433', '1', '1', '提示语:恭喜您，登陆成功', '1543391629', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('434', '1', '1', '提示语:设置更新成功', '1543391643', '2130706433', '/admin/config/setting/group/base.html');
+INSERT INTO `yzn_adminlog` VALUES ('435', '1', '1', '提示语:文件删除成功~', '1543391649', '2130706433', '/attachment/attachments/delete.html');
+INSERT INTO `yzn_adminlog` VALUES ('436', '0', '0', '提示语:请先登陆', '1543394600', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('437', '1', '1', '提示语:恭喜您，登陆成功', '1543394606', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('438', '0', '0', '提示语:请先登陆', '1543398908', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('439', '1', '1', '提示语:恭喜您，登陆成功', '1543398913', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('440', '0', '0', '提示语:请先登陆', '1543451944', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('441', '1', '1', '提示语:恭喜您，登陆成功', '1543451949', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('442', '1', '1', '提示语:设置更新成功', '1543452393', '2130706433', '/admin/config/setting/group/base.html');
+INSERT INTO `yzn_adminlog` VALUES ('443', '1', '1', '提示语:文件删除成功~', '1543452402', '2130706433', '/attachment/attachments/delete.html');
+INSERT INTO `yzn_adminlog` VALUES ('444', '0', '0', '提示语:请先登陆', '1543465031', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('445', '1', '1', '提示语:恭喜您，登陆成功', '1543465039', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('446', '0', '0', '提示语:请先登陆', '1543465329', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('447', '1', '1', '提示语:恭喜您，登陆成功', '1543465335', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('448', '0', '0', '提示语:请先登陆', '1543470974', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('449', '1', '1', '提示语:恭喜您，登陆成功', '1543470979', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('450', '1', '1', '提示语:插件安装成功！', '1543472266', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('451', '1', '1', '提示语:插件安装成功！', '1543472414', '2130706433', '/addons/addons/install.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -327,7 +348,7 @@ CREATE TABLE `yzn_attachment` (
   `listorders` int(5) NOT NULL DEFAULT '100' COMMENT '排序',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=233 DEFAULT CHARSET=utf8 COMMENT='附件表';
+) ENGINE=MyISAM AUTO_INCREMENT=236 DEFAULT CHARSET=utf8 COMMENT='附件表';
 
 -- ----------------------------
 -- Records of yzn_attachment
@@ -446,12 +467,12 @@ INSERT INTO `yzn_config` VALUES ('1', 'web_site_status', 'switch', '站点开关
 INSERT INTO `yzn_config` VALUES ('2', 'web_site_title', 'text', '站点标题', 'base', '', '', '1494408414', '1494408414', '1', 'YznCMS网站管理系统', '2');
 INSERT INTO `yzn_config` VALUES ('3', 'web_site_keywords', 'text', '站点关键词', 'base', '', '', '1494408414', '1494408414', '1', 'YznCMS,网站管理系统', '3');
 INSERT INTO `yzn_config` VALUES ('4', 'web_site_description', 'text', '站点描述', 'base', '', '', '1494408414', '1494408414', '1', '', '4');
-INSERT INTO `yzn_config` VALUES ('5', 'web_site_logo', 'image', '站点LOGO', 'base', '', '', '1494408414', '1494408414', '1', '', '5');
+INSERT INTO `yzn_config` VALUES ('5', 'web_site_logo', 'image', '站点LOGO', 'base', '', '', '1494408414', '1494408414', '1', '233', '5');
 INSERT INTO `yzn_config` VALUES ('6', 'web_site_icp', 'text', '备案信息', 'base', '', '', '1494408414', '1494408414', '1', '', '6');
 INSERT INTO `yzn_config` VALUES ('7', 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', '1494408414', '1494408414', '1', '', '7');
 INSERT INTO `yzn_config` VALUES ('8', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\nsystem:系统\nupload:上传\ndevelop:开发', '0');
 INSERT INTO `yzn_config` VALUES ('9', 'ueditor', 'Ueditor', '第三方代码', 'base', '', '', '1538212563', '1538212563', '1', '', '100');
-INSERT INTO `yzn_config` VALUES ('11', 'pics', 'images', 'pics', 'base', '', '', '1540341793', '1540341793', '1', '', '100');
+INSERT INTO `yzn_config` VALUES ('11', 'pics', 'images', 'pics', 'base', '', '', '1540341793', '1540341793', '1', '234,235', '100');
 INSERT INTO `yzn_config` VALUES ('14', 'upload_file_size', 'text', '文件上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457658', '1541756875', '1', '0', '99');
 INSERT INTO `yzn_config` VALUES ('12', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1541756842', '1', '0', '97');
 INSERT INTO `yzn_config` VALUES ('15', 'upload_file_ext', 'text', '允许上传的文件后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457659', '1540457800', '1', 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z', '100');
@@ -493,6 +514,25 @@ INSERT INTO `yzn_field_type` VALUES ('images', '多张图', '9', 'varchar(256) N
 INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', '16', 'varchar(7) NOT NULL DEFAULT \'\'', '0', '0', '');
 INSERT INTO `yzn_field_type` VALUES ('files', '多文件', '15', 'varchar(256) NOT NULL DEFAULT \'\'', '0', '0', '');
 INSERT INTO `yzn_field_type` VALUES ('summernote', '简洁编辑器', '14', 'text NOT NULL', '0', '1', '');
+
+-- ----------------------------
+-- Table structure for `yzn_hooks`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_hooks`;
+CREATE TABLE `yzn_hooks` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(40) NOT NULL DEFAULT '' COMMENT '钩子名称',
+  `description` text NOT NULL COMMENT '描述',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of yzn_hooks
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_menu`

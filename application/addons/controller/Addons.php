@@ -43,4 +43,38 @@ class Addons extends Adminbase
         var_dump(222);
     }
 
+    /**
+     * 安装插件
+     */
+    public function install()
+    {
+        $addonName = $this->request->param('addon_name');
+        if (empty($addonName)) {
+            $this->error('请选择需要安装的插件！');
+        }
+        if ($this->addons->installAddon($addonName)) {
+            $this->success('插件安装成功！', url('Addons/index'));
+        } else {
+            $error = $this->addons->getError();
+            $this->error($error ? $error : '插件安装失败！');
+        }
+    }
+
+    /**
+     * 卸载插件
+     */
+    public function uninstall()
+    {
+        $addonId = $this->request->param('id/d');
+        if (empty($addonId)) {
+            $this->error('请选择需要卸载的插件！');
+        }
+        if ($this->addons->uninstallAddon($addonId)) {
+            $this->success('插件卸载成功！', url('Addons/index'));
+        } else {
+            $error = $this->addons->getError();
+            $this->error($error ? $error : '插件卸载失败！');
+        }
+    }
+
 }
