@@ -227,17 +227,11 @@ function format_bytes($size, $delimiter = '')
 function get_file_path($id = 0)
 {
     $path = model('attachment/Attachment')->getFilePath($id);
-    if (!$path) {
-        return __STATIC__ . 'admin/img/none.png';
-    }
-    return $path;
+    return $path ? $path : "";
 }
 
 function get_thumb($id = 0)
 {
     $path = model('attachment/Attachment')->getThumbPath($id);
-    if (!$path) {
-        return __STATIC__ . 'admin/img/none.png';
-    }
-    return $path;
+    return $path ? $path : "";
 }
