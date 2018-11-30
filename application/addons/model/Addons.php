@@ -34,21 +34,8 @@ class Addons extends Model
             $this->error = '插件目录不可读或者不存在';
             return false;
         }
-        $addons = array();
-        if (!empty($dirs)) {
-            //取得已安装插件列表
-            $addonsList = $this->where('name', 'in', $dirs)->field(true)->select();
-        } else {
-            $addonsList = array();
-        }
-        foreach ($addonsList as $key => $value) {
-            $addonsList[$key] = $value->toArray();
-        }
-        foreach ($addonsList as $addon) {
-            $addon['uninstall'] = 0;
-            //$addon['config'] = unserialize($addon['config']);
-            $addons[$addon['name']] = $addon;
-        }
+        // 读取数据库插件表
+        $addons = $this->order('id desc')->column(true, 'name');
         //遍历插件列表
         foreach ($dirs as $value) {
             //是否已经安装过
@@ -56,10 +43,8 @@ class Addons extends Model
                 $class = get_addon_class($value);
                 if (!class_exists($class)) {
                     // 实例化插件失败忽略执行
-                    var_dump(111);
-                    /*trace($class);
-                \think\Log::record('插件' . $value . '的入口文件不存在！');
-                continue;*/
+                    $addons[$value]['uninstall'] = -1;
+                    continue;
                 }
                 //获取插件配置
                 $obj = new $class();
@@ -68,8 +53,8 @@ class Addons extends Model
                     $addons[$value]['uninstall'] = 1;
                     unset($addons[$value]['status']);
                     //是否有配置
-                    $config = $obj->getAddonConfig();
-                    $addons[$value]['config'] = $config;
+                    //$config = $obj->getAddonConfig();
+                    //$addons[$value]['config'] = $config;
                 }
             }
         }
