@@ -15,11 +15,11 @@
     <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/config")}' lay-event="config"><i class="icon iconfont icon-shezhi"></i>&nbsp;设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
-    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/enable")}' lay-event="enable"><i class="icon iconfont icon-qiyong"></i>&nbsp;启用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" data-url='{:url("addons/addons/enable")}' lay-event="enable"><i class="icon iconfont icon-qiyong"></i>&nbsp;启用</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/disable")}' lay-event="disable"><i class="icon iconfont icon-jinyong"></i>&nbsp;禁用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm" data-url='{:url("addons/addons/disable")}' lay-event="disable"><i class="icon iconfont icon-jinyong"></i>&nbsp;禁用</a>
     {{#  } }}
-    <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/uninstall")}' lay-event="uninstall"><i class="icon iconfont icon-shanchu"></i>&nbsp;卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" data-url='{:url("addons/addons/uninstall")}' lay-event="uninstall"><i class="icon iconfont icon-shanchu"></i>&nbsp;卸载</a>
 {{#  } else { }}
     <a class="layui-btn layui-btn-xs" data-url='{:url("addons/addons/install")}' lay-event="install"><i class="icon iconfont icon-zidongxiufu"></i>&nbsp;安装</a>
 {{#  } }}
@@ -40,8 +40,8 @@ layui.use('table', function() {
                 { field: 'name', width: 150, title: '标识' },
                 { field: 'description', title: '描述' },
                 { field: 'status_text', width: 80, title: '状态', templet: '<div>{{#  if(d.status_text){ }} {{d.status_text}} {{#  } else { }} 未安装 {{#  } }}</div>' },
-                { field: 'author', width: 100, title: '作者' },
-                { field: 'version', width: 100, title: '版本' },
+                { field: 'author', width: 90, title: '作者' },
+                { field: 'version', width: 90, title: '版本' },
                 { field: 'version', title: '操作', templet: '#titleTpl' }
             ]
         ]
@@ -51,14 +51,19 @@ layui.use('table', function() {
     table.on('tool(table)', function(obj) {
         var data = obj.data;
         var url = $(this).data('url');
-        layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
-            layer.close(index);
-            if (obj.event === 'install') {
+        if (obj.event === 'install') {
+            layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
                 x_request(url, { 'addon_name': data.name });
-            } else {
+                layer.close(index);
+            });
+        } else if (obj.event === 'config') {
+        	window.open(url + "?id=" + data.id, '_self')
+        } else {
+            layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
                 x_request(url, { 'id': data.id });
-            }
-        });
+                layer.close(index);
+            });
+        }
     });
 });
 

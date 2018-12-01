@@ -1,0 +1,9 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<form action="{:url('saveConfig')}" method="post" class="form-horizontal">
+    {present name="custom_config"}
+    {$custom_config|raw}
+    {/present}
+    <input type="hidden" name="id" value="{:input('id')}" readonly>
+</form>
+{/block}

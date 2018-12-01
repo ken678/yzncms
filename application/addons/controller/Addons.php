@@ -90,6 +90,28 @@ class Addons extends Adminbase
         return $this->fetch();
     }
 
+    /**
+     * 保存插件设置
+     */
+    public function saveConfig()
+    {
+        $id = $this->request->param('id/d');
+        //获取插件信息
+        $info = $this->addons->where(array('id' => $id))->find();
+        if (empty($info)) {
+            $this->error('该插件没有安装！');
+        }
+        $config = $this->request->param('config/a');
+        $flag = Db::name('Addons')->where(['id' => $id])->setField('config', json_encode($config));
+        if ($flag !== false) {
+            //更新插件缓存
+            $this->addons->addons_cache();
+            $this->success('保存成功', Cookie('__forward__'));
+        } else {
+            $this->error('保存失败');
+        }
+    }
+
     //启用插件
     public function enable()
     {
