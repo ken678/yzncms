@@ -220,6 +220,57 @@ function format_bytes($size, $delimiter = '')
 }
 
 /**
+ * 复制文件夹
+ * @param string $source 源文件夹
+ * @param string $dest 目标文件夹
+ */
+function copydirs($source, $dest)
+{
+    if (!is_dir($dest)) {
+        mkdir($dest, 0755, true);
+    }
+    foreach (
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST) as $item
+    ) {
+        if ($item->isDir()) {
+            $sontDir = $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathName();
+            if (!is_dir($sontDir)) {
+                mkdir($sontDir, 0755, true);
+            }
+        } else {
+            copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+        }
+    }
+}
+
+/**
+ * 删除文件夹
+ * @param string $dirname 目录
+ * @param bool $withself 是否删除自身
+ * @return boolean
+ */
+function rmdirs($dirname, $withself = true)
+{
+    if (!is_dir($dirname)) {
+        return false;
+    }
+
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($dirname, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST
+    );
+
+    foreach ($files as $fileinfo) {
+        $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+        $todo($fileinfo->getRealPath());
+    }
+    if ($withself) {
+        @rmdir($dirname);
+    }
+    return true;
+}
+
+/**
  * 获取附件路径
  * @param int $id 附件id
  * @return string

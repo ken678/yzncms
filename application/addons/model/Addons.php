@@ -90,6 +90,12 @@ class Addons extends Model
             $this->error = '插件信息获取失败！';
             return false;
         }
+        // 复制文件
+        $sourceAssetsDir = self::getSourceAssetsDir($addonName);
+        $destAssetsDir = self::getDestAssetsDir($addonName);
+        if (is_dir($sourceAssetsDir)) {
+            copydirs($sourceAssetsDir, $destAssetsDir);
+        }
         //开始安装
         $install = $addonObj->install();
         if ($install !== true) {
@@ -106,8 +112,7 @@ class Addons extends Model
             $info['has_adminlist'] = 0;
         }
         $info['config'] = json_encode($addonObj->getAddonConfig());
-        //插件信息验证
-        //
+
         //添加插件安装记录
         $id = $this->allowField(true)->save($info);
         if (!$id) {
@@ -153,6 +158,11 @@ class Addons extends Model
             $this->error = '该插件未安装，无需卸载！';
             return false;
         }
+        // 移除插件基础资源目录
+        $destAssetsDir = self::getDestAssetsDir($addonName);
+        if (is_dir($destAssetsDir)) {
+            rmdirs($destAssetsDir);
+        }
         //卸载插件
         $addonObj = new $class();
         $uninstall = $addonObj->uninstall();
@@ -195,6 +205,30 @@ class Addons extends Model
         }
         $count = $this->where(array('name' => $name))->find();
         return $count ? true : false;
+    }
+
+    /**
+     * 获取插件源资源文件夹
+     * @param   string $name 插件名称
+     * @return  string
+     */
+    protected static function getSourceAssetsDir($name)
+    {
+        return ADDON_PATH . "{$name}/public/";
+    }
+
+    /**
+     * 获取插件目标资源文件夹
+     * @param   string $name 插件名称
+     * @return  string
+     */
+    protected static function getDestAssetsDir($name)
+    {
+        $assetsDir = config('static_path') . "/addons/{$name}";
+        if (!is_dir($assetsDir)) {
+            mkdir($assetsDir, 0755, true);
+        }
+        return $assetsDir;
     }
 
     /**
