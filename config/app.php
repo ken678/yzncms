@@ -137,9 +137,9 @@ return [
 
     //公开路径
     'public_url' => ROOT_URL . (defined('IF_PUBLIC') ? '' : 'public/'),
-    // 文件上传路径
+    // 文件上传文件路径
     'upload_path' => ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'uploads',
-    // 资源路径
+    // 资源文件路径
     'static_path' => ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'static',
 
 ];

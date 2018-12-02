@@ -14,6 +14,7 @@ return [
     // 应用初始化
     'app_init' => [
         'app\\common\\behavior\\Config', // 注册配置行为
+        'app\\common\\behavior\\InitHook', //注册钩子
     ],
     // 应用开始
     'app_begin' => [],

@@ -52,6 +52,47 @@ function cache($name, $value = '', $options = null)
 }
 
 /**
+ * 获取插件类的类名
+ * @param $name 插件名
+ * @param string $type 返回命名空间类型
+ * @param string $class 当前类名
+ * @return string
+ */
+function get_addon_class($name, $type = 'hook', $class = null)
+{
+    $name = \think\Loader::parseName($name);
+    // 处理多级控制器情况
+    if (!is_null($class) && strpos($class, '.')) {
+        $class = explode('.', $class);
+
+        $class[count($class) - 1] = \think\Loader::parseName(end($class), 1);
+        $class = implode('\\', $class);
+    } else {
+        $class = \think\Loader::parseName(is_null($class) ? $name : $class, 1);
+    }
+
+    switch ($type) {
+        case 'controller':
+            $namespace = "\\addons\\" . $name . "\\controller\\" . $class;
+            break;
+        default:
+            $namespace = "\\addons\\" . $name . "\\" . $class;
+    }
+    return class_exists($namespace) ? $namespace : '';
+}
+
+/**
+ * 处理插件钩子
+ * @param string $hook 钩子名称
+ * @param mixed $params 传入参数
+ * @return void
+ */
+function hook($hook, $params = [])
+{
+    think\facade\Hook::listen($hook, $params);
+}
+
+/**
  * 数据签名认证
  * @param  array  $data 被认证的数据
  * @return string       签名
@@ -99,6 +140,32 @@ function int_to_string(&$data, $map = array('status' => array(1 => '正常', -1 
         }
     }
     return $data;
+}
+
+/**
+ * 字符串转换为数组，主要用于把分隔符调整到第二个参数
+ * @param  string $str  要分割的字符串
+ * @param  string $glue 分割符
+ * @return array
+ */
+function str2arr($str, $glue = ',')
+{
+    return explode($glue, $str);
+}
+
+/**
+ * 数组转换为字符串，主要用于把分隔符调整到第二个参数
+ * @param  array  $arr  要连接的数组
+ * @param  string $glue 分割符
+ * @return string
+ */
+function arr2str($arr, $glue = ',')
+{
+    if (is_string($arr)) {
+        return $arr;
+    }
+
+    return implode($glue, $arr);
 }
 
 /**

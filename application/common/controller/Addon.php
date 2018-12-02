@@ -55,14 +55,11 @@ abstract class Addon
         // 初始化视图模型
         $config['view_path'] = $this->addon_path;
         $config = array_merge(Config::get('template.'), $config);
-        $this->view = new View($config, Config::get('view_replace_str'));
+        $this->view = new View();
+        $this->view = $this->view->init($config);
         //加载插件函数文件
         if (file_exists($this->addon_path . 'common.php')) {
             include_once $this->addon_path . 'common.php';
-        }
-        // 控制器初始化
-        if (method_exists($this, '_initialize')) {
-            $this->_initialize();
         }
     }
 
