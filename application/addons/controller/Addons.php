@@ -105,7 +105,7 @@ class Addons extends Adminbase
         $flag = Db::name('Addons')->where(['id' => $id])->setField('config', json_encode($config));
         if ($flag !== false) {
             //更新插件缓存
-            $this->addons->addons_cache();
+            //$this->addons->addons_cache();
             $this->success('保存成功', Cookie('__forward__'));
         } else {
             $this->error('保存失败');
