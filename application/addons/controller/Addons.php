@@ -38,9 +38,18 @@ class Addons extends Adminbase
 
     }
 
+    //插件钩子列表
     public function hooks()
     {
-        var_dump(222);
+        if ($this->request->isAjax()) {
+            $list = Db::name("hooks")->select();
+            int_to_string($list, array(
+                'type' => [1 => '视图', 2 => '控制器'],
+            ));
+            $result = array("code" => 0, "data" => $list);
+            return json($result);
+        }
+        return $this->fetch();
     }
 
     /**
