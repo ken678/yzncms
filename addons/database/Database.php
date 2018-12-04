@@ -39,14 +39,12 @@ class Database extends Addon
             "action" => "index",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 1,
             //名称
-            "name" => "数据库备份",
+            "title" => "数据库备份",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),
@@ -55,14 +53,12 @@ class Database extends Addon
             "action" => "restore",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 1,
             //名称
-            "name" => "备份还原",
+            "title" => "备份还原",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),
@@ -71,14 +67,12 @@ class Database extends Addon
             "action" => "del",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 0,
             //名称
-            "name" => "删除备份",
+            "title" => "删除备份",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),
@@ -87,14 +81,12 @@ class Database extends Addon
             "action" => "repair",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 0,
             //名称
-            "name" => "修复表",
+            "title" => "修复表",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),
@@ -103,14 +95,12 @@ class Database extends Addon
             "action" => "optimization",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 0,
             //名称
-            "name" => "优化表",
+            "title" => "优化表",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),
@@ -119,14 +109,12 @@ class Database extends Addon
             "action" => "import",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 0,
             //名称
-            "name" => "还原表",
+            "title" => "还原表",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),
@@ -135,14 +123,12 @@ class Database extends Addon
             "action" => "export",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 0,
             //名称
-            "name" => "备份数据库",
+            "title" => "备份数据库",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),
@@ -151,14 +137,12 @@ class Database extends Addon
             "action" => "download",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //类型，1：权限认证+菜单，0：只作为菜单
-            "type" => 1,
             //状态，1是显示，2是不显示
             "status" => 0,
             //名称
-            "name" => "备份数据库下载",
+            "title" => "备份数据库下载",
             //备注
-            "remark" => "",
+            "tip" => "",
             //排序
             "listorder" => 0,
         ),

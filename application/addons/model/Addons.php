@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\addons\model;
 
+use think\Db;
 use think\Model;
 
 class Addons extends Model
@@ -111,18 +112,18 @@ class Addons extends Model
             }
             return false;
         }
-        /*if (isset($addonObj->admin_list) && is_array($addonObj->admin_list) && $addonObj->admin_list !== array()) {
-        $info['has_adminlist'] = 1;
-        } else {
-        $info['has_adminlist'] = 0;
-        }*/
         $info['config'] = json_encode($addonObj->getAddonConfig());
-
         //添加插件安装记录
         $id = $this->allowField(true)->save($info);
         if (!$id) {
             $this->error = '写入插件数据失败！';
             return false;
+        }
+        //如果插件有自己的后台
+        if ($info['has_adminlist']) {
+            $admin_list = $addonObj->admin_list;
+            //添加菜单
+            $this->addAddonMenu($info, $admin_list);
         }
         //更新插件行为实现
         $hooks_update = model('admin/Hooks')->updateHooks($addonName);
@@ -181,6 +182,10 @@ class Addons extends Model
         }
         //删除插件记录
         if (false !== $this->where(array('id' => $addonId))->delete()) {
+            //删除插件后台菜单
+            if ($info['has_adminlist']) {
+                $this->delAddonMenu($info);
+            }
             //更新缓存
             //$this->addons_cache();
             //删除行为挂载点
@@ -234,6 +239,113 @@ class Addons extends Model
             mkdir($assetsDir, 0755, true);
         }
         return $assetsDir;
+    }
+
+    /**
+     * 添加插件后台管理菜单
+     * @param type $info
+     * @param type $adminlist
+     * @return boolean
+     */
+    protected function addAddonMenu($info, $admin_list = null)
+    {
+        if (empty($info)) {
+            return false;
+        }
+        //查询出“插件后台列表”菜单ID
+        $menuId = Db::name('Menu')->where(array("app" => "Addons", "controller" => "Addons", "action" => "addonadmin"))->value('id');
+        if (empty($menuId)) {
+            return false;
+        }
+        $data = array(
+            //父ID
+            "parentid" => $menuId,
+            //模块目录名称，也是项目名称
+            "app" => "Addons",
+            //插件名称
+            "controller" => $info['name'],
+            //方法名称
+            "action" => "index",
+            //附加参数 例如：a=12&id=777
+            "parameter" => "isadmin=1",
+            //状态，1是显示，0是不显示
+            "status" => 1,
+            //名称
+            "title" => $info['title'],
+            //备注
+            "tip" => $info['title'] . "插件管理后台！",
+            //排序
+            "listorder" => 0,
+        );
+        //添加插件后台
+        $parentid = Db::name('Menu')->insertGetId($data);
+        if (!$parentid) {
+            return false;
+        }
+        //显示“插件后台列表”菜单
+        //$this->menu_model->allowField(true)->save(['status' => 1], ['id' => $menuId]);
+        //插件具体菜单
+        if (!empty($admin_list)) {
+            foreach ($admin_list as $key => $menu) {
+                //检查参数是否存在
+                if (empty($menu['title']) || empty($menu['action'])) {
+                    continue;
+                }
+                //如果是index，跳过，因为已经有了。。。
+                if ($menu['action'] == 'index') {
+                    continue;
+                }
+                $data = array(
+                    //父ID
+                    "parentid" => $parentid,
+                    //模块目录名称，也是项目名称
+                    "app" => "Addons",
+                    //文件名称，比如LinksAction.class.php就填写 Links
+                    "controller" => $info['name'],
+                    //方法名称
+                    "action" => $menu['action'],
+                    //附加参数 例如：a=12&id=777
+                    "parameter" => 'isadmin=1',
+                    //状态，1是显示，0是不显示
+                    "status" => (int) $menu['status'],
+                    //名称
+                    "title" => $menu['title'],
+                    //备注
+                    "tip" => $menu['tip'] ?: '',
+                    //排序
+                    "listorder" => (int) $menu['listorder'],
+                );
+                Db::name('Menu')->insert($data);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 删除对应插件菜单和权限
+     * @param type $info 插件信息
+     * @return boolean
+     */
+    public function delAddonMenu($info)
+    {
+        if (empty($info)) {
+            return false;
+        }
+        //查询出“插件后台列表”菜单ID
+        $menuId = Db::name("Menu")->where(array("app" => "Addons", "controller" => "Addons", "action" => "addonadmin"))->value('id');
+        if (empty($menuId)) {
+            return false;
+        }
+        //删除对应菜单
+        Db::name("Menu")->where(array('app' => 'Addons', 'controller' => $info['name']))->delete();
+        //删除权限
+        //M("Access")->where(array("app" => "Addons", 'controller' => $info['name']))->delete();
+        //检查“插件后台列表”菜单下还有没有菜单，没有就隐藏
+        $count = Db::name("Menu")->where(array('parentid' => $menuId))->count();
+        if (!$count) {
+            Db::name("Menu")->where(array('id' => $menuId))->update(array('status' => 0));
+        }
+        return true;
     }
 
     /**
