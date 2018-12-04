@@ -18,6 +18,11 @@ use think\Model;
 
 class Addons extends Model
 {
+    protected $insert = ['create_time'];
+    protected function setCreateTimeAttr($value)
+    {
+        return time();
+    }
     /**
      * 获取插件列表
      *
@@ -106,11 +111,11 @@ class Addons extends Model
             }
             return false;
         }
-        if (isset($addonObj->admin_list) && is_array($addonObj->admin_list) && $addonObj->admin_list !== array()) {
-            $info['has_adminlist'] = 1;
+        /*if (isset($addonObj->admin_list) && is_array($addonObj->admin_list) && $addonObj->admin_list !== array()) {
+        $info['has_adminlist'] = 1;
         } else {
-            $info['has_adminlist'] = 0;
-        }
+        $info['has_adminlist'] = 0;
+        }*/
         $info['config'] = json_encode($addonObj->getAddonConfig());
 
         //添加插件安装记录

@@ -2,11 +2,15 @@
 // +----------------------------------------------------------------------
 // | Yzncms [ 御宅男工作室 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2007 http://yzncms.com All rights reserved.
+// | Copyright (c) 2018 http://yzncms.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
+// +----------------------------------------------------------------------
+
+// +----------------------------------------------------------------------
+// | 返回顶部插件
 // +----------------------------------------------------------------------
 namespace addons\returntop;
 
@@ -17,9 +21,10 @@ use app\addons\util\Addon;
  */
 class ReturnTop extends Addon
 {
-
+    //自定义配置页面
     public $custom_config = 'config.html';
 
+    //插件信息
     public $info = [
         'name' => 'returntop',
         'title' => '返回顶部',
@@ -29,11 +34,13 @@ class ReturnTop extends Addon
         'version' => '1.0.0',
     ];
 
+    //安装
     public function install()
     {
         return true;
     }
 
+    //卸载
     public function uninstall()
     {
         return true;
