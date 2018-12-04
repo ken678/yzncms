@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace addons\returntop;
 
-use app\common\controller\Addon;
+use app\addons\util\Addon;
 
 /**
  * 返回顶部插件
