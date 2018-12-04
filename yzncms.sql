@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地链接
+Source Server         : localhost_3306
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-02 13:10:03
+Date: 2018-12-04 18:40:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,12 +31,11 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
-INSERT INTO `yzn_addons` VALUES ('46', 'returntop', '返回顶部', '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式', '1', '{\"random\":\"0\",\"current\":\"1\"}', '御宅男', '1.0.0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -60,7 +59,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543722619', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543915971', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -76,7 +75,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1560 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1576 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -314,6 +313,22 @@ INSERT INTO `yzn_adminlog` VALUES ('438', '0', '0', '提示语:请先登陆', '1
 INSERT INTO `yzn_adminlog` VALUES ('439', '1', '1', '提示语:恭喜您，登陆成功', '1543398913', '2130706433', '/admin/index/login.html');
 INSERT INTO `yzn_adminlog` VALUES ('440', '0', '0', '提示语:请先登陆', '1543451944', '2130706433', '/admin/');
 INSERT INTO `yzn_adminlog` VALUES ('441', '1', '1', '提示语:恭喜您，登陆成功', '1543451949', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('1560', '0', '0', '提示语:请先登陆', '1543915966', '2130706433', '/admin/index/index.html');
+INSERT INTO `yzn_adminlog` VALUES ('1561', '1', '1', '提示语:恭喜您，登陆成功', '1543915971', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('1562', '1', '1', '提示语:插件安装成功！', '1543917891', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('1563', '1', '1', '提示语:插件卸载成功！', '1543917939', '2130706433', '/addons/addons/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('1564', '1', '1', '提示语:插件安装成功！', '1543918023', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('1565', '1', '1', '提示语:插件卸载成功！', '1543918044', '2130706433', '/addons/addons/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('1566', '1', '1', '提示语:插件安装成功！', '1543918236', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('1567', '1', '1', '提示语:插件卸载成功！', '1543918528', '2130706433', '/addons/addons/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('1568', '1', '1', '提示语:插件卸载成功！', '1543918531', '2130706433', '/addons/addons/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('1569', '1', '1', '提示语:插件安装成功！', '1543918536', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('1570', '1', '1', '提示语:插件安装成功！', '1543919038', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('1571', '1', '1', '提示语:保存成功', '1543919525', '2130706433', '/addons/addons/saveconfig.html');
+INSERT INTO `yzn_adminlog` VALUES ('1572', '1', '1', '提示语:保存成功', '1543919996', '2130706433', '/addons/addons/saveconfig.html');
+INSERT INTO `yzn_adminlog` VALUES ('1573', '1', '1', '提示语:保存成功', '1543920003', '2130706433', '/addons/addons/saveconfig.html');
+INSERT INTO `yzn_adminlog` VALUES ('1574', '1', '1', '提示语:插件卸载成功！', '1543920015', '2130706433', '/addons/addons/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('1575', '1', '1', '提示语:插件卸载成功！', '1543920019', '2130706433', '/addons/addons/uninstall.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -525,7 +540,7 @@ CREATE TABLE `yzn_hooks` (
 -- Records of yzn_hooks
 -- ----------------------------
 INSERT INTO `yzn_hooks` VALUES ('5', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '');
-INSERT INTO `yzn_hooks` VALUES ('6', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', 'returntop');
+INSERT INTO `yzn_hooks` VALUES ('6', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
