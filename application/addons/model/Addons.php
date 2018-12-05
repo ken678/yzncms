@@ -283,7 +283,7 @@ class Addons extends Model
             return false;
         }
         //显示“插件后台列表”菜单
-        //$this->menu_model->allowField(true)->save(['status' => 1], ['id' => $menuId]);
+        Db::name("Menu")->where(array('id' => $menuId))->update(array('status' => 1));
         //插件具体菜单
         if (!empty($admin_list)) {
             foreach ($admin_list as $key => $menu) {

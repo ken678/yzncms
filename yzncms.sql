@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-04 18:40:47
+Date: 2018-12-05 17:14:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,11 +31,12 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
+INSERT INTO `yzn_addons` VALUES ('52', 'database', '数据库备份', '简单的数据库备份', '1', '{\"path\":\"\\/Data\\/\",\"part\":\"20971520\",\"compress\":\"1\",\"level\":\"9\"}', '御宅男', '1.0.0', '1543968252', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -59,7 +60,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543915971', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543974364', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -75,7 +76,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1576 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1581 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -329,6 +330,11 @@ INSERT INTO `yzn_adminlog` VALUES ('1572', '1', '1', '提示语:保存成功', '
 INSERT INTO `yzn_adminlog` VALUES ('1573', '1', '1', '提示语:保存成功', '1543920003', '2130706433', '/addons/addons/saveconfig.html');
 INSERT INTO `yzn_adminlog` VALUES ('1574', '1', '1', '提示语:插件卸载成功！', '1543920015', '2130706433', '/addons/addons/uninstall.html');
 INSERT INTO `yzn_adminlog` VALUES ('1575', '1', '1', '提示语:插件卸载成功！', '1543920019', '2130706433', '/addons/addons/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('1576', '0', '0', '提示语:请先登陆', '1543968062', '2130706433', '/admin');
+INSERT INTO `yzn_adminlog` VALUES ('1577', '1', '1', '提示语:恭喜您，登陆成功', '1543968068', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('1578', '1', '1', '提示语:插件安装成功！', '1543968252', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('1579', '0', '0', '提示语:请先登陆', '1543974358', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('1580', '1', '1', '提示语:恭喜您，登陆成功', '1543974364', '2130706433', '/admin/index/login.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -561,7 +567,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -591,3 +597,12 @@ INSERT INTO `yzn_menu` VALUES ('31', '附件删除', '', '23', 'attachment', 'at
 INSERT INTO `yzn_menu` VALUES ('32', '插件扩展', '', '5', 'addons', 'addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('33', '插件管理', '', '32', 'addons', 'addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('34', '行为管理', '', '32', 'addons', 'addons', 'hooks', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('35', '插件后台列表', '', '5', 'addons', 'addons', 'addonadmin', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('36', '数据库备份', '', '35', 'Addons', 'database', 'index', 'isadmin=1', '1', '数据库备份插件管理后台！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('37', '备份还原', '', '36', 'Addons', 'database', 'restore', 'isadmin=1', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('38', '删除备份', '', '36', 'Addons', 'database', 'del', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('39', '修复表', '', '36', 'Addons', 'database', 'repair', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('40', '优化表', '', '36', 'Addons', 'database', 'optimization', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('41', '还原表', '', '36', 'Addons', 'database', 'import', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('42', '备份数据库', '', '36', 'Addons', 'database', 'export', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('43', '备份数据库下载', '', '36', 'Addons', 'database', 'download', 'isadmin=1', '0', '', '0', '0');

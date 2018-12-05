@@ -327,6 +327,8 @@ trait Attribute
 
             if (method_exists($this, $method)) {
                 $value = $this->$method($value, array_merge($this->data, $data));
+
+                $this->set[$name] = true;
             } elseif (isset($this->type[$name])) {
                 // 类型转换
                 $value = $this->writeTransform($value, $this->type[$name]);
@@ -335,7 +337,6 @@ trait Attribute
 
         // 设置数据对象属性
         $this->data[$name] = $value;
-        $this->set[$name]  = true;
     }
 
     /**
@@ -370,7 +371,7 @@ trait Attribute
                 case 'datetime':
                 case 'date':
                     $format = !empty($param) ? $param : $this->dateFormat;
-                    $value  = $this->formatDateTime(time(), $format);
+                    $value  = $this->formatDateTime($format . '.u');
                     break;
                 case 'timestamp':
                 case 'integer':
@@ -383,9 +384,9 @@ trait Attribute
             'date',
             'timestamp',
         ])) {
-            $value = $this->formatDateTime(time(), $this->dateFormat);
+            $value = $this->formatDateTime($this->dateFormat . '.u');
         } else {
-            $value = $this->formatDateTime(time(), $this->dateFormat, true);
+            $value = time();
         }
 
         return $value;
@@ -432,7 +433,7 @@ trait Attribute
             case 'datetime':
                 $format = !empty($param) ? $param : $this->dateFormat;
                 $value  = is_numeric($value) ? $value : strtotime($value);
-                $value  = $this->formatDateTime($value, $format);
+                $value  = $this->formatDateTime($format, $value);
                 break;
             case 'object':
                 if (is_object($value)) {
@@ -499,9 +500,9 @@ trait Attribute
                 'date',
                 'timestamp',
             ])) {
-                $value = $this->formatDateTime(strtotime($value), $this->dateFormat);
+                $value = $this->formatDateTime($this->dateFormat, $value);
             } else {
-                $value = $this->formatDateTime($value, $this->dateFormat);
+                $value = $this->formatDateTime($this->dateFormat, $value, true);
             }
         } elseif ($notFound) {
             $value = $this->getRelationAttribute($name, $item);
@@ -587,13 +588,13 @@ trait Attribute
             case 'timestamp':
                 if (!is_null($value)) {
                     $format = !empty($param) ? $param : $this->dateFormat;
-                    $value  = $this->formatDateTime($value, $format);
+                    $value  = $this->formatDateTime($format, $value, true);
                 }
                 break;
             case 'datetime':
                 if (!is_null($value)) {
                     $format = !empty($param) ? $param : $this->dateFormat;
-                    $value  = $this->formatDateTime(strtotime($value), $format);
+                    $value  = $this->formatDateTime($format, $value);
                 }
                 break;
             case 'json':
