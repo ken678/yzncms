@@ -26,7 +26,7 @@ class Admin extends Adminaddon
     //数据库备份
     public function index()
     {
-        return $this->fetch('../addons/database/view/index.html');
+        return $this->fetch();
     }
 
 }
