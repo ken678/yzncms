@@ -19,11 +19,22 @@ use think\Model;
 
 class Addons extends Model
 {
+    //插件所处目录路径
+    protected $addonsPath = null;
     protected $insert = ['create_time'];
     protected function setCreateTimeAttr($value)
     {
         return time();
     }
+
+    // 模型初始化
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->addonsPath = ADDON_PATH;
+
+    }
+
     /**
      * 获取插件列表
      *
@@ -346,6 +357,15 @@ class Addons extends Model
             Db::name("Menu")->where(array('id' => $menuId))->update(array('status' => 0));
         }
         return true;
+    }
+
+    /**
+     * 获取插件目录
+     * @return type
+     */
+    public function getAddonsPath()
+    {
+        return $this->addonsPath;
     }
 
     /**

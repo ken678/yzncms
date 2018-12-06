@@ -14,12 +14,19 @@
 // +----------------------------------------------------------------------
 namespace addons\database\Controller;
 
-class Admin
+use app\addons\util\Adminaddon;
+
+class Admin extends Adminaddon
 {
+    protected function initialize()
+    {
+        parent::initialize();
+    }
+
     //数据库备份
     public function index()
     {
-        var_dump(1111);
+        return $this->fetch('../addons/database/view/index.html');
     }
 
 }

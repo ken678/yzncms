@@ -10,20 +10,23 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 空控制器
+// | 后台插件类
 // +----------------------------------------------------------------------
-namespace app\addons\controller;
+namespace app\addons\util;
 
-use think\Request;
+use app\common\controller\Adminbase;
 
-class Error
+class Adminaddon extends Adminbase
 {
-    public function _empty(Request $request)
+    //插件标识
+    public $addonName = null;
+    //插件路径
+    protected $addonPath = null;
+    protected function initialize()
     {
-        $controller = $request->controller();
-        $action = $request->action();
-        $object = \think\Container::get("\\addons\\" . $controller . "\\controller\\Admin");
-        return $object->$action();
+        parent::initialize();
+        $this->addonName = $this->request->controller();
+        $this->addonPath = model('addons/addons')->getAddonsPath() . $this->addonName . '/';
     }
 
 }
