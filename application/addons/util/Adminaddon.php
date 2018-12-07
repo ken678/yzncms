@@ -30,7 +30,7 @@ class Adminaddon extends Adminbase
 
         parent::initialize();
         $this->addonName = $this->request->controller();
-        $this->addonPath = model('Addons/Addons')->getAddonsPath() . $this->addonName . DIRECTORY_SEPARATOR;
+        $this->addonPath = model('addons/addons')->getAddonsPath() . $this->addonName . DIRECTORY_SEPARATOR;
     }
 
     /**

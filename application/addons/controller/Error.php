@@ -20,7 +20,7 @@ class Error
 {
     public function _empty(Request $request)
     {
-        $controller = $request->controller();
+        $controller = \think\Loader::parseName($request->controller());
         $action = $request->action();
         $object = \think\Container::get("\\addons\\" . $controller . "\\controller\\Admin");
         return $object->$action();
