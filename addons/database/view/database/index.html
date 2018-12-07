@@ -3,9 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-header">数据库管理</div>
     <div class="layui-card-body">
-        <form class="layui-form" id="export-form" method="post" action="{:url('addons/database/export')}">
-            <table class="layui-hide" id="table" lay-filter="table"></table>
-        </form>
+        <table class="layui-hide" id="table" lay-filter="table"></table>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" id="export">立即备份</button>
@@ -24,6 +22,7 @@ layui.use(['table', 'form'], function() {
         form = layui.form,
         layer = layui.layer;
     table.render({
+        id: 'database',
         elem: '#table',
         toolbar: '#toolbarDemo',
         url: '{:url("addons/database/index")}',
@@ -32,21 +31,24 @@ layui.use(['table', 'form'], function() {
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'name', width: 200, title: '表名' },
                 { field: 'rows', width: 120, title: '数据量' },
-                { field: 'data_length', width: 120, title: '数据大小' },
+                { field: 'data_length', width: 120, title: '数据大小', templet: '#size' },
                 { field: 'create_time', width: 200, title: '创建时间' },
                 { field: 'comment', title: '说明' },
                 { field: 'info', width: 200, title: '备份状态', templet: '<div>未备份</div>' },
             ]
         ],
     });
-    var $form = $("#export-form"),$export = $("#export");
+    var $export = $("#export");
     //提交备份
     $export.click(function() {
+        var checkStatus = table.checkStatus('database');
+        var a = [];
+        $(checkStatus.data).each(function(i, o) {
+            a.push(o.name);
+        });
         $export.parent().children().addClass("layui-btn-disabled");
         $export.html("<i class='icon iconfont icon-fasong'></i>正在发送备份请求...");
-        $.post(
-            $form.attr("action"),
-            $form.serialize(),
+        $.post("{:url('addons/database/export')}", { tables: a },
             function(data) {
                 if (data.code) {
                     tables = data.data.tables;
