@@ -29,7 +29,7 @@ class Adminaddon extends Adminbase
     {
 
         parent::initialize();
-        $this->addonName = $this->request->controller();
+        $this->addonName = \think\Loader::parseName($this->request->controller());
         $this->addonPath = model('addons/addons')->getAddonsPath() . $this->addonName . DIRECTORY_SEPARATOR;
     }
 
@@ -57,13 +57,12 @@ class Adminaddon extends Adminbase
     {
         if (0 !== strpos($template, '/')) {
             $template = str_replace(['/', ':'], DIRECTORY_SEPARATOR, $template);
-            $controller = \think\Loader::parseName($this->request->controller());
-            if ($controller) {
+            if ($this->addonName) {
                 if ('' == $template) {
                     // 如果模板文件名为空 按照默认规则定位
-                    $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . DIRECTORY_SEPARATOR . $this->request->action();
+                    $template = str_replace('.', DIRECTORY_SEPARATOR, $this->addonName) . DIRECTORY_SEPARATOR . $this->request->action();
                 } elseif (false === strpos($template, DIRECTORY_SEPARATOR)) {
-                    $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . DIRECTORY_SEPARATOR . $template;
+                    $template = str_replace('.', DIRECTORY_SEPARATOR, $this->addonName) . DIRECTORY_SEPARATOR . $template;
                 }
             }
         } else {
