@@ -264,7 +264,7 @@ class Addons extends Model
             return false;
         }
         //查询出“插件后台列表”菜单ID
-        $menuId = Db::name('Menu')->where(array("app" => "Addons", "controller" => "Addons", "action" => "addonadmin"))->value('id');
+        $menuId = Db::name('Menu')->where(array("app" => "addons", "controller" => "addons", "action" => "addonadmin"))->value('id');
         if (empty($menuId)) {
             return false;
         }
@@ -272,7 +272,7 @@ class Addons extends Model
             //父ID
             "parentid" => $menuId,
             //模块目录名称，也是项目名称
-            "app" => "Addons",
+            "app" => "addons",
             //插件名称
             "controller" => $info['name'],
             //方法名称
@@ -310,7 +310,7 @@ class Addons extends Model
                     //父ID
                     "parentid" => $parentid,
                     //模块目录名称，也是项目名称
-                    "app" => "Addons",
+                    "app" => "addons",
                     //文件名称，比如LinksAction.class.php就填写 Links
                     "controller" => $info['name'],
                     //方法名称

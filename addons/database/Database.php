@@ -92,7 +92,7 @@ class Database extends Addon
         ),
         array(
             //方法名称
-            "action" => "optimization",
+            "action" => "optimize",
             //附加参数 例如：a=12&id=777
             "data" => "",
             //状态，1是显示，2是不显示

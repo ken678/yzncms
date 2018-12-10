@@ -1,12 +1,12 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-header">数据库管理</div>
+    <div class="layui-card-header">数据库列表</div>
     <div class="layui-card-body">
         <table class="layui-hide" id="table" lay-filter="table"></table>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" >数据库还原</a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('addons/database/restore',['isadmin'=>1])}">数据库还原</a>
                 <a class="layui-btn layui-btn-sm" id="export">立即备份</a>
                 <a class="layui-btn layui-btn-sm" id="optimize" href="{:url('addons/database/optimize',['isadmin'=>1])}">优化表</a>
                 <a class="layui-btn layui-btn-sm" id="repair" href="{:url('addons/database/repair',['isadmin'=>1])}">修复表</a>
