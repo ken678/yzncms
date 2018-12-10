@@ -46,7 +46,7 @@ class Admin extends Adminaddon
     public function index()
     {
         if ($this->request->isAjax()) {
-            $list = db()->query('SHOW TABLE STATUS');
+            $list = Db::query('SHOW TABLE STATUS');
             $list = array_map('array_change_key_case', $list); //全部小写
             $result = array("code" => 0, "data" => $list);
             return json($result);

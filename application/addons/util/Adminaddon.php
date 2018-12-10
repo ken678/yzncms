@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\addons\util;
 
+use app\addons\model\Addons as Addons_model;
 use app\common\controller\Adminbase;
 
 class Adminaddon extends Adminbase
@@ -30,14 +31,15 @@ class Adminaddon extends Adminbase
 
         parent::initialize();
         $this->addonName = \think\Loader::parseName($this->request->controller());
-        $this->addonInfo = model('addons/addons')->where(array('name' => $this->addonName))->find();
+        $this->Addons_model = new Addons_model;
+        $this->addonInfo = $this->Addons_model->where(array('name' => $this->addonName))->find();
         if (empty($this->addonInfo)) {
             $this->error('该插件没有安装！');
         }
         if (!$this->addonInfo['status']) {
             $this->error('该插件已被禁用！');
         }
-        $this->addonPath = model('addons/addons')->getAddonsPath() . $this->addonName . DIRECTORY_SEPARATOR;
+        $this->addonPath = $this->Addons_model->getAddonsPath() . $this->addonName . DIRECTORY_SEPARATOR;
     }
 
     /**
