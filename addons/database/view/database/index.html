@@ -7,8 +7,8 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" id="export">立即备份</button>
-                <button class="layui-btn layui-btn-sm" >优化表</button>
-                <button class="layui-btn layui-btn-sm" >修复表</button>
+                <a class="layui-btn layui-btn-sm" id="optimize" href="{:url('addons/database/optimize',['isadmin'=>1])}">优化表</a>
+                <a class="layui-btn layui-btn-sm" id="repair" href="{:url('addons/database/repair',['isadmin'=>1])}">修复表</a>
               </div>
         </script>
     </div>
@@ -38,7 +38,30 @@ layui.use(['table', 'form'], function() {
             ]
         ],
     });
-    var $export = $("#export");
+    var $export = $("#export"),
+        $optimize = $("#optimize"),
+        $repair = $("#repair");
+    //优化or修复
+    $optimize.add($repair).click(function() {
+        var self = this,
+            checkStatus = table.checkStatus('database');
+        if (checkStatus.data.length <= 0) {
+            layer.msg("请选择需要操作的数据");
+            return false;
+        }
+        var a = [];
+        $(checkStatus.data).each(function(i, o) {
+            a.push(o.name);
+        });
+        $.post(self.href, { tables: a }, function(data) {
+            if (data.code) {
+                layer.msg(data.msg, { icon: 1 });
+            } else {
+                layer.msg(data.msg, { icon: 5 });
+            }
+        }, "json");
+        return false;
+    });
     //提交备份
     $export.click(function() {
         var checkStatus = table.checkStatus('database');
@@ -52,7 +75,7 @@ layui.use(['table', 'form'], function() {
         });
         $export.parent().children().addClass("layui-btn-disabled");
         $export.html("<i class='icon iconfont icon-fasong'></i>正在发送备份请求...");
-        $.post("{:url('addons/database/export')}", { tables: a },
+        $.post("{:url('addons/database/export',['isadmin'=>1])}", { tables: a },
             function(data) {
                 if (data.code) {
                     tables = data.data.tables;
@@ -71,7 +94,7 @@ layui.use(['table', 'form'], function() {
     });
 
     function backup(tab, code) {
-        $.get("{:url('addons/database/export')}", tab, function(data) {
+        $.get("{:url('addons/database/export',['isadmin'=>1])}", tab, function(data) {
             if (data.code) {
                 //showmsg(tab.id, data.msg);
                 if (!$.isPlainObject(data.data.tab)) {

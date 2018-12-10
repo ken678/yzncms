@@ -16,6 +16,7 @@ namespace addons\database\Controller;
 
 use addons\database\lib\Database;
 use app\addons\util\Adminaddon;
+use think\Db;
 
 class Admin extends Adminaddon
 {
@@ -131,6 +132,52 @@ class Admin extends Adminaddon
             return $this->error('参数错误！');
         }
 
+    }
+
+    /**
+     * 优化表
+     * @param  String $tables 表名
+     */
+    public function optimize()
+    {
+        //表名
+        $tables = $this->request->param('tables/a');
+        if ($tables) {
+            if (is_array($tables)) {
+                $tables = implode('`,`', $tables);
+                $list = Db::query("OPTIMIZE TABLE `{$tables}`");
+                if ($list) {
+                    return $this->success("数据表优化完成！");
+                } else {
+                    return $this->error("数据表优化出错请重试！");
+                }
+            }
+        } else {
+            return $this->error("请指定要优化的表！");
+        }
+    }
+
+    /**
+     * 修复表
+     * @param  String $tables 表名
+     */
+    public function repair()
+    {
+        //表名
+        $tables = $this->request->param('tables/a');
+        if ($tables) {
+            if (is_array($tables)) {
+                $tables = implode('`,`', $tables);
+                $list = Db::query("REPAIR TABLE `{$tables}`");
+                if ($list) {
+                    return $this->success("数据表修复完成！");
+                } else {
+                    return $this->error("数据表修复出错请重试！");
+                }
+            }
+        } else {
+            return $this->error("请指定要修复的表！");
+        }
     }
 
 }
