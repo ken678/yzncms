@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-05 17:14:27
+Date: 2018-12-10 18:19:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,12 +31,12 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
 -- ----------------------------
-INSERT INTO `yzn_addons` VALUES ('52', 'database', '数据库备份', '简单的数据库备份', '1', '{\"path\":\"\\/Data\\/\",\"part\":\"20971520\",\"compress\":\"1\",\"level\":\"9\"}', '御宅男', '1.0.0', '1543968252', '1');
+INSERT INTO `yzn_addons` VALUES ('1', 'database', '数据库备份', '简单的数据库备份', '1', '{\"path\":\"\\/Data\\/\",\"part\":\"20971520\",\"compress\":\"1\",\"level\":\"9\"}', '御宅男', '1.0.0', '1544437112', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -55,12 +55,12 @@ CREATE TABLE `yzn_admin` (
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '会员状态',
   PRIMARY KEY (`userid`),
   KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1543974364', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1544436853', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '4', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -76,265 +76,25 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1581 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of yzn_adminlog
 -- ----------------------------
-INSERT INTO `yzn_adminlog` VALUES ('218', '1', '1', '提示语:文件删除成功~', '1540255800', '2130706433', '/attachment/attachments/delete.html?id=82');
-INSERT INTO `yzn_adminlog` VALUES ('217', '0', '1', '提示语:文件数据库记录已不存在~', '1540255738', '2130706433', '/attachment/attachments/delete.html?id=85');
-INSERT INTO `yzn_adminlog` VALUES ('216', '0', '1', '提示语:测试', '1540255475', '2130706433', '/attachment/attachments/delete.html?id=85');
-INSERT INTO `yzn_adminlog` VALUES ('215', '0', '1', '提示语:测试', '1540255469', '2130706433', '/attachment/attachments/delete.html?id=85');
-INSERT INTO `yzn_adminlog` VALUES ('213', '0', '0', null, '1540255385', '0', '');
-INSERT INTO `yzn_adminlog` VALUES ('214', '0', '1', '提示语:测试', '1540255399', '2130706433', '/attachment/attachments/delete.html?id=85');
-INSERT INTO `yzn_adminlog` VALUES ('212', '1', '1', '提示语:恭喜您，登陆成功', '1540252896', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('211', '0', '0', '提示语:请先登陆', '1540252887', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('210', '1', '1', '提示语:恭喜您，登陆成功', '1540203404', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('209', '0', '0', '提示语:请先登陆', '1540203399', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('423', '0', '2', '提示语:未授权访问!', '1542781169', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('420', '1', '0', '提示语:注销成功！', '1542781143', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('421', '1', '2', '提示语:恭喜您，登陆成功', '1542781151', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('422', '0', '2', '提示语:未授权访问!', '1542781157', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542781157366');
-INSERT INTO `yzn_adminlog` VALUES ('429', '0', '1', '提示语:该页面不存在！', '1542869351', '2130706433', '/addons/addons/hooks/menuid/34.html');
-INSERT INTO `yzn_adminlog` VALUES ('428', '0', '1', '提示语:该页面不存在！', '1542869342', '2130706433', '/addons/addons/hooks/menuid/34.html');
-INSERT INTO `yzn_adminlog` VALUES ('427', '1', '1', '提示语:恭喜您，登陆成功', '1542869084', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('426', '0', '0', '提示语:请先登陆', '1542869079', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('425', '1', '1', '提示语:恭喜您，登陆成功', '1542868987', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('424', '0', '0', '提示语:请先登陆', '1542868981', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('418', '1', '1', '提示语:恭喜您，登陆成功', '1542780457', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('417', '0', '0', '提示语:请先登陆', '1542780450', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('416', '0', '2', '提示语:未授权访问!', '1542155338', '2130706433', '/admin/manager/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('415', '0', '2', '提示语:未授权访问!', '1542155335', '2130706433', '/admin/auth_manager/access.html?title=%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98&group_id=1');
-INSERT INTO `yzn_adminlog` VALUES ('414', '1', '2', '提示语:文件删除成功~', '1542155323', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('413', '0', '2', '提示语:菜单名称不能为空', '1542155314', '2130706433', '/admin/menu/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('412', '0', '2', '提示语:未授权访问!', '1542155303', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542155303255');
-INSERT INTO `yzn_adminlog` VALUES ('411', '1', '2', '提示语:恭喜您，登陆成功', '1542155297', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('410', '1', '0', '提示语:注销成功！', '1542155290', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('409', '1', '1', '提示语:操作成功!', '1542155287', '2130706433', '/admin/auth_manager/writegroup.html');
-INSERT INTO `yzn_adminlog` VALUES ('408', '1', '1', '提示语:操作成功!', '1542155274', '2130706433', '/admin/auth_manager/writegroup.html');
-INSERT INTO `yzn_adminlog` VALUES ('407', '1', '1', '提示语:恭喜您，登陆成功', '1542155230', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('406', '1', '0', '提示语:注销成功！', '1542155222', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('405', '0', '2', '提示语:未授权访问!', '1542155147', '2130706433', '/attachment/attachments/upload/dir/images/module/admin.html');
-INSERT INTO `yzn_adminlog` VALUES ('404', '0', '2', '提示语:未授权访问!', '1542155074', '2130706433', '/attachment/attachments/upload/dir/images/module/admin.html');
-INSERT INTO `yzn_adminlog` VALUES ('403', '0', '2', '提示语:未授权访问!', '1542155010', '2130706433', '/attachment/attachments/upload/dir/images/module/admin.html');
-INSERT INTO `yzn_adminlog` VALUES ('402', '0', '2', '提示语:未授权访问!', '1542154999', '2130706433', '/attachment/attachments/upload/dir/images/module/admin.html');
-INSERT INTO `yzn_adminlog` VALUES ('401', '0', '2', '提示语:未授权访问!', '1542154973', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('400', '0', '2', '提示语:未授权访问!', '1542154859', '2130706433', '/admin/menu/edit.html?id=1');
-INSERT INTO `yzn_adminlog` VALUES ('399', '0', '2', '提示语:未授权访问!', '1542154755', '2130706433', '/admin/menu/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('398', '0', '2', '提示语:未授权访问!', '1542154753', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542154752951');
-INSERT INTO `yzn_adminlog` VALUES ('397', '1', '2', '提示语:恭喜您，登陆成功', '1542154746', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('396', '0', '0', '提示语:请先登陆', '1542154736', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('395', '0', '2', '提示语:未授权访问!', '1542068974', '2130706433', '/admin/menu/edit.html?id=1');
-INSERT INTO `yzn_adminlog` VALUES ('394', '0', '2', '提示语:未授权访问!', '1542068971', '2130706433', '/admin/menu/add.html?parentid=1');
-INSERT INTO `yzn_adminlog` VALUES ('393', '0', '2', '提示语:未授权访问!', '1542068968', '2130706433', '/admin/menu/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('392', '0', '2', '提示语:未授权访问!', '1542068966', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542068966030');
-INSERT INTO `yzn_adminlog` VALUES ('391', '1', '2', '提示语:设置更新成功', '1542068964', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('390', '0', '2', '提示语:未授权访问!', '1542068958', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542068958232');
-INSERT INTO `yzn_adminlog` VALUES ('389', '1', '2', '提示语:配置编辑成功~', '1542068954', '2130706433', '/admin/config/edit/id/1.html');
-INSERT INTO `yzn_adminlog` VALUES ('388', '1', '2', '提示语:恭喜您，登陆成功', '1542068941', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('387', '1', '0', '提示语:注销成功！', '1542068933', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('386', '1', '1', '提示语:操作成功!', '1542068931', '2130706433', '/admin/auth_manager/writegroup.html');
-INSERT INTO `yzn_adminlog` VALUES ('385', '1', '1', '提示语:恭喜您，登陆成功', '1542068921', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('384', '1', '0', '提示语:注销成功！', '1542068915', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('383', '0', '2', '提示语:未授权访问!', '1542068912', '2130706433', '/admin/config/edit.html?id=1');
-INSERT INTO `yzn_adminlog` VALUES ('382', '0', '2', '提示语:未授权访问!', '1542068910', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('381', '0', '2', '提示语:未授权访问!', '1542068904', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542068904364');
-INSERT INTO `yzn_adminlog` VALUES ('380', '1', '2', '提示语:恭喜您，登陆成功', '1542068900', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('379', '1', '0', '提示语:注销成功！', '1542068893', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('378', '1', '1', '提示语:恭喜您，登陆成功', '1542068582', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('377', '0', '0', '提示语:请先登陆', '1542068575', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('376', '0', '2', '提示语:未授权访问!', '1542067951', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('375', '0', '2', '提示语:未授权访问!', '1542067942', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542067942745');
-INSERT INTO `yzn_adminlog` VALUES ('374', '0', '2', '提示语:未授权访问!', '1542067941', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('373', '0', '2', '提示语:未授权访问!', '1542067938', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('372', '0', '2', '提示语:未授权访问!', '1542067931', '2130706433', '/admin/auth_manager/access.html?title=%E7%BC%96%E8%BE%91&group_id=4');
-INSERT INTO `yzn_adminlog` VALUES ('371', '1', '2', '提示语:恭喜您，登陆成功', '1542067924', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('370', '1', '0', '提示语:注销成功！', '1542067917', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('369', '1', '1', '提示语:操作成功!', '1542067911', '2130706433', '/admin/auth_manager/writegroup.html');
-INSERT INTO `yzn_adminlog` VALUES ('368', '1', '1', '提示语:恭喜您，登陆成功', '1542067850', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('367', '1', '0', '提示语:注销成功！', '1542067845', '2130706433', '/admin/index/logout.html');
-INSERT INTO `yzn_adminlog` VALUES ('366', '0', '2', '提示语:未授权访问!', '1542067838', '2130706433', '/admin/manager/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('365', '0', '2', '提示语:未授权访问!', '1542067824', '2130706433', '/attachment/attachments/index/menuid/23.html');
-INSERT INTO `yzn_adminlog` VALUES ('364', '0', '2', '提示语:未授权访问!', '1542067822', '2130706433', '/attachment/ueditor/run.html?action=config&&noCache=1542067822165');
-INSERT INTO `yzn_adminlog` VALUES ('363', '1', '2', '提示语:恭喜您，登陆成功', '1542067817', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('362', '0', '0', '提示语:密码错误！', '1542067814', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('361', '0', '0', '提示语:请先登陆', '1542067805', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('360', '1', '1', '提示语:设置更新成功', '1542015553', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('359', '1', '1', '提示语:设置更新成功', '1542015509', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('358', '1', '1', '提示语:恭喜您，登陆成功', '1542015284', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('357', '0', '0', '提示语:请先登陆', '1542015278', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('355', '0', '0', '提示语:请先登陆', '1542008175', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('356', '1', '1', '提示语:恭喜您，登陆成功', '1542008181', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('354', '1', '1', '提示语:设置更新成功', '1541981959', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('353', '1', '1', '提示语:设置更新成功', '1541981861', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('352', '1', '1', '提示语:恭喜您，登陆成功', '1541981490', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('351', '0', '0', '提示语:请先登陆', '1541981484', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('350', '1', '1', '提示语:配置编辑成功~', '1541756888', '2130706433', '/admin/config/edit/id/151.html');
-INSERT INTO `yzn_adminlog` VALUES ('349', '1', '1', '提示语:配置编辑成功~', '1541756875', '2130706433', '/admin/config/edit/id/14.html');
-INSERT INTO `yzn_adminlog` VALUES ('348', '1', '1', '提示语:配置编辑成功~', '1541756856', '2130706433', '/admin/config/edit/id/13.html');
-INSERT INTO `yzn_adminlog` VALUES ('347', '1', '1', '提示语:配置编辑成功~', '1541756842', '2130706433', '/admin/config/edit/id/12.html');
-INSERT INTO `yzn_adminlog` VALUES ('346', '1', '1', '提示语:恭喜您，登陆成功', '1541756806', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('345', '0', '0', '提示语:请先登陆', '1541756800', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('344', '1', '1', '提示语:配置编辑成功~', '1541755158', '2130706433', '/admin/config/edit/id/151.html');
-INSERT INTO `yzn_adminlog` VALUES ('343', '1', '1', '提示语:配置编辑成功~', '1541755151', '2130706433', '/admin/config/edit/id/151.html');
-INSERT INTO `yzn_adminlog` VALUES ('342', '1', '1', '提示语:配置编辑成功~', '1541755146', '2130706433', '/admin/config/edit/id/151.html');
-INSERT INTO `yzn_adminlog` VALUES ('341', '1', '1', '提示语:设置更新成功', '1541755061', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('340', '1', '1', '提示语:设置更新成功', '1541755051', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('339', '1', '1', '提示语:配置编辑成功~', '1541755045', '2130706433', '/admin/config/edit/id/151.html');
-INSERT INTO `yzn_adminlog` VALUES ('338', '1', '1', '提示语:配置添加成功~', '1541752781', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('337', '0', '1', '提示语:配置标题只能是汉字、字母和数字', '1541752773', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('336', '1', '1', '提示语:配置添加成功~', '1541752393', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('335', '1', '1', '提示语:配置添加成功~', '1541752356', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('333', '0', '0', '提示语:请先登陆', '1541752231', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('334', '1', '1', '提示语:恭喜您，登陆成功', '1541752238', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('332', '1', '1', '提示语:文件删除成功~', '1541722099', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('331', '1', '1', '提示语:删除日志成功！', '1541722081', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('419', '1', '1', '提示语:删除日志成功！', '1542780639', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('219', '0', '0', '提示语:请先登陆', '1540259868', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('220', '0', '0', '提示语:密码错误！', '1540259875', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('221', '1', '1', '提示语:恭喜您，登陆成功', '1540259877', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('222', '0', '1', '提示语:没有勾选需要删除的文件~', '1540260613', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('223', '0', '1', '提示语:没有勾选需要删除的文件~', '1540260694', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('224', '0', '1', '提示语:没有勾选需要删除的文件~', '1540260701', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('225', '1', '1', '提示语:文件删除成功~', '1540260751', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('226', '1', '1', '提示语:文件删除成功~', '1540260756', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('227', '1', '1', '提示语:文件删除成功~', '1540260782', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('228', '1', '1', '提示语:文件删除成功~', '1540260788', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('229', '0', '0', '提示语:请先登陆', '1540261141', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('230', '1', '1', '提示语:恭喜您，登陆成功', '1540261146', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('231', '1', '1', '提示语:文件删除成功~', '1540261195', '2130706433', '/attachment/attachments/delete.html?id=86');
-INSERT INTO `yzn_adminlog` VALUES ('232', '0', '0', '提示语:请先登陆', '1540263113', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('233', '1', '1', '提示语:恭喜您，登陆成功', '1540263118', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('234', '1', '1', '提示语:文件删除成功~', '1540263191', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('235', '1', '1', '提示语:文件删除成功~', '1540263817', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('236', '1', '1', '提示语:删除日志成功！', '1540265182', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('237', '1', '1', '提示语:删除日志成功！', '1540265205', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('238', '1', '1', '提示语:删除日志成功！', '1540265221', '2130706433', '/admin/adminlog/deletelog.html');
-INSERT INTO `yzn_adminlog` VALUES ('239', '0', '0', '提示语:请先登陆', '1540265505', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('240', '1', '1', '提示语:恭喜您，登陆成功', '1540265510', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('241', '0', '1', '提示语:该页面不存在！', '1540266004', '2130706433', '/attachment/attachments/check.html');
-INSERT INTO `yzn_adminlog` VALUES ('242', '1', '1', '提示语:文件删除成功~', '1540270296', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('243', '1', '1', '提示语:文件删除成功~', '1540270308', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('244', '0', '0', '提示语:请先登陆', '1540270607', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('245', '1', '1', '提示语:恭喜您，登陆成功', '1540270612', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('246', '1', '1', '提示语:配置添加成功~', '1540270653', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('247', '0', '0', '提示语:请先登陆', '1540271141', '2130706433', '/admin');
-INSERT INTO `yzn_adminlog` VALUES ('248', '1', '1', '提示语:恭喜您，登陆成功', '1540271147', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('249', '1', '1', '提示语:文件删除成功~', '1540271154', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('250', '1', '1', '提示语:文件删除成功~', '1540271158', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('251', '0', '0', '提示语:请先登陆', '1540271867', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('252', '1', '1', '提示语:恭喜您，登陆成功', '1540271872', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('253', '0', '1', '提示语:该页面不存在！', '1540271886', '2130706433', '/admin/config/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('254', '0', '1', '提示语:该页面不存在！', '1540271896', '2130706433', '/admin/config/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('255', '0', '1', '提示语:该页面不存在！', '1540271915', '2130706433', '/admin/config/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('256', '1', '1', '提示语:删除成功', '1540271964', '2130706433', '/admin/config/del.html');
-INSERT INTO `yzn_adminlog` VALUES ('257', '1', '1', '提示语:文件删除成功~', '1540271999', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('258', '0', '0', '提示语:请先登陆', '1540339872', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('259', '1', '1', '提示语:恭喜您，登陆成功', '1540339878', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('260', '1', '1', '提示语:设置更新成功', '1540339988', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('261', '1', '1', '提示语:设置更新成功', '1540340036', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('262', '1', '1', '提示语:设置更新成功', '1540340064', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('263', '1', '1', '提示语:设置更新成功', '1540340194', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('264', '0', '0', '提示语:请先登陆', '1540341504', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('265', '1', '1', '提示语:恭喜您，登陆成功', '1540341508', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('266', '1', '1', '提示语:配置添加成功~', '1540341793', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('267', '1', '1', '提示语:设置更新成功', '1540341806', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('268', '1', '1', '提示语:设置更新成功', '1540341823', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('269', '1', '1', '提示语:设置更新成功', '1540341836', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('270', '1', '1', '提示语:设置更新成功', '1540341900', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('271', '1', '1', '提示语:设置更新成功', '1540342002', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('272', '1', '1', '提示语:设置更新成功', '1540342014', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('273', '0', '0', '提示语:请先登陆', '1540356649', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('274', '1', '1', '提示语:恭喜您，登陆成功', '1540356655', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('275', '1', '1', '提示语:设置更新成功', '1540356674', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('276', '1', '1', '提示语:设置更新成功', '1540356735', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('277', '1', '1', '提示语:设置更新成功', '1540356780', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('278', '1', '1', '提示语:设置更新成功', '1540356790', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('279', '1', '1', '提示语:设置更新成功', '1540356796', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('280', '1', '1', '提示语:设置更新成功', '1540356805', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('281', '1', '1', '提示语:设置更新成功', '1540356828', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('282', '1', '1', '提示语:设置更新成功', '1540356834', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('283', '1', '1', '提示语:设置更新成功', '1540356840', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('284', '1', '1', '提示语:设置更新成功', '1540356861', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('285', '1', '1', '提示语:设置更新成功', '1540356895', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('286', '1', '1', '提示语:设置更新成功', '1540356909', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('287', '1', '1', '提示语:设置更新成功', '1540356915', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('288', '1', '1', '提示语:设置更新成功', '1540356923', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('289', '1', '1', '提示语:设置更新成功', '1540356931', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('290', '1', '1', '提示语:设置更新成功', '1540356992', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('291', '1', '1', '提示语:设置更新成功', '1540356999', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('292', '1', '1', '提示语:设置更新成功', '1540357003', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('293', '1', '1', '提示语:设置更新成功', '1540357010', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('294', '0', '0', '提示语:请先登陆', '1540362700', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('295', '0', '0', '提示语:密码错误！', '1540362713', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('296', '1', '1', '提示语:恭喜您，登陆成功', '1540362716', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('297', '1', '1', '提示语:设置更新成功', '1540362921', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('298', '1', '1', '提示语:设置更新成功', '1540362975', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('299', '1', '1', '提示语:设置更新成功', '1540363709', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('300', '1', '1', '提示语:设置更新成功', '1540363834', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('301', '0', '0', '提示语:请先登陆', '1540425533', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('302', '1', '1', '提示语:恭喜您，登陆成功', '1540425540', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('303', '1', '1', '提示语:设置更新成功', '1540425611', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('304', '1', '1', '提示语:设置更新成功', '1540426859', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('305', '0', '0', '提示语:请先登陆', '1540437003', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('306', '1', '1', '提示语:恭喜您，登陆成功', '1540437008', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('307', '1', '1', '提示语:设置更新成功', '1540437020', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('308', '1', '1', '提示语:文件删除成功~', '1540437034', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('309', '0', '0', '提示语:请先登陆', '1540456566', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('310', '1', '1', '提示语:恭喜您，登陆成功', '1540456572', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('311', '0', '0', '提示语:请先登陆', '1540457580', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('312', '1', '1', '提示语:恭喜您，登陆成功', '1540457588', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('313', '1', '1', '提示语:配置添加成功~', '1540457656', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('314', '1', '1', '提示语:配置添加成功~', '1540457767', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('315', '1', '1', '提示语:配置编辑成功~', '1540457794', '2130706433', '/admin/config/edit/id/13.html');
-INSERT INTO `yzn_adminlog` VALUES ('316', '1', '1', '提示语:配置编辑成功~', '1540457800', '2130706433', '/admin/config/edit/id/12.html');
-INSERT INTO `yzn_adminlog` VALUES ('317', '0', '0', '提示语:请先登陆', '1540458672', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('318', '1', '1', '提示语:恭喜您，登陆成功', '1540458679', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('319', '0', '0', '提示语:请先登陆', '1540545956', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('320', '1', '1', '提示语:恭喜您，登陆成功', '1540545962', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('321', '0', '0', '提示语:请先登陆', '1540974595', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('322', '1', '1', '提示语:恭喜您，登陆成功', '1540974601', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('323', '1', '1', '提示语:设置更新成功', '1540974766', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('324', '1', '1', '提示语:设置更新成功', '1540975099', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('325', '1', '1', '提示语:设置更新成功', '1540975114', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('326', '1', '1', '提示语:设置更新成功', '1540975124', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('327', '1', '1', '提示语:设置更新成功', '1540976002', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('328', '1', '1', '提示语:设置更新成功', '1540976343', '2130706433', '/admin/config/setting/group/upload.html');
-INSERT INTO `yzn_adminlog` VALUES ('329', '0', '0', '提示语:请先登陆', '1541721953', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('330', '1', '1', '提示语:恭喜您，登陆成功', '1541721959', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('430', '0', '0', '提示语:请先登陆', '1543237075', '2130706433', '/admin');
-INSERT INTO `yzn_adminlog` VALUES ('431', '1', '1', '提示语:恭喜您，登陆成功', '1543237083', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('432', '0', '0', '提示语:请先登陆', '1543391624', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('433', '1', '1', '提示语:恭喜您，登陆成功', '1543391629', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('434', '1', '1', '提示语:设置更新成功', '1543391643', '2130706433', '/admin/config/setting/group/base.html');
-INSERT INTO `yzn_adminlog` VALUES ('435', '1', '1', '提示语:文件删除成功~', '1543391649', '2130706433', '/attachment/attachments/delete.html');
-INSERT INTO `yzn_adminlog` VALUES ('436', '0', '0', '提示语:请先登陆', '1543394600', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('437', '1', '1', '提示语:恭喜您，登陆成功', '1543394606', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('438', '0', '0', '提示语:请先登陆', '1543398908', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('439', '1', '1', '提示语:恭喜您，登陆成功', '1543398913', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('440', '0', '0', '提示语:请先登陆', '1543451944', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('441', '1', '1', '提示语:恭喜您，登陆成功', '1543451949', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('1560', '0', '0', '提示语:请先登陆', '1543915966', '2130706433', '/admin/index/index.html');
-INSERT INTO `yzn_adminlog` VALUES ('1561', '1', '1', '提示语:恭喜您，登陆成功', '1543915971', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('1562', '1', '1', '提示语:插件安装成功！', '1543917891', '2130706433', '/addons/addons/install.html');
-INSERT INTO `yzn_adminlog` VALUES ('1563', '1', '1', '提示语:插件卸载成功！', '1543917939', '2130706433', '/addons/addons/uninstall.html');
-INSERT INTO `yzn_adminlog` VALUES ('1564', '1', '1', '提示语:插件安装成功！', '1543918023', '2130706433', '/addons/addons/install.html');
-INSERT INTO `yzn_adminlog` VALUES ('1565', '1', '1', '提示语:插件卸载成功！', '1543918044', '2130706433', '/addons/addons/uninstall.html');
-INSERT INTO `yzn_adminlog` VALUES ('1566', '1', '1', '提示语:插件安装成功！', '1543918236', '2130706433', '/addons/addons/install.html');
-INSERT INTO `yzn_adminlog` VALUES ('1567', '1', '1', '提示语:插件卸载成功！', '1543918528', '2130706433', '/addons/addons/uninstall.html');
-INSERT INTO `yzn_adminlog` VALUES ('1568', '1', '1', '提示语:插件卸载成功！', '1543918531', '2130706433', '/addons/addons/uninstall.html');
-INSERT INTO `yzn_adminlog` VALUES ('1569', '1', '1', '提示语:插件安装成功！', '1543918536', '2130706433', '/addons/addons/install.html');
-INSERT INTO `yzn_adminlog` VALUES ('1570', '1', '1', '提示语:插件安装成功！', '1543919038', '2130706433', '/addons/addons/install.html');
-INSERT INTO `yzn_adminlog` VALUES ('1571', '1', '1', '提示语:保存成功', '1543919525', '2130706433', '/addons/addons/saveconfig.html');
-INSERT INTO `yzn_adminlog` VALUES ('1572', '1', '1', '提示语:保存成功', '1543919996', '2130706433', '/addons/addons/saveconfig.html');
-INSERT INTO `yzn_adminlog` VALUES ('1573', '1', '1', '提示语:保存成功', '1543920003', '2130706433', '/addons/addons/saveconfig.html');
-INSERT INTO `yzn_adminlog` VALUES ('1574', '1', '1', '提示语:插件卸载成功！', '1543920015', '2130706433', '/addons/addons/uninstall.html');
-INSERT INTO `yzn_adminlog` VALUES ('1575', '1', '1', '提示语:插件卸载成功！', '1543920019', '2130706433', '/addons/addons/uninstall.html');
-INSERT INTO `yzn_adminlog` VALUES ('1576', '0', '0', '提示语:请先登陆', '1543968062', '2130706433', '/admin');
-INSERT INTO `yzn_adminlog` VALUES ('1577', '1', '1', '提示语:恭喜您，登陆成功', '1543968068', '2130706433', '/admin/index/login.html');
-INSERT INTO `yzn_adminlog` VALUES ('1578', '1', '1', '提示语:插件安装成功！', '1543968252', '2130706433', '/addons/addons/install.html');
-INSERT INTO `yzn_adminlog` VALUES ('1579', '0', '0', '提示语:请先登陆', '1543974358', '2130706433', '/admin/');
-INSERT INTO `yzn_adminlog` VALUES ('1580', '1', '1', '提示语:恭喜您，登陆成功', '1543974364', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('1', '0', '1', '提示语:该插件没有安装！', '1544437101', '2130706433', '/addons/database/export/isadmin/1.html');
+INSERT INTO `yzn_adminlog` VALUES ('2', '1', '1', '提示语:插件安装成功！', '1544437112', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('3', '1', '1', '提示语:初始化成功！', '1544437123', '2130706433', '/addons/database/export/isadmin/1.html');
+INSERT INTO `yzn_adminlog` VALUES ('4', '1', '1', '提示语:备份完成！', '1544437123', '2130706433', '/addons/database/export/isadmin/1.html?id=0&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('5', '1', '1', '提示语:备份完成！', '1544437123', '2130706433', '/addons/database/export/isadmin/1.html?id=1&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('6', '1', '1', '提示语:备份完成！', '1544437123', '2130706433', '/addons/database/export/isadmin/1.html?id=2&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('7', '1', '1', '提示语:备份完成！', '1544437123', '2130706433', '/addons/database/export/isadmin/1.html?id=3&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('8', '1', '1', '提示语:备份完成！', '1544437123', '2130706433', '/addons/database/export/isadmin/1.html?id=4&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('9', '1', '1', '提示语:备份完成！', '1544437124', '2130706433', '/addons/database/export/isadmin/1.html?id=5&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('10', '1', '1', '提示语:备份完成！', '1544437124', '2130706433', '/addons/database/export/isadmin/1.html?id=6&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('11', '1', '1', '提示语:备份完成！', '1544437124', '2130706433', '/addons/database/export/isadmin/1.html?id=7&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('12', '1', '1', '提示语:备份完成！', '1544437124', '2130706433', '/addons/database/export/isadmin/1.html?id=8&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('13', '1', '1', '提示语:备份完成！', '1544437124', '2130706433', '/addons/database/export/isadmin/1.html?id=9&start=0');
+INSERT INTO `yzn_adminlog` VALUES ('14', '1', '1', '提示语:备份完成！', '1544437124', '2130706433', '/addons/database/export/isadmin/1.html?id=10&start=0');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -379,13 +139,13 @@ CREATE TABLE `yzn_auth_group` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户组状态：为1正常，为0禁用,-1为删除',
   `rules` varchar(500) NOT NULL DEFAULT '' COMMENT '用户组拥有的规则id，多个规则 , 隔开',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='权限组表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='权限组表';
 
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
 INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '154,155,146,149,149,158,159,160,150,151,161,162,163,157,164,165,152,152,153,156,147,148');
-INSERT INTO `yzn_auth_group` VALUES ('4', 'admin', '1', '编辑', '编辑', '1', '154,155,146,149,149,158,159,160,150,151,161,162,163,157,164,165,152,152,153,156,147,148');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '编辑', '编辑', '1', '154,155,146,149,149,158,159,160,150,151,161,162,163,157,164,165,152,152,153,156,147,148');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -470,7 +230,7 @@ CREATE TABLE `yzn_config` (
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8 COMMENT='网站配置';
 
 -- ----------------------------
 -- Records of yzn_config
@@ -540,13 +300,13 @@ CREATE TABLE `yzn_hooks` (
   `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='插件钩子';
 
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
-INSERT INTO `yzn_hooks` VALUES ('5', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '');
-INSERT INTO `yzn_hooks` VALUES ('6', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '');
+INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '');
+INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
@@ -598,11 +358,11 @@ INSERT INTO `yzn_menu` VALUES ('32', '插件扩展', '', '5', 'addons', 'addons'
 INSERT INTO `yzn_menu` VALUES ('33', '插件管理', '', '32', 'addons', 'addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('34', '行为管理', '', '32', 'addons', 'addons', 'hooks', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('35', '插件后台列表', '', '5', 'addons', 'addons', 'addonadmin', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('36', '数据库备份', '', '35', 'Addons', 'database', 'index', 'isadmin=1', '1', '数据库备份插件管理后台！', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('37', '备份还原', '', '36', 'Addons', 'database', 'restore', 'isadmin=1', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('38', '删除备份', '', '36', 'Addons', 'database', 'del', 'isadmin=1', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('39', '修复表', '', '36', 'Addons', 'database', 'repair', 'isadmin=1', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('40', '优化表', '', '36', 'Addons', 'database', 'optimization', 'isadmin=1', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('41', '还原表', '', '36', 'Addons', 'database', 'import', 'isadmin=1', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('42', '备份数据库', '', '36', 'Addons', 'database', 'export', 'isadmin=1', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('43', '备份数据库下载', '', '36', 'Addons', 'database', 'download', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('36', '数据库备份', '', '35', 'addons', 'database', 'index', 'isadmin=1', '1', '数据库备份插件管理后台！', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('37', '备份还原', '', '36', 'addons', 'database', 'restore', 'isadmin=1', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('38', '删除备份', '', '36', 'addons', 'database', 'del', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('39', '修复表', '', '36', 'addons', 'database', 'repair', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('40', '优化表', '', '36', 'addons', 'database', 'optimize', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('41', '还原表', '', '36', 'addons', 'database', 'import', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('42', '备份数据库', '', '36', 'addons', 'database', 'export', 'isadmin=1', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('43', '备份数据库下载', '', '36', 'addons', 'database', 'download', 'isadmin=1', '0', '', '0', '0');
