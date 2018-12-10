@@ -42,6 +42,10 @@ layui.use(['table', 'form'], function() {
     //提交备份
     $export.click(function() {
         var checkStatus = table.checkStatus('database');
+        if (checkStatus.data.length <= 0) {
+            layer.msg("请选择需要备份的数据");
+            return false;
+        }
         var a = [];
         $(checkStatus.data).each(function(i, o) {
             a.push(o.name);
