@@ -30,7 +30,28 @@ class Adminaddon extends Adminbase
 
         parent::initialize();
         $this->addonName = \think\Loader::parseName($this->request->controller());
+        $this->addonInfo = model('addons/addons')->where(array('name' => $this->addonName))->find();
+        if (empty($this->addonInfo)) {
+            $this->error('该插件没有安装！');
+        }
+        if (!$this->addonInfo['status']) {
+            $this->error('该插件已被禁用！');
+        }
         $this->addonPath = model('addons/addons')->getAddonsPath() . $this->addonName . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * 获取插件配置
+     * @staticvar array $_config
+     * @return type
+     */
+    final public function getAddonConfig()
+    {
+        $config = $this->addonInfo['config'];
+        if ($config) {
+            $config = json_decode($config, true);
+        }
+        return $config;
     }
 
     /**

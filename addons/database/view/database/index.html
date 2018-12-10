@@ -53,7 +53,7 @@ layui.use(['table', 'form'], function() {
                 if (data.code) {
                     tables = data.data.tables;
                     $export.html(data.msg + "开始备份，请不要关闭本页面！");
-                    //backup(data.data.tab);
+                    backup(data.data.tab);
                     window.onbeforeunload = function() { return "正在备份数据库，请不要关闭！" }
                 } else {
                     layer.msg(data.msg, { icon: 5 });
@@ -65,6 +65,25 @@ layui.use(['table', 'form'], function() {
         );
         return false;
     });
+
+    function backup(tab, code) {
+        $.get("{:url('addons/database/export')}", tab, function(data) {
+            if (data.code) {
+                //showmsg(tab.id, data.msg);
+                if (!$.isPlainObject(data.data.tab)) {
+                    $export.parent().children().removeClass("layui-btn-disabled");
+                    $export.html("备份完成，点击重新备份");
+                    window.onbeforeunload = function() { return null }
+                    return;
+                }
+                backup(data.data.tab, tab.id != data.data.tab.id);
+            } else {
+                layer.msg(data.msg, { icon: 5 });
+                $export.parent().children().removeClass("disabled");
+                $export.html("立即备份");
+            }
+        });
+    }
 
 
 });
