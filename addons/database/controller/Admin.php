@@ -206,11 +206,15 @@ class Admin extends Adminaddon
      */
     public function import()
     {
+        //时间
+        $time = $this->request->param('time', 0, 'intval');
+        $part = $this->request->param('part', null);
+        //起始行数
+        $start = $this->request->param('start', null);
         if (is_numeric($time) && is_null($part) && is_null($start)) {
-            //初始化
             //获取备份文件信息
             $name = date('Ymd-His', $time) . '-*.sql*';
-            $path = realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
+            $path = $this->databaseConfig['path'] . $name;
             $files = glob($path);
             $list = array();
             foreach ($files as $name) {
@@ -230,7 +234,7 @@ class Admin extends Adminaddon
             }
         } elseif (is_numeric($part) && is_numeric($start)) {
             $list = session('backup_list');
-            $db = new \com\Database($list[$part], array('path' => realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR, 'compress' => $list[$part][2]));
+            $db = new Database($list[$part], array('path' => realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR, 'compress' => $list[$part][2]));
             $start = $db->import($start);
             if (false === $start) {
                 return $this->error('还原数据出错！');
