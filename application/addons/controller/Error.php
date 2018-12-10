@@ -22,7 +22,8 @@ class Error
     {
         $controller = \think\Loader::parseName($request->controller());
         $action = $request->action();
-        $object = \think\Container::get("\\addons\\" . $controller . "\\controller\\Admin");
+        $class = $request->param('isadmin/d') ? 'Admin' : 'Index';
+        $object = \think\Container::get("\\addons\\" . $controller . "\\controller\\{$class}");
         return $object->$action();
     }
 
