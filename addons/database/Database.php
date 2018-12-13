@@ -39,7 +39,7 @@ class Database extends Addon
             "action" => "index",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
+            //状态，1是显示，0是不显示
             "status" => 1,
             //名称
             "title" => "数据库备份",
@@ -53,8 +53,8 @@ class Database extends Addon
             "action" => "restore",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
-            "status" => 1,
+            //状态，1是显示，0是不显示
+            "status" => 0,
             //名称
             "title" => "备份还原",
             //备注
@@ -67,7 +67,7 @@ class Database extends Addon
             "action" => "del",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
+            //状态，1是显示，0是不显示
             "status" => 0,
             //名称
             "title" => "删除备份",
@@ -81,7 +81,7 @@ class Database extends Addon
             "action" => "repair",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
+            //状态，1是显示，0是不显示
             "status" => 0,
             //名称
             "title" => "修复表",
@@ -95,7 +95,7 @@ class Database extends Addon
             "action" => "optimize",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
+            //状态，1是显示，0是不显示
             "status" => 0,
             //名称
             "title" => "优化表",
@@ -109,7 +109,7 @@ class Database extends Addon
             "action" => "import",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
+            //状态，1是显示，0是不显示
             "status" => 0,
             //名称
             "title" => "还原表",
@@ -123,7 +123,7 @@ class Database extends Addon
             "action" => "export",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
+            //状态，1是显示，0是不显示
             "status" => 0,
             //名称
             "title" => "备份数据库",
@@ -137,7 +137,7 @@ class Database extends Addon
             "action" => "download",
             //附加参数 例如：a=12&id=777
             "data" => "",
-            //状态，1是显示，2是不显示
+            //状态，1是显示，0是不显示
             "status" => 0,
             //名称
             "title" => "备份数据库下载",
