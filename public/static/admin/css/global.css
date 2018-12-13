@@ -52,7 +52,7 @@
 .closeBox a span.layui-nav-more.layui-nav-mored{ border-color:transparent transparent #333;}
 .closeBox a i.caozuo {font-size: 16px; position: absolute; top: 1px; left: 0; }
 
-.layui-tab-content {top: 40px; position: absolute; bottom: 0; width: 100%; padding: 0; }
+.layui-tab-content {top: 41px; position: absolute; bottom: 0; width: 100%; padding: 0; }
 .iframe_box{position: relative; height: 100%; overflow: auto; }
 iframe {position: absolute; height: 100%; width: 100%; border: none; }
 
