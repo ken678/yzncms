@@ -101,7 +101,7 @@ layui.use(['laydate'], function() {
             <div id="file_list_{$vo.name}" class="uploader-list">
                 {notempty name="$vo.value"}
                 <div class="file-item thumbnail">
-                    <img data-original="{$vo.value|get_file_path}" src="{$vo.value|get_thumb|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
+                    <img data-original="{$vo.value|get_thumb|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_thumb|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
                     <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
                 </div>
                 {/notempty}
@@ -160,8 +160,10 @@ layui.use(['laydate'], function() {
 {/switch}
 {/volist}
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
-<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
 <script type="text/javascript" src="__STATIC__/libs/Sortable.js"></script>
+<script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
+<link rel="stylesheet" href="__STATIC__/libs/viewer/viewer.min.css">
+<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // 文件上传集合
@@ -360,4 +362,9 @@ jQuery(document).ready(function() {
         }
     });
 });
+{literal}
+$('.uploader-list').each(function () {
+    $(this).viewer();
+});
+{/literal}
 </script>

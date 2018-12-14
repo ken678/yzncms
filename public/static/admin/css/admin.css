@@ -182,3 +182,6 @@ code {
     transition: width .6s ease;
 }
 .sortable-ghost{opacity:.4}
+.uploader-list .thumbnail>img {
+    cursor: zoom-in;
+}
