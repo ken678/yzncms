@@ -22,8 +22,7 @@
 <div class="layui-form-item">
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value' ]}checked='' {/if}> </div>
-        <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value' ]}checked='' {/if}> </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
 </div>
 {/case}
 {case value="array"}
@@ -40,10 +39,7 @@
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
         {volist name="vo.options" id="v"}
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked='' {/if}>
-        {/volist}
-    </div>
-        <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked='' {/if}> {/volist} </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
 </div>
 {/case}
 {case value="radio"}
@@ -51,10 +47,7 @@
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
         {volist name="vo.options" id="v"}
-        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value' ]}checked='' {/if}>
-        {/volist}
-    </div>
-        <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value' ]}checked='' {/if}> {/volist} </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
 </div>
 {/case}
 {case value="select"}
@@ -64,11 +57,7 @@
         <select name="{$vo.fieldArr}[{$vo.name}]">
             <option value=""></option>
             {volist name="vo.options" id="v"}
-            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v} </option>
-            {/volist}
-        </select>
-    </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
 </div>
 {/case}
 {case value="datetime"}
@@ -111,10 +100,10 @@ layui.use(['laydate'], function() {
         <div class="js-upload-image">
             <div id="file_list_{$vo.name}" class="uploader-list">
                 {notempty name="$vo.value"}
-                    <div class="file-item thumbnail">
-                        <img data-original="{$vo.value|get_file_path}" src="{$vo.value|get_thumb|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
-                        <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
-                    </div>
+                <div class="file-item thumbnail">
+                    <img data-original="{$vo.value|get_file_path}" src="{$vo.value|get_thumb|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
+                    <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
+                </div>
                 {/notempty}
             </div>
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$vo.name}" value="{$vo.value|default=''}">
@@ -132,13 +121,13 @@ layui.use(['laydate'], function() {
         <div class="js-upload-images">
             <div id="file_list_{$vo.name}" class="uploader-list">
                 {notempty name="$vo.value"}
-                  {volist name="$vo.value|explode=',',###" id="v"}
-                    <div class="file-item thumbnail">
-                        <img data-original="{$v|get_file_path}" src="{$v|get_thumb|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
-                        <i class="iconfont icon-close remove-picture" data-id="{$vo.value}"></i>
-                        <i class="iconfont icon-yidong move-picture"></i>
-                    </div>
-                  {/volist}
+                {volist name="$vo.value|explode=',',###" id="v"}
+                <div class="file-item thumbnail">
+                    <img data-original="{$v|get_file_path}" src="{$v|get_thumb|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
+                    <i class="iconfont icon-close remove-picture" data-id="{$v}"></i>
+                    <i class="iconfont icon-yidong move-picture"></i>
+                </div>
+                {/volist}
                 {/notempty}
             </div>
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$vo.name}" value="{$vo.value|default=''}">
@@ -156,13 +145,12 @@ layui.use(['laydate'], function() {
         <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>
         <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.all.js"></script>
         <script type="text/javascript">
-        layui.use([], function() {
-            var {$vo.fieldArr}{$vo.name} = UE.getEditor('{$vo.fieldArr}{$vo.name}', {
-                initialFrameWidth:null,
+            var {$vo.fieldArr}{$vo.name} = UE.getEditor('{$vo.fieldArr}{$vo.name}',{
+                initialFrameWidth: null,
                 initialFrameHeight: 250,
                 serverUrl: "{:url('attachment/Ueditor/run')}"
             });
-        })
+
         </script>
         <script type="text/plain" id="{$vo.fieldArr}{$vo.name}" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</script>
     </div>
@@ -173,6 +161,7 @@ layui.use(['laydate'], function() {
 {/volist}
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
 <link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
+<script type="text/javascript" src="__STATIC__/libs/Sortable.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // 文件上传集合
@@ -195,10 +184,10 @@ jQuery(document).ready(function() {
         // 图片限制大小
         var $size = $input_file.data('size');
         // 优化retina, 在retina下这个值是2
-        var ratio             = window.devicePixelRatio || 1;
+        var ratio = window.devicePixelRatio || 1;
         // 缩略图大小
-        var thumbnailWidth    = 100 * ratio;
-        var thumbnailHeight   = 100 * ratio;
+        var thumbnailWidth = 100 * ratio;
+        var thumbnailHeight = 100 * ratio;
 
         var uploader = WebUploader.create({
             // 选完图片后，是否自动上传。
@@ -232,7 +221,7 @@ jQuery(document).ready(function() {
         })
         //console.log(uploader);
         // 当有文件添加进来的时候
-        uploader.on( 'fileQueued', function( file ) {
+        uploader.on('fileQueued', function(file) {
             var $li = $(
                     '<div id="' + file.id + '" class="file-item js-gallery thumbnail">' +
                     '<img>' +
@@ -248,36 +237,36 @@ jQuery(document).ready(function() {
                 $img = $li.find('img');
 
             if ($multiple) {
-                $file_list.append( $li );
+                $file_list.append($li);
             } else {
-                $file_list.html( $li );
+                $file_list.html($li);
                 $input_file.val('');
             }
             // 创建缩略图
             // 如果为非图片文件，可以不用调用此方法。
             // thumbnailWidth x thumbnailHeight 为 100 x 100
-            uploader.makeThumb( file, function( error, src ) {
-                if ( error ) {
+            uploader.makeThumb(file, function(error, src) {
+                if (error) {
                     $img.replaceWith('<span>不能预览</span>');
                     return;
                 }
-                $img.attr( 'src', src );
-            }, thumbnailWidth, thumbnailHeight );
+                $img.attr('src', src);
+            }, thumbnailWidth, thumbnailHeight);
             // 设置当前上传对象
             curr_uploader = uploader;
         });
 
         // 文件上传过程中创建进度条实时显示。
-        uploader.on( 'uploadProgress', function( file, percentage ) {
-            var $percent = $( '#'+file.id ).find('.progress-bar');
-            console.log($percent);
-            $percent.css( 'width', percentage * 100 + '%' );
+        uploader.on('uploadProgress', function(file, percentage) {
+            var $percent = $('#' + file.id).find('.progress-bar');
+            //console.log($percent);
+            $percent.css('width', percentage * 100 + '%');
         });
 
         // 文件上传成功
-        uploader.on( 'uploadSuccess', function( file, response ) {
-            var $li = $( '#'+file.id );
-            if (response.code==0) {
+        uploader.on('uploadSuccess', function(file, response) {
+            var $li = $('#' + file.id);
+            if (response.code == 0) {
                 if ($multiple) {
                     if ($input_file.val()) {
                         $input_file.val($input_file.val() + ',' + response.id);
@@ -289,7 +278,7 @@ jQuery(document).ready(function() {
                     $input_file.val(response.id);
                 }
             }
-            $li.find('.file-state').html('<div class="layui-bg-green">'+response.info+'</div>');
+            $li.find('.file-state').html('<div class="layui-bg-green">' + response.info + '</div>');
             $li.find('img').attr('data-original', response.path);
             // 上传成功后，再次初始化图片查看功能
             //Dolphin.viewer();
@@ -301,8 +290,8 @@ jQuery(document).ready(function() {
         });
 
         // 文件上传失败，显示上传出错。
-        uploader.on( 'uploadError', function( file ) {
-            var $li = $( '#'+file.id );
+        uploader.on('uploadError', function(file) {
+            var $li = $('#' + file.id);
             $li.find('.file-state').html('<div class="bg-danger">服务器错误</div>');
 
             // 文件上传出错后的自定义回调函数
@@ -312,21 +301,21 @@ jQuery(document).ready(function() {
         });
 
         // 文件验证不通过
-        uploader.on('error', function (type) {
+        uploader.on('error', function(type) {
             switch (type) {
                 case 'Q_TYPE_DENIED':
-                    layer.alert('图片类型不正确，只允许上传后缀名为：'+$ext+'，请重新上传！', {icon: 5})
+                    layer.alert('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
                     break;
                 case 'F_EXCEED_SIZE':
-                    layer.alert('图片不得超过'+ $size +'kb，请重新上传！', {icon: 5})
+                    layer.alert('图片不得超过' + $size + 'kb，请重新上传！', { icon: 5 })
                     break;
             }
         });
 
         // 完成上传完了，成功或者失败，先删除进度条。
-        uploader.on( 'uploadComplete', function( file ) {
-            setTimeout(function(){
-                $( '#'+file.id ).find('.progress').remove();
+        uploader.on('uploadComplete', function(file) {
+            setTimeout(function() {
+                $('#' + file.id).find('.progress').remove();
             }, 500);
 
             // 文件上传完成后的自定义回调函数
@@ -336,11 +325,11 @@ jQuery(document).ready(function() {
         });
 
         // 删除图片
-        $file_list.delegate('.remove-picture', 'click', function(){
+        $file_list.delegate('.remove-picture', 'click', function() {
             $(this).closest('.file-item').remove();
             if ($multiple) {
                 var ids = [];
-                $file_list.find('.remove-picture').each(function () {
+                $file_list.find('.remove-picture').each(function() {
                     ids.push($(this).data('id'));
                 });
                 $input_file.val(ids.join(','));
@@ -353,23 +342,22 @@ jQuery(document).ready(function() {
 
         // 将上传实例存起来
         webuploader.push(uploader);
-
         // 如果是多图上传，则实例化拖拽
-        /*if ($multiple) {
-            Sortable.create($file_list,{
-                connectWith: ".uploader-list",
+        if ($multiple) {
+            Sortable.create($file_list.get(0), {
+                group: "file_list",
                 handle: '.move-picture',
-                stop: function () {
+                animation: 150,
+                ghostClass: "sortable-ghost",
+                onEnd: function(evt) {
                     var ids = [];
                     $file_list.find('.remove-picture').each(function () {
                         ids.push($(this).data('id'));
                     });
                     $input_file.val(ids.join(','));
-                    // 拖拽排序后，重新初始化图片查看功能
-                    Dolphin.viewer();
                 }
             });
-        }/*
+        }
     });
 });
 </script>
