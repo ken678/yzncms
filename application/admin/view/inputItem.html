@@ -153,8 +153,8 @@ layui.use(['laydate'], function() {
 <div class="layui-form-item layui-form-text">
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
-        <script type="text/javascript" src="__STATIC__/ueditor/ueditor.config.js"></script>
-        <script type="text/javascript" src="__STATIC__/ueditor/ueditor.all.js"></script>
+        <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.all.js"></script>
         <script type="text/javascript">
         layui.use([], function() {
             var {$vo.fieldArr}{$vo.name} = UE.getEditor('{$vo.fieldArr}{$vo.name}', {
@@ -171,8 +171,8 @@ layui.use(['laydate'], function() {
 {/case}
 {/switch}
 {/volist}
-<script type="text/javascript" src="__STATIC__/webuploader/webuploader.min.js"></script>
-<link rel="stylesheet" href="__STATIC__/webuploader/webuploader.css">
+<script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
+<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
 <script type="text/javascript">
 jQuery(document).ready(function() {
     // 文件上传集合
@@ -356,7 +356,7 @@ jQuery(document).ready(function() {
 
         // 如果是多图上传，则实例化拖拽
         /*if ($multiple) {
-            $file_list.sortable({
+            Sortable.create($file_list,{
                 connectWith: ".uploader-list",
                 handle: '.move-picture',
                 stop: function () {
@@ -368,10 +368,8 @@ jQuery(document).ready(function() {
                     // 拖拽排序后，重新初始化图片查看功能
                     Dolphin.viewer();
                 }
-            }).disableSelection();
-        }*/
-
-
+            });
+        }/*
     });
 });
 </script>
