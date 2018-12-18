@@ -32,7 +32,7 @@ class Module extends Model
     //已安装模块列表
     protected $moduleList = array();
     //系统模块，隐藏
-    protected $systemModuleList = array('admin', 'attachment', 'common', 'content', 'home', 'api', 'member', 'user', 'addons');
+    protected $systemModuleList = array('admin', 'attachment', 'common', 'addons');
     //当前模块名称
     private $moduleName = null;
     //自动完成
@@ -79,16 +79,12 @@ class Module extends Model
                 unset($dirs_arr[$key[0]]);
             }
         }
-
         //数量
         //$count = count($dirs_arr);
-
         foreach ($dirs_arr as $module) {
             $list[$module] = $this->getInfoFromFile($module);
         }
-
         $result = ['moduleList' => $modules, 'modules' => $list];
-
         return $result;
 
     }

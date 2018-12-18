@@ -1,0 +1,36 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">模块管理</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container"></div>
+        </script>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$;
+    table.render({
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("admin/module/index")}',
+        cols: [
+            [
+                { field: 'title', width: 150, title: '名称' },
+                { field: 'name', width: 150, title: '标识' },
+                { field: 'description', title: '描述' },
+                { field: 'status_text', width: 80, title: '状态', templet: '<div>{{#  if(d.status_text){ }} {{d.status_text}} {{#  } else { }} 未安装 {{#  } }}</div>' },
+                { field: 'author', width: 90, title: '作者' },
+                { field: 'version', width: 90, title: '版本' },
+                { field: 'version', title: '操作', templet: '#titleTpl' }
+            ]
+        ]
+    });
+});
+</script>
+{/block}

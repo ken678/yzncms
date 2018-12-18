@@ -31,8 +31,11 @@ class Module extends Adminbase
     //本地模块列表
     public function index()
     {
-        $list = $this->ModuleModel->getAll();
-        $this->assign("data", $list['modules']);
+        if ($this->request->isAjax()) {
+            $list = $this->ModuleModel->getAll();
+            $result = array("code" => 0, "data" => $list['modules']);
+            return json($result);
+        }
         return $this->fetch();
     }
 
