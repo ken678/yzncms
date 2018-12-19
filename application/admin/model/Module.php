@@ -32,7 +32,7 @@ class Module extends Model
     //已安装模块列表
     protected $moduleList = array();
     //系统模块，隐藏
-    protected $systemModuleList = array('admin', 'attachment', 'common', 'addons');
+    protected $systemModuleList = array('admin', 'index', 'attachment', 'common', 'addons');
     //当前模块名称
     private $moduleName = null;
     //自动完成
