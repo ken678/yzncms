@@ -17,7 +17,6 @@ namespace app\admin\controller;
 use app\admin\model\Module as ModuleModel;
 use app\common\controller\Adminbase;
 use think\Controller;
-use think\Url;
 
 class Module extends Adminbase
 {
@@ -48,7 +47,7 @@ class Module extends Adminbase
                 $this->error('请选择需要安装的模块！');
             }
             if ($this->ModuleModel->install($module)) {
-                $this->success('模块安装成功！', Url::build('Admin/Module/index'));
+                $this->success('模块安装成功！', url('admin/Module/index'));
             } else {
                 $error = $this->ModuleModel->getError();
                 $this->error($error ? $error : '模块安装失败！');
@@ -73,10 +72,10 @@ class Module extends Adminbase
             $this->error('请选择需要安装的模块！');
         }
         if ($this->ModuleModel->uninstall($module)) {
-            $this->success("模块卸载成功，请及时更新缓存！", Url::build("Module/index"));
+            $this->success("模块卸载成功，请及时更新缓存！", url("admin/Module/index"));
         } else {
             $error = $this->ModuleModel->getError();
-            $this->error($error ? $error : "模块卸载失败！", Url::build("Module/index"));
+            $this->error($error ? $error : "模块卸载失败！", url("admin/Module/index"));
         }
     }
 

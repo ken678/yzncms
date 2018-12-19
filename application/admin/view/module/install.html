@@ -1,0 +1,18 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">模块安装检测</div>
+    <div class="layui-card-body">
+    	<form class="layui-form form-horizontal" action="{:url('admin/module/install')}" method="post">
+    		<input type="hidden" name="module" value="{$config.module}">
+            <div class="layui-form-item">
+                <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">确认安装</button>
+                <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
+            </div>
+    	</form>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+{/block}

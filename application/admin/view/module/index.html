@@ -1,4 +1,4 @@
-{extend name="admin@index_layout"/}
+{extend name="index_layout"/}
 {block name="main"}
 <div class="layui-card">
     <div class="layui-card-header">模块管理</div>
@@ -34,7 +34,7 @@ layui.use('table', function() {
                 { field: 'version', width: 150, title: '版本' },
                 { field: 'author', width: 150, title: '作者' },
                 { field: 'introduce', title: '简介' },
-                { field: 'installtime', width: 90, title: '安装时间', templet: '<div>{{#  if(d.installtime){ }} 11 {{#  } else { }} / {{#  } }}</div>' },
+                { field: 'installtime', width: 150, title: '安装时间', templet: '<div>{{#  if(d.installtime){ }} {{d.installtime}} {{#  } else { }} / {{#  } }}</div>' },
                 { field: '', title: '操作', templet: '#titleTpl' }
             ]
         ]

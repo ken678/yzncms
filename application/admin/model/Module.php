@@ -15,7 +15,6 @@
 namespace app\admin\model;
 
 use think\Db;
-use think\Loader;
 use think\Model;
 use util\Sql;
 
@@ -67,7 +66,7 @@ class Module extends Model
         $dirs_arr = array_diff($dirs, $this->systemModuleList);
 
         // 读取数据库已经安装模块表
-        $modules = $this->order('listorder asc')->column(true, 'module');
+        $modules = self::order('listorder asc')->select();
 
         //取得已安装模块列表
         $moduleList = array();
@@ -214,17 +213,16 @@ class Module extends Model
         }
         //缓存注册
         if (!empty($config['cache'])) {
-            if (Loader::model('common/Cache')->installModuleCache($config['cache'], $config) !== true) {
-                $this->error = Loader::model('common/Cache')->getError();
+            if (model('common/Cache')->installModuleCache($config['cache'], $config) !== true) {
+                $this->error = model('common/Cache')->getError();
                 $this->installRollback($moduleName);
                 return false;
             }
         }
-        $Dir = new \util\Dir();
         //前台模板
-        if (file_exists($this->appPath . "{$moduleName}/install/template/")) {
+        if (is_dir($this->appPath . "{$moduleName}/install/template/")) {
             //拷贝模板到前台模板目录中去
-            $Dir->copyDir($this->appPath . "{$moduleName}/install/template/", $this->templatePath);
+            copydirs($this->appPath . "{$moduleName}/install/template/", $this->templatePath);
         }
         //更新缓存
         cache('Module', null);
@@ -268,15 +266,17 @@ class Module extends Model
             return false;
         }
         //注销缓存
-        Loader::model('common/Cache')->deleteCacheModule($moduleName);
+        model('common/Cache')->deleteCacheModule($moduleName);
 
         //执行数据库脚本卸载
         $this->runSQL($moduleName, 'uninstall');
         //删除菜单项
         $this->uninstallMenu($moduleName);
-        $Dir = new \util\Dir();
+
         //删除模块前台模板
-        $Dir->delDir($this->templatePath . $moduleName . DIRECTORY_SEPARATOR);
+        if (is_dir($this->templatePath . $moduleName . DIRECTORY_SEPARATOR)) {
+            rmdirs($this->templatePath . $moduleName . DIRECTORY_SEPARATOR);
+        }
 
         //更新缓存
         cache('Module', null);
@@ -319,9 +319,9 @@ class Module extends Model
         }
         $path = $this->appPath . "{$moduleName}/install/{$file}.php";
         //检查是否有安装脚本
-        /*if (!file_exists($path)) {
-        return true;
-        }*/
+        if (!file_exists($path)) {
+            return true;
+        }
         $menu = include $path;
         if (empty($menu)) {
             return true;
