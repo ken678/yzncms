@@ -8,6 +8,15 @@
             <div class="layui-btn-container"></div>
         </script>
     </div>
+    <script type="text/html" id="titleTpl">
+        {{#  if(d.installtime == "" || d.installtime == null || d.installtime == undefined){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="install"><i class="icon iconfont icon-zidongxiufu"></i>&nbsp;安装</a>
+{{#  } else { }}
+    {{#  if(d.iscore == 0){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="uninstall"><i class="icon iconfont icon-shanchu"></i>&nbsp;卸载</a>
+    {{#  } }}
+{{#  } }}
+</script>
 </div>
 {/block}
 {block name="script"}
@@ -21,15 +30,51 @@ layui.use('table', function() {
         url: '{:url("admin/module/index")}',
         cols: [
             [
-                { field: 'title', width: 150, title: '名称' },
-                { field: 'name', width: 150, title: '标识' },
-                { field: 'description', title: '描述' },
-                { field: 'status_text', width: 80, title: '状态', templet: '<div>{{#  if(d.status_text){ }} {{d.status_text}} {{#  } else { }} 未安装 {{#  } }}</div>' },
-                { field: 'author', width: 90, title: '作者' },
-                { field: 'version', width: 90, title: '版本' },
-                { field: 'version', title: '操作', templet: '#titleTpl' }
+                { field: 'modulename', width: 150, title: '名称' },
+                { field: 'version', width: 150, title: '版本' },
+                { field: 'author', width: 150, title: '作者' },
+                { field: 'introduce', title: '简介' },
+                { field: 'installtime', width: 90, title: '安装时间', templet: '<div>{{#  if(d.installtime){ }} 11 {{#  } else { }} / {{#  } }}</div>' },
+                { field: '', title: '操作', templet: '#titleTpl' }
             ]
         ]
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        if (obj.event === 'install') {
+             window.open('{:url("admin/module/install")}' + "?module=" + data.module, '_self')
+        } else if (obj.event === 'uninstall') {
+            layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
+                $.post('{:url("admin/module/uninstall")}', { 'module': data.module }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+                layer.close(index);
+            });
+
+        }
     });
 });
 </script>
