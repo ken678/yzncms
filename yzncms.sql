@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-19 18:20:27
+Date: 2018-12-20 13:54:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -59,7 +59,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1545213192', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1545283554', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '2', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -75,7 +75,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -161,6 +161,22 @@ INSERT INTO `yzn_adminlog` VALUES ('78', '1', '1', '提示语:模块卸载成功
 INSERT INTO `yzn_adminlog` VALUES ('79', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545214744', '2130706433', '/admin/module/uninstall.html');
 INSERT INTO `yzn_adminlog` VALUES ('80', '1', '1', '提示语:模块安装成功！', '1545214750', '2130706433', '/admin/module/install.html');
 INSERT INTO `yzn_adminlog` VALUES ('81', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545214809', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('82', '0', '0', '提示语:请先登陆', '1545283549', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('83', '1', '1', '提示语:恭喜您，登陆成功', '1545283554', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('84', '1', '1', '提示语:模块安装成功！', '1545283739', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('85', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545283768', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('86', '0', '1', '提示语:该页面不存在！', '1545283889', '2130706433', '/addons/addons/addonadmin/menuid/35.html');
+INSERT INTO `yzn_adminlog` VALUES ('87', '0', '1', '提示语:该页面不存在！', '1545283903', '2130706433', '/addons/addons/addonadmin/menuid/35.html');
+INSERT INTO `yzn_adminlog` VALUES ('88', '0', '1', '提示语:该页面不存在！', '1545283908', '2130706433', '/addons/addons/addonadmin/menuid/35.html');
+INSERT INTO `yzn_adminlog` VALUES ('89', '0', '1', '提示语:该页面不存在！', '1545283933', '2130706433', '/addons/addons/addonadmin/menuid/35.html');
+INSERT INTO `yzn_adminlog` VALUES ('90', '1', '1', '提示语:模块安装成功！', '1545284668', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('91', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545284939', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('92', '1', '1', '提示语:模块安装成功！', '1545284957', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('93', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545284976', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('94', '1', '1', '提示语:模块安装成功！', '1545284985', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('95', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545285075', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('96', '1', '1', '提示语:模块安装成功！', '1545285081', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('97', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545285222', '2130706433', '/admin/module/uninstall.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -405,14 +421,14 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
 INSERT INTO `yzn_menu` VALUES ('3', '设置', 'icon-shezhi', '0', 'admin', 'setting', 'index', '', '1', '', '0', '2');
-INSERT INTO `yzn_menu` VALUES ('4', '模块', 'icon-module', '0', 'admin', 'module', 'index', '', '1', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('5', '扩展', 'icon-yingyong', '0', 'addons', 'addons', 'index', '', '1', '', '0', '4');
+INSERT INTO `yzn_menu` VALUES ('4', '模块', 'icon-module', '0', 'admin', 'module', 'index', '', '1', '', '0', '9');
+INSERT INTO `yzn_menu` VALUES ('5', '扩展', 'icon-yingyong', '0', 'addons', 'addons', 'index', '', '1', '', '0', '10');
 INSERT INTO `yzn_menu` VALUES ('10', '系统配置', 'icon-zidongxiufu', '3', 'admin', 'config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('11', '配置管理', 'icon-peizhi', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('13', '网站设置', 'icon-shezhi', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
@@ -438,7 +454,7 @@ INSERT INTO `yzn_menu` VALUES ('34', '行为管理', '', '32', 'addons', 'addons
 INSERT INTO `yzn_menu` VALUES ('35', '插件后台列表', '', '5', 'addons', 'addons', 'addonadmin', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('36', '本地模块', '', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('37', '模块管理', '', '36', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('38', '模块列表', '', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('38', '模块后台列表', '', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_module`

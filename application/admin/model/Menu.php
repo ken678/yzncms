@@ -213,10 +213,11 @@ class Menu extends Model
             $pid = $parentid ?: ((is_null($rs['parentid']) || !isset($rs['parentid'])) ? (int) $defaultMenuParentid : $rs['parentid']);
             $newData = array_merge(array(
                 'title' => $rs['name'],
+                'icon' => isset($rs['icon']) ? $rs['icon'] : '',
                 'parentid' => $pid,
                 'status' => isset($rs['status']) ? $rs['status'] : 0,
-                'tip' => $rs['remark'] ?: '',
-                'listorder' => $rs['listorder'] ?: 0,
+                'tip' => isset($rs['remark']) ? $rs['remark'] : '',
+                'listorder' => isset($rs['listorder']) ? $rs['listorder'] : 0,
             ), $route);
 
             $result = self::create($newData);
