@@ -23,13 +23,12 @@ layui.use('table', function() {
         url: '{:url("cms/models/index")}',
         cols: [
             [
-                { field: 'title', width: 150, title: '模型ID' },
+                { field: 'id', width: 150, title: '模型ID' },
                 { field: 'name', width: 150, title: '模型名称' },
-                { field: 'description', width:150,title: '数据表' },
-                { field: 'status_text', title: '描述' },
-                { field: 'author', width: 90, title: '数据量' },
-                { field: 'version', width: 90, title: '状态' },
-                { field: 'version', title: '操作', templet: '#titleTpl' }
+                { field: 'tablename', width:150,title: '数据表' },
+                { field: 'description', title: '描述' },
+                { field: 'disabled', width: 90, title: '状态', templet: '<div>{{#  if(d.disabled==0){ }} 正常 {{#  } else { }} <font color="#FF0000">禁用</font> {{#  } }} </div>' },
+                { field: '', title: '操作', templet: '#titleTpl' }
             ]
         ]
     });

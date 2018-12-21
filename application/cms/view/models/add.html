@@ -1,7 +1,7 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <div class="layui-card">
-	<div class="layui-card-header">添加模型</div>
+    <div class="layui-card-header">添加模型</div>
     <div class="layui-card-body">
         <form class="layui-form form-horizontal" action="{:url('cms/models/add')}" method="post">
             <div class="layui-form-item">
@@ -16,7 +16,15 @@
                 <div class="layui-input-inline">
                     <input type="text" name="tablename" lay-verify="tablename" autocomplete="off" placeholder="模型表键名" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux">由英文、数字组成</div>
+                <div class="layui-form-mid layui-word-aux">由纯英文组成</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">模型类型</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="type" value="1" title="独立表" checked>
+                    <input type="radio" name="type" value="2" title="主附表">
+                </div>
+                <div class="layui-form-mid layui-word-aux">主附表通过分表提高数据库操作效率</div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">描述</label>
