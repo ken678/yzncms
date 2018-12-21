@@ -32,21 +32,17 @@ CREATE TABLE `yzn_model` (
   `name` char(30) NOT NULL DEFAULT '' COMMENT '模型名称',
   `description` char(100) NOT NULL DEFAULT '' COMMENT '描述',
   `tablename` char(20) NOT NULL DEFAULT '' COMMENT '表名',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '模型类别：1-独立表，2-主附表',
   `setting` text COMMENT '配置信息',
   `addtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `items` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '信息数',
   `enablesearch` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启全站搜索',
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
-  `default_style` char(30) NOT NULL DEFAULT '' COMMENT '风格',
-  `category_template` char(30) NOT NULL DEFAULT '' COMMENT '栏目模板',
-  `list_template` char(30) NOT NULL DEFAULT '' COMMENT '列表模板',
-  `show_template` char(30) NOT NULL DEFAULT '' COMMENT '内容模板',
-  `js_template` varchar(30) NOT NULL DEFAULT '' COMMENT 'JS模板',
-  `sort` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
-  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
+  `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
+  `mark` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
   PRIMARY KEY (`modelid`),
-  KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+  KEY `type` (`mark`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 DROP TABLE IF EXISTS `yzn_model_field`;
 CREATE TABLE `yzn_model_field` (
