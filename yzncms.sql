@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
+Source Server         : 本地链接
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : yzncms
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-21 18:04:16
+Date: 2018-12-21 23:25:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -60,7 +60,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1545379574', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1545396657', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '2', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -76,7 +76,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=174 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=MyISAM AUTO_INCREMENT=191 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -254,6 +254,23 @@ INSERT INTO `yzn_adminlog` VALUES ('170', '0', '1', '提示语:模型名称已�
 INSERT INTO `yzn_adminlog` VALUES ('171', '0', '1', '提示语:模型名称已存在', '1545386542', '2130706433', '/cms/models/add.html');
 INSERT INTO `yzn_adminlog` VALUES ('172', '1', '1', '提示语:添加模型成功！', '1545386552', '2130706433', '/cms/models/add.html');
 INSERT INTO `yzn_adminlog` VALUES ('173', '1', '1', '提示语:添加模型成功！', '1545386587', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('174', '0', '0', '提示语:请先登陆', '1545396652', '2130706433', '/admin');
+INSERT INTO `yzn_adminlog` VALUES ('175', '1', '1', '提示语:恭喜您，登陆成功', '1545396657', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('176', '1', '1', '提示语:添加模型成功！', '1545397358', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('177', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545399002', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('178', '1', '1', '提示语:模块安装成功！', '1545399216', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('179', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545403111', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('180', '1', '1', '提示语:模块安装成功！', '1545403119', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('181', '0', '1', '提示语:模型名称已存在', '1545403188', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('182', '0', '1', '提示语:模型名称已存在', '1545403710', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('183', '0', '1', '提示语:添加失败！', '1545404584', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('184', '0', '1', '提示语:添加失败！', '1545404647', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('185', '1', '1', '提示语:添加模型成功！', '1545404822', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('186', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545405108', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('187', '1', '1', '提示语:模块安装成功！', '1545405144', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('188', '0', '1', '提示语:模型名称已存在', '1545405223', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('189', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545405887', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('190', '1', '1', '提示语:模块安装成功！', '1545405894', '2130706433', '/admin/module/install.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -371,7 +388,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -379,7 +396,7 @@ CREATE TABLE `yzn_cache` (
 INSERT INTO `yzn_cache` VALUES ('1', 'Config', '网站配置', 'admin', 'Config', 'config_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('2', 'Menu', '后台菜单', 'admin', 'Menu', 'menu_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('3', 'Module', '可用模块列表', 'admin', 'Module', 'module_cache', '1');
-INSERT INTO `yzn_cache` VALUES ('5', 'Model', '模型列表', 'cms', 'Models', 'model_cache', '0');
+INSERT INTO `yzn_cache` VALUES ('9', 'Model', '模型列表', 'cms', 'Models', 'model_cache', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_category`
@@ -534,7 +551,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=131 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=171 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -576,16 +593,16 @@ INSERT INTO `yzn_menu` VALUES ('67', '优化表', '', '63', 'addons', 'database'
 INSERT INTO `yzn_menu` VALUES ('68', '还原表', '', '63', 'addons', 'database', 'import', 'isadmin=1', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('69', '备份数据库', '', '63', 'addons', 'database', 'export', 'isadmin=1', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('70', '备份数据库下载', '', '63', 'addons', 'database', 'download', 'isadmin=1', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('130', '禁用模型', '', '126', 'cms', 'models', 'disabled', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('129', '删除模型', '', '126', 'cms', 'models', 'delete', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('128', '修改模型', '', '126', 'cms', 'models', 'edit', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('127', '添加模型', '', '126', 'cms', 'models', 'add', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('126', '模型管理', '', '124', 'cms', 'models', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('125', '栏目列表', '', '124', 'cms', 'category', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('124', '相关设置', '', '121', 'cms', 'category', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('123', '管理内容', '', '122', 'cms', 'cms', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('122', '内容管理', '', '121', 'cms', 'cms', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('121', '内容', 'iconfont icon-article', '0', 'cms', 'index', 'index', '', '1', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('166', '模型管理', 'icon-moxing', '164', 'cms', 'models', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('165', '栏目列表', 'icon-liebiao', '164', 'cms', 'category', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('164', '相关设置', 'icon-zidongxiufu', '161', 'cms', 'category', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('163', '管理内容', 'icon-neirongguanli', '162', 'cms', 'cms', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('162', '内容管理', 'icon-neirongguanli', '161', 'cms', 'cms', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('161', '内容', 'icon-article', '0', 'cms', 'index', 'index', '', '1', '', '0', '3');
+INSERT INTO `yzn_menu` VALUES ('167', '添加模型', '', '166', 'cms', 'models', 'add', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('168', '修改模型', '', '166', 'cms', 'models', 'edit', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('169', '删除模型', '', '166', 'cms', 'models', 'delete', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('170', '禁用模型', '', '166', 'cms', 'models', 'disabled', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -606,7 +623,7 @@ CREATE TABLE `yzn_model` (
   `mark` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
   PRIMARY KEY (`id`),
   KEY `type` (`mark`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 -- ----------------------------
 -- Records of yzn_model
@@ -621,23 +638,23 @@ CREATE TABLE `yzn_model_field` (
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT '字段名',
   `title` varchar(30) NOT NULL DEFAULT '' COMMENT '别名',
-  `tips` text COMMENT '字段提示',
-  `css` varchar(30) NOT NULL DEFAULT '' COMMENT '表单样式',
-  `pattern` varchar(255) NOT NULL DEFAULT '' COMMENT '数据校验正则',
-  `errortips` varchar(255) NOT NULL DEFAULT '' COMMENT '数据校验未通过的提示信息',
+  `tips` tinytext NOT NULL COMMENT '字段提示',
   `formtype` varchar(20) NOT NULL DEFAULT '' COMMENT '字段类型',
   `define` varchar(128) NOT NULL COMMENT '字段定义',
-  `setting` mediumtext COMMENT '额外设置',
-  `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否内部字段 1是',
-  `issystem` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否系统字段 1 是',
-  `isunique` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '值唯一',
+  `setting` tinytext NOT NULL COMMENT '额外设置',
+  `value` tinytext NOT NULL COMMENT '默认值',
+  `jsonrule` tinytext NOT NULL COMMENT '关联规则',
+  `ifsystem` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否系统字段 1 是',
+  `ifeditable` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否可以编辑',
+  `ifrequire` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否必填',
   `isbase` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为基本信息',
-  `issearch` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为搜索条件',
+  `ifsearch` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为搜索条件',
   `isadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '在前台投稿中显示',
-  `isfulltext` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为全站搜索信息',
   `isposition` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否入库到推荐位',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1 禁用 0启用',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1 禁用 0启用',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
@@ -668,4 +685,4 @@ CREATE TABLE `yzn_module` (
 -- ----------------------------
 -- Records of yzn_module
 -- ----------------------------
-INSERT INTO `yzn_module` VALUES ('cms', 'cms模块', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1545384801', '1545384801', '0');
+INSERT INTO `yzn_module` VALUES ('cms', 'cms模块', 'b19cc279ed484c13c96c2f7142e2f437', '0', '1', '1.0.0', null, '1545405894', '1545405894', '0');

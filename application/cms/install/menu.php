@@ -12,7 +12,7 @@ return [
         //名称
         "name" => "内容",
         //图标
-        "icon" => "iconfont icon-article",
+        "icon" => "icon-article",
         //备注
         "remark" => "",
         //排序
@@ -24,12 +24,14 @@ return [
                 "type" => 1,
                 "status" => 1,
                 "name" => "内容管理",
+                "icon" => "icon-neirongguanli",
                 "child" => [
                     [
                         "route" => "cms/cms/index",
                         "type" => 1,
                         "status" => 1,
                         "name" => "管理内容",
+                        "icon" => "icon-neirongguanli",
                     ],
                 ],
             ],
@@ -38,18 +40,21 @@ return [
                 "type" => 1,
                 "status" => 1,
                 "name" => "相关设置",
+                "icon" => "icon-zidongxiufu",
                 "child" => [
                     [
                         "route" => "cms/category/index",
                         "type" => 1,
                         "status" => 1,
                         "name" => "栏目列表",
+                        "icon" => "icon-liebiao",
                     ],
                     [
                         "route" => "cms/models/index",
                         "type" => 1,
                         "status" => 1,
                         "name" => "模型管理",
+                        "icon" => "icon-moxing",
                         "child" => [
                             [
                                 "route" => "cms/models/add",

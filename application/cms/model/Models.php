@@ -24,16 +24,8 @@ use \think\Model;
 class Models extends Model
 {
 
-    private $libPath = '';
     protected $name = 'model';
     protected $ext_table = '_data';
-
-    // 模型初始化
-    protected function initialize()
-    {
-        parent::initialize();
-        $this->libPath = APP_PATH . 'content/';
-    }
 
     /**
      * 创建模型
@@ -51,7 +43,7 @@ class Models extends Model
             //创建模型表和模型附表
             if ($this->createTable($data)) {
                 cache("Model", null);
-                return true;
+                return $this->addFieldRecord($modelid->getAttr('id'), $data['type']);
             } else {
                 //表创建失败
                 self::destroy($modelid->getAttr('id'));
@@ -72,33 +64,26 @@ class Models extends Model
         $data['tablename'] = strtolower($data['tablename']);
         $table = Config::get("database.prefix") . $data['tablename'];
         if ($this->tableExist($table)) {
-            throw new \Exception('创建失败！' . $table . '表已经存在~');
+            $this->error = '创建失败！' . $table . '表已经存在~';
+            return false;
         }
         $sql = <<<EOF
 				CREATE TABLE `{$table}` (
-				`id` mediumint(8) unsigned NOT NULL auto_increment,
-				`catid` smallint(5) unsigned NOT NULL DEFAULT '0',
-				`typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
-				`title` varchar(255) NOT NULL DEFAULT '',
-				`style` varchar(24) NOT NULL DEFAULT '',
-				`thumb` varchar(255) NOT NULL DEFAULT '',
-				`keywords` varchar(255) NOT NULL DEFAULT '',
-				`tags` varchar(255) NOT NULL DEFAULT '',
-				`description` varchar(255) NOT NULL DEFAULT '',
-				`posid` tinyint(1) unsigned NOT NULL DEFAULT '0',
-				`url` varchar(255) NOT NULL DEFAULT '',
-				`listorder` tinyint(3) unsigned NOT NULL DEFAULT '0',
-				`status` tinyint(2) unsigned NOT NULL DEFAULT '1',
-				`sysadd` tinyint(1) unsigned NOT NULL DEFAULT '0',
-				`islink` tinyint(1) unsigned NOT NULL DEFAULT '0',
-				`username` char(20) NOT NULL DEFAULT '',
-				`inputtime` int(10) unsigned NOT NULL DEFAULT '0',
-				`updatetime` int(10) unsigned NOT NULL DEFAULT '0',
-				PRIMARY KEY  (`id`),
+				`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+				`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
+				`tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
+				`posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
+				`listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+				`status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
+				`uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+				`inputtime` int(11) unsigned NOT NULL DEFAULT '0',
+				`updatetime` int(11) unsigned NOT NULL DEFAULT '0',
+				PRIMARY KEY (`id`),
 				KEY `status` (`status`,`listorder`,`id`),
-				KEY `listorder` (`catid`,`status`,`listorder`,`id`),
-				KEY `catid` (`catid`,`status`,`id`),
-				KEY `thumb` (`thumb`)
+				KEY `listorder` (`status`,`listorder`,`id`),
+				KEY `catid` (`status`,`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 EOF;
         Db::execute($sql);
@@ -106,14 +91,8 @@ EOF;
             // 新建附属表
             $sql = <<<EOF
 				CREATE TABLE `{$table}{$this->ext_table}` (
-				`id` mediumint(8) unsigned DEFAULT '0',
-				`content` text,
-				`paginationtype` tinyint(1) NOT NULL DEFAULT '0',
-				`maxcharperpage` mediumint(6) NOT NULL DEFAULT '0',
-				`template` varchar(30) NOT NULL DEFAULT '',
-				`paytype` tinyint(1) unsigned NOT NULL DEFAULT '0',
-				`allow_comment` tinyint(1) unsigned NOT NULL DEFAULT '1',
-				`relation` varchar(255) NOT NULL DEFAULT '',
+				`id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+				`content` text COLLATE utf8_unicode_ci COMMENT '内容',
 				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 EOF;
@@ -127,6 +106,139 @@ EOF;
     //创建一张主表和附表并插入进模型基础字段数据
     $sqlSplit = str_replace(array('@yzncms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $ModeSql);
     return $this->sql_execute($sqlSplit, $dbPrefix);*/
+    }
+
+    /**
+     * 添加默认字段
+     */
+    protected function addFieldRecord($modelid, $type)
+    {
+        $default = [
+            'modelid' => $modelid,
+            'create_time' => request()->time(),
+            'update_time' => request()->time(),
+            'ifsystem' => 1,
+            'status' => 1,
+            'listorder' => 100,
+        ];
+        $data = [
+            [
+                'name' => 'id',
+                'title' => '文档id',
+                'define' => 'mediumint(8) UNSIGNED',
+                'formtype' => 'hidden',
+                'ifeditable' => 1,
+            ],
+            [
+                'name' => 'title',
+                'title' => '标题',
+                'define' => 'varchar(255)',
+                'formtype' => 'text',
+                'ifsearch' => 1,
+                'ifeditable' => 1,
+                'ifrequire' => 1,
+            ],
+            [
+                'name' => 'keywords',
+                'title' => 'SEO关键词',
+                'define' => 'varchar(255)',
+                'formtype' => 'tags',
+                'jsonrule' => '{"string":{"table":"tag","key":"title","delimiter":",","where":"","limit":"6","order":"[rand]"}}',
+                'ifeditable' => 1,
+            ],
+            [
+                'name' => 'description',
+                'title' => 'SEO摘要',
+                'define' => 'varchar(255)',
+                'formtype' => 'textarea',
+                'ifeditable' => 1,
+            ],
+            [
+                'name' => 'uid',
+                'title' => '用户id',
+                'define' => 'int(10) UNSIGNED',
+                'formtype' => 'number',
+                'ifeditable' => 0,
+                'value' => 1,
+            ],
+            [
+                'name' => 'posid',
+                'title' => '推荐位',
+                'define' => 'tinyint(3)',
+                'formtype' => 'checkbox',
+                'ifeditable' => 0,
+            ],
+            [
+                'name' => 'listorder',
+                'title' => '排序',
+                'define' => 'tinyint(3) UNSIGNED',
+                'formtype' => 'number',
+                'ifeditable' => 1,
+                'value' => 100,
+            ],
+            [
+                'name' => 'status',
+                'title' => '状态',
+                'define' => 'tinyint(1)',
+                'formtype' => 'radio',
+                'ifeditable' => 1,
+                'value' => 1,
+                'setting' => '0:禁用
+1:启用',
+            ],
+            [
+                'name' => 'inputtime',
+                'title' => '创建时间',
+                'define' => 'int(11) UNSIGNED',
+                'formtype' => 'datetime',
+                'value' => 0,
+                'ifeditable' => 1,
+                'listorder' => 200,
+            ],
+            [
+                'name' => 'updatetime',
+                'title' => '更新时间',
+                'define' => 'int(11) UNSIGNED',
+                'formtype' => 'datetime',
+                'ifeditable' => 0,
+                'value' => 0,
+                'listorder' => 200,
+            ],
+        ];
+        if ($type == 2) {
+            array_push($data, [
+                'name' => 'id',
+                'title' => '附表文档id',
+                'define' => 'mediumint(8) UNSIGNED',
+                'formtype' => 'hidden',
+                'ifeditable' => 0,
+                'ifsystem' => 0,
+            ],
+                [
+                    'name' => 'content',
+                    'title' => '内容',
+                    'define' => 'text',
+                    'formtype' => 'Ueditor',
+                    'ifsystem' => 0,
+                    'ifeditable' => 1,
+                ]);
+
+        }
+        foreach ($data as $item) {
+            $item = array_merge($default, $item);
+            Db::name('model_field')->insert($item);
+        }
+        return true;
+
+    }
+
+    protected function tableExist($table)
+    {
+        if (true == Db::query("SHOW TABLES LIKE '{$table}'")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -146,15 +258,6 @@ EOF;
             $Cache[$v['modelid']] = $v;
         }
         return $Cache;
-    }
-
-    protected function tableExist($table)
-    {
-        if (true == Db::query("SHOW TABLES LIKE '{$table}'")) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**
