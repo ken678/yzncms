@@ -32,7 +32,7 @@ class Module extends Adminbase
     {
         if ($this->request->isAjax()) {
             $list = $this->ModuleModel->getAll();
-            $result = array("code" => 0, "data" => $list['modules']);
+            $result = array("code" => 0, "data" => $list);
             return json($result);
         }
         return $this->fetch();

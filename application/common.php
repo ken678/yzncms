@@ -169,6 +169,35 @@ function arr2str($arr, $glue = ',')
 }
 
 /**
+ * 时间转换
+ * @param array $arr        传入数组
+ * @param string $field     字段名
+ * @param string $format    格式
+ * @return mixed
+ */
+function to_time(&$arr, $field = 'time', $format = 'Y-m-d H:i:s')
+{
+    if (isset($arr[$field])) {
+        $arr[$field] = date($format, $arr[$field]);
+    }
+    return $arr;
+}
+
+/**
+ * ip转换
+ * @param array $arr        传入数组
+ * @param string $field     字段名
+ * @return mixed
+ */
+function to_ip(&$arr, $field = 'ip')
+{
+    if (isset($arr[$field])) {
+        $arr[$field] = long2ip($arr[$field]);
+    }
+    return $arr;
+}
+
+/**
  * 对查询结果集进行排序
  * @access public
  * @param array $list 查询结果

@@ -68,24 +68,13 @@ class Module extends Model
         // 读取数据库已经安装模块表
         $modules = self::order('listorder asc')->select();
 
-        //取得已安装模块列表
-        $moduleList = array();
-        foreach ($modules as $v) {
-            $moduleList[$v['module']] = $v;
-            //检查是否系统模块，如果是，直接不显示
-            if ($v['iscore']) {
-                $key = array_keys($dirs_arr, $v['module']);
-                unset($dirs_arr[$key[0]]);
-            }
-        }
         //数量
         //$count = count($dirs_arr);
         $list = [];
         foreach ($dirs_arr as $module) {
             $list[$module] = $this->getInfoFromFile($module);
         }
-        $result = ['moduleList' => $modules, 'modules' => $list];
-        return $result;
+        return $list;
 
     }
 
@@ -159,8 +148,6 @@ class Module extends Model
         }
         //已安装模块列表
         $moduleList = cache('Module');
-        //设置脚本最大执行时间
-        set_time_limit(0);
         if ($this->competence($moduleName) !== true) {
             return false;
         }
@@ -450,9 +437,11 @@ class Module extends Model
             return false;
         }
         $module = array();
-        foreach ($data as $v) {
+        foreach ($data as &$v) {
+            to_time($v, 'installtime');
             $module[$v['module']] = $v;
         }
+        unset($v);
         cache('Module', $module);
         return $module;
     }
