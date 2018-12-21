@@ -30,7 +30,13 @@ return array(
     //行为注册
     'tags' => [],
     //缓存，格式：缓存key=>array('module','model','action')
-    'cache' => [],
+    'cache' => [
+        'Model' => [
+            'name' => '模型列表',
+            'model' => 'Models',
+            'action' => 'model_cache',
+        ],
+    ],
     // 数据表，请加表前缀yzn[有数据库表时必填]
     'tables' => [],
 );

@@ -55,10 +55,10 @@ class Cache extends Model
             $add = array(
                 'key' => $key,
                 'name' => $rs['name'],
-                'module' => $rs['module'] ?: $module,
+                'module' => isset($rs['module']) ? $rs['module'] : $module,
                 'model' => $rs['model'],
                 'action' => $rs['action'],
-                'param' => $rs['param'] ?: '',
+                'param' => isset($rs['param']) ? $rs['param'] : '',
                 'system' => 0,
             );
             $data[] = $add;
