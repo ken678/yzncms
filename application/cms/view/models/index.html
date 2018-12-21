@@ -1,0 +1,38 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">模型列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-sm" href="{:url('cms/models/add')}">添加模型</a>
+            </div>
+        </script>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$;
+    table.render({
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("cms/models/index")}',
+        cols: [
+            [
+                { field: 'title', width: 150, title: '模型ID' },
+                { field: 'name', width: 150, title: '模型名称' },
+                { field: 'description', width:150,title: '数据表' },
+                { field: 'status_text', title: '描述' },
+                { field: 'author', width: 90, title: '数据量' },
+                { field: 'version', width: 90, title: '状态' },
+                { field: 'version', title: '操作', templet: '#titleTpl' }
+            ]
+        ]
+    });
+});
+</script>
+{/block}

@@ -50,6 +50,32 @@ return [
                         "type" => 1,
                         "status" => 1,
                         "name" => "模型管理",
+                        "child" => [
+                            [
+                                "route" => "cms/models/add",
+                                "type" => 1,
+                                "status" => 1,
+                                "name" => "添加模型",
+                            ],
+                            [
+                                "route" => "cms/models/edit",
+                                "type" => 1,
+                                "status" => 1,
+                                "name" => "修改模型",
+                            ],
+                            [
+                                "route" => "cms/models/delete",
+                                "type" => 1,
+                                "status" => 1,
+                                "name" => "删除模型",
+                            ],
+                            [
+                                "route" => "cms/models/disabled",
+                                "type" => 1,
+                                "status" => 1,
+                                "name" => "禁用模型",
+                            ],
+                        ],
                     ],
                 ],
             ],
