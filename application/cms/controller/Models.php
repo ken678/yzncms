@@ -32,7 +32,7 @@ class Models extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $data = $this->Models->where(array("type" => 0))->select();
+            $data = $this->Models->select();
             $result = array("code" => 0, "data" => $data);
             return json($result);
         }

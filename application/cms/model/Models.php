@@ -42,15 +42,15 @@ class Models extends Model
         return false;
         }*/
         //添加模型记录
-        $modelid = $this->allowField(true)->save($data);
+        $modelid = self::create($data);
         if ($modelid) {
             //创建模型表和模型附表
-            if ($this->createModel($data['tablename'], $this->modelid)) {
-                cache("Model", null);
-                return $this->modelid;
+            if ($this->createModel($data['tablename'], $modelid->getAttr('id'))) {
+                //cache("Model", null);
+                return true;
             } else {
                 //表创建失败
-                $this->where(array("modelid" => $this->modelid))->delete();
+                self::destroy($modelid->getAttr('id'));
                 $this->error = '数据表创建失败！';
                 return false;
             }
@@ -71,8 +71,7 @@ class Models extends Model
         if (empty($tableName) || $modelId < 1) {
             return false;
         }
-        var_dump(1111);
-        exit();
+        return true;
 
         //表前缀
         /* $dbPrefix = Config::get("database.prefix");

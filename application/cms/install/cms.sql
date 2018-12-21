@@ -28,7 +28,7 @@ CREATE TABLE `yzn_category` (
 
 DROP TABLE IF EXISTS `yzn_model`;
 CREATE TABLE `yzn_model` (
-  `modelid` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(30) NOT NULL DEFAULT '' COMMENT '模型名称',
   `description` char(100) NOT NULL DEFAULT '' COMMENT '描述',
   `tablename` char(20) NOT NULL DEFAULT '' COMMENT '表名',
@@ -40,16 +40,16 @@ CREATE TABLE `yzn_model` (
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
   `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
   `mark` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
-  PRIMARY KEY (`modelid`),
+  PRIMARY KEY (`id`),
   KEY `type` (`mark`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 DROP TABLE IF EXISTS `yzn_model_field`;
 CREATE TABLE `yzn_model_field` (
-  `fieldid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
-  `field` varchar(20) NOT NULL DEFAULT '' COMMENT '字段名',
-  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '别名',
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '字段名',
+  `title` varchar(30) NOT NULL DEFAULT '' COMMENT '别名',
   `tips` text COMMENT '字段提示',
   `css` varchar(30) NOT NULL DEFAULT '' COMMENT '表单样式',
   `pattern` varchar(255) NOT NULL DEFAULT '' COMMENT '数据校验正则',
@@ -67,7 +67,6 @@ CREATE TABLE `yzn_model_field` (
   `isposition` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否入库到推荐位',
   `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1 禁用 0启用',
-  PRIMARY KEY (`fieldid`),
-  KEY `modelid` (`modelid`,`disabled`),
-  KEY `field` (`field`,`modelid`)
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`,`modelid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
