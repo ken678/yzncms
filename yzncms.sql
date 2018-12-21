@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-21 17:33:54
+Date: 2018-12-21 18:04:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -76,7 +76,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=169 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=MyISAM AUTO_INCREMENT=174 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -249,6 +249,11 @@ INSERT INTO `yzn_adminlog` VALUES ('165', '1', '1', '提示语:模块卸载成�
 INSERT INTO `yzn_adminlog` VALUES ('166', '1', '1', '提示语:模块安装成功！', '1545384780', '2130706433', '/admin/module/install.html');
 INSERT INTO `yzn_adminlog` VALUES ('167', '1', '1', '提示语:模块卸载成功，请及时更新缓存！', '1545384792', '2130706433', '/admin/module/uninstall.html');
 INSERT INTO `yzn_adminlog` VALUES ('168', '1', '1', '提示语:模块安装成功！', '1545384801', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('169', '0', '1', '提示语:模型名称已存在', '1545386436', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('170', '0', '1', '提示语:模型名称已存在', '1545386502', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('171', '0', '1', '提示语:模型名称已存在', '1545386542', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('172', '1', '1', '提示语:添加模型成功！', '1545386552', '2130706433', '/cms/models/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('173', '1', '1', '提示语:添加模型成功！', '1545386587', '2130706433', '/cms/models/add.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -601,7 +606,7 @@ CREATE TABLE `yzn_model` (
   `mark` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
   PRIMARY KEY (`id`),
   KEY `type` (`mark`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 -- ----------------------------
 -- Records of yzn_model
