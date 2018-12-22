@@ -75,10 +75,10 @@ return [
                                 "name" => "删除模型",
                             ],
                             [
-                                "route" => "cms/models/disabled",
+                                "route" => "cms/models/setstate",
                                 "type" => 1,
                                 "status" => 1,
-                                "name" => "禁用模型",
+                                "name" => "设置模型状态",
                             ],
                         ],
                     ],

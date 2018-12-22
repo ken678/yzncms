@@ -15,12 +15,16 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+</script>
 {/block}
 {block name="script"}
 <script>
 layui.use('table', function() {
     var table = layui.table,
-        $ = layui.$;
+        $ = layui.$,
+        form = layui.form;
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
@@ -31,10 +35,22 @@ layui.use('table', function() {
                 { field: 'name', width: 150, title: '模型名称' },
                 { field: 'tablename', width:150,title: '数据表' },
                 { field: 'description', title: '描述' },
-                { field: 'disabled', width: 90, title: '状态', templet: '<div>{{#  if(d.disabled==0){ }} 正常 {{#  } else { }} <font color="#FF0000">禁用</font> {{#  } }} </div>' },
+                { field: 'status', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
                 { field: '', title: '操作', templet: '#barTool' }
             ]
         ]
+    });
+
+        //监听状态操作
+    form.on('switch(status)', function(obj) {
+        $.post('{:url("cms/models/setstate")}', { 'id': this.value}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        });
     });
 
     //监听行工具事件

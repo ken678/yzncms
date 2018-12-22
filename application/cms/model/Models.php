@@ -27,6 +27,8 @@ class Models extends Modelbase
 
     protected $name = 'model';
     protected $ext_table = '_data';
+    protected $autoWriteTimestamp = true;
+    protected $insert = ['status' => 1];
 
     /**
      * 创建模型

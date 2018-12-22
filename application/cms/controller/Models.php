@@ -85,4 +85,17 @@ class Models extends Adminbase
         }
     }
 
+    /**
+     * 模型状态
+     */
+    public function setstate()
+    {
+        $id = $this->request->param('id/d');
+        empty($id) && $this->error('参数不能为空！');
+        $r = $this->Models->where((array('id' => $id)))->value('status');
+        $status = $r == '1' ? '0' : '1';
+        $this->Models->where((array('id' => $id)))->update(array('status' => $status));
+        $this->success("操作成功！");
+    }
+
 }
