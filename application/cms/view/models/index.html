@@ -4,13 +4,17 @@
     <div class="layui-card-header">模型列表</div>
     <div class="layui-card-body">
         <table class="layui-hide" id="table" lay-filter="table"></table>
-        <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{:url('cms/models/add')}">添加模型</a>
-            </div>
-        </script>
     </div>
 </div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" href="{:url('cms/models/add')}">添加模型</a>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 {/block}
 {block name="script"}
 <script>
@@ -28,9 +32,45 @@ layui.use('table', function() {
                 { field: 'tablename', width:150,title: '数据表' },
                 { field: 'description', title: '描述' },
                 { field: 'disabled', width: 90, title: '状态', templet: '<div>{{#  if(d.disabled==0){ }} 正常 {{#  } else { }} <font color="#FF0000">禁用</font> {{#  } }} </div>' },
-                { field: '', title: '操作', templet: '#titleTpl' }
+                { field: '', title: '操作', templet: '#barTool' }
             ]
         ]
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("cms/models/delete")}', { 'id': data.id }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });
+        }else if (obj.event === 'edit') {
+            window.open('{:url("admin/models/edit")}' + "?id=" + data.userid, '_self')
+        }
     });
 });
 </script>

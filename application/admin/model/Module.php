@@ -117,8 +117,8 @@ class Module extends Model
         );
 
         // 从配置文件获取
-        if (is_file($this->appPath . $moduleName . '/config.php')) {
-            $moduleConfig = include $this->appPath . $moduleName . '/config.php';
+        if (is_file($this->appPath . $moduleName . '/info.php')) {
+            $moduleConfig = include $this->appPath . $moduleName . '/info.php';
             $config = array_merge($config, $moduleConfig);
         }
 

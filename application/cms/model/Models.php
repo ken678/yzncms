@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\model;
 
+use app\common\model\Modelbase;
 use think\Db;
 use think\facade\Config;
 use \think\Model;
@@ -21,7 +22,7 @@ use \think\Model;
 /**
  * 模型
  */
-class Models extends Model
+class Models extends Modelbase
 {
 
     protected $name = 'model';
@@ -46,7 +47,37 @@ class Models extends Model
             }
         }
         return false;
+    }
 
+    /**
+     * 根据模型ID删除模型
+     * @param type $id 模型id
+     * @return boolean
+     */
+    public function deleteModel($id)
+    {
+        if (empty($id)) {
+            return false;
+        }
+        $modeldata = self::where(array("id" => $id))->find();
+        if (!$modeldata) {
+            return false;
+        }
+        //表名
+        $model_table = $modeldata['tablename'];
+        //删除模型数据
+        self::destroy($id);
+        //更新缓存
+        cache("Model", null);
+        //删除所有和这个模型相关的字段
+        Db::name("ModelField")->where(array("modelid" => $id))->delete();
+        //删除主表
+        $this->deleteTable($model_table);
+        if ((int) $modeldata['type'] == 2) {
+            //删除副表
+            $this->deleteTable($model_table . "_data");
+        }
+        return true;
     }
 
     /**
@@ -56,7 +87,7 @@ class Models extends Model
     {
         $data['tablename'] = strtolower($data['tablename']);
         $table = Config::get("database.prefix") . $data['tablename'];
-        if ($this->tableExist($table)) {
+        if ($this->table_exists($data['tablename'])) {
             $this->error = '创建失败！' . $table . '表已经存在~';
             return false;
         }
@@ -92,13 +123,6 @@ EOF;
             Db::execute($sql);
         }
         return true;
-
-        //表前缀
-        /* $dbPrefix = Config::get("database.prefix");
-    $ModeSql = file_get_contents($this->libPath . self::ModeSql);
-    //创建一张主表和附表并插入进模型基础字段数据
-    $sqlSplit = str_replace(array('@yzncms@', '@zhubiao@', '@modelid@'), array($dbPrefix, $tableName, $modelId), $ModeSql);
-    return $this->sql_execute($sqlSplit, $dbPrefix);*/
     }
 
     /**
@@ -225,13 +249,16 @@ EOF;
 
     }
 
-    protected function tableExist($table)
+    /**
+     * 删除表
+     * $table 不带表前缀
+     */
+    public function deleteTable($table)
     {
-        if (true == Db::query("SHOW TABLES LIKE '{$table}'")) {
-            return true;
-        } else {
-            return false;
+        if ($this->table_exists($table)) {
+            $this->drop_table($table);
         }
+        return true;
     }
 
     /**
