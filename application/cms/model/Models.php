@@ -37,22 +37,15 @@ class Models extends Model
         if (empty($data)) {
             return false;
         }
-        //添加模型记录
-        $modelid = self::create($data);
-        if ($modelid) {
-            //创建模型表和模型附表
-            if ($this->createTable($data)) {
-                cache("Model", null);
-                return $this->addFieldRecord($modelid->getAttr('id'), $data['type']);
-            } else {
-                //表创建失败
-                self::destroy($modelid->getAttr('id'));
-                $this->error = '数据表创建失败！';
-                return false;
+        //创建模型表和模型附表
+        if ($this->createTable($data)) {
+            cache("Model", null);
+            //添加模型记录
+            if (self::allowField(true)->save($data)) {
+                return $this->addFieldRecord($this->getAttr('id'), $data['type']);
             }
-        } else {
-            return false;
         }
+        return false;
 
     }
 
@@ -96,8 +89,8 @@ EOF;
 				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 EOF;
+            Db::execute($sql);
         }
-        Db::execute($sql);
         return true;
 
         //表前缀
