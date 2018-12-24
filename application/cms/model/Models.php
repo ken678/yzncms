@@ -335,14 +335,14 @@ EOF;
      */
     public function getModelAll($type = null)
     {
-        $where = array('disabled' => 0);
+        $where = array('status' => 1);
         if (!is_null($type)) {
             $where['type'] = $type;
         }
         $data = Db::name('model')->where($where)->select();
         $Cache = array();
         foreach ($data as $v) {
-            $Cache[$v['modelid']] = $v;
+            $Cache[$v['id']] = $v;
         }
         return $Cache;
     }
