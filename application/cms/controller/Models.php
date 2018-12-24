@@ -94,10 +94,10 @@ class Models extends Adminbase
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
         //检查该模型是否已经被使用
-        /*$r = Db::name("Category")->where(array("modelid" => $modelid))->find();
+        $r = Db::name("category")->where(array("modelid" => $id))->find();
         if ($r) {
-        $this->error("该模型使用中，删除栏目后再删除！");
-        }*/
+            $this->error("该模型使用中，删除栏目后再删除！");
+        }
         //这里可以根据缓存获取表名
         $modeldata = $this->Models->where(array("id" => $id))->find();
         if (!$modeldata) {
