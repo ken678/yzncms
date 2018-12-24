@@ -12,6 +12,7 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="field">字段管理</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -86,6 +87,8 @@ layui.use('table', function() {
             });
         }else if (obj.event === 'edit') {
             window.open('{:url("cms/models/edit")}' + "?id=" + data.id, '_self')
+        }else if (obj.event === 'field') {
+            window.open('{:url("cms/field/index")}' + "?id=" + data.id, '_self')
         }
     });
 });

@@ -1,0 +1,56 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">字段列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" href="{:url('cms/field/add')}">添加字段</a>
+    </div>
+</script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("cms/field/index",["id"=>$modelid])}',
+        cols: [
+            [
+                { field: 'id', width: 80, title: 'ID' },
+                { field: 'name', width: 150, title: '字段名称' },
+                { field: 'title', width:150,title: '标题' },
+                { field: 'formtype',width:150, title: '字段类型' },
+                { field: 'ifsystem',width:80, title: '主表',templet: '<div>{{#  if(d.ifsystem){ }} 是 {{#  } }} </div>'},
+                { field: 'create_time',width:180, title: '创建时间' },
+                { field: 'status', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
+                { field: '', title: '操作', templet: '#barTool' }
+            ]
+        ]
+    });
+
+    //监听状态操作
+    form.on('switch(status)', function(obj) {
+        $.post('{:url("cms/field/setstate")}', { 'id': this.value}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        });
+    });
+
+});
+</script>
+{/block}

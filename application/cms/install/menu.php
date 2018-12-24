@@ -57,6 +57,12 @@ return [
                         "icon" => "icon-moxing",
                         "child" => [
                             [
+                                "route" => "cms/field/index",
+                                "type" => 1,
+                                "status" => 1,
+                                "name" => "字段管理",
+                            ],
+                            [
                                 "route" => "cms/models/add",
                                 "type" => 1,
                                 "status" => 1,

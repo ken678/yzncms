@@ -182,7 +182,7 @@ EOF;
             // 新建附属表
             $sql = <<<EOF
 				CREATE TABLE `{$table}{$this->ext_table}` (
-				`id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+				`did` mediumint(8) unsigned NOT NULL DEFAULT '0',
 				`content` text COLLATE utf8_unicode_ci COMMENT '内容',
 				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -291,7 +291,7 @@ EOF;
         ];
         if ($type == 2) {
             array_push($data, [
-                'name' => 'id',
+                'name' => 'did',
                 'title' => '附表文档id',
                 'define' => 'mediumint(8) UNSIGNED',
                 'formtype' => 'hidden',
