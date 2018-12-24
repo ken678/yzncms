@@ -69,8 +69,9 @@ class Models extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->param();
-            if (empty($data)) {
-                $this->error('提交数据不能为空！');
+            $result = $this->validate($data, 'Models');
+            if (true !== $result) {
+                return $this->error($result);
             }
             if ($this->Models->editModel($data)) {
                 $this->success('模型修改成功！', url('index'));

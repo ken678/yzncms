@@ -21,8 +21,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">模型类型</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="type" value="1" title="独立表" checked>
-                    <input type="radio" name="type" value="2" title="主附表">
+                    <input type="radio" name="type" value="1" title="独立表" {if $data.type==1} checked{/if} disabled>
+                    <input type="radio" name="type" value="2" title="主附表" {if $data.type==2} checked{/if} disabled>
                 </div>
                 <div class="layui-form-mid layui-word-aux">主附表通过分表提高数据库操作效率</div>
             </div>
