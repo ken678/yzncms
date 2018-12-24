@@ -20,82 +20,52 @@ use think\Db;
 class Category extends Adminbase
 {
 
+    //初始化
+    protected function initialize()
+    {
+        parent::initialize();
+        //取得当前内容模型模板存放目录
+        $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "cms" . DIRECTORY_SEPARATOR;
+        //取得栏目频道模板列表
+        $this->tp_category = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'category*'));
+        //取得栏目列表模板列表
+        $this->tp_list = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'list*'));
+        //取得内容页模板列表
+        $this->tp_show = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'show*'));
+        //取得单页模板
+        $this->tp_page = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'page*'));
+    }
+
     //栏目列表
     public function index()
     {
         if ($this->request->isAjax()) {
             $tree = new \util\Tree();
+            $tree->id = "catid";
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
             $result = Db::name('category')->order(array('listorder', 'catid' => 'DESC'))->select();
-
             $tree->init($result);
-            $_list = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            $_list = $tree->getTreeList($tree->getTreeArray(0), 'catname');
             $total = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
         return $this->fetch();
-        /*$models = cache('Model');
-    $result = cache('Category');
-    $categorys = array();
-    $types = array(0 => '内部栏目', 1 => '<font color="blue">单网页</font>', 2 => '<font color="red">外部链接</font>');
-    if (!empty($result)) {
-    foreach ($result as $r) {
-    $r = getCategory($r['catid']);
-    $r['str_manage'] = '';
-    $r['str_manage'] .= '<a class="btn red" href="javascript:if(confirm(\'您确定要删除吗?\')){location.href=\'' . Url::build("Category/delete", array("catid" => $r['catid'])) . '\'};"><i class="icon iconfont icon-shanchu"></i>删除</a>';
-    $r['str_manage'] .= '<span class="btn"><em><i class="icon iconfont icon-shezhi"></i>设置<i class="arrow"></i></em><ul>';
-    if ($r['type'] != 2) {
-    if ($r['type'] == 1) {
-    $r['str_manage'] .= '<li><a href="' . Url::build("Category/singlepage", array("parentid" => $r['catid'])) . '">添加下级栏目</a></li>';
-    } else {
-    $r['str_manage'] .= '<li><a href="' . Url::build("Category/add", array("parentid" => $r['catid'])) . '">添加下级栏目</a></li>';
-    }
-    }
-    $r['str_manage'] .= '<li><a href="' . Url::build("Category/edit", array("catid" => $r['catid'])) . '">编辑栏目信息</a></li>';
-    $r['str_manage'] .= '</ul></span>';
-
-    $r['modelname'] = $models[$r['modelid']]['name'];
-    $r['typename'] = $types[$r['type']];
-    $r['display_icon'] = $r['ismenu'] ? '' : '&nbsp;<i class="icon iconfont icon-shezhi itip" alt="不在导航显示"></i>';
-    $r['help'] = '';
-    if ($r['url']) {
-    $r['url'] = "<a href='" . $r['url'] . "' target='_blank'>访问</a>";
-    } else {
-    $r['url'] = "<a href='" . Url::build("Category/public_cache") . "'><font color='red'>更新缓存</font></a>";
-    }
-    $categorys[$r['catid']] = $r;
-    }
-    }
-    $str = "<tr>
-    <td width='50' align='center' class='sort'><span alt='可编辑' column_id='\$id' fieldname='gc_sort' nc_type='inline_edit' class='itip editable'>\$listorder</span></td>
-    <td width='150' align='center'>\$str_manage</td>
-    <td width='60' align='center'>\$id</td>
-    <td width='250' align='left'>\$spacer\$catname\$display_icon</td>
-    <td width='70' align='center'>\$typename</td>
-    <td width='70' align='center'>\$modelname</td>
-    <td width='100' align='center' align='center'>\$url</td>
-    <td width='100' align='center'>\$help</td>
-    </tr>";
-    if (!empty($categorys) && is_array($categorys)) {
-    $tree = new \Tree();
-    $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
-    $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-    $tree->init($categorys);
-    $categorydata = $tree->get_tree(0, $str);
-    } else {
-    $categorydata = '';
-    }
-    $this->assign('categorys', $categorydata);
-    return $this->fetch();*/
     }
 
     //新增栏目
     public function add()
     {
         if ($this->request->isPost()) {
-
+            $Category = model("cms/Category");
+            $catid = $Category->addCategory($this->request->post());
+            if ($catid) {
+                $this->success("添加成功！", url("Category/index"));
+            } else {
+                $error = $Category->getError();
+                $this->error($error ? $error : '栏目添加失败！');
+            }
         } else {
             //输出可用模型
             $models = cache("Model");
@@ -115,6 +85,12 @@ class Category extends Adminbase
             } else {
                 $categorydata = '';
             }
+
+            $this->assign("tp_category", $this->tp_category);
+            $this->assign("tp_list", $this->tp_list);
+            $this->assign("tp_show", $this->tp_show);
+            $this->assign("tp_page", $this->tp_page);
+
             $this->assign("category", $categorydata);
             $this->assign("models", $models);
             return $this->fetch();

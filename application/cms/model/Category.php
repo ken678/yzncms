@@ -36,4 +36,27 @@ class Category extends Model
         return $CategoryIds;
     }
 
+    //新增栏目
+    public function addCategory($data)
+    {
+        if (empty($data)) {
+            $this->error = '添加栏目数据不能为空！';
+            return false;
+        }
+        //栏目拼音
+        /*$catname = iconv('utf-8', 'gbk', $data['catname']);
+        $letters = gbk_to_pinyin($catname);
+        $data['letter'] = strtolower(implode('', $letters));*/
+
+        $catid = self::allowField(true)->save($data);
+        if ($catid) {
+            cache('Category', null);
+            return $catid;
+        } else {
+            $this->error = '栏目添加失败！';
+            return false;
+
+        }
+    }
+
 }

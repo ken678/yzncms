@@ -29,6 +29,7 @@ class Tree
      */
     public $icon = array('│', '├', '└');
     public $nbsp = "&nbsp;";
+    public $id = "id";
 
     /**
      * @access private
@@ -136,7 +137,8 @@ class Tree
                 $spacer = $itemprefix ? $itemprefix . $j : '';
                 $value['spacer'] = $spacer;
                 $data[$n] = $value;
-                $data[$n]['childlist'] = $this->getTreeArray($value['id'], $itemprefix . $k . $this->nbsp);
+
+                $data[$n]['childlist'] = $this->getTreeArray($value[$this->id], $itemprefix . $k . $this->nbsp);
                 $n++;
                 $number++;
             }
@@ -157,7 +159,7 @@ class Tree
             unset($v['childlist']);
             $v[$field] = $v['spacer'] . ' ' . $v[$field];
             $v['haschild'] = $childlist ? 1 : 0;
-            if ($v['id']) {
+            if ($v[$this->id]) {
                 $arr[] = $v;
             }
 
