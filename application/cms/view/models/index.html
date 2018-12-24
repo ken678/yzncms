@@ -85,7 +85,7 @@ layui.use('table', function() {
                 });
             });
         }else if (obj.event === 'edit') {
-            window.open('{:url("admin/models/edit")}' + "?id=" + data.userid, '_self')
+            window.open('{:url("cms/models/edit")}' + "?id=" + data.id, '_self')
         }
     });
 });

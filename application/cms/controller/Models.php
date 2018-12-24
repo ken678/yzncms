@@ -62,6 +62,31 @@ class Models extends Adminbase
     }
 
     /**
+     * 模型修改
+     * @author 御宅男  <530765310@qq.com>
+     */
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
+            if (empty($data)) {
+                $this->error('提交数据不能为空！');
+            }
+            if ($this->Models->editModel($data)) {
+                $this->success('模型修改成功！', url('index'));
+            } else {
+                $error = $this->Models->getError();
+                $this->error($error ? $error : '修改失败！');
+            }
+        } else {
+            $id = $this->request->param('id/d', 0);
+            $data = $this->Models->where(array("id" => $id))->find();
+            $this->assign("data", $data);
+            return $this->fetch();
+        }
+    }
+
+    /**
      * 模型删除
      */
     public function delete()
