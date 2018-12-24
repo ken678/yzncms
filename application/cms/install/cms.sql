@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `yzn_category`;
 CREATE TABLE `yzn_category` (
-  `catid` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '栏目ID',
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '栏目ID',
   `module` varchar(15) NOT NULL DEFAULT '' COMMENT '所属模块',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '类别',
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
@@ -21,8 +21,8 @@ CREATE TABLE `yzn_category` (
   `ismenu` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
   `sethtml` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否生成静态',
   `letter` varchar(30) NOT NULL DEFAULT '' COMMENT '栏目拼音',
-  PRIMARY KEY (`catid`),
-  KEY `module` (`module`,`parentid`,`listorder`,`catid`),
+  PRIMARY KEY (`id`),
+  KEY `module` (`module`,`parentid`,`listorder`,`id`),
   KEY `siteid` (`type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='栏目表';
 

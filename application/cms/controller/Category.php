@@ -41,10 +41,9 @@ class Category extends Adminbase
     {
         if ($this->request->isAjax()) {
             $tree = new \util\Tree();
-            $tree->id = "catid";
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-            $result = Db::name('category')->order(array('listorder', 'catid' => 'DESC'))->select();
+            $result = Db::name('category')->order(array('listorder', 'id' => 'DESC'))->select();
             $tree->init($result);
             $_list = $tree->getTreeList($tree->getTreeArray(0), 'catname');
             $total = count($_list);
@@ -79,7 +78,7 @@ class Category extends Adminbase
                 $tree = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
                 $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-                $str = "<option value='\$catid' \$selected>\$spacer \$catname</option>";
+                $str = "<option value='\$id' \$selected>\$spacer \$catname</option>";
                 $tree->init($array);
                 $categorydata = $tree->get_tree(0, $str, $parentid);
             } else {

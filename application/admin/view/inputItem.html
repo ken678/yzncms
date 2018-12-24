@@ -6,7 +6,7 @@
     <div class="layui-form-field-label">
         <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
     </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="number"}
@@ -15,14 +15,14 @@
     <div class="layui-form-field-label">
         <input type="number" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
     </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="switch"}
 <div class="layui-form-item">
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value' ]}checked='' {/if}> </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value' ]}checked='' {/if}> </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="array"}
@@ -31,7 +31,7 @@
     <div class="layui-form-field-label">
         <textarea name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" class="layui-textarea">{$vo.value}</textarea>
     </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="checkbox"}
@@ -39,7 +39,7 @@
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
         {volist name="vo.options" id="v"}
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked='' {/if}> {/volist} </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked='' {/if}> {/volist} </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="radio"}
@@ -47,7 +47,7 @@
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
         {volist name="vo.options" id="v"}
-        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value' ]}checked='' {/if}> {/volist} </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value' ]}checked='' {/if}> {/volist} </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="select"}
@@ -57,7 +57,7 @@
         <select name="{$vo.fieldArr}[{$vo.name}]">
             <option value=""></option>
             {volist name="vo.options" id="v"}
-            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="datetime"}
@@ -67,7 +67,7 @@
         <div class="layui-form-field-label">
             <input type="text" class="layui-input test-item" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}">
         </div>
-        <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+        <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
     </div>
 </div>
 <script type="text/javascript">
@@ -90,7 +90,7 @@ layui.use(['laydate'], function() {
     <div class="layui-form-field-label">
         <textarea placeholder="请输入{$vo.title}" class="layui-textarea" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
     </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="image"}
@@ -111,7 +111,7 @@ layui.use(['laydate'], function() {
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
         </div>
     </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="images"}
@@ -135,7 +135,7 @@ layui.use(['laydate'], function() {
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传多张图片</div>
         </div>
     </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="Ueditor"}
@@ -154,7 +154,7 @@ layui.use(['laydate'], function() {
         </script>
         <script type="text/plain" id="{$vo.fieldArr}{$vo.name}" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</script>
     </div>
-    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>config('{$vo.name}')</code></div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {/switch}

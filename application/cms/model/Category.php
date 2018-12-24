@@ -21,21 +21,6 @@ use \think\Model;
  */
 class Category extends Model
 {
-    //刷新栏目索引缓存
-    public function category_cache()
-    {
-        $data = self::order("listorder ASC")->select();
-        $CategoryIds = array();
-        foreach ($data as $r) {
-            $CategoryIds[$r['catid']] = array(
-                'catid' => $r['catid'],
-                'parentid' => $r['parentid'],
-            );
-        }
-        cache("Category", $CategoryIds);
-        return $CategoryIds;
-    }
-
     //新增栏目
     public function addCategory($data)
     {
@@ -57,6 +42,21 @@ class Category extends Model
             return false;
 
         }
+    }
+
+    //刷新栏目索引缓存
+    public function category_cache()
+    {
+        $data = self::order("listorder ASC")->select();
+        $CategoryIds = array();
+        foreach ($data as $r) {
+            $CategoryIds[$r['id']] = array(
+                'id' => $r['id'],
+                'parentid' => $r['parentid'],
+            );
+        }
+        cache("Category", $CategoryIds);
+        return $CategoryIds;
     }
 
 }
