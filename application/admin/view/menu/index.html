@@ -5,25 +5,29 @@
     <div class="layui-card-body">
         <div class="layui-form">
             <table class="layui-hide" id="table" lay-filter="table"></table>
-            <script type="text/html" id="toolbarDemo">
-                <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
-              </div>
-            </script>
-            <script type="text/html" id="barTool">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script>
         </div>
     </div>
 </div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
+  </div>
+</script>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+</script>
 {/block}
 {block name="script"}
 <script>
 layui.use('table', function() {
     var table = layui.table,
-        $ = layui.$;
+        $ = layui.$,
+        form = layui.form;
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
@@ -33,7 +37,7 @@ layui.use('table', function() {
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'title', title: '菜单名称' },
-                { field: 'status', title: '状态', templet: '<div>{{#  if(d.status){ }} 显示 {{#  } else { }} <font color="#FF0000">隐藏</font> {{#  } }} </div>' },
+                { field: 'status', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
                 { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
             ]
         ],
@@ -44,15 +48,28 @@ layui.use('table', function() {
 
     //监听单元格编辑
     table.on('edit(table)', function(obj) {
-        var value = obj.value,data = obj.data;
-        $.post('{:url("menu/listorder")}', { 'id': data.id,'value':value }, function(data) {
+        var value = obj.value,
+            data = obj.data;
+        $.post('{:url("admin/menu/listorder")}', { 'id': data.id, 'value': value }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            } else {
+                layer.msg(data.msg);
+            }
+
+        })
+    });
+
+        //监听状态操作
+    form.on('switch(status)', function(obj) {
+        $.post('{:url("admin/menu/setstate")}', { 'id': this.value}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
                 layer.msg(data.msg);
             }
 
-        })
+        });
     });
 
     //监听行工具事件
@@ -62,7 +79,7 @@ layui.use('table', function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("menu/delete")}', { 'id': data.id }, function(data) {
+                $.post('{:url("admin/menu/delete")}', { 'id': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -88,10 +105,10 @@ layui.use('table', function() {
                 });
             });
         } else if (obj.event === 'add') {
-            window.open('{:url("menu/add")}' + "?parentid=" + data.id, '_self')
+            window.open('{:url("admin/menu/add")}' + "?parentid=" + data.id, '_self')
 
         } else if (obj.event === 'edit') {
-            window.open('{:url("menu/edit")}' + "?id=" + data.id, '_self')
+            window.open('{:url("admin/menu/edit")}' + "?id=" + data.id, '_self')
         }
     });
 });

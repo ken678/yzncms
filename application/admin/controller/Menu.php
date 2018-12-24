@@ -151,4 +151,17 @@ class Menu extends Adminbase
         }
     }
 
+    /**
+     * 菜单状态
+     */
+    public function setstate()
+    {
+        $id = $this->request->param('id/d');
+        empty($id) && $this->error('参数不能为空！');
+        $r = $this->Menu->where((array('id' => $id)))->value('status');
+        $status = $r == '1' ? '0' : '1';
+        $this->Menu->where((array('id' => $id)))->update(array('status' => $status));
+        $this->success("操作成功！");
+    }
+
 }
