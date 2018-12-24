@@ -354,7 +354,7 @@ EOF;
     public function model_cache()
     {
         $data = $this->getModelAll();
-        Cache('Model', $data);
+        cache('Model', $data);
         return $data;
     }
 

@@ -97,6 +97,9 @@ class Category extends Adminbase
         if ($this->request->isPost()) {
 
         } else {
+            //输出可用模型
+            $models = cache("Model");
+
             //栏目列表 可以用缓存的方式
             $array = cache("Category");
             /*foreach ($array as $k => $v) {
@@ -113,6 +116,7 @@ class Category extends Adminbase
                 $categorydata = '';
             }
             $this->assign("category", $categorydata);
+            $this->assign("models", $models);
             return $this->fetch();
 
         }
