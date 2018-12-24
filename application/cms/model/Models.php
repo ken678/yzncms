@@ -52,6 +52,71 @@ class Models extends Modelbase
     }
 
     /**
+     * 编辑模型
+     * @param type $data 提交数据
+     * @return boolean
+     */
+    public function editModel($data, $modelid = 0)
+    {
+        if (empty($data)) {
+            return false;
+        }
+        //模型ID
+        $modelid = $modelid ? $modelid : (int) $data['id'];
+        if (!$modelid) {
+            $this->error = '模型ID不能为空！';
+            return false;
+        }
+        //查询模型数据
+        $info = self::where(array("id" => $modelid))->find();
+        if (empty($info)) {
+            $this->error = '该模型不存在！';
+            return false;
+        }
+        $data['modelid'] = $modelid;
+        //模型添加验证
+        /*$validate = Loader::validate('Models');
+        if (!$validate->scene('edit')->check($data)) {
+        $this->error = $validate->getError();
+        return false;
+        }*/
+        //是否更改表名
+        if ($info['tablename'] != $data['tablename'] && !empty($data['tablename'])) {
+            //检查新表名是否存在
+            if ($this->table_exists($data['tablename']) || $this->table_exists($data['tablename'] . '_data')) {
+                $this->error = '该表名已经存在！';
+                return false;
+            }
+            if (false !== $this->allowField(true)->save($data, array("modelid" => $modelid))) {
+                //表前缀
+                $dbPrefix = Config::get("database.prefix");
+                //表名更改
+                Db::execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}` TO  `{$dbPrefix}{$data['tablename']}` ;");
+                //修改副表
+                if ($info['type'] == 2) {
+                    Db::execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}_data` TO  `{$dbPrefix}{$data['tablename']}_data` ;");
+                }
+                //更新缓存
+                cache("Model", null);
+                return true;
+            } else {
+                $this->error = '模型更新失败！';
+                return false;
+            }
+        } else {
+            if (false !== self::allowField(true)->save($data, array("modelid" => $modelid))) {
+                //更新缓存
+                cache("Model", null);
+                return true;
+            } else {
+                $this->error = '模型更新失败！';
+                return false;
+            }
+        }
+
+    }
+
+    /**
      * 根据模型ID删除模型
      * @param type $id 模型id
      * @return boolean
