@@ -46,6 +46,7 @@ CREATE TABLE `yzn_model` (
   KEY `type` (`mark`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
+
 DROP TABLE IF EXISTS `yzn_model_field`;
 CREATE TABLE `yzn_model_field` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,

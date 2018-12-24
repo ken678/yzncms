@@ -48,6 +48,20 @@ return [
                         "status" => 1,
                         "name" => "栏目列表",
                         "icon" => "icon-liebiao",
+                        "child" => [
+                            [
+                                "route" => "cms/category/add",
+                                "type" => 1,
+                                "status" => 1,
+                                "name" => "添加栏目",
+                            ],
+                            [
+                                "route" => "cms/category/edit",
+                                "type" => 1,
+                                "status" => 1,
+                                "name" => "编辑栏目",
+                            ],
+                        ],
                     ],
                     [
                         "route" => "cms/models/index",

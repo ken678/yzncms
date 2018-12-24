@@ -23,7 +23,19 @@ class Category extends Adminbase
     //栏目列表
     public function index()
     {
-        $models = cache('Model');
+        if ($this->request->isAjax()) {
+            $tree = new \util\Tree();
+            $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
+            $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+            $result = Db::name('category')->order(array('listorder', 'catid' => 'DESC'))->select();
+
+            $tree->init($result);
+            $_list = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            $total = count($_list);
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+        }
+        return $this->fetch();
         /*$models = cache('Model');
     $result = cache('Category');
     $categorys = array();
@@ -77,6 +89,41 @@ class Category extends Adminbase
     }
     $this->assign('categorys', $categorydata);
     return $this->fetch();*/
+    }
+
+    //新增栏目
+    public function add()
+    {
+        if ($this->request->isPost()) {
+
+        } else {
+            //栏目列表 可以用缓存的方式
+            $array = cache("Category");
+            /*foreach ($array as $k => $v) {
+            $array[$k] = getCategory($v['catid']);
+            }*/
+            if (!empty($array) && is_array($array)) {
+                $tree = new \util\Tree();
+                $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
+                $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+                $str = "<option value='\$catid' \$selected>\$spacer \$catname</option>";
+                $tree->init($array);
+                $categorydata = $tree->get_tree(0, $str, $parentid);
+            } else {
+                $categorydata = '';
+            }
+            $this->assign("category", $categorydata);
+            return $this->fetch();
+
+        }
+
+    }
+
+    //编辑栏目
+    public function edit()
+    {
+        return $this->fetch();
+
     }
 
 }

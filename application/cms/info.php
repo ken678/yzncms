@@ -36,6 +36,11 @@ return array(
             'model' => 'Models',
             'action' => 'model_cache',
         ],
+        'Category' => [
+            'name' => '栏目索引',
+            'model' => 'Category',
+            'action' => 'category_cache',
+        ],
     ],
     // 数据表，请加表前缀yzn[有数据库表时必填]
     'tables' => [],
