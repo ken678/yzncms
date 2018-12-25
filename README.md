@@ -30,3 +30,5 @@ PHP版本：php >= 5.6 (支持php7)
 ```
 [截图预览]
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1008/131345_22a1268c_555541.png "YZNCMS后台管理系统.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133326_84f1f2ed_555541.png "YZNCMS后台管理系统.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133333_55b963a0_555541.png "YZNCMS后台管理系统1.png")
