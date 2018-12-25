@@ -40,6 +40,7 @@ class Models extends Modelbase
         if (empty($data)) {
             return false;
         }
+        $data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
         //创建模型表和模型附表
         if ($this->createTable($data)) {
             cache("Model", null);
@@ -74,6 +75,7 @@ class Models extends Modelbase
             return false;
         }
         $data['modelid'] = $modelid;
+        $data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
         //模型添加验证
         /*$validate = Loader::validate('Models');
         if (!$validate->scene('edit')->check($data)) {

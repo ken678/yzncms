@@ -32,6 +32,12 @@
                     <textarea name="description" required lay-verify="required" placeholder="模型的相关描述" class="layui-textarea">{$data.description}</textarea>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">投稿状态</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="ifsub" lay-skin="switch" lay-text="允许|禁止" value="1" {if 1==$data.ifsub}checked{/if}>
+                </div>
+            </div>
             <input type="hidden" value="{$data.id}" name="id" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
