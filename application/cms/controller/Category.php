@@ -71,16 +71,16 @@ class Category extends Adminbase
 
             //栏目列表 可以用缓存的方式
             $array = cache("Category");
-            /*foreach ($array as $k => $v) {
-            $array[$k] = getCategory($v['catid']);
-            }*/
+            foreach ($array as $k => $v) {
+                $array[$k] = getCategory($v['id']);
+            }
             if (!empty($array) && is_array($array)) {
                 $tree = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
                 $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
                 $str = "<option value='\$id' \$selected>\$spacer \$catname</option>";
                 $tree->init($array);
-                $categorydata = $tree->get_tree(0, $str, $parentid);
+                $categorydata = $tree->get_tree(0, $str);
             } else {
                 $categorydata = '';
             }

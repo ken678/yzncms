@@ -118,6 +118,7 @@ class Models extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
+        cache("Model", null);
         $r = $this->Models->where((array('id' => $id)))->value('status');
         $status = $r == '1' ? '0' : '1';
         $this->Models->where((array('id' => $id)))->update(array('status' => $status));
@@ -131,6 +132,7 @@ class Models extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
+        cache("Model", null);
         $r = $this->Models->where((array('id' => $id)))->value('ifsub');
         $ifsub = $r == '1' ? '0' : '1';
         $this->Models->where((array('id' => $id)))->update(array('ifsub' => $ifsub));
