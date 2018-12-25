@@ -124,4 +124,17 @@ class Models extends Adminbase
         $this->success("操作成功！");
     }
 
+    /**
+     * 投稿状态
+     */
+    public function setSub()
+    {
+        $id = $this->request->param('id/d');
+        empty($id) && $this->error('参数不能为空！');
+        $r = $this->Models->where((array('id' => $id)))->value('ifsub');
+        $ifsub = $r == '1' ? '0' : '1';
+        $this->Models->where((array('id' => $id)))->update(array('ifsub' => $ifsub));
+        $this->success("操作成功！");
+    }
+
 }

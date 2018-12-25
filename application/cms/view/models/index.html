@@ -16,8 +16,11 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-<script type="text/html" id="switchTpl">
+<script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="ifsubTpl">
+    <input type="checkbox" name="ifsub" value="{{d.id}}" lay-skin="switch" lay-text="允许|禁止" lay-filter="ifsub" {{ d.ifsub==1 ? 'checked' : '' }}>
 </script>
 {/block}
 {block name="script"}
@@ -32,11 +35,14 @@ layui.use('table', function() {
         url: '{:url("cms/models/index")}',
         cols: [
             [
-                { field: 'id', width: 150, title: '模型ID' },
-                { field: 'name', width: 150, title: '模型名称' },
-                { field: 'tablename', width:150,title: '数据表' },
+                { field: 'id', width: 80, title: '模型ID' },
+                { field: 'name', width: 120, title: '模型名称' },
+                { field: 'tablename', width:120,title: '数据表' },
                 { field: 'description', title: '描述' },
-                { field: 'status', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
+                { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
+                { field: 'create_time',width:180, title: '创建时间' },
+                { field: 'status', width: 100, title: '状态', templet: '#statusTpl', unresize: true },
+                { field: 'ifsub', width: 100, title: '投稿', templet: '#ifsubTpl', unresize: true },
                 { field: '', title: '操作', templet: '#barTool' }
             ]
         ]
@@ -45,6 +51,18 @@ layui.use('table', function() {
         //监听状态操作
     form.on('switch(status)', function(obj) {
         $.post('{:url("cms/models/setstate")}', { 'id': this.value}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        });
+    });
+
+        //监听状态操作
+    form.on('switch(ifsub)', function(obj) {
+        $.post('{:url("cms/models/setSub")}', { 'id': this.value}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
