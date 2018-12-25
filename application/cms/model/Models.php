@@ -168,16 +168,14 @@ class Models extends Modelbase
 				`tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
 				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
 				`posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
-				`listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-				`status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
-				`uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-				`inputtime` int(11) unsigned NOT NULL DEFAULT '0',
-				`updatetime` int(11) unsigned NOT NULL DEFAULT '0',
-				PRIMARY KEY (`id`),
-				KEY `status` (`status`,`listorder`,`id`),
-				KEY `listorder` (`status`,`listorder`,`id`),
-				KEY `catid` (`status`,`id`)
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+				`listorder` tinyint(3) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+				`uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+                `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
+				`inputtime` int(11) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
+				`updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+				PRIMARY KEY (`id`)
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
         Db::execute($sql);
         if ($data['type'] == 2) {
@@ -187,7 +185,7 @@ EOF;
 				`did` mediumint(8) unsigned NOT NULL DEFAULT '0',
 				`content` text COLLATE utf8_unicode_ci COMMENT '内容',
 				PRIMARY KEY (`did`)
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
             Db::execute($sql);
         }
@@ -206,6 +204,7 @@ EOF;
             'ifsystem' => 1,
             'status' => 1,
             'listorder' => 100,
+            'iffixed' => 1,
         ];
         $data = [
             [
@@ -223,6 +222,7 @@ EOF;
                 'ifsearch' => 1,
                 'ifeditable' => 1,
                 'ifrequire' => 1,
+                'iffixed' => 0,
             ],
             [
                 'name' => 'keywords',
@@ -231,18 +231,20 @@ EOF;
                 'formtype' => 'tags',
                 'jsonrule' => '{"string":{"table":"tag","key":"title","delimiter":",","where":"","limit":"6","order":"[rand]"}}',
                 'ifeditable' => 1,
+                'iffixed' => 0,
             ],
             [
                 'name' => 'description',
                 'title' => 'SEO摘要',
                 'define' => 'varchar(255)',
-                'formtype' => 'textarea',
-                'ifeditable' => 1,
+                'formtype' => 'number',
+                'ifeditable' => 0,
+                'iffixed' => 0,
             ],
             [
                 'name' => 'uid',
                 'title' => '用户id',
-                'define' => 'int(10) UNSIGNED',
+                'define' => 'mediumint(8) UNSIGNED',
                 'formtype' => 'number',
                 'ifeditable' => 0,
                 'value' => 1,
@@ -250,8 +252,8 @@ EOF;
             [
                 'name' => 'posid',
                 'title' => '推荐位',
-                'define' => 'tinyint(3)',
-                'formtype' => 'checkbox',
+                'define' => 'tinyint(3) tinyint(3)',
+                'formtype' => 'number',
                 'ifeditable' => 0,
             ],
             [
@@ -290,6 +292,15 @@ EOF;
                 'value' => 0,
                 'listorder' => 200,
             ],
+            [
+                'name' => 'hits',
+                'title' => '点击量',
+                'define' => 'mediumint(8) UNSIGNED',
+                'formtype' => 'number',
+                'ifeditable' => 1,
+                'value' => 0,
+                'listorder' => 200,
+            ],
         ];
         if ($type == 2) {
             array_push($data, [
@@ -307,6 +318,7 @@ EOF;
                     'formtype' => 'Ueditor',
                     'ifsystem' => 0,
                     'ifeditable' => 1,
+                    'iffixed' => 0,
                 ]);
 
         }

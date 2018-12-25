@@ -42,7 +42,7 @@ class Field extends Adminbase
             $this->error('该模型不存在！');
         }
         //根据模型读取字段列表
-        $banFields = ['id', 'did', 'status', 'uid'];
+        $banFields = ['id', 'did', 'status', 'uid', 'posid'];
         $data = $this->modelfield->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->select()->withAttr('create_time', function ($value, $data) {
             return date('Y-m-d H:i:s', $value);
         });
@@ -55,7 +55,7 @@ class Field extends Adminbase
     }
 
     /**
-     * 模型状态
+     * 字段状态
      */
     public function setstate()
     {
@@ -65,6 +65,21 @@ class Field extends Adminbase
         $status = $r == '1' ? '0' : '1';
         $this->modelfield->where((array('id' => $id)))->update(array('status' => $status));
         $this->success("操作成功！");
+    }
+
+    /**
+     * 菜单排序
+     */
+    public function listorder()
+    {
+        $id = $this->request->param('id/d', 0);
+        $listorder = $this->request->param('value/d', 0);
+        $rs = $this->modelfield->allowField(['listorder'])->isUpdate(true)->save(['id' => $id, 'listorder' => $listorder]);
+        if ($rs) {
+            $this->success("菜单排序成功！");
+        } else {
+            $this->error("菜单排序失败！");
+        }
     }
 
 }

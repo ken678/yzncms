@@ -30,26 +30,21 @@ DROP TABLE IF EXISTS `yzn_model`;
 CREATE TABLE `yzn_model` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(30) NOT NULL DEFAULT '' COMMENT '模型名称',
-  `description` char(100) NOT NULL DEFAULT '' COMMENT '描述',
   `tablename` char(20) NOT NULL DEFAULT '' COMMENT '表名',
+  `description` char(100) NOT NULL DEFAULT '' COMMENT '描述',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '模型类别：1-独立表，2-主附表',
-  `setting` text COMMENT '配置信息',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `items` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '信息数',
-  `enablesearch` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否开启全站搜索',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
-  `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
-  `mark` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模块标识',
   `ifsub` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否允许投稿',
-  PRIMARY KEY (`id`),
-  KEY `type` (`mark`)
+  `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
 
 DROP TABLE IF EXISTS `yzn_model_field`;
 CREATE TABLE `yzn_model_field` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT '字段名',
   `title` varchar(30) NOT NULL DEFAULT '' COMMENT '别名',
@@ -59,13 +54,11 @@ CREATE TABLE `yzn_model_field` (
   `setting` tinytext NOT NULL COMMENT '额外设置',
   `value` tinytext NOT NULL COMMENT '默认值',
   `jsonrule` tinytext NOT NULL COMMENT '关联规则',
-  `ifsystem` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否系统字段 1 是',
+  `ifsystem` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否主表字段 1 是',
   `ifeditable` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否可以编辑',
+  `iffixed` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否固定不可修改',
   `ifrequire` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否必填',
-  `isbase` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为基本信息',
   `ifsearch` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为搜索条件',
-  `isadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '在前台投稿中显示',
-  `isposition` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否入库到推荐位',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
@@ -73,3 +66,4 @@ CREATE TABLE `yzn_model_field` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+

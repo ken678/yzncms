@@ -12,7 +12,11 @@
     </div>
 </script>
 <script type="text/html" id="switchTpl">
+    {{#  if(d.iffixed==1){ }}
+    启用
+    {{#  } else { }}
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+    {{#  } }}
 </script>
 {/block}
 {block name="script"}
@@ -27,6 +31,7 @@ layui.use('table', function() {
         url: '{:url("cms/field/index",["id"=>$modelid])}',
         cols: [
             [
+                { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 80, title: 'ID' },
                 { field: 'name', width: 150, title: '字段名称' },
                 { field: 'title', width:150,title: '标题' },
@@ -37,6 +42,20 @@ layui.use('table', function() {
                 { field: '', title: '操作', templet: '#barTool' }
             ]
         ]
+    });
+
+        //监听单元格编辑
+    table.on('edit(table)', function(obj) {
+        var value = obj.value,
+            data = obj.data;
+        $.post('{:url("cms/field/listorder")}', { 'id': data.id, 'value': value }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            } else {
+                layer.msg(data.msg);
+            }
+
+        })
     });
 
     //监听状态操作

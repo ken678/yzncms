@@ -39,7 +39,7 @@ layui.use('table', function() {
                 { field: 'name', width: 120, title: '模型名称' },
                 { field: 'tablename', width:120,title: '数据表' },
                 { field: 'description', title: '描述' },
-                { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
+                { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type==1){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
                 { field: 'create_time',width:180, title: '创建时间' },
                 { field: 'status', width: 100, title: '状态', templet: '#statusTpl', unresize: true },
                 { field: 'ifsub', width: 100, title: '投稿', templet: '#ifsubTpl', unresize: true },
