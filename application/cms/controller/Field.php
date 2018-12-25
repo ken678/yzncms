@@ -60,10 +60,16 @@ class Field extends Adminbase
     public function setstate()
     {
         $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        $r = $this->modelfield->where((array('id' => $id)))->value('status');
-        $status = $r == '1' ? '0' : '1';
+        $status = $this->request->param('status/d');
         $this->modelfield->where((array('id' => $id)))->update(array('status' => $status));
+        $this->success("操作成功！");
+    }
+
+    public function setsearch()
+    {
+        $id = $this->request->param('id/d');
+        $search = $this->request->param('search/d');
+        $this->modelfield->where((array('id' => $id)))->update(array('ifsearch' => $search));
         $this->success("操作成功！");
     }
 
@@ -79,6 +85,46 @@ class Field extends Adminbase
             $this->success("菜单排序成功！");
         } else {
             $this->error("菜单排序失败！");
+        }
+    }
+
+    /**
+     * 显示隐藏
+     */
+    public function setvisible()
+    {
+        $id = $this->request->param('id/d', 0);
+        $ifvisible = $this->request->param('visible/d', 0);
+
+        $field = $this->modelfield->get($id);
+        if ($field->ifrequire && 0 == $ifvisible) {
+            $this->error("必填字段不可以设置为隐藏！");
+        }
+        $field->ifeditable = $ifvisible;
+        if ($field->save()) {
+            $this->success("设置成功！");
+        } else {
+            $this->error("设置失败！");
+        }
+    }
+
+    /**
+     * 必须
+     */
+    public function setrequire()
+    {
+        $id = $this->request->param('id/d', 0);
+        $ifrequire = $this->request->param('require/d', 0);
+
+        $field = $this->modelfield->get($id);
+        if (!$field->ifeditable && $ifrequire) {
+            $this->error("隐藏字段不可以设置为必填！");
+        }
+        $field->ifrequire = $ifrequire;
+        if ($field->save()) {
+            $this->success("设置成功！");
+        } else {
+            $this->error("设置失败！");
         }
     }
 

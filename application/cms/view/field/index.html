@@ -13,10 +13,23 @@
 </script>
 <script type="text/html" id="switchTpl">
     {{#  if(d.iffixed==1){ }}
+    {{#  if(d.status==1){ }}
     启用
+    {{#  } else { }}
+    禁用
+    {{#  } }}
     {{#  } else { }}
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
     {{#  } }}
+</script>
+<script type="text/html" id="ifsearchTpl">
+    <input type="checkbox" name="ifsearch" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="ifsearch" {{ d.ifsearch==1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="ifrequireTpl">
+    <input type="checkbox" name="ifrequire" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="ifrequire" {{ d.ifrequire==1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="ifeditableTpl">
+    <input type="checkbox" name="ifeditable" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="ifeditable" {{ d.ifeditable==1 ? 'checked' : '' }}>
 </script>
 {/block}
 {block name="script"}
@@ -38,7 +51,10 @@ layui.use('table', function() {
                 { field: 'formtype',width:150, title: '字段类型' },
                 { field: 'ifsystem',width:80, title: '主表',templet: '<div>{{#  if(d.ifsystem){ }} 是 {{#  } }} </div>'},
                 { field: 'create_time',width:180, title: '创建时间' },
+                { field: 'ifsearch', width: 120, title: '搜索', templet: '#ifsearchTpl', unresize: true },
                 { field: 'status', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
+                { field: 'ifrequire', width: 120, title: '必填', templet: '#ifrequireTpl', unresize: true },
+                 { field: 'ifeditable', width: 120, title: '显示', templet: '#ifeditableTpl', unresize: true },
                 { field: '', title: '操作', templet: '#barTool' }
             ]
         ]
@@ -60,7 +76,13 @@ layui.use('table', function() {
 
     //监听状态操作
     form.on('switch(status)', function(obj) {
-        $.post('{:url("cms/field/setstate")}', { 'id': this.value}, function(data) {
+        console.log(obj.elem.checked);
+        if(obj.elem.checked==true){
+            var value=1;
+        }else{
+            var value=0;
+        }
+        $.post('{:url("cms/field/setstate")}', { 'id': this.value,'status':value}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
@@ -70,6 +92,53 @@ layui.use('table', function() {
         });
     });
 
+    form.on('switch(ifsearch)', function(obj) {
+        if(obj.elem.checked==true){
+            var value=1;
+        }else{
+            var value=0;
+        }
+        $.post('{:url("cms/field/setSearch")}', { 'id': this.value,'search':value}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        });
+    });
+
+    form.on('switch(ifrequire)', function(obj) {
+        if(obj.elem.checked==true){
+            var value=1;
+        }else{
+            var value=0;
+        }
+        $.post('{:url("cms/field/setRequire")}', { 'id': this.value,'require':value}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        });
+    });
+
+    form.on('switch(ifeditable)', function(obj) {
+        if(obj.elem.checked==true){
+            var value=1;
+        }else{
+            var value=0;
+        }
+        $.post('{:url("cms/field/setVisible")}', { 'id': this.value,'visible':value}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        });
+    });
 });
 </script>
 {/block}
