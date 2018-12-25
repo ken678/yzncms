@@ -26,7 +26,8 @@ class Cms extends Adminbase
 
     public function index()
     {
-        return $this->fetch();
+        var_dump(11);
+        //return $this->fetch();
     }
 
 }

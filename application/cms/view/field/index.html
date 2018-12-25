@@ -55,13 +55,13 @@ layui.use('table', function() {
                 { field: 'name', width: 120, title: '字段名称' },
                 { field: 'title', width:120,title: '标题' },
                 { field: 'formtype',width:100, title: '字段类型' },
-                { field: 'ifsystem',width:60, title: '主表',templet: '<div>{{#  if(d.ifsystem){ }} 是 {{#  } }} </div>'},
+                { field: 'ifsystem',width:60,align:"center", title: '主表',templet: '<div>{{#  if(d.ifsystem){ }} 是 {{#  } }} </div>'},
                 { field: 'create_time',title: '创建时间' },
-                { field: 'ifsearch', width: 90, title: '搜索', templet: '#ifsearchTpl', unresize: true },
-                { field: 'ifrequire', width: 90, title: '必填', templet: '#ifrequireTpl', unresize: true },
-                { field: 'ifeditable', width: 90, title: '显示', templet: '#ifeditableTpl', unresize: true },
-                { field: 'status', width: 90, title: '状态', templet: '#switchTpl', unresize: true },
-                { field: '',width: 120,title: '操作', templet: '#barTool' }
+                { field: 'ifsearch', width: 90,align:"center", title: '搜索', templet: '#ifsearchTpl', unresize: true },
+                { field: 'ifrequire', width: 90,align:"center", title: '必填', templet: '#ifrequireTpl', unresize: true },
+                { field: 'ifeditable', width: 100,align:"center", title: '显示', templet: '#ifeditableTpl', unresize: true },
+                { field: 'status', width: 100,align:"center", title: '状态', templet: '#switchTpl', unresize: true },
+                { fixed: 'right',width: 120,title: '操作', templet: '#barTool' }
             ]
         ]
     });

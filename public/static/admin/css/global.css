@@ -10,11 +10,7 @@
 .showMenu.layui-layout-admin .layui-side {left: -300px; transition: all .3s; -webkit-transition: all .3s; }
 .showMenu .layui-body,.showMenu .layui-layout-admin .layui-footer {left: -2px; }
 
-#B_history {
-    position: absolute;
-    border-bottom: none;
-    left:40px;
-}
+#B_history {top: 0; position: absolute; border-bottom: none; left:80px; }
 .closeBox {
     position: absolute;
     right: 0;
@@ -41,10 +37,15 @@
     position: absolute;
     text-align: center;
 }
-.tab-go-left {border-color: #e6e6e6; left: 0; top: 0; height: 40px; border-right: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6; width: 39px; position: absolute; text-align: center; background: #fff; z-index: 999; }
-.tab-go-left i {font-weight: bold; color: #666; font-size: 20px; line-height: 40px; cursor: pointer; }
+.layui-tab-title li {
+    border-right: 1px solid #e6e6e6;
+}
+.tab-go-refresh{position: absolute; top: 0; width: 40px; height:40px; text-align: center; cursor: pointer; transition: all .3s; -webkit-transition: all .3s; box-sizing: border-box; border-right: 1px solid #e6e6e6;}
+.tab-go-refresh i{ color: #666; font-size: 20px; line-height: 40px; cursor: pointer}
+.tab-go-left {border-color: #e6e6e6; left:45px; top: 0; height: 40px; border-right: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6; width: 39px; position: absolute; text-align: center; background: #fff; z-index: 999; }
+.tab-go-left i { color: #666; font-size: 20px; line-height: 40px; cursor: pointer; }
 .tab-go-right {background: #fff; border-color: #e6e6e6; right: 60; top: 0; height: 40px; border-bottom: 1px solid #e6e6e6; width: 40px; position: absolute; text-align: center; border-left: 1px solid #e6e6e6; z-index: 999; border-right: 1px solid #e6e6e6; }
-.tab-go-right i {cursor: pointer; font-weight: bold; color: #666; font-size: 20px; line-height: 40px; }
+.tab-go-right i {cursor: pointer; color: #666; font-size: 20px; line-height: 40px; }
 /*页面操作*/
 .closeBox .layui-nav-child {top: 42px; left: -12px; }
 .closeBox .layui-nav-item>a, .closeBox .layui-nav-item>a:hover {color: #000; }
