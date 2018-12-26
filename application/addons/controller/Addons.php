@@ -20,17 +20,41 @@ use think\Db;
 
 class Addons extends Adminbase
 {
-    protected function initialize()
-    {
-        parent::initialize();
-        $this->addons = new Addons_Model;
-    }
-
     //显示插件列表
     public function index()
     {
         if ($this->request->isAjax()) {
-            $addons = $this->addons->getAddonList();
+            //取得模块目录名称
+            $dirs = array_map('basename', glob(ADDON_PATH . '*', GLOB_ONLYDIR));
+            if ($dirs === false || !file_exists(ADDON_PATH)) {
+                $this->error = '插件目录不可读或者不存在';
+                return false;
+            }
+            // 读取数据库插件表
+            $addons = Addons_Model::order('id desc')->column(true, 'name');
+            //遍历插件列表
+            foreach ($dirs as $value) {
+                //是否已经安装过
+                if (!isset($addons[$value])) {
+                    $class = get_addon_class($value);
+                    if (!class_exists($class)) {
+                        // 实例化插件失败忽略执行
+                        $addons[$value]['uninstall'] = -1;
+                        continue;
+                    }
+                    //获取插件配置
+                    $obj = new $class();
+                    $addons[$value] = $obj->info;
+                    if ($addons[$value]) {
+                        $addons[$value]['uninstall'] = 1;
+                        unset($addons[$value]['status']);
+                        //是否有配置
+                        //$config = $obj->getAddonConfig();
+                        //$addons[$value]['config'] = $config;
+                    }
+                }
+            }
+            int_to_string($addons, array('status' => array(-1 => '损坏', 0 => '禁用', 1 => '启用', null => '未安装')));
             $result = array("code" => 0, "data" => $addons);
             return json($result);
         }
@@ -62,15 +86,17 @@ class Addons extends Adminbase
             $this->error('请选择需要操作的插件！');
         }
         //获取插件信息
-        $addon = $this->addons->where(array('id' => $addonId))->find()->toArray();
-        if (empty($addon)) {
+        $addon = Addons_Model::where(array('id' => $addonId))->find();
+        if (!$addon) {
             $this->error('该插件没有安装！');
         }
+        $addon = $addon->toArray();
         //实例化插件入口类
         $addon_class = get_addon_class($addon['name']);
         if (!class_exists($addon_class)) {
             trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
         }
+
         $addonObj = new $addon_class();
         $addon['addon_path'] = $addonObj->addon_path;
         $addon['custom_config'] = isset($addonObj->custom_config) ? $addonObj->custom_config : '';
@@ -106,7 +132,7 @@ class Addons extends Adminbase
     {
         $id = $this->request->param('id/d');
         //获取插件信息
-        $info = $this->addons->where(array('id' => $id))->find();
+        $info = Addons_Model::where(array('id' => $id))->find();
         if (empty($info)) {
             $this->error('该插件没有安装！');
         }
@@ -126,7 +152,7 @@ class Addons extends Adminbase
     {
         $id = $this->request->param('id/d');
         //cache('Hooks', null);
-        if ($this->addons->save(['status' => 1], ['id' => $id])) {
+        if (Addons_Model::where('id', $id)->update(['status' => 1])) {
             $this->success('启用成功');
         } else {
             $this->error('启用失败');
@@ -138,7 +164,7 @@ class Addons extends Adminbase
     {
         $id = $this->request->param('id/d');
         //cache('Hooks', null);
-        if ($this->addons->save(['status' => 0], ['id' => $id])) {
+        if (Addons_Model::where('id', $id)->update(['status' => 0])) {
             $this->success('禁用成功');
         } else {
             $this->error('禁用失败');

@@ -55,14 +55,14 @@ layui.use(['layer', 'form'], function(){
     $('#install').click(function () {
         var table_exists = false;
         if ($('.layui-form i.text-danger').length) {
-            layer.alert('缺少依赖模块或插件')
+            layer.msg('缺少依赖模块或插件')
             return false;
         }
         if ($('.layui-form span.text-danger').length) {
             table_exists = true;
         }
         if (table_exists && $('.layui-form input[name=clear]:checked').val() == 0) {
-            layer.alert('数据库表存在冲突，如果需要覆盖原有数据，请选择“清除旧数据”')
+            layer.msg('数据库表存在冲突，如果需要覆盖原有数据，请选择“清除旧数据”')
             return false;
         }
         $('.layui-form').submit();

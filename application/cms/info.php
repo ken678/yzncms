@@ -47,5 +47,7 @@ return array(
         'yzn_category',
         'yzn_model',
         'yzn_model_field',
+        'yzn_article',
+        'yzn_article_data',
     ],
 );
