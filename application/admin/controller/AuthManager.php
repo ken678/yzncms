@@ -166,7 +166,7 @@ class AuthManager extends Adminbase
         $nodes = model("admin/Menu")->returnNodes(false);
         $AuthRule = model('AuthRule');
         //需要更新和删除的节点必然位于$rules
-        $rules = $AuthRule->where('type', 'in', '1,2')->order('name')->select();
+        $rules = $AuthRule->where('type', 'in', '1,2')->order('name')->select()->toArray();
         //构建insert数据
         $data = array(); //保存需要插入和更新的新节点
         foreach ($nodes as $value) {
@@ -197,15 +197,8 @@ class AuthManager extends Adminbase
                 $ids[] = $rule['id'];
             }
         }
-        if (count($update)) {
-            foreach ($update as $k => $row) {
-                if ($row != $diff[$row['id']]) {
-                    $AuthRule->where(array('id' => $row['id']))->update($row);
-                }
-            }
-        }
         if (count($ids)) {
-            $AuthRule->where(array('id' => array('IN', implode(',', $ids))))->update(array('status' => -1));
+            $AuthRule->where(['id' => $ids])->update(array('status' => -1));
             //删除规则是否需要从每个用户组的访问授权表中移除该规则?
         }
         if (count($data)) {
