@@ -39,7 +39,7 @@ class Adminaddon extends Adminbase
         if (!$this->addonInfo['status']) {
             $this->error('该插件已被禁用！');
         }
-        $this->addonPath = $this->Addons_model->getAddonsPath() . $this->addonName . DIRECTORY_SEPARATOR;
+        $this->addonPath = ADDON_PATH . $this->addonName . DIRECTORY_SEPARATOR;
     }
 
     /**

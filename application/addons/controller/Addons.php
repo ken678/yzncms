@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\addons\controller;
 
-use app\addons\model\Addons as Addons_model;
+use app\addons\model\Addons as Addons_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -23,7 +23,7 @@ class Addons extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->addons = new Addons_model;
+        $this->addons = new Addons_Model;
     }
 
     //显示插件列表
@@ -154,12 +154,54 @@ class Addons extends Adminbase
         if (empty($addonName)) {
             $this->error('请选择需要安装的插件！');
         }
-        if ($this->addons->installAddon($addonName)) {
-            $this->success('插件安装成功！', url('Addons/index'));
-        } else {
-            $error = $this->addons->getError();
-            $this->error($error ? $error : '插件安装失败！');
+        //检查插件是否安装
+        if ($this->isInstall($addonName)) {
+            $this->error('该插件已经安装，无需重复安装！');
         }
+        $class = get_addon_class($addonName);
+        if (!class_exists($class)) {
+            $this->error('获取插件对象出错！');
+        }
+        $addonObj = new $class();
+        //获取插件信息
+        $info = $addonObj->info;
+        if (empty($info)) {
+            $this->error('插件信息获取失败！');
+        }
+        //开始安装
+        $install = $addonObj->install();
+        if ($install !== true) {
+            if (method_exists($addonObj, 'getError')) {
+                $this->error($addonObj->getError() ?: '执行插件预安装操作失败！');
+            } else {
+                $this->error('执行插件预安装操作失败！');
+            }
+        }
+        $info['config'] = json_encode($addonObj->getAddonConfig());
+        //添加插件安装记录
+        $res = Addons_Model::create($info, true);
+        if (!$res) {
+            $this->error('写入插件数据失败！');
+        }
+        // 复制静态资源
+        $sourceAssetsDir = self::getSourceAssetsDir($addonName);
+        $destAssetsDir = self::getDestAssetsDir($addonName);
+        if (is_dir($sourceAssetsDir)) {
+            copydirs($sourceAssetsDir, $destAssetsDir);
+        }
+        //如果插件有自己的后台
+        if (isset($info['has_adminlist']) && $info['has_adminlist']) {
+            $admin_list = $addonObj->admin_list;
+            //添加菜单
+            model('admin/Menu')->addAddonMenu($info, $admin_list);
+        }
+        //更新插件行为实现
+        $hooks_update = model('admin/Hooks')->updateHooks($addonName);
+        if (!$hooks_update) {
+            $this->where("name='{$addon_name}'")->delete();
+            $this->error('更新钩子处插件失败,请卸载后尝试重新安装！');
+        }
+        $this->success('插件安装成功！', url('Addons/index'));
     }
 
     /**
@@ -171,12 +213,84 @@ class Addons extends Adminbase
         if (empty($addonId)) {
             $this->error('请选择需要卸载的插件！');
         }
-        if ($this->addons->uninstallAddon($addonId)) {
+        //获取插件信息
+        $info = Addons_Model::where(array('id' => $addonId))->find();
+        $class = get_addon_class($info['name']);
+        if (empty($info) || !class_exists($class)) {
+            $this->error('该插件不存在！');
+        }
+        //插件标识
+        $addonName = $info['name'];
+        //检查插件是否安装
+        if ($this->isInstall($addonName) == false) {
+            $this->error('该插件未安装，无需卸载！');
+        }
+        //卸载插件
+        $addonObj = new $class();
+        $uninstall = $addonObj->uninstall();
+        if ($uninstall !== true) {
+            if (method_exists($addonObj, 'getError')) {
+                $this->error($addonObj->getError() ? $addonObj->getError() : '执行插件预卸载操作失败！');
+            } else {
+                $this->error('执行插件预卸载操作失败！');
+            }
+        }
+        if (false !== Addons_Model::destroy($addonId)) {
+            //删除插件后台菜单
+            if (isset($info['has_adminlist']) && $info['has_adminlist']) {
+                model('admin/Menu')->delAddonMenu($info);
+            }
+            // 移除插件基础资源目录
+            $destAssetsDir = self::getDestAssetsDir($addonName);
+            if (is_dir($destAssetsDir)) {
+                rmdirs($destAssetsDir);
+            }
+            $hooks_update = model('admin/Hooks')->removeHooks($addonName);
+            if ($hooks_update === false) {
+                $this->error = '卸载插件所挂载的钩子数据失败！';
+            }
             $this->success('插件卸载成功！', url('Addons/index'));
         } else {
-            $error = $this->addons->getError();
-            $this->error($error ? $error : '插件卸载失败！');
+            $this->error('插件卸载失败！');
         }
+    }
+
+    /**
+     * 检查插件是否已经安装
+     * @param type $name 插件标识
+     * @return boolean
+     */
+    public function isInstall($name)
+    {
+        if (empty($name)) {
+            return false;
+        }
+        $count = Addons_Model::where(array('name' => $name))->find();
+        return $count ? true : false;
+    }
+
+    /**
+     * 获取插件源资源文件夹
+     * @param   string $name 插件名称
+     * @return  string
+     */
+    protected static function getSourceAssetsDir($name)
+    {
+        return ADDON_PATH . $name . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * 获取插件目标资源文件夹
+     * @param   string $name 插件名称
+     * @return  string
+     */
+    protected static function getDestAssetsDir($name)
+    {
+        $assetsDir = ROOT_PATH . str_replace("/", DIRECTORY_SEPARATOR, "public/static/addons/{$name}/");
+        if (!is_dir($assetsDir)) {
+            mkdir($assetsDir, 0755, true);
+        }
+        return $assetsDir;
     }
 
 }
