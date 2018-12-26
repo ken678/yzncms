@@ -17,6 +17,7 @@ namespace app\admin\controller;
 use app\admin\model\Module as ModuleModel;
 use app\common\controller\Adminbase;
 use think\Controller;
+use think\Db;
 
 class Module extends Adminbase
 {
@@ -58,6 +59,27 @@ class Module extends Adminbase
                 $this->error('请选择需要安装的模块！');
             }
             $config = $this->ModuleModel->getInfoFromFile($module);
+            // 检查模块依赖
+            // 检查插件依赖
+            // 检查目录权限
+            // 检查数据表
+            if (isset($config['tables']) && !empty($config['tables'])) {
+                foreach ($config['tables'] as $table) {
+                    if (Db::query("SHOW TABLES LIKE '{$table}'")) {
+                        $table_check[] = [
+                            'table' => "{$table}",
+                            'result' => '<span class="text-danger">存在同名</span>',
+                        ];
+                    } else {
+                        $table_check[] = [
+                            'table' => "{$table}",
+                            'result' => '<i class="iconfont icon-qiyong"></i>',
+                        ];
+                    }
+                }
+
+            }
+            $this->assign('table_check', $table_check);
             $this->assign('config', $config);
             return $this->fetch();
 

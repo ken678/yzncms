@@ -43,5 +43,9 @@ return array(
         ],
     ],
     // 数据表，请加表前缀yzn[有数据库表时必填]
-    'tables' => [],
+    'tables' => [
+        'yzn_category',
+        'yzn_model',
+        'yzn_model_field',
+    ],
 );

@@ -3,16 +3,70 @@
 <div class="layui-card">
     <div class="layui-card-header">模块安装检测</div>
     <div class="layui-card-body">
-    	<form class="layui-form form-horizontal" action="{:url('admin/module/install')}" method="post">
-    		<input type="hidden" name="module" value="{$config.module}">
+        <form class="layui-form form-horizontal" action="{:url('admin/module/install')}" method="post">
+            <input type="hidden" name="module" value="{$config.module}">
             <div class="layui-form-item">
-                <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">确认安装</button>
+                <h4>数据表检查</h4>
+                {empty name="table_check"}
+                该模块不需要数据表
+                {else/}
+                <table class="layui-table" lay-even style="max-width: 280px;">
+                    <colgroup>
+                        <col width="180">
+                        <col width="100">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>数据表</th>
+                            <th class="text-center">检查结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="table_check" id="vo"}
+                        <tr>
+                            <td>{$vo.table}</td>
+                            <td class="text-center">{$vo.result|raw}</td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+                {/empty}
+            </div>
+            <div class="layui-form-item">
+                <h4>是否清除旧数据</h4>
+                <div>
+                    <input type="radio" name="clear" value="0" title="否" checked>
+                    <input type="radio" name="clear" value="1" title="是">
+                </div>
+                <div class="layui-form-mid layui-word-aux">选择“是”，将删除数据库中已存在的相同数据表</div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn" id="install" lay-submit="" lay-filter="*" target-form="form-horizontal">确认安装</button>
                 <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
             </div>
-    	</form>
+        </form>
     </div>
 </div>
 {/block}
 {block name="script"}
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+<script>
+layui.use(['layer', 'form'], function(){
+    $('#install').click(function () {
+        var table_exists = false;
+        if ($('.layui-form i.text-danger').length) {
+            layer.alert('缺少依赖模块或插件')
+            return false;
+        }
+        if ($('.layui-form span.text-danger').length) {
+            table_exists = true;
+        }
+        if (table_exists && $('.layui-form input[name=clear]:checked').val() == 0) {
+            layer.alert('数据库表存在冲突，如果需要覆盖原有数据，请选择“清除旧数据”')
+            return false;
+        }
+        $('.layui-form').submit();
+    });
+});
+</script>
 {/block}

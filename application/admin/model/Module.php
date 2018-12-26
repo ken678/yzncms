@@ -178,14 +178,14 @@ class Module extends Model
             return false;
         }
         // 检查数据表
-        if (isset($config['tables']) && !empty($config['tables'])) {
-            foreach ($config['tables'] as $table) {
-                if ($this->db()->query("SHOW TABLES LIKE '{$table}'")) {
-                    $this->error = $table . '数据表已存在，无法安装！';
-                    return false;
-                }
-            }
+        /*if (isset($config['tables']) && !empty($config['tables'])) {
+        foreach ($config['tables'] as $table) {
+        if ($this->db()->query("SHOW TABLES LIKE '{$table}'")) {
+        $this->error = $table . '数据表已存在，无法安装！';
+        return false;
         }
+        }
+        }*/
         //保存在安装表
         if ($this->allowField(true)->save($config) == false) {
             $this->error = '安装失败！';

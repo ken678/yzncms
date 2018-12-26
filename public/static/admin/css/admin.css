@@ -6,6 +6,7 @@
 .w400{width:400px!important;}
 .w500{width:500px!important;}
 .w600{width:600px!important;}
+.text-center {text-align: center !important; }
 code {
     padding: 2px 4px;
     font-size: 90%;
