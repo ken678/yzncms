@@ -96,6 +96,24 @@ class Field extends Adminbase
     }
 
     /**
+     * 删除字段
+     */
+    public function delete()
+    {
+        //字段ID
+        $fieldid = $this->request->param('id/d', '');
+        if (empty($fieldid)) {
+            $this->error('字段ID不能为空！');
+        }
+        if ($this->modelfield->deleteField($fieldid)) {
+            $this->success("字段删除成功！");
+        } else {
+            $error = $this->modelfield->getError();
+            $this->error($error ? $error : "删除字段失败！");
+        }
+    }
+
+    /**
      * 字段状态
      */
     public function setstate()

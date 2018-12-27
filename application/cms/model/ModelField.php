@@ -79,6 +79,45 @@ EOF;
     }
 
     /**
+     * 删除字段
+     * @param type $fieldid 字段id
+     * @return boolean
+     */
+    public function deleteField($fieldid)
+    {
+
+        //原字段信息
+        $info = self::where(array("id" => $fieldid))->find();
+        if (empty($info)) {
+            $this->error = '该字段不存在！';
+            return false;
+        }
+        //模型id
+        $modelid = $info['modelid'];
+        //完整表名获取 判断主表 还是副表
+        $tablename = $this->getModelTableName($modelid, $info['ifsystem']);
+        if (!$this->table_exists($tablename)) {
+            $this->error = '数据表不存在！';
+            return false;
+        }
+        $tablename = config('database.prefix') . $tablename;
+
+        //判断是否允许删除
+        $sql = <<<EOF
+            ALTER TABLE `{$tablename}`
+            DROP COLUMN `{$info['name']}`;
+EOF;
+        try {
+            $res = Db::execute($sql);
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
+        self::get($fieldid)->delete();
+        return true;
+    }
+
+    /**
      * 根据模型ID，返回表名
      * @param type $modelid
      * @param type $modelid
