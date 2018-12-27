@@ -64,7 +64,17 @@ EOF;
         $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
         $data['iffixed'] = 0;
         $data['setting'] = $fieldInfo['ifoption'] ? $data['setting'] : '';
-        $result = self::create($data, true);
+        $fieldid = self::create($data, true);
+        if ($fieldid) {
+            //清理缓存
+            //cache('ModelField', null);
+            return true;
+        } else {
+            $this->error = '字段信息入库失败！';
+            //回滚
+            Db::execute("ALTER TABLE  `{$tablename}` DROP  `{$data['name']}`");
+            return false;
+        }
         return true;
     }
 

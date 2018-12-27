@@ -177,7 +177,12 @@ class Models extends Modelbase
 				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
-        Db::execute($sql);
+        try {
+            $res = Db::execute($sql);
+        } catch (\Exception $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
         if ($data['type'] == 2) {
             // 新建附属表
             $sql = <<<EOF
@@ -187,7 +192,12 @@ EOF;
 				PRIMARY KEY (`did`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
-            Db::execute($sql);
+            try {
+                $res = Db::execute($sql);
+            } catch (\Exception $e) {
+                $this->error = $e->getMessage();
+                return false;
+            }
         }
         return true;
     }
