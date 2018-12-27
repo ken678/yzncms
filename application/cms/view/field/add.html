@@ -26,6 +26,7 @@
                 <label class="layui-form-label">字段类型</label>
                 <div class="layui-input-inline">
                     <select name="formtype" lay-filter="formtype">
+                        <option></option>
                         {volist name="fieldType" id="vo"}
                         <option value="{$vo.name}" data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
                         {/volist}
@@ -34,7 +35,7 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">字段定义</label>
-                <div class="layui-input-inline">
+                <div class="layui-input-inline w300">
                     <input type="text" name="define" lay-verify="define" autocomplete="off" placeholder="字段定义" class="layui-input" id="define">
                 </div>
             </div>

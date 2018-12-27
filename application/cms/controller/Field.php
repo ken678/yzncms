@@ -70,6 +70,10 @@ class Field extends Adminbase
         if ($this->request->isPost()) {
             //增加字段
             $data = $this->request->param();
+            $result = $this->validate($data, 'ModelField');
+            if (true !== $result) {
+                return $this->error($result);
+            }
             $res = $this->modelfield->addField($data);
             if (!$res) {
                 $this->error($this->modelfield->getError());
