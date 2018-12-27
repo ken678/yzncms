@@ -57,7 +57,11 @@
         <select name="{$vo.fieldArr}[{$vo.name}]">
             <option value=""></option>
             {volist name="vo.options" id="v"}
-            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
+            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v}</option>
+            {/volist}
+        </select>
+    </div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="datetime"}

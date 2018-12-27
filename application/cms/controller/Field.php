@@ -17,9 +17,11 @@ namespace app\cms\controller;
 use app\cms\model\ModelField;
 use app\common\controller\Adminbase;
 use think\Db;
+use think\facade\Cookie;
 
 class Field extends Adminbase
 {
+    protected $ext_table = '_data';
     //初始化
     protected function initialize()
     {
@@ -41,6 +43,8 @@ class Field extends Adminbase
         if (empty($model)) {
             $this->error('该模型不存在！');
         }
+        // 记录当前列表页的cookie
+        Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
         //根据模型读取字段列表
         $banFields = ['id', 'did', 'status', 'uid', 'posid'];
         $data = $this->modelfield->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->select()->withAttr('create_time', function ($value, $data) {
@@ -52,6 +56,39 @@ class Field extends Adminbase
         }
         $this->assign("modelid", $modelid);
         return $this->fetch();
+    }
+
+    /**
+     * 增加字段
+     */
+    public function add()
+    {
+        $modelid = $this->request->param('modelid/d', '');
+        if (empty($modelid)) {
+            $this->error('参数错误！');
+        }
+        if ($this->request->isPost()) {
+            //增加字段
+            $data = $this->request->param();
+            $res = $this->modelfield->addField($data);
+            if (!$res) {
+                $this->error($this->modelfield->getError());
+            } else {
+                //$this->success('新增成功', Cookie::get('__forward__'));
+                $this->success('新增成功', Cookie::get('__forward__'));
+            }
+        } else {
+            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
+            $modelInfo = Db::name('model')->where('id', $modelid)->find();
+            $this->assign(
+                [
+                    'modelType' => $modelInfo['type'],
+                    "modelid" => $modelid,
+                    'fieldType' => $fieldType,
+                ]
+            );
+            return $this->fetch();
+        }
     }
 
     /**
