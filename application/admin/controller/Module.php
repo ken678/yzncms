@@ -14,8 +14,9 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\Module as ModuleModel;
+//use app\admin\model\Module as ModuleModel;
 use app\common\controller\Adminbase;
+use sys\Module as ModuleService;
 use think\Controller;
 use think\Db;
 
@@ -25,14 +26,14 @@ class Module extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->ModuleModel = new ModuleModel();
+        $this->ModuleService = new ModuleService();
     }
 
     //本地模块列表
     public function index()
     {
         if ($this->request->isAjax()) {
-            $list = $this->ModuleModel->getAll();
+            $list = $this->ModuleService->getAll();
             $result = array("code" => 0, "data" => $list);
             return json($result);
         }
@@ -47,10 +48,10 @@ class Module extends Adminbase
             if (empty($module)) {
                 $this->error('请选择需要安装的模块！');
             }
-            if ($this->ModuleModel->install($module)) {
+            if ($this->ModuleService->install($module)) {
                 $this->success('模块安装成功！', url('admin/Module/index'));
             } else {
-                $error = $this->ModuleModel->getError();
+                $error = $this->ModuleService->getError();
                 $this->error($error ? $error : '模块安装失败！');
             }
         } else {
@@ -58,7 +59,7 @@ class Module extends Adminbase
             if (empty($module)) {
                 $this->error('请选择需要安装的模块！');
             }
-            $config = $this->ModuleModel->getInfoFromFile($module);
+            $config = $this->ModuleService->getInfoFromFile($module);
             // 检查模块依赖
             // 检查插件依赖
             // 检查目录权限
@@ -93,10 +94,10 @@ class Module extends Adminbase
         if (empty($module)) {
             $this->error('请选择需要安装的模块！');
         }
-        if ($this->ModuleModel->uninstall($module)) {
+        if ($this->ModuleService->uninstall($module)) {
             $this->success("模块卸载成功，请及时更新缓存！", url("admin/Module/index"));
         } else {
-            $error = $this->ModuleModel->getError();
+            $error = $this->ModuleService->getError();
             $this->error($error ? $error : "模块卸载失败！", url("admin/Module/index"));
         }
     }
