@@ -174,6 +174,11 @@ class Module
             $this->error = '安装失败！';
             return false;
         }
+        //执行安装脚本
+        if (!$this->runInstallScript($moduleName)) {
+            $this->installRollback($moduleName);
+            return false;
+        }
         //执行数据库脚本安装
         $this->runSQL($moduleName);
         //执行菜单项安装
@@ -200,6 +205,8 @@ class Module
             //拷贝模板到前台模板目录中去
             copydirs($this->installdir . "public" . DIRECTORY_SEPARATOR, $this->extresPath . strtolower($moduleName) . '/');
         }
+        //安装结束，最后调用安装脚本完成
+        $this->runInstallScript($moduleName, 'end');
         //更新缓存
         cache('Module', null);
         return true;
@@ -241,6 +248,11 @@ class Module
             $this->error = '卸载失败！';
             return false;
         }
+        //执行卸载脚本
+        if (!$this->runInstallScript($moduleName, 'run', 'uninstall')) {
+            //$this->installRollback($moduleName);
+            return false;
+        }
         //注销缓存
         model('common/Cache')->deleteCacheModule($moduleName);
 
@@ -257,6 +269,8 @@ class Module
         if (is_dir($this->extresPath . strtolower($moduleName) . DIRECTORY_SEPARATOR)) {
             rmdirs($this->extresPath . strtolower($moduleName) . DIRECTORY_SEPARATOR);
         }
+        //卸载结束，最后调用卸载脚本完成
+        $this->runInstallScript($moduleName, 'end', 'uninstall');
         //更新缓存
         cache('Module', null);
         return true;
@@ -312,6 +326,34 @@ class Module
             }
         }
         Db::name('menu')->where(array('app' => ucwords($moduleName)))->delete();
+        return true;
+    }
+
+    /**
+     * 执行安装脚本
+     * @param type $moduleName 模块名(目录名)
+     * @return boolean
+     */
+    private function runInstallScript($moduleName = '', $type = 'run', $Dir = 'install')
+    {
+        if (empty($moduleName)) {
+            if ($this->moduleName) {
+                $moduleName = $this->moduleName;
+            } else {
+                $this->error = '模块名称不能为空！';
+                return false;
+            }
+        }
+        //检查是否有安装脚本
+        if (is_file($this->appPath . "{$moduleName}/{$Dir}/{$Dir}.php") !== true) {
+            return true;
+        }
+        $installObj = \think\Container::get("\\app\\{$moduleName}\\{$Dir}\\{$Dir}");
+        //执行安装
+        if (false == $installObj->$type()) {
+            $this->error = $installObj->getError();
+            return false;
+        }
         return true;
     }
 
