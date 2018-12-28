@@ -78,7 +78,6 @@ class Field extends Adminbase
             if (!$res) {
                 $this->error($this->modelfield->getError());
             } else {
-                //$this->success('新增成功', Cookie::get('__forward__'));
                 $this->success('新增成功', Cookie::get('__forward__'));
             }
         } else {
@@ -93,6 +92,47 @@ class Field extends Adminbase
             );
             return $this->fetch();
         }
+    }
+
+    /**
+     * 修改字段
+     */
+    public function edit()
+    {
+        //字段ID
+        $fieldid = $this->request->param('fieldid/d', 0);
+        if (empty($fieldid)) {
+            $this->error('字段ID不能为空！');
+        }
+        if ($this->request->isPost()) {
+            $data = $this->request->param();
+            if ($this->modelfield->editField($data, $fieldid)) {
+                $this->success("更新成功！", Cookie::get('__forward__'));
+            } else {
+                $error = $this->modelfield->getError();
+                $this->error($error ? $error : '更新失败！');
+            }
+        } else {
+            //字段信息
+            $fieldData = ModelField::get($fieldid);
+            if (empty($fieldData)) {
+                $this->error('该字段信息不存在！');
+            }
+            //模型信息
+            $modedata = Db::name('model')->where('id', $fieldData->getAttr('modelid'))->find();
+            if (empty($modedata)) {
+                $this->error('该模型不存在！');
+            }
+            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
+            $this->assign([
+                'modelType' => $modedata['type'],
+                'data' => $fieldData,
+                'fieldid' => $fieldid,
+                'fieldType' => $fieldType,
+            ]);
+            return $this->fetch();
+        }
+
     }
 
     /**

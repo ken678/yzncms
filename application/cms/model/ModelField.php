@@ -22,9 +22,13 @@ use think\Db;
  */
 class ModelField extends Modelbase
 {
+    protected $autoWriteTimestamp = true;
+    protected $insert = ['status' => 1];
+
     //添加字段
     public function addField($data = null)
     {
+        $data['name'] = strtolower($data['name']);
         $data['ifsystem'] = isset($data['ifsystem']) ? intval($data['ifsystem']) : 0;
         //模型id
         $modelid = $data['modelid'];
@@ -76,6 +80,62 @@ EOF;
             return false;
         }
         return true;
+    }
+
+    /**
+     *  编辑字段
+     * @param type $data 编辑字段数据
+     * @param type $fieldid 字段id
+     * @return boolean
+     */
+    public function editField($data, $fieldid = 0)
+    {
+        $data['name'] = strtolower($data['name']);
+        $data['ifsystem'] = isset($data['ifsystem']) ? intval($data['ifsystem']) : 0;
+        if (!$fieldid && !isset($data['fieldid'])) {
+            $this->error = '缺少字段id！';
+            return false;
+        } else {
+            $fieldid = $fieldid ? $fieldid : (int) $data['fieldid'];
+        }
+        //原字段信息
+        $info = self::where(array("id" => $fieldid))->find();
+        if (empty($info)) {
+            $this->error = '该字段不存在！';
+            return false;
+        }
+        //模型id
+        $data['modelid'] = $modelid = $info['modelid'];
+        //完整表名获取 判断主表 还是副表
+        $tablename = $this->getModelTableName($modelid, $data['ifsystem']);
+        if (!$this->table_exists($tablename)) {
+            $this->error = '数据表不存在！';
+            return false;
+        }
+        $tablename = config('database.prefix') . $tablename;
+        //判断字段名唯一性
+        if ($this->where('name', $data['name'])->where('modelid', $modelid)->where('id', '<>', $fieldid)->value('id')) {
+            $this->error = "字段'" . $data['name'] . "`已经存在";
+            return false;
+        }
+        $data['ifeditable'] = isset($data['ifeditable']) ? intval($data['ifeditable']) : 0;
+        $data['ifrequire'] = isset($data['ifrequire']) ? intval($data['ifrequire']) : 0;
+        if ($data['ifrequire'] && !$data['ifeditable']) {
+            $this->error = '必填字段不可以隐藏！';
+            return false;
+        }
+        $sql = <<<EOF
+            ALTER TABLE `{$tablename}`
+            CHANGE COLUMN `{$info['name']}` `{$data['name']}` {$data['define']} COMMENT '{$data['title']}';
+EOF;
+        try {
+            Db::execute($sql);
+        } catch (\Exception $e) {
+            $this->addField($data);
+        }
+        var_dump($tablename);
+        exit();
+
     }
 
     /**

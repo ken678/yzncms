@@ -1,26 +1,26 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-header">添加字段</div>
+    <div class="layui-card-header">编辑字段</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('cms/field/add')}" method="post">
+        <form class="layui-form form-horizontal" action="{:url('cms/field/edit')}" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">字段名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" lay-verify="name" placeholder="字段名称" class="layui-input" required>
+                    <input type="text" name="name" lay-verify="name" placeholder="字段名称" class="layui-input" required value="{$data.name}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">字母、数字组成，并且仅能字母开头</div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">字段标题</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="title" lay-verify="title" placeholder="字段标题" class="layui-input" required>
+                    <input type="text" name="title" lay-verify="title" placeholder="字段标题" class="layui-input" required value="{$data.title}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">字段描述</label>
                 <div class="layui-input-inline w300">
-                    <textarea name="tips" lay-verify="required" placeholder="字段的相关描述" class="layui-textarea"></textarea>
+                    <textarea name="tips" lay-verify="required" placeholder="字段的相关描述" class="layui-textarea">{$data.tips}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -29,7 +29,7 @@
                     <select name="formtype" lay-filter="formtype">
                         <option></option>
                         {volist name="fieldType" id="vo"}
-                        <option value="{$vo.name}" data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
+                        <option value="{$vo.name}" {if $data.formtype==$vo.name}selected{/if} data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
                         {/volist}
                     </select>
                 </div>
@@ -37,7 +37,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">字段定义</label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="define" lay-verify="define" autocomplete="off" placeholder="字段定义" class="layui-input" id="define">
+                    <input type="text" name="define" lay-verify="define" autocomplete="off" placeholder="字段定义" class="layui-input" id="define" value="{$data.define}">
                 </div>
             </div>
             <div class="layui-form-item" id="setting" style="display:none">
@@ -52,42 +52,34 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">字段默认值</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="value" lay-verify="value" autocomplete="off" placeholder="默认插入字段的值" class="layui-input">
+                    <input type="text" name="value" lay-verify="value" autocomplete="off" placeholder="默认插入字段的值" class="layui-input" value="{$data.value}">
                 </div>
             </div>
-            {if $modelType==2}
-            <div class="layui-form-item">
-                <label class="layui-form-label">主表字段</label>
-                <div class="layui-input-inline">
-                    <input type="radio" name="ifsystem" value="1" title="是" checked>
-                    <input type="radio" name="ifsystem" value="0" title="否">
-                </div>
-            </div>
-            {else}
-            <input type="hidden" name="ifsystem" value="1" />
-            {/if}
             <div class="layui-form-item">
                 <label class="layui-form-label">是否必填</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="ifrequire" value="1" title="是" checked>
-                    <input type="radio" name="ifrequire" value="0" title="否">
+                    <input type="radio" name="ifrequire" value="1" title="是" {if $data.ifrequire==1}checked{/if}>
+                    <input type="radio" name="ifrequire" value="0" title="否" {if $data.ifrequire==0}checked{/if}>
                 </div>
             </div>
-            <div class="layui-form-item" id="ifsearch" style="display:none">
+            {if $data['ifsystem']}
+            <div class="layui-form-item" id="ifsearch" {if !in_array($data['formtype'],['text', 'textarea', 'tags', 'Ueditor'])}style="display:none"{/if}>
                 <label class="layui-form-label">是否可搜索</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="ifsearch" value="1" title="是" checked>
-                    <input type="radio" name="ifsearch" value="0" title="否">
+                    <input type="radio" name="ifsearch" value="1" title="是" {if $data.ifsearch==1}checked{/if}>
+                    <input type="radio" name="ifsearch" value="0" title="否" {if $data.ifsearch==2}checked{/if}>
                 </div>
             </div>
+            {/if}
             <div class="layui-form-item">
                 <label class="layui-form-label">是否显示</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="ifeditable" value="1" title="是" checked>
-                    <input type="radio" name="ifeditable" value="0" title="否">
+                    <input type="radio" name="ifeditable" value="1" title="是" {if $data.ifeditable==1}checked{/if}>
+                    <input type="radio" name="ifeditable" value="0" title="否" {if $data.ifeditable==0}checked{/if}>
                 </div>
             </div>
-            <input name="modelid" type="hidden" value="{$modelid}" />
+            <input type="hidden" name="ifsystem"  value="{$data.ifsystem}">
+            <input name="fieldid" type="hidden" value="{$fieldid}" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
