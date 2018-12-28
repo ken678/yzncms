@@ -28,6 +28,8 @@ class Module extends Model
     protected $appPath = APP_PATH;
     //模块模板安装路径
     protected $templatePath;
+    //静态资源目录
+    public $extresPath = null;
     //已安装模块列表
     protected $moduleList = array();
     //系统模块，隐藏
@@ -49,6 +51,7 @@ class Module extends Model
     protected function initialize()
     {
         parent::initialize();
+        $this->extresPath = ROOT_PATH . 'public/static/models/';
         $this->templatePath = TEMPLATE_PATH . 'default/';
     }
 
@@ -211,6 +214,11 @@ class Module extends Model
             //拷贝模板到前台模板目录中去
             copydirs($this->appPath . "{$moduleName}/install/template/", $this->templatePath);
         }
+        //静态资源文件
+        if (file_exists($this->appPath . "{$moduleName}/install/public/")) {
+            //拷贝模板到前台模板目录中去
+            copydirs($this->appPath . "{$moduleName}/install/public/", $this->extresPath . strtolower($moduleName) . '/');
+        }
         //更新缓存
         cache('Module', null);
         return true;
@@ -233,7 +241,7 @@ class Module extends Model
             }
         }
         //设置脚本最大执行时间
-        set_time_limit(0);
+        @set_time_limit(0);
         if ($this->competence($moduleName) !== true) {
             return false;
         }
@@ -264,7 +272,10 @@ class Module extends Model
         if (is_dir($this->templatePath . $moduleName . DIRECTORY_SEPARATOR)) {
             rmdirs($this->templatePath . $moduleName . DIRECTORY_SEPARATOR);
         }
-
+        //静态资源移除
+        if (is_dir($this->extresPath . strtolower($moduleName) . DIRECTORY_SEPARATOR)) {
+            rmdirs($this->extresPath . strtolower($moduleName) . DIRECTORY_SEPARATOR);
+        }
         //更新缓存
         cache('Module', null);
         return true;
