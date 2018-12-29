@@ -14,7 +14,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">选择模型</label>
                             <div class="layui-input-inline w300">
-                                <select name="parentid">
+                                <select name="modelid">
                                     <option value="">请选择模型</option>
                                     {volist name="models" id="vo"}
                                     <option value="{$vo.id}">{$vo.name}</option>
@@ -40,15 +40,15 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">栏目名称 </label>
+                            <label class="layui-form-label">栏目标题 </label>
                             <div class="layui-input-inline w300">
                                 <input type="text" name="catname" autocomplete="off" placeholder="栏目名称" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">英文目录</label>
+                            <label class="layui-form-label">唯一标识</label>
                             <div class="layui-input-inline w300">
-                                <input type="text" name="catdir" autocomplete="off" placeholder="英文目录" class="layui-input">
+                                <input type="text" name="catdir" autocomplete="off" placeholder="唯一标识" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">

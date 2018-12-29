@@ -25,6 +25,7 @@ class Category extends Adminbase
     protected function initialize()
     {
         parent::initialize();
+        $this->Category_Model = new Category_Model;
         //取得当前内容模型模板存放目录
         $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "cms" . DIRECTORY_SEPARATOR;
         //取得栏目频道模板列表
@@ -41,10 +42,14 @@ class Category extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
+            $models = cache('Model');
             $tree = new \util\Tree();
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
             $result = Db::name('category')->order(array('listorder', 'id' => 'DESC'))->select();
+            foreach ($result as $k => $v) {
+                $result[$k]['modelname'] = $models[$v['modelid']]['name'];
+            }
             $tree->init($result);
             $_list = $tree->getTreeList($tree->getTreeArray(0), 'catname');
             $total = count($_list);
@@ -58,15 +63,36 @@ class Category extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $Category = model("cms/Category");
-            $catid = $Category->addCategory($this->request->post());
+            $data = $this->request->post();
+            switch ($data['type']) {
+                //单页
+                case 1:
+                    $scene = 'page';
+                    break;
+                //列表
+                case 2:
+                    $scene = 'list';
+                    break;
+                //链接
+                case 3:
+                    $scene = 'link';
+                    break;
+                default:
+                    return $this->error('栏目类型错误~');
+            }
+            $result = $this->validate($data, 'Category.' . $scene);
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            $catid = $this->Category_Model->addCategory($data);
             if ($catid) {
                 $this->success("添加成功！", url("Category/index"));
             } else {
-                $error = $Category->getError();
+                $error = $this->Category_Model->getError();
                 $this->error($error ? $error : '栏目添加失败！');
             }
         } else {
+            $parentid = $this->request->param('parentid/d', 0);
             //输出可用模型
             $models = cache("Model");
 
@@ -77,11 +103,11 @@ class Category extends Adminbase
             }
             if (!empty($array) && is_array($array)) {
                 $tree = new \util\Tree();
-                $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
-                $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+                $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
+                $tree->nbsp = '&nbsp;&nbsp;';
                 $str = "<option value='\$id' \$selected>\$spacer \$catname</option>";
                 $tree->init($array);
-                $categorydata = $tree->get_tree(0, $str);
+                $categorydata = $tree->get_tree(0, $str, $parentid);
             } else {
                 $categorydata = '';
             }

@@ -38,17 +38,15 @@ layui.use('table', function() {
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'catname', title: '栏目名称' },
                 { field: 'type',width: 100, title: '栏目类型',templet: '<div>{{#  if(d.type==1){ }} 单页 {{#  } else if(d.type==2){  }} 列表 {{#  } else if(d.type==3){ }} 链接 {{#  } else { }} 未知 {{#  } }}</div>' },
+                { field: 'modelname',width: 150, title: '所属模型' },
                 { field: 'status',  width: 100,align:"center", title: '状态',  templet: '#statusTpl', unresize: true },
                 { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
             ]
         ],
     });
-    $('#Table-Refresh').on('click', function() {
-        table.reload("table");
-    });
 
     //监听单元格编辑
-    table.on('edit(table)', function(obj) {
+    /*table.on('edit(table)', function(obj) {
         var value = obj.value,data = obj.data;
         $.post('{:url("menu/listorder")}', { 'id': data.id,'value':value }, function(data) {
             if (data.code == 1) {
@@ -58,7 +56,7 @@ layui.use('table', function() {
             }
 
         })
-    });
+    });*/
 
         //监听状态操作
     form.on('switch(status)', function(obj) {
@@ -82,7 +80,7 @@ layui.use('table', function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("menu/delete")}', { 'id': data.id }, function(data) {
+                $.post('{:url("cms/category/delete")}', { 'id': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -108,10 +106,10 @@ layui.use('table', function() {
                 });
             });
         } else if (obj.event === 'add') {
-            window.open('{:url("menu/add")}' + "?parentid=" + data.id, '_self')
+            window.open('{:url("cms/category/add")}' + "?parentid=" + data.id, '_self')
 
         } else if (obj.event === 'edit') {
-            window.open('{:url("menu/edit")}' + "?id=" + data.id, '_self')
+            window.open('{:url("cms/category/edit")}' + "?id=" + data.id, '_self')
         }
     });
 });
