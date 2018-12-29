@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
+use app\cms\model\Category as Category_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -103,6 +104,21 @@ class Category extends Adminbase
     {
         return $this->fetch();
 
+    }
+
+    /**
+     * 状态
+     */
+    public function setstate()
+    {
+        $id = $this->request->param('id/d');
+        empty($id) && $this->error('参数不能为空！');
+        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        if (Category_Model::update(['status' => $status], ['id' => $id])) {
+            $this->success('操作成功！');
+        } else {
+            $this->error('操作失败！');
+        }
     }
 
 }

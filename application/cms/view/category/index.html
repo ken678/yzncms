@@ -5,25 +5,29 @@
     <div class="layui-card-body">
         <div class="layui-form">
             <table class="layui-hide" id="table" lay-filter="table"></table>
-            <script type="text/html" id="toolbarDemo">
-                <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{:url('cms/category/add')}">新增栏目</a>
-              </div>
-            </script>
-            <script type="text/html" id="barTool">
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加子栏目</a>
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script>
         </div>
     </div>
 </div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+    <a class="layui-btn layui-btn-sm" href="{:url('cms/category/add')}">新增栏目</a>
+  </div>
+</script>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加子栏目</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+</script>
 {/block}
 {block name="script"}
 <script>
 layui.use('table', function() {
     var table = layui.table,
-        $ = layui.$;
+        $ = layui.$,
+        form = layui.form;
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
@@ -34,7 +38,7 @@ layui.use('table', function() {
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'catname', title: '栏目名称' },
                 { field: 'type',width: 100, title: '栏目类型',templet: '<div>{{#  if(d.type==1){ }} 单页 {{#  } else if(d.type==2){  }} 列表 {{#  } else if(d.type==3){ }} 链接 {{#  } else { }} 未知 {{#  } }}</div>' },
-                { field: 'status', title: '状态', templet: '<div>{{#  if(d.status){ }} 显示 {{#  } else { }} <font color="#FF0000">隐藏</font> {{#  } }} </div>' },
+                { field: 'status',  width: 100,align:"center", title: '状态',  templet: '#statusTpl', unresize: true },
                 { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
             ]
         ],
@@ -54,6 +58,21 @@ layui.use('table', function() {
             }
 
         })
+    });
+
+        //监听状态操作
+    form.on('switch(status)', function(obj) {
+        var _this = $(obj.elem);
+        $.post('{:url("cms/category/setstate")}', { 'id': this.value,'status':obj.elem.checked}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
+                form.render('checkbox');
+                layer.msg(data.msg);
+            }
+
+        });
     });
 
     //监听行工具事件

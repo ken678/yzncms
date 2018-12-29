@@ -120,10 +120,13 @@ class Models extends Adminbase
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
         cache("Model", null);
-        $r = $this->Models->where((array('id' => $id)))->value('status');
-        $status = $r == '1' ? '0' : '1';
-        $this->Models->where((array('id' => $id)))->update(array('status' => $status));
-        $this->success("操作成功！");
+        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        if (Models_Model::update(['status' => $status], ['id' => $id])) {
+            $this->success("操作成功！");
+        } else {
+            $this->error('操作失败！');
+        }
+
     }
 
     /**
@@ -134,10 +137,12 @@ class Models extends Adminbase
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
         cache("Model", null);
-        $r = $this->Models->where((array('id' => $id)))->value('ifsub');
-        $ifsub = $r == '1' ? '0' : '1';
-        $this->Models->where((array('id' => $id)))->update(array('ifsub' => $ifsub));
-        $this->success("操作成功！");
+        $ifsub = $this->request->param('ifsub/s') === 'true' ? 1 : 0;
+        if (Models_Model::update(['ifsub' => $ifsub], ['id' => $id])) {
+            $this->success("操作成功！");
+        } else {
+            $this->error('操作失败！');
+        }
     }
 
 }

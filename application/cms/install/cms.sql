@@ -18,9 +18,9 @@ CREATE TABLE `yzn_category` (
   `hits` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '栏目点击数',
   `setting` mediumtext COMMENT '相关配置信息',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `ismenu` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
   `sethtml` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否生成静态',
   `letter` varchar(30) NOT NULL DEFAULT '' COMMENT '栏目拼音',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`parentid`,`listorder`,`id`),
   KEY `siteid` (`type`)
