@@ -71,7 +71,7 @@ EOF;
         $fieldid = self::create($data, true);
         if ($fieldid) {
             //清理缓存
-            //cache('ModelField', null);
+            cache('ModelField', null);
             return true;
         } else {
             $this->error = '字段信息入库失败！';
@@ -139,7 +139,7 @@ EOF;
         $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
         $data['setting'] = $fieldInfo['ifoption'] ? $data['setting'] : '';
         //清理缓存
-        //cache('ModelField', null);
+        cache('ModelField', null);
         self::update($data, ['id' => $fieldid], true);
         return true;
     }
@@ -198,6 +198,25 @@ EOF;
         //完整表名获取 判断主表 还是副表
         $tablename = $ifsystem ? $model_table : $model_table . "_data";
         return $tablename;
+    }
+
+    //生成模型字段缓存
+    public function model_field_cache()
+    {
+        $cache = array();
+        $modelList = Db::name("Model")->select();
+        foreach ($modelList as $info) {
+            $data = Db::name("ModelField")->where(array("modelid" => $info['id'], "status" => 1))->order("listorder ASC")->select();
+            $fieldList = array();
+            if (!empty($data) && is_array($data)) {
+                foreach ($data as $rs) {
+                    $fieldList[$rs['name']] = $rs;
+                }
+            }
+            $cache[$info['id']] = $fieldList;
+        }
+        cache('ModelField', $cache);
+        return $cache;
     }
 
 }

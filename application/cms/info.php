@@ -41,6 +41,11 @@ return array(
             'model' => 'Category',
             'action' => 'category_cache',
         ],
+        'ModelField' => [
+            'name' => '模型字段',
+            'model' => 'ModelField',
+            'action' => 'model_field_cache',
+        ],
     ],
     // 数据表，请加表前缀yzn[有数据库表时必填]
     'tables' => [

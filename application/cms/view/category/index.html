@@ -11,8 +11,8 @@
               </div>
             </script>
             <script type="text/html" id="barTool">
+                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加子栏目</a>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
         </div>
@@ -31,10 +31,11 @@ layui.use('table', function() {
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
-                { field: 'catid', width: 70, title: 'ID' },
+                { field: 'id', width: 70, title: 'ID' },
                 { field: 'catname', title: '栏目名称' },
+                { field: 'type',width: 100, title: '栏目类型',templet: '<div>{{#  if(d.type==1){ }} 单页 {{#  } else if(d.type==2){  }} 列表 {{#  } else if(d.type==3){ }} 链接 {{#  } else { }} 未知 {{#  } }}</div>' },
                 { field: 'status', title: '状态', templet: '<div>{{#  if(d.status){ }} 显示 {{#  } else { }} <font color="#FF0000">隐藏</font> {{#  } }} </div>' },
-                { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
             ]
         ],
     });
