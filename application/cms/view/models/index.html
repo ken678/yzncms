@@ -43,7 +43,7 @@ layui.use('table', function() {
                 { field: 'create_time',width:180, title: '创建时间' },
                 { field: 'status', width: 100, title: '状态', templet: '#statusTpl', unresize: true },
                 { field: 'ifsub', width: 100, title: '投稿', templet: '#ifsubTpl', unresize: true },
-                { field: '', title: '操作', templet: '#barTool' }
+                { fixed: 'right', title: '操作', width: 200, templet: '#barTool' }
             ]
         ]
     });

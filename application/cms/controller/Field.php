@@ -106,6 +106,10 @@ class Field extends Adminbase
         }
         if ($this->request->isPost()) {
             $data = $this->request->param();
+            $result = $this->validate($data, 'ModelField');
+            if (true !== $result) {
+                return $this->error($result);
+            }
             if ($this->modelfield->editField($data, $fieldid)) {
                 $this->success("更新成功！", Cookie::get('__forward__'));
             } else {

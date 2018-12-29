@@ -133,9 +133,15 @@ EOF;
         } catch (\Exception $e) {
             $this->addField($data);
         }
-        var_dump($tablename);
-        exit();
-
+        $fieldInfo = Db::name('field_type')->where('name', $data['formtype'])->field('ifoption,ifstring')->find();
+        //只有主表文本类字段才可支持搜索
+        $data['ifsearch'] = isset($data['ifsearch']) ? ($fieldInfo['ifstring'] && $data['ifsystem'] ? intval($data['ifsearch']) : 0) : 0;
+        $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
+        $data['setting'] = $fieldInfo['ifoption'] ? $data['setting'] : '';
+        //清理缓存
+        //cache('ModelField', null);
+        self::update($data, ['id' => $fieldid], true);
+        return true;
     }
 
     /**
