@@ -62,10 +62,13 @@ layui.use('table', function() {
 
         //监听状态操作
     form.on('switch(status)', function(obj) {
-        $.post('{:url("admin/menu/setstate")}', { 'id': this.value}, function(data) {
+        var _this = $(obj.elem);
+        $.post('{:url("admin/menu/setstate")}', { 'id': this.value,'status':obj.elem.checked}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
+                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
+                form.render('checkbox');
                 layer.msg(data.msg);
             }
 

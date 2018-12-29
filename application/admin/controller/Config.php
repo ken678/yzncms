@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\Config as ConfigModel;
+use app\admin\model\Config as Config_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -27,7 +27,7 @@ class Config extends Adminbase
         //允许使用的字段列表
         //$this->banfie = array("text", "checkbox", "textarea", "radio", "number", "Ueditor", "datetime", "files", "image", "images", "array", "switch", "select");
         $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "Ueditor");
-        $this->ConfigModel = new ConfigModel;
+        $this->ConfigModel = new Config_Model;
     }
 
     //配置首页
@@ -206,15 +206,13 @@ class Config extends Adminbase
     public function setstate($id, $status)
     {
         $id = $this->request->param('id/d');
-        $status = $this->request->param('status/d');
-        if (($status != 0 && $status != 1) || !is_numeric($id) || $id < 0) {
-            return '参数错误';
-        }
-        if ($this->ConfigModel->where('id', $id)->update(['status' => $status])) {
+        empty($id) && $this->error('参数不能为空！');
+        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        if (Config_Model::update(['status' => $status], ['id' => $id])) {
             cache('Config', null); //清空缓存配置
-            $this->error('更新成功');
+            $this->success('操作成功！');
         } else {
-            $this->error('更新失败');
+            $this->error('操作失败！');
         }
     }
 

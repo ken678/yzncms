@@ -158,10 +158,12 @@ class Menu extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
-        $r = $this->Menu->where((array('id' => $id)))->value('status');
-        $status = $r == '1' ? '0' : '1';
-        $this->Menu->where((array('id' => $id)))->update(array('status' => $status));
-        $this->success("操作成功！");
+        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        if (Menu_Model::update(['status' => $status], ['id' => $id])) {
+            $this->success('操作成功！');
+        } else {
+            $this->error('操作失败！');
+        }
     }
 
 }

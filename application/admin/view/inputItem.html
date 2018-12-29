@@ -39,7 +39,10 @@
     <label class="">{$vo.title}</label>
     <div class="layui-form-field-label">
         {volist name="vo.options" id="v"}
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked='' {/if}> {/volist} </div> <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked{/if}>
+        {/volist}
+    </div>
+    <div class="layui-form-mid layui-word-aux">{if $vo.remark}{$vo.remark|raw}，{/if}调用方式：<code>{php}echo '{:config(\''{/php}{$vo.name}{php}echo '\')}'{/php}</code></div>
 </div>
 {/case}
 {case value="radio"}

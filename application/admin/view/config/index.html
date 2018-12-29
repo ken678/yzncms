@@ -10,25 +10,24 @@
             </ul>
             <div class="layui-tab-content">
                 <table class="layui-hide" id="table" lay-filter="table"></table>
-                <script type="text/html" id="toolbarDemo">
-                    <div class="layui-btn-container">
-                    <a class="layui-btn layui-btn-sm" href="{:url('admin/config/add')}">新增配置项</a>
-                  </div>
-                </script>
-                <script type="text/html" id="barTool">
-                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                </script>
-                <script type="text/html" id="switchTpl">
-                    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
-                </script>
             </div>
         </div>
     </div>
 </div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+    <a class="layui-btn layui-btn-sm" href="{:url('admin/config/add')}">新增配置项</a>
+  </div>
+</script>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+</script>
 {/block}
 {block name="script"}
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use('table', function() {
     var table = layui.table,
@@ -52,14 +51,8 @@ layui.use('table', function() {
 
     //监听状态操作
     form.on('switch(status)', function(obj) {
-        //layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
-        var id=this.value;
-        if(obj.elem.checked){
-           var checked=1;
-        }else{
-           var checked=0;
-        }
-        $.post('{:url("admin/config/setstate")}', { 'id': id,'status':checked }, function(data) {
+        var _this = $(obj.elem);
+        $.post('{:url("admin/config/setstate")}', { 'id':this.value,'status':obj.elem.checked }, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
