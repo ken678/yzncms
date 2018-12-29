@@ -119,12 +119,7 @@ layui.use('table', function() {
     //监听状态操作
     form.on('switch(status)', function(obj) {
         var _this = $(obj.elem);
-        if(obj.elem.checked==true){
-            var value=1;
-        }else{
-            var value=0;
-        }
-        $.post('{:url("cms/field/setstate")}', { 'id': this.value,'status':value}, function(data) {
+        $.post('{:url("cms/field/setstate")}', { 'id': this.value,'status':obj.elem.checked}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
@@ -138,12 +133,7 @@ layui.use('table', function() {
 
     form.on('switch(ifsearch)', function(obj) {
         var _this = $(obj.elem);
-        if(obj.elem.checked==true){
-            var value=1;
-        }else{
-            var value=0;
-        }
-        $.post('{:url("cms/field/setSearch")}', { 'id': this.value,'search':value}, function(data) {
+        $.post('{:url("cms/field/setSearch")}', { 'id': this.value,'ifsearch':obj.elem.checked}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
@@ -157,12 +147,7 @@ layui.use('table', function() {
 
     form.on('switch(ifrequire)', function(obj) {
         var _this = $(obj.elem);
-        if(obj.elem.checked==true){
-            var value=1;
-        }else{
-            var value=0;
-        }
-        $.post('{:url("cms/field/setRequire")}', { 'id': this.value,'require':value}, function(data) {
+        $.post('{:url("cms/field/setRequire")}', { 'id': this.value,'ifrequire':obj.elem.checked}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
@@ -176,12 +161,7 @@ layui.use('table', function() {
 
     form.on('switch(ifeditable)', function(obj) {
         var _this = $(obj.elem);
-        if(obj.elem.checked==true){
-            var value=1;
-        }else{
-            var value=0;
-        }
-        $.post('{:url("cms/field/setVisible")}', { 'id': this.value,'visible':value}, function(data) {
+        $.post('{:url("cms/field/setVisible")}', { 'id': this.value,'ifvisible':obj.elem.checked}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{

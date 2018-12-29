@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\model\ModelField;
+use app\cms\model\ModelField as Model_Field;
 use app\common\controller\Adminbase;
 use think\Db;
 use think\facade\Cookie;
@@ -26,7 +26,7 @@ class Field extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelfield = new ModelField;
+        $this->modelfield = new Model_Field;
 
     }
 
@@ -118,7 +118,7 @@ class Field extends Adminbase
             }
         } else {
             //字段信息
-            $fieldData = ModelField::get($fieldid);
+            $fieldData = Model_Field::get($fieldid);
             if (empty($fieldData)) {
                 $this->error('该字段信息不存在！');
             }
@@ -158,25 +158,6 @@ class Field extends Adminbase
     }
 
     /**
-     * 字段状态
-     */
-    public function setstate()
-    {
-        $id = $this->request->param('id/d');
-        $status = $this->request->param('status/d');
-        $this->modelfield->where((array('id' => $id)))->update(array('status' => $status));
-        $this->success("操作成功！");
-    }
-
-    public function setsearch()
-    {
-        $id = $this->request->param('id/d');
-        $search = $this->request->param('search/d');
-        $this->modelfield->where((array('id' => $id)))->update(array('ifsearch' => $search));
-        $this->success("操作成功！");
-    }
-
-    /**
      * 菜单排序
      */
     public function listorder()
@@ -192,14 +173,42 @@ class Field extends Adminbase
     }
 
     /**
+     * 字段状态
+     */
+    public function setstate()
+    {
+        $id = $this->request->param('id/d');
+        empty($id) && $this->error('参数不能为空！');
+        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        if (Model_Field::update(['status' => $status], ['id' => $id])) {
+            $this->success("操作成功！");
+        } else {
+            $this->error('操作失败！');
+        }
+    }
+
+    public function setsearch()
+    {
+        $id = $this->request->param('id/d');
+        empty($id) && $this->error('参数不能为空！');
+        $ifsearch = $this->request->param('ifsearch/s') === 'true' ? 1 : 0;
+        if (Model_Field::update(['ifsearch' => $ifsearch], ['id' => $id])) {
+            $this->success("操作成功！");
+        } else {
+            $this->error('操作失败！');
+        }
+    }
+
+    /**
      * 显示隐藏
      */
     public function setvisible()
     {
         $id = $this->request->param('id/d', 0);
-        $ifvisible = $this->request->param('visible/d', 0);
+        empty($id) && $this->error('参数不能为空！');
+        $ifvisible = $this->request->param('ifvisible/s') === 'true' ? 1 : 0;
 
-        $field = $this->modelfield->get($id);
+        $field = Model_Field::get($id);
         if ($field->ifrequire && 0 == $ifvisible) {
             $this->error("必填字段不可以设置为隐藏！");
         }
@@ -217,9 +226,10 @@ class Field extends Adminbase
     public function setrequire()
     {
         $id = $this->request->param('id/d', 0);
-        $ifrequire = $this->request->param('require/d', 0);
+        empty($id) && $this->error('参数不能为空！');
+        $ifrequire = $this->request->param('ifrequire/s') === 'true' ? 1 : 0;
 
-        $field = $this->modelfield->get($id);
+        $field = Model_Field::get($id);
         if (!$field->ifeditable && $ifrequire) {
             $this->error("隐藏字段不可以设置为必填！");
         }
