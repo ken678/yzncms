@@ -147,12 +147,36 @@ class Category extends Adminbase
 
     }
 
+    //删除栏目
+    public function delete()
+    {
+        $catid = $this->request->param('id/d');
+        if (!$catid) {
+            $this->error("请指定需要删除的栏目！");
+        }
+        //这里需增加栏目条数item直接判断
+        if (false == $this->Category_Model->deleteCatid($catid)) {
+            $this->error("栏目含有信息，无法删除！");
+        }
+        $this->cache();
+        $this->success("栏目删除成功！");
+    }
+
     //更新栏目缓存并修复
     public function public_cache()
     {
         $this->repair();
+        $this->cache();
         $this->success("更新缓存成功！", Url("cms/category/index"));
 
+    }
+
+    /**
+     * 清除栏目缓存
+     */
+    protected function cache()
+    {
+        cache('Category', null);
     }
 
     /**

@@ -15,7 +15,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">上级菜单</label>
                             <div class="layui-input-inline w300">
-                                <select name="parentid">
+                                <select name="parentid" lay-verify="required">
                                     <option value="0">作为顶级栏目</option>
                                     {$category|raw}
                                 </select>

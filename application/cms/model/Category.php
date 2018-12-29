@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\model;
 
+use \think\Db;
 use \think\Model;
 
 /**
@@ -42,6 +43,58 @@ class Category extends Model
             $this->error = '栏目添加失败！';
             return false;
 
+        }
+    }
+
+    /**
+     * 删除栏目
+     */
+    public function deleteCatid($catid)
+    {
+        if (!$catid) {
+            return false;
+        }
+        $where = array();
+        $catInfo = self::get($catid);
+        //是否存在子栏目
+        if ($catInfo['child'] && $catInfo['type'] == 2) {
+            $arrchildid = explode(",", $catInfo['arrchildid']);
+            unset($arrchildid[0]);
+            $catid = array_merge($arrchildid, array($catid));
+        }
+        $where = ['id' => $catid];
+        //检查是否存在数据，存在数据不执行删除
+        if (is_array($catid)) {
+            $modeid = array();
+            foreach ($catid as $cid) {
+                $catinfo = getCategory($cid);
+                if ($catinfo['modelid'] && $catinfo['type'] == 2) {
+                    $modeid[$catinfo['modelid']] = $catinfo['modelid'];
+                }
+                foreach ($modeid as $mid) {
+                    $tbname = ucwords(getModel($mid, 'tablename'));
+                    var_dump($tbname);
+                    if ($tbname && Db::name($tbname)->where(['id' => $catid])->find()) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            $catinfo = getCategory($catid);
+            $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
+            //含资料无法删除
+            if ($tbname && $catinfo['type'] == 2 && Db::name($tbname)->where(["id" => $catid])->find()) {
+                return false;
+            }
+        }
+        $status = self::where($where)->delete();
+        //更新缓存
+        cache('Category', null);
+        if (false !== $status) {
+            //TD
+            return true;
+        } else {
+            return false;
         }
     }
 

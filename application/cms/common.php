@@ -62,3 +62,36 @@ function getCategory($catid, $field = '', $newCache = false)
         return $cache;
     }
 }
+
+/**
+ * 获取模型数据
+ * @param type $modelid 模型ID
+ * @param type $name 返回的字段，默认返回全部，数组
+ * @return boolean
+ */
+function getModel($modelid, $name = '')
+{
+    if (empty($modelid)) {
+        return false;
+    }
+    $key = 'getModel_' . $modelid;
+    $cache = Cache::get($key);
+    if ($cache === 'false') {
+        return false;
+    }
+    if (empty($cache)) {
+        //读取数据
+        $cache = db('Model')->where(array('id' => $modelid))->find();
+        if (empty($cache)) {
+            Cache::set($key, 'false', 60);
+            return false;
+        } else {
+            Cache::set($key, $cache, 3600);
+        }
+    }
+    if ($name) {
+        return $cache[$name];
+    } else {
+        return $cache;
+    }
+}
