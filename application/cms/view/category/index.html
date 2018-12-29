@@ -10,8 +10,9 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-    <a class="layui-btn layui-btn-sm" href="{:url('cms/category/add')}">新增栏目</a>
-  </div>
+      <a class="layui-btn layui-btn-sm" href="{:url('cms/category/add')}">新增栏目</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="public_cache">更新栏目缓存</a>
+    </div>
 </script>
 <script type="text/html" id="barTool">
     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加子栏目</a>
@@ -57,6 +58,38 @@ layui.use('table', function() {
 
         })
     });*/
+
+    table.on('toolbar(table)', function(obj) {
+        if (obj.event === 'public_cache') {
+            $.ajax({
+                url: '{:url("cms/category/public_cache")}',
+                type: "GET",
+                success: function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+                }
+            });
+        }
+    })
 
         //监听状态操作
     form.on('switch(status)', function(obj) {

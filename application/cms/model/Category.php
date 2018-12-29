@@ -28,12 +28,13 @@ class Category extends Model
             $this->error = '添加栏目数据不能为空！';
             return false;
         }
+        //序列化setting数据
+        $data['setting'] = serialize($data['setting']);
         //栏目拼音
         /*$catname = iconv('utf-8', 'gbk', $data['catname']);
         $letters = gbk_to_pinyin($catname);
         $data['letter'] = strtolower(implode('', $letters));*/
-
-        $catid = self::allowField(true)->save($data);
+        $catid = self::create($data, true);
         if ($catid) {
             cache('Category', null);
             return $catid;

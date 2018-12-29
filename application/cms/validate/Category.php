@@ -38,8 +38,8 @@ class Category extends Validate
     ];
 
     protected $scene = [
-        'page' => ['modelid', 'type', 'catname'],
+        'page' => ['type', 'catname'],
         'list' => ['modelid', 'type', 'catname'],
-        'link' => ['modelid', 'type', 'catname'],
+        'link' => ['type', 'catname'],
     ];
 }

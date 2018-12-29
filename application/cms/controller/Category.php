@@ -48,7 +48,11 @@ class Category extends Adminbase
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
             $result = Db::name('category')->order(array('listorder', 'id' => 'DESC'))->select();
             foreach ($result as $k => $v) {
-                $result[$k]['modelname'] = $models[$v['modelid']]['name'];
+                if (isset($models[$v['modelid']]['name'])) {
+                    $result[$k]['modelname'] = $models[$v['modelid']]['name'];
+                } else {
+                    $result[$k]['modelname'] = '/';
+                }
             }
             $tree->init($result);
             $_list = $tree->getTreeList($tree->getTreeArray(0), 'catname');
@@ -93,9 +97,20 @@ class Category extends Adminbase
             }
         } else {
             $parentid = $this->request->param('parentid/d', 0);
+            if (!empty($parentid)) {
+                $Ca = getCategory($parentid);
+                if (empty($Ca)) {
+                    $this->error("父栏目不存在！");
+                }
+            }
             //输出可用模型
-            $models = cache("Model");
-
+            $modelsdata = cache("Model");
+            $models = array();
+            foreach ($modelsdata as $v) {
+                if ($v['status'] == 1 && $v['type'] == 2) {
+                    $models[] = $v;
+                }
+            }
             //栏目列表 可以用缓存的方式
             $array = cache("Category");
             foreach ($array as $k => $v) {
@@ -130,6 +145,91 @@ class Category extends Adminbase
     {
         return $this->fetch();
 
+    }
+
+    //更新栏目缓存并修复
+    public function public_cache()
+    {
+        $this->repair();
+        $this->success("更新缓存成功！", Url("cms/category/index"));
+
+    }
+
+    /**
+     * 修复栏目数据
+     */
+    private function repair()
+    {
+        $this->categorys = $categorys = array();
+        $data = Db::name('Category')->order('listorder ASC, id ASC')->select();
+        if (empty($data)) {
+            //$this->cache();
+            return true;
+        }
+        foreach ($data as $v) {
+            $categorys[$v['id']] = $v;
+        }
+        $this->categorys = $categorys;
+        if (is_array($categorys)) {
+            foreach ($categorys as $catid => $cat) {
+                if ($cat['type'] == 3) {
+                    continue;
+                }
+                $arrparentid = $this->get_arrparentid($catid); //父栏目组
+                $setting = unserialize($cat['setting']); //栏目配置
+                $arrchildid = $this->get_arrchildid($catid); //子栏目组
+                $child = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
+                //检查所有父id 子栏目id 等相关数据是否正确，不正确更新
+                if ($categorys[$catid]['arrparentid'] != $arrparentid || $categorys[$catid]['arrchildid'] != $arrchildid || $categorys[$catid]['child'] != $child) {
+                    Category_Model::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
+                }
+                getCategory($catid, '', true);
+            }
+
+        }
+        return true;
+    }
+
+    /**
+     *
+     * 获取父栏目ID列表
+     * @param integer $catid              栏目ID
+     * @param array $arrparentid          父目录ID
+     * @param integer $n                  查找的层次
+     */
+    private function get_arrparentid($catid, $arrparentid = '', $n = 1)
+    {
+        if ($n > 5 || !is_array($this->categorys) || !isset($this->categorys[$catid])) {
+            return false;
+        }
+
+        $parentid = $this->categorys[$catid]['parentid']; //当前父栏目
+        $arrparentid = $arrparentid ? $parentid . ',' . $arrparentid : $parentid; //父栏目组
+        if ($parentid) {
+            $arrparentid = $this->get_arrparentid($parentid, $arrparentid, ++$n);
+        } else {
+            $this->categorys[$catid]['arrparentid'] = $arrparentid;
+        }
+        $parentid = $this->categorys[$catid]['parentid'];
+        return $arrparentid;
+    }
+
+    /**
+     *
+     * 获取子栏目ID列表
+     * @param $catid 栏目ID
+     */
+    private function get_arrchildid($catid)
+    {
+        $arrchildid = $catid;
+        if (is_array($this->categorys)) {
+            foreach ($this->categorys as $id => $cat) {
+                if ($cat['parentid'] && $id != $catid && $cat['parentid'] == $catid) {
+                    $arrchildid .= ',' . $this->get_arrchildid($id);
+                }
+            }
+        }
+        return $arrchildid;
     }
 
     /**
