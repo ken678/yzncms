@@ -17,7 +17,7 @@ layui.use(['element', 'layer', 'form'], function() {
     })
 
     /* 监听状态设置开关 */
-    form.on('switch(switchStatus)', function(data) {
+    /*form.on('switch(switchStatus)', function(data) {
         var that = $(this),
             status = 0;
         if (!that.attr('data-href')) {
@@ -34,7 +34,7 @@ layui.use(['element', 'layer', 'form'], function() {
                 form.render('checkbox');
             }
         });
-    });
+    });*/
 
     //ajax get请求
     $('.ajax-get').click(function() {

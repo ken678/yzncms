@@ -195,6 +195,3 @@ jQuery(document).ready(function() {
         }
     });
 });
-$('.uploader-list').each(function () {
-    $(this).viewer();
-});

@@ -12,7 +12,6 @@ CREATE TABLE `yzn_category` (
   `image` varchar(100) NOT NULL DEFAULT '' COMMENT '栏目图片',
   `description` mediumtext COMMENT '栏目描述',
   `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
-  `hits` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '栏目点击数',
   `setting` mediumtext COMMENT '相关配置信息',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `letter` varchar(30) NOT NULL DEFAULT '' COMMENT '栏目拼音',
