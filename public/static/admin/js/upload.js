@@ -1,4 +1,4 @@
-jQuery(document).ready(function() {
+ $(function () {
     // 文件上传集合
     var webuploader = [];
     // 当前上传对象
