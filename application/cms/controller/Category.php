@@ -68,17 +68,24 @@ class Category extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
+            if (empty($data)) {
+                $this->error = '添加栏目数据不能为空！';
+                return false;
+            }
             switch ($data['type']) {
                 //单页
                 case 1:
+                    $fields = ['catname', 'catdir', 'type', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'page';
                     break;
                 //列表
                 case 2:
+                    $fields = ['catname', 'catdir', 'type', 'modelid', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'list';
                     break;
                 //链接
                 case 3:
+                    $fields = ['catname', 'catdir', 'type', 'image', 'description', 'url', 'listorder', 'letter', 'status'];
                     $scene = 'link';
                     break;
                 default:
@@ -88,8 +95,8 @@ class Category extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $catid = $this->Category_Model->addCategory($data);
-            if ($catid) {
+            $status = $this->Category_Model->addCategory($data, $fields);
+            if ($status) {
                 $this->success("添加成功！", url("Category/index"));
             } else {
                 $error = $this->Category_Model->getError();
@@ -143,7 +150,88 @@ class Category extends Adminbase
     //编辑栏目
     public function edit()
     {
-        return $this->fetch();
+        if ($this->request->isPost()) {
+            $id = $this->request->param('id/d', 0);
+            if (empty($id)) {
+                $this->error('请选择需要修改的栏目！');
+            }
+            $data = $this->request->post();
+            switch ($data['type']) {
+                //单页
+                case 1:
+                    $data['modelid'] = 0;
+                    $data['url'] = '';
+                    $scene = 'page';
+                    break;
+                //列表
+                case 2:
+                    $data['url'] = '';
+                    $scene = 'list';
+                    break;
+                //链接
+                case 3:
+                    $data['modelid'] = 0;
+                    $scene = 'link';
+                    break;
+                default:
+                    return $this->error('栏目类型错误~');
+            }
+            $result = $this->validate($data, 'Category.' . $scene);
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            $status = $this->Category_Model->editCategory($data, ['catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
+            if ($status) {
+                $this->success("修改成功！", url("Category/index"));
+            } else {
+                $error = $this->Category_Model->getError();
+                $this->error($error ? $error : '栏目修改失败！');
+            }
+
+        } else {
+            $id = $this->request->param('id/d', 0);
+            if (empty($id)) {
+                $this->error('请选择需要修改的栏目！');
+            }
+            $data = getCategory($id);
+            $setting = $data['setting'];
+
+            //输出可用模型
+            $modelsdata = cache("Model");
+            $models = array();
+            foreach ($modelsdata as $v) {
+                if ($v['status'] == 1 && $v['type'] == 2) {
+                    $models[] = $v;
+                }
+            }
+
+            //栏目列表 可以用缓存的方式
+            $array = cache("Category");
+            foreach ($array as $k => $v) {
+                $array[$k] = getCategory($v['id']);
+            }
+            if (!empty($array) && is_array($array)) {
+                $tree = new \util\Tree();
+                $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
+                $tree->nbsp = '&nbsp;&nbsp;';
+                $str = "<option value='\$id' \$selected>\$spacer \$catname</option>";
+                $tree->init($array);
+                $categorydata = $tree->get_tree(0, $str, $data['parentid']);
+            } else {
+                $categorydata = '';
+            }
+
+            $this->assign("tp_category", $this->tp_category);
+            $this->assign("tp_list", $this->tp_list);
+            $this->assign("tp_show", $this->tp_show);
+            $this->assign("tp_page", $this->tp_page);
+
+            $this->assign("data", $data);
+            $this->assign("setting", $setting);
+            $this->assign("category", $categorydata);
+            $this->assign("models", $models);
+            return $this->fetch();
+        }
 
     }
 
@@ -265,6 +353,9 @@ class Category extends Adminbase
         empty($id) && $this->error('参数不能为空！');
         $status = $this->request->param('status/s') === 'true' ? 1 : 0;
         if (Category_Model::update(['status' => $status], ['id' => $id])) {
+            //更新栏目缓存
+            cache('Category', null);
+            getCategory($id, '', true);
             $this->success('操作成功！');
         } else {
             $this->error('操作失败！');

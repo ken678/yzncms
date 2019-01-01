@@ -23,7 +23,7 @@ use \think\Model;
 class Category extends Model
 {
     //新增栏目
-    public function addCategory($data)
+    public function addCategory($data, $fields)
     {
         if (empty($data)) {
             $this->error = '添加栏目数据不能为空！';
@@ -35,7 +35,7 @@ class Category extends Model
         /*$catname = iconv('utf-8', 'gbk', $data['catname']);
         $letters = gbk_to_pinyin($catname);
         $data['letter'] = strtolower(implode('', $letters));*/
-        $catid = self::create($data, true);
+        $catid = self::create($data, $fields);
         if ($catid) {
             cache('Category', null);
             return $catid;
@@ -43,6 +43,44 @@ class Category extends Model
             $this->error = '栏目添加失败！';
             return false;
 
+        }
+    }
+
+    //编辑栏目
+    public function editCategory($data, $fields)
+    {
+        if (empty($data)) {
+            $this->error = '编辑栏目数据不能为空！';
+            return false;
+        }
+        $catid = $data['id'];
+        //栏目类型
+        $data['type'] = (int) $data['type'];
+
+        //查询该栏目是否存在
+        $info = self::where(array('id' => $catid))->find();
+        if (empty($info)) {
+            $this->error = '该栏目不存在！';
+            return false;
+        }
+
+        //栏目拼音
+        /*$catname = iconv('utf-8', 'gbk', $data['catname']);
+        $letters = gbk_to_pinyin($catname);
+        $data['letter'] = strtolower(implode('', $letters));*/
+
+        //序列化setting数据
+        $data['setting'] = serialize($data['setting']);
+
+        //更新数据
+        if (self::update($data, [], $fields) !== false) {
+            //更新栏目缓存
+            cache('Category', null);
+            getCategory($catid, '', true);
+            return true;
+        } else {
+            $this->error = '栏目编辑失败！';
+            return false;
         }
     }
 
@@ -73,7 +111,6 @@ class Category extends Model
                 }
                 foreach ($modeid as $mid) {
                     $tbname = ucwords(getModel($mid, 'tablename'));
-                    var_dump($tbname);
                     if ($tbname && Db::name($tbname)->where(['id' => $catid])->find()) {
                         return false;
                     }
