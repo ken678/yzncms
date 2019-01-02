@@ -75,17 +75,17 @@ class Category extends Adminbase
             switch ($data['type']) {
                 //单页
                 case 1:
-                    $fields = ['catname', 'catdir', 'type', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'page';
                     break;
                 //列表
                 case 2:
-                    $fields = ['catname', 'catdir', 'type', 'modelid', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'list';
                     break;
                 //链接
                 case 3:
-                    $fields = ['catname', 'catdir', 'type', 'image', 'description', 'url', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'listorder', 'letter', 'status'];
                     $scene = 'link';
                     break;
                 default:
@@ -180,7 +180,7 @@ class Category extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $status = $this->Category_Model->editCategory($data, ['catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
+            $status = $this->Category_Model->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
                 $this->success("修改成功！", url("Category/index"));
             } else {
