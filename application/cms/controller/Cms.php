@@ -32,6 +32,24 @@ class Cms extends Adminbase
     //栏目信息列表
     public function classlist()
     {
+        if ($this->request->isAjax()) {
+            $catid = $this->request->param('id/d', 0);
+            //当前栏目信息
+            $catInfo = getCategory($catid);
+            if (empty($catInfo)) {
+                $this->error('该栏目不存在！');
+            }
+            //栏目所属模型
+            $modelid = $catInfo['modelid'];
+            //检查模型是否被禁用
+            if (!getModel($modelid, 'status')) {
+                $this->error('模型被禁用！');
+            }
+            $modelCache = cache("Model");
+            $tableName = $modelCache[$modelid]['tablename'];
+            $list = Db::name(ucwords($tableName))->select();
+        }
+        return $this->fetch();
 
     }
 
