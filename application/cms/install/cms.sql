@@ -8,16 +8,15 @@ CREATE TABLE `yzn_category` (
   `parentid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
   `arrparentid` varchar(255) NOT NULL DEFAULT '' COMMENT '所有父ID',
   `child` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否存在子栏目，1存在',
-  `arrchildid` mediumtext COMMENT '所有子栏目ID',
+  `arrchildid` mediumtext NOT NULL COMMENT '所有子栏目ID',
   `image` mediumint(8) unsigned NOT NULL COMMENT '栏目图片',
-  `description` mediumtext COMMENT '栏目描述',
+  `description` mediumtext NOT NULL COMMENT '栏目描述',
   `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
-  `setting` mediumtext COMMENT '相关配置信息',
+  `setting` mediumtext NOT NULL COMMENT '相关配置信息',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `letter` varchar(30) NOT NULL DEFAULT '' COMMENT '栏目拼音',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='栏目表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='栏目表'
 
 DROP TABLE IF EXISTS `yzn_model`;
 CREATE TABLE `yzn_model` (

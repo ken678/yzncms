@@ -29,6 +29,18 @@ class Cms extends Adminbase
         return $this->fetch();
     }
 
+    //栏目信息列表
+    public function classlist()
+    {
+
+    }
+
+    //添加栏目
+    public function add()
+    {
+
+    }
+
     public function panl()
     {
     }
