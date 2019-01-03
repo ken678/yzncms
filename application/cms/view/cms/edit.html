@@ -1,11 +1,11 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <div class="layui-card">
-	<div class="layui-card-header">添加内容</div>
+	<div class="layui-card-header">编辑内容</div>
     <div class="layui-card-body">
         <form class="layui-form form-horizontal" action="" method="post">
             {include file="admin@inputItem" /}
-            <input type="hidden" name="modelField[id]" value="{$id}">
+            <input type="hidden" name="modelField[catid]" value="{$catid}">
             {if count($fieldList)}
             <div class="layui-form-item">
                 <div>

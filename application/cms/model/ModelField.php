@@ -221,6 +221,38 @@ EOF;
         }
     }
 
+    //编辑模型内容
+    public function editModelData($data, $dataExt = [])
+    {
+        $catid = (int) $data['catid'];
+        $id = (int) $data['id'];
+        unset($data['catid']);
+        unset($data['id']);
+        $modelid = getCategory($catid, 'modelid');
+        //完整表名获取
+        $tablename = $this->getModelTableName($modelid);
+        if (!$this->table_exists($tablename)) {
+            $this->error = '数据表不存在！';
+            return false;
+        }
+
+        $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
+        list($data, $dataExt) = $dataAll;
+        if (!isset($data['updatetime'])) {
+            $data['updatetime'] = request()->time();
+        }
+        try {
+            //主表
+            Db::name($tablename)->where('id', $id)->update($data);
+            //附表
+            if (!empty($dataExt)) {
+                Db::name($tablename . $this->ext_table)->where('did', $id)->update($dataExt);
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     //查询解析模型数据用以构造from表单
     public function getFieldList($modelId, $id = null)
     {

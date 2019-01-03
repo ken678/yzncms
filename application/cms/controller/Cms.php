@@ -79,7 +79,7 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
-                $fieldList = model('ModelField')->getFieldList($modelid);
+                $fieldList = $this->modelfield->getFieldList($modelid);
                 $this->assign([
                     'id' => $catid,
                     'fieldList' => $fieldList,
@@ -96,6 +96,13 @@ class Cms extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
+            $data = $this->request->post();
+            $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+            try {
+                $this->modelfield->editModelData($data['modelField'], $data['modelFieldExt']);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
 
         } else {
             $catid = $this->request->param('catid/d', 0);
@@ -106,9 +113,9 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
-                $fieldList = model('ModelField')->getFieldList($modelid, $id);
+                $fieldList = $this->modelfield->getFieldList($modelid, $id);
                 $this->assign([
-                    'id' => $catid,
+                    'catid' => $catid,
                     'fieldList' => $fieldList,
                 ]);
                 return $this->fetch();
