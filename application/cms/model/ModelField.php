@@ -24,6 +24,7 @@ class ModelField extends Modelbase
 {
     protected $autoWriteTimestamp = true;
     protected $insert = ['status' => 1];
+    protected $ext_table = '_data';
 
     //添加字段
     public function addField($data = null)
@@ -183,6 +184,43 @@ EOF;
         return true;
     }
 
+    //添加模型内容
+    public function addModelData($data, $dataExt = [])
+    {
+        $catid = (int) $data['id'];
+        unset($data['id']);
+        $modelid = getCategory($catid, 'modelid');
+        //完整表名获取
+        $tablename = $this->getModelTableName($modelid);
+        if (!$this->table_exists($tablename)) {
+            $this->error = '数据表不存在！';
+            return false;
+        }
+        //处理数据
+        $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
+        list($data, $dataExt) = $dataAll;
+        if (!isset($data['inputtime'])) {
+            $data['inputtime'] = request()->time();
+        }
+        if (!isset($data['updatetime'])) {
+            $data['updatetime'] = request()->time();
+
+        }
+        try {
+            //主表
+            $id = Db::name($tablename)->insertGetId($data);
+            //附表
+            if (!empty($dataExt)) {
+                $dataExt['did'] = $id;
+                Db::name($tablename . $this->ext_table)->insert($dataExt);
+            }
+
+        } catch (\Exception $e) {
+
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     //查询解析模型数据用以构造from表单
     public function getFieldList($modelId, $id = null)
     {
@@ -191,11 +229,11 @@ EOF;
         if (!empty($list)) {
             //编辑信息时查询出已有信息
             if ($id) {
-                $modelInfo = Db::name('Model')->where('id', $modelId)->field('table,type')->find();
-                $dataInfo = Db::name($modelInfo['table'])->where('cname', $id)->find();
+                $modelInfo = Db::name('Model')->where('id', $modelId)->field('tablename,type')->find();
+                $dataInfo = Db::name($modelInfo['tablename'])->where('id', $id)->find();
                 //查询附表信息
                 if ($modelInfo['type'] == 2 && !empty($dataInfo)) {
-                    $dataInfoExt = Db::name($modelInfo['table'] . $this->ext_table)->where('did', $dataInfo['id'])->find();
+                    $dataInfoExt = Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $dataInfo['id'])->find();
                 }
             }
             foreach ($list as &$value) {
@@ -269,6 +307,7 @@ EOF;
                 }
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
+
                 }
                 if ($value['type'] == 'summernote') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
@@ -276,25 +315,6 @@ EOF;
             }
         }
         return $list;
-    }
-
-    //添加模型内容
-    public function addModelData($data, $dataExt)
-    {
-        $catid = (int) $data['id'];
-        $modelid = getCategory($catid, 'modelid');
-        //处理数据
-        $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
-        list($data, $dataExt) = $dataAll;
-        //完整表名获取
-        $tablename = $this->getModelTableName($modelid);
-        if (!$this->table_exists($tablename)) {
-            $this->error = '数据表不存在！';
-            return false;
-        }
-        $id = Db::name($tablename)->insertGetId($data);
-        var_dump($id);
-
     }
 
     //处理post提交的模型数据
@@ -355,11 +375,11 @@ EOF;
                         break;
                     // 百度编辑器
                     case 'Ueditor':
-                        ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
+                        //${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
                         break;
                     // 简洁编辑器
                     case 'summernote':
-                        ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
+                        //${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
                         break;
                 }
             }

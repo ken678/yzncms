@@ -163,7 +163,7 @@
                             data.url = data.url ? data.url : '#';
                             if (!(data['isChild'])) {
                                 //一级菜单
-                                html.push('<li class="layui-nav-item"><a href="' + data.url + '" lay-id="' + data.id + '"><i class="iconfont ' + data.icon + '"></i>&nbsp;<b>' + data.title + '</b></a>');
+                                html.push('<li class="layui-nav-item layui-nav-itemed"><a href="' + data.url + '" lay-id="' + data.id + '"><i class="iconfont ' + data.icon + '"></i>&nbsp;<b>' + data.title + '</b></a>');
                             } else {
                                 //二级菜单
                                 child_html.push('<dd><a href="' + data.url + '" lay-id="' + data.id + '"><i class="iconfont ' + data.icon + '"></i>&nbsp;' + data.title + '</a></dd>');

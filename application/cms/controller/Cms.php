@@ -49,7 +49,9 @@ class Cms extends Adminbase
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $list = Db::name(ucwords($tableName))->select();
+            $list = Db::name(ucwords($tableName))->withAttr('updatetime', function ($value, $data) {
+                return date('Y-m-d H:i:s', $value);
+            })->select();
             $result = array("code" => 0, "data" => $list);
             return json($result);
         }
@@ -84,6 +86,33 @@ class Cms extends Adminbase
                 ]);
                 return $this->fetch();
             } else if ($category['type'] == 1) {
+                return $this->fetch('singlepage');
+            }
+
+        }
+    }
+
+    //编辑信息
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+
+        } else {
+            $catid = $this->request->param('catid/d', 0);
+            $id = $this->request->param('id/d', 0);
+            $category = getCategory($catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！');
+            }
+            if ($category['type'] == 2) {
+                $modelid = $category['modelid'];
+                $fieldList = model('ModelField')->getFieldList($modelid, $id);
+                $this->assign([
+                    'id' => $catid,
+                    'fieldList' => $fieldList,
+                ]);
+                return $this->fetch();
+            } else {
                 return $this->fetch('singlepage');
             }
 

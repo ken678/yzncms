@@ -13,7 +13,6 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加子栏目</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -33,13 +32,52 @@ layui.use('table', function() {
         url: '{:url("cms/cms/classlist",["id"=>$id])}',
         cols: [
             [
+                { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'title', title: '标题' },
+                { field: 'hits', width: 80,title: '点击量' },
+                { field: 'updatetime', width: 180,title: '更新时间' },
                 { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
-                { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
             ]
         ],
+    });
+
+        //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            /*layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("cms/field/delete")}', { 'id': data.id }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });*/
+        }else if (obj.event === 'edit') {
+            window.open('{:url("cms/cms/edit",["catid"=>$id])}' + "?id=" + data.id, '_blank')
+        }
     });
 
 });
