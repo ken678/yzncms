@@ -32,8 +32,8 @@ class Cms extends Adminbase
     //栏目信息列表
     public function classlist()
     {
+        $catid = $this->request->param('id/d', 0);
         if ($this->request->isAjax()) {
-            $catid = $this->request->param('id/d', 0);
             //当前栏目信息
             $catInfo = getCategory($catid);
             if (empty($catInfo)) {
@@ -49,6 +49,7 @@ class Cms extends Adminbase
             $tableName = $modelCache[$modelid]['tablename'];
             $list = Db::name(ucwords($tableName))->select();
         }
+        $this->assign('id', $catid);
         return $this->fetch();
 
     }
@@ -56,6 +57,16 @@ class Cms extends Adminbase
     //添加栏目
     public function add()
     {
+        $category = getCategory($this->request->param('id/d', 0));
+        if (empty($category)) {
+            $this->error('该栏目不存在！');
+        }
+        $modelid = $category['modelid'];
+        $fieldList = model('ModelField')->getFieldList($modelid);
+        $this->assign([
+            'fieldList' => $fieldList,
+        ]);
+        return $this->fetch();
 
     }
 
