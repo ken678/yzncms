@@ -278,6 +278,106 @@ EOF;
         return $list;
     }
 
+    //添加模型内容
+    public function addModelData($data, $dataExt)
+    {
+        $catid = (int) $data['id'];
+        $modelid = getCategory($catid, 'modelid');
+        //处理数据
+        $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
+        list($data, $dataExt) = $dataAll;
+        //完整表名获取
+        $tablename = $this->getModelTableName($modelid);
+        if (!$this->table_exists($tablename)) {
+            $this->error = '数据表不存在！';
+            return false;
+        }
+        $id = Db::name($tablename)->insertGetId($data);
+        var_dump($id);
+
+    }
+
+    //处理post提交的模型数据
+    protected function dealModelPostData($modeId, $data, $dataExt = [], $ignoreField = [])
+    {
+        //字段类型
+        $query = self::where('modelid', $modeId)->where('status', 1);
+        if ([] != $ignoreField) {
+            $query = $query->where('name', 'not in', $ignoreField);
+        }
+        $filedTypeList = $query->column('name,title,type,ifsystem,ifeditable,ifrequire');
+        //字段规则
+        $fieldRule = Db::name('field_type')->column('name', 'vrule');
+        foreach ($filedTypeList as $name => $vo) {
+            $arr = $vo['ifsystem'] ? 'data' : 'dataExt';
+            if (!isset(${$arr}[$name])) {
+                switch ($vo['type']) {
+                    // 开关
+                    case 'switch':
+                        ${$arr}[$name] = 0;
+                        break;
+                    case 'checkbox':
+                        ${$arr}[$name] = '';
+                        break;
+                }
+            } else {
+                if (is_array(${$arr}[$name])) {
+                    ${$arr}[$name] = ',' . implode(',', ${$arr}[$name]) . ',';
+                }
+                switch ($vo['type']) {
+                    // 开关
+                    case 'switch':
+                        ${$arr}[$name] = 1;
+                        break;
+                    // 日期+时间
+                    case 'datetime':
+                        if ($vo['ifeditable']) {
+                            ${$arr}[$name] = strtotime(${$arr}[$name]);
+                        }
+                        break;
+                    // 日期
+                    case 'date':
+                        ${$arr}[$name] = strtotime(${$arr}[$name]);
+                        break;
+                    case 'images':
+                        if (!empty(${$arr}[$name])) {
+                            $imageArr = explode(',', substr(${$arr}[$name], 0, -1));
+                            $uniqueImageArr = array_unique($imageArr);
+                            ${$arr}[$name] = implode(',', $uniqueImageArr);
+                        }
+                        break;
+                    case 'files':
+                        if (!empty(${$arr}[$name])) {
+                            $fileArr = explode(',', substr(${$arr}[$name], 0, -1));
+                            $uniqueFileArr = array_unique($fileArr);
+                            ${$arr}[$name] = implode(',', $uniqueFileArr);
+                        }
+                        break;
+                    // 百度编辑器
+                    case 'Ueditor':
+                        ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
+                        break;
+                    // 简洁编辑器
+                    case 'summernote':
+                        ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
+                        break;
+                }
+            }
+            //数据必填验证
+            if ($vo['ifrequire'] && empty(${$arr}[$name])) {
+                throw new \Exception("'" . $vo['title'] . "'必须填写~");
+            }
+            //数据格式验证
+            if (!empty($fieldRule[$vo['type']]) && !empty(${$arr}[$name]) && !Validate::{$fieldRule[$vo['type']]}(${$arr}[$name])) {
+                throw new \Exception("'" . $vo['title'] . "'格式错误~");
+                //安全过滤
+            } else {
+
+            }
+        }
+        return [$data, $dataExt];
+    }
+
     /**
      * 根据模型ID，返回表名
      * @param type $modelid

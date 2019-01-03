@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
+use app\cms\model\ModelField as Model_Field;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -22,6 +23,7 @@ class Cms extends Adminbase
     protected function initialize()
     {
         parent::initialize();
+        $this->modelfield = new Model_Field;
     }
 
     public function index()
@@ -48,6 +50,8 @@ class Cms extends Adminbase
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
             $list = Db::name(ucwords($tableName))->select();
+            $result = array("code" => 0, "data" => $list);
+            return json($result);
         }
         $this->assign('id', $catid);
         return $this->fetch();
@@ -57,16 +61,33 @@ class Cms extends Adminbase
     //添加栏目
     public function add()
     {
-        $category = getCategory($this->request->param('id/d', 0));
-        if (empty($category)) {
-            $this->error('该栏目不存在！');
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+            try {
+                $this->modelfield->addModelData($data['modelField'], $data['modelFieldExt']);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+        } else {
+            $catid = $this->request->param('id/d', 0);
+            $category = getCategory($catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！');
+            }
+            if ($category['type'] == 2) {
+                $modelid = $category['modelid'];
+                $fieldList = model('ModelField')->getFieldList($modelid);
+                $this->assign([
+                    'id' => $catid,
+                    'fieldList' => $fieldList,
+                ]);
+                return $this->fetch();
+            } else if ($category['type'] == 1) {
+                return $this->fetch('singlepage');
+            }
+
         }
-        $modelid = $category['modelid'];
-        $fieldList = model('ModelField')->getFieldList($modelid);
-        $this->assign([
-            'fieldList' => $fieldList,
-        ]);
-        return $this->fetch();
 
     }
 

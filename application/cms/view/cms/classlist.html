@@ -30,7 +30,7 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("cms/cms/classlist")}',
+        url: '{:url("cms/cms/classlist",["id"=>$id])}',
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },

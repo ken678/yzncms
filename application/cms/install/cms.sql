@@ -74,3 +74,28 @@ INSERT INTO `yzn_model_field` VALUES ('10', '1', 'updatetime', '更新时间', '
 INSERT INTO `yzn_model_field` VALUES ('11', '1', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1546480012', '1546480012', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('12', '1', 'did', '附表文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '0', '0', '1', '0', '0', '1546480012', '1546480012', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('13', '1', 'content', '内容', '', 'Ueditor', 'text', '', '', '', '0', '1', '0', '0', '0', '1546480012', '1546480012', '100', '1');
+
+
+DROP TABLE IF EXISTS `yzn_article`;
+CREATE TABLE `yzn_article` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
+  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
+  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
+  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
+  `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章模型模型表';
+
+DROP TABLE IF EXISTS `yzn_article_data`;
+CREATE TABLE `yzn_article_data` (
+  `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `content` text COLLATE utf8_unicode_ci COMMENT '内容',
+  PRIMARY KEY (`did`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章模型模型表';
