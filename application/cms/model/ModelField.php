@@ -184,11 +184,12 @@ EOF;
     }
 
     //查询解析模型数据用以构造from表单
-    public function getFieldList($modelId, $id = null, $model = 'document', $where = "status='1'", $fields = "name,title,remark,type,value,options,ifsystem,ifeditable,ifrequire,jsonrule")
+    public function getFieldList($modelId, $id = null, $model = 'column', $where = "status='1'", $fields = "name,title,remark,type,value,options,ifsystem,ifeditable,ifrequire,jsonrule")
     {
         $ifcache = config('app_cache') ? true : false;
         $cacheKey = 'yzn_model_field_' . $modelId . $id . $model . $where . $fields;
-        $list = $ifcache ? cache($cacheKey) : false;
+        //$list = $ifcache ? cache($cacheKey) : false;
+        $list = false;
         $nowModel = request()->module();
         if (false === $list || 'admin' == $nowModel) {
             $list = self::where('modelid', $modelId)->where($where)->order('listorder asc,id asc')->column($fields);

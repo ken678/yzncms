@@ -1,6 +1,21 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-{include file="admin@inputItem"  /}
+<div class="layui-card">
+	<div class="layui-card-header">添加内容</div>
+    <div class="layui-card-body">
+        <form class="layui-form form-horizontal" action="" method="post">
+            {include file="admin@inputItem" /}
+            {if count($fieldList)}
+            <div class="layui-form-item">
+                <div>
+                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+                </div>
+            </div>
+            {/if}
+        </form>
+    </div>
+</div>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}
