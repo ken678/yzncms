@@ -248,7 +248,7 @@ EOF;
                 'title' => 'SEO摘要',
                 'define' => 'varchar(255)',
                 'type' => 'textarea',
-                'ifeditable' => 0,
+                'ifeditable' => 1,
                 'iffixed' => 0,
             ],
             [
@@ -262,8 +262,8 @@ EOF;
             [
                 'name' => 'posid',
                 'title' => '推荐位',
-                'define' => 'tinyint(3) tinyint(3)',
-                'type' => 'number',
+                'define' => 'tinyint(3) UNSIGNED',
+                'type' => 'checkbox',
                 'ifeditable' => 0,
             ],
             [

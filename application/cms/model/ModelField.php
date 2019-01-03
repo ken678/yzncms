@@ -184,115 +184,95 @@ EOF;
     }
 
     //查询解析模型数据用以构造from表单
-    public function getFieldList($modelId, $id = null, $model = 'column', $where = "status='1'", $fields = "name,title,remark,type,value,options,ifsystem,ifeditable,ifrequire,jsonrule")
+    public function getFieldList($modelId, $id = null)
     {
-        $ifcache = config('app_cache') ? true : false;
-        $cacheKey = 'yzn_model_field_' . $modelId . $id . $model . $where . $fields;
-        //$list = $ifcache ? cache($cacheKey) : false;
-        $list = false;
-        $nowModel = request()->module();
-        if (false === $list || 'admin' == $nowModel) {
-            $list = self::where('modelid', $modelId)->where($where)->order('listorder asc,id asc')->column($fields);
-            if (!empty($list)) {
-                //编辑信息时查询出已有信息
-                if ($id) {
-                    $modelInfo = Db::name('Model')->where('id', $modelId)->field('table,type')->find();
-                    switch ($model) {
-                        case 'column':
-                            //查询主表信息单页栏目使用
-                            $dataInfo = Db::name($modelInfo['table'])->where('cname', $id)->find();
-                            break;
-                        case 'document':
-                            //查询主表信息列表栏目使用
-                            $dataInfo = Db::name($modelInfo['table'])->where('id', $id)->find();
-                            break;
-                        default:
-                            break;
-                    }
-                    //查询附表信息
-                    if ($modelInfo['type'] == 2 && !empty($dataInfo)) {
-                        $dataInfoExt = Db::name($modelInfo['table'] . $this->ext_table)->where('did', $dataInfo['id'])->find();
-                    }
-                }
-                foreach ($list as &$value) {
-                    if (isset($value['ifsystem'])) {
-                        if ($value['ifsystem']) {
-                            $value['fieldArr'] = 'modelField';
-                            if (isset($dataInfo[$value['name']])) {
-                                $value['value'] = $dataInfo[$value['name']];
-                            }
-                        } else {
-                            $value['fieldArr'] = 'modelFieldExt';
-                            if (isset($dataInfoExt[$value['name']])) {
-                                $value['value'] = $dataInfoExt[$value['name']];
-                            }
-                        }
-                    }
-                    //解析字段关联规则
-                    $dataRule = [];
-                    /*if ('' != $value['jsonrule']) {
-                    $dataRule = json_decode($value['jsonrule'], true);
-                    }*/
-                    if ('' != $value['options']) {
-                        $value['options'] = parse_attr($value['options']);
-                    } elseif (isset($dataRule['choose'])) {
-                        $value['options'] = Db::name($dataRule['choose']['table'])->where($dataRule['choose']['where'])->limit($dataRule['choose']['limit'])->order($dataRule['choose']['order'])->column($dataRule['choose']['key'] . ',' . $dataRule['choose']['value']);
-                    }
-                    if ('' == $value['value'] && isset($dataRule['string'])) {
-                        $stringArray = Db::name($dataRule['string']['table'])->where($dataRule['string']['where'])->limit($dataRule['string']['limit'])->order($dataRule['string']['order'])->column($dataRule['string']['key']);
-                        if (!empty($stringArray)) {
-                            $value['value'] = implode($dataRule['string']['delimiter'], $stringArray);
-                        }
-                    }
-                    if ($value['type'] == 'checkbox') {
-                        $value['value'] = (strlen($value['value']) > 2) ? substr($value['value'], 1, -1) : '';
-                        $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
-                    }
-                    if ($value['type'] == 'datetime') {
-                        $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
-                    }
-                    if ($value['type'] == 'date') {
-                        $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
-                    }
-                    if ($value['type'] == 'image') {
-                        $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                        if (isset($dataRule['thumb']['ifon'])) {
-                            $value['param']['thumb'] = 1;
-                            $value['param']['thumbsize'] = $dataRule['thumb']['size'];
-                            $value['param']['thumbtype'] = $dataRule['thumb']['type'];
-                        }
-                    }
-                    if ($value['type'] == 'images') {
-                        $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                        if (isset($dataRule['thumb']['ifon'])) {
-                            $value['param']['thumb'] = 1;
-                            $value['param']['thumbsize'] = $dataRule['thumb']['size'];
-                            $value['param']['thumbtype'] = $dataRule['thumb']['type'];
-                        }
-                        if (!empty($value['value'])) {
-                            $value['value'] .= ',';
-                        }
-                    }
-                    if ($value['type'] == 'files') {
-                        $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                        if (isset($dataRule['file']['type'])) {
-                            $value['param']['sizelimit'] = $dataRule['file']['size'];
-                            $value['param']['extlimit'] = $dataRule['file']['type'];
-                        }
-                        if (!empty($value['value'])) {
-                            $value['value'] .= ',';
-                        }
-                    }
-                    if ($value['type'] == 'Ueditor') {
-                        $value['value'] = htmlspecialchars_decode($value['value']);
-                    }
-                    if ($value['type'] == 'summernote') {
-                        $value['value'] = htmlspecialchars_decode($value['value']);
-                    }
+
+        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,value,options,ifsystem,ifeditable,ifrequire,jsonrule");
+        if (!empty($list)) {
+            //编辑信息时查询出已有信息
+            if ($id) {
+                $modelInfo = Db::name('Model')->where('id', $modelId)->field('table,type')->find();
+                $dataInfo = Db::name($modelInfo['table'])->where('cname', $id)->find();
+                //查询附表信息
+                if ($modelInfo['type'] == 2 && !empty($dataInfo)) {
+                    $dataInfoExt = Db::name($modelInfo['table'] . $this->ext_table)->where('did', $dataInfo['id'])->find();
                 }
             }
-            if ($ifcache && 'admin' != $nowModel) {
-                cache($cacheKey, $list, null, 'yzn_model_field');
+            foreach ($list as &$value) {
+                if (isset($value['ifsystem'])) {
+                    if ($value['ifsystem']) {
+                        $value['fieldArr'] = 'modelField';
+                        if (isset($dataInfo[$value['name']])) {
+                            $value['value'] = $dataInfo[$value['name']];
+                        }
+                    } else {
+                        $value['fieldArr'] = 'modelFieldExt';
+                        if (isset($dataInfoExt[$value['name']])) {
+                            $value['value'] = $dataInfoExt[$value['name']];
+                        }
+                    }
+                }
+                //解析字段关联规则
+                $dataRule = [];
+                /*if ('' != $value['jsonrule']) {
+                $dataRule = json_decode($value['jsonrule'], true);
+                }*/
+                if ('' != $value['options']) {
+                    $value['options'] = parse_attr($value['options']);
+                } elseif (isset($dataRule['choose'])) {
+                    $value['options'] = Db::name($dataRule['choose']['table'])->where($dataRule['choose']['where'])->limit($dataRule['choose']['limit'])->order($dataRule['choose']['order'])->column($dataRule['choose']['key'] . ',' . $dataRule['choose']['value']);
+                }
+                if ('' == $value['value'] && isset($dataRule['string'])) {
+                    $stringArray = Db::name($dataRule['string']['table'])->where($dataRule['string']['where'])->limit($dataRule['string']['limit'])->order($dataRule['string']['order'])->column($dataRule['string']['key']);
+                    if (!empty($stringArray)) {
+                        $value['value'] = implode($dataRule['string']['delimiter'], $stringArray);
+                    }
+                }
+                if ($value['type'] == 'checkbox') {
+                    $value['value'] = (strlen($value['value']) > 2) ? substr($value['value'], 1, -1) : '';
+                    $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
+                }
+                if ($value['type'] == 'datetime') {
+                    $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
+                }
+                if ($value['type'] == 'date') {
+                    $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
+                }
+                if ($value['type'] == 'image') {
+                    $value['param'] = ['dir' => 'images', 'module' => 'admin'];
+                    if (isset($dataRule['thumb']['ifon'])) {
+                        $value['param']['thumb'] = 1;
+                        $value['param']['thumbsize'] = $dataRule['thumb']['size'];
+                        $value['param']['thumbtype'] = $dataRule['thumb']['type'];
+                    }
+                }
+                if ($value['type'] == 'images') {
+                    $value['param'] = ['dir' => 'images', 'module' => 'admin'];
+                    if (isset($dataRule['thumb']['ifon'])) {
+                        $value['param']['thumb'] = 1;
+                        $value['param']['thumbsize'] = $dataRule['thumb']['size'];
+                        $value['param']['thumbtype'] = $dataRule['thumb']['type'];
+                    }
+                    if (!empty($value['value'])) {
+                        $value['value'] .= ',';
+                    }
+                }
+                if ($value['type'] == 'files') {
+                    $value['param'] = ['dir' => 'files', 'module' => 'admin'];
+                    if (isset($dataRule['file']['type'])) {
+                        $value['param']['sizelimit'] = $dataRule['file']['size'];
+                        $value['param']['extlimit'] = $dataRule['file']['type'];
+                    }
+                    if (!empty($value['value'])) {
+                        $value['value'] .= ',';
+                    }
+                }
+                if ($value['type'] == 'Ueditor') {
+                    $value['value'] = htmlspecialchars_decode($value['value']);
+                }
+                if ($value['type'] == 'summernote') {
+                    $value['value'] = htmlspecialchars_decode($value['value']);
+                }
             }
         }
         return $list;

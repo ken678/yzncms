@@ -56,7 +56,7 @@ CREATE TABLE `yzn_model_field` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1 禁用 0启用',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0 禁用 1启用',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
@@ -64,9 +64,9 @@ CREATE TABLE `yzn_model_field` (
 INSERT INTO `yzn_model_field` VALUES ('1', '1', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1546480012', '1546480012', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('2', '1', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1546480012', '1546480012', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('3', '1', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1546480012', '1546480012', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('4', '1', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '0', '0', '0', '0', '1546480012', '1546480012', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('4', '1', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1546480012', '1546481602', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('5', '1', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1546480012', '1546480012', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('6', '1', 'posid', '推荐位', '', 'number', 'tinyint(3) tinyint(3)', '', '', '', '1', '0', '1', '0', '0', '1546480012', '1546480012', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('6', '1', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1546480012', '1546480012', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('7', '1', 'listorder', '排序', '', 'number', 'tinyint(3) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1546480012', '1546480012', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('8', '1', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1546480012', '1546480012', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('9', '1', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1546480012', '1546480012', '200', '1');
