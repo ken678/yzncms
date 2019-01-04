@@ -253,6 +253,26 @@ EOF;
         }
     }
 
+    //删除模型内容
+    public function deleteModelData($modeId, $ids)
+    {
+        $modelInfo = cache('Model');
+        if (false == $modelInfo) {
+            return false;
+        }
+        $modelInfo = $modelInfo[$modeId];
+        if (is_array($ids)) {
+            try {
+                Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->delete();
+                if (2 == $modelInfo['type']) {
+                    Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', 'in', $ids)->delete();
+                }
+            } catch (\Exception $e) {
+                throw new \Exception($e->getMessage());
+            }
+        }
+    }
+
     //查询解析模型数据用以构造from表单
     public function getFieldList($modelId, $id = null)
     {

@@ -1,7 +1,9 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <style type="text/css">
-.childrenBody{background: #fff;}
+.childrenBody {
+    background: #fff;
+}
 </style>
 <div class="layui-form">
     <table class="layui-hide" id="table" lay-filter="table"></table>
@@ -9,7 +11,7 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" href="{:url('cms/cms/add',['id'=>$id])}" target="_blank">新增内容</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="public_cache">批量删除</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</a>
     </div>
 </script>
 <script type="text/html" id="barTool">
@@ -36,21 +38,65 @@ layui.use('table', function() {
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'title', title: '标题' },
-                { field: 'hits', width: 80,title: '点击量' },
-                { field: 'updatetime', width: 180,title: '更新时间' },
+                { field: 'hits', width: 80, title: '点击量' },
+                { field: 'updatetime', width: 180, title: '更新时间' },
                 { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
                 { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
             ]
         ],
     });
 
-        //监听行工具事件
+
+    table.on('toolbar(table)', function(obj) {
+        if (obj.event === 'delAll') {
+            var checkStatus = table.checkStatus('table'),
+                data = checkStatus.data,
+                ids = [];
+            if (data.length > 0) {
+                for (let i in data) {
+                    ids.push(data[i].id);
+                }
+                layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
+                    $.post('{:url("cms/cms/delete",["catid"=>$id])}', { 'ids': ids }, function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
+                    });
+                    layer.close(index);
+                })
+            } else {
+                layer.msg("请选择需要删除的数据");
+            }
+        } else {
+            table.reload('table');
+        }
+    });
+
+    //监听行工具事件
     table.on('tool(table)', function(obj) {
         var data = obj.data;
         if (obj.event === 'del') {
-            /*layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("cms/field/delete")}', { 'id': data.id }, function(data) {
+                $.post('{:url("cms/cms/delete",["catid"=>$id])}', { 'ids': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -74,8 +120,8 @@ layui.use('table', function() {
                     }
 
                 });
-            });*/
-        }else if (obj.event === 'edit') {
+            });
+        } else if (obj.event === 'edit') {
             window.open('{:url("cms/cms/edit",["catid"=>$id])}' + "?id=" + data.id, '_blank')
         }
     });

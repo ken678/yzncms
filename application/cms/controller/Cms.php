@@ -127,6 +127,30 @@ class Cms extends Adminbase
 
     }
 
+    //删除
+    public function delete($ids = 0)
+    {
+        $catid = $this->request->param('catid/d', 0);
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids) || !$catid) {
+            $this->error('参数错误！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        $modelid = getCategory($catid, 'modelid');
+        try {
+            $this->modelfield->deleteModelData($modelid, $ids);
+        } catch (\Exception $ex) {
+            $this->error($ex->getMessage());
+        }
+        /*$logic = logic($modelid);
+        foreach ($ids as $id) {
+        $logic->rmove($id, $catid);
+        }*/
+        $this->success('删除成功！');
+    }
+
     public function panl()
     {
     }
