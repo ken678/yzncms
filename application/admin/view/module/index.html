@@ -35,7 +35,7 @@ layui.use('table', function() {
                 { field: 'author', width: 150, title: '作者' },
                 { field: 'introduce', title: '简介' },
                 { field: 'installtime', width: 200, title: '安装时间', templet: '<div>{{#  if(d.installtime){ }} {{d.installtime}} {{#  } else { }} / {{#  } }}</div>' },
-                { field: '', title: '操作', templet: '#titleTpl' }
+                { fixed: 'right', width: 150,title: '操作', templet: '#titleTpl' }
             ]
         ]
     });

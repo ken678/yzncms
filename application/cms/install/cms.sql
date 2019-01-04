@@ -87,7 +87,6 @@ CREATE TABLE `yzn_article` (
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
-  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
   `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
   `listorder` tinyint(3) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
@@ -105,3 +104,15 @@ CREATE TABLE `yzn_article_data` (
   `content` text COLLATE utf8_unicode_ci COMMENT '内容',
   PRIMARY KEY (`did`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章模型模型表';
+
+DROP TABLE IF EXISTS `yzn_page`;
+CREATE TABLE `yzn_page` (
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `title` varchar(160) NOT NULL DEFAULT '' COMMENT '标题',
+  `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '关键字',
+  `description` varchar(255) NOT NULL DEFAULT '' COMMENT 'SEO描述',
+  `content` text COMMENT '内容',
+  `inputtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`catid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='单页内容表';

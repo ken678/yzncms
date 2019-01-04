@@ -166,7 +166,6 @@ class Models extends Modelbase
                 `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
 				`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
 				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
-				`tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
 				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
 				`posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
 				`listorder` tinyint(3) unsigned NOT NULL DEFAULT '100' COMMENT '排序',

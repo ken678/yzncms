@@ -15,6 +15,7 @@
 namespace app\cms\controller;
 
 use app\cms\model\ModelField as Model_Field;
+use app\cms\model\Page as Page_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -81,10 +82,13 @@ class Cms extends Adminbase
                     $this->error($ex->getMessage());
                 }
             } else if ($category['type'] == 1) {
-                var_dump(444);
-                exit();
+                $Page_Model = new Page_Model;
+                if (!$Page_Model->savePage($data['modelField'])) {
+                    $error = $Page_Model->getError();
+                    $this->error($error ? $error : '操作失败！');
+                }
             }
-            $this->success('添加成功！');
+            $this->success('操作成功！');
         } else {
             $catid = $this->request->param('catid/d', 0);
             $category = getCategory($catid);
@@ -100,7 +104,10 @@ class Cms extends Adminbase
                 ]);
                 return $this->fetch();
             } else if ($category['type'] == 1) {
+                $Page_Model = new Page_Model;
+                $info = $Page_Model->getPage($catid);
                 $this->assign([
+                    'info' => $info,
                     'catid' => $catid,
                 ]);
                 return $this->fetch('singlepage');

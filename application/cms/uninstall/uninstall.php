@@ -26,19 +26,21 @@ class Uninstall extends UninstallBase
         'model_field',
         'article',
         'article_data',
+        'page',
     );
+    protected $ext_table = '_data';
 
     //卸载
     public function run()
     {
         // 内容模型的表名列表
-        $table_list = Db::name('model')->column('tablename');
+        $table_list = Db::name('model')->field('tablename,type')->select();
         if ($table_list) {
-            foreach ($table_list as $tablename) {
-                // 删除内容模型表
-                if (!empty($tablename)) {
-                    $tablename = config('database.prefix') . $tablename;
-                    Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
+            foreach ($table_list as $val) {
+                $tablename = config('database.prefix') . $val['tablename'];
+                Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
+                if ($val['type'] == 2) {
+                    Db::execute("DROP TABLE IF EXISTS `{$tablename}{$this->ext_table}`;");
                 }
             }
         }
@@ -52,7 +54,6 @@ class Uninstall extends UninstallBase
                 }
             }
         }
-
         return true;
     }
 

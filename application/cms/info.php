@@ -54,5 +54,6 @@ return array(
         'yzn_model_field',
         'yzn_article',
         'yzn_article_data',
+        'yzn_page',
     ],
 );

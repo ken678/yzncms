@@ -26,7 +26,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">字段类型</label>
                 <div class="layui-input-inline">
-                    <select name="formtype" lay-filter="formtype">
+                    <select name="type" lay-filter="type">
                         <option></option>
                         {volist name="fieldType" id="vo"}
                         <option value="{$vo.name}" data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
@@ -103,7 +103,7 @@
 layui.use(['layer', 'form'], function() {
     var layer = layui.layer,
         form = layui.form;
-    form.on('select(formtype)', function(data) {
+    form.on('select(type)', function(data) {
         $('#define').val($(data.elem).find("option:selected").attr("data-define"));
         var ifoption = $(data.elem).find("option:selected").attr("data-ifoption");
         var ifstring = $(data.elem).find("option:selected").attr("data-ifstring");

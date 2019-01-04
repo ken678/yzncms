@@ -23,7 +23,7 @@ class ModelField extends Validate
     protected $rule = [
         'name' => 'require|alphaNum',
         'title' => 'require|chs',
-        'formtype' => 'require|alphaDash',
+        'type' => 'require|alphaDash',
         'define' => 'require',
         'value' => 'chsAlphaNum',
 
@@ -34,8 +34,8 @@ class ModelField extends Validate
         'name.alphaNum' => '字段名称只能为字母和数字',
         'title.require' => '字段标题不得为空',
         'title.chs' => '字段标题只能为只能是汉字',
-        'formtype.require' => '字段类型不得为空',
-        'formtype.alphaDash' => '字段类型格式错误',
+        'type.require' => '字段类型不得为空',
+        'type.alphaDash' => '字段类型格式错误',
         'define.require' => '字段定义不得为空',
         'value.chsAlphaNum' => '字段默认值格式错误',
 

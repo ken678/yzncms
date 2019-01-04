@@ -342,9 +342,9 @@ EOF;
                         $value['param']['thumbsize'] = $dataRule['thumb']['size'];
                         $value['param']['thumbtype'] = $dataRule['thumb']['type'];
                     }
-                    if (!empty($value['value'])) {
-                        $value['value'] .= ',';
-                    }
+                    /*if (!empty($value['value'])) {
+                $value['value'] .= ',';
+                }*/
                 }
                 if ($value['type'] == 'files') {
                     $value['param'] = ['dir' => 'files', 'module' => 'admin'];
@@ -426,11 +426,11 @@ EOF;
                         break;
                     // 百度编辑器
                     case 'Ueditor':
-                        //${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
+                        ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
                         break;
                     // 简洁编辑器
                     case 'summernote':
-                        //${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
+                        ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
                         break;
                 }
             }
