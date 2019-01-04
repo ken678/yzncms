@@ -1,22 +1,44 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<div class="layui-card">
-	<div class="layui-card-header">添加内容</div>
-    <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="" method="post">
-            {include file="admin@inputItem" /}
-            <input type="hidden" name="modelField[id]" value="{$id}">
-            {if count($fieldList)}
-            <div class="layui-form-item">
-                <div>
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                </div>
-            </div>
-            {/if}
-        </form>
+<form class="layui-form form-horizontal" action="" method="post">
+    {include file="admin@inputItem" /}
+    <input type="hidden" name="modelField[catid]" value="{$id}">
+    {if count($fieldList)}
+    <div class="layui-form-item">
+        <div>
+            <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+        </div>
     </div>
-</div>
+    {/if}
+</form>
 {/block}
 {block name="script"}
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+<script type="text/javascript">
+layui.use('layer', function() {
+    $('.ajax-post').on('click', function(e) {
+        var layer = layui.layer;
+        var target, query, form;
+        var target_form = $(this).attr('target-form');
+
+        form = $('.' + target_form);
+        target = form.attr("action");
+        $.post(target, form.serialize()).success(function(data) {
+            if (data.code == 1) {
+                layer.confirm(data.msg, {
+                    btn: ['继续添加', '返回列表'] //按钮
+                }, function() {
+                    window.open('{:url("cms/cms/add",["id"=>$id])}', '_self')
+                }, function() {
+                    window.open('{:url("cms/cms/classlist",["id"=>$id])}', '_self')
+                });
+            } else {
+                layer.msg(data.msg);
+            }
+
+        });
+        return false;
+
+    });
+})
+</script>
 {/block}

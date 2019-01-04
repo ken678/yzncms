@@ -163,6 +163,7 @@ class Models extends Modelbase
         $sql = <<<EOF
 				CREATE TABLE `{$table}` (
 				`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+                `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
 				`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
 				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
 				`tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -221,6 +222,13 @@ EOF;
                 'name' => 'id',
                 'title' => '文档id',
                 'define' => 'mediumint(8) UNSIGNED',
+                'type' => 'hidden',
+                'ifeditable' => 1,
+            ],
+            [
+                'name' => 'catid',
+                'title' => '栏目id',
+                'define' => 'smallint(5) unsigned',
                 'type' => 'hidden',
                 'ifeditable' => 1,
             ],

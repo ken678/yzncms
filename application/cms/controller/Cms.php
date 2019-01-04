@@ -49,7 +49,7 @@ class Cms extends Adminbase
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $list = Db::name(ucwords($tableName))->withAttr('updatetime', function ($value, $data) {
+            $list = Db::name(ucwords($tableName))->where('catid', $catid)->withAttr('updatetime', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
             })->select();
             $result = array("code" => 0, "data" => $list);
@@ -71,6 +71,7 @@ class Cms extends Adminbase
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
+            $this->success('添加成功！');
         } else {
             $catid = $this->request->param('id/d', 0);
             $category = getCategory($catid);
@@ -103,6 +104,7 @@ class Cms extends Adminbase
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
+            $this->success('编辑成功！');
 
         } else {
             $catid = $this->request->param('catid/d', 0);

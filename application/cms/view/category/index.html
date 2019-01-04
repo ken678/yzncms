@@ -48,9 +48,9 @@ layui.use('table', function() {
     });
 
     //监听单元格编辑
-    /*table.on('edit(table)', function(obj) {
+    table.on('edit(table)', function(obj) {
         var value = obj.value,data = obj.data;
-        $.post('{:url("menu/listorder")}', { 'id': data.id,'value':value }, function(data) {
+        $.post('{:url("cms/category/listorder")}', { 'id': data.id,'value':value }, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{
@@ -58,7 +58,7 @@ layui.use('table', function() {
             }
 
         })
-    });*/
+    });
 
     table.on('toolbar(table)', function(obj) {
         if (obj.event === 'public_cache') {

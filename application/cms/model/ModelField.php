@@ -187,8 +187,10 @@ EOF;
     //添加模型内容
     public function addModelData($data, $dataExt = [])
     {
-        $catid = (int) $data['id'];
-        unset($data['id']);
+        $catid = (int) $data['catid'];
+        if (empty($catid)) {
+            $this->error("请指定栏目ID！");
+        }
         $modelid = getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
