@@ -10,7 +10,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm" href="{:url('cms/cms/add',['id'=>$id])}">新增内容</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('cms/cms/add',['catid'=>$catid])}">新增内容</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</a>
     </div>
 </script>
@@ -31,7 +31,7 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("cms/cms/classlist",["id"=>$id])}',
+        url: '{:url("cms/cms/classlist",["catid"=>$catid])}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
@@ -57,7 +57,7 @@ layui.use('table', function() {
                     ids.push(data[i].id);
                 }
                 layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
-                    $.post('{:url("cms/cms/delete",["catid"=>$id])}', { 'ids': ids }, function(data) {
+                    $.post('{:url("cms/cms/delete",["catid"=>$catid])}', { 'ids': ids }, function(data) {
                         if (data.code == 1) {
                             if (data.url) {
                                 layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -96,7 +96,7 @@ layui.use('table', function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("cms/cms/delete",["catid"=>$id])}', { 'ids': data.id }, function(data) {
+                $.post('{:url("cms/cms/delete",["catid"=>$catid])}', { 'ids': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -122,7 +122,7 @@ layui.use('table', function() {
                 });
             });
         } else if (obj.event === 'edit') {
-            window.open('{:url("cms/cms/edit",["catid"=>$id])}' + "?id=" + data.id, '_self')
+            window.open('{:url("cms/cms/edit",["catid"=>$catid])}' + "?id=" + data.id, '_self')
         }
     });
 

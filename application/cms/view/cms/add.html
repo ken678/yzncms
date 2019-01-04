@@ -2,11 +2,11 @@
 {block name="main"}
 <form class="layui-form form-horizontal" action="" method="post">
     {include file="admin@inputItem" /}
-    <input type="hidden" name="modelField[catid]" value="{$id}">
+    <input type="hidden" name="modelField[catid]" value="{$catid}">
     {if count($fieldList)}
     <div class="layui-form-item">
         <div>
-            <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+            <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
         </div>
     </div>
     {/if}
@@ -14,22 +14,21 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-layui.use('layer', function() {
+layui.use(['form','layer'], function() {
     $('.ajax-post').on('click', function(e) {
-        var layer = layui.layer;
-        var target, query, form;
+        var form = layui.form,
+         layer = layui.layer,
+         target;
         var target_form = $(this).attr('target-form');
-
-        form = $('.' + target_form);
-        target = form.attr("action");
-        $.post(target, form.serialize()).success(function(data) {
+        target = $('.form-horizontal').attr("action");
+        $.post(target, $('.form-horizontal').serialize()).success(function(data) {
             if (data.code == 1) {
                 layer.confirm(data.msg, {
                     btn: ['继续添加', '返回列表'] //按钮
                 }, function() {
-                    window.open('{:url("cms/cms/add",["id"=>$id])}', '_self')
+                    window.open('{:url("cms/cms/add",["catid"=>$catid])}', '_self')
                 }, function() {
-                    window.open('{:url("cms/cms/classlist",["id"=>$id])}', '_self')
+                    window.open('{:url("cms/cms/classlist",["catid"=>$catid])}', '_self')
                 });
             } else {
                 layer.msg(data.msg);

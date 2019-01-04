@@ -34,7 +34,7 @@ class Cms extends Adminbase
     //栏目信息列表
     public function classlist()
     {
-        $catid = $this->request->param('id/d', 0);
+        $catid = $this->request->param('catid/d', 0);
         if ($this->request->isAjax()) {
             //当前栏目信息
             $catInfo = getCategory($catid);
@@ -55,7 +55,7 @@ class Cms extends Adminbase
             $result = array("code" => 0, "data" => $list);
             return json($result);
         }
-        $this->assign('id', $catid);
+        $this->assign('catid', $catid);
         return $this->fetch();
 
     }
@@ -65,15 +65,28 @@ class Cms extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
-            try {
-                $this->modelfield->addModelData($data['modelField'], $data['modelFieldExt']);
-            } catch (\Exception $ex) {
-                $this->error($ex->getMessage());
+            $catid = intval($data['modelField']['catid']);
+            if (empty($catid)) {
+                $this->error("请指定栏目ID！");
+            }
+            $category = getCategory($catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！');
+            }
+            if ($category['type'] == 2) {
+                $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+                try {
+                    $this->modelfield->addModelData($data['modelField'], $data['modelFieldExt']);
+                } catch (\Exception $ex) {
+                    $this->error($ex->getMessage());
+                }
+            } else if ($category['type'] == 1) {
+                var_dump(444);
+                exit();
             }
             $this->success('添加成功！');
         } else {
-            $catid = $this->request->param('id/d', 0);
+            $catid = $this->request->param('catid/d', 0);
             $category = getCategory($catid);
             if (empty($category)) {
                 $this->error('该栏目不存在！');
@@ -82,11 +95,14 @@ class Cms extends Adminbase
                 $modelid = $category['modelid'];
                 $fieldList = $this->modelfield->getFieldList($modelid);
                 $this->assign([
-                    'id' => $catid,
+                    'catid' => $catid,
                     'fieldList' => $fieldList,
                 ]);
                 return $this->fetch();
             } else if ($category['type'] == 1) {
+                $this->assign([
+                    'catid' => $catid,
+                ]);
                 return $this->fetch('singlepage');
             }
 
@@ -178,14 +194,14 @@ class Cms extends Adminbase
             //终极栏目
             if ($rs['child'] == 0) {
                 $data['target'] = 'right';
-                $data['url'] = url('cms/cms/classlist', array('id' => $rs['id']));
+                $data['url'] = url('cms/cms/classlist', array('catid' => $rs['id']));
             } else {
                 $data['isParent'] = true;
             }
 
             //单页
             if ($rs['type'] == 1 && $rs['child'] == 0) {
-                $data['url'] = url('cms/cms/add', array('id' => $rs['id']));
+                $data['url'] = url('cms/cms/add', array('catid' => $rs['id']));
             }
 
             $json[] = $data;
