@@ -104,6 +104,22 @@ return [
                     ],
                 ],
             ],
+            [
+                "route" => "cms/theme/index",
+                "type" => 1,
+                "status" => 1,
+                "name" => "模板管理",
+                "icon" => "",
+                "child" => [
+                    [
+                        "route" => "cms/theme/index",
+                        "type" => 1,
+                        "status" => 1,
+                        "name" => "主题管理",
+                        "icon" => "",
+                    ],
+                ],
+            ],
         ],
     ],
 ];

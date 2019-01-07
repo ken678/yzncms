@@ -1,0 +1,50 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<style type="text/css">
+.cmdlist-container {
+    background: #fff;
+    border: 1px solid;
+    border-color: #ecebeb #e1e0e0 #d5d5d5 #e1e0e0;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.cmdlist-container img {
+    padding: 5%;
+    width: 90%;
+}
+.cmdlist-text {
+    padding: 0 10px 0;
+    line-height: 2;
+}
+.cmdlist-container .ft{
+    background: #f8f8f8;
+    border-top: 1px solid #eeeeee;
+    padding: 5px 0;
+    border-bottom: 1px solid #fff;
+}
+.cmdlist-container .ft .org {
+    padding: 0 0 0 10px;
+    color: #ff6600 !important;
+}
+</style>
+<div class="layui-card">
+    <div class="layui-card-header">主题管理</div>
+    <div class="layui-card-body">
+        <div class="layui-row layui-col-space30">
+            <div class="layui-col-md2 layui-col-sm4">
+                <div class="cmdlist-container">
+                    <a href="javascript:;">
+              <img src="https://www.layui.com/admin/std/dist/layuiadmin/style/res/template/portrait.png">
+                    </a>
+              <div class="cmdlist-text">
+                <p class="info">Default</p>
+              </div>
+              <div class="ft"> <span class="org">已使用</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+{/block}
