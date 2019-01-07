@@ -57,7 +57,7 @@ CREATE TABLE `yzn_model_field` (
   `ifsearch` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '作为搜索条件',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0 禁用 1启用',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
@@ -89,7 +89,7 @@ CREATE TABLE `yzn_article` (
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
   `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
-  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
   `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',

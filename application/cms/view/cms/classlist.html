@@ -46,6 +46,34 @@ layui.use('table', function() {
         ],
     });
 
+        //监听单元格编辑
+    table.on('edit(table)', function(obj) {
+        var value = obj.value,data = obj.data;
+        $.post('{:url("cms/cms/listorder")}', { 'id': data.id,'value':value }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        })
+    });
+
+            //监听状态操作
+    form.on('switch(status)', function(obj) {
+        var _this = $(obj.elem);
+        $.post('{:url("cms/cms/setstate")}', { 'id': this.value,'status':obj.elem.checked}, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
+                form.render('checkbox');
+                layer.msg(data.msg);
+            }
+
+        });
+    });
+
 
     table.on('toolbar(table)', function(obj) {
         if (obj.event === 'delAll') {

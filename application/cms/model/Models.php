@@ -168,7 +168,7 @@ class Models extends Modelbase
 				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
 				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
 				`posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
-				`listorder` tinyint(3) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+				`listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
 				`uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
                 `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
 				`inputtime` int(11) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
@@ -276,7 +276,7 @@ EOF;
             [
                 'name' => 'listorder',
                 'title' => '排序',
-                'define' => 'tinyint(3) UNSIGNED',
+                'define' => 'smallint(5) UNSIGNED',
                 'type' => 'number',
                 'ifeditable' => 1,
                 'value' => 100,

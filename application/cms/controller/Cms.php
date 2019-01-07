@@ -217,4 +217,47 @@ class Cms extends Adminbase
         return $this->fetch();
     }
 
+    /**
+     * 排序
+     */
+    public function listorder()
+    {
+        $id = $this->request->param('id/d', 0);
+        $listorder = $this->request->param('value/d', 0);
+        $modelid = getCategory($id, 'modelid');
+        $modelCache = cache("Model");
+        if (empty($modelCache[$modelid])) {
+            return false;
+        };
+        $tableName = $modelCache[$modelid]['tablename'];
+        if (Db::name($tableName)->where('id', $id)->update(['listorder' => $listorder])) {
+            $this->success("排序成功！");
+        } else {
+            $this->error("排序失败！");
+        }
+    }
+
+    /**
+     * 状态
+     */
+    public function setstate()
+    {
+        $id = $this->request->param('id/d', 0);
+        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        $modelid = getCategory($id, 'modelid');
+        $modelCache = cache("Model");
+        if (empty($modelCache[$modelid])) {
+            return false;
+        };
+        $tableName = $modelCache[$modelid]['tablename'];
+        if (Db::name($tableName)->where('id', $id)->update(['status' => $status])) {
+            //更新栏目缓存
+            cache('Category', null);
+            getCategory($id, '', true);
+            $this->success('操作成功！');
+        } else {
+            $this->error('操作失败！');
+        }
+    }
+
 }
