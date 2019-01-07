@@ -42,7 +42,7 @@ layui.use('table', function() {
                 { field: 'status_text', width: 80, title: '状态', templet: '<div>{{#  if(d.status_text){ }} {{d.status_text}} {{#  } else { }} 未安装 {{#  } }}</div>' },
                 { field: 'author', width: 90, title: '作者' },
                 { field: 'version', width: 90, title: '版本' },
-                { fixed: 'right',width: 200, title: '操作', templet: '#titleTpl' }
+                { fixed: 'right', width: 220, title: '操作', templet: '#titleTpl' }
             ]
         ]
     });
@@ -57,7 +57,7 @@ layui.use('table', function() {
                 layer.close(index);
             });
         } else if (obj.event === 'config') {
-        	window.open(url + "?id=" + data.id, '_self')
+            window.open(url + "?id=" + data.id, '_self')
         } else {
             layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
                 x_request(url, { 'id': data.id });
@@ -71,24 +71,20 @@ function x_request(url, params) {
     $.post(url, params, function(data) {
         if (data.code == 1) {
             if (data.url) {
-                layer.msg(data.msg + ' 页面即将自动跳转~');
+                layer.alert(data.msg,{icon: 1}, function(index) {
+                	layer.close(index);
+                    if (data.url) {
+                        location.href = data.url;
+                    } else {
+                        location.reload();
+                    }
+                });
             } else {
-                layer.msg(data.msg);
+                layer.alert(data.msg);
             }
-            setTimeout(function() {
-                if (data.url) {
-                    location.href = data.url;
-                } else {
-                    location.reload();
-                }
-            }, 1500);
+
         } else {
-            layer.msg(data.msg);
-            setTimeout(function() {
-                if (data.url) {
-                    location.href = data.url;
-                }
-            }, 1500);
+            layer.alert(data.msg);
         }
 
     });

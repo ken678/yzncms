@@ -227,7 +227,7 @@ class Addons extends Adminbase
             $this->where("name='{$addon_name}'")->delete();
             $this->error('更新钩子处插件失败,请卸载后尝试重新安装！');
         }
-        $this->success('插件安装成功！', url('Addons/index'));
+        $this->success('插件安装成功！清除浏览器缓存和框架缓存后生效！', url('Addons/index'));
     }
 
     /**
@@ -275,7 +275,7 @@ class Addons extends Adminbase
             if ($hooks_update === false) {
                 $this->error = '卸载插件所挂载的钩子数据失败！';
             }
-            $this->success('插件卸载成功！', url('Addons/index'));
+            $this->success('插件卸载成功！清除浏览器缓存和框架缓存后生效！', url('Addons/index'));
         } else {
             $this->error('插件卸载失败！');
         }

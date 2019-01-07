@@ -51,9 +51,10 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['layer', 'form'], function(){
-    $('#install').click(function () {
+layui.use(['layer', 'form'], function() {
+    $('#install').click(function() {
         var table_exists = false;
+        var target;
         if ($('.layui-form i.text-danger').length) {
             layer.msg('缺少依赖模块或插件')
             return false;
@@ -65,7 +66,28 @@ layui.use(['layer', 'form'], function(){
             layer.msg('数据库表存在冲突，如果需要覆盖原有数据，请选择“清除旧数据”')
             return false;
         }
-        $('.layui-form').submit();
+        //$('.layui-form').submit();
+        target = $('.form-horizontal').attr("action");
+        $.post(target, $('.form-horizontal').serialize()).success(function(data) {
+            if (data.code == 1) {
+                if (data.url) {
+                    layer.alert(data.msg, { icon: 1 }, function(index) {
+                        layer.close(index);
+                        if (data.url) {
+                            location.href = data.url;
+                        } else {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    layer.alert(data.msg);
+                }
+            } else {
+                layer.alert(data.msg);
+            }
+
+        });
+        return false;
     });
 });
 </script>

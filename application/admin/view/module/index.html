@@ -35,7 +35,7 @@ layui.use('table', function() {
                 { field: 'author', width: 150, title: '作者' },
                 { field: 'introduce', title: '简介' },
                 { field: 'installtime', width: 200, title: '安装时间', templet: '<div>{{#  if(d.installtime){ }} {{d.installtime}} {{#  } else { }} / {{#  } }}</div>' },
-                { fixed: 'right', width: 150,title: '操作', templet: '#titleTpl' }
+                { fixed: 'right', width: 150, title: '操作', templet: '#titleTpl' }
             ]
         ]
     });
@@ -44,30 +44,25 @@ layui.use('table', function() {
     table.on('tool(table)', function(obj) {
         var data = obj.data;
         if (obj.event === 'install') {
-             window.open('{:url("admin/module/install")}' + "?module=" + data.module, '_self')
+            window.open('{:url("admin/module/install")}' + "?module=" + data.module, '_self')
         } else if (obj.event === 'uninstall') {
             layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
                 $.post('{:url("admin/module/uninstall")}', { 'module': data.module }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
-                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                            layer.alert(data.msg, { icon: 1 }, function(index) {
+                                layer.close(index);
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            });
                         } else {
-                            layer.msg(data.msg);
+                            layer.alert(data.msg);
                         }
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            } else {
-                                location.reload();
-                            }
-                        }, 1500);
                     } else {
-                        layer.msg(data.msg);
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            }
-                        }, 1500);
+                        layer.alert(data.msg);
                     }
 
                 });
