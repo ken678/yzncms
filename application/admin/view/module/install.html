@@ -20,11 +20,9 @@
                     </thead>
                 </table>
             </div>
+            {notempty name="need_module"}
             <div class="layui-form-item">
                 <h4><b>模块依赖检查</b></h4>
-                {empty name="need_module"}
-                无需依赖其他模块
-                {else/}
                 <table class="layui-table" lay-even style="max-width: 400px;">
                     <colgroup>
                         <col width="180">
@@ -50,13 +48,11 @@
                         {/volist}
                     </tbody>
                 </table>
-                {/empty}
             </div>
+            {/notempty}
+            {notempty name="need_plugin"}
             <div class="layui-form-item">
                 <h4><b>插件依赖检查</b></h4>
-                {empty name="need_plugin"}
-                无需依赖其他插件
-                {else/}
                 <table class="layui-table" lay-even style="max-width: 400px;">
                     <colgroup>
                         <col width="180">
@@ -82,13 +78,11 @@
                         {/volist}
                     </tbody>
                 </table>
-                {/empty}
             </div>
+            {/notempty}
+            {notempty name="table_check"}
             <div class="layui-form-item">
                 <h4><b>数据表检查</b></h4>
-                {empty name="table_check"}
-                该模块不需要数据表
-                {else/}
                 <table class="layui-table" lay-even style="max-width: 280px;">
                     <colgroup>
                         <col width="180">
@@ -110,8 +104,8 @@
                         {/volist}
                     </tbody>
                 </table>
-                {/empty}
             </div>
+            {/notempty}
             <div class="layui-form-item">
                 <h4><b>是否清除旧数据</b></h4>
                 <div>

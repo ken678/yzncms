@@ -57,5 +57,6 @@ return array(
         'yzn_article',
         'yzn_article_data',
         'yzn_page',
+        'yzn_position',
     ],
 );

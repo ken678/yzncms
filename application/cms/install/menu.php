@@ -102,6 +102,15 @@ return [
                             ],
                         ],
                     ],
+                    [
+                        "route" => "cms/position/index",
+                        "type" => 1,
+                        "status" => 1,
+                        "name" => "推荐位管理",
+                        "icon" => "",
+                        "child" => [
+                        ],
+                    ],
                 ],
             ],
         ],
