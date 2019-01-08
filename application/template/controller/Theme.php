@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 模板管理
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\template\controller;
 
 use app\common\controller\Adminbase;
 use think\Db;
@@ -30,13 +30,10 @@ class Theme extends Adminbase
                 continue;
             }
             $arr[$key]['name'] = basename($v);
-            if (is_file(TEMPLATE_PATH . $arr[$key]['name'] . '/cms/preview.jpg')) {
-                $arr[$key]['preview'] = ROOT_URL . 'templates/' . $arr[$key]['name'] . '/cms/preview.jpg';
+            if (is_file(TEMPLATE_PATH . $arr[$key]['name'] . '/preview.jpg')) {
+                $arr[$key]['preview'] = ROOT_URL . 'templates/' . $arr[$key]['name'] . '/preview.jpg';
             } else {
                 $arr[$key]['preview'] = config('public_url') . "static/admin/img/none.png";
-            }
-            if (!config('theme') && $arr[$key]['name'] == 'default') {
-                $arr[$key]['use'] = 1;
             }
             if (config('theme') == $arr[$key]['name']) {
                 $arr[$key]['use'] = 1;
