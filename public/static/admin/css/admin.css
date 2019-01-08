@@ -6,6 +6,21 @@
 .w400{width:400px!important;}
 .w500{width:500px!important;}
 .w600{width:600px!important;}
+.text-danger {
+    color: #d26a5c;
+}
+.text-info {
+    color: #70b9eb;
+}
+.text-warning {
+    color: #f3b760;
+}
+.text-success {
+    color: #46c37b;
+}
+.text-primary {
+    color: #5c90d2;
+}
 .text-center {text-align: center !important; }
 code {
     padding: 2px 4px;

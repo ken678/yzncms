@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-08 13:10:30
+Date: 2019-01-08 16:08:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `yzn_addons` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='插件表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
 -- Records of yzn_addons
@@ -59,7 +59,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1546918174', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1546928135', '2130706433', '530765310@qq.com', '1');
 INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '2', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
 
 -- ----------------------------
@@ -75,7 +75,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of yzn_adminlog
@@ -84,6 +84,47 @@ INSERT INTO `yzn_adminlog` VALUES ('1', '1', '1', '提示语:清理缓存', '154
 INSERT INTO `yzn_adminlog` VALUES ('2', '1', '1', '提示语:清理缓存', '1546921755', '2130706433', '/admin/index/cache.html?type=all&_=1546921750822');
 INSERT INTO `yzn_adminlog` VALUES ('3', '1', '1', '提示语:模块卸载成功！清除浏览器缓存和框架缓存后生效！', '1546921908', '2130706433', '/admin/module/uninstall.html');
 INSERT INTO `yzn_adminlog` VALUES ('4', '1', '1', '提示语:清理缓存', '1546924162', '2130706433', '/admin/index/cache.html?type=all&_=1546923544343');
+INSERT INTO `yzn_adminlog` VALUES ('5', '1', '1', '提示语:模块安装成功！清除浏览器缓存和框架缓存后生效！', '1546924281', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('6', '0', '0', '提示语:请先登陆', '1546924697', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('7', '1', '1', '提示语:恭喜您，登陆成功', '1546924702', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('8', '1', '1', '提示语:插件安装成功！清除浏览器缓存和框架缓存后生效！', '1546924713', '2130706433', '/addons/addons/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('9', '0', '0', '提示语:请先登陆', '1546928128', '2130706433', '/admin/');
+INSERT INTO `yzn_adminlog` VALUES ('10', '1', '1', '提示语:恭喜您，登陆成功', '1546928135', '2130706433', '/admin/index/login.html');
+INSERT INTO `yzn_adminlog` VALUES ('11', '1', '1', '提示语:更新成功！', '1546928515', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('12', '1', '1', '提示语:更新成功！', '1546928523', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('13', '1', '1', '提示语:清理缓存', '1546928581', '2130706433', '/admin/index/cache.html?type=all&_=1546928136838');
+INSERT INTO `yzn_adminlog` VALUES ('14', '1', '1', '提示语:更新成功！', '1546928688', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('15', '1', '1', '提示语:更新成功！', '1546928693', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('16', '1', '1', '提示语:更新成功！', '1546928696', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('17', '1', '1', '提示语:更新成功！', '1546928709', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('18', '1', '1', '提示语:更新成功！', '1546928713', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('19', '1', '1', '提示语:更新成功！', '1546928716', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('20', '1', '1', '提示语:更新成功！', '1546928879', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('21', '1', '1', '提示语:更新成功！', '1546928999', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('22', '1', '1', '提示语:更新成功！', '1546929003', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('23', '1', '1', '提示语:更新成功！清理缓存生效！', '1546929049', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('24', '1', '1', '提示语:更新成功！清理缓存生效！', '1546929106', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('25', '1', '1', '提示语:更新成功！清理缓存生效！', '1546929110', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('26', '1', '1', '提示语:插件卸载成功！清除浏览器缓存和框架缓存后生效！', '1546929123', '2130706433', '/addons/addons/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('27', '1', '1', '提示语:更新成功！清理缓存生效！', '1546929131', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('28', '1', '1', '提示语:更新成功！请及时清理缓存！', '1546929216', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('29', '1', '1', '提示语:更新成功！请及时清理缓存！', '1546929226', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('30', '1', '1', '提示语:更新成功！请及时清理缓存！', '1546929242', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('31', '1', '1', '提示语:更新成功！请及时清理缓存！', '1546929970', '2130706433', '/template/theme/chose/theme/blue1.html');
+INSERT INTO `yzn_adminlog` VALUES ('32', '1', '1', '提示语:更新成功！请及时清理缓存！', '1546930057', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('33', '0', '1', '提示语:主题名称不能为空且必须为纯字母！', '1546930060', '2130706433', '/template/theme/chose/theme/blue1.html');
+INSERT INTO `yzn_adminlog` VALUES ('34', '1', '1', '提示语:更新成功！请及时清理缓存！', '1546930140', '2130706433', '/template/theme/chose/theme/blue.html');
+INSERT INTO `yzn_adminlog` VALUES ('35', '1', '1', '提示语:更新成功！请及时清理缓存！', '1546930143', '2130706433', '/template/theme/chose/theme/default.html');
+INSERT INTO `yzn_adminlog` VALUES ('36', '1', '1', '提示语:添加成功！', '1546930245', '2130706433', '/cms/category/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('37', '1', '1', '提示语:添加成功！', '1546930447', '2130706433', '/cms/category/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('38', '1', '1', '提示语:模块卸载成功！清除浏览器缓存和框架缓存后生效！', '1546930600', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('39', '1', '1', '提示语:模块安装成功！清除浏览器缓存和框架缓存后生效！', '1546930606', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('40', '1', '1', '提示语:模块卸载成功！清除浏览器缓存和框架缓存后生效！', '1546930709', '2130706433', '/admin/module/uninstall.html');
+INSERT INTO `yzn_adminlog` VALUES ('41', '0', '1', '提示语:该模块要求系统最低版本为：1.0.1！', '1546930711', '2130706433', '/admin/module/install.html?module=cms');
+INSERT INTO `yzn_adminlog` VALUES ('42', '0', '1', '提示语:该模块要求系统最低版本为：1.0.1！', '1546930715', '2130706433', '/admin/module/install.html?module=cms');
+INSERT INTO `yzn_adminlog` VALUES ('43', '0', '1', '提示语:该模块要求系统最低版本为：1.0.1！', '1546930717', '2130706433', '/admin/module/install.html?module=cms');
+INSERT INTO `yzn_adminlog` VALUES ('44', '1', '1', '提示语:模块安装成功！清除浏览器缓存和框架缓存后生效！', '1546932707', '2130706433', '/admin/module/install.html');
+INSERT INTO `yzn_adminlog` VALUES ('45', '1', '1', '提示语:模块卸载成功！清除浏览器缓存和框架缓存后生效！', '1546932710', '2130706433', '/admin/module/uninstall.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -204,7 +245,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=183 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=192 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -330,7 +371,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -374,7 +415,7 @@ INSERT INTO `yzn_menu` VALUES ('40', '主题管理', 'icon-zhuti', '39', 'templa
 DROP TABLE IF EXISTS `yzn_module`;
 CREATE TABLE `yzn_module` (
   `module` varchar(15) NOT NULL COMMENT '模块',
-  `modulename` varchar(20) NOT NULL DEFAULT '' COMMENT '模块名称',
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '模块名称',
   `sign` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
   `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '内置模块',
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否可用',

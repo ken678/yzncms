@@ -6,7 +6,86 @@
         <form class="layui-form form-horizontal" action="{:url('admin/module/install')}" method="post">
             <input type="hidden" name="module" value="{$config.module}">
             <div class="layui-form-item">
-                <h4>数据表检查</h4>
+                <table class="layui-table" lay-even style="max-width: 280px;">
+                    <colgroup>
+                        <col width="180">
+                        <col width="100">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td>是否适配系统版本</td>
+                            <td class="text-center">{$version_check|raw}</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="layui-form-item">
+                <h4><b>模块依赖检查</b></h4>
+                {empty name="need_module"}
+                无需依赖其他模块
+                {else/}
+                <table class="layui-table" lay-even style="max-width: 400px;">
+                    <colgroup>
+                        <col width="180">
+                        <col width="100">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>模块</th>
+                            <th>当前版本</th>
+                            <th>所需版本</th>
+                            <th class="text-center">检查结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="need_module" id="vo"}
+                        <tr>
+                            <td>{$vo.module}</td>
+                            <td width="100">{$vo.version}</td>
+                            <td width="100">{$vo.version_need}</td>
+                            <td class="text-center" width="100">{$vo.result|raw}</td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+                {/empty}
+            </div>
+            <div class="layui-form-item">
+                <h4><b>插件依赖检查</b></h4>
+                {empty name="need_plugin"}
+                无需依赖其他插件
+                {else/}
+                <table class="layui-table" lay-even style="max-width: 400px;">
+                    <colgroup>
+                        <col width="180">
+                        <col width="100">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>插件</th>
+                            <th>当前版本</th>
+                            <th>所需版本</th>
+                            <th class="text-center">检查结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="need_plugin" id="vo"}
+                        <tr>
+                            <td>{$vo.plugin}</td>
+                            <td width="100">{$vo.version}</td>
+                            <td width="100">{$vo.version_need}</td>
+                            <td class="text-center" width="100">{$vo.result|raw}</td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+                {/empty}
+            </div>
+            <div class="layui-form-item">
+                <h4><b>数据表检查</b></h4>
                 {empty name="table_check"}
                 该模块不需要数据表
                 {else/}
@@ -34,7 +113,7 @@
                 {/empty}
             </div>
             <div class="layui-form-item">
-                <h4>是否清除旧数据</h4>
+                <h4><b>是否清除旧数据</b></h4>
                 <div>
                     <input type="radio" name="clear" value="0" title="否" checked>
                     <input type="radio" name="clear" value="1" title="是">
@@ -56,7 +135,7 @@ layui.use(['layer', 'form'], function() {
         var table_exists = false;
         var target;
         if ($('.layui-form i.text-danger').length) {
-            layer.msg('缺少依赖模块或插件')
+            layer.msg('系统版本过低或缺少依赖模块或插件')
             return false;
         }
         if ($('.layui-form span.text-danger').length) {
