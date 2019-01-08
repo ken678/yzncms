@@ -97,8 +97,27 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
+
+                $position = Db::name('Position')->select();
+                $array = array();
+                foreach ($position as $_key => $_value) {
+                    //如果有设置模型，检查是否有该模型
+                    if ($_value['modelid'] && $modelid !== $_value['modelid']) {
+                        continue;
+                    }
+                    //如果设置了模型，又设置了栏目
+                    if ($_value['modelid'] && $_value['catid'] && $catid !== $_value['catid']) {
+                        continue;
+                    }
+                    //如果设置了栏目
+                    if ($_value['catid'] && $catid !== $_value['catid']) {
+                        continue;
+                    }
+                    $array[$_key] = $_value['name'];
+                }
                 $fieldList = $this->modelfield->getFieldList($modelid);
                 $this->assign([
+                    'position' => $array,
                     'catid' => $catid,
                     'fieldList' => $fieldList,
                 ]);
@@ -169,10 +188,6 @@ class Cms extends Adminbase
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
         }
-        /*$logic = logic($modelid);
-        foreach ($ids as $id) {
-        $logic->rmove($id, $catid);
-        }*/
         $this->success('删除成功！');
     }
 
