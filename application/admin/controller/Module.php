@@ -65,7 +65,7 @@ class Module extends Adminbase
                 if (version_compare(config('version.yzncms_version'), $config['adaptation'], '>=') == false) {
                     $version_check = '<i class="iconfont icon-jinyong text-danger"></i>';
                 } else {
-                    $version_check = '<i class="iconfont icon-qiyong"></i>';
+                    $version_check = '<i class="iconfont icon-qiyong text-success"></i>';
                 }
             }
             $need_module = [];

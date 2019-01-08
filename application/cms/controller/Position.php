@@ -15,6 +15,7 @@
 namespace app\cms\controller;
 
 use app\common\controller\Adminbase;
+use think\Db;
 
 class Position extends Adminbase
 {
@@ -24,7 +25,22 @@ class Position extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $data = '';
+            $data = Db::name('Position')->order(array('listorder' => 'ASC', 'id' => 'DESC'))
+                ->withAttr('modelid', function ($value, $data) {
+                    if ($data['modelid']) {
+                        return getModel($data['modelid'], 'name');
+                    } else {
+                        return '不限模型';
+                    }
+                })->withAttr('catid', function ($value, $data) {
+                if ($data['catid']) {
+                    return getCategory($data['catid'], 'name');
+                } else {
+                    return '不限栏目';
+                }
+            })->withAttr('create_time', function ($value, $data) {
+                return date('Y-m-d H:i:s', $value);
+            })->select();
             $result = array("code" => 0, "data" => $data);
             return json($result);
         }

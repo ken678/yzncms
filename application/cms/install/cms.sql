@@ -79,6 +79,22 @@ INSERT INTO `yzn_model_field` VALUES ('12', '1', 'hits', '点击量', '', 'numbe
 INSERT INTO `yzn_model_field` VALUES ('13', '1', 'did', '附表文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '0', '0', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('14', '1', 'content', '内容', '', 'Ueditor', 'text', '', '', '', '0', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 
+DROP TABLE IF EXISTS `yzn_position`;
+CREATE TABLE `yzn_position` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '推荐位id',
+  `modelid` mediumint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型id',
+  `catid` varchar(255) NOT NULL DEFAULT '' COMMENT '栏目id',
+  `name` char(30) NOT NULL DEFAULT '' COMMENT '推荐位名称',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='推荐位';
+
+
+INSERT INTO `yzn_position` VALUES ('1', '0', '0', '首页幻灯片', '1500272764', '1500519504', '1');
+INSERT INTO `yzn_position` VALUES ('2', '0', '0', '首页文字推荐', '1500272764', '1500519504', '2');
+INSERT INTO `yzn_position` VALUES ('3', '0', '0', '首页图片推荐', '1500272764', '1500519504', '3');
 
 
 DROP TABLE IF EXISTS `yzn_article`;

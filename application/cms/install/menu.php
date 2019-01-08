@@ -107,7 +107,7 @@ return [
                         "type" => 1,
                         "status" => 1,
                         "name" => "推荐位管理",
-                        "icon" => "",
+                        "icon" => "icon-tuijian",
                         "child" => [
                         ],
                     ],
