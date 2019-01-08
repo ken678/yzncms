@@ -346,15 +346,22 @@ EOF;
                 $value['value'] .= ',';
                 }*/
                 }
+                if ($value['type'] == 'file') {
+                    $value['param'] = ['dir' => 'files', 'module' => 'admin'];
+                    if (isset($dataRule['file']['type'])) {
+                        $value['param']['sizelimit'] = $dataRule['file']['size'];
+                        $value['param']['extlimit'] = $dataRule['file']['type'];
+                    }
+                }
                 if ($value['type'] == 'files') {
                     $value['param'] = ['dir' => 'files', 'module' => 'admin'];
                     if (isset($dataRule['file']['type'])) {
                         $value['param']['sizelimit'] = $dataRule['file']['size'];
                         $value['param']['extlimit'] = $dataRule['file']['type'];
                     }
-                    if (!empty($value['value'])) {
-                        $value['value'] .= ',';
-                    }
+                    /*if (!empty($value['value'])) {
+                $value['value'] .= ',';
+                }*/
                 }
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
