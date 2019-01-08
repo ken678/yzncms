@@ -16,6 +16,7 @@ namespace app\template\controller;
 
 use app\common\controller\Adminbase;
 use think\Db;
+use think\facade\Validate;
 
 class Theme extends Adminbase
 {
@@ -48,16 +49,17 @@ class Theme extends Adminbase
     //风格选择
     public function chose()
     {
-        $theme = $this->request->param('theme/s');
-        if (empty($theme)) {
-            $this->error("主题名称不能为空！");
+        $theme = $this->request->param('theme/s', 'default');
+        if (!Validate::checkRule($theme, 'must|alpha')) {
+            $this->error("主题名称不能为空且必须为纯字母！");
         }
         if ($theme == config('theme')) {
-            $this->error("主题未改变！", url("Theme/index"));
+            $this->error("主题未改变！", url("theme/index"));
         }
-        $status = Db::name('Config')->where('name', 'theme')->save(['value' => $theme]);
+        $status = Db::name('Config')->where('name', 'theme')->setField('value', $theme);
         if ($status !== false) {
-            $this->success("更新成功！");
+            cache('Config', null); //清空缓存配置
+            $this->success("更新成功！请及时清理缓存！");
         } else {
             $this->error("更新失败！");
         }

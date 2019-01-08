@@ -96,7 +96,6 @@ class Addons extends Adminbase
         if (!class_exists($addon_class)) {
             trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
         }
-
         $addonObj = new $addon_class();
         $addon['addon_path'] = $addonObj->addon_path;
         $addon['custom_config'] = isset($addonObj->custom_config) ? $addonObj->custom_config : '';

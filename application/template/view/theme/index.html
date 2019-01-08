@@ -37,7 +37,7 @@
                         {if isset($vo['use']) && $vo['use']==1}
                         <button class="layui-btn layui-btn-sm layui-btn-disabled layui-btn-fluid">已使用</button>
                         {else /}
-                        <a class="layui-btn layui-btn-sm layui-btn-fluid">选择使用</a>
+                        <a href="{:url('template/theme/chose',['theme'=>$vo['name']])}" class="layui-btn layui-btn-sm layui-btn-fluid ajax-get confirm">选择使用</a>
                         {/if}
                     </div>
                 </div>
@@ -48,4 +48,5 @@
 </div>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}

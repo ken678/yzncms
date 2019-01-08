@@ -70,6 +70,8 @@ layui.use(['element', 'layer', 'form'], function() {
                 }
                 layer.close(index);
             });
+        }else{
+
         };
         return false;
     });
