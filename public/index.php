@@ -21,7 +21,7 @@ define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 define('APP_PATH', ROOT_PATH . 'application' . DIRECTORY_SEPARATOR);
 define('ADDON_PATH', ROOT_PATH . 'addons' . DIRECTORY_SEPARATOR);
 define('ROOT_URL', rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/') . '/');
-define('TEMPLATE_PATH', ROOT_PATH . 'templates' . DIRECTORY_SEPARATOR);
+define('TEMPLATE_PATH', __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR);
 // 加载基础文件
 require ROOT_PATH . 'thinkphp' . DIRECTORY_SEPARATOR . 'base.php';
 // 执行应用并响应
