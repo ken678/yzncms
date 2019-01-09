@@ -3,7 +3,7 @@
 <form class="layui-form form-horizontal" action="" method="post">
     {include file="admin@inputItem" /}
     <input type="hidden" name="modelField[catid]" value="{$catid}">
-    {if count($fieldList)}
+    <input type='hidden' name='modelField[posid][]' value='-1'>
     {if isset($position) && !empty($position)}
     <div class="layui-form-item">
     <label class="">推荐位</label>
@@ -14,6 +14,7 @@
     </div>
     </div>
     {/if}
+    {if count($fieldList)}
     <div class="layui-form-item">
         <div>
             <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>

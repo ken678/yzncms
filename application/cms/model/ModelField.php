@@ -399,6 +399,14 @@ EOF;
                         break;
                 }
             } else {
+                //推荐位
+                if ($name == 'posid') {
+                    if (empty(${$arr}[$name]) || !is_array(${$arr}[$name])) {
+                        ${$arr}[$name] = 0;
+                    }
+                    $number = count(${$arr}[$name]);
+                    ${$arr}[$name] = $number == 1 ? 0 : 1;
+                }
                 if (is_array(${$arr}[$name])) {
                     ${$arr}[$name] = ',' . implode(',', ${$arr}[$name]) . ',';
                 }
