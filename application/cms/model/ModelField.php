@@ -196,7 +196,7 @@ EOF;
         }
         //处理数据
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
-        $posids = $data['posid'];
+        $posid = $data['posid'];
         list($data, $dataExt) = $dataAll;
         if (!isset($data['inputtime'])) {
             $data['inputtime'] = request()->time();
@@ -216,8 +216,14 @@ EOF;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
-        if ($posids && is_array($posids)) {
-            model('Position')->positionUpdate($id, $modelid, $catid, $posids);
+        if ($posid && is_array($posid)) {
+            $posids = array();
+            foreach ($posid as $r) {
+                if ($r != '-1') {
+                    $posids[] = $r;
+                }
+            }
+            model('Position')->positionUpdate($id, $modelid, $catid, $posids, 0, 1);
         }
     }
 

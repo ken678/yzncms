@@ -29,11 +29,12 @@ class Position extends Model
      * @param int $modelid 模型ID
      * @param array $posid 推送到的推荐位ID
      * @param int $expiration 过期时间设置
+     * @param int $undel 是否判断推荐位去除情况
      * 调用方式
      * $push = D("Position");
      * $push->positionUpdate(323, 25, 45, array(20,21), array('title'=>'文章标题','thumb'=>'缩略图路径','inputtime'='时间戳'));
      */
-    public function positionUpdate($id, $modelid, $catid, $posid, $expiration = 0)
+    public function positionUpdate($id, $modelid, $catid, $posid, $expiration = 0, $undel = 0)
     {
         $arr = array();
         $id = intval($id);
@@ -46,6 +47,10 @@ class Position extends Model
         $arr['modelid'] = $modelid;
         $arr['catid'] = $catid;
         $arr['posid'] = $posid;
+        if ($undel == 0) {
+            //删除推荐位
+            //$pos_info = $this->position_del($catid, $id, $posid);
+        }
         return $this->position_list($arr, $expiration) ? true : false;
     }
 
@@ -57,11 +62,16 @@ class Position extends Model
      */
     public function position_list($arr = array(), $expiration = 0)
     {
+        $PositionData = model('PositionData');
         if (is_array($arr['posid']) && !empty($arr['posid'])) {
             foreach ($arr['posid'] as $pid) {
-
+                $info = array();
+                $info['id'] = intval($arr['id']);
+                $info['catid'] = intval($arr['catid']);
+                $info['posid'] = $pid;
+                $info['modelid'] = intval($arr['modelid']);
+                $r = $PositionData->isUpdate(false)->allowField(true)->save($info);
             }
-
         }
         return true;
     }
