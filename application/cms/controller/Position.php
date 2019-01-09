@@ -14,11 +14,18 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
+use app\cms\model\Position as Position_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 
 class Position extends Adminbase
 {
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->Position_Model = new Position_Model;
+    }
+
     /**
      * 首页
      */
@@ -45,6 +52,17 @@ class Position extends Adminbase
             return json($result);
         }
         return $this->fetch();
+    }
+
+    //删除 推荐位
+    public function delete()
+    {
+        $posid = $this->request->param('id/d', 0);
+        if ($this->Position_Model->positionDel($posid)) {
+            $this->success('删除成功！<font color=\"#FF0000\">请更新缓存！</font>', url('cms/position/index'));
+        } else {
+            $this->error($this->Position_Model->getError() ?: '删除失败');
+        }
     }
 
 }

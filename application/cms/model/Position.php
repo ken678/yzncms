@@ -21,6 +21,34 @@ use \think\Model;
  */
 class Position extends Model
 {
+    //关联
+    public function positiondata()
+    {
+        return $this->hasMany('PositionData', 'posid', 'id');
+    }
+
+    /**
+     * 删除推荐位
+     * @param type $posid 推荐位ID
+     * @return boolean
+     */
+    public function positionDel($posid)
+    {
+        if (empty($posid)) {
+            $this->error = '请指定需要删除的推荐位！';
+            return false;
+        }
+        $pid = self::get($posid, 'positiondata');
+        //关联删除
+        if ($pid->together('positiondata')->delete()) {
+            $this->position_cache();
+            return true;
+        } else {
+            $this->error = '删除失败！';
+            return false;
+        }
+
+    }
 
     /**
      * 推荐位推送修改接口
