@@ -21,5 +21,7 @@ use \think\Model;
  */
 class PositionData extends Model
 {
+	//关联删除需设置主键
+	protected $pk = 'posid';
 
 }
