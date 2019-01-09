@@ -97,8 +97,7 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
-
-                $position = Db::name('Position')->select();
+                $position = cache('Position');
                 $array = array();
                 foreach ($position as $_key => $_value) {
                     //如果有设置模型，检查是否有该模型

@@ -91,6 +91,15 @@ CREATE TABLE `yzn_position` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='推荐位';
 
+DROP TABLE IF EXISTS `yzn_position_data`;
+CREATE TABLE `yzn_position_data` (
+  `id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '文章ID',
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `posid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位ID',
+  `modelid` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
+  KEY `posid` (`posid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='推荐位数据表';
+
 
 INSERT INTO `yzn_position` VALUES ('1', '0', '0', '首页幻灯片', '1500272764', '1500519504', '1');
 INSERT INTO `yzn_position` VALUES ('2', '0', '0', '首页文字推荐', '1500272764', '1500519504', '2');

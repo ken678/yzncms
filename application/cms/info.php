@@ -48,6 +48,11 @@ return array(
             'model' => 'ModelField',
             'action' => 'model_field_cache',
         ],
+        'Position' => [
+            'name' => '推荐位',
+            'model' => 'Position',
+            'action' => 'position_cache',
+        ],
     ],
     // 数据表，请加表前缀yzn[有数据库表时必填]
     'tables' => [
@@ -58,5 +63,6 @@ return array(
         'yzn_article_data',
         'yzn_page',
         'yzn_position',
+        'yzn_position_data',
     ],
 );

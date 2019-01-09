@@ -192,11 +192,11 @@ EOF;
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
         if (!$this->table_exists($tablename)) {
-            $this->error = '数据表不存在！';
-            return false;
+            throw new \Exception('数据表不存在！');
         }
         //处理数据
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
+        $posids = $data['posid'];
         list($data, $dataExt) = $dataAll;
         if (!isset($data['inputtime'])) {
             $data['inputtime'] = request()->time();
@@ -213,10 +213,11 @@ EOF;
                 $dataExt['did'] = $id;
                 Db::name($tablename . $this->ext_table)->insert($dataExt);
             }
-
         } catch (\Exception $e) {
-
             throw new \Exception($e->getMessage());
+        }
+        if ($posids && is_array($posids)) {
+            model('Position')->positionUpdate($id, $modelid, $catid, $posids);
         }
     }
 
@@ -231,12 +232,12 @@ EOF;
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
         if (!$this->table_exists($tablename)) {
-            $this->error = '数据表不存在！';
-            return false;
+            throw new \Exception('数据表不存在！');
         }
 
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
+
         if (!isset($data['updatetime'])) {
             $data['updatetime'] = request()->time();
         }

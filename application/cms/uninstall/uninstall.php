@@ -28,6 +28,7 @@ class Uninstall extends UninstallBase
         'article_data',
         'page',
         'position',
+        'position_data',
     );
     protected $ext_table = '_data';
 
