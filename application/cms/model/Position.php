@@ -21,10 +21,28 @@ use \think\Model;
  */
 class Position extends Model
 {
+    protected $autoWriteTimestamp = true;
     //关联
     public function positiondata()
     {
         return $this->hasMany('PositionData', 'posid', 'id');
+    }
+
+    /**
+     * 添加推荐位
+     */
+    public function positionAdd($data)
+    {
+        $data['catid'] = isset($data['catid']) ? (int) $data['catid'] : 0;
+        $posid = self::create($data);
+        if ($posid) {
+            $this->position_cache();
+            return true;
+        } else {
+            $this->error = '添加失败！';
+            return false;
+        }
+
     }
 
     /**

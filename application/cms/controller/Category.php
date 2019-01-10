@@ -114,7 +114,7 @@ class Category extends Adminbase
             $modelsdata = cache("Model");
             $models = array();
             foreach ($modelsdata as $v) {
-                if ($v['status'] == 1 && $v['type'] == 2) {
+                if ($v['status'] == 1) {
                     $models[] = $v;
                 }
             }

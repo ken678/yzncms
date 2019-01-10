@@ -41,7 +41,7 @@ class Position extends Adminbase
                     }
                 })->withAttr('catid', function ($value, $data) {
                 if ($data['catid']) {
-                    return getCategory($data['catid'], 'name');
+                    return getCategory($data['catid'], 'catname');
                 } else {
                     return '不限栏目';
                 }
@@ -60,6 +60,12 @@ class Position extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
+            $data = $this->request->post();
+            if ($this->Position_Model->positionAdd($data)) {
+                $this->success("添加成功！", url('cms/position/index'));
+            } else {
+                $this->error($this->Position_Model->getError());
+            }
 
         } else {
             $Model = cache('Model');
@@ -87,7 +93,7 @@ class Position extends Adminbase
     {
         $posid = $this->request->param('id/d', 0);
         if ($this->Position_Model->positionDel($posid)) {
-            $this->success('删除成功！<font color="#FF0000">请更新缓存！</font>', url('cms/position/index'));
+            $this->success('删除成功！', url('cms/position/index'));
         } else {
             $this->error($this->Position_Model->getError() ?: '删除失败');
         }
