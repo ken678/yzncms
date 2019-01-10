@@ -54,12 +54,40 @@ class Position extends Adminbase
         return $this->fetch();
     }
 
+    /**
+     * 添加推荐位
+     */
+    public function add()
+    {
+        if ($this->request->isPost()) {
+
+        } else {
+            $Model = cache('Model');
+            $modelinfo = [];
+            foreach ($Model as $k => $v) {
+                if ($v['type'] == 2) {
+                    $modelinfo[$v['id']] = $v['name'];
+                }
+            }
+            $this->assign('modelinfo', $modelinfo);
+            return $this->fetch();
+        }
+
+    }
+
+    //动态加载推荐位栏目
+    public function public_category_load()
+    {
+        $modelid = $this->request->param('modelid/d', 0);
+        echo \util\Form::select_category('', 'name=catid', '', $modelid);
+    }
+
     //删除 推荐位
     public function delete()
     {
         $posid = $this->request->param('id/d', 0);
         if ($this->Position_Model->positionDel($posid)) {
-            $this->success('删除成功！<font color=\"#FF0000\">请更新缓存！</font>', url('cms/position/index'));
+            $this->success('删除成功！<font color="#FF0000">请更新缓存！</font>', url('cms/position/index'));
         } else {
             $this->error($this->Position_Model->getError() ?: '删除失败');
         }

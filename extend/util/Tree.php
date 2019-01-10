@@ -110,6 +110,44 @@ class Tree
     }
 
     /**
+     * @param integer $myid 要查询的ID
+     * @param string $str   第一种HTML代码方式
+     * @param string $str2  第二种HTML代码方式
+     * @param integer $sid  默认选中
+     * @param integer $adds 前缀
+     */
+    public function get_tree_category($myid, $str, $str2, $sid = 0, $adds = '')
+    {
+        $number = 1;
+        $child = $this->get_child($myid);
+        if (is_array($child)) {
+            $total = count($child);
+            foreach ($child as $id => $a) {
+                $j = $k = '';
+                if ($number == $total) {
+                    $j .= $this->icon[2];
+                } else {
+                    $j .= $this->icon[1];
+                    $k = $adds ? $this->icon[0] : '';
+                }
+                $spacer = $adds ? $adds . $j : '';
+
+                $selected = $this->have($sid, $id) ? 'selected' : '';
+                @extract($a);
+                if (empty($html_disabled)) {
+                    eval("\$nstr = \"$str\";");
+                } else {
+                    eval("\$nstr = \"$str2\";");
+                }
+                $this->ret .= $nstr;
+                $this->get_tree_category($id, $str, $str2, $sid, $adds . $k . '&nbsp;');
+                $number++;
+            }
+        }
+        return $this->ret;
+    }
+
+    /**
      *
      * 获取树状数组
      * @param string $myid 要查询的ID
@@ -168,6 +206,11 @@ class Tree
             }
         }
         return $arr;
+    }
+
+    private function have($list, $item)
+    {
+        return (strpos(',,' . $list . ',', ',' . $item . ','));
     }
 
 }
