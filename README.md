@@ -28,11 +28,11 @@ PHP版本：php >= 5.6 (支持php7)
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 ```
-[截图预览]
+[截图预览]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133448_0555dfbc_555541.png "YZNCMS后台管理系统.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133326_84f1f2ed_555541.png "YZNCMS后台管理系统.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133333_55b963a0_555541.png "YZNCMS后台管理系统1.png")
 
-[捐赠]
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/173713_cb50d6b9_555541.png "1547112799941_03.png")
+[捐赠]  
+![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/174021_a9fe46fd_555541.png "1547112799941_03_02_02.png")
 捐赠后联系作者，维护捐赠列表
