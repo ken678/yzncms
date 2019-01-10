@@ -36,3 +36,7 @@ PHP版本：php >= 5.6 (支持php7)
 [捐赠]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/181152_57b5113e_555541.jpeg "mm_facetoface_collect_qrcode_1547113957376_01.jpg")
+
+[开源协议]  
+YznCMS遵循Apache2开源协议发布，并提供免费使用。
+部分代码来自互联网，若有异议，可以联系作者进行删除。
