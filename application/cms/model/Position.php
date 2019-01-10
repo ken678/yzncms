@@ -34,12 +34,26 @@ class Position extends Model
     public function positionAdd($data)
     {
         $data['catid'] = isset($data['catid']) ? (int) $data['catid'] : 0;
-        $posid = self::create($data);
-        if ($posid) {
+        if (self::create($data)) {
             $this->position_cache();
             return true;
         } else {
             $this->error = '添加失败！';
+            return false;
+        }
+    }
+
+    /**
+     * 编辑推荐位
+     */
+    public function positionSave($data)
+    {
+        $data['catid'] = isset($data['catid']) ? (int) $data['catid'] : 0;
+        if (self::update($data)) {
+            $this->position_cache();
+            return true;
+        } else {
+            $this->error = '更新失败！';
             return false;
         }
 

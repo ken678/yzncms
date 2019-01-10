@@ -8,7 +8,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">推荐位名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" lay-verify="name" placeholder="推荐位名称" class="layui-input" required>
+                    <input type="text" name="name" lay-verify="name" placeholder="推荐位名称" class="layui-input" required  value="{$data['name']}">
                 </div>
             </div>
             <div class="layui-form-item web_list">
@@ -17,7 +17,7 @@
                     <select name="modelid" lay-filter="modelid">
                         <option value="0">请选择模型</option>
                         {volist name="modelinfo" id="vo"}
-                        <option value="{$key}">{$vo}</option>
+                        <option value="{$key}" {if $key == $data['modelid']}selected{/if}>{$vo}</option>
                         {/volist}
                     </select>
                 </div>
@@ -25,9 +25,10 @@
             <div class="layui-form-item web_list">
                 <label class="layui-form-label">所属栏目</label>
                 <div class="layui-input-inline" id="load_catid">
-
+                    {php}echo \util\Form::select_category($data['catid'], 'name=catid', '作为顶级栏目', $data['modelid']);{/php}
                 </div>
             </div>
+            <input name="id" value="{$data['id']}" type="hidden" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
@@ -49,7 +50,7 @@ layui.use(['layer', 'form'], function() {
                 $('#load_catid').html(data);
                 form.render('select'); //刷新select选择框渲染
             });
-            console.log(data.value);
+            //console.log(data.value);
         });
 });
 </script>

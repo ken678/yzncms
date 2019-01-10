@@ -78,6 +78,38 @@ class Position extends Adminbase
             $this->assign('modelinfo', $modelinfo);
             return $this->fetch();
         }
+    }
+
+    /**
+     * 编辑推荐位
+     */
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            if ($this->Position_Model->positionSave($data)) {
+                $this->success("编辑成功！", url('cms/position/index'));
+            } else {
+                $this->error($this->Position_Model->getError());
+            }
+
+        } else {
+            $posid = $this->request->param('id/d', 0);
+            $data = Position_Model::get($posid);
+            if (!$data) {
+                $this->error('该推荐位不存在！');
+            }
+            $Model = cache('Model');
+            $modelinfo = [];
+            foreach ($Model as $k => $v) {
+                if ($v['type'] == 2) {
+                    $modelinfo[$v['id']] = $v['name'];
+                }
+            }
+            $this->assign('data', $data);
+            $this->assign('modelinfo', $modelinfo);
+            return $this->fetch();
+        }
 
     }
 
