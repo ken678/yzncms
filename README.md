@@ -34,4 +34,4 @@ PHP版本：php >= 5.6 (支持php7)
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133333_55b963a0_555541.png "YZNCMS后台管理系统1.png")
 
 [捐赠]  
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/174231_0e811754_555541.jpeg "1547112799941_03_02_02.jpg")
+![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/174308_74110b5f_555541.jpeg "1547112799941_03_02_02.jpg")
