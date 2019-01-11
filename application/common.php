@@ -367,9 +367,16 @@ function rmdirs($dirname, $withself = true)
 }
 
 /**
+ * 获取附件名称
+ */
+function get_file_name($id = '')
+{
+    $name = model('attachment/Attachment')->getFileName($id);
+    return $name ? $name : '没有找到文件';
+}
+
+/**
  * 获取附件路径
- * @param int $id 附件id
- * @return string
  */
 function get_file_path($id = 0)
 {
@@ -377,12 +384,18 @@ function get_file_path($id = 0)
     return $path ? $path : "";
 }
 
-function get_file_name($id = '')
+/**
+ * 批量获取附件路径
+ */
+function get_files_path($ids = [])
 {
-    $name = model('attachment/Attachment')->getFileName($id);
-    return $name ? $name : '没有找到文件';
+    $paths = model('admin/attachment')->getFilePath($ids);
+    return !$paths ? [] : $paths;
 }
 
+/**
+ * 获取图片路径
+ */
 function get_thumb($id = 0)
 {
     $path = model('attachment/Attachment')->getThumbPath($id);

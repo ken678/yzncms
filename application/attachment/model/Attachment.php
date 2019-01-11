@@ -29,7 +29,7 @@ class Attachment extends Model
      */
     public function getFilePath($id = '', $type = 0)
     {
-        $uploadPath = config('upload_path');
+        $uploadPath = config('public_url') . 'uploads/';
         if (is_array($id)) {
             $data_list = $this->where('id', 'in', $id)->select();
             $paths = [];
