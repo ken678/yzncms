@@ -214,10 +214,10 @@ layui.use(['laydate'], function() {
                     {notempty name="$vo.value"}
                     {volist name="$vo.value|explode=',',###" id="v"}
                     <tr class="file-item">
-                      <td>{$vo.value|get_file_name}</td>
+                      <td>{$v|get_file_name}</td>
                       <td>/</td>
                       <td>/</td>
-                      <td><a href="{$vo.value|get_file_path}" class="layui-btn download-file layui-btn layui-btn-xs">下载</a> <a href="javascript:void(0);" class="layui-btn remove-file layui-btn layui-btn-xs layui-btn-danger">删除</a></td>
+                      <td><a href="{$v|get_file_path}" class="layui-btn download-file layui-btn layui-btn-xs">下载</a> <a href="javascript:void(0);" class="layui-btn remove-file layui-btn layui-btn-xs layui-btn-danger">删除</a></td>
                     </tr>
                     {/volist}
                     {/notempty}
