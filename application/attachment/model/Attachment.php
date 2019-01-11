@@ -75,6 +75,16 @@ class Attachment extends Model
         }
     }
 
+    /**
+     * 根据附件id获取名称
+     * @param  string $id 附件id
+     * @return string     名称
+     */
+    public function getFileName($id = '')
+    {
+        return $this->where('id', $id)->value('name');
+    }
+
     //获取图片路径
     public static function getFileInfo($id = '', $field = 'path', $ifstatus = false)
     {

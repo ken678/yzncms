@@ -121,13 +121,6 @@ code {
     width: 40px;
     height: 40px;
 }
-.file-item .remove-file{
-    color: #CA4949;
-    cursor: pointer;
-}
-.file-item .remove-file:hover{
-    color: #EC6969;
-}
 .file-item .fa-check {
     color: #68C39F;
     margin-top: 3px;

@@ -377,6 +377,12 @@ function get_file_path($id = 0)
     return $path ? $path : "";
 }
 
+function get_file_name($id = '')
+{
+    $name = model('attachment/Attachment')->getFileName($id);
+    return $name ? $name : '没有找到文件';
+}
+
 function get_thumb($id = 0)
 {
     $path = model('attachment/Attachment')->getThumbPath($id);

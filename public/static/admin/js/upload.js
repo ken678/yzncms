@@ -40,7 +40,24 @@
                 extensions: $ext
             }
         });
-        //console.log(uploader);
+        
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+            var $li ='<tr id="' + file.id + '" class="file-item"><td>' + file.name + '</td>'+
+                    '<td class="file-state">正在读取文件信息...</td><td><div class="layui-progress"><div class="layui-progress-bar" lay-percent="0%"></div></div></td>'+
+                     '<td><a href="javascript:void(0);" class="layui-btn download-file layui-btn layui-btn-xs">下载</a> <a href="javascript:void(0);" class="layui-btn remove-file layui-btn layui-btn-xs layui-btn-danger">删除</a></td></tr>';
+
+            if ($multiple) {
+                $file_list.find('.file-box').append($li);
+            } else {
+                $file_list.find('.file-box').html($li);
+                // 清空原来的数据
+                $input_file.val('');
+            }
+            // 设置当前上传对象
+            curr_uploader = uploader;
+        });
+
         // 文件上传成功
         uploader.on( 'uploadSuccess', function( file, response ) {
             var $li = $( '#'+file.id );
@@ -57,25 +74,21 @@
                 }
             }
             // 加入提示信息
-            //$li.find('.file-state').html('<span class="text-'+ response.class +'">'+ response.info +'</span>');
+            $li.find('.file-state').html('<span class="text-'+ response.class +'">'+ response.info +'</span>');
             // 添加下载链接
-            //$li.find('.download-file').attr('href', response.path);
+            $li.find('.download-file').attr('href', response.path);
+        });
 
-            // 文件上传成功后的自定义回调函数
-            //if (window['dp_file_upload_success'] !== undefined) window['dp_file_upload_success']();
-            // 文件上传成功后的自定义回调函数
-            //if (window['dp_file_upload_success_'+$input_file_name] !== undefined) window['dp_file_upload_success_'+$input_file_name]();
+         // 文件上传过程中创建进度条实时显示。
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            var $percent = $( '#'+file.id ).find('.layui-progress-bar');
+            $percent.css( 'width', percentage * 100 + '%' );
         });
 
         // 文件上传失败，显示上传出错。
         uploader.on( 'uploadError', function( file ) {
             var $li = $( '#'+file.id );
             $li.find('.file-state').html('<span class="text-danger">服务器发生错误~</span>');
-
-            // 文件上传出错后的自定义回调函数
-            //if (window['dp_file_upload_error'] !== undefined) window['dp_file_upload_error']();
-            // 文件上传出错后的自定义回调函数
-            //if (window['dp_file_upload_error_'+$input_file_name] !== undefined) window['dp_file_upload_error_'+$input_file_name]();
         });
 
         // 文件验证不通过
@@ -88,6 +101,26 @@
                     layer.alert('图片不得超过' + $size + 'kb，请重新上传！', { icon: 5 })
                     break;
             }
+        });
+        // 删除文件
+        $file_list.delegate('.remove-file', 'click', function(){
+            if ($multiple) {
+                var id  = $(this).data('id'),
+                    ids = $input_file.val().split(',');
+
+                if (id) {
+                    for (var i = 0; i < ids.length; i++) {
+                        if (ids[i] == id) {
+                            ids.splice(i, 1);
+                            break;
+                        }
+                    }
+                    $input_file.val(ids.join(','));
+                }
+            } else {
+                $input_file.val('');
+            }
+            $(this).closest('.file-item').remove();
         });
         // 将上传实例存起来
         webuploader.push(uploader);
@@ -208,22 +241,12 @@
             $li.find('img').attr('data-original', response.path);
             // 上传成功后，再次初始化图片查看功能
             //Dolphin.viewer();
-
-            // 文件上传成功后的自定义回调函数
-            //if (window['dp_image_upload_success'] !== undefined) window['dp_image_upload_success']();
-            // 文件上传成功后的自定义回调函数
-            //if (window['dp_image_upload_success_'+$input_file_name] !== undefined) window['dp_image_upload_success_'+$input_file_name]();
         });
 
         // 文件上传失败，显示上传出错。
         uploader.on('uploadError', function(file) {
             var $li = $('#' + file.id);
             $li.find('.file-state').html('<div class="bg-danger">服务器错误</div>');
-
-            // 文件上传出错后的自定义回调函数
-            //if (window['dp_image_upload_error'] !== undefined) window['dp_image_upload_error']();
-            // 文件上传出错后的自定义回调函数
-            //if (window['dp_image_upload_error_'+$input_file_name] !== undefined) window['dp_image_upload_error_'+$input_file_name]();
         });
 
         // 文件验证不通过
@@ -244,10 +267,6 @@
                 $('#' + file.id).find('.progress').remove();
             }, 500);
 
-            // 文件上传完成后的自定义回调函数
-            //if (window['dp_image_upload_complete'] !== undefined) window['dp_image_upload_complete']();
-            // 文件上传完成后的自定义回调函数
-            //if (window['dp_image_upload_complete_'+$input_file_name] !== undefined) window['dp_image_upload_complete_'+$input_file_name]();
         });
 
         // 删除图片
