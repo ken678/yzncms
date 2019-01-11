@@ -26,7 +26,7 @@ class Config extends Adminbase
         parent::initialize();
         //允许使用的字段列表
         //$this->banfie = array("text", "checkbox", "textarea", "radio", "number", "Ueditor", "datetime", "files", "image", "images", "array", "switch", "select");
-        $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "Ueditor");
+        $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "Ueditor", "file", "files");
         $this->ConfigModel = new Config_Model;
     }
 
@@ -147,7 +147,7 @@ class Config extends Adminbase
             }
             $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data);
             cache('Config', null); //清空缓存配置
-            $this->success('配置添加成功~');
+            $this->success('配置添加成功~', url('admin/config/index'));
         } else {
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
             $this->assign([
@@ -169,7 +169,7 @@ class Config extends Adminbase
             }
             $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data, ['id' => $data['id']]);
             cache('Config', null); //清空缓存配置
-            $this->success('配置编辑成功~');
+            $this->success('配置编辑成功~', url('admin/config/index'));
 
         } else {
             $id = $this->request->param('id/d');

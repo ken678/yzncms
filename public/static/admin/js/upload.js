@@ -3,6 +3,97 @@
     var webuploader = [];
     // 当前上传对象
     var curr_uploader = {};
+
+    // 文件上传
+    $('.js-upload-file,.js-upload-files').each(function () {
+        var $input_file       = $(this).find('input');
+        var $input_file_name  = $input_file.attr('id');
+        // 是否多文件上传
+        var $multiple         = $input_file.data('multiple');
+        // 允许上传的后缀
+        var $ext              = $input_file.data('ext');
+        // 文件限制大小
+        var $size             = $input_file.data('size');
+        // 文件列表
+        var $file_list        = $('#file_list_' + $input_file_name);
+        // 实例化上传
+        var uploader = WebUploader.create({
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // 去重
+            duplicate: true,
+            // swf文件路径
+            swf: GV.WebUploader_swf,
+            // 文件接收服务端。
+            server: GV.file_upload_url,
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: {
+                id: '#picker_' + $input_file_name,
+                multiple: $multiple
+            },
+            // 文件限制大小
+            fileSingleSizeLimit: $size,
+            // 只允许选择文件文件。
+            accept: {
+                title: 'Files',
+                extensions: $ext
+            }
+        });
+        //console.log(uploader);
+        // 文件上传成功
+        uploader.on( 'uploadSuccess', function( file, response ) {
+            var $li = $( '#'+file.id );
+            if (response.code==0) {
+                if ($multiple) {
+                    if ($input_file.val()) {
+                        $input_file.val($input_file.val() + ',' + response.id);
+                    } else {
+                        $input_file.val(response.id);
+                    }
+                    $li.find('.remove-file').attr('data-id', response.id);
+                } else {
+                    $input_file.val(response.id);
+                }
+            }
+            // 加入提示信息
+            //$li.find('.file-state').html('<span class="text-'+ response.class +'">'+ response.info +'</span>');
+            // 添加下载链接
+            //$li.find('.download-file').attr('href', response.path);
+
+            // 文件上传成功后的自定义回调函数
+            //if (window['dp_file_upload_success'] !== undefined) window['dp_file_upload_success']();
+            // 文件上传成功后的自定义回调函数
+            //if (window['dp_file_upload_success_'+$input_file_name] !== undefined) window['dp_file_upload_success_'+$input_file_name]();
+        });
+
+        // 文件上传失败，显示上传出错。
+        uploader.on( 'uploadError', function( file ) {
+            var $li = $( '#'+file.id );
+            $li.find('.file-state').html('<span class="text-danger">服务器发生错误~</span>');
+
+            // 文件上传出错后的自定义回调函数
+            //if (window['dp_file_upload_error'] !== undefined) window['dp_file_upload_error']();
+            // 文件上传出错后的自定义回调函数
+            //if (window['dp_file_upload_error_'+$input_file_name] !== undefined) window['dp_file_upload_error_'+$input_file_name]();
+        });
+
+        // 文件验证不通过
+        uploader.on('error', function(type) {
+            switch (type) {
+                case 'Q_TYPE_DENIED':
+                    layer.alert('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
+                    break;
+                case 'F_EXCEED_SIZE':
+                    layer.alert('图片不得超过' + $size + 'kb，请重新上传！', { icon: 5 })
+                    break;
+            }
+        });
+        // 将上传实例存起来
+        webuploader.push(uploader);
+    });
+
+    //图片上传
     $('.js-upload-image,.js-upload-images').each(function() {
         var $input_file = $(this).find('input');
         var $input_file_name = $input_file.attr('id');

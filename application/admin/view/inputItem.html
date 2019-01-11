@@ -150,6 +150,45 @@ layui.use(['laydate'], function() {
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
+{case value="file"}
+<div class="layui-form-item layui-form-text">
+    <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
+    <div class="layui-form-field-label">
+        <div class="js-upload-file">
+            <div id="file_list_{$vo.name}" class="uploader-list">
+                {notempty name="$vo.value"}
+                <table class="layui-table">
+                  <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="150">
+                    <col>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>文件名称</th>
+                      <th>提示</th>
+                      <th>进度</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{$vo.value}</td>
+                      <td>/</td>
+                      <td><div class="layui-progress"><div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div></div></td>
+                      <td><a href="" class="layui-btn download-file layui-btn layui-btn-xs">下载</a> <a href="javascript:void(0);" class="layui-btn remove-file layui-btn layui-btn-xs layui-btn-danger">删除</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                {/notempty}
+            </div>
+            <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-size="{:config('upload_file_size')}" data-ext="{:config('upload_file_ext')}" id="{$vo.name}" value="{$vo.value|default=''}">
+            <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传单个文件</div>
+        </div>
+    </div>
+</div>
+{/case}
 {case value="Ueditor"}
 <div class="layui-form-item layui-form-text">
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>

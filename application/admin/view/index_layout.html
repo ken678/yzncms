@@ -15,6 +15,7 @@
 //全局变量
 var GV = {
     'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/attachments/upload", ["dir" => "images", "module" => request()->module()])}',
+    'file_upload_url': '{$file_upload_url ? $file_upload_url : url("attachment/attachments/upload", ["dir" => "files", "module" => request()->module()])}',
     'WebUploader_swf': '__STATIC__/webuploader/Uploader.swf',
     'upload_check_url': '{$upload_check_url ? $upload_check_url : url("attachment/Attachments/check")}',
 };
