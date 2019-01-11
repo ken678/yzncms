@@ -61,6 +61,10 @@ class Position extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
+            $result = $this->validate($data, 'Position');
+            if (true !== $result) {
+                return $this->error($result);
+            }
             if ($this->Position_Model->positionAdd($data)) {
                 $this->success("添加成功！", url('cms/position/index'));
             } else {
@@ -87,6 +91,10 @@ class Position extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
+            $result = $this->validate($data, 'Position');
+            if (true !== $result) {
+                return $this->error($result);
+            }
             if ($this->Position_Model->positionSave($data)) {
                 $this->success("编辑成功！", url('cms/position/index'));
             } else {

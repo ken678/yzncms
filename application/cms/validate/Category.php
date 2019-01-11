@@ -37,7 +37,7 @@ class Category extends Validate
         'type.require' => '栏目类型不得为空',
         'type.number' => '栏目类型格式错误',
         'catname.require' => '栏目标题不得为空',
-        'catname.chsAlphaNum' => '只能是汉字、字母和数字',
+        'catname.chsAlphaNum' => '栏目标题只能是汉字、字母和数字',
         'catdir.require' => '唯一标识不得为空',
         'catdir.alpha' => '唯一标识为纯字母',
         'catdir.unique' => '唯一标识已经存在',
