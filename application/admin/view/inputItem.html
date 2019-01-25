@@ -243,7 +243,7 @@ layui.use(['laydate'], function() {
                       <td>{$v|get_file_name}</td>
                       <td>/</td>
                       <td>/</td>
-                      <td><a href="{$v|get_file_path}" class="layui-btn download-file layui-btn layui-btn-xs">下载</a> <a href="javascript:void(0);" class="layui-btn remove-file layui-btn layui-btn-xs layui-btn-danger">删除</a></td>
+                      <td><a href="{$v|get_file_path}" class="layui-btn download-file layui-btn layui-btn-xs">下载</a> <a href="javascript:void(0);" class="layui-btn remove-file layui-btn layui-btn-xs layui-btn-danger" data-id="{$v}">删除</a></td>
                     </tr>
                     {/volist}
                     {/notempty}
