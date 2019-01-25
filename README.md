@@ -7,7 +7,7 @@ Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.1.X和layui
 
 演示地址：http://demo.yzncms.com/admin/ （超级管理员：admin admin)
 手册地址：https://www.kancloud.cn/ken678/yzncms
-官网地址：http://bbs.yzncms.com（建设中）
+官网地址：http://www.yzncms.com（建设中）
 社区地址：http://bbs.yzncms.com
 ```
 [环境要求]
