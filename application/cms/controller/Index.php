@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\common\controller\Homebase;
+use app\cms\controller\Homebase;
 
 class Index extends Homebase
 {
@@ -28,7 +28,7 @@ class Index extends Homebase
      */
     public function index()
     {
-        return $this->fetch();
+        return $this->fetch('');
     }
 
     /**
@@ -36,7 +36,7 @@ class Index extends Homebase
      */
     public function lists()
     {
-        return $this->fetch();
+        return $this->fetch('');
     }
 
     /**

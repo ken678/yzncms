@@ -12,8 +12,17 @@
 // +----------------------------------------------------------------------
 // | 前台控制模块
 // +----------------------------------------------------------------------
-namespace app\common\controller;
+namespace app\cms\controller;
+
+use app\common\controller\Base;
+use think\facade\Config;
 
 class Homebase extends Base
 {
+    protected function fetch($template = '', $vars = [], $config = [])
+    {
+        $Theme = empty(Config::get('theme')) ? 'default' : Config::get('theme');
+        $this->view->config('view_path', TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . 'cms' . DIRECTORY_SEPARATOR);
+        return $this->view->fetch($template, $vars, $config);
+    }
 }
