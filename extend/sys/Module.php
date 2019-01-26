@@ -40,7 +40,7 @@ class Module
      */
     public function __construct()
     {
-        $this->extresPath = ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR;
+        $this->extresPath = ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR;
         $this->templatePath = TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR;
     }
 

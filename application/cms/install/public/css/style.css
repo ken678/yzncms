@@ -1,0 +1,22 @@
+@charset "UTF-8";
+/*通用*/
+.w1200 {
+    width: 1200px;
+    margin: 0 auto;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+/*头部*/
+.header{
+    width: 100%;
+    z-index: 100;
+    position: relative;
+    height: 95px;
+    background: url(../images/header_bg.jpg) no-repeat center top #1d1e22;
+    transition: all .3s ease-in;
+    top: 0;
+}

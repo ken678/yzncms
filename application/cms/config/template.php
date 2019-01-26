@@ -19,10 +19,12 @@ return [
         '__STATIC__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static'),
         '__UPLOAD__' => ROOT_URL . (defined('IF_PUBLIC') ? 'uploads' : 'public/uploads'),
 
-        '__IMG_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/models/cms/images',
-        '__CSS_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/models/cms/css',
-        '__JS_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/models/cms/js',
-        '__HOME_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/models/cms',
+        '__IMG_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/images',
+        '__CSS_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/css',
+        '__JS_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/js',
+        '__HOME_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms',
     ],
+    // 预先加载的标签库
+    'taglib_pre_load' => 'app\cms\taglib\Yzn',
 
 ];
