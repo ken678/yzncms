@@ -34,6 +34,7 @@ class Form
         if ($default_option) {
             $string .= "<option value='0'>{$default_option}</option>";
         }
+        $categorys = [];
         if (is_array($result)) {
             foreach ($result as $r) {
                 $r = getCategory($r['id']);
