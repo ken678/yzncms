@@ -19,6 +19,7 @@ use think\facade\Config;
 
 class Homebase extends Base
 {
+
     protected function fetch($template = '', $vars = [], $config = [])
     {
         $Theme = empty(Config::get('theme')) ? 'default' : Config::get('theme');

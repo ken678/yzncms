@@ -28,7 +28,7 @@ class Index extends Homebase
      */
     public function index()
     {
-        return $this->fetch('');
+        return $this->fetch('/index');
     }
 
     /**
@@ -36,7 +36,7 @@ class Index extends Homebase
      */
     public function lists()
     {
-        return $this->fetch('');
+        return $this->fetch('/index');
     }
 
     /**
@@ -44,7 +44,7 @@ class Index extends Homebase
      */
     public function shows()
     {
-        return $this->fetch();
+        return $this->fetch('/index');
 
     }
 
