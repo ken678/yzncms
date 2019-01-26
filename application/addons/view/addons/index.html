@@ -4,11 +4,16 @@
     <div class="layui-card-header">插件管理</div>
     <div class="layui-card-body">
         <table class="layui-hide" id="table" lay-filter="table"></table>
-        <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container"></div>
-        </script>
     </div>
 </div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+    <a class="layui-btn layui-btn-sm" id="local-install">本地安装</a>
+  </div>
+</script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container"></div>
+</script>
 <script type="text/html" id="titleTpl">
     {{#  if(d.uninstall == "" || d.uninstall == null || d.uninstall == undefined){ }}
     {{#  if(d.configl == "" || d.configl == null || d.configl == undefined){ }}
@@ -27,9 +32,10 @@
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
+layui.use(['table', 'upload'], function() {
     var table = layui.table,
-        $ = layui.$;
+        $ = layui.$,
+        upload = layui.upload;
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
@@ -45,6 +51,25 @@ layui.use('table', function() {
                 { fixed: 'right', width: 220, title: '操作', templet: '#titleTpl' }
             ]
         ]
+    });
+
+    //执行实例
+    var uploadInst = upload.render({
+        elem: '#local-install',
+        url: '{:url("addons/addons/local")}',
+        accept: 'file',
+        exts: 'zip',
+        done: function(res) {
+            //上传完毕回调
+            if (res.code == 1) {
+                layer.alert(res.msg);
+            }else{
+                layer.alert(res.msg);
+            }
+        },
+        error: function() {
+            //请求异常回调
+        }
     });
 
     //监听行工具事件
@@ -71,8 +96,8 @@ function x_request(url, params) {
     $.post(url, params, function(data) {
         if (data.code == 1) {
             if (data.url) {
-                layer.alert(data.msg,{icon: 1}, function(index) {
-                	layer.close(index);
+                layer.alert(data.msg, { icon: 1 }, function(index) {
+                    layer.close(index);
                     if (data.url) {
                         location.href = data.url;
                     } else {
