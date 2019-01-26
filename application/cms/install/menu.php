@@ -43,6 +43,13 @@ return [
                 "icon" => "icon-zidongxiufu",
                 "child" => [
                     [
+                        "route" => "cms/setting/index",
+                        "type" => 1,
+                        "status" => 1,
+                        "name" => "CMS配置",
+                        "icon" => "icon-liebiao",
+                    ],
+                    [
                         "route" => "cms/category/index",
                         "type" => 1,
                         "status" => 1,
