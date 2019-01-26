@@ -7,38 +7,44 @@
             <div class="layui-form-item">
                 <label class="">站点开关</label>
                 <div class="layui-form-field-label">
-                    <input type="checkbox" name="setting[web_site_status]" lay-skin="switch" lay-text="ON|OFF" value="1" checked=''>
+                    <input type="checkbox" name="setting[web_site_status]" lay-skin="switch" lay-text="ON|OFF" value="1" {if 1 == $setting['web_site_status']}checked='' {/if}>
                 </div>
                 <div class="layui-form-mid layui-word-aux">站点关闭后前台将不能访问</div>
             </div>
             <div class="layui-form-item">
+                <label class="">站点名称</label>
+                <div class="layui-form-field-label">
+                    <input type="text" name="setting[site_name]" placeholder="请输入站点标题" class="layui-input" value="{$setting['site_name']}">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="">站点标题</label>
                 <div class="layui-form-field-label">
-                    <input type="text" name="setting[web_site_title]" placeholder="请输入站点标题" autocomplete="off" class="layui-input" value="">
+                    <input type="text" name="setting[site_title]" placeholder="请输入站点标题" class="layui-input" value="{$setting['site_title']}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="">站点关键词</label>
                 <div class="layui-form-field-label">
-                    <input type="text" name="setting[web_site_keywords]" placeholder="请输入站点关键词" autocomplete="off" class="layui-input" value="">
+                    <input type="text" name="setting[site_keyword]" placeholder="请输入站点关键词"  class="layui-input" value="{$setting['site_keyword']}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="">站点描述</label>
                 <div class="layui-form-field-label">
-                    <textarea name="setting[web_site_description]" placeholder="请输入站点描述" class="layui-textarea"></textarea>
+                    <textarea name="setting[site_description]" placeholder="请输入站点描述" class="layui-textarea">{$setting['site_description']}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="">备案信息</label>
                 <div class="layui-form-field-label">
-                    <input type="text" name="setting[web_site_icp]" placeholder="请输入备案信息" autocomplete="off" class="layui-input" value="">
+                    <input type="text" name="setting[site_icp]" placeholder="请输入备案信息"  class="layui-input" value="{$setting['site_icp']}">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="">站点代码</label>
                 <div class="layui-form-field-label">
-                    <textarea name="setting[web_site_statistics]" placeholder="请输入站点代码" class="layui-textarea"></textarea>
+                    <textarea name="setting[site_statistics]" placeholder="请输入站点代码" class="layui-textarea">{$setting['site_statistics']}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">

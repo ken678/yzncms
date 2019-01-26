@@ -10,44 +10,23 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | cms管理
+// | CMS模型
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\cms\model;
 
-use app\cms\controller\Homebase;
+use \think\Model;
 
-class Index extends Homebase
+/**
+ * 模型
+ */
+class Cms extends Model
 {
-    protected function initialize()
+    //会员配置缓存
+    public function cms_cache()
     {
-        parent::initialize();
-    }
-
-    /**
-     * 首页
-     */
-    public function index()
-    {
-        $SEO = seo();
-        $this->assign("SEO", $SEO);
-        return $this->fetch('/index');
-    }
-
-    /**
-     * 列表页
-     */
-    public function lists()
-    {
-        return $this->fetch('/index');
-    }
-
-    /**
-     * 内容页
-     */
-    public function shows()
-    {
-        return $this->fetch('/index');
-
+        $data = unserialize(model('admin/Module')->where(array('module' => 'cms'))->value('setting'));
+        cache("Cms_Config", $data);
+        return $data;
     }
 
 }

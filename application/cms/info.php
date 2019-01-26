@@ -53,6 +53,11 @@ return array(
             'model' => 'Position',
             'action' => 'position_cache',
         ],
+        'Cms_Config' => [
+            'name' => 'CMS配置',
+            'model' => 'Cms',
+            'action' => 'cms_cache',
+        ],
     ],
     // 数据表，请加表前缀yzn[有数据库表时必填]
     'tables' => [

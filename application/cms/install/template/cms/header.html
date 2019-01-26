@@ -2,10 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>1111</title>
-<meta name="keywords" content="1111">
-<meta name="description" content="11111">
+<title>{if condition="isset($SEO['title']) && !empty($SEO['title'])"}{$SEO['title']}{/if}{$SEO['site_title']}</title>
+<meta name="keywords" content="{$SEO['keyword']}" />
+<meta name="description" content="{$SEO['description']}" />
 <link rel="stylesheet" href="__CSS_PATH__/base.css">
 </head>
 <body>
-	
