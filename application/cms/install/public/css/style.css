@@ -1,17 +1,21 @@
 @charset "UTF-8";
+
 /*通用*/
 .w1200 {
     width: 1200px;
     margin: 0 auto;
 }
-.fl{
-	float: left;
+
+.fl {
+    float: left;
 }
-.fr{
-	float: right;
+
+.fr {
+    float: right;
 }
+
 /*头部*/
-.header{
+.header {
     width: 100%;
     z-index: 100;
     position: relative;
@@ -20,23 +24,28 @@
     transition: all .3s ease-in;
     top: 0;
 }
-.header .logo{
+
+.header .logo {
     margin-top: 8px;
 }
-.header .topright{
+
+.header .topright {
     position: relative;
     margin-top: 25px;
     width: 835px;
     height: 50px;
     line-height: 50px;
 }
+
 .header .nav {
-    padding-right: 40px;
+    padding-right: 90px;
 }
+
 .header .nav .navlist {
     position: relative;
     display: block;
 }
+
 .header .nav li {
     float: left;
     display: inline-block;
@@ -47,6 +56,7 @@
     height: 50px;
     line-height: 50px;
 }
+
 .header .nav li a {
     display: block;
     text-align: center;
@@ -60,9 +70,10 @@
     -webkit-border-radius: 20px;
     border-radius: 20px;
 }
+
 .header .nav ul .subnav {
     background: #fff;
-    border-top: 2px solid #63b670;
+    border-top: 2px solid #E74C3C;
     box-shadow: 0 13px 42px 11px rgba(0, 0, 0, 0.05);
     height: auto;
     left: 0;
@@ -77,4 +88,197 @@
     transform: translate3d(0, 10px, 0);
     -moz-transform: translate3d(0, 10px, 0);
     -webkit-transform: translate3d(0, 10px, 0);
+}
+
+.header .nav ul li:hover .subnav {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.header .nav ul .subnav a {
+    color: #666;
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    transition: all 0.2s ease-in-out 0s;
+    max-width: 100%;
+    border: 0 none;
+    border-bottom: 1px solid #eee;
+    border-radius: initial;
+}
+
+.header .nav ul .subnav a:hover {
+    color: #E74C3C;
+    background: #f9f9f9;
+    text-indent: 3px;
+}
+
+.header .topbtn {
+    padding-right: 7%;
+    position: relative;
+    z-index: 10;
+}
+
+.header .search-box {
+    position: absolute;
+    right: 0;
+    top: -25px;
+    height: 80px;
+    line-height: 80px;
+    z-index: 99;
+}
+
+.header .search-box .butn {
+    display: block;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    margin-top: 30px;
+    background: url(../images/ico_60.png) no-repeat center;
+}
+
+.header .search-box .butn.hov {
+    background: none;
+}
+
+.header .search-box .butn.hov i {
+    display: block;
+}
+
+.header .search-box .butn i {
+    width: 38px;
+    height: 38px;
+    display: none;
+    background: url(../images/sou.png) no-repeat center;
+    margin: 0 auto;
+    border: 1px solid #52545b;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+}
+
+.header .search-box .share-sub {
+    position: absolute;
+    right: 40px;
+    top: 25px;
+    width: 0;
+    height: 48px;
+    overflow: hidden;
+    background: #ededed;
+    border-radius: 5px 0 0 5px;
+}
+
+.header .search-box .share-sub .tex {
+    width: 220px;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    padding: 14px 10px;
+    color: #666;
+    border: none;
+    background: #ededed;
+    outline: none;
+}
+
+.header .search-box .share-sub .sub-btn {
+    border: none;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    outline: none;
+    background: url(../images/sou.png) no-repeat center #E74C3C;
+}
+/*轮播图*/
+.fullSlide {
+    width: 100%;
+    position: relative;
+    height: 600px;
+    background: #000;
+}
+
+.fullSlide .bd {
+    margin: 0 auto;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.fullSlide .bd ul {
+    width: 100% !important;
+}
+
+.fullSlide .bd li {
+    width: 100% !important;
+    height: 600px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.fullSlide .bd li a {
+    display: block;
+    height: 600px;
+}
+
+.fullSlide .hd {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    line-height: 30px;
+}
+
+.fullSlide .hd ul {
+    text-align: center;
+}
+
+.fullSlide .hd ul li {
+    cursor: pointer;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    width: 40px;
+    height: 5px;
+    margin: 4px;
+    overflow: hidden;
+    background: #fff;
+    line-height: 999px;
+}
+
+.fullSlide .hd ul .on {
+    background: #E74C3C;
+}
+
+.fullSlide .prev,
+.fullSlide .next {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    margin-top: -30px;
+    left: 4%;
+    z-index: 1;
+    width: 40px;
+    height: 60px;
+    background: url(../images/slider-arrow.png) -126px -137px #000 no-repeat;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    display: none;
+}
+
+.fullSlide .next {
+    left: auto;
+    right: 4%;
+    background-position: -6px -137px;
 }
