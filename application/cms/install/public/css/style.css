@@ -14,6 +14,15 @@
     float: right;
 }
 
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
 /*头部*/
 .header {
     width: 100%;
@@ -197,6 +206,7 @@
     outline: none;
     background: url(../images/sou.png) no-repeat center #E74C3C;
 }
+
 /*轮播图*/
 .fullSlide {
     width: 100%;
@@ -281,4 +291,99 @@
     left: auto;
     right: 4%;
     background-position: -6px -137px;
+}
+
+/*底部*/
+.footer {
+    width: 100%;
+    background: #191919;
+    color: #fff;
+    padding-bottom: 40px;
+}
+
+.footer .links {
+    padding: 30px 0;
+    margin-bottom: 40px;
+    font-size: 16px;
+    border-bottom: 1px solid #353535;
+}
+
+.footer .links span {
+    color: #fff;
+    display: inline-block;
+}
+
+.footer .links a {
+    display: inline-block;
+    font-size: 14px;
+    color: #999;
+    padding-right: 10px;
+}
+.footer .botnavlist li {
+    float: left;
+    width: 100px;
+    padding: 0 0 0 48px;
+    display: block;
+    list-style: none;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: left;
+    border-right: 1px solid #353535;
+    overflow: hidden;
+}
+.footer .botnavlist li:first-child {
+    padding-left: 0px;
+}
+.footer .botnavlist li a {
+    color: #fff;
+    display: block;
+    line-height: 32px;
+    font-size: 16px;
+}
+.footer .botnavlist li .drop {
+    padding-top: 10px;
+}
+.footer .botnavlist li .drop a {
+    display: block;
+    line-height: 26px;
+    color: #999;
+    width: 100%;
+    font-size: 12px;
+}
+.footer .botnavlist li a:hover {
+    color: #E74C3C;
+}
+.footer .qcode {
+    width: 540px;
+}
+.footer .btel {
+    width: 300px;
+    line-height: 28px;
+}
+.footer .btel .p1 {
+    color: #fff;
+}
+.footer .btel .p2 {
+    font-family: "GrayDesign Regular", "arial, helvetica, sans-serif";
+    font-size: 34px;
+    color: #E74C3C;
+    line-height: 34px;
+    padding-bottom: 5px;
+}
+.footer .btel .p3 {
+    color: #999;
+    line-height: 22px;
+}
+.footer .qcode .ewm {
+    width: 130px;
+    height: 130px;
+    display: block;
+    border: 5px solid #666;
+}
+.copy{
+        background: #191919;
+    border-top: 1px solid #353535;
+    line-height: 60px;
+    color: #999;
+    font-size: 12px;
 }
