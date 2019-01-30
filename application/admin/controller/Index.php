@@ -49,7 +49,7 @@ class Index extends Adminbase
             if (User::instance()->login($data['username'], $data['password'])) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
-                $this->error(User::instance()->getError(), url('admin/index/login'));
+                $this->error("用户名或者密码错误，登陆失败！", url('admin/index/login'));
             }
 
         } else {
