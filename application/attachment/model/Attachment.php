@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\model;
 
+use app\admin\service\User;
 use think\Model;
 
 class Attachment extends Model
@@ -106,8 +107,8 @@ class Attachment extends Model
     public function deleteFile($id)
     {
         $path = config('upload_path');
-        $isAdministrator = model('admin/AdminUser')->isAdministrator();
-        $uid = (int) model('admin/AdminUser')->isLogin();
+        $isAdministrator = User::instance()->isAdministrator();
+        $uid = (int) User::instance()->isLogin();
 
         if (is_array($id)) {
             $files_path = $isAdministrator ? self::where('id', 'in', $id)->column('path,thumb', 'id') : self::where('id', 'in', $id)->where('uid', $uid)->column('path,thumb', 'id');

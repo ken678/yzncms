@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\AdminUser as AdminUser_model;
+use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\facade\Cache;
 
@@ -31,8 +31,7 @@ class Index extends Adminbase
     //登录判断
     public function login()
     {
-        $AdminUser_model = new AdminUser_model;
-        if ($AdminUser_model->isLogin()) {
+        if (User::instance()->isLogin()) {
             $this->redirect('admin/index/index');
         }
         if ($this->request->isPost()) {
@@ -47,10 +46,10 @@ class Index extends Adminbase
             $this->error('验证码输入错误！');
             return false;
             }*/
-            if ($AdminUser_model->login($data['username'], $data['password'])) {
+            if (User::instance()->login($data['username'], $data['password'])) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
-                $this->error($AdminUser_model->getError(), url('admin/index/login'));
+                $this->error(User::instance()->getError(), url('admin/index/login'));
             }
 
         } else {
@@ -62,8 +61,7 @@ class Index extends Adminbase
     //手动退出登录
     public function logout()
     {
-        $AdminUser_model = new AdminUser_model;
-        if ($AdminUser_model->logout()) {
+        if (User::instance()->logout()) {
             //手动登出时，清空forward
             //cookie("forward", NULL);
             $this->success('注销成功！', url("admin/index/login"));

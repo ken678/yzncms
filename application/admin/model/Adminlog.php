@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
+use app\admin\service\User;
 use think\Model;
 
 class Adminlog extends Model
@@ -26,7 +27,7 @@ class Adminlog extends Model
     public function record($message, $status = 0)
     {
         $data = array(
-            'uid' => (int) model('admin/AdminUser')->isLogin(),
+            'uid' => (int) User::instance()->isLogin(),
             'status' => $status,
             'info' => "提示语:{$message}",
             'get' => request()->url(),

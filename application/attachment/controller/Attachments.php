@@ -14,7 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
 
-use app\admin\model\AdminUser as AdminUser_model;
+//use app\admin\model\AdminUser as AdminUser_model;
+use app\admin\service\User;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Adminbase;
 use think\Db;
@@ -250,7 +251,7 @@ class Attachments extends Adminbase
         if ($info) {
             // 获取附件信息
             $file_info = [
-                'uid' => $this->AdminUser_model->isLogin(),
+                'uid' => User::instance()->isLogin(),
                 'name' => $file->getInfo('name'),
                 'mime' => $file->getInfo('type'),
                 'path' => $dir . '/' . str_replace('\\', '/', $info->getSaveName()),

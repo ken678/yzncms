@@ -102,69 +102,6 @@ class AdminUser extends Model
     }
 
     /**
-     * 用户登录
-     * @param string $username 用户名
-     * @param string $password 密码
-     * @return bool|mixed
-     */
-    public function login($username = '', $password = '')
-    {
-        $username = trim($username);
-        $password = trim($password);
-        $map['username'] = $username;
-        $userInfo = self::get($map);
-        if (!$userInfo) {
-            $this->error = '用户不存在！';
-        } elseif (!$userInfo['status']) {
-            $this->error = '用户已被禁用！';
-        } else {
-            //密码判断
-            if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {
-                $this->error = '密码错误！';
-            } else {
-                $this->autoLogin($userInfo);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 自动登录用户
-     */
-    public function autoLogin($userInfo)
-    {
-        //记录行为
-        //action_log('user_login', 'member', $userInfo['userid'], $userInfo['userid']);
-        /* 更新登录信息 */
-        $data = array(
-            'uid' => $userInfo['userid'],
-            'last_login_time' => time(),
-            'last_login_ip' => request()->ip(1),
-        );
-        $this->loginStatus((int) $userInfo['userid']);
-        /* 记录登录SESSION和COOKIES */
-        $auth = [
-            'uid' => $userInfo['userid'],
-            'username' => $userInfo['username'],
-            'last_login_time' => $userInfo['last_login_time'],
-        ];
-        Session('admin_user_auth', $auth);
-        Session('admin_user_auth_sign', data_auth_sign($auth));
-    }
-
-    /**
-     * 更新登录状态信息
-     * @param type $userId
-     * @return type
-     */
-    public function loginStatus($userId)
-    {
-        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip(1)];
-        return $this->save($data, ['userid' => $userId]);
-    }
-
-    /**
      * 获取用户信息
      * @param type $identifier 用户名或者用户ID
      * @return boolean|array
@@ -186,46 +123,20 @@ class AdminUser extends Model
             return false;
         }
         //密码验证
-        if (!empty($password) && password($password, $userInfo['encrypt']) != $userInfo['password']) {
+        if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {
             return false;
         }
         return $userInfo;
     }
 
     /**
-     * 检验用户是否已经登陆
+     * 更新登录状态信息
+     * @param type $userId
+     * @return type
      */
-    public function isLogin()
+    public function loginStatus($userId)
     {
-        $user = session('admin_user_auth');
-        if (empty($user)) {
-            return 0;
-        } else {
-            return session('admin_user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
-        }
+        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip(1)];
+        return $this->save($data, ['userid' => $userId]);
     }
-
-    /**
-     * 检查当前用户是否超级管理员
-     * @return boolean
-     */
-    public function isAdministrator()
-    {
-        $userInfo = $this->getUserInfo($this->isLogin());
-        if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 注销登录状态
-     * @return boolean
-     */
-    public function logout()
-    {
-        session(null);
-        return true;
-    }
-
 }
