@@ -14,6 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
+use app\admin\model\AuthRule;
+use app\admin\service\User;
 use \think\Db;
 use \think\Model;
 
@@ -90,19 +92,35 @@ class Menu extends Model
             $result = array_merge($result2, $result);
         }
         //是否超级管理员
-        //if (User::getInstance()->isAdministrator()) {
-        return $result;
-        //}
+        if (User::instance()->isAdministrator()) {
+            return $result;
+        }
         $array = array();
         foreach ($result as $v) {
-
             $rule = $v['app'] . '/' . $v['controller'] . '/' . $v['action'];
-            if ($this->checkRule($rule, array('in', '1,2'), null)) {
+            if ($this->checkRule($rule, [1, 2], null)) {
                 $array[] = $v;
             }
         }
         return $array;
+    }
 
+    /**
+     * 权限检测
+     * @param string  $rule    检测的规则
+     * @param string  $mode    check模式
+     * @return boolean
+     */
+    final protected function checkRule($rule, $type = AuthRule::RULE_URL, $mode = 'url')
+    {
+        static $Auth = null;
+        if (!$Auth) {
+            $Auth = new \libs\Auth();
+        }
+        if (!$Auth->check($rule, User::instance()->userid, $type, $mode)) {
+            return false;
+        }
+        return true;
     }
 
     /**
