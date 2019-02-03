@@ -32,11 +32,15 @@ CREATE TABLE `yzn_model` (
   `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
 
-
+-- ----------------------------
+-- Records of yzn_model
+-- ----------------------------
 INSERT INTO `yzn_model` VALUES ('1', '文章模型', 'article', '文章模型', '2', '1546574975', '1546574975', '0', '0', '1');
-INSERT INTO `yzn_model` VALUES ('2', '图片模型', 'picture', '图片模型\r\n', '2', '1548754193', '1548754193', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('2', '图片模型', 'picture', '图片模型', '2', '1548754193', '1548754193', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('3', '产品模型', 'product', '产品模型', '2', '1549165800', '1549165800', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('4', '下载模型', 'download', '下载模型', '2', '1549165817', '1549165817', '0', '0', '1');
 
 
 DROP TABLE IF EXISTS `yzn_model_field`;
@@ -62,11 +66,9 @@ CREATE TABLE `yzn_model_field` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0 禁用 1启用',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
 
--- ----------------------------
--- Records of yzn_model_field
--- ----------------------------
+
 INSERT INTO `yzn_model_field` VALUES ('1', '1', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('2', '1', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('3', '1', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1546574975', '1546574975', '100', '1');
@@ -95,6 +97,34 @@ INSERT INTO `yzn_model_field` VALUES ('25', '2', 'updatetime', '更新时间', '
 INSERT INTO `yzn_model_field` VALUES ('26', '2', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1548754192', '1548754192', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('27', '2', 'did', '附表文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '0', '0', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('28', '2', 'content', '内容', '', 'Ueditor', 'text', '', '', '', '0', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('29', '3', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('30', '3', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('31', '3', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('32', '3', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('33', '3', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('34', '3', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('35', '3', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('36', '3', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('37', '3', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('38', '3', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('39', '3', 'updatetime', '更新时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '0', '1', '0', '0', '1549165800', '1549165800', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('40', '3', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('41', '3', 'did', '附表文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '0', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('42', '3', 'content', '内容', '', 'Ueditor', 'text', '', '', '', '0', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('43', '4', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('44', '4', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('45', '4', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('46', '4', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('47', '4', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('48', '4', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('49', '4', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('50', '4', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('51', '4', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('52', '4', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549165817', '1549165817', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('53', '4', 'updatetime', '更新时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '0', '1', '0', '0', '1549165817', '1549165817', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('54', '4', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549165817', '1549165817', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('55', '4', 'did', '附表文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '0', '0', '1', '0', '0', '1549165817', '1549165817', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('56', '4', 'content', '内容', '', 'Ueditor', 'text', '', '', '', '0', '1', '0', '0', '0', '1549165817', '1549165817', '100', '1');
 
 DROP TABLE IF EXISTS `yzn_position`;
 CREATE TABLE `yzn_position` (
@@ -164,12 +194,39 @@ CREATE TABLE `yzn_picture` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='图片模型模型表';
 
+
 DROP TABLE IF EXISTS `yzn_picture_data`;
 CREATE TABLE `yzn_picture_data` (
   `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `content` text COLLATE utf8_unicode_ci COMMENT '内容',
   PRIMARY KEY (`did`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='图片模型模型表';
+
+
+DROP TABLE IF EXISTS `yzn_product`;
+CREATE TABLE `yzn_product` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
+  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
+  `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
+
+
+DROP TABLE IF EXISTS `yzn_product_data`;
+CREATE TABLE `yzn_product_data` (
+  `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `content` text COLLATE utf8_unicode_ci COMMENT '内容',
+  PRIMARY KEY (`did`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
 
 DROP TABLE IF EXISTS `yzn_page`;
 CREATE TABLE `yzn_page` (
