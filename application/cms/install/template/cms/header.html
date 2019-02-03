@@ -13,8 +13,10 @@
 </head>
 
 <body>
-    {yzn:category  catid="0" cache="3600" order="listorder ASC" return="data"}
-    <?php var_dump($data); ?>
+    {yzn:category cache="3600" order="listorder ASC" num="10" return="data"}
+    {foreach $data as $key=>$vo }
+    <?php var_dump($vo['catname']); ?>
+    {/foreach}
     {/yzn:category}
     <!--头部-->
     <div class="header">
