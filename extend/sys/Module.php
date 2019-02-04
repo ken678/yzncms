@@ -189,7 +189,9 @@ class Module
             copydirs($this->installdir . "public" . DIRECTORY_SEPARATOR, $this->extresPath . strtolower($name) . '/');
         }
         //安装结束，最后调用安装脚本完成
-        $this->runInstallScript($name, 'end');
+        if (!$this->runInstallScript($name, 'end')) {
+            return false;
+        }
         //更新缓存
         cache('Module', null);
         return true;
@@ -253,7 +255,9 @@ class Module
             rmdirs($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR);
         }
         //卸载结束，最后调用卸载脚本完成
-        $this->runInstallScript($name, 'end', 'uninstall');
+        if (!$this->runInstallScript($name, 'end', 'uninstall')) {
+            return false;
+        }
         //更新缓存
         cache('Module', null);
         return true;
@@ -333,7 +337,7 @@ class Module
         }
         $installObj = \think\Container::get("\\app\\{$name}\\{$Dir}\\{$Dir}");
         //执行安装
-        if (false == $installObj->$type()) {
+        if (false === $installObj->$type()) {
             $this->error = $installObj->getError();
             return false;
         }
