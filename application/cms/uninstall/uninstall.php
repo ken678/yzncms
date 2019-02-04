@@ -24,8 +24,6 @@ class Uninstall extends UninstallBase
         'category',
         'model',
         'model_field',
-        'article',
-        'article_data',
         'page',
         'position',
         'position_data',
@@ -35,24 +33,26 @@ class Uninstall extends UninstallBase
     //卸载
     public function run()
     {
-        // 内容模型的表名列表
-        $table_list = Db::name('model')->field('tablename,type')->select();
-        if ($table_list) {
-            foreach ($table_list as $val) {
-                $tablename = config('database.prefix') . $val['tablename'];
-                Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
-                if ($val['type'] == 2) {
-                    Db::execute("DROP TABLE IF EXISTS `{$tablename}{$this->ext_table}`;");
+        if (request()->param('clear') == 1) {
+            // 内容模型的表名列表
+            $table_list = Db::name('model')->field('tablename,type')->select();
+            if ($table_list) {
+                foreach ($table_list as $val) {
+                    $tablename = config('database.prefix') . $val['tablename'];
+                    Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
+                    if ($val['type'] == 2) {
+                        Db::execute("DROP TABLE IF EXISTS `{$tablename}{$this->ext_table}`;");
+                    }
                 }
             }
-        }
-        //删除对应模型数据表
-        if (!empty($this->modelTabList)) {
-            foreach ($this->modelTabList as $tablename) {
-                //删除固定表
-                if (!empty($tablename)) {
-                    $tablename = config('database.prefix') . $tablename;
-                    Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
+            //删除对应模型数据表
+            if (!empty($this->modelTabList)) {
+                foreach ($this->modelTabList as $tablename) {
+                    //删除固定表
+                    if (!empty($tablename)) {
+                        $tablename = config('database.prefix') . $tablename;
+                        Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
+                    }
                 }
             }
         }

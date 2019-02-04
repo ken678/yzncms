@@ -46,7 +46,8 @@ layui.use('table', function() {
         if (obj.event === 'install') {
             window.open('{:url("admin/module/install")}' + "?module=" + data.module, '_self')
         } else if (obj.event === 'uninstall') {
-            layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
+            window.open('{:url("admin/module/uninstall")}' + "?module=" + data.module, '_self')
+            /*layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
                 $.post('{:url("admin/module/uninstall")}', { 'module': data.module }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
@@ -67,7 +68,7 @@ layui.use('table', function() {
 
                 });
                 layer.close(index);
-            });
+            });*/
 
         }
     });

@@ -110,15 +110,26 @@ class Module extends Adminbase
     //模块卸载
     public function uninstall()
     {
-        $module = $this->request->param('module');
-        if (empty($module)) {
-            $this->error('请选择需要安装的模块！');
-        }
-        if ($this->ModuleService->uninstall($module)) {
-            $this->success("模块卸载成功！清除浏览器缓存和框架缓存后生效！", url("admin/Module/index"));
+        if ($this->request->isPost()) {
+            $module = $this->request->param('module');
+            if (empty($module)) {
+                $this->error('请选择需要安装的模块！');
+            }
+            if ($this->ModuleService->uninstall($module)) {
+                $this->success("模块卸载成功！清除浏览器缓存和框架缓存后生效！", url("admin/Module/index"));
+            } else {
+                $error = $this->ModuleService->getError();
+                $this->error($error ? $error : "模块卸载失败！", url("admin/Module/index"));
+            }
         } else {
-            $error = $this->ModuleService->getError();
-            $this->error($error ? $error : "模块卸载失败！", url("admin/Module/index"));
+            $module = $this->request->param('module', '');
+            if (empty($module)) {
+                $this->error('请选择需要安装的模块！');
+            }
+            $config = $this->ModuleService->getInfoFromFile($module);
+            $this->assign('config', $config);
+            return $this->fetch();
+
         }
     }
 
