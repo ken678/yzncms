@@ -14,7 +14,7 @@
                 <div class="layui-form-mid layui-word-aux">选择“是”，将删除数据库中模块数据表</div>
             </div>
             <div class="layui-form-item">
-                <button class="layui-btn" id="install" lay-submit="" lay-filter="*" target-form="form-horizontal">确认卸载</button>
+                <button class="layui-btn ajax-post" id="uninstall" lay-submit="" lay-filter="*" target-form="form-horizontal">确认卸载</button>
                 <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
             </div>
         </form>
@@ -24,6 +24,30 @@
 {block name="script"}
 <script>
 layui.use(['layer', 'form'], function() {
+    $('#uninstall').click(function() {
+        var target;
+        target = $('.form-horizontal').attr("action");
+        $.post(target, $('.form-horizontal').serialize()).success(function(data) {
+            if (data.code == 1) {
+                if (data.url) {
+                    layer.alert(data.msg, { icon: 1 }, function(index) {
+                        layer.close(index);
+                        if (data.url) {
+                            location.href = data.url;
+                        } else {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    layer.alert(data.msg);
+                }
+            } else {
+                layer.alert(data.msg);
+            }
+
+        });
+        return false;
+    });
 });
 </script>
 {/block}
