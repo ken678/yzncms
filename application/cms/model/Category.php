@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\model;
 
+use think\facade\Cache;
 use \think\Db;
 use \think\Model;
 
@@ -133,6 +134,58 @@ class Category extends Model
         } else {
             return false;
         }
+    }
+
+    public function getCategory($data)
+    {
+        $where = isset($tag['where']) ? $tag['where'] : "status=1";
+        $order = isset($tag['order']) ? $tag['order'] : 'listorder,id desc';
+        //每页显示总数
+        $num = isset($tag['num']) ? (int) $tag['num'] : 10;
+        //缓存时间
+        $cache = (int) $data['cache'];
+        $cacheID = to_guid_string($data);
+        $array = array();
+        if ($cache && $array = cache::get($cacheID)) {
+            return $array;
+        }
+        if (isset($tag['catid'])) {
+            $catid = (int) $tag['catid'];
+            $where .= empty($where) ? "parentid = " . $catid : " AND parentid = " . $catid;
+        }
+        //如果条件不为空，进行查库
+        if (!empty($where)) {
+            $categorys = self::where($where)->limit($num)->order($data['order'])->select();
+            if ($categorys) {
+                $categorys = $categorys->toArray();
+                foreach ($categorys as &$vo) {
+                    if (empty($vo['url'])) {
+                        $vo['url'] = self::buildUrl($vo['type'], $vo['id'], $vo['url']);
+                    }
+                    /*if (isset($vo['cover_picture']) && $vo['cover_picture']) {
+                $vo['cover'] = model('attachment')->getFileInfo($vo['cover_picture'], 'path');
+                }*/
+                }
+            }
+        }
+        //结果进行缓存
+        if ($cache) {
+            cache::set($cacheID, $categorys, $cache);
+        }
+        return $categorys;
+    }
+
+    public static function buildUrl($type, $id, $url = '')
+    {
+        switch ($type) {
+            case 3: //自定义链接
+                $url = empty($url) ? '#' : ((strpos($url, '://') !== false) ? $url : url($url));
+                break;
+            default:
+                $url = url('index/list', ['catid' => $id]);
+                break;
+        }
+        return $url;
     }
 
     //刷新栏目索引缓存

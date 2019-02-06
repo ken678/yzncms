@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\cms\taglib;
 
-use think\facade\Cache;
 use think\template\TagLib;
 
 class Yzn extends Taglib
@@ -33,20 +32,14 @@ class Yzn extends Taglib
 
     public function tagCategory($tag, $content)
     {
-        //每页显示总数
-        $num = isset($tag['num']) ? (int) $tag['num'] : 10;
         //数据返回变量
         $return = isset($tag['return']) ? "data" : $tag['return'];
-        $where = isset($tag['where']) ? $tag['where'] : "status=1";
-        $order = isset($tag['order']) ? $tag['order'] : 'listorder,id desc';
-        //缓存时间
-        $cache = (int) $tag['cache'];
-        if (isset($tag['catid'])) {
-            $catid = (int) $tag['catid'];
-            $where .= empty($where) ? "parentid = " . $catid : " AND parentid = " . $catid;
-        }
         //拼接php代码
         $parseStr = '<?php ';
+        $parseStr .= '$db = model("Category");';
+        $parseStr .= '$' . $return . '= $db->getCategory(' . self::arr_to_html($tag) . ');';
+        $parseStr .= ' ?>';
+        /*$parseStr = '<?php ';
         $parseStr .= '$cache = ' . $cache . ';';
         $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
         $parseStr .= 'if($cache && $_return = Cache::get($cacheID)):';
@@ -55,12 +48,12 @@ class Yzn extends Taglib
         $parseStr .= '$db = db("Category");';
         //如果条件不为空，进行查库
         if (!empty($where)) {
-            $parseStr .= '$' . $return . '= $db->where("' . $where . '")->limit(' . $num . ')->select();';
-            $parseStr .= 'if($cache):';
-            $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
-            $parseStr .= 'endif;';
+        $parseStr .= '$' . $return . '= $db->where("' . $where . '")->limit(' . $num . ')->select();';
+        $parseStr .= 'if($cache):';
+        $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
+        $parseStr .= 'endif;';
         }
-        $parseStr .= 'endif; ?>';
+        $parseStr .= 'endif; ?>';*/
         $parseStr .= $content;
         return $parseStr;
     }
