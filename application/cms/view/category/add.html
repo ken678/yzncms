@@ -24,18 +24,18 @@
                         <div class="layui-form-item">
                             <label>栏目类型</label>
                                 <div class="w300">
-                                    <input type="radio" name="type" value="2" title="列表" checked lay-filter="type">
-                                    <input type="radio" name="type" value="1" title="单页" lay-filter="type">
-                                    <input type="radio" name="type" value="3" title="链接" lay-filter="type">
+                                    <input type="radio" name="type" value="2" {eq name="parentid_data['type']" value="2"}checked{/eq} title="列表" lay-filter="type">
+                                    <input type="radio" name="type" value="1" {eq name="parentid_data['type']" value="1"}checked{/eq} title="单页" lay-filter="type">
+                                    <input type="radio" name="type" value="3" {eq name="parentid_data['type']" value="3"}checked{/eq} title="链接" lay-filter="type">
                                 </div>
                         </div>
                         <div class="layui-form-item web_list">
                             <label>选择模型</label>
                                 <div class="w300">
                                     <select name="modelid">
-                                        <option value="">请选择模型</option>
+                                        <option {empty name="parentid_data.modelid"}selected{/empty}>请选择模型</option>
                                         {volist name="models" id="vo"}
-                                        <option value="{$vo.id}">{$vo.name}</option>
+                                        <option value="{$vo.id}" {eq name="vo.id" value="$parentid_data['modelid']" }selected{/eq}>{$vo.name}</option>
                                         {/volist}
                                     </select>
                                 </div>
@@ -117,49 +117,49 @@
                             <label class="w100">栏目首页模板</label>
                             <div class="w300">
                                 <select name="setting[category_template]">
-                                    <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
+                                    <option value="category.html" selected>默认栏目首页:category.html</option>
                                     {volist name="tp_category" id="vo"}
                                     <option value="{$vo}">{$vo}</option>
                                     {/volist}
                                 </select>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">新增模板以category_xx.{:config('template.view_suffix')}形式</div>
+                            <div class="layui-form-mid layui-word-aux">新增模板以category_xx.html形式</div>
                         </div>
                         <div class="layui-form-item web_list">
                             <label class="w100">栏目列表页模板</label>
                             <div class="w300">
                                 <select name="setting[list_template]">
-                                    <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
+                                    <option value="list.html" selected>默认栏目列表页:list.html</option>
                                     {volist name="tp_list" id="vo"}
                                     <option value="{$vo}">{$vo}</option>
                                     {/volist}
                                 </select>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">新增模板以list_xx.{:config('template.view_suffix')}形式</div>
+                            <div class="layui-form-mid layui-word-aux">新增模板以list_xx.html形式</div>
                         </div>
                         <div class="layui-form-item web_list">
                             <label class="w100">内容页模板</label>
                             <div class="w300">
                                 <select name="setting[show_template]">
-                                    <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
+                                    <option value="show.html" selected>默认内容页:show.html</option>
                                     {volist name="tp_show" id="vo"}
                                     <option value="{$vo}">{$vo}</option>
                                     {/volist}
                                 </select>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">新增模板以show_xx.{:config('template.view_suffix')}形式</div>
+                            <div class="layui-form-mid layui-word-aux">新增模板以show_xx.html形式</div>
                         </div>
                         <div class="layui-form-item web_page">
                             <label class="w100">单页模板</label>
                             <div class="w300">
                                 <select name="setting[page_template]">
-                                    <option value="page.{:config('template.view_suffix')}" selected>默认内容页:page.{:config('template.view_suffix')}</option>
+                                    <option value="page.html" selected>默认内容页:page.html</option>
                                     {volist name="tp_page" id="vo"}
                                     <option value="{$vo}">{$vo}</option>
                                     {/volist}
                                 </select>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">新增模板以page_xx.{:config('template.view_suffix')}形式</div>
+                            <div class="layui-form-mid layui-word-aux">新增模板以page_xx.html形式</div>
                         </div>
                     </div>
                 </div>
