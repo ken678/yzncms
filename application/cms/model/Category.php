@@ -138,10 +138,10 @@ class Category extends Model
 
     public function getCategory($data)
     {
-        $where = isset($tag['where']) ? $tag['where'] : "status=1";
-        $order = isset($tag['order']) ? $tag['order'] : 'listorder,id desc';
+        $where = isset($data['where']) ? $data['where'] : "status=1";
+        $order = isset($data['order']) ? $data['order'] : 'listorder,id desc';
         //每页显示总数
-        $num = isset($tag['num']) ? (int) $tag['num'] : 10;
+        $num = isset($data['num']) ? (int) $data['num'] : 10;
         //缓存时间
         $cache = (int) $data['cache'];
         $cacheID = to_guid_string($data);
@@ -149,8 +149,8 @@ class Category extends Model
         if ($cache && $array = cache::get($cacheID)) {
             return $array;
         }
-        if (isset($tag['catid'])) {
-            $catid = (int) $tag['catid'];
+        if (isset($data['catid'])) {
+            $catid = (int) $data['catid'];
             $where .= empty($where) ? "parentid = " . $catid : " AND parentid = " . $catid;
         }
         //如果条件不为空，进行查库

@@ -14,6 +14,7 @@ $(function() {
 
         }
     });
+})
     /* 控制左右按钮显示 */
     jQuery(".fullSlide").hover(function() { jQuery(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.5) }, function() { jQuery(this).find(".prev,.next").fadeOut() });
     /* 调用SuperSlide */
@@ -31,23 +32,3 @@ $(function() {
             }
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-})
