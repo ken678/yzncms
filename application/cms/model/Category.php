@@ -182,7 +182,7 @@ class Category extends Model
                 $url = empty($url) ? '#' : ((strpos($url, '://') !== false) ? $url : url($url));
                 break;
             default:
-                $url = url('index/list', ['catid' => $id]);
+                $url = url('index/lists', ['catid' => $id]);
                 break;
         }
         return $url;
