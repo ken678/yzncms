@@ -34,6 +34,7 @@ class Yzn extends Taglib
     {
         //数据返回变量
         $return = isset($tag['return']) ? "data" : $tag['return'];
+        $tag['catid'] = $this->autoBuildVar($tag['catid']);
         //拼接php代码
         $parseStr = '<?php ';
         $parseStr .= '$db = model("Category");';

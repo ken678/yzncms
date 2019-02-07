@@ -35,12 +35,21 @@
             	</div>
                 <div class="nav fr">
                     <ul class="navlist">
-                        <li id="cur" class="hover"><a href="/13105" title="首页">首页</a></li>
+                        <li id="cur" class="hover"><a href="{:url('cms/index/index')}" title="首页">首页</a></li>
                         {yzn:category catid="0" cache="3600" order="listorder ASC" num="10" return="data"}
                         {foreach $data as $key=>$vo }
-                        <li class=""><a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
+                        <li class="">
+                            <a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
+                            <!--判断是否有子栏目-->
+                            {eq name="vo.child" value="1"}
                             <div class="subnav">
-                                <a href="/13105/a/guanyuwomen/gongsijianjie/" title="公司简介">公司简介</a> <a href="/13105/a/guanyuwomen/qiyewenhua/" title="企业文化">企业文化</a> <a href="/13105/a/guanyuwomen/gongsirongyu/" title="公司荣誉">公司荣誉</a> </div>
+                                {yzn:category catid="$vo['id']" cache="3600" order="listorder ASC" num="10" return="data"}
+                                {foreach $data as $key=>$vo }
+                                <a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
+                                {/foreach}
+                                {/yzn:category}
+                            </div>
+                            {/eq}
                         </li>
                         {/foreach}
                         {/yzn:category}
