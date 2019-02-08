@@ -159,9 +159,9 @@ class Category extends Model
             if ($categorys) {
                 $categorys = $categorys->toArray();
                 foreach ($categorys as &$vo) {
-                    if (empty($vo['url'])) {
-                        $vo['url'] = self::buildUrl($vo['type'], $vo['id'], $vo['url']);
-                    }
+                    /*if (empty($vo['url'])) {
+                    $vo['url'] = self::buildUrl($vo['type'], $vo['id'], $vo['url']);
+                    }*/
                     /*if (isset($vo['cover_picture']) && $vo['cover_picture']) {
                 $vo['cover'] = model('attachment')->getFileInfo($vo['cover_picture'], 'path');
                 }*/
@@ -173,19 +173,6 @@ class Category extends Model
             cache::set($cacheID, $categorys, $cache);
         }
         return $categorys;
-    }
-
-    public static function buildUrl($type, $id, $url = '')
-    {
-        switch ($type) {
-            case 3: //自定义链接
-                $url = empty($url) ? '#' : ((strpos($url, '://') !== false) ? $url : url($url));
-                break;
-            default:
-                $url = url('index/lists', ['catid' => $id]);
-                break;
-        }
-        return $url;
     }
 
     //刷新栏目索引缓存

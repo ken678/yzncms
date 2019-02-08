@@ -297,11 +297,29 @@ class Category extends Adminbase
                 if ($categorys[$catid]['arrparentid'] != $arrparentid || $categorys[$catid]['arrchildid'] != $arrchildid || $categorys[$catid]['child'] != $child) {
                     Category_Model::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
                 }
+                //更新URL
+                $url = self::buildUrl($cat['type'], $cat['id'], $cat['url']);
+                if ($cat['url'] != $url) {
+                    Category_Model::update(['url' => $url], ['id' => $catid], true);
+                }
                 getCategory($catid, '', true);
             }
 
         }
         return true;
+    }
+
+    public static function buildUrl($type, $id, $url = '')
+    {
+        switch ($type) {
+            case 3: //自定义链接
+                $url = empty($url) ? '#' : ((strpos($url, '://') !== false) ? $url : url($url));
+                break;
+            default:
+                $url = url('cms/index/lists', ['catid' => $id]);
+                break;
+        }
+        return $url;
     }
 
     /**

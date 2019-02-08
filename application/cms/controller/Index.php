@@ -74,6 +74,7 @@ class Index extends Homebase
 
         $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
         $this->assign("SEO", $seo);
+        $this->assign($category);
         return $this->fetch('/' . $template);
     }
 
