@@ -354,9 +354,6 @@ INSERT INTO `yzn_menu` VALUES ('35', '插件后台列表', 'icon-016', '5', 'add
 INSERT INTO `yzn_menu` VALUES ('36', '本地模块', 'icon-yingyong', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('37', '模块管理', 'icon-mokuaishezhi', '36', 'admin', 'module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('38', '模块后台列表', 'icon-016', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('6', '界面', 'icon-jiemiansheji', '0', 'template', 'theme', 'index', '', '1', '', '0', '11');
-INSERT INTO `yzn_menu` VALUES ('39', '模板风格', 'icon-jiemiansheji', '6', 'template', 'theme', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('40', '主题管理', 'icon-zhuti', '39', 'template', 'theme', 'index', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_module`
