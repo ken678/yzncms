@@ -46,7 +46,7 @@ class Category extends Adminbase
             $tree = new \util\Tree();
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-            $result = Db::name('category')->order(array('listorder', 'id' => 'DESC'))->select();
+            $result = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
             foreach ($result as $k => $v) {
                 if (isset($models[$v['modelid']]['name'])) {
                     $result[$k]['modelname'] = $models[$v['modelid']]['name'];
