@@ -30,16 +30,6 @@
             }
         },
         callback: {
-            //捕获单击节点之前的事件回调函数
-            beforeClick: function(treeId, treeNode) {
-                var zTree = $.fn.zTree.getZTreeObj("tree");
-                if (treeNode.isParent) {
-                    zTree.expandNode(treeNode);
-                    return false;
-                } else {
-                    return true;
-                }
-            },
             onClick: function(event, treeId, treeNode) {
                 //栏目ID
                 var catid = treeNode.catid;

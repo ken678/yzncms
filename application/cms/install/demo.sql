@@ -84,15 +84,17 @@ INSERT INTO `yzn_category` VALUES ('15', '企业网站', 'enterprise', '2', '2',
 INSERT INTO `yzn_category` VALUES ('16', '响应式网站', 'responsive', '2', '2', '5', '0,5', '0', '16', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
 INSERT INTO `yzn_category` VALUES ('17', '手机网站', 'mobile', '2', '2', '5', '0,5', '0', '17', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
 
+INSERT INTO `yzn_position` VALUES ('1', '0', '0', '首页幻灯片', '1500272764', '1500519504', '1');
+INSERT INTO `yzn_position` VALUES ('2', '0', '0', '首页文字推荐', '1500272764', '1500519504', '2');
+INSERT INTO `yzn_position` VALUES ('3', '0', '0', '首页图片推荐', '1500272764', '1500519504', '3');
+
 
 INSERT INTO `yzn_model` VALUES ('1', '文章模型', 'article', '文章模型', '2', '1546574975', '1546574975', '0', '0', '1');
 INSERT INTO `yzn_model` VALUES ('2', '图片模型', 'picture', '图片模型', '2', '1548754193', '1548754193', '0', '0', '1');
 INSERT INTO `yzn_model` VALUES ('3', '产品模型', 'product', '产品模型', '2', '1549165800', '1549165800', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('4', '下载模型', 'download', '下载模型', '2', '1549624988', '1549624988', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('5', '留言本', 'guestbook', '留言本', '1', '1549625011', '1549625011', '1', '0', '1');
 
-
-INSERT INTO `yzn_position` VALUES ('1', '0', '0', '首页幻灯片', '1500272764', '1500519504', '1');
-INSERT INTO `yzn_position` VALUES ('2', '0', '0', '首页文字推荐', '1500272764', '1500519504', '2');
-INSERT INTO `yzn_position` VALUES ('3', '0', '0', '首页图片推荐', '1500272764', '1500519504', '3');
 
 INSERT INTO `yzn_model_field` VALUES ('1', '1', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('2', '1', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
@@ -136,3 +138,29 @@ INSERT INTO `yzn_model_field` VALUES ('39', '3', 'updatetime', '更新时间', '
 INSERT INTO `yzn_model_field` VALUES ('40', '3', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('41', '3', 'did', '附表文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '0', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('42', '3', 'content', '内容', '', 'Ueditor', 'text', '', '', '', '0', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('43', '4', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('44', '4', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('45', '4', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('46', '4', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('47', '4', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('48', '4', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('49', '4', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('50', '4', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('51', '4', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('52', '4', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('53', '4', 'updatetime', '更新时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '0', '1', '0', '0', '1549624988', '1549624988', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('54', '4', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('55', '4', 'did', '附表文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '0', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('56', '4', 'content', '内容', '', 'Ueditor', 'text', '', '', '', '0', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('57', '5', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('58', '5', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('59', '5', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('60', '5', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('61', '5', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('62', '5', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('63', '5', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('64', '5', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('65', '5', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1549625011', '1549625011', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('66', '5', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549625011', '1549625011', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('67', '5', 'updatetime', '更新时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '0', '1', '0', '0', '1549625011', '1549625011', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('68', '5', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549625011', '1549625011', '200', '1');

@@ -235,15 +235,11 @@ class Cms extends Adminbase
             );
 
             //终极栏目
-            if ($rs['child'] == 0) {
-                $data['target'] = 'right';
-                $data['url'] = url('cms/cms/classlist', array('catid' => $rs['id']));
-            } else {
-                $data['isParent'] = true;
-            }
+            $data['target'] = 'right';
+            $data['url'] = url('cms/cms/classlist', array('catid' => $rs['id']));
 
             //单页
-            if ($rs['type'] == 1 && $rs['child'] == 0) {
+            if ($rs['type'] == 1) {
                 $data['url'] = url('cms/cms/add', array('catid' => $rs['id']));
             }
 
