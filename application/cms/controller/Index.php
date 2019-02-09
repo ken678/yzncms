@@ -59,6 +59,7 @@ class Index extends Homebase
             //去除完后缀的模板
             $template = $tpar[0];
             unset($tpar);
+            $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
             //单页
         } else if ($category['type'] == 1) {
             $template = $setting['page_template'] ? $setting['page_template'] : 'page';
@@ -69,12 +70,14 @@ class Index extends Homebase
             $template = $tpar[0];
             unset($tpar);
             $info = model('Page')->getPage($catid);
-            $this->assign($info);
+            $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
+            $title = $info['title'] ? $info['title'] : $setting['meta_title'];
+            $description = $info['description'] ? $info['description'] : $setting['meta_description'];
+            $seo = seo($catid, $title, $description, $keywords);
+            $this->assign('page', $info);
         }
-
-        $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
         $this->assign("SEO", $seo);
-        $this->assign($category);
+        $this->assign('category', $category);
         return $this->fetch('/' . $template);
     }
 
