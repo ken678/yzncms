@@ -70,6 +70,7 @@ class Index extends Homebase
             $template = $tpar[0];
             unset($tpar);
             $info = model('Page')->getPage($catid);
+            //SEO
             $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
             $title = $info['title'] ? $info['title'] : $setting['meta_title'];
             $description = $info['description'] ? $info['description'] : $setting['meta_description'];
