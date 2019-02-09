@@ -15,6 +15,7 @@
 namespace app\common\behavior;
 
 use think\Db;
+use think\facade\Cache;
 use think\facade\Hook;
 
 // 初始化钩子信息
@@ -24,7 +25,7 @@ class InitHook
     // 行为扩展的执行入口必须是run
     public function run($params)
     {
-        $data = cache('Hooks');
+        $data = Cache::get('Hooks');
         if (empty($data)) {
             $hooks = Db::name('Hooks')->column('name,addons');
             foreach ($hooks as $key => $value) {
@@ -33,10 +34,10 @@ class InitHook
                     if ($data) {
                         $addons[$key] = array_map('get_addon_class', $data);
                         Hook::add($key, $addons[$key]);
-                        cache('hooks', $addons);
                     }
                 }
             }
+            Cache::set('Hooks', Hook::get());
         } else {
             //批量导入插件
             Hook::import($data, false);
