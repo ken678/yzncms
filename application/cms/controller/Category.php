@@ -139,7 +139,7 @@ class Category extends Adminbase
             $this->assign("tp_show", $this->tp_show);
             $this->assign("tp_page", $this->tp_page);
 
-            $this->assign('parentid_data', $Ca);
+            //$this->assign('parentid_data', $Ca);
 
             $this->assign("category", $categorydata);
             $this->assign("models", $models);

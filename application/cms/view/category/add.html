@@ -24,18 +24,18 @@
                         <div class="layui-form-item">
                             <label>栏目类型</label>
                                 <div class="w300">
-                                    <input type="radio" name="type" value="2" {eq name="parentid_data['type']" value="2"}checked{/eq} title="列表" lay-filter="type">
-                                    <input type="radio" name="type" value="1" {eq name="parentid_data['type']" value="1"}checked{/eq} title="单页" lay-filter="type">
-                                    <input type="radio" name="type" value="3" {eq name="parentid_data['type']" value="3"}checked{/eq} title="链接" lay-filter="type">
+                                    <input type="radio" name="type" value="2" checked title="列表" lay-filter="type">
+                                    <input type="radio" name="type" value="1" title="单页" lay-filter="type">
+                                    <input type="radio" name="type" value="3" title="链接" lay-filter="type">
                                 </div>
                         </div>
                         <div class="layui-form-item web_list">
                             <label>选择模型</label>
                                 <div class="w300">
                                     <select name="modelid">
-                                        <option {empty name="parentid_data.modelid"}selected{/empty}>请选择模型</option>
+                                        <option>请选择模型</option>
                                         {volist name="models" id="vo"}
-                                        <option value="{$vo.id}" {eq name="vo.id" value="$parentid_data['modelid']" }selected{/eq}>{$vo.name}</option>
+                                        <option value="{$vo.id}">{$vo.name}</option>
                                         {/volist}
                                     </select>
                                 </div>

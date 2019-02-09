@@ -214,6 +214,7 @@ class Cms extends Adminbase
 
     public function panl()
     {
+        return "CMS面板";
     }
 
     //显示栏目菜单列表
