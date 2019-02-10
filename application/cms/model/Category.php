@@ -136,45 +136,6 @@ class Category extends Model
         }
     }
 
-    public function getCategory($data)
-    {
-        $where = isset($data['where']) ? $data['where'] : "status=1";
-        $order = isset($data['order']) ? $data['order'] : 'listorder,id desc';
-        //每页显示总数
-        $num = isset($data['num']) ? (int) $data['num'] : 10;
-        //缓存时间
-        $cache = (int) $data['cache'];
-        $cacheID = to_guid_string($data);
-        $array = array();
-        if ($cache && $array = cache::get($cacheID)) {
-            return $array;
-        }
-        if (isset($data['catid'])) {
-            $catid = (int) $data['catid'];
-            $where .= empty($where) ? "parentid = " . $catid : " AND parentid = " . $catid;
-        }
-        //如果条件不为空，进行查库
-        if (!empty($where)) {
-            $categorys = self::where($where)->limit($num)->order($data['order'])->select();
-            if ($categorys) {
-                $categorys = $categorys->toArray();
-                foreach ($categorys as &$vo) {
-                    /*if (empty($vo['url'])) {
-                    $vo['url'] = self::buildUrl($vo['type'], $vo['id'], $vo['url']);
-                    }*/
-                    /*if (isset($vo['cover_picture']) && $vo['cover_picture']) {
-                $vo['cover'] = model('attachment')->getFileInfo($vo['cover_picture'], 'path');
-                }*/
-                }
-            }
-        }
-        //结果进行缓存
-        if ($cache) {
-            cache::set($cacheID, $categorys, $cache);
-        }
-        return $categorys;
-    }
-
     //刷新栏目索引缓存
     public function category_cache()
     {

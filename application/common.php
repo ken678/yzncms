@@ -82,6 +82,20 @@ function get_addon_class($name, $type = 'hook', $class = null)
 }
 
 /**
+ * 检查模块是否已经安装
+ * @param type $moduleName 模块名称
+ * @return boolean
+ */
+function isModuleInstall($moduleName)
+{
+    $appCache = cache('Module');
+    if (isset($appCache[$moduleName])) {
+        return true;
+    }
+    return false;
+}
+
+/**
  * 处理插件钩子
  * @param string $hook 钩子名称
  * @param mixed $params 传入参数

@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 标签库
 // +----------------------------------------------------------------------
-namespace app\cms\taglib;
+namespace app\common\taglib;
 
 use think\template\TagLib;
 
@@ -22,39 +22,39 @@ class Yzn extends Taglib
     // 标签定义
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        //上一篇
-        'pre' => ['attr' => 'catid,id,target,msg,field', 'close' => 0],
-        //下一篇
-        'next' => ['attr' => 'catid,id,target,msg,field', 'close' => 0],
-        //导航标签
-        'category' => ['attr' => 'catid,cache,num,return,where,order', 'close' => 1, 'level' => 3],
+        'yzn' => ['attr' => 'module,action, num, cache, page, pagesize, return', 'close' => 1, 'level' => 3],
     ];
 
-    public function tagCategory($tag, $content)
+    /**
+     * yzn标签
+     */
+    public function tagYzn($tag, $content)
     {
+        //缓存时间
+        $cache = isset($tag['cache']) && intval($tag['cache']) ? intval($tag['cache']) : 0;
         //数据返回变量
-        $return = isset($tag['return']) ? "data" : $tag['return'];
-        $tag['catid'] = $this->autoBuildVar($tag['catid']);
+        $return = isset($tag['return']) && trim($tag['return']) ? trim($tag['return']) : 'data';
+        //每页显示总数
+        $num = isset($tag['num']) && intval($tag['num']) > 0 ? intval($tag['num']) : 20;
+        //模块
+        $module = $tag['module'] = strtolower($tag['module']);
+        //方法
+        $action = $tag['action'] = trim($tag['action']);
         //拼接php代码
         $parseStr = '<?php ';
-        $parseStr .= '$db = model("Category");';
-        $parseStr .= '$' . $return . '= $db->getCategory(' . self::arr_to_html($tag) . ');';
-        $parseStr .= ' ?>';
-        /*$parseStr = '<?php ';
         $parseStr .= '$cache = ' . $cache . ';';
         $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
         $parseStr .= 'if($cache && $_return = Cache::get($cacheID)):';
         $parseStr .= '$' . $return . ' = $_return;';
         $parseStr .= 'else: ';
-        $parseStr .= '$db = db("Category");';
-        //如果条件不为空，进行查库
-        if (!empty($where)) {
-        $parseStr .= '$' . $return . '= $db->where("' . $where . '")->limit(' . $num . ')->select();';
+        $parseStr .= '$' . $module . 'TagLib =  \think\Container::get("\\\\app\\\\' . $module . '\\\\taglib\\\\' . ucwords($module) . 'TagLib");';
+        $parseStr .= 'if(method_exists($' . $module . 'TagLib, "' . $action . '")):';
+        $parseStr .= '$' . $return . ' = $' . $module . 'TagLib->' . $action . '(' . self::arr_to_html($tag) . ');';
         $parseStr .= 'if($cache):';
         $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
         $parseStr .= 'endif;';
-        }
-        $parseStr .= 'endif; ?>';*/
+        $parseStr .= 'endif;';
+        $parseStr .= 'endif; ?>';
         $parseStr .= $content;
         return $parseStr;
     }
@@ -75,7 +75,7 @@ class Yzn extends Taglib
                     if (strpos($val, '$') === 0) {
                         $str .= "'$key'=>$val,";
                     } else if (preg_match("/^([a-zA-Z_].*)\(/i", $val, $matches)) {
-//判断是否使用函数
+                        //判断是否使用函数
                         if (function_exists($matches[1])) {
                             $str .= "'$key'=>$val,";
                         } else {

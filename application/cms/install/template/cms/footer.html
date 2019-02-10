@@ -10,22 +10,22 @@
         <!--此处可用安装友情链接模块-->
     </div>
     <ul class="botnavlist fl">
-        {yzn:category catid="0" cache="3600" where="id in(1,5,6,7)" order="listorder ASC" num="4" return="data"}
+        {yzn module="cms" action="category" catid="0" cache="3600" where="id in(1,5,6,7)" order="listorder ASC" num="4" return="data"}
         {foreach $data as $key=>$vo }
         <li><a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
             <div class="drop clearfix">
                 <!--判断是否有子栏目-->
                 {eq name="vo.child" value="1"}
-                {yzn:category catid="$vo['id']" cache="3600" order="listorder ASC" num="10" return="data"}
+                {yzn module="cms" action="category" catid="$vo['id']" cache="3600" order="listorder ASC" num="10" return="data"}
                 {foreach $data as $key=>$vo }
                 <a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
                 {/foreach}
-                {/yzn:category}
+                {/yzn}
                 {/eq}
             </div>
         </li>
         {/foreach}
-        {/yzn:category}
+        {/yzn}
     </ul>
     <div class="qcode fr">
         <!--此处变量可以后台配置设置调用-->

@@ -66,6 +66,10 @@
     line-height: 50px;
 }
 
+.header .nav li.hover a{
+    color: #E74C3C;
+}
+
 .header .nav li a {
     display: block;
     text-align: center;
@@ -319,6 +323,7 @@
     color: #999;
     padding-right: 10px;
 }
+
 .footer .botnavlist li {
     float: left;
     width: 100px;
@@ -331,18 +336,22 @@
     border-right: 1px solid #353535;
     overflow: hidden;
 }
+
 .footer .botnavlist li:first-child {
     padding-left: 0px;
 }
+
 .footer .botnavlist li a {
     color: #fff;
     display: block;
     line-height: 32px;
     font-size: 16px;
 }
+
 .footer .botnavlist li .drop {
     padding-top: 10px;
 }
+
 .footer .botnavlist li .drop a {
     display: block;
     line-height: 26px;
@@ -350,19 +359,24 @@
     width: 100%;
     font-size: 12px;
 }
+
 .footer .botnavlist li a:hover {
     color: #E74C3C;
 }
+
 .footer .qcode {
     width: 540px;
 }
+
 .footer .btel {
     width: 300px;
     line-height: 28px;
 }
+
 .footer .btel .p1 {
     color: #fff;
 }
+
 .footer .btel .p2 {
     font-family: "GrayDesign Regular", "arial, helvetica, sans-serif";
     font-size: 34px;
@@ -370,18 +384,21 @@
     line-height: 34px;
     padding-bottom: 5px;
 }
+
 .footer .btel .p3 {
     color: #999;
     line-height: 22px;
 }
+
 .footer .qcode .ewm {
     width: 130px;
     height: 130px;
     display: block;
     border: 5px solid #666;
 }
-.copy{
-        background: #191919;
+
+.copy {
+    background: #191919;
     border-top: 1px solid #353535;
     line-height: 60px;
     color: #999;

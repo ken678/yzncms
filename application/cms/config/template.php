@@ -24,7 +24,4 @@ return [
         '__JS_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/js',
         '__HOME_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms',
     ],
-    // 预先加载的标签库
-    'taglib_pre_load' => 'app\cms\taglib\Yzn',
-
 ];
