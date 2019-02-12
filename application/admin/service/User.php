@@ -102,7 +102,7 @@ class User
             'last_login_time' => time(),
             'last_login_ip' => request()->ip(1),
         );
-        model('Admin/AdminUser')->loginStatus((int) $userInfo['userid']);
+        model('admin/AdminUser')->loginStatus((int) $userInfo['userid']);
         /* 记录登录SESSION和COOKIES */
         $auth = [
             'uid' => $userInfo['userid'],
@@ -172,7 +172,7 @@ class User
         if (empty($identifier)) {
             return false;
         }
-        return model('Admin/AdminUser')->getUserInfo($identifier, $password);
+        return model('admin/AdminUser')->getUserInfo($identifier, $password);
     }
 
     /**
