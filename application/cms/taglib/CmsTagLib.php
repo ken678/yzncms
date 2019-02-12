@@ -28,6 +28,9 @@ class CmsTagLib
     public function where($attr)
     {
         $where = [];
+        if (isset($attr['where']) && $attr['where']) {
+            array_push($where, $attr['where']);
+        }
         //栏目id条件
         if (isset($attr['catid']) && (int) $attr['catid']) {
             $catid = (int) $attr['catid'];
@@ -35,12 +38,16 @@ class CmsTagLib
                 $catids_str = getCategory($catid, 'arrchildid');
                 $pos = strpos($catids_str, ',') + 1;
                 $catids_str = substr($catids_str, $pos);
-                $where['catid'] = array("IN", $catids_str);
+                array_push($where, "catid in(" . $catids_str . ")");
             } else {
-                $where['catid'] = array("EQ", $catid);
+                array_push($where, "catid = " . $catid);
             }
         }
-        $this->where = $where;
+        $where_str = "";
+        if (0 < count($where)) {
+            $where_str = implode(" AND ", $where);
+        }
+        $this->where = $where_str;
         return $this->where;
     }
 
@@ -82,7 +89,7 @@ class CmsTagLib
         $modelCache = cache("Model");
         $tableName = $modelCache[$modelid]['tablename'];
         $this->where($data);
-        $list = \think\Db::name(ucwords($tableName))->where($where)->where($this->where)->paginate(1);
+        $list = \think\Db::name(ucwords($tableName))->where($this->where)->paginate(1);
         return $list;
     }
 
