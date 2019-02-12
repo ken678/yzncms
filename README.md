@@ -2,7 +2,7 @@
 
 [项目介绍]
 ```
-Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.1.X和layui2.x最新版,框架易于功能扩展，代码维护，方便二次开发  
+Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.1.X最新版,框架易于功能扩展，代码维护，方便二次开发  
 帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
 
 演示地址：http://demo.yzncms.com/admin/ （超级管理员：admin admin)
@@ -28,6 +28,7 @@ PHP版本：php >= 5.6 (支持php7)
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 ```
+
 [截图预览]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133448_0555dfbc_555541.png "YZNCMS后台管理系统.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133326_84f1f2ed_555541.png "YZNCMS后台管理系统.png")
