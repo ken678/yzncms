@@ -41,7 +41,7 @@ class Yzn extends Taglib
         //方法
         $action = $tag['action'] = trim($tag['action']);
         //当前分页参数
-        $page = $tag['page'] = (isset($tag['page'])) ? $tag['page'] : "";
+        $tag['page'] = (isset($tag['page'])) ? ((substr($tag['page'], 0, 1) == '$') ? $tag['page'] : (int) $tag['page']) : 0;
 
         //拼接php代码
         $parseStr = '<?php ';

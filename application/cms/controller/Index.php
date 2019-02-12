@@ -28,8 +28,10 @@ class Index extends Homebase
      */
     public function index()
     {
+        $page = $this->request->param('page/d', 1);
         $SEO = seo();
         $this->assign("SEO", $SEO);
+        $this->assign("page", $page);
         return $this->fetch('/index');
     }
 
@@ -40,6 +42,7 @@ class Index extends Homebase
     {
         //栏目ID
         $catid = $this->request->param('catid/d', 0);
+        $page = $this->request->param('page/d', 1);
         //获取栏目数据
         $category = getCategory($catid);
         if (empty($category)) {
@@ -75,10 +78,11 @@ class Index extends Homebase
             $title = $info['title'] ? $info['title'] : $setting['meta_title'];
             $description = $info['description'] ? $info['description'] : $setting['meta_description'];
             $seo = seo($catid, $title, $description, $keywords);
-            $this->assign('page', $info);
+            $this->assign('show', $info);
         }
+        $this->assign("page", $page);
         $this->assign("SEO", $seo);
-        $this->assign('category', $category);
+        $this->assign("category", $category);
         return $this->fetch('/' . $template);
     }
 
@@ -87,6 +91,8 @@ class Index extends Homebase
      */
     public function shows()
     {
+        $page = $page = $this->request->param('page/d', 1);
+        $this->assign("page", $page);
         return $this->fetch('/' . $template);
 
     }
