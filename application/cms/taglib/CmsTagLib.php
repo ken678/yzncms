@@ -68,7 +68,6 @@ class CmsTagLib
         //如果条件不为空，进行查库
         if (!empty($where)) {
             $categorys = model('Category')->where($where)->limit($num)->order($data['order'])->select();
-
         }
         return $categorys;
     }
@@ -81,7 +80,7 @@ class CmsTagLib
         if (!$data['catid']) {
             return false;
         }
-        $where = isset($data['where']) ? $data['where'] : "status=1";
+        $data['where'] = isset($data['where']) ? $data['where'] : "status=1";
         //当前栏目信息
         $catInfo = getCategory($data['catid']);
         //栏目所属模型
@@ -89,8 +88,15 @@ class CmsTagLib
         $modelCache = cache("Model");
         $tableName = $modelCache[$modelid]['tablename'];
         $this->where($data);
-        $list = \think\Db::name(ucwords($tableName))->where($this->where)->paginate(1);
-        return $list;
+        if (isset($data['page']) && $data['page']) {
+            $pages = \think\Db::name(ucwords($tableName))->where($this->where)->paginate(1);
+            $result['pages'] = $pages;
+            $result['list'] = $pages->items();
+        } else {
+            $result = \think\Db::name(ucwords($tableName))->where($this->where)->select();
+        }
+        return $result;
+
     }
 
 }

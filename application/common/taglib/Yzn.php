@@ -41,7 +41,7 @@ class Yzn extends Taglib
         //方法
         $action = $tag['action'] = trim($tag['action']);
         //当前分页参数
-        $tag['page'] = (isset($tag['page'])) ? ((substr($tag['page'], 0, 1) == '$') ? $tag['page'] : (int) $tag['page']) : 0;
+        $page = $tag['page'] = (isset($tag['page'])) ? ((substr($tag['page'], 0, 1) == '$') ? $tag['page'] : (int) $tag['page']) : 0;
 
         //拼接php代码
         $parseStr = '<?php ';
@@ -57,7 +57,14 @@ class Yzn extends Taglib
         $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
         $parseStr .= 'endif;';
         $parseStr .= 'endif;';
-        $parseStr .= 'endif; ?>';
+        $parseStr .= 'endif;';
+        //判断分页
+        if ($page) {
+            $parseStr .= '$_return = $' . $return . ';';
+            $parseStr .= '$' . $return . ' = $_return["list"];';
+            $parseStr .= '$pages = $_return["pages"];';
+        }
+        $parseStr .= ' ?>';
         $parseStr .= $content;
         if (!empty($parseStr)) {
             return $parseStr;
