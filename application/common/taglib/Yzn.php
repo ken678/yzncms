@@ -56,7 +56,10 @@ class Yzn extends Taglib
         $parseStr .= 'endif;';
         $parseStr .= 'endif; ?>';
         $parseStr .= $content;
-        return $parseStr;
+        if (!empty($parseStr)) {
+            return $parseStr;
+        }
+        return;
     }
 
     /**

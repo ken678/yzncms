@@ -35,9 +35,7 @@ class CmsTagLib
         //如果条件不为空，进行查库
         if (!empty($where)) {
             $categorys = model('Category')->where($where)->limit($num)->order($data['order'])->select();
-            if ($categorys) {
-                $categorys = $categorys->toArray();
-            }
+
         }
         return $categorys;
     }
