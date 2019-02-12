@@ -22,7 +22,7 @@ class Yzn extends Taglib
     // 标签定义
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'yzn' => ['attr' => 'module,action, num, cache, page, pagesize, return', 'close' => 1, 'level' => 3],
+        'yzn' => ['attr' => 'module,action, num, cache, page, return', 'close' => 1, 'level' => 3],
     ];
 
     /**
@@ -40,6 +40,9 @@ class Yzn extends Taglib
         $module = $tag['module'] = strtolower($tag['module']);
         //方法
         $action = $tag['action'] = trim($tag['action']);
+        //当前分页参数
+        $page = $tag['page'] = (isset($tag['page'])) ? $tag['page'] : "";
+
         //拼接php代码
         $parseStr = '<?php ';
         $parseStr .= '$cache = ' . $cache . ';';

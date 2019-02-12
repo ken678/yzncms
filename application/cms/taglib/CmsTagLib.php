@@ -18,6 +18,32 @@ use think\facade\Cache;
 
 class CmsTagLib
 {
+    public $where;
+
+    /**
+     * 组合查询条件
+     * @param type $attr
+     * @return type
+     */
+    public function where($attr)
+    {
+        $where = [];
+        //栏目id条件
+        if (isset($attr['catid']) && (int) $attr['catid']) {
+            $catid = (int) $attr['catid'];
+            if (getCategory($catid, 'child')) {
+                $catids_str = getCategory($catid, 'arrchildid');
+                $pos = strpos($catids_str, ',') + 1;
+                $catids_str = substr($catids_str, $pos);
+                $where['catid'] = array("IN", $catids_str);
+            } else {
+                $where['catid'] = array("EQ", $catid);
+            }
+        }
+        $this->where = $where;
+        return $this->where;
+    }
+
     /**
      * 栏目标签
      */
@@ -38,6 +64,26 @@ class CmsTagLib
 
         }
         return $categorys;
+    }
+
+    /**
+     * 列表标签
+     */
+    public function lists($data)
+    {
+        if (!$data['catid']) {
+            return false;
+        }
+        $where = isset($data['where']) ? $data['where'] : "status=1";
+        //当前栏目信息
+        $catInfo = getCategory($data['catid']);
+        //栏目所属模型
+        $modelid = $catInfo['modelid'];
+        $modelCache = cache("Model");
+        $tableName = $modelCache[$modelid]['tablename'];
+        $this->where($data);
+        $list = \think\Db::name(ucwords($tableName))->where($where)->where($this->where)->paginate(1);
+        return $list;
     }
 
 }
