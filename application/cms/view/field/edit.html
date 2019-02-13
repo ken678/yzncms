@@ -20,7 +20,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">字段描述</label>
                 <div class="layui-input-inline w300">
-                    <textarea name="tips" lay-verify="required" placeholder="字段的相关描述" class="layui-textarea">{$data.tips}</textarea>
+                    <textarea name="remark" lay-verify="required" placeholder="字段的相关描述" class="layui-textarea">{$data.remark}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -29,7 +29,7 @@
                     <select name="type" lay-filter="type">
                         <option></option>
                         {volist name="fieldType" id="vo"}
-                        <option value="{$vo.name}" {if $data.formtype==$vo.name}selected{/if} data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
+                        <option value="{$vo.name}" {if $data.type==$vo.name}selected{/if} data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
                         {/volist}
                     </select>
                 </div>
@@ -63,7 +63,7 @@
                 </div>
             </div>
             {if $data['ifsystem']}
-            <div class="layui-form-item" id="ifsearch" {if !in_array($data['formtype'],['text', 'textarea', 'tags', 'Ueditor'])}style="display:none"{/if}>
+            <div class="layui-form-item" id="ifsearch" {if !in_array($data['type'],['text', 'textarea', 'tags', 'Ueditor'])}style="display:none"{/if}>
                 <label class="layui-form-label">是否可搜索</label>
                 <div class="layui-input-inline">
                     <input type="radio" name="ifsearch" value="1" title="是" {if $data.ifsearch==1}checked{/if}>
