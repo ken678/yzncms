@@ -50,7 +50,7 @@ class Index extends Homebase
         }
         //栏目扩展配置信息
         $setting = $category['setting'];
-        //生成类型为2的栏目
+        //类型为列表的栏目
         if ($category['type'] == 2) {
             //栏目首页模板
             $template = $setting['category_template'] ? $setting['category_template'] : 'category';
@@ -82,7 +82,8 @@ class Index extends Homebase
         }
         $this->assign("page", $page);
         $this->assign("SEO", $seo);
-        $this->assign("category", $category);
+        $this->assign($category);
+        $this->assign('catid', $catid);
         return $this->fetch('/' . $template);
     }
 

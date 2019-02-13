@@ -35,10 +35,10 @@
             	</div>
                 <div class="nav fr">
                     <ul class="navlist">
-                        <li {if !isset($category['id'])}class="hover"{/if}><a href="{:url('cms/index/index')}" title="首页">首页</a></li>
+                        <li {if !isset($catid)}class="hover"{/if}><a href="{:url('cms/index/index')}" title="首页">首页</a></li>
                         {yzn module="cms" action="category" catid="0" cache="3600" order="listorder ASC" num="10" return="data"}
                         {foreach $data as $key=>$vo }
-                        <li {if isset($category['id']) && in_array($category['id'],explode(',',$vo['arrchildid']))}class='hover'{/if}>
+                        <li {if isset($catid) && in_array($catid,explode(',',$vo['arrchildid']))}class='hover'{/if}>
                             <a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
                             <!--判断是否有子栏目-->
                             {eq name="vo.child" value="1"}
