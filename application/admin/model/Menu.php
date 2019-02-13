@@ -82,7 +82,7 @@ class Menu extends Model
     final public function adminMenu($parentid, $with_self = false)
     {
         $parentid = (int) $parentid;
-        $result = $this->where(array('parentid' => $parentid, 'status' => 1))->order('listorder ASC,id ASC')->select()->toArray();
+        $result = $this->where(array('parentid' => $parentid, 'status' => 1))->order('listorder ASC,id ASC')->cache(60)->select()->toArray();
         if (empty($result)) {
             $result = array();
         }

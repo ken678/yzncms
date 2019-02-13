@@ -143,13 +143,15 @@ class User
      * 检查当前用户是否超级管理员
      * @return boolean
      */
-    public function isAdministrator()
+    public function isAdministrator($uid = null)
     {
-        $userInfo = $this->getUserInfo($this->isLogin());
-        if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
-            return true;
-        }
-        return false;
+        $uid = is_null($uid) ? $this->isLogin() : $uid;
+        return $uid && (intval($uid) === self::administratorRoleId);
+        /*$userInfo = $this->getUserInfo($this->isLogin());
+    if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
+    return true;
+    }
+    return false;*/
     }
 
     /**
