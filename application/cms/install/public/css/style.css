@@ -14,6 +14,10 @@
     float: right;
 }
 
+.tc {
+    text-align: center;
+}
+
 .clearfix:after {
     visibility: hidden;
     display: block;
@@ -66,7 +70,7 @@
     line-height: 50px;
 }
 
-.header .nav li.hover a{
+.header .nav li.hover a {
     color: #E74C3C;
 }
 
@@ -78,10 +82,6 @@
     height: 50px;
     line-height: 50px;
     padding: 0 18px;
-    border: 1px solid #25262b;
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
 }
 
 .header .nav ul .subnav {
@@ -403,4 +403,18 @@
     line-height: 60px;
     color: #999;
     font-size: 12px;
+    margin-bottom: 30px;
+}
+
+.tips {
+    background: #000;
+    width: 100%;
+    line-height: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 0;
+}
+
+.tips p {
+    color: red;
 }
