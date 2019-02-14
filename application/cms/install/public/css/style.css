@@ -297,6 +297,130 @@
     background-position: -6px -137px;
 }
 
+/*内页*/
+.headline-bg {
+    position: absolute;
+    width: 100%;
+    top: 95px;
+    left: 0;
+    height: 500px;
+    background: #253340 url(../images/headline-bg.jpg) no-repeat 50% top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.container-top {
+    position: relative;
+    overflow: hidden;
+    padding: 70px 0 44px;
+    height: 44px;
+    line-height: 44px;
+}
+
+.container-top h2 {
+    font-size: 30px;
+    color: #ffffff;
+    float: left;
+    text-transform: uppercase;
+}
+
+.container-top h2 span {
+    padding-left: 28px;
+    margin-left: 20px;
+    background: url(../images/titlebg_01.jpg) no-repeat left center;
+    font-family: Arial;
+}
+
+.bread-nav {
+    float: right;
+    min-width: 420px;
+    color: #ffffff;
+    text-align: right;
+    padding-top: 5px;
+}
+
+.bread-nav a {
+    color: #f3f3f3;
+    margin: 0 3px;
+}
+
+.content {
+    background-color: #fff;
+    padding: 30px 30px 50px;
+    overflow: hidden;
+}
+.about{
+    font-size: 16px;
+    line-height: 30px;
+    color: #666666;
+}
+.content-left {
+    width: 240px;
+    float: left;
+}
+
+.content-right {
+    width: 860px;
+    float: right;
+}
+
+.content-title {
+    width: 160px;
+    padding-left: 80px;
+    height: 80px;
+    line-height: 80px;
+    background: #f90712 url(../images/h2bg.png) no-repeat 25px center;
+    font-size: 24px;
+    color: #ffffff;
+    border-bottom: 3px solid #f6f6f6;
+}
+.menu-list {
+    width: 240px;
+    background-color: #f6f6f6;
+}
+.menu-list a {
+    display: block;
+    width: 236px;
+    height: 55px;
+    line-height: 55px;
+    border-left: 4px solid #f6f6f6;
+    border-bottom: 1px solid #e8e8e8;
+    text-indent: 40px;
+    font-size: 16px;
+    color: #333;
+}
+.menu-list a:hover, .menu-list a.active {
+    border-left-color: #f1151f;
+    background-color: #fff;
+    text-indent: 36px;
+}
+.content-contact {
+    margin-top: 38px;
+    width: 100%;
+}
+.content-contact .h2bg {
+    height: 84px;
+    width: 100%;
+    line-height: 84px;
+    background: url(../images/conbg.png) no-repeat center;
+}
+.content-contact .h2bg h2 {
+    width: 146px;
+    padding-left: 94px;
+    background: url(../images/conico.png) no-repeat 34px center;
+    font-size: 24px;
+    color: #ffffff;
+}
+.cc-info {
+    padding: 20px 25px 40px 30px;
+    background-color: #f6f6f6;
+}
+.cc-info p {
+    color: #666666;
+    line-height: 26px;
+}
 /*底部*/
 .footer {
     width: 100%;

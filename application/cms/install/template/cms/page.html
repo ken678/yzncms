@@ -1,2 +1,55 @@
 {include file="header" /}
+<style type="text/css">
+body {
+    background: #f6f6f6;
+}
+</style>
+<div class="headline-bg"></div>
+<div class="main" style="position: relative;">
+    <div class="w1200">
+        <div class="container-top">
+            <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
+            <!-- 面包屑 -->
+            <div class="bread-nav">
+                <a href="">首页</a>
+                &gt; <a href="">关于我们</a> &gt; <a href="">公司简介</a>
+            </div>
+        </div>
+        <div class="content">
+            <!-- 左侧栏目 -->
+            <div class="content-left">
+                <h2 class="content-title">关于我们</h2>
+                <div class="menu-list">
+                    <a href="" class="transition active">公司简介</a>
+                    <a href="" class="transition">企业文化</a>
+                    <a href="" class="transition">公司荣誉</a>
+                    <a href="" class="transition">联系我们</a>
+                </div>
+                <!-- 联系我们 -->
+                <div class="content-contact">
+                    <div class="h2bg">
+                        <h2>联系我们</h2>
+                    </div>
+                    <div class="cc-info">
+                        <p>
+                            全国统一服务热线：
+                        </p>
+                        <p>
+                            400-0000-000
+                        </p>
+                        <p>
+                            邮&nbsp;&nbsp;&nbsp;箱：530765310@qq.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="content-right">
+                <div class="about" deep="4">
+                    Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.1.X最新版,框架易于功能扩展，代码维护，方便二次开发 帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {include file="footer" /}
