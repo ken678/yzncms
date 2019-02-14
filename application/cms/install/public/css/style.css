@@ -493,7 +493,7 @@
 }
 
 .footer .btel {
-    width: 300px;
+    width: 320px;
     line-height: 28px;
 }
 
@@ -502,11 +502,13 @@
 }
 
 .footer .btel .p2 {
+        margin-bottom: 10px;
+    padding-left: 48px;
+    background: url(../images/ico_tel.png) no-repeat left center;
     font-family: "GrayDesign Regular", "arial, helvetica, sans-serif";
-    font-size: 34px;
-    color: #E74C3C;
-    line-height: 34px;
-    padding-bottom: 5px;
+    font-size: 30px;
+    color: #fa0712;
+    line-height: 40px;
 }
 
 .footer .btel .p3 {
