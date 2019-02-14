@@ -64,6 +64,26 @@ function getCategory($catid, $field = '', $newCache = false)
 }
 
 /**
+ * 当前路径
+ * 返回指定栏目路径层级
+ * @param $catid 栏目id
+ * @param $symbol 栏目间隔符
+ */
+function catpos($catid, $symbol = ' &gt; ')
+{
+    if (getCategory($catid) == false) {
+        return '';
+    }
+    //获取当前栏目的 父栏目列表
+    $arrparentid = array_filter(explode(',', getCategory($catid, 'arrparentid') . ',' . $catid));
+    foreach ($arrparentid as $cid) {
+        $parsestr[] = '<a href="' . getCategory($cid, 'url') . '" >' . getCategory($cid, 'catname') . '</a>';
+    }
+    $parsestr = implode($symbol, $parsestr);
+    return $parsestr;
+}
+
+/**
  * 获取模型数据
  * @param type $modelid 模型ID
  * @param type $name 返回的字段，默认返回全部，数组

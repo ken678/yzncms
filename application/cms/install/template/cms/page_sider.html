@@ -1,0 +1,27 @@
+<div class="content-left">
+    <h2 class="content-title">{:getCategory($top_parentid,'catname')}</h2>
+    <div class="menu-list">
+        {yzn module="cms" action="category" catid="$top_parentid" cache="3600" order="listorder ASC" num="10" return="data"}
+        {foreach $data as $key=>$vo }
+        <a href="{$vo['url']}" class="transition {if $vo['id']==$catid}active{/if}">{$vo['catname']}</a>
+        {/foreach}
+        {/yzn}
+    </div>
+    <!-- 联系我们 -->
+    <div class="content-contact">
+        <div class="h2bg">
+            <h2>联系我们</h2>
+        </div>
+        <div class="cc-info">
+            <p>
+                全国统一服务热线：
+            </p>
+            <p>
+                400-0000-000
+            </p>
+            <p>
+                邮&nbsp;&nbsp;&nbsp;箱：530765310@qq.com
+            </p>
+        </div>
+    </div>
+</div>

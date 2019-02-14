@@ -78,11 +78,14 @@ class Index extends Homebase
             $title = $info['title'] ? $info['title'] : $setting['meta_title'];
             $description = $info['description'] ? $info['description'] : $setting['meta_description'];
             $seo = seo($catid, $title, $description, $keywords);
-            $this->assign('show', $info);
+            $this->assign($info);
         }
+        //获取顶级栏目ID
+        $arrparentid = explode(',', $category['arrparentid']);
+        $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
+        $this->assign("top_parentid", $top_parentid);
         $this->assign("page", $page);
         $this->assign("SEO", $seo);
-        $this->assign($category);
         $this->assign('catid', $catid);
         return $this->fetch('/' . $template);
     }
