@@ -224,7 +224,7 @@ class Cms extends Adminbase
         $categorys = cache('Category');
         foreach ($categorys as $rs) {
             $rs = getCategory($rs['id']);
-            //外部链接
+            //剔除无子栏目外部链接
             if ($rs['type'] == 3 && $rs['child'] == 0) {
                 continue;
             }
@@ -234,7 +234,6 @@ class Cms extends Adminbase
                 'catname' => $rs['catname'],
                 'type' => $rs['type'],
             );
-
             //终极栏目
             if ($rs['child'] == 0) {
                 $data['target'] = 'right';
@@ -242,7 +241,6 @@ class Cms extends Adminbase
             } else {
                 $data['isParent'] = true;
             }
-
             //单页
             if ($rs['type'] == 1) {
                 $data['target'] = 'right';

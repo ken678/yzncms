@@ -291,9 +291,9 @@ class Category extends Adminbase
                 if ($cat['url'] != $url) {
                 Category_Model::update(['url' => $url], ['id' => $catid], true);
                 }*/
-                if ($cat['type'] == 3) {
-                    continue;
-                }
+                /*if ($cat['type'] == 3) {
+                continue;
+                }*/
                 $arrparentid = $this->get_arrparentid($catid); //父栏目组
                 $setting = unserialize($cat['setting']); //栏目配置
                 $arrchildid = $this->get_arrchildid($catid); //子栏目组
