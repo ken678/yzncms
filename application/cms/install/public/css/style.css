@@ -421,6 +421,73 @@
     color: #666666;
     line-height: 26px;
 }
+/*新闻列表*/
+.newsPage .list {
+    padding-bottom: 30px;
+}
+.newsPage .item {
+    height: 178px;
+    transition: all .5s;
+    border: 1px solid #f3f3f3;
+    display: block;
+    margin-bottom: 20px;
+}
+.newsPage .item a {
+    padding: 26px;
+    display: block;
+}
+.newsPage .item img {
+    width: 168px;
+    height: 126px;
+    display: block;
+    margin-right: 30px;
+}
+.newsPage .item h3 {
+    font-weight: normal;
+    font-size: 20px;
+    padding: 10px 0 10px;
+    -webkit-transition: all ease 300ms;
+    -moz-transition: all ease 300ms;
+    -ms-transition: all ease 300ms;
+    -o-transition: all ease 300ms;
+    transition: all ease 300ms;
+    color: #000;
+}
+.newsPage .item .txt {
+    color: #999;
+    line-height: 24px;
+    width: 400px;
+    height: 48px;
+    overflow: hidden;
+}
+.newsPage .item .time {
+    width: 130px;
+    padding: 20px 0 20px 45px;
+    border-left: 1px solid #eee;
+    font-family: arial;
+    font-size: 18px;
+    color: #999;
+    text-align: center;
+}
+.newsPage .item .time .day {
+    font-size: 30px;
+    line-height: 45px;
+    display: block;
+}
+.newsPage .item:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    margin-left: 15px;
+}
+.newsPage .item:hover h3 {
+    color: #3fb150;
+}
+.newsPage .item:hover .time .day span {
+    background: #6d6d6d;
+}
+.newsPage .item:hover .time .day strong {
+    background: #ff0000;
+    color: #fff;
+}
 /*底部*/
 .footer {
     width: 100%;

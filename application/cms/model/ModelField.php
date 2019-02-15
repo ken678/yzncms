@@ -279,6 +279,70 @@ EOF;
         }
     }
 
+    public function getDataList($modeId, $data)
+    {
+        $modelCache = cache("Model");
+        $tableName = $modelCache[$modeId]['tablename']; //表名
+
+        if (2 == $modelCache[$modelid]['type'] && $data['moreinfo']) {
+            $extTable = $tableName . $this->ext_table;
+            if ($data['page']) {
+                $result = \think\Db::view(ucwords($tableName), '*')
+                    ->where($this->where)
+                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
+                    ->order($data['order'])
+                    ->paginate($data['limit']);
+            } else {
+                $result = \think\Db::view(ucwords($tableName), '*')
+                    ->where($this->where)->limit($data['limit'])
+                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
+                    ->order($data['order'])
+                    ->select();
+            }
+        } else {
+            if ($data['page']) {
+                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->order($data['order'])->paginate($data['limit']);
+            } else {
+                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->limit($data['limit'])->order($data['order'])->select();
+            }
+        }
+        //数据格式化处理
+        if (!empty($result)) {
+            foreach ($result as $key => $vo) {
+                $fieldinfo = self::where('modelid', $modelid)->where('status', 1)->column('name,type,options,jsonrule,ifsystem');
+                $vo = $this->dealModelShowData($fieldinfo, $vo);
+                $vo['url'] = buildContentUrl($vo['catid'], $vo['id']);
+                $result[$key] = $vo;
+            }
+        }
+        return $result;
+
+    }
+
+    /**
+     * 详情页
+     */
+    public function getDataInfo($modeId, $where)
+    {
+        //内容模型缓存
+        $modelInfo = cache('Model');
+        if (false == $modelInfo) {
+            return false;
+        }
+        $modelInfo = $modelInfo[$modeId];
+        if (2 == $modelInfo['type']) {
+            $extTable = $modelInfo['tablename'] . $this->ext_table;
+            $dataInfo = Db::view($modelInfo['tablename'], '*')->where($where)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
+        } else {
+            $dataInfo = Db::name($modelInfo['tablename'])->where($where)->find();
+        }
+        if (!empty($dataInfo)) {
+            $fieldinfo = self::where('modelid', $modeId)->where('status', 1)->column('name,type,options,jsonrule,ifsystem');
+            $dataInfo = $this->dealModelShowData($fieldinfo, $dataInfo);
+        }
+        return $dataInfo;
+    }
+
     //查询解析模型数据用以构造from表单
     public function getFieldList($modelId, $id = null)
     {
@@ -469,6 +533,49 @@ EOF;
             }
         }
         return [$data, $dataExt];
+    }
+
+    //格式化显示数据
+    protected function dealModelShowData($fieldinfo, $data)
+    {
+        $newdata = [];
+        foreach ($data as $key => $value) {
+            switch ($fieldinfo[$key]['type']) {
+                case 'array':
+                    $newdata[$key] = parse_attr($newdata[$key]);
+                    break;
+                case 'radio':
+
+                    break;
+                case 'select':
+
+                    break;
+                case 'checkbox':
+                    break;
+                case 'image':
+                    break;
+                case 'images':
+                    break;
+                case 'files':
+                    break;
+                case 'tags':
+                    $newdata[$key] = explode(',', $value);
+                    break;
+                case 'Ueditor':
+                    $newdata[$key] = htmlspecialchars_decode($value);
+                    break;
+                case 'summernote':
+                    $newdata[$key] = htmlspecialchars_decode($value);
+                    break;
+                default:
+                    $newdata[$key] = $value;
+                    break;
+            }
+            if (!isset($newdata[$key])) {
+                $newdata[$key] = '';
+            }
+        }
+        return $newdata;
     }
 
     /**

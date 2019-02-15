@@ -98,8 +98,40 @@ class Index extends Homebase
      */
     public function shows()
     {
+        //ID
+        $id = $this->request->param('id/d', 0);
+        //栏目ID
+        $catid = $this->request->param('catid/d', 0);
         $page = $page = $this->request->param('page/d', 1);
+        //获取栏目数据
+        $category = getCategory($catid);
+        if (empty($category)) {
+            $this->error('栏目不存在！');
+        }
+        //模型ID
+        $modelid = $category['modelid'];
+        //内容所有字段
+        $data = model('ModelField')->getDataInfo($modelid, "id='" . $id . "'");
+        if (empty($data)) {
+            abort(404, '内容不存在或未审核');
+        }
+        //栏目扩展配置信息
+        $setting = $category['setting'];
+        //内容页模板
+        $template = $setting['show_template'] ? $setting['show_template'] : 'show';
+        //去除模板文件后缀
+        $newstempid = explode(".", $template);
+        $template = $newstempid[0];
+        unset($newstempid);
+        $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+        //获取顶级栏目ID
+        $arrparentid = explode(',', $category['arrparentid']);
+        $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
+        $this->assign("top_parentid", $top_parentid);
+        $this->assign("SEO", $seo);
+        $this->assign('catid', $catid);
         $this->assign("page", $page);
+        $this->assign($data);
         return $this->fetch('/' . $template);
 
     }

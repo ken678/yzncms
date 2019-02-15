@@ -18,14 +18,14 @@ use think\facade\Cache;
 
 class CmsTagLib
 {
-    public $where;
+    protected $where;
 
     /**
      * 组合查询条件
      * @param type $attr
      * @return type
      */
-    public function where($attr)
+    protected function where($attr)
     {
         $where = [];
         if (isset($attr['where']) && $attr['where']) {
@@ -81,22 +81,19 @@ class CmsTagLib
             return false;
         }
         $data['where'] = isset($data['where']) ? $data['where'] : "status=1";
+        if (!isset($data['limit'])) {
+            $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
+        }
+        if (empty($data['order'])) {
+            $data['order'] = array('updatetime' => 'DESC', 'id' => 'DESC');
+        }
         //当前栏目信息
         $catInfo = getCategory($data['catid']);
         //栏目所属模型
         $modelid = $catInfo['modelid'];
-        $modelCache = cache("Model");
-        $tableName = $modelCache[$modelid]['tablename'];
-        $this->where($data);
-        if (isset($data['page']) && $data['page']) {
-            $pages = \think\Db::name(ucwords($tableName))->where($this->where)->paginate(1);
-            $result['pages'] = $pages;
-            $result['list'] = $pages->items();
-        } else {
-            $result = \think\Db::name(ucwords($tableName))->where($this->where)->select();
-        }
+        $data['where'] = $this->where($data);
+        $result = model('ModelField')->getDataList($modelid, $data);
         return $result;
-
     }
 
 }
