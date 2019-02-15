@@ -279,71 +279,6 @@ EOF;
         }
     }
 
-    public function getDataList($modeId, $data)
-    {
-        $modelCache = cache("Model");
-        $tableName = $modelCache[$modeId]['tablename']; //表名
-
-        if (2 == $modelCache[$modelid]['type'] && $data['moreinfo']) {
-            $extTable = $tableName . $this->ext_table;
-            if ($data['page']) {
-                $result = \think\Db::view(ucwords($tableName), '*')
-                    ->where($this->where)
-                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                    ->order($data['order'])
-                    ->paginate($data['limit']);
-            } else {
-                $result = \think\Db::view(ucwords($tableName), '*')
-                    ->where($this->where)->limit($data['limit'])
-                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                    ->order($data['order'])
-                    ->select();
-            }
-        } else {
-            if ($data['page']) {
-                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->order($data['order'])->paginate($data['limit']);
-            } else {
-                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->limit($data['limit'])->order($data['order'])->select();
-            }
-        }
-        //数据格式化处理
-        if (!empty($result)) {
-            foreach ($result as $key => $vo) {
-                $fieldinfo = self::where('modelid', $modelid)->where('status', 1)->column('name,type,options,jsonrule,ifsystem');
-                $vo = $this->dealModelShowData($fieldinfo, $vo);
-                $vo['url'] = buildContentUrl($vo['catid'], $vo['id']);
-                $result[$key] = $vo;
-            }
-        }
-        return $result;
-
-    }
-
-    /**
-     * 详情页
-     */
-    public function getDataInfo($modeId, $where, $moreifo = false, $field = "'*'", $order = '')
-    {
-        //内容模型缓存
-        $modelInfo = cache('Model');
-        if (false == $modelInfo) {
-            return false;
-        }
-        $modelInfo = $modelInfo[$modeId];
-        if (2 == $modelInfo['type'] && $moreifo) {
-            $extTable = $modelInfo['tablename'] . $this->ext_table;
-            $dataInfo = Db::view($modelInfo['tablename'], '*')->field($field)->where($where)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
-        } else {
-            $dataInfo = Db::name($modelInfo['tablename'])->field($field)->where($where)->find();
-        }
-        if (!empty($dataInfo)) {
-            $fieldinfo = self::where('modelid', $modeId)->where('status', 1)->column('name,type,options,jsonrule,ifsystem');
-            $dataInfo = $this->dealModelShowData($fieldinfo, $dataInfo);
-            $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
-        }
-        return $dataInfo;
-    }
-
     //查询解析模型数据用以构造from表单
     public function getFieldList($modelId, $id = null)
     {
@@ -536,7 +471,80 @@ EOF;
         return [$data, $dataExt];
     }
 
-    //格式化显示数据
+    public function getDataList($modeId, $data)
+    {
+        $modelCache = cache("Model");
+        $ModelField = cache('ModelField');
+        $tableName = $modelCache[$modeId]['tablename']; //表名
+
+        if (2 == $modelCache[$modelid]['type'] && $data['moreinfo']) {
+            $extTable = $tableName . $this->ext_table;
+            if ($data['page']) {
+                $result = \think\Db::view(ucwords($tableName), '*')
+                    ->where($this->where)
+                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
+                    ->order($data['order'])
+                    ->paginate($data['limit']);
+            } else {
+                $result = \think\Db::view(ucwords($tableName), '*')
+                    ->where($this->where)->limit($data['limit'])
+                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
+                    ->order($data['order'])
+                    ->select();
+            }
+        } else {
+            if ($data['page']) {
+                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->order($data['order'])->paginate($data['limit']);
+            } else {
+                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->limit($data['limit'])->order($data['order'])->select();
+            }
+        }
+        //数据格式化处理
+        if (!empty($result)) {
+            foreach ($result as $key => $vo) {
+                $vo = $this->dealModelShowData($ModelField[$modeId], $vo);
+                $vo['url'] = buildContentUrl($vo['catid'], $vo['id']);
+                $result[$key] = $vo;
+            }
+        }
+        return $result;
+
+    }
+
+    /**
+     * 详情页
+     * @param  [type]  $modeId  []
+     * @param  [type]  $where   []
+     * @param  boolean $moreifo []
+     * @param  string  $field   []
+     * @param  string  $order   []
+     */
+    public function getDataInfo($modeId, $where, $moreifo = false, $field = "'*'", $order = '')
+    {
+        $modelInfo = cache('Model');
+        $ModelField = cache('ModelField');
+        if (false == $modelInfo || false == $ModelField) {
+            return false;
+        }
+        $modelInfo = $modelInfo[$modeId];
+        if (2 == $modelInfo['type'] && $moreifo) {
+            $extTable = $modelInfo['tablename'] . $this->ext_table;
+            $dataInfo = Db::view($modelInfo['tablename'], '*')->field($field)->where($where)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
+        } else {
+            $dataInfo = Db::name($modelInfo['tablename'])->field($field)->where($where)->find();
+        }
+        if (!empty($dataInfo)) {
+            $dataInfo = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
+            $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
+        }
+        return $dataInfo;
+    }
+
+    /**
+     * 数据处理 前端显示
+     * @param  $fieldinfo
+     * @param  $data
+     */
     protected function dealModelShowData($fieldinfo, $data)
     {
         $newdata = [];

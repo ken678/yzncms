@@ -65,9 +65,11 @@ class CmsTagLib
             $catid = (int) $data['catid'];
             $where .= empty($where) ? "parentid = " . $catid : " AND parentid = " . $catid;
         }
-        //如果条件不为空，进行查库
-        if (!empty($where)) {
-            $categorys = model('Category')->where($where)->limit($num)->order($data['order'])->select();
+        $categorys = model('Category')->where($where)->limit($num)->order($data['order'])->select();
+        if (!empty($categorys)) {
+            foreach ($categorys as &$vo) {
+                $vo['url'] = buildCatUrl($vo['type'], $vo['id'], $vo['url']);
+            }
         }
         return $categorys;
     }

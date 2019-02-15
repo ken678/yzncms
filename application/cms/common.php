@@ -77,7 +77,8 @@ function catpos($catid, $symbol = ' &gt; ')
     //获取当前栏目的 父栏目列表
     $arrparentid = array_filter(explode(',', getCategory($catid, 'arrparentid') . ',' . $catid));
     foreach ($arrparentid as $cid) {
-        $parsestr[] = '<a href="' . getCategory($cid, 'url') . '" >' . getCategory($cid, 'catname') . '</a>';
+        $url = buildCatUrl(getCategory($cid, 'type'), $cid, getCategory($cid, 'url'));
+        $parsestr[] = '<a href="' . $url . '" >' . getCategory($cid, 'catname') . '</a>';
     }
     $parsestr = implode($symbol, $parsestr);
     return $parsestr;
@@ -161,6 +162,22 @@ function str_cut($sourcestr, $length, $dot = '...')
 function buildContentUrl($catid, $id)
 {
     return url('cms/index/shows', ['catid' => $catid, 'id' => $id]);
+}
+
+/**
+ * 生成栏目URL
+ */
+function buildCatUrl($type, $id, $url = '')
+{
+    switch ($type) {
+        case 3: //自定义链接
+            $url = empty($url) ? '' : ((strpos($url, '://') !== false) ? $url : url($url));
+            break;
+        default:
+            $url = url('cms/index/lists', ['catid' => $id]);
+            break;
+    }
+    return $url;
 }
 
 /**

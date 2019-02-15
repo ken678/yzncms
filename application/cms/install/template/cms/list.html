@@ -21,7 +21,7 @@ body {
             <!-- 右侧内容 -->
             <div class="content-right">
                 <!--文章列表开始-->
-                {yzn module="cms" action="lists" catid="$catid" order="listorder ASC" num="10" page="$page" return="data"}
+                {yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="10" page="$page" return="data"}
                 {foreach $data as $key=>$vo }
                 <ul class="list">
                     <li class="item clearfix">

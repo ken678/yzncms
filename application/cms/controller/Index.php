@@ -115,8 +115,8 @@ class Index extends Homebase
         //更新点击量
         //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
         //上下页
-        $previous_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id <" . $id, fasle);
-        $next_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id >" . $id, fasle);
+        $previous_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id <" . $id, false);
+        $next_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id >" . $id, false);
         if (!empty($previous_page)) {
             $previous_page = array('title' => $previous_page['title'], 'url' => $previous_page['url']);
         } else {
