@@ -322,7 +322,7 @@ EOF;
     /**
      * 详情页
      */
-    public function getDataInfo($modeId, $where)
+    public function getDataInfo($modeId, $where, $moreifo = false, $field = "'*'", $order = '')
     {
         //内容模型缓存
         $modelInfo = cache('Model');
@@ -330,15 +330,16 @@ EOF;
             return false;
         }
         $modelInfo = $modelInfo[$modeId];
-        if (2 == $modelInfo['type']) {
+        if (2 == $modelInfo['type'] && $moreifo) {
             $extTable = $modelInfo['tablename'] . $this->ext_table;
-            $dataInfo = Db::view($modelInfo['tablename'], '*')->where($where)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
+            $dataInfo = Db::view($modelInfo['tablename'], '*')->field($field)->where($where)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
         } else {
-            $dataInfo = Db::name($modelInfo['tablename'])->where($where)->find();
+            $dataInfo = Db::name($modelInfo['tablename'])->field($field)->where($where)->find();
         }
         if (!empty($dataInfo)) {
             $fieldinfo = self::where('modelid', $modeId)->where('status', 1)->column('name,type,options,jsonrule,ifsystem');
             $dataInfo = $this->dealModelShowData($fieldinfo, $dataInfo);
+            $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
         }
         return $dataInfo;
     }

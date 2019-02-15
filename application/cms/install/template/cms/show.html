@@ -1,0 +1,31 @@
+{include file="header" /}
+<style type="text/css">
+body {
+    background: #f6f6f6;
+}
+</style>
+<div class="headline-bg"></div>
+<div class="main" style="position: relative;">
+    <div class="w1200">
+        <div class="container-top">
+            <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
+            <!-- 面包屑 -->
+            <div class="bread-nav">
+                <a href="">首页</a>&gt; {:catpos($catid)}
+            </div>
+        </div>
+        <div class="content">
+            <!-- 左侧栏目 -->
+            {include file="sider" /}
+            <!-- 右侧内容 -->
+            <div class="content-right">
+                <div class="about" deep="4">
+                    {$content|raw}
+                    上一篇：<a href="{$previous_page['url']}">{$previous_page['title']}</a><br>
+                    下一篇：<a href="{$next_page['url']}">{$next_page['title']}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="footer" /}
