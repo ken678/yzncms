@@ -104,6 +104,7 @@ class Index extends Homebase
         //栏目ID
         $catid = $this->request->param('catid/d', 0);
         $page = $page = $this->request->param('page/d', 1);
+        $models = cache('Model');
         //获取栏目数据
         $category = getCategory($catid);
         if (empty($category)) {
@@ -111,48 +112,64 @@ class Index extends Homebase
         }
         //模型ID
         $modelid = $category['modelid'];
+        $modelInfo = $models[$modelid];
 
-        //更新点击量
-        //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
-        //上下页
-        $previous_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id <" . $id, false);
-        $next_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id >" . $id, false);
-        if (!empty($previous_page)) {
-            $previous_page = array('title' => $previous_page['title'], 'url' => $previous_page['url']);
+        if ($this->request->isPost()) {
+            //投稿
+            if (!isset($modelInfo)) {
+                $this->error('栏目禁止投稿~');
+            }
+            if (!$modelInfo['ifsub']) {
+                $this->error($modelInfo['title'] . '模型禁止投稿~');
+            }
         } else {
-            $previous_page = array('title' => "没有了", 'url' => 'javascript:alert("没有了");');
-        }
-        if (!empty($next_page)) {
-            $next_page = array('title' => $next_page['title'], 'url' => $next_page['url']);
-        } else {
-            $next_page = array('title' => "没有了", 'url' => 'javascript:alert("没有了");');
-        }
+            //更新点击量
+            //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
+            //上下页
+            $previous_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id <" . $id, false);
+            $next_page = model('ModelField')->getDataInfo($modelid, "catid =" . $catid . " AND id >" . $id, false);
+            if (!empty($previous_page)) {
+                $previous_page = array('title' => $previous_page['title'], 'url' => $previous_page['url']);
+            } else {
+                $previous_page = array('title' => "没有了", 'url' => 'javascript:alert("没有了");');
+            }
+            if (!empty($next_page)) {
+                $next_page = array('title' => $next_page['title'], 'url' => $next_page['url']);
+            } else {
+                $next_page = array('title' => "没有了", 'url' => 'javascript:alert("没有了");');
+            }
 
-        //内容所有字段
-        $data = model('ModelField')->getDataInfo($modelid, "id='" . $id . "'", true);
-        if (empty($data)) {
-            abort(404, '内容不存在或未审核');
+            //内容所有字段
+            $data = model('ModelField')->getDataInfo($modelid, "id='" . $id . "'", true);
+            if (empty($data)) {
+                abort(404, '内容不存在或未审核');
+            }
+            //栏目扩展配置信息
+            $setting = $category['setting'];
+            //内容页模板
+            $template = $setting['show_template'] ? $setting['show_template'] : 'show';
+            //去除模板文件后缀
+            $newstempid = explode(".", $template);
+            $template = $newstempid[0];
+            unset($newstempid);
+            $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+            //获取顶级栏目ID
+            $arrparentid = explode(',', $category['arrparentid']);
+            $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
+            //投稿
+            if (isset($modelInfo['ifsub']) && $modelInfo['ifsub']) {
+                $fieldList = model('ModelField')->getFieldList($modelInfo['id']);
+                $this->assign('fieldList', $fieldList);
+            }
+            $this->assign("previous_page", $previous_page);
+            $this->assign("next_page", $next_page);
+            $this->assign("top_parentid", $top_parentid);
+            $this->assign("SEO", $seo);
+            $this->assign('catid', $catid);
+            $this->assign("page", $page);
+            $this->assign($data);
+            return $this->fetch('/' . $template);
         }
-        //栏目扩展配置信息
-        $setting = $category['setting'];
-        //内容页模板
-        $template = $setting['show_template'] ? $setting['show_template'] : 'show';
-        //去除模板文件后缀
-        $newstempid = explode(".", $template);
-        $template = $newstempid[0];
-        unset($newstempid);
-        $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
-        //获取顶级栏目ID
-        $arrparentid = explode(',', $category['arrparentid']);
-        $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
-        $this->assign("previous_page", $previous_page);
-        $this->assign("next_page", $next_page);
-        $this->assign("top_parentid", $top_parentid);
-        $this->assign("SEO", $seo);
-        $this->assign('catid', $catid);
-        $this->assign("page", $page);
-        $this->assign($data);
-        return $this->fetch('/' . $template);
 
     }
 

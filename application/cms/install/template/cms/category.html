@@ -23,7 +23,7 @@ body {
             	<!--文章列表开始-->
                 <ul class="list">
                 {yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="10" page="$page" return="data"}
-                {foreach $data as $key=>$vo }
+                {volist name="data" id="vo"}
                     <li class="item clearfix">
                         <a href="{$vo['url']}" title="{$vo['title']}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo['title']}">
                             <div class="time fr"><span class="day">{$vo.updatetime|date="m-d"}</span><span class="year">{$vo.updatetime|date="Y"}</span></div>
@@ -31,7 +31,7 @@ body {
                             <div class="txt">{$vo.description|str_cut=###,60}</div>
                         </a>
                     </li>
-                {/foreach}
+                {/volist}
                 {/yzn}
                 </ul>
                 <!--文章列表结束-->
