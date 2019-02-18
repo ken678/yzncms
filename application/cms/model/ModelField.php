@@ -519,7 +519,7 @@ EOF;
      * @param  string  $field   []
      * @param  string  $order   []
      */
-    public function getDataInfo($modeId, $where, $moreifo = false, $field = "'*'", $order = '')
+    public function getDataInfo($modeId, $where, $moreifo = false, $field = '*', $order = '')
     {
         $modelInfo = cache('Model');
         $ModelField = cache('ModelField');
@@ -529,7 +529,7 @@ EOF;
         $modelInfo = $modelInfo[$modeId];
         if (2 == $modelInfo['type'] && $moreifo) {
             $extTable = $modelInfo['tablename'] . $this->ext_table;
-            $dataInfo = Db::view($modelInfo['tablename'], '*')->field($field)->where($where)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
+            $dataInfo = Db::view($modelInfo['tablename'], '*')->where($where)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
         } else {
             $dataInfo = Db::name($modelInfo['tablename'])->field($field)->where($where)->find();
         }
