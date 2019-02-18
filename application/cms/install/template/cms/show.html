@@ -20,9 +20,25 @@ body {
             <!-- 右侧内容 -->
             <div class="content-right">
                 <div class="about" deep="4">
-                    {$content|raw}
-                    上一篇：<a href="{$previous_page['url']}">{$previous_page['title']}</a><br>
-                    下一篇：<a href="{$next_page['url']}">{$next_page['title']}</a>
+                    <div class="newsshow">
+                        <div class="new_til">
+                            <h2>{$title}</h2>
+                            <div class="date clearfix">
+                                <span class="s1">时间：{$inputtime|date='Y-m-d H:i'}</span>
+                                <span class="s2">阅读：99</span>
+                                <span class="s3">来源：互联网</span></div>
+                        </div>
+                        <div class="newsview">
+                            {$content|raw}
+                        </div>
+                        <div class="viewpage">
+                            <div class="main_r_nav">
+                                <a href="{$previous_page['url']}">上一篇：{$previous_page['title']}</a>
+                                <a href="{$next_page['url']}">下一篇：{$next_page['title']}</a>
+                            </div>
+                            <div class="returnlist"> <a href="javascript:history.go(-1);" title="返回列表">返回列表</a> </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

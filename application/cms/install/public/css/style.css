@@ -479,7 +479,7 @@
     margin-left: 15px;
 }
 .newsPage .item:hover h3 {
-    color: #3fb150;
+    color: #f90712;
 }
 .newsPage .item:hover .time .day span {
     background: #6d6d6d;
@@ -487,6 +487,96 @@
 .newsPage .item:hover .time .day strong {
     background: #ff0000;
     color: #fff;
+}
+.viewpage {
+    background: #eee;
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+}
+/*新闻详情页*/
+.newsshow {
+    padding-top: 25px;
+}
+.newsview {
+    min-height: 400px;
+    display: inline;
+    margin-top: 30px;
+    border-top: 1px solid #fff;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    font-size: 14px;
+    line-height: 33px;
+    float: left;
+    color: #777;
+}
+.newsshow h2 {
+    color: #333333;
+    font-size: 26px;
+    font-weight: normal;
+}
+.newsshow .date {
+    font-size: 14px;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eeeeee;
+}
+.newsshow .date span {
+    display: block;
+    float: left;
+    color: #999999;
+    margin-right: 30px;
+    padding-left: 22px;
+}
+.newsshow .date .s1 {
+    background: url(../images/news_icon1.jpg) no-repeat left center;
+}
+.newsshow .date .s2 {
+    background: url(../images/news_icon2.jpg) no-repeat left center;
+}
+.newsshow .date .s3 {
+    background: url(../images/news_icon3.jpg) no-repeat left center;
+}
+.main_r_nav {
+    float: left;
+    width: 754px;
+    height: 66px;
+    padding: 10px 0;
+    font-size: 14px;
+    margin-left: 20px;
+    display: inline;
+}
+.main_r_nav a {
+    color: #777;
+    float: left;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 33px;
+    font-size: 14px;
+}
+.main_r_nav a:hover{
+    color: #f90712;
+}
+.returnlist {
+    width: 50px;
+    height: 56px;
+    padding: 15px 18px;
+    display: inline;
+    float: right;
+    color: #fff;
+    line-height: 30px;
+    font-size: 12px;
+    background: #2f2e2e;
+}
+.returnlist a {
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    font-family: "microsoft yahei";
+    width: 100%;
+    display: block;
 }
 /*底部*/
 .footer {
