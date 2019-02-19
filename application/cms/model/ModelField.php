@@ -471,32 +471,43 @@ EOF;
         return [$data, $dataExt];
     }
 
-    public function getDataList($modeId, $data)
+    /**
+     * 列表页
+     * @param   $modeId  []
+     * @param   $where   []
+     * @param   $moreifo []
+     * @param   $field   []
+     * @param   $order   []
+     * @param   $limit   []
+     * @param   $page    []
+     */
+    public function getDataList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null)
     {
         $modelCache = cache("Model");
         $ModelField = cache('ModelField');
         $tableName = $modelCache[$modeId]['tablename']; //表名
 
-        if (2 == $modelCache[$modelid]['type'] && $data['moreinfo']) {
+        if (2 == $modelCache[$modelid]['type'] && $moreifo) {
             $extTable = $tableName . $this->ext_table;
-            if ($data['page']) {
+            if ($page) {
                 $result = \think\Db::view(ucwords($tableName), '*')
-                    ->where($this->where)
+                    ->where($where)
                     ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                    ->order($data['order'])
-                    ->paginate($data['limit']);
+                    ->order($order)
+                    ->paginate($limit);
             } else {
                 $result = \think\Db::view(ucwords($tableName), '*')
-                    ->where($this->where)->limit($data['limit'])
+                    ->where($where)
+                    ->limit($limit)
                     ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                    ->order($data['order'])
+                    ->order($order)
                     ->select();
             }
         } else {
-            if ($data['page']) {
-                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->order($data['order'])->paginate($data['limit']);
+            if ($page) {
+                $result = \think\Db::name(ucwords($tableName))->where($where)->order($order)->paginate($limit);
             } else {
-                $result = \think\Db::name(ucwords($tableName))->where($data['where'])->limit($data['limit'])->order($data['order'])->select();
+                $result = \think\Db::name(ucwords($tableName))->where($where)->limit($limit)->order($order)->select();
             }
         }
         //数据格式化处理

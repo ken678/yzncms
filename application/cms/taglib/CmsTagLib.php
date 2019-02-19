@@ -93,8 +93,7 @@ class CmsTagLib
         $catInfo = getCategory($data['catid']);
         //栏目所属模型
         $modelid = $catInfo['modelid'];
-        $data['where'] = $this->where($data);
-        $result = model('ModelField')->getDataList($modelid, $data);
+        $result = model('ModelField')->getDataList($modelid, $this->where($data), $data['moreifo'], $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
     }
 

@@ -70,8 +70,8 @@ CREATE TABLE `yzn_product_data` (
   PRIMARY KEY (`did`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
 
-DROP TABLE IF EXISTS `yzn_message`;
-CREATE TABLE `yzn_message` (
+DROP TABLE IF EXISTS `yzn_guestbook`;
+CREATE TABLE `yzn_guestbook` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
@@ -101,7 +101,7 @@ INSERT INTO `yzn_category` VALUES ('16', '响应式网站', 'responsive', '2', '
 INSERT INTO `yzn_category` VALUES ('17', '手机网站', 'mobile', '2', '2', '5', '0,5', '0', '17', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '3', '1');
 INSERT INTO `yzn_category` VALUES ('1', '关于我们', 'about', '3', '0', '0', '0', '1', '1,2,3,4', '0', '', 'cms/index/lists?catid=2', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '1', '1');
 INSERT INTO `yzn_category` VALUES ('18', '联系方式', 'fangshi', '1', '0', '8', '0,8', '0', '18', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
-INSERT INTO `yzn_category` VALUES ('19', '在线留言', 'message', '2', '5', '8', '0,8', '0', '19', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
+INSERT INTO `yzn_category` VALUES ('19', '在线留言', 'guestbook', '2', '5', '8', '0,8', '0', '19', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
 
 
 INSERT INTO `yzn_position` VALUES ('1', '0', '0', '首页幻灯片', '1500272764', '1500519504', '1');
@@ -113,7 +113,7 @@ INSERT INTO `yzn_model` VALUES ('1', '文章模型', 'article', '文章模型', 
 INSERT INTO `yzn_model` VALUES ('2', '图片模型', 'picture', '图片模型', '2', '1548754193', '1548754193', '0', '0', '1');
 INSERT INTO `yzn_model` VALUES ('3', '产品模型', 'product', '产品模型', '2', '1549165800', '1549165800', '0', '0', '1');
 INSERT INTO `yzn_model` VALUES ('4', '下载模型', 'download', '下载模型', '2', '1549624988', '1549624988', '0', '0', '1');
-INSERT INTO `yzn_model` VALUES ('5', '留言本', 'message', '留言本', '1', '1550480944', '1550480944', '1', '0', '1');
+INSERT INTO `yzn_model` VALUES ('5', '留言本', 'guestbook', '留言本', '1', '1550480944', '1550480944', '1', '0', '1');
 
 
 INSERT INTO `yzn_model_field` VALUES ('1', '1', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
