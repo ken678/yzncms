@@ -252,7 +252,13 @@ EOF;
             Db::name($tablename)->where('id', $id)->update($data);
             //附表
             if (!empty($dataExt)) {
-                Db::name($tablename . $this->ext_table)->where('did', $id)->update($dataExt);
+                //查询是否存在ID 不存在则新增
+                if (Db::name($tablename . $this->ext_table)->where('did', $id)->find()) {
+                    Db::name($tablename . $this->ext_table)->where('did', $id)->update($dataExt);
+                } else {
+                    $dataExt['did'] = $id;
+                    Db::name($tablename . $this->ext_table)->insert($dataExt);
+                };
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
