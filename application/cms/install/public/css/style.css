@@ -424,12 +424,13 @@
 }
 
 .cc-info {
-    padding: 20px 25px 40px 30px;
+    padding: 20px 20px 40px 20px;
     background-color: #f6f6f6;
 }
 
 .cc-info p {
     color: #666666;
+    font-size: 14px;
     line-height: 26px;
 }
 /*留言*/

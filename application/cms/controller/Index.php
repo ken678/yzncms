@@ -174,7 +174,13 @@ class Index extends Homebase
         $this->assign("page", $page);
         $this->assign($data);
         return $this->fetch('/' . $template);
+    }
 
+    /**
+     * 简单搜索
+     */
+    public function search{
+        
     }
 
 }
