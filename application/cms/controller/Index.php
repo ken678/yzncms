@@ -138,19 +138,6 @@ class Index extends Homebase
 
         //更新点击量
         //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
-        //上下页
-        $previous_page = $this->modelfield->getDataInfo($modelid, "catid =" . $catid . " AND id <" . $id, false);
-        $next_page = $this->modelfield->getDataInfo($modelid, "catid =" . $catid . " AND id >" . $id, false);
-        if (!empty($previous_page)) {
-            $previous_page = array('title' => $previous_page['title'], 'url' => $previous_page['url']);
-        } else {
-            $previous_page = array('title' => "没有了", 'url' => 'javascript:alert("没有了");');
-        }
-        if (!empty($next_page)) {
-            $next_page = array('title' => $next_page['title'], 'url' => $next_page['url']);
-        } else {
-            $next_page = array('title' => "没有了", 'url' => 'javascript:alert("没有了");');
-        }
 
         //内容所有字段
         $data = $this->modelfield->getDataInfo($modelid, "id='" . $id . "'", true);
@@ -169,8 +156,7 @@ class Index extends Homebase
         //获取顶级栏目ID
         $arrparentid = explode(',', $category['arrparentid']);
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
-        $this->assign("previous_page", $previous_page);
-        $this->assign("next_page", $next_page);
+
         $this->assign("top_parentid", $top_parentid);
         $this->assign("SEO", $seo);
         $this->assign('catid', $catid);

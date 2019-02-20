@@ -33,8 +33,12 @@ body {
                         </div>
                         <div class="viewpage">
                             <div class="main_r_nav">
-                                <a href="{$previous_page['url']}">上一篇：{$previous_page['title']}</a>
-                                <a href="{$next_page['url']}">下一篇：{$next_page['title']}</a>
+                                {yzn module="cms" action="pre" catid="$catid" id="$id" cache="3600" return="data"}
+                                <a href="{$data['url']}" {$target}>上一篇：{$data['title']}</a>
+                                {/yzn}
+                                {yzn module="cms" action="next" catid="$catid" id="$id" cache="3600" return="data"}
+                                <a href="{$data['url']}" {$target}>下一篇：{$data['title']}</a>
+                                {/yzn}
                             </div>
                             <div class="returnlist"> <a href="javascript:history.go(-1);" title="返回列表">返回列表</a> </div>
                         </div>

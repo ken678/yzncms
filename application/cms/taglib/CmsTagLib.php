@@ -97,4 +97,46 @@ class CmsTagLib
         return $result;
     }
 
+    /**
+     * 上一页
+     */
+    public function pre($data)
+    {
+        //当没有内容时的提示语
+        $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
+        //是否新窗口打开
+        $target = !empty($data['blank']) ? ' target="_blank" ' : ' target="_self" ';
+        $result = model('ModelField')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
+        if (!$result) {
+            $result['title'] = $msg;
+            $result['url'] = 'javascript:alert("' . $msg . '");';
+            $result['blank'] = $target;
+        } else {
+            $result['blank'] = $target;
+        }
+        return $result;
+
+    }
+
+    /**
+     * 下一页
+     */
+    public function next($data)
+    {
+        //当没有内容时的提示语
+        $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
+        //是否新窗口打开
+        $target = !empty($data['blank']) ? ' target=\"_blank\" ' : '';
+        $result = model('ModelField')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
+        if (!$result) {
+            $result['title'] = $msg;
+            $result['url'] = 'javascript:alert("' . $msg . '");';
+            $result['blank'] = $target;
+        } else {
+            $result['blank'] = $target;
+        }
+        return $result;
+
+    }
+
 }
