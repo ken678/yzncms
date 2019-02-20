@@ -151,8 +151,8 @@ class Index extends Homebase
         //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
 
         //内容所有字段
-        $data = $this->modelfield->getDataInfo($modelid, "id='" . $id . "'", true);
-        if (empty($data)) {
+        $info = $this->modelfield->getDataInfo($modelid, "id='" . $id . "'", true);
+        if (empty($info)) {
             abort(404, '内容不存在或未审核');
         }
         //栏目扩展配置信息
@@ -163,7 +163,13 @@ class Index extends Homebase
         $newstempid = explode(".", $template);
         $template = $newstempid[0];
         unset($newstempid);
-        $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+
+        //SEO
+        $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
+        $title = $info['title'] ? $info['title'] : $setting['meta_title'];
+        $description = $info['description'] ? $info['description'] : $setting['meta_description'];
+        $seo = seo($catid, $title, $description, $keywords);
+
         //获取顶级栏目ID
         $arrparentid = explode(',', $category['arrparentid']);
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
@@ -172,7 +178,7 @@ class Index extends Homebase
         $this->assign("SEO", $seo);
         $this->assign('catid', $catid);
         $this->assign("page", $page);
-        $this->assign($data);
+        $this->assign($info);
         return $this->fetch('/' . $template);
     }
 
