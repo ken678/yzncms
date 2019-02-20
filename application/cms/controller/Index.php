@@ -63,6 +63,17 @@ class Index extends Homebase
             if (!$modelInfo['ifsub']) {
                 $this->error($modelInfo['title'] . '模型禁止投稿~');
             }
+            $data = $this->request->post();
+            $data['modelField']['catid'] = $catid;
+            $data['modelField']['listorder'] = 100;
+            $data['modelField']['status'] = 0;
+            $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+            try {
+                $this->modelfield->addModelData($data['modelField'], $data['modelFieldExt']);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+            $this->success($modelInfo['title'] . '提交成功~');
         } else {
             //栏目扩展配置信息
             $setting = $category['setting'];
