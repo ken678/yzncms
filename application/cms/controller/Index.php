@@ -179,8 +179,9 @@ class Index extends Homebase
     /**
      * 简单搜索
      */
-    public function search{
-        
+    public function search()
+    {
+
     }
 
 }
