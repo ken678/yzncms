@@ -70,13 +70,13 @@ CREATE TABLE `yzn_product_data` (
   PRIMARY KEY (`did`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
 
+
+
 DROP TABLE IF EXISTS `yzn_guestbook`;
 CREATE TABLE `yzn_guestbook` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '您的姓名',
   `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
@@ -84,8 +84,13 @@ CREATE TABLE `yzn_guestbook` (
   `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的电话',
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的邮箱',
+  `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的意见或建议',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='留言本模型表';
+
+
 
 INSERT INTO `yzn_category` VALUES ('2', '公司简介', 'Introduction', '1', '0', '1', '0,1', '0', '2', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '1', '1');
 INSERT INTO `yzn_category` VALUES ('3', '企业文化', 'culture', '1', '0', '1', '0,1', '0', '3', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '2', '1');
@@ -177,13 +182,14 @@ INSERT INTO `yzn_model_field` VALUES ('77', '5', 'status', '状态', '', 'radio'
 INSERT INTO `yzn_model_field` VALUES ('75', '5', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1550480944', '1550480944', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('76', '5', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1550480944', '1550480944', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('74', '5', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('73', '5', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('72', '5', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('71', '5', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1550480944', '1550480944', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('81', '5', 'phone', '您的电话', '', 'text', 'varchar(255) NOT NULL DEFAULT \'\'', '', '', '', '1', '1', '0', '1', '1', '1550629851', '1550630223', '2', '1');
+INSERT INTO `yzn_model_field` VALUES ('82', '5', 'email', '您的邮箱', '', 'text', 'varchar(255) NOT NULL DEFAULT \'\'', '', '', '', '1', '1', '0', '1', '1', '1550629880', '1550630224', '3', '1');
+INSERT INTO `yzn_model_field` VALUES ('71', '5', 'title', '您的姓名', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1550480944', '1550630221', '1', '1');
 INSERT INTO `yzn_model_field` VALUES ('70', '5', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1550480944', '1550480944', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('69', '5', 'id', '文档id', '', 'hidden', 'mediumint(8) UNSIGNED', '', '', '', '1', '1', '1', '0', '0', '1550480944', '1550480944', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('79', '5', 'updatetime', '更新时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '0', '1', '0', '0', '1550480944', '1550480944', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('80', '5', 'hits', '点击量', '', 'number', 'mediumint(8) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1550480944', '1550480944', '200', '1');
+INSERT INTO `yzn_model_field` VALUES ('83', '5', 'content', '您的意见或建议', '', 'textarea', 'varchar(255) NOT NULL DEFAULT \'\'', '', '', '', '1', '1', '0', '1', '1', '1550629912', '1550630226', '4', '1');
 
 
 INSERT INTO `yzn_article` VALUES ('1', '9', '让客户留住更长时间访问你的网站', '', '什么能让您的客户“一见钟情”？除了网站的界面，没有其他因素。网站的界面是非常重要的因素之一。因为这是客户访问网站时的第一印象。那时，您需要为客户提供一个吸引人且引人注目的界面。要做到这一点非常容易，你只需要有一个合理布局的界面，整洁不要分散读者的注意力。在与网站互动时，客户可以轻松搜索他们需要学习的信息。此外，您还可以使用一些额外的注释来使界面更加美观：首先，效果的最大效果用于避免分散用户的注意力。这些效果甚至会使网站更重，并且加载速度更慢。其次，您可以创建更多可用空间并消除不重要的信息，从而使关键消息更', '0', '100', '0', '0', '1550188136', '1550476672', '1');
