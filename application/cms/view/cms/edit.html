@@ -8,7 +8,7 @@
     <label class="">推荐位</label>
     <div class="layui-form-field-label">
         {volist name="position" id="v"}
-        <input type="checkbox" name="modelField[posid][]" lay-skin="primary" title="{$v}" value="{$key}">
+        <input type="checkbox" name="modelField[posid][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$posids)}checked=''{/if}>
         {/volist}
     </div>
     </div>

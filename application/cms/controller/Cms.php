@@ -175,8 +175,7 @@ class Cms extends Adminbase
                     $array[$_key] = $_value['name'];
                 }
                 //已经推荐
-                $result = model('PositionData')->where(['id' => $id, 'modelid' => $modelid])->column("id");
-                $posids = implode(',', array_keys($result));
+                $posids = model('PositionData')->where(['id' => $id, 'modelid' => $modelid])->column("posid");
                 $this->assign([
                     'posids' => $posids,
                     'position' => $array,

@@ -109,9 +109,43 @@ class Position extends Model
         $arr['posid'] = $posid;
         if ($undel == 0) {
             //删除推荐位
-            //$pos_info = $this->position_del($catid, $id, $posid);
+            $pos_info = $this->position_del($catid, $id, $posid);
         }
         return $this->position_list($arr, $expiration) ? true : false;
+    }
+
+    /**
+     * 推荐位删除计算
+     * Enter description here ...
+     * @param int $catid 栏目ID
+     * @param int $id 文章id
+     * @param array $input_posid 传入推荐位数组
+     */
+    private function position_del($catid, $id, $input_posid)
+    {
+        $array = array();
+        $pos_data = model('PositionData');
+        //查找已存在推荐位
+        $olPosid = $pos_data->where(array('id' => $id, 'catid' => $catid))->column('posid');
+        if (empty($olPosid)) {
+            return false;
+        }
+        //差集计算，需要删除的推荐
+        $real_posid = array_diff($olPosid, $input_posid);
+        if (empty($real_posid)) {
+            return false;
+        }
+        $status = $pos_data->where([
+            ['catid', '=', $catid],
+            ['modelid', '=', getCategory($catid, 'modelid')],
+            ['id', '=', $id],
+            ['posid', 'in', $real_posid],
+        ])->delete();
+        if (false !== $status) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -130,7 +164,13 @@ class Position extends Model
                 $info['catid'] = intval($arr['catid']);
                 $info['posid'] = $pid;
                 $info['modelid'] = intval($arr['modelid']);
-                $r = $PositionData->isUpdate(false)->allowField(true)->save($info);
+                //判断推荐位数据是否存在，不存在新增
+                $r = $PositionData->where(array('id' => $info['id'], 'posid' => $pid, 'catid' => $info['catid']))->find();
+                if ($r) {
+                    $PositionData->isUpdate(true)->allowField(true)->save($info);
+                } else {
+                    $PositionData->isUpdate(false)->allowField(true)->save($info);
+                }
             }
         }
         return true;

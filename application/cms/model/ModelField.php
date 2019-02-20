@@ -216,6 +216,7 @@ EOF;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+        //推荐位
         if ($posid && is_array($posid)) {
             $posids = array();
             foreach ($posid as $r) {
@@ -242,6 +243,7 @@ EOF;
         }
 
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
+        $posid = $data['posid'];
         list($data, $dataExt) = $dataAll;
 
         if (!isset($data['updatetime'])) {
@@ -262,6 +264,16 @@ EOF;
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
+        }
+        //推荐位
+        if ($posid && is_array($posid)) {
+            $posids = array();
+            foreach ($posid as $r) {
+                if ($r != '-1') {
+                    $posids[] = $r;
+                }
+            }
+            model('Position')->positionUpdate($id, $modelid, $catid, $posids, 0, 0);
         }
     }
 
