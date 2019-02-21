@@ -297,6 +297,66 @@
     background-position: -6px -137px;
 }
 
+/*首页*/
+.main_case{
+    overflow: hidden;
+    min-height: 500px;
+    background: #fff;
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.main_new {
+    overflow: hidden;
+    min-height: 500px;
+    background: #f7f7f7;
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.m_til {
+    text-align: center;
+}
+.m_til em {
+    display: block;
+    line-height: 60px;
+    position: relative;
+    font-size: 35px;
+    color: #3f3f3f;
+}
+.m_til .enfont {
+    font-family: 华文细黑;
+    letter-spacing: .06em;
+    transform: scale(1,1.1);
+    text-transform: uppercase;
+}
+.m_til em i {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 26px;
+    height: 2px;
+    margin-left: -13px;
+    background: #E74C3C;
+}
+.m_til span {
+    line-height: 66px;
+    font-size: 24px;
+    color: #292828;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*内页*/
 .headline-bg {
     position: absolute;
