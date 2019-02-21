@@ -23,32 +23,44 @@ body {
                     <form action="" method="post" name="myform">
                         <h4>如果您对我们有任何的建议或咨询，可以在这里留言，我们将尽快回复您的咨询。</h4>
                         <div class="message">
-                        	<!--此处只展示单文本和多文本 更多组件自行拓展-->
-                        	{volist name="fieldList" id="vo"}
+                            <!--此处只展示单文本和多文本 更多组件自行拓展-->
+                            {volist name="fieldList" id="vo"}
                             {if $vo.ifeditable && !in_array($vo.name,['listorder','status'])}
-                        	{switch name="vo.type"}
-							{case value="text"}
-							<div class="field_{$vo.name}">
-							    <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="{$vo.title}{if $vo.ifrequire}*{/if}" value="{$vo.value}">
-							    {if $vo.remark} <small class="text-muted">{$vo.remark}</small>{/if}
-							</div>
-							{/case}
-							{case value="textarea"}
-							<div class="field_{$vo.name}">
-							    <textarea class="form-control" rows="5" name="{$vo.fieldArr}[{$vo.name}]" placeholder="{$vo.title}{if $vo.ifrequire}*{/if}">{$vo.value}</textarea>
-							    {if $vo.remark} <small class="text-muted">{$vo.remark}</small>{/if}
-							</div>
-							{/case}
-							{/switch}
+                            {switch name="vo.type"}
+                            {case value="text"}
+                            <div class="field_{$vo.name}">
+                                <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="{$vo.title}{if $vo.ifrequire}*{/if}" value="{$vo.value}">
+                                {if $vo.remark} <small class="text-muted">{$vo.remark}</small>{/if}
+                            </div>
+                            {/case}
+                            {case value="textarea"}
+                            <div class="field_{$vo.name}">
+                                <textarea class="form-control" rows="5" name="{$vo.fieldArr}[{$vo.name}]" placeholder="{$vo.title}{if $vo.ifrequire}*{/if}">{$vo.value}</textarea>
+                                {if $vo.remark} <small class="text-muted">{$vo.remark}</small>{/if}
+                            </div>
+                            {/case}
+                            {/switch}
                             {/if}
                             {/volist}
+                            <div class="field_code">
+                                <input type="text" name="captcha" placeholder="验证码*" value="" style="width: 100px;">
+                                <img id="verify" src="{:url('api/checkcode/getVerify','font_size=18&imageW=130&imageH=38')}" title="点击刷新" alt="验证码" class="captcha">
+							</div>
                             <!--此处只展示单文本和多文本 更多组件自行拓展-->
-                        </div>
-                        <input type="submit" value="提交">
+                            </div>
+                            {:token()}
+                            <input type="submit" value="提交">
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+//刷新验证码
+$("#verify").click(function() {
+    var verifyimg = $("#verify").attr("src");
+    $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+});
+</script>
 {include file="footer" /}

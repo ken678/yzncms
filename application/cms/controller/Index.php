@@ -63,7 +63,17 @@ class Index extends Homebase
             if (!$modelInfo['ifsub']) {
                 $this->error($modelInfo['title'] . '模型禁止投稿~');
             }
+
             $data = $this->request->post();
+            // 验证码
+            if (!captcha_check($data['captcha'])) {
+                $this->error('验证码错误或失效');
+            }
+            //令牌验证
+            $vresult = $this->validate($data, ['__token__|令牌' => 'require|token']);
+            if (true !== $vresult) {
+                $this->error($vresult);
+            }
             $data['modelField']['catid'] = $catid;
             $data['modelField']['listorder'] = 100;
             $data['modelField']['status'] = 0;
