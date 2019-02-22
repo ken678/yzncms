@@ -46,6 +46,9 @@ class install extends InstallBase
                 }
             }
         }
+        //复制路由
+        $route_file = APP_PATH . str_replace("/", DIRECTORY_SEPARATOR, "cms/install/route_cms.php");
+        copy($route_file, ROOT_PATH . 'route' . DIRECTORY_SEPARATOR . 'route_cms.php');
         return true;
     }
 
