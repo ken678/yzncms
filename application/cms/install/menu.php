@@ -33,6 +33,13 @@ return [
                         "name" => "管理内容",
                         "icon" => "icon-neirongguanli",
                     ],
+                    [
+                        "route" => "cms/tags/index",
+                        "type" => 1,
+                        "status" => 1,
+                        "name" => "tags管理",
+                        "icon" => "icon-tags",
+                    ],
                 ],
             ],
             [
