@@ -298,26 +298,10 @@
 }
 
 /*首页*/
-.main_case{
-    overflow: hidden;
-    min-height: 500px;
-    background: #fff;
-    width: 100%;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-.main_new {
-    overflow: hidden;
-    min-height: 500px;
-    background: #f7f7f7;
-    width: 100%;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-
 .m_til {
     text-align: center;
 }
+
 .m_til em {
     display: block;
     line-height: 60px;
@@ -325,12 +309,14 @@
     font-size: 35px;
     color: #3f3f3f;
 }
+
 .m_til .enfont {
     font-family: 华文细黑;
     letter-spacing: .06em;
-    transform: scale(1,1.1);
+    transform: scale(1, 1.1);
     text-transform: uppercase;
 }
+
 .m_til em i {
     position: absolute;
     left: 50%;
@@ -340,19 +326,103 @@
     margin-left: -13px;
     background: #E74C3C;
 }
+
 .m_til span {
     line-height: 66px;
     font-size: 24px;
     color: #292828;
 }
 
+.main_case {
+    overflow: hidden;
+    min-height: 500px;
+    background: #fff;
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
 
+.main_new {
+    overflow: hidden;
+    min-height: 500px;
+    background: #f2f1f6 url(../images/inews_bg.gif) no-repeat center bottom;
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.news_list{
+    margin-top: 40px;
+}
+.news_list li {
+    float: left;
+    width: 375px;
+    margin-right: 25px;
+}
 
+.news_list li ._date {
+    width: 55px;
+    float: left;
+    height: 65px;
+    background: url(../images/inews_d.png) no-repeat 0 0;
+    color: #fff;
+    text-align: center;
+    margin-left: 2%;
+}
 
+.news_list li ._date ._d1 {
+    display: block;
+    font-size: 20px;
+    line-height: 24px;
+    padding-top: 10px;
+}
 
+.news_list li ._date ._d2 {
+    display: block;
+    line-height: 20px;
+    font-size: 12px;
+}
 
+.news_list li ._nr {
+    width: 300px;
+    float: right;
+}
 
+.news_list li ._title {
+    font-size: 16px;
+    line-height: 25px;
+    height: 50px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
 
+.news_list li ._sum {
+    line-height: 24px;
+    height: 96px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.news_list li ._more {
+    display: block;
+    width: 150px;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #898989;
+    text-align: center;
+    font-size: 14px;
+}
+
+.news_list li:hover ._more {
+    background: #fa0712;
+    border-color: #fa0712;
+    color: #fff;
+}
+
+.news_list li:hover ._date {
+    background-image: url(../images/inews_don.png);
+}
 
 
 

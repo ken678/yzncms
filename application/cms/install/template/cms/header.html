@@ -13,39 +13,40 @@
 </head>
 
 <body>
-    <!--头部-->
+    <!--S 头部-->
     <div class="header">
         <div class="w1200">
             <div class="logo fl">
                 <img src="__IMG_PATH__/logo.png" alt="" />
 		    </div>
             <div class="topright fr">
-            	<!--搜索栏开始-->
+            	<!--S 搜索栏-->
             	<div class="topbtn fr">
             		<div class="search-box fr">
             			<span class="butn hov"><i></i></span>
 						<div class="share-sub" style="width: 0px;">
-						    <form name="formsearch" action="/13105/plus/search.php">
-						        <input type="hidden" name="kwtype" value="0">
+						    <form name="formsearch" action="">
 						        <input class="fl tex" type="text" name="q" value="请输入关键字" onfocus="if(this.value==defaultValue)this.value=''" onblur="if(this.value=='')this.value=defaultValue">
 						        <input type="submit" value="" class="fl sub-btn ico">
 						    </form>
 						</div>
             		</div>
             	</div>
+                <!--E 搜索栏-->
+                <!--S 导航-->
                 <div class="nav fr">
                     <ul class="navlist">
                         <li {if !isset($catid)}class="hover"{/if}><a href="{:url('cms/index/index')}" title="首页">首页</a></li>
                         {yzn module="cms" action="category" catid="0" cache="3600" order="listorder ASC" num="10" return="data"}
                         {foreach $data as $key=>$vo }
                         <li {if isset($catid) && in_array($catid,explode(',',$vo['arrchildid']))}class='hover'{/if}>
-                            <a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
+                            <a href="{$vo.url}" title="{$vo.catname}">{$vo.catname}</a>
                             <!--判断是否有子栏目-->
                             {eq name="vo.child" value="1"}
                             <div class="subnav">
                                 {yzn module="cms" action="category" catid="$vo['id']" cache="3600" order="listorder ASC" num="10" return="data"}
                                 {foreach $data as $key=>$vo }
-                                <a href="{$vo['url']}" title="{$vo['catname']}">{$vo['catname']}</a>
+                                <a href="{$vo.url}" title="{$vo.catname}">{$vo.catname}</a>
                                 {/foreach}
                                 {/yzn}
                             </div>
@@ -55,6 +56,8 @@
                         {/yzn}
                     </ul>
                 </div>
+                <!--E 导航-->
             </div>
         </div>
+        <!--E 头部-->
     </div>

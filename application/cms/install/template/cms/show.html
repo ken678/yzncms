@@ -15,9 +15,10 @@ body {
             </div>
         </div>
         <div class="content">
-            <!-- 左侧栏目 -->
+            <!--S 左侧栏目 -->
             {include file="sider" /}
-            <!-- 右侧内容 -->
+            <!--E 左侧栏目 -->
+            <!--S 右侧内容 -->
             <div class="content-right">
                 <div class="about" deep="4">
                     <div class="newsshow">
@@ -34,10 +35,10 @@ body {
                         <div class="viewpage">
                             <div class="main_r_nav">
                                 {yzn module="cms" action="pre" catid="$catid" id="$id" cache="3600" return="data"}
-                                <a href="{$data['url']}" {$target}>上一篇：{$data['title']}</a>
+                                <a href="{$data.url}" {$data.target}>上一篇：{$data.title}</a>
                                 {/yzn}
                                 {yzn module="cms" action="next" catid="$catid" id="$id" cache="3600" return="data"}
-                                <a href="{$data['url']}" {$target}>下一篇：{$data['title']}</a>
+                                <a href="{$data.url}" {$data.target}>下一篇：{$data.title}</a>
                                 {/yzn}
                             </div>
                             <div class="returnlist"> <a href="javascript:history.go(-1);" title="返回列表">返回列表</a> </div>
@@ -45,6 +46,7 @@ body {
                     </div>
                 </div>
             </div>
+            <!--E 右侧内容 -->
         </div>
     </div>
 </div>

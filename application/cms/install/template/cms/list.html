@@ -10,32 +10,35 @@ body {
     <div class="w1200">
         <div class="container-top">
             <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
-            <!-- 面包屑 -->
+            <!--S 面包屑 -->
             <div class="bread-nav">
                 <a href="">首页</a>&gt; {:catpos($catid)}
             </div>
+            <!--E 面包屑 -->
         </div>
         <div class="content newsPage">
-            <!-- 左侧栏目 -->
+            <!--S 左侧栏目 -->
             {include file="sider" /}
-            <!-- 右侧内容 -->
+            <!--E 左侧栏目 -->
+            <!--S 右侧内容 -->
             <div class="content-right">
-                <!--文章列表开始-->
+                <!--S 文章列表-->
                 <ul class="list">
                 {yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="10" page="$page" return="data"}
                 {volist name="data" id="vo"}
                     <li class="item clearfix">
-                        <a href="{$vo['url']}" title="{$vo['title']}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo['title']}">
+                        <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo.title}">
                             <div class="time fr"><span class="day">{$vo.updatetime|date="m-d"}</span><span class="year">{$vo.updatetime|date="Y"}</span></div>
-                            <h3>{$vo['title']}</h3>
+                            <h3>{$vo.title}</h3>
                             <div class="txt">{$vo.description|str_cut=###,60}</div>
                         </a>
                     </li>
                 {/volist}
                 {/yzn}
                 </ul>
-                <!--文章列表结束-->
+                <!--E 文章列表-->
             </div>
+            <!--E 右侧内容 -->
         </div>
     </div>
 </div>

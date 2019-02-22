@@ -9,32 +9,36 @@ body {
     <div class="w1200">
         <div class="container-top">
             <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
-            <!-- 面包屑 -->
+            <!--S 面包屑 -->
             <div class="bread-nav">
                 <a href="">首页</a>&gt; {:catpos($catid)}
             </div>
+            <!--E 面包屑 -->
         </div>
         <div class="content">
-            <!-- 左侧栏目 -->
+            <!--S 左侧栏目 -->
             {include file="sider" /}
-            <!-- 右侧内容 -->
+            <!--E 左侧栏目 -->
+            <!--S 右侧内容 -->
             <div class="content-right">
                 <div class="honor">
-                    <!-- 荣誉资质 -->
+                    <!--S 荣誉资质 -->
                     <ul class="honor-list clearfix" id="honor">
                     	{yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="10" page="$page" return="data"}
                         {volist name="data" id="vo" mod="3"}
                         <li {eq name="mod" value="2"}class="r"{/eq}>
                             <a href="https://via.placeholder.com/245x345" class="img transition">
-								<img src="https://via.placeholder.com/245x345" width="245" height="345" alt="" title="{$vo['title']}">
+								<img src="https://via.placeholder.com/245x345" width="245" height="345" alt="" title="{$vo.title}">
 							</a>
-                            <h3>{$vo['title']}</h3>
+                            <h3>{$vo.title}</h3>
                         </li>
                         {/volist}
                         {/yzn}
                     </ul>
+                    <!--E 荣誉资质 -->
                 </div>
             </div>
+            <!--E 右侧内容 -->
         </div>
     </div>
 </div>

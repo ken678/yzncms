@@ -32,6 +32,25 @@
 			<h5><em class="enfont">News information<i></i></em></h5>
 			<span>新闻动态</span>
 		</div>
+		<ul class="news_list">
+			{yzn module="cms" action="lists" catid="6" cache="3600" order="listorder ASC" num="3" return="data"}
+            {volist name="data" id="vo"}
+			<li>
+				<div class="_date">
+					<span class="_d1">{$vo.updatetime|date="Y"}</span>
+					<span class="_d2">{$vo.updatetime|date="m-d"}</span>
+				</div>
+				<div class="_nr">
+					<a href="{$vo.url}" title="{$vo.title}">
+						<h3 class="_title">{$vo.title}</h3>
+						<div class="_sum">{$vo.description|str_cut=###,100}</div>
+						<span class="_more">+查看更多</span>
+					</a>
+				</div>
+			</li>
+			{/volist}
+            {/yzn}
+		</ul>
 	</div>
 </div>
 <!--E 新闻-->
