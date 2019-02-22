@@ -350,9 +350,11 @@
     padding-top: 40px;
     padding-bottom: 40px;
 }
-.news_list{
+
+.news_list {
     margin-top: 40px;
 }
+
 .news_list li {
     float: left;
     width: 375px;
@@ -425,7 +427,39 @@
 }
 
 
+/*分页*/
+#pages {
+    text-align: center;
+}
 
+#pages li {
+    padding: 0 10px;
+    margin: 0 2px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #e6e6e6;
+    color: #333;
+    display: inline-block;
+}
+
+#pages li.active {
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #f90712;
+    color: #fff;
+    display: inline-block;
+}
+
+#pages li:hover {
+    background: #f90712;
+}
+
+#pages li:hover a {
+    color: #fff;
+}
 
 /*内页*/
 .headline-bg {
