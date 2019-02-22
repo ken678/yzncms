@@ -94,3 +94,36 @@ CREATE TABLE `yzn_page` (
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`catid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='单页内容表';
+
+DROP TABLE IF EXISTS `yzn_tags`;
+CREATE TABLE `yzn_tags` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'tagID',
+  `tag` char(20) NOT NULL DEFAULT '' COMMENT 'tag名称',
+  `seo_title` varchar(255) NOT NULL DEFAULT '' COMMENT 'seo标题',
+  `seo_keyword` varchar(255) NOT NULL DEFAULT '' COMMENT 'seo关键字',
+  `seo_description` varchar(255) NOT NULL DEFAULT '' COMMENT 'seo简介',
+  `style` char(5) NOT NULL DEFAULT '' COMMENT '附加状态码',
+  `usetimes` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '信息总数',
+  `lastusetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后使用时间',
+  `hits` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '点击数',
+  `lasthittime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最近访问时间',
+  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag` (`tag`),
+  KEY `usetimes` (`usetimes`,`listorder`),
+  KEY `hits` (`hits`,`listorder`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='tags主表';
+
+
+DROP TABLE IF EXISTS `yzn_tags_content`;
+CREATE TABLE `yzn_tags_content` (
+  `tag` char(20) NOT NULL COMMENT 'tag名称',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '信息地址',
+  `title` varchar(80) NOT NULL DEFAULT '' COMMENT '标题',
+  `modelid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
+  `contentid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '信息ID',
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  KEY `modelid` (`modelid`,`contentid`),
+  KEY `tag` (`tag`(10))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='tags数据表';
