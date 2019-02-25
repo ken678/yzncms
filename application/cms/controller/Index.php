@@ -193,10 +193,46 @@ class Index extends Homebase
     }
 
     /**
-     * 简单搜索
+     * 搜索
      */
     public function search()
     {
+        $seo = seo();
+        $this->assign('seo', $seo);
+        //模型
+        $mid = $this->request->param('modelid/d', 0);
+        //栏目
+        $catid = $this->request->param('catid/d', 0);
+        //关键词
+        $keyword = $this->request->param('q');
+        $modellist = cache('Model');
+        if (empty($modellist)) {
+            return $this->error('没有可搜索模型~');
+        }
+        if ($mid) {
+
+        } else {
+            foreach ($modellist as $key => $vo) {
+
+                $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
+                if (empty($searchField)) {
+                    continue;
+                }
+                $where = '';
+                foreach ($searchField as $v) {
+                    $where .= "$v like '%$keyword%' or ";
+                }
+                $where = '(' . substr($where, 0, -4) . ') ';
+                $where .= " and status='1'";
+                $list = model('ModelField')->getDataList($key, $where, false, '*', 'listorder,id desc', 10, 1);
+                var_dump($list);
+
+            }
+
+            //var_dump($modellist);
+            exit();
+
+        }
 
     }
 

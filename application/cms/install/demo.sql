@@ -46,6 +46,31 @@ CREATE TABLE `yzn_picture_data` (
   PRIMARY KEY (`did`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='图片模型模型表';
 
+DROP TABLE IF EXISTS `yzn_download`;
+CREATE TABLE `yzn_download` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
+  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
+  `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='下载模型模型表';
+
+DROP TABLE IF EXISTS `yzn_download_data`;
+CREATE TABLE `yzn_download_data` (
+  `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `content` text COLLATE utf8_unicode_ci COMMENT '内容',
+  PRIMARY KEY (`did`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='下载模型模型表';
+
+
 DROP TABLE IF EXISTS `yzn_product`;
 CREATE TABLE `yzn_product` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
