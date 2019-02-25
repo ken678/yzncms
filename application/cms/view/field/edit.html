@@ -78,6 +78,13 @@
                     <input type="radio" name="ifeditable" value="0" title="否" {if $data.ifeditable==0}checked{/if}>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="status" value="1" title="启用" {if $data.status==1}checked{/if}>
+                    <input type="radio" name="status" value="0" title="禁用" {if $data.status==0}checked{/if}>
+                </div>
+            </div>
             <input type="hidden" name="ifsystem"  value="{$data.ifsystem}">
             <input name="fieldid" type="hidden" value="{$fieldid}" />
             <div class="layui-form-item">
