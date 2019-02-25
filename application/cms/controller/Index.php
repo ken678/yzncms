@@ -213,7 +213,6 @@ class Index extends Homebase
 
         } else {
             foreach ($modellist as $key => $vo) {
-
                 $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
                 if (empty($searchField)) {
                     continue;
@@ -225,15 +224,22 @@ class Index extends Homebase
                 $where = '(' . substr($where, 0, -4) . ') ';
                 $where .= " and status='1'";
                 $list = model('ModelField')->getDataList($key, $where, false, '*', 'listorder,id desc', 10, 1);
-                var_dump($list);
-
+                if ($list->isEmpty()) {
+                    continue;
+                } else {
+                    break;
+                }
             }
-
-            //var_dump($modellist);
-            exit();
-
         }
-
+        $this->assign([
+            'mid' => $mid,
+            'catid' => $catid,
+            'keyword' => $keyword,
+            'list' => $list,
+            'page' => $list->render(),
+            'modellist' => $modellist,
+        ]);
+        return $this->fetch('/search');
     }
 
 }
