@@ -462,9 +462,10 @@
 }
 
 /*内页*/
-.main{
+.main {
     min-height: 500px;
 }
+
 .headline-bg {
     position: absolute;
     width: 100%;
@@ -1022,4 +1023,93 @@
 
 .tips p {
     color: red;
+}
+
+/*搜索*/
+.search-top-box {
+    background: #fff;
+    padding: 100px 0 300px 0;
+}
+.search {
+    border: 2px solid #fa0712;
+    height: 45px;
+    line-height: 45px;
+    margin: 40px auto 0 auto;
+    width: 600px;
+}
+
+.search select {
+    display: none;
+}
+
+.search .select_box {
+    font-size: 14px;
+    color: #999999;
+    width: 120px;
+    line-height: 45px;
+    float: left;
+    position: relative;
+}
+
+.search .select_showbox {
+    height: 45px;
+    background: url(../images/search_ico.png) no-repeat 90px center;
+    text-indent: 1.5em;
+}
+
+.search .select_showbox.active {
+    background: url(../images/search_ico_hover.png) no-repeat 90px center;
+}
+
+.search .select_option {
+    border: 2px solid #fa0712;
+    border-top: none;
+    display: none;
+    left: -2px;
+    top: 45px;
+    position: absolute;
+    z-index: 99;
+    background: #fff;
+}
+
+.search .select_option li {
+    text-indent: 1.5em;
+    width: 100px;
+    cursor: pointer;
+}
+.search .select_option li a{
+    color: #666;
+}
+
+.search .select_option li.selected {
+    background-color: #F3F3F3;
+    color: #999;
+}
+
+.search .select_option li.hover {
+    background: #BEBEBE;
+    color: #fff;
+}
+
+.search input.inp_srh,
+.search input.btn_srh {
+    border: none;
+    background: none;
+    height: 45px;
+    line-height: 45px;
+    float: left
+}
+
+.search input.inp_srh {
+    font-size: 14px;
+    outline: none;
+    width: 380px;
+}
+
+.search input.btn_srh {
+    background: #fa0712;
+    color: #FFF;
+    font-family: "微软雅黑";
+    font-size: 15px;
+    width: 100px;
 }
