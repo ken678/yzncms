@@ -203,7 +203,7 @@ class Index extends Homebase
      */
     public function search()
     {
-        $seo = seo();
+        $seo = seo('', '搜索结果');
         //模型
         $modelid = $this->request->param('modelid/d', 0);
         //关键词
