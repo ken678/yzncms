@@ -211,12 +211,35 @@ class Index extends Homebase
         //关键词
         $keyword = $this->request->param('q/s', '', 'trim,safe_replace,strip_tags,htmlspecialchars');
         $keyword = str_replace('%', '', $keyword); //过滤'%'，用户全文搜索
+
+        $result = $this->validate([
+            'keyword' => $keyword,
+        ], [
+            'keyword|标题关键词' => 'require|chsDash|max:25',
+        ]);
+        if (true !== $result) {
+            $this->error($result);
+        }
+
         $modellist = cache('Model');
         if (!$modellist) {
             return $this->error('没有可搜索模型~');
         }
         if ($mid) {
-
+            if (!array_key_exists($mid, $modellist)) {
+                $this->error('模型错误~');
+            }
+            $searchField = Db::name('model_field')->where('modelid', $mid)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
+            if (empty($searchField)) {
+                $this->error('没有设置搜索字段~');
+            }
+            $where = '';
+            foreach ($searchField as $vo) {
+                $where .= "$vo like '%$keyword%' or ";
+            }
+            $where = '(' . substr($where, 0, -4) . ') ';
+            $where .= " and status='1'";
+            $list = model('ModelField')->getDataList($mid, $where, false, '*', "listorder,id desc", 10, 1);
         } else {
             foreach ($modellist as $key => $vo) {
                 $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
