@@ -21,7 +21,7 @@
                         </ul>
                     </div>
                     <input id="modelid" name="modelid" value="0" type="hidden">
-                    <input class="inp_srh" name="keyword" placeholder="请输入搜索关键词">
+                    <input class="inp_srh" name="keyword" placeholder="请输入搜索关键词" value="{$keyword}">
                     <input class="btn_srh" type="submit" value="搜索">
                 </form>
             </div>
@@ -33,24 +33,18 @@
                 <div class="search_list">
                     <h5>按时间搜索</h5>
                     <div class="list-group">
-                        <a href="?f=search&amp;starttime=0&amp;keywords=两" class="list-group-item_gr active">全部时间</a>
-                        <a href="?f=search&amp;starttime=1&amp;keywords=两" class="list-group-item_gr ">一天内</a>
-                        <a href="?f=search&amp;starttime=7&amp;keywords=两" class="list-group-item_gr ">一周内</a>
-                        <a href="?f=search&amp;starttime=30&amp;keywords=两" class="list-group-item_gr ">一月内</a>
-                        <a href="?f=search&amp;starttime=365&amp;keywords=两" class="list-group-item_gr ">一年内</a>
+                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'','modelid'=>$modelid])}" class="list-group-item_gr {empty name="time"}active{/empty}">全部时间</a>
+                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'day','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="day"}active{/eq}">一天内</a>
+                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'week','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="week"}active{/eq}">一周内</a>
+                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'month','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="month"}active{/eq}">一月内</a>
+                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'year','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="year"}active{/eq}">一年内</a>
                     </div>
                     <h5>搜索历史</h5>
                     <div class="list-group">
-                        <a href="?f=search&amp;starttime=0&amp;keywords=12" class="list-group-item_gr">12</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=两" class="list-group-item_gr">两</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=两人" class="list-group-item_gr">两人</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=2" class="list-group-item_gr">2</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=1" class="list-group-item_gr">1</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=两天" class="list-group-item_gr">两天</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=联通" class="list-group-item_gr">联通</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=撒的" class="list-group-item_gr">撒的</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=我们" class="list-group-item_gr">我们</a>
-                        <a href="?f=search&amp;starttime=0&amp;keywords=454" class="list-group-item_gr">454</a>
+                        <a href="" class="list-group-item_gr">12</a>
+                        <a href="" class="list-group-item_gr">两</a>
+                        <a href="" class="list-group-item_gr">两人</a>
+                        <a href="" class="list-group-item_gr">2</a>
                     </div>
                 </div>
             </div>

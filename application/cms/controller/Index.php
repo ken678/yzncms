@@ -205,10 +205,12 @@ class Index extends Homebase
     {
         $seo = seo();
         //模型
-        $mid = $this->request->param('modelid/d', 0);
+        $modelid = $this->request->param('modelid/d', 0);
         //关键词
         $keyword = $this->request->param('keyword/s', '', 'trim,safe_replace,strip_tags,htmlspecialchars');
         $keyword = str_replace('%', '', $keyword); //过滤'%'，用户全文搜索
+        //时间范围
+        $time = $this->request->param('time/s', '');
 
         $result = $this->validate([
             'keyword' => $keyword,
@@ -218,16 +220,33 @@ class Index extends Homebase
         if (true !== $result) {
             $this->error($result);
         }
+        //按时间搜索
+        if ($time == 'day') {
+            $search_time = time() - 86400;
+            $sql_time = ' AND inputtime > ' . $search_time;
+        } elseif ($time == 'week') {
+            $search_time = time() - 604800;
+            $sql_time = ' AND inputtime > ' . $search_time;
+        } elseif ($time == 'month') {
+            $search_time = time() - 2592000;
+            $sql_time = ' AND inputtime > ' . $search_time;
+        } elseif ($time == 'year') {
+            $search_time = time() - 31536000;
+            $sql_time = ' AND inputtime > ' . $search_time;
+        } else {
+            $search_time = 0;
+            $sql_time = '';
+        }
 
         $modellist = cache('Model');
         if (!$modellist) {
             return $this->error('没有可搜索模型~');
         }
-        if ($mid) {
-            if (!array_key_exists($mid, $modellist)) {
+        if ($modelid) {
+            if (!array_key_exists($modelid, $modellist)) {
                 $this->error('模型错误~');
             }
-            $searchField = Db::name('model_field')->where('modelid', $mid)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
+            $searchField = Db::name('model_field')->where('modelid', $modelid)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
             if (empty($searchField)) {
                 $this->error('没有设置搜索字段~');
             }
@@ -236,8 +255,8 @@ class Index extends Homebase
                 $where .= "$vo like '%$keyword%' or ";
             }
             $where = '(' . substr($where, 0, -4) . ') ';
-            $where .= " and status='1'";
-            $list = model('ModelField')->getDataList($mid, $where, false, '*', "listorder,id desc", 10, 1);
+            $where .= " AND status='1' $sql_time";
+            $list = model('ModelField')->getDataList($modelid, $where, false, '*', "listorder,id desc", 10, 1);
         } else {
             foreach ($modellist as $key => $vo) {
                 $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
@@ -249,7 +268,7 @@ class Index extends Homebase
                     $where .= "$v like '%$keyword%' or ";
                 }
                 $where = '(' . substr($where, 0, -4) . ') ';
-                $where .= " and status='1'";
+                $where .= " AND status='1' $sql_time";
                 $list = model('ModelField')->getDataList($key, $where, false, '*', 'listorder,id desc', 10, 1);
                 if ($list->isEmpty()) {
                     continue;
@@ -259,6 +278,9 @@ class Index extends Homebase
             }
         }
         $this->assign([
+            'time' => $time,
+            'modelid' => $modelid,
+            'keyword' => $keyword,
             'modellist' => $modellist,
             'SEO' => $seo,
             'list' => $list,
