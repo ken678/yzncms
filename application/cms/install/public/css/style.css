@@ -1,32 +1,6 @@
 @charset "UTF-8";
 
 /*通用*/
-.color_primary,
-.color_heyilan {
-    color: #3498DB;
-}
-
-.color_success {
-    color: #1ABC9C;
-}
-
-.color_info {
-    color: #5bc0de;
-}
-
-.color_warning,
-.color_heyihong {
-    color: #F39C12;
-}
-
-.color_danger {
-    color: #d9534f;
-}
-
-.color_cheng {
-    color: #ec972f;
-}
-
 .color_222 {
     color: #222;
 }
@@ -70,27 +44,9 @@
 .color_ddd {
     color: #ddd;
 }
-
-.color_qiyehong {
-    color: #ed53a5;
+.color_f00 {
+    color: #f00;
 }
-
-.color_qiyelv {
-    color: #a8cc17
-}
-
-.color_qiyecheng {
-    color: #f07f0d
-}
-
-.color_qiyehuang {
-    color: #fdcf00
-}
-
-.color_qiyelan {
-    color: #2980B9
-}
-
 .font14 {
     font-size: 14px;
 }
@@ -1278,6 +1234,7 @@
 }
 
 .list-group-item_gr {
+    color: #999;
     font-size: 14px;
     line-height: 25px;
     position: relative;

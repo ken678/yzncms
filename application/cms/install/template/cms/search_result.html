@@ -17,7 +17,7 @@
                             <ul class="select_option">
                                 <li><a data-id="">搜索全部</a></li>
                                 {volist name="modellist" id="vo"}
-                                <li data-id="{$vo.id}" class="{eq name="vo.id" value="$modelid"}selected{/eq}"> <a>{$vo.name}</a></li>
+                                <li data-id="{$vo.id}" class="{eq name="vo.id" value="$modelid" }selected{/eq}"> <a>{$vo.name}</a></li>
                                 {/volist}
                             </ul>
                         </div>
@@ -26,7 +26,7 @@
                         <input class="btn_srh" type="submit" value="搜索">
                     </form>
                 </div>
-                <div class="search_time color_999 font14">获得约<strong class="color_qiyecheng"> {$count} </strong>条结果 （用时{$search_time} 秒）</div>
+                <div class="search_time color_999 font14">获得约<strong class="color_f00"> {$count} </strong>条结果 （用时{$search_time} 秒）</div>
             </div>
         </div>
     </div>
