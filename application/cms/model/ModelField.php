@@ -505,7 +505,7 @@ EOF;
         $ModelField = cache('ModelField');
         $tableName = $modelCache[$modeId]['tablename']; //表名
 
-        if (2 == $modelCache[$modelid]['type'] && $moreifo) {
+        if (2 == $modelCache[$modeId]['type'] && $moreifo) {
             $extTable = $tableName . $this->ext_table;
             if ($page) {
                 $result = \think\Db::view(ucwords($tableName), '*')
