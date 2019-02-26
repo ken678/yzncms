@@ -463,7 +463,7 @@
 
 /*内页*/
 .main {
-    min-height: 500px;
+    min-height: 450px;
 }
 
 .headline-bg {
@@ -1026,17 +1026,20 @@
 }
 
 /*搜索*/
-.search-top-box {
-    background: #fff;
-    padding: 100px 0 300px 0;
-}
 .search {
+    background: #fff;
     border: 2px solid #fa0712;
     height: 45px;
     line-height: 45px;
-    margin: 40px auto 0 auto;
+    margin: 0 auto;
     width: 600px;
 }
+
+.search-top-box {
+    background: #fff;
+    padding: 100px 0 200px 0;
+}
+
 
 .search select {
     display: none;
@@ -1077,7 +1080,8 @@
     width: 100px;
     cursor: pointer;
 }
-.search .select_option li a{
+
+.search .select_option li a {
     color: #666;
 }
 
@@ -1112,4 +1116,47 @@
     font-family: "微软雅黑";
     font-size: 15px;
     width: 100px;
+}
+.search_result{
+    background: #fff;
+    padding: 16px 0px;
+}
+.search_left {
+    text-align: right;
+    float: left;
+    width: 200px;
+    margin-right: 16px;
+}
+.search_left h5{
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 30px;
+}
+.list-group {
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+.list-group-item_gr {
+    font-size: 14px;
+    line-height: 25px;
+    position: relative;
+    display: block;
+    padding: 2px 0px;
+}
+.list-group-item_gr.active, .list-group-item_gr.active:hover, .list-group-item_gr.active:focus {
+    z-index: 2;
+    color: #fa0712;
+    font-weight: 600;
+}
+.left-line {
+    border-left: 1px solid #ddd;
+}
+.search_right{
+
+    float: right;
+    width: 970px;
+}
+.search_bd{
+    min-height: 500px;
+        margin-left: 16px;
 }
