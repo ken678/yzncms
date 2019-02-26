@@ -9,21 +9,24 @@
 <div class="main">
     <div class="search-top-box">
         <div class="w1200">
-            <div class="search radius6">
-                <form method="get" name="search" action="{:url('cms/index/search')}">
-                    <div class="select_box">
-                        <div class="select_showbox" style="cursor: pointer;">搜索全部</div>
-                        <ul class="select_option">
-                            <li><a data-id="">搜索全部</a></li>
-                            {volist name="modellist" id="vo"}
-                            <li data-id="{$vo.id}" class="{eq name="vo.id" value="$modelid"}selected{/eq}"><a>{$vo.name}</a></li>
-                            {/volist}
-                        </ul>
-                    </div>
-                    <input id="modelid" name="modelid" value="0" type="hidden">
-                    <input class="inp_srh" name="keyword" placeholder="请输入搜索关键词" value="{$keyword}">
-                    <input class="btn_srh" type="submit" value="搜索">
-                </form>
+            <div class="search_box">
+                <div class="search radius6">
+                    <form method="get" name="search" action="{:url('cms/index/search')}">
+                        <div class="select_box">
+                            <div class="select_showbox" style="cursor: pointer;">搜索全部</div>
+                            <ul class="select_option">
+                                <li><a data-id="">搜索全部</a></li>
+                                {volist name="modellist" id="vo"}
+                                <li data-id="{$vo.id}" class="{eq name=" vo.id" value="$modelid" }selected{/eq}"> <a>{$vo.name}</a></li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        <input id="modelid" name="modelid" value="0" type="hidden">
+                        <input class="inp_srh" name="keyword" placeholder="请输入搜索关键词" value="{$keyword}">
+                        <input class="btn_srh" type="submit" value="搜索">
+                    </form>
+                </div>
+                <div class="search_time color_999 font14">获得约<strong class="color_qiyecheng"> {$count} </strong>条结果 （用时{$search_time} 秒）</div>
             </div>
         </div>
     </div>
@@ -50,7 +53,7 @@
             <div class="search_right left-line newsPage">
                 <div class="search_bd">
                     <ul class="list">
-                        {volist name="list" id="vo"}
+                        {volist name="list" id="vo" empty="<div class='tc font20 l-h80'>暂时没有数据</div>"}
                         <li class="item clearfix">
                             <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo.title}">
                             <div class="time fr"><span class="day">{$vo.updatetime|date="m-d"}</span><span class="year">{$vo.updatetime|date="Y"}</span></div>
@@ -72,13 +75,13 @@ $(function() {
         $(this).addClass("active");
     });
 
-	if($('.select_option li').is('.selected')){
-	   $(".select_showbox").html($('.select_option li.selected').html());
-	   $("#modelid").val($('.select_option li.selected').data('id'));
-	}
+    if ($('.select_option li').is('.selected')) {
+        $(".select_showbox").html($('.select_option li.selected').html());
+        $("#modelid").val($('.select_option li.selected').data('id'));
+    }
 
     $(".select_option li").click(function() {
-    	$("#modelid").val($(this).data('id'));
+        $("#modelid").val($(this).data('id'));
         $(".select_showbox").html($(this).html());
         $(".select_option").hide();
         $(".select_showbox").removeClass("active");

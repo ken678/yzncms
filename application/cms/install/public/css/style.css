@@ -1,9 +1,135 @@
 @charset "UTF-8";
 
 /*通用*/
+.color_primary,
+.color_heyilan {
+    color: #3498DB;
+}
+
+.color_success {
+    color: #1ABC9C;
+}
+
+.color_info {
+    color: #5bc0de;
+}
+
+.color_warning,
+.color_heyihong {
+    color: #F39C12;
+}
+
+.color_danger {
+    color: #d9534f;
+}
+
+.color_cheng {
+    color: #ec972f;
+}
+
+.color_222 {
+    color: #222;
+}
+
+.color_333 {
+    color: #333;
+}
+
+.color_555 {
+    color: #555;
+}
+
+.color_666 {
+    color: #666;
+}
+
+.color_777 {
+    color: #777;
+}
+
+.color_999 {
+    color: #999;
+}
+
+.color_eee {
+    color: #eee;
+}
+
+.color_aaa {
+    color: #aaa;
+}
+
+.color_bbb {
+    color: #bbb;
+}
+
+.color_ccc {
+    color: #ccc;
+}
+
+.color_ddd {
+    color: #ddd;
+}
+
+.color_qiyehong {
+    color: #ed53a5;
+}
+
+.color_qiyelv {
+    color: #a8cc17
+}
+
+.color_qiyecheng {
+    color: #f07f0d
+}
+
+.color_qiyehuang {
+    color: #fdcf00
+}
+
+.color_qiyelan {
+    color: #2980B9
+}
+
+.font14 {
+    font-size: 14px;
+}
+
+.font20 {
+    font-size: 20px;
+}
+
+.font25 {
+    font-size: 25px;
+}
+
+.font30 {
+    font-size: 30px;
+}
+
+.font36 {
+    font-size: 36px;
+}
+
 .w1200 {
     width: 1200px;
     margin: 0 auto;
+}
+
+.l-h25 {
+    line-height: 25px;
+}
+
+.l-h50 {
+    line-height: 50px;
+}
+
+.l-h80 {
+    line-height: 80px;
+}
+
+.l-h100 {
+    line-height: 100px;
 }
 
 .fl {
@@ -1027,10 +1153,15 @@
 
 /*搜索*/
 .search {
+    width: 600px;
     background: #fff;
     border: 2px solid #fa0712;
     height: 45px;
     line-height: 45px;
+
+}
+
+.search_box {
     margin: 0 auto;
     width: 600px;
 }
@@ -1040,6 +1171,10 @@
     padding: 100px 0 200px 0;
 }
 
+.search_time {
+    line-height: 40px;
+    height: 40px;
+}
 
 .search select {
     display: none;
@@ -1118,25 +1253,30 @@
     font-size: 15px;
     width: 100px;
 }
-.search_result{
+
+.search_result {
     background: #fff;
     padding: 16px 0px;
 }
+
 .search_left {
     text-align: right;
     float: left;
     width: 200px;
     margin-right: 16px;
 }
-.search_left h5{
+
+.search_left h5 {
     font-weight: normal;
     font-size: 16px;
     line-height: 30px;
 }
+
 .list-group {
     margin-bottom: 20px;
     padding-left: 0;
 }
+
 .list-group-item_gr {
     font-size: 14px;
     line-height: 25px;
@@ -1144,20 +1284,26 @@
     display: block;
     padding: 2px 0px;
 }
-.list-group-item_gr.active, .list-group-item_gr.active:hover, .list-group-item_gr.active:focus {
+
+.list-group-item_gr.active,
+.list-group-item_gr.active:hover,
+.list-group-item_gr.active:focus {
     z-index: 2;
     color: #fa0712;
     font-weight: 600;
 }
+
 .left-line {
     border-left: 1px solid #ddd;
 }
-.search_right{
+
+.search_right {
 
     float: right;
     width: 970px;
 }
-.search_bd{
+
+.search_bd {
     min-height: 500px;
-        margin-left: 16px;
+    margin-left: 16px;
 }

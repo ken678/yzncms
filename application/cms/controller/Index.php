@@ -220,6 +220,7 @@ class Index extends Homebase
         if (true !== $result) {
             $this->error($result);
         }
+        debug('begin');
         //按时间搜索
         if ($time == 'day') {
             $search_time = time() - 86400;
@@ -251,6 +252,7 @@ class Index extends Homebase
         if (!$modellist) {
             return $this->error('没有可搜索模型~');
         }
+
         if ($modelid) {
             if (!array_key_exists($modelid, $modellist)) {
                 $this->error('模型错误~');
@@ -286,6 +288,8 @@ class Index extends Homebase
                 }
             }
         }
+        $count = $list->total();
+        debug('end');
         $this->assign([
             'time' => $time,
             'modelid' => $modelid,
@@ -293,7 +297,9 @@ class Index extends Homebase
             'shistory' => $shistory,
             'SEO' => $seo,
             'list' => $list,
+            'count' => $count,
             'modellist' => $modellist,
+            'search_time' => debug('begin', 'end', 6), //运行时间
             'page' => $list->render(),
         ]);
         if (!empty($keyword)) {
