@@ -33,8 +33,10 @@ class Index extends Homebase
     {
         $page = $this->request->param('page/d', 1);
         $SEO = seo();
-        $this->assign("SEO", $SEO);
-        $this->assign("page", $page);
+        $this->assign([
+            'SEO' => $seo,
+            'page' => $page,
+        ]);
         return $this->fetch('/index');
     }
 
@@ -128,10 +130,12 @@ class Index extends Homebase
                 $fieldList = $this->modelfield->getFieldList($modelInfo['id']);
                 $this->assign('fieldList', $fieldList);
             }
-            $this->assign("top_parentid", $top_parentid);
-            $this->assign("page", $page);
-            $this->assign("SEO", $seo);
-            $this->assign('catid', $catid);
+            $this->assign([
+                'top_parentid' => $top_parentid,
+                'SEO' => $seo,
+                'catid' => $catid,
+                'page' => $page,
+            ]);
             return $this->fetch('/' . $template);
 
         }
@@ -184,11 +188,13 @@ class Index extends Homebase
         $arrparentid = explode(',', $category['arrparentid']);
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
 
-        $this->assign("top_parentid", $top_parentid);
-        $this->assign("SEO", $seo);
-        $this->assign('catid', $catid);
-        $this->assign("page", $page);
         $this->assign($info);
+        $this->assign([
+            'top_parentid' => $top_parentid,
+            'SEO' => $seo,
+            'catid' => $catid,
+            'page' => $page,
+        ]);
         return $this->fetch('/' . $template);
     }
 
@@ -198,15 +204,15 @@ class Index extends Homebase
     public function search()
     {
         $seo = seo();
-        $this->assign('seo', $seo);
         //模型
         $mid = $this->request->param('modelid/d', 0);
         //栏目
         $catid = $this->request->param('catid/d', 0);
         //关键词
-        $keyword = $this->request->param('q');
+        $keyword = $this->request->param('q/s', '', 'trim,safe_replace,strip_tags,htmlspecialchars');
+        $keyword = str_replace('%', '', $keyword); //过滤'%'，用户全文搜索
         $modellist = cache('Model');
-        if (empty($modellist)) {
+        if (!$modellist) {
             return $this->error('没有可搜索模型~');
         }
         if ($mid) {
@@ -232,12 +238,9 @@ class Index extends Homebase
             }
         }
         $this->assign([
-            'mid' => $mid,
-            'catid' => $catid,
-            'keyword' => $keyword,
+            'SEO' => $seo,
             'list' => $list,
             'page' => $list->render(),
-            'modellist' => $modellist,
         ]);
         return $this->fetch('/search');
     }
