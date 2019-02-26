@@ -13,10 +13,10 @@
                 <form method="get" name="search" action="{:url('cms/index/search')}">
                     <div class="select_box">
                         <div class="select_showbox" style="cursor: pointer;">搜索全部</div>
-                        <ul class="select_option" style="display: none;">
-                            <li class="selected"><a href="javascript:set_option(0);">搜索全部</a></li>
+                        <ul class="select_option">
+                            <li><a data-id="">搜索全部</a></li>
                             {volist name="modellist" id="vo"}
-                            <li class=""><a href="javascript:set_option({$vo.id});">{$vo.name}</a></li>
+                            <li data-id="{$vo.id}" class="{eq name="vo.id" value="$modelid"}selected{/eq}"><a>{$vo.name}</a></li>
                             {/volist}
                         </ul>
                     </div>
@@ -41,10 +41,9 @@
                     </div>
                     <h5>搜索历史</h5>
                     <div class="list-group">
-                        <a href="" class="list-group-item_gr">12</a>
-                        <a href="" class="list-group-item_gr">两</a>
-                        <a href="" class="list-group-item_gr">两人</a>
-                        <a href="" class="list-group-item_gr">2</a>
+                        {volist name="shistory" id="vo"}
+                        <a href="{:url('cms/index/search',['keyword'=>$vo])}" class="list-group-item_gr" title="{$vo}">{$vo}</a>
+                        {/volist}
                     </div>
                 </div>
             </div>
@@ -73,7 +72,13 @@ $(function() {
         $(this).addClass("active");
     });
 
+	if($('.select_option li').is('.selected')){
+	   $(".select_showbox").html($('.select_option li.selected').html());
+	   $("#modelid").val($('.select_option li.selected').data('id'));
+	}
+
     $(".select_option li").click(function() {
+    	$("#modelid").val($(this).data('id'));
         $(".select_showbox").html($(this).html());
         $(".select_option").hide();
         $(".select_showbox").removeClass("active");
@@ -85,9 +90,5 @@ $(function() {
         $(this).removeClass("selected");
     });
 });
-
-function set_option(id) {
-    $("#modelid").val(id);
-}
 </script>
 {include file="footer" /}

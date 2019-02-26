@@ -1065,6 +1065,7 @@
 }
 
 .search .select_option {
+    display: none;
     border: 2px solid #fa0712;
     border-top: none;
     display: none;

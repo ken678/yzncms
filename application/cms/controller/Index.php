@@ -237,6 +237,15 @@ class Index extends Homebase
             $search_time = 0;
             $sql_time = '';
         }
+        //搜索历史记录
+        $shistory = cookie("shistory");
+        if (!$shistory) {
+            $shistory = array();
+        }
+        array_unshift($shistory, $keyword);
+        $shistory = array_slice(array_unique($shistory), 0, 10);
+        //加入搜索历史
+        cookie("shistory", $shistory);
 
         $modellist = cache('Model');
         if (!$modellist) {
@@ -281,9 +290,10 @@ class Index extends Homebase
             'time' => $time,
             'modelid' => $modelid,
             'keyword' => $keyword,
-            'modellist' => $modellist,
+            'shistory' => $shistory,
             'SEO' => $seo,
             'list' => $list,
+            'modellist' => $modellist,
             'page' => $list->render(),
         ]);
         if (!empty($keyword)) {
