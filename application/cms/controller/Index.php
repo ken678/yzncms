@@ -206,16 +206,14 @@ class Index extends Homebase
         $seo = seo();
         //模型
         $mid = $this->request->param('modelid/d', 0);
-        //栏目
-        $catid = $this->request->param('catid/d', 0);
         //关键词
-        $keyword = $this->request->param('q/s', '', 'trim,safe_replace,strip_tags,htmlspecialchars');
+        $keyword = $this->request->param('keyword/s', '', 'trim,safe_replace,strip_tags,htmlspecialchars');
         $keyword = str_replace('%', '', $keyword); //过滤'%'，用户全文搜索
 
         $result = $this->validate([
             'keyword' => $keyword,
         ], [
-            'keyword|标题关键词' => 'require|chsDash|max:25',
+            'keyword|标题关键词' => 'chsDash|max:25',
         ]);
         if (true !== $result) {
             $this->error($result);
@@ -261,11 +259,17 @@ class Index extends Homebase
             }
         }
         $this->assign([
+            'modellist' => $modellist,
             'SEO' => $seo,
             'list' => $list,
             'page' => $list->render(),
         ]);
-        return $this->fetch('/search');
+        if (!empty($keyword)) {
+            return $this->fetch('/search_result');
+        } else {
+            return $this->fetch('/search');
+        }
+
     }
 
 }

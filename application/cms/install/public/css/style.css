@@ -462,6 +462,9 @@
 }
 
 /*内页*/
+.main{
+    min-height: 500px;
+}
 .headline-bg {
     position: absolute;
     width: 100%;

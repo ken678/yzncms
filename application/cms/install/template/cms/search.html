@@ -1,38 +1,47 @@
 {include file="header" /}
-<style type="text/css">
-body {
-    background: #f6f6f6;
-}
-
-</style>
-<div class="headline-bg"></div>
-<div class="main" style="position: relative;">
-    <div class="w1200">
-        <div class="container-top">
-            <h2>搜索<span>SEARCH</span></h2>
-        </div>
-        <div class="content newsPage">
-            <!--S 左侧栏目 -->
-
-            <!--E 左侧栏目 -->
-            <!--S 右侧内容 -->
-            <div class="content-right" style="width: 1150px;float: left;">
-                <!--S 文章列表-->
-                <ul class="list">
-                {volist name="list" id="vo"}
-                    <li class="item clearfix">
-                        <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo.title}">
-                            <div class="time fr"><span class="day">{$vo.updatetime|date="m-d"}</span><span class="year">{$vo.updatetime|date="Y"}</span></div>
-                            <h3>{$vo.title}</h3>
-                            <div class="txt">{$vo.description|str_cut=###,60}</div>
-                        </a>
-                    </li>
-                {/volist}
-                </ul>
-                <!--E 文章列表-->
+<div class="main">
+    <div class="search-top-box">
+        <div class="w1200">
+            <div class="search radius6">
+                <form method="get" name="search" action="{:url('cms/index/search')}">
+                    <div class="select_box">
+                        <div class="select_showbox" style="cursor: pointer;">搜索全部</div>
+                        <ul class="select_option" style="display: none;">
+                            <li class="selected"><a href="javascript:set_option(0);">搜索全部</a></li>
+                            {volist name="modellist" id="vo"}
+                            <li class=""><a href="javascript:set_option({$vo.id});">{$vo.name}</a></li>
+                            {/volist}
+                        </ul>
+                    </div>
+                    <input id="modelid" name="modelid" value="0" type="hidden">
+                    <input class="inp_srh" name="keyword" placeholder="请输入搜索关键词">
+                    <input class="btn_srh" type="submit" value="搜索">
+                </form>
             </div>
-            <!--E 右侧内容 -->
         </div>
     </div>
 </div>
+<script type="text/javascript">
+$(function() {
+    $(".select_showbox").click(function() {
+        $(".select_option").show();
+        $(this).addClass("active");
+    });
+
+    $(".select_option li").click(function(){
+        $(".select_showbox").html($(this).html());
+        $(".select_option").hide();
+        $(".select_showbox").removeClass("active");
+    });
+
+    $(".select_option li").hover(function(){
+        $(this).addClass("selected");
+    },function(){
+        $(this).removeClass("selected");
+    });
+});
+function set_option(id) {
+    $("#modelid").val(id);
+}
+</script>
 {include file="footer" /}
