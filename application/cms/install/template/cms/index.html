@@ -17,41 +17,111 @@
 <!--E 轮播图-->
 <!--S 案例-->
 <div class="main_case">
-	<div class="w1200">
-		<div class="m_til">
-			<h5><em class="enfont">EXCELLENT CASE<i></i></em></h5>
-			<span>精品案例</span>
-		</div>
-	</div>
+    <div class="w1200">
+        <div class="m_til">
+            <h5><em class="enfont">EXCELLENT CASE<i></i></em></h5>
+            <span>精品案例</span>
+        </div>
+    </div>
 </div>
 <!--E 案例-->
+<!--S 关于我们-->
+<div class="main_about">
+    <div class="w1200">
+        <div class="abt_l">
+            <div class="common_index_title">
+                <a href="javascript:;" class="t">
+			        <div class="en">
+			         ABOUT US
+			        </div> 关于我们
+			    </a>
+            </div>
+            <div class="p1">
+                <p>xxx网络公司始终以“精诚服务客户”作为公司发展主要核心，细分客户需求，为客户量身定制各种网络业务需求。</p>
+            </div>
+            <div class="box_item clearfix">
+                <div class="item_l">
+                    <div class="y">
+                        <i class="num">2017</i>年
+                    </div>
+                    <div class="s">
+                        成立于2017年6月
+                    </div>
+                </div>
+                <div class="item_r">
+                    <div class="y">
+                        <i class="num">120</i>
+                        <span class="jia">+</span>家
+                    </div>
+                    <div class="s">
+                        已经服务超过50家企业
+                    </div>
+                </div>
+            </div>
+            <div class="box_item clearfix">
+                <div class="item_l">
+                    <div class="y">
+                        <i class="num">10</i>
+                        <span class="jia">+</span>项
+                    </div>
+                    <div class="s">
+                        获得10项以上荣誉
+                    </div>
+                </div>
+                <div class="item_r">
+                    <div class="y">
+                        <i class="num">15</i>
+                        <span class="jia">+</span>人
+                    </div>
+                    <div class="s">
+                        拥有员工人数30以上
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="abt_r">
+            <div class="pr">
+                <img src="__IMG_PATH__/about.jpg" alt="" class="w100">
+                <div class="box">
+                    <div class="t">
+                        Our slogan
+                    </div>
+                    <div class="p">
+                        用心致力服务，联手创造未来!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--E 关于我们-->
 <!--S 新闻-->
 <div class="main_new">
-	<div class="w1200">
-		<div class="m_til">
-			<h5><em class="enfont">News information<i></i></em></h5>
-			<span>新闻动态</span>
-		</div>
-		<ul class="news_list">
-			{yzn module="cms" action="lists" catid="6" cache="3600" order="listorder ASC" num="3" return="data"}
+    <div class="w1200">
+        <div class="m_til">
+            <h5><em class="enfont">News information<i></i></em></h5>
+            <span>新闻动态</span>
+        </div>
+        <ul class="news_list">
+            {yzn module="cms" action="lists" catid="6" cache="3600" order="listorder ASC" num="3" return="data"}
             {volist name="data" id="vo"}
-			<li>
-				<div class="_date">
-					<span class="_d1">{$vo.updatetime|date="Y"}</span>
-					<span class="_d2">{$vo.updatetime|date="m-d"}</span>
-				</div>
-				<div class="_nr">
-					<a href="{$vo.url}" title="{$vo.title}">
+            <li>
+                <div class="_date">
+                    <span class="_d1">{$vo.updatetime|date="Y"}</span>
+                    <span class="_d2">{$vo.updatetime|date="m-d"}</span>
+                </div>
+                <div class="_nr">
+                    <a href="{$vo.url}" title="{$vo.title}">
 						<h3 class="_title">{$vo.title}</h3>
 						<div class="_sum">{$vo.description|str_cut=###,100}</div>
 						<span class="_more">+查看更多</span>
 					</a>
-				</div>
-			</li>
-			{/volist}
+                </div>
+            </li>
+            {/volist}
             {/yzn}
-		</ul>
-	</div>
+        </ul>
+    </div>
 </div>
 <!--E 新闻-->
 {include file="footer" /}

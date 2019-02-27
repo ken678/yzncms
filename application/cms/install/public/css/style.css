@@ -44,9 +44,11 @@
 .color_ddd {
     color: #ddd;
 }
+
 .color_f00 {
     color: #f00;
 }
+
 .font14 {
     font-size: 14px;
 }
@@ -65,6 +67,10 @@
 
 .font36 {
     font-size: 36px;
+}
+
+.w100 {
+    width: 100%;
 }
 
 .w1200 {
@@ -100,7 +106,12 @@
     text-align: center;
 }
 
-.clearfix:after {
+.pr {
+    position: relative;
+}
+
+.clearfix:after,
+.clearfix:before {
     visibility: hidden;
     display: block;
     font-size: 0;
@@ -420,17 +431,136 @@
     min-height: 500px;
     background: #fff;
     width: 100%;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
-.main_new {
+.main_about {
     overflow: hidden;
     min-height: 500px;
+    background: #fff;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.main_about .abt_l {
+    width: 33%;
+    float: left;
+}
+
+.main_about .abt_l .common_index_title {
+    margin: 35px 0;
+    display: inline-block;
+}
+
+.main_about .abt_l .common_index_title a {
+    display: block;
+}
+
+.main_about .abt_l .common_index_title .t {
+    font-size: 40px;
+    line-height: 1;
+    font-weight: bold;
+    color: #2d4455;
+}
+
+.main_about .abt_l .common_index_title .en {
+    font-size: 20px;
+    line-height: 1;
+    font-family: 'Arial';
+    color: #fa0712;
+    margin-bottom: 5px;
+}
+
+.main_about .abt_l .p1 {
+    line-height: 1.6;
+    font-size: 14px;
+    color: #2d4455;
+    height: 50px;
+    overflow: hidden;
+    margin-bottom: 70px;
+}
+
+.main_about .abt_l .box_item {
+    line-height: 1;
+    margin-bottom: 50px;
+}
+
+.main_about .abt_l .box_item .item_l {
+    position: relative;
+}
+
+.main_about .abt_l .box_item .item_l,
+.main_about .abt_l .box_item .item_r {
+    width: 50%;
+    float: left;
+}
+
+.main_about .abt_l .box_item .y {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.main_about .abt_l .box_item .s {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.main_about .abt_l .box_item .y i {
+    font-size: 40px;
+    font-family: 'Impact';
+    font-weight: bold;
+    line-height: 1;
+    margin-right: 10px;
+}
+
+.main_about .abt_l .box_item .item_l:after {
+    content: '';
+    position: absolute;
+    right: 20%;
+    height: 66px;
+    width: 1px;
+    background: #dfdfdf;
+    top: 50%;
+    margin-top: -33px;
+}
+
+.main_about .abt_r {
+    width: 65%;
+    float: right;
+}
+
+.main_about .abt_r .box {
+    position: absolute;
+    width: 430px;
+    height: 186px;
+    background: url(../images/index_sanjiao.png) no-repeat;
+    right: 0;
+    bottom: 0;
+    color: #fff;
+    text-align: right;
+}
+.main_about .abt_r .box .t {
+    text-transform: uppercase;
+    font-size: 30px;
+    font-family: 'Arial';
+    line-height: 1;
+    margin-bottom: 5px;
+    margin-right: 40px;
+    margin-top: 110px;
+}
+.main_about .abt_r .box .p {
+    font-size: 16px;
+    margin-right: 40px;
+}
+.main_new {
+    overflow: hidden;
+    min-height: 450px;
     background: #f2f1f6 url(../images/inews_bg.gif) no-repeat center bottom;
     width: 100%;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .news_list {
