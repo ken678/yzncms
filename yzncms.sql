@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-26 11:15:40
+Date: 2019-02-27 13:23:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,11 +75,15 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of yzn_adminlog
 -- ----------------------------
+INSERT INTO `yzn_adminlog` VALUES ('1', '1', '1', '提示语:设置更新成功', '1551244828', '2130706433', '/admin/config/setting/group/system.html');
+INSERT INTO `yzn_adminlog` VALUES ('2', '1', '1', '提示语:配置添加成功~', '1551244923', '2130706433', '/admin/config/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('3', '1', '1', '提示语:配置添加成功~', '1551244957', '2130706433', '/admin/config/add.html');
+INSERT INTO `yzn_adminlog` VALUES ('4', '1', '1', '提示语:配置编辑成功~', '1551244971', '2130706433', '/admin/config/edit/id/8.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -230,18 +234,20 @@ CREATE TABLE `yzn_config` (
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='网站配置';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='网站配置';
 
 -- ----------------------------
 -- Records of yzn_config
 -- ----------------------------
-INSERT INTO `yzn_config` VALUES ('1', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', '\nsystem:系统\nupload:上传\ndevelop:开发', '0');
+INSERT INTO `yzn_config` VALUES ('1', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\r\nsystem:系统\r\nupload:上传\r\ndevelop:开发', '0');
 INSERT INTO `yzn_config` VALUES ('5', 'upload_file_size', 'text', '文件上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457658', '1541756875', '1', '0', '99');
 INSERT INTO `yzn_config` VALUES ('3', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1541756842', '1', '0', '97');
 INSERT INTO `yzn_config` VALUES ('6', 'upload_file_ext', 'text', '允许上传的文件后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457659', '1540457800', '1', 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z', '100');
 INSERT INTO `yzn_config` VALUES ('4', 'upload_image_ext', 'text', '允许上传的图片后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457657', '1541756856', '1', 'gif,jpg,jpeg,bmp,png', '98');
 INSERT INTO `yzn_config` VALUES ('7', 'upload_driver', 'radio', '上传驱动', 'upload', 'local:本地', '图片或文件上传驱动', '1541752781', '1541756888', '1', 'local', '101');
 INSERT INTO `yzn_config` VALUES ('2', 'theme', 'text', '主题风格', 'system', '', '或可在[界面]-[主题管理]中配置', '1541752781', '1541756888', '1', 'default', '1');
+INSERT INTO `yzn_config` VALUES ('8', 'web_site_icp', 'text', '备案信息', 'base', '', '', '1551244923', '1551244971', '1', '', '1');
+INSERT INTO `yzn_config` VALUES ('9', 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', '1551244957', '1551244957', '1', '', '100');
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`

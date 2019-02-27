@@ -31,7 +31,7 @@ class Config extends Adminbase
     }
 
     //配置首页
-    public function index($group = 'system')
+    public function index($group = 'base')
     {
         if ($this->request->isAjax()) {
             $_list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
@@ -52,7 +52,7 @@ class Config extends Adminbase
     }
 
     //配置设置
-    public function setting($group = 'system')
+    public function setting($group = 'base')
     {
         if ($this->request->isPost()) {
             $data = $this->request->post('modelField/a');
