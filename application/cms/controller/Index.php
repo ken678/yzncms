@@ -32,7 +32,7 @@ class Index extends Homebase
     public function index()
     {
         $page = $this->request->param('page/d', 1);
-        $SEO = seo();
+        $seo = seo();
         $this->assign([
             'SEO' => $seo,
             'page' => $page,
