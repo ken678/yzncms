@@ -14,15 +14,27 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
+use app\cms\model\Tags as Tags_Model;
 use app\common\controller\Adminbase;
 
 class Tags extends Adminbase
 {
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->Tags = new Tags_Model;
+    }
+
     /**
      * tags列表
      */
     public function index()
     {
+        if ($this->request->isAjax()) {
+            $data = $this->Tags->select();
+            $result = array("code" => 0, "data" => $data);
+            return json($result);
+        }
         return $this->fetch();
 
     }
