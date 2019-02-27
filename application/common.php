@@ -409,19 +409,10 @@ function get_file_name($id = '')
 /**
  * 获取附件路径
  */
-function get_file_path($id = 0)
+function get_file_path($id)
 {
     $path = model('attachment/Attachment')->getFilePath($id);
     return $path ? $path : "";
-}
-
-/**
- * 批量获取附件路径
- */
-function get_files_path($ids = [])
-{
-    $paths = model('admin/attachment')->getFilePath($ids);
-    return !$paths ? [] : $paths;
 }
 
 /**
