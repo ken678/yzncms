@@ -40,13 +40,13 @@
                     <input type="text" name="define" lay-verify="define" autocomplete="off" placeholder="字段定义" class="layui-input" id="define" value="{$data.define}">
                 </div>
             </div>
-            <div class="layui-form-item" id="options" style="display:none">
+            <div class="layui-form-item" id="options" {if !$fieldType[$data['type']]['ifoption']}style="display:none"{/if}>
                 <label class="layui-form-label">选项</label>
                 <div class="layui-input-inline w300">
                     <textarea name="options" lay-verify="required" placeholder="值:描述
 值:描述
 值:描述
-....." class="layui-textarea"></textarea>
+....." class="layui-textarea">{$data.options}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">

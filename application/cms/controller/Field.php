@@ -129,7 +129,6 @@ class Field extends Adminbase
             }
             $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
             $this->assign([
-                'modelType' => $modedata['type'],
                 'data' => $fieldData,
                 'fieldid' => $fieldid,
                 'fieldType' => $fieldType,
