@@ -429,7 +429,7 @@
 .main_case {
     overflow: hidden;
     min-height: 500px;
-    background: #fff;
+    background: #f2f1f6;
     width: 100%;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -541,6 +541,7 @@
     color: #fff;
     text-align: right;
 }
+
 .main_about .abt_r .box .t {
     text-transform: uppercase;
     font-size: 30px;
@@ -550,10 +551,12 @@
     margin-right: 40px;
     margin-top: 110px;
 }
+
 .main_about .abt_r .box .p {
     font-size: 16px;
     margin-right: 40px;
 }
+
 .main_new {
     overflow: hidden;
     min-height: 450px;
@@ -638,6 +641,86 @@
     background-image: url(../images/inews_don.png);
 }
 
+.product_box {}
+
+.classify-screen {
+    border: 1px solid #ececec;
+    font-size: 12px;
+    padding: 5px 20px 0px;
+    margin: 15px auto;
+}
+
+.classify-box {
+    padding: 10px 0px;
+}
+
+.classify-box .classify-name {
+    width: 80px;
+    float: left;
+    font-size: 16px;
+    font-weight: 400;
+    text-indent: 15px;
+    line-height: 30px;
+}
+
+.classify-box .classify-screen-con {
+    font-size: 16px;
+    line-height: 30px;
+    float: left;
+    width: 980px;
+}
+
+.classify-box .classify-screen-con .classify-choose {
+    width: 980px;
+    float: left;
+}
+
+.classify-box .classify-screen-con a {
+    position: relative;
+    float: left;
+    color: #666;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.classify-box .classify-screen-con a:hover {
+    color: #E31939;
+}
+
+.classify-box .classify-screen-con a:after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 16px;
+    background-color: #e3e3e3;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -8px;
+}
+
+.classify-box .classify-screen-con a span {
+    padding: 3px 10px;
+    margin: 0 10px;
+}
+
+.classify-box .classify-screen-con a.selected span {
+    background: #E31939;
+    color: #ffffff;
+}
+
+
+
+
+
+
+
+
 
 /*分页*/
 #pages {
@@ -676,6 +759,7 @@
 /*内页*/
 .main {
     min-height: 450px;
+    position: relative;
 }
 
 .headline-bg {
@@ -1181,6 +1265,8 @@
 }
 
 .footer .qcode {
+    height: 150px;
+    background: url(../images/map.png) center no-repeat;
     width: 540px;
 }
 
@@ -1199,7 +1285,7 @@
     background: url(../images/ico_tel.png) no-repeat left center;
     font-family: "GrayDesign Regular", "arial, helvetica, sans-serif";
     font-size: 30px;
-    color: #fa0712;
+    color: #fff;
     line-height: 40px;
 }
 
