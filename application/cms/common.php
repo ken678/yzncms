@@ -181,6 +181,18 @@ function buildCatUrl($type, $id, $url = '')
 }
 
 /**
+ * 生成分类信息中的筛选菜单
+ * @param $field   字段名称
+ * @param $modelid  模型ID
+ */
+function filters($field, $modelid, $diyarr = array())
+{
+    $fields = cache('ModelField')[$modelid];
+    $options = empty($diyarr) ? explode("\n", $fields[$field]['options']) : $diyarr;
+    var_dump($options);
+}
+
+/**
  * 生成SEO
  * @param $catid        栏目ID
  * @param $title        标题

@@ -1,0 +1,65 @@
+{include file="header" /}
+<style type="text/css">
+body {
+    background: #f6f6f6;
+}
+</style>
+<div class="headline-bg"></div>
+<div class="main">
+    <div class="w1200">
+        <div class="container-top">
+            <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
+            <!-- 面包屑 -->
+            <div class="bread-nav">
+                <a href="">首页</a>&gt; {:catpos($catid)}
+            </div>
+        </div>
+        <div class="content">
+            <div class="product_box">
+                <div class="classify-screen">
+                    <div class="classify-box clearfix">
+                        <h5 class="classify-name">类型：</h5>
+                        <div class="classify-screen-con">
+                            <div class="classify-choose">
+                                <a target="_self" href="" class="selected"><span>不限</span></a>
+                                <a target="_self" href=""><span>营销网站</span></a>
+                                <a target="_self" href=""><span>电商网站</span></a>
+                                <a target="_self" href=""><span>响应式网站</span></a>
+                                <a target="_self" href=""><span>手机网站</span></a>
+                                <a target="_self" href=""><span>外贸网站</span></a>
+                                <a target="_self" href=""><span>其他</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="classify-box clearfix">
+                        <h5 class="classify-name">行业：</h5>
+                        <div class="classify-screen-con">
+                            <div class="classify-choose">
+                                <a target="_self" href="" class="selected"><span>不限</span></a>
+                                <a target="_self" href=""><span>机械设备</span></a>
+                                <a target="_self" href=""><span>车辆物流</span></a>
+                                <a target="_self" href=""><span>地产建筑装修</span></a>
+                                <a target="_self" href=""><span>教育培训</span></a>
+                                <a target="_self" href=""><span>其他</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="classify-box clearfix">
+                        <h5 class="classify-name">价格：</h5>
+                        <div class="classify-screen-con">
+                            <div class="classify-choose">
+                                <a target="_self" href="" class="selected"><span>不限</span></a>
+                                <a target="_self" href=""><span>≤2500</span></a>
+                                <a target="_self" href=""><span>≤5000</span></a>
+                                <a target="_self" href=""><span>≤8000</span></a>
+                                <a target="_self" href=""><span>≥1万</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{include file="footer" /}
