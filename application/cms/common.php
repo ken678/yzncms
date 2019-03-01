@@ -192,6 +192,35 @@ function filters($field, $modelid, $diyarr = array())
     var_dump($options);
 }
 
+function paramdecode($str)
+{
+    $arr = [];
+    $arr1 = explode('&', $str);
+    foreach ($arr1 as $vo) {
+        if (!empty($vo)) {
+            $arr2 = explode('=', $vo);
+            if (!empty($arr2[1])) {
+                $arr[$arr2[0]] = $arr2[1];
+            }
+        }
+    }
+    return $arr;
+}
+
+function paramencode($arr)
+{
+    $str = '';
+    if (!empty($arr)) {
+        foreach ($arr as $key => $vo) {
+            if (!empty($vo)) {
+                $str .= $key . '=' . $vo . '&';
+            }
+        }
+        $str = substr($str, 0, -1);
+    }
+    return $str;
+}
+
 /**
  * 生成SEO
  * @param $catid        栏目ID
