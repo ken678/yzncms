@@ -32,7 +32,7 @@ class Attachment extends Model
     {
         $uploadPath = config('public_url') . 'uploads/';
         if (is_array($id)) {
-            $data_list = $this->where('id', 'in', $id)->select();
+            $data_list = $this->where('id', 'in', $id)->field('path,driver,thumb')->select();
             $paths = [];
             foreach ($data_list as $key => $value) {
                 if ($value['driver'] == 'local') {
@@ -43,7 +43,7 @@ class Attachment extends Model
             }
             return $paths;
         } else {
-            $data = $this->where('id', $id)->find();
+            $data = $this->where('id', $id)->field('path,driver,thumb')->find();
             if ($data) {
                 if ($data['driver'] == 'local') {
                     return ($type == 0 ? $uploadPath : '') . $data['path'];
