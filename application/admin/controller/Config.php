@@ -104,23 +104,17 @@ class Config extends Adminbase
                 if ($value['type'] == 'datetime') {
                     $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : $value['value'];
                 }
-                if ($value['type'] == 'date') {
-                    $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
-                }
                 if ($value['type'] == 'image') {
-                    $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
+                    //$value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
                 }
                 if ($value['type'] == 'images') {
-                    $value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
-                    /*if (!empty($value['value'])) {
-                $value['value'] .= ',';
-                }*/
+                    //$value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
+                }
+                if ($value['type'] == 'file') {
+                    //$value['param'] = ['dir' => 'file', 'module' => 'admin'];
                 }
                 if ($value['type'] == 'files') {
-                    $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                    /*if (!empty($value['value'])) {
-                $value['value'] .= ',';
-                }*/
+                    //$value['param'] = ['dir' => 'files', 'module' => 'admin'];
                 }
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
