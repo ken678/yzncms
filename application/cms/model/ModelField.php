@@ -591,7 +591,7 @@ EOF;
                 case 'checkbox':
                     break;
                 case 'image':
-                    $newdata[$key] = empty($value) ? "" : get_file_path($value);
+                    $newdata[$key] = $value;
                     break;
                 case 'images':
                     break;
