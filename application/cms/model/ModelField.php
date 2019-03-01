@@ -566,6 +566,7 @@ EOF;
             $dataInfo = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
             $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
         }
+
         return $dataInfo;
     }
 
@@ -609,6 +610,9 @@ EOF;
                 default:
                     $newdata[$key] = $value;
                     break;
+            }
+            if ('posid' == $key) {
+                $newdata[$key] = $value;
             }
             if (!isset($newdata[$key])) {
                 $newdata[$key] = '';
