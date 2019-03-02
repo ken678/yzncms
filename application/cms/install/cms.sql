@@ -72,15 +72,16 @@ CREATE TABLE `yzn_position` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='推荐位';
 
+
 DROP TABLE IF EXISTS `yzn_position_data`;
 CREATE TABLE `yzn_position_data` (
   `id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '文章ID',
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
   `posid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位ID',
   `modelid` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   KEY `posid` (`posid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='推荐位数据表';
-
 
 
 DROP TABLE IF EXISTS `yzn_page`;

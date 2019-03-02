@@ -15,6 +15,7 @@
 namespace app\cms\controller;
 
 use app\cms\model\Position as Position_Model;
+use app\cms\model\PositionData as PositionData_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -27,7 +28,7 @@ class Position extends Adminbase
     }
 
     /**
-     * 首页
+     * 推荐位列表
      */
     public function index()
     {
@@ -55,7 +56,7 @@ class Position extends Adminbase
     }
 
     /**
-     * 信息管理
+     * 推荐位信息管理
      */
     public function item()
     {
@@ -76,7 +77,7 @@ class Position extends Adminbase
     }
 
     /**
-     * 添加推荐位
+     * 推荐位添加
      */
     public function add()
     {
@@ -106,7 +107,7 @@ class Position extends Adminbase
     }
 
     /**
-     * 编辑推荐位
+     * 推荐位编辑
      */
     public function edit()
     {
@@ -142,14 +143,25 @@ class Position extends Adminbase
 
     }
 
-    //动态加载推荐位栏目
-    public function public_category_load()
+    /**
+     * 推荐位排序
+     */
+    public function listorder()
     {
-        $modelid = $this->request->param('modelid/d', 0);
-        echo \util\Form::select_category('', 'name=catid', '', $modelid);
+        $posid = $this->request->param('id/d', 0);
+        $listorder = $this->request->param('value/d', 0);
+
+        $rs = PositionData_Model::update(['listorder' => $listorder], ['posid' => $posid], true);
+        if ($rs) {
+            $this->success("排序成功！");
+        } else {
+            $this->error("排序失败！");
+        }
     }
 
-    //删除 推荐位
+    /**
+     * 推荐位删除
+     */
     public function delete()
     {
         $posid = $this->request->param('id/d', 0);
@@ -158,6 +170,13 @@ class Position extends Adminbase
         } else {
             $this->error($this->Position_Model->getError() ?: '删除失败');
         }
+    }
+
+    //动态加载推荐位栏目
+    public function public_category_load()
+    {
+        $modelid = $this->request->param('modelid/d', 0);
+        echo \util\Form::select_category('', 'name=catid', '', $modelid);
     }
 
 }

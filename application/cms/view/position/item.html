@@ -31,6 +31,19 @@ layui.use('table', function() {
         ]
     });
 
+        //监听单元格编辑
+    table.on('edit(table)', function(obj) {
+        var value = obj.value,data = obj.data;
+        $.post('{:url("cms/position/listorder")}', { 'id': data.posid,'value':value }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        })
+    });
+
 
 });
 </script>
