@@ -60,20 +60,23 @@ class Position extends Adminbase
      */
     public function item()
     {
-        $limit = $this->request->param('limit/d', 10);
-        $page = $this->request->param('page/d', 1);
-        $posid = $this->request->param('id/d', 0);
-        if ($this->request->isAjax()) {
-            $data = model('PositionData')->where(['posid' => $posid])->page($page, $limit)->order(["id" => "DESC"])->select();
-            foreach ($data as $k => $v) {
-                $data[$k]['data'] = model('ModelField')->getDataInfo($v['modelid'], "id='" . $v['id'] . "'", false);
-            }
-            $result = array("code" => 0, "data" => $data);
-            return json($result);
-        }
-        $this->assign('posid', $posid);
-        return $this->fetch();
+        if ($this->request->isPost()) {
 
+        } else {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 1);
+            $posid = $this->request->param('id/d', 0);
+            if ($this->request->isAjax()) {
+                $data = model('PositionData')->where(['posid' => $posid])->page($page, $limit)->order(["id" => "DESC"])->select();
+                foreach ($data as $k => $v) {
+                    $data[$k]['data'] = model('ModelField')->getDataInfo($v['modelid'], "id='" . $v['id'] . "'", false);
+                }
+                $result = array("code" => 0, "data" => $data);
+                return json($result);
+            }
+            $this->assign('posid', $posid);
+            return $this->fetch();
+        }
     }
 
     /**
