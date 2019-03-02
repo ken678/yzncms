@@ -32,7 +32,7 @@ class Module
     //已安装模块列表
     protected $moduleList = array();
     //系统模块，隐藏
-    protected $systemModuleList = array('admin', 'index', 'api', 'attachment', 'common', 'addons', 'template');
+    protected $systemModuleList = array('admin', 'index', 'api', 'attachment', 'common', 'addons', 'template', 'error');
     //当前模块名称
     private $name = null;
     /**
