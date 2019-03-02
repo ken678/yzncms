@@ -61,7 +61,20 @@ class Position extends Adminbase
     public function item()
     {
         if ($this->request->isPost()) {
-
+            $posid = $this->request->param('id/d', 0);
+            $ids = $this->request->param('ids/a', []);
+            if (empty($ids) || !$posid) {
+                $this->error('参数错误！');
+            }
+            if (!is_array($ids)) {
+                $ids = array(0 => $ids);
+            }
+            $db = model('PositionData');
+            foreach ($ids as $v) {
+                $_v = explode('-', $v);
+                $db->deleteItem((int) $posid, (int) $_v[0], (int) $_v[1]);
+            }
+            $this->success("移除成功！");
         } else {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);

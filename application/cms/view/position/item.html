@@ -6,6 +6,11 @@
         <table class="layui-hide" id="table" lay-filter="table"></table>
     </div>
 </div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</a>
+    </div>
+</script>
 <script type="text/html" id="barTool">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -18,9 +23,11 @@ layui.use('table', function() {
         form = layui.form;
     table.render({
         elem: '#table',
+        toolbar: '#toolbarDemo',
         url: '{:url("cms/position/item",["id"=>$posid])}',
         cols: [
             [
+                { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 60, title: '排序', edit: 'text' },
                 { field: 'catid', width: 80, title: '栏目ID' },
                 { field: 'id', width: 80, title: '文章ID' },
@@ -42,6 +49,83 @@ layui.use('table', function() {
             }
 
         })
+    });
+
+        table.on('toolbar(table)', function(obj) {
+        if (obj.event === 'delAll') {
+            var checkStatus = table.checkStatus('table'),
+                data = checkStatus.data,
+                ids = [];
+            if (data.length > 0) {
+                for (let i in data) {
+                    ids.push(data[i].id+'-'+data[i].modelid);
+                }
+                layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
+                    $.post('{:url("cms/position/item",["id"=>$posid])}', { 'ids': ids }, function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
+                    });
+                    layer.close(index);
+                })
+            } else {
+                layer.msg("请选择需要删除的数据");
+            }
+        } else {
+            table.reload('table');
+        }
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("cms/position/item",["id"=>$posid])}', { 'ids': data.id+'-'+data.modelid }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });
+        }
     });
 
 
