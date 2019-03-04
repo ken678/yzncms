@@ -41,8 +41,27 @@ class PositionData extends Model
         $where['posid'] = intval($posid);
         if (self::where($where)->delete() !== false) {
             $this->contentPos($id, $modelid);
-            //删除相关联的附件
-            //service('Attachment')->api_delete('position-' . $modelid . '-' . $id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 根据模型ID和信息ID删除推荐信息
+     * @param type $modelid
+     * @param type $id
+     */
+    public function deleteByModeId($modelid, $ids)
+    {
+        if (empty($modelid) || empty($ids)) {
+            return false;
+        }
+        $where = array();
+        $where['id'] = $ids;
+        $where['modelid'] = $modelid;
+        if ($this->where($where)->delete() !== false) {
+            $this->contentPos($ids, $modelid);
             return true;
         } else {
             return false;

@@ -298,7 +298,18 @@ EOF;
             } catch (\Exception $e) {
                 throw new \Exception($e->getMessage());
             }
+        } else {
+            try {
+                Db::name($modelInfo['tablename'])->where('id', $ids)->delete();
+                if (2 == $modelInfo['type']) {
+                    Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $ids)->delete();
+                }
+            } catch (\Exception $e) {
+                throw new \Exception($e->getMessage());
+            }
         }
+        //删除推荐位的信息
+        model('PositionData')->deleteByModeId($modeId, $ids)
     }
 
     //查询解析模型数据用以构造from表单
