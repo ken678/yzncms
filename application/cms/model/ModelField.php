@@ -244,7 +244,7 @@ EOF;
             throw new \Exception('数据表不存在！');
         }
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
-        $this->description($data);
+        $this->description($data, $dataExt);
 
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         $posid = $data['posid'];
