@@ -45,6 +45,7 @@ function getCategory($catid, $field = '', $newCache = false)
         } else {
             //扩展配置
             $cache['setting'] = unserialize($cache['setting']);
+            $cache['url'] = buildCatUrl($cache['type'], $catid);
             //栏目扩展字段
             //$cache['extend'] = $cache['setting']['extend'];
             Cache::set($key, $cache, 3600);
