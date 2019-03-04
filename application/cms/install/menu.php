@@ -54,7 +54,7 @@ return [
                         "type" => 1,
                         "status" => 1,
                         "name" => "CMS配置",
-                        "icon" => "icon-liebiao",
+                        "icon" => "icon-shezhi",
                     ],
                     [
                         "route" => "cms/category/index",
