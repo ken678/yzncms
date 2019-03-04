@@ -13,20 +13,20 @@
         </div>
         <ul class="botnavlist fl">
             {yzn module="cms" action="category" catid="0" cache="3600" where="id in(1,6,8)" order="listorder ASC" num="4" return="data"}
-            {foreach $data as $key=>$vo }
+            {volist name="data" id="vo"}
             <li><a href="{$vo.url}" title="{$vo.catname}">{$vo.catname}</a>
                 <div class="drop clearfix">
                     <!--判断是否有子栏目-->
                     {eq name="vo.child" value="1"}
                     {yzn module="cms" action="category" catid="$vo['id']" cache="3600" order="listorder ASC" num="10" return="data"}
-                    {foreach $data as $key=>$vo }
+                    {volist name="data" id="vo"}
                     <a href="{$vo.url}" title="{$vo.catname}">{$vo.catname}</a>
-                    {/foreach}
+                    {/volist}
                     {/yzn}
                     {/eq}
                 </div>
             </li>
-            {/foreach}
+            {/volist}
             {/yzn}
         </ul>
         <div class="qcode fr">
