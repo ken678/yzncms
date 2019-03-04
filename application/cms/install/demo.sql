@@ -147,7 +147,7 @@ INSERT INTO `yzn_model_field` VALUES ('1', '1', 'id', '文档id', '', 'hidden', 
 INSERT INTO `yzn_model_field` VALUES ('2', '1', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('3', '1', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('4', '1', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('5', '1', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('5', '1', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('6', '1', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('7', '1', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('8', '1', 'listorder', '排序', '', 'number', 'tinyint(3) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
@@ -161,7 +161,7 @@ INSERT INTO `yzn_model_field` VALUES ('15', '2', 'id', '文档id', '', 'hidden',
 INSERT INTO `yzn_model_field` VALUES ('16', '2', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('17', '2', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('18', '2', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('19', '2', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('19', '2', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('20', '2', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('21', '2', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('22', '2', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1548754192', '1548754192', '100', '1');
@@ -175,7 +175,7 @@ INSERT INTO `yzn_model_field` VALUES ('29', '3', 'id', '文档id', '', 'hidden',
 INSERT INTO `yzn_model_field` VALUES ('30', '3', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('31', '3', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('32', '3', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('33', '3', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('33', '3', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('34', '3', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('35', '3', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('36', '3', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
@@ -189,7 +189,7 @@ INSERT INTO `yzn_model_field` VALUES ('43', '4', 'id', '文档id', '', 'hidden',
 INSERT INTO `yzn_model_field` VALUES ('44', '4', 'catid', '栏目id', '', 'hidden', 'smallint(5) unsigned', '', '', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('45', '4', 'title', '标题', '', 'text', 'varchar(255)', '', '', '', '1', '1', '0', '1', '1', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('46', '4', 'keywords', 'SEO关键词', '', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('47', '4', 'description', 'SEO摘要', '', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('47', '4', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('48', '4', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('49', '4', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('50', '4', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');

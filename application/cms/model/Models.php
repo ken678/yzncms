@@ -246,7 +246,7 @@ EOF;
                 'title' => 'SEO关键词',
                 'define' => 'varchar(255)',
                 'type' => 'text',
-                'jsonrule' => '{"string":{"table":"tag","key":"title","delimiter":",","where":"","limit":"6","order":"[rand]"}}',
+                'jsonrule' => '',
                 'ifeditable' => 1,
                 'iffixed' => 0,
             ],
@@ -257,6 +257,7 @@ EOF;
                 'type' => 'textarea',
                 'ifeditable' => 1,
                 'iffixed' => 0,
+                'remark' => '如不填写，则自动截取附表中编辑器的200字符',
             ],
             [
                 'name' => 'uid',

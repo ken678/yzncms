@@ -194,6 +194,8 @@ EOF;
         if (!$this->table_exists($tablename)) {
             throw new \Exception('数据表不存在！');
         }
+        //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
+        $this->description($data, $dataExt);
         //处理数据
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         $posid = $data['posid'];
@@ -241,6 +243,8 @@ EOF;
         if (!$this->table_exists($tablename)) {
             throw new \Exception('数据表不存在！');
         }
+        //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
+        $this->description($data);
 
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         $posid = $data['posid'];
@@ -619,6 +623,18 @@ EOF;
             }
         }
         return $newdata;
+    }
+
+    /**
+     * 自动获取简介
+     */
+    protected function description(&$data, $dataExt)
+    {
+        //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
+        if ($data['description'] == '' && isset($dataExt['content'])) {
+            $content = $dataExt['content'];
+            $data['description'] = str_cut(str_replace(array("\r\n", "\t", '&ldquo;', '&rdquo;', '&nbsp;'), '', strip_tags($content)), 200);
+        }
     }
 
     /**
