@@ -309,7 +309,7 @@ EOF;
             }
         }
         //删除推荐位的信息
-        model('PositionData')->deleteByModeId($modeId, $ids)
+        model('PositionData')->deleteByModeId($modeId, $ids);
     }
 
     //查询解析模型数据用以构造from表单
