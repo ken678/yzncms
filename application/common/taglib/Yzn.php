@@ -22,8 +22,8 @@ class Yzn extends Taglib
     // 标签定义
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'yzn' => ['attr' => 'module , action , num , cache , type , catid , id , posid , page, msg , blank , return , moreinfo', 'close' => 1, 'level' => 3],
-        'get' => ['attr' => 'sql , table , num , cache , page , return', 'close' => 1, 'level' => 3],
+        'yzn' => ['attr' => 'module,action,num,cache,type,catid,id,posid,page,msg,blank,return,moreinfo', 'close' => 1, 'level' => 3],
+        'get' => ['attr' => 'sql,table,num,cache,page,return', 'close' => 1, 'level' => 3],
     ];
 
     /**
@@ -86,9 +86,13 @@ class Yzn extends Taglib
         //当前分页参数
         $page = $tag['page'] = (isset($tag['page'])) ? ((substr($tag['page'], 0, 1) == '$') ? $tag['page'] : (int) $tag['page']) : 0;
         //SQL语句
-        $tag['sql'] = $sql = str_replace(array("think_", "yzn_"), config('database.prefix'), strtolower($tag['sql']));
+        if (isset($tag['sql'])) {
+            $tag['sql'] = $sql = str_replace(array("think_", "yzn_"), config('database.prefix'), strtolower($tag['sql']));
+        }
         //表名
-        $table = str_replace(config('database.prefix'), '', $tag['table']);
+        if (isset($tag['table'])) {
+            $table = str_replace(config('database.prefix'), '', $tag['table']);
+        }
         if (!$sql && !$table) {
             return false;
         }
@@ -109,9 +113,9 @@ class Yzn extends Taglib
             if ($tag['where']) {
                 array_push($tableWhere, $tag['where']);
             }
-            if (0 < count($tableWhere)) {
-                $tableWhere = implode(" AND ", $tableWhere);
-            }
+            /*if (0 < count($tableWhere)) {
+        $tableWhere = implode(" AND ", $tableWhere);
+        }*/
         }
         //拼接php代码
         $parseStr = '<?php ';
@@ -127,7 +131,6 @@ class Yzn extends Taglib
             }
             $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
             $parseStr .= 'endif;';
-
         } else {
 
         }
