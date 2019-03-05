@@ -24,7 +24,7 @@ body {
             <div class="content-right">
                 <!--S 文章列表-->
                 <ul class="list">
-                {yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="10" page="$page" return="data"}
+                {yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="4" page="$page" return="data"}
                 {volist name="data" id="vo"}
                     <li class="item clearfix">
                         <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo.title}">
@@ -37,6 +37,9 @@ body {
                 {/yzn}
                 </ul>
                 <!--E 文章列表-->
+                <!--S 分页-->
+                {$pages|raw}
+                <!--E 分页-->
             </div>
             <!--E 右侧内容 -->
         </div>
