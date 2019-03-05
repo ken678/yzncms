@@ -93,15 +93,15 @@ class Yzn extends Taglib
         if (isset($tag['table'])) {
             $table = str_replace(config('database.prefix'), '', $tag['table']);
         }
-        if (!$sql && !$table) {
+        if (!isset($sql) && !isset($table)) {
             return false;
         }
         //删除，插入不执行！这样处理感觉有点鲁莽了，，，-__,-!
-        if (strpos($tag['sql'], "delete") || strpos($tag['sql'], "insert")) {
+        if (isset($sql) && (strpos($sql, "delete")) === false || isset($sql) && (strpos($sql, "insert")) === false || isset($sql) && (strpos($sql, "update")) === false) {
             return false;
         }
         //如果使用table参数方式，使用类似tp的查询语言效果
-        if ($table) {
+        if (isset($table) && $table) {
             $table = strtolower($table);
             //条件
             $tableWhere = array();
@@ -110,12 +110,9 @@ class Yzn extends Taglib
                     $tableWhere[$key] = $val;
                 }
             }
-            if ($tag['where']) {
+            if (isset($tag['where'])) {
                 array_push($tableWhere, $tag['where']);
             }
-            /*if (0 < count($tableWhere)) {
-        $tableWhere = implode(" AND ", $tableWhere);
-        }*/
         }
         //拼接php代码
         $parseStr = '<?php ';
@@ -126,40 +123,29 @@ class Yzn extends Taglib
             $parseStr .= '$' . $return . ' = $_return;';
             $parseStr .= 'else: ';
             $parseStr .= '$get_db = \think\Db::name(ucwords("' . $table . '"));';
-            if ($tag['order']) {
+            if (isset($tag['order'])) {
                 $parseStr .= ' $get_db->order("' . $tag['order'] . '"); ';
             }
             $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
             $parseStr .= 'endif;';
         } else {
+            $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
+            $parseStr .= 'if($cache && $_return = Cache::get($cacheID)):';
+            $parseStr .= '$' . $return . ' = $_return;';
+            $parseStr .= 'else: ';
+            //判断是否变量传递
+            if (substr(trim($sql), 0, 1) == '$') {
+                $parseStr .= ' $_sql = str_replace(array("think_", "yzn_"), config("database.prefix"),' . $sql . ');';
+            } else {
+                $parseStr .= ' $_sql = "' . str_replace('"', '\"', $sql) . '";';
+            }
+            $parseStr .= '$' . $return . '=\think\Db::query($_sql." LIMIT ' . $num . ' ");';
+            $parseStr .= 'endif;';
 
         }
-
-        /*
-        if ($table) {
-
-        $parseStr .= ' }else{ ';
-        $parseStr .= ' $get_db = \think\db(ucwords("' . $table . '"));';
-        if ($tag['order']) {
-        $parseStr .= ' $get_db->order("' . $tag['order'] . '"); ';
-        }
-        $parseStr .= '      $' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
-        } else {
-        $parseStr .= ' $cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
-        $parseStr .= ' if(' . $cache . ' && $_return = S( $cacheID ) ){ ';
-        $parseStr .= '      $' . $return . '=$_return;';
-        $parseStr .= ' }else{ ';
-        if (substr(trim($sql), 0, 1) == '$') {
-        $parseStr .= ' $_sql = str_replace(array("think_", "lvyecms_"), C("DB_PREFIX"),' . $sql . ');';
-        } else {
-        $parseStr .= ' $_sql = "' . str_replace('"', '\"', $sql) . '";';
-        }
-        $parseStr .= ' $get_db = M();';
-        $parseStr .= '      $' . $return . '=$get_db->query($_sql." LIMIT ' . $num . ' ");';
-        }
-        $parseStr .= ' if(' . $cache . '){ S( $cacheID  ,$' . $return . ',$cache); }; ';
-        $parseStr .= ' } ';*/
-
+        $parseStr .= 'if($cache):';
+        $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
+        $parseStr .= 'endif;';
         $parseStr .= ' ?>';
         $parseStr .= $content;
         if (!empty($parseStr)) {
