@@ -465,20 +465,21 @@ EOF;
                     case 'date':
                         ${$arr}[$name] = strtotime(${$arr}[$name]);
                         break;
-                    case 'images':
-                        if (!empty(${$arr}[$name])) {
-                            $imageArr = explode(',', substr(${$arr}[$name], 0, -1));
-                            $uniqueImageArr = array_unique($imageArr);
-                            ${$arr}[$name] = implode(',', $uniqueImageArr);
-                        }
-                        break;
+                    /*case 'images':
+                    if (!empty(${$arr}[$name])) {
+                    var_dump(${$arr}[$name]);
+                    $imageArr = explode(',', substr(${$arr}[$name], 0, -1));
+                    $uniqueImageArr = array_unique($imageArr);
+                    ${$arr}[$name] = implode(',', $uniqueImageArr);
+                    }
+                    break;
                     case 'files':
-                        if (!empty(${$arr}[$name])) {
-                            $fileArr = explode(',', substr(${$arr}[$name], 0, -1));
-                            $uniqueFileArr = array_unique($fileArr);
-                            ${$arr}[$name] = implode(',', $uniqueFileArr);
-                        }
-                        break;
+                    if (!empty(${$arr}[$name])) {
+                    $fileArr = explode(',', substr(${$arr}[$name], 0, -1));
+                    $uniqueFileArr = array_unique($fileArr);
+                    ${$arr}[$name] = implode(',', $uniqueFileArr);
+                    }
+                    break;*/
                     // 百度编辑器
                     case 'Ueditor':
                         ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
@@ -610,6 +611,11 @@ EOF;
                     $newdata[$key] = $value;
                     break;
                 case 'images':
+                    if (strpos($value, ',') !== false) {
+                        $newdata[$key] = explode(',', $value);
+                    } else {
+                        $newdata[$key] = $value;
+                    }
                     break;
                 case 'files':
                     break;
