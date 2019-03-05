@@ -50,7 +50,7 @@ layui.use('table', function() {
         //监听单元格编辑
     table.on('edit(table)', function(obj) {
         var value = obj.value,data = obj.data;
-        $.post('{:url("cms/cms/listorder")}', { 'id': data.id,'value':value }, function(data) {
+        $.post('{:url("cms/cms/listorder",["catid"=>$catid])}', {'id': data.id,'value':value }, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{

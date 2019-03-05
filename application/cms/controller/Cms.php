@@ -259,9 +259,10 @@ class Cms extends Adminbase
      */
     public function listorder()
     {
+        $catid = $this->request->param('catid/d', 0);
         $id = $this->request->param('id/d', 0);
         $listorder = $this->request->param('value/d', 0);
-        $modelid = getCategory($id, 'modelid');
+        $modelid = getCategory($catid, 'modelid');
         $modelCache = cache("Model");
         if (empty($modelCache[$modelid])) {
             return false;
