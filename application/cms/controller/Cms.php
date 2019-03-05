@@ -55,7 +55,7 @@ class Cms extends Adminbase
             $total = Db::name(ucwords($tableName))->count();
             $list = Db::name(ucwords($tableName))->page($page, $limit)->where('catid', $catid)->withAttr('updatetime', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
-            })->order('id', 'desc')->select();
+            })->order(['listorder', 'id' => 'desc'])->select();
             $result = array("code" => 0, "count" => $total, "data" => $list);
             return json($result);
         }
