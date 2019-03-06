@@ -3,17 +3,6 @@
 <form class="layui-form form-horizontal" action="" method="post">
     {include file="admin@inputItem" /}
     <input type="hidden" name="modelField[catid]" value="{$catid}">
-    <input type='hidden' name='modelField[posid][]' value='-1'>
-    {if isset($position) && !empty($position)}
-    <div class="layui-form-item">
-    <label class="">推荐位</label>
-    <div class="layui-form-field-label">
-        {volist name="position" id="v"}
-        <input type="checkbox" name="modelField[posid][]" lay-skin="primary" title="{$v}" value="{$key}">
-        {/volist}
-    </div>
-    </div>
-    {/if}
     {if count($fieldList)}
     <div class="layui-form-item">
         <div>

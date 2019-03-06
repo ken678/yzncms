@@ -60,30 +60,6 @@ CREATE TABLE `yzn_model_field` (
   KEY `name` (`name`,`modelid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
 
-DROP TABLE IF EXISTS `yzn_position`;
-CREATE TABLE `yzn_position` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '推荐位id',
-  `modelid` mediumint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型id',
-  `catid` varchar(255) NOT NULL DEFAULT '' COMMENT '栏目id',
-  `name` char(30) NOT NULL DEFAULT '' COMMENT '推荐位名称',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='推荐位';
-
-
-DROP TABLE IF EXISTS `yzn_position_data`;
-CREATE TABLE `yzn_position_data` (
-  `id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '文章ID',
-  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
-  `posid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位ID',
-  `modelid` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
-  `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
-  KEY `posid` (`posid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='推荐位数据表';
-
-
 DROP TABLE IF EXISTS `yzn_page`;
 CREATE TABLE `yzn_page` (
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',

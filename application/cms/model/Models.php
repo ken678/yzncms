@@ -165,6 +165,7 @@ class Models extends Modelbase
 				`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
                 `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
 				`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+				`flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
 				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
 				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
 				`posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
@@ -240,6 +241,19 @@ EOF;
                 'ifeditable' => 1,
                 'ifrequire' => 1,
                 'iffixed' => 0,
+            ],
+            [
+                'name' => 'flag',
+                'title' => '属性',
+                'define' => 'varchar(32)',
+                'type' => 'checkbox',
+                'ifeditable' => 1,
+                'options' => '1:置顶[1]
+2:头条[2]
+3:特荐[3]
+4:推荐[4]
+5:热点[5]
+6:幻灯[6]',
             ],
             [
                 'name' => 'keywords',

@@ -100,26 +100,8 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
-                $position = cache('Position');
-                $array = array();
-                foreach ($position as $_key => $_value) {
-                    //如果有设置模型，检查是否有该模型
-                    if ($_value['modelid'] && $modelid !== $_value['modelid']) {
-                        continue;
-                    }
-                    //如果设置了模型，又设置了栏目
-                    if ($_value['modelid'] && $_value['catid'] && $catid !== $_value['catid']) {
-                        continue;
-                    }
-                    //如果设置了栏目
-                    if ($_value['catid'] && $catid !== $_value['catid']) {
-                        continue;
-                    }
-                    $array[$_key] = $_value['name'];
-                }
                 $fieldList = $this->modelfield->getFieldList($modelid);
                 $this->assign([
-                    'position' => $array,
                     'catid' => $catid,
                     'fieldList' => $fieldList,
                 ]);
@@ -160,28 +142,7 @@ class Cms extends Adminbase
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
                 $fieldList = $this->modelfield->getFieldList($modelid, $id);
-                $position = cache('Position');
-                $array = array();
-                foreach ($position as $_key => $_value) {
-                    //如果有设置模型，检查是否有该模型
-                    if ($_value['modelid'] && $modelid !== $_value['modelid']) {
-                        continue;
-                    }
-                    //如果设置了模型，又设置了栏目
-                    if ($_value['modelid'] && $_value['catid'] && $catid !== $_value['catid']) {
-                        continue;
-                    }
-                    //如果设置了栏目
-                    if ($_value['catid'] && $catid !== $_value['catid']) {
-                        continue;
-                    }
-                    $array[$_key] = $_value['name'];
-                }
-                //已经推荐
-                $posids = model('PositionData')->where(['id' => $id, 'modelid' => $modelid])->column("posid");
                 $this->assign([
-                    'posids' => $posids,
-                    'position' => $array,
                     'catid' => $catid,
                     'fieldList' => $fieldList,
                 ]);

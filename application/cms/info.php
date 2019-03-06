@@ -48,11 +48,6 @@ return array(
             'model' => 'ModelField',
             'action' => 'model_field_cache',
         ],
-        'Position' => [
-            'name' => '推荐位',
-            'model' => 'Position',
-            'action' => 'position_cache',
-        ],
         'Cms_Config' => [
             'name' => 'CMS配置',
             'model' => 'Cms',
@@ -65,7 +60,5 @@ return array(
         'yzn_model',
         'yzn_model_field',
         'yzn_page',
-        'yzn_position',
-        'yzn_position_data',
     ],
 );
