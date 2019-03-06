@@ -198,7 +198,6 @@ EOF;
         $this->description($data, $dataExt);
         //处理数据
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
-        $posid = $data['posid'];
         list($data, $dataExt) = $dataAll;
         if (!isset($data['inputtime'])) {
             $data['inputtime'] = request()->time();
@@ -218,16 +217,6 @@ EOF;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
-        //推荐位
-        if ($posid && is_array($posid)) {
-            $posids = array();
-            foreach ($posid as $r) {
-                if ($r != '-1') {
-                    $posids[] = $r;
-                }
-            }
-            model('Position')->positionUpdate($id, $modelid, $catid, $posids, 0, 1);
-        }
     }
 
     //编辑模型内容
@@ -245,9 +234,7 @@ EOF;
         }
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         $this->description($data, $dataExt);
-
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
-        $posid = $data['posid'];
         list($data, $dataExt) = $dataAll;
 
         if (!isset($data['updatetime'])) {
@@ -268,16 +255,6 @@ EOF;
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
-        }
-        //推荐位
-        if ($posid && is_array($posid)) {
-            $posids = array();
-            foreach ($posid as $r) {
-                if ($r != '-1') {
-                    $posids[] = $r;
-                }
-            }
-            model('Position')->positionUpdate($id, $modelid, $catid, $posids, 0, 0);
         }
     }
 
@@ -308,8 +285,6 @@ EOF;
                 throw new \Exception($e->getMessage());
             }
         }
-        //删除推荐位的信息
-        model('PositionData')->deleteByModeId($modeId, $ids);
     }
 
     //查询解析模型数据用以构造from表单
@@ -358,7 +333,6 @@ EOF;
                     }
                 }
                 if ($value['type'] == 'checkbox') {
-                    $value['value'] = (strlen($value['value']) > 2) ? substr($value['value'], 1, -1) : '';
                     $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
                 }
                 if ($value['type'] == 'datetime') {
@@ -440,7 +414,8 @@ EOF;
                 }
             } else {
                 if (is_array(${$arr}[$name])) {
-                    ${$arr}[$name] = ',' . implode(',', ${$arr}[$name]) . ',';
+                    //${$arr}[$name] = ',' . implode(',', ${$arr}[$name]) . ',';
+                    ${$arr}[$name] = implode(',', ${$arr}[$name]);
                 }
                 switch ($vo['type']) {
                     // 开关
@@ -623,9 +598,6 @@ EOF;
                 default:
                     $newdata[$key] = $value;
                     break;
-            }
-            if ('posid' == $key) {
-                $newdata[$key] = $value;
             }
             if (!isset($newdata[$key])) {
                 $newdata[$key] = '';

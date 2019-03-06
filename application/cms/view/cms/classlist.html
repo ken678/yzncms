@@ -18,6 +18,27 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+<script type="text/html" id="title">
+  {{ d.title }}
+  {{# if(d.flag.indexOf("1")!==-1){ }}
+  <span class="text-danger">[置顶]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("2")!==-1){ }}
+  <span class="text-danger">[头条]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("3")!==-1){ }}
+  <span class="text-danger">[特荐]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("4")!==-1){ }}
+  <span class="text-danger">[推荐]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("6")!==-1){ }}
+  <span class="text-danger">[热点]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("6")!==-1){ }}
+  <span class="text-danger">[幻灯]</span>
+  {{#  } }}
+</script>
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
@@ -37,7 +58,7 @@ layui.use('table', function() {
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 70, title: 'ID' },
-                { field: 'title', title: '标题',templet: '<div>{{d.title}}{{#  if(d.posid == 1){ }} <i class="iconfont icon-tuijian"></i> {{#  } }}</div>'},
+                { field: 'title', title: '标题',templet: '#title'},
                 { field: 'hits', width: 80, title: '点击量' },
                 { field: 'updatetime', width: 180, title: '更新时间' },
                 { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
