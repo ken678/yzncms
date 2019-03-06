@@ -196,6 +196,21 @@ class Config extends Adminbase
         }
     }
 
+    /**
+     * 排序
+     */
+    public function listorder()
+    {
+        $id = $this->request->param('id/d', 0);
+        $listorder = $this->request->param('value/d', 0);
+        $rs = Config_Model::update(['listorder' => $listorder], ['id' => $id], true);
+        if ($rs) {
+            $this->success("排序成功！");
+        } else {
+            $this->error("排序失败！");
+        }
+    }
+
     //设置配置状态
     public function setstate($id, $status)
     {

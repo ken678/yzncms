@@ -39,6 +39,7 @@ layui.use('table', function() {
         url: '{:url("admin/config/index",["group"=>$group])}',
         cols: [
             [
+                { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'name', title: '名称' },
                 { field: 'title', title: '标题' },
                 { field: 'ftitle', width: 150, title: '类型' },
@@ -47,6 +48,19 @@ layui.use('table', function() {
                 { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
             ]
         ],
+    });
+
+            //监听单元格编辑
+    table.on('edit(table)', function(obj) {
+        var value = obj.value,data = obj.data;
+        $.post('{:url("admin/config/listorder")}', {'id': data.id,'value':value }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            }else{
+                layer.msg(data.msg);
+            }
+
+        })
     });
 
     //监听状态操作
