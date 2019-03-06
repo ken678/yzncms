@@ -87,37 +87,15 @@ class CmsTagLib
         if (empty($data['order'])) {
             $data['order'] = array('updatetime' => 'DESC', 'id' => 'DESC');
         }
+        if (isset($data['flag'])) {
+            $data['where'] = "FIND_IN_SET('" . intval($data['flag']) . "',flag)";
+        }
         //当前栏目信息
         $catInfo = getCategory($data['catid']);
         //栏目所属模型
         $modelid = $catInfo['modelid'];
         $result = model('ModelField')->getDataList($modelid, $this->where($data), $data['moreifo'], $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
-    }
-
-    /**
-     * 推荐位标签
-     */
-    public function position($data)
-    {
-        $posid = (int) $data['posid'];
-        if ($posid < 1) {
-            return false;
-        }
-        $catid = (int) $data['catid'];
-        $thumb = isset($data['thumb']) ? $data['thumb'] : 0;
-        $order = empty($data['order']) ? array("id" => "DESC") : $data['order'];
-        $num = (int) $data['num'];
-
-        $data['where'] = isset($data['where']) ? $data['where'] : "";
-        $data['where'] .= "posid = " . $posid;
-
-        $data = model('PositionData')->where($this->where($data))->limit($num)->select();
-        foreach ($data as $k => $v) {
-            $data[$k] = model('modelfield')->getDataInfo($v['modelid'], "id='" . $v['id'] . "'", false);
-        }
-        return $data;
-
     }
 
     /**
