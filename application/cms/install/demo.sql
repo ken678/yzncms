@@ -6,7 +6,6 @@ CREATE TABLE `yzn_article` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -31,7 +30,6 @@ CREATE TABLE `yzn_picture` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -56,7 +54,6 @@ CREATE TABLE `yzn_download` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -82,7 +79,6 @@ CREATE TABLE `yzn_product` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -107,7 +103,6 @@ CREATE TABLE `yzn_guestbook` (
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '您的姓名',
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
-  `posid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐位',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -149,7 +144,6 @@ INSERT INTO `yzn_model_field` VALUES ('4', '1', 'flag', '属性', '', 'checkbox'
 INSERT INTO `yzn_model_field` VALUES ('5', '1', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('6', '1', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('7', '1', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1546574975', '1546574975', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('8', '1', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('9', '1', 'listorder', '排序', '', 'number', 'tinyint(3) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('10', '1', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('11', '1', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '200', '1');
@@ -165,7 +159,6 @@ INSERT INTO `yzn_model_field` VALUES ('19', '2', 'flag', '属性', '', 'checkbox
 INSERT INTO `yzn_model_field` VALUES ('20', '2', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('21', '2', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('22', '2', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1548754192', '1548754192', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('23', '2', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('24', '2', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('25', '2', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('26', '2', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1548754192', '1548754192', '200', '1');
@@ -181,7 +174,6 @@ INSERT INTO `yzn_model_field` VALUES ('34', '3', 'flag', '属性', '', 'checkbox
 INSERT INTO `yzn_model_field` VALUES ('35', '3', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('36', '3', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('37', '3', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('38', '3', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('39', '3', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('40', '3', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('41', '3', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549165800', '1549165800', '200', '1');
@@ -197,7 +189,6 @@ INSERT INTO `yzn_model_field` VALUES ('49', '4', 'flag', '属性', '', 'checkbox
 INSERT INTO `yzn_model_field` VALUES ('50', '4', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'varchar(255)', '', '', '{\"string\":{\"table\":\"tag\",\"key\":\"title\",\"delimiter\":\",\",\"where\":\"\",\"limit\":\"6\",\"order\":\"[rand]\"}}', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('51', '4', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'varchar(255)', '', '', '', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('52', '4', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('53', '4', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('54', '4', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('55', '4', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('56', '4', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1549624988', '1549624988', '200', '1');
@@ -208,7 +199,6 @@ INSERT INTO `yzn_model_field` VALUES ('60', '4', 'content', '内容', '', 'Uedit
 
 INSERT INTO `yzn_model_field` VALUES ('61', '5', 'inputtime', '创建时间', '', 'datetime', 'int(11) UNSIGNED', '', '0', '', '1', '1', '1', '0', '0', '1550480944', '1550480944', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('62', '5', 'status', '状态', '', 'radio', 'tinyint(1)', '0:禁用\r\n1:启用', '1', '', '1', '1', '1', '0', '0', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('63', '5', 'posid', '推荐位', '', 'checkbox', 'tinyint(3) UNSIGNED', '', '', '', '1', '0', '1', '0', '0', '1550480944', '1550480944', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('64', '5', 'listorder', '排序', '', 'number', 'smallint(5) UNSIGNED', '', '100', '', '1', '1', '1', '0', '0', '1550480944', '1550480944', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('65', '5', 'uid', '用户id', '', 'number', 'mediumint(8) UNSIGNED', '', '1', '', '1', '0', '1', '0', '0', '1550480944', '1550480944', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('66', '5', 'phone', '您的电话', '', 'text', 'varchar(255) NOT NULL DEFAULT \'\'', '', '', '', '1', '1', '0', '1', '1', '1550629851', '1550630223', '2', '1');
@@ -222,12 +212,12 @@ INSERT INTO `yzn_model_field` VALUES ('73', '5', 'hits', '点击量', '', 'numbe
 INSERT INTO `yzn_model_field` VALUES ('74', '5', 'content', '您的意见或建议', '', 'textarea', 'varchar(255) NOT NULL DEFAULT \'\'', '', '', '', '1', '1', '0', '1', '1', '1550629912', '1550630226', '4', '1');
 
 
-INSERT INTO `yzn_article` VALUES ('1', '9', '让客户留住更长时间访问你的网站', '', '', '什么能让您的客户“一见钟情”？除了网站的界面，没有其他因素。网站的界面是非常重要的因素之一。因为这是客户访问网站时的第一印象。那时，您需要为客户提供一个吸引人且引人注目的界面。要做到这一点非常容易，你只需要有一个合理布局的界面，整洁不要分散读者的注意力。在与网站互动时，客户可以轻松搜索他们需要学习的信息。此外，您还可以使用一些额外的注释来使界面更加美观：首先，效果的最大效果用于避免分散用户的注意力。这些效果甚至会使网站更重，并且加载速度更慢。其次，您可以创建更多可用空间并消除不重要的信息，从而使关键消息更', '0', '100', '0', '0', '1550188136', '1550476672', '1');
-INSERT INTO `yzn_article` VALUES ('2', '9', '移动网站需要吸引哪些观众并将其转化为客户', '', '', '在移动设备上设计网站以吸引观众并使他们成为他们的客户并不容易。移动网站是否只有两个友好元素，下载速度是否足够快？使用移动设备访问网站的人是那些时间很少的人，所以他们总是希望事情快速而正确。', '0', '100', '0', '0', '1550202861', '1550450153', '1');
-INSERT INTO `yzn_article` VALUES ('3', '14', '空壳网站是什么？如何避免成为空壳网站？空壳网站怎么处理？', '', '', '一、备案数据，包括：主体信息、网站信息、接入信息。\r\n（1）主体信息是指，网站主办者（网站开办者）的注册信息。\r\n（2）网站信息是指，网站主办者开办的（一个或多个）网站的注册信息。\r\n（3）接入信息是指，网站主办者（每个）网站的数据存放的虚拟空间的接入信息。', '0', '100', '0', '0', '1550448808', '1550476816', '1');
-INSERT INTO `yzn_article` VALUES ('4', '14', '单位或网站涉及金融类关键词，办理网站备案注意事项', '', '', '1.根据《国务院办公厅关于印发互联网金融风险专项整治工作实施方案的通知（国办发〔2016〕21号）》要求，公司注册名称或经营范围中使用“交易所”、“交易中心”、“金融”、“资产管理”、“理财”、“基金”、“基金管理”、“投资管理（包括投资）”、“财富管理”、“股权投资基金”、“网贷”、“网络借贷”、“P2P”、“股权众筹”、“互联网保险”、“支付”、“信托”等字样的企业，在做网站备案业务办理时，需提供金融管理部门的专项审批文件。', '0', '100', '0', '0', '1550449235', '1550449733', '1');
-INSERT INTO `yzn_article` VALUES ('5', '10', '个人建设网站有哪些步骤？', '', '', '虽然互联网上付费提供网站建设和网站制作服务的公司或者个人有很多，都是为企业或者个人提供网站建设和网页设计服务的，但是对于那些刚刚走出校门或者刚刚参加工作的朋友来说，如果想通过互联网创业，想要做一个自己的网站，但是又没有明确的经营理念，只是想要尝试一下互联网创业，这时候大部分人都会选择自己建网站，一方面是为了能够节省较高的网站建设费用，另一方面也可以简单的学习一些网站建设或网站制作的一些基本知识，那么自己建网站到底应该如何入手呢今天小编就跟大家写一篇自己建网站的全攻略，希望能够帮助那些想要自己建网站的朋友有', '0', '100', '0', '0', '1550449817', '1550476910', '1');
-INSERT INTO `yzn_article` VALUES ('6', '10', '企业建设手机网站注意的事项？', '', '', ' 虽然很多企业都专门弄起了APP软件，不过从综合层面来说，还是网站更加靠谱一些，因为网站比制作APP成本要低廉很多，而且受传统思维习惯的影响，大部分的会主动寻找相关内容的人来说，他们还是更加习惯利用搜索引擎去进行寻找。并且这一群人在社会上面也拥有一定的社会经验以及地位，像是销售人员、采购人员等等，如果他们不再办公室，正好在上班途中或者是出差途中的话，肯定是需要使用手机来搜索某些信息的，所以从实用性角度来看的话，反倒是企业网站比APP更好一些，那么，企业建设手机网站的时候要注意什么?', '0', '100', '0', '0', '1550450424', '1550476700', '1');
+INSERT INTO `yzn_article` VALUES ('1', '9', '让客户留住更长时间访问你的网站', '', '', '什么能让您的客户“一见钟情”？除了网站的界面，没有其他因素。网站的界面是非常重要的因素之一。因为这是客户访问网站时的第一印象。那时，您需要为客户提供一个吸引人且引人注目的界面。要做到这一点非常容易，你只需要有一个合理布局的界面，整洁不要分散读者的注意力。在与网站互动时，客户可以轻松搜索他们需要学习的信息。此外，您还可以使用一些额外的注释来使界面更加美观：首先，效果的最大效果用于避免分散用户的注意力。这些效果甚至会使网站更重，并且加载速度更慢。其次，您可以创建更多可用空间并消除不重要的信息，从而使关键消息更', '100', '0', '0', '1550188136', '1550476672', '1');
+INSERT INTO `yzn_article` VALUES ('2', '9', '移动网站需要吸引哪些观众并将其转化为客户', '', '', '在移动设备上设计网站以吸引观众并使他们成为他们的客户并不容易。移动网站是否只有两个友好元素，下载速度是否足够快？使用移动设备访问网站的人是那些时间很少的人，所以他们总是希望事情快速而正确。', '100', '0', '0', '1550202861', '1550450153', '1');
+INSERT INTO `yzn_article` VALUES ('3', '14', '空壳网站是什么？如何避免成为空壳网站？空壳网站怎么处理？', '', '', '一、备案数据，包括：主体信息、网站信息、接入信息。\r\n（1）主体信息是指，网站主办者（网站开办者）的注册信息。\r\n（2）网站信息是指，网站主办者开办的（一个或多个）网站的注册信息。\r\n（3）接入信息是指，网站主办者（每个）网站的数据存放的虚拟空间的接入信息。', '100', '0', '0', '1550448808', '1550476816', '1');
+INSERT INTO `yzn_article` VALUES ('4', '14', '单位或网站涉及金融类关键词，办理网站备案注意事项', '', '', '1.根据《国务院办公厅关于印发互联网金融风险专项整治工作实施方案的通知（国办发〔2016〕21号）》要求，公司注册名称或经营范围中使用“交易所”、“交易中心”、“金融”、“资产管理”、“理财”、“基金”、“基金管理”、“投资管理（包括投资）”、“财富管理”、“股权投资基金”、“网贷”、“网络借贷”、“P2P”、“股权众筹”、“互联网保险”、“支付”、“信托”等字样的企业，在做网站备案业务办理时，需提供金融管理部门的专项审批文件。', '100', '0', '0', '1550449235', '1550449733', '1');
+INSERT INTO `yzn_article` VALUES ('5', '10', '个人建设网站有哪些步骤？', '', '', '虽然互联网上付费提供网站建设和网站制作服务的公司或者个人有很多，都是为企业或者个人提供网站建设和网页设计服务的，但是对于那些刚刚走出校门或者刚刚参加工作的朋友来说，如果想通过互联网创业，想要做一个自己的网站，但是又没有明确的经营理念，只是想要尝试一下互联网创业，这时候大部分人都会选择自己建网站，一方面是为了能够节省较高的网站建设费用，另一方面也可以简单的学习一些网站建设或网站制作的一些基本知识，那么自己建网站到底应该如何入手呢今天小编就跟大家写一篇自己建网站的全攻略，希望能够帮助那些想要自己建网站的朋友有', '100', '0', '0', '1550449817', '1550476910', '1');
+INSERT INTO `yzn_article` VALUES ('6', '10', '企业建设手机网站注意的事项？', '', '', ' 虽然很多企业都专门弄起了APP软件，不过从综合层面来说，还是网站更加靠谱一些，因为网站比制作APP成本要低廉很多，而且受传统思维习惯的影响，大部分的会主动寻找相关内容的人来说，他们还是更加习惯利用搜索引擎去进行寻找。并且这一群人在社会上面也拥有一定的社会经验以及地位，像是销售人员、采购人员等等，如果他们不再办公室，正好在上班途中或者是出差途中的话，肯定是需要使用手机来搜索某些信息的，所以从实用性角度来看的话，反倒是企业网站比APP更好一些，那么，企业建设手机网站的时候要注意什么?', '100', '0', '0', '1550450424', '1550476700', '1');
 
 
 INSERT INTO `yzn_article_data` VALUES ('1', '&lt;p&gt;&lt;strong&gt;通过网站让客户“一见钟情”&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;什么能让您的客户“一见钟情”？除了网站的界面，没有其他因素。网站的界面是非常重要的因素之一。因为这是客户访问网站时的第一印象。那时，您需要为客户提供一个吸引人且引人注目的界面。要做到这一点非常容易，你只需要有一个合理布局的界面，整洁不要分散读者的注意力。在与网站互动时，客户可以轻松搜索他们需要学习的信息。此外，您还可以使用一些额外的注释来使界面更加美观：首先，效果的最大效果用于避免分散用户的注意力。这些效果甚至会使网站更重，并且加载速度更慢。其次，您可以创建更多可用空间并消除不重要的信息，从而使关键消息更容易，更快地到达客户。&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;内容不仅要有回报，还应该精美呈现&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;对客户有用的内容是让客户保持更长时间的首要因素之一。但是，不仅昂贵的信息足够，内容的呈现和格式是您的网站有更长的时间留在客户的技巧。您可以设计一个白色背景的网站，以便所有信息变得更加突出。绝对不要使用色彩鲜艳的花朵和图案的深色背景，因为它可能使读者难以获取信息。此外，字体用法和段落间距同样重要。选择的字体不应该太挑剔，时尚，但应该是简单，易于看到的字体和显示专业性。附加，线条之间应该是合理的距离，内容布局的段落更加开放。&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;优化网站以与所有设备兼容&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;通常情况下，企业只能优化显示在计算机或笔记本电脑上，但往往会忽略各种其他重要设备，如智能手机或平板电脑等。但是，用户数量的情况随着移动设备的访问越来越多，新网站可确保与设备（包括移动设备）的兼容性。&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;适当地浏览网站中的信息&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;如果您通过主页给客户留下了深刻印象，客户一直渴望了解您的业务。为了使此过程更好地运行，您需要确保子页面的所有链接与前面提到的链接标题的内容一致。\r\n您还可以为关键位置的内容创建重音，以提高点击率。而且您也不要忘记确保您没有基本错误，例如链接到损坏的页面，丢失图像甚至丢失链接。&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;定期更新网站内容&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;内容不需要质量，但在网站上也需要有数量。这里的金额并不意味着猖獗的金额，而是每天都是偶数。如果客户返回您的网站但仍然是旧内容，则您可能会失去客户，因为客户不想返回网站更新旧内容。\r\n有了这些提示，您需要立即更新缺少的元素以完成网站并留住客户。做好这些事情后，您会很快注意到您网站的跳出率大&lt;/p&gt;');
@@ -244,8 +234,8 @@ INSERT INTO `yzn_page` VALUES ('18', '联系我们', '', '', '<p>手　机：158
 
 
 
-INSERT INTO `yzn_picture` VALUES ('1', '4', 'ISO9001证书', '', '', '', '0', '100', '0', '0', '1550552511', '1550554247', '1');
-INSERT INTO `yzn_picture` VALUES ('2', '4', 'ISO14001证书', '', '', '', '0', '100', '0', '0', '1550554284', '1550554288', '1');
-INSERT INTO `yzn_picture` VALUES ('3', '4', 'OHSAS18001证书', '', '', '', '0', '100', '0', '0', '1550554298', '1550554301', '1');
-INSERT INTO `yzn_picture` VALUES ('4', '4', '企业信用等级评价', '', '', '', '0', '100', '0', '0', '1550554307', '1550554309', '1');
-INSERT INTO `yzn_picture` VALUES ('5', '4', '企业荣誉证书', '', '', '', '0', '100', '0', '0', '1550554314', '1550554316', '1');
+INSERT INTO `yzn_picture` VALUES ('1', '4', 'ISO9001证书', '', '', '', '100', '0', '0', '1550552511', '1550554247', '1');
+INSERT INTO `yzn_picture` VALUES ('2', '4', 'ISO14001证书', '', '', '', '100', '0', '0', '1550554284', '1550554288', '1');
+INSERT INTO `yzn_picture` VALUES ('3', '4', 'OHSAS18001证书', '', '', '', '100', '0', '0', '1550554298', '1550554301', '1');
+INSERT INTO `yzn_picture` VALUES ('4', '4', '企业信用等级评价', '', '', '', '100', '0', '0', '1550554307', '1550554309', '1');
+INSERT INTO `yzn_picture` VALUES ('5', '4', '企业荣誉证书', '', '', '', '100', '0', '0', '1550554314', '1550554316', '1');
