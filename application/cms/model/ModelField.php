@@ -581,7 +581,7 @@ EOF;
                     if (strpos($value, ',') !== false) {
                         $newdata[$key] = explode(',', $value);
                     } else {
-                        $newdata[$key] = $value;
+                        $newdata[$key] = array($value);
                     }
                     break;
                 case 'files':
