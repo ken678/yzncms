@@ -13,8 +13,8 @@
 // | CMS路由
 // +----------------------------------------------------------------------
 Route::rule('cms/index', 'cms/index/index');
-Route::rule('cms/lists/:catid', 'cms/index/lists');
-Route::rule('cms/shows/:catid/:id', 'cms/index/shows');
+Route::rule('cms/lists/:catid', 'cms/index/lists')->pattern(['catid' => '\d+']);
+Route::rule('cms/shows/:catid/:id', 'cms/index/shows')->pattern(['catid' => '\d+', 'id' => '\d+']);
 Route::rule('cms/search', 'cms/index/search');
 //如果想要直接绑定域名 不加cms后缀 直接注释上面代码 使用以下代码
 //Route::rule('index', 'cms/index/index');
