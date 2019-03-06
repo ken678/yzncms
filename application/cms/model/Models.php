@@ -249,6 +249,7 @@ EOF;
                 'jsonrule' => '',
                 'ifeditable' => 1,
                 'iffixed' => 0,
+                'remark' => '多关键词之间用空格或者“,”隔开',
             ],
             [
                 'name' => 'description',
