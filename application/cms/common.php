@@ -183,14 +183,59 @@ function buildCatUrl($type, $id, $url = '')
 
 /**
  * 生成分类信息中的筛选菜单
- * @param $field   字段名称
- * @param $modelid  模型ID
  */
-function filters($field, $modelid, $diyarr = array())
+function filters($modelid)
 {
-    $fields = cache('ModelField')[$modelid];
-    $options = empty($diyarr) ? explode("\n", $fields[$field]['options']) : $diyarr;
-    var_dump($options);
+    $param = input();
+    $options = cache('ModelField')[$modelid];
+    $data = [];
+    foreach ($options as $_k => $_v) {
+        if (!in_array($_v['type'], ['select', 'radio', 'checkbox'])) {
+            continue;
+        } else {
+            $_v['options'] = parse_attr($_v['options']);
+        }
+        $data[$_v['name']] = $_v;
+    }
+    foreach ($data as $name => $rs) {
+        $url = structure_filters_url($name, $modelid, $data);
+        $_ar = [];
+        foreach ($rs['options'] as $k => $v) {
+            $_ar[$k] = [
+                'active' => false,
+                'key' => $k,
+                'title' => $v,
+                'url' => $url . $name . '=' . $k,
+            ];
+        }
+        if (!empty($param[$name])) {
+            $_ar[$param[$name]]['active'] = true;
+        }
+        $rs['opt'] = $_ar;
+        $rs['opt_url'] = $url;
+        $data[$name] = $rs;
+    }
+    return $data;
+}
+
+/**
+ * 生成其他筛选地址
+ */
+function structure_filters_url($fieldname, $modelid, $array = [])
+{
+    $param = input();
+    foreach ($array as $name => $rs) {
+        if ($fieldname == $name) {
+            //排除自身
+            continue;
+        }
+        if (in_array($rs['type'], ['select', 'radio', 'checkbox'])) {
+            if ($param[$name] !== '' && $param[$name] !== null) {
+                $url .= $name . '=' . $param[$name] . '&';
+            }
+        }
+    }
+    return $url;
 }
 
 function paramdecode($str)

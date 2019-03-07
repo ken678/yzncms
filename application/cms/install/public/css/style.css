@@ -110,6 +110,49 @@
     position: relative;
 }
 
+.pa {
+    position: absolute;
+}
+
+.transition {
+    transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+
+.imgZoom img,
+.imgY180 img {
+    -moz-transition: all .8s ease 0s;
+    -ms-transition: all .8s ease 0s;
+    -o-transition: all .8s ease 0s;
+    -webkit-transition: all .8s ease 0s;
+    transition: all .8s ease 0s;
+}
+
+.imgZoom {
+    overflow: hidden;
+}
+
+.imgZoom:hover img {
+    -moz-transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -o-transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1);
+}
+
+.imgY180:hover img {
+    cursor: pointer;
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg)
+}
+
+
 .clearfix:after,
 .clearfix:before {
     visibility: hidden;
@@ -118,6 +161,12 @@
     content: " ";
     clear: both;
     height: 0;
+}
+
+.el {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 /*头部*/
@@ -434,6 +483,125 @@
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
+.case_list {
+    position: relative;
+    margin-top: 40px;
+}
+
+.case_list ul li {
+    overflow: hidden;
+    float: left;
+    width: 380px;
+    margin-right: 24px;
+}
+
+.case_list ul li a {
+    display: block;
+}
+
+.case_list ul li .case_a {
+    padding: 25px 8% 30px;
+    background-color: #e8e8e8;
+    overflow: hidden;
+    z-index: 2;
+    display: block;
+}
+
+.case_list ul li .case_a:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #e74c3c;
+    left: 0;
+    bottom: -100%;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.case_list ul li.hover .case_a:before {
+    bottom: 0;
+}
+
+.case_list ul li.hover .case_a h2,
+.case_list ul li.hover .case_a .nr {
+    color: #fff;
+}
+
+.case_list ul li .case_a h2 {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    color: #666;
+}
+
+.case_list ul li .case_a .nr {
+    font-size: 14px;
+    color: #666464;
+    line-height: 21px;
+    height: 42px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.case_list ul li .top-Floor {
+    width: 100%;
+    height: 100%;
+    background: url(../images/black.4.png) repeat;
+    z-index: 3;
+    left: 0;
+    top: -100%;
+}
+
+.case_list ul li.hover .top-Floor {
+    top: 0;
+}
+
+.case_list ul li .top-Floor .white-cross {
+    width: 60px;
+    height: 60px;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin-left: -30px;
+    margin-top: -30px;
+    background: url(../images/whit_cross.png) no-repeat;
+}
+
+.case_list .x_arrs {
+-webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    position: absolute;
+    left: -5%;
+    top: 50%;
+    margin-top: -25px;
+    display: block;
+    width: 51px;
+    height: 51px;
+    background: url(../images/scroll_btn_4.png) 0px 0px no-repeat;
+}
+
+.case_list .next {
+    left: auto;
+    right: -5%;
+    background-position: right bottom;
+}
+
+.case_list .prev {
+    left: -5%;
+    background-position: left bottom;
+}
+
+.case_list .prev:hover {
+    background-position: left top;
+}
+
+.case_list .next:hover {
+    background-position: right top;
+}
+
 
 .main_about {
     overflow: hidden;
