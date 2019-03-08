@@ -16,6 +16,7 @@ namespace app\cms\model;
 
 use app\common\model\Modelbase;
 use think\Db;
+use think\facade\Validate;
 
 /**
  * 字段模型
@@ -401,7 +402,7 @@ EOF;
         }
         $filedTypeList = $query->column('name,title,type,ifsystem,ifeditable,ifrequire');
         //字段规则
-        $fieldRule = Db::name('field_type')->column('name', 'vrule');
+        $fieldRule = Db::name('field_type')->column('vrule', 'name');
         foreach ($filedTypeList as $name => $vo) {
             $arr = $vo['ifsystem'] ? 'data' : 'dataExt';
             if (!isset(${$arr}[$name])) {
