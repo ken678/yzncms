@@ -90,11 +90,12 @@ class CmsTagLib
         if (isset($data['flag'])) {
             $data['where'] = "FIND_IN_SET('" . intval($data['flag']) . "',flag)";
         }
+        $moreifo = isset($data['moreifo']) ? $data['moreifo'] : 0;
         //当前栏目信息
         $catInfo = getCategory($data['catid']);
         //栏目所属模型
         $modelid = $catInfo['modelid'];
-        $result = model('Cms')->getDataList($modelid, $this->where($data), $data['moreifo'], $data['field'], $data['order'], $data['limit'], $data['page']);
+        $result = model('Cms')->getDataList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
     }
 
@@ -106,14 +107,14 @@ class CmsTagLib
         //当没有内容时的提示语
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
-        $target = !empty($data['blank']) ? ' target="_blank" ' : ' target="_self" ';
+        $target = !empty($data['target']) ? ' target="_blank" ' : ' target="_self" ';
         $result = model('Cms')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
-            $result['blank'] = $target;
+            $result['target'] = $target;
         } else {
-            $result['blank'] = $target;
+            $result['target'] = $target;
         }
         return $result;
 
@@ -127,14 +128,14 @@ class CmsTagLib
         //当没有内容时的提示语
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
-        $target = !empty($data['blank']) ? ' target=\"_blank\" ' : '';
+        $target = !empty($data['target']) ? ' target=\"_blank\" ' : '';
         $result = model('Cms')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
-            $result['blank'] = $target;
+            $result['target'] = $target;
         } else {
-            $result['blank'] = $target;
+            $result['target'] = $target;
         }
         return $result;
 

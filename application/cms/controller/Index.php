@@ -50,14 +50,14 @@ class Index extends Homebase
         $page = $this->request->param('page/d', 1);
         //获取栏目数据
         $category = getCategory($catid);
-        //模型ID
-        $modelid = $category['modelid'];
-        $models = cache('Model');
-        $modelInfo = $models[$modelid];
         if (empty($category)) {
             $this->error('栏目不存在！');
         }
+        //模型ID
+        $modelid = $category['modelid'];
+        $models = cache('Model');
         if ($this->request->isPost()) {
+            $modelInfo = $models[$modelid];
             //投稿
             if (!isset($modelInfo)) {
                 $this->error('栏目禁止投稿~');
@@ -102,6 +102,12 @@ class Index extends Homebase
                 $template = $tpar[0];
                 unset($tpar);
                 $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+                //投稿
+                $modelInfo = $models[$modelid];
+                if (isset($modelInfo['ifsub']) && $modelInfo['ifsub']) {
+                    $fieldList = $this->Cms_Model->getFieldList($modelInfo['id']);
+                    $this->assign('fieldList', $fieldList);
+                }
                 //单页
             } else if ($category['type'] == 1) {
                 $template = $setting['page_template'] ? $setting['page_template'] : 'page';
@@ -125,11 +131,6 @@ class Index extends Homebase
             //获取顶级栏目ID
             $arrparentid = explode(',', $category['arrparentid']);
             $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
-            //投稿
-            if (isset($modelInfo['ifsub']) && $modelInfo['ifsub']) {
-                $fieldList = $this->Cms_Model->getFieldList($modelInfo['id']);
-                $this->assign('fieldList', $fieldList);
-            }
             $this->assign([
                 'top_parentid' => $top_parentid,
                 'SEO' => $seo,
