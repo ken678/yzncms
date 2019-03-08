@@ -37,7 +37,7 @@ return [
                         "route" => "cms/tags/index",
                         "type" => 1,
                         "status" => 1,
-                        "name" => "tags管理",
+                        "name" => "Tags管理",
                         "icon" => "icon-tags",
                     ],
                 ],

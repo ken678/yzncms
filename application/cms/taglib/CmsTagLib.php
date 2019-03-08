@@ -94,7 +94,7 @@ class CmsTagLib
         $catInfo = getCategory($data['catid']);
         //栏目所属模型
         $modelid = $catInfo['modelid'];
-        $result = model('ModelField')->getDataList($modelid, $this->where($data), $data['moreifo'], $data['field'], $data['order'], $data['limit'], $data['page']);
+        $result = model('Cms')->getDataList($modelid, $this->where($data), $data['moreifo'], $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
     }
 
@@ -107,7 +107,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['blank']) ? ' target="_blank" ' : ' target="_self" ';
-        $result = model('ModelField')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
+        $result = model('Cms')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
@@ -128,7 +128,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['blank']) ? ' target=\"_blank\" ' : '';
-        $result = model('ModelField')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
+        $result = model('Cms')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';

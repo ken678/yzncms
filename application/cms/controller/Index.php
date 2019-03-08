@@ -15,7 +15,7 @@
 namespace app\cms\controller;
 
 use app\cms\controller\Homebase;
-use app\cms\model\ModelField as Model_Field;
+use app\cms\model\Cms as Cms_Model;
 use think\Db;
 
 class Index extends Homebase
@@ -23,7 +23,7 @@ class Index extends Homebase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelfield = new Model_Field;
+        $this->Cms_Model = new Cms_Model;
     }
 
     /**
@@ -81,7 +81,7 @@ class Index extends Homebase
             $data['modelField']['status'] = 0;
             $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
             try {
-                $this->modelfield->addModelData($data['modelField'], $data['modelFieldExt']);
+                $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
@@ -127,7 +127,7 @@ class Index extends Homebase
             $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
             //投稿
             if (isset($modelInfo['ifsub']) && $modelInfo['ifsub']) {
-                $fieldList = $this->modelfield->getFieldList($modelInfo['id']);
+                $fieldList = $this->Cms_Model->getFieldList($modelInfo['id']);
                 $this->assign('fieldList', $fieldList);
             }
             $this->assign([
@@ -165,7 +165,7 @@ class Index extends Homebase
         //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
 
         //内容所有字段
-        $info = $this->modelfield->getDataInfo($modelid, "id='" . $id . "'", true);
+        $info = $this->Cms_Model->getDataInfo($modelid, "id='" . $id . "'", true);
         if (empty($info)) {
             abort(404, '内容不存在或未审核');
         }
@@ -267,7 +267,7 @@ class Index extends Homebase
             }
             $where = '(' . substr($where, 0, -4) . ') ';
             $where .= " AND status='1' $sql_time";
-            $list = model('ModelField')->getDataList($modelid, $where, false, '*', "listorder,id desc", 10, 1);
+            $list = $this->Cms_Model->getDataList($modelid, $where, false, '*', "listorder,id desc", 10, 1);
         } else {
             foreach ($modellist as $key => $vo) {
                 $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
@@ -280,7 +280,7 @@ class Index extends Homebase
                 }
                 $where = '(' . substr($where, 0, -4) . ') ';
                 $where .= " AND status='1' $sql_time";
-                $list = model('ModelField')->getDataList($key, $where, false, '*', 'listorder,id desc', 10, 1);
+                $list = $this->Cms_Model->getDataList($key, $where, false, '*', 'listorder,id desc', 10, 1);
                 if ($list->isEmpty()) {
                     continue;
                 } else {

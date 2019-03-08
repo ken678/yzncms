@@ -6,7 +6,7 @@ CREATE TABLE `yzn_article` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'tags标签',
+  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tags标签',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -31,7 +31,7 @@ CREATE TABLE `yzn_picture` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'tags标签',
+  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tags标签',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -56,7 +56,7 @@ CREATE TABLE `yzn_download` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'tags标签',
+  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tags标签',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -82,7 +82,7 @@ CREATE TABLE `yzn_product` (
   `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
   `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'tags标签',
+  `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tags标签',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
@@ -147,7 +147,7 @@ INSERT INTO `yzn_model_field` VALUES ('3', '1', 'title', '标题', '', 'text', '
 INSERT INTO `yzn_model_field` VALUES ('4', '1', 'flag', '属性', '', 'checkbox', 'a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:76:\"1:置顶[1]\r\n2:头条[2]\r\n3:特荐[3]\r\n4:推荐[4]\r\n5:热点[5]\r\n6:幻灯[6]\";s:5:\"value\";s:0:\"\";}', '1', '1', '1', '0', '0', '1551846870', '1551846870', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('5', '1', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('6', '1', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('7', '1', 'tags', 'tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('7', '1', 'tags', 'Tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('8', '1', 'uid', '用户id', '', 'number', 'a:3:{s:6:\"define\";s:21:\"mediumint(8) UNSIGNED\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('9', '1', 'listorder', '排序', '', 'number', 'a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('10', '1', 'status', '状态', '', 'radio', 'a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:18:\"0:禁用\r\n1:启用\";s:5:\"value\";s:1:\"1\";}', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');
@@ -162,7 +162,7 @@ INSERT INTO `yzn_model_field` VALUES ('18', '2', 'title', '标题', '', 'text', 
 INSERT INTO `yzn_model_field` VALUES ('19', '2', 'flag', '属性', '', 'checkbox', 'a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:76:\"1:置顶[1]\r\n2:头条[2]\r\n3:特荐[3]\r\n4:推荐[4]\r\n5:热点[5]\r\n6:幻灯[6]\";s:5:\"value\";s:0:\"\";}', '1', '1', '1', '0', '0', '1551846870', '1551846870', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('20', '2', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('21', '2', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1548754192', '1548754192', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('22', '2', 'tags', 'tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('22', '2', 'tags', 'Tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('23', '2', 'uid', '用户id', '', 'number', 'a:3:{s:6:\"define\";s:21:\"mediumint(8) UNSIGNED\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('24', '2', 'listorder', '排序', '', 'number', 'a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}', '1', '1', '1', '0', '0', '1548754192', '1548754192', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('25', '2', 'status', '状态', '', 'radio', 'a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:18:\"0:禁用\r\n1:启用\";s:5:\"value\";s:1:\"1\";}', '1', '1', '1', '0', '0', '1548754192', '1548754192', '100', '1');
@@ -177,7 +177,7 @@ INSERT INTO `yzn_model_field` VALUES ('33', '3', 'title', '标题', '', 'text', 
 INSERT INTO `yzn_model_field` VALUES ('34', '3', 'flag', '属性', '', 'checkbox', 'a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:76:\"1:置顶[1]\r\n2:头条[2]\r\n3:特荐[3]\r\n4:推荐[4]\r\n5:热点[5]\r\n6:幻灯[6]\";s:5:\"value\";s:0:\"\";}', '1', '1', '1', '0', '0', '1551846870', '1551846870', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('35', '3', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('36', '3', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1549165800', '1549165800', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('37', '3', 'tags', 'tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('37', '3', 'tags', 'Tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('38', '3', 'uid', '用户id', '', 'number', 'a:3:{s:6:\"define\";s:21:\"mediumint(8) UNSIGNED\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('39', '3', 'listorder', '排序', '', 'number', 'a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('40', '3', 'status', '状态', '', 'radio', 'a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:18:\"0:禁用\r\n1:启用\";s:5:\"value\";s:1:\"1\";}', '1', '1', '1', '0', '0', '1549165800', '1549165800', '100', '1');
@@ -192,7 +192,7 @@ INSERT INTO `yzn_model_field` VALUES ('48', '4', 'title', '标题', '', 'text', 
 INSERT INTO `yzn_model_field` VALUES ('49', '4', 'flag', '属性', '', 'checkbox', 'a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:76:\"1:置顶[1]\r\n2:头条[2]\r\n3:特荐[3]\r\n4:推荐[4]\r\n5:热点[5]\r\n6:幻灯[6]\";s:5:\"value\";s:0:\"\";}', '1', '1', '1', '0', '0', '1551846870', '1551846870', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('50', '4', 'keywords', 'SEO关键词', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('51', '4', 'description', 'SEO摘要', '如不填写，则自动截取附表中编辑器的200字符', 'textarea', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1549624988', '1549624988', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('52', '4', 'tags', 'tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
+INSERT INTO `yzn_model_field` VALUES ('52', '4', 'tags', 'Tags标签', '多关键词之间用空格或者“,”隔开', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '1', '0', '0', '0', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('53', '4', 'uid', '用户id', '', 'number', 'a:3:{s:6:\"define\";s:21:\"mediumint(8) UNSIGNED\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('54', '4', 'listorder', '排序', '', 'number', 'a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('55', '4', 'status', '状态', '', 'radio', 'a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:18:\"0:禁用\r\n1:启用\";s:5:\"value\";s:1:\"1\";}', '1', '1', '1', '0', '0', '1549624988', '1549624988', '100', '1');

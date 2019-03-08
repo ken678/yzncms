@@ -168,7 +168,7 @@ class Models extends Modelbase
 				`flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
 				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
 				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
-                `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'tags标签',
+                `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tags标签',
 				`listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
 				`uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
                 `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
@@ -272,7 +272,7 @@ EOF;
             ],
             [
                 'name' => 'tags',
-                'title' => 'tags标签',
+                'title' => 'Tags标签',
                 'type' => 'text',
                 'ifeditable' => 1,
                 'iffixed' => 0,

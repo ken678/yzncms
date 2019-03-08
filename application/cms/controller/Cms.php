@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\model\ModelField as Model_Field;
+use app\cms\model\Cms as Cms_Model;
 use app\cms\model\Page as Page_Model;
 use app\common\controller\Adminbase;
 use think\Db;
@@ -24,7 +24,7 @@ class Cms extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelfield = new Model_Field;
+        $this->Cms_Model = new Cms_Model;
     }
 
     public function index()
@@ -80,7 +80,7 @@ class Cms extends Adminbase
             if ($category['type'] == 2) {
                 $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
                 try {
-                    $this->modelfield->addModelData($data['modelField'], $data['modelFieldExt']);
+                    $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
                 } catch (\Exception $ex) {
                     $this->error($ex->getMessage());
                 }
@@ -100,7 +100,7 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
-                $fieldList = $this->modelfield->getFieldList($modelid);
+                $fieldList = $this->Cms_Model->getFieldList($modelid);
                 $this->assign([
                     'catid' => $catid,
                     'fieldList' => $fieldList,
@@ -126,7 +126,7 @@ class Cms extends Adminbase
             $data = $this->request->post();
             $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
             try {
-                $this->modelfield->editModelData($data['modelField'], $data['modelFieldExt']);
+                $this->Cms_Model->editModelData($data['modelField'], $data['modelFieldExt']);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
@@ -141,7 +141,7 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid = $category['modelid'];
-                $fieldList = $this->modelfield->getFieldList($modelid, $id);
+                $fieldList = $this->Cms_Model->getFieldList($modelid, $id);
                 $this->assign([
                     'catid' => $catid,
                     'fieldList' => $fieldList,
@@ -168,7 +168,7 @@ class Cms extends Adminbase
         }
         $modelid = getCategory($catid, 'modelid');
         try {
-            $this->modelfield->deleteModelData($modelid, $ids);
+            $this->Cms_Model->deleteModelData($modelid, $ids);
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
         }
