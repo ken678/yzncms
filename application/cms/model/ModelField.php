@@ -55,7 +55,7 @@ class ModelField extends Modelbase
         //先将字段存在设置的主表或附表里面 再将数据存入ModelField
         $sql = <<<EOF
             ALTER TABLE `{$tablename}`
-            ADD COLUMN `{$data['name']}` {$data['define']} COMMENT '{$data['title']}';
+            ADD COLUMN `{$data['name']}` {$data['setting']['define']} COMMENT '{$data['title']}';
 EOF;
         try {
             $res = Db::execute($sql);
@@ -68,7 +68,9 @@ EOF;
         $data['ifsearch'] = isset($data['ifsearch']) ? ($fieldInfo['ifstring'] && $data['ifsystem'] ? intval($data['ifsearch']) : 0) : 0;
         $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
         $data['iffixed'] = 0;
-        $data['options'] = $fieldInfo['ifoption'] ? $data['options'] : '';
+        $data['setting']['options'] = $fieldInfo['ifoption'] ? $data['setting']['options'] : '';
+        //附加属性值
+        $data['setting'] = serialize($data['setting']);
         $fieldid = self::create($data, true);
         if ($fieldid) {
             //清理缓存
@@ -127,7 +129,7 @@ EOF;
         }
         $sql = <<<EOF
             ALTER TABLE `{$tablename}`
-            CHANGE COLUMN `{$info['name']}` `{$data['name']}` {$data['define']} COMMENT '{$data['title']}';
+            CHANGE COLUMN `{$info['name']}` `{$data['name']}` {$data['setting']['define']} COMMENT '{$data['title']}';
 EOF;
         try {
             Db::execute($sql);
@@ -138,7 +140,10 @@ EOF;
         //只有主表文本类字段才可支持搜索
         $data['ifsearch'] = isset($data['ifsearch']) ? ($fieldInfo['ifstring'] && $data['ifsystem'] ? intval($data['ifsearch']) : 0) : 0;
         $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
-        $data['options'] = $fieldInfo['ifoption'] ? $data['options'] : '';
+        //$data['options'] = $fieldInfo['ifoption'] ? $data['options'] : '';
+        $data['setting']['options'] = $fieldInfo['ifoption'] ? $data['setting']['options'] : '';
+        //附加属性值
+        $data['setting'] = serialize($data['setting']);
         //清理缓存
         cache('ModelField', null);
         self::update($data, ['id' => $fieldid], true);
@@ -291,7 +296,7 @@ EOF;
     public function getFieldList($modelId, $id = null)
     {
 
-        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,value,options,ifsystem,ifeditable,ifrequire");
+        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,ifsystem,ifeditable,ifrequire,setting");
         if (!empty($list)) {
             //编辑信息时查询出已有信息
             if ($id) {
@@ -318,19 +323,14 @@ EOF;
                 }
                 //解析字段关联规则
                 $dataRule = [];
-                /*if ('' != $value['jsonrule']) {
-                $dataRule = json_decode($value['jsonrule'], true);
-                }*/
+                //扩展配置
+                $value['setting'] = unserialize($value['setting']);
+                $value['options'] = $value['setting']['options'];
+
                 if ('' != $value['options']) {
                     $value['options'] = parse_attr($value['options']);
                 } elseif (isset($dataRule['choose'])) {
                     $value['options'] = Db::name($dataRule['choose']['table'])->where($dataRule['choose']['where'])->limit($dataRule['choose']['limit'])->order($dataRule['choose']['order'])->column($dataRule['choose']['key'] . ',' . $dataRule['choose']['value']);
-                }
-                if ('' == $value['value'] && isset($dataRule['string'])) {
-                    $stringArray = Db::name($dataRule['string']['table'])->where($dataRule['string']['where'])->limit($dataRule['string']['limit'])->order($dataRule['string']['order'])->column($dataRule['string']['key']);
-                    if (!empty($stringArray)) {
-                        $value['value'] = implode($dataRule['string']['delimiter'], $stringArray);
-                    }
                 }
                 if ($value['type'] == 'checkbox') {
                     $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
@@ -343,19 +343,19 @@ EOF;
                 }
                 if ($value['type'] == 'image') {
                     $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                    if (isset($dataRule['thumb']['ifon'])) {
-                        $value['param']['thumb'] = 1;
-                        $value['param']['thumbsize'] = $dataRule['thumb']['size'];
-                        $value['param']['thumbtype'] = $dataRule['thumb']['type'];
-                    }
+                    /*if (isset($dataRule['thumb']['ifon'])) {
+                $value['param']['thumb'] = 1;
+                $value['param']['thumbsize'] = $dataRule['thumb']['size'];
+                $value['param']['thumbtype'] = $dataRule['thumb']['type'];
+                }*/
                 }
                 if ($value['type'] == 'images') {
                     $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                    if (isset($dataRule['thumb']['ifon'])) {
-                        $value['param']['thumb'] = 1;
-                        $value['param']['thumbsize'] = $dataRule['thumb']['size'];
-                        $value['param']['thumbtype'] = $dataRule['thumb']['type'];
-                    }
+                    /*if (isset($dataRule['thumb']['ifon'])) {
+                    $value['param']['thumb'] = 1;
+                    $value['param']['thumbsize'] = $dataRule['thumb']['size'];
+                    $value['param']['thumbtype'] = $dataRule['thumb']['type'];
+                    }*/
                     /*if (!empty($value['value'])) {
                 $value['value'] .= ',';
                 }*/
@@ -373,9 +373,6 @@ EOF;
                         $value['param']['sizelimit'] = $dataRule['file']['size'];
                         $value['param']['extlimit'] = $dataRule['file']['type'];
                     }
-                    /*if (!empty($value['value'])) {
-                $value['value'] .= ',';
-                }*/
                 }
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);

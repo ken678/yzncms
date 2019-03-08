@@ -24,8 +24,8 @@ class ModelField extends Validate
         'name' => 'require|alphaNum',
         'title' => 'require|chsAlpha',
         'type' => 'require|alphaDash',
-        'define' => 'require',
-        'value' => 'chsAlphaNum',
+        'setting.define' => 'require',
+        'setting.value' => 'chsAlphaNum',
 
     ];
     //定义验证提示
@@ -36,8 +36,8 @@ class ModelField extends Validate
         'title.chsAlpha' => '字段标题只能为只能是汉字和字母',
         'type.require' => '字段类型不得为空',
         'type.alphaDash' => '字段类型格式错误',
-        'define.require' => '字段定义不得为空',
-        'value.chsAlphaNum' => '字段默认值格式错误',
+        'setting.define.require' => '字段定义不得为空',
+        'setting.value.chsAlphaNum' => '字段默认值格式错误',
 
     ];
 }
