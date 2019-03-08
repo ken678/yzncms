@@ -238,19 +238,19 @@ EOF;
                 'ifeditable' => 1,
                 'ifrequire' => 1,
                 'iffixed' => 0,
-                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
+                'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'flag',
                 'title' => '属性',
                 'type' => 'checkbox',
                 'ifeditable' => 1,
-                'setting' => 'a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:76:\"1:置顶[1]
+                'setting' => "a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT ''\";s:7:\"options\";s:76:\"1:置顶[1]
 2:头条[2]
 3:特荐[3]
 4:推荐[4]
 5:热点[5]
-6:幻灯[6]\";s:5:\"value\";s:0:\"\";}',
+6:幻灯[6]\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'keywords',
@@ -259,7 +259,7 @@ EOF;
                 'ifeditable' => 1,
                 'iffixed' => 0,
                 'remark' => '多关键词之间用空格或者“,”隔开',
-                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
+                'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'description',
@@ -268,7 +268,7 @@ EOF;
                 'ifeditable' => 1,
                 'iffixed' => 0,
                 'remark' => '如不填写，则自动截取附表中编辑器的200字符',
-                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
+                'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'tags',
@@ -277,7 +277,7 @@ EOF;
                 'ifeditable' => 1,
                 'iffixed' => 0,
                 'remark' => '多关键词之间用空格或者“,”隔开',
-                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
+                'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'uid',
@@ -290,15 +290,15 @@ EOF;
                 'title' => '排序',
                 'type' => 'number',
                 'ifeditable' => 1,
-                'setting' => 'a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}',
+                'setting' => "a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}",
             ],
             [
                 'name' => 'status',
                 'title' => '状态',
                 'type' => 'radio',
                 'ifeditable' => 1,
-                'setting' => 'a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:18:\"0:禁用
-1:启用\";s:5:\"value\";s:1:\"1\";}',
+                'setting' => "a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:18:\"0:禁用
+1:启用\";s:5:\"value\";s:1:\"1\";}",
             ],
             [
                 'name' => 'inputtime',
@@ -306,7 +306,7 @@ EOF;
                 'type' => 'datetime',
                 'ifeditable' => 1,
                 'listorder' => 200,
-                'setting' => 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
+                'setting' => "a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'updatetime',
@@ -314,7 +314,7 @@ EOF;
                 'type' => 'datetime',
                 'ifeditable' => 0,
                 'listorder' => 200,
-                'setting' => 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
+                'setting' => "a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'hits',
@@ -322,7 +322,7 @@ EOF;
                 'type' => 'number',
                 'ifeditable' => 1,
                 'listorder' => 200,
-                'setting' => 'a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}',
+                'setting' => "a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}",
             ],
         ];
         if ($type == 2) {
@@ -340,7 +340,7 @@ EOF;
                     'ifsystem' => 0,
                     'ifeditable' => 1,
                     'iffixed' => 0,
-                    'setting' => 'a:3:{s:6:\"define\";s:13:\"text NOT NULL\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
+                    'setting' => "a:3:{s:6:\"define\";s:13:\"text NOT NULL\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
                 ]);
 
         }
