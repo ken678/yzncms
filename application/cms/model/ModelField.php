@@ -291,7 +291,7 @@ EOF;
     public function getFieldList($modelId, $id = null)
     {
 
-        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,value,options,ifsystem,ifeditable,ifrequire,jsonrule");
+        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,value,options,ifsystem,ifeditable,ifrequire");
         if (!empty($list)) {
             //编辑信息时查询出已有信息
             if ($id) {
