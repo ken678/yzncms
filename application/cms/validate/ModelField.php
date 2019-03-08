@@ -21,7 +21,7 @@ class ModelField extends Validate
 
     //定义验证规则
     protected $rule = [
-        'name' => 'require|alphaNum',
+        'name' => 'require|regex:/^[a-zA-Z][A-Za-z0-9]+$/',
         'title' => 'require|chsAlpha',
         'type' => 'require|alphaDash',
         'setting.define' => 'require',
@@ -31,7 +31,7 @@ class ModelField extends Validate
     //定义验证提示
     protected $message = [
         'name.require' => '字段名称不得为空',
-        'name.alphaNum' => '字段名称只能为字母和数字',
+        'name.regex' => '字段名称只能为字母和数字，并且仅能字母开头',
         'title.require' => '字段标题不得为空',
         'title.chsAlpha' => '字段标题只能为只能是汉字和字母',
         'type.require' => '字段类型不得为空',
