@@ -327,6 +327,11 @@ EOF;
                 $value['setting'] = unserialize($value['setting']);
                 $value['options'] = $value['setting']['options'];
 
+                if (empty($value['value'])) {
+                    //为空设置默认值
+                    $value['value'] = $value['setting']['value'];
+                }
+
                 if ('' != $value['options']) {
                     $value['options'] = parse_attr($value['options']);
                 } elseif (isset($dataRule['choose'])) {
