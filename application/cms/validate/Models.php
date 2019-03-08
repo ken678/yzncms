@@ -18,16 +18,16 @@ use think\Validate;
 
 class Models extends Validate
 {
-
     //定义验证规则
     protected $rule = [
-        'name' => 'require|max:30|unique:model',
+        'name' => 'require|chs|max:30|unique:model',
         'tablename' => 'require|max:20|unique:model|alpha',
         'type' => 'in:1,2',
     ];
     //定义验证提示
     protected $message = [
         'name.require' => '模型名称不得为空',
+        'name.chs' => '模型名称只能为汉字',
         'name.max' => '模型名称长度错误',
         'name.unique' => '模型名称已存在',
         'tablename.require' => '表键名不得为空',

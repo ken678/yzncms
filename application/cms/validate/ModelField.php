@@ -18,7 +18,6 @@ use think\Validate;
 
 class ModelField extends Validate
 {
-
     //定义验证规则
     protected $rule = [
         'name' => 'require|regex:/^[a-zA-Z][A-Za-z0-9]+$/',
@@ -26,7 +25,11 @@ class ModelField extends Validate
         'type' => 'require|alphaDash',
         'setting.define' => 'require',
         'setting.value' => 'chsAlphaNum',
-
+        'ifsystem' => 'in:0,1',
+        'ifrequire' => 'in:0,1',
+        'ifeditable' => 'in:0,1',
+        'ifsearch' => 'in:0,1',
+        'status' => 'in:0,1',
     ];
     //定义验证提示
     protected $message = [
@@ -38,6 +41,10 @@ class ModelField extends Validate
         'type.alphaDash' => '字段类型格式错误',
         'setting.define.require' => '字段定义不得为空',
         'setting.value.chsAlphaNum' => '字段默认值格式错误',
-
+        'ifsystem.in' => '主表字段格式错误',
+        'ifrequire.in' => '是否必填格式错误',
+        'ifeditable.in' => '是否显示格式错误',
+        'ifsearch.in' => '是否显示搜索格式错误',
+        'status.in' => '字段状态格式错误',
     ];
 }
