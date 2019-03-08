@@ -221,126 +221,114 @@ EOF;
             [
                 'name' => 'id',
                 'title' => '文档id',
-                'define' => 'mediumint(8) UNSIGNED',
                 'type' => 'hidden',
                 'ifeditable' => 1,
             ],
             [
                 'name' => 'catid',
                 'title' => '栏目id',
-                'define' => 'smallint(5) unsigned',
                 'type' => 'hidden',
                 'ifeditable' => 1,
             ],
             [
                 'name' => 'title',
                 'title' => '标题',
-                'define' => 'varchar(255)',
                 'type' => 'text',
                 'ifsearch' => 1,
                 'ifeditable' => 1,
                 'ifrequire' => 1,
                 'iffixed' => 0,
+                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
             ],
             [
                 'name' => 'flag',
                 'title' => '属性',
-                'define' => 'varchar(32)',
                 'type' => 'checkbox',
                 'ifeditable' => 1,
-                'options' => '1:置顶[1]
+                'setting' => 'a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:76:\"1:置顶[1]
 2:头条[2]
 3:特荐[3]
 4:推荐[4]
 5:热点[5]
-6:幻灯[6]',
+6:幻灯[6]\";s:5:\"value\";s:0:\"\";}',
             ],
             [
                 'name' => 'keywords',
                 'title' => 'SEO关键词',
-                'define' => 'varchar(255)',
                 'type' => 'text',
                 'ifeditable' => 1,
                 'iffixed' => 0,
                 'remark' => '多关键词之间用空格或者“,”隔开',
+                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
             ],
             [
                 'name' => 'description',
                 'title' => 'SEO摘要',
-                'define' => 'varchar(255)',
                 'type' => 'textarea',
                 'ifeditable' => 1,
                 'iffixed' => 0,
                 'remark' => '如不填写，则自动截取附表中编辑器的200字符',
+                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
             ],
             [
                 'name' => 'tags',
                 'title' => 'tags标签',
-                'define' => 'varchar(255)',
                 'type' => 'text',
                 'ifeditable' => 1,
                 'iffixed' => 0,
                 'remark' => '多关键词之间用空格或者“,”隔开',
+                'setting' => 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
             ],
             [
                 'name' => 'uid',
                 'title' => '用户id',
-                'define' => 'mediumint(8) UNSIGNED',
                 'type' => 'number',
                 'ifeditable' => 0,
-                'value' => 1,
             ],
             [
                 'name' => 'listorder',
                 'title' => '排序',
-                'define' => 'smallint(5) UNSIGNED',
                 'type' => 'number',
                 'ifeditable' => 1,
-                'value' => 100,
+                'setting' => 'a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}',
             ],
             [
                 'name' => 'status',
                 'title' => '状态',
-                'define' => 'tinyint(1)',
                 'type' => 'radio',
                 'ifeditable' => 1,
-                'value' => 1,
-                'options' => '0:禁用
-1:启用',
+                'setting' => 'a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:18:\"0:禁用
+1:启用\";s:5:\"value\";s:1:\"1\";}',
             ],
             [
                 'name' => 'inputtime',
                 'title' => '创建时间',
-                'define' => 'int(11) UNSIGNED',
                 'type' => 'datetime',
-                'value' => 0,
                 'ifeditable' => 1,
                 'listorder' => 200,
+                'setting' => 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
             ],
             [
                 'name' => 'updatetime',
                 'title' => '更新时间',
-                'define' => 'int(11) UNSIGNED',
                 'type' => 'datetime',
                 'ifeditable' => 0,
-                'value' => 0,
                 'listorder' => 200,
+                'setting' => 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
             ],
             [
                 'name' => 'hits',
                 'title' => '点击量',
-                'define' => 'mediumint(8) UNSIGNED',
                 'type' => 'number',
                 'ifeditable' => 1,
-                'value' => 0,
                 'listorder' => 200,
+                'setting' => 'a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}',
             ],
         ];
         if ($type == 2) {
             array_push($data, [
                 'name' => 'did',
                 'title' => '附表文档id',
-                'define' => 'mediumint(8) UNSIGNED',
                 'type' => 'hidden',
                 'ifeditable' => 0,
                 'ifsystem' => 0,
@@ -348,11 +336,11 @@ EOF;
                 [
                     'name' => 'content',
                     'title' => '内容',
-                    'define' => 'text',
                     'type' => 'Ueditor',
                     'ifsystem' => 0,
                     'ifeditable' => 1,
                     'iffixed' => 0,
+                    'setting' => 'a:3:{s:6:\"define\";s:13:\"text NOT NULL\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}',
                 ]);
 
         }
