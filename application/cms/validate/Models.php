@@ -23,6 +23,7 @@ class Models extends Validate
         'name' => 'require|chs|max:30|unique:model',
         'tablename' => 'require|max:20|unique:model|alpha',
         'type' => 'in:1,2',
+        'ifsub' => 'eq:1',
     ];
     //定义验证提示
     protected $message = [
@@ -34,6 +35,7 @@ class Models extends Validate
         'tablename.max' => '表键名长度错误',
         'tablename.alpha' => '表键名只支持字母',
         'tablename.unique' => '表键名已存在',
-        'type.in' => '模型类型类型错误',
+        'type.in' => '模型类型错误',
+        'ifsub.eq' => '投稿类型错误',
     ];
 }
