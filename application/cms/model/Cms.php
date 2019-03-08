@@ -96,6 +96,12 @@ class Cms extends Modelbase
         }
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         $this->description($data, $dataExt);
+        //TAG标签处理
+        if (!empty($data['tags'])) {
+            $this->tag_dispose($data['tags'], $id, $catid, $modelid);
+        } else {
+            $this->tag_dispose([], $id, $catid, $modelid);
+        }
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
 
@@ -463,6 +469,35 @@ class Cms extends Modelbase
             }
         }
         return $newdata;
+    }
+
+    /**
+     * TAG标签处理
+     */
+    private function tag_dispose($tags, $id, $catid, $modelid)
+    {
+        $tags_mode = model('Tags');
+        if (!empty($tags)) {
+            if (strpos($tags, ',') === false) {
+                $keyword = explode(' ', $tags);
+            } else {
+                $keyword = explode(',', $tags);
+            }
+            $keyword = array_unique($keyword);
+            /*foreach ($keyword as $val) {
+        if (!$val) {
+        continue;
+        }
+        if ('add' == request()->action()) {
+        $tags_mode->addTag($val, $id, $catid, $modelid);
+        } else {
+        $tags_mode->updata($val, $id, $catid, $modelid);
+        }
+        }*/
+        } else {
+            //直接清除已有的tags
+            $tags_mode->deleteAll($id, $catid, $modelid);
+        }
     }
 
     /**
