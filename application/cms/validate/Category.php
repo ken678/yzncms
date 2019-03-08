@@ -18,11 +18,11 @@ use think\Validate;
 
 class Category extends Validate
 {
-
     //定义验证规则
     protected $rule = [
+        'parentid' => 'require|number',
         'modelid' => 'require|number',
-        'type' => 'require|number',
+        'type' => 'require|in:1,2,3',
         'catname' => 'require|chsAlphaNum',
         'catdir' => 'require|alphaNum|unique:category',
         'image' => 'number',
@@ -32,10 +32,12 @@ class Category extends Validate
     ];
     //定义验证提示
     protected $message = [
+        'parentid.require' => '上级栏目不得为空',
+        'parentid.number' => '上级栏目格式错误',
         'modelid.require' => '所属模型不得为空',
         'modelid.number' => '所属模型格式错误',
         'type.require' => '栏目类型不得为空',
-        'type.number' => '栏目类型格式错误',
+        'type.in' => '栏目类型格式错误',
         'catname.require' => '栏目标题不得为空',
         'catname.chsAlphaNum' => '栏目标题只能是汉字、字母和数字',
         'catdir.require' => '唯一标识不得为空',
@@ -48,10 +50,9 @@ class Category extends Validate
         'status.in' => '栏目状态格式不正确',
 
     ];
-
     protected $scene = [
-        'page' => ['type', 'catname', 'catdir', 'image', 'listorder', 'status'],
-        'list' => ['modelid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
-        'link' => ['type', 'catname', 'catdir', 'image', 'listorder', 'status'],
+        'page' => ['parentid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
+        'list' => ['parentid', 'modelid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
+        'link' => ['parentid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
     ];
 }
