@@ -4,7 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>跳转提示</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
     <style type="text/css">
         *{box-sizing:border-box;margin:0;padding:0;font-family:Lantinghei SC,Open Sans,Arial,Hiragino Sans GB,Microsoft YaHei,"微软雅黑",STHeiti,WenQuanYi Micro Hei,SimSun,sans-serif;-webkit-font-smoothing:antialiased}
         body{padding:70px 0;background:#edf1f4;font-weight:400;font-size:1pc;-webkit-text-size-adjust:none;color:#333}
@@ -23,7 +22,7 @@
         .system-message .btn-grey{border-color:#bbb;color:#bbb}
         .clearfix:after{clear:both;display:block;visibility:hidden;height:0;content:"."}
         @media (max-width:768px){body {padding:20px 0;}}
-            @media (max-width:480px){.system-message h1{font-size:30px;}}
+        @media (max-width:480px){.system-message h1{font-size:30px;}}
     </style>
 </head>
 <body>
@@ -35,7 +34,7 @@
     <h1>{$msg}</h1>
     {if $url}
         <p class="jump">
-            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <span id="wait"><?php echo($wait);?></span>
+            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <span id="wait"><?php echo($wait);?></span>秒
         </p>
     {/if}
     <p class="clearfix">
@@ -46,7 +45,7 @@
     </p>
 </div>
 <div class="copyright">
-    <p>Powered by <a href="https://www.yzncms.com/">YznCMS</a></p>
+    <p>Powered by <a href="http://www.yzncms.com/">YznCMS</a></p>
 </div>
 {if $url}
     <script type="text/javascript">
