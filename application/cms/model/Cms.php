@@ -58,6 +58,7 @@ class Cms extends Modelbase
         }
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         $this->description($data, $dataExt);
+
         //处理数据
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
@@ -71,6 +72,10 @@ class Cms extends Modelbase
         try {
             //主表
             $id = Db::name($tablename)->insertGetId($data);
+            //TAG标签处理
+            if (!empty($data['tags'])) {
+                $this->tag_dispose($data['tags'], $id, $catid, $modelid);
+            }
             //附表
             if (!empty($dataExt)) {
                 $dataExt['did'] = $id;
@@ -484,16 +489,12 @@ class Cms extends Modelbase
                 $keyword = explode(',', $tags);
             }
             $keyword = array_unique($keyword);
-            /*foreach ($keyword as $val) {
-        if (!$val) {
-        continue;
-        }
-        if ('add' == request()->action()) {
-        $tags_mode->addTag($val, $id, $catid, $modelid);
-        } else {
-        $tags_mode->updata($val, $id, $catid, $modelid);
-        }
-        }*/
+            if ('add' == request()->action()) {
+                $tags_mode->addTag($keyword, $id, $catid, $modelid);
+            } else {
+                $tags_mode->updata($keyword, $id, $catid, $modelid);
+            }
+
         } else {
             //直接清除已有的tags
             $tags_mode->deleteAll($id, $catid, $modelid);

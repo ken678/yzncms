@@ -33,9 +33,33 @@ class Tags extends Model
         if (!$tagname || !$id || !$catid || !$modelid) {
             return false;
         }
-        var_dump(11);
-        exit();
-
+        $time = time();
+        $newdata = array();
+        if (is_array($tagname)) {
+            foreach ($tagname as $v) {
+                if (empty($v) || $v == '') {
+                    continue;
+                }
+                if ($this->where(array("tag" => $v))->find()) {
+                    $this->where(array("tag" => $v))->setInc('usetimes');
+                } else {
+                    self::create(array(
+                        "tag" => $v,
+                        "usetimes" => 1,
+                        "lastusetime" => $time,
+                        "lasthittime" => $time,
+                    ));
+                }
+                $newdata[] = array(
+                    'tag' => $v,
+                    "modelid" => $modelid,
+                    "contentid" => $id,
+                    "catid" => $catid,
+                    "updatetime" => $time,
+                );
+            }
+            model('TagsContent')->saveAll($newdata);
+        }
     }
 
     /**
@@ -55,13 +79,63 @@ class Tags extends Model
             "contentid" => $id,
             "catid" => $catid,
         ))->select();
-        foreach ($tags as $key => $value) {
-
+        foreach ($tags as $key => $val) {
+            if (!$val) {
+                continue;
+            }
+            //如果在新的关键字数组找不到，说明已经去除
+            if (!in_array($val['tag'], $tagname)) {
+                //删除不存在的tag
+                $this->deleteTagName($val['tag'], $id, $catid, $modelid);
+            } else {
+                foreach ($tagname as $k => $v) {
+                    if ($val['tag'] == $v) {
+                        unset($tagname[$k]);
+                    }
+                }
+            }
         }
+        //新增的tags
+        if (count($tagname) > 0) {
+            $this->addTag($tagname, $id, $catid, $modelid, $data);
+        }
+    }
 
-        var_dump($tags);
-        exit();
-
+    /**
+     * 删除tag
+     * @param type $tagname
+     * @param type $id
+     * @param type $catid
+     * @param type $modelid
+     */
+    public function deleteTagName($tagname, $id, $catid, $modelid)
+    {
+        if (!$id || !$catid || !$modelid || !$tagname) {
+            return false;
+        }
+        $db_tags_content = model("TagsContent");
+        if (is_array($tagname)) {
+            foreach ($tagname as $name) {
+                $r = $this->where(array("tag" => $name))->find();
+                if ($r) {
+                    if ($r['usetimes'] > 0) {
+                        $this->where(array("tag" => $name))->setDec('usetimes');
+                    }
+                    //删除tags数据
+                    $db_tags_content->where(array("tag" => $name, 'contentid' => $id, "catid" => $catid))->delete();
+                }
+            }
+        } else {
+            $r = $this->where(array("tag" => $tagname))->find();
+            if ($r) {
+                if ($r['usetimes'] > 0) {
+                    $this->where(array("tag" => $tagname))->setDec('usetimes');
+                }
+                //删除tags数据
+                $db_tags_content->where(array("tag" => $r['tag'], 'contentid' => $id, "catid" => $catid))->delete();
+            }
+        }
+        return true;
     }
 
     /**
@@ -76,19 +150,19 @@ class Tags extends Model
         if (!$id || !$catid || !$modelid) {
             return false;
         }
-        /*$db_tags_content = M("TagsContent");
+        $db_tags_content = model("TagsContent");
         $where = array('modelid' => $modelid, 'contentid' => $id, "catid" => $catid);
         //取得对应tag数据
         $tagslist = $db_tags_content->where($where)->select();
         if (empty($tagslist)) {
-        return true;
+            return true;
         }
         //全部-1
         foreach ($tagslist as $k => $value) {
-        $this->where(array("tag" => $value['tag']))->setDec('usetimes');
+            $this->where(array("tag" => $value['tag']))->setDec('usetimes');
         }
         //删除tags数据
-        $db_tags_content->where($where)->delete();*/
+        $db_tags_content->where($where)->delete();
         return true;
     }
 
