@@ -52,7 +52,7 @@ class Cms extends Adminbase
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $total = Db::name(ucwords($tableName))->count();
+            $total = Db::name(ucwords($tableName))->where('catid', $catid)->count();
             $list = Db::name(ucwords($tableName))->page($page, $limit)->where('catid', $catid)->withAttr('updatetime', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
             })->order(['listorder', 'id' => 'desc'])->select();
