@@ -29,11 +29,11 @@ layui.use('table', function() {
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
-                { field: 'title', title: 'Tags名称'},
-                { field: 'hits', width: 80, title: '点击量' },
-                { field: 'updatetime', width: 180, title: '最后使用时间' },
-                { field: 'updatetime', width: 180, title: '最近访问时间' },
-                { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
+                { field: 'tag', title: 'Tags名称'},
+                { field: 'usetimes', width: 100, title: '信息总数' },
+                { field: 'hits', width: 100, title: '点击量' },
+                { field: 'lastusetime', width: 180, title: '最后使用时间' },
+                { field: 'lasthittime', width: 180, title: '最近访问时间' },
                 { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
             ]
         ],
