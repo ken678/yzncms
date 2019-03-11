@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\taglib;
 
+use think\Db;
 use think\facade\Cache;
 
 class CmsTagLib
@@ -97,6 +98,54 @@ class CmsTagLib
         $modelid = $catInfo['modelid'];
         $result = model('Cms')->getDataList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
+    }
+
+    /**
+     * Tags标签
+     */
+    public function tags($data)
+    {
+        $where = [];
+        if (isset($attr['where']) && $attr['where']) {
+            array_push($where, $attr['where']);
+        }
+        if (isset($data['tagid'])) {
+            if (strpos($data['tagid'], ',') !== false) {
+                $r = Db::name('Tags')->where('id', 'in', $tagid)->value('tagid,tag');
+                array_push($where, "tag in(" . $r . ")");
+            } else {
+                $r = Db::name('Tags')->where(['id' => (int) $data['tagid']])->find();
+                array_push($where, "tag = '" . $r['tag'] . "'");
+            }
+        } else {
+            if (is_array($data['tag'])) {
+                array_push($where, "tag in(" . $data['tag'] . ")");
+            } else {
+                $tags = strpos($data['tag'], ',') !== false ? explode(',', $data['tag']) : explode(' ', $data['tag']);
+                if (count($tags) == 1) {
+                    array_push($where, "tag = '" . $data['tag'] . "'");
+                } else {
+                    array_push($where, "tag in('" . implode("','", $tags) . "' )");
+                }
+            }
+        }
+        $where_str = "";
+        if (0 < count($where)) {
+            $where_str = implode(" AND ", $where);
+        }
+        if (!isset($data['limit'])) {
+            $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
+        }
+        $return = Db::name('TagsContent')->where($where_str)->limit($data['limit'])->select();
+        //读取文章信息
+        foreach ($return as $k => $v) {
+            $r = model('Cms')->getDataInfo($v['modelid'], "id =" . $v['contentid'], false, '*', $data['limit'], $data['page']);
+            if ($r) {
+                $return[$k] = array_merge($v, $r);
+            }
+        }
+        return $result;
+
     }
 
     /**
