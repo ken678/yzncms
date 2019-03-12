@@ -216,6 +216,10 @@ EOF;
             $fieldList = array();
             if (!empty($data) && is_array($data)) {
                 foreach ($data as $rs) {
+                    //扩展配置
+                    if (!empty($rs['setting'])) {
+                        $rs = array_merge($rs, unserialize($rs['setting']));
+                    }
                     $fieldList[$rs['name']] = $rs;
                 }
             }

@@ -190,10 +190,10 @@ function filters($modelid)
     $options = cache('ModelField')[$modelid];
     $data = [];
     foreach ($options as $_k => $_v) {
-        if (!in_array($_v['type'], ['select', 'radio', 'checkbox'])) {
-            continue;
-        } else {
+        if (isset($_v['filtertype']) && $_v['filtertype']) {
             $_v['options'] = parse_attr($_v['options']);
+        } else {
+            continue;
         }
         $data[$_v['name']] = $_v;
     }
@@ -229,7 +229,7 @@ function structure_filters_url($fieldname, $modelid, $array = [])
             //排除自身
             continue;
         }
-        if (in_array($rs['type'], ['select', 'radio', 'checkbox'])) {
+        if (isset($rs['filtertype']) && $rs['filtertype']) {
             if ($param[$name] !== '' && $param[$name] !== null) {
                 $url .= $name . '=' . $param[$name] . '&';
             }
