@@ -24,54 +24,24 @@
         </div>
         <div class="case_list">
             <ul>
+            {yzn module="cms" action="lists" flag="4" catid="5" cache="3600" order="listorder ASC" num="10" return="data"}
+            {volist name="data" id="vo"}
             	<li>
-            		<a href="" class="pr">
-            			<img src="https://via.placeholder.com/380x285" alt="">
+            		<a href="{$vo.url}" class="pr">
+            			<img src="https://via.placeholder.com/380x285" alt="{$vo.title}">
             			<div class="top-Floor pa transition"> <span class="white-cross pa"></span></div>
             		</a>
-            		<a href="" class="case_a transition pr">
-            			<h2 class="el">案例的名称</h2>
-            			<div class="nr">案例的描述案例的描述案例的描述案例的描述案例的描述案例的描...</div>
+            		<a href="{$vo.url}" class="case_a transition pr">
+            			<h2 class="el">{$vo.title}</h2>
+            			<div class="nr">{$vo.description|str_cut=###,100}</div>
             		</a>
             	</li>
-            	<li>
-            		<a href="" class="pr">
-            			<img src="https://via.placeholder.com/380x285" alt="">
-            			<div class="top-Floor pa transition"> <span class="white-cross pa"></span></div>
-            		</a>
-            		<a href="" class="case_a transition pr">
-            			<h2 class="el">案例的名称</h2>
-            			<div class="nr">案例的描述案例的描述案例的描述案例的描述案例的描述案例的描...</div>
-            		</a>
-            	</li>
-            	<li>
-            		<a href="" class="pr">
-            			<img src="https://via.placeholder.com/380x285" alt="">
-            			<div class="top-Floor pa transition"> <span class="white-cross pa"></span></div>
-            		</a>
-            		<a href="" class="case_a transition pr">
-            			<h2 class="el">案例的名称</h2>
-            			<div class="nr">案例的描述案例的描述案例的描述案例的描述案例的描述案例的描...</div>
-            		</a>
-            	</li>
+            {/volist}
+            {/yzn}
             </ul>
             <a class="x_arrs prev" href="javascript:void(0)"></a>
             <a class="x_arrs next" href="javascript:void(0)"></a>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
 </div>
 <!--E 案例-->
