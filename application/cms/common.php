@@ -186,7 +186,6 @@ function buildCatUrl($type, $id, $url = '')
  */
 function filters($modelid)
 {
-    $param = input();
     $options = cache('ModelField')[$modelid];
     $data = [];
     foreach ($options as $_k => $_v) {
@@ -197,45 +196,37 @@ function filters($modelid)
         }
         $data[$_v['name']] = $_v;
     }
+    $param = paramdecode(input('condition'));
+    $catid = input('catid');
+    $conditionParam = [];
     foreach ($data as $name => $rs) {
-        $url = structure_filters_url($name, $modelid, $data);
-        $_ar = [];
-        foreach ($rs['options'] as $k => $v) {
-            $_ar[$k] = [
-                'active' => false,
-                'key' => $k,
-                'title' => $v,
-                'url' => $url . $name . '=' . $k,
-            ];
-        }
+        //选中
         if (!empty($param[$name])) {
-            $_ar[$param[$name]]['active'] = true;
+            $conditionParam[$name]['options'][$param[$name]]['active'] = true;
+            $nowParam = $param;
+            $nowParam[$name] = '';
+            $conditionParam[$name]['options'][$param[$name]]['param'] = paramencode($nowParam);
+            unset($nowParam);
         }
-        $rs['opt'] = $_ar;
-        $rs['opt_url'] = $url;
-        $data[$name] = $rs;
-    }
-    return $data;
-}
+        $conditionParam[$name]['title'] = $rs['title'];
+        $conditionParam[$name]['name'] = $rs['name'];
 
-/**
- * 生成其他筛选地址
- */
-function structure_filters_url($fieldname, $modelid, $array = [])
-{
-    $param = input();
-    foreach ($array as $name => $rs) {
-        if ($fieldname == $name) {
-            //排除自身
-            continue;
-        }
-        if (isset($rs['filtertype']) && $rs['filtertype']) {
-            if ($param[$name] !== '' && $param[$name] !== null) {
-                $url .= $name . '=' . $param[$name] . '&';
+        //未选中 active param title url
+        foreach ($data[$name]['options'] as $k => $v) {
+            $conditionParam[$name]['options'][$k]['title'] = $v;
+            //未选中条件参数生成
+            if (!isset($conditionParam[$name]['options'][$k]['active'])) {
+                $conditionParam[$name]['options'][$k]['active'] = 0;
+                $nowParam = $param;
+                $nowParam[$name] = $k;
+                $conditionParam[$name]['options'][$k]['param'] = paramencode($nowParam);
             }
+
+            $conditionParam[$name]['options'][$k]['url'] = url('cms/index/lists', ['catid' => $catid, 'condition' => $conditionParam[$name]['options'][$k]['param']]);
+            ksort($conditionParam[$name]['options']);
         }
     }
-    return $url;
+    return $conditionParam;
 }
 
 function paramdecode($str)

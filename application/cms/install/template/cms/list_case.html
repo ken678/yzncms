@@ -22,9 +22,8 @@ body {
                         <h5 class="classify-name">{$vo.title}：</h5>
                         <div class="classify-screen-con">
                             <div class="classify-choose">
-                                <a target="_self" href="" class="selected"><span>不限</span></a>
-                                {volist name="$vo.opt" id="vs"}
-                                <a target="_self" href="" {if $vs.active}class="selected"{/if}><span>{$vs.title}</span></a>
+                                {volist name="$vo.options" id="vs"}
+                                <a target="_self" href="{$vs.url}" {if $vs.active}class="selected"{/if}><span>{$vs.title}</span></a>
                                 {/volist}
                             </div>
                         </div>
