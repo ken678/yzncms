@@ -571,7 +571,7 @@
 }
 
 .case_list .x_arrs {
--webkit-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     position: absolute;
     left: -5%;
@@ -1124,6 +1124,67 @@
     color: #fff;
 }
 
+/*案例*/
+.case_ny_list {
+    width: 100%;
+    padding-top: 20px;
+}
+
+.case_ny_list li {
+    margin-bottom: 20px;
+    width: 270px;
+    float: left;
+    margin-right: 20px;
+}
+
+.case_ny_list li ._con {
+    border-bottom: #f80909 solid 2px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 355px;
+}
+
+.case_ny_list li ._img {
+    height: 0;
+    padding-bottom: 80%;
+    overflow: hidden;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.case_ny_list li ._con:hover ._img { padding-bottom: 60%; }
+.case_ny_list li ._info {
+    background: #fff;
+    padding: 20px;
+    overflow: hidden;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.case_ny_list li ._info h3 {
+    line-height: 2;
+    font-weight: normal;
+    font-size: 16px;
+    color: #000;
+}
+
+.case_ny_list li ._info .txt {
+    line-height: 22px;
+    margin-bottom: 25px;
+    height: 66px;
+}
+
+.case_ny_list li ._info ._more {
+    display: block;
+    width: 124px;
+    height: 32px;
+    line-height: 32px;
+    color: #fff;
+    text-align: center;
+    background: #f80909;
+}
+
+
+
 /*荣誉*/
 .honor {
     padding-left: 15px;
@@ -1479,6 +1540,7 @@
 }
 
 .tips {
+    z-index: 9999999999;
     background: #000;
     width: 100%;
     line-height: 40px;

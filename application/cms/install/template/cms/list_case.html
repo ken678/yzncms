@@ -15,6 +15,7 @@ body {
             </div>
         </div>
         <div class="content">
+        	<!--S 筛选列表 -->
             <div class="product_box">
                 <div class="classify-screen">
                     {volist name=":filters(3)" id="vo"}
@@ -31,18 +32,34 @@ body {
                     {/volist}
                 </div>
             </div>
+            <!--E 筛选列表 -->
+            <!--S 筛选条件 -->
             {php}$where=structure_filters_sql(3);{/php}
-            {yzn module="cms" action="lists" where="$where" catid="$catid" order="listorder ASC" num="4" page="$page" return="data"}
-            {volist name="data" id="vo"}
-            <li class="item clearfix">
-                <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo.title}">
-                            <div class="time fr"><span class="day">{$vo.updatetime|date="m-d"}</span><span class="year">{$vo.updatetime|date="Y"}</span></div>
-                            <h3>{$vo.title}</h3>
-                            <div class="txt">{$vo.description|str_cut=###,60}</div>
-                        </a>
-            </li>
-            {/volist}
-            {/yzn}
+            <!--E 筛选添加 -->
+            <div class="case_ny_list">
+            	<!--S 文章列表-->
+                <ul>
+                    {yzn module="cms" action="lists" where="$where" catid="$catid" cache="3600" order="listorder ASC" num="8" page="$page" return="data"}
+                    {volist name="data" id="vo" mod="4"}
+                    <li {eq name="mod" value="3" }style="margin-right:0;" {/eq}> <div class="_con">
+                        <div class="_img"><img  src="https://via.placeholder.com/270x210" alt="{$vo.title}"></div>
+                            <div class="_info">
+                                <h3>{$vo.title|str_cut=###,12}</h3>
+                                <div class="txt">
+                                    {$vo.description|str_cut=###,50}
+                                </div>
+                                <a href="{$vo.url}" class="_more">查看更多<i>&gt;</i></a>
+                            </div>
+                        </div>
+                    </li>
+                    {/volist}
+                    {/yzn}
+                </ul>
+                <!--E 文章列表-->
+                <!--S 分页-->
+                {$pages|raw}
+                <!--E 分页-->
+            </div>
         </div>
     </div>
 </div>
