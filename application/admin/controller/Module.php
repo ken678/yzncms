@@ -49,7 +49,7 @@ class Module extends Adminbase
                 $this->error('请选择需要安装的模块！');
             }
             if ($this->ModuleService->install($module)) {
-                $this->success('模块安装成功！清除浏览器缓存和框架缓存后生效！', url('admin/Module/index'));
+                $this->success('模块安装成功！一键清理缓存后生效！', url('admin/Module/index'));
             } else {
                 $error = $this->ModuleService->getError();
                 $this->error($error ? $error : '模块安装失败！');
@@ -116,7 +116,7 @@ class Module extends Adminbase
                 $this->error('请选择需要安装的模块！');
             }
             if ($this->ModuleService->uninstall($module)) {
-                $this->success("模块卸载成功！清除浏览器缓存和框架缓存后生效！", url("admin/Module/index"));
+                $this->success("模块卸载成功！一键清理缓存后生效！", url("admin/Module/index"));
             } else {
                 $error = $this->ModuleService->getError();
                 $this->error($error ? $error : "模块卸载失败！", url("admin/Module/index"));
