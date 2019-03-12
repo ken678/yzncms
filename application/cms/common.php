@@ -229,6 +229,27 @@ function filters($modelid)
     return $conditionParam;
 }
 
+function structure_filters_sql($modelid)
+{
+    $options = cache('ModelField')[$modelid];
+    $data = [];
+    foreach ($options as $_k => $_v) {
+        if (isset($_v['filtertype']) && $_v['filtertype']) {
+            $_v['options'] = parse_attr($_v['options']);
+        } else {
+            continue;
+        }
+        $data[$_v['name']] = $_v;
+    }
+    $sql = '`status` = \'1\'';
+    $param = paramdecode(input('condition'));
+    foreach ($param as $k => $r) {
+        $sql .= " AND `$k` = '$r'";
+
+    }
+    return $sql;
+}
+
 function paramdecode($str)
 {
     $arr = [];
