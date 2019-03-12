@@ -10,10 +10,10 @@
     </div>
     <script type="text/html" id="titleTpl">
         {{#  if(d.installtime == "" || d.installtime == null || d.installtime == undefined){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="install"><i class="icon iconfont icon-zidongxiufu"></i>&nbsp;安装</a>
+    <a class="layui-btn layui-btn-xs" lay-event="install">安装</a>
 {{#  } else { }}
     {{#  if(d.iscore == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="uninstall"><i class="icon iconfont icon-shanchu"></i>&nbsp;卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="uninstall">卸载</a>
     {{#  } }}
 {{#  } }}
 </script>
