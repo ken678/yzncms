@@ -24,8 +24,6 @@ class Uninstall extends UninstallBase
         'category',
         'model',
         'model_field',
-        'position',
-        'position_data',
         'page',
         'tags',
         'tags_content',

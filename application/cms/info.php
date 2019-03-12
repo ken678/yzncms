@@ -60,5 +60,7 @@ return array(
         'yzn_model',
         'yzn_model_field',
         'yzn_page',
+        'yzn_tags',
+        'yzn_tags_content',
     ],
 );

@@ -63,9 +63,9 @@ class Module extends Adminbase
             //版本检查
             if ($config['adaptation']) {
                 if (version_compare(config('version.yzncms_version'), $config['adaptation'], '>=') == false) {
-                    $version_check = '<i class="iconfont icon-jinyong text-danger"></i>';
+                    $version_check = '<i class="iconfont icon-delete text-danger"></i>';
                 } else {
-                    $version_check = '<i class="iconfont icon-qiyong text-success"></i>';
+                    $version_check = '<i class="iconfont icon-success text-success"></i>';
                 }
             }
             $need_module = [];
@@ -91,7 +91,7 @@ class Module extends Adminbase
                     } else {
                         $table_check[] = [
                             'table' => "{$table}",
-                            'result' => '<i class="iconfont icon-qiyong text-success"></i>',
+                            'result' => '<i class="iconfont icon-success text-success"></i>',
                         ];
                     }
                 }
@@ -157,7 +157,7 @@ class Module extends Adminbase
                 $type => $value[0],
                 'version' => $curr_version ? $curr_version : '未安装',
                 'version_need' => $value[2] . $value[1],
-                'result' => $result ? '<i class="iconfont icon-qiyong text-success"></i>' : '<i class="iconfont icon-jinyong text-danger"></i>',
+                'result' => $result ? '<i class="iconfont icon-success text-success"></i>' : '<i class="iconfont icon-delete text-danger"></i>',
             ];
         }
 
