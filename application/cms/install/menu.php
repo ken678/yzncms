@@ -12,7 +12,7 @@ return [
         //名称
         "name" => "内容",
         //图标
-        "icon" => "icon-article",
+        "icon" => "icon-shiyongwendang",
         //备注
         "remark" => "",
         //排序
@@ -38,7 +38,7 @@ return [
                         "type" => 1,
                         "status" => 1,
                         "name" => "Tags管理",
-                        "icon" => "icon-tags",
+                        "icon" => "icon-label",
                     ],
                 ],
             ],
@@ -54,14 +54,14 @@ return [
                         "type" => 1,
                         "status" => 1,
                         "name" => "CMS配置",
-                        "icon" => "icon-shezhi",
+                        "icon" => "icon-setup",
                     ],
                     [
                         "route" => "cms/category/index",
                         "type" => 1,
                         "status" => 1,
                         "name" => "栏目列表",
-                        "icon" => "icon-liebiao",
+                        "icon" => "icon-other",
                         "child" => [
                             [
                                 "route" => "cms/category/add",
@@ -82,7 +82,7 @@ return [
                         "type" => 1,
                         "status" => 1,
                         "name" => "模型管理",
-                        "icon" => "icon-moxing",
+                        "icon" => "icon-apartment",
                         "child" => [
                             [
                                 "route" => "cms/field/index",
