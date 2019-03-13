@@ -14,11 +14,11 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
 
-//use app\admin\model\AdminUser as AdminUser_model;
 use app\admin\service\User;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Adminbase;
 use think\Db;
+use think\Image;
 
 class Attachments extends Adminbase
 {
@@ -172,6 +172,8 @@ class Attachments extends Adminbase
         foreach (['php', 'html', 'htm', 'js'] as $vo) {
             unset($ext_limit[$vo]);
         }
+        // 水印参数
+        $watermark = $this->request->post('watermark', '');
         // 获取附件数据
         switch ($from) {
             case 'ueditor':
@@ -249,6 +251,13 @@ class Attachments extends Adminbase
         // 移动到框架应用根目录指定目录下
         $info = $file->move($this->uploadPath . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
+            // 水印功能
+            if ($watermark == '') {
+                if ($dir == 'images' && config('upload_thumb_water') == 1 && config('upload_thumb_water_pic') > 0) {
+                    $this->create_water($info->getRealPath(), config('upload_thumb_water_pic'));
+                }
+            }
+
             // 获取附件信息
             $file_info = [
                 'uid' => User::instance()->isLogin(),
@@ -326,6 +335,30 @@ class Attachments extends Adminbase
                 $this->error($ex->getMessage());
             }
             $this->success('文件删除成功~');
+        }
+    }
+
+    /**
+     * 添加水印
+     * @param string $file 要添加水印的文件路径
+     * @param string $watermark_img 水印图片id
+     * @param string $watermark_pos 水印位置
+     * @param string $watermark_alpha 水印透明度
+     * @author 蔡伟明 <314013107@qq.com>
+     */
+    private function create_water($file = '', $watermark_img = '', $watermark_pos = '', $watermark_alpha = '')
+    {
+        $path = model('Attachment')->getFilePath($watermark_img, 1);
+        $thumb_water_pic = realpath($this->uploadPath . '/' . $path);
+        if (is_file($thumb_water_pic)) {
+            // 读取图片
+            $image = Image::open($file);
+            // 添加水印
+            $watermark_pos = $watermark_pos == '' ? config('upload_thumb_water_position')['key'] : $watermark_pos;
+            $watermark_alpha = $watermark_alpha == '' ? config('upload_thumb_water_alpha') : $watermark_alpha;
+            $image->water($thumb_water_pic, $watermark_pos, $watermark_alpha);
+            // 保存水印图片，覆盖原图
+            $image->save($file);
         }
     }
 
