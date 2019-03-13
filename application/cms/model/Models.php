@@ -245,12 +245,7 @@ EOF;
                 'title' => '属性',
                 'type' => 'checkbox',
                 'ifeditable' => 1,
-                'setting' => "a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT ''\";s:7:\"options\";s:76:\"1:置顶[1]
-2:头条[2]
-3:特荐[3]
-4:推荐[4]
-5:热点[5]
-6:幻灯[6]\";s:5:\"value\";s:0:\"\";}",
+                'setting' => "a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT ''\";s:7:\"options\";s:76:\"1:置顶[1]\r\n2:头条[2]\r\n3:特荐[3]\r\n4:推荐[4]\r\n5:热点[5]\r\n6:幻灯[6]\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'keywords',
@@ -297,8 +292,7 @@ EOF;
                 'title' => '状态',
                 'type' => 'radio',
                 'ifeditable' => 1,
-                'setting' => "a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:18:\"0:禁用
-1:启用\";s:5:\"value\";s:1:\"1\";}",
+                'setting' => "a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:18:\"0:禁用\r\n1:启用\";s:5:\"value\";s:1:\"1\";}",
             ],
             [
                 'name' => 'inputtime',
