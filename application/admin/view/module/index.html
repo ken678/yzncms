@@ -6,8 +6,10 @@
         <table class="layui-hide" id="table" lay-filter="table"></table>
     </div>
     <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container"></div>
-        </script>
+        <div class="layui-btn-container">
+            <a class="layui-btn layui-btn-sm" id="local-install">本地安装</a>
+        </div>
+    </script>
     <script type="text/html" id="titleTpl">
         {{#  if(d.installtime == "" || d.installtime == null || d.installtime == undefined){ }}
     <a class="layui-btn layui-btn-xs" lay-event="install">安装</a>
@@ -21,9 +23,10 @@
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
+layui.use(['table', 'upload'], function() {
     var table = layui.table,
-        $ = layui.$;
+        $ = layui.$,
+        upload = layui.upload;
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
@@ -40,6 +43,25 @@ layui.use('table', function() {
         ]
     });
 
+    //执行实例
+    var uploadInst = upload.render({
+        elem: '#local-install',
+        url: '{:url("admin/module/local")}',
+        accept: 'file',
+        exts: 'zip',
+        done: function(res) {
+            //上传完毕回调
+            if (res.code == 1) {
+                layer.alert(res.msg);
+            }else{
+                layer.alert(res.msg);
+            }
+        },
+        error: function() {
+            //请求异常回调
+        }
+    });
+
     //监听行工具事件
     table.on('tool(table)', function(obj) {
         var data = obj.data;
@@ -47,29 +69,6 @@ layui.use('table', function() {
             window.open('{:url("admin/module/install")}' + "?module=" + data.module, '_self')
         } else if (obj.event === 'uninstall') {
             window.open('{:url("admin/module/uninstall")}' + "?module=" + data.module, '_self')
-            /*layer.confirm('确定执行此操作吗？', { icon: 3, title: '提示' }, function(index) {
-                $.post('{:url("admin/module/uninstall")}', { 'module': data.module }, function(data) {
-                    if (data.code == 1) {
-                        if (data.url) {
-                            layer.alert(data.msg, { icon: 1 }, function(index) {
-                                layer.close(index);
-                                if (data.url) {
-                                    location.href = data.url;
-                                } else {
-                                    location.reload();
-                                }
-                            });
-                        } else {
-                            layer.alert(data.msg);
-                        }
-                    } else {
-                        layer.alert(data.msg);
-                    }
-
-                });
-                layer.close(index);
-            });*/
-
         }
     });
 });

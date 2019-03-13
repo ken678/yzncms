@@ -249,37 +249,6 @@ function list_sort_by($list, $field, $sortby = 'asc')
 }
 
 /**
- * 解析配置
- * @param string $value 配置值
- * @return array|string
- */
-function parse_attr($value = '')
-{
-    $array = preg_split('/[,;\r\n]+/', trim($value, ",;\r\n"));
-    if (strpos($value, ':')) {
-        $value = array();
-        foreach ($array as $val) {
-            list($k, $v) = explode(':', $val);
-            $value[$k] = $v;
-        }
-    } else {
-        $value = $array;
-    }
-    return $value;
-}
-
-/**
- * 时间戳格式化
- * @param int $time
- * @return string 完整的时间显示
- */
-function time_format($time = null, $format = 'Y-m-d H:i')
-{
-    $time = $time === null ? $_SERVER['REQUEST_TIME'] : intval($time);
-    return date($format, $time);
-}
-
-/**
  * 把返回的数据集转换成Tree
  * @param array $list 要转换的数据集
  * @param string $pid parent标记字段
@@ -311,6 +280,37 @@ function list_to_tree($list, $pk = 'id', $pid = 'parentid', $child = '_child', $
         }
     }
     return $tree;
+}
+
+/**
+ * 解析配置
+ * @param string $value 配置值
+ * @return array|string
+ */
+function parse_attr($value = '')
+{
+    $array = preg_split('/[,;\r\n]+/', trim($value, ",;\r\n"));
+    if (strpos($value, ':')) {
+        $value = array();
+        foreach ($array as $val) {
+            list($k, $v) = explode(':', $val);
+            $value[$k] = $v;
+        }
+    } else {
+        $value = $array;
+    }
+    return $value;
+}
+
+/**
+ * 时间戳格式化
+ * @param int $time
+ * @return string 完整的时间显示
+ */
+function time_format($time = null, $format = 'Y-m-d H:i')
+{
+    $time = $time === null ? $_SERVER['REQUEST_TIME'] : intval($time);
+    return date($format, $time);
 }
 
 /**
@@ -398,7 +398,9 @@ function to_guid_string($mix)
 }
 
 /**
- * 获取附件名称
+ * 根据附件id获取文件名
+ * @param string $id 附件id
+ * @return string
  */
 function get_file_name($id = '')
 {
@@ -408,6 +410,8 @@ function get_file_name($id = '')
 
 /**
  * 获取附件路径
+ * @param int $id 附件id
+ * @return string
  */
 function get_file_path($id)
 {
@@ -416,7 +420,9 @@ function get_file_path($id)
 }
 
 /**
- * 获取图片路径
+ * 获取图片缩略图路径
+ * @param int $id 附件id
+ * @return string
  */
 function get_thumb($id = 0)
 {
@@ -426,7 +432,6 @@ function get_thumb($id = 0)
 
 /**
  * 安全过滤函数
- *
  * @param $string
  * @return string
  */
