@@ -260,17 +260,7 @@ layui.use(['laydate'], function() {
 <div class="layui-form-item layui-form-text">
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
-        <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>
-        <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.all.js"></script>
-        <script type="text/javascript">
-            var {$vo.fieldArr}{$vo.name} = UE.getEditor('{$vo.fieldArr}{$vo.name}',{
-                initialFrameWidth: null,
-                initialFrameHeight: 250,
-                serverUrl: "{:url('attachment/Ueditor/run')}"
-            });
-
-        </script>
-        <script type="text/plain" id="{$vo.fieldArr}{$vo.name}" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</script>
+        <script type="text/plain" class="js-ueditor" id="{$vo.name}" name="{$vo.name}">{$vo.value|raw}</script>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
@@ -279,10 +269,12 @@ layui.use(['laydate'], function() {
 
 {/if}
 {/volist}
+<script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.all.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/Sortable.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/js/upload.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/js/form.js"></script>
 <link rel="stylesheet" href="__STATIC__/libs/viewer/viewer.min.css">
 <link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
 <script type="text/javascript">
