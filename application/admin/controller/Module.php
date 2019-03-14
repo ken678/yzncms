@@ -149,7 +149,7 @@ class Module extends Adminbase
             }
             // 当前版本
             if ($type == 'module') {
-                $curr_version = Db::name('Module')->where('name', $value[0])->value('version');
+                $curr_version = Db::name('Module')->where('module', $value[0])->value('version');
             } else {
                 $curr_version = Db::name('Addons')->where('name', $value[0])->value('version');
             }
