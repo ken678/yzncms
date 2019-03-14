@@ -198,7 +198,7 @@
                      '<div id="' + file.id + '" class="file-item js-gallery thumbnail">' +
                      '<img>' +
                      '<div class="info">' + file.name + '</div>' +
-                     '<i class="iconfont icon-close remove-picture"></i>' +
+                     '<i class="iconfont icon-delete_fill remove-picture"></i>' +
                      ($multiple ? '<i class="fa fa-fw fa-arrows move-picture"></i>' : '') +
                      '<div class="progress progress-mini remove-margin active">' +
                      '<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>' +
