@@ -84,8 +84,10 @@ class Attachment extends Model
     public function getFilePath($id = '', $type = 0)
     {
         $uploadPath = config('public_url') . 'uploads/';
-        if (is_array($id)) {
-            $data_list = $this->where('id', 'in', $id)->field('path,driver,thumb')->select();
+        $isIds = strpos($id, ',') !== false;
+        if ($isIds) {
+            $ids = explode(',', $id);
+            $data_list = $this->where('id', 'in', $ids)->field('path,driver,thumb')->select();
             $paths = [];
             foreach ($data_list as $key => $value) {
                 if ($value['driver'] == 'local') {
@@ -117,16 +119,24 @@ class Attachment extends Model
     public function getThumbPath($id = '')
     {
         $uploadUrl = config('public_url') . 'uploads/';
-        $result = $this->where('id', $id)->field('path,driver,thumb')->find();
-        if ($result) {
-            if ($result['driver'] == 'local') {
-                return $result['thumb'] != '' ? $uploadUrl . $result['thumb'] : $uploadUrl . $result['path'];
-            } else {
-                return $result['thumb'] != '' ? $result['thumb'] : $result['path'];
-            }
+        $isIds = strpos($id, ',') !== false;
+        if ($isIds) {
+            $ids = explode(',', $id);
+            $result = $this->where('id', 'in', $ids)->field('path,driver,thumb')->select();
+
         } else {
-            return $result;
+            $result = $this->where('id', $id)->field('path,driver,thumb')->find();
+            if ($result) {
+                if ($result['driver'] == 'local') {
+                    return $result['thumb'] != '' ? $uploadUrl . $result['thumb'] : $uploadUrl . $result['path'];
+                } else {
+                    return $result['thumb'] != '' ? $result['thumb'] : $result['path'];
+                }
+            } else {
+                return $result;
+            }
         }
+
     }
 
     /**

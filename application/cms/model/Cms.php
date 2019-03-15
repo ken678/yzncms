@@ -445,14 +445,10 @@ class Cms extends Modelbase
                 case 'checkbox':
                     break;
                 case 'image':
-                    $newdata[$key] = $value;
+                    $newdata[$key] = empty($value) ? '' : get_file_path($value);
                     break;
                 case 'images':
-                    if (strpos($value, ',') !== false) {
-                        $newdata[$key] = explode(',', $value);
-                    } else {
-                        $newdata[$key] = array($value);
-                    }
+                    $newdata[$key] = empty($value) ? [] : get_file_path($value);
                     break;
                 case 'files':
                     break;
