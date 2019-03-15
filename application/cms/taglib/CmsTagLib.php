@@ -68,6 +68,7 @@ class CmsTagLib
         if (!empty($categorys)) {
             foreach ($categorys as &$vo) {
                 $vo['url'] = buildCatUrl($vo['type'], $vo['id'], $vo['url']);
+                $vo['image'] = get_thumb($vo['image']);
             }
         }
         return $categorys;
