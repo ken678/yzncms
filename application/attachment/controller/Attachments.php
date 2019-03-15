@@ -254,7 +254,7 @@ class Attachments extends Adminbase
             // 水印功能
             if ($watermark == '') {
                 if ($dir == 'images' && config('upload_thumb_water') == 1 && config('upload_thumb_water_pic') > 0) {
-                    $this->create_water($info->getRealPath(), config('upload_thumb_water_pic'));
+                    model('Attachment')->create_water($info->getRealPath(), config('upload_thumb_water_pic'));
                 }
             }
 
@@ -335,30 +335,6 @@ class Attachments extends Adminbase
                 $this->error($ex->getMessage());
             }
             $this->success('文件删除成功~');
-        }
-    }
-
-    /**
-     * 添加水印
-     * @param string $file 要添加水印的文件路径
-     * @param string $watermark_img 水印图片id
-     * @param string $watermark_pos 水印位置
-     * @param string $watermark_alpha 水印透明度
-     * @author 蔡伟明 <314013107@qq.com>
-     */
-    private function create_water($file = '', $watermark_img = '', $watermark_pos = '', $watermark_alpha = '')
-    {
-        $path = model('Attachment')->getFilePath($watermark_img, 1);
-        $thumb_water_pic = realpath($this->uploadPath . '/' . $path);
-        if (is_file($thumb_water_pic)) {
-            // 读取图片
-            $image = Image::open($file);
-            // 添加水印
-            $watermark_pos = $watermark_pos == '' ? config('upload_thumb_water_position')['key'] : $watermark_pos;
-            $watermark_alpha = $watermark_alpha == '' ? config('upload_thumb_water_alpha') : $watermark_alpha;
-            $image->water($thumb_water_pic, $watermark_pos, $watermark_alpha);
-            // 保存水印图片，覆盖原图
-            $image->save($file);
         }
     }
 

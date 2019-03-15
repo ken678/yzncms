@@ -430,6 +430,46 @@ function get_thumb($id = 0)
     return $path ? $path : "";
 }
 
+function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'nopic.gif')
+{
+    static $_thumb_cache = array();
+    if (empty($imgurl)) {
+        return $smallpic;
+    }
+    //区分
+    $key = md5($imgurl . $width . $height . $thumbType . $smallpic);
+    if (isset($_thumb_cache[$key])) {
+        return $_thumb_cache[$key];
+    }
+    if (!$width) {
+        return $smallpic;
+    }
+
+    $uploadUrl = config('public_url') . 'uploads/';
+    $uploadPath = config('upload_path');
+    $imgurl_replace = str_replace($uploadUrl, '', $imgurl);
+
+    $newimgname = 'thumb_' . $width . '_' . $height . '_' . basename($imgurl_replace);
+    $newimgurl = dirname($imgurl_replace) . '/' . $newimgname;
+    if (is_file($uploadPath . DIRECTORY_SEPARATOR . $newimgurl)) {
+        return $uploadUrl . $newimgurl;
+    }
+    //取得图片相关信息
+    list($width_t, $height_t, $type, $attr) = getimagesize($uploadPath . DIRECTORY_SEPARATOR . $imgurl_replace);
+    //如果高是0，自动计算高
+    if ($height <= 0) {
+        $height = round(($width / $width_t) * $height_t);
+    }
+    //判断生成的缩略图大小是否正常
+    if ($width >= $width_t || $height >= $height_t) {
+        return $imgurl;
+    }
+    model('attachment/Attachment')->create_thumb($uploadPath . DIRECTORY_SEPARATOR . $imgurl_replace, $uploadPath . DIRECTORY_SEPARATOR . dirname($imgurl_replace) . '/', $newimgname, "{$width},{$height}", $thumbType);
+    $_thumb_cache[$key] = $uploadUrl . $newimgurl;
+    return $_thumb_cache[$key];
+
+}
+
 /**
  * 安全过滤函数
  * @param $string
