@@ -51,7 +51,6 @@ class AuthManager extends Adminbase
 
         $map = array('status' => 1);
         $main_rules = Db::name('AuthRule')->where($map)->column('name,id');
-
         $json = array();
         foreach ($result as $rs) {
             $data = array(
@@ -195,6 +194,13 @@ class AuthManager extends Adminbase
                 $diff[$rule['id']] = $rule;
             } elseif ($rule['status'] == 1) {
                 $ids[] = $rule['id'];
+            }
+        }
+        if (count($update)) {
+            foreach ($update as $k => $row) {
+                if ($row != $diff[$row['id']]) {
+                    $AuthRule->where(array('id' => $row['id']))->update($row);
+                }
             }
         }
         if (count($ids)) {
