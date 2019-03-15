@@ -420,17 +420,6 @@ function get_file_path($id)
 }
 
 /**
- * 获取图片缩略图路径
- * @param int $id 附件id
- * @return string
- */
-function get_thumb($id = 0)
-{
-    $path = model('attachment/Attachment')->getThumbPath($id);
-    return $path ? $path : "";
-}
-
-/**
  * 生成缩略图
  * @param type $imgurl 图片地址
  * @param type $width 缩略图宽度

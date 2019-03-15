@@ -116,28 +116,27 @@ class Attachment extends Model
      * @param string $id 图片id
      * @return mixed
      */
-    public function getThumbPath($id = '')
+    /*public function getThumbPath($id = '')
     {
-        $uploadUrl = config('public_url') . 'uploads/';
-        $isIds = strpos($id, ',') !== false;
-        if ($isIds) {
-            $ids = explode(',', $id);
-            $result = $this->where('id', 'in', $ids)->field('path,driver,thumb')->select();
+    $uploadUrl = config('public_url') . 'uploads/';
+    $isIds = strpos($id, ',') !== false;
+    if ($isIds) {
+    $ids = explode(',', $id);
+    $result = $this->where('id', 'in', $ids)->field('path,driver,thumb')->select();
 
-        } else {
-            $result = $this->where('id', $id)->field('path,driver,thumb')->find();
-            if ($result) {
-                if ($result['driver'] == 'local') {
-                    return $result['thumb'] != '' ? $uploadUrl . $result['thumb'] : $uploadUrl . $result['path'];
-                } else {
-                    return $result['thumb'] != '' ? $result['thumb'] : $result['path'];
-                }
-            } else {
-                return $result;
-            }
-        }
-
+    } else {
+    $result = $this->where('id', $id)->field('path,driver,thumb')->find();
+    if ($result) {
+    if ($result['driver'] == 'local') {
+    return $result['thumb'] != '' ? $uploadUrl . $result['thumb'] : $uploadUrl . $result['path'];
+    } else {
+    return $result['thumb'] != '' ? $result['thumb'] : $result['path'];
     }
+    } else {
+    return $result;
+    }
+    }
+    }*/
 
     /**
      * 根据附件id获取名称

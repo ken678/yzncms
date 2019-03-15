@@ -48,7 +48,7 @@ function getCategory($catid, $field = '', $newCache = false)
             $cache['url'] = buildCatUrl($cache['type'], $catid);
             //栏目扩展字段
             //$cache['extend'] = $cache['setting']['extend'];
-            $cache['image'] = get_thumb($cache['image']);
+            $cache['image'] = get_file_path($cache['image']);
             Cache::set($key, $cache, 3600);
         }
     }
