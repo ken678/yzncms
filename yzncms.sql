@@ -149,7 +149,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=222 DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=203 DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
@@ -178,17 +178,6 @@ INSERT INTO `yzn_auth_rule` VALUES ('199', 'admin', '1', 'admin/config/edit', '�
 INSERT INTO `yzn_auth_rule` VALUES ('200', 'admin', '1', 'admin/config/del', '删除配置', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('201', 'admin', '2', 'admin/module/index', '模块', '1', '');
 INSERT INTO `yzn_auth_rule` VALUES ('202', 'addons', '2', 'addons/addons/index', '扩展', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('211', 'cms', '1', 'cms/cms/index', '管理内容', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('212', 'cms', '1', 'cms/category/index', '栏目列表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('213', 'cms', '1', 'cms/category/add', '添加栏目', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('214', 'cms', '1', 'cms/category/edit', '编辑栏目', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('215', 'cms', '1', 'cms/models/index', '模型管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('216', 'cms', '1', 'cms/field/index', '字段管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('217', 'cms', '1', 'cms/models/add', '添加模型', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('218', 'cms', '1', 'cms/models/edit', '修改模型', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('219', 'cms', '1', 'cms/models/delete', '删除模型', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('220', 'cms', '1', 'cms/models/setstate', '设置模型状态', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('221', 'cms', '2', 'cms/index/index', '内容', '1', '');
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
