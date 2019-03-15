@@ -34,10 +34,6 @@ CREATE TABLE `yzn_addons` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
--- Records of yzn_addons
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `yzn_admin`
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_admin`;
@@ -109,10 +105,6 @@ CREATE TABLE `yzn_attachment` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='附件表';
-
--- ----------------------------
--- Records of yzn_attachment
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -242,7 +234,6 @@ INSERT INTO `yzn_config` VALUES ('11', 'upload_thumb_water_pic', 'image', '水�
 INSERT INTO `yzn_config` VALUES ('12', 'upload_thumb_water_position', 'radio', '水印位置', 'upload', '1:左上角\r\n2:上居中\r\n3:右上角\r\n4:左居中\r\n5:居中\r\n6:右居中\r\n7:左下角\r\n8:下居中\r\n9:右下角', '只有开启水印功能才生效', '1552435257', '1552436082', '1', '9', '7');
 INSERT INTO `yzn_config` VALUES ('13', 'upload_thumb_water_alpha', 'text', '水印透明度', 'upload', '', '请输入0~100之间的数字，数字越小，透明度越高', '1552435299', '1552436083', '1', '50', '8');
 
-
 -- ----------------------------
 -- Table structure for `yzn_field_type`
 -- ----------------------------
@@ -279,8 +270,6 @@ INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', '17', 'varchar(7) NOT
 INSERT INTO `yzn_field_type` VALUES ('files', '多文件', '15', 'varchar(255) NOT NULL DEFAULT \'\'', '0', '0', '');
 INSERT INTO `yzn_field_type` VALUES ('summernote', '简洁编辑器', '14', 'text NOT NULL', '0', '1', '');
 INSERT INTO `yzn_field_type` VALUES ('file', '单文件', '16', 'int(5) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isNumber');
-
-
 
 -- ----------------------------
 -- Table structure for `yzn_hooks`
@@ -378,7 +367,3 @@ CREATE TABLE `yzn_module` (
   PRIMARY KEY (`module`),
   KEY `sign` (`sign`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='已安装模块列表';
-
--- ----------------------------
--- Records of yzn_module
--- ----------------------------
