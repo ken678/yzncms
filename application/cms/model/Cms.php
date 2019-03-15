@@ -299,22 +299,9 @@ class Cms extends Modelbase
                 }
                 if ($value['type'] == 'image') {
                     $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                    /*if (isset($dataRule['thumb']['ifon'])) {
-                $value['param']['thumb'] = 1;
-                $value['param']['thumbsize'] = $dataRule['thumb']['size'];
-                $value['param']['thumbtype'] = $dataRule['thumb']['type'];
-                }*/
                 }
                 if ($value['type'] == 'images') {
                     $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                    /*if (isset($dataRule['thumb']['ifon'])) {
-                    $value['param']['thumb'] = 1;
-                    $value['param']['thumbsize'] = $dataRule['thumb']['size'];
-                    $value['param']['thumbtype'] = $dataRule['thumb']['type'];
-                    }*/
-                    /*if (!empty($value['value'])) {
-                $value['value'] .= ',';
-                }*/
                 }
                 if ($value['type'] == 'file') {
                     $value['param'] = ['dir' => 'files', 'module' => 'admin'];
