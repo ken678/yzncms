@@ -92,6 +92,7 @@ class CmsTagLib
         if (isset($data['flag'])) {
             $data['where'] = "FIND_IN_SET('" . intval($data['flag']) . "',flag)";
         }
+        $data['field'] = isset($data['field']) ? $data['field'] : '*';
         $moreifo = isset($data['moreifo']) ? $data['moreifo'] : 0;
         //当前栏目信息
         $catInfo = getCategory($data['catid']);
