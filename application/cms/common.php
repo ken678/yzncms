@@ -38,7 +38,9 @@ function getCategory($catid, $field = '', $newCache = false)
     }
     if (empty($cache)) {
         //读取数据
-        $cache = db('category')->where(array('id' => $catid))->find();
+        $cache = db('category')->where(['id' => $catid])->withAttr('image', function ($value, $data) {
+            return get_thumb($value);
+        })->find();
         if (empty($cache)) {
             Cache::set($key, 'false', 60);
             return false;
