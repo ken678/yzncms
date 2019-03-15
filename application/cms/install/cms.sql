@@ -9,7 +9,7 @@ CREATE TABLE `yzn_category` (
   `arrparentid` varchar(255) NOT NULL DEFAULT '' COMMENT '所有父ID',
   `child` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否存在子栏目，1存在',
   `arrchildid` mediumtext NOT NULL COMMENT '所有子栏目ID',
-  `image` mediumint(8) unsigned NOT NULL COMMENT '栏目图片',
+  `image` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '栏目图片',
   `description` mediumtext NOT NULL COMMENT '栏目描述',
   `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
   `setting` mediumtext NOT NULL COMMENT '相关配置信息',
