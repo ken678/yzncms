@@ -430,9 +430,19 @@ function get_thumb($id = 0)
     return $path ? $path : "";
 }
 
-function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'nopic.gif')
+/**
+ * 生成缩略图
+ * @param type $imgurl 图片地址
+ * @param type $width 缩略图宽度
+ * @param type $height 缩略图高度
+ * @param type $thumbType 缩略图生成方式
+ * @param type $smallpic 图片不存在时显示默认图片
+ * @return type
+ */
+function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'none.png')
 {
     static $_thumb_cache = array();
+    $smallpic = config('public_url') . 'static/admin/img/' . $smallpic;
     if (empty($imgurl)) {
         return $smallpic;
     }
@@ -451,8 +461,13 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
 
     $newimgname = 'thumb_' . $width . '_' . $height . '_' . basename($imgurl_replace);
     $newimgurl = dirname($imgurl_replace) . '/' . $newimgname;
+    //检查生成的缩略图是否已经生成过
     if (is_file($uploadPath . DIRECTORY_SEPARATOR . $newimgurl)) {
         return $uploadUrl . $newimgurl;
+    }
+    //检查文件是否存在，如果是开启远程附件的，估计就通过不了，以后在考虑完善！
+    if (!is_file($uploadPath . DIRECTORY_SEPARATOR . $imgurl_replace)) {
+        return $imgurl;
     }
     //取得图片相关信息
     list($width_t, $height_t, $type, $attr) = getimagesize($uploadPath . DIRECTORY_SEPARATOR . $imgurl_replace);
