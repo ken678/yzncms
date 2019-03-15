@@ -38,9 +38,7 @@ function getCategory($catid, $field = '', $newCache = false)
     }
     if (empty($cache)) {
         //读取数据
-        $cache = db('category')->where(['id' => $catid])->withAttr('image', function ($value, $data) {
-            return get_thumb($value);
-        })->find();
+        $cache = db('category')->where(['id' => $catid])->find();
         if (empty($cache)) {
             Cache::set($key, 'false', 60);
             return false;
@@ -50,6 +48,7 @@ function getCategory($catid, $field = '', $newCache = false)
             $cache['url'] = buildCatUrl($cache['type'], $catid);
             //栏目扩展字段
             //$cache['extend'] = $cache['setting']['extend'];
+            $cache['image'] = get_thumb($cache['image']);
             Cache::set($key, $cache, 3600);
         }
     }
