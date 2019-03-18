@@ -17,6 +17,39 @@ namespace util;
 class Form
 {
     /**
+     * 下拉选择框
+     * @param type $array 数据
+     * @param type $id 默认选择
+     * @param type $str 属性
+     * @param type $default_option 默认选项
+     * @return boolean|string
+     */
+    public static function select($array = array(), $id = 0, $str = '', $default_option = '')
+    {
+        $string = '<select ' . $str . '><option value=""></option>';
+        $default_selected = (empty($id) && $default_option) ? 'selected' : '';
+        if ($default_option) {
+            $string .= '<option value="" $default_selected>$default_option</option>';
+        }
+
+        if (!is_array($array) || count($array) == 0) {
+            return false;
+        }
+
+        $ids = array();
+        if (isset($id)) {
+            $ids = explode(',', $id);
+        }
+
+        foreach ($array as $key => $value) {
+            $selected = in_array($key, $ids) ? 'selected' : '';
+            $string .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+        }
+        $string .= '</select>';
+        return $string;
+    }
+
+    /**
      * 栏目选择
      * @param string $file 栏目缓存文件名
      * @param intval/array $id 别选中的ID，多选是可以是数组

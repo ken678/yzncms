@@ -34,6 +34,7 @@
                                 <div class="w300">
                                     <select name="modelid">
                                         <option>请选择模型</option>
+
                                         {volist name="models" id="vo"}
                                         <option value="{$vo.id}" {if condition=" $parentid_modelid eq $vo['id'] "}selected{/if}>{$vo.name}</option>
                                         {/volist}

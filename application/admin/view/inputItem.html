@@ -62,12 +62,7 @@
 <div class="layui-form-item">
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
-        <select name="{$vo.fieldArr}[{$vo.name}]">
-            <option value=""></option>
-            {volist name="vo.options" id="v"}
-            <option value="{$key}" {if $key==$vo[ 'value' ]}selected="" {/if}>{$v}</option>
-            {/volist}
-        </select>
+        {php}echo \util\Form::select($vo['options'],$vo['value'],'name='.$vo["fieldArr"].'['.$vo["name"].']');{/php}
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
