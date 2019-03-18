@@ -362,35 +362,35 @@ class Attachments extends Adminbase
             $host = parse_url($vo, PHP_URL_HOST);
             if ($host != $_SERVER['HTTP_HOST']) {
                 //当前域名下的文件不下载
-                /*$fileExt = get_url_file_ext($vo);
-            $filename = $path . 'temp' . DIRECTORY_SEPARATOR . md5($vo) . '.' . $fileExt;
-            if (http_down($vo, $filename) !== false) {
-            $file_info['md5'] = hash_file('md5', $filename);
-            if ($file_exists = AttachmentModel::get(['md5' => $file_info['md5']])) {
-            unlink($filename);
-            $localpath = $this->uploadUrl . $file_exists['path'];
-            } else {
-            $file_info['sha1'] = hash_file('sha1', $filename);
-            $file_info['size'] = filesize($filename);
-            $file_info['mime'] = mime_content_type($filename);
+                $fileExt = get_url_file_ext($vo);
+                $filename = $path . 'temp' . DIRECTORY_SEPARATOR . md5($vo) . '.' . $fileExt;
+                if (http_down($vo, $filename) !== false) {
+                    $file_info['md5'] = hash_file('md5', $filename);
+                    if ($file_exists = Attachment_Model::get(['md5' => $file_info['md5']])) {
+                        unlink($filename);
+                        $localpath = $this->uploadUrl . $file_exists['path'];
+                    } else {
+                        $file_info['sha1'] = hash_file('sha1', $filename);
+                        $file_info['size'] = filesize($filename);
+                        $file_info['mime'] = mime_content_type($filename);
 
-            $fpath = $type . DIRECTORY_SEPARATOR . date('Ymd');
-            $savePath = $path . $fpath;
-            if (!is_dir($savePath)) {
-            mkdir($savePath, 0755, true);
-            }
-            $fname = DIRECTORY_SEPARATOR . md5(microtime(true)) . '.' . $fileExt;
-            $file_info['name'] = $vo;
-            $file_info['path'] = str_replace(DIRECTORY_SEPARATOR, '/', $fpath . $fname);
-            $file_info['ext'] = $fileExt;
+                        $fpath = $type . DIRECTORY_SEPARATOR . date('Ymd');
+                        $savePath = $path . $fpath;
+                        if (!is_dir($savePath)) {
+                            mkdir($savePath, 0755, true);
+                        }
+                        $fname = DIRECTORY_SEPARATOR . md5(microtime(true)) . '.' . $fileExt;
+                        $file_info['name'] = $vo;
+                        $file_info['path'] = str_replace(DIRECTORY_SEPARATOR, '/', $fpath . $fname);
+                        $file_info['ext'] = $fileExt;
 
-            if (rename($filename, $savePath . $fname)) {
-            AttachmentModel::create($file_info);
-            $localpath = $this->uploadUrl . $file_info['path'];
-            }
-            }
-            $content = str_replace($vo, $localpath, $content);
-            }*/
+                        if (rename($filename, $savePath . $fname)) {
+                            Attachment_Model::create($file_info);
+                            $localpath = $this->uploadUrl . $file_info['path'];
+                        }
+                    }
+                    $content = str_replace($vo, $localpath, $content);
+                }
             }
         }
         exit($content);
