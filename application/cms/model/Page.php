@@ -28,12 +28,12 @@ class Page extends Model
      * @param type $catid 栏目ID
      * @return boolean
      */
-    public function getPage($catid)
+    public function getPage($catid, $cache = false)
     {
         if (empty($catid)) {
             return false;
         }
-        $list = self::get($catid);
+        $list = self::get($catid, 10);
         return $list;
 
     }

@@ -117,7 +117,8 @@ class Index extends Homebase
                 $tpar = explode(".", $template, 2);
                 $template = $tpar[0];
                 unset($tpar);
-                $info = model('Page')->getPage($catid);
+                $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+                $info = model('Page')->getPage($catid, $ifcache);
                 if ($info) {
                     $info = $info->toArray();
                 }
@@ -166,7 +167,8 @@ class Index extends Homebase
         //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
 
         //内容所有字段
-        $info = $this->Cms_Model->getDataInfo($modelid, "id='" . $id . "'", true);
+        $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+        $info = $this->Cms_Model->getDataInfo($modelid, "id='" . $id . "'", true, '*', '', $ifcache);
         if (empty($info)) {
             abort(404, '内容不存在或未审核');
         }
