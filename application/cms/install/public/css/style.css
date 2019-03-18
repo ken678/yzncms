@@ -1151,7 +1151,11 @@
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-.case_ny_list li ._con:hover ._img { padding-bottom: 60%; }
+
+.case_ny_list li ._con:hover ._img {
+    padding-bottom: 60%;
+}
+
 .case_ny_list li ._info {
     background: #fff;
     padding: 20px;
@@ -1183,8 +1187,117 @@
     background: #f80909;
 }
 
+.case_ny_left {
+    float: left;
+    width: 720px;
+}
 
+.case_ny_left h2 {
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 1.6;
+}
 
+.casePreview {
+    border-top-color: #dddddd;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-bottom-color: #dddddd;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+.backBtn {
+    float: left;
+    padding: 8px 15px 8px 15px;
+    border: 1px solid #dedede;
+}
+
+.previewBtn {
+    float: right;
+    padding: 8px 15px 8px 15px;
+    background-color: #f80909;
+    color: #FFFFFF;
+}
+
+.previewBtn:hover {
+    color: #fff;
+    background-color: #c50606;
+}
+
+.caseTitle {
+    font-size: 18px;
+    border-left: 3px #f80909 solid;
+    padding-left: 15px;
+    line-height: 1;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.detaLabels {
+    margin-top: 20px;
+}
+
+.labelList {
+    background-color: #eeeeee;
+    color: #666;
+    font-size: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.detaIntro {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.detaBody {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #666;
+}
+
+.case_ny_right {
+    float: right;
+    width: 360px;
+}
+
+.case_ny_right h3 {
+    font-weight: normal;
+    line-height: 1.8;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.newsBox {
+    border-bottom: 1px dashed #eee;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+ .newsTitle {
+    color: #333;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 0.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.newsIntro {
+    color: #999;
+    height: 3em;
+    line-height: 1.5em;
+    overflow: hidden;
+}
 /*荣誉*/
 .honor {
     padding-left: 15px;
