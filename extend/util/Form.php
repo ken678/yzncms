@@ -50,6 +50,34 @@ class Form
     }
 
     /**
+     * 复选框
+     * @param $array 选项 二维数组
+     * @param $id 默认选中值，多个用 '逗号'分割
+     * @param $str 属性
+     * @param $defaultvalue 是否增加默认值 默认值为 -99
+     */
+    public static function checkbox($array = array(), $id = '', $str = '', $defaultvalue = '', $field = '')
+    {
+        $string = '';
+        /*$id = trim($id);
+        if ($id != '') {
+        $id = strpos($id, ',') ? explode(',', $id) : array($id);
+        }*/
+        if ($defaultvalue) {
+            $string .= '<input type="hidden" ' . $str . ' value="-99">';
+        }
+        $i = 1;
+        foreach ($array as $key => $value) {
+            $key = trim($key);
+            $checked = ($id && in_array($key, $id)) ? 'checked' : '';
+            $string .= '<input type="checkbox" lay-skin="primary" ' . $str . ' id="' . $field . '_' . $i . '" ' . $checked . ' value="' . htmlspecialchars($key) . '" title="' . htmlspecialchars($value) . '"> ';
+
+            $i++;
+        }
+        return $string;
+    }
+
+    /**
      * 栏目选择
      * @param string $file 栏目缓存文件名
      * @param intval/array $id 别选中的ID，多选是可以是数组
