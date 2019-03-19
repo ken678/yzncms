@@ -5,6 +5,9 @@
     <div class="layui-card-body">
         <form class="layui-form form-horizontal" action="{:url('admin/AuthManager/writeGroup')}" method="post">
             <div class="zTreeDemoBackground left">
+                <ul class="ztree" style="margin-left: 5px;margin-top:5px; padding: 0;">
+                    <li><a title="全部展开、折叠 "><span class="button ico_open"></span><span id="ztree_expandAll" data-open="false">全部展开、折叠 </span></a> </li>
+                </ul>
                 <ul id="treeDemo" class="ztree"></ul>
             </div>
             <input type="hidden" name="rules" value="" />
@@ -65,6 +68,15 @@ layui.config({
         $.fn.zTree.init($("#treeDemo"), setting, zNodes);
         zTree = $.fn.zTree.getZTreeObj("treeDemo");
         zTree.expandAll(true);
+        $("#ztree_expandAll").click(function() {
+            if ($(this).data("open")) {
+                zTree.expandAll(false);
+                $(this).data("open", false);
+            } else {
+                zTree.expandAll(true);
+                $(this).data("open", true);
+            }
+        });
     });
 
     layui.use(['element', 'layer', 'form'], function() {
