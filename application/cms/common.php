@@ -242,11 +242,14 @@ function structure_filters_sql($modelid)
         }
         $data[$_v['name']] = $_v;
     }
+    $fields_key = array_keys($data);
+
     $sql = '`status` = \'1\'';
     $param = paramdecode(input('condition'));
     foreach ($param as $k => $r) {
-        $sql .= " AND `$k` = '$r'";
-
+        if (in_array($k, $fields_key) && intval($r) != 0) {
+            $sql .= " AND `$k` = '$r'";
+        }
     }
     return $sql;
 }
