@@ -21,6 +21,7 @@ use \think\Model;
  */
 class Tags extends Model
 {
+    protected $autoWriteTimestamp = true;
     /**
      * 添加tags
      * @param type $tagname tags名称 可以是数组
@@ -46,8 +47,6 @@ class Tags extends Model
                     self::create(array(
                         "tag" => $v,
                         "usetimes" => 1,
-                        "lastusetime" => $time,
-                        "lasthittime" => $time,
                     ));
                 }
                 $newdata[] = array(

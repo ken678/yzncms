@@ -31,11 +31,7 @@ class Tags extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $_list = $this->Tags->withAttr('lastusetime', function ($value, $data) {
-                return date('Y-m-d H:i:s', $value);
-            })->withAttr('lasthittime', function ($value, $data) {
-                return date('Y-m-d H:i:s', $value);
-            })->order(['listorder', 'id' => 'desc'])->select();
+            $_list = $this->Tags->order(['listorder', 'id' => 'desc'])->select();
             $total = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
