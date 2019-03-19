@@ -137,11 +137,11 @@ INSERT INTO `yzn_category` VALUES ('18', '联系方式', 'fangshi', '1', '0', '8
 INSERT INTO `yzn_category` VALUES ('19', '在线留言', 'guestbook', '2', '5', '8', '0,8', '0', '19', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:19:\"list_guestbook.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
 
 
-INSERT INTO `yzn_model` VALUES ('1', '文章模型', 'article', '文章模型', '2', '1546574975', '1546574975', '0', '0', '1');
-INSERT INTO `yzn_model` VALUES ('2', '图片模型', 'picture', '图片模型', '2', '1548754193', '1548754193', '0', '0', '1');
-INSERT INTO `yzn_model` VALUES ('3', '产品模型', 'product', '产品模型', '2', '1549165800', '1549165800', '0', '0', '1');
-INSERT INTO `yzn_model` VALUES ('4', '下载模型', 'download', '下载模型', '2', '1549624988', '1549624988', '0', '0', '1');
-INSERT INTO `yzn_model` VALUES ('5', '留言本', 'guestbook', '留言本', '1', '1550480944', '1550480944', '1', '0', '1');
+INSERT INTO `yzn_model` VALUES ('1', '文章模型', 'article', '文章模型','', '2', '1546574975', '1546574975', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('2', '图片模型', 'picture', '图片模型','', '2', '1548754193', '1548754193', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('3', '产品模型', 'product', '产品模型','', '2', '1549165800', '1549165800', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('4', '下载模型', 'download', '下载模型','', '2', '1549624988', '1549624988', '0', '0', '1');
+INSERT INTO `yzn_model` VALUES ('5', '留言本', 'guestbook', '留言本', '','1', '1550480944', '1550480944', '1', '0', '1');
 
 
 INSERT INTO `yzn_model_field` VALUES ('1', '1', 'id', '文档id', '', 'hidden', '', '1', '1', '1', '0', '0', '1546574975', '1546574975', '100', '1');

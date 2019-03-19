@@ -25,6 +25,7 @@ CREATE TABLE `yzn_model` (
   `name` char(30) NOT NULL DEFAULT '' COMMENT '模型名称',
   `tablename` char(20) NOT NULL DEFAULT '' COMMENT '表名',
   `description` char(100) NOT NULL DEFAULT '' COMMENT '描述',
+  `setting` text COMMENT '配置信息',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '模型类别：1-独立表，2-主附表',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
