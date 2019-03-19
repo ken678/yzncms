@@ -475,46 +475,6 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
 }
 
 /**
- * 获得url文件拓展名
- * @param  string $url 网址
- * @return string
- */
-function get_url_file_ext($url)
-{
-    $ext = pathinfo($url, PATHINFO_EXTENSION);
-    //网址中不存在文件扩展名
-    if (empty($ext)) {
-        //获取url中的header信息
-        $head = get_head($url);
-        if (!empty($head)) {
-            //从headers中获得文件名
-            $headers = explode("\n", $head);
-            foreach ($headers as $v) {
-                $item = explode(':', $v);
-                if (count($item) > 1) {
-                    $name = strtolower($item[0]);
-                    if ($name == 'location') {
-                        //302跳转
-                        $this->url = count($item) == 2 ? trim($item[1]) : trim($item[1]) . ':' . trim($item[2]); //防止http:被解析
-                        $ext = pathinfo($this->url, PATHINFO_EXTENSION);
-                        break;
-                    } else if ($name == 'content-disposition') {
-                        //可能是Content-Disposition: attachment; filename=".$file_name
-                        //获得MIME： Content-Type
-                        $item[1] = trim($item[1]);
-                        $tmps = explode("filename=", $item[1]);
-                        $tmp = count($tmps) > 1 ? $tmps[1] : $tmps[0];
-                        $ext = pathinfo($tmp, PATHINFO_EXTENSION);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    return $ext;
-}
-
-/**
  * 下载远程文件，默认保存在temp下
  * @param  string  $url     网址
  * @param  string  $filename    保存文件名
