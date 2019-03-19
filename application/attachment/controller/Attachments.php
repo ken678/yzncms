@@ -363,7 +363,7 @@ class Attachments extends Adminbase
                 //当前域名下的文件不下载
                 $fileExt = strrchr($vo, '.');
                 if ($fileExt != '.png' && $fileExt != '.jpg' && $fileExt != '.gif' && $fileExt != '.jpeg' && $fileExt != '.bmp') {
-                    return $content;
+                    exit($content);
                 }
                 $filename = $this->uploadPath . DIRECTORY_SEPARATOR . 'temp' . DIRECTORY_SEPARATOR . md5($vo) . $fileExt;
                 if (http_down($vo, $filename) !== false) {
@@ -395,7 +395,7 @@ class Attachments extends Adminbase
                 }
             }
         }
-        return $content;
+        exit($content);
     }
 
 }
