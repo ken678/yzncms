@@ -348,7 +348,7 @@ class Attachments extends Adminbase
         $content = $this->request->post('content');
         $type = $this->request->post('type');
         $urls = [];
-        preg_match_all("/(src|SRC)=[\"|'| ]{0,}((http|https):\/\/(.*)\.(gif|jpg|jpeg|bmp|png))/isU", $content, $urls);
+        preg_match_all("/(src|SRC)=[\"|'| ]{0,}((http|https):\/\/(.*)\.(gif|jpg|jpeg|bmp|png|tiff))/isU", $content, $urls);
         $urls = array_unique($urls[2]);
 
         $file_info = [
@@ -362,7 +362,7 @@ class Attachments extends Adminbase
             if ($host != $_SERVER['HTTP_HOST']) {
                 //当前域名下的文件不下载
                 $fileExt = strrchr($vo, '.');
-                if ($fileExt != '.png' && $fileExt != '.jpg' && $fileExt != '.gif' && $fileExt != '.jpeg' && $fileExt != '.bmp') {
+                if (!in_array($fileExt, ['.jpg', '.gif', '.png', '.bmp', '.jpeg', '.tiff'])) {
                     exit($content);
                 }
                 $filename = $this->uploadPath . DIRECTORY_SEPARATOR . 'temp' . DIRECTORY_SEPARATOR . md5($vo) . $fileExt;
