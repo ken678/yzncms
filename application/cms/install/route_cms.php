@@ -16,7 +16,7 @@
 Route::rule('cms/index', 'cms/index/index');
 Route::rule('cms/lists/:catid/[:condition]', 'cms/index/lists')->pattern(['catid' => '\d+', 'condition' => '[0-9_&=a-zA-Z]+']);
 Route::rule('cms/shows/:catid/:id', 'cms/index/shows')->pattern(['catid' => '\d+', 'id' => '\d+']);
-Route::rule('cms/tag/[:tag]', 'cms/index/tags');
+Route::rule('cms/tag/[:tag]$', 'cms/index/tags');
 Route::rule('cms/search/<keyword?>/[:modelid]/[:time]', 'cms/index/search')->pattern(['keyword' => '\w+', 'modelid' => '\d+', 'time' => '\w+']);
 
 //如果想要直接绑定域名 不加cms后缀 直接注释上面代码 如以下代码
