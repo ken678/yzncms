@@ -161,15 +161,13 @@ class Category extends Adminbase
     //添加外部链接栏目
     public function wadd()
     {
-        $this->add();
-        return $this->fetch();
+        return $this->add();
     }
 
     //添加单页
     public function singlepage()
     {
-        $this->add();
-        return $this->fetch();
+        return $this->add();
     }
 
     //编辑栏目
