@@ -158,6 +158,18 @@ return [
                                 "name" => "添加栏目",
                             ],
                             [
+                                "route" => "cms/category/singlepage",
+                                "type" => 1,
+                                "status" => 0,
+                                "name" => "添加单页",
+                            ],
+                            [
+                                "route" => "cms/category/wadd",
+                                "type" => 1,
+                                "status" => 0,
+                                "name" => "添加外部链接",
+                            ],
+                            [
                                 "route" => "cms/category/edit",
                                 "type" => 1,
                                 "status" => 0,
