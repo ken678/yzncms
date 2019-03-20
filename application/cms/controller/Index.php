@@ -137,6 +137,7 @@ class Index extends Homebase
                 'SEO' => $seo,
                 'catid' => $catid,
                 'page' => $page,
+                'modelid' => $modelid,
             ]);
             return $this->fetch('/' . $template);
 

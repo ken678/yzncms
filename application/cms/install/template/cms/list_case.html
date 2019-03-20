@@ -18,7 +18,7 @@ body {
         	<!--S 筛选列表 -->
             <div class="product_box">
                 <div class="classify-screen">
-                    {volist name=":filters(3)" id="vo"}
+                    {volist name=":filters($modelid)" id="vo"}
                     <div class="classify-box clearfix">
                         <h5 class="classify-name">{$vo.title}：</h5>
                         <div class="classify-screen-con">
