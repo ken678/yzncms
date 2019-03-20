@@ -56,7 +56,7 @@
                                         <div id="file_list_image" class="uploader-list">
                                             {notempty name="$data.image"}
                                             <div class="file-item thumbnail">
-                                                <img data-original="{$data.image|default='__STATIC__/admin/img/none.png'}" src="{$data.image|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
+                                                <img data-original="{$data.image|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$data.image|get_file_path|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
                                                 <i class="iconfont icon-delete_fill remove-picture" data-id="{$data.image}"></i>
                                             </div>
                                             {/notempty}
@@ -83,19 +83,19 @@
                                 <div class="layui-form-item web_seo">
                                     <label>网页标题</label>
                                     <div class="w300">
-                                        <input type="text" name="setting[meta_title]" autocomplete="off" placeholder="针对搜索引擎设置的标题" class="layui-input" value="{$data['setting']['meta_title']}">
+                                        <input type="text" name="setting[meta_title]" autocomplete="off" placeholder="针对搜索引擎设置的标题" class="layui-input" value="{$setting['meta_title']}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item web_seo">
                                     <label>网页关键词</label>
                                     <div class="w300">
-                                        <input type="text" name="setting[meta_keywords]" autocomplete="off" placeholder="关键字中间用半角逗号隔开" class="layui-input" value="{$data['setting']['meta_keywords']}">
+                                        <input type="text" name="setting[meta_keywords]" autocomplete="off" placeholder="关键字中间用半角逗号隔开" class="layui-input" value="{$setting['meta_keywords']}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item web_seo">
                                     <label>网页描述</label>
                                     <div class="w300">
-                                        <textarea name="setting[meta_description]" required="" lay-verify="required" placeholder="针对搜索引擎设置的网页描述" class="layui-textarea">{$data['setting']['meta_description']}</textarea>
+                                        <textarea name="setting[meta_description]" required="" lay-verify="required" placeholder="针对搜索引擎设置的网页描述" class="layui-textarea">{$setting['meta_description']}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                         <select name="setting[category_template]">
                                             <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
                                             {volist name="tp_category" id="vo"}
-                                            <option value="{$vo}" {eq name="data['setting']['category_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以category_xx.{:config('template.view_suffix')}形式,【含有子栏目时生效】</div>
+                                            <option value="{$vo}" {eq name="setting['category_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以category_xx.{:config('template.view_suffix')}形式,【含有子栏目时生效】</div>
                                 </div>
                                 <div class="layui-form-item web_list">
                                     <label class="w100">栏目列表页模板</label>
@@ -114,7 +114,7 @@
                                         <select name="setting[list_template]">
                                             <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
                                             {volist name="tp_list" id="vo"}
-                                            <option value="{$vo}" {eq name="data['setting']['list_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以list_xx.{:config('template.view_suffix')}形式,【没有子栏目时生效】</div>
+                                            <option value="{$vo}" {eq name="setting['list_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以list_xx.{:config('template.view_suffix')}形式,【没有子栏目时生效】</div>
                                 </div>
                                 <div class="layui-form-item web_list">
                                     <label class="w100">内容页模板</label>
@@ -122,7 +122,7 @@
                                         <select name="setting[show_template]">
                                             <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
                                             {volist name="tp_show" id="vo"}
-                                            <option value="{$vo}" {eq name="data['setting']['show_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以show_xx.{:config('template.view_suffix')}形式</div>
+                                            <option value="{$vo}" {eq name="setting['show_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以show_xx.{:config('template.view_suffix')}形式</div>
                                 </div>
                             </div>
                         </div>

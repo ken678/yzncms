@@ -219,7 +219,7 @@ class Category extends Adminbase
                 $this->error('请选择需要修改的栏目！');
             }
             $data = Db::name('category')->where(['id' => $id])->find();
-            $setting = $data['setting'];
+            $setting = unserialize($data['setting']);
 
             //输出可用模型
             $modelsdata = cache("Model");
