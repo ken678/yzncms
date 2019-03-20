@@ -21,21 +21,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <label>栏目类型</label>
-                            <div class="w300">
-                                <input type="radio" name="type" value="2" title="列表" {eq name="data.type" value="2" }checked{/eq} lay-filter="type">
-                                <input type="radio" name="type" value="1" title="单页" {eq name="data.type" value="1" }checked{/eq} lay-filter="type">
-                                <input type="radio" name="type" value="3" title="链接" {eq name="data.type" value="3" }checked{/eq} lay-filter="type">
-                            </div>
-                        </div>
                         <div class="layui-form-item web_list">
                             <label>选择模型</label>
                             <div class="w300">
                                 <select name="modelid">
                                     <option value="">请选择模型</option>
                                     {volist name="models" id="vo"}
-                                    <option value="{$vo.id}" {eq name="vo.id" value="$data['modelid']" }selected{/eq}>{$vo.name} </option> {/volist} </select> </div> </div> <div class="layui-form-item">
+                                    <option value="{$vo.id}" {eq name="vo.id" value="$data['modelid']" }selected{/eq}>{$vo.name} </option> {/volist} </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
                                         <label>栏目标题 </label>
                                         <div class="w300">
                                             <input type="text" name="catname" autocomplete="off" placeholder="栏目名称" class="layui-input" value="{$data.catname}">
@@ -53,13 +48,6 @@
                                 <div class="w300">
                                     <textarea name="description" placeholder="栏目简介" class="layui-textarea">{$data.description}</textarea>
                                 </div>
-                            </div>
-                            <div class="layui-form-item web_link">
-                                <label>链接地址</label>
-                                <div class="w300">
-                                    <input type="text" name="url" autocomplete="off" placeholder="自定义链接地址" class="layui-input" value="{$data.url}">
-                                </div>
-                                <div class="layui-form-mid layui-word-aux">内部链接格式:模块/控制器/操作，外部链接则必须http://开头</div>
                             </div>
                             <div class="layui-form-item layui-form-text">
                                 <label>栏目图片</label>
@@ -84,7 +72,9 @@
                             <div class="layui-form-item">
                                 <label>在导航显示</label>
                                 <div class="w300">
-                                    <input type="radio" name="status" value="1" title="显示" {eq name="data.status" value="1" }checked{/eq}> <input type="radio" name="status" value="0" title="隐藏" {eq name="data.status" value="0" }checked{/eq}> </div> </div> <div class="layui-form-item">
+                                    <input type="radio" name="status" value="1" title="显示" {eq name="data.status" value="1" }checked{/eq}> <input type="radio" name="status" value="0" title="隐藏" {eq name="data.status" value="0" }checked{/eq}> </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label>显示排序</label>
                                     <div class="w300">
                                         <input type="text" name="listorder" autocomplete="off" placeholder="显示排序" class="layui-input" value="{$data['listorder']}">
@@ -134,16 +124,9 @@
                                             {volist name="tp_show" id="vo"}
                                             <option value="{$vo}" {eq name="data['setting']['show_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以show_xx.{:config('template.view_suffix')}形式</div>
                                 </div>
-                                <div class="layui-form-item web_page">
-                                    <label class="w100">单页模板</label>
-                                    <div class="w300">
-                                        <select name="setting[page_template]">
-                                            <option value="page.{:config('template.view_suffix')}" selected>默认内容页:page.{:config('template.view_suffix')}</option>
-                                            {volist name="tp_page" id="vo"}
-                                            <option value="{$vo}" {eq name="data['setting']['page_template']" value="$vo" }selected{/eq}>{$vo} </option> {/volist} </select> </div> <div class="layui-form-mid layui-word-aux">新增模板以page_xx.{:config('template.view_suffix')}形式</div>
-                                </div>
                             </div>
                         </div>
+                        <input type="hidden" name="type" value="2">
                         <input name="id" type="hidden" value="{$data.id}">
                         <div class="layui-form-item">
                             <div>
@@ -158,49 +141,6 @@
 {/block}
 {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
-<script type="text/javascript">
-layui.use(['layer', 'form'], function() {
-    var layer = layui.layer,
-        form = layui.form;
-    setFieldOption($('input:radio[name="type"]:checked').val());
-    form.on('radio(type)', function(data) {
-        setFieldOption(data.value);
-        //console.log(data.elem); //得到radio原始DOM对象
-        //console.log(data.value); //被点击的radio的value值
-    });
-    $('.uploader-list').each(function() {
-        $(this).viewer();
-    });
-
-    function setFieldOption(typeid) {
-        //单页
-        if (1 == typeid) {
-            $('.web_list').hide();
-            $('.web_link').hide();
-            $('.web_page').show();
-            $('#modeTab').show();
-            $('.web_seo').show();
-        }
-        //列表
-        if (2 == typeid) {
-            $('.web_link').hide();
-            $('.web_page').hide();
-            $('.web_list').show();
-            $('#modeTab').show();
-            $('.web_seo').show();
-        }
-        //链接
-        if (3 == typeid) {
-            $('.web_page').hide();
-            $('.web_list').hide();
-            $('.web_link').show();
-            $('#modeTab').hide();
-            $('.web_seo').hide();
-        }
-    }
-
-});
-</script>
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/Sortable.js"></script>

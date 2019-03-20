@@ -21,18 +21,6 @@
                                     </select>
                                 </div>
                         </div>
-                        <div class="layui-form-item web_list">
-                            <label>选择模型</label>
-                                <div class="w300">
-                                    <select name="modelid">
-                                        <option>请选择模型</option>
-
-                                        {volist name="models" id="vo"}
-                                        <option value="{$vo.id}" {if condition=" $parentid_modelid eq $vo['id'] "}selected{/if}>{$vo.name}</option>
-                                        {/volist}
-                                    </select>
-                                </div>
-                        </div>
                         <div class="layui-form-item">
                             <label>栏目标题 </label>
                                 <div class="w300">
@@ -99,45 +87,21 @@
                         </div>
                     </div>
                     <div class="layui-tab-item">
-                        <div class="layui-form-item web_list">
-                            <label class="w100">栏目首页模板</label>
+                        <div class="layui-form-item web_page">
+                            <label class="w100">单页模板</label>
                             <div class="w300">
-                                <select name="setting[category_template]">
-                                    <option value="category.html" selected>默认栏目首页:category.html</option>
-                                    {volist name="tp_category" id="vo"}
+                                <select name="setting[page_template]">
+                                    <option value="page.html" selected>默认内容页:page.html</option>
+                                    {volist name="tp_page" id="vo"}
                                     <option value="{$vo}">{$vo}</option>
                                     {/volist}
                                 </select>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">新增模板以category_xx.html形式,【含有子栏目时生效】</div>
-                        </div>
-                        <div class="layui-form-item web_list">
-                            <label class="w100">栏目列表页模板</label>
-                            <div class="w300">
-                                <select name="setting[list_template]">
-                                    <option value="list.html" selected>默认栏目列表页:list.html</option>
-                                    {volist name="tp_list" id="vo"}
-                                    <option value="{$vo}">{$vo}</option>
-                                    {/volist}
-                                </select>
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">新增模板以list_xx.html形式,【没有子栏目时生效】</div>
-                        </div>
-                        <div class="layui-form-item web_list">
-                            <label class="w100">内容页模板</label>
-                            <div class="w300">
-                                <select name="setting[show_template]">
-                                    <option value="show.html" selected>默认内容页:show.html</option>
-                                    {volist name="tp_show" id="vo"}
-                                    <option value="{$vo}">{$vo}</option>
-                                    {/volist}
-                                </select>
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">新增模板以show_xx.html形式</div>
+                            <div class="layui-form-mid layui-word-aux">新增模板以page_xx.html形式</div>
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="type" value="2">
+                <input type="hidden" name="type" value="1">
                 <div class="layui-form-item">
                     <div>
                         <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
@@ -150,7 +114,6 @@
 </div>
 {/block}
 {block name="script"}
-
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/Sortable.js"></script>

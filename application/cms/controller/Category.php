@@ -46,6 +46,7 @@ class Category extends Adminbase
             $tree = new \util\Tree();
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+            $categorys = array();
             $result = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
             foreach ($result as $k => $v) {
                 if (isset($models[$v['modelid']]['name'])) {
@@ -53,8 +54,16 @@ class Category extends Adminbase
                 } else {
                     $result[$k]['modelname'] = '/';
                 }
+                if ($v['type'] == 1) {
+                    $v['add_url'] = url("Category/singlepage", array("parentid" => $v['id']));
+                } elseif ($v['type'] == 2) {
+                    $v['add_url'] = url("Category/add", array("parentid" => $v['id']));
+                } elseif ($v['type'] == 3) {
+                    $v['add_url'] = url("Category/wadd", array("parentid" => $v['id']));
+                }
+                $categorys[$v['id']] = $v;
             }
-            $tree->init($result);
+            $tree->init($categorys);
             $_list = $tree->getTreeList($tree->getTreeArray(0), 'catname');
             $total = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
@@ -149,6 +158,20 @@ class Category extends Adminbase
 
     }
 
+    //添加外部链接栏目
+    public function wadd()
+    {
+        $this->add();
+        return $this->fetch();
+    }
+
+    //添加单页
+    public function singlepage()
+    {
+        $this->add();
+        return $this->fetch();
+    }
+
     //编辑栏目
     public function edit()
     {
@@ -195,7 +218,7 @@ class Category extends Adminbase
             if (empty($id)) {
                 $this->error('请选择需要修改的栏目！');
             }
-            $data = getCategory($id);
+            $data = Db::name('category')->where(['id' => $id])->find();
             $setting = $data['setting'];
 
             //输出可用模型
@@ -232,7 +255,16 @@ class Category extends Adminbase
             $this->assign("setting", $setting);
             $this->assign("category", $categorydata);
             $this->assign("models", $models);
-            return $this->fetch();
+
+            if ($data['type'] == 1) {
+                //单页栏目
+                return $this->fetch("singlepage_edit");
+            } else if ($data['type'] == 2) {
+                //外部栏目
+                return $this->fetch();
+            } else {
+                return $this->fetch("wedit");
+            }
         }
 
     }

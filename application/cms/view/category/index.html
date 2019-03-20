@@ -12,11 +12,13 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" href="{:url('cms/category/add')}">新增栏目</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('cms/category/singlepage')}">新增单页</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('cms/category/wadd')}">新增外部链接</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="public_cache">更新栏目缓存</a>
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加子栏目</a>
+    <a href="{{d.add_url}}" class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">添加子栏目</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -111,7 +113,7 @@ layui.use('table', function() {
     //监听行工具事件
     table.on('tool(table)', function(obj) {
         var data = obj.data;
-        //console.log(obj);
+        console.log(obj);
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
@@ -140,10 +142,7 @@ layui.use('table', function() {
 
                 });
             });
-        } else if (obj.event === 'add') {
-            window.open('{:url("cms/category/add")}' + "?parentid=" + data.id, '_self')
-
-        } else if (obj.event === 'edit') {
+        }else if (obj.event === 'edit') {
             window.open('{:url("cms/category/edit")}' + "?id=" + data.id, '_self')
         }
     });
