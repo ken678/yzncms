@@ -26,7 +26,7 @@ body {
             	<div class="detaLabels">
                     {notempty name="tags"}
                     {volist name=":explode(',',$tags)" id="vo"}
-            		<a class="labelList" href="{:url('cms/index/tag',['name'=>$vo])}">{$vo}</a>
+            		<a class="labelList" href="{:url('cms/index/tags',['tag'=>$vo])}">{$vo}</a>
                     {/volist}
                     {/notempty}
             	</div>

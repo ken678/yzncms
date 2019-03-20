@@ -165,7 +165,7 @@ class Index extends Homebase
         $modelid = $category['modelid'];
 
         //更新点击量
-        //Db::name($modelInfo['tablename'])->where('id', $id)->inc('hits')->update();
+        //Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
 
         //内容所有字段
         $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
@@ -317,8 +317,28 @@ class Index extends Homebase
     /**
      * tags
      */
-    public function tag()
+    public function tags()
     {
+        $tagid = $this->request->param('tagid/d', 0);
+        $tag = $this->request->param('tag/s', '');
+        $where = array();
+        if (!empty($tagid)) {
+            $where['tagid'] = $tagid;
+        } else if (!empty($tag)) {
+            $where['tag'] = $tag;
+        }
+        //如果条件为空，则显示标签首页
+        if (empty($where)) {
+            return $this->fetch('/tags_list');
+
+        }
+        //根据条件获取tag信息
+        $info = Db::name('Tags')->where($where)->find();
+        if (empty($info)) {
+            $this->error('抱歉，沒有找到您需要的内容！');
+        }
+        $this->assign($info);
+        $this->assign("SEO", seo());
         return $this->fetch('/tags');
 
     }
