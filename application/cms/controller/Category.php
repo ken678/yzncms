@@ -50,9 +50,9 @@ class Category extends Adminbase
             $result = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
             foreach ($result as $k => $v) {
                 if (isset($models[$v['modelid']]['name'])) {
-                    $result[$k]['modelname'] = $models[$v['modelid']]['name'];
+                    $v['modelname'] = $models[$v['modelid']]['name'];
                 } else {
-                    $result[$k]['modelname'] = '/';
+                    $v['modelname'] = '/';
                 }
                 if ($v['type'] == 1) {
                     $v['add_url'] = url("Category/singlepage", array("parentid" => $v['id']));
