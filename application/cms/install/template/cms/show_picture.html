@@ -24,9 +24,11 @@ body {
             	</div>
             	<div class="caseTitle">项目标签</div>
             	<div class="detaLabels">
-            		<a class="labelList" href="?tag=响应式网站建设">响应式网站建设</a>
-            		<a class="labelList" href="?tag=营销型网站">营销型网站</a>
-            		<a class="labelList" href="?tag=响应式网站">响应式网站</a>
+                    {notempty name="tags"}
+                    {volist name=":explode(',',$tags)" id="vo"}
+            		<a class="labelList" href="{:url('cms/index/tag',['name'=>$vo])}">{$vo}</a>
+                    {/volist}
+                    {/notempty}
             	</div>
             	<div class="caseTitle">项目简介</div>
             	<div class="detaIntro">{$description}</div>

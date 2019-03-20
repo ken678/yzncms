@@ -314,4 +314,13 @@ class Index extends Homebase
 
     }
 
+    /**
+     * tags
+     */
+    public function tag()
+    {
+        return $this->fetch('/tags');
+
+    }
+
 }
