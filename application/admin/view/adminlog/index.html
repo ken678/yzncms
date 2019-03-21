@@ -6,7 +6,6 @@
         <table class="layui-hide" id="table" lay-filter="table"></table>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="refresh"><i class="iconfont icon-shuaxin"></i>&nbsp;刷新</button>
             <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="dellog">删除一个月前日志</button>
           </div>
         </script>
@@ -68,8 +67,6 @@ layui.use('table', function() {
                     }
                 });
             });
-        }else{
-            table.reload('table');
         }
     })
 });
