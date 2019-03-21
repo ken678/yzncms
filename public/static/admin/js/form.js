@@ -8,7 +8,7 @@
 
      // ueditor编辑器
      $('.js-ueditor').each(function() {
-         var ueditor_name = $(this).attr('name');
+         var ueditor_name = $(this).attr('id');
          ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
              initialFrameHeight: 400, //初始化编辑器高度,默认320
              autoHeightEnabled: false, //是否自动长高
