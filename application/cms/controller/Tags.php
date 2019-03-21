@@ -47,7 +47,26 @@ class Tags extends Adminbase
      */
     public function edit()
     {
-        return $this->fetch();
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            if ($this->Tags->save($data, ['id' => $data['tagid']]) !== false) {
+                if ($data['oldtagsname'] != $data['tag']) {
+                    model('TagsContent')->save(['tag' => $data['tag']], ['tag' => $data['oldtagsname']]);
+                }
+                $this->success('修改成功！');
+            }
+            $this->success('修改失败！');
+
+        } else {
+            $id = $this->request->param('id/d', 0);
+            if (empty($id)) {
+                $this->error('请指定需要修改的tags！');
+            }
+            $data = Tags_Model::get($id);
+            $this->assign('data', $data);
+            return $this->fetch();
+        }
+
     }
 
     /**

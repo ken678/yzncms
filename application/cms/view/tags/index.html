@@ -78,7 +78,7 @@ layui.use('table', function() {
                 });
             });
         }else if (obj.event === 'edit') {
-            window.open('{:url("cms/tags/edit")}' + "?fieldid=" + data.id, '_self')
+            window.open('{:url("cms/tags/edit")}' + "?id=" + data.id, '_self')
         }
     });
 
