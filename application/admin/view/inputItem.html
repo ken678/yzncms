@@ -260,7 +260,7 @@ layui.use(['laydate'], function() {
 <div class="layui-form-item layui-form-text">
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
-        <script type="text/plain" class="js-ueditor" id="{$vo.name}" name="{$vo.name}">{$vo.value|raw}</script>
+        <script type="text/plain" class="js-ueditor" id="{$vo.name}" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</script>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
     <div style="margin-top: 5px;">
