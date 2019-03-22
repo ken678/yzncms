@@ -42,10 +42,10 @@ class Index extends Adminbase
                 $this->error($result);
             }
             //验证码
-            /*if (!captcha_check($data['verify'])) {
-            $this->error('验证码输入错误！');
-            return false;
-            }*/
+            if (!captcha_check($data['verify'])) {
+                $this->error('验证码输入错误！');
+                return false;
+            }
             if (User::instance()->login($data['username'], $data['password'])) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
