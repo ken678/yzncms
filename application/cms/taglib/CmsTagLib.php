@@ -146,7 +146,7 @@ class CmsTagLib
                 $return[$k] = array_merge($v, $r);
             }
         }
-        return $result;
+        return $return;
 
     }
 

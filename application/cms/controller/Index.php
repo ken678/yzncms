@@ -319,12 +319,11 @@ class Index extends Homebase
      */
     public function tags()
     {
+        $page = $page = $this->request->param('page/d', 1);
         $tagid = $this->request->param('tagid/d', 0);
         $tag = $this->request->param('tag/s', '');
         $where = array();
-        if (!empty($tagid)) {
-            $where['tagid'] = $tagid;
-        } else if (!empty($tag)) {
+        if (!empty($tag)) {
             $where['tag'] = $tag;
         }
         //如果条件为空，则显示标签首页
@@ -340,8 +339,12 @@ class Index extends Homebase
         if (empty($info)) {
             $this->error('抱歉，沒有找到您需要的内容！');
         }
+        //访问数+1
+        Db::name('Tags')->where($where)->setInc("hits");
         $this->assign($info);
         $this->assign("SEO", seo());
+        $this->assign("page", $page);
+        $this->assign("tag", $tag);
         return $this->fetch('/tags');
 
     }
