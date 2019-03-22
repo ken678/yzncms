@@ -36,15 +36,19 @@ class Index extends Adminbase
         }
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            // 验证数据
-            $result = $this->validate($data, 'AdminUser.checklogin');
-            if (true !== $result) {
-                $this->error($result);
-            }
             //验证码
             if (!captcha_check($data['verify'])) {
                 $this->error('验证码输入错误！');
                 return false;
+            }
+            // 验证数据
+            $rule = [
+                'username|用户名' => 'require|alphaDash|length:3,20',
+                'password|密码' => 'require|length:3,20',
+            ];
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result);
             }
             if (User::instance()->login($data['username'], $data['password'])) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
