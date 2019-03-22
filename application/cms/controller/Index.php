@@ -329,8 +329,7 @@ class Index extends Homebase
         //如果条件为空，则显示标签首页
         if (empty($where)) {
             $data = Db::name('Tags')->order(['hits' => 'DESC'])->limit(100)->select();
-            $SEO = seo('', '标签');
-            $this->assign("SEO", $SEO);
+            $this->assign("SEO", seo('', '标签'));
             $this->assign('list', $data);
             return $this->fetch('/tags_list');
         }
@@ -342,9 +341,9 @@ class Index extends Homebase
         //访问数+1
         Db::name('Tags')->where($where)->setInc("hits");
         $this->assign($info);
-        $this->assign("SEO", seo());
+        $this->assign("SEO", seo('', $tag, $info['seo_description'], $info['seo_keyword']));
         $this->assign("page", $page);
-        $this->assign("tag", $tag);
+        $this->assign($info);
         return $this->fetch('/tags');
 
     }
