@@ -20,9 +20,11 @@ Route::rule('cms/tag/[:tag]', 'cms/index/tags');
 Route::rule('cms/search/<keyword?>/[:modelid]/[:time]', 'cms/index/search')->pattern(['keyword' => '\w+', 'modelid' => '\d+', 'time' => '\w+']);
 
 //如果想要直接绑定域名 不加cms后缀 直接注释上面代码 如以下代码
+//Route::rule('/', 'cms/index/index');
 //Route::rule('index', 'cms/index/index');
 //Route::rule('lists/:catid/[:condition]', 'cms/index/lists')->pattern(['catid' => '\d+', 'condition' => '[0-9_&=a-zA-Z]+']);
 //更多...
+//更个性化的地址请参考TP手册路由章节
 
 //最后重要提示
 //务必【更新栏目缓存】和【一键清理缓存】
