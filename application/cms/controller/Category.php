@@ -179,6 +179,10 @@ class Category extends Adminbase
                 $this->error('请选择需要修改的栏目！');
             }
             $data = $this->request->post();
+            //上级栏目不能是自身
+            if ($data['parentid'] == $id) {
+                $this->error('上级栏目不能是自身！');
+            }
             switch ($data['type']) {
                 //单页
                 case 1:
