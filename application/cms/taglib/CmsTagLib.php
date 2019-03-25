@@ -93,11 +93,12 @@ class CmsTagLib
             $data['where'] = "FIND_IN_SET('" . intval($data['flag']) . "',flag)";
         }
         $data['field'] = isset($data['field']) ? $data['field'] : '*';
-        $moreifo = isset($data['moreifo']) ? $data['moreifo'] : 0;
+        $moreifo = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
         //当前栏目信息
         $catInfo = getCategory($data['catid']);
         //栏目所属模型
         $modelid = $catInfo['modelid'];
+
         $result = model('Cms')->getDataList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
     }
