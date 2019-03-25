@@ -1,0 +1,43 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">会员配置</div>
+    <div class="layui-card-body">
+        <form class="layui-form form-horizontal" action="" method="post">
+            <div class="layui-form-item">
+                <label>允许新会员注册</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="setting[allowregister]" value="1" title="是" {if 1 == $setting['allowregister']}checked{/if}>
+                    <input type="radio" name="setting[allowregister]" value="0" title="否" {if 0 == $setting['allowregister']}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label>新会员注册需要管理员审核</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="setting[registerverify]" value="1" title="是" {if 1 == $setting['registerverify']}checked{/if}>
+                    <input type="radio" name="setting[registerverify]" value="0" title="否" {if 0 == $setting['registerverify']}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label>是否开启登陆验证码</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="setting[openverification]" value="1" title="是" {if 1 == $setting['openverification']}checked{/if}>
+                    <input type="radio" name="setting[openverification]" value="0" title="否" {if 0 == $setting['openverification']}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label>新会员默认积分</label>
+                <div class="layui-form-field-label">
+                     <input type="number" name="setting[defualtpoint]" required="" lay-verify="required" placeholder="新会员默认积分" autocomplete="off" class="layui-input" value="0">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+{/block}
