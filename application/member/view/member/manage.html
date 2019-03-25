@@ -1,0 +1,42 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">会员列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" href="">添加会员</a>
+    </div>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("membern/member/manage")}',
+        cols: [
+            [
+                { field: 'id', width: 80, title: '用户ID' },
+                { field: 'name', width: 120, title: '用户名' },
+                { field: 'title', width:120,title: '昵称' },
+                { field: 'type',width:120, title: '邮箱' },
+                { field: 'ifsystem',width:120,title: '注册IP' },
+                { field: 'create_time',title: '最后登录' },
+                { field: 'ifsearch', width: 120,title: '金钱总数'},
+                { field: 'ifrequire', width: 120, title: '积分总数' },
+                { field: 'status', width: 100,align:"center", title: '状态'},
+                { fixed: 'right',width: 120,title: '操作', templet: '#barTool' }
+            ]
+        ]
+    });
+});
+</script>
+{/block}
