@@ -20,7 +20,7 @@ return [
         //子菜单列表
         "child" => [
             [
-                "route" => "cms/cms/index",
+                "route" => "cms/cms/index1",
                 "type" => 1,
                 "status" => 1,
                 "name" => "内容管理",
@@ -131,7 +131,7 @@ return [
                 ],
             ],
             [
-                "route" => "cms/category/index",
+                "route" => "cms/category/index1",
                 "type" => 1,
                 "status" => 1,
                 "name" => "相关设置",
