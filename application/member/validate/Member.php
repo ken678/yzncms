@@ -10,23 +10,13 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 会员模型
+// | 模型验证
 // +----------------------------------------------------------------------
-namespace app\member\model;
+namespace app\member\validate;
 
-use \think\Model;
+use think\Validate;
 
-/**
- * 模型
- */
-class Member extends Model
+class Member extends Validate
 {
-    //会员配置缓存
-    public function member_cache()
-    {
-        $data = unserialize(db('Module')->where(['module' => 'member'])->value('setting'));
-        cache("Member_Config", $data);
-        return $data;
-    }
 
 }

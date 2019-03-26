@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 会员模型
+// | 会员组模型
 // +----------------------------------------------------------------------
 namespace app\member\model;
 
@@ -19,14 +19,28 @@ use \think\Model;
 /**
  * 模型
  */
-class Member extends Model
+class MemberGroup extends Model
 {
-    //会员配置缓存
-    public function member_cache()
+    //生成会员组缓存
+    public function membergroup_cache()
     {
-        $data = unserialize(db('Module')->where(['module' => 'member'])->value('setting'));
-        cache("Member_Config", $data);
-        return $data;
+        $data = $this->select();
+        if ($data) {
+            $data = $data->toArray();
+        } else {
+            return;
+        }
+        $return = array();
+        foreach ($data as $k => $v) {
+            if ($v['expand']) {
+                $v['expand'] = unserialize($v['expand']);
+            } else {
+                $v['expand'] = array();
+            }
+            $return[$v['id']] = $v;
+        }
+        cache("Member_Group", $return);
+        return $return;
     }
 
 }

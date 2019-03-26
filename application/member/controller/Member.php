@@ -25,8 +25,7 @@ class Member extends Adminbase
     {
         parent::initialize();
         $this->Member_Model = new Member_Model;
-        //$this->groupCache = cache("Member_group"); //会员模型
-        //$this->groupsModel = cache("Model_Member"); //会员组
+        $this->groupCache = cache("Member_Group"); //会员模型
     }
 
     /**
@@ -53,8 +52,19 @@ class Member extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
+            $result = $this->validate($data, 'member');
+            if (true !== $result) {
+                return $this->error($result);
+            }
 
         } else {
+            foreach ($this->groupCache as $g) {
+                if (in_array($g['id'], array(8, 1, 7))) {
+                    continue;
+                }
+                $groupCache[$g['id']] = $g['name'];
+            }
+            $this->assign('groupCache', $groupCache);
             return $this->fetch();
         }
 

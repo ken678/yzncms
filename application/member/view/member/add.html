@@ -25,6 +25,12 @@
                 </div>
                 <div class="layui-form-mid layui-word-aux">请再次输入您的密码</div>
             </div>
+            <div class="layui-form-item web_list">
+                <label class="layui-form-label">会员组</label>
+                    <div class="layui-input-inline">
+                        {php} echo \util\Form::select($groupCache, input('groupid',0), 'name="groupid"', '') {/php}
+                    </div>
+            </div>
             <div class="layui-form-item">
                 <div>
                     <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>

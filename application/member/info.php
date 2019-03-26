@@ -36,7 +36,18 @@ return array(
     //行为注册
     'tags' => [],
     //缓存，格式：缓存key=>array('module','model','action')
-    'cache' => [],
+    'cache' => [
+        'Member_Config' => [
+            'name' => '会员配置',
+            'model' => 'Member',
+            'action' => 'member_cache',
+        ],
+        'Member_Group' => [
+            'name' => '会员组',
+            'model' => 'MemberGroup',
+            'action' => 'membergroup_cache',
+        ],
+    ],
     // 数据表，请加表前缀yzn[有数据库表时必填]
     'tables' => [
         'yzn_member',
