@@ -8,7 +8,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-sm" href="">添加会员</a>
+        <a class="layui-btn layui-btn-sm" href="{:url('member/member/add')}">添加会员</a>
     </div>
 </script>
 {/block}
@@ -21,7 +21,7 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("membern/member/manage")}',
+        url: '{:url("member/member/manage")}',
         cols: [
             [
                 { field: 'id', width: 80, title: '用户ID' },
