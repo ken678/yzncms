@@ -175,9 +175,23 @@ class Cms extends Adminbase
         $this->success('删除成功！');
     }
 
+    //面板
     public function panl()
     {
-        return "CMS面板";
+        $info['category'] = Db::name('Category')->count();
+        $info['model'] = Db::name('Model')->where(['module' => 'cms'])->count();
+        $info['tags'] = Db::name('Tags')->count();
+        $info['doc'] = 0;
+        $modellist = cache('Model');
+        foreach ($modellist as $model) {
+            if ($model['module'] !== 'cms') {
+                continue;
+            }
+            $tmp = Db::name($model['tablename'])->count();
+            $info['doc'] += $tmp;
+        }
+        $this->assign('info', $info);
+        return $this->fetch();
     }
 
     //显示栏目菜单列表
