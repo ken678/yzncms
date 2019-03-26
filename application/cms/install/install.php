@@ -31,17 +31,19 @@ class install extends InstallBase
         if (!empty($Setting) && is_array($Setting)) {
             Db::name("Module")->where('module', 'cms')->setField('setting', serialize($Setting));
         }
-        //默认安装演示数据
-        $sql_file = APP_PATH . "cms/install/demo.sql";
-        if (file_exists($sql_file)) {
-            $sql_statement = Sql::getSqlFromFile($sql_file);
-            if (!empty($sql_statement)) {
-                foreach ($sql_statement as $value) {
-                    try {
-                        Db::execute($value);
-                    } catch (\Exception $e) {
-                        $this->error = '导入演示数据失败，请检查demo.sql的语句是否正确';
-                        return false;
+        //安装演示数据
+        if (request()->param('demo') == 1) {
+            $sql_file = APP_PATH . "cms/install/demo.sql";
+            if (file_exists($sql_file)) {
+                $sql_statement = Sql::getSqlFromFile($sql_file);
+                if (!empty($sql_statement)) {
+                    foreach ($sql_statement as $value) {
+                        try {
+                            Db::execute($value);
+                        } catch (\Exception $e) {
+                            $this->error = '导入演示数据失败，请检查demo.sql的语句是否正确';
+                            return false;
+                        }
                     }
                 }
             }
