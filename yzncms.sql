@@ -355,6 +355,7 @@ CREATE TABLE `yzn_module` (
 DROP TABLE IF EXISTS `yzn_model`;
 CREATE TABLE `yzn_model` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `module` varchar(15) NOT NULL  DEFAULT '' COMMENT '所属模块',
   `name` char(30) NOT NULL DEFAULT '' COMMENT '模型名称',
   `tablename` char(20) NOT NULL DEFAULT '' COMMENT '表名',
   `description` char(100) NOT NULL DEFAULT '' COMMENT '描述',
@@ -366,7 +367,7 @@ CREATE TABLE `yzn_model` (
   `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='内容模型列表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型列表';
 
 
 -- ----------------------------
@@ -393,3 +394,18 @@ CREATE TABLE `yzn_model_field` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+
+-- ----------------------------
+-- Table structure for `yzn_terms`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_terms`;
+CREATE TABLE `yzn_terms` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类ID',
+  `parentid` smallint(5) NOT NULL DEFAULT '0' COMMENT '父ID',
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '分类名称',
+  `module` varchar(15) NOT NULL DEFAULT '' COMMENT '所属模块',
+  `setting` mediumtext COMMENT '相关配置信息',
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`),
+  KEY `module` (`module`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类表';

@@ -32,8 +32,8 @@ class Uninstall extends UninstallBase
     public function run()
     {
         if (request()->param('clear') == 1) {
-            // 内容模型的表名列表
-            $table_list = Db::name('model')->field('tablename,type')->select();
+            // 删除模型中建的表
+            $table_list = Db::name('model')->where(['module' => 'cms'])->field('tablename,type,id')->select();
             if ($table_list) {
                 foreach ($table_list as $val) {
                     $tablename = config('database.prefix') . $val['tablename'];
@@ -41,12 +41,14 @@ class Uninstall extends UninstallBase
                     if ($val['type'] == 2) {
                         Db::execute("DROP TABLE IF EXISTS `{$tablename}{$this->ext_table}`;");
                     }
+                    Db::name('model_field')->where(['modelid' => $val['id']])->delete();
                 }
             }
-            //删除对应模型数据表
+            //删除模型中的表
+            Db::name('model')->where(['module' => 'cms'])->delete();
+            //删除固定表
             if (!empty($this->modelTabList)) {
                 foreach ($this->modelTabList as $tablename) {
-                    //删除固定表
                     if (!empty($tablename)) {
                         $tablename = config('database.prefix') . $tablename;
                         Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
