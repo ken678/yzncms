@@ -21,6 +21,16 @@ use \think\Model;
  */
 class Member extends Model
 {
+
+    /**
+     * 注册一个新用户
+     */
+    public function register($data)
+    {
+        return true;
+
+    }
+
     //会员配置缓存
     public function member_cache()
     {

@@ -56,7 +56,11 @@ class Member extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-
+            if (!$this->Member_Model->register($data)) {
+                $this->error('用户添加失败！');
+            } else {
+                $this->success('用户添加成功！', url('member/member/manage'));
+            }
         } else {
             foreach ($this->groupCache as $g) {
                 if (in_array($g['id'], array(8, 1, 7))) {
