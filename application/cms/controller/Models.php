@@ -33,7 +33,7 @@ class Models extends Adminbase
     {
 
         if ($this->request->isAjax()) {
-            $data = $this->Models->select();
+            $data = $this->Models->where(['module' => 'cms'])->select();
             $result = array("code" => 0, "data" => $data);
             return json($result);
         }

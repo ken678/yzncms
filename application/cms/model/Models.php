@@ -40,6 +40,7 @@ class Models extends Modelbase
         if (empty($data)) {
             return false;
         }
+        $data['module'] = 'cms';
         $data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
         //创建模型表和模型附表
         if ($this->createTable($data)) {
