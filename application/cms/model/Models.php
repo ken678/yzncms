@@ -359,34 +359,4 @@ EOF;
         return true;
     }
 
-    /**
-     * 根据模型类型取得数据用于缓存
-     * @param type $type
-     * @return type
-     */
-    public function getModelAll($type = null)
-    {
-        $where = array('status' => 1);
-        if (!is_null($type)) {
-            $where['type'] = $type;
-        }
-        $data = Db::name('model')->where($where)->select();
-        $Cache = array();
-        foreach ($data as $v) {
-            $Cache[$v['id']] = $v;
-        }
-        return $Cache;
-    }
-
-    /**
-     * 生成模型缓存，以模型ID为下标的数组
-     * @return boolean
-     */
-    public function model_cache()
-    {
-        $data = $this->getModelAll();
-        cache('Model', $data);
-        return $data;
-    }
-
 }

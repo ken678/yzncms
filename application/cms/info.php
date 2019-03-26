@@ -37,20 +37,10 @@ return array(
     'tags' => [],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache' => [
-        'Model' => [
-            'name' => '模型列表',
-            'model' => 'Models',
-            'action' => 'model_cache',
-        ],
         'Category' => [
             'name' => '栏目索引',
             'model' => 'Category',
             'action' => 'category_cache',
-        ],
-        'ModelField' => [
-            'name' => '模型字段',
-            'model' => 'ModelField',
-            'action' => 'model_field_cache',
         ],
         'Cms_Config' => [
             'name' => 'CMS配置',
