@@ -141,42 +141,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='规则表';
-
--- ----------------------------
--- Records of yzn_auth_rule
--- ----------------------------
-INSERT INTO `yzn_auth_rule` VALUES ('1', 'admin', '2', 'admin/index/index', '首页', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('2', 'admin', '2', 'admin/setting/index', '设置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('3', 'admin', '1', 'admin/config/index1', '系统配置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('4', 'admin', '1', 'admin/config/index', '配置管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('5', 'admin', '1', 'admin/config/setting', '网站设置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('6', 'admin', '1', 'admin/menu/index', '菜单管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('7', 'admin', '1', 'admin/manager/index1', '权限管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('8', 'admin', '1', 'admin/manager/index', '管理员管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('9', 'admin', '1', 'admin/authManager/index', '角色管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('10', 'admin', '1', 'admin/adminlog/index', '管理日志', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('11', 'admin', '1', 'admin/menu/add', '新增菜单', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('12', 'admin', '1', 'admin/menu/edit', '编辑菜单', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('13', 'admin', '1', 'admin/menu/delete', '删除菜单', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('14', 'attachment', '1', 'attachment/attachments/upload', '附件上传', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('15', 'attachment', '1', 'attachment/attachments/delete', '附件删除', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('16', 'addons', '1', 'addons/addons/index2', '插件扩展', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('17', 'addons', '1', 'addons/addons/index', '插件管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('18', 'addons', '1', 'addons/addons/hooks', '行为管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('19', 'addons', '1', 'addons/addons/addonadmin', '插件后台列表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('20', 'admin', '1', 'admin/cloud/index', '在线云平台', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('21', 'admin', '1', 'admin/module/index2', '本地模块', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('22', 'admin', '1', 'admin/module/index', '模块后台列表', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('23', 'admin', '1', 'admin/moduleshop/index', '模块商店', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('24', 'admin', '1', 'admin/addonshop/index', '插件商店', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('25', 'admin', '2', 'admin/main/index', '控制面板', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('26', 'attachment', '1', 'attachment/attachments/index', '附件管理', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('27', 'admin', '1', 'admin/config/add', '新增配置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('28', 'admin', '1', 'admin/config/edit', '编辑配置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('29', 'admin', '1', 'admin/config/del', '删除配置', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('30', 'admin', '2', 'admin/module/index1', '模块', '1', '');
-INSERT INTO `yzn_auth_rule` VALUES ('31', 'addons', '2', 'addons/addons/index1', '扩展', '1', '');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='规则表';
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -192,7 +157,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=212 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -222,7 +187,7 @@ CREATE TABLE `yzn_config` (
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='网站配置';
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='网站配置';
 
 -- ----------------------------
 -- Records of yzn_config
@@ -318,7 +283,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=172 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -330,12 +295,17 @@ INSERT INTO `yzn_menu` VALUES ('4', '模块', 'icon-supply', '0', 'admin', 'modu
 INSERT INTO `yzn_menu` VALUES ('5', '扩展', 'icon-tools', '0', 'addons', 'addons', 'index1', '', '1', '', '0', '10');
 INSERT INTO `yzn_menu` VALUES ('10', '系统配置', 'icon-zidongxiufu', '3', 'admin', 'config', 'index1', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('11', '配置管理', 'icon-apartment', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('12', '删除日志', '', '20', 'admin', 'adminlog', 'deletelog', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('13', '网站设置', 'icon-setup', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', 'icon-other', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('15', '权限管理', 'icon-guanliyuan', '3', 'admin', 'manager', 'index1', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('20', '管理日志', 'icon-rizhi', '15', 'admin', 'adminlog', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', 'icon-guanliyuan', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('17', '角色管理', 'icon-group', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('18', '添加管理员', '', '16', 'admin', 'manager', 'add', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('19', '编辑管理员', '', '16', 'admin', 'manager', 'edit', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('20', '管理日志', 'icon-rizhi', '15', 'admin', 'adminlog', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('21', '删除管理员', '', '16', 'admin', 'manager', 'del', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('22', '添加角色', '', '17', 'admin', 'authManager', 'createGroup', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('23', '附件管理', 'icon-accessory', '10', 'attachment', 'attachments', 'index', '', '1', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('24', '新增配置', '', '11', 'admin', 'config', 'add', '', '1', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('25', '编辑配置', '', '11', 'admin', 'config', 'edit', '', '1', '', '0', '2');
@@ -355,6 +325,9 @@ INSERT INTO `yzn_menu` VALUES ('38', '模块管理', 'icon-mokuaishezhi', '37', 
 INSERT INTO `yzn_menu` VALUES ('39', '模块后台列表', 'icon-liebiaosousuo', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('40', '模块商店', 'icon-caigou-xianxing', '36', 'admin', 'moduleshop', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('41', '插件商店', 'icon-caigou-xianxing', '36', 'admin', 'addonshop', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('42', '编辑角色', '', '17', 'admin', 'authManager', 'editGroup', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('43', '删除角色', '', '17', 'admin', 'authManager', 'deleteGroup', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('44', '访问授权', '', '17', 'admin', 'authManager', 'access', '', '1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `yzn_module`
