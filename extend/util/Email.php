@@ -123,18 +123,19 @@ class Email
         $result = false;
         switch ($this->options['mail_type']['key']) {
             case 1:
-                //使用phpmailer发送
-                $this->mail->setFrom($this->options['from'], $this->options['from_name']);
-                $this->mail->addAddress($this->options['to'], $this->options['to_name']);
-                $this->mail->Subject = $this->options['subject'];
-                if ($this->options['ishtml']) {
-                    $this->mail->isHTML(true);
-                    $this->mail->Body = $this->options['body'];
-                } else {
-                    $this->mail->AltBody = $this->options['body'];
-                }
                 try
                 {
+                    //使用phpmailer发送
+                    $this->mail->setFrom($this->options['from'], $this->options['from_name']);
+                    $this->mail->addAddress($this->options['to'], $this->options['to_name']);
+                    $this->mail->Subject = $this->options['subject'];
+                    if ($this->options['ishtml']) {
+                        $this->mail->isHTML(true);
+                        $this->mail->Body = $this->options['body'];
+                    } else {
+                        $this->mail->AltBody = $this->options['body'];
+                    }
+
                     $result = $this->mail->send();
                 } catch (Exception $e) {
                     $this->setError($e->getMessage());
