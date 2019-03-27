@@ -209,12 +209,15 @@ INSERT INTO `yzn_config` VALUES ('11', 'upload_thumb_water_pic', 'image', '水�
 INSERT INTO `yzn_config` VALUES ('12', 'upload_thumb_water_position', 'radio', '水印位置', 'upload', '1:左上角\r\n2:上居中\r\n3:右上角\r\n4:左居中\r\n5:居中\r\n6:右居中\r\n7:左下角\r\n8:下居中\r\n9:右下角', '只有开启水印功能才生效', '1552435257', '1552436082', '1', '9', '7');
 INSERT INTO `yzn_config` VALUES ('13', 'upload_thumb_water_alpha', 'text', '水印透明度', 'upload', '', '请输入0~100之间的数字，数字越小，透明度越高', '1552435299', '1552436083', '1', '50', '8');
 INSERT INTO `yzn_config` VALUES ('14', 'mail_type', 'radio', '邮件发送模式', 'email', '1:SMTP\r\n2:Mail', '', '1553652833', '1553652915', '1', '1', '1');
-INSERT INTO `yzn_config` VALUES ('15', 'mail_smtp_host', 'text', '邮件服务器', 'email', '', '错误的配置发送邮件会导致服务器超时', '1553652889', '1553652917', '1', 'smtp.qq.com', '2');
+INSERT INTO `yzn_config` VALUES ('15', 'mail_smtp_host', 'text', '邮件服务器', 'email', '', '错误的配置发送邮件会导致服务器超时', '1553652889', '1553652917', '1', 'smtp.163.com', '2');
 INSERT INTO `yzn_config` VALUES ('16', 'mail_smtp_port', 'text', '邮件发送端口', 'email', '', '不加密默认25,SSL默认465,TLS默认587', '1553653165', '1553653292', '1', '465', '3');
-INSERT INTO `yzn_config` VALUES ('17', 'mail_smtp_user', 'text', '用户名', 'email', '', '', '1553653267', '1553653267', '1', '', '4');
-INSERT INTO `yzn_config` VALUES ('18', 'mail_smtp_pass', 'text', '密码', 'email', '', '', '1553653344', '1553653344', '1', '', '5');
-INSERT INTO `yzn_config` VALUES ('19', 'mail_verify_type', 'radio', '验证方式', 'email', '1:TLS\r\n2:SSL', '', '1553653426', '1553653459', '1', '1', '6');
-INSERT INTO `yzn_config` VALUES ('20', 'mail_from', 'text', '发件人邮箱', 'email', '', '', '1553653500', '1553653500', '1', '', '7');
+INSERT INTO `yzn_config` VALUES ('17', 'mail_auth', 'radio', '身份认证', 'email', '0:关闭\r\n1:开启', '', '1553658375', '1553658392', '1', '1', '4');
+INSERT INTO `yzn_config` VALUES ('18', 'mail_smtp_user', 'text', '用户名', 'email', '', '', '1553653267', '1553658393', '1', 'o0mcw_ken0o', '5');
+INSERT INTO `yzn_config` VALUES ('19', 'mail_smtp_pass', 'text', '密码', 'email', '', '', '1553653344', '1553658394', '1', '66552432A', '6');
+INSERT INTO `yzn_config` VALUES ('20', 'mail_verify_type', 'radio', '验证方式', 'email', '1:TLS\r\n2:SSL', '', '1553653426', '1553658395', '1', '2', '7');
+INSERT INTO `yzn_config` VALUES ('21', 'mail_from', 'text', '发件人邮箱', 'email', '', '', '1553653500', '1553658397', '1', 'o0mcw_ken0o@163.com', '8');
+
+
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`
