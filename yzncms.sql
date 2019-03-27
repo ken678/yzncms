@@ -190,14 +190,14 @@ CREATE TABLE `yzn_config` (
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='网站配置';
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='网站配置';
 
 -- ----------------------------
 -- Records of yzn_config
 -- ----------------------------
 INSERT INTO `yzn_config` VALUES ('1', 'web_site_icp', 'text', '备案信息', 'base', '', '', '1551244923', '1551244971', '1', '', '1');
 INSERT INTO `yzn_config` VALUES ('2', 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', '1551244957', '1551244957', '1', '', '100');
-INSERT INTO `yzn_config` VALUES ('3', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\r\nsystem:系统\r\nupload:上传\r\ndevelop:开发', '0');
+INSERT INTO `yzn_config` VALUES ('3', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\r\nemail:邮箱\r\nsystem:系统\r\nupload:上传\r\ndevelop:开发', '0');
 INSERT INTO `yzn_config` VALUES ('4', 'theme', 'text', '主题风格', 'system', '', '', '1541752781', '1541756888', '1', 'default', '1');
 INSERT INTO `yzn_config` VALUES ('5', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1552436075', '1', '0', '2');
 INSERT INTO `yzn_config` VALUES ('6', 'upload_image_ext', 'text', '允许上传的图片后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457657', '1552436074', '1', 'gif,jpg,jpeg,bmp,png', '1');
@@ -208,6 +208,13 @@ INSERT INTO `yzn_config` VALUES ('10', 'upload_thumb_water', 'switch', '添加�
 INSERT INTO `yzn_config` VALUES ('11', 'upload_thumb_water_pic', 'image', '水印图片', 'upload', '', '只有开启水印功能才生效', '1552435183', '1552436081', '1', '', '6');
 INSERT INTO `yzn_config` VALUES ('12', 'upload_thumb_water_position', 'radio', '水印位置', 'upload', '1:左上角\r\n2:上居中\r\n3:右上角\r\n4:左居中\r\n5:居中\r\n6:右居中\r\n7:左下角\r\n8:下居中\r\n9:右下角', '只有开启水印功能才生效', '1552435257', '1552436082', '1', '9', '7');
 INSERT INTO `yzn_config` VALUES ('13', 'upload_thumb_water_alpha', 'text', '水印透明度', 'upload', '', '请输入0~100之间的数字，数字越小，透明度越高', '1552435299', '1552436083', '1', '50', '8');
+INSERT INTO `yzn_config` VALUES ('14', 'mail_type', 'radio', '邮件发送模式', 'email', '1:SMTP\r\n2:Mail', '', '1553652833', '1553652915', '1', '1', '1');
+INSERT INTO `yzn_config` VALUES ('15', 'mail_smtp_host', 'text', '邮件服务器', 'email', '', '错误的配置发送邮件会导致服务器超时', '1553652889', '1553652917', '1', 'smtp.qq.com', '2');
+INSERT INTO `yzn_config` VALUES ('16', 'mail_smtp_port', 'text', '邮件发送端口', 'email', '', '不加密默认25,SSL默认465,TLS默认587', '1553653165', '1553653292', '1', '465', '3');
+INSERT INTO `yzn_config` VALUES ('17', 'mail_smtp_user', 'text', '用户名', 'email', '', '', '1553653267', '1553653267', '1', '', '4');
+INSERT INTO `yzn_config` VALUES ('18', 'mail_smtp_pass', 'text', '密码', 'email', '', '', '1553653344', '1553653344', '1', '', '5');
+INSERT INTO `yzn_config` VALUES ('19', 'mail_verify_type', 'radio', '验证方式', 'email', '1:TLS\r\n2:SSL', '', '1553653426', '1553653459', '1', '1', '6');
+INSERT INTO `yzn_config` VALUES ('20', 'mail_from', 'text', '发件人邮箱', 'email', '', '', '1553653500', '1553653500', '1', '', '7');
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`
