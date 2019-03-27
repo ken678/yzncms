@@ -128,7 +128,7 @@ class Email
                 $this->mail->addAddress($this->options['to'], $this->options['to_name']);
                 $this->mail->Subject = $this->options['subject'];
                 if ($this->options['ishtml']) {
-                    //$this->mail->isHTML(true);
+                    $this->mail->isHTML(true);
                     $this->mail->Body = $this->options['body'];
                 } else {
                     $this->mail->AltBody = $this->options['body'];
