@@ -376,7 +376,6 @@ CREATE TABLE `yzn_model` (
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '模型类别：1-独立表，2-主附表',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `ifsub` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否允许投稿',
   `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
   PRIMARY KEY (`id`)

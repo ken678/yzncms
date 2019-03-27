@@ -20,7 +20,11 @@
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="ifsubTpl">
-    <input type="checkbox" name="ifsub" value="{{d.id}}" lay-skin="switch" lay-text="允许|禁止" lay-filter="ifsub" {{ d.ifsub==1 ? 'checked' : '' }}>
+    {{#  if(d.setting.ifsub==1){ }}
+    启用
+    {{#  } else { }}
+    禁用
+    {{#  } }}
 </script>
 {/block}
 {block name="script"}
@@ -42,7 +46,7 @@ layui.use('table', function() {
                 { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type==1){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
                 { field: 'create_time',width:180, title: '创建时间' },
                 { field: 'status', width: 100, title: '状态', templet: '#statusTpl', unresize: true },
-                { field: 'ifsub', width: 100, title: '投稿', templet: '#ifsubTpl', unresize: true },
+                { field: 'ifsub', width: 80, title: '投稿', templet: '#ifsubTpl'},
                 { fixed: 'right', title: '操作', width: 200, templet: '#barTool' }
             ]
         ]
@@ -63,20 +67,6 @@ layui.use('table', function() {
         });
     });
 
-        //监听状态操作
-    form.on('switch(ifsub)', function(obj) {
-        var _this = $(obj.elem);
-        $.post('{:url("cms/models/setSub")}', { 'id': this.value,'ifsub':obj.elem.checked}, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            }else{
-                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
-                form.render('checkbox');
-                layer.msg(data.msg);
-            }
-
-        });
-    });
 
     //监听行工具事件
     table.on('tool(table)', function(obj) {

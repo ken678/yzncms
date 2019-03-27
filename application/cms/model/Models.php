@@ -41,7 +41,8 @@ class Models extends Modelbase
             return false;
         }
         $data['module'] = 'cms';
-        $data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
+        //$data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
+        $data['setting'] = serialize($data['setting']);
         //创建模型表和模型附表
         if ($this->createTable($data)) {
             cache("Model", null);
@@ -76,13 +77,8 @@ class Models extends Modelbase
             return false;
         }
         $data['modelid'] = $modelid;
-        $data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
-        //模型添加验证
-        /*$validate = Loader::validate('Models');
-        if (!$validate->scene('edit')->check($data)) {
-        $this->error = $validate->getError();
-        return false;
-        }*/
+        $data['setting'] = serialize($data['setting']);
+        //$data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
         //是否更改表名
         if ($info['tablename'] != $data['tablename'] && !empty($data['tablename'])) {
             //检查新表名是否存在

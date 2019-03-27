@@ -33,7 +33,9 @@ class Models extends Adminbase
     {
 
         if ($this->request->isAjax()) {
-            $data = $this->Models->where(['module' => 'cms'])->select();
+            $data = $this->Models->where(['module' => 'cms'])->withAttr('setting', function ($value, $data) {
+                return unserialize($value);
+            })->select();
             $result = array("code" => 0, "data" => $data);
             return json($result);
         }
@@ -83,6 +85,7 @@ class Models extends Adminbase
         } else {
             $id = $this->request->param('id/d', 0);
             $data = $this->Models->where(array("id" => $id))->find();
+            $data['setting'] = unserialize($data['setting']);
             $this->assign("data", $data);
             return $this->fetch();
         }
@@ -132,17 +135,17 @@ class Models extends Adminbase
     /**
      * 投稿状态
      */
-    public function setSub()
-    {
-        $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        cache("Model", null);
-        $ifsub = $this->request->param('ifsub/s') === 'true' ? 1 : 0;
-        if (Models_Model::update(['ifsub' => $ifsub], ['id' => $id])) {
-            $this->success("操作成功！");
-        } else {
-            $this->error('操作失败！');
-        }
-    }
+    /*public function setSub()
+{
+$id = $this->request->param('id/d');
+empty($id) && $this->error('参数不能为空！');
+cache("Model", null);
+$ifsub = $this->request->param('ifsub/s') === 'true' ? 1 : 0;
+if (Models_Model::update(['ifsub' => $ifsub], ['id' => $id])) {
+$this->success("操作成功！");
+} else {
+$this->error('操作失败！');
+}
+}*/
 
 }

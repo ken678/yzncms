@@ -58,11 +58,12 @@ class Index extends Homebase
         $models = cache('Model');
         if ($this->request->isPost()) {
             $modelInfo = $models[$modelid];
+            $modelInfo['setting'] = unserialize($modelInfo['setting']);
             //投稿
             if (!isset($modelInfo)) {
                 $this->error('栏目禁止投稿~');
             }
-            if (!$modelInfo['ifsub']) {
+            if (!$modelInfo['setting']['ifsub']) {
                 $this->error($modelInfo['title'] . '模型禁止投稿~');
             }
 
@@ -104,7 +105,8 @@ class Index extends Homebase
                 $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
                 //投稿
                 $modelInfo = $models[$modelid];
-                if (isset($modelInfo['ifsub']) && $modelInfo['ifsub']) {
+                $modelInfo['setting'] = unserialize($modelInfo['setting']);
+                if (isset($modelInfo['setting']['ifsub']) && $modelInfo['setting']['ifsub']) {
                     $fieldList = $this->Cms_Model->getFieldList($modelInfo['id']);
                     $this->assign('fieldList', $fieldList);
                 }

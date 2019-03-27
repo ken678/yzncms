@@ -35,7 +35,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">投稿状态</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="ifsub" lay-skin="switch" lay-text="允许|禁止" value="1" {if 1==$data.ifsub}checked{/if}>
+                    <input type="radio" name="setting[ifsub]" value="1" title="允许" {if $data.setting.ifsub==1}checked{/if}>
+                    <input type="radio" name="setting[ifsub]" value="0" title="禁止" {if $data.setting.ifsub==0}checked{/if}>
                 </div>
             </div>
             <input type="hidden" value="{$data.id}" name="id" />
