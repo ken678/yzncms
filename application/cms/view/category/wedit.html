@@ -38,7 +38,13 @@
                             <div class="w300">
                                 <input type="text" name="url" autocomplete="off" placeholder="自定义链接地址" class="layui-input" value="{$data.url}">
                             </div>
-                            <div class="layui-form-mid layui-word-aux">内部链接格式:模块/控制器/操作，外部链接则必须http://开头</div>
+                            <div class="layui-form-mid layui-word-aux">内部链接格式:模块/控制器/操作?参数=参数值&...，外部链接则必须http://开头</div>
+                        </div>
+                        <div class="layui-form-item web_seo">
+                            <label>栏目简介</label>
+                            <div class="w300">
+                                <textarea name="description" placeholder="栏目简介" class="layui-textarea">{$data.description}</textarea>
+                            </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
                             <label>栏目图片</label>
