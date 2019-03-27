@@ -42,14 +42,20 @@ class Email
      */
     public function __construct($options = [])
     {
+        if ($config = \think\facade\Config::get('app.')) {
+            $this->options = array_merge($this->options, $config);
+        }
+
+        $this->options = array_merge($this->options, $options);
         $securArr = [1 => 'tls', 2 => 'ssl'];
         $this->mail = new PHPMailer(true);
         $this->mail->SMTPDebug = $this->options['debug'];
         $this->mail->isSMTP();
         $this->mail->Host = $this->options['mail_smtp_host']; //SMTP服务器
+        $this->mail->SMTPAuth = true;
         $this->mail->Username = $this->options['mail_smtp_user']; //SMTP username
         $this->mail->Password = $this->options['mail_smtp_pass']; // SMTP password
-        $this->mail->SMTPSecure = isset($securArr[$this->options['mail_verify_type']]) ? $securArr[$this->options['mail_verify_type']] : ''; //支持TLS加密,还接受了ssl
+        $this->mail->SMTPSecure = isset($securArr[$this->options['mail_verify_type']['key']]) ? $securArr[$this->options['mail_verify_type']['key']] : ''; //支持TLS加密,还接受了ssl
         $this->mail->Port = $this->options['mail_smtp_port']; //TCP端口连接
 
         //设置发件人
@@ -110,7 +116,7 @@ class Email
     public function send()
     {
         $result = false;
-        switch ($this->options['mail_type']) {
+        switch ($this->options['mail_type']['key']) {
             case 1:
                 //使用phpmailer发送
                 $this->mail->setFrom($this->options['from'], $this->options['from_name']);
