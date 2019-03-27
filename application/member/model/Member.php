@@ -24,10 +24,27 @@ class Member extends Model
 
     /**
      * 注册一个新用户
+     * @param string $username  用户名
+     * @param string $password  密码
+     * @param string $email     邮箱
+     * @param string $mobile    手机号
+     * @param array $extend    扩展参数
      */
-    public function register($data)
+    public function register($username, $password, $email = '', $mobile = '', $extend = [])
     {
-        return true;
+        $data = array(
+            "username" => $username,
+            "password" => $password,
+            "email" => $email,
+            "encrypt" => $encrypt,
+            "amount" => 0,
+        );
+        $userid = $this->save($data);
+        if ($userid) {
+            return $userid;
+        }
+        $this->error = $Member->getError() ?: '注册失败！';
+        return false;
 
     }
 
