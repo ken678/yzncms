@@ -54,9 +54,9 @@ class Email
         $this->mail->Host = $this->options['mail_smtp_host']; //SMTP服务器
         // 设置为“需要验证”
         if ($this->options['mail_auth']['key']) {
-            $this->mail->SMTPAuth = = true;
+            $this->mail->SMTPAuth = true;
         } else {
-            $this->mail->SMTPAuth = = false;
+            $this->mail->SMTPAuth = false;
         }
         $this->mail->Username = $this->options['mail_smtp_user']; //SMTP username
         $this->mail->Password = $this->options['mail_smtp_pass']; // SMTP password
