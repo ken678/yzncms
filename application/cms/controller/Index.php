@@ -166,8 +166,9 @@ class Index extends Homebase
         //模型ID
         $modelid = $category['modelid'];
 
+        $modelInfo = cache('Model')[$modelid];
         //更新点击量
-        //Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
+        Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
 
         //内容所有字段
         $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
