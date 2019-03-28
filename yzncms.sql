@@ -296,7 +296,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -341,6 +341,13 @@ INSERT INTO `yzn_menu` VALUES ('41', '插件商店', 'icon-caigou-xianxing', '36
 INSERT INTO `yzn_menu` VALUES ('42', '编辑角色', '', '17', 'admin', 'authManager', 'editGroup', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('43', '删除角色', '', '17', 'admin', 'authManager', 'deleteGroup', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('44', '访问授权', '', '17', 'admin', 'authManager', 'access', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('45', '角色授权', '', '17', 'admin', 'authManager', 'writeGroup', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('46', '模块安装', '', '38', 'admin', 'module', 'install', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('47', '模块卸载', '', '38', 'admin', 'module', 'uninstall', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('48', '本地安装', '', '38', 'admin', 'module', 'local', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('49', '缓存更新', '', '0', 'admin', 'index', 'cache', '', '0', '', '0', '0');
+
+
 
 -- ----------------------------
 -- Table structure for `yzn_module`
