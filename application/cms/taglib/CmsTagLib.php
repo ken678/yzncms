@@ -99,7 +99,7 @@ class CmsTagLib
         //栏目所属模型
         $modelid = $catInfo['modelid'];
 
-        $result = model('Cms')->getDataList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
+        $result = model('Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
     }
 
@@ -142,7 +142,7 @@ class CmsTagLib
         $return = Db::name('TagsContent')->where($where_str)->limit($data['limit'])->select();
         //读取文章信息
         foreach ($return as $k => $v) {
-            $r = model('Cms')->getDataInfo($v['modelid'], "id =" . $v['contentid'], false, '*', $data['limit'], $data['page']);
+            $r = model('Cms')->getContent($v['modelid'], "id =" . $v['contentid'], false, '*', $data['limit'], $data['page']);
             if ($r) {
                 $return[$k] = array_merge($v, $r);
             }
@@ -160,7 +160,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target="_blank" ' : ' target="_self" ';
-        $result = model('Cms')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
+        $result = model('Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
@@ -181,7 +181,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=\"_blank\" ' : '';
-        $result = model('Cms')->getDataInfo(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
+        $result = model('Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';

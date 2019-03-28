@@ -172,7 +172,7 @@ class Index extends Homebase
 
         //内容所有字段
         $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
-        $info = $this->Cms_Model->getDataInfo($modelid, "id='" . $id . "'", true, '*', '', $ifcache);
+        $info = $this->Cms_Model->getContent($modelid, "id='" . $id . "'", true, '*', '', $ifcache);
         if (empty($info)) {
             abort(404, '内容不存在或未审核');
         }
@@ -274,7 +274,7 @@ class Index extends Homebase
             }
             $where = '(' . substr($where, 0, -4) . ') ';
             $where .= " AND status='1' $sql_time";
-            $list = $this->Cms_Model->getDataList($modelid, $where, false, '*', "listorder,id desc", 10, 1);
+            $list = $this->Cms_Model->getList($modelid, $where, false, '*', "listorder,id desc", 10, 1);
         } else {
             foreach ($modellist as $key => $vo) {
                 $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
@@ -287,7 +287,7 @@ class Index extends Homebase
                 }
                 $where = '(' . substr($where, 0, -4) . ') ';
                 $where .= " AND status='1' $sql_time";
-                $list = $this->Cms_Model->getDataList($key, $where, false, '*', 'listorder,id desc', 10, 1);
+                $list = $this->Cms_Model->getList($key, $where, false, '*', 'listorder,id desc', 10, 1);
                 if ($list->isEmpty()) {
                     continue;
                 } else {

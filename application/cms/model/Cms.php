@@ -331,15 +331,15 @@ class Cms extends Modelbase
 
     /**
      * 列表页
-     * @param   $modeId  []
-     * @param   $where   []
-     * @param   $moreifo []
+     * @param   $modeId  [模型ID]
+     * @param   $where   [查询条件]
+     * @param   $moreifo [是否含附表]
      * @param   $field   []
      * @param   $order   []
-     * @param   $limit   []
-     * @param   $page    []
+     * @param   $limit   [条数]
+     * @param   $page    [是否有分页]
      */
-    public function getDataList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null)
+    public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null)
     {
         $modelCache = cache("Model");
         $ModelField = cache('ModelField');
@@ -382,13 +382,13 @@ class Cms extends Modelbase
 
     /**
      * 详情页
-     * @param  [type]  $modeId  []
-     * @param  [type]  $where   []
-     * @param  boolean $moreifo []
+     * @param  [type]  $modeId  [模型ID]
+     * @param  [type]  $where   [查询条件]
+     * @param  boolean $moreifo [是否含附表]
      * @param  string  $field   []
      * @param  string  $order   []
      */
-    public function getDataInfo($modeId, $where, $moreifo = false, $field = '*', $order = '', $cache = false)
+    public function getContent($modeId, $where, $moreifo = false, $field = '*', $order = '', $cache = false)
     {
         $modelInfo = cache('Model');
         $ModelField = cache('ModelField');
