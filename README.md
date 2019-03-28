@@ -28,6 +28,12 @@ PHP版本：php >= 5.6 (支持php7)
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 ```
+[常见问题]
+
+```
+更多的常见问题见手册
+```
+
 
 [截图预览]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0305/183046_a3672965_555541.png "YZNCMS后台管理系统.png")
