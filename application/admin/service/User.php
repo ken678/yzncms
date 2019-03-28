@@ -65,27 +65,11 @@ class User
     {
         $username = trim($username);
         $password = trim($password);
-        //$map['username'] = $username;
-        //$userInfo = self::get($map);
-        //验证
         $userInfo = $this->getUserInfo($username, $password);
         if (false == $userInfo) {
             return false;
         }
         $this->autoLogin($userInfo);
-        /*if (false == $userInfo) {
-        $this->error = '用户不存在！';
-        } elseif (!$userInfo['status']) {
-        $this->error = '用户已被禁用！';
-        } else {
-        //密码判断
-        if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {
-        $this->error = '密码错误！';
-        } else {
-        $this->autoLogin($userInfo);
-        return true;
-        }
-        }*/
         return true;
     }
 
@@ -147,11 +131,6 @@ class User
     {
         $uid = is_null($uid) ? $this->isLogin() : $uid;
         return $uid && (intval($uid) === self::administratorRoleId);
-        /*$userInfo = $this->getUserInfo($this->isLogin());
-    if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
-    return true;
-    }
-    return false;*/
     }
 
     /**

@@ -23,15 +23,16 @@ class Adminbase extends Base
     protected function initialize()
     {
         parent::initialize();
-        //验证登录
+
         //过滤不需要登陆的行为
-        $allowUrl = ['admin/index/login',
+        $allowUrl = [
+            'admin/index/login',
             'admin/index/logout',
         ];
-        $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
-        if (in_array($rule, $allowUrl)) {
 
-        } else {
+        $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+
+        if (!in_array($rule, $allowUrl)) {
             if (defined('UID')) {
                 return;
             }
@@ -47,13 +48,14 @@ class Adminbase extends Base
                         $this->error('未授权访问!');
                     }
                 }
-
             }
         }
-
     }
 
-    //验证登录
+    /**
+     * 验证登录
+     * @return boolean
+     */
     private function competence()
     {
         //检查是否登录
@@ -62,18 +64,17 @@ class Adminbase extends Base
             return false;
         }
         //获取当前登录用户信息
-        $userInfo = User::instance()->getInfo();
+        $this->_userinfo = $userInfo = User::instance()->getInfo();
         if (empty($userInfo)) {
             User::instance()->logout();
             return false;
         }
-        $this->_userinfo = $userInfo;
         //是否锁定
-        /*if (!$userInfo['status']) {
-        User::getInstance()->logout();
-        $this->error('您的帐号已经被锁定！', url('admin/index/login'));
-        return false;
-        }*/
+        if (!$userInfo['status']) {
+            User::instance()->logout();
+            $this->error('您的帐号已经被锁定！', url('admin/index/login'));
+            return false;
+        }
         return $userInfo;
 
     }
