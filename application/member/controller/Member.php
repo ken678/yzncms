@@ -62,9 +62,7 @@ class Member extends Adminbase
             }
             $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
             if ($userid > 0) {
-                unset($data['username']);
-                unset($data['password']);
-                unset($data['emial']);
+                unset($data['username'], $data['password'], $data['email']);
                 if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
                     exit();
                     $this->success("添加会员成功！", url("member/member/manage"));
@@ -83,6 +81,36 @@ class Member extends Adminbase
                 $groupCache[$g['id']] = $g['name'];
             }
             $this->assign('groupCache', $groupCache);
+            return $this->fetch();
+        }
+    }
+
+    /**
+     * 会员编辑
+     */
+    public function edit()
+    {
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            $result = $this->validate($data, 'member');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+        } else {
+            $userid = $this->request->param('id', 0);
+            //主表
+            $data = $this->Member_Model->where(["id" => $userid])->find();
+            if (empty($data)) {
+                $this->error("该会员不存在！");
+            }
+            foreach ($this->groupCache as $g) {
+                if (in_array($g['id'], array(8, 1, 7))) {
+                    continue;
+                }
+                $groupCache[$g['id']] = $g['name'];
+            }
+            $this->assign('groupCache', $groupCache);
+            $this->assign("data", $data);
             return $this->fetch();
         }
 

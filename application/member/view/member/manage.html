@@ -30,17 +30,53 @@ layui.use('table', function() {
             [
                 { field: 'id', width: 80, title: '用户ID' },
                 { field: 'username', width: 150, title: '用户名' },
-                { field: 'nickname', width:150,title: '昵称' },
-                { field: 'email',width:150, title: '邮箱' },
-                { field: 'reg_ip',title: '注册IP' },
-                { field: 'last_login_time',title: '最后登录' },
-                { field: 'amount', width: 120,title: '金钱总数'},
+                { field: 'nickname', width: 150, title: '昵称' },
+                { field: 'email', width: 150, title: '邮箱' },
+                { field: 'reg_ip', title: '注册IP' },
+                { field: 'last_login_time', title: '最后登录' },
+                { field: 'amount', width: 120, title: '金钱总数' },
                 { field: 'point', width: 120, title: '积分总数' },
                 { field: 'login', width: 120, title: '登录次数' },
-                { field: 'status', width: 100,align:"center", title: '状态'},
-                { fixed: 'right',width: 120,title: '操作', templet: '#barTool' }
+                { field: 'status', width: 100, align: "center", title: '状态' },
+                { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
             ]
         ]
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("member/member/delete")}', { 'id': data.id }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });
+        } else if (obj.event === 'edit') {
+            window.open('{:url("member/member/edit")}' + "?id=" + data.id, '_self')
+        }
     });
 });
 </script>
