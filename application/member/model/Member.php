@@ -21,6 +21,14 @@ use \think\Model;
  */
 class Member extends Model
 {
+    protected $autoWriteTimestamp = true;
+    protected $updateTime = false;
+    protected $createTime = 'reg_time';
+    protected $insert = ['status' => 1, 'reg_ip'];
+    protected function setRegIpAttr()
+    {
+        return request()->ip(1);
+    }
 
     /**
      * 注册一个新用户
@@ -30,22 +38,22 @@ class Member extends Model
      * @param string $mobile    手机号
      * @param array $extend    扩展参数
      */
-    public function register($username, $password, $email = '', $mobile = '', $extend = [])
+    public function userRegister($username, $password, $email = '', $mobile = '', $extend = [])
     {
+        $passwordinfo = encrypt_password($password); //对密码进行处理
         $data = array(
             "username" => $username,
-            "password" => $password,
+            "password" => $passwordinfo['password'],
             "email" => $email,
-            "encrypt" => $encrypt,
+            "encrypt" => $passwordinfo['encrypt'],
             "amount" => 0,
         );
         $userid = $this->save($data);
         if ($userid) {
-            return $userid;
+            return $this->getAttr('id');
         }
         $this->error = $Member->getError() ?: '注册失败！';
         return false;
-
     }
 
     //会员配置缓存

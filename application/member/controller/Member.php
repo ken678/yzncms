@@ -56,7 +56,20 @@ class Member extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $userid = $this->Member_Model->register($data['username'], $data['password'], $data['email']);
+            $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
+            if ($userid > 0) {
+                unset($data['username']);
+                unset($data['password']);
+                unset($data['emial']);
+                if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
+                    exit();
+                    $this->success("添加会员成功！", url("member/member/manage"));
+                } else {
+                    //service("Passport")->userDelete($memberinfo['userid']);
+                    $this->error("添加会员失败！");
+                }
+
+            }
 
         } else {
             foreach ($this->groupCache as $g) {
