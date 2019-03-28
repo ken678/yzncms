@@ -36,7 +36,11 @@ class Member extends Adminbase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 10);
-            $_list = $this->Member_Model->page($page, $limit)->select();
+            $_list = $this->Member_Model->page($page, $limit)->select()->withAttr('reg_ip', function ($value, $data) {
+                return long2ip($value);
+            })->withAttr('last_login_time', function ($value, $data) {
+                return time_format($value);
+            });
             $total = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
