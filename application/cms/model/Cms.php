@@ -185,7 +185,6 @@ class Cms extends Modelbase
                 }
             } else {
                 if (is_array(${$arr}[$name])) {
-                    //${$arr}[$name] = ',' . implode(',', ${$arr}[$name]) . ',';
                     ${$arr}[$name] = implode(',', ${$arr}[$name]);
                 }
                 switch ($vo['type']) {
@@ -203,27 +202,8 @@ class Cms extends Modelbase
                     case 'date':
                         ${$arr}[$name] = strtotime(${$arr}[$name]);
                         break;
-                    /*case 'images':
-                    if (!empty(${$arr}[$name])) {
-                    var_dump(${$arr}[$name]);
-                    $imageArr = explode(',', substr(${$arr}[$name], 0, -1));
-                    $uniqueImageArr = array_unique($imageArr);
-                    ${$arr}[$name] = implode(',', $uniqueImageArr);
-                    }
-                    break;
-                    case 'files':
-                    if (!empty(${$arr}[$name])) {
-                    $fileArr = explode(',', substr(${$arr}[$name], 0, -1));
-                    $uniqueFileArr = array_unique($fileArr);
-                    ${$arr}[$name] = implode(',', $uniqueFileArr);
-                    }
-                    break;*/
                     // 百度编辑器
                     case 'Ueditor':
-                        ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
-                        break;
-                    // 简洁编辑器
-                    case 'summernote':
                         ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
                         break;
                 }
@@ -465,15 +445,16 @@ class Cms extends Modelbase
                 case 'images':
                     $newdata[$key] = empty($value) ? [] : get_file_path($value);
                     break;
+                case 'file':
+                    $newdata[$key] = empty($value) ? '' : get_file_path($value);
+                    break;
                 case 'files':
+                    $newdata[$key] = empty($value) ? [] : get_file_path($value);
                     break;
                 case 'tags':
                     $newdata[$key] = explode(',', $value);
                     break;
                 case 'Ueditor':
-                    $newdata[$key] = htmlspecialchars_decode($value);
-                    break;
-                case 'summernote':
                     $newdata[$key] = htmlspecialchars_decode($value);
                     break;
                 default:
