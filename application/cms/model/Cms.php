@@ -426,12 +426,38 @@ class Cms extends Modelbase
                     $newdata[$key] = parse_attr($newdata[$key]);
                     break;
                 case 'radio':
-
+                    if (!empty($value)) {
+                        if (!empty($fieldinfo[$key]['options'])) {
+                            $optionArr = parse_attr($fieldinfo[$key]['options']);
+                            $newdata[$key] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
+                        }
+                    }
                     break;
                 case 'select':
-
+                    if (!empty($value)) {
+                        if (!empty($fieldinfo[$key]['options'])) {
+                            $optionArr = parse_attr($fieldinfo[$key]['options']);
+                            $newdata[$key] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
+                        }
+                    }
                     break;
                 case 'checkbox':
+                    if (!empty($value)) {
+                        if (!empty($fieldinfo[$key]['options'])) {
+                            $optionArr = parse_attr($fieldinfo[$key]['options']);
+                            $valueArr = explode(',', $value);
+                            foreach ($valueArr as $v) {
+                                if (isset($optionArr[$v])) {
+                                    $newdata[$key][$v] = $optionArr[$v];
+                                } elseif ($v) {
+                                    $newdata[$key][$v] = $v;
+                                }
+                            }
+                            //其他表关联
+                        } else {
+                            $newdata[$key] = [];
+                        }
+                    }
                     break;
                 case 'image':
                     $newdata[$key] = empty($value) ? '' : get_file_path($value);
