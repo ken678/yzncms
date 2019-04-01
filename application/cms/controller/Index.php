@@ -126,9 +126,8 @@ class Index extends Homebase
                 }
                 //SEO
                 $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
-                $title = $info['title'] ? $info['title'] : $setting['meta_title'];
                 $description = $info['description'] ? $info['description'] : $setting['meta_description'];
-                $seo = seo($catid, $title, $description, $keywords);
+                $seo = seo($catid, $setting['meta_title'], $description, $keywords);
                 $this->assign($info);
             }
             //获取顶级栏目ID
