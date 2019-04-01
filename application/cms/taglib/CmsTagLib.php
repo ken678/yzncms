@@ -96,10 +96,10 @@ class CmsTagLib
         $moreifo = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
         //当前栏目信息
         $catInfo = getCategory($data['catid']);
-        //栏目所属模型
-        $modelid = $catInfo['modelid'];
-
-        $result = model('Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
+        $result = [];
+        if (isset($catInfo['modelid']) && $catInfo['modelid']) {
+            $result = model('Cms')->getList($catInfo['modelid'], $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
+        }
         return $result;
     }
 
