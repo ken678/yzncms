@@ -344,28 +344,30 @@ class Cms extends Modelbase
         $modelCache = cache("Model");
         $ModelField = cache('ModelField');
         $tableName = ucwords($modelCache[$modeId]['tablename']); //表名
-
-        if (2 == $modelCache[$modeId]['type'] && $moreifo) {
-            $extTable = $tableName . $this->ext_table;
-            if ($page) {
-                $result = \think\Db::view($tableName, '*')
-                    ->where($where)
-                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                    ->order($order)
-                    ->paginate($limit);
+        $result = [];
+        if (isset($tableName) && !empty($tableName)) {
+            if (2 == $modelCache[$modeId]['type'] && $moreifo) {
+                $extTable = $tableName . $this->ext_table;
+                if ($page) {
+                    $result = \think\Db::view($tableName, '*')
+                        ->where($where)
+                        ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
+                        ->order($order)
+                        ->paginate($limit);
+                } else {
+                    $result = \think\Db::view($tableName, '*')
+                        ->where($where)
+                        ->limit($limit)
+                        ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
+                        ->order($order)
+                        ->select();
+                }
             } else {
-                $result = \think\Db::view($tableName, '*')
-                    ->where($where)
-                    ->limit($limit)
-                    ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                    ->order($order)
-                    ->select();
-            }
-        } else {
-            if ($page) {
-                $result = \think\Db::name($tableName)->where($where)->order($order)->paginate($limit);
-            } else {
-                $result = \think\Db::name($tableName)->where($where)->limit($limit)->order($order)->select();
+                if ($page) {
+                    $result = \think\Db::name($tableName)->where($where)->order($order)->paginate($limit);
+                } else {
+                    $result = \think\Db::name($tableName)->where($where)->limit($limit)->order($order)->select();
+                }
             }
         }
         //数据格式化处理
