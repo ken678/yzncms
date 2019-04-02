@@ -101,7 +101,7 @@
                         </div>
                         <div class="layui-tab-item">
                             <div class="layui-form-item web_list">
-                                <label class="w100">栏目首页模板</label>
+                                <label>栏目首页模板</label>
                                 <div class="w300">
                                     <select name="setting[category_template]">
                                         <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
@@ -112,7 +112,7 @@
                                 <div class="layui-form-mid layui-word-aux">新增模板以category_xx.{:config('template.view_suffix')}形式,【含有子栏目时生效】</div>
                             </div>
                             <div class="layui-form-item web_list">
-                                <label class="w100">栏目列表页模板</label>
+                                <label>栏目列表页模板</label>
                                 <div class="w300">
                                     <select name="setting[list_template]">
                                         <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
@@ -124,7 +124,7 @@
                                 <div class="layui-form-mid layui-word-aux">新增模板以list_xx.{:config('template.view_suffix')}形式,【没有子栏目时生效】</div>
                             </div>
                             <div class="layui-form-item web_list">
-                                <label class="w100">内容页模板</label>
+                                <label>内容页模板</label>
                                 <div class="w300">
                                     <select name="setting[show_template]">
                                         <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
@@ -133,6 +133,13 @@
                                     </select>
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">新增模板以show_xx.{:config('template.view_suffix')}形式</div>
+                            </div>
+                            <div class="layui-form-item web_list">
+                                <label>模板应用到子栏目</label>
+                                <div class="w300">
+                                    <input type="radio" name="template_child" value="1" title="是">
+                                    <input type="radio" name="template_child" value="0" title="否" checked>
+                                </div>
                             </div>
                         </div>
                     </div>

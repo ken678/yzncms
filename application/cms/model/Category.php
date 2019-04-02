@@ -23,6 +23,7 @@ use \think\Model;
  */
 class Category extends Model
 {
+    public $categorys;
     //新增栏目
     public function addCategory($data, $fields)
     {
@@ -32,10 +33,7 @@ class Category extends Model
         }
         //序列化setting数据
         $data['setting'] = serialize($data['setting']);
-        //栏目拼音
-        /*$catname = iconv('utf-8', 'gbk', $data['catname']);
-        $letters = gbk_to_pinyin($catname);
-        $data['letter'] = strtolower(implode('', $letters));*/
+
         $catid = self::create($data, $fields);
         if ($catid) {
             cache('Category', null);
@@ -65,14 +63,22 @@ class Category extends Model
             return false;
         }
 
-        //栏目拼音
-        /*$catname = iconv('utf-8', 'gbk', $data['catname']);
-        $letters = gbk_to_pinyin($catname);
-        $data['letter'] = strtolower(implode('', $letters));*/
-
+        //应用模板到所有子栏目
+        if ($data['template_child']) {
+            $idstr = $this->get_arrchildid($catid);
+            if (!empty($idstr)) {
+                $arr = self::all($idstr);
+                foreach ($arr as $key => $val) {
+                    $setting = unserialize($val->getAttr('setting'));
+                    $setting['category_template'] = $data['setting']['category_template'];
+                    $setting['list_template'] = $data['setting']['list_template'];
+                    $setting['show_template'] = $data['setting']['show_template'];
+                    $rs = self::where('id', $val->getAttr('id'))->update(['setting' => serialize($setting)]);
+                }
+            }
+        }
         //序列化setting数据
         $data['setting'] = serialize($data['setting']);
-
         //更新数据
         if (self::update($data, [], $fields) !== false) {
             //更新栏目缓存
@@ -134,6 +140,55 @@ class Category extends Model
         } else {
             return false;
         }
+    }
+
+    /**
+     *
+     * 获取父栏目ID列表
+     * @param integer $catid              栏目ID
+     * @param array $arrparentid          父目录ID
+     * @param integer $n                  查找的层次
+     */
+    public function get_arrparentid($catid, $arrparentid = '', $n = 1)
+    {
+        if (empty($this->categorys)) {
+            $this->categorys = cache('Category');
+        }
+        if ($n > 10 || !is_array($this->categorys) || !isset($this->categorys[$catid])) {
+            return false;
+        }
+        //获取当前栏目的上级栏目ID
+        $parentid = $this->categorys[$catid]['parentid'];
+        //所有父ID
+        $arrparentid = $arrparentid ? $parentid . ',' . $arrparentid : $parentid;
+        if ($parentid) {
+            $arrparentid = $this->get_arrparentid($parentid, $arrparentid, ++$n);
+        } else {
+            $this->categorys[$catid]['arrparentid'] = $arrparentid;
+        }
+        //$parentid = $this->categorys[$catid]['parentid'];
+        return $arrparentid;
+    }
+
+    /**
+     *
+     * 获取子栏目ID列表
+     * @param $catid 栏目ID
+     */
+    public function get_arrchildid($catid)
+    {
+        if (!$this->categorys) {
+            $this->categorys = cache('Category');
+        }
+        $arrchildid = $catid;
+        if (is_array($this->categorys)) {
+            foreach ($this->categorys as $id => $cat) {
+                if ($cat['parentid'] && $id != $catid && $cat['parentid'] == $catid) {
+                    $arrchildid .= ',' . $this->get_arrchildid($id);
+                }
+            }
+        }
+        return $arrchildid;
     }
 
     //刷新栏目索引缓存
