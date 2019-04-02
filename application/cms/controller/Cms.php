@@ -53,10 +53,14 @@ class Cms extends Adminbase
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
             $total = Db::name(ucwords($tableName))->where('catid', $catid)->count();
-            $list = Db::name(ucwords($tableName))->page($page, $limit)->where('catid', $catid)->withAttr('updatetime', function ($value, $data) {
-                return date('Y-m-d H:i:s', $value);
-            })->order(['listorder', 'id' => 'desc'])->select();
-            $result = array("code" => 0, "count" => $total, "data" => $list);
+            $list = Db::name(ucwords($tableName))->page($page, $limit)->where('catid', $catid)->order(['listorder', 'id' => 'desc'])->select();
+            $_list = [];
+            foreach ($list as $k => $v) {
+                $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
+                $v['url'] = buildContentUrl($v['catid'], $v['id']);
+                $_list[$v['id']] = $v;
+            }
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
         $this->assign('catid', $catid);
