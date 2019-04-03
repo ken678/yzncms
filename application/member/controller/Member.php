@@ -64,15 +64,12 @@ class Member extends Adminbase
             if ($userid > 0) {
                 unset($data['username'], $data['password'], $data['email']);
                 if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
-                    exit();
                     $this->success("添加会员成功！", url("member/member/manage"));
                 } else {
                     //service("Passport")->userDelete($memberinfo['userid']);
                     $this->error("添加会员失败！");
                 }
-
             }
-
         } else {
             foreach ($this->groupCache as $g) {
                 if (in_array($g['id'], array(8, 1, 7))) {
@@ -113,6 +110,27 @@ class Member extends Adminbase
             $this->assign("data", $data);
             return $this->fetch();
         }
+    }
+
+    /**
+     * 会员删除
+     */
+    public function delete()
+    {
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids)) {
+            $this->error('请选择需要删除的会员！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        foreach ($ids as $uid) {
+            $info = Member_Model::get($uid);
+            if (!empty($info)) {
+                $this->Member_Model->userDelete($uid);
+            }
+        }
+        $this->success("删除成功！");
 
     }
 

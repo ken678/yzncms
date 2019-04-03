@@ -8,6 +8,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</a>
         <a class="layui-btn layui-btn-sm" href="{:url('member/member/add')}">添加会员</a>
     </div>
 </script>
@@ -28,19 +29,60 @@ layui.use('table', function() {
         url: '{:url("member/member/manage")}',
         cols: [
             [
+                { type: 'checkbox', fixed: 'left' },
                 { field: 'id', width: 80, title: '用户ID' },
                 { field: 'username', width: 150, title: '用户名' },
                 { field: 'nickname', width: 150, title: '昵称' },
-                { field: 'email', width: 150, title: '邮箱' },
+                { field: 'email',  title: '邮箱' },
                 { field: 'reg_ip', title: '注册IP' },
                 { field: 'last_login_time', title: '最后登录' },
                 { field: 'amount', width: 120, title: '金钱总数' },
                 { field: 'point', width: 120, title: '积分总数' },
-                { field: 'login', width: 120, title: '登录次数' },
-                { field: 'status', width: 100, align: "center", title: '状态' },
+                { field: 'login', width: 100, title: '登录次数' },
                 { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
             ]
         ]
+    });
+
+        table.on('toolbar(table)', function(obj) {
+        if (obj.event === 'delAll') {
+            var checkStatus = table.checkStatus('table'),
+                data = checkStatus.data,
+                ids = [];
+            if (data.length > 0) {
+                for (let i in data) {
+                    ids.push(data[i].id);
+                }
+                layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
+                    $.post('{:url("member/member/delete")}', { 'ids': ids }, function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
+                    });
+                    layer.close(index);
+                })
+            } else {
+                layer.msg("请选择需要删除的数据");
+            }
+        }
     });
 
     //监听行工具事件
@@ -49,7 +91,7 @@ layui.use('table', function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("member/member/delete")}', { 'id': data.id }, function(data) {
+                $.post('{:url("member/member/delete")}', { 'ids': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');

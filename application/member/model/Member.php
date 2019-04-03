@@ -56,6 +56,21 @@ class Member extends Model
         return false;
     }
 
+    /**
+     * 删除用户
+     * @param type $uid 用户UID
+     * @return boolean
+     */
+    public function userDelete($uid)
+    {
+        //删除本地用户数据开始
+        if (self::where(["id" => $uid])->delete() !== flase) {
+            return true;
+        }
+        $this->error = '删除会员失败！';
+        return false;
+    }
+
     //会员配置缓存
     public function member_cache()
     {
