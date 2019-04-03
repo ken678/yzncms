@@ -35,10 +35,12 @@ class Attachments extends Adminbase
 
     public function index()
     {
-        $limit = $this->request->param('limit/d', 10);
-        $page = $this->request->param('page/d', 10);
         if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 10);
+            $map = $this->buildparams();
             $_list = Db::name("attachment")
+                ->where($map)
                 ->page($page, $limit)
                 ->order('id', 'desc')
                 ->withAttr('size', function ($value, $data) {
@@ -48,7 +50,7 @@ class Attachments extends Adminbase
                     return date('Y-m-d H:i:s', $value);
                 })
                 ->select();
-            $total = Db::name("attachment")->order('id', 'desc')->count();
+            $total = Db::name("attachment")->where($map)->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }

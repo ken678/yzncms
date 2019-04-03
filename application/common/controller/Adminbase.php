@@ -115,4 +115,20 @@ class Adminbase extends Base
         return true;
     }
 
+    /**
+     * 生成查询所需要的条件,排序方式
+     */
+    protected function buildparams()
+    {
+        $search_field = $this->request->param('search_field/s', '', 'trim');
+        $keyword = $this->request->param('keyword/s', '', 'trim');
+        $map = [];
+        // 搜索框搜索
+        if ($search_field != '' && $keyword !== '') {
+            $map[] = [$search_field, 'like', "%$keyword%"];
+        }
+        return $map;
+
+    }
+
 }
