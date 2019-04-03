@@ -283,8 +283,8 @@ class Category extends Adminbase
         if (false == $this->Category_Model->deleteCatid($catid)) {
             $this->error("栏目含有信息，无法删除！");
         }
-        $this->cache();
-        $this->success("栏目删除成功！");
+        //$this->cache();
+        $this->success("栏目删除成功！", url('cms/category/public_cache'));
     }
 
     //更新栏目缓存并修复
