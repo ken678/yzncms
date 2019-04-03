@@ -333,6 +333,10 @@ class Category extends Adminbase
                     Category_Model::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
                 }
                 getCategory($catid, '', true);
+                //删除在非正常显示的栏目
+                if ($cat['parentid'] != 0 && !isset($this->categorys[$cat['parentid']])) {
+                    $this->Category_Model->deleteCatid($catid);
+                }
             }
 
         }
