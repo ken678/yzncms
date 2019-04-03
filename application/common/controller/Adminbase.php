@@ -122,10 +122,20 @@ class Adminbase extends Base
     {
         $search_field = $this->request->param('search_field/s', '', 'trim');
         $keyword = $this->request->param('keyword/s', '', 'trim');
+
+        $filter_time = $this->request->param('filter_time/s', '', 'trim');
+        $filter_time_range = $this->request->param('filter_time_range/s', '', 'trim');
+
         $map = [];
         // 搜索框搜索
         if ($search_field != '' && $keyword !== '') {
             $map[] = [$search_field, 'like', "%$keyword%"];
+        }
+
+        if ($filter_time && $filter_time_range) {
+            $filter_time_range = str_replace(' - ', ',', $filter_time_range);
+            $arr = array_slice(explode(',', $filter_time_range), 0, 2);
+            $map[] = [$filter_time, 'between time', [$arr[0] . ' 00:00:00', $arr[1] . ' 23:59:59']];
         }
         return $map;
 
