@@ -310,9 +310,9 @@ class Category extends Adminbase
     private function repair()
     {
         $this->categorys = $categorys = array();
+        //取出需要处理的栏目数据
         $data = Db::name('Category')->order('listorder ASC, id ASC')->select();
         if (empty($data)) {
-            //$this->cache();
             return true;
         }
         foreach ($data as $v) {
@@ -321,17 +321,12 @@ class Category extends Adminbase
         $this->categorys = $categorys;
         if (is_array($categorys)) {
             foreach ($categorys as $catid => $cat) {
-                //更新URL
-                /*$url = self::buildUrl($cat['type'], $cat['id'], $cat['url']);
-                if ($cat['url'] != $url) {
-                Category_Model::update(['url' => $url], ['id' => $catid], true);
-                }*/
-                /*if ($cat['type'] == 3) {
-                continue;
-                }*/
-                $arrparentid = $this->Category_Model->get_arrparentid($catid); //父栏目组
-                $setting = unserialize($cat['setting']); //栏目配置
-                $arrchildid = $this->Category_Model->get_arrchildid($catid); //子栏目组
+                //获取父栏目ID列表
+                $arrparentid = $this->Category_Model->get_arrparentid($catid);
+                //栏目配置信息反序列化
+                $setting = unserialize($cat['setting']);
+                //获取子栏目ID列表
+                $arrchildid = $this->Category_Model->get_arrchildid($catid);
                 $child = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
                 //检查所有父id 子栏目id 等相关数据是否正确，不正确更新
                 if ($categorys[$catid]['arrparentid'] != $arrparentid || $categorys[$catid]['arrchildid'] != $arrchildid || $categorys[$catid]['child'] != $child) {
