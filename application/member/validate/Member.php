@@ -27,4 +27,9 @@ class Member extends Validate
         'groupid|会员组' => 'require|number',
     ];
 
+    public function sceneEdit()
+    {
+        return $this->remove('password', 'require');
+    }
+
 }

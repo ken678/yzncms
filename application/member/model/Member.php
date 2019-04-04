@@ -57,6 +57,52 @@ class Member extends Model
     }
 
     /**
+     * 更新用户基本资料
+     * @param type $username 用户名
+     * @param type $oldpw 旧密码
+     * @param type $newpw 新密码，如不修改为空
+     * @param type $email Email，如不修改为空
+     * @param type $ignoreoldpw 是否忽略旧密码
+     * @param type $data 其他信息
+     * @return boolean
+     */
+    public function userEdit($username, $oldpw, $newpw = '', $email = '', $ignoreoldpw = 0, $data = array())
+    {
+        //验证旧密码是否正确
+        if ($ignoreoldpw == 0) {
+            $info = self::where(["username" => $username])->find();
+            $pas = encrypt_password($oldpw, $info['encrypt']);
+            if ($pas['password'] != $info['password']) {
+                $this->error = '旧密码错误！';
+                return false;
+            }
+        }
+        if ($newpw) {
+            $passwordinfo = encrypt_password($newpw);
+            $data = array(
+                "password" => $passwordinfo['password'],
+                "encrypt" => $passwordinfo['encrypt'],
+            );
+        } else {
+            unset($data['password'], $data['encrypt']);
+        }
+        if ($email) {
+            $data['email'] = $email;
+        } else {
+            unset($data['email']);
+        }
+        if (empty($data)) {
+            return true;
+        }
+        if (self::allowField(true)->save($data, ["username" => $username]) !== false) {
+            return true;
+        } else {
+            $this->error = '用户资料更新失败！';
+            return false;
+        }
+    }
+
+    /**
      * 删除用户
      * @param type $uid 用户UID
      * @return boolean

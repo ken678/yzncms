@@ -64,7 +64,7 @@ class Member extends Adminbase
             if ($userid > 0) {
                 unset($data['username'], $data['password'], $data['email']);
                 if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
-                    $this->success("添加会员成功！", url("member/member/manage"));
+                    $this->success("添加会员成功！", url("member/manage"));
                 } else {
                     //service("Passport")->userDelete($memberinfo['userid']);
                     $this->error("添加会员失败！");
@@ -88,14 +88,33 @@ class Member extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
+            $userid = $this->request->param('id/d', 0);
             $data = $this->request->post();
-            $result = $this->validate($data, 'member');
+            $result = $this->validate($data, 'member.edit');
             if (true !== $result) {
                 return $this->error($result);
             }
+            //获取用户信息
+            $userinfo = Member_Model::get($userid);
+            if (empty($userinfo)) {
+                $this->error('该会员不存在！');
+            }
+            //修改基本资料
+            if ($userinfo['username'] != $data['username'] || !empty($data['password']) || $userinfo['email'] != $data['email']) {
+                $res = $this->Member_Model->userEdit($userinfo['username'], '', $data['password'], $data['email'], 1);
+                if (!$res) {
+                    $this->error($this->Member_Model->getError());
+                }
+            }
+            unset($data['username'], $data['password'], $data['email']);
+            //更新除基本资料外的其他信息
+            if (false === $this->Member_Model->allowField(true)->save($data, ['id' => $userid])) {
+                $this->error('更新失败！');
+            }
+            $this->success("更新成功！", url("member/manage"));
+
         } else {
-            $userid = $this->request->param('id', 0);
-            //主表
+            $userid = $this->request->param('id/d', 0);
             $data = $this->Member_Model->where(["id" => $userid])->find();
             if (empty($data)) {
                 $this->error("该会员不存在！");
