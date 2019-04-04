@@ -6,6 +6,19 @@
 }
 </style>
 <div class="layui-form">
+        <blockquote class="layui-elem-quote quoteBox">
+            <form class="layui-form search-from" method="get">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="laydate" placeholder="搜索时间范围">
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" class="layui-input searchVal" placeholder="请输入标题关键词">
+                    </div>
+                    <a class="layui-btn search_btn" data-type="reload">搜索</a>
+                </div>
+            </form>
+        </blockquote>
     <table class="layui-hide" id="table" lay-filter="table"></table>
 </div>
 <script type="text/html" id="toolbarDemo">
@@ -45,10 +58,15 @@
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
+layui.use(['table', 'laydate'], function() {
     var table = layui.table,
         $ = layui.$,
-        form = layui.form;
+        form = layui.form,
+        laydate = layui.laydate;
+    laydate.render({
+        elem: '#laydate',
+        range: true,
+    });
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
@@ -67,6 +85,20 @@ layui.use('table', function() {
             ]
         ],
         page: {}
+    });
+
+    $(".search_btn").on("click", function() {
+        table.reload("table", {
+            page: {
+                curr: 1 //重新从第 1 页开始
+            },
+            where: {
+                search_field: 'title',
+                keyword: $(".searchVal").val(),
+                filter_time: 'inputtime',
+                filter_time_range: $("#laydate").val()
+            }
+        })
     });
 
         //监听单元格编辑

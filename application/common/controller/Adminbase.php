@@ -127,18 +127,20 @@ class Adminbase extends Base
         $filter_time_range = $this->request->param('filter_time_range/s', '', 'trim');
 
         $map = [];
-        // 搜索框搜索
+        // 关键词搜索
         if ($search_field != '' && $keyword !== '') {
             $map[] = [$search_field, 'like', "%$keyword%"];
         }
 
+        //时间范围搜索
         if ($filter_time && $filter_time_range) {
             $filter_time_range = str_replace(' - ', ',', $filter_time_range);
-            $arr = array_slice(explode(',', $filter_time_range), 0, 2);
+            $arr = explode(',', $filter_time_range);
+            !empty($arr[0]) ? $arr[0] : date("Y-m-d", strtotime("-1 day"));
+            !empty($arr[1]) ? $arr[1] : date('Y-m-d', time());
             $map[] = [$filter_time, 'between time', [$arr[0] . ' 00:00:00', $arr[1] . ' 23:59:59']];
         }
         return $map;
-
     }
 
 }

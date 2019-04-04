@@ -36,9 +36,10 @@ class Cms extends Adminbase
     public function classlist()
     {
         $catid = $this->request->param('catid/d', 0);
-        $limit = $this->request->param('limit/d', 10);
-        $page = $this->request->param('page/d', 10);
         if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 10);
+            $map = $this->buildparams();
             //当前栏目信息
             $catInfo = getCategory($catid);
             if (empty($catInfo)) {
@@ -52,8 +53,8 @@ class Cms extends Adminbase
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $total = Db::name(ucwords($tableName))->where('catid', $catid)->count();
-            $list = Db::name(ucwords($tableName))->page($page, $limit)->where('catid', $catid)->order(['listorder', 'id' => 'desc'])->select();
+            $total = Db::name(ucwords($tableName))->where($map)->where('catid', $catid)->count();
+            $list = Db::name(ucwords($tableName))->page($page, $limit)->where($map)->where('catid', $catid)->order(['listorder', 'id' => 'desc'])->select();
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
