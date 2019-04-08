@@ -71,15 +71,8 @@ CREATE TABLE `yzn_adminlog` (
   `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
--- ----------------------------
--- Records of yzn_adminlog
--- ----------------------------
-INSERT INTO `yzn_adminlog` VALUES ('1', '1', '1', '提示语:设置更新成功', '1551244828', '2130706433', '/admin/config/setting/group/system.html');
-INSERT INTO `yzn_adminlog` VALUES ('2', '1', '1', '提示语:配置添加成功~', '1551244923', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('3', '1', '1', '提示语:配置添加成功~', '1551244957', '2130706433', '/admin/config/add.html');
-INSERT INTO `yzn_adminlog` VALUES ('4', '1', '1', '提示语:配置编辑成功~', '1551244971', '2130706433', '/admin/config/edit/id/8.html');
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -296,7 +289,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -328,24 +321,27 @@ INSERT INTO `yzn_menu` VALUES ('28', '编辑菜单', '', '14', 'admin', 'menu', 
 INSERT INTO `yzn_menu` VALUES ('29', '删除菜单', '', '14', 'admin', 'menu', 'delete', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('30', '附件上传', '', '23', 'attachment', 'attachments', 'upload', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('31', '附件删除', '', '23', 'attachment', 'attachments', 'delete', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('32', '插件扩展', 'icon-tools', '5', 'addons', 'addons', 'index2', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('33', '插件管理', 'icon-plugins-', '32', 'addons', 'addons', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('34', '行为管理', 'icon-hangweifenxi', '32', 'addons', 'addons', 'hooks', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('35', '插件后台列表', 'icon-liebiaosousuo', '5', 'addons', 'addons', 'addonadmin', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('36', '在线云平台', 'icon-cloud-download', '4', 'admin', 'cloud', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('37', '本地模块', 'icon-supply', '4', 'admin', 'module', 'index2', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('38', '模块管理', 'icon-mokuaishezhi', '37', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('39', '模块后台列表', 'icon-liebiaosousuo', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('40', '模块商店', 'icon-caigou-xianxing', '36', 'admin', 'moduleshop', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('41', '插件商店', 'icon-caigou-xianxing', '36', 'admin', 'addonshop', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('42', '编辑角色', '', '17', 'admin', 'authManager', 'editGroup', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('43', '删除角色', '', '17', 'admin', 'authManager', 'deleteGroup', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('44', '访问授权', '', '17', 'admin', 'authManager', 'access', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('45', '角色授权', '', '17', 'admin', 'authManager', 'writeGroup', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('46', '模块安装', '', '38', 'admin', 'module', 'install', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('47', '模块卸载', '', '38', 'admin', 'module', 'uninstall', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('48', '本地安装', '', '38', 'admin', 'module', 'local', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('49', '缓存更新', '', '0', 'admin', 'index', 'cache', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('32', '编辑器附件', '', '23', 'attachment', 'ueditor', 'run', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('33', '图片列表', '', '23', 'attachment', 'attachments', 'showFileLis', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('38', '插件扩展', 'icon-tools', '5', 'addons', 'addons', 'index2', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('39', '插件管理', 'icon-plugins-', '38', 'addons', 'addons', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('40', '行为管理', 'icon-hangweifenxi', '38', 'addons', 'addons', 'hooks', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('41', '插件后台列表', 'icon-liebiaosousuo', '5', 'addons', 'addons', 'addonadmin', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('42', '在线云平台', 'icon-cloud-download', '4', 'admin', 'cloud', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('43', '本地模块', 'icon-supply', '4', 'admin', 'module', 'index2', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('44', '模块管理', 'icon-mokuaishezhi', '43', 'admin', 'module', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('45', '模块后台列表', 'icon-liebiaosousuo', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('46', '模块商店', 'icon-caigou-xianxing', '42', 'admin', 'moduleshop', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('47', '插件商店', 'icon-caigou-xianxing', '42', 'admin', 'addonshop', 'index', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('48', '编辑角色', '', '17', 'admin', 'authManager', 'editGroup', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('49', '删除角色', '', '17', 'admin', 'authManager', 'deleteGroup', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('50', '访问授权', '', '17', 'admin', 'authManager', 'access', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('51', '角色授权', '', '17', 'admin', 'authManager', 'writeGroup', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('52', '模块安装', '', '44', 'admin', 'module', 'install', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('53', '模块卸载', '', '44', 'admin', 'module', 'uninstall', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('54', '本地安装', '', '44', 'admin', 'module', 'local', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('55', '缓存更新', '', '0', 'admin', 'index', 'cache', '', '0', '', '0', '0');
+
 
 
 
