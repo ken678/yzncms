@@ -200,28 +200,54 @@ function filters($modelid)
     $catid = input('catid');
     $conditionParam = [];
     foreach ($data as $name => $rs) {
-        //选中
-        if (!empty($param[$name])) {
-            $conditionParam[$name]['options'][$param[$name]]['active'] = true;
-            $nowParam = $param;
-            $nowParam[$name] = '';
-            $conditionParam[$name]['options'][$param[$name]]['param'] = paramencode($nowParam);
-            unset($nowParam);
+        //判断是否是单选条件
+        $ifradio = 'checkbox' == $data[$name]['type'] ? false : true;
+        if ($ifradio) {
+            //单选选中参数
+            if (!empty($param[$name])) {
+                $conditionParam[$name]['options'][$param[$name]]['active'] = true;
+                $nowParam = $param;
+                $nowParam[$name] = '';
+                $conditionParam[$name]['options'][$param[$name]]['param'] = paramencode($nowParam);
+                unset($nowParam);
+            }
+        } else {
+            //多选选中参数
+            if (!empty($param[$name])) {
+                $paramContent = explode('_', $param[$name]);
+                foreach ($paramContent as $k => $v) {
+                    $nowParamContent = $paramContent;
+                    unset($nowParamContent[$k]);
+                    $nowParam = $param;
+                    $nowParam[$name] = implode('_', $nowParamContent);
+                    $conditionParam[$name]['options'][$v]['active'] = 1;
+                    $conditionParam[$name]['options'][$v]['param'] = paramencode($nowParam);
+                    unset($nowParam);
+                    unset($nowParamContent);
+                }
+                unset($paramContent);
+            }
+
         }
         $conditionParam[$name]['title'] = $rs['title'];
         $conditionParam[$name]['name'] = $rs['name'];
-
         //未选中 active param title url
         foreach ($data[$name]['options'] as $k => $v) {
             $conditionParam[$name]['options'][$k]['title'] = $v;
             //未选中条件参数生成
             if (!isset($conditionParam[$name]['options'][$k]['active'])) {
+                //未选中条件参数生成
                 $conditionParam[$name]['options'][$k]['active'] = 0;
-                $nowParam = $param;
-                $nowParam[$name] = $k;
-                $conditionParam[$name]['options'][$k]['param'] = paramencode($nowParam);
+                if ($ifradio) {
+                    $nowParam = $param;
+                    $nowParam[$name] = $k;
+                    $conditionParam[$name]['options'][$k]['param'] = paramencode($nowParam);
+                } else {
+                    $nowParam = $param;
+                    $nowParam[$name] = empty($param[$name]) ? $k : $param[$name] . '_' . $k;
+                    $conditionParam[$name]['options'][$k]['param'] = paramencode($nowParam);
+                }
             }
-
             $conditionParam[$name]['options'][$k]['url'] = url('cms/index/lists', ['catid' => $catid, 'condition' => $conditionParam[$name]['options'][$k]['param']]);
             ksort($conditionParam[$name]['options']);
         }
@@ -246,8 +272,13 @@ function structure_filters_sql($modelid)
     $sql = '`status` = \'1\'';
     $param = paramdecode(input('condition'));
     foreach ($param as $k => $r) {
-        if (in_array($k, $fields_key) && intval($r) != 0) {
-            $sql .= " AND `$k` = '$r'";
+        if (isset($data[$k]['type']) && in_array($k, $fields_key) && intval($r) != 0) {
+            if ('radio' == $data[$k]['type']) {
+                $sql .= " AND `$k` = '$r'";
+            } elseif ('checkbox' == $data[$k]['type']) {
+                $r = str_replace('_', ',', $r);
+                $sql .= " AND $k in('$r')";
+            }
         }
     }
     return $sql;
