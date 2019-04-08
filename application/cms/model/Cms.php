@@ -252,21 +252,17 @@ class Cms extends Modelbase
                         }
                     }
                 }
-                //解析字段关联规则
-                $dataRule = [];
                 //扩展配置
                 $value['setting'] = unserialize($value['setting']);
                 $value['options'] = $value['setting']['options'];
 
-                if (empty($value['value'])) {
-                    //为空设置默认值
-                    $value['value'] = $value['setting']['value'];
-                }
+                /*if (empty($value['value'])) {
+                //为空设置默认值
+                $value['value'] = $value['setting']['value'];
+                }*/
 
                 if ('' != $value['options']) {
                     $value['options'] = parse_attr($value['options']);
-                } elseif (isset($dataRule['choose'])) {
-                    $value['options'] = Db::name($dataRule['choose']['table'])->where($dataRule['choose']['where'])->limit($dataRule['choose']['limit'])->order($dataRule['choose']['order'])->column($dataRule['choose']['key'] . ',' . $dataRule['choose']['value']);
                 }
                 if ($value['type'] == 'checkbox') {
                     $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
@@ -285,17 +281,9 @@ class Cms extends Modelbase
                 }
                 if ($value['type'] == 'file') {
                     $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                    if (isset($dataRule['file']['type'])) {
-                        $value['param']['sizelimit'] = $dataRule['file']['size'];
-                        $value['param']['extlimit'] = $dataRule['file']['type'];
-                    }
                 }
                 if ($value['type'] == 'files') {
                     $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                    if (isset($dataRule['file']['type'])) {
-                        $value['param']['sizelimit'] = $dataRule['file']['size'];
-                        $value['param']['extlimit'] = $dataRule['file']['type'];
-                    }
                 }
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);

@@ -220,14 +220,13 @@ function filters($modelid)
                     unset($nowParamContent[$k]);
                     $nowParam = $param;
                     $nowParam[$name] = implode('_', $nowParamContent);
-                    $conditionParam[$name]['options'][$v]['active'] = 1;
+                    $conditionParam[$name]['options'][$v]['active'] = true;
                     $conditionParam[$name]['options'][$v]['param'] = paramencode($nowParam);
                     unset($nowParam);
                     unset($nowParamContent);
                 }
                 unset($paramContent);
             }
-
         }
         $conditionParam[$name]['title'] = $rs['title'];
         $conditionParam[$name]['name'] = $rs['name'];

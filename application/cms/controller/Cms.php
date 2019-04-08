@@ -260,14 +260,15 @@ class Cms extends Adminbase
      */
     public function setstate()
     {
+        $catid = $this->request->param('catid/d', 0);
         $id = $this->request->param('id/d', 0);
         $status = $this->request->param('status/s') === 'true' ? 1 : 0;
-        $modelid = getCategory($id, 'modelid');
+        $modelid = getCategory($catid, 'modelid');
         $modelCache = cache("Model");
         if (empty($modelCache[$modelid])) {
             return false;
         };
-        $tableName = $modelCache[$modelid]['tablename'];
+        $tableName = ucwords($modelCache[$modelid]['tablename']);
         if (Db::name($tableName)->where('id', $id)->update(['status' => $status])) {
             //更新栏目缓存
             cache('Category', null);
