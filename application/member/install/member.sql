@@ -49,11 +49,11 @@ CREATE TABLE `yzn_member_group` (
   `icon` char(30) NOT NULL COMMENT '用户组图标',
   `usernamecolor` char(7) NOT NULL COMMENT '用户名颜色',
   `description` char(100) NOT NULL COMMENT '描述',
-  `sort` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用',
   PRIMARY KEY (`id`),
   KEY `disabled` (`disabled`),
-  KEY `listorder` (`sort`)
+  KEY `listorder` (`listorder`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 INSERT INTO `yzn_member_group` VALUES ('1', '禁止访问', '1', '0', '0', '0', '1', '1', '0', '1', '0', '0', '0', '0', '0.00', '0.00', '0.00', '', '', '0', '0', '0');
