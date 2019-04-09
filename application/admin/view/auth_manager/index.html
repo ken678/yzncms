@@ -36,7 +36,7 @@ layui.use('table', function() {
                 { field: 'title',width: 200, title: '授权',templet: "<div><a class='layui-btn layui-btn-xs' href='{:url('AuthManager/access?group_name=')}?title={{d.title}}&group_id={{d.id}}'>访问授权</a></div>" },
                 { field: 'title', width: 200, title: '权限组'},
                 { field: 'description', title: '描述' },
-                { field: 'status', width: 100,title: '状态', templet: '<div>{{#  if(d.status){ }} 正常 {{#  } else { }} <font color="#FF0000">禁用</font> {{#  } }} </div>' },
+                { field: 'status', width: 100,title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">正常</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>' },
                 { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
             ]
         ],

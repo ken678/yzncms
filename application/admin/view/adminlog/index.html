@@ -29,7 +29,7 @@ layui.use('table', function() {
                 { field: 'get', title: '操作URL' },
                 { field: 'create_time', width: 180, title: '时间' },
                 { field: 'ip', width: 100, title: 'IP' },
-                { field: 'status', width: 100, title: '状态', templet: '<div>{{#  if(d.status){ }} success {{#  } else { }} <font color="#FF0000">error</font> {{#  } }} </div>' },
+                { field: 'status', width: 80, title: '状态',align: "center", templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">成功</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">失败</button> {{#  } }} </div>' },
             ]
         ],
         page: {}
