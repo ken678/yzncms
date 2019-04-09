@@ -8,13 +8,14 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</a>
         <a class="layui-btn layui-btn-sm" href="{:url('member/group/add')}">添加会员组</a>
     </div>
 </script>
 <script type="text/html" id="barTool">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    {{#  if(d.issystem!=1){ }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } }}
 </script>
 <script type="text/html" id="issystem">
     {{#  if(d.issystem==1){ }}
@@ -84,9 +85,8 @@ layui.use('table', function() {
         url: '{:url("member/group/index")}',
         cols: [
             [
-                { type: 'checkbox', fixed: 'left' },
                 { field: 'id', width: 80, title: 'ID' },
-                { field: 'listorder', width: 100, title: '排序' },
+                { field: 'listorder', width: 100, title: '排序',edit:'text' },
                 { field: 'name', title: '会员组名' },
                 { field: 'issystem', width: 100,  title: '系统组',align:"center",templet: '#issystem' },
                 { field: '_count', width: 100,align:"center", title: '会员数' },

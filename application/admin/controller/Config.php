@@ -17,7 +17,6 @@ namespace app\admin\controller;
 use app\admin\model\Config as Config_Model;
 use app\common\controller\Adminbase;
 use think\Db;
-use think\facade\Validate;
 
 class Config extends Adminbase
 {
@@ -26,12 +25,13 @@ class Config extends Adminbase
     {
         parent::initialize();
         //允许使用的字段列表
-        //$this->banfie = array("text", "checkbox", "textarea", "radio", "number", "Ueditor", "datetime", "files", "image", "images", "array", "switch", "select");
         $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "Ueditor", "file", "files", 'color');
         $this->ConfigModel = new Config_Model;
     }
 
-    //配置首页
+    /**
+     * 配置首页
+     */
     public function index($group = 'base')
     {
         if ($this->request->isAjax()) {
@@ -52,7 +52,9 @@ class Config extends Adminbase
         return $this->fetch();
     }
 
-    //配置设置
+    /**
+     * 配置设置
+     */
     public function setting($group = 'base')
     {
         if ($this->request->isPost()) {
@@ -86,15 +88,14 @@ class Config extends Adminbase
                     }
                 }
                 //数据格式验证
-                if (!empty($fieldRule[$type]) && !empty($data[$name]) && !Validate::{$fieldRule[$type]}($data[$name])) {
+                if (!empty($fieldRule[$type]) && !empty($data[$name]) && !think\facade\ValidateValidate::{$fieldRule[$type]}($data[$name])) {
                     return $this->error("'" . $name . "'格式错误~");
                 }
                 if (isset($data[$name])) {
-                    $map = array('name' => $name);
-                    $this->ConfigModel->where($map)->setField('value', $data[$name]);
+                    $this->ConfigModel->where(['name' => $name])->setField('value', $data[$name]);
                 }
             }
-            cache('Config', null); //清空缓存配置
+            cache('Config', null);
             return $this->success('设置更新成功');
         } else {
             $configList = $this->ConfigModel->where('group', $group)
@@ -111,32 +112,24 @@ class Config extends Adminbase
                 if ($value['type'] == 'datetime') {
                     $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : $value['value'];
                 }
-                if ($value['type'] == 'image') {
-                    //$value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
-                }
-                if ($value['type'] == 'images') {
-                    //$value['param'] = ['dir' => 'images', 'module' => 'admin', 'watermark' => 0];
-                }
-                if ($value['type'] == 'file') {
-                    //$value['param'] = ['dir' => 'file', 'module' => 'admin'];
-                }
-                if ($value['type'] == 'files') {
-                    //$value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                }
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
                 }
                 $value['fieldArr'] = 'modelField';
             }
-            $this->assign('groupArray', config('config_group'));
-            $this->assign('fieldList', $configList);
-            $this->assign('group', $group);
+            $this->assign([
+                'groupArray' => config('config_group'),
+                'fieldList' => $configList,
+                'group' => $group,
+            ]);
             return $this->fetch();
         }
 
     }
 
-    //新增配置
+    /**
+     * 新增配置
+     */
     public function add()
     {
         if ($this->request->isPost()) {
@@ -148,7 +141,7 @@ class Config extends Adminbase
             }
             $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data);
             cache('Config', null); //清空缓存配置
-            $this->success('配置添加成功~', url('admin/config/index'));
+            $this->success('配置添加成功~', url('config/index'));
         } else {
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
             $this->assign([
@@ -159,7 +152,9 @@ class Config extends Adminbase
         }
     }
 
-    //编辑配置
+    /**
+     * 编辑配置
+     */
     public function edit()
     {
         if ($this->request->isPost()) {
@@ -170,7 +165,7 @@ class Config extends Adminbase
             }
             $result = $this->ConfigModel->allowField(['name', 'title', 'group', 'type', 'value', 'options', 'remark', 'listorder', 'status'])->save($data, ['id' => $data['id']]);
             cache('Config', null); //清空缓存配置
-            $this->success('配置编辑成功~', url('admin/config/index'));
+            $this->success('配置编辑成功~', url('config/index'));
 
         } else {
             $id = $this->request->param('id/d');
@@ -188,7 +183,9 @@ class Config extends Adminbase
         }
     }
 
-    //删除配置
+    /**
+     * 删除配置
+     */
     public function del()
     {
         $id = $this->request->param('id/d');
@@ -218,7 +215,9 @@ class Config extends Adminbase
         }
     }
 
-    //设置配置状态
+    /**
+     * 设置配置状态
+     */
     public function setstate($id, $status)
     {
         $id = $this->request->param('id/d');
