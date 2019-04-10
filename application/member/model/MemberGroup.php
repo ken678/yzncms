@@ -37,6 +37,31 @@ class MemberGroup extends Model
         return $group;
     }
 
+    /**
+     * 删除用户组
+     * @param type $groupid 用户组ID，可以是数组
+     * @return boolean
+     */
+    public function groupDelete($groupid)
+    {
+        if (empty($groupid)) {
+            $this->error = '没有指定需要删除的会员组别！';
+            return false;
+        }
+
+        $info = self::get($groupid);
+        if ($info['issystem']) {
+            $this->error = '系统用户组[' . $info['name'] . ']不能删除！';
+            return false;
+        }
+        if (false !== $info->delete()) {
+            return true;
+        } else {
+            $this->error = '删除失败！';
+            return false;
+        }
+    }
+
     //生成会员组缓存
     public function membergroup_cache()
     {
