@@ -57,17 +57,7 @@
                 <label>用户组图标</label>
                 <div class="layui-form-field-label">
                     <div class="js-upload-image">
-                        <div id="file_list_icon" class="uploader-list">
-                            {notempty name="$data.icon"}
-                            <div class="file-item thumbnail">
-                                <img data-original="{$data.icon|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$data.icon|get_file_path|default='__STATIC__/admin/img/none.png'}" width="100" style="max-height: 100px;">
-                                <i class="iconfont icon-delete_fill remove-picture" data-id="{$data.icon}"></i>
-                            </div>
-                            {/notempty}
-                        </div>
-                        <input type="hidden" name="icon" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext="gif,jpg,jpeg,bmp,png" id="icon" value="{$data.icon|default=''}">
-                        <div class="layui-clear"></div>
-                        <div id="picker_icon">上传单张图片</div>
+                        {php}echo \util\Form::images('icon','',$data['icon']){/php}
                     </div>
                 </div>
             </div>
@@ -84,7 +74,4 @@
 {/block}
 {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
-<script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/js/form.js"></script>
-<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
 {/block}

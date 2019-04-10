@@ -57,13 +57,7 @@
                 <label>用户组图标</label>
                 <div class="layui-form-field-label">
                     <div class="js-upload-image">
-                        <div id="file_list_icon" class="uploader-list">
-                        </div>
-
-
-                        <input type="hidden" name="icon" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext="gif,jpg,jpeg,bmp,png" id="icon" value="">
-                        <div class="layui-clear"></div>
-                        <div id="picker_icon">上传单张图片</div>
+                       {php}echo \util\Form::images('icon'){/php}
                     </div>
                 </div>
             </div>
@@ -79,7 +73,4 @@
 {/block}
 {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
-<script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/js/form.js"></script>
-<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
 {/block}
