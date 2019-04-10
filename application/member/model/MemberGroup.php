@@ -21,7 +21,7 @@ use \think\Model;
  */
 class MemberGroup extends Model
 {
-    protected $auto = ['issystem' => 0, 'allowvisit' => 1, 'disabled' => 0];
+    protected $auto = ['issystem' => 0, 'allowvisit' => 1, 'status' => 1];
 
     /**
      * 添加会员组
