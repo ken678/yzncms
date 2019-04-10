@@ -21,6 +21,22 @@ use \think\Model;
  */
 class MemberGroup extends Model
 {
+    protected $auto = ['issystem' => 0, 'allowvisit' => 1, 'disabled' => 0];
+
+    /**
+     * 添加会员组
+     * @param type $data 提交数据
+     * @return boolean
+     */
+    public function groupAdd($data)
+    {
+        if (!is_array($data)) {
+            return false;
+        }
+        $group = self::create($data, true);
+        return $group;
+    }
+
     //生成会员组缓存
     public function membergroup_cache()
     {

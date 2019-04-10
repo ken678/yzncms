@@ -45,4 +45,27 @@ class Group extends Adminbase
         return $this->fetch();
     }
 
+    /**
+     * 会员组添加
+     */
+    public function add()
+    {
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            $result = $this->validate($data, 'Group');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            if ($this->Member_Group->groupAdd($data)) {
+                $this->success("添加成功！", url("group/index"));
+            } else {
+                $this->error("添加失败！");
+            }
+
+        } else {
+            return $this->fetch();
+        }
+
+    }
+
 }
