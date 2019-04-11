@@ -78,6 +78,11 @@ class Group extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
+            if ($this->Member_Group->groupEdit($data)) {
+                $this->success("修改成功！", url("group/index"));
+            } else {
+                $this->error("修改失败！");
+            }
 
         } else {
             $groupid = $this->request->param('id/d', 0);

@@ -21,7 +21,8 @@ use \think\Model;
  */
 class MemberGroup extends Model
 {
-    protected $auto = ['issystem' => 0, 'allowvisit' => 1, 'status' => 1];
+    protected $auto = ['allowvisit' => 1, 'status' => 1];
+    protected $insert = ['issystem' => 0];
 
     /**
      * 添加会员组
@@ -33,8 +34,26 @@ class MemberGroup extends Model
         if (!is_array($data)) {
             return false;
         }
-        $group = self::create($data, true);
-        return $group;
+        return self::create($data, true);
+    }
+
+    /**
+     * 编辑会员组
+     * @param type $data 数据
+     * @return boolean
+     */
+    public function groupEdit($data)
+    {
+        if (!is_array($data)) {
+            return false;
+        }
+        $data['allowpost'] = $data['allowpost'] ? $data['allowpost'] : 0;
+        $data['allowpostverify'] = $data['allowpostverify'] ? $data['allowpostverify'] : 0;
+        $data['allowupgrade'] = $data['allowupgrade'] ? $data['allowupgrade'] : 0;
+        $data['allowsendmessage'] = $data['allowsendmessage'] ? $data['allowsendmessage'] : 0;
+        $data['allowattachment'] = $data['allowattachment'] ? $data['allowattachment'] : 0;
+        $data['allowsearch'] = $data['allowsearch'] ? $data['allowsearch'] : 0;
+        return self::update($data);
     }
 
     /**
