@@ -121,27 +121,29 @@ class Form
     }
 
     /**
-     * 单张图片上传
+     * 图片上传
      * @param string $name 表单名称
      * @param int $id 表单id
      * @param string $value 表单默认值
+     * @param string $multiple 是否多图片
      * @param string $alowexts 允许图片格式
      * @param int $size 图片大小限制
      * @param int $watermark_setting  水印 0或1
      */
-    public static function images($name, $id = '', $value = '', $ext = '', $size = 0, $watermark = 0)
+    public static function images($name, $id = '', $value = '', $multiple = 'false', $ext = '', $size = 0, $watermark = 0)
     {
         $string = '';
+        $static_url = ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static');
         //加载所需JS，防止重复加载
         if (!defined('IMAGES_upload_JS')) {
             $string .= '
-                <script type="text/javascript"  src="' . ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/libs/webuploader/webuploader.min.js"></script>
-                <link rel="stylesheet" href="' . ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/libs/webuploader/webuploader.css">';
+                <script type="text/javascript"  src="' . $static_url . '/libs/webuploader/webuploader.min.js"></script>
+                <link rel="stylesheet" href="' . $static_url . '/libs/webuploader/webuploader.css">';
             define('IMAGES_upload_JS', 1);
         }
         if (!defined('FORM_JS')) {
             $string .= '
-                <script type="text/javascript"  src="' . ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/admin/js/form.js"></script>';
+                <script type="text/javascript"  src="' . $static_url . '/admin/js/form.js"></script>';
             define('FORM_JS', 1);
         }
 
@@ -153,11 +155,10 @@ class Form
         }
         $string .= "<div id='file_list_{$name}' class='uploader-list'>";
         if (!empty($value)) {
-            $path = get_file_path($value);
+            $path = get_file_path($value) ? get_file_path($value) : $static_url . "/admin/img/none.png";
             $string .= "<div class='file-item thumbnail'><img data-original='{$path}' src='{$path}' width='100' style='max-height: 100px;'><i class='iconfont icon-delete_fill remove-picture' data-id='{$value}'></i></div>";
         }
-        $string .= "<input type='hidden' name='{$name}' data-multiple='false' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'>上传单张图片</div>";
-        $string .= "</div>";
+        $string .= "</div><input type='hidden' name='{$name}' data-multiple='{$multiple}' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'>上传单张图片</div>";
         return $string;
     }
 

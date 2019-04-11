@@ -74,4 +74,11 @@
 {/block}
 {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+<script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
+<link rel="stylesheet" href="__STATIC__/libs/viewer/viewer.min.css">
+<script type="text/javascript">
+$('.uploader-list').each(function () {
+    $(this).viewer();
+});
+</script>
 {/block}

@@ -44,11 +44,7 @@
                             <label>栏目图片</label>
                             <div class="layui-form-field-label">
                                 <div class="js-upload-image">
-                                    <div id="file_list_image" class="uploader-list">
-                                    </div>
-                                    <input type="hidden" name="image" data-multiple="false" data-watermark='' data-thumb='' data-size="0" data-ext="gif,jpg,jpeg,bmp,png" id="image" value="">
-                                    <div class="layui-clear"></div>
-                                    <div id="picker_image">上传单张图片</div>
+                                    {php}echo \util\Form::images('image'){/php}
                                 </div>
                             </div>
                         </div>
@@ -115,8 +111,11 @@
 {/block}
 {block name="script"}
 <script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
-<script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
-<script type="text/javascript" src="__STATIC__/libs/Sortable.js"></script>
-<script type="text/javascript" src="__STATIC__/admin/js/form.js"></script>
-<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
+<script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
+<link rel="stylesheet" href="__STATIC__/libs/viewer/viewer.min.css">
+<script type="text/javascript">
+$('.uploader-list').each(function () {
+    $(this).viewer();
+});
+</script>
 {/block}
