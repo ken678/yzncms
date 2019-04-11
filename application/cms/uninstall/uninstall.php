@@ -57,7 +57,9 @@ class Uninstall extends UninstallBase
             }
         }
         //删除路由
-        unlink(ROOT_PATH . 'route' . DIRECTORY_SEPARATOR . 'route_cms.php');
+        if (file_exists(ROOT_PATH . 'route' . DIRECTORY_SEPARATOR . 'route_cms.php')) {
+            unlink(ROOT_PATH . 'route' . DIRECTORY_SEPARATOR . 'route_cms.php');
+        }
         return true;
     }
 

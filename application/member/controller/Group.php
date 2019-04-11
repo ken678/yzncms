@@ -73,6 +73,11 @@ class Group extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
+            $data = $this->request->post();
+            $result = $this->validate($data, 'Group');
+            if (true !== $result) {
+                return $this->error($result);
+            }
 
         } else {
             $groupid = $this->request->param('id/d', 0);
