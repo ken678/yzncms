@@ -78,14 +78,14 @@ class Index extends Adminbase
         $type = $this->request->request("type");
         switch ($type) {
             case 'data' || 'all':
-                rmdirs(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'cache');
+                \util\File::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'cache');
                 Cache::clear();
                 if ($type == 'content') {
                     break;
                 }
 
             case 'template' || 'all':
-                rmdirs(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'temp');
+                \util\File::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'temp');
                 if ($type == 'template') {
                     break;
                 }

@@ -181,12 +181,12 @@ class Module
         $this->installdir = $this->appPath . "{$name}" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
         if (is_dir($this->installdir . "template" . DIRECTORY_SEPARATOR)) {
             //拷贝模板到前台模板目录中去
-            copydirs($this->installdir . "template" . DIRECTORY_SEPARATOR, $this->templatePath);
+            \util\File::copy_dir($this->installdir . "template" . DIRECTORY_SEPARATOR, $this->templatePath);
         }
         //静态资源文件
         if (file_exists($this->installdir . "public" . DIRECTORY_SEPARATOR)) {
             //拷贝模板到前台模板目录中去
-            copydirs($this->installdir . "public" . DIRECTORY_SEPARATOR, $this->extresPath . strtolower($name) . '/');
+            \util\File::copy_dir($this->installdir . "public" . DIRECTORY_SEPARATOR, $this->extresPath . strtolower($name) . '/');
         }
         //安装结束，最后调用安装脚本完成
         if (!$this->runInstallScript($name, 'end')) {
@@ -248,11 +248,11 @@ class Module
 
         //删除模块前台模板
         if (is_dir($this->templatePath . $name . DIRECTORY_SEPARATOR)) {
-            rmdirs($this->templatePath . $name . DIRECTORY_SEPARATOR);
+            \util\File::del_dir($this->templatePath . $name . DIRECTORY_SEPARATOR);
         }
         //静态资源移除
         if (is_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR)) {
-            rmdirs($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR);
+            \util\File::del_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR);
         }
         //卸载结束，最后调用卸载脚本完成
         if (!$this->runInstallScript($name, 'end', 'uninstall')) {

@@ -213,7 +213,7 @@ class Addons extends Adminbase
         $sourceAssetsDir = self::getSourceAssetsDir($addonName);
         $destAssetsDir = self::getDestAssetsDir($addonName);
         if (is_dir($sourceAssetsDir)) {
-            copydirs($sourceAssetsDir, $destAssetsDir);
+            \util\File::copy_dir($sourceAssetsDir, $destAssetsDir);
         }
         //如果插件有自己的后台
         if (isset($info['has_adminlist']) && $info['has_adminlist']) {
@@ -269,7 +269,7 @@ class Addons extends Adminbase
             // 移除插件基础资源目录
             $destAssetsDir = self::getDestAssetsDir($addonName);
             if (is_dir($destAssetsDir)) {
-                rmdirs($destAssetsDir);
+                \util\File::del_dir($destAssetsDir);
             }
             $hooks_update = model('admin/Hooks')->removeHooks($addonName);
             if ($hooks_update === false) {
