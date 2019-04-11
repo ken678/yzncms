@@ -88,7 +88,7 @@ class Config extends Adminbase
                     }
                 }
                 //数据格式验证
-                if (!empty($fieldRule[$type]) && !empty($data[$name]) && !think\facade\ValidateValidate::{$fieldRule[$type]}($data[$name])) {
+                if (!empty($fieldRule[$type]) && !empty($data[$name]) && !\think\facade\Validate::{$fieldRule[$type]}($data[$name])) {
                     return $this->error("'" . $name . "'格式错误~");
                 }
                 if (isset($data[$name])) {
