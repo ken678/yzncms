@@ -14,6 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\admin\service;
 
+use think\facade\Session;
+
 class User
 {
     //当前登录会员详细信息
@@ -93,8 +95,8 @@ class User
             'username' => $userInfo['username'],
             'last_login_time' => $userInfo['last_login_time'],
         ];
-        Session('admin_user_auth', $auth);
-        Session('admin_user_auth_sign', data_auth_sign($auth));
+        Session::set('admin_user_auth', $auth);
+        Session::set('admin_user_auth_sign', data_auth_sign($auth));
     }
 
     /**
@@ -115,11 +117,11 @@ class User
      */
     public function isLogin()
     {
-        $user = session('admin_user_auth');
+        $user = Session::get('admin_user_auth');
         if (empty($user)) {
             return 0;
         } else {
-            return session('admin_user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
+            return Session::get('admin_user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
         }
     }
 
@@ -139,7 +141,7 @@ class User
      */
     public function logout()
     {
-        session(null);
+        Session::clear();
         return true;
     }
 

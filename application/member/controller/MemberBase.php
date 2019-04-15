@@ -20,6 +20,8 @@ use think\facade\Config;
 
 class MemberBase extends Base
 {
+    //用户id
+    protected $userid = 0;
     //用户信息
     protected $userinfo = array();
     //初始化
@@ -35,7 +37,7 @@ class MemberBase extends Base
      */
     final public function check_member()
     {
-        $this->userinfo = User::instance()->id;
+        $this->userid = User::instance()->id;
         if (substr($this->request->module(), 0, 7) == 'public_') {
             //所有以public_开头的方法都无需检测是否登陆
             return true;

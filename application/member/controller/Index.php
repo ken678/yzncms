@@ -14,10 +14,18 @@
 // +----------------------------------------------------------------------
 namespace app\member\controller;
 
-use app\member\service\User;
+use app\member\model\Member as Member_Model;
+use think\facade\Cookie;
 
 class Index extends MemberBase
 {
+
+    //初始化
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->Member_Model = new Member_Model;
+    }
 
     //会员中心首页
     public function index()
@@ -28,8 +36,7 @@ class Index extends MemberBase
     //登录页面
     public function login()
     {
-        $forward = $_REQUEST['forward'] ? $_REQUEST['forward'] : cookie("forward");
-        cookie("forward", null);
+        $cookie_url = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
         if (!empty($this->userid)) {
             $this->success("您已经是登陆状态！", $forward ? $forward : url("Index/index"));
         }
@@ -38,6 +45,17 @@ class Index extends MemberBase
             $username = $this->request->param('username');
             $password = $this->request->param('password');
             $captcha = $this->request->param('captcha');
+            $cookieTime = $this->request->param('cookieTime', 0);
+            $userid = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
+            if ($userid > 0) {
+                if (!$cookie_url) {
+                    $cookie_url = url('index');
+                }
+                $this->success('登录成功！', $cookie_url);
+            } else {
+                //登陆失败
+                $this->error('账号或者密码错误！');
+            }
 
         } else {
             $this->assign('forward', $forward);

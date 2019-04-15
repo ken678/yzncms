@@ -31,6 +31,38 @@ class Member extends Model
     }
 
     /**
+     * 会员登录
+     * @param type $identifier 用户/UID
+     * @param type $password 明文密码，填写表示验证密码
+     * @param type $is_remember_me cookie有效期
+     * @return boolean
+     */
+    public function loginLocal($identifier, $password = null, $is_remember_me = 604800)
+    {
+        $map = [];
+        if (is_int($identifier)) {
+            $map['id'] = $identifier;
+            $identifier = intval($identifier);
+        } else {
+            $map['username'] = $identifier;
+        }
+        $userinfo = $this->getLocalUser($identifier);
+        if (empty($userinfo)) {
+            return false;
+        }
+        //是否需要进行密码验证
+        if (!empty($password)) {
+            $password = encrypt_password($password, $userinfo["encrypt"]);
+            if ($password != $userinfo['password']) {
+                $this->error = '密码错误！';
+                return false;
+            }
+        }
+        $this->autoLogin($userinfo);
+        return $userinfo['id'];
+    }
+
+    /**
      * 获取用户信息
      * @param type $identifier 用户/UID
      * @param type $password 明文密码，填写表示验证密码
@@ -44,30 +76,26 @@ class Member extends Model
             return false;
         }
         if (is_int($identifier)) {
-            $map['userid'] = $identifier;
+            $map['id'] = $identifier;
         } else {
             $map['username'] = $identifier;
         }
-        var_dump($map);
-        exit();
-        /*$UserMode = D('Member/Member');
-    $user = $UserMode->where($map)->find();
-    if (empty($user)) {
-    $this->error = '该用户不存在！';
-    return false;
-    }
-    //是否需要进行密码验证
-    if (!empty($password)) {
-    $encrypt = $user["encrypt"];
-    //对明文密码进行加密
-    $password = $UserMode->encryption($identifier, $password, $encrypt);
-    if ($password != $user['password']) {
-    $this->error = '用户密码错误！';
-    //密码错误
-    return false;
-    }
-    }
-    return $user;*/
+        $userinfo = self::where($map)->find();
+        if (empty($userinfo)) {
+            $this->error = '该用户不存在！';
+            return false;
+        }
+        //是否需要进行密码验证
+        if (!empty($password)) {
+            //对明文密码进行加密
+            $password = encrypt_password($password, $userinfo["encrypt"]);
+            if ($password != $userinfo['password']) {
+                $this->error = '用户密码错误！';
+                //密码错误
+                return false;
+            }
+        }
+        return $userinfo;
     }
 
     /**
@@ -155,6 +183,39 @@ class Member extends Model
         }
         $this->error = '删除会员失败！';
         return false;
+    }
+
+    /**
+     * 自动登录用户
+     */
+    public function autoLogin($userInfo)
+    {
+        /* 更新登录信息 */
+        $data = array(
+            'uid' => $userInfo['id'],
+            'last_login_time' => time(),
+            'last_login_ip' => request()->ip(1),
+        );
+        $this->loginStatus((int) $userInfo['id']);
+        /* 记录登录SESSION和COOKIES */
+        $auth = [
+            'uid' => $userInfo['id'],
+            'username' => $userInfo['username'],
+            'last_login_time' => $userInfo['last_login_time'],
+        ];
+        Session('user_auth', $auth);
+        Session('user_auth_sign', data_auth_sign($auth));
+    }
+
+    /**
+     * 更新登录状态信息
+     * @param type $userId
+     * @return type
+     */
+    public function loginStatus($userId)
+    {
+        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip(1)];
+        return $this->save($data, ['id' => $userId]);
     }
 
     //会员配置缓存
