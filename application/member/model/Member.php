@@ -31,6 +31,46 @@ class Member extends Model
     }
 
     /**
+     * 获取用户信息
+     * @param type $identifier 用户/UID
+     * @param type $password 明文密码，填写表示验证密码
+     * @return array|boolean
+     */
+    public function getLocalUser($identifier, $password = null)
+    {
+        $map = array();
+        if (empty($identifier)) {
+            $this->error = '参数为空！';
+            return false;
+        }
+        if (is_int($identifier)) {
+            $map['userid'] = $identifier;
+        } else {
+            $map['username'] = $identifier;
+        }
+        var_dump($map);
+        exit();
+        /*$UserMode = D('Member/Member');
+    $user = $UserMode->where($map)->find();
+    if (empty($user)) {
+    $this->error = '该用户不存在！';
+    return false;
+    }
+    //是否需要进行密码验证
+    if (!empty($password)) {
+    $encrypt = $user["encrypt"];
+    //对明文密码进行加密
+    $password = $UserMode->encryption($identifier, $password, $encrypt);
+    if ($password != $user['password']) {
+    $this->error = '用户密码错误！';
+    //密码错误
+    return false;
+    }
+    }
+    return $user;*/
+    }
+
+    /**
      * 注册一个新用户
      * @param string $username  用户名
      * @param string $password  密码
