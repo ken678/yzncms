@@ -36,7 +36,7 @@ class Member extends Adminbase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 10);
-            $_list = $this->Member_Model->page($page, $limit)->select()->withAttr('reg_ip', function ($value, $data) {
+            $_list = $this->Member_Model->where('status', 1)->page($page, $limit)->select()->withAttr('reg_ip', function ($value, $data) {
                 return long2ip($value);
             })->withAttr('last_login_time', function ($value, $data) {
                 return time_format($value);
@@ -144,7 +144,7 @@ class Member extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $uid) {
-            $info = Member_Model::get($uid);
+            $info = $this->Member_Model->find($uid);
             if (!empty($info)) {
                 $this->Member_Model->userDelete($uid);
             }
@@ -159,10 +159,43 @@ class Member extends Adminbase
         return $this->fetch();
     }
 
-    //
+    /**
+     * 审核会员
+     */
     public function userverify()
     {
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 10);
+            $_list = $this->Member_Model->where('status', '<>', 1)->page($page, $limit)->select()->withAttr('reg_ip', function ($value, $data) {
+                return long2ip($value);
+            })->withAttr('last_login_time', function ($value, $data) {
+                return time_format($value);
+            });
+            $total = count($_list);
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+
+        }
         return $this->fetch();
+    }
+
+    /**
+     * 审核会员
+     */
+    public function pass()
+    {
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids)) {
+            $this->error('请选择需要审核的会员！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        foreach ($ids as $uid) {
+            $info = Member_Model::where('id', $uid)->update(['status' => 1]);
+        }
+        $this->success("审核成功！");
     }
 
 }

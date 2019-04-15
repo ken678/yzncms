@@ -1,0 +1,126 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">审核会员</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll" data-url='{:url("member/member/delete")}'>批量删除</a>
+        <a class="layui-btn layui-btn-sm" lay-event="pass" data-url='{:url("member/member/pass")}'>审核通过</a>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("member/member/userverify")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'id', width: 80, title: '用户ID' },
+                { field: 'username', width: 150, title: '用户名' },
+                { field: 'nickname', width: 150, title: '昵称' },
+                { field: 'email',  title: '邮箱' },
+                { field: 'reg_ip', title: '注册IP' },
+                { field: 'last_login_time', title: '最后登录' },
+                { field: 'amount', width: 120, title: '金钱总数' },
+                { field: 'point', width: 120, title: '积分总数' },
+                { field: 'login', width: 100, title: '登录次数' },
+                { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
+            ]
+        ]
+    });
+
+        table.on('toolbar(table)', function(obj) {
+        if (obj.event === 'delAll' || obj.event === 'pass') {
+            var checkStatus = table.checkStatus('table'),
+                data = checkStatus.data,
+                ids = [],
+                url=$(this).data('url');
+            if (data.length > 0) {
+                for (let i in data) {
+                    ids.push(data[i].id);
+                }
+                layer.confirm('确定操作选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
+                    $.post(url, { 'ids': ids }, function(data) {
+                        if (data.code == 1) {
+                            if (data.url) {
+                                layer.msg(data.msg + ' 页面即将自动跳转~');
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                } else {
+                                    location.reload();
+                                }
+                            }, 1500);
+                        } else {
+                            layer.msg(data.msg);
+                            setTimeout(function() {
+                                if (data.url) {
+                                    location.href = data.url;
+                                }
+                            }, 1500);
+                        }
+                    });
+                    layer.close(index);
+                })
+            } else {
+                layer.msg("请选择需要操作的数据");
+            }
+        }
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("member/member/delete")}', { 'ids': data.id }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            });
+        } else if (obj.event === 'edit') {
+            window.open('{:url("member/member/edit")}' + "?id=" + data.id, '_self')
+        }
+    });
+});
+</script>
+{/block}
