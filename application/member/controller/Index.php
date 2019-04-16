@@ -30,6 +30,7 @@ class Index extends MemberBase
     //会员中心首页
     public function index()
     {
+        return $this->fetch('/index');
 
     }
 
@@ -69,7 +70,7 @@ class Index extends MemberBase
         if ($this->request->isPost()) {
             var_dump(11);
         } else {
-            return $this->fetch();
+            return $this->fetch('/register');
         }
         /*if (empty($this->memberConfig['allowregister'])) {
     $this->error("系统不允许新会员注册！");
