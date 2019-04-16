@@ -14,6 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\member\service;
 
+use think\facade\Session;
+
 class User
 {
     protected static $instance = null;
@@ -34,6 +36,25 @@ class User
         }
 
         return self::$instance;
+    }
+
+    /**
+     * 魔术方法
+     * @param type $name
+     * @return null
+     */
+    public function __get($name)
+    {
+        //从缓存中获取
+        if (isset(self::$userInfo[$name])) {
+            return self::$userInfo[$name];
+        } else {
+            $userInfo = $this->getInfo();
+            if (!empty($userInfo)) {
+                return $userInfo[$name];
+            }
+            return null;
+        }
     }
 
     /**
@@ -63,22 +84,13 @@ class User
     }
 
     /**
-     * 魔术方法
-     * @param type $name
-     * @return null
+     * 注销登录状态
+     * @return boolean
      */
-    public function __get($name)
+    public function logout()
     {
-        //从缓存中获取
-        if (isset(self::$userInfo[$name])) {
-            return self::$userInfo[$name];
-        } else {
-            $userInfo = $this->getInfo();
-            if (!empty($userInfo)) {
-                return $userInfo[$name];
-            }
-            return null;
-        }
+        Session::clear();
+        return true;
     }
 
     /**

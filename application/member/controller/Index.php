@@ -15,6 +15,7 @@
 namespace app\member\controller;
 
 use app\member\model\Member as Member_Model;
+use app\member\service\User;
 use think\facade\Cookie;
 
 class Index extends MemberBase
@@ -88,6 +89,16 @@ class Index extends MemberBase
     $this->assign('count', $count);
     $this->display('Public:register');
     }*/
+    }
+
+    //手动退出登录
+    public function logout()
+    {
+        if (User::instance()->logout()) {
+            //手动登出时，清空forward
+            //cookie("forward", NULL);
+            $this->success('注销成功！', url("index/login"));
+        }
     }
 
 }
