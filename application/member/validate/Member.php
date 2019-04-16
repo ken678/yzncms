@@ -32,4 +32,9 @@ class Member extends Validate
         return $this->remove('password', 'require');
     }
 
+    public function sceneRegister()
+    {
+        return $this->remove('groupid', 'require');
+    }
+
 }

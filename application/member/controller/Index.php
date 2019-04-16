@@ -68,27 +68,28 @@ class Index extends MemberBase
     //注册页面
     public function register()
     {
+        $forward = $_REQUEST['forward'] ?: cookie("forward");
+        cookie("forward", null);
+        if ($this->userid) {
+            $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("index"));
+        }
         if ($this->request->isPost()) {
-            var_dump(11);
+            $data = $this->request->post();
+            $result = $this->validate($data, 'member.register');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
+            if ($userid > 0) {
+                //注册登陆状态
+                $this->Member_Model->loginLocal($data['username'], $data['password']);
+                $this->success('会员注册成功！');
+            } else {
+                $this->error($this->Member_Model->getError() ?: '帐号注册失败！');
+            }
         } else {
             return $this->fetch('/register');
         }
-        /*if (empty($this->memberConfig['allowregister'])) {
-    $this->error("系统不允许新会员注册！");
-    }
-    $forward = $_REQUEST['forward'] ?: cookie("forward");
-    cookie("forward", null);
-    if ($this->userid) {
-    $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : U("Index/index"));
-    } else {
-    $count = $this->memberDb->where(array('checked' => 1))->count('userid');
-    //取出人气高的8位会员
-    $heat = $this->memberDb->where(array('checked' => 1))->order(array('heat' => 'DESC'))->field('userid,username,heat')->limit(8)->select();
-
-    $this->assign('heat', $heat);
-    $this->assign('count', $count);
-    $this->display('Public:register');
-    }*/
     }
 
     //手动退出登录
@@ -96,7 +97,7 @@ class Index extends MemberBase
     {
         if (User::instance()->logout()) {
             //手动登出时，清空forward
-            //cookie("forward", NULL);
+            cookie("forward", null);
             $this->success('注销成功！', url("index/login"));
         }
     }
