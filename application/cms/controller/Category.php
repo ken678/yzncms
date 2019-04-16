@@ -104,7 +104,7 @@ class Category extends Adminbase
             if ($data['isbatch']) {
                 unset($data['isbatch'], $data['info']['catname'], $data['info']['catdir']);
                 //需要批量添加的栏目
-                $batch_add = explode("\r\n", $data['batch_add']);
+                $batch_add = explode(PHP_EOL, $data['batch_add']);
                 if (empty($batch_add) || empty($data['batch_add'])) {
                     $this->error('请填写需要添加的栏目！');
                 }

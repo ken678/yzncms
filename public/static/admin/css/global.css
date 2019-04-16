@@ -56,6 +56,14 @@
 
 .layui-tab-content {top: 41px; position: absolute; bottom: 0; width: 100%; padding: 0; }
 .iframe_box{position: relative; height: 100%; overflow: auto; }
+
+.functionSrtting_box{ padding-top:15px;}
+.functionSrtting_box .layui-form-label{ width:81px;}
+.functionSrtting_box .layui-word-aux{ position:absolute;left:60px; top:9px; font-size: 12px;}
+.skinBtn {
+    text-align: center;
+}
+
 iframe {position: absolute; height: 100%; width: 100%; border: none; }
 
 .hideMenu {float: left; width: 20px; height: 20px; margin-top: 15px; font-size: 17px; line-height: 20px; text-align: center; padding: 5px 5px; color: #fff; background-color: #1AA094; }
