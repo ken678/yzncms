@@ -25,11 +25,13 @@
                         <label>密码</label>
                         <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
                     </div>
+                    {eq name="Member_config.openverification" value="1"}
                     <div class="layui-input-inline input-item verify-box">
                         <label>验证码</label>
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                         <img id="verify" src="{:url('api/checkcode/getVerify','font_size=18&imageW=130&imageH=38')}" alt="验证码" class="captcha">
                     </div>
+                    {/eq}
                     <div class="layui-form-item" style="margin-bottom: 20px;">
                           <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
                           <a href="{:url('member/index/forget')}" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
@@ -57,7 +59,7 @@
             return false;
             function success(data) {
                 if (data.code) {
-                    layer.msg('登入成功', {
+                    layer.msg(data.msg, {
                         offset: '15px',
                         icon: 1,
                         time: 1000

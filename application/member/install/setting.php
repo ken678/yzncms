@@ -8,4 +8,5 @@ return array(
     'registerverify' => '0',
     'openverification' => '1',
     'defualtpoint' => '0',
+    'defualtamount' => '0',
 );

@@ -31,8 +31,9 @@ class MemberBase extends Base
     {
         parent::initialize();
         $this->memberConfig = cache("Member_Config");
-        //登陆检测
         $this->check_member();
+        //============全局模板变量==============
+        $this->assign("Member_config", $this->memberConfig);
     }
 
     /**
@@ -51,11 +52,12 @@ class MemberBase extends Base
         };
         if ($this->userid) {
             //  获取用户信息
-            $this->userinfo = Db::name('Member')->find($this->userid);
+            $this->userinfo = User::instance()->getInfo();
             //  判断用户是否被锁定
             if ($this->userinfo['status'] !== 1) {
                 $this->error("您的帐号已经被锁定！", url('/'));
             }
+            $this->assign("userinfo", $this->userinfo);
             return true;
         } else {
             // 还没登录 跳转到登录页面

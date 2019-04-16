@@ -38,7 +38,9 @@ class Index extends MemberBase
     //登录页面
     public function login()
     {
+        var_dump($this->Member_Model->get_usergroup_bypoint(0));
         $cookie_url = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
+        Cookie::set("forward", null);
         if (!empty($this->userid)) {
             $this->success("您已经是登陆状态！", $forward ? $forward : url("Index/index"));
         }
@@ -46,8 +48,15 @@ class Index extends MemberBase
             //登录验证
             $username = $this->request->param('username');
             $password = $this->request->param('password');
-            $captcha = $this->request->param('captcha');
+            $verify = $this->request->param('verify');
             $cookieTime = $this->request->param('cookieTime', 0);
+            //验证码
+            if (empty($verify) && $this->memberConfig['openverification']) {
+                $this->error('验证码错误！');
+            }
+            if ($this->memberConfig['openverification'] && !captcha_check($verify)) {
+                $this->error('验证码错误！');
+            }
             $userid = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userid > 0) {
                 if (!$cookie_url) {
@@ -85,6 +94,27 @@ class Index extends MemberBase
             $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
             if ($userid > 0) {
                 unset($data['username'], $data['password'], $data['email']);
+                //==============注册设置处理==============
+                //新注册用户积分
+                $data['point'] = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
+                //新会员注册默认赠送资金
+                $data['amount'] = $this->memberConfig['defualtamount'] ? $this->memberConfig['defualtamount'] : 0;
+                //新会员注册需要邮件验证
+                if ($this->memberConfig['enablemailcheck']) {
+                    $data['groupid'] = 7;
+                    $data['status'] = 0;
+                } else {
+                    //新会员注册需要管理员审核
+                    if ($this->memberConfig['registerverify']) {
+                        $data['status'] = 0;
+                    } else {
+                        $data['status'] = 1;
+                    }
+                    //计算用户组
+                    $data['groupid'] = $this->Member_Model->get_usergroup_bypoint($data['point']);
+                }
+                //==============注册设置处理==============
+
                 if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
                     //注册登陆状态
                     $this->Member_Model->loginLocal($post['username'], $post['password']);
@@ -107,7 +137,7 @@ class Index extends MemberBase
     {
         if (User::instance()->logout()) {
             //手动登出时，清空forward
-            cookie("forward", null);
+            Cookie::set("forward", null);
             $this->success('注销成功！', url("index/login"));
         }
     }

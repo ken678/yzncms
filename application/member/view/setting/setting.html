@@ -28,7 +28,13 @@
             <div class="layui-form-item">
                 <label>新会员默认积分</label>
                 <div class="layui-form-field-label">
-                     <input type="number" name="setting[defualtpoint]" required="" lay-verify="required" placeholder="新会员默认积分" autocomplete="off" class="layui-input" value="0">
+                     <input type="number" name="setting[defualtpoint]" required="" lay-verify="required" placeholder="新会员默认积分" autocomplete="off" class="layui-input" value="{$setting.defualtpoint}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label>新会员默认资金</label>
+                <div class="layui-form-field-label">
+                     <input type="number" name="setting[defualtamount]" required="" lay-verify="required" placeholder="新会员默认资金" autocomplete="off" class="layui-input" value="{$setting.defualtamount}">
                 </div>
             </div>
             <div class="layui-form-item">

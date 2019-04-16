@@ -66,7 +66,7 @@
             return false;
             function success(data) {
                 if (data.code) {
-                    layer.msg('登入成功', {
+                    layer.msg(data.msg, {
                         offset: '15px',
                         icon: 1,
                         time: 1000

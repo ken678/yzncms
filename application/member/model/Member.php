@@ -208,6 +208,40 @@ class Member extends Model
     }
 
     /**
+     * 根据积分算出用户组
+     * @param $point int 积分数
+     */
+    public function get_usergroup_bypoint($point = 0)
+    {
+        $groupid = 2;
+        if (empty($point)) {
+            $member_setting = cache("Member_Config");
+            //新会员默认点数
+            $point = $member_setting['defualtpoint'] ? $member_setting['defualtpoint'] : 0;
+        }
+        //获取会有组缓存
+        $grouplist = cache("Member_Group");
+        foreach ($grouplist as $k => $v) {
+            $grouppointlist[$k] = $v['point'];
+        }
+        //对数组进行逆向排序
+        arsort($grouppointlist);
+        //如果超出用户组积分设置则为积分最高的用户组
+        if ($point > max($grouppointlist)) {
+            $groupid = key($grouppointlist);
+        } else {
+            foreach ($grouppointlist as $k => $v) {
+                if ($point >= $v) {
+                    $groupid = $tmp_k;
+                    break;
+                }
+                $tmp_k = $k;
+            }
+        }
+        return $groupid;
+    }
+
+    /**
      * 更新登录状态信息
      * @param type $userId
      * @return type
