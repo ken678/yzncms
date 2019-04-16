@@ -34,19 +34,33 @@
                                 </div>
                         </div>
                         <div class="layui-form-item">
-                            <label>栏目标题 </label>
+                            <label>添加方式</label>
                                 <div class="w300">
-                                    <input type="text" name="catname" autocomplete="off" placeholder="栏目名称" class="layui-input">
+                                    <input type="radio" name="isbatch" value="1" title="批量添加" lay-filter="filter">
+                                    <input type="radio" name="isbatch" value="0" title="单条添加" checked lay-filter="filter">
                                 </div>
                         </div>
-                        <div class="layui-form-item">
+                        <div class="layui-form-item" id="normal_add">
+                            <label>栏目标题 </label>
+                                <div class="w300">
+                                    <input type="text" name="catname" autocomplete="off" placeholder="栏目名称" class="layui-input" id="catname">
+                                </div>
+                        </div>
+                        <div class="layui-form-item" id="catdir_tr">
                             <label>唯一标识</label>
                                 <div class="w300">
-                                    <input type="text" name="catdir" autocomplete="off" placeholder="唯一标识" class="layui-input">
+                                    <input type="text" name="catdir" autocomplete="off" placeholder="唯一标识" class="layui-input" id="catdir">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">栏目唯一英文数字标识</div>
                         </div>
-                        <div class="layui-form-item web_seo">
+                        <div class="layui-form-item" id="batch_add" style="display:none">
+                            <label>栏目名称</label>
+                                <div class="w300">
+                                    <textarea name="batch_add" placeholder="栏目名称|唯一标识" class="layui-textarea"></textarea>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">例如：<br>国内新闻|china<br>国际新闻|world</div>
+                        </div>
+                        <div class="layui-form-item">
                             <label>栏目简介</label>
                                 <div class="w300">
                                     <textarea name="description" placeholder="栏目简介" class="layui-textarea"></textarea>
@@ -152,6 +166,27 @@
 <script type="text/javascript">
 $('.uploader-list').each(function () {
     $(this).viewer();
+});
+layui.use('form', function(){
+	var form = layui.form;
+	form.on('radio(filter)', function(data){
+		//console.log(data.elem); //得到radio原始DOM对象
+		//console.log(data.value); //被点击的radio的value值
+		if(1==data.value){
+			$('#normal_add').hide();
+			$('#catdir_tr').hide();
+			$('#batch_add').show();
+			$('#catname').attr('disabled',true);
+			$('#catdir').attr('disabled',true);
+		}
+		if(0==data.value){
+			$('#normal_add').show();
+			$('#catdir_tr').show();
+			$('#batch_add').hide();
+			$('#catname').attr('disabled',false);
+			$('#catdir').attr('disabled',false);
+		}
+	});
 });
 </script>
 {/block}

@@ -101,17 +101,40 @@ class Category extends Adminbase
                 default:
                     return $this->error('栏目类型错误~');
             }
-            $result = $this->validate($data, 'Category.' . $scene);
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            $status = $this->Category_Model->addCategory($data, $fields);
-            if ($status) {
+            if ($data['isbatch']) {
+                unset($data['isbatch'], $data['info']['catname'], $data['info']['catdir']);
+                //需要批量添加的栏目
+                $batch_add = explode("\r\n", $data['batch_add']);
+                if (empty($batch_add) || empty($data['batch_add'])) {
+                    $this->error('请填写需要添加的栏目！');
+                }
+                foreach ($batch_add as $rs) {
+                    $cat = explode('|', $rs, 2);
+                    if ($cat[0] && $cat[1]) {
+                        $data['catname'] = $cat[0];
+                        $data['catdir'] = $cat[1];
+                        $result = $this->validate($data, 'Category.' . $scene);
+                        if (true !== $result) {
+                            return $this->error($result);
+                        }
+                        $this->Category_Model->addCategory($data, $fields);
+                    }
+                }
                 $this->success("添加成功！", url("Category/index"));
             } else {
-                $error = $this->Category_Model->getError();
-                $this->error($error ? $error : '栏目添加失败！');
+                $result = $this->validate($data, 'Category.' . $scene);
+                if (true !== $result) {
+                    return $this->error($result);
+                }
+                $status = $this->Category_Model->addCategory($data, $fields);
+                if ($status) {
+                    $this->success("添加成功！", url("Category/index"));
+                } else {
+                    $error = $this->Category_Model->getError();
+                    $this->error($error ? $error : '栏目添加失败！');
+                }
             }
+
         } else {
             $parentid = $this->request->param('parentid/d', 0);
             if (!empty($parentid)) {
