@@ -58,48 +58,6 @@ class User
     }
 
     /**
-     * 用户登录
-     * @param string $username 用户名
-     * @param string $password 密码
-     * @return bool|mixed
-     */
-    public function login($username = '', $password = '')
-    {
-        $username = trim($username);
-        $password = trim($password);
-        $userInfo = $this->getUserInfo($username, $password);
-        if (false == $userInfo) {
-            return false;
-        }
-        $this->autoLogin($userInfo);
-        return true;
-    }
-
-    /**
-     * 自动登录用户
-     */
-    public function autoLogin($userInfo)
-    {
-        //记录行为
-        //action_log('user_login', 'member', $userInfo['userid'], $userInfo['userid']);
-        /* 更新登录信息 */
-        $data = array(
-            'uid' => $userInfo['userid'],
-            'last_login_time' => time(),
-            'last_login_ip' => request()->ip(1),
-        );
-        model('admin/AdminUser')->loginStatus((int) $userInfo['userid']);
-        /* 记录登录SESSION和COOKIES */
-        $auth = [
-            'uid' => $userInfo['userid'],
-            'username' => $userInfo['username'],
-            'last_login_time' => $userInfo['last_login_time'],
-        ];
-        Session::set('admin_user_auth', $auth);
-        Session::set('admin_user_auth_sign', data_auth_sign($auth));
-    }
-
-    /**
      * 获取当前登录用户资料
      * @return array
      */

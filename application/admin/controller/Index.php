@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\model\AdminUser;
 use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\facade\Cache;
@@ -50,7 +51,8 @@ class Index extends Adminbase
             if (true !== $result) {
                 $this->error($result);
             }
-            if (User::instance()->login($data['username'], $data['password'])) {
+            $AdminUser = new AdminUser;
+            if ($AdminUser->login($data['username'], $data['password'])) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
                 $this->error("用户名或者密码错误，登陆失败！", url('admin/index/login'));
