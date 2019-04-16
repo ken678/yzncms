@@ -153,12 +153,6 @@ class Member extends Adminbase
 
     }
 
-    //
-    public function setting()
-    {
-        return $this->fetch();
-    }
-
     /**
      * 审核会员
      */

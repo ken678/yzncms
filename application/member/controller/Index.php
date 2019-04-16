@@ -68,22 +68,32 @@ class Index extends MemberBase
     //注册页面
     public function register()
     {
+        if (empty($this->memberConfig['allowregister'])) {
+            $this->error("系统不允许新会员注册！");
+        }
         $forward = $_REQUEST['forward'] ?: cookie("forward");
         cookie("forward", null);
         if ($this->userid) {
             $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("index"));
         }
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $post = $data = $this->request->post();
             $result = $this->validate($data, 'member.register');
             if (true !== $result) {
                 return $this->error($result);
             }
             $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
             if ($userid > 0) {
-                //注册登陆状态
-                $this->Member_Model->loginLocal($data['username'], $data['password']);
-                $this->success('会员注册成功！');
+                unset($data['username'], $data['password'], $data['email']);
+                if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
+                    //注册登陆状态
+                    $this->Member_Model->loginLocal($post['username'], $post['password']);
+                    $this->success('会员注册成功！', url('index'));
+                } else {
+                    //删除
+                    $this->Member_Model->userDelete($userid);
+                    $this->error("会员注册失败！");
+                }
             } else {
                 $this->error($this->Member_Model->getError() ?: '帐号注册失败！');
             }

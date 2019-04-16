@@ -24,10 +24,13 @@ class MemberBase extends Base
     protected $userid = 0;
     //用户信息
     protected $userinfo = array();
+    //会员模型相关配置
+    protected $memberConfig = array();
     //初始化
     protected function initialize()
     {
         parent::initialize();
+        $this->memberConfig = cache("Member_Config");
         //登陆检测
         $this->check_member();
     }
@@ -48,12 +51,12 @@ class MemberBase extends Base
         };
         if ($this->userid) {
             //  获取用户信息
-            /*$this->userinfo = Db::name('Member')->find($this->userid);
-        //  判断用户是否被锁定
-        if ($this->userinfo['status'] !== 1) {
-        $this->error("您的帐号已经被锁定！", url('/'));
-        }
-        return true;*/
+            $this->userinfo = Db::name('Member')->find($this->userid);
+            //  判断用户是否被锁定
+            if ($this->userinfo['status'] !== 1) {
+                $this->error("您的帐号已经被锁定！", url('/'));
+            }
+            return true;
         } else {
             // 还没登录 跳转到登录页面
             $this->redirect('member/index/login');
