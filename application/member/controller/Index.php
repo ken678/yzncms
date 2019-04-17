@@ -38,7 +38,6 @@ class Index extends MemberBase
     //登录页面
     public function login()
     {
-        var_dump($this->Member_Model->get_usergroup_bypoint(0));
         $cookie_url = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
         Cookie::set("forward", null);
         if (!empty($this->userid)) {

@@ -54,7 +54,7 @@ $url = function_exists('config') ? config('template.tpl_replace_string.__STATIC_
 <body class="error-page-wrapper">
 <div class="content-container">
     <div class="head-line">
-        <img src="<?php echo $url; ?>/admin/img/error.svg" alt="" width="120"/>
+        <img src="<?php echo $url; ?>/common/img/error.svg" alt="" width="120"/>
     </div>
     <div class="subheader">
     	<?php echo nl2br(htmlentities($message)); ?>
