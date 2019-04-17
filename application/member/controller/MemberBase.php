@@ -26,13 +26,17 @@ class MemberBase extends Base
     protected $userinfo = array();
     //会员模型相关配置
     protected $memberConfig = array();
+    //会员组缓存
+    protected $memberGroup = array();
     //初始化
     protected function initialize()
     {
         parent::initialize();
         $this->memberConfig = cache("Member_Config");
+        $this->memberGroup = cache("Member_Group");
         $this->check_member();
         //============全局模板变量==============
+        $this->assign("Member_group", $this->memberGroup);
         $this->assign("Member_config", $this->memberConfig);
     }
 
@@ -57,6 +61,7 @@ class MemberBase extends Base
             if ($this->userinfo['status'] !== 1) {
                 $this->error("您的帐号已经被锁定！", url('/'));
             }
+            $this->userinfo['groupname'] = $this->memberGroup[$this->userinfo['groupid']]['name'];
             $this->assign("userinfo", $this->userinfo);
             return true;
         } else {
