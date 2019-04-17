@@ -31,6 +31,23 @@ class Member extends Model
     }
 
     /**
+     * 获取头像
+     * @param   string $value
+     * @param   array  $data
+     * @return string
+     */
+    public function getAvatarAttr($value, $data)
+    {
+        if (!$value) {
+            $value = config('public_url') . 'static/modules/member/img/avatar.png';
+            return $value;
+            //启用首字母头像，请使用
+            //$value = letter_avatar($data['nickname']);
+        }
+        return get_file_path($value);
+    }
+
+    /**
      * 会员登录
      * @param type $identifier 用户/UID
      * @param type $password 明文密码，填写表示验证密码

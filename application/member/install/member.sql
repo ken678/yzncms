@@ -10,6 +10,7 @@ CREATE TABLE `yzn_member` (
   `login` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '登录次数',
   `email` char(32) NOT NULL DEFAULT '' COMMENT '电子邮箱',
   `mobile` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号',
+  `avatar` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '头像',
   `groupid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '用户组ID',
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '用户模型ID',
   `reg_ip` bigint(20) NOT NULL DEFAULT '0' COMMENT '注册IP',
