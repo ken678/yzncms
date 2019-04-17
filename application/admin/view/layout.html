@@ -97,6 +97,8 @@
             element = layui.element,
             layer = layui.layer,
             form = layui.form,
+            menu=[],
+            liIndex,
             cacheStr = window.sessionStorage.getItem("cache"),
             changeRefreshStr = window.sessionStorage.getItem("changeRefresh");
         var SUBMENU_CONFIG = <?php echo $SUBMENU_CONFIG; ?>;
@@ -117,9 +119,9 @@
         $('#J_B_main_block').html(html.join(''));
         element.render(); //重新渲染
         //维持在线
-        setInterval(function() {
+        /*setInterval(function() {
             online();
-        }, 60000);
+        }, 60000);*/
 
         //功能设定
         $(".functionSetting").click(function(){
@@ -172,6 +174,47 @@
                 }
             })
         })
+
+        //刷新后还原打开的窗口
+        if(cacheStr == "true") {
+            if (window.sessionStorage.getItem("menu") != null) {
+                menu = JSON.parse(window.sessionStorage.getItem("menu"));
+                curmenu = window.sessionStorage.getItem("curmenu");
+                //console.log(curmenu);
+                for (var i = 0; i < menu.length; i++) {
+                    var li = $('<li>' + menu[i].title + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i></li>').attr('lay-id', menu[i].layId);
+                    li.appendTo('#B_history');
+                    //创建一个并加以标识
+                    var iframeAttr = {
+                        src: menu[i].href,
+                        id: 'iframe_' + menu[i].layId,
+                        frameborder: '0',
+                        scrolling: 'auto',
+                        height: '100%',
+                        width: '100%'
+                    };
+                    var iframe = $('<iframe/>').prop(iframeAttr).appendTo('#B_frame .layui-tab-content .iframe_box');
+                    $('#B_frame iframe').hide();
+                    $('#iframe_' + menu[i].layId).show();
+                    showTab(li); //计算此tab的位置，如果不在屏幕内，则移动导航位置
+
+                    //定位到刷新前的窗口
+                    if (curmenu != "undefined") {
+                        if (curmenu == '' || curmenu == "null") {  //定位到后台首页
+
+                        }else{
+                            if (JSON.parse(curmenu).title == menu[i].title) {  //定位到刷新前的页面
+                                $('#B_history li[lay-id=' + menu[i].layId + ']').addClass('layui-this').siblings('li').removeClass('layui-this');
+                            }
+                        }
+                    }
+                }
+            }else{
+                window.sessionStorage.removeItem("menu");
+                window.sessionStorage.removeItem("curmenu");
+            }
+
+        }
 
 
         //顶部导航点击
@@ -243,6 +286,7 @@
         $('#B_menubar').on('click', 'a', function(e) {
             e.preventDefault();
             e.stopPropagation();
+
             //iframe_height();
             var $this = $(this),
                 _dt = $this.parent(),
@@ -283,6 +327,9 @@
                 href = options.href,
                 id = options.id,
                 li = $('#B_history li[lay-id=' + id + ']');
+            if(window.sessionStorage.getItem("menu")){
+                menu = JSON.parse(window.sessionStorage.getItem("menu"));
+            }
             //如果iframe标签是已经存在的，则显示并让选项卡高亮,并不显示loading
             if (li.length > 0) {
                 var iframe = $('#iframe_' + id);
@@ -296,6 +343,14 @@
                 $('#B_frame iframe').hide();
                 $('#iframe_' + id).show();
                 showTab(li); //计算此tab的位置，如果不在屏幕内，则移动导航位置
+
+                //当前窗口内容
+                var curmenu = {
+                    "title" : elem.html(),
+                    "href" : href,
+                    "layId" : id
+                }
+                window.sessionStorage.setItem("curmenu",JSON.stringify(curmenu));  //当前的窗口
             } else {
                 //创建一个并加以标识
                 var iframeAttr = {
@@ -308,11 +363,21 @@
                 };
                 var iframe = $('<iframe/>').prop(iframeAttr).appendTo('#B_frame .layui-tab-content .iframe_box');
 
+                //当前窗口内容
+                var curmenu = {
+                    "title" : elem.html(),
+                    "href" : href,
+                    "layId" : id
+                }
+                menu.push(curmenu);
+                window.sessionStorage.setItem("menu",JSON.stringify(menu)); //打开的窗口
+                window.sessionStorage.setItem("curmenu",JSON.stringify(curmenu));  //当前的窗口
+
                 $(iframe[0].contentWindow.document).ready(function() {
                     $('#B_frame iframe').hide();
-                    setTimeout(function() {
+                    /*setTimeout(function() {
                         $('#loading').hide();
-                    }, 500);
+                    }, 500);*/
                     var li = $('<li>' + elem.html() + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i></li>').attr('lay-id', id);
                     li.appendTo('#B_history');
                     showTab(li); //计算此tab的位置，如果不在屏幕内，则移动导航位置
@@ -341,9 +406,22 @@
                 //选择左边菜单
                 $("#B_menubar").find(".layui-this").removeClass('layui-this');
                 $("#B_menubar").find("a[lay-id=" + data_id + "]").parent().addClass('layui-this');
+
+                if(window.sessionStorage.getItem("menu")) {
+                    curmenu = menu[$(this).index() - 1];
+                }
+                if($(this).index() == 0){
+                    window.sessionStorage.setItem("curmenu",'');
+                }else{
+                    window.sessionStorage.setItem("curmenu",JSON.stringify(curmenu));
+                }
             }
 
             $(this).addClass('layui-this').siblings('li').removeClass('layui-this');
+            //是否点击窗口切换刷新页面
+            if(changeRefreshStr == "true"){
+                $('#iframe_' + data_id).attr('src', $('#iframe_' + data_id).attr('src'));
+            }
             /*try {
                 var menuid = parseInt(data_id);
                 if (menuid) {
@@ -361,6 +439,11 @@
                 prev_li = li.prev('li'),
                 data_id = li.attr('lay-id');
             li.hide(60, function() {
+                liIndex = li.index();
+                var menu = JSON.parse(window.sessionStorage.getItem("menu"));
+                menu.splice((liIndex - 1), 1);
+                window.sessionStorage.setItem("menu", JSON.stringify(menu));
+
                 $(this).remove(); //移除选项卡
                 $('#iframe_' + data_id).remove(); //移除iframe页面
                 var current_li = $('#B_history li.layui-this');
@@ -432,6 +515,9 @@
 
         //关闭全部选项卡
         $(".closePageAll").on("click", function() {
+            window.sessionStorage.removeItem("menu");
+            menu = [];
+            window.sessionStorage.removeItem("curmenu");
             if ($("#B_history li").length > 1) {
                 $("#B_history li").each(function() {
                     data_id = $(this).attr('lay-id');
