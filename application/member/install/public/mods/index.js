@@ -31,7 +31,41 @@
 
 
 
-    var fly = {}
+    var fly = {
+        //Ajax
+        json: function(url, data, success, options) {
+            var that = this,
+                type = typeof data === 'function';
+
+            if (type) {
+                options = success
+                success = data;
+                data = {};
+            }
+
+            options = options || {};
+
+            return $.ajax({
+                type: options.type || 'post',
+                dataType: options.dataType || 'json',
+                data: data,
+                url: url,
+                success: function(res) {
+                    if (res.status === 0) {
+                        success && success(res);
+                    } else {
+                        layer.msg(res.msg || res.code, { shift: 6 });
+                        options.error && options.error();
+                    }
+                },
+                error: function(e) {
+                    layer.msg('请求异常，请重试', { shift: 6 });
+                    options.error && options.error(e);
+                }
+            });
+        }
+
+    }
 
     //表单提交
     form.on('submit(*)', function(data) {

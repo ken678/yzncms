@@ -131,6 +131,15 @@ class Index extends MemberBase
         }
     }
 
+    /**
+     * 个人资料
+     */
+    public function profile()
+    {
+        return $this->fetch('/profile');
+
+    }
+
     //手动退出登录
     public function logout()
     {
