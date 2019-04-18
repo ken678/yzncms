@@ -30,6 +30,11 @@ class Category extends Validate
         'status|栏目状态' => 'require|in:0,1',
     ];
 
+    //定义验证提示
+    protected $message = [
+        'modelid.number' => '所属模型不得为空',
+    ];
+
     protected $scene = [
         'page' => ['parentid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
         'list' => ['parentid', 'modelid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
