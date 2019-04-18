@@ -28,6 +28,7 @@ class Category extends Validate
         'image|栏目图片' => 'number',
         'listorder|栏目排序' => 'require|number',
         'status|栏目状态' => 'require|in:0,1',
+        'url|链接地址' => 'require',
     ];
 
     //定义验证提示
@@ -38,6 +39,6 @@ class Category extends Validate
     protected $scene = [
         'page' => ['parentid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
         'list' => ['parentid', 'modelid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
-        'link' => ['parentid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status'],
+        'link' => ['parentid', 'type', 'catname', 'catdir', 'image', 'listorder', 'status', 'url'],
     ];
 }
