@@ -307,10 +307,11 @@ function parse_attr($value = '')
  * @param int $time
  * @return string 完整的时间显示
  */
-function time_format($time = null, $format = 'Y-m-d H:i')
+function time_format($time = null, $type = 0)
 {
+    $types = array('Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d');
     $time = $time === null ? $_SERVER['REQUEST_TIME'] : intval($time);
-    return date($format, $time);
+    return date($types[$type], $time);
 }
 
 /**
