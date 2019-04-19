@@ -60,7 +60,7 @@ class Cms extends Adminbase
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
                 $v['url'] = buildContentUrl($v['catid'], $v['id']);
-                $_list[$v['id']] = $v;
+                $_list[] = $v;
             }
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);

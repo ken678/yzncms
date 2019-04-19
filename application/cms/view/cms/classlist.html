@@ -150,10 +150,12 @@ layui.use(['table', 'laydate'], function() {
 
 
     table.on('toolbar(table)', function(obj) {
+            var checkStatus = table.checkStatus(obj.config.id),
+                
+                ids = [],
+                id = tag = '';
         if (obj.event === 'delAll') {
-            var checkStatus = table.checkStatus('table'),
-                data = checkStatus.data,
-                ids = [];
+            var data = checkStatus.data;
             if (data.length > 0) {
                 for (let i in data) {
                     ids.push(data[i].id);
@@ -188,9 +190,7 @@ layui.use(['table', 'laydate'], function() {
                 layer.msg("请选择需要删除的数据");
             }
         }else if (obj.event === 'move') {
-            var checkStatus = table.checkStatus('table'),
-                data = checkStatus.data,
-                id = tag = '';
+            var data = checkStatus.data;
             if (data.length > 0) {
                 for (let i in data) {
                     id += tag + data[i].id;
