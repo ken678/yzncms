@@ -323,6 +323,7 @@ INSERT INTO `yzn_menu` VALUES ('30', '附件上传', '', '23', 'attachment', 'at
 INSERT INTO `yzn_menu` VALUES ('31', '附件删除', '', '23', 'attachment', 'attachments', 'delete', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('32', '编辑器附件', '', '23', 'attachment', 'ueditor', 'run', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('33', '图片列表', '', '23', 'attachment', 'attachments', 'showFileLis', '', '0', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES ('34', '图片本地化', '', '23', 'attachment', 'attachments', 'getUrlFile', '', '0', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('38', '插件扩展', 'icon-tools', '5', 'addons', 'addons', 'index2', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('39', '插件管理', 'icon-plugins-', '38', 'addons', 'addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('40', '行为管理', 'icon-hangweifenxi', '38', 'addons', 'addons', 'hooks', '', '1', '', '0', '0');
