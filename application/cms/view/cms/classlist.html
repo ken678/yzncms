@@ -204,12 +204,12 @@ layui.use(['table', 'laydate'], function() {
 				  area: ['300px', '250px'],
                   btn: ['移动'],
                   yes: function(index, layero){
-                      var remove_id = $("select[name='remove']").val();
-                      if (remove_id == 0) {
+                      var tocatid = $("select[name='remove']").val();
+                      if (tocatid == 0) {
                             layer.msg("请选择移动的栏目");
                             return;
                       }
-                      $.post('{:url("cms/cms/remove")}', { 'ids': id,'remove_id':remove_id}, function(data) {
+                      $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id,'tocatid':tocatid}, function(data) {
                            if (data.code == 1) {
                               layer.msg(data.msg);
                               layer.close(index);

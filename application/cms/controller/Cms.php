@@ -95,6 +95,38 @@ class Cms extends Adminbase
     //移动文章
     public function remove()
     {
+        if ($this->request->isPost()) {
+            $catid = $this->request->param('catid/d', 0);
+            if (!$catid) {
+                $this->error("请指定栏目！");
+            }
+            //需要移动的信息ID集合
+            $ids = $this->request->param('ids/s');
+            //目标栏目
+            $tocatid = $this->request->param('tocatid/d', 0);
+            if ($ids) {
+                if ($tocatid == $catid) {
+                    $this->error('目标栏目和当前栏目是同一个栏目！');
+                }
+                $modelid = getCategory($tocatid, 'modelid');
+                if (!$modelid) {
+                    $this->error('该模型不存在！');
+                }
+                $ids = array_filter(explode('|', $ids), 'intval');
+                $tableName = Db::name('model')->where('id', $modelid)->where('status', 1)->value('tablename');
+                if (!$tableName) {
+                    return $this->error('模型被冻结不可操作~');
+                }
+                if (Db::name(ucwords($tableName))->where('id', 'in', $ids)->update(['catid' => $tocatid])) {
+                    $this->success('栏目修改成功~');
+                } else {
+                    $this->error('栏目修改失败~');
+                }
+            } else {
+                $this->error('请选择需要移动的信息！');
+            }
+
+        }
 
     }
 
