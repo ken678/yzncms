@@ -37,12 +37,11 @@ class Cms extends Modelbase
      */
     protected function getModelTableName($modelid, $ifsystem = 1)
     {
-        //读取模型配置 以后优化缓存形式
         $model_cache = cache("Model");
         //表名获取
-        $model_table = $model_cache[$modelid]['tablename'];
+        $model_table = ucwords($model_cache[$modelid]['tablename']);
         //完整表名获取 判断主表 还是副表
-        $tablename = $ifsystem ? $model_table : $model_table . "_data";
+        $tablename = $ifsystem ? $model_table : $model_table . $this->ext_table;
         return $tablename;
     }
 
@@ -301,12 +300,10 @@ class Cms extends Modelbase
      */
     public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null)
     {
-        $modelCache = cache("Model");
-        $ModelField = cache('ModelField');
-        $tableName = ucwords($modelCache[$modeId]['tablename']); //表名
+        $tableName = $this->getModelTableName($modeId);
         $result = [];
         if (isset($tableName) && !empty($tableName)) {
-            if (2 == $modelCache[$modeId]['type'] && $moreifo) {
+            if (2 == getModel($modeId, 'type') && $moreifo) {
                 $extTable = $tableName . $this->ext_table;
                 if ($page) {
                     $result = \think\Db::view($tableName, '*')
@@ -332,6 +329,7 @@ class Cms extends Modelbase
         }
         //数据格式化处理
         if (!empty($result)) {
+            $ModelField = cache('ModelField');
             foreach ($result as $key => $vo) {
                 $vo = $this->dealModelShowData($ModelField[$modeId], $vo);
                 $vo['url'] = buildContentUrl($vo['catid'], $vo['id']);
@@ -339,7 +337,6 @@ class Cms extends Modelbase
             }
         }
         return $result;
-
     }
 
     /**
@@ -352,23 +349,18 @@ class Cms extends Modelbase
      */
     public function getContent($modeId, $where, $moreifo = false, $field = '*', $order = '', $cache = false)
     {
-        $modelInfo = cache('Model');
-        $ModelField = cache('ModelField');
-        if (false == $modelInfo || false == $ModelField) {
-            return false;
-        }
-        $modelInfo = $modelInfo[$modeId];
-        if (2 == $modelInfo['type'] && $moreifo) {
-            $extTable = $modelInfo['tablename'] . $this->ext_table;
-            $dataInfo = Db::view($modelInfo['tablename'], '*')->where($where)->cache($cache)->view($extTable, '*', $modelInfo['tablename'] . '.id=' . $extTable . '.did', 'LEFT')->find();
+        $tableName = $this->getModelTableName($modeId);
+        if (2 == getModel($modeId, 'type') && $moreifo) {
+            $extTable = $tableName . $this->ext_table;
+            $dataInfo = Db::view($tableName, '*')->where($where)->cache($cache)->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')->find();
         } else {
-            $dataInfo = Db::name($modelInfo['tablename'])->field($field)->cache($cache)->where($where)->find();
+            $dataInfo = Db::name($tableName)->field($field)->cache($cache)->where($where)->find();
         }
         if (!empty($dataInfo)) {
+            $ModelField = cache('ModelField');
             $dataInfo = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
             $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
         }
-
         return $dataInfo;
     }
 
