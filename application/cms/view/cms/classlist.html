@@ -25,6 +25,7 @@
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" href="{:url('cms/cms/add',['catid'=>$catid])}">新增内容</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</a>
+      <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="move">批量移动</a>
     </div>
 </script>
 <script type="text/html" id="barTool">
@@ -55,6 +56,24 @@
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
+<div id="remove" style="display: none;">
+	<div class="box-body" style="padding: 20px;">
+		<blockquote class="layui-elem-quote">只能将数据移动到相同模型的栏目下，不同模型的数据移动将被忽略</blockquote>
+		<div class="layui-form">
+		    <div class="layui-form-item">
+	            <select name="remove" lay-verify="required">
+	                <option></option>
+	                {$string|raw}
+	            </select>
+		    </div>
+		</div>
+	</div>
+</div>
+<style type="text/css">
+.layui-layer-page .layui-layer-content {
+    overflow: inherit;
+}
+</style>
 {/block}
 {block name="script"}
 <script>
@@ -168,6 +187,43 @@ layui.use(['table', 'laydate'], function() {
             } else {
                 layer.msg("请选择需要删除的数据");
             }
+        }else if (obj.event === 'move') {
+            var checkStatus = table.checkStatus('table'),
+                data = checkStatus.data,
+                id = tag = '';
+            if (data.length > 0) {
+                for (let i in data) {
+                    id += tag + data[i].id;
+                    tag = '|';
+                    //ids.push(data[i].id);
+                }
+                layer.open({
+                  title: false,
+				  type: 1,
+				  content: $('#remove'),
+				  area: ['300px', '250px'],
+                  btn: ['移动'],
+                  yes: function(index, layero){
+                      var remove_id = $("select[name='remove']").val();
+                      if (remove_id == 0) {
+                            layer.msg("请选择移动的栏目");
+                            return;
+                      }
+                      $.post('{:url("cms/cms/remove")}', { 'ids': id,'remove_id':remove_id}, function(data) {
+                           if (data.code == 1) {
+                              layer.msg(data.msg);
+                              layer.close(index);
+                           }else{
+                            layer.msg(data.msg);
+                           }
+                      })
+                  }
+
+				});
+            } else {
+                layer.msg("请选择需要移动的数据");
+            }
+
         }
     });
 

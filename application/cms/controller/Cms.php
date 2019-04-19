@@ -36,17 +36,18 @@ class Cms extends Adminbase
     public function classlist()
     {
         $catid = $this->request->param('catid/d', 0);
+        //当前栏目信息
+        $catInfo = getCategory($catid);
+        if (empty($catInfo)) {
+            $this->error('该栏目不存在！');
+        }
+        //栏目所属模型
+        $modelid = $catInfo['modelid'];
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 10);
             $map = $this->buildparams();
-            //当前栏目信息
-            $catInfo = getCategory($catid);
-            if (empty($catInfo)) {
-                $this->error('该栏目不存在！');
-            }
-            //栏目所属模型
-            $modelid = $catInfo['modelid'];
+
             //检查模型是否被禁用
             if (!getModel($modelid, 'status')) {
                 $this->error('模型被禁用！');
@@ -64,8 +65,36 @@ class Cms extends Adminbase
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
+        /*移动栏目 复制栏目*/
+        $tree = new \util\Tree();
+        $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
+        $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+        $categorys = array();
+        $result = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+        foreach ($result as $k => $v) {
+            if ($v['type'] != 2) {
+                continue;
+            }
+            if ($modelid && $modelid != $v['modelid'] && $v['child'] == 0) {
+                continue;
+            }
+            $v['disabled'] = $v['child'] ? 'disabled' : '';
+            $v['selected'] = $k == $catid ? 'selected' : '';
+            $categorys[$k] = $v;
+        }
+        $str = "<option value='\$id' \$selected \$disabled>\$spacer \$catname</option>";
+        $tree->init($categorys);
+        $string = $tree->get_tree(0, $str);
+
+        $this->assign('string', $string);
         $this->assign('catid', $catid);
         return $this->fetch();
+
+    }
+
+    //移动文章
+    public function remove()
+    {
 
     }
 
