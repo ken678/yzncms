@@ -104,13 +104,13 @@
         ,done: function(res){
             console.log(res);
           if(res.code == 0){
-            $.post('/user/set/', {
+            /*$.post('/user/set/', {
               avatar: res.url
             }, function(res){
               //location.reload();
-            });
+            });*/
           } else {
-            layer.msg(res.msg, {icon: 5});
+            layer.msg(res.info, {icon: 5});
           }
           avatarAdd.find('.loading').hide();
         }

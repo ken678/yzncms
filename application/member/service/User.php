@@ -64,7 +64,7 @@ class User
     public function getInfo()
     {
         if (empty(self::$userInfo)) {
-            self::$userInfo = model('Member')->getLocalUser($this->isLogin());
+            self::$userInfo = model('member/Member')->getLocalUser($this->isLogin());
         }
         return !empty(self::$userInfo) ? self::$userInfo : false;
     }
