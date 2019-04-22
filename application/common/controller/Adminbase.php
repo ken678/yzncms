@@ -33,16 +33,25 @@ class Adminbase extends Base
         $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
 
         if (!in_array($rule, $allowUrl)) {
+
             if (defined('UID')) {
                 return;
             }
             define('UID', (int) User::instance()->isLogin());
+            // 是否是超级管理员
+            define('IS_ROOT', User::instance()->isAdministrator());
+            if (!IS_ROOT && config('ADMIN_ALLOW_IP')) {
+                // 检查IP地址访问
+                if (!in_array($this->request->ip(), explode(',', config('ADMIN_ALLOW_IP')))) {
+                    $this->error('403:禁止访问');
+                }
+            }
             if (false == $this->competence()) {
                 //跳转到登录界面
                 $this->error('请先登陆', url('admin/index/login'));
             } else {
                 //是否超级管理员
-                if (!User::instance()->isAdministrator()) {
+                if (!IS_ROOT) {
                     //检测访问权限
                     if (!$this->checkRule($rule, [1, 2])) {
                         $this->error('未授权访问!');
@@ -59,10 +68,10 @@ class Adminbase extends Base
     private function competence()
     {
         //检查是否登录
-        $uid = (int) User::instance()->isLogin();
+        /*$uid = (int) User::instance()->isLogin();
         if (empty($uid)) {
-            return false;
-        }
+        return false;
+        }*/
         //获取当前登录用户信息
         $this->_userinfo = $userInfo = User::instance()->getInfo();
         if (empty($userInfo)) {
