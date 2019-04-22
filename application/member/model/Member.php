@@ -156,8 +156,7 @@ class Member extends Model
         //验证旧密码是否正确
         if ($ignoreoldpw == 0) {
             $info = self::where(["username" => $username])->find();
-            $pas = encrypt_password($oldpw, $info['encrypt']);
-            if ($pas['password'] != $info['password']) {
+            if (encrypt_password($oldpw, $info['encrypt']) != $info['password']) {
                 $this->error = '旧密码错误！';
                 return false;
             }

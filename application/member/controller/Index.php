@@ -15,7 +15,7 @@
 namespace app\member\controller;
 
 use app\member\model\Member as Member_Model;
-use app\member\service\User;
+//use app\member\service\User;
 use think\facade\Cookie;
 
 class Index extends MemberBase
@@ -137,6 +137,26 @@ class Index extends MemberBase
     public function profile()
     {
         return $this->fetch('/profile');
+
+    }
+
+    /**
+     * 更改密码
+     */
+    public function changepwd()
+    {
+        if ($this->request->isPost()) {
+            $oldPassword = $this->request->post("oldpassword");
+            $newPassword = $this->request->post("newpassword");
+
+            $res = $this->Member_Model->userEdit($this->userinfo['username'], $oldPassword, $newPassword);
+            if (!$res) {
+                $this->error($this->Member_Model->getError());
+            }
+            $this->success('修改成功！');
+            //注销当前登陆
+            $this->logout();
+        }
 
     }
 
