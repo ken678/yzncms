@@ -34,7 +34,9 @@ return array(
     //依赖插件
     'need_plugin' => [],
     //行为注册
-    'tags' => [],
+    'tags' => [
+        'pageHeader', 'pageFooter',
+    ],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache' => [
         'Category' => [

@@ -191,7 +191,7 @@ class Module
         }
         //安装行为
         if (!empty($config['tags'])) {
-            model('admin/Hooks')->moduleHooksInstallation($name, $config['tags']);
+            model('admin/Hooks')->updateModules($name, $config['tags']);
         }
         //安装结束，最后调用安装脚本完成
         if (!$this->runInstallScript($name, 'end')) {
@@ -223,6 +223,8 @@ class Module
         /*if ($this->competence($name) !== true) {
         return false;
         }*/
+        //加载模块基本配置
+        $config = $this->getInfoFromFile($name);
         //取得该模块数据库中记录的安装信息
         $info = Module_Model::where(array('module' => $name))->find();
         if (empty($info)) {
@@ -244,7 +246,9 @@ class Module
             return false;
         }
         //注销缓存
-        model('common/Cache')->deleteCacheModule($name);
+        if (!empty($config['cache'])) {
+            model('common/Cache')->deleteCacheModule($name);
+        }
 
         //执行数据库脚本卸载
         $this->runSQL($name, 'uninstall');
@@ -259,8 +263,10 @@ class Module
         if (is_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR)) {
             File::del_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR);
         }
-        //去除对应行为规则
-        model('admin/Hooks')->moduleHooksUninstall($name);
+        //去除对应行为
+        if (!empty($config['tags'])) {
+            model('admin/Hooks')->removeModules($name, $config['tags']);
+        }
         //卸载结束，最后调用卸载脚本完成
         if (!$this->runInstallScript($name, 'end', 'uninstall')) {
             return false;

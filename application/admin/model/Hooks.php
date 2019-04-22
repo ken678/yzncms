@@ -40,9 +40,32 @@ class Hooks extends Model
         $common = array_intersect($hooks, $methods);
         if (!empty($common)) {
             foreach ($common as $hook) {
-                $flag = $this->updateAddons($hook, array($addons_name));
+                $flag = $this->updateAddons($hook, array($addons_name), 'addons');
                 if (false === $flag) {
                     $this->removeHooks($addons_name);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 更新插件里的所有钩子对应的模块
+     */
+    public function updateModules($module, $hooksRule)
+    {
+        if (empty($module) || !is_array($hooksRule)) {
+            $this->error = '参数不正确！';
+            return false;
+        }
+        $hooks = $this->column('name');
+        $common = array_intersect($hooks, $hooksRule);
+        if (!empty($common)) {
+            foreach ($common as $hook) {
+                $flag = $this->updateAddons($hook, array($module), 'modules');
+                if (false === $flag) {
+                    $this->removeHooks($module);
                     return false;
                 }
             }
@@ -56,21 +79,21 @@ class Hooks extends Model
      * @param  [type] 插件名称 [description]
      * @return [type]              [description]
      */
-    public function updateAddons($hook_name, $addons_name)
+    public function updateAddons($hook_name, $name, $type)
     {
-        $o_addons = $this->where(['name' => $hook_name])->value('addons');
+        $o_addons = $this->where(['name' => $hook_name])->value($type);
         if ($o_addons) {
             $o_addons = str2arr($o_addons);
         }
         if ($o_addons) {
-            $addons = array_merge($o_addons, $addons_name);
+            $addons = array_merge($o_addons, $name);
             $addons = array_unique($addons);
         } else {
-            $addons = $addons_name;
+            $addons = $name;
         }
-        $flag = $this->where(['name' => $hook_name])->setField('addons', arr2str($addons));
+        $flag = $this->where(['name' => $hook_name])->setField($type, arr2str($addons));
         if (false === $flag) {
-            $this->where(['name' => $hook_name])->setField('addons', arr2str($o_addons));
+            $this->where(['name' => $hook_name])->setField($type, arr2str($o_addons));
         }
 
         return $flag;
@@ -91,7 +114,29 @@ class Hooks extends Model
         $common = array_intersect($hooks, $methods);
         if ($common) {
             foreach ($common as $hook) {
-                $flag = $this->removeAddons($hook, array($addons_name));
+                $flag = $this->removeAddons($hook, array($addons_name), 'addons');
+                if (false === $flag) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 去除插件所有钩子里对应的插件数据
+     */
+    public function removeModules($module, $hooksRule)
+    {
+        if (empty($module) || !is_array($hooksRule)) {
+            $this->error = '参数不正确！';
+            return false;
+        }
+        $hooks = $this->column('name');
+        $common = array_intersect($hooks, $hooksRule);
+        if ($common) {
+            foreach ($common as $hook) {
+                $flag = $this->removeAddons($hook, array($module), 'modules');
                 if (false === $flag) {
                     return false;
                 }
@@ -105,41 +150,20 @@ class Hooks extends Model
      * $hook_name 钩子名称
      * $addons_name 插件名称
      */
-    public function removeAddons($hook_name, $addons_name)
+    public function removeAddons($hook_name, $name, $type)
     {
-        $o_addons = $this->where(['name' => $hook_name])->value('addons');
+        $o_addons = $this->where(['name' => $hook_name])->value($type);
         $o_addons = str2arr($o_addons);
         if ($o_addons) {
-            $addons = array_diff($o_addons, $addons_name);
+            $addons = array_diff($o_addons, $name);
         } else {
             return true;
         }
-        $flag = $this->where(['name' => $hook_name])->setField('addons', arr2str($addons));
+        $flag = $this->where(['name' => $hook_name])->setField($type, arr2str($addons));
         if (false === $flag) {
-            $this->where(['name' => $hook_name])->setField('addons', arr2str($o_addons));
+            $this->where(['name' => $hook_name])->setField($type, arr2str($o_addons));
         }
         return $flag;
-    }
-
-    /**
-     * 模块安装，安装行为规则
-     * 在模块配置文件中增加 tags 例如：
-     *  'tags' => array(
-     *                  'login_end' => array(
-     *                                    'title' => '会员登陆成功后行为',
-     *                                    'remark' => '会员登陆成功后行为',
-     *                                    'type' => 1,
-     *                                    '具体的规则1',
-     *                                    '具体的规则2',
-     *                   ),
-     *  )
-     * @param type $module 模块标识
-     * @param type $hooksRule 对应规则
-     * @return boolean
-     */
-    public function moduleHooksInstallation($module, $hooksRule)
-    {
-        return true;
     }
 
     /**
