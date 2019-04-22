@@ -16,11 +16,11 @@ namespace app\attachment\controller;
 
 use app\admin\service\User;
 use app\attachment\model\Attachment as Attachment_Model;
-use app\common\controller\Adminbase;
+use app\common\controller\Base;
 use think\Db;
 use think\Image;
 
-class Attachments extends Adminbase
+class Attachments extends Base
 {
 
     private $uploadUrl = '';

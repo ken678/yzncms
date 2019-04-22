@@ -141,6 +141,14 @@ class Index extends MemberBase
     }
 
     /**
+     * 头像设置
+     */
+    public function regavatar()
+    {
+
+    }
+
+    /**
      * 更改密码
      */
     public function changepwd()
