@@ -126,4 +126,84 @@ class Hooks extends Model
         return $flag;
     }
 
+    /**
+     * 模块安装，安装行为规则
+     * 在模块配置文件中增加 tags 例如：
+     *  'tags' => array(
+     *                  'login_end' => array(
+     *                                    'title' => '会员登陆成功后行为',
+     *                                    'remark' => '会员登陆成功后行为',
+     *                                    'type' => 1,
+     *                                    '具体的规则1',
+     *                                    '具体的规则2',
+     *                   ),
+     *  )
+     * @param type $module 模块标识
+     * @param type $hooksRule 对应规则
+     * @return boolean
+     */
+    public function moduleHooksInstallation($module, $hooksRule)
+    {
+        if (empty($module) || !is_array($hooksRule)) {
+            $this->error = '参数不正确！';
+            return false;
+        }
+        $time = time();
+        foreach ($hooksRule as $hook => $ruleList) {
+            //检查是否有同样的行为
+            $hooksInfo = $this->where(['name' => $hook])->find();
+            if (empty($hooksInfo)) {
+                //行为描述
+                $description = $ruleList['description'];
+                //行为类型
+                $type = (int) $ruleList['type'];
+                $this->save([
+                    'name' => $hook,
+                    'description' => $description ?: "模块{$module}中的行为！",
+                    'type' => $type ?: 1,
+                ]);
+                $hooksId = $this->getAttr('id');
+
+            } else {
+                $hooksId = $hooksInfo['id'];
+
+            }
+            //如果获取不到行为id，跳过
+            if (empty($hooksId)) {
+                continue;
+            }
+            model('hooksRule')->save([
+                'hid' => $hooksId,
+                'name' => $module,
+                'listorder' => 0,
+                'type' => 1,
+            ]);
+        }
+        return true;
+    }
+
+    /**
+     * 卸载模块时删除对应模块安装时创建的规则！
+     * @param type $module 模块标识
+     * @return boolean
+     */
+    public function moduleHooksUninstall($module)
+    {
+        if (empty($module)) {
+            $this->error = '模块标识不能为空！';
+            return false;
+        }
+        return $this->ruleDelByModule($module);
+    }
+
+    /**
+     * 根据所属模块，删除对应的行为规则
+     * @param type $module 模块标识
+     * @return boolean
+     */
+    public function ruleDelByModule($module)
+    {
+
+    }
+
 }

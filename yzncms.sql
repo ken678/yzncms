@@ -73,7 +73,6 @@ CREATE TABLE `yzn_adminlog` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
-
 -- ----------------------------
 -- Table structure for `yzn_attachment`
 -- ----------------------------
@@ -161,7 +160,6 @@ INSERT INTO `yzn_cache` VALUES ('3', 'Module', '可用模块列表', 'admin', 'M
 INSERT INTO `yzn_cache` VALUES ('4', 'Model', '模型列表', 'admin', 'Models', 'model_cache', '1');
 INSERT INTO `yzn_cache` VALUES ('5', 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', '1');
 
-
 -- ----------------------------
 -- Table structure for `yzn_config`
 -- ----------------------------
@@ -209,8 +207,6 @@ INSERT INTO `yzn_config` VALUES ('18', 'mail_smtp_user', 'text', '用户名', 'e
 INSERT INTO `yzn_config` VALUES ('19', 'mail_smtp_pass', 'text', '密码', 'email', '', '', '1553653344', '1553658394', '1', '', '6');
 INSERT INTO `yzn_config` VALUES ('20', 'mail_verify_type', 'radio', '验证方式', 'email', '1:TLS\r\n2:SSL', '', '1553653426', '1553658395', '1', '2', '7');
 INSERT INTO `yzn_config` VALUES ('21', 'mail_from', 'text', '发件人邮箱', 'email', '', '', '1553653500', '1553658397', '1', '', '8');
-
-
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`
@@ -269,6 +265,21 @@ CREATE TABLE `yzn_hooks` (
 -- ----------------------------
 INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '');
 INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '');
+
+-- ----------------------------
+-- Table structure for `yzn_hooks_rule`
+-- ----------------------------
+DROP TABLE IF EXISTS `yzn_hooks_rule`;
+CREATE TABLE `yzn_hooks_rule` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `hid` int(10) unsigned NOT NULL COMMENT '钩子ID',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1:模型2:插件',
+  `name` varchar(30) NOT NULL COMMENT '模块或者插件名称',
+  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='钩子规则表';
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
@@ -343,9 +354,6 @@ INSERT INTO `yzn_menu` VALUES ('53', '模块卸载', '', '44', 'admin', 'module'
 INSERT INTO `yzn_menu` VALUES ('54', '本地安装', '', '44', 'admin', 'module', 'local', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('55', '缓存更新', '', '0', 'admin', 'index', 'cache', '', '0', '', '0', '0');
 
-
-
-
 -- ----------------------------
 -- Table structure for `yzn_module`
 -- ----------------------------
@@ -355,16 +363,15 @@ CREATE TABLE `yzn_module` (
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT '模块名称',
   `sign` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
   `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '内置模块',
-  `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否可用',
   `version` varchar(50) NOT NULL DEFAULT '' COMMENT '版本',
   `setting` mediumtext COMMENT '设置信息',
   `installtime` int(10) NOT NULL DEFAULT '0' COMMENT '安装时间',
   `updatetime` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否可用',
   PRIMARY KEY (`module`),
   KEY `sign` (`sign`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='已安装模块列表';
-
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -384,7 +391,6 @@ CREATE TABLE `yzn_model` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型列表';
-
 
 -- ----------------------------
 -- Table structure for `yzn_model_field`

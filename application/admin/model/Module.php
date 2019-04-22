@@ -22,7 +22,7 @@ use think\Model;
 class Module extends Model
 {
     //自动完成
-    protected $auto = ['iscore' => 0, 'disabled' => 1];
+    protected $auto = ['iscore' => 0, 'status' => 1];
     protected $insert = ['installtime', 'updatetime'];
     protected function setInstalltimeAttr($value)
     {
