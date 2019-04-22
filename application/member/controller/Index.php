@@ -148,7 +148,22 @@ class Index extends MemberBase
         if ($this->request->isPost()) {
             $oldPassword = $this->request->post("oldpassword");
             $newPassword = $this->request->post("newpassword");
-
+            $renewPassword = $this->request->post("renewpassword");
+            // 验证数据
+            $data = [
+                'oldpassword' => $oldPassword,
+                'newpassword' => $newPassword,
+                'renewpassword' => $renewPassword,
+            ];
+            $rule = [
+                'oldpassword|旧密码' => 'require|length:6,30',
+                'newpassword|新密码' => 'require|length:6,30',
+                'renewpassword|确认密码' => 'require|length:6,30|confirm:newpassword',
+            ];
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result);
+            }
             $res = $this->Member_Model->userEdit($this->userinfo['username'], $oldPassword, $newPassword);
             if (!$res) {
                 $this->error($this->Member_Model->getError());
