@@ -139,40 +139,6 @@ class Hooks extends Model
      */
     public function moduleHooksInstallation($module, $hooksRule)
     {
-        if (empty($module) || !is_array($hooksRule)) {
-            $this->error = '参数不正确！';
-            return false;
-        }
-        $time = time();
-        foreach ($hooksRule as $hook => $ruleList) {
-            //检查是否有同样的行为
-            $hooksInfo = $this->where(['name' => $hook])->find();
-            if (empty($hooksInfo)) {
-                //行为描述
-                $description = $ruleList['description'];
-                //行为类型
-                $type = (int) $ruleList['type'];
-                $this->save([
-                    'name' => $hook,
-                    'description' => $description ?: "模块{$module}中的行为！",
-                    'type' => $type ?: 1,
-                ]);
-                $hooksId = $this->getAttr('id');
-
-            } else {
-                $hooksId = $hooksInfo['id'];
-            }
-            //如果获取不到行为id，跳过
-            if (empty($hooksId)) {
-                continue;
-            }
-            model('hooksRule')->save([
-                'hid' => $hooksId,
-                'name' => $module,
-                'listorder' => 0,
-                'type' => 1,
-            ]);
-        }
         return true;
     }
 
@@ -183,18 +149,8 @@ class Hooks extends Model
      */
     public function moduleHooksUninstall($module)
     {
-        if (empty($module)) {
-            $this->error = '模块标识不能为空！';
-            return false;
-        }
-        //删除规则
-        if (false !== model('hooksRule')->where(['name' => $module, 'type' => 1])->delete()) {
-            //删除行为
-            return true;
-        } else {
-            $this->error = '删除失败！';
-            return false;
-        }
+        return true;
+
     }
 
 }

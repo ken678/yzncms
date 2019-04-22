@@ -256,30 +256,16 @@ CREATE TABLE `yzn_hooks` (
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
+  `modules` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的模块 ''，''分割',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='插件钩子';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
 
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
-INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '');
-INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '');
-
--- ----------------------------
--- Table structure for `yzn_hooks_rule`
--- ----------------------------
-DROP TABLE IF EXISTS `yzn_hooks_rule`;
-CREATE TABLE `yzn_hooks_rule` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `hid` int(10) unsigned NOT NULL COMMENT '钩子ID',
-  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1:模型2:插件',
-  `name` varchar(30) NOT NULL COMMENT '模块或者插件名称',
-  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='钩子规则表';
+INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '', '');
+INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '', '');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`

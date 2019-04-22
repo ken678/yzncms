@@ -27,31 +27,27 @@ class InitHook
     {
         $data = Cache::get('Hooks');
         if (empty($data)) {
-            $hooks = Db::name('Hooks')->column('id,name');
+            //所有模块和插件钩子
+            $hooks = Db::name('Hooks')->column('name,addons,modules');
             foreach ($hooks as $key => $value) {
                 $hooks_class = [];
-                $modules = Db::name('HooksRule')->where(['hid' => $key, 'type' => 1])->order('listorder asc,create_time desc')->column('name');
                 //模块
-                if ($modules) {
-                    $data = Db::name('Module')->where('status', 1)->whereIn('module', $modules)->column('module');
+                if ($value['modules']) {
+                    $data = Db::name('Module')->whereIn('module', $value['modules'])->where('status', 1)->column('module');
                     if ($data) {
-                        $modules = array_intersect($modules, $data);
-                        foreach ($modules as $key => $module) {
+                        foreach ($data as $key => $module) {
                             $hooks_class[] = "\\app\\" . $module . "\\behavior\\Hooks";
                         }
                     }
-
                 }
                 //插件
-                $plugin = Db::name('HooksRule')->where(['hid' => $key, 'type' => 2])->order('listorder asc,create_time desc')->column('name');
-                if ($plugin) {
-                    $data = Db::name('Addons')->where('status', 1)->whereIn('name', $value)->column('name');
+                if ($value['addons']) {
+                    $data = Db::name('Addons')->whereIn('name', $value['addons'])->where('status', 1)->column('name');
                     if ($data) {
-                        $plugins = array_intersect($plugin, $data);
-                        $hooks_class = array_merge($hooks_class, array_map('get_addon_class', $plugins));
+                        $hooks_class = array_merge($hooks_class, array_map('get_addon_class', $data));
                     }
                 }
-                Hook::add($value, $hooks_class);
+                Hook::add($value['name'], $hooks_class);
             }
             Cache::set('Hooks', Hook::get());
         } else {
