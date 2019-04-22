@@ -145,6 +145,14 @@ class Index extends MemberBase
      */
     public function regavatar()
     {
+        if ($this->request->isPost()) {
+            $id = $this->request->post("id");
+            $res = $this->Member_Model->userEdit($this->userinfo['username'], '', '', '', 1, ['avatar' => $id]);
+            if (!$res) {
+                $this->error($this->Member_Model->getError());
+            }
+            $this->success('修改成功！');
+        }
 
     }
 

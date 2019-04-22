@@ -104,11 +104,11 @@
         ,done: function(res){
             console.log(res);
           if(res.code == 0){
-            /*$.post('/user/set/', {
-              avatar: res.url
+            $.post(GV.avatar_upload_url, {
+               id: res.id
             }, function(res){
-              //location.reload();
-            });*/
+               location.reload();
+            });
           } else {
             layer.msg(res.info, {icon: 5});
           }
