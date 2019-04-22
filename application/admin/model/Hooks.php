@@ -22,12 +22,7 @@ use think\Model;
 
 class Hooks extends Model
 {
-    protected $autoWriteTimestamp = false;
-    protected $auto = ['update_time'];
-    protected function setUpdateTimeAttr($value)
-    {
-        return time();
-    }
+    protected $autoWriteTimestamp = true;
 
     /**
      * 更新插件里的所有钩子对应的插件
@@ -166,7 +161,6 @@ class Hooks extends Model
 
             } else {
                 $hooksId = $hooksInfo['id'];
-
             }
             //如果获取不到行为id，跳过
             if (empty($hooksId)) {
@@ -193,17 +187,14 @@ class Hooks extends Model
             $this->error = '模块标识不能为空！';
             return false;
         }
-        return $this->ruleDelByModule($module);
-    }
-
-    /**
-     * 根据所属模块，删除对应的行为规则
-     * @param type $module 模块标识
-     * @return boolean
-     */
-    public function ruleDelByModule($module)
-    {
-
+        //删除规则
+        if (false !== model('hooksRule')->where(['name' => $module, 'type' => 1])->delete()) {
+            //删除行为
+            return true;
+        } else {
+            $this->error = '删除失败！';
+            return false;
+        }
     }
 
 }

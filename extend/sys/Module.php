@@ -189,6 +189,10 @@ class Module
             //拷贝模板到前台模板目录中去
             File::copy_dir($this->installdir . "public" . DIRECTORY_SEPARATOR, $this->extresPath . strtolower($name) . '/');
         }
+        //安装行为
+        if (!empty($config['tags'])) {
+            model('admin/Hooks')->moduleHooksInstallation($name, $config['tags']);
+        }
         //安装结束，最后调用安装脚本完成
         if (!$this->runInstallScript($name, 'end')) {
             return false;
@@ -255,6 +259,8 @@ class Module
         if (is_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR)) {
             File::del_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR);
         }
+        //去除对应行为规则
+        model('admin/Hooks')->moduleHooksUninstall($name);
         //卸载结束，最后调用卸载脚本完成
         if (!$this->runInstallScript($name, 'end', 'uninstall')) {
             return false;
