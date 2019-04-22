@@ -15,7 +15,7 @@
 namespace app\member\controller;
 
 use app\member\model\Member as Member_Model;
-//use app\member\service\User;
+use app\member\service\User;
 use think\facade\Cookie;
 
 class Index extends MemberBase
@@ -151,7 +151,7 @@ class Index extends MemberBase
             if (!$res) {
                 $this->error($this->Member_Model->getError());
             }
-            $this->success('修改成功！');
+            $this->success('修改成功！', url('index/regavatar@avatar'));
         }
 
     }

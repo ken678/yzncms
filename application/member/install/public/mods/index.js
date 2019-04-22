@@ -29,7 +29,17 @@
         }
     };
 
-
+    //显示当前tab
+    if (location.hash) {
+        element.tabChange('user', location.hash.replace(/^#/, ''));
+    }
+    element.on('tab(user)', function() {
+        var othis = $(this),
+            layid = othis.attr('lay-id');
+        if (layid) {
+            location.hash = layid;
+        }
+    });
 
     var fly = {
         //Ajax
@@ -90,36 +100,36 @@
         return false;
     });
 
-      //上传图片
-  if($('.upload-img')[0]){
-    layui.use('upload', function(upload){
-      var avatarAdd = $('.avatar-add');
-      upload.render({
-        elem: '.upload-img'
-        ,url: GV.image_upload_url
-        ,size: 50
-        ,before: function(){
-          avatarAdd.find('.loading').show();
-        }
-        ,done: function(res){
-            console.log(res);
-          if(res.code == 0){
-            $.post(GV.avatar_upload_url, {
-               id: res.id
-            }, function(res){
-               location.reload();
+    //上传图片
+    if ($('.upload-img')[0]) {
+        layui.use('upload', function(upload) {
+            var avatarAdd = $('.avatar-add');
+            upload.render({
+                elem: '.upload-img',
+                url: GV.image_upload_url,
+                size: 50,
+                before: function() {
+                    avatarAdd.find('.loading').show();
+                },
+                done: function(res) {
+                    console.log(res);
+                    if (res.code == 0) {
+                        $.post(GV.avatar_upload_url, {
+                            id: res.id
+                        }, function(res) {
+                            location.reload();
+                        });
+                    } else {
+                        layer.msg(res.info, { icon: 5 });
+                    }
+                    avatarAdd.find('.loading').hide();
+                },
+                error: function() {
+                    avatarAdd.find('.loading').hide();
+                }
             });
-          } else {
-            layer.msg(res.info, {icon: 5});
-          }
-          avatarAdd.find('.loading').hide();
-        }
-        ,error: function(){
-          avatarAdd.find('.loading').hide();
-        }
-      });
-    });
-  }
+        });
+    }
 
     //加载特定模块
     if (layui.cache.page && layui.cache.page !== 'index') {
