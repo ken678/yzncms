@@ -14,31 +14,80 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
 
-use app\admin\service\User;
+use app\admin\service\User as admin_user;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Base;
+use app\member\service\User as home_user;
 
 class Upload extends Base
 {
-
+    //上传用户
+    public $upname = null;
+    //上传用户ID
+    public $upuserid = 0;
+    //会员组
+    public $groupid = 0;
+    //是否后台
+    public $isadmin = 0;
+    //上传模块
+    public $module = 'cms';
     private $uploadUrl = '';
     private $uploadPath = '';
 
     protected function initialize()
     {
         parent::initialize();
+        //检查是否后台登录，后台登录下优先级最高，用于权限判断
+        if (admin_user::instance()->isLogin()) {
+            $this->isadmin = 1;
+            $this->upname = admin_user::instance()->username;
+            $this->upuserid = admin_user::instance()->userid;
+        } elseif (home_user::instance()->isLogin()) {
+            $this->upname = home_user::instance()->username;
+            $this->upuserid = home_user::instance()->id;
+            $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
+        } else {
+            return $this->error('未登录');
+        }
         $this->uploadUrl = config('public_url') . 'uploads/';
         $this->uploadPath = config('upload_path');
     }
 
     public function upload($dir = '', $from = '', $module = '', $thumb = 0, $thumbsize = '', $thumbtype = '', $watermark = 1, $sizelimit = -1, $extlimit = '')
     {
-        // 临时取消执行时间限制
-        //@set_time_limit(0);
+        //验证是否可以上传
+        $status = $this->isUpload($module);
+        if (true !== $status) {
+            return json([
+                'code' => -1,
+                'info' => $status,
+            ]);
+        }
         if ($dir == '') {
             return $this->error('没有指定上传目录');
         }
         return $this->saveFile($dir, $from, $module, $thumb, $thumbsize, $thumbtype, $watermark, $sizelimit, $extlimit);
+    }
+
+    /**
+     * 检查是否可以上传
+     */
+    protected function isUpload($module)
+    {
+        $module_list = cache('Module');
+        if ($module_list[strtolower($module)] || ucwords($module) == 'cms') {
+            $this->module = strtolower($module);
+        } else {
+            return false;
+        }
+        //如果是前台上传，判断用户组权限
+        if ($this->isadmin == 0) {
+            $member_group = cache('Member_Group');
+            if ((int) $member_group[$this->groupid]['allowattachment'] < 1) {
+                return "所在的用户组没有附件上传权限！";
+            }
+        }
+        return true;
     }
 
     /**
@@ -177,7 +226,7 @@ class Upload extends Base
 
             // 获取附件信息
             $file_info = [
-                'uid' => User::instance()->isLogin(),
+                'uid' => $this->upuserid,
                 'name' => $file->getInfo('name'),
                 'mime' => $file->getInfo('type'),
                 'path' => $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
