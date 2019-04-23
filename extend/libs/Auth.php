@@ -126,10 +126,10 @@ class Auth
         }
         $user_groups = Db::name($this->_config['AUTH_USER'])
             ->alias('a')
-            ->where('a.userid', $uid)
+            ->where('a.id', $uid)
             ->where('g.status', 1)
             ->join($this->_config['AUTH_GROUP'] . ' g', "g.id = a.roleid")
-            ->field('userid,roleid,title,rules')
+            ->field('id,roleid,title,rules')
             ->select();
         $groups[$uid] = $user_groups ?: array();
         return $groups[$uid];
@@ -200,7 +200,7 @@ class Auth
     {
         static $userinfo = array();
         if (!isset($userinfo[$uid])) {
-            $userinfo[$uid] = Db::name($this->_config['auth_user'])->where(array('userid' => $uid))->find();
+            $userinfo[$uid] = Db::name($this->_config['auth_user'])->where(array('id' => $uid))->find();
         }
         return $userinfo[$uid];
     }

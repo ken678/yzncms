@@ -41,31 +41,6 @@ class AuthGroup extends Model
     }
 
     /**
-     * 返回用户所属用户组信息
-     * @param  int    $uid 用户id
-     * @return array  用户所属的用户组 array(
-     * array('uid'=>'用户id','group_id'=>'用户组id','title'=>'用户组名称','rules'=>'用户组拥有的规则id,多个,号隔开'),
-     * ...)
-     */
-    /*public static function getUserGroup($uid)
-    {
-    static $groups = array();
-    if (isset($groups[$uid])) {
-    return $groups[$uid];
-    }
-
-    $prefix = config('database.prefix');
-    $user_groups = \think\Db::table($prefix . self::MEMBER)
-    ->alias('a')
-    ->field('userid,roleid,title,description,rules')
-    ->join($prefix . self::AUTH_GROUP . " g", " g.id=a.roleid")
-    ->where("a.userid='$uid' and g.status='1'")
-    ->select();
-    $groups[$uid] = $user_groups ? $user_groups : array();
-    return $groups[$uid];
-    }*/
-
-    /**
      * 根据角色Id获取角色名
      * @param int $roleId 角色id
      * @return string 返回角色名

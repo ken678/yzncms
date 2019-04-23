@@ -117,7 +117,7 @@ class Menu extends Model
         if (!$Auth) {
             $Auth = new \libs\Auth();
         }
-        if (!$Auth->check($rule, User::instance()->userid, $type, $mode)) {
+        if (!$Auth->check($rule, User::instance()->id, $type, $mode)) {
             return false;
         }
         return true;

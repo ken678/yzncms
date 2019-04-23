@@ -21,7 +21,7 @@ class AdminUser extends Model
 {
     // 设置当前模型对应的完整数据表名称
     protected $name = 'admin';
-    protected $pk = 'userid';
+    protected $pk = 'id';
     protected $insert = ['status' => 1];
 
     /**
@@ -47,18 +47,16 @@ class AdminUser extends Model
      */
     public function autoLogin($userInfo)
     {
-        //记录行为
-        //action_log('user_login', 'member', $userInfo['userid'], $userInfo['userid']);
         /* 更新登录信息 */
         $data = array(
-            'uid' => $userInfo['userid'],
+            'uid' => $userInfo['id'],
             'last_login_time' => time(),
             'last_login_ip' => request()->ip(1),
         );
-        $this->loginStatus((int) $userInfo['userid']);
+        $this->loginStatus((int) $userInfo['id']);
         /* 记录登录SESSION和COOKIES */
         $auth = [
-            'uid' => $userInfo['userid'],
+            'uid' => $userInfo['id'],
             'username' => $userInfo['username'],
             'last_login_time' => $userInfo['last_login_time'],
         ];
@@ -95,11 +93,11 @@ class AdminUser extends Model
      */
     public function editManager($data)
     {
-        if (empty($data) || !isset($data['userid']) || !is_array($data)) {
+        if (empty($data) || !isset($data['id']) || !is_array($data)) {
             $this->error = '没有修改的数据！';
             return false;
         }
-        $info = $this->where(array('userid' => $data['userid']))->find();
+        $info = $this->where(array('id' => $data['id']))->find();
         if (empty($info)) {
             $this->error = '该管理员不存在！';
             return false;
@@ -119,21 +117,21 @@ class AdminUser extends Model
 
     /**
      * 删除管理员
-     * @param type $userId
+     * @param type $id
      * @return boolean
      */
-    public function deleteManager($userId)
+    public function deleteManager($id)
     {
-        $userId = (int) $userId;
-        if (empty($userId)) {
+        $id = (int) $id;
+        if (empty($id)) {
             $this->error = '请指定需要删除的用户ID！';
             return false;
         }
-        if ($userId == 1) {
+        if ($id == 1) {
             $this->error = '禁止对超级管理员执行该操作！';
             return false;
         }
-        if (false !== $this->where(array('userid' => $userId))->delete()) {
+        if (false !== $this->where(array('id' => $id))->delete()) {
             return true;
         } else {
             $this->error = '删除失败！';
@@ -154,7 +152,7 @@ class AdminUser extends Model
         $map = array();
         //判断是uid还是用户名
         if (is_int($identifier)) {
-            $map['userid'] = $identifier;
+            $map['id'] = $identifier;
         } else {
             $map['username'] = $identifier;
         }
@@ -171,12 +169,12 @@ class AdminUser extends Model
 
     /**
      * 更新登录状态信息
-     * @param type $userId
+     * @param type $id
      * @return type
      */
-    public function loginStatus($userId)
+    public function loginStatus($id)
     {
         $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip(1)];
-        return $this->save($data, ['userid' => $userId]);
+        return $this->save($data, ['id' => $id]);
     }
 }

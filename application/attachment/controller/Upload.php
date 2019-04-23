@@ -41,7 +41,7 @@ class Upload extends Base
         if (admin_user::instance()->isLogin()) {
             $this->isadmin = 1;
             $this->upname = admin_user::instance()->username;
-            $this->upuserid = admin_user::instance()->userid;
+            $this->upuserid = admin_user::instance()->id;
         } elseif (home_user::instance()->isLogin()) {
             $this->upname = home_user::instance()->username;
             $this->upuserid = home_user::instance()->id;

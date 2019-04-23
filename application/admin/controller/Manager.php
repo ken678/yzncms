@@ -34,7 +34,7 @@ class Manager extends Adminbase
         if ($this->request->isAjax()) {
             $this->AuthGroup_Model = new AuthGroup_Model();
             $_list = Db::name("admin")
-                ->order(array('userid' => 'ASC'))
+                ->order(array('id' => 'ASC'))
                 ->withAttr('last_login_time', function ($value, $data) {
                     return date('Y-m-d H:i:s', $value);
                 })
@@ -94,7 +94,7 @@ class Manager extends Adminbase
             }
         } else {
             $id = $this->request->param('id/d');
-            $data = $this->AdminUser->where(array("userid" => $id))->find();
+            $data = $this->AdminUser->where(array("id" => $id))->find();
             if (empty($data)) {
                 $this->error('该信息不存在！');
             }

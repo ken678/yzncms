@@ -38,7 +38,7 @@ CREATE TABLE `yzn_addons` (
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_admin`;
 CREATE TABLE `yzn_admin` (
-  `userid` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) DEFAULT NULL COMMENT '管理账号',
   `password` varchar(32) DEFAULT NULL COMMENT '管理密码',
   `roleid` tinyint(4) unsigned DEFAULT '0',
@@ -48,7 +48,7 @@ CREATE TABLE `yzn_admin` (
   `last_login_ip` bigint(20) unsigned DEFAULT '0' COMMENT '最后登录IP',
   `email` varchar(40) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '会员状态',
-  PRIMARY KEY (`userid`),
+  PRIMARY KEY (`id`),
   KEY `username` (`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 

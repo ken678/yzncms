@@ -11,7 +11,7 @@
               </div>
             </script>
             <script type="text/html" id="barTool">
-                {{#  if(d.userid == 1){ }}
+                {{#  if(d.id == 1){ }}
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 {{#  } else { }}
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -33,7 +33,7 @@ layui.use('table', function() {
         url: '{:url("admin/manager/index")}',
         cols: [
             [
-                { field: 'userid', width: 80, title: 'ID'},
+                { field: 'id', width: 80, title: 'ID'},
                 { field: 'username', width: 80, title: '登录名'},
                 { field: 'roleid', width: 120, title: '所属角色'},
                 { field: 'last_login_ip', title: '最后登录IP' },
@@ -52,7 +52,7 @@ layui.use('table', function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("admin/manager/del")}', { 'id': data.userid }, function(data) {
+                $.post('{:url("admin/manager/del")}', { 'id': data.id }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -78,7 +78,7 @@ layui.use('table', function() {
                 });
             });
         }else if (obj.event === 'edit') {
-            window.open('{:url("admin/manager/edit")}' + "?id=" + data.userid, '_self')
+            window.open('{:url("admin/manager/edit")}' + "?id=" + data.id, '_self')
         }
     });
 });
