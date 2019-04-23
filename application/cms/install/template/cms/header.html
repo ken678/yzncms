@@ -57,7 +57,8 @@
                     </ul>
                 </div>
                 <!--E 导航-->
-                <!--S 会员中心-->
+                <!--S 会员中心 需要安装会员模块-->
+                {if isModuleInstall('member')}
                 <div class="user fr">
                 	<ul>
                 		{if !$Think.session.user_auth.uid}
@@ -69,6 +70,7 @@
                 		{/if}
                 	</ul>
                 </div>
+                {/if}
                 <!--E 会员中心-->
             </div>
         </div>
