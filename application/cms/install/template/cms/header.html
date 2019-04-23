@@ -34,7 +34,7 @@
             	</div>
                 <!--E 搜索栏-->
                 <!--S 导航-->
-                <div class="nav fr">
+                <div class="nav fl">
                     <ul class="navlist">
                         <li {if !isset($catid)}class="hover"{/if}><a href="{:url('cms/index/index')}" title="首页">首页</a></li>
                         {yzn module="cms" action="category" catid="0" cache="3600" order="listorder ASC" num="10" return="data"}
@@ -57,6 +57,19 @@
                     </ul>
                 </div>
                 <!--E 导航-->
+                <!--S 会员中心-->
+                <div class="user fr">
+                	<ul>
+                		{if !$Think.session.user_auth.uid}
+                		<li class="log"><a href="{:url('member/index/login')}">登录</a></li>
+                		<li class="reg"><a href="{:url('member/index/register')}">注册</a></li>
+                		{else}
+                		<li><a href="{:url('member/index/index')}">会员：{$Think.session.user_auth.username}</a></li>
+                		<li><a href="{:url('member/index/logout')}">退出</a></li>
+                		{/if}
+                	</ul>
+                </div>
+                <!--E 会员中心-->
             </div>
         </div>
         <!--E 头部-->

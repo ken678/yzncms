@@ -169,6 +169,24 @@
     text-overflow: ellipsis;
 }
 
+.user {
+    line-height: 50px;
+    height: 50px;
+    padding-right: 50px;
+}
+
+.user ul li {
+    float: left;
+}
+
+.user ul li a {
+    display: block;
+    font-size: 14px;
+    margin: 0 5px;
+    padding: 0 5px;
+    color: #fff;
+}
+
 /*头部*/
 .header {
     width: 100%;
