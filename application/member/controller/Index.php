@@ -138,11 +138,19 @@ class Index extends MemberBase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
+            //验证数据合法性
+            $rule = [
+                'nickname|昵称' => 'chsDash|length:3,20',
+                'avatar|头像' => 'number',
+            ];
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result);
+            }
             $userinfo = $this->Member_Model->getLocalUser($this->userid);
             if (empty($userinfo)) {
                 $this->error('该会员不存在！');
             }
-
             if (!empty($data)) {
                 //暂时只允许昵称，头像修改
                 $this->Member_Model->allowField(['nickname', 'avatar'])->save($data, ["id" => $this->userid]);
