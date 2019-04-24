@@ -254,6 +254,7 @@ class Cms extends Modelbase
                 //扩展配置
                 $value['setting'] = unserialize($value['setting']);
                 $value['options'] = $value['setting']['options'];
+                $value['value'] = $value['setting']['value'];
 
                 if ('' != $value['options']) {
                     $value['options'] = parse_attr($value['options']);
@@ -267,18 +268,7 @@ class Cms extends Modelbase
                 if ($value['type'] == 'date') {
                     $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
                 }
-                /*if ($value['type'] == 'image') {
-                $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                }
-                if ($value['type'] == 'images') {
-                $value['param'] = ['dir' => 'images', 'module' => 'admin'];
-                }
-                if ($value['type'] == 'file') {
-                $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                }
-                if ($value['type'] == 'files') {
-                $value['param'] = ['dir' => 'files', 'module' => 'admin'];
-                }*/
+
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
 
