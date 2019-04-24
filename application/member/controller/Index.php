@@ -136,24 +136,21 @@ class Index extends MemberBase
      */
     public function profile()
     {
-        return $this->fetch('/profile');
-
-    }
-
-    /**
-     * 头像设置
-     */
-    public function regavatar()
-    {
         if ($this->request->isPost()) {
-            $id = $this->request->post("id");
-            $res = $this->Member_Model->userEdit($this->userinfo['username'], '', '', '', 1, ['avatar' => $id]);
-            if (!$res) {
-                $this->error($this->Member_Model->getError());
+            $data = $this->request->post();
+            $userinfo = $this->Member_Model->getLocalUser($this->userid);
+            if (empty($userinfo)) {
+                $this->error('该会员不存在！');
             }
-            $this->success('修改成功！', url('index/regavatar@avatar'));
-        }
 
+            if (!empty($data)) {
+                //暂时只允许昵称，头像修改
+                $this->Member_Model->allowField(['nickname', 'avatar'])->save($data, ["id" => $this->userid]);
+            }
+            $this->success("基本信息修改成功！");
+        } else {
+            return $this->fetch('/profile');
+        }
     }
 
     /**

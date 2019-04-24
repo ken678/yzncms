@@ -7,7 +7,7 @@
     </ul>
     <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-form layui-form-pane layui-tab-item layui-show">
-            <form method="post">
+            <form class="layui-form" action="{:url('member/index/profile')}" method="post">
                 <div class="layui-form-item"> <label class="layui-form-label">用户名</label>
                     <div class="layui-input-inline">
                         <input type="text" name="username" required="" lay-verify="required" autocomplete="off" value="{$userinfo.username}" class="layui-input" disabled style="cursor: not-allowed !important;">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="layui-form-pane layui-tab-item">
-            <form class="layui-form" action="{:url('member/index/changepwd')}" method="POST">
+            <form class="layui-form" action="{:url('member/index/changepwd')}" method="post">
                 <div class="layui-form-item"> <label class="layui-form-label">旧密码</label>
                     <div class="layui-input-inline"> <input type="password" name="oldpassword" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div>
                 </div>
