@@ -180,7 +180,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        $status = $this->request->param('status/d');
         if (Model_Field::update(['status' => $status], ['id' => $id])) {
             $this->success("操作成功！");
         } else {
@@ -192,7 +192,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
-        $ifsearch = $this->request->param('ifsearch/s') === 'true' ? 1 : 0;
+        $ifsearch = $this->request->param('status/d');
         if (Model_Field::update(['ifsearch' => $ifsearch], ['id' => $id])) {
             $this->success("操作成功！");
         } else {
@@ -207,7 +207,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         empty($id) && $this->error('参数不能为空！');
-        $ifvisible = $this->request->param('ifvisible/s') === 'true' ? 1 : 0;
+        $ifvisible = $this->request->param('status/d');
 
         $field = Model_Field::get($id);
         if ($field->ifrequire && 0 == $ifvisible) {
@@ -228,7 +228,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         empty($id) && $this->error('参数不能为空！');
-        $ifrequire = $this->request->param('ifrequire/s') === 'true' ? 1 : 0;
+        $ifrequire = $this->request->param('status/d');
 
         $field = Model_Field::get($id);
         if (!$field->ifeditable && $ifrequire) {

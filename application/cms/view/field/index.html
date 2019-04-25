@@ -19,17 +19,17 @@
     禁用
     {{#  } }}
     {{#  } else { }}
-    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="status" data-href="{:url('setstate')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
     {{#  } }}
 </script>
 <script type="text/html" id="ifsearchTpl">
-    <input type="checkbox" name="ifsearch" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="ifsearch" {{ d.ifsearch==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="ifsearch" data-href="{:url('setSearch')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifsearch==1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="ifrequireTpl">
-    <input type="checkbox" name="ifrequire" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="ifrequire" {{ d.ifrequire==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="ifrequire" data-href="{:url('setRequire')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifrequire==1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="ifeditableTpl">
-    <input type="checkbox" name="ifeditable" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="ifeditable" {{ d.ifeditable==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="ifeditable" data-href="{:url('setVisible')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.ifeditable==1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="barTool">
     {{#  if(!d.iffixed){ }}
@@ -79,63 +79,6 @@ layui.use('table', function() {
             }
 
         })
-    });
-
-    //监听状态操作
-    form.on('switch(status)', function(obj) {
-        var _this = $(obj.elem);
-        $.post('{:url("cms/field/setstate")}', { 'id': this.value,'status':obj.elem.checked}, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            }else{
-                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
-                form.render('checkbox');
-                layer.msg(data.msg);
-            }
-
-        });
-    });
-
-    form.on('switch(ifsearch)', function(obj) {
-        var _this = $(obj.elem);
-        $.post('{:url("cms/field/setSearch")}', { 'id': this.value,'ifsearch':obj.elem.checked}, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            }else{
-                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
-                form.render('checkbox');
-                layer.msg(data.msg);
-            }
-
-        });
-    });
-
-    form.on('switch(ifrequire)', function(obj) {
-        var _this = $(obj.elem);
-        $.post('{:url("cms/field/setRequire")}', { 'id': this.value,'ifrequire':obj.elem.checked}, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            }else{
-                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
-                form.render('checkbox');
-                layer.msg(data.msg);
-            }
-
-        });
-    });
-
-    form.on('switch(ifeditable)', function(obj) {
-        var _this = $(obj.elem);
-        $.post('{:url("cms/field/setVisible")}', { 'id': this.value,'ifvisible':obj.elem.checked}, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            }else{
-                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
-                form.render('checkbox');
-                layer.msg(data.msg);
-            }
-
-        });
     });
 });
 </script>

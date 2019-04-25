@@ -54,7 +54,7 @@
   {{#  } }}
 </script>
 <script type="text/html" id="statusTpl">
-    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="status" data-href='{:url("setstate",["catid"=>$catid])}?id={{d.id}}' value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 <div id="remove" style="display: none;">
 	<div class="box-body" style="padding: 20px;">
@@ -133,22 +133,6 @@ layui.use(['table', 'laydate'], function() {
 
         })
     });
-
-            //监听状态操作
-    form.on('switch(status)', function(obj) {
-        var _this = $(obj.elem);
-        $.post('{:url("cms/cms/setstate",["catid"=>$catid])}', { 'id': this.value,'status':obj.elem.checked}, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            }else{
-                !obj.elem.checked ? _this.prop('checked',true) : _this.removeAttr('checked');
-                form.render('checkbox');
-                layer.msg(data.msg);
-            }
-
-        });
-    });
-
 
     table.on('toolbar(dataTable)', function(obj) {
             var checkStatus = table.checkStatus(obj.config.id),

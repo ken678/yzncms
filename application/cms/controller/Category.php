@@ -388,7 +388,7 @@ class Category extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/s') === 'true' ? 1 : 0;
+        $status = $this->request->param('status/d');
         if (Category_Model::update(['status' => $status], ['id' => $id])) {
             //更新栏目缓存
             cache('Category', null);
