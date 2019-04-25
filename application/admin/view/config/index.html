@@ -9,7 +9,7 @@
                 {/volist}
             </ul>
             <div class="layui-tab-content">
-                <table class="layui-hide" id="table" lay-filter="table"></table>
+                <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@ layui.use('table', function() {
         $ = layui.$,
         form = layui.form;
     table.render({
-        elem: '#table',
+        elem: '#dataTable',
         toolbar: '#toolbarDemo',
         url: '{:url("admin/config/index",["group"=>$group])}',
         cols: [
@@ -51,8 +51,8 @@ layui.use('table', function() {
         ],
     });
 
-            //监听单元格编辑
-    table.on('edit(table)', function(obj) {
+    //监听单元格编辑
+    table.on('edit(dataTable)', function(obj) {
         var value = obj.value,data = obj.data;
         $.post('{:url("admin/config/listorder")}', {'id': data.id,'value':value }, function(data) {
             if (data.code == 1) {
