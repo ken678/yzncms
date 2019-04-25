@@ -63,7 +63,7 @@ layui.use(['element', 'layer', 'form'], function() {
      * @attr href或data-href 请求地址
      * @attr refresh 操作完成后是否自动刷新
      */
-    $(document).on('click', '.lay-tr-del', function() {
+    $(document).on('click', '.layui-tr-del', function() {
         var that = $(this),
             href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
         layer.confirm('删除之后无法恢复，您确定要删除吗？', {title:false, closeBtn:0}, function(index){

@@ -13,11 +13,12 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use('table', function() {
     var table = layui.table,
@@ -83,42 +84,6 @@ layui.use('table', function() {
             } else {
                 layer.msg("请选择需要操作的数据");
             }
-        }
-    });
-
-    //监听行工具事件
-    table.on('tool(table)', function(obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
-                layer.close(index);
-                $.post('{:url("member/member/delete")}', { 'ids': data.id }, function(data) {
-                    if (data.code == 1) {
-                        if (data.url) {
-                            layer.msg(data.msg + ' 页面即将自动跳转~');
-                        } else {
-                            layer.msg(data.msg);
-                        }
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            } else {
-                                location.reload();
-                            }
-                        }, 1500);
-                    } else {
-                        layer.msg(data.msg);
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            }
-                        }, 1500);
-                    }
-
-                });
-            });
-        } else if (obj.event === 'edit') {
-            window.open('{:url("member/member/edit")}' + "?id=" + data.id, '_self')
         }
     });
 });

@@ -102,17 +102,14 @@ class Group extends Adminbase
      */
     public function delete()
     {
-        if ($this->request->isPost()) {
-            $groupid = $this->request->param('id/d', 0);
-            if (empty($groupid)) {
-                $this->error("没有指定需要删除的会员组别！");
-            }
-            if ($this->Member_Group->groupDelete($groupid)) {
-                $this->success("删除成功！", url("group/index"));
-            } else {
-                $this->error($this->Member_Group->getError());
-            }
-
+        $groupid = $this->request->param('id/d', 0);
+        if (empty($groupid)) {
+            $this->error("没有指定需要删除的会员组别！");
+        }
+        if ($this->Member_Group->groupDelete($groupid)) {
+            $this->success("删除成功！", url("group/index"));
+        } else {
+            $this->error($this->Member_Group->getError());
         }
     }
 

@@ -20,7 +20,7 @@
 <script type="text/html" id="barTool">
     <a href="{{d.add_url}}" class="layui-btn layui-btn-xs layui-btn-normal">添加子栏目</a>
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("delete")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs lay-tr-del">删除</a>
+    <a href='{:url("delete")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
