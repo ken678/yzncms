@@ -150,6 +150,30 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
         layer.closeAll('tips')
     })*/
 
+        /**
+     * 通用状态设置开关
+     * @attr data-href 请求地址
+     */
+    form.on('switch(switchStatus)', function(data) {
+        var that = $(this), status = 0;
+        if (!that.attr('data-href')) {
+            layer.msg('请设置data-href参数');
+            return false;
+        }
+        if (this.checked) {
+            status = 1;
+        }
+        $.get(that.attr('data-href'), {status:status}, function(res) {
+            layer.msg(res.msg);
+            if (res.code == 0) {
+                that.trigger('click');
+                form.render('checkbox');
+            }
+        });
+    });
+
+
+
     //通用添加
     $(".ajax-jump").click(function() {
         addoredit($(this).attr('url'));
