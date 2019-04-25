@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
 
-class Ueditor extends Attachments
+class Ueditor extends Upload
 {
     //编辑器初始配置
     private $confing = array(
