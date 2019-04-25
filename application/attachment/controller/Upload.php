@@ -75,7 +75,7 @@ class Upload extends Base
     protected function isUpload($module)
     {
         $module_list = cache('Module');
-        if ($module_list[strtolower($module)] || ucwords($module) == 'cms') {
+        if ($module_list[strtolower($module)] || strtolower($module) == 'admin') {
             $this->module = strtolower($module);
         } else {
             return false;
