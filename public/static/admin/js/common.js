@@ -4,6 +4,85 @@ layui.use(['element', 'layer', 'form'], function() {
         $ = layui.jquery,
         form = layui.form;
 
+    /**
+     * iframe弹窗
+     * @href 弹窗地址
+     * @title 弹窗标题
+     * @lay-data {width: '弹窗宽度', height: '弹窗高度', idSync: '是否同步ID', table: '数据表ID(同步ID时必须)', type: '弹窗类型'}
+     */
+    $(document).on('click', '.layui-iframe', function() {
+        var that = $(this),
+            query = '';
+        var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: that.attr('href'), title: that.attr('title') };
+        var opt = new Function('return ' + that.attr('lay-data'))() || {};
+
+        opt.url = opt.url || def.url;
+        opt.title = opt.title || def.title;
+        opt.width = opt.width || def.width;
+        opt.height = opt.height || def.height;
+        opt.type = opt.type || def.type;
+        opt.table = opt.table || def.table;
+        opt.idSync = opt.idSync || def.idSync;
+
+        if (!opt.url) {
+            layer.msg('请设置href参数');
+            return false;
+        }
+
+        if (opt.idSync) {// ID 同步
+            if ($('.checkbox-ids:checked').length <= 0) {
+                var checkStatus = table.checkStatus(opt.table);
+                if (checkStatus.data.length <= 0) {
+                    layer.msg('请选择要操作的数据');
+                    return false;
+                }
+
+                for (var i in checkStatus.data) {
+                    query += '&id[]=' + checkStatus.data[i].id;
+                }
+            } else {
+                $('.checkbox-ids:checked').each(function() {
+                    query += '&id[]=' + $(this).val();
+                })
+            }
+        }
+
+        if (opt.url.indexOf('?') >= 0) {
+            opt.url += '&iframe=yes'+query;
+        } else {
+            opt.url += '?iframe=yes'+query;
+        }
+
+        layer.open({type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height]});
+        return false;
+
+    });
+
+     /**
+     * 通用表格行数据行删除
+     * @attr href或data-href 请求地址
+     * @attr refresh 操作完成后是否自动刷新
+     */
+    $(document).on('click', '.lay-tr-del', function() {
+        var that = $(this),
+            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+        layer.confirm('删除之后无法恢复，您确定要删除吗？', {title:false, closeBtn:0}, function(index){
+            if (!href) {
+                layer.msg('请设置data-href参数');
+                return false;
+            }
+            $.get(href, function(res) {
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                } else {
+                    that.parents('tr').remove();
+                }
+            });
+            layer.close(index);
+        });
+        return false;
+    });
+
     /*$('[title]').hover(function() {
         var title = $(this).attr('title');
         layer.tips(title, $(this))
@@ -15,26 +94,6 @@ layui.use(['element', 'layer', 'form'], function() {
     $(".ajax-jump").click(function() {
         addoredit($(this).attr('url'));
     })
-
-    /* 监听状态设置开关 */
-    /*form.on('switch(switchStatus)', function(data) {
-        var that = $(this),
-            status = 0;
-        if (!that.attr('data-href')) {
-            layer.msg('请设置data-href参数');
-            return false;
-        }
-        if (this.checked) {
-            status = 1;
-        }
-        $.get(that.attr('data-href'), { status: status }, function(res) {
-            layer.msg(res.msg);
-            if (res.code == 1) {
-                that.trigger('click');
-                form.render('checkbox');
-            }
-        });
-    });*/
 
     //ajax get请求
     $('.ajax-get').click(function() {
@@ -70,7 +129,7 @@ layui.use(['element', 'layer', 'form'], function() {
                 }
                 layer.close(index);
             });
-        }else{
+        } else {
 
         };
         return false;
@@ -149,8 +208,9 @@ layui.use(['element', 'layer', 'form'], function() {
         });
         return false;
     });
+
     //添加文章
-    function addoredit(url) {
+    /*function addoredit(url) {
         var index = layer.open({
             title: "新增数据",
             type: 2,
@@ -169,6 +229,6 @@ layui.use(['element', 'layer', 'form'], function() {
         $(window).on("resize", function() {
             layer.full(index);
         })
-    }
+    }*/
 
 });
