@@ -1,5 +1,6 @@
-layui.use(['element', 'layer', 'form'], function() {
+layui.use(['table', 'element', 'layer', 'form'], function() {
     var element = layui.element,
+        table = layui.table,
         layer = layui.layer,
         $ = layui.jquery,
         form = layui.form;
@@ -29,7 +30,7 @@ layui.use(['element', 'layer', 'form'], function() {
             return false;
         }
 
-        if (opt.idSync) {// ID 同步
+        if (opt.idSync) { // ID 同步
             if ($('.checkbox-ids:checked').length <= 0) {
                 var checkStatus = table.checkStatus(opt.table);
                 if (checkStatus.data.length <= 0) {
@@ -48,17 +49,17 @@ layui.use(['element', 'layer', 'form'], function() {
         }
 
         if (opt.url.indexOf('?') >= 0) {
-            opt.url += '&iframe=yes'+query;
+            opt.url += '&iframe=yes' + query;
         } else {
-            opt.url += '?iframe=yes'+query;
+            opt.url += '?iframe=yes' + query;
         }
 
-        layer.open({type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height]});
+        layer.open({ type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height] });
         return false;
 
     });
 
-     /**
+    /**
      * 通用表格行数据行删除
      * @attr href或data-href 请求地址
      * @attr refresh 操作完成后是否自动刷新
@@ -66,7 +67,7 @@ layui.use(['element', 'layer', 'form'], function() {
     $(document).on('click', '.layui-tr-del', function() {
         var that = $(this),
             href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
-        layer.confirm('删除之后无法恢复，您确定要删除吗？', {title:false, closeBtn:0}, function(index){
+        layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
             if (!href) {
                 layer.msg('请设置data-href参数');
                 return false;
@@ -80,6 +81,65 @@ layui.use(['element', 'layer', 'form'], function() {
             });
             layer.close(index);
         });
+        return false;
+    });
+
+    /**
+     * 列表页批量操作按钮组
+     * @attr href 操作地址
+     * @attr data-table table容器ID
+     * @class confirm 类似系统confirm
+     * @attr tips confirm提示内容
+     */
+    $(document).on('click', '.layui-batch-all', function() {
+        var that = $(this),
+            query = '',
+            code = function(that) {
+                var href = that.attr('href') ? that.attr('href') : that.attr('data-href');
+                var tableObj = that.attr('data-table') ? that.attr('data-table') : 'dataTable';
+                if (!href) {
+                    layer.msg('请设置data-href参数');
+                    return false;
+                }
+
+                if ($('.checkbox-ids:checked').length <= 0) {
+                    var checkStatus = table.checkStatus(tableObj);
+                    if (checkStatus.data.length <= 0) {
+                        layer.msg('请选择要操作的数据');
+                        return false;
+                    }
+                    for (var i in checkStatus.data) {
+                        if (i > 0) {
+                            query += '&';
+                        }
+                        query += 'ids[]=' + checkStatus.data[i].id;
+                    }
+                } else {
+                    if (that.parents('form')[0]) {
+                        query = that.parents('form').serialize();
+                    } else {
+                        query = $('#pageListForm').serialize();
+                    }
+                }
+
+                layer.msg('数据提交中...', { time: 500000 });
+                $.post(href, query, function(res) {
+                    layer.msg(res.msg, {}, function() {
+                        if (res.code != 0) {
+                            location.reload();
+                        }
+                    });
+                });
+            };
+        if (that.hasClass('confirm')) {
+            var tips = that.attr('tips') ? that.attr('tips') : '您确定要执行此操作吗？';
+            layer.confirm(tips, { icon: 3, title: '提示信息' }, function(index) {
+                code(that);
+                layer.close(index);
+            });
+        } else {
+            code(that);
+        }
         return false;
     });
 
