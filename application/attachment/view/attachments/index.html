@@ -16,10 +16,10 @@
                 </div>
             </form>
         </blockquote>
-        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="delAll">批量删除</button>
+            <button class="layui-btn layui-btn-sm confirm layui-batch-all" data-href='{:url("delete")}'>批量删除</button>
           </div>
         </script>
         <script type="text/html" id="barTool">
@@ -40,7 +40,7 @@ layui.use(['table', 'laydate'], function() {
         range: true,
     });
     table.render({
-        elem: '#table',
+        elem: '#dataTable',
         toolbar: '#toolbarDemo',
         url: '{:url("attachment/attachments/index")}',
         cols: [
@@ -58,7 +58,7 @@ layui.use(['table', 'laydate'], function() {
     });
 
     $(".search_btn").on("click", function() {
-        table.reload("table", {
+        table.reload("dataTable", {
             page: {
                 curr: 1 //重新从第 1 页开始
             },
@@ -69,47 +69,6 @@ layui.use(['table', 'laydate'], function() {
                 filter_time_range: $("#laydate").val()
             }
         })
-    });
-
-    table.on('toolbar(table)', function(obj) {
-        if (obj.event === 'delAll') {
-            var checkStatus = table.checkStatus('table'),
-                data = checkStatus.data,
-                ids = [];
-            if (data.length > 0) {
-                for (let i in data) {
-                    ids.push(data[i].id);
-                }
-                layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
-                    $.post('{:url("attachment/attachments/delete")}', { 'ids': ids }, function(data) {
-                        if (data.code == 1) {
-                            if (data.url) {
-                                layer.msg(data.msg + ' 页面即将自动跳转~');
-                            } else {
-                                layer.msg(data.msg);
-                            }
-                            setTimeout(function() {
-                                if (data.url) {
-                                    location.href = data.url;
-                                } else {
-                                    location.reload();
-                                }
-                            }, 1500);
-                        } else {
-                            layer.msg(data.msg);
-                            setTimeout(function() {
-                                if (data.url) {
-                                    location.href = data.url;
-                                }
-                            }, 1500);
-                        }
-                    });
-                    layer.close(index);
-                })
-            } else {
-                layer.msg("请选择需要删除的数据");
-            }
-        }
     });
 });
 </script>
