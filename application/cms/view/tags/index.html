@@ -14,14 +14,15 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs lay-tr-del">删除</a>
 </script>
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="status" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use('table', function() {
     var table = layui.table,
@@ -46,43 +47,8 @@ layui.use('table', function() {
         page: {}
     });
 
-        //监听行工具事件
-    table.on('tool(table)', function(obj) {
-        var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
-                layer.close(index);
-                $.post('{:url("cms/tags/delete")}', { 'ids': data.id }, function(data) {
-                    if (data.code == 1) {
-                        if (data.url) {
-                            layer.msg(data.msg + ' 页面即将自动跳转~');
-                        } else {
-                            layer.msg(data.msg);
-                        }
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            } else {
-                                location.reload();
-                            }
-                        }, 1500);
-                    } else {
-                        layer.msg(data.msg);
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            }
-                        }, 1500);
-                    }
 
-                });
-            });
-        }else if (obj.event === 'edit') {
-            window.open('{:url("cms/tags/edit")}' + "?id=" + data.id, '_self')
-        }
-    });
-
-        table.on('toolbar(table)', function(obj) {
+    table.on('toolbar(table)', function(obj) {
         if (obj.event === 'delAll') {
             var checkStatus = table.checkStatus('table'),
                 data = checkStatus.data,
