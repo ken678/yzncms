@@ -19,12 +19,12 @@
                 </div>
             </form>
         </blockquote>
-    <table class="layui-hide" id="table" lay-filter="table"></table>
+    <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" href="{:url('cms/cms/add',['catid'=>$catid])}">新增内容</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete",["catid"=>$catid])}'>批量删除</a>
       <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="move">批量移动</a>
     </div>
 </script>
@@ -88,7 +88,7 @@ layui.use(['table', 'laydate'], function() {
         range: true,
     });
     table.render({
-        elem: '#table',
+        elem: '#dataTable',
         toolbar: '#toolbarDemo',
         url: '{:url("cms/cms/classlist",["catid"=>$catid])}',
         cols: [
@@ -108,7 +108,7 @@ layui.use(['table', 'laydate'], function() {
     });
 
     $(".search_btn").on("click", function() {
-        table.reload("table", {
+        table.reload("dataTable", {
             page: {
                 curr: 1 //重新从第 1 页开始
             },
@@ -122,7 +122,7 @@ layui.use(['table', 'laydate'], function() {
     });
 
         //监听单元格编辑
-    table.on('edit(table)', function(obj) {
+    table.on('edit(dataTable)', function(obj) {
         var value = obj.value,data = obj.data;
         $.post('{:url("cms/cms/listorder",["catid"=>$catid])}', {'id': data.id,'value':value }, function(data) {
             if (data.code == 1) {
@@ -150,47 +150,12 @@ layui.use(['table', 'laydate'], function() {
     });
 
 
-    table.on('toolbar(table)', function(obj) {
+    table.on('toolbar(dataTable)', function(obj) {
             var checkStatus = table.checkStatus(obj.config.id),
                 
                 ids = [],
                 id = tag = '';
-        if (obj.event === 'delAll') {
-            var data = checkStatus.data;
-            if (data.length > 0) {
-                for (let i in data) {
-                    ids.push(data[i].id);
-                }
-                layer.confirm('确定删除选中的数据？', { icon: 3, title: '提示信息' }, function(index) {
-                    $.post('{:url("cms/cms/delete",["catid"=>$catid])}', { 'ids': ids }, function(data) {
-                        if (data.code == 1) {
-                            if (data.url) {
-                                layer.msg(data.msg + ' 页面即将自动跳转~');
-                            } else {
-                                layer.msg(data.msg);
-                            }
-                            setTimeout(function() {
-                                if (data.url) {
-                                    location.href = data.url;
-                                } else {
-                                    location.reload();
-                                }
-                            }, 1500);
-                        } else {
-                            layer.msg(data.msg);
-                            setTimeout(function() {
-                                if (data.url) {
-                                    location.href = data.url;
-                                }
-                            }, 1500);
-                        }
-                    });
-                    layer.close(index);
-                })
-            } else {
-                layer.msg("请选择需要删除的数据");
-            }
-        }else if (obj.event === 'move') {
+        if (obj.event === 'move') {
             var data = checkStatus.data;
             if (data.length > 0) {
                 for (let i in data) {
