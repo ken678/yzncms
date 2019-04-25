@@ -173,13 +173,6 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
         });
     });
 
-
-
-    //通用添加
-    $(".ajax-jump").click(function() {
-        addoredit($(this).attr('url'));
-    })
-
     //ajax get请求
     $('.ajax-get').click(function() {
         var that = $(this),
@@ -315,27 +308,5 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
         });
         return false;
     });
-
-    //添加文章
-    /*function addoredit(url) {
-        var index = layer.open({
-            title: "新增数据",
-            type: 2,
-            content: url,
-            success: function(layero, index) {
-                var body = layer.getChildFrame('body', index);
-                setTimeout(function() {
-                    layer.tips('点击此处返回列表', '.layui-layer-setwin .layui-layer-close', {
-                        tips: 3
-                    });
-                }, 500)
-            }
-        })
-        layer.full(index);
-        //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
-        $(window).on("resize", function() {
-            layer.full(index);
-        })
-    }*/
 
 });
