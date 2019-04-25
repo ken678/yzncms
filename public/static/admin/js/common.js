@@ -150,12 +150,13 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
         layer.closeAll('tips')
     })*/
 
-        /**
+    /**
      * 通用状态设置开关
      * @attr data-href 请求地址
      */
     form.on('switch(switchStatus)', function(data) {
-        var that = $(this), status = 0;
+        var that = $(this),
+            status = 0;
         if (!that.attr('data-href')) {
             layer.msg('请设置data-href参数');
             return false;
@@ -163,7 +164,7 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
         if (this.checked) {
             status = 1;
         }
-        $.get(that.attr('data-href'), {status:status}, function(res) {
+        $.get(that.attr('data-href'), { status: status }, function(res) {
             layer.msg(res.msg);
             if (res.code == 0) {
                 that.trigger('click');
@@ -181,40 +182,62 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
 
     //ajax get请求
     $('.ajax-get').click(function() {
-        var target;
-        var that = this;
+        var that = $(this),
+            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+        if (!href) {
+            layer.msg('请设置data-href参数');
+            return false;
+        }
         if ($(this).hasClass('confirm')) {
             layer.confirm('确认要执行该操作吗?', { icon: 3, title: '提示' }, function(index) {
-                if ((target = $(that).attr('href')) || (target = $(that).attr('url'))) {
-                    $.get(target).success(function(data) {
-                        if (data.code == 1) {
-                            if (data.url) {
-                                layer.msg(data.msg + ' 页面即将自动跳转~');
-                            } else {
-                                layer.msg(data.msg);
-                            }
-                            setTimeout(function() {
-                                if (data.url) {
-                                    location.href = data.url;
-                                } else {
-                                    location.reload();
-                                }
-                            }, 1500);
+                $.get(href).success(function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
                         } else {
                             layer.msg(data.msg);
-                            setTimeout(function() {
-                                if (data.url) {
-                                    location.href = data.url;
-                                }
-                            }, 1500);
                         }
-                    });
-
-                }
-                layer.close(index);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+                });
             });
         } else {
-
+            $.get(href).success(function(data) {
+                if (data.code == 1) {
+                    if (data.url) {
+                        layer.msg(data.msg + ' 页面即将自动跳转~');
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                    setTimeout(function() {
+                        if (data.url) {
+                            location.href = data.url;
+                        } else {
+                            location.reload();
+                        }
+                    }, 1500);
+                } else {
+                    layer.msg(data.msg);
+                    setTimeout(function() {
+                        if (data.url) {
+                            location.href = data.url;
+                        }
+                    }, 1500);
+                }
+            });
         };
         return false;
     });
