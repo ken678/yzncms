@@ -14,7 +14,7 @@
       <a class="layui-btn layui-btn-sm" href="{:url('cms/category/add')}">新增栏目</a>
       <a class="layui-btn layui-btn-sm" href="{:url('cms/category/singlepage')}">新增单页</a>
       <a class="layui-btn layui-btn-sm" href="{:url('cms/category/wadd')}">新增外部链接</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="public_cache">更新栏目缓存<span class="layui-badge-dot layui-bg-orange"></span></a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger ajax-get" data-href="{:url('public_cache')}">更新栏目缓存<span class="layui-badge-dot layui-bg-orange"></span></a>
     </div>
 </script>
 <script type="text/html" id="barTool">
@@ -64,38 +64,6 @@ layui.use('table', function() {
 
         })
     });
-
-    table.on('toolbar(table)', function(obj) {
-        if (obj.event === 'public_cache') {
-            $.ajax({
-                url: '{:url("cms/category/public_cache")}',
-                type: "GET",
-                success: function(data) {
-                    if (data.code == 1) {
-                        if (data.url) {
-                            layer.msg(data.msg + ' 页面即将自动跳转~');
-                        } else {
-                            layer.msg(data.msg);
-                        }
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            } else {
-                                location.reload();
-                            }
-                        }, 1500);
-                    } else {
-                        layer.msg(data.msg);
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            }
-                        }, 1500);
-                    }
-                }
-            });
-        }
-    })
 
 });
 </script>
