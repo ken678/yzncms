@@ -14,8 +14,8 @@
                 {{#  if(d.id == 1){ }}
                 <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
                 {{#  } else { }}
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <a href='{:url("editgroup")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+                <a href='{:url("deletegroup")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs lay-tr-del">删除</a>
                 {{#  } }}
             </script>
         </div>
@@ -23,6 +23,7 @@
 </div>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use('table', function() {
     var table = layui.table,
@@ -40,43 +41,6 @@ layui.use('table', function() {
                 { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
             ]
         ],
-    });
-
-    //监听行工具事件
-    table.on('tool(table)', function(obj) {
-        var data = obj.data;
-        //console.log(obj);
-        if (obj.event === 'del') {
-            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
-                layer.close(index);
-                $.post('{:url("admin/AuthManager/deletegroup")}', { 'id': data.id }, function(data) {
-                    if (data.code == 1) {
-                        if (data.url) {
-                            layer.msg(data.msg + ' 页面即将自动跳转~');
-                        } else {
-                            layer.msg(data.msg);
-                        }
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            } else {
-                                location.reload();
-                            }
-                        }, 1500);
-                    } else {
-                        layer.msg(data.msg);
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            }
-                        }, 1500);
-                    }
-
-                });
-            });
-        }else if (obj.event === 'edit') {
-            window.open('{:url("admin/AuthManager/editgroup")}' + "?id=" + data.id, '_self')
-        }
     });
 });
 </script>
