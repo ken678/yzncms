@@ -266,8 +266,8 @@ CREATE TABLE `yzn_hooks` (
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
-INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '', '', '1', '0');
-INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '', '', '1', '0');
+INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
