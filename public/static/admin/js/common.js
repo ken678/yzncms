@@ -235,20 +235,79 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
         return false;
     });
 
+    /**
+     * 监听表单提交
+     * @attr action 请求地址
+     * @attr data-form 表单DOM
+     */
+    form.on('submit(formSubmit)', function(data) {
+        var _form = '',
+            that = $(this),
+            text = that.text(),
+            options = { pop: false, refresh: true, jump: false, callback: null };
+        if ($(this).attr('data-form')) {
+            _form = $(that.attr('data-form'));
+        } else {
+            _form = that.parents('form');
+        }
+
+        if (that.attr('lay-data')) {
+            options = new Function('return ' + that.attr('lay-data'))();
+        }
+
+        that.prop('disabled', true).text('提交中...');
+        $.ajax({
+            type: "POST",
+            url: _form.attr('action'),
+            data: _form.serialize(),
+            success: function(res) {
+                that.text(res.msg);
+                if (res.code == 0) {
+                    that.prop('disabled', false).removeClass('layui-btn-normal').addClass('layui-btn-danger');
+                    setTimeout(function() {
+                        that.removeClass('layui-btn-danger').addClass('layui-btn-normal').text(text);
+                    }, 3000);
+                } else {
+                    setTimeout(function() {
+                        that.text(text).prop('disabled', false);
+                        if (options.callback) {
+                            options.callback(that, res);
+                        }
+                        if (options.pop == true) {
+                            if (options.refresh == true) {
+                                parent.location.reload();
+                            } else if (options.jump == true && res.url != '') {
+                                parent.location.href = res.url;
+                            }
+                            parent.layui.layer.closeAll();
+                        } else if (options.refresh == true) {
+                            if (res.url != '') {
+                                location.href = res.url;
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    }, 3000);
+                }
+            }
+        });
+        return false;
+    });
+
     //通用表单post提交
     $('.ajax-post').on('click', function(e) {
-        var target, query, form1;
-        var target_form = $(this).attr('target-form');
-        var that = this;
-        var nead_confirm = false;
+        var target, query, _form,
+            target_form = $(this).attr('target-form'),
+            that = this,
+            nead_confirm = false;
 
-        form1 = $('.' + target_form);
+        _form = $('.' + target_form);
         if ($(this).attr('hide-data') === 'true') {
-            form1 = $('.hide-data');
-            query = form1.serialize();
-        } else if (form1.get(0) == undefined) {
+            _form = $('.hide-data');
+            query = _form.serialize();
+        } else if (_form.get(0) == undefined) {
             return false;
-        } else if (form1.get(0).nodeName == 'FORM') {
+        } else if (_form.get(0).nodeName == 'FORM') {
             if ($(this).hasClass('confirm')) {
                 if (!confirm('确认要执行该操作吗?')) {
                     return false;
@@ -257,12 +316,11 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
             if ($(this).attr('url') !== undefined) {
                 target = $(this).attr('url');
             } else {
-                //target = form1.get(0).action;
-                target = form1.attr("action");
+                target = _form.attr("action");
             }
-            query = form1.serialize();
-        } else if (form1.get(0).nodeName == 'INPUT' || form1.get(0).nodeName == 'SELECT' || form1.get(0).nodeName == 'TEXTAREA') {
-            form1.each(function(k, v) {
+            query = _form.serialize();
+        } else if (_form.get(0).nodeName == 'INPUT' || _form.get(0).nodeName == 'SELECT' || _form.get(0).nodeName == 'TEXTAREA') {
+            _form.each(function(k, v) {
                 if (v.type == 'checkbox' && v.checked == true) {
                     nead_confirm = true;
                 }
@@ -272,19 +330,19 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
                     return false;
                 }
             }
-            query = form1.serialize();
+            query = _form.serialize();
         } else {
             if ($(this).hasClass('confirm')) {
                 if (!confirm('确认要执行该操作吗?')) {
                     return false;
                 }
             }
-            query = form1.find('input,select,textarea').serialize();
+            query = _form.find('input,select,textarea').serialize();
         }
-
 
         $.post(target, query).success(function(data) {
             if (data.code == 1) {
+                parent.layui.layer.closeAll();
                 if (data.url) {
                     layer.msg(data.msg + ' 页面即将自动跳转~');
                 } else {
