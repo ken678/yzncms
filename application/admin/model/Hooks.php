@@ -59,8 +59,23 @@ class Hooks extends Model
             $this->error = '参数不正确！';
             return false;
         }
+        //判断钩子是否存在 不存在就新增
+        foreach ($hooksRule as $key => $value) {
+            //检查是否有同样的行为
+            if (empty($this->where(['name' => $key])->find())) {
+                $description = $value['description'];
+                $type = (int) $value['type'];
+                $this->save([
+                    'name' => $key,
+                    'description' => $description ?: "模块{$module}中的行为！",
+                    'type' => $type ?: 1,
+                    'status' => 1,
+                    'system' => 0,
+                ]);
+            }
+        }
         $hooks = $this->column('name');
-        $common = array_intersect($hooks, $hooksRule);
+        $common = array_intersect($hooks, array_keys($hooksRule));
         if (!empty($common)) {
             foreach ($common as $hook) {
                 $flag = $this->updateAddons($hook, array($module), 'modules');
@@ -124,7 +139,7 @@ class Hooks extends Model
     }
 
     /**
-     * 去除插件所有钩子里对应的插件数据
+     * 去除插件所有钩子里对应的模块数据
      */
     public function removeModules($module, $hooksRule)
     {
@@ -132,8 +147,10 @@ class Hooks extends Model
             $this->error = '参数不正确！';
             return false;
         }
+        //TODO 删除钩子 暂时先不删除 后期看是否加上
+
         $hooks = $this->column('name');
-        $common = array_intersect($hooks, $hooksRule);
+        $common = array_intersect($hooks, array_keys($hooksRule));
         if ($common) {
             foreach ($common as $hook) {
                 $flag = $this->removeAddons($hook, array($module), 'modules');
