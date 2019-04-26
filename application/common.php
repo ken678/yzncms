@@ -99,11 +99,16 @@ function isModuleInstall($moduleName)
  * 处理插件钩子
  * @param string $hook 钩子名称
  * @param mixed $params 传入参数
+ * @param  boolean $is_return 是否返回（true:返回值，false:直接输入）
+ * @param  bool   $once   只获取一个有效返回值
  * @return void
  */
-function hook($hook, $params = [])
+function hook($hook, $params = [], $is_return = false, $once = false)
 {
-    think\facade\Hook::listen($hook, $params);
+    if ($is_return == true) {
+        return \think\facade\Hook::listen($hook, $params, $once);
+    }
+    \think\facade\Hook::listen($hook, $params, $once);
 }
 
 /**
