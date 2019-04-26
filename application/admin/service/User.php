@@ -89,8 +89,13 @@ class User
      */
     public function isAdministrator($uid = null)
     {
-        $uid = is_null($uid) ? $this->isLogin() : $uid;
-        return $uid && (intval($uid) === self::administratorRoleId);
+        $userInfo = $this->getInfo();
+        if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
+            return true;
+        }
+        return false;
+        /*$uid = is_null($uid) ? $this->isLogin() : $uid;
+    return $uid && (intval($uid) === self::administratorRoleId);*/
     }
 
     /**
