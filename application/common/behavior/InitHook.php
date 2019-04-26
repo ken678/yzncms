@@ -28,7 +28,7 @@ class InitHook
         $data = Cache::get('Hooks');
         if (empty($data)) {
             //所有模块和插件钩子
-            $hooks = Db::name('Hooks')->column('name,addons,modules');
+            $hooks = Db::name('Hooks')->where('status', 1)->column('name,addons,modules');
             foreach ($hooks as $key => $value) {
                 $hooks_class = [];
                 //模块
