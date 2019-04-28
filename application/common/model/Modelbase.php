@@ -30,7 +30,7 @@ class Modelbase extends Model
      */
     public function drop_table($table)
     {
-        $table = Config::get("database.prefix") . $table;
+        $table = Config::get("database.prefix") . strtolower($table);
         return Db::query("DROP TABLE $table");
     }
 
@@ -40,7 +40,7 @@ class Modelbase extends Model
      */
     public function table_exists($table)
     {
-        $table = Config::get("database.prefix") . $table;
+        $table = Config::get("database.prefix") . strtolower($table);
         if (true == Db::query("SHOW TABLES LIKE '{$table}'")) {
             return true;
         } else {
@@ -65,7 +65,7 @@ class Modelbase extends Model
     public function get_fields($table)
     {
         $fields = array();
-        $table = Config::get("database.prefix") . $table;
+        $table = Config::get("database.prefix") . strtolower($table);
         $data = Db::query("SHOW COLUMNS FROM $table");
         foreach ($data as $v) {
             $fields[$v['Field']] = $v['Type'];
