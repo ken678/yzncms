@@ -17,6 +17,7 @@ namespace sys;
 
 use app\admin\model\Module as Module_Model;
 use think\Db;
+use think\facade\Cache;
 use util\File;
 use util\Sql;
 
@@ -199,6 +200,7 @@ class Module
         }
         //更新缓存
         cache('Module', null);
+        Cache::set('Hooks', null);
         return true;
     }
 
@@ -273,6 +275,7 @@ class Module
         }
         //更新缓存
         cache('Module', null);
+        Cache::set('Hooks', null);
         return true;
     }
 
@@ -375,6 +378,7 @@ class Module
         Module_Model::where(array('module' => $name))->delete();
         //更新缓存
         cache('Module', null);
+        Cache::set('Hooks', null);
     }
 
     /**
