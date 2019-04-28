@@ -193,6 +193,23 @@ class Index extends MemberBase
             //注销当前登陆
             $this->logout();
         }
+    }
+
+    /**
+     * 修改邮箱
+     */
+    public function changeemail()
+    {
+        return $this->fetch('/changeemail');
+
+    }
+
+    /**
+     * 修改手机号
+     */
+    public function changemobile()
+    {
+        return $this->fetch('/changemobile');
 
     }
 

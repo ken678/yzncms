@@ -20,11 +20,11 @@
                 </div>
                 <div class="layui-form-item"> <label class="layui-form-label">手机</label>
                     <div class="layui-input-inline"> <input type="text" name="mobile" required="" lay-verify="phone" autocomplete="off" value="{$userinfo.mobile}" class="layui-input" disabled style="cursor: not-allowed !important;"></div>
-                    <button class="layui-btn" type="button">修改</button>
+                    <button class="layui-btn layui-iframe" type="button" href="{:url('changemobile')}" lay-data="{width:'420px',height:'250px',title:'修改手机'}">修改</button>
                 </div>
                 <div class="layui-form-item"> <label class="layui-form-label">邮箱</label>
                     <div class="layui-input-inline"> <input type="text" name="email" required="" lay-verify="email" autocomplete="off" value="{$userinfo.email}" class="layui-input" disabled style="cursor: not-allowed !important;"> </div>
-                    <button class="layui-btn" type="button">修改</button>
+                    <button class="layui-btn layui-iframe" type="button" href="{:url('changeemail')}" lay-data="{width:'420px',height:'250px',title:'修改邮箱'}">修改</button>
                 </div>
                 <div class="layui-form-item"> <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit="">确认修改</button> </div>
             </form>

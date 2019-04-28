@@ -31,6 +31,8 @@ class Ems extends Base
      */
     public function send()
     {
+        var_dump(11);
+        exit();
 
     }
 
@@ -39,6 +41,8 @@ class Ems extends Base
      */
     public function check()
     {
+        var_dump(22);
+        exit();
 
     }
 
