@@ -261,13 +261,23 @@ CREATE TABLE `yzn_hooks` (
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
 
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
 INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '', '', '1', '1');
 INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('3', 'sms_send', '短信发送行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('4', 'sms_notice', '短信发送通知', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('5', 'sms_check', '检测短信验证是否正确', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('6', 'ems_send', '邮件发送行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('7', 'ems_notice', '邮件发送通知', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('8', 'ems_check', '检测邮件验证是否正确', '2', '1509174020', '', '', '1', '1');
+
+
+
+
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
