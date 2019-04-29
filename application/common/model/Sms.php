@@ -18,6 +18,12 @@ use \think\Model;
 
 class Sms extends Model
 {
+    protected $auto = ['ip'];
+    protected $autoWriteTimestamp = true;
+    public function setIpAttr($value)
+    {
+        return request()->ip(1);
+    }
     /**
      * 验证码有效时长
      * @var int
@@ -57,9 +63,7 @@ class Sms extends Model
     public function send($mobile, $code = null, $event = 'default')
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $time = time();
-        $ip = request()->ip();
-        $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
+        $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code]);
         $result = hook('sms_send', $sms);
         if (!$result) {
             $sms->delete();

@@ -18,6 +18,12 @@ use \think\Model;
 
 class Ems extends Model
 {
+    protected $auto = ['ip'];
+    protected $autoWriteTimestamp = true;
+    public function setIpAttr($value)
+    {
+        return request()->ip(1);
+    }
     /**
      * 验证码有效时长
      * @var int
@@ -57,9 +63,7 @@ class Ems extends Model
     public function send($email, $code = null, $event = 'default')
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $time = time();
-        $ip = request()->ip();
-        $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
+        $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code]);
         $result = hook('ems_send', $ems);
         if (!$result) {
             $ems->delete();

@@ -430,7 +430,7 @@ CREATE TABLE `yzn_sms` (
   `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
   `code` varchar(10) NOT NULL DEFAULT '' COMMENT '验证码',
   `times` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '验证次数',
-  `ip` varchar(30) NOT NULL DEFAULT '' COMMENT 'IP',
+  `ip` bigint(20) NOT NULL DEFAULT '0' COMMENT 'IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='短信验证码表';
@@ -445,7 +445,7 @@ CREATE TABLE `yzn_ems` (
   `email` varchar(100) NOT NULL DEFAULT '' COMMENT '邮箱',
   `code` varchar(10) NOT NULL DEFAULT '' COMMENT '验证码',
   `times` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '验证次数',
-  `ip` varchar(30) NOT NULL DEFAULT '' COMMENT 'IP',
+  `ip` bigint(20) NOT NULL DEFAULT '0' COMMENT 'IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='邮箱验证码表';
