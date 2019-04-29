@@ -20,6 +20,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Email
 {
     /**
+     * 单例对象
+     */
+    protected static $instance;
+    /**
      * phpmailer对象
      */
     protected $mail = [];
@@ -35,6 +39,21 @@ class Email
     public $options = [
         'debug' => 0, //关闭调式模式
     ];
+
+    /**
+     * 初始化
+     * @access public
+     * @param array $options 参数
+     * @return Email
+     */
+    public static function instance($options = [])
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new static($options);
+        }
+
+        return self::$instance;
+    }
 
     /**
      * 构造函数
