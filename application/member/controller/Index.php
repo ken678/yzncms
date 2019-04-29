@@ -14,9 +14,12 @@
 // +----------------------------------------------------------------------
 namespace app\member\controller;
 
+use app\common\model\Ems as Ems_Model;
+use app\common\model\Sms as Sms_Model;
 use app\member\model\Member as Member_Model;
 use app\member\service\User;
 use think\facade\Cookie;
+use think\facade\Validate;
 
 class Index extends MemberBase
 {
@@ -206,6 +209,21 @@ class Index extends MemberBase
             if (!$email || !$captcha) {
                 $this->error('参数不得为空！');
             }
+            if (!Validate::is($email, "email")) {
+                $this->error('邮箱格式不正确！');
+            }
+            if ($this->Member_Model->where('email', $email)->where('id', '<>', $this->userid)->find()) {
+                $this->error('邮箱已占用');
+            }
+            $Ems_Model = new Ems_Model();
+            $result = $Ems_Model->check($email, $captcha, 'changeemail');
+            if (!$result) {
+                $this->error('验证码错误！');
+            }
+            //只修改邮箱
+            $this->Member_Model->allowField(['ischeck_email', 'email'])->save(['email' => $email, 'ischeck_email' => 1], ['id' => 1]);
+            $Ems_Model->flush($email, 'changeemail');
+            $this->success();
         } else {
             return $this->fetch('/changeemail');
         }
@@ -223,6 +241,21 @@ class Index extends MemberBase
             if (!$mobile || !$captcha) {
                 $this->error('参数不得为空！');
             }
+            if (!Validate::regex($mobile, "^1\d{10}$")) {
+                $this->error('手机号格式不正确！');
+            }
+            if ($this->Member_Model->where('mobile', $mobile)->where('id', '<>', $this->userid)->find()) {
+                $this->error('手机号已占用');
+            }
+            $Sms_Model = new Sms_Model();
+            $result = $Sms_Model->check($mobile, $captcha, 'changemobile');
+            if (!$result) {
+                $this->error('验证码错误！');
+            }
+            //只修改手机号
+            $this->Member_Model->allowField(['ischeck_mobile', 'mobile'])->save(['mobile' => $mobile, 'ischeck_mobile' => 1], ['id' => 1]);
+            $Sms_Model->flush($email, 'changeemail');
+            $this->success();
         } else {
             return $this->fetch('/changemobile');
         }

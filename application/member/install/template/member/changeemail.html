@@ -13,12 +13,12 @@
         <div class="layui-form-item">
             <label class="layui-form-label">新邮箱</label>
             <div class="layui-input-inline">
-                <input type="text" name="mobile" required="" lay-verify="required|email" id="email" autocomplete="off" value="" class="layui-input" placeholder="新邮箱"></div>
+                <input type="text" name="email" required="" lay-verify="required|email" id="email" autocomplete="off" value="" class="layui-input" placeholder="新邮箱"></div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">验证码</label>
             <div class="layui-input-inline">
-                <input type="text" name="email" required="" lay-verify="required" autocomplete="off" value="" class="layui-input"> </div>
+                <input type="text" name="captcha" required="" lay-verify="required" autocomplete="off" value="" class="layui-input"> </div>
             <button class="layui-btn" type="button" id="get_verify" data-event="changeemail">获取验证码</button>
         </div>
         <div class="layui-form-item">
@@ -38,11 +38,10 @@
     </style>
     <script src="__STATIC__/libs/layui/layui.js"></script>
     <script>
-    layui.define(['layer', 'form', 'element'], function(exports) {
+    layui.define(['layer', 'form'], function(exports) {
         var $ = layui.jquery,
             layer = layui.layer,
-            form = layui.form,
-            element = layui.element;
+            form = layui.form;
         $(document).on('click', '#get_verify', function() {
             var email = $("#email").val();
             var event = $(this).data('event');

@@ -15,7 +15,7 @@
 namespace app\api\controller;
 
 use app\common\controller\Base;
-use app\common\model\Ems as ems_model;
+use app\common\model\Ems as Ems_Model;
 use app\member\model\Member;
 use think\facade\Validate;
 
@@ -26,7 +26,7 @@ class Ems extends Base
      */
     protected function initialize()
     {
-        $this->ems_model = new ems_model();
+        $this->Ems_Model = new Ems_Model();
         parent::initialize();
     }
 
@@ -41,7 +41,7 @@ class Ems extends Base
         }
         $event = $this->request->request("event");
         $event = $event ? $event : 'register';
-        $last = $this->ems_model->where(['email' => $email, 'event' => $event])->order('id', 'DESC')->find();
+        $last = $this->Ems_Model->where(['email' => $email, 'event' => $event])->order('id', 'DESC')->find();
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
         }
@@ -57,9 +57,9 @@ class Ems extends Base
         }
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
         $time = time();
-        $ip = request()->ip();
-        $ems = $this->ems_model->save(['event' => $event, 'email' => $email, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
-        if ($ems) {
+        $ip = $this->request->ip();
+        $ret = $this->Ems_Model->save(['event' => $event, 'email' => $email, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
+        if ($ret) {
             $this->success('发送成功');
         } else {
             $this->error('发送失败');
