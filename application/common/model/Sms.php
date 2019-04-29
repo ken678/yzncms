@@ -29,6 +29,45 @@ class Sms extends Model
      * @var int
      */
     protected $maxCheckNums = 10;
+
+    /**
+     * 获取最后一次手机发送的数据
+     *
+     * @param   int    $mobile 手机号
+     * @param   string $event  事件
+     * @return  Sms
+     */
+    public function get($mobile, $event = 'default')
+    {
+        $sms = self::where(['mobile' => $mobile, 'event' => $event])
+            ->order('id', 'DESC')
+            ->find();
+        hook('sms_get', $sms);
+        return $sms ? $sms : null;
+    }
+
+    /**
+     * 发送验证码
+     *
+     * @param   int    $mobile 手机号
+     * @param   int    $code   验证码,为空时将自动生成4位数字
+     * @param   string $event  事件
+     * @return  boolean
+     */
+    public function send($mobile, $code = null, $event = 'default')
+    {
+        $code = is_null($code) ? mt_rand(1000, 9999) : $code;
+        $time = time();
+        $ip = request()->ip();
+        $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
+        $result = hook('sms_send', $sms);
+        if (!$result) {
+            $sms->delete();
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 校验验证码
      *

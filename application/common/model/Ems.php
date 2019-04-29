@@ -31,6 +31,22 @@ class Ems extends Model
     protected $maxCheckNums = 10;
 
     /**
+     * 获取最后一次邮箱发送的数据
+     *
+     * @param   int    $email 邮箱
+     * @param   string $event 事件
+     * @return  Ems
+     */
+    public function get($email, $event = 'default')
+    {
+        $ems = self::where(['email' => $email, 'event' => $event])
+            ->order('id', 'DESC')
+            ->find();
+        hook('ems_get', $ems);
+        return $ems ? $ems : null;
+    }
+
+    /**
      * 发送验证码
      *
      * @param   int    $email 邮箱

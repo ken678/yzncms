@@ -50,7 +50,7 @@ class Ems extends Base
         }
         $event = $this->request->request("event");
         $event = $event ? $event : 'register';
-        $last = $this->Ems_Model->where(['email' => $email, 'event' => $event])->order('id', 'DESC')->find();
+        $last = $this->Ems_Model->get($email, $event);
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
         }

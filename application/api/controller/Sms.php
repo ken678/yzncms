@@ -42,7 +42,7 @@ class Sms extends Base
         if (!$mobile || !Validate::regex($mobile, "^1\d{10}$")) {
             $this->error('手机号不正确');
         }
-        $last = $this->Sms_Model->where(['mobile' => $mobile, 'event' => $event])->order('id', 'DESC')->find();
+        $last = $this->Sms_Model->get($mobile, $event);
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
         }
@@ -60,10 +60,7 @@ class Sms extends Base
                 $this->error('未注册');
             }
         }
-        $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $time = time();
-        $ip = $this->request->ip();
-        $ret = $this->Sms_Model->save(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
+        $ret = $this->Sms_Model->send($mobile, null, $event);
         if ($ret) {
             $this->success('发送成功');
         } else {
