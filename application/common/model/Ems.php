@@ -48,7 +48,7 @@ class Ems extends Model
         $ems = self::where(['email' => $email, 'event' => $event])
             ->order('id', 'DESC')
             ->find();
-        hook('ems_get', $ems);
+        hook('emsGet', $ems);
         return $ems ? $ems : null;
     }
 
@@ -64,7 +64,7 @@ class Ems extends Model
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
         $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code]);
-        $result = hook('ems_send', $ems);
+        $result = hook('emsSend', $ems, true);
         if (!$result) {
             $ems->delete();
             return false;
@@ -94,7 +94,7 @@ class Ems extends Model
                     $ems->save();
                     return false;
                 } else {
-                    $result = hook('ems_check', $ems);
+                    $result = hook('emsCheck', $ems);
                     return true;
                 }
             } else {
@@ -118,7 +118,7 @@ class Ems extends Model
     {
         self::where(['email' => $email, 'event' => $event])
             ->delete();
-        hook('ems_flush');
+        hook('emsFlush');
         return true;
     }
 

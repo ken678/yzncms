@@ -48,7 +48,7 @@ class Sms extends Model
         $sms = self::where(['mobile' => $mobile, 'event' => $event])
             ->order('id', 'DESC')
             ->find();
-        hook('sms_get', $sms);
+        hook('smsGet', $sms);
         return $sms ? $sms : null;
     }
 
@@ -64,7 +64,7 @@ class Sms extends Model
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
         $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code]);
-        $result = hook('sms_send', $sms);
+        $result = hook('smsSend', $sms);
         if (!$result) {
             $sms->delete();
             return false;
@@ -94,7 +94,7 @@ class Sms extends Model
                     $sms->save();
                     return false;
                 } else {
-                    $result = hook('sms_check', $sms);
+                    $result = hook('smsCheck', $sms);
                     return $result;
                 }
             } else {
@@ -118,7 +118,7 @@ class Sms extends Model
     {
         self::where(['mobile' => $mobile, 'event' => $event])
             ->delete();
-        hook('sms_flush');
+        hook('smsFlush');
         return true;
     }
 }
