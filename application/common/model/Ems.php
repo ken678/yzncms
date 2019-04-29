@@ -29,6 +29,29 @@ class Ems extends Model
      * @var int
      */
     protected $maxCheckNums = 10;
+
+    /**
+     * 发送验证码
+     *
+     * @param   int    $email 邮箱
+     * @param   int    $code  验证码,为空时将自动生成4位数字
+     * @param   string $event 事件
+     * @return  boolean
+     */
+    public function send($email, $code = null, $event = 'default')
+    {
+        $code = is_null($code) ? mt_rand(1000, 9999) : $code;
+        $time = time();
+        $ip = request()->ip();
+        $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
+        $result = hook('ems_send', $ems);
+        if (!$result) {
+            $ems->delete();
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 校验验证码
      *

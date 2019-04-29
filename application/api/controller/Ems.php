@@ -28,6 +28,15 @@ class Ems extends Base
     {
         $this->Ems_Model = new Ems_Model();
         parent::initialize();
+        \think\facade\Hook::add('ems_send', function ($params) {
+            $obj = \util\Email::instance();
+            $result = $obj
+                ->to($params->email)
+                ->subject('验证码')
+                ->message("你的验证码是：" . $params->code)
+                ->send();
+            return $result;
+        });
     }
 
     /**
@@ -55,10 +64,7 @@ class Ems extends Base
                 $this->error('未注册');
             }
         }
-        $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $time = time();
-        $ip = $this->request->ip();
-        $ret = $this->Ems_Model->save(['event' => $event, 'email' => $email, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
+        $ret = $this->Ems_Model->send($email, null, $event);
         if ($ret) {
             $this->success('发送成功');
         } else {

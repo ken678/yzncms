@@ -87,24 +87,27 @@
         var data = { event: $(that).data("event") };
         data[type] = element.val();
 
+        $(that).attr('disabled',true).text("发送中...");
+
         $.post($(that).data("url"), data, function(data) {
             if (data.code == 1) {
-                clearInterval(si[type]);
-                var seconds = 60;
+                var seconds = 10;
                 si[type] = setInterval(function() {
                     seconds--;
                     if (seconds <= 0) {
-                        clearInterval(si);
-                        $(that).removeClass("layui-btn-disabled").text("获取验证码");
+                        clearInterval(si[type]);
+                        $(that).removeClass("layui-btn-disabled").text("获取验证码").attr("disabled", false);
                     } else {
                         $(that).addClass("layui-btn-disabled").text(seconds + "秒后可发送");
                     }
                 }, 1000);
             } else {
+                $(that).removeClass("layui-btn-disabled").text("获取验证码").attr("disabled", false);
                 layer.msg(data.msg);
             }
 
         })
+        return false;
     })
 
     //表单提交
