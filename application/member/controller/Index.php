@@ -200,7 +200,15 @@ class Index extends MemberBase
      */
     public function changeemail()
     {
-        return $this->fetch('/changeemail');
+        if ($this->request->isPost()) {
+            $email = $this->request->post('email');
+            $captcha = $this->request->request('captcha');
+            if (!$email || !$captcha) {
+                $this->error('参数不得为空！');
+            }
+        } else {
+            return $this->fetch('/changeemail');
+        }
 
     }
 
@@ -209,7 +217,15 @@ class Index extends MemberBase
      */
     public function changemobile()
     {
-        return $this->fetch('/changemobile');
+        if ($this->request->isPost()) {
+            $mobile = $this->request->request('mobile');
+            $captcha = $this->request->request('captcha');
+            if (!$mobile || !$captcha) {
+                $this->error('参数不得为空！');
+            }
+        } else {
+            return $this->fetch('/changemobile');
+        }
 
     }
 
