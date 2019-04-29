@@ -19,7 +19,7 @@
             <label class="layui-form-label">验证码</label>
             <div class="layui-input-inline">
                 <input type="text" name="captcha" required="" lay-verify="required" autocomplete="off" value="" class="layui-input"> </div>
-            <button class="layui-btn" type="button" id="get_verify" data-event="changeemail">获取验证码</button>
+            <button class="layui-btn btn-captcha" type="button" data-event="changeemail" data-type="email" data-url="{:url('api/ems/send')}">获取验证码</button>
         </div>
         <div class="layui-form-item">
             <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit="">确认修改</button>
@@ -38,18 +38,12 @@
     </style>
     <script src="__STATIC__/libs/layui/layui.js"></script>
     <script>
-    layui.define(['layer', 'form'], function(exports) {
-        var $ = layui.jquery,
-            layer = layui.layer,
-            form = layui.form;
-        $(document).on('click', '#get_verify', function() {
-            var email = $("#email").val();
-            var event = $(this).data('event');
-            $.get("{:url('api/ems/send')}", { email: email, event: event }, function(data) {
-                layer.msg(data.msg);
-            })
-        })
-    })
+    layui.config({
+        version: "3.0.0",
+        base: '__STATIC__/modules/member/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly');
     </script>
 </body>
 

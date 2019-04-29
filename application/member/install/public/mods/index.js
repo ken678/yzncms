@@ -77,6 +77,36 @@
 
     }
 
+    //发送验证码
+    $(document).on("click", ".btn-captcha", function(e) {
+        var that = this;
+        var type = $(that).data("type") ? $(that).data("type") : 'mobile';
+        var element = $("input[name='" + type + "']");
+        var si = {};
+
+        var data = { event: $(that).data("event") };
+        data[type] = element.val();
+
+        $.post($(that).data("url"), data, function(data) {
+            if (data.code == 1) {
+                clearInterval(si[type]);
+                var seconds = 60;
+                si[type] = setInterval(function() {
+                    seconds--;
+                    if (seconds <= 0) {
+                        clearInterval(si);
+                        $(that).removeClass("layui-btn-disabled").text("获取验证码");
+                    } else {
+                        $(that).addClass("layui-btn-disabled").text(seconds + "秒后可发送");
+                    }
+                }, 1000);
+            } else {
+                layer.msg(data.msg);
+            }
+
+        })
+    })
+
     //表单提交
     form.on('submit(*)', function(data) {
         var action = $(data.form).attr('action'),
