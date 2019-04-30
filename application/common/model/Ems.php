@@ -64,7 +64,7 @@ class Ems extends Model
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
         $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code]);
-        $result = hook('emsSend', $ems, true);
+        $result = hook('emsSend', $ems, true, true);
         if (!$result) {
             $ems->delete();
             return false;

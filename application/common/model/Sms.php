@@ -64,7 +64,7 @@ class Sms extends Model
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
         $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code]);
-        $result = hook('smsSend', $sms);
+        $result = hook('smsSend', $sms, true, true);
         if (!$result) {
             $sms->delete();
             return false;
