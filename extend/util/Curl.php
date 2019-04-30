@@ -77,16 +77,24 @@ class Curl
             curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeaders);
         }
         $ret = curl_exec($ch);
-        if (curl_errno($ch)) {
+        $err = curl_error($ch);
+
+        if (false === $ret || !empty($err)) {
+            $errno = curl_errno($ch);
+            $info = curl_getinfo($ch);
             curl_close($ch);
-            return array(curl_error($ch), curl_errno($ch));
-        } else {
-            curl_close($ch);
-            if (!is_string($ret) || !strlen($ret)) {
-                return false;
-            }
-            return $ret;
+            return [
+                'ret' => false,
+                'errno' => $errno,
+                'msg' => $err,
+                'info' => $info,
+            ];
         }
+        curl_close($ch);
+        return [
+            'ret' => true,
+            'msg' => $ret,
+        ];
     }
 
     /**
