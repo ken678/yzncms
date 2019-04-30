@@ -40,10 +40,10 @@ class Adminbase extends Base
             define('UID', (int) User::instance()->isLogin());
             // 是否是超级管理员
             define('IS_ROOT', User::instance()->isAdministrator());
-            if (!IS_ROOT && config('ADMIN_ALLOW_IP')) {
+            if (!IS_ROOT && config('admin_allow_ip')) {
                 // 检查IP地址访问
-                if (!in_array($this->request->ip(), explode(',', config('ADMIN_ALLOW_IP')))) {
-                    $this->error('403:禁止访问');
+                if (!in_array($this->request->ip(), explode(',', config('admin_allow_ip')))) {
+                    $this->error('403:IP禁止访问');
                 }
             }
             if (false == $this->competence()) {
