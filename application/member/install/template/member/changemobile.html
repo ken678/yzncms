@@ -22,7 +22,7 @@
             <button class="layui-btn btn-captcha" type="button" data-event="changemobile" data-type="mobile" data-url="{:url('api/sms/send')}">获取验证码</button>
         </div>
         <div class="layui-form-item">
-            <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit="">确认修改</button>
+            <button class="layui-btn" key="set-mine" lay-filter="formSubmit" lay-submit="" lay-data="{pop:true}">确认修改</button>
         </div>
     </form>
     <style type="text/css">

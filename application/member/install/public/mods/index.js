@@ -61,7 +61,7 @@
                 data: data,
                 url: url,
                 success: function(res) {
-                    if (res.status === 0) {
+                    if (res.code === 0) {
                         success && success(res);
                     } else {
                         layer.msg(res.msg || res.code, { shift: 6 });
@@ -87,7 +87,7 @@
         var data = { event: $(that).data("event") };
         data[type] = element.val();
 
-        $(that).attr('disabled',true).text("发送中...");
+        $(that).attr('disabled', true).text("发送中...");
 
         $.post($(that).data("url"), data, function(data) {
             if (data.code == 1) {
@@ -110,25 +110,60 @@
         return false;
     })
 
-    //表单提交
-    form.on('submit(*)', function(data) {
-        var action = $(data.form).attr('action'),
-            button = $(data.elem);
-        fly.json(action, data.field, function(res) {
-            var end = function() {
-                if (res.action) {
-                    location.href = res.action;
+    /**
+     * 监听表单提交
+     * @attr action 请求地址
+     * @attr data-form 表单DOM
+     */
+    form.on('submit(formSubmit)', function(data) {
+        var _form = '',
+            that = $(this),
+            text = that.text(),
+            options = { pop: false, refresh: true, jump: false, callback: null };
+        if ($(this).attr('data-form')) {
+            _form = $(that.attr('data-form'));
+        } else {
+            _form = that.parents('form');
+        }
+
+        if (that.attr('lay-data')) {
+            options = new Function('return ' + that.attr('lay-data'))();
+        }
+        that.prop('disabled', true).text('提交中...');
+        $.ajax({
+            type: "POST",
+            url: _form.attr('action'),
+            data: _form.serialize(),
+            success: function(res) {
+                that.text(res.msg);
+                if (res.code == 0) {
+                    that.prop('disabled', false).addClass('layui-btn-danger');
+                    setTimeout(function() {
+                        that.removeClass('layui-btn-danger').text(text);
+                    }, 3000);
                 } else {
-                    fly.form[action || button.attr('key')](data.field, data.form);
+                    setTimeout(function() {
+                        that.text(text).prop('disabled', false);
+                        if (options.callback) {
+                            options.callback(that, res);
+                        }
+                        if (options.pop == true) {
+                            if (options.refresh == true) {
+                                parent.location.reload();
+                            } else if (options.jump == true && res.url != '') {
+                                parent.location.href = res.url;
+                            }
+                            parent.layui.layer.closeAll();
+                        } else if (options.refresh == true) {
+                            if (res.url != '') {
+                                location.href = res.url;
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    }, 3000);
                 }
-            };
-            if (res.status == 0) {
-                button.attr('alert') ? layer.alert(res.msg, {
-                    icon: 1,
-                    time: 10 * 1000,
-                    end: end
-                }) : end();
-            };
+            }
         });
         return false;
     });
@@ -145,7 +180,6 @@
                     avatarAdd.find('.loading').show();
                 },
                 done: function(res) {
-                    console.log(res);
                     if (res.code == 0) {
                         $.post(GV.profile_upload_url, {
                             avatar: res.id
