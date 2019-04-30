@@ -174,62 +174,39 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
     });
 
     //ajax get请求
-    $('.ajax-get').click(function() {
+    $(document).on('click', '.ajax-get', function() {
         var that = $(this),
-            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href'),
+            refresh = !that.attr('refresh') ? 'true' : that.attr('refresh');
         if (!href) {
             layer.msg('请设置data-href参数');
             return false;
         }
         if ($(this).hasClass('confirm')) {
             layer.confirm('确认要执行该操作吗?', { icon: 3, title: '提示' }, function(index) {
-                $.get(href).success(function(data) {
-                    if (data.code == 1) {
-                        if (data.url) {
-                            layer.msg(data.msg + ' 页面即将自动跳转~');
-                        } else {
-                            layer.msg(data.msg);
-                        }
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
+                $.get(href, {}, function(res) {
+                    layer.msg(res.msg, {}, function() {
+                        if (refresh == 'true' || refresh == 'yes') {
+                            if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                                location.href = res.url;
                             } else {
                                 location.reload();
                             }
-                        }, 1500);
-                    } else {
-                        layer.msg(data.msg);
-                        setTimeout(function() {
-                            if (data.url) {
-                                location.href = data.url;
-                            }
-                        }, 1500);
-                    }
+                        }
+                    });
                 });
             });
         } else {
-            $.get(href).success(function(data) {
-                if (data.code == 1) {
-                    if (data.url) {
-                        layer.msg(data.msg + ' 页面即将自动跳转~');
-                    } else {
-                        layer.msg(data.msg);
-                    }
-                    setTimeout(function() {
-                        if (data.url) {
-                            location.href = data.url;
+            $.get(href, {}, function(res) {
+                layer.msg(res.msg, {}, function() {
+                    if (refresh == 'true') {
+                        if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                            location.href = res.url;
                         } else {
                             location.reload();
                         }
-                    }, 1500);
-                } else {
-                    layer.msg(data.msg);
-                    setTimeout(function() {
-                        if (data.url) {
-                            location.href = data.url;
-                        }
-                    }, 1500);
-                }
+                    }
+                });
             });
         };
         return false;
