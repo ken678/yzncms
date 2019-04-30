@@ -12,10 +12,10 @@
     </script>
     <script type="text/html" id="titleTpl">
         {{#  if(d.installtime == "" || d.installtime == null || d.installtime == undefined){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="install">安装</a>
+    <a class="layui-btn layui-btn-xs" href="{:url('install')}?module={{ d.module }}">安装</a>
 {{#  } else { }}
     {{#  if(d.iscore == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="uninstall">卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" href="{:url('uninstall')}?module={{ d.module }}">卸载</a>
     {{#  } }}
 {{#  } }}
 </script>
@@ -59,16 +59,6 @@ layui.use(['table', 'upload'], function() {
         },
         error: function() {
             //请求异常回调
-        }
-    });
-
-    //监听行工具事件
-    table.on('tool(table)', function(obj) {
-        var data = obj.data;
-        if (obj.event === 'install') {
-            window.open('{:url("admin/module/install")}' + "?module=" + data.module, '_self')
-        } else if (obj.event === 'uninstall') {
-            window.open('{:url("admin/module/uninstall")}' + "?module=" + data.module, '_self')
         }
     });
 });
