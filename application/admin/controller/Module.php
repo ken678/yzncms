@@ -19,7 +19,6 @@ use app\common\controller\Adminbase;
 use sys\Module as ModuleService;
 use think\Controller;
 use think\Db;
-use ZipArchive;
 
 class Module extends Adminbase
 {
@@ -184,19 +183,26 @@ class Module extends Adminbase
             if (file_exists(APP_PATH . $moduleName)) {
                 $this->error('该模块目录已经存在！');
             }
-            if (class_exists('ZipArchive')) {
-                $zip = new ZipArchive;
-                if ($zip->open($filename) !== true) {
-                    $this->error('无法打开ZIP文件！');
-                }
-                if (!$zip->extractTo(APP_PATH . $moduleName)) {
-                    $zip->close();
-                    $this->error('无法解压ZIP文件！');
-                }
-                $zip->close();
-                $this->success('模块解压成功，可以进入模块管理进行安装！', url('addons/index'));
+            $zip = new \util\PclZip($filename);
+            $status = $zip->extract(PCLZIP_OPT_PATH, APP_PATH . $moduleName);
+            if ($status) {
+                $this->success('模块解压成功，可以进入模块管理进行安装！', url('index'));
+            } else {
+                $this->error('模块解压失败！');
             }
-            $this->error("无法执行解压操作，请确保ZipArchive安装正确！");
+            /*if (class_exists('ZipArchive')) {
+        $zip = new ZipArchive;
+        if ($zip->open($filename) !== true) {
+        $this->error('无法打开ZIP文件！');
+        }
+        if (!$zip->extractTo(APP_PATH . $moduleName)) {
+        $zip->close();
+        $this->error('无法解压ZIP文件！');
+        }
+        $zip->close();
+        $this->success('模块解压成功，可以进入模块管理进行安装！', url('addons/index'));
+        }
+        $this->error("无法执行解压操作，请确保ZipArchive安装正确！");*/
         }
     }
 
