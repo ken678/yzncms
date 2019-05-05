@@ -288,21 +288,23 @@ class Addons extends Adminbase
     public function local()
     {
         if ($this->request->isPost()) {
-            if (!$_FILES['file']) {
+            $files = $this->request->file('file');
+            if ($files == null) {
                 $this->error("请选择上传文件！");
             }
-            //上传临时文件地址
-            $filename = $_FILES['file']['tmp_name'];
-            if (strtolower(substr($_FILES['file']['name'], -3, 3)) != 'zip') {
+            if (strtolower(substr($files->getInfo('name'), -3, 3)) != 'zip') {
                 $this->error("上传的文件格式有误！");
             }
             //插件名称
-            $addonName = pathinfo($_FILES['file']['name']);
+            $addonName = pathinfo($files->getInfo('name'));
             $addonName = $addonName['filename'];
             //检查插件目录是否存在
             if (file_exists(ADDON_PATH . $addonName)) {
                 $this->error('该插件目录已经存在！');
             }
+
+            //上传临时文件地址
+            $filename = $files->getInfo('tmp_name');
             $zip = new \util\PclZip($filename);
             $status = $zip->extract(PCLZIP_OPT_PATH, ADDON_PATH . $addonName);
             if ($status) {
@@ -310,19 +312,6 @@ class Addons extends Adminbase
             } else {
                 $this->error('插件解压失败！');
             }
-            /*if (class_exists('ZipArchive')) {
-        $zip = new ZipArchive;
-        if ($zip->open($filename) !== true) {
-        $this->error('无法打开ZIP文件！');
-        }
-        if (!$zip->extractTo(ADDON_PATH . $addonName)) {
-        $zip->close();
-        $this->error('无法解压ZIP文件！');
-        }
-        $zip->close();
-        $this->success('插件解压成功，可以进入插件管理进行安装！', url('addons/index'));
-        }
-        $this->error("无法执行解压操作，请确保ZipArchive安装正确！");*/
         }
     }
 
