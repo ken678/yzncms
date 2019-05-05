@@ -112,6 +112,40 @@ function hook($hook, $params = [], $is_return = false, $once = false)
 }
 
 /**
+ * 获取插件类的配置值值
+ * @param string $name 插件名
+ * @return array
+ */
+function get_addon_config($name)
+{
+    $addon = get_addon_instance($name);
+    if (!$addon) {
+        return [];
+    }
+    return $addon->getAddonConfig();
+}
+
+/**
+ * 获取插件的单例
+ * @param $name
+ * @return mixed|null
+ */
+function get_addon_instance($name)
+{
+    static $_addons = [];
+    if (isset($_addons[$name])) {
+        return $_addons[$name];
+    }
+    $class = get_addon_class($name);
+    if (class_exists($class)) {
+        $_addons[$name] = new $class();
+        return $_addons[$name];
+    } else {
+        return null;
+    }
+}
+
+/**
  * 数据签名认证
  * @param  array  $data 被认证的数据
  * @return string       签名
