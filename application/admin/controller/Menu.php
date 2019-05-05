@@ -20,11 +20,6 @@ use think\Db;
 
 class Menu extends Adminbase
 {
-    protected function initialize()
-    {
-        parent::initialize();
-        $this->Menu = new Menu_Model;
-    }
 
     //后台菜单首页
     public function index()
@@ -55,11 +50,15 @@ class Menu extends Adminbase
             } else {
                 $data['status'] = 1;
             }
-            if ($this->Menu->add($data)) {
-                $this->success("添加成功！", url("Menu/index"));
+
+            $result = $this->validate($data, 'Menu.add');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            if (Menu_Model::create($data)) {
+                $this->success("添加成功！", url("index"));
             } else {
-                $error = $this->Menu->getError();
-                $this->error($error ? $error : '添加失败！');
+                $this->error('添加失败！');
             }
         } else {
             $tree = new \util\Tree();
@@ -90,16 +89,19 @@ class Menu extends Adminbase
             } else {
                 $data['status'] = 1;
             }
-            if ($this->Menu->edit($data)) {
-                $this->success("编辑成功！", url("Menu/index"));
+            $result = $this->validate($data, 'Menu.edit');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            if (Menu_Model::update($data)) {
+                $this->success("编辑成功！", url("index"));
             } else {
-                $error = $this->Menu->getError();
-                $this->error($error ? $error : '编辑失败！');
+                $this->error('编辑失败！');
             }
         } else {
             $tree = new \util\Tree();
             $id = $this->request->param('id/d', '');
-            $rs = Db::name('menu')->where(["id" => $id])->find();
+            $rs = Menu_Model::where(["id" => $id])->find();
             $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
             $array = array();
             foreach ($result as $r) {
@@ -125,11 +127,11 @@ class Menu extends Adminbase
         if (empty($id)) {
             $this->error('ID错误');
         }
-        $result = Db::name('menu')->where(["parentid" => $id])->find();
+        $result = Menu_Model::where(["parentid" => $id])->find();
         if ($result) {
             $this->error("含有子菜单，无法删除！");
         }
-        if ($this->Menu->del($id) !== false) {
+        if (Menu_Model::destroy($id) !== false) {
             $this->success("删除菜单成功！");
         } else {
             $this->error("删除失败！");
@@ -143,7 +145,7 @@ class Menu extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         $listorder = $this->request->param('value/d', 0);
-        $rs = $this->Menu->allowField(['listorder'])->isUpdate(true)->save(['id' => $id, 'listorder' => $listorder]);
+        $rs = Menu_Model::update(['id' => $id, 'listorder' => $listorder]);
         if ($rs) {
             $this->success("菜单排序成功！");
         } else {

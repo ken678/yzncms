@@ -160,48 +160,6 @@ class Menu extends Model
     }
 
     /**
-     * 添加后台菜单
-     */
-    public function add($data)
-    {
-        $validate = new \app\admin\validate\Menu;
-        $result = $validate->scene('add')->check($data);
-        if (!$result) {
-            $this->error = $validate->getError();
-            return false;
-        }
-        return $this->allowField(true)->save($data) !== false ? true : false;
-    }
-
-    /**
-     * 修改后台菜单
-     */
-    public function edit($data)
-    {
-        $validate = new \app\admin\validate\Menu;
-        $result = $validate->scene('edit')->check($data);
-        if (!$result) {
-            $this->error = $validate->getError();
-            return false;
-        }
-        return $this->allowField(true)->isUpdate(true)->save($data) !== false ? true : false;
-    }
-
-    /**
-     * 删除菜单
-     */
-    public function del($id)
-    {
-        $result = $this->where(['id' => $id])->delete();
-        if ($result) {
-            return true;
-        } else {
-            $this->error = "删除失败";
-            return false;
-        }
-    }
-
-    /**
      * 模块安装时进行菜单注册
      * @param array $data 菜单数据
      * @param array $config 模块配置
