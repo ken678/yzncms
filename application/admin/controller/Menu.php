@@ -28,7 +28,7 @@ class Menu extends Adminbase
             $tree = new \util\Tree();
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-            $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
+            $result = Menu_Model::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
 
             $tree->init($result);
             $_list = $tree->getTreeList($tree->getTreeArray(0), 'title');
@@ -63,7 +63,7 @@ class Menu extends Adminbase
         } else {
             $tree = new \util\Tree();
             $parentid = $this->request->param('parentid/d', '');
-            $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
+            $result = Menu_Model::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
             $array = array();
             foreach ($result as $r) {
                 $r['selected'] = $r['id'] == $parentid ? 'selected' : '';
@@ -102,7 +102,7 @@ class Menu extends Adminbase
             $tree = new \util\Tree();
             $id = $this->request->param('id/d', '');
             $rs = Menu_Model::where(["id" => $id])->find();
-            $result = Db::name('menu')->order(array('listorder', 'id' => 'DESC'))->select();
+            $result = Menu_Model::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
             $array = array();
             foreach ($result as $r) {
                 $r['selected'] = $r['id'] == $rs['parentid'] ? 'selected' : '';
