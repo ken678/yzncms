@@ -259,6 +259,14 @@ class Index extends MemberBase
         } else {
             return $this->fetch('/changemobile');
         }
+    }
+
+    /**
+     *忘记密码
+     */
+    public function forget()
+    {
+        return $this->fetch('/forget');
 
     }
 
