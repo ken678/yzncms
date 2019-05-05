@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
-use app\attachment\model\Attachment as Attachment_config;
 use \think\Model;
 
 class Config extends Model
