@@ -21,8 +21,17 @@ class AdminUser extends Model
 {
     // 设置当前模型对应的完整数据表名称
     protected $name = 'admin';
-    protected $pk = 'id';
     protected $insert = ['status' => 1];
+
+    public function getLastLoginTimeAttr($value)
+    {
+        return date('Y-m-d H:i:s', $value);
+    }
+
+    public function getLastLoginIpAttr($value)
+    {
+        return long2ip($value);
+    }
 
     /**
      * 用户登录

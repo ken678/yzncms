@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\AdminUser;
+use app\admin\model\AdminUser as Admin_User;
 use app\admin\model\AuthGroup as AuthGroup_Model;
 use app\common\controller\Adminbase;
 use think\Db;
@@ -23,7 +23,7 @@ class Manager extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->AdminUser = new AdminUser;
+        $this->Admin_User = new Admin_User;
     }
 
     /**
@@ -33,14 +33,8 @@ class Manager extends Adminbase
     {
         if ($this->request->isAjax()) {
             $this->AuthGroup_Model = new AuthGroup_Model();
-            $_list = Db::name("admin")
+            $_list = $this->Admin_User
                 ->order(array('id' => 'ASC'))
-                ->withAttr('last_login_time', function ($value, $data) {
-                    return date('Y-m-d H:i:s', $value);
-                })
-                ->withAttr('last_login_ip', function ($value, $data) {
-                    return long2ip($value);
-                })
                 ->withAttr('roleid', function ($value, $data) {
                     return $this->AuthGroup_Model->getRoleIdName($value);
                 })
@@ -63,10 +57,10 @@ class Manager extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->AdminUser->createManager($data)) {
+            if ($this->Admin_User->createManager($data)) {
                 $this->success("添加管理员成功！", url('admin/manager/index'));
             } else {
-                $error = $this->AdminUser->getError();
+                $error = $this->Admin_User->getError();
                 $this->error($error ? $error : '添加失败！');
             }
 
@@ -87,14 +81,14 @@ class Manager extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->AdminUser->editManager($data)) {
+            if ($this->Admin_User->editManager($data)) {
                 $this->success("修改成功！");
             } else {
                 $this->error($this->User->getError() ?: '修改失败！');
             }
         } else {
             $id = $this->request->param('id/d');
-            $data = $this->AdminUser->where(array("id" => $id))->find();
+            $data = $this->Admin_User->where(array("id" => $id))->find();
             if (empty($data)) {
                 $this->error('该信息不存在！');
             }
@@ -110,10 +104,10 @@ class Manager extends Adminbase
     public function del()
     {
         $id = $this->request->param('id/d');
-        if ($this->AdminUser->deleteManager($id)) {
+        if ($this->Admin_User->deleteManager($id)) {
             $this->success("删除成功！");
         } else {
-            $this->error($this->AdminUser->getError() ?: '删除失败！');
+            $this->error($this->Admin_User->getError() ?: '删除失败！');
         }
     }
 
