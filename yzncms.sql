@@ -199,7 +199,7 @@ INSERT INTO `yzn_config` VALUES ('9', 'mail_verify_type', 'radio', '验证方式
 INSERT INTO `yzn_config` VALUES ('10', 'mail_from', 'text', '发件人邮箱', 'email', '', '', '1553653500', '1553658397', '1', '', '8');
 INSERT INTO `yzn_config` VALUES ('11', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\r\nemail:邮箱\r\nsystem:系统\r\nupload:上传\r\ndevelop:开发', '0');
 INSERT INTO `yzn_config` VALUES ('12', 'theme', 'text', '主题风格', 'system', '', '', '1541752781', '1541756888', '1', 'default', '1');
-INSERT INTO `yzn_config` VALUES ('13', 'admin_allow_ip', 'textarea', '后台允许访问IP', 'system', '', '多个用逗号分隔，如果不配置表示不限制IP访问', '1551244957', '1551244957', '1', '', '2');
+INSERT INTO `yzn_config` VALUES ('13', 'admin_allow_ip', 'textarea', '后台允许访问IP', 'system', '', '匹配IP段用\"*\"占位，如192.168.*.*，多个IP地址请用英文逗号\",\"分割', '1551244957', '1551244957', '1', '', '2');
 INSERT INTO `yzn_config` VALUES ('14', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1552436075', '1', '0', '2');
 INSERT INTO `yzn_config` VALUES ('15', 'upload_image_ext', 'text', '允许上传的图片后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457657', '1552436074', '1', 'gif,jpg,jpeg,bmp,png', '1');
 INSERT INTO `yzn_config` VALUES ('16', 'upload_file_size', 'text', '文件上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457658', '1552436078', '1', '0', '3');

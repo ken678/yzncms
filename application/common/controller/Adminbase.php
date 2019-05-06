@@ -42,8 +42,20 @@ class Adminbase extends Base
             define('IS_ROOT', User::instance()->isAdministrator());
             if (!IS_ROOT && config('admin_allow_ip')) {
                 // 检查IP地址访问
-                if (!in_array($this->request->ip(), explode(',', config('admin_allow_ip')))) {
-                    $this->error('403:IP禁止访问');
+                $arr = explode(',', config('admin_allow_ip'));
+                foreach ($arr as $val) {
+                    //是否是IP段
+                    if (strpos($val, '*')) {
+                        if (strpos($this->request->ip(), str_replace('.*', '', $val)) !== false) {
+                            $this->error('403:你在IP禁止段内,禁止访问！');
+                        }
+                    } else {
+                        //不是IP段,用绝对匹配
+                        if ($this->request->ip() == $val) {
+                            $this->error('403:IP地址绝对匹配,禁止访问！');
+                        }
+
+                    }
                 }
             }
             if (false == $this->competence()) {
