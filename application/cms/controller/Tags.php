@@ -34,6 +34,11 @@ class Tags extends Adminbase
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 10);
             $_list = $this->Tags->order(['listorder', 'id' => 'desc'])->page($page, $limit)->select();
+            foreach ($_list as $k => &$v) {
+                $v['url'] = url('cms/index/tags', ['tag' => $v['tag']]);
+            }
+            unset($v);
+
             $total = $this->Tags->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
