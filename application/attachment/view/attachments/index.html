@@ -49,7 +49,11 @@ layui.use(['table', 'laydate'], function() {
                 { field: 'id', width: 80, title: 'ID', sort: true },
                 { field: 'aid', width: 80, title: '用户ID' },
                 { field: 'name', title: '名称' },
-                { field: 'size', title: '大小', sort: true },
+                { field: 'path', width: 420,title: '物理路径',templet:'<div><a class="layui-btn layui-btn layui-btn-xs" href="{{d.path}}" target="_blank">{{d.path}}</a></div>'},
+                { field: 'size',width: 100, title: '大小', sort: true },
+                { field: 'ext',width: 100, title: '类型'},
+                { field: 'mime',width: 120, title: 'Mime类型'},
+                { field: 'driver',width: 100, title: '存储引擎'},
                 { field: 'create_time', width: 180, title: '上传时间' },
                 { fixed: 'right', width: 70, title: '操作', toolbar: '#barTool' }
             ]

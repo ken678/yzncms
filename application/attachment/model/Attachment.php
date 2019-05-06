@@ -23,6 +23,11 @@ class Attachment extends Model
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
+    public function getSizeAttr($value)
+    {
+        return format_bytes($value);
+    }
+
     /**
      * 创建缩略图
      * @param string $file 目标文件，可以是文件对象或文件路径

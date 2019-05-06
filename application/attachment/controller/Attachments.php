@@ -38,18 +38,12 @@ class Attachments extends Adminbase
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 10);
             $map = $this->buildparams();
-            $_list = Db::name("attachment")
-                ->where($map)
-                ->page($page, $limit)
-                ->order('id', 'desc')
-                ->withAttr('size', function ($value, $data) {
-                    return format_bytes($value);
-                })
-                ->withAttr('create_time', function ($value, $data) {
-                    return date('Y-m-d H:i:s', $value);
-                })
-                ->select();
-            $total = Db::name("attachment")->where($map)->order('id', 'desc')->count();
+            $_list = Attachment_Model::where($map)->page($page, $limit)->order('id', 'desc')->select();
+            foreach ($_list as $k => &$v) {
+                $v['path'] = $v['driver'] == 'local' ? $this->uploadUrl . $v['path'] : $v['path'];
+            }
+            unset($v);
+            $total = Attachment_Model::where($map)->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
