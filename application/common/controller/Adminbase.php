@@ -40,6 +40,7 @@ class Adminbase extends Base
             define('UID', (int) User::instance()->isLogin());
             // 是否是超级管理员
             define('IS_ROOT', User::instance()->isAdministrator());
+
             if (!IS_ROOT && config('admin_allow_ip')) {
                 // 检查IP地址访问
                 $arr = explode(',', config('admin_allow_ip'));
