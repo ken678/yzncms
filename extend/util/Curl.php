@@ -109,14 +109,11 @@ class Curl
      */
     public function post($url, $fields, $userAgent = '', $httpHeaders = '', $username = '', $password = '')
     {
-        $ret = $this->execute('POST', $url, $fields, $userAgent, $httpHeaders, $username, $password);
-        if (false === $ret) {
+        $req = $this->execute('POST', $url, $fields, $userAgent, $httpHeaders, $username, $password);
+        if (false === $req['ret']) {
             return false;
         }
-        if (is_array($ret)) {
-            return false;
-        }
-        return $ret;
+        return $req['msg'];
     }
 
     /**
@@ -130,14 +127,11 @@ class Curl
      */
     public function get($url, $userAgent = '', $httpHeaders = '', $username = '', $password = '')
     {
-        $ret = $this->execute('GET', $url, "", $userAgent, $httpHeaders, $username, $password);
-        if (false === $ret) {
+        $req = $this->execute('GET', $url, "", $userAgent, $httpHeaders, $username, $password);
+        if (false === $req['ret']) {
             return false;
         }
-        if (is_array($ret)) {
-            return false;
-        }
-        return $ret;
+        return $req['msg'];
     }
 
     /**

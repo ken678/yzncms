@@ -25,6 +25,7 @@ class Adminlog extends Adminbase
         parent::initialize();
         $this->Adminlog_Model = new Adminlog_Model;
     }
+
     //日志首页
     public function index()
     {
@@ -34,9 +35,6 @@ class Adminlog extends Adminbase
             $data = $this->Adminlog_Model
                 ->page($page, $limit)
                 ->order('id', 'desc')
-                ->withAttr('ip', function ($value, $data) {
-                    return long2ip($value);
-                })
                 ->select();
             $total = $this->Adminlog_Model->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $data);

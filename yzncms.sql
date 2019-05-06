@@ -79,6 +79,7 @@ CREATE TABLE `yzn_adminlog` (
 DROP TABLE IF EXISTS `yzn_attachment`;
 CREATE TABLE `yzn_attachment` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `aid` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
   `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `name` char(50) NOT NULL DEFAULT '' COMMENT '文件名',
   `module` char(15) NOT NULL DEFAULT '' COMMENT '模块名，由哪个模块上传的',
