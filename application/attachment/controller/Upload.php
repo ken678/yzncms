@@ -24,7 +24,8 @@ class Upload extends Base
     //上传用户
     public $upname = null;
     //上传用户ID
-    public $upuserid = 0;
+    public $admin_id = 0;
+    public $user_id = 0;
     //会员组
     public $groupid = 0;
     //是否后台
@@ -41,10 +42,10 @@ class Upload extends Base
         if (admin_user::instance()->isLogin()) {
             $this->isadmin = 1;
             $this->upname = admin_user::instance()->username;
-            $this->upuserid = admin_user::instance()->id;
+            $this->admin_id = admin_user::instance()->id;
         } elseif (home_user::instance()->isLogin()) {
             $this->upname = home_user::instance()->username;
-            $this->upuserid = home_user::instance()->id;
+            $this->user_id = home_user::instance()->id;
             $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
         } else {
             return $this->error('未登录');
@@ -226,7 +227,8 @@ class Upload extends Base
 
             // 获取附件信息
             $file_info = [
-                'uid' => $this->upuserid,
+                'aid' => $this->admin_id,
+                'uid' => $this->user_id,
                 'name' => $file->getInfo('name'),
                 'mime' => $file->getInfo('type'),
                 'path' => $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
