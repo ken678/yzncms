@@ -153,7 +153,7 @@
 
         $.post($(that).data("url"), data, function(data) {
             if (data.code == 1) {
-                var seconds = 10;
+                var seconds = 120;
                 si[type] = setInterval(function() {
                     seconds--;
                     if (seconds <= 0) {
