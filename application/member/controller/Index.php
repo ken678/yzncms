@@ -305,7 +305,7 @@ class Index extends MemberBase
             } else {
                 $this->error('类型错误！');
             }
-            $res = $this->Member_Model->userEdit($user['username'], $oldPassword, $newpassword);
+            $res = $this->Member_Model->userEdit($user['username'], '', $newpassword, '', 1);
             if (!$res) {
                 $this->error($this->Member_Model->getError());
             }
