@@ -266,7 +266,13 @@ class Index extends MemberBase
      */
     public function forget()
     {
-        return $this->fetch('/forget');
+        if ($this->request->isPost()) {
+            var_dump(111);
+            exit();
+
+        } else {
+            return $this->fetch('/forget');
+        }
 
     }
 
