@@ -177,7 +177,7 @@ class Menu extends Model
             return false;
         }
         //默认安装时父级ID
-        $defaultMenuParentid = $this->where(array('app' => 'admin', 'controller' => 'module', 'action' => 'index'))->value('id') ?: 38;
+        $defaultMenuParentid = $this->where(array('app' => 'admin', 'controller' => 'module', 'action' => 'list'))->value('id') ?: 45;
         //安装模块名称
         $moduleNama = $config['module'];
         foreach ($data as $rs) {
