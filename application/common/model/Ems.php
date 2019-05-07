@@ -19,7 +19,7 @@ use \think\Model;
 class Ems extends Model
 {
     protected $auto = ['ip'];
-    protected $autoWriteTimestamp = true;
+
     public function setIpAttr($value)
     {
         return request()->ip(1);
@@ -63,7 +63,8 @@ class Ems extends Model
     public function send($email, $code = null, $event = 'default')
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code]);
+        $time = time();
+        $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code, 'create_time' => $time]);
         $result = hook('emsSend', $ems, true, true);
         if (!$result) {
             $ems->delete();
@@ -116,8 +117,7 @@ class Ems extends Model
      */
     public function flush($email, $event = 'default')
     {
-        self::where(['email' => $email, 'event' => $event])
-            ->delete();
+        self::where(['email' => $email, 'event' => $event])->delete();
         hook('emsFlush');
         return true;
     }

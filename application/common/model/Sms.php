@@ -19,7 +19,7 @@ use \think\Model;
 class Sms extends Model
 {
     protected $auto = ['ip'];
-    protected $autoWriteTimestamp = true;
+
     public function setIpAttr($value)
     {
         return request()->ip(1);
@@ -63,7 +63,8 @@ class Sms extends Model
     public function send($mobile, $code = null, $event = 'default')
     {
         $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code]);
+        $time = time();
+        $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'create_time' => $time]);
         $result = hook('smsSend', $sms, true, true);
         if (!$result) {
             $sms->delete();
