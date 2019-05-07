@@ -267,8 +267,49 @@ class Index extends MemberBase
     public function forget()
     {
         if ($this->request->isPost()) {
-            var_dump(111);
-            exit();
+            $type = $this->request->request("type");
+            $mobile = $this->request->request("mobile");
+            $email = $this->request->request("email");
+            $newpassword = $this->request->request("newpassword");
+            $captcha = $this->request->request("captcha");
+            if (!$newpassword || !$captcha) {
+                $this->error('参数不得为空！');
+            }
+            if ($type == 'mobile') {
+                if (!Validate::regex($mobile, "^1\d{10}$")) {
+                    $this->error('手机号格式不正确！');
+                }
+                $user = $this->Member_Model->where('mobile', $mobile)->find();
+                if (!$user) {
+                    $this->error('用户不存在！');
+                }
+
+                $Sms_Model = new Sms_Model();
+                $result = $Sms_Model->check($mobile, $captcha, 'resetpwd');
+                if (!$result) {
+                    $this->error('验证码错误！');
+                }
+            } elseif ($type == 'email') {
+                if (!Validate::is($email, "email")) {
+                    $this->error('邮箱格式不正确！');
+                }
+                $user = $this->Member_Model->where('email', $email)->find();
+                if (!$user) {
+                    $this->error('用户不存在！');
+                }
+                $Ems_Model = new Ems_Model();
+                $result = $Ems_Model->check($email, $captcha, 'resetpwd');
+                if (!$result) {
+                    $this->error('验证码错误！');
+                }
+            } else {
+                $this->error('类型错误！');
+            }
+            $res = $this->Member_Model->userEdit($user['username'], $oldPassword, $newpassword);
+            if (!$res) {
+                $this->error($this->Member_Model->getError());
+            }
+            $this->success('重置成功！');
 
         } else {
             return $this->fetch('/forget');
