@@ -28,7 +28,6 @@ class Form
     {
         $string = '<select ' . $str . '>';
         $default_selected = (empty($id) && $default_option) ? 'selected' : '';
-
         if ($default_option) {
             $string .= "<option value='' $default_selected>$default_option</option>";
         }
