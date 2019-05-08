@@ -267,26 +267,19 @@ class Index extends MemberBase
     public function actemail()
     {
         if ($this->request->isPost()) {
-            $email = $this->request->post('email');
             $captcha = $this->request->request('captcha');
-            if (!$email || !$captcha) {
+            if (!$captcha) {
                 $this->error('参数不得为空！');
             }
-            if (!Validate::is($email, "email")) {
-                $this->error('邮箱格式不正确！');
-            }
-            if (!$this->Member_Model->where(['email' => $email, 'id' => $this->userid])->find()) {
-                $this->error('用户不存在');
-            }
             $Ems_Model = new Ems_Model();
-            $result = $Ems_Model->check($email, $captcha, 'actemail');
+            $result = $Ems_Model->check($this->userinfo['email'], $captcha, 'actemail');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改邮箱
             $this->Member_Model->save(['ischeck_email' => 1], ['id' => 1]);
-            $Ems_Model->flush($email, 'actemail');
-            $this->success();
+            $Ems_Model->flush($this->userinfo['email'], 'actemail');
+            $this->success('激活成功！');
         } else {
             return $this->fetch('/actemail');
         }
@@ -298,26 +291,19 @@ class Index extends MemberBase
     public function actmobile()
     {
         if ($this->request->isPost()) {
-            $mobile = $this->request->request('mobile');
             $captcha = $this->request->request('captcha');
-            if (!$mobile || !$captcha) {
+            if (!$captcha) {
                 $this->error('参数不得为空！');
             }
-            if (!Validate::regex($mobile, "^1\d{10}$")) {
-                $this->error('手机号格式不正确！');
-            }
-            if (!$this->Member_Model->where(['mobile' => $mobile, 'id' => $this->userid])->find()) {
-                $this->error('用户不存在');
-            }
             $Sms_Model = new Sms_Model();
-            $result = $Sms_Model->check($mobile, $captcha, 'actmobile');
+            $result = $Sms_Model->check($this->userinfo['mobile'], $captcha, 'actmobile');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改手机号
             $this->Member_Model->save(['ischeck_mobile' => 1], ['id' => 1]);
-            $Sms_Model->flush($mobile, 'actmobile');
-            $this->success();
+            $Sms_Model->flush($this->userinfo['mobile'], 'actmobile');
+            $this->success('激活成功！');
         } else {
             return $this->fetch('/actmobile');
         }
