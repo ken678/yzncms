@@ -22,9 +22,43 @@ class Yzn extends Taglib
     // 标签定义
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
+        'template' => ['attr' => 'file', 'close' => 0],
         'yzn' => ['attr' => 'module,action,num,cache,type,catid,id,page,msg,blank,return,moreinfo', 'close' => 1, 'level' => 3],
         'get' => ['attr' => 'sql,table,num,cache,page,return', 'close' => 1, 'level' => 3],
     ];
+
+    /**
+     * 加载前台模板
+     * 格式：{template file="Content/footer.html" theme="主题"/}
+     * @staticvar array $_templateParseCache
+     * @param type $attr file，theme
+     * @param type $content
+     * @return string|array 返回模板解析后的内容
+     */
+    public function tagTemplate($tag, $content)
+    {
+        $config = cache('Config');
+        $theme = $tag['theme'] ?: $config['theme'];
+        $templateFile = $tag['file'];
+        //不是直接指定模板路径的
+        if (false === strpos($templateFile, config('template.view_suffix'))) {
+            $templateFile = TEMPLATE_PATH . $theme . '/' . $templateFile . config('template.view_suffix');
+        } else {
+            $templateFile = TEMPLATE_PATH . $theme . '/' . $templateFile;
+        }
+        //判断模板是否存在
+        if (!file_exists($templateFile)) {
+            $templateFile = str_replace($theme . '/', 'default/', $templateFile);
+            if (!file_exists($templateFile)) {
+                return '';
+            }
+        }
+        //读取内容
+        $tmplContent = file_get_contents($templateFile);
+        //解析模板
+        $this->tpl->parse($tmplContent);
+        return $tmplContent;
+    }
 
     /**
      * yzn标签
