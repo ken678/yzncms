@@ -57,11 +57,12 @@ var GV = {
     <div class="layui-container fly-marginTop fly-user-main">
         <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
             <li class="layui-nav-item {eq name="Request.action" value="index" }layui-this{/eq}">
-                <a href="{:url('index')}"><i class="layui-icon">&#xe612;</i>&nbsp;用户中心</a>
+                <a href="{:url('index')}"><i class="iconfont icon-people"></i>&nbsp;用户中心</a>
             </li>
             <li class="layui-nav-item {eq name="Request.action" value="profile" }layui-this{/eq}">
-                <a href="{:url('index/profile')}"><i class="layui-icon">&#xe620;</i>&nbsp;基本设置</a>
+                <a href="{:url('index/profile')}"><i class="iconfont icon-setup"></i>&nbsp;基本设置</a>
             </li>
+            {:hook('userSidenavAfter')}
         </ul>
         <div class="site-tree-mobile layui-hide">
             <i class="layui-icon">&#xe602;</i>
