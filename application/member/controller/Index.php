@@ -254,10 +254,72 @@ class Index extends MemberBase
             }
             //只修改手机号
             $this->Member_Model->allowField(['ischeck_mobile', 'mobile'])->save(['mobile' => $mobile, 'ischeck_mobile' => 1], ['id' => 1]);
-            $Sms_Model->flush($email, 'changeemail');
+            $Sms_Model->flush($mobile, 'changemobile');
             $this->success();
         } else {
             return $this->fetch('/changemobile');
+        }
+    }
+
+    /**
+     * 激活邮箱
+     */
+    public function actemail()
+    {
+        if ($this->request->isPost()) {
+            $email = $this->request->post('email');
+            $captcha = $this->request->request('captcha');
+            if (!$email || !$captcha) {
+                $this->error('参数不得为空！');
+            }
+            if (!Validate::is($email, "email")) {
+                $this->error('邮箱格式不正确！');
+            }
+            if (!$this->Member_Model->where(['email' => $email, 'id' => $this->userid])->find()) {
+                $this->error('用户不存在');
+            }
+            $Ems_Model = new Ems_Model();
+            $result = $Ems_Model->check($email, $captcha, 'actemail');
+            if (!$result) {
+                $this->error('验证码错误！');
+            }
+            //只修改邮箱
+            $this->Member_Model->save(['ischeck_email' => 1], ['id' => 1]);
+            $Ems_Model->flush($email, 'actemail');
+            $this->success();
+        } else {
+            return $this->fetch('/actemail');
+        }
+    }
+
+    /**
+     * 激活手机号
+     */
+    public function actmobile()
+    {
+        if ($this->request->isPost()) {
+            $mobile = $this->request->request('mobile');
+            $captcha = $this->request->request('captcha');
+            if (!$mobile || !$captcha) {
+                $this->error('参数不得为空！');
+            }
+            if (!Validate::regex($mobile, "^1\d{10}$")) {
+                $this->error('手机号格式不正确！');
+            }
+            if (!$this->Member_Model->where(['mobile' => $mobile, 'id' => $this->userid])->find()) {
+                $this->error('用户不存在');
+            }
+            $Sms_Model = new Sms_Model();
+            $result = $Sms_Model->check($mobile, $captcha, 'actmobile');
+            if (!$result) {
+                $this->error('验证码错误！');
+            }
+            //只修改手机号
+            $this->Member_Model->save(['ischeck_mobile' => 1], ['id' => 1]);
+            $Sms_Model->flush($mobile, 'actmobile');
+            $this->success();
+        } else {
+            return $this->fetch('/actmobile');
         }
     }
 
@@ -279,7 +341,7 @@ class Index extends MemberBase
                 if (!Validate::regex($mobile, "^1\d{10}$")) {
                     $this->error('手机号格式不正确！');
                 }
-                $user = $this->Member_Model->where('mobile', $mobile)->find();
+                $user = $this->Member_Model->where(['mobile' => $mobile, 'id' => $this->userid])->find();
                 if (!$user) {
                     $this->error('用户不存在！');
                 }
@@ -293,7 +355,7 @@ class Index extends MemberBase
                 if (!Validate::is($email, "email")) {
                     $this->error('邮箱格式不正确！');
                 }
-                $user = $this->Member_Model->where('email', $email)->find();
+                $user = $this->Member_Model->where(['email' => $email, 'id' => $this->userid])->find();
                 if (!$user) {
                     $this->error('用户不存在！');
                 }
