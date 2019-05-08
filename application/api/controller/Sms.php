@@ -39,7 +39,7 @@ class Sms extends Base
         $event = $this->request->request("event");
         $event = $event ? $event : 'register';
 
-        if (!$mobile || !Validate::regex($mobile, "^1\d{10}$")) {
+        if (!$mobile || !Validate::isMobile($mobile)) {
             $this->error('手机号不正确');
         }
         $last = $this->Sms_Model->get($mobile, $event);

@@ -45,11 +45,12 @@ class Ems extends Base
     public function send()
     {
         $email = $this->request->request("email");
-        if (!Validate::isEmail($email)) {
-            $this->error('邮箱格式不正确！');
-        }
         $event = $this->request->request("event");
         $event = $event ? $event : 'register';
+
+        if (!$email || !Validate::isEmail($email)) {
+            $this->error('邮箱格式不正确！');
+        }
         $last = $this->Ems_Model->get($email, $event);
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
