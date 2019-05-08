@@ -60,7 +60,7 @@ class Ems extends Base
                 $this->error('已被注册');
             } elseif (in_array($event, ['changeemail']) && $userinfo) {
                 $this->error('已被占用');
-            } elseif (in_array($event, ['changepwd', 'resetpwd']) && !$userinfo) {
+            } elseif (in_array($event, ['changepwd', 'resetpwd', 'actemail']) && !$userinfo) {
                 $this->error('未注册');
             }
         }

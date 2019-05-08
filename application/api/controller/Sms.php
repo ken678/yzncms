@@ -56,7 +56,7 @@ class Sms extends Base
                 $this->error('已被注册');
             } elseif (in_array($event, ['changemobile']) && $userinfo) {
                 $this->error('已被占用');
-            } elseif (in_array($event, ['changepwd', 'resetpwd']) && !$userinfo) {
+            } elseif (in_array($event, ['changepwd', 'resetpwd', 'actmobile']) && !$userinfo) {
                 $this->error('未注册');
             }
         }
