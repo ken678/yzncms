@@ -241,7 +241,7 @@ class Index extends MemberBase
             if (!$mobile || !$captcha) {
                 $this->error('参数不得为空！');
             }
-            if (!Validate::regex($mobile, "^1\d{10}$")) {
+            if (!Validate::isMobile($mobile)) {
                 $this->error('手机号格式不正确！');
             }
             if ($this->Member_Model->where('mobile', $mobile)->where('id', '<>', $this->userid)->find()) {
@@ -321,27 +321,40 @@ class Index extends MemberBase
             $newpassword = $this->request->request("newpassword");
             $captcha = $this->request->request("captcha");
 
-            if (!$newpassword || !$captcha) {
-                $this->error('参数不得为空！');
+            // 验证数据
+            $data = [
+                'mobile' => $mobile,
+                'email' => $email,
+                'captcha' => $captcha,
+                'newpassword' => $newpassword,
+            ];
+            $rule = [
+                'mobile|手机号' => 'require|mobile',
+                'email|邮箱' => 'require|email',
+                'captcha|验证码' => 'require|number|length:4',
+                'newpassword|新密码' => 'require|length:6,30',
+            ];
+            if ($type == "mobile") {
+                unset($rule['email|邮箱']);
+            } else {
+                unset($rule['mobile|手机号']);
             }
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result);
+            }
+
             if ($type == 'mobile') {
-                if (!Validate::regex($mobile, "^1\d{10}$")) {
-                    $this->error('手机号格式不正确！');
-                }
                 $user = $this->Member_Model->where('mobile', $mobile)->find();
                 if (!$user) {
                     $this->error('用户不存在！');
                 }
-
                 $Sms_Model = new Sms_Model();
                 $result = $Sms_Model->check($mobile, $captcha, 'resetpwd');
                 if (!$result) {
                     $this->error('验证码错误！');
                 }
             } elseif ($type == 'email') {
-                if (!Validate::is($email, "email")) {
-                    $this->error('邮箱格式不正确！');
-                }
                 $user = $this->Member_Model->where('email', $email)->find();
                 if (!$user) {
                     $this->error('用户不存在！');
