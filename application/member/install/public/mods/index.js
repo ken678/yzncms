@@ -298,5 +298,6 @@
     shadeMobile.on('click', function() {
         $('body').removeClass('site-mobile');
     });
+    exports('fly', {});
 
 });
