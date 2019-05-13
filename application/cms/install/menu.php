@@ -289,6 +289,13 @@ return [
                             ],
                         ],
                     ],
+                    [
+                        "route" => "cms/cms/recycle",
+                        "type" => 1,
+                        "status" => 1,
+                        "name" => "回收站",
+                        "icon" => "icon-trash",
+                    ],
                 ],
             ],
         ],
