@@ -12,6 +12,13 @@
                 <div class="layui-form-mid layui-word-aux">站点关闭后前台将不能访问</div>
             </div>
             <div class="layui-form-item">
+                <label class="">回收站</label>
+                <div class="layui-form-field-label">
+                    <input type="checkbox" name="setting[web_site_recycle]" lay-skin="switch" lay-text="ON|OFF" value="0" {if 1 == $setting['web_site_recycle']}checked='' {/if}>
+                </div>
+                <div class="layui-form-mid layui-word-aux">开启后，误删的文章可以恢复,反之不可还原</div>
+            </div>
+            <div class="layui-form-item">
                 <label class="">站点名称</label>
                 <div class="layui-form-field-label">
                     <input type="text" name="setting[site_name]" placeholder="请输入站点标题" class="layui-input" value="{$setting['site_name']}">
