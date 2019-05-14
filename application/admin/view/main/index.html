@@ -46,7 +46,7 @@
                         <i class="icon iconfont icon-time layui-anim"></i>
                     </div>
                     <div class="panel_word">
-                        <span class="loginTime"><?php if($userInfo['last_login_time'] > 0) { echo date('Y-m-d H:i:s',$userInfo['last_login_time']);} else { echo '--';}?></span>
+                        <span class="loginTime"><?php if($userInfo['last_login_time'] > 0) { echo $userInfo['last_login_time'];} else { echo '--';}?></span>
                         <cite>上次登录时间</cite>
                     </div>
                 </a>
