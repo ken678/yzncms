@@ -240,9 +240,9 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
             success: function(res) {
                 that.text(res.msg);
                 if (res.code == 0) {
-                    that.prop('disabled', false).removeClass('layui-btn-normal').addClass('layui-btn-danger');
+                    that.prop('disabled', true).removeClass('layui-btn-normal').addClass('layui-btn-danger');
                     setTimeout(function() {
-                        that.removeClass('layui-btn-danger').addClass('layui-btn-normal').text(text);
+                        that.prop('disabled', false).removeClass('layui-btn-danger').addClass('layui-btn-normal').text(text);
                     }, 3000);
                 } else {
                     setTimeout(function() {
