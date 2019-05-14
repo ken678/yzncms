@@ -118,7 +118,7 @@ class Category extends Model
                 }
                 foreach ($modeid as $mid) {
                     $tbname = ucwords(getModel($mid, 'tablename'));
-                    if ($tbname && Db::name($tbname)->where(['id' => $catid])->find()) {
+                    if ($tbname && Db::name($tbname)->where(['catid' => $catid])->find()) {
                         return false;
                     }
                 }
@@ -127,7 +127,7 @@ class Category extends Model
             $catinfo = getCategory($catid);
             $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
             //含资料无法删除
-            if ($tbname && $catinfo['type'] == 2 && Db::name($tbname)->where(["id" => $catid])->find()) {
+            if ($tbname && $catinfo['type'] == 2 && Db::name($tbname)->where(["catid" => $catid])->find()) {
                 return false;
             }
         }
