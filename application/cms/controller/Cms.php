@@ -105,6 +105,7 @@ class Cms extends Adminbase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
+            $map = $this->buildparams();
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
             $total = Db::name($tableName)->where($map)->where(['catid' => $catid, 'status' => 0])->count();
