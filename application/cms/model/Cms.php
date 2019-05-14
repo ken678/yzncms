@@ -144,9 +144,9 @@ class Cms extends Modelbase
                     Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', 0);
                 } else {
                     Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->delete();
-                }
-                if (2 == $modelInfo['type']) {
-                    Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', 'in', $ids)->delete();
+                    if (2 == $modelInfo['type']) {
+                        Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', 'in', $ids)->delete();
+                    }
                 }
             } catch (\Exception $e) {
                 throw new \Exception($e->getMessage());
@@ -157,10 +157,9 @@ class Cms extends Modelbase
                     Db::name($modelInfo['tablename'])->where('id', $ids)->setField('status', 0);
                 } else {
                     Db::name($modelInfo['tablename'])->where('id', $ids)->delete();
-                }
-
-                if (2 == $modelInfo['type']) {
-                    Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $ids)->delete();
+                    if (2 == $modelInfo['type']) {
+                        Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $ids)->delete();
+                    }
                 }
             } catch (\Exception $e) {
                 throw new \Exception($e->getMessage());

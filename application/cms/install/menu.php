@@ -87,6 +87,13 @@ return [
                                 "status" => 0,
                                 "name" => "状态设置",
                             ],
+                            [
+                                "route" => "cms/cms/recycle",
+                                "type" => 1,
+                                "status" => 0,
+                                "name" => "回收站",
+                                "icon" => "icon-trash",
+                            ],
                         ],
                     ],
                     [
@@ -288,13 +295,6 @@ return [
                                 "name" => "设置模型状态",
                             ],
                         ],
-                    ],
-                    [
-                        "route" => "cms/cms/recycle",
-                        "type" => 1,
-                        "status" => 1,
-                        "name" => "回收站",
-                        "icon" => "icon-trash",
                     ],
                 ],
             ],

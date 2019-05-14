@@ -54,8 +54,8 @@ class Cms extends Adminbase
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $total = Db::name(ucwords($tableName))->where($map)->where(['catid' => $catid, 'status' => 1])->count();
-            $list = Db::name(ucwords($tableName))->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => 1])->order(['listorder', 'id' => 'desc'])->select();
+            $total = Db::name($tableName)->where($map)->where(['catid' => $catid, 'status' => 1])->count();
+            $list = Db::name($tableName)->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => 1])->order(['listorder', 'id' => 'desc'])->select();
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
@@ -94,25 +94,25 @@ class Cms extends Adminbase
     //回收站
     public function recycle()
     {
+        $catid = $this->request->param('catid/d', 0);
+        //当前栏目信息
+        $catInfo = getCategory($catid);
+        if (empty($catInfo)) {
+            $this->error('该栏目不存在！');
+        }
+        //栏目所属模型
+        $modelid = $catInfo['modelid'];
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
-            $table_list = Db::name('model')->where(['module' => 'cms'])->field('tablename,type,id')->select();
-            $result = array();
-            foreach ($table_list as $key => $model) {
-                //$total += Db::name(ucwords($model['tablename']))->where($map)->where('status', 0)->count();
-                $_list = Db::name(ucwords($model['tablename']))->where($map)->where('status', 0)->order(['listorder', 'id' => 'desc'])->select();
-                if ($_list) {
-                    foreach ($_list as $k => $v) {
-                        $v['ids'] = $v['catid'] . "-" . $v['id'];
-                        $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
-                        $result[] = $v;
-                    }
-                }
-            }
-            $result = array("code" => 0, "data" => $result);
+            $modelCache = cache("Model");
+            $tableName = $modelCache[$modelid]['tablename'];
+            $total = Db::name($tableName)->where($map)->where(['catid' => $catid, 'status' => 0])->count();
+            $_list = Db::name($tableName)->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => 0])->order(['listorder', 'id' => 'desc'])->select();
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
+        $this->assign('catid', $catid);
         return $this->fetch();
     }
 
