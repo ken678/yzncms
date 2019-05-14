@@ -119,26 +119,47 @@ class Cms extends Adminbase
     //还原回收站
     public function restore()
     {
-        $ids = $this->request->param('ids');
-        if ($ids) {
-
-        } else {
-
+        $catid = $this->request->param('catid/d', 0);
+        //当前栏目信息
+        $catInfo = getCategory($catid);
+        if (empty($catInfo)) {
+            $this->error('该栏目不存在！');
         }
-        $this->error('111');
+        //栏目所属模型
+        $modelid = $catInfo['modelid'];
+        $ids = $this->request->param('ids');
+        $modelInfo = cache('Model');
+        $modelInfo = $modelInfo[$modelid];
+        if ($ids) {
+            if (!is_array($ids)) {
+                $ids = array(0 => $ids);
+            }
+            Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', 1);
+        }
+        $this->success('还原成功！');
 
     }
 
     //清空回收站
     public function destroy()
     {
-        $ids = $this->request->param('ids');
-        if ($ids) {
-
-        } else {
-
+        $catid = $this->request->param('catid/d', 0);
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids) || !$catid) {
+            $this->error('参数错误！');
         }
-        $this->error('111');
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        $modelid = getCategory($catid, 'modelid');
+        $cmsConfig = cache("Cms_Config");
+        try {
+            $this->Cms_Model->deleteModelData($modelid, $ids);
+        } catch (\Exception $ex) {
+            $this->error($ex->getMessage());
+        }
+
+        $this->success('销毁成功！');
     }
 
     //移动文章

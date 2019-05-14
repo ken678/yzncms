@@ -24,15 +24,15 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" href="javascript:history.back(-1);"><i class="iconfont icon-undo"></i>返回</a>
-      <a class="layui-btn layui-btn-sm confirm layui-batch-all" data-href="{:url('restore')}" data-ifids="true">还原</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href="{:url('destroy')}" data-ifids="true">销毁</a>
-      <a class="layui-btn layui-btn-sm layui-btn-normal ajax-get confirm" data-href="{:url('restore')}">还原全部</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger ajax-get confirm" data-href="{:url('destroy')}">清空回收站</a>
+      <a class="layui-btn layui-btn-sm confirm layui-batch-all" data-href="{:url('restore',['catid'=>$catid])}">还原</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href="{:url('destroy',['catid'=>$catid])}">销毁</a>
+      <!--<a class="layui-btn layui-btn-sm layui-btn-normal ajax-get confirm" data-href="{:url('restore')}">还原全部</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger ajax-get confirm" data-href="{:url('destroy')}">清空回收站</a>-->
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs ajax-get" data-href="{:url('restore')}?ids={{d.catid}}-{{d.id}}">还原</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del" data-href="{:url('destroy')}?ids={{d.catid}}-{{d.id}}">销毁</a>
+    <a class="layui-btn layui-btn-xs ajax-get" data-href="{:url('restore')}?catid={{d.catid}}&ids={{d.id}}">还原</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del" data-href="{:url('destroy')}?catid={{d.catid}}&ids={{d.id}}">销毁</a>
 </script>
 {/block}
 {block name="script"}
