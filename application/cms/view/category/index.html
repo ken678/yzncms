@@ -11,9 +11,9 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm" href="{:url('cms/category/add')}">新增栏目</a>
-      <a class="layui-btn layui-btn-sm" href="{:url('cms/category/singlepage')}">新增单页</a>
-      <a class="layui-btn layui-btn-sm" href="{:url('cms/category/wadd')}">新增外部链接</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('add')}">新增栏目</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('singlepage')}">新增单页</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('wadd')}">新增外部链接</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger ajax-get" data-href="{:url('public_cache')}">更新栏目缓存<span class="layui-badge-dot layui-bg-orange"></span></a>
     </div>
 </script>
@@ -36,7 +36,7 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("cms/category/index")}',
+        url: '{:url("index")}',
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },

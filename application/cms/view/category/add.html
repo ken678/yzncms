@@ -3,7 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-header">添加栏目</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('cms/category/add')}" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-tab">
                 <ul class="layui-tab-title">
                     <li class="layui-this">基本设置</li>
@@ -15,7 +15,7 @@
                         <div class="layui-form-item">
                             <label>上级菜单</label>
                                 <div class="w300">
-                                    <select name="parentid" lay-verify="required">
+                                    <select name="parentid">
                                         <option value="0">作为顶级栏目</option>
                                         {$category|raw}
                                     </select>
@@ -26,7 +26,6 @@
                                 <div class="w300">
                                     <select name="modelid">
                                         <option>请选择模型</option>
-
                                         {volist name="models" id="vo"}
                                         <option value="{$vo.id}" {if condition=" $parentid_modelid eq $vo['id'] "}selected{/if}>{$vo.name}</option>
                                         {/volist}
@@ -43,13 +42,13 @@
                         <div class="layui-form-item" id="normal_add">
                             <label>栏目标题 </label>
                                 <div class="w300">
-                                    <input type="text" name="catname" autocomplete="off" placeholder="栏目名称" class="layui-input" id="catname">
+                                    <input type="text" name="catname" lay-verify="required" autocomplete="off" placeholder="栏目名称" class="layui-input" id="catname">
                                 </div>
                         </div>
                         <div class="layui-form-item" id="catdir_tr">
                             <label>唯一标识</label>
                                 <div class="w300">
-                                    <input type="text" name="catdir" autocomplete="off" placeholder="唯一标识" class="layui-input" id="catdir">
+                                    <input type="text" name="catdir" lay-verify="required" autocomplete="off" placeholder="唯一标识" class="layui-input" id="catdir">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">栏目唯一英文数字标识</div>
                         </div>
@@ -104,7 +103,7 @@
                         <div class="layui-form-item web_seo">
                             <label>网页描述</label>
                                 <div class="w300">
-                                    <textarea name="setting[meta_description]" required="" lay-verify="required" placeholder="针对搜索引擎设置的网页描述" class="layui-textarea"></textarea>
+                                    <textarea name="setting[meta_description]"  placeholder="针对搜索引擎设置的网页描述" class="layui-textarea"></textarea>
                                 </div>
                         </div>
                     </div>
@@ -150,8 +149,8 @@
                 <input type="hidden" name="type" value="2">
                 <div class="layui-form-item">
                     <div>
-                        <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
-                        <button class="layui-btn layui-btn-normal" onclick="javascript :history.back(-1);">返回</button>
+                        <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                        <button class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);">返回</button>
                     </div>
                 </div>
             </div>
