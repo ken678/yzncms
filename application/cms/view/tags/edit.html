@@ -3,11 +3,11 @@
 <div class="layui-card">
     <div class="layui-card-header">Tags编辑</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">标签 </label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="tag" autocomplete="off" placeholder="标签 " class="layui-input" value="{$data.tag}">
+                    <input type="text" name="tag" lay-verify="required" autocomplete="off" placeholder="标签 " class="layui-input" value="{$data.tag}">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -38,8 +38,8 @@
             <input type="hidden" name="oldtagsname" value="{$data.tag}"/>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" onclick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
         </form>

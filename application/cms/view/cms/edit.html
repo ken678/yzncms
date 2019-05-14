@@ -1,6 +1,6 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<form class="layui-form form-horizontal" action="" method="post">
+<form class="layui-form form-horizontal" method="post">
     {include file="admin@inputItem" /}
     {if count($fieldList)}
     <div class="layui-form-item">
@@ -17,26 +17,23 @@
 layui.use(['form','layer'], function() {
     $('.ajax-post').on('click', function(e) {
         var form = layui.form,
-         layer = layui.layer,
-         target;
-        var target_form = $(this).attr('target-form');
+        layer = layui.layer,target,
+        target_form = $(this).attr('target-form');
         target = $('.form-horizontal').attr("action");
         $.post(target, $('.form-horizontal').serialize()).success(function(data) {
             if (data.code == 1) {
                 layer.confirm(data.msg, {
                     btn: ['继续添加', '返回列表'] //按钮
                 }, function() {
-                    window.open('{:url("cms/cms/add",["catid"=>$catid])}', '_self')
+                    location.href = '{:url("add",["catid"=>$catid])}';
                 }, function() {
-                    window.open('{:url("cms/cms/classlist",["catid"=>$catid])}', '_self')
+                    location.href = '{:url("classlist",["catid"=>$catid])}';
                 });
             } else {
                 layer.msg(data.msg);
             }
-
         });
         return false;
-
     });
 })
 </script>
