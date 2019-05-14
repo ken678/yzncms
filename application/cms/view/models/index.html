@@ -8,7 +8,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-sm" href="{:url('cms/models/add')}">添加模型</a>
+        <a class="layui-btn layui-btn-sm" href="{:url('add')}">添加模型</a>
     </div>
 </script>
 <script type="text/html" id="barTool">
@@ -18,13 +18,6 @@
 </script>
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" data-href="{:url('setstate')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
-</script>
-<script type="text/html" id="ifsubTpl">
-    {{#  if(d.setting.ifsub==1){ }}
-    启用
-    {{#  } else { }}
-    禁用
-    {{#  } }}
 </script>
 {/block}
 {block name="script"}
@@ -37,7 +30,7 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("cms/models/index")}',
+        url: '{:url("index")}',
         cols: [
             [
                 { field: 'id', width: 80, title: '模型ID' },
@@ -47,7 +40,7 @@ layui.use('table', function() {
                 { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type==1){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
                 { field: 'create_time',width:180, title: '创建时间' },
                 { field: 'status', width: 100, title: '状态', templet: '#statusTpl', unresize: true },
-                { field: 'ifsub', width: 80, title: '投稿', templet: '#ifsubTpl'},
+                { field: 'ifsub', width: 80, title: '投稿', templet:'<div>{{#  if(d.setting.ifsub==1){ }} 启用 {{#  } else { }} 禁用 {{#  } }} </div>'},
                 { fixed: 'right', title: '操作', width: 200, templet: '#barTool' }
             ]
         ]
