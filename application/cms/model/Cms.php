@@ -131,7 +131,7 @@ class Cms extends Modelbase
     }
 
     //删除模型内容
-    public function deleteModelData($modeId, $ids)
+    public function deleteModelData($modeId, $ids, $no_delete = false)
     {
         $modelInfo = cache('Model');
         if (false == $modelInfo) {
@@ -140,7 +140,11 @@ class Cms extends Modelbase
         $modelInfo = $modelInfo[$modeId];
         if (is_array($ids)) {
             try {
-                Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->delete();
+                if ($no_delete) {
+                    Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', 0);
+                } else {
+                    Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->delete();
+                }
                 if (2 == $modelInfo['type']) {
                     Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', 'in', $ids)->delete();
                 }
@@ -149,7 +153,12 @@ class Cms extends Modelbase
             }
         } else {
             try {
-                Db::name($modelInfo['tablename'])->where('id', $ids)->delete();
+                if ($no_delete) {
+                    Db::name($modelInfo['tablename'])->where('id', $ids)->setField('status', 0);
+                } else {
+                    Db::name($modelInfo['tablename'])->where('id', $ids)->delete();
+                }
+
                 if (2 == $modelInfo['type']) {
                     Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $ids)->delete();
                 }

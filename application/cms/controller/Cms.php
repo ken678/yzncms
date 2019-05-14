@@ -45,7 +45,7 @@ class Cms extends Adminbase
         $modelid = $catInfo['modelid'];
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 10);
+            $page = $this->request->param('page/d', 1);
             $map = $this->buildparams();
 
             //检查模型是否被禁用
@@ -54,8 +54,8 @@ class Cms extends Adminbase
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $total = Db::name(ucwords($tableName))->where($map)->where('catid', $catid)->count();
-            $list = Db::name(ucwords($tableName))->page($page, $limit)->where($map)->where('catid', $catid)->order(['listorder', 'id' => 'desc'])->select();
+            $total = Db::name(ucwords($tableName))->where($map)->where(['catid' => $catid, 'status' => 1])->count();
+            $list = Db::name(ucwords($tableName))->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => 1])->order(['listorder', 'id' => 'desc'])->select();
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
@@ -89,7 +89,56 @@ class Cms extends Adminbase
         $this->assign('string', $string);
         $this->assign('catid', $catid);
         return $this->fetch();
+    }
 
+    //回收站
+    public function recycle()
+    {
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 1);
+            $table_list = Db::name('model')->where(['module' => 'cms'])->field('tablename,type,id')->select();
+            $result = array();
+            foreach ($table_list as $key => $model) {
+                //$total += Db::name(ucwords($model['tablename']))->where($map)->where('status', 0)->count();
+                $_list = Db::name(ucwords($model['tablename']))->where($map)->where('status', 0)->order(['listorder', 'id' => 'desc'])->select();
+                if ($_list) {
+                    foreach ($_list as $k => $v) {
+                        $v['ids'] = $v['catid'] . "-" . $v['id'];
+                        $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
+                        $result[] = $v;
+                    }
+                }
+            }
+            $result = array("code" => 0, "data" => $result);
+            return json($result);
+        }
+        return $this->fetch();
+    }
+
+    //还原回收站
+    public function restore()
+    {
+        $ids = $this->request->param('ids');
+        if ($ids) {
+
+        } else {
+
+        }
+        $this->error('111');
+
+    }
+
+    //清空回收站
+    public function destroy()
+    {
+        $ids = $this->request->param('ids');
+        if ($ids) {
+
+        } else {
+
+        }
+        $this->error('111');
     }
 
     //移动文章
@@ -233,11 +282,13 @@ class Cms extends Adminbase
             $ids = array(0 => $ids);
         }
         $modelid = getCategory($catid, 'modelid');
+        $cmsConfig = cache("Cms_Config");
         try {
-            $this->Cms_Model->deleteModelData($modelid, $ids);
+            $this->Cms_Model->deleteModelData($modelid, $ids, $cmsConfig['web_site_recycle']);
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
         }
+
         $this->success('删除成功！');
     }
 
