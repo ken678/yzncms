@@ -3,18 +3,18 @@
 <div class="layui-card">
     <div class="layui-card-header">添加模型</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('cms/models/add')}" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">模型名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="模型名称" class="layui-input">
+                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="模型名称" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">模型中文名称，用于添加栏目时选择使用。</div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">模型表键名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="tablename" lay-verify="tablename" autocomplete="off" placeholder="模型表键名" class="layui-input">
+                    <input type="text" name="tablename" lay-verify="required" autocomplete="off" placeholder="模型表键名" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">由小写字母组成</div>
             </div>
@@ -29,7 +29,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">描述</label>
                 <div class="layui-input-inline w300">
-                    <textarea name="description" required lay-verify="required" placeholder="模型的相关描述" class="layui-textarea"></textarea>
+                    <textarea name="description" placeholder="模型的相关描述" class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -41,8 +41,8 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onClick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
         </form>

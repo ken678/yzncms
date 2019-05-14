@@ -3,33 +3,25 @@
 <div class="layui-card">
     <div class="layui-card-header">编辑模型</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('cms/models/edit')}" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">模型名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="模型名称" class="layui-input" value="{$data.name}">
+                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="模型名称" class="layui-input" value="{$data.name}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">模型中文名称，用于添加栏目时选择使用。</div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">模型表键名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="tablename" lay-verify="tablename" autocomplete="off" placeholder="模型表键名" class="layui-input" value="{$data.tablename}">
+                    <input type="text" name="tablename" lay-verify="required" autocomplete="off" placeholder="模型表键名" class="layui-input" value="{$data.tablename}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">由小写字母组成</div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">模型类型</label>
-                <div class="layui-input-inline">
-                    <input type="radio" name="type" value="1" title="独立表" {if $data.type==1} checked{/if} disabled>
-                    <input type="radio" name="type" value="2" title="主附表" {if $data.type==2} checked{/if} disabled>
-                </div>
-                <div class="layui-form-mid layui-word-aux">主附表通过分表提高数据库操作效率</div>
-            </div>
-            <div class="layui-form-item">
                 <label class="layui-form-label">描述</label>
                 <div class="layui-input-block w300">
-                    <textarea name="description" required lay-verify="required" placeholder="模型的相关描述" class="layui-textarea">{$data.description}</textarea>
+                    <textarea name="description" placeholder="模型的相关描述" class="layui-textarea">{$data.description}</textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -42,8 +34,8 @@
             <input type="hidden" value="{$data.id}" name="id" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onClick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
         </form>
