@@ -20,20 +20,8 @@ class Models extends Validate
 {
     //定义验证规则
     protected $rule = [
-        'name' => 'require|chs|max:30|unique:model',
-        'tablename' => 'require|max:20|unique:model|alpha',
-        'type' => 'in:1,2',
-    ];
-    //定义验证提示
-    protected $message = [
-        'name.require' => '模型名称不得为空',
-        'name.chs' => '模型名称只能为汉字',
-        'name.max' => '模型名称长度错误',
-        'name.unique' => '模型名称已存在',
-        'tablename.require' => '表键名不得为空',
-        'tablename.max' => '表键名长度错误',
-        'tablename.alpha' => '表键名只支持字母',
-        'tablename.unique' => '表键名已存在',
-        'type.in' => '模型类型错误',
+        'name|模型名称' => 'require|chs|max:30|unique:model',
+        'tablename|表键名' => 'require|lower|max:20|unique:model|alpha',
+        'type|模型类型' => 'in:1,2',
     ];
 }
