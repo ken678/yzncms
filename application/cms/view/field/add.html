@@ -4,30 +4,30 @@
     <div class="layui-card-header">添加字段</div>
     <div class="layui-card-body">
         <blockquote class="layui-elem-quote"><p>默认以下字段名称已存在，请不要建立同名的字段：<br>id、catid、title、keywords、description、flag、listsorder、uid、hits、inputtime、updatetime、status、did、content</p></blockquote>
-        <form class="layui-form form-horizontal" action="{:url('cms/field/add')}" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">字段名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" lay-verify="name" placeholder="字段名称" class="layui-input" required>
+                    <input type="text" name="name" lay-verify="required" placeholder="字段名称" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">字母、数字组成，并且仅能字母开头</div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">字段标题</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="title" lay-verify="title" placeholder="字段标题" class="layui-input" required>
+                    <input type="text" name="title" lay-verify="required" placeholder="字段标题" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">字段描述</label>
                 <div class="layui-input-inline w300">
-                    <textarea name="remark" lay-verify="required" placeholder="字段的相关描述" class="layui-textarea"></textarea>
+                    <textarea name="remark" placeholder="字段的相关描述" class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">字段类型</label>
                 <div class="layui-input-inline">
-                    <select name="type" lay-filter="type">
+                    <select name="type" lay-filter="type" lay-verify="required">
                         <option></option>
                         {volist name="fieldType" id="vo"}
                         <option value="{$vo.name}" data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
@@ -38,14 +38,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">字段定义</label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="setting[define]" lay-verify="define" autocomplete="off" placeholder="字段定义" class="layui-input" id="define">
+                    <input type="text" name="setting[define]" lay-verify="required" autocomplete="off" placeholder="字段定义" class="layui-input" id="define">
                 </div>
             </div>
             <div id="options" style="display:none">
                 <div class="layui-form-item">
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-inline w300">
-                        <textarea name="setting[options]" lay-verify="required" placeholder="值:描述
+                        <textarea name="setting[options]" placeholder="值:描述
 值:描述
 值:描述
 ....." class="layui-textarea"></textarea>
@@ -107,7 +107,7 @@
             <input name="modelid" type="hidden" value="{$modelid}" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
                     <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
                 </div>
             </div>
@@ -116,6 +116,7 @@
 </div>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script>
 layui.use(['layer', 'form'], function() {
     var layer = layui.layer,
@@ -141,5 +142,4 @@ layui.use(['layer', 'form'], function() {
     });
 });
 </script>
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}

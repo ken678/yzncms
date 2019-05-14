@@ -8,7 +8,8 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-sm" href="{:url('cms/field/add',['modelid'=>$modelid])}">添加字段</a>
+        <a class="layui-btn layui-btn-sm" href="javascript:history.back(-1);"><i class="iconfont icon-undo"></i>&nbsp;返回</a>
+        <a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url('add',['modelid'=>$modelid])}">添加字段</a>
     </div>
 </script>
 <script type="text/html" id="switchTpl">
@@ -48,16 +49,16 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("cms/field/index",["id"=>$modelid])}',
+        url: '{:url("index",["id"=>$modelid])}',
         cols: [
             [
                 { field: 'listorder', width: 60, title: '排序', edit: 'text' },
                 { field: 'id', width: 60, title: 'ID' },
-                { field: 'name', width: 120, title: '字段名称' },
-                { field: 'title', width:120,title: '标题' },
-                { field: 'type',width:100, title: '字段类型' },
+                { field: 'name', title: '字段名称' },
+                { field: 'title', title: '标题' },
+                { field: 'type',width:120, title: '字段类型' },
                 { field: 'ifsystem',width:60,align:"center", title: '主表',templet: '<div>{{#  if(d.ifsystem){ }} 是 {{#  } }} </div>'},
-                { field: 'create_time',title: '创建时间' },
+                { field: 'create_time',width:180,title: '创建时间' },
                 { field: 'ifsearch', width: 90,align:"center", title: '搜索', templet: '#ifsearchTpl', unresize: true },
                 { field: 'ifrequire', width: 90,align:"center", title: '必填', templet: '#ifrequireTpl', unresize: true },
                 { field: 'ifeditable', width: 100,align:"center", title: '显示', templet: '#ifeditableTpl', unresize: true },
@@ -71,7 +72,7 @@ layui.use('table', function() {
     table.on('edit(table)', function(obj) {
         var value = obj.value,
             data = obj.data;
-        $.post('{:url("cms/field/listorder")}', { 'id': data.id, 'value': value }, function(data) {
+        $.post('{:url("listorder")}', { 'id': data.id, 'value': value }, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             } else {
