@@ -3,7 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-header">编辑访问权限</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('admin/AuthManager/writeGroup')}" method="post">
+        <form class="layui-form form-horizontal" action="{:url('writeGroup')}" method="post">
             <div class="zTreeDemoBackground left">
                 <ul class="ztree" style="margin-left: 5px;margin-top:5px; padding: 0;">
                     <li><a title="全部展开、折叠 "><span class="button ico_open"></span><span id="ztree_expandAll" data-open="false">全部展开、折叠 </span></a> </li>
@@ -15,7 +15,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" onClick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn layui-btn-normal" onClick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
         </form>
@@ -79,9 +79,8 @@ layui.config({
         });
     });
 
-    layui.use(['element', 'layer', 'form'], function() {
-        var element = layui.element,
-            layer = layui.layer,
+    layui.use(['layer', 'form'], function() {
+        var layer = layui.layer,
             form = layui.form;
         //通用表单post提交
         $('.ajax-post').on('click', function(e) {

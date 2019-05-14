@@ -16,7 +16,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-    <a class="layui-btn layui-btn-sm" href="{:url('admin/config/add')}">新增配置项</a>
+    <a class="layui-btn layui-btn-sm" href="{:url('add')}">新增配置项</a>
   </div>
 </script>
 <script type="text/html" id="barTool">
@@ -37,7 +37,7 @@ layui.use('table', function() {
     table.render({
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
-        url: '{:url("admin/config/index",["group"=>$group])}',
+        url: '{:url("index",["group"=>$group])}',
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
@@ -50,7 +50,6 @@ layui.use('table', function() {
             ]
         ],
     });
-
     //监听单元格编辑
     table.on('edit(dataTable)', function(obj) {
         var value = obj.value,data = obj.data;

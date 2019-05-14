@@ -10,7 +10,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
-    <a class="layui-btn layui-btn-sm" href="{:url('admin/menu/add')}">新增后台菜单</a>
+    <a class="layui-btn layui-btn-sm" href="{:url('add')}">新增后台菜单</a>
   </div>
 </script>
 <script type="text/html" id="barTool">
@@ -32,7 +32,7 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("admin/menu/index")}',
+        url: '{:url("index")}',
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
@@ -43,15 +43,12 @@ layui.use('table', function() {
             ]
         ],
     });
-    $('#Table-Refresh').on('click', function() {
-        table.reload("table");
-    });
 
     //监听单元格编辑
     table.on('edit(table)', function(obj) {
         var value = obj.value,
             data = obj.data;
-        $.post('{:url("admin/menu/listorder")}', { 'id': data.id, 'value': value }, function(data) {
+        $.post('{:url("listorder")}', { 'id': data.id, 'value': value }, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             } else {

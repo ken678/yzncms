@@ -1,13 +1,13 @@
 {extend name="index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-header">添加后台菜单</div>
+    <div class="layui-card-header">编辑后台菜单</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('admin/menu/edit')}" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">上级菜单</label>
                 <div class="layui-input-inline w300">
-                    <select name="parentid">
+                    <select name="parentid" lay-verify="required">
                         <option value="0">作为一级菜单</option>
                         {$select_categorys|raw}
                     </select>
@@ -17,25 +17,25 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">名称 </label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="title" autocomplete="off" placeholder="名称" class="layui-input" value="{$data.title}">
+                    <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="名称" class="layui-input" value="{$data.title}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">模块</label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="app" autocomplete="off" placeholder="模块" class="layui-input" value="{$data.app}">
+                    <input type="text" name="app" lay-verify="required" autocomplete="off" placeholder="模块" class="layui-input" value="{$data.app}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">控制器</label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="controller" autocomplete="off" placeholder="控制器" class="layui-input" value="{$data.controller}">
+                    <input type="text" name="controller" lay-verify="required" autocomplete="off" placeholder="控制器" class="layui-input" value="{$data.controller}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">方法</label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="action" autocomplete="off" placeholder="方法" class="layui-input" value="{$data.action}">
+                    <input type="text" name="action" lay-verify="required" autocomplete="off" placeholder="方法" class="layui-input" value="{$data.action}">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -53,8 +53,8 @@
             <input type="hidden" name="id" value="{$data.id}" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" onclick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
         </form>

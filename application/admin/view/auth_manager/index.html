@@ -7,7 +7,7 @@
             <table class="layui-hide" id="table" lay-filter="table"></table>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{:url('AuthManager/createGroup')}">添加角色</a>
+                <a class="layui-btn layui-btn-sm" href="{:url('createGroup')}">添加角色</a>
               </div>
             </script>
             <script type="text/html" id="barTool">
@@ -31,10 +31,10 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("admin/AuthManager/index")}',
+        url: '{:url("index")}',
         cols: [
             [
-                { field: 'title',width: 200, title: '授权',templet: "<div><a class='layui-btn layui-btn-xs' href='{:url('AuthManager/access?group_name=')}?title={{d.title}}&group_id={{d.id}}'>访问授权</a></div>" },
+                { field: 'title',width: 200, title: '授权',templet: "<div><a class='layui-btn layui-btn-xs' href='{:url('access?group_name=')}?title={{d.title}}&group_id={{d.id}}'>访问授权</a></div>" },
                 { field: 'title', width: 200, title: '权限组'},
                 { field: 'description', title: '描述' },
                 { field: 'status', width: 100,title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">正常</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>' },

@@ -7,7 +7,7 @@
             <table class="layui-hide" id="table" lay-filter="table"></table>
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{:url('admin/manager/add')}">添加管理员</a>
+                <a class="layui-btn layui-btn-sm" href="{:url('add')}">添加管理员</a>
               </div>
             </script>
             <script type="text/html" id="barTool">
@@ -31,7 +31,7 @@ layui.use('table', function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("admin/manager/index")}',
+        url: '{:url("index")}',
         cols: [
             [
                 { field: 'id', width: 80, title: 'ID'},

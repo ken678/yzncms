@@ -3,11 +3,11 @@
 <div class="layui-card">
     <div class="layui-card-header">编辑配置</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('admin/config/edit',['id'=>$info.id])}" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">分组</label>
                 <div class="layui-input-inline w300">
-                    <select name="group">
+                    <select name="group" lay-verify="required">
                         <option value=""></option>
                         {volist name="groupArray" id="vo"}
                         <option value="{$key}" {if $info.group==$key}selected{/if}>{$vo}[{$key}]</option>
@@ -18,7 +18,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">配置类型</label>
                 <div class="layui-input-inline w300">
-                    <select name="type" lay-filter="type">
+                    <select name="type" lay-filter="type" lay-verify="required">
                         <option value=""></option>
                         {volist name="fieldType" id="vo"}
                         <option value="{$vo.name}" data-ifoption="{$vo.ifoption}" {if $info.type==$vo.name}selected{/if}>{$vo.title}[{$vo.name}]</option>
@@ -29,14 +29,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">配置标题</label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="title" value="{$info.title}" lay-verify="title" autocomplete="off" placeholder="字段中文标题" class="layui-input">
+                    <input type="text" name="title" lay-verify="required" value="{$info.title}" autocomplete="off" placeholder="字段中文标题" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">一般由中文组成，仅用于显示</div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">配置名称</label>
                 <div class="layui-input-inline w300">
-                    <input type="text" name="name" value="{$info.name}" autocomplete="off" placeholder="字段英文名称" class="layui-input">
+                    <input type="text" name="name" lay-verify="required" value="{$info.name}" autocomplete="off" placeholder="字段英文名称" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">由英文字母开头和下划线组成，如 <code>web_site_title</code></div>
             </div>
@@ -70,13 +70,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">排序</label>
                 <div class="layui-input-inline w300">
-                    <input type="number" name="listorder" lay-verify="title" autocomplete="off" placeholder="只能是正整数" class="layui-input" value="{$info.listorder}">
+                    <input type="number" name="listorder" autocomplete="off" placeholder="只能是正整数" class="layui-input" value="{$info.listorder}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" onclick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
             <input type="hidden" name="id" value="{$info.id}">
