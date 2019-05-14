@@ -142,7 +142,7 @@ class Addons extends Adminbase
         if ($flag !== false) {
             //更新插件缓存
             //$this->addons->addons_cache();
-            $this->success('保存成功', Cookie('__forward__'));
+            $this->success('保存成功', url('index'));
         } else {
             $this->error('保存失败');
         }
