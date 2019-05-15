@@ -27,8 +27,8 @@ class Setting extends Adminbase
             $setting['web_site_status'] = isset($setting['web_site_status']) ? intval($setting['web_site_status']) : 0;
             $data['setting'] = serialize($setting);
             if (Module_Model::update($data, ['module' => 'cms'])) {
-                $this->success("更新成功！");
                 cache('Cms_Config', null);
+                $this->success("更新成功！");
             } else {
                 $this->success("更新失败！");
             }
