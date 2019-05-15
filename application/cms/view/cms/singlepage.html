@@ -1,6 +1,6 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<form class="layui-form form-horizontal" action="" method="post">
+<form class="layui-form" method="post">
     <div class="layui-form-item">
         <div class="layui-form-item">
             <label class="">标题&nbsp;<font color="red">*</font></label>
@@ -38,10 +38,11 @@
         </div>
         <input type="hidden" name="modelField[catid]" value="{$catid}">
         <div>
-            <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
+            <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
         </div>
     </div>
 </form>
 {/block}
 {block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 {/block}
