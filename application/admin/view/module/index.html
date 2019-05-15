@@ -11,14 +11,14 @@
         </div>
     </script>
     <script type="text/html" id="titleTpl">
-        {{#  if(d.installtime == "" || d.installtime == null || d.installtime == undefined){ }}
-    <a class="layui-btn layui-btn-xs" href="{:url('install')}?module={{ d.module }}">安装</a>
-{{#  } else { }}
-    {{#  if(d.iscore == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger" href="{:url('uninstall')}?module={{ d.module }}">卸载</a>
+    {{#  if(d.installtime == "" || d.installtime == null || d.installtime == undefined){ }}
+        <a class="layui-btn layui-btn-xs" href="{:url('install')}?module={{ d.module }}">安装</a>
+    {{#  } else { }}
+        {{#  if(d.iscore == 0){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-danger" href="{:url('uninstall')}?module={{ d.module }}">卸载</a>
+        {{#  } }}
     {{#  } }}
-{{#  } }}
-</script>
+    </script>
 </div>
 {/block}
 {block name="script"}
@@ -30,7 +30,7 @@ layui.use(['table', 'upload'], function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("admin/module/index")}',
+        url: '{:url("index")}',
         cols: [
             [
                 { field: 'name', width: 150, title: '名称' },
