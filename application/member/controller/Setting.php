@@ -21,7 +21,6 @@ use think\Db;
 class Setting extends Adminbase
 {
 
-    //
     public function setting()
     {
         if ($this->request->isPost()) {
