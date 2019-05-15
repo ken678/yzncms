@@ -59,7 +59,7 @@ class Cms extends Adminbase
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
-                $v['url'] = buildContentUrl($v['catid'], $v['id']);
+                $v['url'] = $this->Cms_Model->buildContentUrl($v['catid'], $v['id']);
                 $_list[] = $v;
             }
             $result = array("code" => 0, "count" => $total, "data" => $_list);

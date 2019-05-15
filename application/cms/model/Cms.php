@@ -332,7 +332,7 @@ class Cms extends Modelbase
             $ModelField = cache('ModelField');
             foreach ($result as $key => $vo) {
                 $vo = $this->dealModelShowData($ModelField[$modeId], $vo);
-                $vo['url'] = buildContentUrl($vo['catid'], $vo['id']);
+                $vo['url'] = $this->buildContentUrl($vo['catid'], $vo['id']);
                 $result[$key] = $vo;
             }
         }
@@ -359,7 +359,7 @@ class Cms extends Modelbase
         if (!empty($dataInfo)) {
             $ModelField = cache('ModelField');
             $dataInfo = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
-            $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
+            $dataInfo['url'] = $this->buildContentUrl($dataInfo['catid'], $dataInfo['id']);
         }
         return $dataInfo;
     }
@@ -475,6 +475,12 @@ class Cms extends Modelbase
             $content = $dataExt['content'];
             $data['description'] = str_cut(str_replace(array("\r\n", "\t", '&ldquo;', '&rdquo;', '&nbsp;'), '', strip_tags($content)), 200);
         }
+    }
+
+//创建内容链接
+    public function buildContentUrl($catid, $id)
+    {
+        return url('cms/index/shows', ['catid' => $catid, 'id' => $id]);
     }
 
     //会员配置缓存

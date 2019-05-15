@@ -159,12 +159,6 @@ function str_cut($sourcestr, $length, $dot = '...')
     return $returnstr;
 }
 
-//创建内容链接
-function buildContentUrl($catid, $id)
-{
-    return url('cms/index/shows', ['catid' => $catid, 'id' => $id]);
-}
-
 /**
  * 生成栏目URL
  */
