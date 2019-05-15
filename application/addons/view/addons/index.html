@@ -11,9 +11,6 @@
     <a class="layui-btn layui-btn-sm" id="local-install">本地安装</a>
   </div>
 </script>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container"></div>
-</script>
 <script type="text/html" id="titleTpl">
     {{#  if(d.uninstall == "" || d.uninstall == null || d.uninstall == undefined){ }}
     {{#  if(d.configl == "" || d.configl == null || d.configl == undefined){ }}
@@ -40,7 +37,7 @@ layui.use(['table', 'upload'], function() {
     table.render({
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("addons/addons/index")}',
+        url: '{:url("index")}',
         cols: [
             [
                 { field: 'title', width: 150, title: '名称' },
@@ -73,7 +70,5 @@ layui.use(['table', 'upload'], function() {
         }
     });
 });
-
-
 </script>
 {/block}
