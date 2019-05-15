@@ -19,11 +19,6 @@ use app\common\controller\Adminbase;
 
 class Setting extends Adminbase
 {
-    protected function initialize()
-    {
-        parent::initialize();
-    }
-
     //cms设置
     public function index()
     {
@@ -33,6 +28,7 @@ class Setting extends Adminbase
             $data['setting'] = serialize($setting);
             if (Module_Model::update($data, ['module' => 'cms'])) {
                 $this->success("更新成功！");
+                cache('Cms_Config', null);
             } else {
                 $this->success("更新失败！");
             }
