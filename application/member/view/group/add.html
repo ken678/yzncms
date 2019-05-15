@@ -3,23 +3,23 @@
 <div class="layui-card">
     <div class="layui-card-header">添加会员组</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label>会员组名称</label>
                 <div class="w300">
-                    <input type="text" name="name" autocomplete="off" placeholder="会员组名称" class="layui-input">
+                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="会员组名称" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label>积分小于</label>
                 <div class="w300">
-                    <input type="text" name="point" autocomplete="off" placeholder="积分小于" class="layui-input">
+                    <input type="text" name="point" lay-verify="required" autocomplete="off" placeholder="积分小于" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label>星星数</label>
                 <div class="w300">
-                    <input type="text" name="starnum" autocomplete="off" placeholder="星星数" class="layui-input">
+                    <input type="text" name="starnum" lay-verify="required" autocomplete="off" placeholder="星星数" class="layui-input">
                 </div>
             </div>
 
@@ -37,13 +37,13 @@
             <div class="layui-form-item">
                 <label>最大短消息数</label>
                 <div class="w300">
-                    <input type="text" name="allowmessage" autocomplete="off" placeholder="最大短消息数" class="layui-input">
+                    <input type="text" name="allowmessage" lay-verify="required" autocomplete="off" placeholder="最大短消息数" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label>日最大投稿数</label>
                 <div class="w300">
-                    <input type="text" name="allowpostnum" autocomplete="off" placeholder="日最大投稿数" class="layui-input">
+                    <input type="text" name="allowpostnum" lay-verify="required" autocomplete="off" placeholder="日最大投稿数" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">0为不限制</div>
             </div>
@@ -63,8 +63,8 @@
             </div>
             <div class="layui-form-item">
                 <div>
-                    <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" onclick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
         </form>
