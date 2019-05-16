@@ -141,7 +141,7 @@ class Cms extends Modelbase
         if (is_array($ids)) {
             try {
                 if ($no_delete) {
-                    Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', 0);
+                    Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', -1);
                 } else {
                     Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->delete();
                     if (2 == $modelInfo['type']) {
@@ -154,7 +154,7 @@ class Cms extends Modelbase
         } else {
             try {
                 if ($no_delete) {
-                    Db::name($modelInfo['tablename'])->where('id', $ids)->setField('status', 0);
+                    Db::name($modelInfo['tablename'])->where('id', $ids)->setField('status', -1);
                 } else {
                     Db::name($modelInfo['tablename'])->where('id', $ids)->delete();
                     if (2 == $modelInfo['type']) {

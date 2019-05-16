@@ -54,8 +54,12 @@ class Cms extends Adminbase
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $total = Db::name($tableName)->where($map)->where(['catid' => $catid, 'status' => 1])->count();
-            $list = Db::name($tableName)->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => 1])->order(['listorder', 'id' => 'desc'])->select();
+            $conditions = [
+                ['catid', '=', $catid],
+                ['status', '<>', -1],
+            ];
+            $total = Db::name($tableName)->where($map)->where($conditions)->count();
+            $list = Db::name($tableName)->page($page, $limit)->where($map)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
@@ -108,8 +112,8 @@ class Cms extends Adminbase
             $map = $this->buildparams();
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $total = Db::name($tableName)->where($map)->where(['catid' => $catid, 'status' => 0])->count();
-            $_list = Db::name($tableName)->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => 0])->order(['listorder', 'id' => 'desc'])->select();
+            $total = Db::name($tableName)->where($map)->where(['catid' => $catid, 'status' => -1])->count();
+            $_list = Db::name($tableName)->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => -1])->order(['listorder', 'id' => 'desc'])->select();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
