@@ -12,7 +12,7 @@ CREATE TABLE `yzn_article` (
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
   `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章模型模型表';
 
@@ -37,7 +37,7 @@ CREATE TABLE `yzn_picture` (
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
   `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='图片模型模型表';
 
@@ -62,7 +62,7 @@ CREATE TABLE `yzn_download` (
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
   `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='下载模型模型表';
 
@@ -87,7 +87,7 @@ CREATE TABLE `yzn_product` (
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
   `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `type` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '类型',
   `trade` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '行业',
   `price` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '价格',
@@ -112,7 +112,7 @@ CREATE TABLE `yzn_guestbook` (
   `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
   `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的电话',
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的邮箱',
   `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的意见或建议',
