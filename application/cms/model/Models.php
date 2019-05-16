@@ -171,7 +171,7 @@ class Models extends Modelbase
                 `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
 				`inputtime` int(11) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
 				`updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-                `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+                `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
 				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
