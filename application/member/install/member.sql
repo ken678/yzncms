@@ -19,7 +19,7 @@ CREATE TABLE `yzn_member` (
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `ischeck_email` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否验证过邮箱',
   `ischeck_mobile` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否验证过手机',
-  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '会员状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `email` (`email`),
@@ -46,11 +46,9 @@ CREATE TABLE `yzn_member_group` (
   `usernamecolor` char(7) NOT NULL COMMENT '用户名颜色',
   `description` char(100) NOT NULL COMMENT '描述',
   `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `expand` mediumtext COMMENT '拓展',
-  PRIMARY KEY (`id`),
-  KEY `listorder` (`listorder`),
-  KEY `status` (`status`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 INSERT INTO `yzn_member_group` VALUES ('1', '禁止访问', '1', '0', '0', '0', '1', '1', '0', '1', '0', '0', '0', '0', '0', '', '0', '0', '1', '');
