@@ -14,7 +14,7 @@ CREATE TABLE `yzn_category` (
   `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
   `setting` mediumtext NOT NULL COMMENT '相关配置信息',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='栏目表';
 
