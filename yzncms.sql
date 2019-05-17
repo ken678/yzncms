@@ -24,12 +24,12 @@ CREATE TABLE `yzn_addons` (
   `name` varchar(40) NOT NULL COMMENT '插件名或标识',
   `title` varchar(20) NOT NULL DEFAULT '' COMMENT '中文名',
   `description` text COMMENT '插件描述',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   `config` text COMMENT '配置',
   `author` varchar(40) DEFAULT '' COMMENT '作者',
   `version` varchar(20) DEFAULT '' COMMENT '版本号',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
   `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
@@ -47,7 +47,7 @@ CREATE TABLE `yzn_admin` (
   `last_login_time` int(10) unsigned DEFAULT '0' COMMENT '最后登录时间',
   `last_login_ip` bigint(20) unsigned DEFAULT '0' COMMENT '最后登录IP',
   `email` varchar(40) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '会员状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `username` (`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='管理员表';
@@ -64,7 +64,7 @@ INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16
 DROP TABLE IF EXISTS `yzn_adminlog`;
 CREATE TABLE `yzn_adminlog` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID',
-  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `uid` smallint(3) NOT NULL DEFAULT '0' COMMENT '操作者ID',
   `info` text COMMENT '说明',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -95,7 +95,7 @@ CREATE TABLE `yzn_attachment` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorders` int(5) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='附件表';
 
@@ -109,16 +109,16 @@ CREATE TABLE `yzn_auth_group` (
   `type` tinyint(4) NOT NULL COMMENT '组类型',
   `title` char(20) NOT NULL DEFAULT '' COMMENT '用户组中文名称',
   `description` varchar(80) NOT NULL DEFAULT '' COMMENT '描述信息',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '用户组状态：为1正常，为0禁用,-1为删除',
   `rules` varchar(500) NOT NULL DEFAULT '' COMMENT '用户组拥有的规则id，多个规则 , 隔开',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='权限组表';
 
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
-INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '1', '');
-INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '编辑', '编辑', '1', '');
+INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '', '1');
+INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '编辑', '编辑', '', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -130,8 +130,8 @@ CREATE TABLE `yzn_auth_rule` (
   `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1-url;2-主菜单',
   `name` char(80) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识',
   `title` char(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效(0:无效,1:有效)',
   `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='规则表';
@@ -175,7 +175,7 @@ CREATE TABLE `yzn_config` (
   `remark` varchar(100) NOT NULL DEFAULT '' COMMENT '配置说明',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `value` text COMMENT '配置值',
   `listorder` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
@@ -260,7 +260,7 @@ CREATE TABLE `yzn_hooks` (
   `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
   `modules` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的模块 ''，''分割',
   `system` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否系统',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
@@ -294,7 +294,7 @@ CREATE TABLE `yzn_menu` (
   `controller` char(20) NOT NULL DEFAULT '' COMMENT '控制器标识',
   `action` char(20) NOT NULL DEFAULT '' COMMENT '方法标识',
   `parameter` char(255) NOT NULL DEFAULT '' COMMENT '附加参数',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `tip` varchar(255) NOT NULL DEFAULT '' COMMENT '提示',
   `is_dev` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否开发者可见',
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
@@ -368,7 +368,7 @@ CREATE TABLE `yzn_module` (
   `installtime` int(10) NOT NULL DEFAULT '0' COMMENT '安装时间',
   `updatetime` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否可用',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`module`),
   KEY `sign` (`sign`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='已安装模块列表';
@@ -388,7 +388,7 @@ CREATE TABLE `yzn_model` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否禁用 1禁用',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型列表';
 
@@ -412,7 +412,7 @@ CREATE TABLE `yzn_model_field` (
   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0 禁用 1启用',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='模型字段列表';

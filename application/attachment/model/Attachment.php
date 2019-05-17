@@ -22,6 +22,7 @@ class Attachment extends Model
 {
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
+    protected $insert = ['status' => 1];
 
     public function getSizeAttr($value)
     {
