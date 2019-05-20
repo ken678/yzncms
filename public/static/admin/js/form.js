@@ -268,7 +268,7 @@
          // 文件上传失败，显示上传出错。
          uploader.on('uploadError', function(file) {
              var $li = $('#' + file.id);
-             $li.find('.file-state').html('<div class="bg-danger">服务器错误</div>');
+             $li.find('.file-state').html('<div class="layui-bg-red">服务器错误</div>');
          });
 
          // 文件验证不通过
