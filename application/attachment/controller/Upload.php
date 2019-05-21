@@ -122,23 +122,8 @@ class Upload extends Base
         $size_limit = $size_limit * 1024;
         // 附件类型限制
         $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
-        if ('' != $extlimit) {
-            $extArr = explode(',', $ext_limit);
-            $extArrPara = explode(',', $extlimit);
-            $ext_limit = '';
-            foreach ($extArrPara as $vo) {
-                if (in_array($vo, $extArr) && $vo) {
-                    $ext_limit .= $vo . ',';
-                }
-            }
-            if ($ext_limit) {
-                $ext_limit = substr($ext_limit, 0, -1);
-            }
-        }
         $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
-        foreach (['php', 'html', 'htm', 'js'] as $vo) {
-            unset($ext_limit[$vo]);
-        }
+
         // 水印参数
         $watermark = $this->request->post('watermark', '');
         // 获取附件数据
@@ -200,6 +185,7 @@ class Upload extends Base
         if (!preg_grep("/$file_ext/i", $ext_limit)) {
             $error_msg = '附件类型不正确！';
         }
+
         if (!in_array($file_ext, $ext_limit)) {
             $error_msg = '附件类型不正确！';
         }
