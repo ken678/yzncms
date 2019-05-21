@@ -28,9 +28,7 @@ class Config extends Adminbase
         $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "Ueditor", "file", "files", 'color');
     }
 
-    /**
-     * 配置首页
-     */
+    //配置首页
     public function index($group = 'base')
     {
         if ($this->request->isAjax()) {
@@ -42,18 +40,18 @@ class Config extends Adminbase
                     return date('Y-m-d H:i:s', $value);
                 })
                 ->select();
-            $total = count($_list);
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            $result = array("code" => 0, "data" => $_list);
             return json($result);
+        } else {
+            $this->assign([
+                'groupArray' => config('config_group'),
+                'group' => $group,
+            ]);
+            return $this->fetch();
         }
-        $this->assign('groupArray', config('config_group'));
-        $this->assign('group', $group);
-        return $this->fetch();
     }
 
-    /**
-     * 配置设置
-     */
+    //配置设置
     public function setting($group = 'base')
     {
         if ($this->request->isPost()) {
@@ -126,9 +124,7 @@ class Config extends Adminbase
 
     }
 
-    /**
-     * 新增配置
-     */
+    //新增配置
     public function add()
     {
         if ($this->request->isPost()) {
@@ -154,9 +150,7 @@ class Config extends Adminbase
         }
     }
 
-    /**
-     * 编辑配置
-     */
+    //编辑配置
     public function edit()
     {
         if ($this->request->isPost()) {
@@ -187,9 +181,7 @@ class Config extends Adminbase
         }
     }
 
-    /**
-     * 删除配置
-     */
+    //删除配置
     public function del()
     {
         $id = $this->request->param('id/d');
@@ -204,9 +196,7 @@ class Config extends Adminbase
         }
     }
 
-    /**
-     * 排序
-     */
+    //排序
     public function listorder()
     {
         $id = $this->request->param('id/d', 0);
@@ -219,9 +209,7 @@ class Config extends Adminbase
         }
     }
 
-    /**
-     * 设置配置状态
-     */
+    //设置配置状态
     public function setstate($id, $status)
     {
         $id = $this->request->param('id/d');
