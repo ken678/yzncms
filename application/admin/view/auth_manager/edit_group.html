@@ -5,6 +5,14 @@
     <div class="layui-card-body">
         <form class="layui-form" action="{:url('writeGroup')}" method="post">
             <div class="layui-form-item">
+                <label class="layui-form-label">父级</label>
+                <div class="layui-input-block w300">
+                    <select name="parentid">
+                        {$Groupdata|raw}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">权限组</label>
                 <div class="layui-input-block w300">
                     <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="权限组" class="layui-input" value="{$auth_group.title}">

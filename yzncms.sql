@@ -105,6 +105,7 @@ CREATE TABLE `yzn_attachment` (
 DROP TABLE IF EXISTS `yzn_auth_group`;
 CREATE TABLE `yzn_auth_group` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户组id,自增主键',
+  `parentid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '父组别',
   `module` varchar(20) NOT NULL COMMENT '用户组所属模块',
   `type` tinyint(4) NOT NULL COMMENT '组类型',
   `title` char(20) NOT NULL DEFAULT '' COMMENT '用户组中文名称',
@@ -117,8 +118,8 @@ CREATE TABLE `yzn_auth_group` (
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
-INSERT INTO `yzn_auth_group` VALUES ('1', 'admin', '1', '超级管理员', '拥有所有权限', '', '1');
-INSERT INTO `yzn_auth_group` VALUES ('2', 'admin', '1', '编辑', '编辑', '', '1');
+INSERT INTO `yzn_auth_group` VALUES ('1', '0', 'admin', '1', '超级管理员', '拥有所有权限', '', '1');
+INSERT INTO `yzn_auth_group` VALUES ('2', '1', 'admin', '1', '编辑', '编辑', '', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`

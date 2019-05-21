@@ -20,23 +20,24 @@ use think\Db;
  */
 class AuthManager extends Adminbase
 {
-    /**
-     * 权限管理首页
-     */
+    //权限管理首页
     public function index()
     {
         if ($this->request->isAjax()) {
-            $_list = Db::name('AuthGroup')->where(['module' => 'admin'])->order(['id' => 'ASC'])->select();
-            $total = count($_list);
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            $tree = new \util\Tree();
+            $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->select();
+            $tree->init($_list);
+            $result = [];
+            $result = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            $result = array("code" => 0, "data" => $result);
             return json($result);
+        } else {
+            return $this->fetch();
         }
-        return $this->fetch();
+
     }
 
-    /**
-     * 访问授权页面
-     */
+    //访问授权页面
     public function access()
     {
         $this->updateRules(); //更新节点
@@ -80,34 +81,49 @@ class AuthManager extends Adminbase
 
     }
 
-    /**
-     * 创建管理员用户组
-     */
+    //创建管理员用户组
     public function createGroup()
     {
         if (empty($this->auth_group)) {
             //清除编辑权限的值
             $this->assign('auth_group', array('title' => null, 'id' => null, 'description' => null, 'rules' => null));
         }
+        $tree = new \util\Tree();
+        $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
+        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->select();
+        $result = [];
+        foreach ($_list as $rs) {
+            $result[$rs['id']] = $rs;
+        }
+        $tree->init($result);
+        $Groupdata = $tree->get_tree(0, $str, 0);
+        $this->assign("Groupdata", $Groupdata);
         return $this->fetch('edit_group');
 
     }
 
-    /**
-     * 编辑管理员用户组
-     */
+    //编辑管理员用户组
     public function editGroup()
     {
         $id = $this->request->param('id/d');
         $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroup::TYPE_ADMIN))->find($id);
+        $tree = new \util\Tree();
+        $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
+        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->select();
+        $result = [];
+        foreach ($_list as $rs) {
+            $result[$rs['id']] = $rs;
+        }
+        $tree->init($result);
+
+        $Groupdata = $tree->get_tree(0, $str, $auth_group['parentid']);
+        $this->assign("Groupdata", $Groupdata);
         $this->assign('auth_group', $auth_group);
         return $this->fetch();
 
     }
 
-    /**
-     * 删除管理员用户组
-     */
+    //删除管理员用户组
     public function deleteGroup()
     {
         $roleid = $this->request->param('id/d');
@@ -128,9 +144,7 @@ class AuthManager extends Adminbase
         }
     }
 
-    /**
-     * 管理员用户组数据写入/更新
-     */
+    //管理员用户组数据写入/更新
     public function writeGroup()
     {
         $data = $this->request->post();
