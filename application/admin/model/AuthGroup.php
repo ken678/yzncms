@@ -42,12 +42,59 @@ class AuthGroup extends Model
 
     /**
      * 根据角色Id获取角色名
-     * @param int $roleId 角色id
+     * @param int $Groupid 角色id
      * @return string 返回角色名
      */
-    public function getRoleIdName($roleId)
+    public function getRoleIdName($Groupid)
     {
-        return $this->where(array('id' => $roleId))->value('title');
+        return $this->where(array('id' => $Groupid))->value('title');
+    }
+
+    /**
+     * 通过递归的方式获取该角色下的全部子角色
+     * @param type $id
+     * @return string
+     */
+    public function getArrchildid($id)
+    {
+        if (empty($this->roleList)) {
+            $this->roleList = $this->order(array("id" => "desc"))->column('*', 'id');
+        }
+        $arrchildid = $id;
+        if (is_array($this->roleList)) {
+            foreach ($this->roleList as $k => $cat) {
+                if ($cat['parentid'] && $k != $id && $cat['parentid'] == $id) {
+                    $arrchildid .= ',' . $this->getArrchildid($k);
+                }
+            }
+        }
+        return $arrchildid;
+    }
+
+    /**
+     * 删除角色
+     * @param int $Groupid 角色ID
+     * @return boolean
+     */
+    public function GroupDelete($Groupid)
+    {
+        if (empty($Groupid) || $Groupid == 1) {
+            $this->error = '超级管理员角色不能被删除！';
+            return false;
+        }
+        //角色信息
+        $info = $this->where(array('id' => $Groupid))->find();
+        if (empty($info)) {
+            $this->error = '该角色不存在！';
+            return false;
+        }
+        //子角色列表
+        $child = explode(',', $this->getArrchildid($Groupid));
+        if (count($child) > 1) {
+            $this->error = '该角色下有子角色，请删除子角色才可以删除！';
+            return false;
+        }
+        return $this->where(array('id' => $Groupid))->delete() !== false ? true : false;
     }
 
 }

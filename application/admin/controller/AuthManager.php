@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\Controller;
 
-use app\admin\model\AuthGroup;
+use app\admin\model\AuthGroup as AuthGroup_Model;
 use app\admin\model\AuthRule;
 use app\common\controller\Adminbase;
 use think\Db;
@@ -20,6 +20,13 @@ use think\Db;
  */
 class AuthManager extends Adminbase
 {
+
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->AuthGroup_Model = new AuthGroup_Model;
+    }
+
     //权限管理首页
     public function index()
     {
@@ -47,7 +54,7 @@ class AuthManager extends Adminbase
         $rules = Db::name('AuthGroup')
             ->where('status', '<>', 0)
             ->where('id', '=', $group_id)
-            ->where(['type' => AuthGroup::TYPE_ADMIN])
+            ->where(['type' => AuthGroup_Model::TYPE_ADMIN])
             ->value('rules');
 
         $map = array('status' => 1);
@@ -90,12 +97,8 @@ class AuthManager extends Adminbase
         }
         $tree = new \util\Tree();
         $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
-        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->select();
-        $result = [];
-        foreach ($_list as $rs) {
-            $result[$rs['id']] = $rs;
-        }
-        $tree->init($result);
+        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
+        $tree->init($_list);
         $Groupdata = $tree->get_tree(0, $str, 0);
         $this->assign("Groupdata", $Groupdata);
         return $this->fetch('edit_group');
@@ -106,16 +109,11 @@ class AuthManager extends Adminbase
     public function editGroup()
     {
         $id = $this->request->param('id/d');
-        $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroup::TYPE_ADMIN))->find($id);
+        $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroup_Model::TYPE_ADMIN))->find($id);
         $tree = new \util\Tree();
         $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
-        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->select();
-        $result = [];
-        foreach ($_list as $rs) {
-            $result[$rs['id']] = $rs;
-        }
-        $tree->init($result);
-
+        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
+        $tree->init($_list);
         $Groupdata = $tree->get_tree(0, $str, $auth_group['parentid']);
         $this->assign("Groupdata", $Groupdata);
         $this->assign('auth_group', $auth_group);
@@ -126,21 +124,12 @@ class AuthManager extends Adminbase
     //删除管理员用户组
     public function deleteGroup()
     {
-        $roleid = $this->request->param('id/d');
-        //判断是否可删除
-        if (empty($roleid) || $roleid == 1) {
-            $this->error('超级管理员角色不能被删除!');
-        }
-        $res = Db::name("admin")->where('roleid', $roleid)->find();
-        if ($res) {
-            $this->error('删除失败，当前角色含有用户');
-        }
-        $AuthGroup = new AuthGroup();
-        $r = $AuthGroup->destroy($roleid);
-        if ($r === false) {
-            $this->error('操作失败' . $AuthGroup->getError());
+        $Groupid = $this->request->param('id/d');
+        if ($this->AuthGroup_Model->GroupDelete($Groupid)) {
+            $this->success("删除成功！");
         } else {
-            $this->success('操作成功!');
+            $error = $this->AuthGroup_Model->getError();
+            $this->error($error ? $error : '删除失败！');
         }
     }
 
@@ -149,20 +138,19 @@ class AuthManager extends Adminbase
     {
         $data = $this->request->post();
         $data['module'] = 'admin';
-        $data['type'] = AuthGroup::TYPE_ADMIN;
-        $AuthGroup = new AuthGroup;
+        $data['type'] = AuthGroup_Model::TYPE_ADMIN;
         if (isset($data['id']) && !empty($data['id'])) {
             //更新
-            $r = $AuthGroup->allowField(true)->save($data, ['id' => $data['id']]);
+            $r = $this->AuthGroup_Model->allowField(true)->save($data, ['id' => $data['id']]);
         } else {
             $result = $this->validate($data, 'AuthGroup');
             if (true !== $result) {
                 return $this->error($result);
             }
-            $r = $AuthGroup->allowField(true)->save($data);
+            $r = $this->AuthGroup_Model->allowField(true)->save($data);
         }
         if ($r === false) {
-            $this->error('操作失败' . $AuthGroup->getError());
+            $this->error('操作失败' . $this->AuthGroup_Model->getError());
         } else {
             $this->success('操作成功!');
         }
