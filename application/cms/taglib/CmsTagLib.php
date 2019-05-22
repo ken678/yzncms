@@ -79,9 +79,9 @@ class CmsTagLib
      */
     public function lists($data)
     {
-        if (!$data['catid']) {
-            return false;
-        }
+
+        $catid = isset($data['catid']) ? trim($data['catid']) : '';
+
         $data['where'] = isset($data['where']) ? $data['where'] : "status=1";
         if (!isset($data['limit'])) {
             $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
@@ -94,12 +94,19 @@ class CmsTagLib
         }
         $data['field'] = isset($data['field']) ? $data['field'] : '*';
         $moreifo = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
-        //当前栏目信息
-        $catInfo = getCategory($data['catid']);
-        $result = [];
-        if (isset($catInfo['modelid']) && $catInfo['modelid']) {
-            $result = model('Cms')->getList($catInfo['modelid'], $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
+
+        //如果设置了catid，则根据catid判断modelid,传入的modelid失效
+        if ($catid) {
+            //当前栏目信息
+            $catInfo = getCategory($catid);
+            $modelid = $catInfo['modelid'];
+        } else {
+            if (!isset($data['modelid'])) {
+                return false;
+            }
+            $modelid = intval($data['modelid']);
         }
+        $result = model('Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
     }
 
