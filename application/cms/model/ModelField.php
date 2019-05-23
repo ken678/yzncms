@@ -46,9 +46,9 @@ class ModelField extends Modelbase
             return false;
         }
 
-        $data['ifeditable'] = isset($data['ifeditable']) ? intval($data['ifeditable']) : 0;
+        $data['isadd'] = isset($data['isadd']) ? intval($data['isadd']) : 0;
         $data['ifrequire'] = isset($data['ifrequire']) ? intval($data['ifrequire']) : 0;
-        if ($data['ifrequire'] && !$data['ifeditable']) {
+        if ($data['ifrequire'] && !$data['isadd']) {
             $this->error = '必填字段不可以隐藏！';
             return false;
         }
@@ -121,9 +121,9 @@ EOF;
             $this->error = "字段'" . $data['name'] . "`已经存在";
             return false;
         }
-        $data['ifeditable'] = isset($data['ifeditable']) ? intval($data['ifeditable']) : 0;
+        $data['isadd'] = isset($data['isadd']) ? intval($data['isadd']) : 0;
         $data['ifrequire'] = isset($data['ifrequire']) ? intval($data['ifrequire']) : 0;
-        if ($data['ifrequire'] && !$data['ifeditable']) {
+        if ($data['ifrequire'] && !$data['isadd']) {
             $this->error = '必填字段不可以隐藏！';
             return false;
         }

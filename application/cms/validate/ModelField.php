@@ -27,7 +27,6 @@ class ModelField extends Validate
         'setting.value' => 'chsAlphaNum',
         'ifsystem' => 'in:0,1',
         'ifrequire' => 'in:0,1',
-        'ifeditable' => 'in:0,1',
         'ifsearch' => 'in:0,1',
         'status' => 'in:0,1',
     ];
@@ -43,7 +42,6 @@ class ModelField extends Validate
         'setting.value.chsAlphaNum' => '字段默认值格式错误',
         'ifsystem.in' => '主表字段格式错误',
         'ifrequire.in' => '是否必填格式错误',
-        'ifeditable.in' => '是否显示格式错误',
         'ifsearch.in' => '是否显示搜索格式错误',
         'status.in' => '字段状态格式错误',
     ];

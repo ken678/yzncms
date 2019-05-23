@@ -207,13 +207,13 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         empty($id) && $this->error('参数不能为空！');
-        $ifvisible = $this->request->param('status/d');
+        $status = $this->request->param('status/d');
 
         $field = Model_Field::get($id);
-        if ($field->ifrequire && 0 == $ifvisible) {
+        if ($field->ifrequire && 0 == $status) {
             $this->error("必填字段不可以设置为隐藏！");
         }
-        $field->ifeditable = $ifvisible;
+        $field->isadd = $status;
         if ($field->save()) {
             $this->success("设置成功！");
         } else {
@@ -228,13 +228,13 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         empty($id) && $this->error('参数不能为空！');
-        $ifrequire = $this->request->param('status/d');
+        $status = $this->request->param('status/d');
 
         $field = Model_Field::get($id);
-        if (!$field->ifeditable && $ifrequire) {
+        if (!$field->isadd && $status) {
             $this->error("隐藏字段不可以设置为必填！");
         }
-        $field->ifrequire = $ifrequire;
+        $field->ifrequire = $status;
         if ($field->save()) {
             $this->success("设置成功！");
         } else {

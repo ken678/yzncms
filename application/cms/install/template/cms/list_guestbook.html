@@ -25,7 +25,7 @@ body {
                         <div class="message">
                             <!--此处只展示单文本和多文本 更多组件自行拓展-->
                             {volist name="fieldList" id="vo"}
-                            {if $vo.ifeditable && !in_array($vo.name,['listorder','status'])}
+                            {if !in_array($vo.name,['listorder','status'])}
                             {switch name="vo.type"}
                             {case value="text"}
                             <div class="field_{$vo.name}">

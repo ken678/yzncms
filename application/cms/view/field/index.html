@@ -29,8 +29,8 @@
 <script type="text/html" id="ifrequireTpl">
     <input type="checkbox" name="ifrequire" data-href="{:url('setRequire')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifrequire==1 ? 'checked' : '' }}>
 </script>
-<script type="text/html" id="ifeditableTpl">
-    <input type="checkbox" name="ifeditable" data-href="{:url('setVisible')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.ifeditable==1 ? 'checked' : '' }}>
+<script type="text/html" id="isaddTpl">
+    <input type="checkbox" name="isadd" data-href="{:url('setVisible')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.isadd==1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="barTool">
     {{#  if(!d.iffixed){ }}
@@ -61,7 +61,7 @@ layui.use('table', function() {
                 { field: 'create_time',width:180,title: '创建时间' },
                 { field: 'ifsearch', width: 90,align:"center", title: '搜索', templet: '#ifsearchTpl', unresize: true },
                 { field: 'ifrequire', width: 90,align:"center", title: '必填', templet: '#ifrequireTpl', unresize: true },
-                { field: 'ifeditable', width: 100,align:"center", title: '显示', templet: '#ifeditableTpl', unresize: true },
+                { field: 'isadd', width: 100,align:"center", title: '投稿显示', templet: '#isaddTpl', unresize: true },
                 { field: 'status', width: 100,align:"center", title: '状态', templet: '#switchTpl', unresize: true },
                 { fixed: 'right',width: 120,title: '操作', templet: '#barTool' }
             ]

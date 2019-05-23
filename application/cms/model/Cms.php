@@ -175,7 +175,7 @@ class Cms extends Modelbase
         if ([] != $ignoreField) {
             $query = $query->where('name', 'not in', $ignoreField);
         }
-        $filedTypeList = $query->column('name,title,type,ifsystem,ifeditable,ifrequire');
+        $filedTypeList = $query->column('name,title,type,ifsystem,ifrequire');
         //字段规则
         $fieldRule = Db::name('field_type')->column('vrule', 'name');
         foreach ($filedTypeList as $name => $vo) {
@@ -201,9 +201,9 @@ class Cms extends Modelbase
                         break;
                     // 日期+时间
                     case 'datetime':
-                        if ($vo['ifeditable']) {
-                            ${$arr}[$name] = strtotime(${$arr}[$name]);
-                        }
+                        //if ($vo['ifeditable']) {
+                        ${$arr}[$name] = strtotime(${$arr}[$name]);
+                        //}
                         break;
                     // 日期
                     case 'date':
@@ -234,7 +234,7 @@ class Cms extends Modelbase
     public function getFieldList($modelId, $id = null)
     {
 
-        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,ifsystem,ifeditable,ifrequire,setting");
+        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,iscore,ifsystem,ifrequire,setting");
         if (!empty($list)) {
             //编辑信息时查询出已有信息
             if ($id) {
@@ -246,8 +246,7 @@ class Cms extends Modelbase
                 }
             }
             foreach ($list as $key => &$value) {
-                //去除不显示字段
-                if (!$value['ifeditable']) {
+                if ($value['iscore']) {
                     unset($list[$key]);
                 }
                 //核心字段做标记
