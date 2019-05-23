@@ -34,7 +34,12 @@ return array(
     //依赖插件
     'need_plugin' => [],
     //行为注册
-    'tags' => [],
+    'tags' => [
+        'userSidenavAfter' => [
+            'type' => 1,
+            'description' => '会员左侧导航',
+        ],
+    ],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache' => [
         'Category' => [
