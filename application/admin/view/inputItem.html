@@ -1,5 +1,4 @@
 {volist name="fieldList" id="vo"}
-{if !isset($vo.ifeditable)||$vo.ifeditable}
 
 {switch name="vo.type"}
 {case value="hidden"}
@@ -270,7 +269,6 @@ layui.use(['laydate'], function() {
 {/case}
 {/switch}
 
-{/if}
 {/volist}
 <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.all.js"></script>

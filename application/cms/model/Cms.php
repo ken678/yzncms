@@ -245,20 +245,24 @@ class Cms extends Modelbase
                     $dataInfoExt = Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $dataInfo['id'])->find();
                 }
             }
-            foreach ($list as &$value) {
-                if (isset($value['ifsystem'])) {
-                    if ($value['ifsystem']) {
-                        $value['fieldArr'] = 'modelField';
-                        if (isset($dataInfo[$value['name']])) {
-                            $value['value'] = $dataInfo[$value['name']];
-                        }
-                    } else {
-                        $value['fieldArr'] = 'modelFieldExt';
-                        if (isset($dataInfoExt[$value['name']])) {
-                            $value['value'] = $dataInfoExt[$value['name']];
-                        }
+            foreach ($list as $key => &$value) {
+                //去除不显示字段
+                if (!$value['ifeditable']) {
+                    unset($list[$key]);
+                }
+                //核心字段做标记
+                if ($value['ifsystem']) {
+                    $value['fieldArr'] = 'modelField';
+                    if (isset($dataInfo[$value['name']])) {
+                        $value['value'] = $dataInfo[$value['name']];
+                    }
+                } else {
+                    $value['fieldArr'] = 'modelFieldExt';
+                    if (isset($dataInfoExt[$value['name']])) {
+                        $value['value'] = $dataInfoExt[$value['name']];
                     }
                 }
+
                 //扩展配置
                 $value['setting'] = unserialize($value['setting']);
                 $value['options'] = $value['setting']['options'];
