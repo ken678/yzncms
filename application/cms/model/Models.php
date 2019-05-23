@@ -214,6 +214,7 @@ EOF;
             'listorder' => 100,
             'iffixed' => 1,
             'remark' => '',
+            'isadd' => 0,
         ];
         $data = [
             [
@@ -237,6 +238,7 @@ EOF;
                 'ifrequire' => 1,
                 'iffixed' => 0,
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'isadd' => 1,
             ],
             [
                 'name' => 'flag',
@@ -253,6 +255,7 @@ EOF;
                 'iffixed' => 0,
                 'remark' => '多关键词之间用空格或者“,”隔开',
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'isadd' => 1,
             ],
             [
                 'name' => 'description',
@@ -262,6 +265,7 @@ EOF;
                 'iffixed' => 0,
                 'remark' => '如不填写，则自动截取附表中编辑器的200字符',
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'isadd' => 1,
             ],
             [
                 'name' => 'tags',
@@ -333,6 +337,7 @@ EOF;
                     'ifeditable' => 1,
                     'iffixed' => 0,
                     'setting' => "a:3:{s:6:\"define\";s:13:\"text NOT NULL\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                    'isadd' => 1,
                 ]);
 
         }
