@@ -213,6 +213,7 @@ EOF;
             'status' => 1,
             'listorder' => 100,
             'iffixed' => 1,
+            'remark' => '',
         ];
         $data = [
             [
