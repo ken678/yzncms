@@ -93,7 +93,7 @@ class AuthManager extends Adminbase
     {
         if (empty($this->auth_group)) {
             //清除编辑权限的值
-            $this->assign('auth_group', array('title' => null, 'id' => null, 'description' => null, 'rules' => null));
+            $this->assign('auth_group', array('title' => null, 'id' => null, 'description' => null, 'rules' => null, 'status' => 1));
         }
         $tree = new \util\Tree();
         $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
