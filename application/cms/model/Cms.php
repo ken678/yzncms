@@ -234,7 +234,7 @@ class Cms extends Modelbase
     public function getFieldList($modelId, $id = null)
     {
 
-        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,iscore,ifsystem,ifrequire,setting");
+        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,isadd,iscore,ifsystem,ifrequire,setting");
         if (!empty($list)) {
             //编辑信息时查询出已有信息
             if ($id) {

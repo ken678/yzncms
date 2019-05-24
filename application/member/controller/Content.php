@@ -37,7 +37,8 @@ class Content extends MemberBase
         showmessage(L('allowpostnum_deny') . $grouplist[$memberinfo['groupid']]['allowpostnum'], HTTP_REFERER);
         }*/
         if ($this->request->isPost()) {
-            var_dump(111);
+            $data = $this->request->post();
+            dump($data);
             exit();
 
         } else {
@@ -56,8 +57,8 @@ class Content extends MemberBase
                 if ($v['id'] == $catid) {
                     $array[$k]['selected'] = "selected";
                 }
-                //只有终极栏目可以发表
-                if ($v['child'] == 1) {
+                //含子栏目和单页不可以发表
+                if ($v['child'] == 1 || $v['type'] == 1) {
                     $array[$k]['disabled'] = "disabled";
                     $array[$k]['catidurl'] = url('publish', array('step' => 2));
                 } else {
