@@ -180,16 +180,7 @@ function buildCatUrl($type, $id, $url = '')
  */
 function filters($modelid)
 {
-    $options = cache('ModelField')[$modelid];
-    $data = [];
-    foreach ($options as $_k => $_v) {
-        if (isset($_v['filtertype']) && $_v['filtertype']) {
-            $_v['options'] = parse_attr($_v['options']);
-        } else {
-            continue;
-        }
-        $data[$_v['name']] = $_v;
-    }
+    $data = get_filters_field($modelid);
     $param = paramdecode(input('condition'));
     $catid = input('catid');
     $conditionParam = [];
@@ -250,16 +241,7 @@ function filters($modelid)
 
 function structure_filters_sql($modelid)
 {
-    $options = cache('ModelField')[$modelid];
-    $data = [];
-    foreach ($options as $_k => $_v) {
-        if (isset($_v['filtertype']) && $_v['filtertype']) {
-            $_v['options'] = parse_attr($_v['options']);
-        } else {
-            continue;
-        }
-        $data[$_v['name']] = $_v;
-    }
+    $data = get_filters_field($modelid);
     $fields_key = array_keys($data);
 
     $sql = '`status` = \'1\'';
@@ -275,6 +257,26 @@ function structure_filters_sql($modelid)
         }
     }
     return $sql;
+}
+
+function get_filters_field($modelid)
+{
+
+    static $filters_data = [];
+    if ($filters_data) {
+        return $filters_data;
+    }
+    $options = cache('ModelField')[$modelid];
+    foreach ($options as $_k => $_v) {
+        if (isset($_v['filtertype']) && $_v['filtertype']) {
+            $_v['options'] = parse_attr($_v['options']);
+        } else {
+            continue;
+        }
+        $filters_data[$_v['name']] = $_v;
+    }
+    return $filters_data;
+
 }
 
 function paramdecode($str)
