@@ -168,6 +168,8 @@ class Models extends Modelbase
                 `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tags标签',
 				`listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
 				`uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+				`username` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
+				`sysadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否后台添加',
                 `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
 				`inputtime` int(11) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
 				`updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
@@ -273,6 +275,18 @@ EOF;
             [
                 'name' => 'uid',
                 'title' => '用户id',
+                'type' => 'number',
+                'iscore' => 1,
+            ],
+            [
+                'name' => 'username',
+                'title' => '用户名',
+                'type' => 'text',
+                'iscore' => 1,
+            ],
+            [
+                'name' => 'sysadd',
+                'title' => '是否后台添加',
                 'type' => 'number',
                 'iscore' => 1,
             ],

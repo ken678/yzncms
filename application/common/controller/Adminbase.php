@@ -16,6 +16,9 @@ namespace app\common\controller;
 
 use app\admin\service\User;
 
+//定义是后台
+define('IN_ADMIN', true);
+
 class Adminbase extends Base
 {
     public $_userinfo; //当前登录账号信息
