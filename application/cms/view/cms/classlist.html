@@ -55,7 +55,7 @@
   {{#  } }}
 </script>
 <script type="text/html" id="statusTpl">
-    <input type="checkbox" name="status" data-href='{:url("setstate",["catid"=>$catid])}?id={{d.id}}' value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="status" data-href='{:url("setstate",["catid"=>$catid])}?id={{d.id}}' value="{{d.id}}" lay-skin="switch" lay-text="通过|待审核" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 <div id="remove" style="display: none;">
 	<div class="box-body" style="padding: 20px;">
@@ -100,8 +100,9 @@ layui.use(['table', 'laydate'], function() {
                 { field: 'title', title: '标题',templet: '#title'},
                 { field: 'hits', width: 80, title: '点击量' },
                 { field: 'updatetime', width: 180, title: '更新时间' },
+                { field: 'username', width: 100, title: '发布人' },
                 { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
-                { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
+                { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
                 { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
             ]
         ],
