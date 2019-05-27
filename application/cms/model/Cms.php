@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\model;
 
+use app\cms\model\Category as Category_Model;
 use app\common\model\Modelbase;
 use think\Db;
 use think\facade\Validate;
@@ -49,7 +50,7 @@ class Cms extends Modelbase
     public function addModelData($data, $dataExt = [])
     {
         $catid = (int) $data['catid'];
-        $modelid = getCategory($catid, 'modelid');
+        $modelid = Category_Model::getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
         if (!$this->table_exists($tablename)) {
@@ -92,7 +93,7 @@ class Cms extends Modelbase
         $id = (int) $data['id'];
         unset($data['catid']);
         unset($data['id']);
-        $modelid = getCategory($catid, 'modelid');
+        $modelid = Category_Model::getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
         if (!$this->table_exists($tablename)) {
