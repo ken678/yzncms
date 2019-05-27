@@ -1,5 +1,7 @@
 {volist name="fieldList" id="vo"}
 
+{if isset($vo['isadd']) && $vo['isadd']}
+
 {switch name="vo.type"}
 {case value="hidden"}
 {if $vo.value}<input type="hidden" class="form-control" name="{$vo.fieldArr}[{$vo.name}]"  value="{$vo.value}">{/if}
@@ -268,6 +270,8 @@ layui.use(['laydate'], function() {
 </div>
 {/case}
 {/switch}
+
+{/if}
 
 {/volist}
 <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>

@@ -38,8 +38,23 @@ class Content extends MemberBase
         }*/
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            dump($data);
-            exit();
+            $catid = intval($data['modelField']['catid']);
+            if (empty($catid)) {
+                $this->error("请指定栏目ID！");
+            }
+            $category = Db::name('Category')->find($catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！');
+            }
+            if ($category['type'] == 2) {
+                $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+                try {
+                    $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
+                } catch (\Exception $ex) {
+                    $this->error($ex->getMessage());
+                }
+            }
+            $this->success('操作成功！');
 
         } else {
             $step = $this->request->param('step/d', 1);
