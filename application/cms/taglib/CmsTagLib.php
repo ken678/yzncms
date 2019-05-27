@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\taglib;
 
+use app\cms\model\Category as Category_Model;
 use think\Db;
 use think\facade\Cache;
 
@@ -64,10 +65,10 @@ class CmsTagLib
             $catid = (int) $data['catid'];
             $where .= empty($where) ? "parentid = " . $catid : " AND parentid = " . $catid;
         }
-        $categorys = model('cms/Category')->where($where)->limit($num)->order($data['order'])->select();
+        $categorys = Category_Model::where($where)->limit($num)->order($data['order'])->select();
         if (!empty($categorys)) {
             foreach ($categorys as &$vo) {
-                $vo['url'] = $this->buildCatUrl($vo['type'], $vo['id'], $vo['url']);
+                $vo['url'] = Category_Model::buildCatUrl($vo['type'], $vo['id'], $vo['url']);
                 $vo['image'] = get_file_path($vo['image']);
             }
         }
@@ -197,22 +198,6 @@ class CmsTagLib
             $result['target'] = $target;
         }
         return $result;
-    }
-
-/**
- * 生成栏目URL
- */
-    public function buildCatUrl($type, $id, $url = '')
-    {
-        switch ($type) {
-            case 3: //自定义链接
-                $url = empty($url) ? '' : ((strpos($url, '://') !== false) ? $url : url($url));
-                break;
-            default:
-                $url = url('cms/index/lists', ['catid' => $id]);
-                break;
-        }
-        return $url;
     }
 
 }

@@ -13,7 +13,9 @@
 // | cms函数文件
 // +----------------------------------------------------------------------
 
+use app\cms\model\Category as Category_Model;
 use think\facade\Cache;
+
 /**
  * 获取栏目相关信息
  * @param type $catid 栏目id
@@ -23,45 +25,7 @@ use think\facade\Cache;
  */
 function getCategory($catid, $field = '', $newCache = false)
 {
-    if (empty($catid)) {
-        return false;
-    }
-    $key = 'getCategory_' . $catid;
-    //强制刷新缓存
-    if ($newCache) {
-        Cache::rm($key, null);
-    }
-    $cache = Cache::get($key);
-    if ($cache === 'false') {
-        return false;
-    }
-    if (empty($cache)) {
-        //读取数据
-        $cache = db('category')->where(['id' => $catid])->find();
-        if (empty($cache)) {
-            Cache::set($key, 'false', 60);
-            return false;
-        } else {
-            //扩展配置
-            $cache['setting'] = unserialize($cache['setting']);
-            $cache['url'] = buildCatUrl($cache['type'], $catid);
-            //栏目扩展字段
-            //$cache['extend'] = $cache['setting']['extend'];
-            $cache['image'] = get_file_path($cache['image']);
-            Cache::set($key, $cache, 3600);
-        }
-    }
-    if ($field) {
-        //支持var.property，不过只支持一维数组
-        if (false !== strpos($field, '.')) {
-            $vars = explode('.', $field);
-            return $cache[$vars[0]][$vars[1]];
-        } else {
-            return $cache[$field];
-        }
-    } else {
-        return $cache;
-    }
+    return Category_Model::getCategory($catid, $field, $newCache);
 }
 
 /**
@@ -78,44 +42,11 @@ function catpos($catid, $symbol = ' &gt; ')
     //获取当前栏目的 父栏目列表
     $arrparentid = array_filter(explode(',', getCategory($catid, 'arrparentid') . ',' . $catid));
     foreach ($arrparentid as $cid) {
-        $url = buildCatUrl(getCategory($cid, 'type'), $cid, getCategory($cid, 'url'));
+        $url = Category_Model::buildCatUrl(getCategory($cid, 'type'), $cid, getCategory($cid, 'url'));
         $parsestr[] = '<a href="' . $url . '" >' . getCategory($cid, 'catname') . '</a>';
     }
     $parsestr = implode($symbol, $parsestr);
     return $parsestr;
-}
-
-/**
- * 获取模型数据
- * @param type $modelid 模型ID
- * @param type $name 返回的字段，默认返回全部，数组
- * @return boolean
- */
-function getModel($modelid, $name = '')
-{
-    if (empty($modelid)) {
-        return false;
-    }
-    $key = 'getModel_' . $modelid;
-    $cache = Cache::get($key);
-    if ($cache === 'false') {
-        return false;
-    }
-    if (empty($cache)) {
-        //读取数据
-        $cache = db('Model')->where(array('id' => $modelid))->find();
-        if (empty($cache)) {
-            Cache::set($key, 'false', 60);
-            return false;
-        } else {
-            Cache::set($key, $cache, 3600);
-        }
-    }
-    if ($name) {
-        return $cache[$name];
-    } else {
-        return $cache;
-    }
 }
 
 /**
@@ -157,22 +88,6 @@ function str_cut($sourcestr, $length, $dot = '...')
         $returnstr = $returnstr . $dot; //超过长度时在尾处加上省略号
     }
     return $returnstr;
-}
-
-/**
- * 生成栏目URL
- */
-function buildCatUrl($type, $id, $url = '')
-{
-    switch ($type) {
-        case 3: //自定义链接
-            $url = empty($url) ? '' : ((strpos($url, '://') !== false) ? $url : url($url));
-            break;
-        default:
-            $url = url('cms/index/lists', ['catid' => $id]);
-            break;
-    }
-    return $url;
 }
 
 /**
