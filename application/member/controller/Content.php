@@ -37,7 +37,7 @@ class Content extends MemberBase
         showmessage(L('allowpostnum_deny') . $grouplist[$memberinfo['groupid']]['allowpostnum'], HTTP_REFERER);
         }*/
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data = $this->request->post(false);
             $catid = intval($data['modelField']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
