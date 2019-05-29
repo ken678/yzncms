@@ -14,10 +14,9 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\common\controller\Base;
-use think\facade\Config;
+use app\common\controller\Homebase;
 
-class Homebase extends Base
+class Cmsbase extends Homebase
 {
     //CMS模型相关配置
     protected $cmsConfig = [];
@@ -30,12 +29,5 @@ class Homebase extends Base
         if (!$this->cmsConfig['web_site_status']) {
             $this->error("站点已经关闭，请稍后访问~");
         }
-    }
-
-    protected function fetch($template = '', $vars = [], $config = [])
-    {
-        $Theme = empty(Config::get('theme')) ? 'default' : Config::get('theme');
-        $this->view->config('view_path', TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . 'cms' . DIRECTORY_SEPARATOR);
-        return $this->view->fetch($template, $vars, $config);
     }
 }

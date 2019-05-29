@@ -18,7 +18,7 @@ use app\cms\controller\Homebase;
 use app\cms\model\Cms as Cms_Model;
 use think\Db;
 
-class Index extends Homebase
+class Index extends Cmsbase
 {
     protected function initialize()
     {
