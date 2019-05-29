@@ -59,6 +59,14 @@ class Cms extends Modelbase
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         $this->description($data, $dataExt);
 
+        if (!defined('IN_ADMIN') || (defined('IN_ADMIN') && IN_ADMIN == false)) {
+            $data['sysadd'] = 0;
+        } else {
+            //添加用户名
+            $data['uid'] = \app\admin\service\User::instance()->id;
+            $data['username'] = \app\admin\service\User::instance()->username;
+            $data['sysadd'] = 1;
+        }
         //处理数据
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
