@@ -27,7 +27,7 @@ class Content extends MemberBase
 
     public function publish()
     {
-        $this->_check_group_auth($this->userinfo['groupid']);
+        $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
         //判断每日投稿数
         /*$this->content_check_db = pc_base::load_model('content_check_model');
         $todaytime = strtotime(date('y-m-d', SYS_TIME));
@@ -38,6 +38,12 @@ class Content extends MemberBase
         }*/
         if ($this->request->isPost()) {
             $data = $this->request->post(false);
+            //判断会员组投稿是否需要审核
+            if ($groupinfo['allowpostverify']) {
+                $data['status'] = 1;
+            } else {
+                $data['status'] = 0;
+            }
             $catid = intval($data['modelField']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
@@ -54,8 +60,11 @@ class Content extends MemberBase
                     $this->error($ex->getMessage());
                 }
             }
-            $this->success('操作成功！');
-
+            if ($data['status'] == 1) {
+                $this->success('操作成功，内容已通过审核！');
+            } else {
+                $this->success('操作成功，等待管理员审核！');
+            }
         } else {
             $step = $this->request->param('step/d', 1);
             if ($step == 1) {
@@ -117,7 +126,7 @@ class Content extends MemberBase
         if (!$grouplist[$groupid]['allowpost']) {
             $this->error('你没有权限投稿，请升级会员组！');
         }
-        return $grouplist;
+        return $grouplist[$groupid];
     }
 
 }
