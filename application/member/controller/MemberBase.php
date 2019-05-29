@@ -14,11 +14,11 @@
 // +----------------------------------------------------------------------
 namespace app\member\controller;
 
-use app\common\controller\Base;
+use app\common\controller\Homebase;
 use app\member\service\User;
 use think\facade\Config;
 
-class MemberBase extends Base
+class MemberBase extends HomeBase
 {
     //用户id
     protected $userid = 0;
