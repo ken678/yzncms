@@ -80,15 +80,19 @@ iframe {position: absolute; height: 100%; width: 100%; border: none; }
   .layui-layout-admin .layui-side{left: -300px; transition: all .3s; -webkit-transition: all .3s;}
   .site-tree-mobile{display: block!important; position: fixed; z-index: 100000; bottom: 20px; left: 10px; width: 40px; height: 40px; line-height: 40px; border-radius: 2px; text-align: center; background-color: rgba(0,0,0,.7); color: #fff;}
   .site-mobile .site-tree-mobile{display: none !important;}
-  .site-mobile .layui-side{ left: 0; z-index:1100; }
+  .site-mobile .layui-side{ left: 87px; z-index:1100; }
   .site-mobile .site-mobile-shade{content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,.9); z-index: 999;}
   .layui-body,.layui-layout-admin .layui-footer{ left:-2px; }
 }
 @media screen and (max-width: 720px){
-  .hideMenu {display: none !important; }
+  	.hideMenu {display: none !important; }
 	.mobileTopLevelMenus{ padding:0;}
+	.winner-hide {display: none !important; }
 }
 @media screen and (max-width:480px){
 	.logo{ width:120px;padding: 0 5px;font-size: 14px;}
 }
 
+.topLevelMenus-winner {float: left;z-index:1100;position: absolute;left: -20px;top: 60px;width: 150px;}
+.topLevelMenus-winner .layui-nav-item {background-color: #23262e; }
+.topLevelMenus-winner .layui-nav-item.layui-this {background-color: rgba(0,0,0,0.5); }
