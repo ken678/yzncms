@@ -24,8 +24,16 @@ var GV = {
 </script>
 </head>
 <body class="childrenBody">
-    {block name="main"}主内容{/block}
-    {block name="script"}{/block}
+{block name="main"}
+主内容
+{/block}
+<script type="text/javascript">
+    layui.config({
+        base: '__STATIC__/admin/js/'
+    }).use('common');
+</script>
+{block name="script"}
+{/block}
 </body>
 
 </html>

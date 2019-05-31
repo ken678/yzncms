@@ -68,14 +68,7 @@
 </div>
 {/block}
 {block name="script"}
-<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
 <script type="text/javascript">
-layui.config({
-    base: '__STATIC__/admin/js/'
-}).extend({
-    iconPicker: 'iconPicker'
-});
-
 layui.use(['iconPicker', 'form', 'layer'], function() {
     var iconPicker = layui.iconPicker,
         form = layui.form,
