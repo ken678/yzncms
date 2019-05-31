@@ -27,12 +27,12 @@
                     </dl>
                 </li>
             </ul>-->
-            <ul class="layui-nav topLevelMenus" id="J_B_main_block">
+			<ul class="layui-nav Menus-winner topLevelMenus" id="J_B_main_block">
                 <!--AJAX数据-->
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item"><a href="{:url('/')}" target="_blank"><i class="iconfont icon-homepage"></i>&nbsp;站点首页</a></li>
-                <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-richangqingli"></i>&nbsp;清理缓存</a>
+                <li class="layui-nav-item"><a href="{:url('/')}" target="_blank"><i class="iconfont icon-homepage"></i><span class="winner-hide">&nbsp;站点主页</span></a></li>
+                <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-richangqingli"></i><span class="winner-hide">&nbsp;清理缓存</span></a>
                     <dl class="layui-nav-child" id="deletecache">
                         <dd><a href="javascript:;" data-type="all">一键清理缓存<span class="layui-badge-dot"></span></a></dd>
                         <dd><a href="javascript:;" data-type="data">清理数据缓存</a></dd>
@@ -452,9 +452,13 @@
             shadeMobile = $('.site-mobile-shade')
         treeMobile.on('click', function() {
             $('body').addClass('site-mobile');
+            $('.Menus-winner').removeClass('topLevelMenus');//解决top导航
+            $('.Menus-winner').addClass('topLevelMenus-winner');//解决top导航
+
         });
         shadeMobile.on('click', function() {
             $('body').removeClass('site-mobile');
+            $('.Menus-winner').addClass('topLevelMenus');//解决top导航
         });
 
         //用于维持在线
