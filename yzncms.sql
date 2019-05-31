@@ -86,7 +86,7 @@ CREATE TABLE `yzn_attachment` (
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
-  `mime` varchar(64) NOT NULL DEFAULT '' COMMENT '文件mime类型',
+  `mime` varchar(100) NOT NULL DEFAULT '' COMMENT '文件mime类型',
   `ext` char(4) NOT NULL DEFAULT '' COMMENT '文件类型',
   `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
   `md5` char(32) NOT NULL DEFAULT '' COMMENT '文件md5',
