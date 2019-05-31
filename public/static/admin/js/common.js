@@ -1,4 +1,4 @@
-layui.use(['table', 'element', 'layer', 'form'], function() {
+layui.define(['table', 'element', 'layer', 'form'], function(exports) {
     var element = layui.element,
         table = layui.table,
         layer = layui.layer,
@@ -344,4 +344,5 @@ layui.use(['table', 'element', 'layer', 'form'], function() {
         return false;
     });
 
+    exports('common', {});
 });
