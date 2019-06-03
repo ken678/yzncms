@@ -60,8 +60,8 @@ class Cms extends Modelbase
         $this->description($data, $dataExt);
 
         if (!defined('IN_ADMIN') || (defined('IN_ADMIN') && IN_ADMIN == false)) {
-            $data['uid'] = \app\member\service\User::instance()->id;
-            $data['username'] = \app\member\service\User::instance()->username;
+            empty($data['uid']) ? \app\member\service\User::instance()->id : $data['uid'];
+            empty($data['username']) ? \app\member\service\User::instance()->username : $data['username'];
             $data['sysadd'] = 0;
         } else {
             //添加用户名

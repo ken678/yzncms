@@ -39,6 +39,8 @@ class Content extends MemberBase
         }*/
         if ($this->request->isPost()) {
             $data = $this->request->post(false);
+            $data['uid'] = $this->userid;
+            $data['username'] = $this->userinfo['username'];
             //判断会员组投稿是否需要审核
             if ($groupinfo['allowpostverify']) {
                 $data['status'] = 1;
@@ -66,8 +68,8 @@ class Content extends MemberBase
                 Member_Content_Model::create([
                     'catid' => $catid,
                     'content_id' => $id,
-                    'uid' => $this->userid,
-                    'username' => $this->userinfo['username'],
+                    'uid' => $data['uid'],
+                    'username' => $data['username'],
                     'create_time' => time(),
                     'status' => $data['status'],
                 ]);
