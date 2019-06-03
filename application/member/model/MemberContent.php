@@ -18,5 +18,6 @@ use \think\Model;
 
 class MemberContent extends Model
 {
+    protected $autoWriteTimestamp = true;
 
 }

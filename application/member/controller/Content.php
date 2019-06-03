@@ -24,6 +24,7 @@ class Content extends MemberBase
     {
         parent::initialize();
         $this->Cms_Model = new Cms_Model;
+        //$this->Member_Content_Model = new Member_Content_Model;
     }
 
     public function publish()
@@ -129,6 +130,34 @@ class Content extends MemberBase
 
     public function published()
     {
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 10);
+            $type = $this->request->param('type/s', "");
+            $where = array('uid' => $this->userid);
+            if ('check' == $type) {
+                $where['status'] = 1;
+            }
+            if ('checking' == $type) {
+                $where['status'] = 0;
+            }
+            $total = Member_Content_Model::where($where)->count();
+            $_list = Member_Content_Model::where($where)->page($page, $limit)->order(array("id" => "DESC"))->select();
+            $categoryModel = model('cms/Category');
+            foreach ($_list as $k => $v) {
+                $modelid = $categoryModel::getCategory($v['catid'], 'modelid');
+                $tablename = ucwords(getModel($modelid, 'tablename'));
+                $info = Db::name($tablename)->where(array("id" => $v['content_id'], "sysadd" => 0))->find();
+                if ($info) {
+                    $_list[$k]['url'] = $this->Cms_Model->buildContentUrl($v['catid'], $v['content_id']);
+                    $_list[$k]['title'] = $info['title'];
+                    $_list[$k]['catname'] = $categoryModel::getCategory($v['catid'], 'catname');
+                }
+            }
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+
+            return json($result);
+        }
         return $this->fetch('/published');
 
     }
