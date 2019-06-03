@@ -15,6 +15,7 @@
 namespace app\member\controller;
 
 use app\cms\model\Cms as Cms_Model;
+use app\member\model\MemberContent as Member_Content_Model;
 use think\Db;
 
 class Content extends MemberBase
@@ -55,10 +56,21 @@ class Content extends MemberBase
             if ($category['type'] == 2) {
                 $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
                 try {
-                    $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
+                    $id = $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
                 } catch (\Exception $ex) {
                     $this->error($ex->getMessage());
                 }
+            }
+            //添加投稿记录
+            if ($id) {
+                Member_Content_Model::create([
+                    'catid' => $catid,
+                    'content_id' => $id,
+                    'uid' => $this->userid,
+                    'username' => $this->userinfo['username'],
+                    'create_time' => time(),
+                    'status' => $data['status'],
+                ]);
             }
             if ($data['status'] == 1) {
                 $this->success('操作成功，内容已通过审核！');

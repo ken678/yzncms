@@ -60,6 +60,8 @@ class Cms extends Modelbase
         $this->description($data, $dataExt);
 
         if (!defined('IN_ADMIN') || (defined('IN_ADMIN') && IN_ADMIN == false)) {
+            $data['uid'] = \app\member\service\User::instance()->id;
+            $data['username'] = \app\member\service\User::instance()->username;
             $data['sysadd'] = 0;
         } else {
             //添加用户名
@@ -92,6 +94,7 @@ class Cms extends Modelbase
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+        return $id;
     }
 
     //编辑模型内容

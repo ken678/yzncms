@@ -51,6 +51,21 @@ CREATE TABLE `yzn_member_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `yzn_member_content`;
+CREATE TABLE `yzn_member_content` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `catid` smallint(5) NOT NULL COMMENT '栏目ID',
+  `content_id` int(10) NOT NULL COMMENT '信息ID',
+  `uid` mediumint(8) NOT NULL COMMENT '会员ID',
+  `username` char(16) NOT NULL COMMENT '用户名',
+  `integral` tinyint(1) NOT NULL COMMENT '是否赠送过点数',
+  `create_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`catid`,`content_id`,`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员投稿信息记录表';
+
+
 INSERT INTO `yzn_member_group` VALUES ('1', '禁止访问', '1', '0', '0', '0', '1', '1', '0', '1', '0', '0', '0', '0', '0', '', '0', '0', '1', '');
 INSERT INTO `yzn_member_group` VALUES ('2', '新手上路', '1', '1', '50', '100', '1', '1', '0', '0', '0', '1', '0', '0', '0', '', '', '2', '1', '');
 INSERT INTO `yzn_member_group` VALUES ('4', '中级会员', '1', '3', '150', '500', '1', '1', '0', '1', '1', '1', '0', '0', '0', '', '', '4', '1', '');
