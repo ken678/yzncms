@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\member\controller;
 
+use app\cms\model\Category as Category_Model;
 use app\cms\model\Cms as Cms_Model;
 use app\member\model\MemberContent as Member_Content_Model;
 use think\Db;
@@ -76,9 +77,9 @@ class Content extends MemberBase
                 ]);
             }
             if ($data['status'] == 1) {
-                $this->success('操作成功，内容已通过审核！');
+                $this->success('操作成功，内容已通过审核！', url('published'));
             } else {
-                $this->success('操作成功，等待管理员审核！');
+                $this->success('操作成功，等待管理员审核！', url('published'));
             }
         } else {
             $step = $this->request->param('step/d', 1);
@@ -128,6 +129,42 @@ class Content extends MemberBase
 
     }
 
+    /**
+     * 编辑内容
+     */
+    public function edit()
+    {
+        $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
+        if ($this->request->isPost()) {
+
+        } else {
+            $id = $this->request->param('id/d', 0);
+            $info = Member_Content_Model::where(array('uid' => $this->userid, 'id' => $id))->find();
+            if (empty($info)) {
+                $this->error('稿件不存在！');
+            }
+            $catid = $info['catid'];
+            //取得栏目数据
+            $category = Category_Model::getCategory($catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！', url('publish', array('step' => 2)));
+            }
+            //模型ID
+            $modelid = (int) $category['modelid'];
+            //判断是否终极栏目
+            if ($category['child'] || $category['type'] == 0) {
+                $this->error("该栏目不允许投稿！", url('publish', array('step' => 2)));
+            }
+            $fieldList = $this->Cms_Model->getFieldList($modelid, $info['content_id']);
+            $this->assign([
+                'catid' => $catid,
+                'fieldList' => $fieldList,
+            ]);
+            return $this->fetch('/edit');
+        }
+
+    }
+
     public function published()
     {
         if ($this->request->isAjax()) {
@@ -143,15 +180,14 @@ class Content extends MemberBase
             }
             $total = Member_Content_Model::where($where)->count();
             $_list = Member_Content_Model::where($where)->page($page, $limit)->order(array("id" => "DESC"))->select();
-            $categoryModel = model('cms/Category');
             foreach ($_list as $k => $v) {
-                $modelid = $categoryModel::getCategory($v['catid'], 'modelid');
+                $modelid = Category_Model::getCategory($v['catid'], 'modelid');
                 $tablename = ucwords(getModel($modelid, 'tablename'));
                 $info = Db::name($tablename)->where(array("id" => $v['content_id'], "sysadd" => 0))->find();
                 if ($info) {
                     $_list[$k]['url'] = $this->Cms_Model->buildContentUrl($v['catid'], $v['content_id']);
                     $_list[$k]['title'] = $info['title'];
-                    $_list[$k]['catname'] = $categoryModel::getCategory($v['catid'], 'catname');
+                    $_list[$k]['catname'] = Category_Model::getCategory($v['catid'], 'catname');
                 }
             }
             $result = array("code" => 0, "count" => $total, "data" => $_list);
@@ -173,8 +209,7 @@ class Content extends MemberBase
         //只能删除自己的 且 未通过审核的
         if ($info && $info['uid'] == $this->userid && $info['status'] != 1) {
             //取得栏目信息
-            $categoryModel = model('cms/Category');
-            $category = $categoryModel::getCategory($info['catid']);
+            $category = Category_Model::getCategory($info['catid']);
             if (!$category) {
                 $this->success('栏目不存在！');
             }
