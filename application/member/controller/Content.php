@@ -136,6 +136,34 @@ class Content extends MemberBase
     {
         $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
         if ($this->request->isPost()) {
+            $data = $this->request->post(false);
+            //判断会员组投稿是否需要审核
+            if ($groupinfo['allowpostverify']) {
+                $data['status'] = 1;
+            } else {
+                $data['status'] = 0;
+            }
+            $catid = intval($data['modelField']['catid']);
+            if (empty($catid)) {
+                $this->error("请指定栏目ID！");
+            }
+            $category = Db::name('Category')->find($catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！');
+            }
+            if ($category['type'] == 2) {
+                $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+                try {
+                    $this->Cms_Model->editModelData($data['modelField'], $data['modelFieldExt']);
+                } catch (\Exception $ex) {
+                    $this->error($ex->getMessage());
+                }
+            }
+            if ($data['status'] == 1) {
+                $this->success('编辑成功，内容已通过审核！', url('published'));
+            } else {
+                $this->success('编辑成功，等待管理员审核！', url('published'));
+            }
 
         } else {
             $id = $this->request->param('id/d', 0);
