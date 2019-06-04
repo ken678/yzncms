@@ -57,7 +57,7 @@ class Tags extends Model
                     "updatetime" => $time,
                 );
             }
-            model('TagsContent')->saveAll($newdata);
+            model('cms/TagsContent')->saveAll($newdata);
         }
     }
 
@@ -149,7 +149,7 @@ class Tags extends Model
         if (!$id || !$catid || !$modelid) {
             return false;
         }
-        $db_tags_content = model("TagsContent");
+        $db_tags_content = model("cms/TagsContent");
         $where = array('modelid' => $modelid, 'contentid' => $id, "catid" => $catid);
         //取得对应tag数据
         $tagslist = $db_tags_content->where($where)->select();

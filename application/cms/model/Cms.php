@@ -460,7 +460,7 @@ class Cms extends Modelbase
      */
     private function tag_dispose($tags, $id, $catid, $modelid)
     {
-        $tags_mode = model('Tags');
+        $tags_mode = model('cms/Tags');
         if (!empty($tags)) {
             if (strpos($tags, ',') === false) {
                 $keyword = explode(' ', $tags);
