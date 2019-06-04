@@ -159,7 +159,35 @@ class Content extends MemberBase
             return json($result);
         }
         return $this->fetch('/published');
+    }
 
+    //删除
+    public function del()
+    {
+        $id = $this->request->param('id/d', 0);
+        if (empty($id)) {
+            $this->error('请指定需要删除的信息！');
+        }
+        //信息
+        $info = Member_Content_Model::where('id', $id)->find();
+        //只能删除自己的 且 未通过审核的
+        if ($info && $info['uid'] == $this->userid && $info['status'] != 1) {
+            //取得栏目信息
+            $categoryModel = model('cms/Category');
+            $category = $categoryModel::getCategory($info['catid']);
+            if (!$category) {
+                $this->success('栏目不存在！');
+            }
+            try {
+                $this->Cms_Model->deleteModelData($category['modelid'], $info['content_id']);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+            Member_Content_Model::where(array('uid' => $this->userid, 'id' => $id))->delete();
+            $this->success('删除成功！');
+        } else {
+            $this->error('对不起，你无权删除！');
+        }
     }
 
     //检查会员组权限

@@ -279,6 +279,31 @@
 
     });
 
+    /**
+     * 通用表格行数据行删除
+     * @attr href或data-href 请求地址
+     * @attr refresh 操作完成后是否自动刷新
+     */
+    $(document).on('click', '.layui-tr-del', function() {
+        var that = $(this),
+            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+        layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
+            if (!href) {
+                layer.msg('请设置data-href参数');
+                return false;
+            }
+            $.get(href, function(res) {
+                if (res.code == 0) {
+                    layer.msg(res.msg);
+                } else {
+                    that.parents('tr').remove();
+                }
+            });
+            layer.close(index);
+        });
+        return false;
+    });
+
     //加载特定模块
     if (layui.cache.page && layui.cache.page !== 'index') {
         var extend = {};
