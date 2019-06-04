@@ -1,3 +1,4 @@
+{if isset($fieldList)}
 {volist name="fieldList" id="vo"}
 
 {if isset($vo['isadd']) && $vo['isadd']}
@@ -291,3 +292,4 @@ $('.uploader-list').each(function () {
     $(this).viewer();
 });
 </script>
+{/if}

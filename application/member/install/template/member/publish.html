@@ -17,8 +17,8 @@
                     <div class="layui-form-mid layui-word-aux">请先选择栏目(阴影的表示没有权限)，选择栏目后页面会刷新。</div>
                 </div>
                 {include file="inputItem" /}
+                {if isset($fieldList) && count($fieldList)}
                 <input type="hidden" name="modelField[catid]" value="{$catid}">
-                {if count($fieldList)}
                 <div class="layui-form-item">
                     <div>
                         <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>

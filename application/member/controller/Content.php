@@ -32,30 +32,31 @@ class Content extends MemberBase
     {
         $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
         //判断每日投稿数
-        /*$this->content_check_db = pc_base::load_model('content_check_model');
-        $todaytime = strtotime(date('y-m-d', SYS_TIME));
-        $_username = $this->memberinfo['username'];
-        $allowpostnum = $this->content_check_db->count("`inputtime` > $todaytime AND `username`='$_username'");
-        if ($grouplist[$memberinfo['groupid']]['allowpostnum'] > 0 && $allowpostnum >= $grouplist[$memberinfo['groupid']]['allowpostnum']) {
-        showmessage(L('allowpostnum_deny') . $grouplist[$memberinfo['groupid']]['allowpostnum'], HTTP_REFERER);
-        }*/
+        $allowpostnum = Member_Content_Model::where('uid', $this->userid)->whereTime('create_time', 'd')->count();
+        if ($groupinfo['allowpostnum'] > 0 && $allowpostnum >= $groupinfo['allowpostnum']) {
+            $this->error("今日投稿数量已达上限！");
+        }
         if ($this->request->isPost()) {
             $data = $this->request->post(false);
             $data['uid'] = $this->userid;
             $data['username'] = $this->userinfo['username'];
+            $catid = intval($data['modelField']['catid']);
+            if (empty($catid)) {
+                $this->error("请指定栏目ID！");
+            }
+            $catidPrv = Db::name('category_priv')->where(array("catid" => $catid, "roleid" => $this->userinfo['groupid'], "is_admin" => 0, "action" => "add"))->find();
+            if (empty($catidPrv)) {
+                $this->error("您没有该栏目投稿权限！");
+            }
+            $category = Db::name('Category')->find($catid);
+            if (empty($category)) {
+                $this->error('该栏目不存在！');
+            }
             //判断会员组投稿是否需要审核
             if ($groupinfo['allowpostverify']) {
                 $data['status'] = 1;
             } else {
                 $data['status'] = 0;
-            }
-            $catid = intval($data['modelField']['catid']);
-            if (empty($catid)) {
-                $this->error("请指定栏目ID！");
-            }
-            $category = Db::name('Category')->find($catid);
-            if (empty($category)) {
-                $this->error('该栏目不存在！');
             }
             if ($category['type'] == 2) {
                 $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
@@ -88,8 +89,6 @@ class Content extends MemberBase
             }
             $catid = $this->request->param('catid/d', 0);
             $tree = new \util\Tree();
-            $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
-            $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
             $str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
             $array = cache("Category");
             foreach ($array as $k => $v) {
@@ -137,12 +136,7 @@ class Content extends MemberBase
         $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
         if ($this->request->isPost()) {
             $data = $this->request->post(false);
-            //判断会员组投稿是否需要审核
-            if ($groupinfo['allowpostverify']) {
-                $data['status'] = 1;
-            } else {
-                $data['status'] = 0;
-            }
+
             $catid = intval($data['modelField']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
@@ -151,6 +145,18 @@ class Content extends MemberBase
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
+            $catidPrv = Db::name('category_priv')->where(array("catid" => $catid, "roleid" => $this->userinfo['groupid'], "is_admin" => 0, "action" => "add"))->find();
+            if (empty($catidPrv)) {
+                $this->error("您没有该栏目投稿权限！");
+            }
+
+            //判断会员组投稿是否需要审核
+            if ($groupinfo['allowpostverify']) {
+                $data['status'] = 1;
+            } else {
+                $data['status'] = 0;
+            }
+
             if ($category['type'] == 2) {
                 $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
                 try {
