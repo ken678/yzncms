@@ -9,6 +9,7 @@
                     <li class="layui-this">基本设置</li>
                     <li>选项设置</li>
                     <li id="modeTab">模板设置</li>
+                    <li>权限设置</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -124,6 +125,33 @@
                                     <input type="radio" name="template_child" value="0" title="否" checked>
                                 </div>
                             </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            {if condition="isModuleInstall('member')"}
+                            <div class="layui-form-item web_list">
+                                <label>会员组权限</label>
+                                <table class="layui-table" style="max-width: 250px;">
+                                  <colgroup>
+                                    <col width="150">
+                                    <col width="100">
+                                  </colgroup>
+                                  <thead>
+                                    <tr>
+                                      <th>会员组名称</th>
+                                      <th>允许投稿</th>
+                                    </tr> 
+                                  </thead>
+                                  <tbody>
+                                    {volist name="Member_Group" id="vo"}
+                                    <tr>
+                                      <td>{$vo.name}</td>
+                                      <td><input type="checkbox" name="priv_groupid[]" value="add,{$vo.id}" title="允许" lay-skin="primary" {php} echo model("cms/CategoryPriv")->check_category_priv($privs,'add',$vo['id'],0);{/php}></td>
+                                    </tr>
+                                    {/volist}
+                                  </tbody>
+                                </table>
+                            </div>
+                            {/if}
                         </div>
                     </div>
                     <input type="hidden" name="modelid" value="{$data.modelid}">

@@ -117,7 +117,13 @@ class Category extends Adminbase
                         if (true !== $result) {
                             return $this->error($result);
                         }
-                        $this->Category_Model->addCategory($data, $fields);
+                        $catid = $this->Category_Model->addCategory($data, $fields);
+                        if ($catid) {
+                            if (isModuleInstall('member')) {
+                                //更新会员组权限
+                                model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                            }
+                        }
                     }
                 }
                 $this->success("添加成功！", url("Category/index"));
@@ -128,6 +134,9 @@ class Category extends Adminbase
                 }
                 $status = $this->Category_Model->addCategory($data, $fields);
                 if ($status) {
+                    if (isModuleInstall('member')) {
+                        model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                    }
                     $this->success("添加成功！", url("Category/index"));
                 } else {
                     $error = $this->Category_Model->getError();
@@ -173,7 +182,10 @@ class Category extends Adminbase
             $this->assign("tp_page", $this->tp_page);
 
             $this->assign('parentid_modelid', isset($Ca['modelid']) ? $Ca['modelid'] : 0);
-
+            if (isModuleInstall('member')) {
+                //会员组
+                $this->assign("Member_Group", cache("Member_Group"));
+            }
             $this->assign("category", $categorydata);
             $this->assign("models", $models);
             return $this->fetch();
@@ -198,13 +210,13 @@ class Category extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            $id = $this->request->param('id/d', 0);
-            if (empty($id)) {
+            $catid = $this->request->param('id/d', 0);
+            if (empty($catid)) {
                 $this->error('请选择需要修改的栏目！');
             }
             $data = $this->request->post();
             //上级栏目不能是自身
-            if ($data['parentid'] == $id) {
+            if ($data['parentid'] == $catid) {
                 $this->error('上级栏目不能是自身！');
             }
             switch ($data['type']) {
@@ -233,6 +245,10 @@ class Category extends Adminbase
             }
             $status = $this->Category_Model->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
+                if (isModuleInstall('member')) {
+                    //更新会员组权限
+                    model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                }
                 $this->success("修改成功！", url("Category/index"));
             } else {
                 $error = $this->Category_Model->getError();
@@ -240,11 +256,11 @@ class Category extends Adminbase
             }
 
         } else {
-            $id = $this->request->param('id/d', 0);
-            if (empty($id)) {
+            $catid = $this->request->param('id/d', 0);
+            if (empty($catid)) {
                 $this->error('请选择需要修改的栏目！');
             }
-            $data = Db::name('category')->where(['id' => $id])->find();
+            $data = Db::name('category')->where(['id' => $catid])->find();
             $setting = unserialize($data['setting']);
 
             //输出可用模型
@@ -281,7 +297,12 @@ class Category extends Adminbase
             $this->assign("setting", $setting);
             $this->assign("category", $categorydata);
             $this->assign("models", $models);
-
+            if (isModuleInstall('member')) {
+                //会员组
+                $this->assign("Member_Group", cache("Member_Group"));
+            }
+            //权限数据
+            $this->assign("privs", model("cms/CategoryPriv")->where(array('catid' => $catid))->select());
             if ($data['type'] == 1) {
                 //单页栏目
                 return $this->fetch("singlepage_edit");
