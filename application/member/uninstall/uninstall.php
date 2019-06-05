@@ -42,6 +42,10 @@ class Uninstall extends UninstallBase
         }
         //删除路由
         //unlink(ROOT_PATH . 'route' . DIRECTORY_SEPARATOR . 'route_cms.php');
+        //隐藏cms的投稿菜单
+        if (isModuleInstall('cms')) {
+            Db::name('menu')->where(['app' => 'cms', 'controller' => 'publish', 'action' => 'index'])->setField('status', 0);
+        }
         return true;
     }
 

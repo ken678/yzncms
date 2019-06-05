@@ -10,31 +10,18 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 安装脚本
+// | 稿件管理
 // +----------------------------------------------------------------------
-namespace app\member\install;
+namespace app\cms\controller;
 
-use think\Db;
-use \sys\InstallBase;
+use app\common\controller\Adminbase;
 
-class install extends InstallBase
+class Publish extends Adminbase
 {
-    /**
-     * 安装完回调
-     * @return boolean
-     */
-    public function end()
+
+    public function index()
     {
-        //填充默认配置
-        $Setting = include APP_PATH . 'member/install/setting.php';
-        if (!empty($Setting) && is_array($Setting)) {
-            Db::name("Module")->where('module', 'member')->setField('setting', serialize($Setting));
-        }
-        //显示cms的投稿菜单
-        if (isModuleInstall('cms')) {
-            Db::name('menu')->where(['app' => 'cms', 'controller' => 'publish', 'action' => 'index'])->setField('status', 1);
-        }
-        return true;
+        return $this->fetch();
     }
 
 }
