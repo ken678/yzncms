@@ -1,0 +1,50 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">稿件管理</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href=''>批量删除</a>
+      <a class="layui-btn layui-btn-sm layui-btn-normal confirm layui-batch-all" data-href=''>通过审核</a>
+      <a class="layui-btn layui-btn-sm layui-btn-warm" href="">退稿</a>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use(['table'], function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#dataTable',
+        toolbar: '#toolbarDemo',
+        url: '{:url("index")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'id', width: 70, title: 'ID' },
+                { field: 'title', title: '标题'},
+                { field: 'create_time', width: 180, title: '发布时间' },
+                { field: 'username', width: 100, title: '发布人' },
+                { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
+                { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
+                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+        page: {}
+    });
+
+});
+</script>
+{/block}
