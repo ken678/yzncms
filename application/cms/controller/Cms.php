@@ -145,28 +145,6 @@ class Cms extends Adminbase
 
     }
 
-    //清空回收站
-    public function destroy()
-    {
-        $catid = $this->request->param('catid/d', 0);
-        $ids = $this->request->param('ids/a', null);
-        if (empty($ids) || !$catid) {
-            $this->error('参数错误！');
-        }
-        if (!is_array($ids)) {
-            $ids = array(0 => $ids);
-        }
-        $modelid = getCategory($catid, 'modelid');
-        $cmsConfig = cache("Cms_Config");
-        try {
-            $this->Cms_Model->deleteModelData($modelid, $ids);
-        } catch (\Exception $ex) {
-            $this->error($ex->getMessage());
-        }
-
-        $this->success('销毁成功！');
-    }
-
     //移动文章
     public function remove()
     {
@@ -297,7 +275,7 @@ class Cms extends Adminbase
     }
 
     //删除
-    public function delete($ids = 0)
+    public function delete()
     {
         $catid = $this->request->param('catid/d', 0);
         $ids = $this->request->param('ids/a', null);
@@ -310,12 +288,38 @@ class Cms extends Adminbase
         $modelid = getCategory($catid, 'modelid');
         $cmsConfig = cache("Cms_Config");
         try {
-            $this->Cms_Model->deleteModelData($modelid, $ids, $cmsConfig['web_site_recycle']);
+            foreach ($ids as $id) {
+                $this->Cms_Model->deleteModelData($modelid, $id, $cmsConfig['web_site_recycle']);
+            }
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
         }
 
         $this->success('删除成功！');
+    }
+
+    //清空回收站
+    public function destroy()
+    {
+        $catid = $this->request->param('catid/d', 0);
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids) || !$catid) {
+            $this->error('参数错误！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        $modelid = getCategory($catid, 'modelid');
+        $cmsConfig = cache("Cms_Config");
+        try {
+            foreach ($ids as $id) {
+                $this->Cms_Model->deleteModelData($modelid, $id);
+            }
+        } catch (\Exception $ex) {
+            $this->error($ex->getMessage());
+        }
+
+        $this->success('销毁成功！');
     }
 
     //面板

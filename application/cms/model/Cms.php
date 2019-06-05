@@ -143,40 +143,25 @@ class Cms extends Modelbase
     }
 
     //删除模型内容
-    public function deleteModelData($modeId, $ids, $no_delete = false)
+    public function deleteModelData($modeId, $id, $no_delete = false)
     {
         $modelInfo = cache('Model');
-        if (false == $modelInfo) {
-            return false;
-        }
         $modelInfo = $modelInfo[$modeId];
-        if (is_array($ids)) {
-            try {
-                if ($no_delete) {
-                    Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', -1);
-                } else {
-                    Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->delete();
-                    if (2 == $modelInfo['type']) {
-                        Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', 'in', $ids)->delete();
-                    }
-                }
-            } catch (\Exception $e) {
-                throw new \Exception($e->getMessage());
-            }
+
+        $data = Db::name($modelInfo['tablename'])->where('id', $id)->find();
+        if (empty($data)) {
+            throw new \Exception("该信息不存在！");
+        }
+        if ($no_delete) {
+            Db::name($modelInfo['tablename'])->where('id', $id)->setField('status', -1);
         } else {
-            try {
-                if ($no_delete) {
-                    Db::name($modelInfo['tablename'])->where('id', $ids)->setField('status', -1);
-                } else {
-                    Db::name($modelInfo['tablename'])->where('id', $ids)->delete();
-                    if (2 == $modelInfo['type']) {
-                        Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $ids)->delete();
-                    }
-                }
-            } catch (\Exception $e) {
-                throw new \Exception($e->getMessage());
+            Db::name($modelInfo['tablename'])->where('id', $id)->delete();
+            if (2 == $modelInfo['type']) {
+                Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $id)->delete();
             }
         }
+        //标签
+        hook('contentDeleteEnd', $data);
     }
 
     //处理post提交的模型数据

@@ -97,6 +97,15 @@ return [
                         ],
                     ],
                     [
+                        "route" => "cms/publish/index",
+                        "type" => 1,
+                        "status" => 0,
+                        "name" => "稿件管理",
+                        "icon" => "icon-neirongguanli",
+                        "child" => [
+                        ],
+                    ],
+                    [
                         "route" => "cms/tags/index",
                         "type" => 1,
                         "status" => 1,
