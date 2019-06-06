@@ -171,9 +171,9 @@ class Index extends Cmsbase
 
         //内容所有字段
         $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
-        $info = $this->Cms_Model->getContent($modelid, "id='" . $id . "'", true, '*', '', $ifcache);
+        $info = $this->Cms_Model->getContent($modelid, "id='" . $id . "' and status='1'", true, '*', '', $ifcache);
         if (empty($info)) {
-            abort(404, '内容不存在或未审核');
+            throw new \think\Exception('内容不存在或未审核!', 404);
         }
         //栏目扩展配置信息
         $setting = $category['setting'];
