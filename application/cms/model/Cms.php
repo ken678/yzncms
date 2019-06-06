@@ -77,7 +77,6 @@ class Cms extends Modelbase
         }
         if (!isset($data['updatetime'])) {
             $data['updatetime'] = request()->time();
-
         }
         try {
             //主表

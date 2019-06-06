@@ -82,12 +82,6 @@ return [
                                 "name" => "批量移动",
                             ],
                             [
-                                "route" => "cms/cms/setstate",
-                                "type" => 1,
-                                "status" => 0,
-                                "name" => "状态设置",
-                            ],
-                            [
                                 "route" => "cms/cms/recycle",
                                 "type" => 1,
                                 "status" => 0,

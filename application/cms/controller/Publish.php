@@ -55,4 +55,63 @@ class Publish extends Adminbase
         return $this->fetch();
     }
 
+    //删除
+    public function del()
+    {
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids)) {
+            $this->error('请指定需要删除的信息！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        foreach ($ids as $id) {
+            //信息
+            $info = Member_Content_Model::where('id', $id)->find();
+            //取得栏目信息
+            $category = Category_Model::getCategory($info['catid']);
+            if (!$category) {
+                $this->success('栏目不存在！');
+            }
+            try {
+                $this->Cms_Model->deleteModelData($category['modelid'], $info['content_id']);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+        }
+        $this->success('删除成功！');
+    }
+
+    //通过审核
+    public function pass()
+    {
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids)) {
+            $this->error('请指定需要操作的信息！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        foreach ($ids as $id) {
+
+        }
+
+    }
+
+    //退稿
+    public function reject()
+    {
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids)) {
+            $this->error('请指定需要操作的信息！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        foreach ($ids as $id) {
+
+        }
+
+    }
+
 }

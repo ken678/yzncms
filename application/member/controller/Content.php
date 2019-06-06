@@ -38,8 +38,8 @@ class Content extends MemberBase
         }
         if ($this->request->isPost()) {
             $data = $this->request->post(false);
-            $data['uid'] = $this->userid;
-            $data['username'] = $this->userinfo['username'];
+            $data['modelField']['uid'] = $this->userid;
+            $data['modelField']['username'] = $this->userinfo['username'];
             $catid = intval($data['modelField']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
@@ -54,9 +54,9 @@ class Content extends MemberBase
             }
             //判断会员组投稿是否需要审核
             if ($groupinfo['allowpostverify']) {
-                $data['status'] = 1;
+                $data['modelField']['status'] = 1;
             } else {
-                $data['status'] = 0;
+                $data['modelField']['status'] = 0;
             }
             if ($category['type'] == 2) {
                 $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
@@ -71,10 +71,10 @@ class Content extends MemberBase
                 Member_Content_Model::create([
                     'catid' => $catid,
                     'content_id' => $id,
-                    'uid' => $data['uid'],
-                    'username' => $data['username'],
+                    'uid' => $data['modelField']['uid'],
+                    'username' => $data['modelField']['username'],
                     'create_time' => time(),
-                    'status' => $data['status'],
+                    'status' => $data['modelField']['status'],
                 ]);
             }
             if ($data['status'] == 1) {
@@ -252,7 +252,6 @@ class Content extends MemberBase
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
-            Member_Content_Model::where(array('uid' => $this->userid, 'id' => $id))->delete();
             $this->success('删除成功！');
         } else {
             $this->error('对不起，你无权删除！');

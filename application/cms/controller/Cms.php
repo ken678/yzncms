@@ -400,25 +400,25 @@ class Cms extends Adminbase
     /**
      * 状态
      */
-    public function setstate()
-    {
-        $catid = $this->request->param('catid/d', 0);
-        $id = $this->request->param('id/d', 0);
-        $status = $this->request->param('status/d');
-        $modelid = getCategory($catid, 'modelid');
-        $modelCache = cache("Model");
-        if (empty($modelCache[$modelid])) {
-            return false;
-        };
-        $tableName = ucwords($modelCache[$modelid]['tablename']);
-        if (Db::name($tableName)->where('id', $id)->update(['status' => $status])) {
-            //更新栏目缓存
-            cache('Category', null);
-            getCategory($id, '', true);
-            $this->success('操作成功！');
-        } else {
-            $this->error('操作失败！');
-        }
-    }
+    /*public function setstate()
+{
+$catid = $this->request->param('catid/d', 0);
+$id = $this->request->param('id/d', 0);
+$status = $this->request->param('status/d');
+$modelid = getCategory($catid, 'modelid');
+$modelCache = cache("Model");
+if (empty($modelCache[$modelid])) {
+return false;
+};
+$tableName = ucwords($modelCache[$modelid]['tablename']);
+if (Db::name($tableName)->where('id', $id)->update(['status' => $status])) {
+//更新栏目缓存
+cache('Category', null);
+getCategory($id, '', true);
+$this->success('操作成功！');
+} else {
+$this->error('操作失败！');
+}
+}*/
 
 }
