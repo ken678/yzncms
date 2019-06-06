@@ -93,8 +93,16 @@ class Publish extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $id) {
+            $info = Member_Content_Model::get($id);
+            $info->status = 1;
+            $info->save();
 
+            $modelid = getCategory($info['catid'], 'modelid');
+            $model_cache = cache("Model");
+            $tablename = ucwords($model_cache[$modelid]['tablename']);
+            Db::name($tablename)->where('id', $info['content_id'])->setField('status', 1);
         }
+        $this->success('操作成功！');
 
     }
 
@@ -109,8 +117,16 @@ class Publish extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $id) {
+            $info = Member_Content_Model::get($id);
+            $info->status = -1;
+            $info->save();
 
+            $modelid = getCategory($info['catid'], 'modelid');
+            $model_cache = cache("Model");
+            $tablename = ucwords($model_cache[$modelid]['tablename']);
+            Db::name($tablename)->where('id', $info['content_id'])->setField('status', 0);
         }
+        $this->success('操作成功！');
 
     }
 
