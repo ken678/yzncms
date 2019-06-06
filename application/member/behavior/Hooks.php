@@ -28,4 +28,13 @@ class Hooks extends _Hooks
         }
     }
 
+    public function contentEditEnd($params)
+    {
+        //参数是审核文章的数据
+        if (!empty($params) && isset($params['sysadd']) && $params['sysadd'] == 0 && $params['status'] == 1) {
+            //标识审核状态
+            db("member_content")->where(array("content_id" => $params['id'], "catid" => $params['catid']))->setField('status', 1);
+        }
+    }
+
 }

@@ -123,22 +123,20 @@ class Cms extends Modelbase
         if (!isset($data['updatetime'])) {
             $data['updatetime'] = request()->time();
         }
-        try {
-            //主表
-            Db::name($tablename)->where('id', $id)->update($data);
-            //附表
-            if (!empty($dataExt)) {
-                //查询是否存在ID 不存在则新增
-                if (Db::name($tablename . $this->ext_table)->where('did', $id)->find()) {
-                    Db::name($tablename . $this->ext_table)->where('did', $id)->update($dataExt);
-                } else {
-                    $dataExt['did'] = $id;
-                    Db::name($tablename . $this->ext_table)->insert($dataExt);
-                };
-            }
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        //主表
+        Db::name($tablename)->where('id', $id)->update($data);
+        //附表
+        if (!empty($dataExt)) {
+            //查询是否存在ID 不存在则新增
+            if (Db::name($tablename . $this->ext_table)->where('did', $id)->find()) {
+                Db::name($tablename . $this->ext_table)->where('did', $id)->update($dataExt);
+            } else {
+                $dataExt['did'] = $id;
+                Db::name($tablename . $this->ext_table)->insert($dataExt);
+            };
         }
+        //标签
+        hook('contentEditEnd', $data);
     }
 
     //删除模型内容

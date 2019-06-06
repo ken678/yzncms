@@ -77,7 +77,7 @@ class Content extends MemberBase
                     'status' => $data['modelField']['status'],
                 ]);
             }
-            if ($data['status'] == 1) {
+            if ($data['modelField']['status'] == 1) {
                 $this->success('操作成功，内容已通过审核！', url('published'));
             } else {
                 $this->success('操作成功，等待管理员审核！', url('published'));

@@ -39,6 +39,10 @@ return array(
             'type' => 2,
             'description' => '内容删除后调用',
         ],
+        'contentEditEnd' => [
+            'type' => 2,
+            'description' => '内容编辑后调用',
+        ],
     ],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache' => [
