@@ -118,8 +118,6 @@ class Models extends Modelbase
         if (!$modeldata) {
             throw new \Exception('数据不存在！');
         }
-        //表名
-        $model_table = $modeldata['tablename'];
         //删除模型数据
         self::destroy($id);
         //更新缓存
@@ -127,10 +125,12 @@ class Models extends Modelbase
         //删除所有和这个模型相关的字段
         Db::name("ModelField")->where("modelid", $id)->delete();
         //删除主表
-        $this->deleteTable($model_table);
+        $table_name = Config::get("database.prefix") . $modeldata['tablename'];
+        Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
         if ((int) $modeldata['type'] == 2) {
             //删除副表
-            $this->deleteTable($model_table . "_data");
+            $table_name .= $this->ext_table;
+            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
         }
         return true;
     }
@@ -326,18 +326,6 @@ EOF;
         foreach ($data as $item) {
             $item = array_merge($default, $item);
             Db::name('model_field')->insert($item);
-        }
-        return true;
-    }
-
-    /**
-     * 删除表
-     * $table 不带表前缀
-     */
-    public function deleteTable($table)
-    {
-        if ($this->table_exists($table)) {
-            $this->drop_table($table);
         }
         return true;
     }
