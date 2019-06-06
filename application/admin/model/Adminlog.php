@@ -20,6 +20,7 @@ use think\Model;
 class Adminlog extends Model
 {
     protected $autoWriteTimestamp = true;
+    protected $updateTime = false;
 
     public function getIpAttr($value)
     {

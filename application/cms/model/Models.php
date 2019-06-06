@@ -28,30 +28,28 @@ class Models extends Modelbase
     protected $name = 'model';
     protected $ext_table = '_data';
     protected $autoWriteTimestamp = true;
-    protected $insert = ['status' => 1];
 
     /**
      * 创建模型
      * @param type $data 提交数据
      * @return boolean
      */
-    public function addModel($data)
+    public function addModel($data, $module = 'cms')
     {
         if (empty($data)) {
-            return false;
+            throw new \Exception('数据不得为空！');
         }
-        $data['module'] = 'cms';
-        //$data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
+        $data['module'] = $module;
         $data['setting'] = serialize($data['setting']);
-        //创建模型表和模型附表
-        if ($this->createTable($data)) {
+        //添加模型记录
+        if (self::allowField(true)->save($data)) {
+            $id = $this->getAttr('id');
             cache("Model", null);
-            //添加模型记录
-            if (self::allowField(true)->save($data)) {
-                return $this->addFieldRecord($this->getAttr('id'), $data['type']);
+            //创建模型表和模型字段
+            if ($this->createTable($data)) {
+                $this->addFieldRecord($id, $data['type']);
             }
         }
-        return false;
     }
 
     /**
@@ -62,29 +60,26 @@ class Models extends Modelbase
     public function editModel($data, $modelid = 0)
     {
         if (empty($data)) {
-            return false;
+            throw new \Exception('数据不得为空！');
         }
         //模型ID
         $modelid = $modelid ? $modelid : (int) $data['id'];
         if (!$modelid) {
-            $this->error = '模型ID不能为空！';
-            return false;
+            throw new \Exception('模型ID不能为空！');
         }
         //查询模型数据
         $info = self::where(array("id" => $modelid))->find();
         if (empty($info)) {
-            $this->error = '该模型不存在！';
-            return false;
+            throw new \Exception('该模型不存在！');
         }
         $data['modelid'] = $modelid;
         $data['setting'] = serialize($data['setting']);
-        //$data['ifsub'] = isset($data['ifsub']) ? $data['ifsub'] : 0;
+
         //是否更改表名
         if ($info['tablename'] != $data['tablename'] && !empty($data['tablename'])) {
             //检查新表名是否存在
             if ($this->table_exists($data['tablename']) || $this->table_exists($data['tablename'] . '_data')) {
-                $this->error = '该表名已经存在！';
-                return false;
+                throw new \Exception('该表名已经存在！');
             }
             if (false !== $this->allowField(true)->save($data, array("modelid" => $modelid))) {
                 //表前缀
@@ -99,8 +94,7 @@ class Models extends Modelbase
                 cache("Model", null);
                 return true;
             } else {
-                $this->error = '模型更新失败！';
-                return false;
+                throw new \Exception('模型更新失败！');
             }
         } else {
             if (false !== self::allowField(true)->save($data, array("modelid" => $modelid))) {
@@ -108,11 +102,9 @@ class Models extends Modelbase
                 cache("Model", null);
                 return true;
             } else {
-                $this->error = '模型更新失败！';
-                return false;
+                throw new \Exception('模型更新失败！');
             }
         }
-
     }
 
     /**
@@ -122,12 +114,9 @@ class Models extends Modelbase
      */
     public function deleteModel($id)
     {
-        if (empty($id)) {
-            return false;
-        }
         $modeldata = self::where(array("id" => $id))->find();
         if (!$modeldata) {
-            return false;
+            throw new \Exception('数据不存在！');
         }
         //表名
         $model_table = $modeldata['tablename'];
@@ -136,7 +125,7 @@ class Models extends Modelbase
         //更新缓存
         cache("Model", null);
         //删除所有和这个模型相关的字段
-        Db::name("ModelField")->where(array("modelid" => $id))->delete();
+        Db::name("ModelField")->where("modelid", $id)->delete();
         //删除主表
         $this->deleteTable($model_table);
         if ((int) $modeldata['type'] == 2) {
@@ -154,8 +143,7 @@ class Models extends Modelbase
         $data['tablename'] = strtolower($data['tablename']);
         $table = Config::get("database.prefix") . $data['tablename'];
         if ($this->table_exists($data['tablename'])) {
-            $this->error = '创建失败！' . $table . '表已经存在~';
-            return false;
+            throw new \Exception('创建失败！' . $table . '表已经存在~');
         }
         $sql = <<<EOF
 				CREATE TABLE `{$table}` (
@@ -177,12 +165,8 @@ class Models extends Modelbase
 				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
-        try {
-            $res = Db::execute($sql);
-        } catch (\Exception $e) {
-            $this->error = $e->getMessage();
-            return false;
-        }
+
+        $res = Db::execute($sql);
         if ($data['type'] == 2) {
             // 新建附属表
             $sql = <<<EOF
@@ -192,12 +176,7 @@ EOF;
 				PRIMARY KEY (`did`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
-            try {
-                $res = Db::execute($sql);
-            } catch (\Exception $e) {
-                $this->error = $e->getMessage();
-                return false;
-            }
+            $res = Db::execute($sql);
         }
         return true;
     }
@@ -349,7 +328,6 @@ EOF;
             Db::name('model_field')->insert($item);
         }
         return true;
-
     }
 
     /**

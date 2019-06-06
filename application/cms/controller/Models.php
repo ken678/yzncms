@@ -26,25 +26,17 @@ class Models extends Adminbase
         $this->Models = new Models_Model;
     }
 
-    /**
-     * 模型列表
-     */
+    //模型列表
     public function index()
     {
-
         if ($this->request->isAjax()) {
-            $data = $this->Models->where(['module' => 'cms'])->withAttr('setting', function ($value, $data) {
-                return unserialize($value);
-            })->select();
-            $result = array("code" => 0, "data" => $data);
-            return json($result);
+            $data = $this->Models->where(['module' => 'cms'])->select();
+            return json(["code" => 0, "data" => $data]);
         }
         return $this->fetch();
     }
 
-    /**
-     * 添加模型
-     */
+    //添加模型
     public function add()
     {
         if ($this->request->isPost()) {
@@ -53,21 +45,18 @@ class Models extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->Models->addModel($data)) {
-                $this->success("添加模型成功！", url('models/index'));
-            } else {
-                $error = $this->Models->getError();
-                $this->error($error ? $error : '添加失败！');
+            try {
+                $this->Models->addModel($data);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
+            $this->success('模型新增成功！', url('index'));
         } else {
             return $this->fetch();
         }
     }
 
-    /**
-     * 模型修改
-     * @author 御宅男  <530765310@qq.com>
-     */
+    //模型修改
     public function edit()
     {
         if ($this->request->isPost()) {
@@ -76,12 +65,12 @@ class Models extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->Models->editModel($data)) {
-                $this->success('模型修改成功！', url('index'));
-            } else {
-                $error = $this->Models->getError();
-                $this->error($error ? $error : '修改失败！');
+            try {
+                $this->Models->editModel($data);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
+            $this->success('模型修改成功！', url('index'));
         } else {
             $id = $this->request->param('id/d', 0);
             $data = $this->Models->where(array("id" => $id))->find();
@@ -91,9 +80,7 @@ class Models extends Adminbase
         }
     }
 
-    /**
-     * 模型删除
-     */
+    //模型删除
     public function delete()
     {
         $id = $this->request->param('id/d');
@@ -108,16 +95,15 @@ class Models extends Adminbase
         if (!$modeldata) {
             $this->error("要删除的模型不存在！");
         }
-        if ($this->Models->deleteModel($id)) {
-            $this->success("删除成功！", url("index"));
-        } else {
-            $this->error("删除失败！");
+        try {
+            $this->Models->deleteModel($id);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
+        $this->success("删除成功！", url("index"));
     }
 
-    /**
-     * 模型状态
-     */
+    //模型状态
     public function setstate()
     {
         $id = $this->request->param('id/d');
@@ -131,21 +117,4 @@ class Models extends Adminbase
         }
 
     }
-
-    /**
-     * 投稿状态
-     */
-    /*public function setSub()
-{
-$id = $this->request->param('id/d');
-empty($id) && $this->error('参数不能为空！');
-cache("Model", null);
-$ifsub = $this->request->param('ifsub/s') === 'true' ? 1 : 0;
-if (Models_Model::update(['ifsub' => $ifsub], ['id' => $id])) {
-$this->success("操作成功！");
-} else {
-$this->error('操作失败！');
-}
-}*/
-
 }

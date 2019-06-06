@@ -25,6 +25,13 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="status" value="1" title="正常" {if $data.status==1}checked{/if}>
+                    <input type="radio" name="status" value="0" title="禁止" {if $data.status==0}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">投稿状态</label>
                 <div class="layui-input-inline">
                     <input type="radio" name="setting[ifsub]" value="1" title="允许" {if $data.setting.ifsub==1}checked{/if}>

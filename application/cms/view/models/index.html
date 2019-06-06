@@ -39,7 +39,6 @@ layui.use('table', function() {
                 { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type==1){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
                 { field: 'create_time',width:180, title: '创建时间' },
                 { field: 'status', width: 100, title: '状态', templet: '#statusTpl', unresize: true },
-                { field: 'ifsub', width: 80, title: '投稿', templet:'<div>{{#  if(d.setting.ifsub==1){ }} 启用 {{#  } else { }} 禁用 {{#  } }} </div>'},
                 { fixed: 'right', title: '操作', width: 200, templet: '#barTool' }
             ]
         ]
