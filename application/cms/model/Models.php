@@ -203,11 +203,13 @@ EOF;
                 'name' => 'id',
                 'title' => '文档id',
                 'type' => 'hidden',
+                'isadd' => 1,
             ],
             [
                 'name' => 'catid',
                 'title' => '栏目id',
                 'type' => 'hidden',
+                'isadd' => 1,
             ],
             [
                 'name' => 'title',
