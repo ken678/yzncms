@@ -11,31 +11,33 @@
     <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css">
     <script src="__STATIC__/libs/layui/layui.js"></script>
     <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
-<script type="text/javascript">
-//全局变量
-var GV = {
-    'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images", "module" => request()->module()])}',
-    'file_upload_url': '{$file_upload_url ? $file_upload_url : url("attachment/upload/upload", ["dir" => "files", "module" => request()->module()])}',
-    'WebUploader_swf': '__STATIC__/webuploader/Uploader.swf',
-    'upload_check_url': '{$upload_check_url ? $upload_check_url : url("attachment/Attachments/check")}',
-    'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/Ueditor/run")}',
-    'ueditor_grabimg_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/Attachments/geturlfile")}',
-};
-</script>
+    <script type="text/javascript">
+    //全局变量
+    var GV = {
+        'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images", "module" => request()->module()])}',
+        'file_upload_url': '{$file_upload_url ? $file_upload_url : url("attachment/upload/upload", ["dir" => "files", "module" => request()->module()])}',
+        'WebUploader_swf': '__STATIC__/webuploader/Uploader.swf',
+        'upload_check_url': '{$upload_check_url ? $upload_check_url : url("attachment/Attachments/check")}',
+        'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/Ueditor/run")}',
+        'ueditor_grabimg_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/Attachments/geturlfile")}',
+    };
+    </script>
 </head>
+
 <body class="childrenBody">
-{block name="main"}
-主内容
-{/block}
-{block name="layui"}
-<script type="text/javascript">
+    {block name="main"}主内容{/block}
+    {block name="layui"}
+    <script type="text/javascript">
     layui.config({
-        base: '__STATIC__/admin/js/'
+        version: '1557143998898',
+        base: '__STATIC__/libs/layui/extend/'
+    }).extend({
+        common: '{/}__STATIC__/admin/js/common'
     }).use('common');
-</script>
-{/block}
-{block name="script"}
-{/block}
+    </script>
+    {/block}
+    {block name="script"}
+    {/block}
 </body>
 
 </html>
