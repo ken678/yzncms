@@ -92,14 +92,14 @@ layui.use(['table', 'laydate'], function() {
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
-                { field: 'id', width: 70, title: 'ID' },
-                { field: 'title', title: '标题',templet: '#title'},
+                { field: 'id', width: 60, title: 'ID' },
+                { field: 'title', title: '标题'},
                 { field: 'hits', width: 80, title: '点击量' },
-                { field: 'updatetime', width: 180, title: '更新时间' },
-                { field: 'username', width: 100, title: '发布人' },
+                { field: 'updatetime', width: 160, title: '更新时间' },
+                { field: 'username', width: 80, title: '发布人' },
                 { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
-                { field: 'status', width: 120, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">正常</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">待审核</button> {{#  } }} </div>'},
-                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+                { field: 'status', width: 60, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">正常</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">待审核</button> {{#  } }} </div>'},
+                { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
             ]
         ],
         page: {}
