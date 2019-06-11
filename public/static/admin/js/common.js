@@ -1,9 +1,37 @@
-layui.define(['table', 'element', 'layer', 'form'], function(exports) {
+layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) {
     var element = layui.element,
         table = layui.table,
         layer = layui.layer,
         $ = layui.jquery,
-        form = layui.form;
+        form = layui.form,
+        notice = layui.notice;
+
+    var fly = {
+        json: function(url, data, success, options) {
+            options = options || {};
+            return $.ajax({
+                type: options.type || 'post',
+                dataType: options.dataType || 'json',
+                data: data,
+                url: url,
+                success: function(res) {
+                    if (res.code === 1) {
+                        notice.success(res.msg);
+                        success && success(res);
+                    } else {
+                        notice.error(res.msg);
+                        options.error && options.error();
+                    }
+                },
+                error: function(e) {
+                    notice.error("请求异常，请重试");
+                    options.error && options.error(e);
+                }
+            })
+        }
+
+    }
+
 
     /**
      * iframe弹窗
@@ -14,7 +42,7 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
     $(document).on('click', '.layui-iframe', function() {
         var that = $(this),
             query = '';
-        var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: that.attr('href'), title: that.attr('title') };
+        var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: !that.attr('data-href') ? that.attr('href') : that.attr('data-href'), title: that.attr('title') };
         var opt = new Function('return ' + that.attr('lay-data'))() || {};
 
         opt.url = opt.url || def.url;
@@ -26,7 +54,7 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
         opt.idSync = opt.idSync || def.idSync;
 
         if (!opt.url) {
-            layer.msg('请设置href参数');
+            notice.info('请设置data-href参数');
             return false;
         }
 
@@ -34,7 +62,7 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
             if ($('.checkbox-ids:checked').length <= 0) {
                 var checkStatus = table.checkStatus(opt.table);
                 if (checkStatus.data.length <= 0) {
-                    layer.msg('请选择要操作的数据');
+                    notice.info('请选择要操作的数据');
                     return false;
                 }
 
@@ -69,13 +97,14 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
             href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
         layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
             if (!href) {
-                layer.msg('请设置data-href参数');
+                notice.info('请设置data-href参数');
                 return false;
             }
             $.get(href, function(res) {
                 if (res.code == 0) {
-                    layer.msg(res.msg);
+                    notice.error(res.msg);
                 } else {
+                    notice.success(res.msg);
                     that.parents('tr').remove();
                 }
             });
@@ -98,14 +127,14 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
                 var href = that.attr('href') ? that.attr('href') : that.attr('data-href');
                 var tableObj = that.attr('data-table') ? that.attr('data-table') : 'dataTable';
                 if (!href) {
-                    layer.msg('请设置data-href参数');
+                    notice.info('请设置data-href参数');
                     return false;
                 }
 
                 if ($('.checkbox-ids:checked').length <= 0) {
                     var checkStatus = table.checkStatus(tableObj);
                     if (checkStatus.data.length <= 0) {
-                        layer.msg('请选择要操作的数据');
+                        notice.info('请选择要操作的数据');
                         return false;
                     }
                     for (var i in checkStatus.data) {
@@ -122,13 +151,11 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
                     }
                 }
 
-                layer.msg('数据提交中...', { time: 500000 });
-                $.post(href, query, function(res) {
-                    layer.msg(res.msg, {}, function() {
-                        if (res.code != 0) {
-                            location.reload();
-                        }
-                    });
+                fly.json(href, query, function(res) {
+                    if (res.code != 0) {
+                        //location.reload();
+                        table.reload('dataTable');
+                    }
                 });
             };
         if (that.hasClass('confirm')) {
@@ -158,19 +185,85 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
         var that = $(this),
             status = 0;
         if (!that.attr('data-href')) {
-            layer.msg('请设置data-href参数');
+            notice.info('请设置data-href参数');
             return false;
         }
         if (this.checked) {
             status = 1;
         }
         $.get(that.attr('data-href'), { status: status }, function(res) {
-            layer.msg(res.msg);
-            if (res.code == 0) {
+            if (res.code === 1) {
+                notice.success(res.msg);
+            }else{
+                notice.error(res.msg);
                 that.trigger('click');
                 form.render('checkbox');
             }
         });
+    });
+
+    /**
+     * 监听表单提交
+     * @attr action 请求地址
+     * @attr data-form 表单DOM
+     */
+    form.on('submit(formSubmit)', function(data) {
+        var _form = '',
+            that = $(this),
+            text = that.text(),
+            options = { pop: false, refresh: true, jump: false, callback: null };
+        if ($(this).attr('data-form')) {
+            _form = $(that.attr('data-form'));
+        } else {
+            _form = that.parents('form');
+        }
+
+        if (that.attr('lay-data')) {
+            options = new Function('return ' + that.attr('lay-data'))();
+        }
+        that.prop('disabled', true);
+        //that.prop('disabled', true).text('提交中...');
+        $.ajax({
+            type: "POST",
+            url: _form.attr('action'),
+            data: _form.serialize(),
+            success: function(res) {
+                //that.text(res.msg);
+                if (res.code == 0) {
+                    notice.error(res.msg);
+                    that.prop('disabled', true);
+                    //that.prop('disabled', true).removeClass('layui-btn-normal').addClass('layui-btn-danger');
+                    setTimeout(function() {
+                        that.prop('disabled', false);
+                        //that.prop('disabled', false).removeClass('layui-btn-danger').addClass('layui-btn-normal').text(text);
+                    }, 3000);
+                } else {
+                    notice.success(res.msg);
+                    setTimeout(function() {
+                        that.prop('disabled', false);
+                        //that.text(text).prop('disabled', false);
+                        if (options.callback) {
+                            options.callback(that, res);
+                        }
+                        if (options.pop == true) {
+                            if (options.refresh == true) {
+                                parent.location.reload();
+                            } else if (options.jump == true && res.url != '') {
+                                parent.location.href = res.url;
+                            }
+                            parent.layui.layer.closeAll();
+                        } else if (options.refresh == true) {
+                            if (res.url != '') {
+                                location.href = res.url;
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    }, 3000);
+                }
+            }
+        });
+        return false;
     });
 
     //ajax get请求
@@ -209,65 +302,6 @@ layui.define(['table', 'element', 'layer', 'form'], function(exports) {
                 });
             });
         };
-        return false;
-    });
-
-    /**
-     * 监听表单提交
-     * @attr action 请求地址
-     * @attr data-form 表单DOM
-     */
-    form.on('submit(formSubmit)', function(data) {
-        var _form = '',
-            that = $(this),
-            text = that.text(),
-            options = { pop: false, refresh: true, jump: false, callback: null };
-        if ($(this).attr('data-form')) {
-            _form = $(that.attr('data-form'));
-        } else {
-            _form = that.parents('form');
-        }
-
-        if (that.attr('lay-data')) {
-            options = new Function('return ' + that.attr('lay-data'))();
-        }
-
-        that.prop('disabled', true).text('提交中...');
-        $.ajax({
-            type: "POST",
-            url: _form.attr('action'),
-            data: _form.serialize(),
-            success: function(res) {
-                that.text(res.msg);
-                if (res.code == 0) {
-                    that.prop('disabled', true).removeClass('layui-btn-normal').addClass('layui-btn-danger');
-                    setTimeout(function() {
-                        that.prop('disabled', false).removeClass('layui-btn-danger').addClass('layui-btn-normal').text(text);
-                    }, 3000);
-                } else {
-                    setTimeout(function() {
-                        that.text(text).prop('disabled', false);
-                        if (options.callback) {
-                            options.callback(that, res);
-                        }
-                        if (options.pop == true) {
-                            if (options.refresh == true) {
-                                parent.location.reload();
-                            } else if (options.jump == true && res.url != '') {
-                                parent.location.href = res.url;
-                            }
-                            parent.layui.layer.closeAll();
-                        } else if (options.refresh == true) {
-                            if (res.url != '') {
-                                location.href = res.url;
-                            } else {
-                                location.reload();
-                            }
-                        }
-                    }, 3000);
-                }
-            }
-        });
         return false;
     });
 
