@@ -1,6 +1,6 @@
 /* 全局 */
 html,body{overflow-x: hidden;}
-html body{margin-top: 61px;}
+.body{margin-top: 61px;}
 html{background-color: #F2F2F2;}
 i{font-style: normal;}
 
@@ -119,6 +119,7 @@ body .fly-user-main{position: relative; min-height: 600px;}
 
 
 .layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px; }
+.layui-form-text label{line-height: 2;}
 
 @media screen and (max-width: 768px) {
 	.fly-main{width: 100%;}

@@ -12,16 +12,16 @@
     <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css">
     <script src="__STATIC__/libs/layui/layui.js"></script>
     <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
-<script type="text/javascript">
-//全局变量
-var GV = {
-    'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images", "module" => request()->module()])}',
-    'profile_upload_url': '{$profile_upload_url ? $profile_upload_url : url("member/index/profile")}'
-};
-</script>
+    <script type="text/javascript">
+    //全局变量
+    var GV = {
+        'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images", "module" => request()->module()])}',
+        'profile_upload_url': '{$profile_upload_url ? $profile_upload_url : url("member/index/profile")}'
+    };
+    </script>
 </head>
 
-<body>
+<body class="body">
     <div class="fly-header layui-bg-black">
         <div class="layui-container">
             <a class="fly-logo" href="{:url('index')}">
