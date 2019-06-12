@@ -29,9 +29,7 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                 }
             })
         }
-
-    }
-
+    };
 
     /**
      * iframe弹窗
@@ -152,8 +150,7 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                 }
 
                 fly.json(href, query, function(res) {
-                    if (res.code != 0) {
-                        //location.reload();
+                    if (res.code === 1) {
                         table.reload('dataTable');
                     }
                 });
@@ -194,7 +191,7 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
         $.get(that.attr('data-href'), { status: status }, function(res) {
             if (res.code === 1) {
                 notice.success(res.msg);
-            }else{
+            } else {
                 notice.error(res.msg);
                 that.trigger('click');
                 form.render('checkbox');
@@ -217,50 +214,37 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
         } else {
             _form = that.parents('form');
         }
-
         if (that.attr('lay-data')) {
             options = new Function('return ' + that.attr('lay-data'))();
         }
         that.prop('disabled', true);
-        //that.prop('disabled', true).text('提交中...');
-        $.ajax({
-            type: "POST",
-            url: _form.attr('action'),
-            data: _form.serialize(),
-            success: function(res) {
-                //that.text(res.msg);
-                if (res.code == 0) {
-                    notice.error(res.msg);
-                    that.prop('disabled', true);
-                    //that.prop('disabled', true).removeClass('layui-btn-normal').addClass('layui-btn-danger');
-                    setTimeout(function() {
-                        that.prop('disabled', false);
-                        //that.prop('disabled', false).removeClass('layui-btn-danger').addClass('layui-btn-normal').text(text);
-                    }, 3000);
-                } else {
-                    notice.success(res.msg);
-                    setTimeout(function() {
-                        that.prop('disabled', false);
-                        //that.text(text).prop('disabled', false);
-                        if (options.callback) {
-                            options.callback(that, res);
+        fly.json(_form.attr('action'), _form.serialize(), function(res) {
+            if (res.code == 0) {
+                that.prop('disabled', true);
+                setTimeout(function() {
+                    that.prop('disabled', false);
+                }, 3000);
+            } else {
+                setTimeout(function() {
+                    that.prop('disabled', false);
+                    if (options.callback) {
+                        options.callback(that, res);
+                    }
+                    if (options.pop == true) {
+                        if (options.refresh == true) {
+                            parent.location.reload();
+                        } else if (options.jump == true && res.url != '') {
+                            parent.location.href = res.url;
                         }
-                        if (options.pop == true) {
-                            if (options.refresh == true) {
-                                parent.location.reload();
-                            } else if (options.jump == true && res.url != '') {
-                                parent.location.href = res.url;
-                            }
-                            parent.layui.layer.closeAll();
-                        } else if (options.refresh == true) {
-                            if (res.url != '') {
-                                location.href = res.url;
-                            } else {
-                                location.reload();
-                            }
+                        parent.layui.layer.closeAll();
+                    } else if (options.refresh == true) {
+                        if (res.url != '') {
+                            location.href = res.url;
+                        } else {
+                            location.reload();
                         }
-                    }, 3000);
-                }
+                    }
+                }, 3000);
             }
         });
         return false;
