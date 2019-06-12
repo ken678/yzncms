@@ -74,12 +74,12 @@ class Field extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $res = $this->modelfield->addField($data);
-            if (!$res) {
-                $this->error($this->modelfield->getError());
-            } else {
-                $this->success('新增成功', Cookie::get('__forward__'));
+            try {
+                $res = $this->modelfield->addField($data);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
+            $this->success('新增成功', Cookie::get('__forward__'));
         } else {
             $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
             $modelInfo = Db::name('model')->where('id', $modelid)->find();
@@ -110,12 +110,12 @@ class Field extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->modelfield->editField($data, $fieldid)) {
-                $this->success("更新成功！", Cookie::get('__forward__'));
-            } else {
-                $error = $this->modelfield->getError();
-                $this->error($error ? $error : '更新失败！');
+            try {
+                $this->modelfield->editField($data, $fieldid);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
+            $this->success("更新成功！", Cookie::get('__forward__'));
         } else {
             //字段信息
             $fieldData = Model_Field::get($fieldid);
@@ -150,12 +150,12 @@ class Field extends Adminbase
         if (empty($fieldid)) {
             $this->error('字段ID不能为空！');
         }
-        if ($this->modelfield->deleteField($fieldid)) {
-            $this->success("字段删除成功！");
-        } else {
-            $error = $this->modelfield->getError();
-            $this->error($error ? $error : "删除字段失败！");
+        try {
+            $this->modelfield->deleteField($fieldid);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
+        $this->success("字段删除成功！");
     }
 
     /**

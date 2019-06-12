@@ -40,7 +40,7 @@ class Models extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->param();
+            $data = $this->request->post();
             $result = $this->validate($data, 'Models');
             if (true !== $result) {
                 return $this->error($result);
@@ -60,7 +60,7 @@ class Models extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->param();
+            $data = $this->request->post();
             $result = $this->validate($data, 'Models');
             if (true !== $result) {
                 return $this->error($result);
