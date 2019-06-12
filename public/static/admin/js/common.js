@@ -15,6 +15,8 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                 data: data,
                 url: url,
                 success: function(res) {
+                    res = fly.onAjaxResponse(res);
+                    console.log(res);
                     if (res.code === 1) {
                         notice.success(res.msg);
                         success && success(res);
@@ -28,6 +30,18 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                     options.error && options.error(e);
                 }
             })
+        },
+        //服务器响应数据后
+        onAjaxResponse: function(response) {
+            try {
+                var ret = typeof response === 'object' ? response : JSON.parse(response);
+                if (!ret.hasOwnProperty('code')) {
+                    $.extend(ret, { code: -2, msg: response, data: null });
+                }
+            } catch (e) {
+                var ret = { code: -1, msg: e.message, data: null };
+            }
+            return ret;
         }
     };
 
@@ -246,13 +260,13 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                     }
                 }, 3000);
             }
-        },{
-            error: function(){
+        }, {
+            error: function() {
                 that.prop('disabled', true);
                 setTimeout(function() {
                     that.prop('disabled', false);
                 }, 3000);
-        }
+            }
 
         });
         return false;
