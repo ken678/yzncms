@@ -24,6 +24,11 @@ return [
     'tpl_replace_string' => [
         '__STATIC__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static'),
         '__UPLOAD__' => ROOT_URL . (defined('IF_PUBLIC') ? 'uploads' : 'public/uploads'),
+        //cms模块
+        '__IMG_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/images',
+        '__CSS_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/css',
+        '__JS_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/js',
+        '__HOME_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms',
     ],
     // 模板文件名分隔符
     'view_depr' => DIRECTORY_SEPARATOR,
