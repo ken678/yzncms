@@ -246,6 +246,14 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                     }
                 }, 3000);
             }
+        },{
+            error: function(){
+                that.prop('disabled', true);
+                setTimeout(function() {
+                    that.prop('disabled', false);
+                }, 3000);
+        }
+
         });
         return false;
     });
