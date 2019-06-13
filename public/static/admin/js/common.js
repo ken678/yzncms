@@ -16,7 +16,6 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                 url: url,
                 success: function(res) {
                     res = fly.onAjaxResponse(res);
-                    console.log(res);
                     if (res.code === 1) {
                         notice.success(res.msg);
                         success && success(res);
@@ -113,11 +112,13 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                 return false;
             }
             $.get(href, function(res) {
-                if (res.code == 0) {
-                    notice.error(res.msg);
-                } else {
+                res = fly.onAjaxResponse(res);
+                    console.log(res);
+                if (res.code == 1) {
                     notice.success(res.msg);
                     that.parents('tr').remove();
+                } else {
+                    notice.error(res.msg);
                 }
             });
             layer.close(index);
