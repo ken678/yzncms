@@ -38,7 +38,7 @@ class Yzn extends Taglib
     public function tagTemplate($tag, $content)
     {
         $config = cache('Config');
-        $theme = $tag['theme'] ?: $config['theme'];
+        $theme = isset($tag['theme']) ?: $config['theme'];
         $templateFile = $tag['file'];
         //不是直接指定模板路径的
         if (false === strpos($templateFile, config('template.view_suffix'))) {
