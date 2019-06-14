@@ -29,11 +29,14 @@ class Models extends Model
      * @param type $type
      * @return type
      */
-    public function getModelAll($type = null)
+    public function getModelAll($type = null, $module = null)
     {
         $where = array('status' => 1);
         if (!is_null($type)) {
             $where['type'] = $type;
+        }
+        if (!is_null($module)) {
+            $where['module'] = $module;
         }
         $data = Db::name('Model')->where($where)->select();
         $Cache = array();
