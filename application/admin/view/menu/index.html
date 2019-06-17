@@ -4,14 +4,15 @@
     <div class="layui-card-header">菜单管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="table" lay-filter="table"></table>
+            <table class="layui-hide" id="treeTable" lay-filter="treeTable"></table>
         </div>
     </div>
 </div>
 <script type="text/html" id="toolbarDemo">
-  <div class="layui-btn-container">
+<div class="layui-btn-container">
     <a class="layui-btn layui-btn-sm" href="{:url('add')}">新增后台菜单</a>
-  </div>
+    <a class="layui-btn layui-btn-sm layui-btn-normal" id="openAll">展开或折叠全部</a>
+</div>
 </script>
 <script type="text/html" id="barTool">
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
@@ -24,27 +25,42 @@
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
-    var table = layui.table,
-        $ = layui.$,
-        form = layui.form;
-    table.render({
-        elem: '#table',
+var editObj = null,
+    ptable = null,
+    treeGrid = null,
+    tableId = 'treeTable';
+layui.use(['table', 'treeGrid'], function() {
+    var $ = layui.$,
+        treeGrid = layui.treeGrid;
+    ptable = treeGrid.render({
+        id: tableId,
+        elem: '#' + tableId,
         toolbar: '#toolbarDemo',
-        url: '{:url("index")}',
+        idField: 'id',
+        url: "{:url('index')}",
+        cellMinWidth: 100,
+        treeId: 'id', //树形id字段名称
+        treeUpId: 'parentid', //树形父id字段名称
+        treeShowName: 'title', //以树形式显示的字段
+        height: 'full-140',
+        isFilter: false,
+        iconOpen: false, //是否显示图标【默认显示】
+        isOpenDefault: false, //节点默认是展开还是折叠【默认展开】
+        onDblClickRow: false, //去除双击事件
         cols: [
             [
-                { field: 'listorder', width: 70, title: '排序', edit: 'text' },
-                { field: 'id', width: 70, title: 'ID' },
-                { field: 'title', title: '菜单名称' },
-                { field: 'status', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
-                { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
+                { field: 'listorder', align: 'center', width: 60, title: '排序', edit: 'text' },
+                { field: 'id', align: 'center', width: 60, title: 'ID' },
+                { field: 'title', title: '菜单名称', },
+                { field: 'status', align: 'center', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
+                { fixed: 'right', align: 'center', width: 200, title: '操作', toolbar: '#barTool' }
             ]
         ],
-    });
+        page: false
+    })
 
     //监听单元格编辑
-    table.on('edit(table)', function(obj) {
+    treeGrid.on('edit(treeTable)', function(obj) {
         var value = obj.value,
             data = obj.data;
         $.post('{:url("listorder")}', { 'id': data.id, 'value': value }, function(data) {
@@ -56,6 +72,12 @@ layui.use('table', function() {
 
         })
     });
+
+    $('#openAll').click(function(e) {
+        console.log(treeGrid);
+        var treedata = treeGrid.getDataTreeList(tableId);
+        treeGrid.treeOpenAll(tableId, !treedata[0][treeGrid.config.cols.isOpen]);
+    })
 
 });
 </script>

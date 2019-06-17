@@ -26,8 +26,8 @@ class Menu extends Adminbase
     {
         if ($this->request->isAjax()) {
             $tree = new \util\Tree();
-            $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
-            $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
+            $tree->icon = array('', '', '');
+            $tree->nbsp = '';
             $result = Menu_Model::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
 
             $tree->init($result);
