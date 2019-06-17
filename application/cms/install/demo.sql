@@ -109,25 +109,6 @@ CREATE TABLE `yzn_product_data` (
   PRIMARY KEY (`did`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
 
-DROP TABLE IF EXISTS `yzn_guestbook`;
-CREATE TABLE `yzn_guestbook` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
-  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '您的姓名',
-  `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
-  `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
-  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-  `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户名',
-  `sysadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否后台添加',
-  `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
-  `inputtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的电话',
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的邮箱',
-  `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '您的意见或建议',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='留言本模型表';
 
 INSERT INTO `yzn_category` VALUES ('2', '公司简介', 'Introduction', '1', '0', '1', '0,1', '2', '0', '0', '', '', 'a:4:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"page_template\";s:9:\"page.html\";}', '1', '1');
 INSERT INTO `yzn_category` VALUES ('3', '企业文化', 'culture', '1', '0', '1', '0,1', '3', '0', '0', '', '', 'a:4:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"page_template\";s:9:\"page.html\";}', '2', '1');
@@ -140,29 +121,12 @@ INSERT INTO `yzn_category` VALUES ('10', '网站知识', 'knowledge', '2', '1', 
 INSERT INTO `yzn_category` VALUES ('14', '备案知识', 'record', '2', '1', '6', '0,6', '14', '0', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '3', '1');
 INSERT INTO `yzn_category` VALUES ('1', '关于我们', 'about', '3', '0', '0', '0', '1,2,3,4', '1', '0', '', 'cms/index/lists?catid=2', 'N;', '1', '1');
 INSERT INTO `yzn_category` VALUES ('18', '联系方式', 'fangshi', '1', '0', '8', '0,8', '18', '0', '0', '', '', 'a:4:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
-INSERT INTO `yzn_category` VALUES ('19', '在线留言', 'guestbook', '2', '5', '8', '0,8', '19', '0', '0', '', '', 'a:7:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:19:\"list_guestbook.html\";s:13:\"show_template\";s:9:\"show.html\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
 
-INSERT INTO `yzn_model` VALUES ('1', 'cms', '文章模型', 'article', '文章模型', 'a:1:{s:5:\"ifsub\";s:1:\"0\";}', '2', '1546574975', '1546574975', '0', '1');
-INSERT INTO `yzn_model` VALUES ('2', 'cms', '图片模型', 'picture', '图片模型', 'a:1:{s:5:\"ifsub\";s:1:\"0\";}', '2', '1548754193', '1548754193', '0', '1');
-INSERT INTO `yzn_model` VALUES ('3', 'cms', '产品模型', 'product', '产品模型', 'a:1:{s:5:\"ifsub\";s:1:\"0\";}', '2', '1549165800', '1549165800', '0', '1');
-INSERT INTO `yzn_model` VALUES ('4', 'cms', '下载模型', 'download', '下载模型', 'a:1:{s:5:\"ifsub\";s:1:\"0\";}', '2', '1549624988', '1549624988', '0', '1');
-INSERT INTO `yzn_model` VALUES ('5', 'cms', '留言本', 'guestbook', '留言本', 'a:1:{s:5:\"ifsub\";s:1:\"1\";}', '1', '1550480944', '1550480944', '0', '1');
+INSERT INTO `yzn_model` VALUES ('1', 'cms', '文章模型', 'article', '文章模型', '', '2', '1546574975', '1546574975', '0', '1');
+INSERT INTO `yzn_model` VALUES ('2', 'cms', '图片模型', 'picture', '图片模型', '', '2', '1548754193', '1548754193', '0', '1');
+INSERT INTO `yzn_model` VALUES ('3', 'cms', '产品模型', 'product', '产品模型', '', '2', '1549165800', '1549165800', '0', '1');
+INSERT INTO `yzn_model` VALUES ('4', 'cms', '下载模型', 'download', '下载模型', '', '2', '1549624988', '1549624988', '0', '1');
 
-INSERT INTO `yzn_model_field` VALUES ('85', '5', 'hits', '点击量', '', 'number', 'a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}', '1', '0', '1', '0', '0', '0', '1550480944', '1550480944', '200', '1');
-INSERT INTO `yzn_model_field` VALUES ('86', '5', 'content', '您的意见或建议', '', 'textarea', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '0', '1', '1', '1', '1550629912', '1550630226', '4', '1');
-INSERT INTO `yzn_model_field` VALUES ('83', '5', 'id', '文档id', '', 'hidden', '', '1', '0', '1', '0', '0', '1', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('84', '5', 'updatetime', '更新时间', '', 'datetime', 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '0', '1550480944', '1550480944', '200', '1');
-INSERT INTO `yzn_model_field` VALUES ('82', '5', 'catid', '栏目id', '', 'hidden', '', '1', '0', '1', '0', '0', '1', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('81', '5', 'flag', '属性', '', 'checkbox', 'a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:76:\"1:置顶[1]\r\n2:头条[2]\r\n3:特荐[3]\r\n4:推荐[4]\r\n5:热点[5]\r\n6:幻灯[6]\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '0', '1551846870', '1551846870', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('80', '5', 'title', '您的姓名', '', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '0', '1', '1', '1', '1550480944', '1550630221', '1', '1');
-INSERT INTO `yzn_model_field` VALUES ('74', '5', 'listorder', '排序', '', 'number', 'a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}', '1', '0', '1', '0', '0', '0', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('79', '5', 'email', '您的邮箱', '', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '0', '1', '1', '1', '1550629880', '1550630224', '3', '1');
-INSERT INTO `yzn_model_field` VALUES ('75', '5', 'uid', '用户id', '', 'number', null, '1', '1', '1', '0', '0', '0', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('76', '5', 'username', '用户名', '', 'text', null, '1', '1', '1', '0', '0', '0', '1558767044', '1558767044', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('77', '5', 'sysadd', '是否后台添加', '', 'number', null, '1', '1', '1', '0', '0', '0', '1558767044', '1558767044', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('78', '5', 'phone', '您的电话', '', 'text', 'a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT \'\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '0', '1', '1', '1', '1550629851', '1550630223', '2', '1');
-INSERT INTO `yzn_model_field` VALUES ('73', '5', 'status', '状态', '', 'radio', 'a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:21:\"0:待审核\r\n1:通过\";s:5:\"value\";s:1:\"1\";}', '1', '0', '1', '0', '0', '0', '1550480944', '1550480944', '100', '1');
-INSERT INTO `yzn_model_field` VALUES ('72', '5', 'inputtime', '创建时间', '', 'datetime', 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '0', '1550480944', '1550480944', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('67', '4', 'inputtime', '创建时间', '', 'datetime', 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '0', '1549624988', '1549624988', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('68', '4', 'updatetime', '更新时间', '', 'datetime', 'a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}', '1', '0', '1', '0', '0', '0', '1549624988', '1549624988', '200', '1');
 INSERT INTO `yzn_model_field` VALUES ('69', '4', 'hits', '点击量', '', 'number', 'a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT \'0\'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}', '1', '0', '1', '0', '0', '0', '1549624988', '1549624988', '200', '1');

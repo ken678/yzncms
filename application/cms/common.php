@@ -15,6 +15,7 @@
 
 use app\cms\model\Category as Category_Model;
 use think\facade\Cache;
+use think\facade\Request;
 
 /**
  * 获取栏目相关信息
@@ -55,8 +56,9 @@ function catpos($catid, $symbol = ' &gt; ')
 function filters($modelid)
 {
     $data = get_filters_field($modelid);
-    $param = paramdecode(input('condition'));
-    $catid = input('catid');
+    Request::filter('trim');
+    $param = paramdecode(Request::param('condition'));
+    $catid = Request::param('catid');
     $conditionParam = [];
     foreach ($data as $name => $rs) {
         //判断是否是单选条件
@@ -117,9 +119,8 @@ function structure_filters_sql($modelid)
 {
     $data = get_filters_field($modelid);
     $fields_key = array_keys($data);
-
     $sql = '`status` = \'1\'';
-    $param = paramdecode(input('condition'));
+    $param = paramdecode(Request::param('condition'));
     foreach ($param as $k => $r) {
         if (isset($data[$k]['type']) && in_array($k, $fields_key) && intval($r) != 0) {
             if ('radio' == $data[$k]['type']) {

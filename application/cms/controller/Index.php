@@ -56,93 +56,53 @@ class Index extends Cmsbase
         //模型ID
         $modelid = $category['modelid'];
         $models = cache('Model');
-        if ($this->request->isPost()) {
-            $modelInfo = $models[$modelid];
-            $modelInfo['setting'] = unserialize($modelInfo['setting']);
-            //投稿
-            if (!isset($modelInfo)) {
-                $this->error('栏目禁止投稿~');
-            }
-            if (!$modelInfo['setting']['ifsub']) {
-                $this->error($modelInfo['title'] . '模型禁止投稿~');
-            }
 
-            $data = $this->request->post();
-            // 验证码
-            if (!captcha_check($data['captcha'])) {
-                $this->error('验证码错误或失效');
+        //栏目扩展配置信息
+        $setting = $category['setting'];
+        //类型为列表的栏目
+        if ($category['type'] == 2) {
+            //栏目首页模板
+            $template = $setting['category_template'] ? $setting['category_template'] : 'category';
+            //栏目列表页模板
+            $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
+            //判断使用模板类型，如果有子栏目使用频道页模板
+            $template = $category['child'] ? "{$template}" : "{$template_list}";
+            $tpar = explode(".", $template, 2);
+            //去除完后缀的模板
+            $template = $tpar[0];
+            unset($tpar);
+            $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+            //单页
+        } else if ($category['type'] == 1) {
+            $template = $setting['page_template'] ? $setting['page_template'] : 'page';
+            //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
+            $template = "{$template}";
+            //去除后缀
+            $tpar = explode(".", $template, 2);
+            $template = $tpar[0];
+            unset($tpar);
+            $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+            $info = model('Page')->getPage($catid, $ifcache);
+            if ($info) {
+                $info = $info->toArray();
             }
-            //令牌验证
-            $vresult = $this->validate($data, ['__token__|令牌' => 'require|token']);
-            if (true !== $vresult) {
-                $this->error($vresult);
-            }
-            $data['modelField']['catid'] = $catid;
-            $data['modelField']['listorder'] = 100;
-            $data['modelField']['status'] = 0;
-            $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
-            try {
-                $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
-            } catch (\Exception $ex) {
-                $this->error($ex->getMessage());
-            }
-            $this->success($modelInfo['title'] . '提交成功~');
-        } else {
-            //栏目扩展配置信息
-            $setting = $category['setting'];
-            //类型为列表的栏目
-            if ($category['type'] == 2) {
-                //栏目首页模板
-                $template = $setting['category_template'] ? $setting['category_template'] : 'category';
-                //栏目列表页模板
-                $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
-                //判断使用模板类型，如果有子栏目使用频道页模板
-                $template = $category['child'] ? "{$template}" : "{$template_list}";
-                $tpar = explode(".", $template, 2);
-                //去除完后缀的模板
-                $template = $tpar[0];
-                unset($tpar);
-                $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
-                //投稿
-                $modelInfo = $models[$modelid];
-                $modelInfo['setting'] = unserialize($modelInfo['setting']);
-                if (isset($modelInfo['setting']['ifsub']) && $modelInfo['setting']['ifsub']) {
-                    $fieldList = $this->Cms_Model->getFieldList($modelInfo['id']);
-                    $this->assign('fieldList', $fieldList);
-                }
-                //单页
-            } else if ($category['type'] == 1) {
-                $template = $setting['page_template'] ? $setting['page_template'] : 'page';
-                //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
-                $template = "{$template}";
-                //去除后缀
-                $tpar = explode(".", $template, 2);
-                $template = $tpar[0];
-                unset($tpar);
-                $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
-                $info = model('Page')->getPage($catid, $ifcache);
-                if ($info) {
-                    $info = $info->toArray();
-                }
-                //SEO
-                $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
-                $description = $info['description'] ? $info['description'] : $setting['meta_description'];
-                $seo = seo($catid, $setting['meta_title'], $description, $keywords);
-                $this->assign($info);
-            }
-            //获取顶级栏目ID
-            $arrparentid = explode(',', $category['arrparentid']);
-            $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
-            $this->assign([
-                'top_parentid' => $top_parentid,
-                'SEO' => $seo,
-                'catid' => $catid,
-                'page' => $page,
-                'modelid' => $modelid,
-            ]);
-            return $this->fetch('/' . $template);
-
+            //SEO
+            $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
+            $description = $info['description'] ? $info['description'] : $setting['meta_description'];
+            $seo = seo($catid, $setting['meta_title'], $description, $keywords);
+            $this->assign($info);
         }
+        //获取顶级栏目ID
+        $arrparentid = explode(',', $category['arrparentid']);
+        $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
+        $this->assign([
+            'top_parentid' => $top_parentid,
+            'SEO' => $seo,
+            'catid' => $catid,
+            'page' => $page,
+            'modelid' => $modelid,
+        ]);
+        return $this->fetch('/' . $template);
 
     }
 
