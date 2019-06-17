@@ -101,7 +101,6 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
     /**
      * 通用表格行数据行删除
      * @attr href或data-href 请求地址
-     * @attr refresh 操作完成后是否自动刷新
      */
     $(document).on('click', '.layui-tr-del', function() {
         var that = $(this),
@@ -113,7 +112,6 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
             }
             $.get(href, function(res) {
                 res = fly.onAjaxResponse(res);
-                    console.log(res);
                 if (res.code == 1) {
                     notice.success(res.msg);
                     that.parents('tr').remove();
@@ -182,12 +180,6 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
         return false;
     });
 
-    /*$('[title]').hover(function() {
-        var title = $(this).attr('title');
-        layer.tips(title, $(this))
-    }, function() {
-        layer.closeAll('tips')
-    })*/
 
     /**
      * 通用状态设置开关
