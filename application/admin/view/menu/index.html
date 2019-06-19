@@ -51,6 +51,8 @@ layui.use(['table', 'treeGrid'], function() {
                 { field: 'listorder', align: 'center', width: 60, title: '排序', edit: 'text' },
                 { field: 'id', align: 'center', width: 60, title: 'ID' },
                 { field: 'title', title: '菜单名称', },
+                { width: 80,title: '图标',align: 'center',templet:"<div><i class='iconfont {{d.icon}}'></i></div>" },
+                { width: 200,title: '模块/控制器/方法',templet:"<div>{{d.app}}/{{d.controller}}/{{d.action}}</div>"},
                 { field: 'status', align: 'center', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
                 { fixed: 'right', align: 'center', width: 200, title: '操作', toolbar: '#barTool' }
             ]
