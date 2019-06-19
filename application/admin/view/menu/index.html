@@ -25,13 +25,12 @@
 {/block}
 {block name="script"}
 <script>
-var editObj = null,
-    ptable = null,
-    treeGrid = null,
-    tableId = 'treeTable';
+var treeGrid = null;
 layui.use(['table', 'treeGrid'], function() {
     var $ = layui.$,
-        treeGrid = layui.treeGrid;
+        treeGrid = layui.treeGrid,
+        tableId = 'treeTable',
+        ptable = null;
     ptable = treeGrid.render({
         id: tableId,
         elem: '#' + tableId,
@@ -74,7 +73,6 @@ layui.use(['table', 'treeGrid'], function() {
     });
 
     $('#openAll').click(function(e) {
-        console.log(treeGrid);
         var treedata = treeGrid.getDataTreeList(tableId);
         treeGrid.treeOpenAll(tableId, !treedata[0][treeGrid.config.cols.isOpen]);
     })
