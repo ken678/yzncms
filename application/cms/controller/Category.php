@@ -110,21 +110,24 @@ class Category extends Adminbase
                 }
                 foreach ($batch_add as $rs) {
                     $cat = explode('|', $rs, 2);
-                    if ($cat[0] && $cat[1]) {
-                        $data['catname'] = $cat[0];
-                        $data['catdir'] = $cat[1];
-                        $result = $this->validate($data, 'Category.' . $scene);
-                        if (true !== $result) {
-                            return $this->error($result);
-                        }
-                        $catid = $this->Category_Model->addCategory($data, $fields);
-                        if ($catid) {
-                            if (isModuleInstall('member')) {
-                                //更新会员组权限
-                                model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
-                            }
+                    //if ($cat[0] && $cat[1]) {
+                    $data['catname'] = $cat[0];
+                    $data['catdir'] = isset($cat[1]) ? $cat[1] : '';
+                    $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir']);
+
+                    $result = $this->validate($data, 'Category.' . $scene);
+                    if (true !== $result) {
+                        return $this->error($result);
+                    }
+                    $catid = $this->Category_Model->addCategory($data, $fields);
+                    if ($catid) {
+                        if (isModuleInstall('member')) {
+                            //更新会员组权限
+                            model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                         }
                     }
+                    //}
+
                 }
                 $this->success("添加成功！", url("Category/index"));
             } else {
