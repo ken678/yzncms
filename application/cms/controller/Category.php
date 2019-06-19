@@ -128,6 +128,7 @@ class Category extends Adminbase
                 }
                 $this->success("添加成功！", url("Category/index"));
             } else {
+                $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir']);
                 $result = $this->validate($data, 'Category.' . $scene);
                 if (true !== $result) {
                     return $this->error($result);
@@ -239,6 +240,7 @@ class Category extends Adminbase
                 default:
                     return $this->error('栏目类型错误~');
             }
+            $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir'], $catid);
             $result = $this->validate($data, 'Category.' . $scene);
             if (true !== $result) {
                 return $this->error($result);
@@ -418,6 +420,32 @@ class Category extends Adminbase
         } else {
             $this->error('操作失败！');
         }
+    }
+
+    /**
+     * 获取栏目的拼音
+     */
+    private function get_dirpinyin($catname = '', $catdir = '', $id = 0)
+    {
+        $pinyin = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
+        if (empty($catdir)) {
+            $catdir = $pinyin->permalink($catname, '');
+        }
+        if (strval(intval($catdir)) == strval($catdir)) {
+            $catdir .= genRandomString(3);
+        }
+        $map = [
+            ['catdir', '=', $catdir],
+        ];
+        if (intval($id) > 0) {
+            $map[] = ['id', '<>', $id];
+        }
+        $result = Db::name('Category')->field('id')->where($map)->find();
+        if (!empty($result)) {
+            $nowDirname = $catdir . genRandomString(3);
+            return $this->get_dirpinyin($catname, $nowDirname, $id);
+        }
+        return $catdir;
     }
 
 }

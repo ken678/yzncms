@@ -24,7 +24,7 @@ class Category extends Validate
         'modelid|所属模型' => 'require|number',
         'type|栏目类型' => 'require|in:1,2,3',
         'catname|栏目标题' => 'require',
-        'catdir|唯一标识' => 'require|alphaNum|unique:category',
+        'catdir|唯一标识' => 'require|alphaNum',
         'image|栏目图片' => 'number',
         'listorder|栏目排序' => 'require|number',
         'status|栏目状态' => 'require|in:0,1',
