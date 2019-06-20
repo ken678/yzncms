@@ -47,9 +47,7 @@ class Field extends Adminbase
         Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
         //根据模型读取字段列表
         $banFields = ['id', 'catid', 'did', 'status', 'uid', 'flag', 'hits', 'listorder'];
-        $data = $this->modelfield->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->select()->withAttr('create_time', function ($value, $data) {
-            return date('Y-m-d H:i:s', $value);
-        });
+        $data = $this->modelfield->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->select();
         if ($this->request->isAjax()) {
             $result = array("code" => 0, "data" => $data);
             return json($result);

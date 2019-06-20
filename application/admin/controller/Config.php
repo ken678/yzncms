@@ -36,9 +36,6 @@ class Config extends Adminbase
                 ->where('group', $group)
                 ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
                 ->order('listorder,id desc')
-                ->withAttr('update_time', function ($value, $data) {
-                    return date('Y-m-d H:i:s', $value);
-                })
                 ->select();
             $result = array("code" => 0, "data" => $_list);
             return json($result);
