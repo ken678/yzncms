@@ -10,6 +10,7 @@ return array(
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
     'think\\' => array($vendorDir . '/topthink/think-image/src'),
     'app\\' => array($baseDir . '/application'),
+    'Yansongda\\Pay\\' => array($vendorDir . '/yansongda/pay/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Overtrue\\Pinyin\\' => array($vendorDir . '/overtrue/pinyin/src'),

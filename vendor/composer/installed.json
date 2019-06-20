@@ -644,5 +644,58 @@
                 "email": "448901948@qq.com"
             }
         ]
+    },
+    {
+        "name": "yansongda/pay",
+        "version": "v1.3.5",
+        "version_normalized": "1.3.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yansongda/pay.git",
+            "reference": "3af05fd113b8d0c0de1411aa8d12b5710c0808d8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yansongda/pay/zipball/3af05fd113b8d0c0de1411aa8d12b5710c0808d8",
+            "reference": "3af05fd113b8d0c0de1411aa8d12b5710c0808d8",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "guzzlehttp/guzzle": "^6.3",
+            "php": ">=5.6"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^6.2"
+        },
+        "time": "2018-11-29T13:20:11+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Yansongda\\Pay\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "yansongda",
+                "email": "me@yansongda.cn"
+            }
+        ],
+        "description": "专注 Alipay 和 WeChat 的支付扩展包",
+        "keywords": [
+            "alipay",
+            "pay",
+            "wechat"
+        ]
     }
 ]

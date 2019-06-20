@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e51a0f2bd0ae58082b633119b5dc6802",
+    "content-hash": "431e54951ee3d0478dfafe87f7c6a691",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -629,6 +629,57 @@
                 }
             ],
             "time": "2018-05-11T06:45:42+00:00"
+        },
+        {
+            "name": "yansongda/pay",
+            "version": "v1.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yansongda/pay.git",
+                "reference": "3af05fd113b8d0c0de1411aa8d12b5710c0808d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yansongda/pay/zipball/3af05fd113b8d0c0de1411aa8d12b5710c0808d8",
+                "reference": "3af05fd113b8d0c0de1411aa8d12b5710c0808d8",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Yansongda\\Pay\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yansongda",
+                    "email": "me@yansongda.cn"
+                }
+            ],
+            "description": "专注 Alipay 和 WeChat 的支付扩展包",
+            "keywords": [
+                "alipay",
+                "pay",
+                "wechat"
+            ],
+            "time": "2018-11-29T13:20:11+00:00"
         }
     ],
     "packages-dev": [],

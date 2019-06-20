@@ -26,6 +26,10 @@ class ComposerStaticInitc101c24647591725e2af1463c4b45c92
         array (
             'app\\' => 4,
         ),
+        'Y' => 
+        array (
+            'Yansongda\\Pay\\' => 14,
+        ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
@@ -59,6 +63,10 @@ class ComposerStaticInitc101c24647591725e2af1463c4b45c92
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/application',
+        ),
+        'Yansongda\\Pay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yansongda/pay/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
