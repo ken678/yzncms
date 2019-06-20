@@ -2,48 +2,31 @@
 
 namespace Yansongda\Pay\Tests;
 
-use Yansongda\Pay\Contracts\GatewayInterface;
-use Yansongda\Pay\Exceptions\InvalidArgumentException;
+use Yansongda\Pay\Contracts\GatewayApplicationInterface;
+use Yansongda\Pay\Exceptions\GatewayException;
 use Yansongda\Pay\Pay;
 
 class PayTest extends TestCase
 {
-    public function testDriverWithoutConfig()
+    public function testAlipayGateway()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $alipay = Pay::alipay(['foo' => 'bar']);
 
-        $pay = new Pay([]);
-        $pay->driver('foo');
+        $this->assertInstanceOf(GatewayApplicationInterface::class, $alipay);
     }
 
-    public function testDriver()
+    public function testWechatGateway()
     {
-        $pay = new Pay(['alipay' => ['app_id' => '']]);
+        $wechat = Pay::wechat(['foo' => 'bar']);
 
-        $this->assertInstanceOf(Pay::class, $pay->driver('alipay'));
+        $this->assertInstanceOf(GatewayApplicationInterface::class, $wechat);
     }
 
-    public function testGatewayWithoutDriver()
+    public function testFooGateway()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Driver is not defined.');
+        $this->expectException(GatewayException::class);
+        $this->expectExceptionMessage('Gateway [foo] Not Exists');
 
-        $pay = new Pay([]);
-        $pay->gateway();
-    }
-
-    public function testInvalidGateway()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Gateway [foo] is not supported.');
-
-        $pay = new Pay(['alipay' => ['app_id' => '']]);
-        $pay->driver('alipay')->gateway('foo');
-    }
-
-    public function testGateway()
-    {
-        $pay = new Pay(['alipay' => ['app_id' => '']]);
-        $this->assertInstanceOf(GatewayInterface::class, $pay->driver('alipay')->gateway());
+        Pay::foo([]);
     }
 }

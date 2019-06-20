@@ -2,43 +2,40 @@
 
 namespace Yansongda\Pay\Gateways\Alipay;
 
-class ScanGateway extends Alipay
+use Yansongda\Pay\Contracts\GatewayInterface;
+use Yansongda\Pay\Events;
+use Yansongda\Pay\Exceptions\GatewayException;
+use Yansongda\Pay\Exceptions\InvalidConfigException;
+use Yansongda\Pay\Exceptions\InvalidSignException;
+use Yansongda\Supports\Collection;
+
+class ScanGateway implements GatewayInterface
 {
     /**
-     * get method config.
+     * Pay an order.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @return string
+     * @param string $endpoint
+     * @param array  $payload
+     *
+     * @throws GatewayException
+     * @throws InvalidConfigException
+     * @throws InvalidSignException
+     *
+     * @return Collection
      */
-    protected function getMethod()
+    public function pay($endpoint, array $payload): Collection
     {
-        return 'alipay.trade.precreate';
-    }
+        $payload['method'] = 'alipay.trade.precreate';
+        $payload['biz_content'] = json_encode(array_merge(
+            json_decode($payload['biz_content'], true),
+            ['product_code' => '']
+        ));
+        $payload['sign'] = Support::generateSign($payload);
 
-    /**
-     * get productCode config.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
-     */
-    protected function getProductCode()
-    {
-        return '';
-    }
+        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Alipay', 'Scan', $endpoint, $payload));
 
-    /**
-     * pay a order.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @param array $config_biz
-     *
-     * @return array|bool
-     */
-    public function pay(array $config_biz = [])
-    {
-        return $this->getResult($config_biz, $this->getMethod());
+        return Support::requestApi($payload);
     }
 }

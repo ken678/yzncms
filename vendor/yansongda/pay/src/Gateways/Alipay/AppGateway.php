@@ -2,45 +2,36 @@
 
 namespace Yansongda\Pay\Gateways\Alipay;
 
-class AppGateway extends Alipay
+use Symfony\Component\HttpFoundation\Response;
+use Yansongda\Pay\Contracts\GatewayInterface;
+use Yansongda\Pay\Events;
+use Yansongda\Pay\Exceptions\InvalidConfigException;
+
+class AppGateway implements GatewayInterface
 {
     /**
-     * get method config.
+     * Pay an order.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @return string
+     * @param string $endpoint
+     * @param array  $payload
+     *
+     * @throws InvalidConfigException
+     *
+     * @return Response
      */
-    protected function getMethod()
+    public function pay($endpoint, array $payload): Response
     {
-        return 'alipay.trade.app.pay';
-    }
+        $payload['method'] = 'alipay.trade.app.pay';
+        $payload['biz_content'] = json_encode(array_merge(
+            json_decode($payload['biz_content'], true),
+            ['product_code' => 'QUICK_MSECURITY_PAY']
+        ));
+        $payload['sign'] = Support::generateSign($payload);
 
-    /**
-     * get productCode method.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
-     */
-    protected function getProductCode()
-    {
-        return 'QUICK_MSECURITY_PAY';
-    }
+        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Alipay', 'App', $endpoint, $payload));
 
-    /**
-     * pay a order.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @param array $config_biz
-     *
-     * @return string
-     */
-    public function pay(array $config_biz = [])
-    {
-        parent::pay($config_biz);
-
-        return http_build_query($this->config);
+        return Response::create(http_build_query($payload));
     }
 }

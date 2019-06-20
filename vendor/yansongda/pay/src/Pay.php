@@ -2,109 +2,141 @@
 
 namespace Yansongda\Pay;
 
-use Yansongda\Pay\Exceptions\InvalidArgumentException;
-use Yansongda\Pay\Support\Config;
+use Exception;
+use Yansongda\Pay\Contracts\GatewayApplicationInterface;
+use Yansongda\Pay\Exceptions\InvalidGatewayException;
+use Yansongda\Pay\Gateways\Alipay;
+use Yansongda\Pay\Gateways\Wechat;
+use Yansongda\Pay\Listeners\KernelLogSubscriber;
+use Yansongda\Supports\Config;
+use Yansongda\Supports\Log;
+use Yansongda\Supports\Str;
 
+/**
+ * @method static Alipay alipay(array $config) 支付宝
+ * @method static Wechat wechat(array $config) 微信
+ */
 class Pay
 {
     /**
-     * @var \Yansongda\Pay\Support\Config
-     */
-    private $config;
-
-    /**
-     * @var string
-     */
-    private $drivers;
-
-    /**
-     * @var \Yansongda\Pay\Contracts\GatewayInterface
-     */
-    private $gateways;
-
-    /**
-     * construct method.
+     * Config.
      *
-     * @author JasonYan <me@yansongda.cn>
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * Bootstrap.
+     *
+     * @author yansongda <me@yansongda.cn>
      *
      * @param array $config
+     *
+     * @throws Exception
      */
-    public function __construct(array $config = [])
+    public function __construct(array $config)
     {
         $this->config = new Config($config);
+
+        $this->registerLogService();
+        $this->registerEventService();
     }
 
     /**
-     * set pay's driver.
-     *
-     * @author JasonYan <me@yansongda.cn>
-     *
-     * @param string $driver
-     *
-     * @return Pay
-     */
-    public function driver($driver)
-    {
-        if (is_null($this->config->get($driver))) {
-            throw new InvalidArgumentException("Driver [$driver]'s Config is not defined.");
-        }
-
-        $this->drivers = $driver;
-
-        return $this;
-    }
-
-    /**
-     * set pay's gateway.
+     * Magic static call.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param string $gateway
+     * @param string $method
+     * @param array  $params
      *
-     * @return \Yansongda\Pay\Contracts\GatewayInterface
+     * @throws InvalidGatewayException
+     * @throws Exception
+     *
+     * @return GatewayApplicationInterface
      */
-    public function gateway($gateway = 'web')
+    public static function __callStatic($method, $params): GatewayApplicationInterface
     {
-        if (!isset($this->drivers)) {
-            throw new InvalidArgumentException('Driver is not defined.');
-        }
+        $app = new self(...$params);
 
-        $this->gateways = $this->createGateway($gateway);
-
-        return $this->gateways;
+        return $app->create($method);
     }
 
     /**
-     * create pay's gateway.
+     * Create a instance.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param string $gateway
+     * @param string $method
      *
-     * @return \Yansongda\Pay\Contracts\GatewayInterface
+     * @throws InvalidGatewayException
+     *
+     * @return GatewayApplicationInterface
      */
-    protected function createGateway($gateway)
+    protected function create($method): GatewayApplicationInterface
     {
-        if (!file_exists(__DIR__.'/Gateways/'.ucfirst($this->drivers).'/'.ucfirst($gateway).'Gateway.php')) {
-            throw new InvalidArgumentException("Gateway [$gateway] is not supported.");
+        $gateway = __NAMESPACE__.'\\Gateways\\'.Str::studly($method);
+
+        if (class_exists($gateway)) {
+            return self::make($gateway);
         }
 
-        $gateway = __NAMESPACE__.'\\Gateways\\'.ucfirst($this->drivers).'\\'.ucfirst($gateway).'Gateway';
-
-        return $this->build($gateway);
+        throw new InvalidGatewayException("Gateway [{$method}] Not Exists");
     }
 
     /**
-     * build pay's gateway.
+     * Make a gateway.
      *
-     * @author JasonYan <me@yansongda.cn>
+     * @author yansongda <me@yansonga.cn>
      *
      * @param string $gateway
      *
-     * @return \Yansongda\Pay\Contracts\GatewayInterface
+     * @throws InvalidGatewayException
+     *
+     * @return GatewayApplicationInterface
      */
-    protected function build($gateway)
+    protected function make($gateway): GatewayApplicationInterface
     {
-        return new $gateway($this->config->get($this->drivers));
+        $app = new $gateway($this->config);
+
+        if ($app instanceof GatewayApplicationInterface) {
+            return $app;
+        }
+
+        throw new InvalidGatewayException("Gateway [{$gateway}] Must Be An Instance Of GatewayApplicationInterface");
+    }
+
+    /**
+     * Register log service.
+     *
+     * @author yansongda <me@yansongda.cn>
+     *
+     * @throws Exception
+     */
+    protected function registerLogService()
+    {
+        $logger = Log::createLogger(
+            $this->config->get('log.file'),
+            'yansongda.pay',
+            $this->config->get('log.level', 'warning'),
+            $this->config->get('log.type', 'daily'),
+            $this->config->get('log.max_file', 30)
+        );
+
+        Log::setLogger($logger);
+    }
+
+    /**
+     * Register event service.
+     *
+     * @author yansongda <me@yansongda.cn>
+     *
+     * @return void
+     */
+    protected function registerEventService()
+    {
+        Events::setDispatcher(Events::createDispatcher());
+
+        Events::addSubscriber(new KernelLogSubscriber());
     }
 }

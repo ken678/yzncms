@@ -2,40 +2,51 @@
 
 namespace Yansongda\Pay\Gateways\Wechat;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Yansongda\Pay\Events;
+use Yansongda\Pay\Exceptions\GatewayException;
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
+use Yansongda\Pay\Exceptions\InvalidSignException;
 
-class WapGateway extends Wechat
+class WapGateway extends Gateway
 {
     /**
-     * get trade type config.
+     * Pay an order.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @return string
+     * @param string $endpoint
+     * @param array  $payload
+     *
+     * @throws GatewayException
+     * @throws InvalidArgumentException
+     * @throws InvalidSignException
+     *
+     * @return RedirectResponse
      */
-    protected function getTradeType()
+    public function pay($endpoint, array $payload): RedirectResponse
     {
-        return 'MWEB';
+        $payload['trade_type'] = $this->getTradeType();
+
+        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Wechat', 'Wap', $endpoint, $payload));
+
+        $mweb_url = $this->preOrder($payload)->get('mweb_url');
+
+        $url = is_null(Support::getInstance()->return_url) ? $mweb_url : $mweb_url.
+                        '&redirect_url='.urlencode(Support::getInstance()->return_url);
+
+        return RedirectResponse::create($url);
     }
 
     /**
-     * pay a order.
+     * Get trade type config.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param array $config_biz
-     *
      * @return string
      */
-    public function pay(array $config_biz = [])
+    protected function getTradeType(): string
     {
-        if (is_null($this->user_config->get('app_id'))) {
-            throw new InvalidArgumentException('Missing Config -- [app_id]');
-        }
-
-        $data = $this->preOrder($config_biz);
-
-        return is_null($this->user_config->get('return_url')) ? $data['mweb_url'] : $data['mweb_url'].
-                        '&redirect_url='.urlencode($this->user_config->get('return_url'));
+        return 'MWEB';
     }
 }

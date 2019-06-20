@@ -2,37 +2,48 @@
 
 namespace Yansongda\Pay\Gateways\Wechat;
 
+use Symfony\Component\HttpFoundation\Request;
+use Yansongda\Pay\Events;
+use Yansongda\Pay\Exceptions\GatewayException;
 use Yansongda\Pay\Exceptions\InvalidArgumentException;
+use Yansongda\Pay\Exceptions\InvalidSignException;
+use Yansongda\Supports\Collection;
 
-class ScanGateway extends Wechat
+class ScanGateway extends Gateway
 {
     /**
-     * get trade type config.
+     * Pay an order.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @return string
+     * @param string $endpoint
+     * @param array  $payload
+     *
+     * @throws GatewayException
+     * @throws InvalidArgumentException
+     * @throws InvalidSignException
+     *
+     * @return Collection
      */
-    protected function getTradeType()
+    public function pay($endpoint, array $payload): Collection
     {
-        return 'NATIVE';
+        $payload['spbill_create_ip'] = Request::createFromGlobals()->server->get('SERVER_ADDR');
+        $payload['trade_type'] = $this->getTradeType();
+
+        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Wechat', 'Scan', $endpoint, $payload));
+
+        return $this->preOrder($payload);
     }
 
     /**
-     * pay a order using modelTWO.
+     * Get trade type config.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param array $config_biz
-     *
      * @return string
      */
-    public function pay(array $config_biz = [])
+    protected function getTradeType(): string
     {
-        if (is_null($this->user_config->get('app_id'))) {
-            throw new InvalidArgumentException('Missing Config -- [app_id]');
-        }
-
-        return $this->preOrder($config_biz)['code_url'];
+        return 'NATIVE';
     }
 }

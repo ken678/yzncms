@@ -2,46 +2,43 @@
 
 namespace Yansongda\Pay\Gateways\Alipay;
 
-class PosGateway extends Alipay
+use Yansongda\Pay\Contracts\GatewayInterface;
+use Yansongda\Pay\Events;
+use Yansongda\Pay\Exceptions\GatewayException;
+use Yansongda\Pay\Exceptions\InvalidConfigException;
+use Yansongda\Pay\Exceptions\InvalidSignException;
+use Yansongda\Supports\Collection;
+
+class PosGateway implements GatewayInterface
 {
     /**
-     * get method config.
+     * Pay an order.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @return string
+     * @param string $endpoint
+     * @param array  $payload
+     *
+     * @throws GatewayException
+     * @throws InvalidConfigException
+     * @throws InvalidSignException
+     *
+     * @return Collection
      */
-    protected function getMethod()
+    public function pay($endpoint, array $payload): Collection
     {
-        return 'alipay.trade.pay';
-    }
+        $payload['method'] = 'alipay.trade.pay';
+        $payload['biz_content'] = json_encode(array_merge(
+            json_decode($payload['biz_content'], true),
+            [
+                'product_code' => 'FACE_TO_FACE_PAYMENT',
+                'scene'        => 'bar_code',
+            ]
+        ));
+        $payload['sign'] = Support::generateSign($payload);
 
-    /**
-     * get productCode config.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
-     */
-    protected function getProductCode()
-    {
-        return 'FACE_TO_FACE_PAYMENT';
-    }
+        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Alipay', 'Pos', $endpoint, $payload));
 
-    /**
-     * pay a order.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @param array  $config_biz
-     * @param string $scene
-     *
-     * @return array|bool
-     */
-    public function pay(array $config_biz = [], $scene = 'bar_code')
-    {
-        $config_biz['scene'] = $scene;
-
-        return $this->getResult($config_biz, $this->getMethod());
+        return Support::requestApi($payload);
     }
 }
