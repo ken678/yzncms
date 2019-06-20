@@ -83,7 +83,7 @@ class Info extends AdminBase
     {
         $id = $this->request->param('id', 0);
         $formid = $this->request->param('formid', 0);
-        $fieldList = $this->Formguide_Model->getFieldList($formid, $id);
+        $fieldList = $this->Formguide_Model->getFieldInfo($formid, $id);
         $this->assign([
             'fieldList' => $fieldList,
         ]);
@@ -96,6 +96,8 @@ class Info extends AdminBase
         foreach ($fieldList as $k => $v) {
             if ($v['type'] == "text" || $v['type'] == "textarea" || $v['type'] == "number") {
                 $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "' },\n";
+            } elseif ($v['type'] == "datetime") {
+                $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "',templet: function(d){ return layui.formatDateTime(d." . $v['name'] . ") } },\n";
             }
         }
         return $htmlstr;

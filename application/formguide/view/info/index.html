@@ -33,7 +33,7 @@ layui.use('table', function() {
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'id', width: 60, title: 'ID' },
-                {$formStr}
+                {$formStr|raw}
                 { field: 'ip',width:120,title: 'IP' },
                 { field: 'inputtime',width:180,title: '创建时间' },
                 { fixed: 'right',width: 120,title: '操作', templet: '#barTool' }

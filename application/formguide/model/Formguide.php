@@ -53,11 +53,11 @@ class Formguide extends Cms_Model
     }
 
     //
-    public function getFieldList($modelId, $id = null)
+    public function getFieldInfo($modelId, $id = null)
     {
+
         $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,isadd,iscore,ifsystem,ifrequire,setting");
         if (!empty($list)) {
-            //编辑信息时查询出已有信息
             if ($id) {
                 $modelInfo = Db::name('Model')->where('id', $modelId)->field('tablename,type')->find();
                 $dataInfo = Db::name($modelInfo['tablename'])->where('id', $id)->find();
@@ -66,7 +66,7 @@ class Formguide extends Cms_Model
                 if ($value['iscore']) {
                     unset($list[$key]);
                 }
-
+                //核心字段做标记
                 if ($value['ifsystem']) {
                     $value['fieldArr'] = 'modelField';
                     if (isset($dataInfo[$value['name']])) {
@@ -79,29 +79,25 @@ class Formguide extends Cms_Model
                     }
                 }
 
-                //扩展配置
                 $value['setting'] = unserialize($value['setting']);
                 $value['options'] = $value['setting']['options'];
 
                 if ('' != $value['options']) {
                     $value['options'] = parse_attr($value['options']);
                 }
-                if ($value['type'] == 'select') {
-                    $value['value'] = empty($value['value']) ? '' : $value['options'][$value['value']];
-                }
                 if ($value['type'] == 'checkbox') {
-                    $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
+                    $value['value'] = $value['value'];
                 }
+                if ($value['type'] == 'image') {
+                    $value['value'] = !empty($value['value']) ? '<a href="' . get_file_path($value['value']) . '" target="_blank">[图片]</a>' : '';
+                }
+                //选项类型
+                if ($value['type'] == 'radio' || $value['type'] == 'radio' || $value['type'] == 'select') {
+                    $value['value'] = !empty($value['value']) ? $value['options'][$value['value']] : '';
+                }
+
                 if ($value['type'] == 'datetime') {
                     $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
-                }
-                if ($value['type'] == 'date') {
-                    $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
-                }
-
-                if ($value['type'] == 'Ueditor') {
-                    $value['value'] = htmlspecialchars_decode($value['value']);
-
                 }
             }
         }

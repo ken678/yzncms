@@ -16,7 +16,7 @@
   	{volist name="fieldList" id="vo"}
     <tr>
       <td>{$vo.title}</td>
-      <td>{$vo.value}</td>
+      <td>{$vo.value|raw}</td>
     </tr>
     {/volist}
   </tbody>
