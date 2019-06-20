@@ -51,65 +51,6 @@ class Attachments extends Adminbase
         return $this->fetch();
     }
 
-    /**
-     * @param string $type 类型
-     * @param $config
-     * @return \think\response\Json
-     */
-    protected function showFileList($type = '')
-    {
-        /* 获取参数 */
-        $size = input('get.size/d', 0);
-        $start = input('get.start/d', 0);
-        $allowExit = input('get.exit', '');
-        if ($size == 0) {
-            $size = 20;
-        }
-        /* 判断类型 */
-        switch ($type) {
-            /* 列出附件 */
-            case 'listfile':
-                $allowExit = '' == $allowExit ? config('upload_file_ext') : $allowExit;
-                break;
-            /* 列出图片 */
-            case 'listimage':
-            default:
-                $allowExit = '' == $allowExit ? config('upload_image_ext') : $allowExit;
-        }
-
-        /* 获取附件列表 */
-        $filelist = Attachment_Model::order('id desc')->where('ext', 'in', $allowExit)->where('status', 1)->limit($start, $size)->column('id,path,create_time,name,size');
-        if (empty($filelist)) {
-            return json(array(
-                "state" => "没有找到附件",
-                "list" => [],
-                "start" => $start,
-                "total" => 0
-            ));
-        }
-        $uploadUrl = config('public_url');
-        $list = [];
-        $i = 0;
-        foreach ($filelist as $value) {
-            $list[$i]['id'] = $value['id'];
-            $list[$i]['url'] = $uploadUrl . 'uploads/' . $value['path'];
-            $list[$i]['name'] = $value['name'];
-            $list[$i]['size'] = format_bytes($value['size']);
-            $list[$i]['mtime'] = $value['create_time'];
-            $i++;
-        }
-
-        /* 返回数据 */
-        $result = array(
-            "state" => "SUCCESS",
-            "list" => $list,
-            "start" => $start,
-            "total" => Attachment_Model::where('ext', 'in', $allowExit)->count(),
-        );
-        return json($result);
-
-    }
-
     public function delete()
     {
         $ids = $this->request->param('ids/a', null);
