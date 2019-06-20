@@ -1,0 +1,132 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">添加字段</div>
+    <div class="layui-card-body">
+        <blockquote class="layui-elem-quote"><p>默认以下字段名称已存在，请不要建立同名的字段：<br>id、catid、title、keywords、description、flag、listsorder、uid、hits、inputtime、updatetime、status、did、content</p></blockquote>
+        <form class="layui-form" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">字段名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" lay-verify="required" placeholder="字段名称" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">字母、数字组成，并且仅能字母开头</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字段标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" lay-verify="required" placeholder="字段标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字段描述</label>
+                <div class="layui-input-inline w300">
+                    <textarea name="remark" placeholder="字段的相关描述" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字段类型</label>
+                <div class="layui-input-inline">
+                    <select name="type" lay-filter="type" lay-verify="required">
+                        <option></option>
+                        {volist name="fieldType" id="vo"}
+                        <option value="{$vo.name}" data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字段定义</label>
+                <div class="layui-input-inline w300">
+                    <input type="text" name="setting[define]" lay-verify="required" autocomplete="off" placeholder="字段定义" class="layui-input" id="define">
+                </div>
+            </div>
+            <div id="options" style="display:none">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选项</label>
+                    <div class="layui-input-inline w300">
+                        <textarea name="setting[options]" placeholder="值:描述
+值:描述
+值:描述
+....." class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">筛选字段</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="setting[filtertype]" value="1" title="是">
+                        <input type="radio" name="setting[filtertype]" value="0" title="否">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字段默认值</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="setting[value]" lay-verify="value" autocomplete="off" placeholder="默认插入字段的值" class="layui-input">
+                </div>
+            </div>
+            {if $modelType==2}
+            <div class="layui-form-item">
+                <label class="layui-form-label">主表字段</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="ifsystem" value="1" title="是" checked>
+                    <input type="radio" name="ifsystem" value="0" title="否">
+                </div>
+            </div>
+            {else}
+            <input type="hidden" name="ifsystem" value="1" />
+            {/if}
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否必填</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="ifrequire" value="1" title="是" checked>
+                    <input type="radio" name="ifrequire" value="0" title="否">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">显示</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="isadd" value="1" title="是" checked>
+                    <input type="radio" name="isadd" value="0" title="否">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="status" value="1" title="启用" checked>
+                    <input type="radio" name="status" value="0" title="禁用">
+                </div>
+            </div>
+            <input name="modelid" type="hidden" value="{$modelid}" />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use(['layer', 'form'], function() {
+    var layer = layui.layer,
+        form = layui.form;
+    form.on('select(type)', function(data) {
+        $('#define').val($(data.elem).find("option:selected").attr("data-define"));
+        var ifoption = $(data.elem).find("option:selected").attr("data-ifoption");
+        var ifstring = $(data.elem).find("option:selected").attr("data-ifstring");
+
+        //选项字段手动和关联隐显
+        if (ifoption == '1') {
+            $('#options').show();
+            //$('#autoOptions').show();
+        } else {
+            $('#options').hide();
+            //$('#autoOptions').hide();
+        }
+    });
+});
+</script>
+{/block}
