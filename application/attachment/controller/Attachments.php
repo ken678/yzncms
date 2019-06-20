@@ -28,6 +28,7 @@ class Attachments extends Adminbase
     protected function initialize()
     {
         parent::initialize();
+        $this->Attachment_Model = new Attachment_Model;
         $this->uploadUrl = config('public_url') . 'uploads/';
         $this->uploadPath = config('upload_path');
     }
@@ -109,33 +110,23 @@ class Attachments extends Adminbase
 
     }
 
-    public function delete($id = '')
+    public function delete()
     {
-        if ($this->request->isPost()) {
-            $ids = input('post.ids/a', null, 'intval');
-            if (empty($ids)) {
-                $this->error('没有勾选需要删除的文件~');
-            }
-            $Attachment = model('Attachment');
-            try {
-                $Attachment->deleteFile($ids);
-            } catch (\Exception $ex) {
-                $this->error($ex->getMessage());
-            }
-            $this->success('文件删除成功~');
-        } else {
-            $id = intval($id);
-            if ($id <= 0) {
-                $this->error('参数错误~');
-            }
-            $Attachment = model('Attachment');
-            try {
-                $Attachment->deleteFile($id);
-            } catch (\Exception $ex) {
-                $this->error($ex->getMessage());
-            }
-            $this->success('文件删除成功~');
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids)) {
+            $this->error('请选择需要删除的附件！');
         }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        foreach ($ids as $id) {
+            try {
+                $this->Attachment_Model->deleteFile($id);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+        }
+        $this->success('文件删除成功~');
     }
 
     /**
