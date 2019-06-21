@@ -27,7 +27,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">字段类型</label>
                 <div class="layui-input-inline">
-                    <select name="type" lay-filter="type" lay-verify="required">
+                    <select name="type" lay-filter="fieldtype" lay-verify="required">
                         <option></option>
                         {volist name="fieldType" id="vo"}
                         <option value="{$vo.name}" data-define="{$vo.default_define}" data-ifoption="{$vo.ifoption}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
@@ -39,6 +39,17 @@
                 <label class="layui-form-label">字段定义</label>
                 <div class="layui-input-inline w300">
                     <input type="text" name="setting[define]" lay-verify="required" autocomplete="off" placeholder="字段定义" class="layui-input" id="define">
+                </div>
+                <div class="layui-input-inline">
+                    <select lay-filter="fasttype">
+                        <option data-define="">快速选择</option>
+                        <option data-define="varchar(255) NOT NULL DEFAULT ''">255个字符串以内</option>
+                        <option data-define="int(7) NOT NULL DEFAULT '0'">10位以内纯数字</option>
+                        <option data-define="tinyint(2) NOT NULL DEFAULT '0'">2位以内纯数字</option>
+                        <option data-define="text NOT NULL">常用文本文档</option>
+                        <option data-define="decimal(10,2) unsigned NOT NULL">价格</option>
+                        <option data-define="mediumtext NOT NULL">巨型文本文档</option>
+                    </select>
                 </div>
             </div>
             <div id="options" style="display:none">
@@ -120,7 +131,7 @@
 layui.use(['layer', 'form'], function() {
     var layer = layui.layer,
         form = layui.form;
-    form.on('select(type)', function(data) {
+    form.on('select(fieldtype)', function(data) {
         $('#define').val($(data.elem).find("option:selected").attr("data-define"));
         var ifoption = $(data.elem).find("option:selected").attr("data-ifoption");
         var ifstring = $(data.elem).find("option:selected").attr("data-ifstring");
@@ -130,14 +141,14 @@ layui.use(['layer', 'form'], function() {
         } else {
             $('#ifsearch').hide();
         }
-        //选项字段手动和关联隐显
         if (ifoption == '1') {
             $('#options').show();
-            //$('#autoOptions').show();
         } else {
             $('#options').hide();
-            //$('#autoOptions').hide();
         }
+    });
+    form.on('select(fasttype)', function(data) {
+        $('#define').val($(data.elem).find("option:selected").attr("data-define"));
     });
 });
 </script>
