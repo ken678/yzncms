@@ -94,10 +94,10 @@ class Info extends AdminBase
     {
         $htmlstr = "";
         foreach ($fieldList as $k => $v) {
-            if ($v['type'] == "text" || $v['type'] == "textarea" || $v['type'] == "number") {
-                $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "' },\n";
-            } elseif ($v['type'] == "datetime") {
+            if ($v['type'] == "datetime") {
                 $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "',templet: function(d){ return layui.formatDateTime(d." . $v['name'] . ") } },\n";
+            } elseif ($v['type'] != "image" && $v['type'] != "images" && $v['type'] != "file" && $v['type'] != "files") {
+                $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "' },\n";
             }
         }
         return $htmlstr;

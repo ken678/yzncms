@@ -66,36 +66,19 @@ class Formguide extends Cms_Model
                 if ($value['iscore']) {
                     unset($list[$key]);
                 }
-                //核心字段做标记
-                if ($value['ifsystem']) {
-                    $value['fieldArr'] = 'modelField';
-                    if (isset($dataInfo[$value['name']])) {
-                        $value['value'] = $dataInfo[$value['name']];
-                    }
-                } else {
-                    $value['fieldArr'] = 'modelFieldExt';
-                    if (isset($dataInfoExt[$value['name']])) {
-                        $value['value'] = $dataInfoExt[$value['name']];
-                    }
+
+                if (isset($dataInfo[$value['name']])) {
+                    $value['value'] = $dataInfo[$value['name']];
                 }
 
                 $value['setting'] = unserialize($value['setting']);
                 $value['options'] = $value['setting']['options'];
-
                 if ('' != $value['options']) {
                     $value['options'] = parse_attr($value['options']);
                 }
-                if ($value['type'] == 'checkbox') {
-                    $value['value'] = $value['value'];
+                if ($value['type'] == 'image' || $value['type'] == 'file') {
+                    $value['value'] = !empty($value['value']) ? '<a href="' . get_file_path($value['value']) . '" target="_blank">[查看]</a>' : '';
                 }
-                if ($value['type'] == 'image') {
-                    $value['value'] = !empty($value['value']) ? '<a href="' . get_file_path($value['value']) . '" target="_blank">[图片]</a>' : '';
-                }
-                //选项类型
-                if ($value['type'] == 'radio' || $value['type'] == 'radio' || $value['type'] == 'select') {
-                    $value['value'] = !empty($value['value']) ? $value['options'][$value['value']] : '';
-                }
-
                 if ($value['type'] == 'datetime') {
                     $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
                 }

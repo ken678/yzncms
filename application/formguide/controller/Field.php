@@ -26,6 +26,8 @@ class Field extends AdminBase
     protected function initialize()
     {
         parent::initialize();
+        //允许使用的字段列表
+        $this->banfie = array("text", "checkbox", "textarea", "radio", "select", "image", "number", "Ueditor", "color", "file");
         $this->modelfield = new Model_Field;
     }
 
@@ -62,7 +64,7 @@ class Field extends AdminBase
             $this->success('新增成功', Cookie::get('__forward__'));
         } else {
             $fieldid = $this->request->param('id/d', 0);
-            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
+            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,default_define,ifoption,ifstring');
             $modelInfo = Db::name('model')->where('id', $fieldid)->find();
             $this->assign(
                 [
@@ -105,7 +107,7 @@ class Field extends AdminBase
             if (empty($modedata)) {
                 $this->error('该模型不存在！');
             }
-            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
+            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,default_define,ifoption,ifstring');
             $this->assign([
                 'data' => $fieldData,
                 'fieldid' => $fieldid,
