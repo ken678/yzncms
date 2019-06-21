@@ -33,6 +33,7 @@ class Attachments extends Adminbase
         $this->uploadPath = config('upload_path');
     }
 
+    //附件列表页
     public function index()
     {
         if ($this->request->isAjax()) {
@@ -51,6 +52,7 @@ class Attachments extends Adminbase
         return $this->fetch();
     }
 
+    //附件删除
     public function delete()
     {
         $ids = $this->request->param('ids/a', null);

@@ -209,10 +209,32 @@ class Upload extends Base
                     ]);
             }
         }
-        // 判断附件是否已存在
-        /*if ($file_exists = AttachmentModel::get(['md5' => $file->hash('md5')])) {
 
-        }*/
+        // 判断附件是否已存在
+        if ($file_exists = Attachment_Model::get(['md5' => $file->hash('md5')])) {
+            if ($file_exists['driver'] == 'local') {
+                $file_path = $this->uploadUrl . $file_exists['path'];
+            } else {
+                $file_path = $file_exists['path'];
+            }
+            switch ($from) {
+                case 'ueditor':
+                    return json([
+                        "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
+                        "url" => $file_path, // 返回的地址
+                        "title" => $file_exists['name'], // 附件名
+                    ]);
+                    break;
+                default:
+                    return json([
+                        'code' => 0,
+                        'info' => $file_exists['name'] . '上传成功',
+                        'class' => 'success',
+                        'id' => $file_exists['id'],
+                        'path' => $file_path,
+                    ]);
+            }
+        }
 
         // 判断附件大小是否超过限制
         if ($size_limit > 0 && ($file->getInfo('size') > $size_limit)) {
