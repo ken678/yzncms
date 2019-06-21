@@ -188,6 +188,8 @@ EOF;
     {
         $default = [
             'modelid' => $modelid,
+            'pattern' => '',
+            'errortips' => '',
             'create_time' => request()->time(),
             'update_time' => request()->time(),
             'ifsystem' => 1,

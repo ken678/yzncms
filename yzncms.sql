@@ -403,6 +403,8 @@ CREATE TABLE `yzn_model_field` (
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT '字段名',
   `title` varchar(30) NOT NULL DEFAULT '' COMMENT '别名',
   `remark` tinytext NOT NULL COMMENT '字段提示',
+  `pattern` varchar(255) NOT NULL COMMENT '数据校验正则',
+  `errortips` varchar(255) NOT NULL COMMENT '数据校验未通过的提示信息',
   `type` varchar(20) NOT NULL DEFAULT '' COMMENT '字段类型',
   `setting` mediumtext,
   `ifsystem` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否主表字段 1 是',
@@ -417,7 +419,7 @@ CREATE TABLE `yzn_model_field` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
 
 -- ----------------------------
 -- Table structure for `yzn_terms`
