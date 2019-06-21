@@ -169,7 +169,7 @@ class Cms extends Modelbase
         if ([] != $ignoreField) {
             $query = $query->where('name', 'not in', $ignoreField);
         }
-        $filedTypeList = $query->column('name,title,type,ifsystem,ifrequire');
+        $filedTypeList = $query->column('name,title,type,ifsystem,ifrequire,pattern,errortips');
         //字段规则
         $fieldRule = Db::name('field_type')->column('vrule', 'name');
         foreach ($filedTypeList as $name => $vo) {
@@ -212,6 +212,10 @@ class Cms extends Modelbase
             //数据必填验证
             if ($vo['ifrequire'] && empty(${$arr}[$name])) {
                 throw new \Exception("'" . $vo['title'] . "'必须填写~");
+            }
+            //正则校验
+            if ($vo['pattern'] && !Validate::regex(${$arr}[$name], $vo['pattern'])) {
+                throw new \Exception("'" . $vo['title'] . "'" . (!empty($vo['errortips']) ? $vo['errortips'] : '正则校验失败') . "");
             }
             //数据格式验证
             if (!empty($fieldRule[$vo['type']]) && !empty(${$arr}[$name]) && !Validate::{$fieldRule[$vo['type']]}(${$arr}[$name])) {

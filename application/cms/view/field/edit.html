@@ -52,6 +52,32 @@
                     </select>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据校验</label>
+                <div class="layui-input-inline w300">
+                    <input type="text" name="pattern" autocomplete="off" placeholder="正则校验数据合法性，留空不校验" class="layui-input" value="{$data.pattern}" id="pattern">
+                </div>
+                <div class="layui-input-inline">
+                    <select lay-filter="pattern">
+                        <option data-define="">常用正则</option>
+                        <option data-define="/^[0-9.-]+$/">数字</option>
+                        <option data-define="/^[0-9-]+$/">整数</option>
+                        <option data-define="/^[a-z]+$/i">字母</option>
+                        <option data-define="/^[0-9a-z]+$/i">数字+字母</option>
+                        <option data-define="/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/">E-mail</option>
+                        <option data-define="/^[0-9]{5,20}$/">QQ</option>
+                        <option data-define="/^http:\/\//">超级链接</option>
+                        <option data-define="/^(1)[0-9]{10}$/">手机号码</option>
+                        <option data-define="/^[0-9-]{6,13}$/">电话号码</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">提示信息</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="errortips" placeholder="数据校验未通过的提示信息" class="layui-input" value="{$data.errortips}">
+                </div>
+            </div>
             <div id="options" {if !$fieldType[$data['type']]['ifoption']}style="display:none"{/if}>
                 <div class="layui-form-item">
                     <label class="layui-form-label">选项</label>
@@ -141,6 +167,9 @@ layui.use(['layer', 'form'], function() {
     });
     form.on('select(fasttype)', function(data) {
         $('#define').val($(data.elem).find("option:selected").attr("data-define"));
+    });
+    form.on('select(pattern)', function(data) {
+        $('#pattern').val($(data.elem).find("option:selected").attr("data-define"));
     });
 });
 </script>
