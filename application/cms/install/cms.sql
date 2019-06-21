@@ -48,8 +48,8 @@ CREATE TABLE `yzn_tags` (
   `seo_description` varchar(255) NOT NULL DEFAULT '' COMMENT 'seo简介',
   `usetimes` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '信息总数',
   `hits` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '点击数',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `tag` (`tag`),
@@ -64,7 +64,7 @@ CREATE TABLE `yzn_tags_content` (
   `modelid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
   `contentid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '信息ID',
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
-  `updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   KEY `modelid` (`modelid`,`contentid`),
   KEY `tag` (`tag`(10))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='tags数据表';

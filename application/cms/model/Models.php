@@ -159,8 +159,8 @@ class Models extends Modelbase
 				`username` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
 				`sysadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否后台添加',
                 `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
-				`inputtime` int(11) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
-				`updatetime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+				`inputtime` int(10) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
+				`updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
                 `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
 				PRIMARY KEY (`id`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
@@ -288,14 +288,14 @@ EOF;
                 'title' => '创建时间',
                 'type' => 'datetime',
                 'listorder' => 200,
-                'setting' => "a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'setting' => "a:3:{s:6:\"define\";s:37:\"int(10) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
                 'name' => 'updatetime',
                 'title' => '更新时间',
                 'type' => 'datetime',
                 'listorder' => 200,
-                'setting' => "a:3:{s:6:\"define\";s:37:\"int(11) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'setting' => "a:3:{s:6:\"define\";s:37:\"int(10) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
                 'iscore' => 1,
             ],
             [
