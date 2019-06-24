@@ -73,7 +73,7 @@ class MemberBase extends HomeBase
     protected function fetch($template = '', $vars = [], $config = [])
     {
         $Theme = empty(Config::get('theme')) ? 'default' : Config::get('theme');
-        $this->view->config('view_path', TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . 'member' . DIRECTORY_SEPARATOR);
+        $this->view->config('view_path', TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . $this->request->module() . DIRECTORY_SEPARATOR);
         return $this->view->fetch($template, $vars, $config);
     }
 
