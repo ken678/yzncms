@@ -23,6 +23,7 @@ use think\facade\Validate;
 
 class Index extends MemberBase
 {
+    protected $noNeedLogin = ['login', 'register', 'logout', 'forget'];
 
     //初始化
     protected function initialize()

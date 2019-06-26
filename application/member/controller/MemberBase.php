@@ -53,9 +53,9 @@ class MemberBase extends HomeBase
             return true;
         }
         //该类方法不需要验证是否登陆
-        if ($this->request->module() == 'member' && $this->request->controller() == 'Index' && in_array($this->request->action(), array('login', 'register', 'logout', 'forget'))) {
-            return true;
-        };
+        /*if ($this->request->module() == 'member' && $this->request->controller() == 'Index' && in_array($this->request->action(), array('login', 'register', 'logout', 'forget'))) {
+        return true;
+        };*/
         if ($this->userid) {
             //  获取用户信息
             $this->userinfo = User::instance()->getInfo();
