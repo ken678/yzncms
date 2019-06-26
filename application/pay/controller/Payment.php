@@ -34,9 +34,9 @@ class Payment extends Adminbase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
-
-            $total = $this->Account_Model->order('id', 'desc')->count();
-            $data = $this->Account_Model->page($page, $limit)->select();
+            $map = $this->buildparams();
+            $total = $this->Account_Model->where($map)->order('id', 'desc')->count();
+            $data = $this->Account_Model->where($map)->page($page, $limit)->select();
             return json(["code" => 0, "count" => $total, "data" => $data]);
         } else {
             return $this->fetch();

@@ -32,6 +32,12 @@ class Account extends Model
         return $status[$value];
     }
 
+    public function getPayTypeAttr($value)
+    {
+        $status = ['offline' => '线下支付', 'recharge' => '后台充值', 'selfincome' => '自助获取', 'online' => '在线支付'];
+        return $status[$value];
+    }
+
     public function getPaytimeAttr($value)
     {
         if (!empty($value)) {
@@ -59,8 +65,8 @@ class Account extends Model
                 'type' => 1,
                 'money' => $money,
                 'payamount' => 0,
-                'pay_type' => 'recharge',
-                'payment' => trim($epay[$pay_type]['name']),
+                'pay_type' => 'online',
+                'payment' => trim($epay[$pay_type]['title']),
                 'ip' => request()->ip(1),
                 'status' => 'unpay',
             ];
