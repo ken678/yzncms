@@ -26,6 +26,21 @@ class Account extends Model
     protected $createTime = 'addtime';
     protected $updateTime = false;
 
+    public function getStatusAttr($value)
+    {
+        $status = ['succ' => '交易成功', 'failed' => '交易失败', 'error' => '交易错误', 'progress' => '交易处理中', 'timeout' => '交易超时', 'cancel' => '交易取消', 'waitting' => '等待付款', 'unpay' => '未付款'];
+        return $status[$value];
+    }
+
+    public function getPaytimeAttr($value)
+    {
+        if (!empty($value)) {
+            return date('Y-m-d H:i:s', $value);
+        } else {
+            return '';
+        }
+    }
+
     /**
      * 发起订单支付
      * @param float  $money
@@ -41,6 +56,7 @@ class Account extends Model
                 'trade_sn' => date("Ymdhis") . sprintf("%08d", $uid) . mt_rand(1000, 9999),
                 'uid' => $uid,
                 'username' => $username,
+                'type' => 1,
                 'money' => $money,
                 'payamount' => 0,
                 'pay_type' => 'recharge',
@@ -49,7 +65,6 @@ class Account extends Model
                 'status' => 'unpay',
             ];
             $order = self::create($data);
-            exit;
             $notifyurl = request()->root(true) . '/pay/index/epay/type/notify/pay_type/' . $pay_type;
             $returnurl = request()->root(true) . '/pay/index/epay/type/return/pay_type/' . $pay_type;
             \app\pay\library\Service::submitOrder($money, $order->trade_sn, $pay_type, "充值{$money}元", $notifyurl, $returnurl);
@@ -69,23 +84,20 @@ class Account extends Model
      */
     public function settle($orderid, $payamount = null, $memo = '')
     {
-        $order = self::getByOrderid($orderid);
+        $order = self::getByTradeSn($orderid);
         if (!$order) {
             return false;
         }
-        if ($order['status'] != 'succ') {
-            $order->payamount = $payamount ? $payamount : $order->amount;
+        if ($order->getData('status') != 'succ') {
+            $order->money = $payamount ? $payamount : $order->money;
             $order->paytime = time();
             $order->status = 'succ';
-            $order->memo = $memo;
             $order->save();
-
-            // 最新版本可直接使用User::money($order->user_id, $order->amount, '充值');来更新
             // 更新会员余额
-            $user = Member::get($order->user_id);
+            $user = Member::get($order->uid);
             if ($user) {
-                $before = $user->money;
-                $after = $user->money + $order->amount;
+                $before = $user->amount;
+                $after = $user->amount + $order->money;
                 //更新会员信息
                 $user->save(['money' => $after]);
                 //写入日志

@@ -14,7 +14,8 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">配置</a>
+    <a href='' class="layui-btn layui-btn-xs">改价</a>
+    <a href='' class="layui-btn layui-btn-xs layui-btn-danger confirm layui-batch-all">删除</a>
 </script>
 {/block}
 {block name="script"}
@@ -37,10 +38,10 @@ layui.use(['table', 'laydate'], function() {
                 { field: 'trade_sn',title: '订单号'},
                 { field: 'username',  width: 120,title: '用户名'},
                 { field: 'payment',  width: 120,title: '支付方式'},
-                { field: 'money', width: 120, title: '支付金额' },
+                { field: 'money', width: 120, title: '支付金额',templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>'},
                 { field: 'addtime', width: 200,title: '创建时间' },
-                { field: 'paytime', width: 200,title: '支付时间' },
-                { field: 'status', width: 120, align: "center", title: '订单状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">启用</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>'},
+                { field: 'paytime', width: 200,title: '支付时间',templet: '<div>{{#  if(d.paytime){ }} {{d.paytime}} {{#  } else { }} / {{#  } }}</div>' },
+                { field: 'status', width: 120, align: "center", title: '订单状态',templet:'<div>{{#  if(d.status=="交易成功"){ }} <button type="button" class="layui-btn layui-btn-xs">{{d.status}}</button> {{#  } else { }} <button type="button" class="layui-btn layui-btn-xs layui-btn-danger">{{d.status}}</button> {{#  } }}</div>'},
                 { fixed: 'right', width: 350, title: '操作', toolbar: '#barTool' }
             ]
         ],

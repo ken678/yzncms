@@ -113,8 +113,7 @@ class Service
         }
         try {
             $pay = Pay::$type(self::getConfig($type));
-            $data = $type == 'wechat' ? file_get_contents("php://input") : request()->post('', null, 'trim');
-            $data = $pay->verify($data);
+            $data = $pay->verify();
             if ($type == 'alipay') {
                 if (in_array($data['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
                     return $pay;

@@ -32,6 +32,7 @@ class Index extends MemberBase
     //充值
     public function pay()
     {
+        $this->Account_Model->settle('20190626125153000000012228', '1');
         if ($this->request->isPost()) {
             $money = $this->request->request('money');
             $pay_type = $this->request->request('pay_type');
@@ -70,6 +71,7 @@ class Index extends MemberBase
                 $payamount = $paytype == 'alipay' ? $data['total_amount'] : $data['total_fee'] / 100;
                 $this->Account_Model->settle($data['out_trade_no'], $payamount);
             } catch (Exception $e) {
+                //写入日志
             }
             return $pay->success()->send();
         } else {
