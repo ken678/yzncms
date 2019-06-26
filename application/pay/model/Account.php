@@ -48,6 +48,29 @@ class Account extends Model
     }
 
     /**
+     * 添加积分/金钱记录
+     */
+    public function _add($type, $money, $pay_type, $uid, $username, $usernote = '', $adminnote = '', $status = 'succ')
+    {
+        $data = array();
+        $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
+        $data['trade_sn'] = date("Ymdhis") . sprintf("%08d", $userid) . mt_rand(1000, 9999);
+        $data['uid'] = $uid;
+        $data['username'] = $username;
+        $data['money'] = $money;
+        $data['paytime'] = time();
+        $data['usernote'] = $usernote;
+        $data['pay_type'] = isset($pay_type) ? trim($pay_type) : 'selfincome';
+        $data['payment'] = '后台充值';
+        $data['ip'] = request()->ip(1);
+        $data['adminnote'] = isset($adminnote) ? trim($adminnote) : '';
+        $data['status'] = isset($status) ? trim($status) : 'succ';
+        $order = self::create($data);
+        return true;
+
+    }
+
+    /**
      * 发起订单支付
      * @param float  $money
      * @param string $paytype

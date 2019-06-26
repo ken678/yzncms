@@ -17,20 +17,42 @@ namespace app\pay\controller;
 use app\common\controller\Adminbase;
 use app\pay\model\Account as Account_Model;
 use app\pay\model\Payment as Payment_Model;
+use app\pay\model\Spend as Spend_Model;
+use think\Db;
 
 class Payment extends Adminbase
 {
     protected function initialize()
     {
         parent::initialize();
-        $this->Payment = new Payment_Model;
+        $this->Payment_Model = new Payment_Model;
         $this->Account_Model = new Account_Model;
+        $this->Spend_Model = new Spend_Model;
 
     }
 
     public function modify_deposit()
     {
         if ($this->request->isAjax()) {
+            $data = $this->request->post();
+            $result = $this->validate($data, 'Account');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            $userinfo = Db::name('member')->where('username', trim($data['username']))->find();
+            if ($userinfo) {
+                if ($data['pay_unit']) {
+                    //增加
+                    $this->Account_Model->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->_userinfo['username']);
+                } else {
+                    //减少
+                    $this->Spend_Model->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], $data['usernote']);
+                }
+                $this->success("充值成功！");
+            } else {
+                $this->error('用户不存在！');
+            }
+
         } else {
             return $this->fetch();
         }
@@ -43,8 +65,8 @@ class Payment extends Adminbase
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
             $map = $this->buildparams();
-            $total = $this->Account_Model->where($map)->order('id', 'desc')->count();
-            $data = $this->Account_Model->where($map)->page($page, $limit)->select();
+            $total = $this->Account_Model->where($map)->count();
+            $data = $this->Account_Model->where($map)->page($page, $limit)->order('id', 'desc')->select();
             return json(["code" => 0, "count" => $total, "data" => $data]);
         } else {
             return $this->fetch();
@@ -55,7 +77,7 @@ class Payment extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $data = $this->Payment->select();
+            $data = $this->Payment_Model->select();
             return json(["code" => 0, "data" => $data]);
         } else {
             return $this->fetch();
@@ -69,7 +91,7 @@ class Payment extends Adminbase
             $id = $this->request->param('id/d', 0);
             $config = $this->request->param('config/a');
             $data['config'] = serialize($config);
-            if ($this->Payment->allowField(true)->save($data, ['id' => $id])) {
+            if ($this->Payment_Model->allowField(true)->save($data, ['id' => $id])) {
                 cache('Pay_Config', null);
                 $this->success("更新成功！");
             } else {
@@ -77,7 +99,7 @@ class Payment extends Adminbase
             }
         } else {
             $id = $this->request->param('id/d', 0);
-            $info = $this->Payment->where('id', $id)->find();
+            $info = $this->Payment_Model->where('id', $id)->find();
             $this->assign('info', $info);
             return $this->fetch($info['name']);
         }
