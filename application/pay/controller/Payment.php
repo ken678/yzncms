@@ -28,6 +28,14 @@ class Payment extends Adminbase
 
     }
 
+    public function modify_deposit()
+    {
+        if ($this->request->isAjax()) {
+        } else {
+            return $this->fetch();
+        }
+    }
+
     //入账列表
     public function pay_list()
     {

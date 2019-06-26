@@ -29,6 +29,20 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label>沙箱模式</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="config[mode]" value="1" title="启用" {if $info.config.mode==1}checked{/if}>
+                    <input type="radio" name="config[mode]" value="0" title="禁用" {if $info.config.mode==0}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label>日志</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="config[log]" value="1" title="启用" {if $info.config.log==1}checked{/if}>
+                    <input type="radio" name="config[log]" value="0" title="禁用" {if $info.config.log==0}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label>状态</label>
                 <div class="layui-form-field-label">
                     <input type="radio" name="status" value="1" title="启用" checked>

@@ -167,14 +167,16 @@ class Service
     {
         $config = cache('Pay_Config');
         $config = isset($config[$type]['config']) ? $config[$type]['config'] : $config['wechat']['config'];
-        $config['mode'] = 'dev';
-        /*if ($config['log']) {
-        $config['log'] = [
-        'file' => LOG_PATH . '/epaylogs/' . $type . '-' . date("Y-m-d") . '.log',
-        'level' => 'debug',
-        ];
+        if ($config['mode']) {
+            $config['mode'] = 'dev';
         }
-        if (isset($config['cert_client']) && substr($config['cert_client'], 0, 6) == '/epay/') {
+        if ($config['log']) {
+            $config['log'] = [
+                'file' => \think\facade\Env::get('runtime_path') . 'log/epaylogs/' . $type . '-' . date("Y-m-d") . '.log',
+                'level' => 'debug',
+            ];
+        }
+        /*if (isset($config['cert_client']) && substr($config['cert_client'], 0, 6) == '/epay/') {
         $config['cert_client'] = ADDON_PATH . $config['cert_client'];
         }
         if (isset($config['cert_key']) && substr($config['cert_key'], 0, 6) == '/epay/') {
