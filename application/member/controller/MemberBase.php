@@ -28,6 +28,8 @@ class MemberBase extends HomeBase
     protected $memberConfig = array();
     //会员组缓存
     protected $memberGroup = array();
+    //无需登录的方法,同时也就不需要鉴权了
+    protected $noNeedLogin = [];
     //初始化
     protected function initialize()
     {
@@ -46,7 +48,7 @@ class MemberBase extends HomeBase
     final public function check_member()
     {
         $this->userid = User::instance()->id;
-        if (substr($this->request->module(), 0, 7) == 'public_') {
+        if (substr($this->request->module(), 0, 7) == 'public_' || in_array(strtolower($this->request->action()), $this->noNeedLogin)) {
             //所有以public_开头的方法都无需检测是否登陆
             return true;
         }
