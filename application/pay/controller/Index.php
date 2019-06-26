@@ -32,7 +32,6 @@ class Index extends MemberBase
     //充值
     public function pay()
     {
-        $this->Account_Model->settle('20190626125153000000012228', '1');
         if ($this->request->isPost()) {
             $money = $this->request->request('money');
             $pay_type = $this->request->request('pay_type');

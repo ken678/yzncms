@@ -32,8 +32,12 @@ class Payment extends Adminbase
     public function pay_list()
     {
         if ($this->request->isAjax()) {
-            $data = $this->Account_Model->select();
-            return json(["code" => 0, "data" => $data]);
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 1);
+
+            $total = $this->Account_Model->order('id', 'desc')->count();
+            $data = $this->Account_Model->page($page, $limit)->select();
+            return json(["code" => 0, "count" => $total, "data" => $data]);
         } else {
             return $this->fetch();
         }

@@ -99,7 +99,7 @@ class Account extends Model
                 $before = $user->amount;
                 $after = $user->amount + $order->money;
                 //更新会员信息
-                $user->save(['money' => $after]);
+                $user->save(['amount' => $after]);
                 //写入日志
                 //MoneyLog::create(['user_id' => $order->user_id, 'money' => $order->amount, 'before' => $before, 'after' => $after, 'memo' => '充值']);
             }
