@@ -53,6 +53,7 @@ class Index extends MemberBase
         }
     }
 
+    //入账记录
     public function pay_list()
     {
         if ($this->request->isAjax()) {
@@ -70,6 +71,7 @@ class Index extends MemberBase
 
     }
 
+    //入账记录
     public function spend_list()
     {
         if ($this->request->isAjax()) {
@@ -84,13 +86,16 @@ class Index extends MemberBase
         } else {
             return $this->fetch('/spend_list');
         }
+    }
+
+    //积分兑换
+    public function change_credit()
+    {
+        return $this->fetch('/change_credit');
 
     }
 
-    /**
-     * 企业支付通知和回调
-     * @throws \think\exception\DbException
-     */
+    //企业支付通知和回调
     public function epay()
     {
         $type = $this->request->param('type');
