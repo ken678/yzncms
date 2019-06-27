@@ -19,12 +19,34 @@ use \think\Model;
 class Spend extends Model
 {
     protected $name = 'pay_spend';
+    // 定义时间戳字段名
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'addtime';
+    protected $updateTime = false;
+
+    public function getIpAttr($value)
+    {
+        return long2ip($value);
+    }
 
     /**
      * 消费积分/金钱记录
      */
-    public function _spend($type, $value, $pay_type, $userid = '', $username = '', $remarks = '')
+    public function _spend($type, $money, $pay_type, $uid = '', $username = '', $msg = '', $remarks = '')
     {
+        $data = array();
+        $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
+        $data['creat_at'] = date('YmdHis') . mt_rand(1000, 9999);
+        $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
+        $data['uid'] = isset($uid) && intval($uid) ? intval($uid) : 0;
+        $data['username'] = isset($username) ? trim($username) : '';
+        $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
+        $data['msg'] = isset($msg) ? trim($msg) : '';
+        $data['remarks'] = isset($remarks) ? trim($remarks) : '';
+        $data['ip'] = request()->ip(1);
+        if (self::create($data)) {
+
+        }
     }
 
 }

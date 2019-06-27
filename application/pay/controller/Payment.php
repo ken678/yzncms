@@ -46,7 +46,7 @@ class Payment extends Adminbase
                     $this->Account_Model->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->_userinfo['username']);
                 } else {
                     //减少
-                    $this->Spend_Model->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], $data['usernote']);
+                    $this->Spend_Model->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], '后台充值', $data['usernote']);
                 }
                 $this->success("充值成功！");
             } else {
