@@ -17,6 +17,7 @@ namespace app\pay\controller;
 use app\member\controller\MemberBase;
 use app\pay\model\Account as Account_Model;
 use app\pay\model\Payment as Payment_Model;
+use app\pay\model\Spend as Spend_Model;
 
 class Index extends MemberBase
 {
@@ -27,6 +28,7 @@ class Index extends MemberBase
         parent::initialize();
         $this->Payment_Model = new Payment_Model;
         $this->Account_Model = new Account_Model;
+        $this->Spend_Model = new Spend_Model;
     }
 
     //充值
@@ -49,6 +51,40 @@ class Index extends MemberBase
             $this->assign('paytypeList', $paytypeList);
             return $this->fetch('/pay');
         }
+    }
+
+    public function pay_list()
+    {
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 1);
+
+            $_list = $this->Account_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
+            $total = $this->Account_Model->where('uid', $this->userinfo['id'])->count();
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+
+        } else {
+            return $this->fetch('/pay_list');
+        }
+
+    }
+
+    public function spend_list()
+    {
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 1);
+
+            $_list = $this->Spend_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
+            $total = $this->Spend_Model->where('uid', $this->userinfo['id'])->count();
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+
+        } else {
+            return $this->fetch('/spend_list');
+        }
+
     }
 
     /**
