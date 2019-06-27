@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\pay\model;
 
+use think\Db;
 use \think\Model;
 
 class Spend extends Model
@@ -32,7 +33,7 @@ class Spend extends Model
     /**
      * 消费积分/金钱记录
      */
-    public function _spend($type, $money, $pay_type, $uid = '', $username = '', $msg = '', $remarks = '')
+    public function _spend($type, $money, $uid = '', $username = '', $msg = '', $remarks = '')
     {
         $data = array();
         $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
@@ -45,8 +46,16 @@ class Spend extends Model
         $data['remarks'] = isset($remarks) ? trim($remarks) : '';
         $data['ip'] = request()->ip(1);
         if (self::create($data)) {
-
+            if ($data['type'] == 1) {
+                //金钱方式消费
+                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setDec('amount', $data['money']);
+            } else {
+                //积分方式消费
+                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setDec('point', $data['money']);
+            }
+            return true;
         }
+        return false;
     }
 
 }

@@ -7,10 +7,10 @@
             <form class="layui-form search-from" method="get">
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" id="laydate" placeholder="搜索支付时间范围">
+                        <input type="text" class="layui-input" id="laydate" placeholder="搜索创建时间范围">
                     </div>
                     <div class="layui-input-inline">
-                        <input type="text" name="keyword" class="layui-input searchVal" placeholder="请输入订单号">
+                        <input type="text" name="keyword" class="layui-input searchVal" placeholder="请输入消费流水号">
                     </div>
                     <a class="layui-btn search_btn" data-type="reload">搜索</a>
                 </div>
@@ -64,7 +64,7 @@ layui.use(['table', 'laydate'], function() {
             },
             where: {
                 search_field: 'creat_at',
-                keyword: '$(".searchVal").val()',
+                keyword: $(".searchVal").val(),
                 filter_time: 'addtime',
                 filter_time_range: $("#laydate").val()
             }

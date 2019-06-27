@@ -39,7 +39,7 @@ INSERT INTO `yzn_pay_payment` VALUES ('2', 'wechat', '微信','icon-weixin', '�
 DROP TABLE IF EXISTS `yzn_pay_spend`;
 CREATE TABLE `yzn_pay_spend` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '消费ID',
-  `creat_at` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '消费流水号',
+  `creat_at` char(20) NOT NULL COMMENT '消费流水号',
   `uid` int(11) unsigned NOT NULL COMMENT '用户ID',
   `username` char(16) NOT NULL COMMENT '用户名',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1金钱or2点数',
