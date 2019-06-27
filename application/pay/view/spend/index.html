@@ -1,7 +1,7 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-header">入账记录</div>
+    <div class="layui-card-header">消费记录</div>
     <div class="layui-card-body">
         <blockquote class="layui-elem-quote quoteBox">
             <form class="layui-form search-from" method="get">
@@ -24,13 +24,9 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm layui-iframe" href='{:url("payment/modify_deposit")}' lay-data="{width:'520px',height:'500px',title:'在线充值'}">在线充值</a>
-      <a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url('spend/index')}">消费记录</a>
+      <a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url('payment/pay_list')}">入账记录</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('payment/index')}">支付模块</a>
     </div>
-</script>
-<script type="text/html" id="barTool">
-    <a href='' class="layui-btn layui-btn-xs">改价</a>
-    <a href='' class="layui-btn layui-btn-xs layui-btn-danger confirm layui-batch-all">删除</a>
 </script>
 {/block}
 {block name="script"}
@@ -47,19 +43,16 @@ layui.use(['table', 'laydate'], function() {
     table.render({
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
-        url: '{:url("pay_list")}',
+        url: '{:url("index")}',
         cols: [
             [
-                { field: 'trade_sn', title: '订单号' },
+                { field: 'creat_at', title: '消费流水号' },
                 { field: 'username', width: 120, title: '用户名' },
-                { field: 'pay_type', width: 120, title: '业务方式' },
-                { field: 'payment', width: 120, title: '支付方式' },
-                { field: 'money', width: 120, title: '支付金额', templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>' },
-                { field: 'addtime', width: 180, title: '创建时间' },
-                { field: 'paytime', width: 180, title: '支付时间', templet: '<div>{{#  if(d.paytime){ }} {{d.paytime}} {{#  } else { }} / {{#  } }}</div>' },
-                { field: 'ip', width: 180, title: 'IP' },
-                { field: 'status', width: 120, align: "center", title: '订单状态', templet: '<div>{{#  if(d.status=="交易成功"){ }} <button type="button" class="layui-btn layui-btn-xs">{{d.status}}</button> {{#  } else { }} <button type="button" class="layui-btn layui-btn-xs layui-btn-danger">{{d.status}}</button> {{#  } }}</div>' },
-                { fixed: 'right', width: 150,title: '操作', toolbar: '#barTool' }
+                { field: 'money', width: 120, title: '消费金额', templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>' },
+                { field: 'addtime', width: 200, title: '创建时间' },
+                { field: 'ip', width: 200, title: 'IP' },
+                { field: 'msg', width: 200, title: '备注说明' },
+                { field: 'type', width: 80, title: '类型' },
             ]
         ],
         page: {}
@@ -71,9 +64,9 @@ layui.use(['table', 'laydate'], function() {
                 curr: 1 //重新从第 1 页开始
             },
             where: {
-                search_field: 'trade_sn',
+                search_field: 'creat_at',
                 keyword: '$(".searchVal").val()',
-                filter_time: 'paytime',
+                filter_time: 'addtime',
                 filter_time_range: $("#laydate").val()
             }
         })

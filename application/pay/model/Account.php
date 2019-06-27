@@ -16,7 +16,8 @@ namespace app\pay\model;
 
 use app\member\model\Member;
 use app\member\service\User as home_user;
-use \think\Model;
+use think\Db;
+use think\Model;
 
 class Account extends Model
 {
@@ -47,6 +48,11 @@ class Account extends Model
         }
     }
 
+    public function getIpAttr($value)
+    {
+        return long2ip($value);
+    }
+
     /**
      * 添加积分/金钱记录
      */
@@ -55,9 +61,9 @@ class Account extends Model
         $data = array();
         $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
         $data['trade_sn'] = date("Ymdhis") . sprintf("%08d", $userid) . mt_rand(1000, 9999);
-        $data['uid'] = $uid;
-        $data['username'] = $username;
-        $data['money'] = $money;
+        $data['uid'] = isset($uid) && intval($uid) ? intval($uid) : 0;
+        $data['username'] = isset($username) ? trim($username) : '';
+        $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
         $data['paytime'] = time();
         $data['usernote'] = $usernote;
         $data['pay_type'] = isset($pay_type) ? trim($pay_type) : 'selfincome';
@@ -65,9 +71,17 @@ class Account extends Model
         $data['ip'] = request()->ip(1);
         $data['adminnote'] = isset($adminnote) ? trim($adminnote) : '';
         $data['status'] = isset($status) ? trim($status) : 'succ';
-        $order = self::create($data);
-        return true;
-
+        if (self::create($data)) {
+            if ($data['type'] == 1) {
+                //金钱方式充值
+                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('amount', $data['money']);
+            } else {
+                //积分方式充值
+                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('point', $data['money']);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
