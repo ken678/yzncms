@@ -9,4 +9,5 @@ return array(
     'openverification' => '1',
     'defualtpoint' => '0',
     'defualtamount' => '0',
+    'rmb_point_rate' => '10',
 );
