@@ -27,10 +27,10 @@ class Homebase extends Base
         parent::initialize();
     }
 
-    protected function fetch($template = '', $vars = [], $config = [])
+    protected function fetch($template = '', $vars = [], $config = [], $renderContent = false)
     {
         $Theme = empty(Config::get('theme')) ? 'default' : Config::get('theme');
         $this->view->config('view_path', TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . $this->request->module() . DIRECTORY_SEPARATOR);
-        return $this->view->fetch($template, $vars, $config);
+        return $this->view->fetch($template, $vars, $config, $renderContent);
     }
 }
