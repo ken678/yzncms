@@ -95,7 +95,7 @@ class Category extends Adminbase
                     break;
                 //链接
                 case 3:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'link';
                     break;
                 default:

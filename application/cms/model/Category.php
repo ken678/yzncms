@@ -33,7 +33,6 @@ class Category extends Model
         }
         //序列化setting数据
         $data['setting'] = serialize($data['setting']);
-
         $catid = self::create($data, $fields);
         if ($catid) {
             cache('Category', null);
