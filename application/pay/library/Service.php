@@ -16,7 +16,7 @@
 namespace app\pay\library;
 
 use Exception;
-use think\facade\Response;
+//use think\facade\Response;
 use Yansongda\Pay\Pay;
 
 class Service
@@ -67,30 +67,30 @@ class Service
                 case 'web':
                     //电脑支付,跳转
                     $html = $pay->web($params)->send();
-                    //Response::create($html)->send();
                     break;
                 case 'wap':
                     //手机网页支付,跳转
                     $html = $pay->wap($params)->send();
-                    Response::create($html)->send();
-                    break;
-                case 'app':
-                    //APP支付,直接返回字符串
-                    $html = $pay->app($params)->send();
-                    break;
-                case 'scan':
-                    //扫码支付,直接返回字符串
-                    $html = $pay->pos($params)->send();
-                    break;
-                case 'pos':
-                    //刷卡支付,直接返回字符串
-                    //刷卡支付必须要有auth_code
-                    $params['auth_code'] = $auth_code;
-                    $html = $pay->scan($params)->send();
                     break;
                 default:
             }
         } else {
+            //如果是移动端自动切换为wap
+            $method = $request->isMobile() ? 'wap' : $method;
+            //创建支付对象
+            $pay = Pay::wechat($config);
+            $params = [
+                'out_trade_no' => $orderid, //你的订单号
+                'body' => $title,
+                'total_fee' => $amount * 100, //单位分
+            ];
+            switch ($method) {
+                case 'web':
+                    //电脑支付,跳转到自定义展示页面
+                    $html = $pay->scan($params);
+                    break;
+                default:
+            }
 
         }
         //返回字符串
@@ -169,12 +169,16 @@ class Service
         $config = isset($config[$type]['config']) ? $config[$type]['config'] : $config['wechat']['config'];
         if ($config['mode']) {
             $config['mode'] = 'dev';
+        } else {
+            unset($config['mode']);
         }
         if ($config['log']) {
             $config['log'] = [
                 'file' => \think\facade\Env::get('runtime_path') . 'log/epaylogs/' . $type . '-' . date("Y-m-d") . '.log',
                 'level' => 'debug',
             ];
+        } else {
+            unset($config['log']);
         }
         /*if (isset($config['cert_client']) && substr($config['cert_client'], 0, 6) == '/epay/') {
         $config['cert_client'] = ADDON_PATH . $config['cert_client'];
