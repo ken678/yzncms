@@ -23,6 +23,7 @@ class Uninstall extends UninstallBase
     private $modelTabList = array(
         'member',
         'member_group',
+        'member_content',
     );
 
     //卸载

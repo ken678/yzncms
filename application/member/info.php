@@ -61,6 +61,7 @@ return array(
     'tables' => [
         'yzn_member',
         'yzn_member_group',
+        'yzn_member_content',
 
     ],
 );
