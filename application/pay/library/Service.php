@@ -16,6 +16,7 @@
 namespace app\pay\library;
 
 use Exception;
+use think\facade\Session;
 //use think\facade\Response;
 use Yansongda\Pay\Pay;
 
@@ -87,7 +88,24 @@ class Service
             switch ($method) {
                 case 'web':
                     //电脑支付,跳转到自定义展示页面
-                    $html = $pay->scan($params);
+                    //$html = $pay->scan($params);
+                    Session::set("wechatorderdata", [
+                        'out_trade_no' => $orderid, //你的订单号
+                        'body' => $title,
+                        'total_fee' => $amount * 100, //单位分
+                        "return_code" => "SUCCESS",
+                        "return_msg" => "OK",
+                        "appid" => "wx12xxxxxxxxa1ec74",
+                        "mch_id" => "150xxxxxx041",
+                        "nonce_str" => "IfbciLd3G81cR7Sx",
+                        "sign" => "6EA3D3xxxxxxxxxC606EE812A4",
+                        "prepay_id" => "wx01165418xxxxxxxx21071165855200",
+                        "trade_type" => "NATIVE",
+                        "code_url" => "weixin://wxpay/bizpayurl?pr=4aXtmGv",
+                    ]);
+                    $url = url('pay/api/wechat');
+                    header("location:{$url}");
+                    exit;
                     break;
                 default:
             }
