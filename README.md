@@ -14,7 +14,7 @@ Yzncms(又名御宅男cms)是完全开源的项目，基于ThinkPHP5.1.X最新�
 ```
 支持系统：WinXP/Win2003/Vista/Win7/Win8/Linux
 WEB服务器：iis/apache/nginx
-PHP版本：php >= 5.6 (支持php7)
+PHP版本：php >= 5.6 (推荐php7.0+)
 数据库：MySQL >= 5.0
 ```
 [空间要求]
