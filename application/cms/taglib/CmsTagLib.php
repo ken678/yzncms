@@ -83,7 +83,7 @@ class CmsTagLib
 
         $catid = isset($data['catid']) ? trim($data['catid']) : '';
 
-        $data['where'] = isset($data['where']) ? $data['where'] : "status=1";
+        $data['where'] = isset($data['where']) ? $data['where'] . " AND status=1" : "status=1";
         if (!isset($data['limit'])) {
             $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
         }
@@ -91,7 +91,7 @@ class CmsTagLib
             $data['order'] = array('updatetime' => 'DESC', 'id' => 'DESC');
         }
         if (isset($data['flag'])) {
-            $data['where'] = "FIND_IN_SET('" . intval($data['flag']) . "',flag)";
+            $data['where'] = $data['where'] . " AND FIND_IN_SET('" . intval($data['flag']) . "',flag)";
         }
         $data['field'] = isset($data['field']) ? $data['field'] : '*';
         $moreifo = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
