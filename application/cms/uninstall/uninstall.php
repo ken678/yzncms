@@ -22,6 +22,7 @@ class Uninstall extends UninstallBase
     //固定相关表
     private $modelTabList = array(
         'category',
+        'category_priv',
         'page',
         'tags',
         'tags_content',
