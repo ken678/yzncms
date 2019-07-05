@@ -35,10 +35,18 @@ class Index extends MemberBase
     public function pay()
     {
         if ($this->request->isPost()) {
-            $money = $this->request->request('money');
-            $pay_type = $this->request->request('pay_type');
-            if ($money <= 0) {
-                $this->error('充值金额不正确');
+            $money = $this->request->request('money/d');
+            $pay_type = $this->request->request('pay_type/s');
+            if (!$money || $money < 0) {
+                $this->error("支付金额必须大于0");
+            }
+            if (!$pay_type || !in_array($pay_type, ['alipay', 'wechat'])) {
+                $this->error("支付类型不能为空");
+            }
+            //验证码
+            if (!captcha_check($this->request->post('verify/s', ''))) {
+                $this->error('验证码输入错误！');
+                return false;
             }
             try {
                 $this->Account_Model->submitOrder($money, $pay_type ? $pay_type : 'wechat');
@@ -91,7 +99,24 @@ class Index extends MemberBase
     //积分兑换
     public function change_credit()
     {
-        return $this->fetch('/change_credit');
+        if ($this->request->isPost()) {
+            $money = $this->request->param('money/d', 0);
+            if (!$money || $money < 0) {
+                $this->error("兑换金额必须大于0");
+            }
+            $point = $money * $this->memberConfig['rmb_point_rate'];
+            //扣除金钱
+            if ($this->Spend_Model->_spend(1, floatval($money), $this->userinfo['id'], $this->userinfo['username'], '积分兑换')) {
+                //增加积分
+                \think\Db::name('member')->where(['id' => $this->userinfo['id'], 'username' => $this->userinfo['username']])->setInc('point', $point);
+                $this->success("兑换成功！");
+            } else {
+                $this->error('兑换失败！');
+            }
+
+        } else {
+            return $this->fetch('/change_credit');
+        }
 
     }
 
