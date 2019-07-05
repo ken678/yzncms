@@ -84,6 +84,22 @@ class Payment extends Adminbase
         }
     }
 
+    //删除入账记录
+    public function delete()
+    {
+        $ids = $this->request->param('ids/a');
+        empty($ids) && $this->error('参数错误！');
+        if (!is_array($ids)) {
+            $ids = array($ids);
+        }
+        $res = $this->Account_Model->where('id', 'in', $ids)->delete();
+        if ($res !== false) {
+            $this->success('删除成功！');
+        } else {
+            $this->error('删除失败！');
+        }
+    }
+
     //模块配置
     public function edit()
     {
