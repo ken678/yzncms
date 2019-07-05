@@ -100,16 +100,18 @@ class Payment extends Adminbase
         }
     }
 
-    //模块配置
+    //支付模块配置
     public function edit()
     {
         if ($this->request->isPost()) {
+            $data = [];
             $id = $this->request->param('id/d', 0);
             $config = $this->request->param('config/a');
+            $data['status'] = $this->request->param('status/d', 0);
             $data['config'] = serialize($config);
             if ($this->Payment_Model->allowField(true)->save($data, ['id' => $id])) {
                 cache('Pay_Config', null);
-                $this->success("更新成功！");
+                $this->success("更新成功！", url('index'));
             } else {
                 $this->success("更新失败！");
             }

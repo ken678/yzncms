@@ -45,8 +45,8 @@
             <div class="layui-form-item">
                 <label>状态</label>
                 <div class="layui-form-field-label">
-                    <input type="radio" name="status" value="1" title="启用" checked>
-                    <input type="radio" name="status" value="0" title="禁用">
+                    <input type="radio" name="status" value="1" title="启用" {if $info.status==1}checked{/if}>
+                    <input type="radio" name="status" value="0" title="禁用" {if $info.status==0}checked{/if}>
                 </div>
             </div>
             <input type="hidden" name="id" value="{$info.id}">

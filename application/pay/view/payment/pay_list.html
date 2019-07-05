@@ -71,7 +71,7 @@ layui.use(['table', 'laydate'], function() {
             },
             where: {
                 search_field: 'trade_sn',
-                keyword: '$(".searchVal").val()',
+                keyword: $(".searchVal").val(),
                 filter_time: 'paytime',
                 filter_time_range: $("#laydate").val()
             }
