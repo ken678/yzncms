@@ -1136,63 +1136,6 @@
     line-height: 26px;
 }
 
-/*留言*/
-.message h4 {
-    font-size: 16px;
-    color: #999;
-    margin: 30px 0 30px 0;
-    font-weight: normal;
-}
-
-.message input {
-    margin-bottom: 10px;
-    border: #CCC 1px solid;
-    padding: 10px 20px 10px 40px;
-    width: 200px;
-    font-size: 16px;
-    vertical-align: middle;
-}
-
-.message .field_title input {
-    background: url(../images/d1_05.png) 5px center no-repeat;
-}
-
-.message .field_phone input {
-    background: url(../images/d1_07.png) 5px center no-repeat;
-}
-
-.message .field_email input {
-    background: url(../images/d1_09.png) 5px center no-repeat;
-}
-
-.message .field_code input {
-    background: url(../images/d1_11.png) 5px center no-repeat;
-}
-
-.message .field_code img {
-    cursor: pointer;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    vertical-align: middle;
-}
-
-.message .field_content textarea {
-    margin-bottom: 10px;
-    width: 400px;
-    border: #CCC 1px solid;
-    padding: 15px 20px 15px 40px;
-    height: 120px;
-    font-size: 16px;
-    background: url(../images/d1_14.png) 5px 8px no-repeat;
-}
-
-.message [type="submit"] {
-    padding-left: 20px;
-    cursor: pointer;
-    border: #CCC 1px solid;
-    background: #21212d;
-    color: #fff;
-}
 
 /*案例*/
 .case_ny_list {
