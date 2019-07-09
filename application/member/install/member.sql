@@ -58,7 +58,6 @@ CREATE TABLE `yzn_member_content` (
   `content_id` int(10) NOT NULL COMMENT '信息ID',
   `uid` mediumint(8) NOT NULL COMMENT '会员ID',
   `username` char(16) NOT NULL COMMENT '用户名',
-  `integral` tinyint(1) NOT NULL COMMENT '是否赠送过点数',
   `create_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
