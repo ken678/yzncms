@@ -52,6 +52,45 @@ function cache($name, $value = '', $options = null)
 }
 
 /**
+ * 加载其他模块函数
+ */
+function fun($fun)
+{
+    list($module_name, $fun) = explode('@', $fun);
+    $path = APP_PATH . $module_name . DIRECTORY_SEPARATOR;
+    if (is_file($path . 'common.php')) {
+        include_once $path . 'common.php';
+    }
+    $params = func_get_args();
+    unset($params[0]);
+    $params = array_values($params);
+
+    /*if (!is_array($param)) {
+    $param = [$param];
+    }
+    $ReflectionFunc = new \ReflectionFunction($fun);
+    $depend = array();
+    foreach ($ReflectionFunc->getParameters() as $value) {
+    if (isset($param[$value->name])) {
+    $depend[] = $param[$value->name];
+    } elseif ($value->isDefaultValueAvailable()) {
+    $depend[] = $value->getDefaultValue();
+    } else {
+    $tmp = $value->getClass();
+    if (is_null($tmp)) {
+    throw new \Exception("Function parameters can not be getClass {$class}");
+    }
+    $depend[] = $this->get($tmp->getName());
+    }
+    }*/
+
+    if (function_exists($fun)) {
+        return call_user_func_array($fun, $params);
+    }
+    return null;
+}
+
+/**
  * 获取插件类的类名
  * @param $name 插件名
  * @param string $type 返回命名空间类型
