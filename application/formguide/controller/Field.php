@@ -132,4 +132,19 @@ class Field extends AdminBase
         $this->success("字段删除成功！");
     }
 
+    /**
+     * 排序
+     */
+    public function listorder()
+    {
+        $id = $this->request->param('id/d', 0);
+        $listorder = $this->request->param('value/d', 0);
+        $rs = Model_Field::update(['listorder' => $listorder], ['id' => $id], true);
+        if ($rs) {
+            $this->success("排序成功！");
+        } else {
+            $this->error("排序失败！");
+        }
+    }
+
 }
