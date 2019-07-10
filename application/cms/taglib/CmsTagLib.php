@@ -107,7 +107,7 @@ class CmsTagLib
             }
             $modelid = intval($data['modelid']);
         }
-        $result = model('Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
+        $result = model('cms/Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
         return $result;
     }
 
@@ -150,7 +150,7 @@ class CmsTagLib
         $return = Db::name('TagsContent')->where($where_str)->limit($data['limit'])->select();
         //读取文章信息
         foreach ($return as $k => $v) {
-            $r = model('Cms')->getContent($v['modelid'], "id =" . $v['contentid'], false, '*', $data['limit'], $data['page']);
+            $r = model('cms/Cms')->getContent($v['modelid'], "id =" . $v['contentid'], false, '*', $data['limit'], $data['page']);
             if ($r) {
                 $return[$k] = array_merge($v, $r);
             }
@@ -168,7 +168,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target="_blank" ' : ' target="_self" ';
-        $result = model('Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
+        $result = model('cms/Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
@@ -189,7 +189,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=\"_blank\" ' : '';
-        $result = model('Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
+        $result = model('cms/Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
