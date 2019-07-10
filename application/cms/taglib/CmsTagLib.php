@@ -35,8 +35,8 @@ class CmsTagLib
         //栏目id条件
         if (isset($attr['catid']) && (int) $attr['catid']) {
             $catid = (int) $attr['catid'];
-            if (getCategory($catid, 'child')) {
-                $catids_str = getCategory($catid, 'arrchildid');
+            if (Category_Model::getCategory($catid, 'child')) {
+                $catids_str = Category_Model::getCategory($catid, 'arrchildid');
                 $pos = strpos($catids_str, ',') + 1;
                 $catids_str = substr($catids_str, $pos);
                 array_push($where, "catid in(" . $catids_str . ")");
@@ -99,7 +99,7 @@ class CmsTagLib
         //如果设置了catid，则根据catid判断modelid,传入的modelid失效
         if ($catid) {
             //当前栏目信息
-            $catInfo = getCategory($catid);
+            $catInfo = Category_Model::getCategory($catid);
             $modelid = $catInfo['modelid'];
         } else {
             if (!isset($data['modelid'])) {
@@ -168,7 +168,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target="_blank" ' : ' target="_self" ';
-        $result = model('Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
+        $result = model('Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id <" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
@@ -189,7 +189,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=\"_blank\" ' : '';
-        $result = model('Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
+        $result = model('Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND id >" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
             $result['url'] = 'javascript:alert("' . $msg . '");';
