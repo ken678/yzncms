@@ -58,9 +58,12 @@ function filters($modelid)
     $data = get_filters_field($modelid);
     Request::filter('trim');
     $param = paramdecode(Request::param('condition'));
+
     $catid = Request::param('catid');
     $conditionParam = [];
     foreach ($data as $name => $rs) {
+        $all[0] = '不限';
+        $data[$name]['options'] = array_merge($all, $data[$name]['options']);
         //判断是否是单选条件
         $ifradio = 'checkbox' == $data[$name]['type'] ? false : true;
         if ($ifradio) {
@@ -110,6 +113,9 @@ function filters($modelid)
             }
             $conditionParam[$name]['options'][$k]['url'] = url('cms/index/lists', ['catid' => $catid, 'condition' => $conditionParam[$name]['options'][$k]['param']]);
             ksort($conditionParam[$name]['options']);
+        }
+        if (!isset($param[$rs['name']]) && empty($param[$rs['name']])) {
+            $conditionParam[$name]['options'][0]['active'] = true;
         }
     }
     return $conditionParam;
