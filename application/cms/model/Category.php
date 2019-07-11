@@ -96,49 +96,66 @@ class Category extends Model
     public function deleteCatid($catid)
     {
         if (!$catid) {
-            return false;
+            throw new \Exception("栏目ID不得为空！");
         }
-        $where = array();
         $catInfo = self::get($catid);
         //是否存在子栏目
         if ($catInfo['child']) {
-            $arrchildid = explode(",", $catInfo['arrchildid']);
-            unset($arrchildid[0]);
-            $catid = array_merge($arrchildid, array($catid));
+            throw new \Exception("栏目含有子栏目，不得删除！");
         }
-        $where = ['id' => $catid];
         //检查是否存在数据，存在数据不执行删除
-        if (is_array($catid)) {
-            $modeid = array();
-            foreach ($catid as $cid) {
-                $catinfo = getCategory($cid);
-                if ($catinfo['modelid'] && $catinfo['type'] == 2) {
-                    $modeid[$catinfo['modelid']] = $catinfo['modelid'];
-                }
-                foreach ($modeid as $mid) {
-                    $tbname = ucwords(getModel($mid, 'tablename'));
-                    if ($tbname && Db::name($tbname)->where(['catid' => $catid])->find()) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            $catinfo = getCategory($catid);
+        if ($catInfo['modelid'] && $catInfo['type'] == 2) {
             $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
-            //含资料无法删除
-            if ($tbname && $catinfo['type'] == 2 && Db::name($tbname)->where(["catid" => $catid])->find()) {
-                return false;
+            if ($tbname && Db::name($tbname)->where(['catid' => $catid])->find()) {
+                throw new \Exception("栏目含有信息，不得删除！");
             }
         }
-        $status = self::where($where)->delete();
-        //更新缓存
-        cache('Category', null);
-        if (false !== $status) {
-            //TD
-            return true;
-        } else {
-            return false;
-        }
+        self::where('id', $catid)->delete();
+        return true;
+        /*if (!$catid) {
+    return false;
+    }
+    $where = array();
+    $catInfo = self::get($catid);
+    //是否存在子栏目
+    if ($catInfo['child']) {
+    $arrchildid = explode(",", $catInfo['arrchildid']);
+    unset($arrchildid[0]);
+    $catid = array_merge($arrchildid, array($catid));
+    }
+    $where = ['id' => $catid];
+    //检查是否存在数据，存在数据不执行删除
+    if (is_array($catid)) {
+    $modeid = array();
+    foreach ($catid as $cid) {
+    $catinfo = getCategory($cid);
+    if ($catinfo['modelid'] && $catinfo['type'] == 2) {
+    $modeid[$catinfo['modelid']] = $catinfo['modelid'];
+    }
+    foreach ($modeid as $mid) {
+    $tbname = ucwords(getModel($mid, 'tablename'));
+    if ($tbname && Db::name($tbname)->where(['catid' => $catid])->find()) {
+    return false;
+    }
+    }
+    }
+    } else {
+    $catinfo = getCategory($catid);
+    $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
+    //含资料无法删除
+    if ($tbname && $catinfo['type'] == 2 && Db::name($tbname)->where(["catid" => $catid])->find()) {
+    return false;
+    }
+    }
+    $status = self::where($where)->delete();
+    //更新缓存
+    cache('Category', null);
+    if (false !== $status) {
+    //TD
+    return true;
+    } else {
+    return false;
+    }*/
     }
 
     /**

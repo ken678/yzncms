@@ -324,15 +324,22 @@ class Category extends Adminbase
     //删除栏目
     public function delete()
     {
-        $catid = $this->request->param('id/d');
-        if (!$catid) {
-            $this->error("请指定需要删除的栏目！");
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids)) {
+            $this->error('参数错误！');
         }
-        //这里需增加栏目条数item直接判断
-        if (false == $this->Category_Model->deleteCatid($catid)) {
-            $this->error("栏目含有信息，无法删除！");
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
         }
-        //$this->cache();
+        try {
+            foreach ($ids as $id) {
+                $this->Category_Model->deleteCatid($id);
+            }
+        } catch (\Exception $ex) {
+            $this->error($ex->getMessage());
+        }
+
+        $this->cache();
         $this->success("栏目删除成功！", url('cms/category/public_cache'));
     }
 
