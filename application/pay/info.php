@@ -50,10 +50,10 @@ return array(
             'action' => 'pay_cache',
         ],
     ],
-    // 数据表，请加表前缀yzn[有数据库表时必填]
+    // 数据表，不要加表前缀[有数据库表时必填]
     'tables' => [
-        'yzn_pay_account',
-        'yzn_pay_payment',
-        'yzn_pay_spend',
+        'pay_account',
+        'pay_payment',
+        'pay_spend',
     ],
 );

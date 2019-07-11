@@ -44,10 +44,10 @@ return array(
     ],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache' => [],
-    // 数据表，请加表前缀yzn[有数据库表时必填]
+    // 数据表，不要加表前缀[有数据库表时必填]
     'tables' => [
-        'yzn_message',
-        'yzn_message_data',
-        'yzn_message_group',
+        'message',
+        'message_data',
+        'message_group',
     ],
 );

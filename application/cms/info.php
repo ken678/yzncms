@@ -53,12 +53,12 @@ return array(
             'action' => 'cms_cache',
         ],
     ],
-    // 数据表，请加表前缀yzn[有数据库表时必填]
+    // 数据表，不要加表前缀[有数据库表时必填]
     'tables' => [
-        'yzn_category',
-        'yzn_category_priv',
-        'yzn_page',
-        'yzn_tags',
-        'yzn_tags_content',
+        'category',
+        'category_priv',
+        'page',
+        'tags',
+        'tags_content',
     ],
 );

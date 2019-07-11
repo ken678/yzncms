@@ -57,11 +57,11 @@ return array(
             'action' => 'membergroup_cache',
         ],
     ],
-    // 数据表，请加表前缀yzn[有数据库表时必填]
+    // 数据表，不要加表前缀[有数据库表时必填]
     'tables' => [
-        'yzn_member',
-        'yzn_member_group',
-        'yzn_member_content',
+        'member',
+        'member_group',
+        'member_content',
 
     ],
 );

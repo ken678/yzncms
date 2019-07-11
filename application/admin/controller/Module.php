@@ -83,14 +83,14 @@ class Module extends Adminbase
             // 检查数据表
             if (isset($config['tables']) && !empty($config['tables'])) {
                 foreach ($config['tables'] as $table) {
-                    if (Db::query("SHOW TABLES LIKE '{$table}'")) {
+                    if (Db::query("SHOW TABLES LIKE '" . config('database.prefix') . "{$table}'")) {
                         $table_check[] = [
-                            'table' => "{$table}",
+                            'table' => config('database.prefix') . "{$table}",
                             'result' => '<span class="text-danger">存在同名</span>',
                         ];
                     } else {
                         $table_check[] = [
-                            'table' => "{$table}",
+                            'table' => config('database.prefix') . "{$table}",
                             'result' => '<i class="iconfont icon-success text-success"></i>',
                         ];
                     }
