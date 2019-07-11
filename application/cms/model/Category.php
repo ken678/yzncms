@@ -101,7 +101,7 @@ class Category extends Model
         $where = array();
         $catInfo = self::get($catid);
         //是否存在子栏目
-        if ($catInfo['child'] && $catInfo['type'] == 2) {
+        if ($catInfo['child']) {
             $arrchildid = explode(",", $catInfo['arrchildid']);
             unset($arrchildid[0]);
             $catid = array_merge($arrchildid, array($catid));
