@@ -100,9 +100,12 @@ class Category extends Model
         }
         $catInfo = self::get($catid);
         //是否存在子栏目
-        if ($catInfo['child']) {
+        if (self::where('parentid', $catid)->find()) {
             throw new \Exception("栏目含有子栏目，不得删除！");
         }
+        /*if ($catInfo['child']) {
+        throw new \Exception("栏目含有子栏目，不得删除！");
+        }*/
         //检查是否存在数据，存在数据不执行删除
         if ($catInfo['modelid'] && $catInfo['type'] == 2) {
             $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
