@@ -20,6 +20,13 @@
   </div>
 </script>
 <script type="text/html" id="barTool">
+    {{# if(d.type=='radio' || d.type=='select'){ }}
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('{{d.name}}')['key']} 值：{:config('{{d.name}}')['value']}{/literal}">代码调用</a>
+    {{# } else if(d.type=='checkbox' || d.type=='array' || d.type=='images' || d.type=='files'){ }}
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{volist name=&quot;:config('{{d.name}}')&quot; id='vo'}  值：{$key}  描述：{$vo} <br> {/volist}{/literal}">代码调用</a>
+    {{# } else { }}
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('{{d.name}}')}{/literal}">代码调用</a>
+    {{# } }}
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
@@ -29,10 +36,11 @@
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
+layui.use(['table','clipboard'], function() {
     var table = layui.table,
         $ = layui.$,
-        form = layui.form;
+        form = layui.form,
+        clipboard =  layui.clipboard;
     table.render({
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
@@ -45,10 +53,19 @@ layui.use('table', function() {
                 { field: 'ftitle', width: 150, title: '类型' },
                 { field: 'update_time', width: 200, title: '更新时间', templet: function(d){ return layui.formatDateTime(d.update_time) }},
                 { field: 'status', title: '状态', width: 100, templet: '#switchTpl', unresize: true },
-                { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 180, title: '操作', toolbar: '#barTool' }
             ]
         ],
     });
+
+    var clipboard = new clipboard('.copy');
+    clipboard.on('success', function(e) {
+        layer.msg("复制成功");
+    });
+    clipboard.on('error', function(e) {
+        layer.msg("复制失败！请手动调用");
+    });
+
     //监听单元格编辑
     table.on('edit(dataTable)', function(obj) {
         var value = obj.value,data = obj.data;
