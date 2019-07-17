@@ -49,7 +49,7 @@ class Api extends HomeBase
                 $pay = Pay::wechat($config);
                 $result = $pay->find($orderData['out_trade_no']);
                 if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
-                    $this->success("", "", ['trade_state' => $result['trade_state']]);
+                    $this->success('', url('pay/index/pay_list'), ['trade_state' => $result['trade_state']]);
                 } else {
                     $this->error("查询失败");
                 }

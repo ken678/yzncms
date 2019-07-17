@@ -35,7 +35,7 @@ class Index extends MemberBase
     public function pay()
     {
         if ($this->request->isPost()) {
-            $money = $this->request->request('money/d');
+            $money = $this->request->request('money/f');
             $pay_type = $this->request->request('pay_type/s');
             if (!$money || $money < 0) {
                 $this->error("支付金额必须大于0");

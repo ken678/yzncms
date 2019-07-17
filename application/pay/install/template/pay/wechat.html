@@ -108,7 +108,7 @@
                                     $(".wechat-qrcode .paid").removeClass("hidden");
                                     $(".wechat-tips p").html("支付成功！<br>3秒后将自动跳转...");
                                     setTimeout(function() {
-                                        location.href = queryParams.return_url;
+                                        location.href = ret.url;
                                     }, 3000);
                                     clearInterval(si);
                                 } else if (data.trade_state == 'REFUND') {
