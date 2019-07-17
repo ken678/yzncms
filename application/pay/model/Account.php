@@ -54,37 +54,6 @@ class Account extends Model
     }
 
     /**
-     * 添加积分/金钱记录
-     */
-    public function _add($type, $money, $pay_type, $uid, $username, $usernote = '', $adminnote = '', $status = 'succ')
-    {
-        $data = array();
-        $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
-        $data['trade_sn'] = date("Ymdhis") . sprintf("%08d", $userid) . mt_rand(1000, 9999);
-        $data['uid'] = isset($uid) && intval($uid) ? intval($uid) : 0;
-        $data['username'] = isset($username) ? trim($username) : '';
-        $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
-        $data['paytime'] = time();
-        $data['usernote'] = $usernote;
-        $data['pay_type'] = isset($pay_type) ? trim($pay_type) : 'selfincome';
-        $data['payment'] = '后台充值';
-        $data['ip'] = request()->ip(1);
-        $data['adminnote'] = isset($adminnote) ? trim($adminnote) : '';
-        $data['status'] = isset($status) ? trim($status) : 'succ';
-        if (self::create($data)) {
-            if ($data['type'] == 1) {
-                //金钱方式充值
-                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('amount', $data['money']);
-            } else {
-                //积分方式充值
-                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('point', $data['money']);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * 发起订单支付
      * @param float  $money
      * @param string $paytype
@@ -116,6 +85,37 @@ class Account extends Model
             throw new Exception("支付方式不存在");
         }
 
+    }
+
+    /**
+     * 添加积分/金钱记录
+     */
+    public function _add($type, $money, $pay_type, $uid, $username, $usernote = '', $adminnote = '', $status = 'succ')
+    {
+        $data = array();
+        $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
+        $data['trade_sn'] = date("Ymdhis") . sprintf("%08d", $userid) . mt_rand(1000, 9999);
+        $data['uid'] = isset($uid) && intval($uid) ? intval($uid) : 0;
+        $data['username'] = isset($username) ? trim($username) : '';
+        $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
+        $data['paytime'] = time();
+        $data['usernote'] = $usernote;
+        $data['pay_type'] = isset($pay_type) ? trim($pay_type) : 'selfincome';
+        $data['payment'] = '后台充值';
+        $data['ip'] = request()->ip(1);
+        $data['adminnote'] = isset($adminnote) ? trim($adminnote) : '';
+        $data['status'] = isset($status) ? trim($status) : 'succ';
+        if (self::create($data)) {
+            if ($data['type'] == 1) {
+                //金钱方式充值
+                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('amount', $data['money']);
+            } else {
+                //积分方式充值
+                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('point', $data['money']);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

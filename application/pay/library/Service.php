@@ -100,6 +100,10 @@ class Service
                     header("location:{$url}");
                     exit;
                     break;
+                case 'wap':
+                    //手机网页支付,跳转
+                    $html = $pay->wap($params)->send();
+                    break;
                 default:
             }
 

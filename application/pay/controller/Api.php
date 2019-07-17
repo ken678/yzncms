@@ -15,10 +15,12 @@
 namespace app\pay\controller;
 
 use app\common\controller\Homebase;
+use app\pay\library\Service;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use think\facade\Session;
 use think\Response;
+use Yansongda\Pay\Pay;
 
 class Api extends HomeBase
 {
@@ -28,6 +30,7 @@ class Api extends HomeBase
      */
     public function wechat()
     {
+        $config = Service::getConfig('wechat');
         $isWechat = stripos($this->request->server('HTTP_USER_AGENT'), 'MicroMessenger') !== false;
         if ($isWechat) {
 
@@ -41,6 +44,16 @@ class Api extends HomeBase
                 'return_url' => $orderData['return_url'],
                 'total_fee' => $orderData['total_fee'],
             ];
+            //检测订单状态
+            if ($this->request->isPost()) {
+                $pay = Pay::wechat($config);
+                $result = $pay->find($orderData['out_trade_no']);
+                if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
+                    $this->success("", "", ['trade_state' => $result['trade_state']]);
+                } else {
+                    $this->error("查询失败");
+                }
+            }
             $this->assign("data", $data);
         }
         return $this->fetch('/wechat');

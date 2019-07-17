@@ -88,6 +88,8 @@
             }
         });
 
+        var queryParams = {$data|raw|json_encode};
+
         var si, xhr;
         if (typeof queryParams != 'undefined') {
             var queryResult = function() {
