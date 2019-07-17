@@ -133,8 +133,6 @@ $('.uploader-list').each(function () {
 layui.use('form', function(){
     var form = layui.form;
     form.on('radio(filter)', function(data){
-        //console.log(data.elem); //得到radio原始DOM对象
-        //console.log(data.value); //被点击的radio的value值
         if(1==data.value){
             //批量
             $('#normal_add').hide();
@@ -142,7 +140,7 @@ layui.use('form', function(){
             $('#batch_add').show();
 
             $('#catname').attr('disabled',true).attr('lay-verify','');
-            $('#catdir').attr('disabled',true).attr('lay-verify','');
+            //$('#catdir').attr('disabled',true).attr('lay-verify','');
         }
         if(0==data.value){
             $('#normal_add').show();
@@ -150,7 +148,7 @@ layui.use('form', function(){
             $('#batch_add').hide();
 
             $('#catname').attr('disabled',false).attr('lay-verify','required');
-            $('#catdir').attr('disabled',false).attr('lay-verify','required');
+            //$('#catdir').attr('disabled',false).attr('lay-verify','required');
         }
     });
 });
