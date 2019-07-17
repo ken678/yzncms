@@ -39,7 +39,10 @@ input, button, select, textarea { outline: none}
 .qrcode-area .qrcode-header { display: block; width: auto; padding: 0; margin: 75px auto 15px; font-size: 14px;}
 .qrcode-area .qrcode-header .qrcode-header-money { font-size: 26px; font-weight: 700; color: #f60; margin-top: 10px;}
 .qrcode-area .qrcode-img-wrapper { position: relative; width: 170px; height: auto; min-height: 170px; margin: 0 auto; padding: 6px; border: 1px solid #d3d3d3; -webkit-box-shadow: 1px 1px 1px #ccc; box-shadow: 1px 1px 1px #ccc;}
-.qrcode-area .qrcode-img-area { width: 170px; height: 170px; text-align: center;}
+.qrcode-area .qrcode-img-area { width: 170px; height: 170px; text-align: center;position: relative;}
+.qrcode-area .qrcode-img-area .logo {position: absolute; top: 50%; left: 50%; height: 30px; width: 30px; margin-left: -15px; margin-top: -15px; background: #fff url(../images/logo-wechat.png) no-repeat center center; background-size: cover; border-radius: 3px; }
+.qrcode-area .qrcode-img-area .paid {position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: .95; background: #fff url(../images/paid.png) center center no-repeat; }
+.qrcode-area .qrcode-img-area .expired {position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: .95; background: #fff url(../images/expired.png) center center no-repeat; }
 .qrcode-area .qrcode-img-area img{ width:168px; height:168px;}
 .qrcode-area .qrcode-img-explain { padding: 10px 0 6px;}
 .qrcode-area .qrcode-img-explain img { margin-left: 20px; margin-top: 5px; float: left;}

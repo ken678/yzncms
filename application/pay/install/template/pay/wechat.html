@@ -52,7 +52,12 @@
                     <p class="qrcode-header-money">{:number_format($data['total_fee']/100,2)}</p>
                 </div>
                 <div class="qrcode-img-wrapper">
-                    <div class="qrcode-img-area"><img src="{:url('pay/api/qrcode')}?text={$data.code_url}" alt="扫码支付"></div>
+                    <div class="qrcode-img-area">
+                        <img src="{:url('pay/api/qrcode')}?text={$data.code_url}" alt="扫码支付">
+                        <div class="logo hidden-xs logo-wechat"></div>
+                        <div class="paid none"></div>
+                        <div class="expired none"></div>
+                    </div>
                     <div class="qrcode-img-explain clearfix">
                         <img src="__STATIC__/modules/pay/images/wechat-scan.png" alt="扫一扫标识">
                         <div>
@@ -89,10 +94,10 @@
         });
 
         var queryParams = {$data|raw|json_encode};
-
-        var si, xhr;
+        //定时查询订单状态
+        var qi, xhr;
         if (typeof queryParams != 'undefined') {
-            var queryResult = function() {
+            var checkOrderStatus = function() {
                 xhr && xhr.abort();
                 xhr = $.ajax({
                     url: "",
@@ -105,30 +110,33 @@
                             console.log(data);
                             if (typeof data.trade_state != 'undefined') {
                                 if (data.trade_state == 'SUCCESS') {
-                                    $(".wechat-qrcode .paid").removeClass("hidden");
-                                    $(".wechat-tips p").html("支付成功！<br>3秒后将自动跳转...");
+                                    $(".qrcode-img-area .paid").removeClass("none");
                                     setTimeout(function() {
                                         location.href = ret.url;
                                     }, 3000);
-                                    clearInterval(si);
-                                } else if (data.trade_state == 'REFUND') {
-                                    $(".wechat-tips p").html("请求失败！<br>请返回重新发起支付");
-                                    clearInterval(si);
-                                } else if (data.trade_state == 'NOTPAY') {} else if (data.trade_state == 'CLOSED') {
-                                    $(".wechat-tips p").html("订单已关闭！<br>请返回重新发起支付");
-                                    clearInterval(si);
-                                } else if (data.trade_state == 'USERPAYING') {} else if (data.trade_state == 'PAYERROR') {
-                                    clearInterval(si);
+                                    clearInterval(qi);
+                                } else if (data.trade_state == 'expired') {
+                                    $(".qrcode-img-area .expired").removeClass("none");
+                                } else {
+                                    qi = setTimeout(function() {
+                                        checkOrderStatus();
+                                    }, 3000);
                                 }
                             }
+                        } else {
+                            qi = setTimeout(function() {
+                                checkOrderStatus();
+                            }, 3000);
                         }
+                    },
+                    error: function() {
+                        qi = setTimeout(function() {
+                            checkOrderStatus();
+                        }, 3000);
                     }
                 });
             };
-            si = setInterval(function() {
-                queryResult();
-            }, 3000);
-            queryResult();
+            checkOrderStatus();
         }
 
     });
