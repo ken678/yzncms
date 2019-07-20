@@ -240,7 +240,7 @@ class Category extends Model
             } else {
                 //扩展配置
                 $cache['setting'] = unserialize($cache['setting']);
-                $cache['url'] = self::buildCatUrl($cache['type'], $catid);
+                $cache['url'] = self::buildCatUrl($cache['type'], $catid, $cache['url']);
                 //栏目扩展字段
                 //$cache['extend'] = $cache['setting']['extend'];
                 $cache['image'] = get_file_path($cache['image']);
