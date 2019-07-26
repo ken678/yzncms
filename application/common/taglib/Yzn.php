@@ -131,7 +131,7 @@ class Yzn extends Taglib
             return false;
         }
         //删除，插入不执行！这样处理感觉有点鲁莽了，，，-__,-!
-        if (isset($sql) && (strpos($sql, "delete")) === false || isset($sql) && (strpos($sql, "insert")) === false || isset($sql) && (strpos($sql, "update")) === false) {
+        if (isset($sql) && (stripos($sql, "delete")) !== false || isset($sql) && (stripos($sql, "insert")) !== false || isset($sql) && (stripos($sql, "update")) !== false) {
             return false;
         }
         //如果使用table参数方式，使用类似tp的查询语言效果
