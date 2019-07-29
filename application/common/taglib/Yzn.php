@@ -160,7 +160,12 @@ class Yzn extends Taglib
             if (isset($tag['order'])) {
                 $parseStr .= ' $get_db->order("' . $tag['order'] . '"); ';
             }
-            $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
+            if ($page) {
+                $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->paginate(' . $num . ');';
+            } else {
+                $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
+
+            }
             $parseStr .= 'endif;';
         } else {
             $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
@@ -175,11 +180,15 @@ class Yzn extends Taglib
             }
             $parseStr .= '$' . $return . '=\think\Db::query($_sql." LIMIT ' . $num . ' ");';
             $parseStr .= 'endif;';
-
         }
         $parseStr .= 'if($cache):';
         $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
         $parseStr .= 'endif;';
+        //判断分页
+        if ($page) {
+            $parseStr .= '$pages = $' . $return . '->render();';
+            $parseStr .= '$' . $return . ' = $' . $return . '->items();';
+        }
         $parseStr .= ' ?>';
         $parseStr .= $content;
         if (!empty($parseStr)) {
