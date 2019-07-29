@@ -194,7 +194,7 @@ class Member extends Model
     public function userDelete($uid)
     {
         //删除本地用户数据开始
-        if (self::where(["id" => $uid])->delete() !== flase) {
+        if (self::where(["id" => $uid])->delete() !== false) {
             return true;
         }
         $this->error = '删除会员失败！';
