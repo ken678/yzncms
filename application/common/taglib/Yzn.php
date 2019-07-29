@@ -178,7 +178,7 @@ class Yzn extends Taglib
             } else {
                 $parseStr .= ' $_sql = "' . str_replace('"', '\"', $sql) . '";';
             }
-            $parseStr .= '$' . $return . '=\think\Db::query($_sql." LIMIT ' . $num . ' ");';
+            $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . " LIMIT " . $num . '");';
             $parseStr .= 'endif;';
         }
         $parseStr .= 'if($cache):';
