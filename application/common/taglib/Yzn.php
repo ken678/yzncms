@@ -24,7 +24,7 @@ class Yzn extends Taglib
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         'template' => ['attr' => 'file', 'close' => 0],
         'yzn' => ['attr' => 'module,action,num,cache,type,catid,id,page,msg,blank,return,moreinfo', 'close' => 1, 'level' => 3],
-        'get' => ['attr' => 'sql,table,num,cache,page,return', 'close' => 1, 'level' => 3],
+        'get' => ['attr' => 'sql,table,num,cache,page,return,order', 'close' => 1, 'level' => 3],
     ];
 
     /**
