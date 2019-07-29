@@ -417,6 +417,9 @@ class Cms extends Modelbase
                     break;
                 case 'images':
                     $newdata[$key] = empty($value) ? [] : get_file_path($value);
+                    if (!is_array($newdata[$key])) {
+                        $newdata[$key] = array($newdata[$key]);
+                    }
                     break;
                 case 'file':
                     $newdata[$key] = empty($value) ? '' : get_file_path($value);

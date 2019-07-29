@@ -69,6 +69,9 @@ class Config extends Model
                     break;
                 case 'images':
                     $newConfigs[$key] = empty($value['value']) ? [] : get_file_path($value['value']);
+                    if (!is_array($newConfigs[$key])) {
+                        $newConfigs[$key] = array($newConfigs[$key]);
+                    }
                     break;
                 case 'Ueditor':
                     $newConfigs[$key] = htmlspecialchars_decode($value['value']);
