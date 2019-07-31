@@ -18,6 +18,7 @@ use app\admin\service\User as admin_user;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Base;
 use app\member\service\User as home_user;
+use think\facade\Hook;
 
 class Upload extends Base
 {
@@ -286,6 +287,15 @@ class Upload extends Base
                     ]);
             }
         }
+
+        // 附件上传钩子，用于第三方文件上传扩展
+        if (config('upload_driver')['key'] != 'local') {
+            $hook_result = Hook::listen('upload_attachment', ['file' => $file, 'from' => $from, 'module' => $module], true);
+            if (false !== $hook_result) {
+                return $hook_result;
+            }
+        }
+
         // 移动到框架应用根目录指定目录下
         $info = $file->move($this->uploadPath . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
