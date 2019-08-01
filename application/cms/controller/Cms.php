@@ -345,9 +345,10 @@ class Cms extends Adminbase
     public function public_categorys()
     {
         $json = [];
-        $categorys = cache('Category');
+        //$categorys = cache('Category');
+        $categorys = Db::name('Category')->select();
         foreach ($categorys as $rs) {
-            $rs = getCategory($rs['id']);
+            //$rs = getCategory($rs['id']);
             //剔除无子栏目外部链接
             if ($rs['type'] == 3 && $rs['child'] == 0) {
                 continue;
