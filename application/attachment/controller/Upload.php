@@ -113,6 +113,27 @@ class Upload extends Base
         }
         $this->uploadUrl = config('public_url') . 'uploads/';
         $this->uploadPath = config('upload_path');
+
+        //图片上传大小和类型
+        $this->confing['imageMaxSize'] = $this->confing['catcherMaxSize'] = config('upload_image_size') * 1024;
+        if (!empty(config('upload_image_ext'))) {
+            $imageallowext = parse_attr(config('upload_image_ext'));
+            foreach ($imageallowext as $k => $rs) {
+                $imageallowext[$k] = ".{$rs}";
+            }
+            $this->confing['imageAllowFiles'] = $imageallowext;
+        }
+
+        //附件上传大小和类型
+        $this->confing['fileMaxSize'] = $this->confing['videoMaxSize'] = config('upload_file_size') * 1024;
+        if (!empty(config('upload_file_ext'))) {
+            $fileallowext = parse_attr(config('upload_file_ext'));
+            foreach ($fileallowext as $k => $rs) {
+                $fileallowext[$k] = ".{$rs}";
+            }
+            $this->confing['fileAllowFiles'] = $fileallowext;
+        }
+
     }
 
     public function upload($dir = '', $from = '', $module = '', $thumb = 0, $thumbsize = '', $thumbtype = '', $watermark = 1, $sizelimit = -1, $extlimit = '')
