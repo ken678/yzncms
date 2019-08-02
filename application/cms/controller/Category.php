@@ -278,10 +278,11 @@ class Category extends Adminbase
             }
 
             //栏目列表 可以用缓存的方式
-            $array = cache("Category");
-            foreach ($array as $k => $v) {
-                $array[$k] = getCategory($v['id']);
-            }
+            //$array = cache("Category");
+            $array = Db::name('Category')->order('listorder ASC, id ASC')->select();
+            /*foreach ($array as $k => $v) {
+            $array[$k] = getCategory($v['id']);
+            }*/
             if (!empty($array) && is_array($array)) {
                 $tree = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
