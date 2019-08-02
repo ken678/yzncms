@@ -388,7 +388,7 @@ class Category extends Adminbase
                 if ($categorys[$catid]['arrparentid'] != $arrparentid || $categorys[$catid]['arrchildid'] != $arrchildid || $categorys[$catid]['child'] != $child) {
                     Category_Model::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
                 }
-                getCategory($catid, '', true);
+                \think\facade\Cache::rm('getCategory_' . $catid, null);
                 //删除在非正常显示的栏目
                 if ($cat['parentid'] != 0 && !isset($this->categorys[$cat['parentid']])) {
                     $this->Category_Model->deleteCatid($catid);
