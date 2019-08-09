@@ -164,7 +164,7 @@ trait Conversion
         foreach ($data as $key => $val) {
             if ($val instanceof Model || $val instanceof ModelCollection) {
                 // 关联模型对象
-                if (isset($this->visible[$key])) {
+                if (isset($this->visible[$key]) && is_array($this->visible[$key])) {
                     $val->visible($this->visible[$key]);
                 } elseif (isset($this->hidden[$key]) && is_array($this->hidden[$key])) {
                     $val->hidden($this->hidden[$key]);
@@ -189,10 +189,12 @@ trait Conversion
 
                     if (!$relation) {
                         $relation = $this->getAttr($key);
-                        $relation->visible($name);
+                        if ($relation) {
+                            $relation->visible($name);
+                        }
                     }
 
-                    $item[$key] = $relation->append($name)->toArray();
+                    $item[$key] = $relation ? $relation->append($name)->toArray() : [];
                 } elseif (strpos($name, '.')) {
                     list($key, $attr) = explode('.', $name);
                     // 追加关联对象属性
@@ -200,10 +202,12 @@ trait Conversion
 
                     if (!$relation) {
                         $relation = $this->getAttr($key);
-                        $relation->visible([$attr]);
+                        if ($relation) {
+                            $relation->visible([$attr]);
+                        }
                     }
 
-                    $item[$key] = $relation->append([$attr])->toArray();
+                    $item[$key] = $relation ? $relation->append([$attr])->toArray() : [];
                 } else {
                     $item[$name] = $this->getAttr($name, $item);
                 }
