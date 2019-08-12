@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9efd01a4aadd94a8fbef2d40ab47c6a4",
+    "content-hash": "66ca042393c6abfb9af22818bddbf20b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1309,16 +1309,16 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v5.1.37.1",
+            "version": "v5.1.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "05eecd121d18d6705aaa10aa44fcdf7c14da4d0b"
+                "reference": "b538d2615794bfd05455b6f8232a359d09f5a8df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/05eecd121d18d6705aaa10aa44fcdf7c14da4d0b",
-                "reference": "05eecd121d18d6705aaa10aa44fcdf7c14da4d0b",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/b538d2615794bfd05455b6f8232a359d09f5a8df",
+                "reference": "b538d2615794bfd05455b6f8232a359d09f5a8df",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1362,7 +1362,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2019-05-28T06:57:29+00:00"
+            "time": "2019-08-09T07:12:36+00:00"
         },
         {
             "name": "topthink/think-captcha",
