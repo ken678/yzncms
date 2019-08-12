@@ -298,8 +298,10 @@ class Cms extends Modelbase
      * @param   $order   []
      * @param   $limit   [条数]
      * @param   $page    [是否有分页]
+     * @param  int|bool  $simple   是否简洁模式或者总记录数
+     * @param  array     $config   配置参数
      */
-    public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null)
+    public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null, $simple = false, $config = [])
     {
         $tableName = $this->getModelTableName($modeId);
         $result = [];
@@ -311,7 +313,7 @@ class Cms extends Modelbase
                         ->where($where)
                         ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
                         ->order($order)
-                        ->paginate($limit);
+                        ->paginate($limit, $simple, $config);
                 } else {
                     $result = \think\Db::view($tableName, '*')
                         ->where($where)
@@ -322,7 +324,7 @@ class Cms extends Modelbase
                 }
             } else {
                 if ($page) {
-                    $result = \think\Db::name($tableName)->where($where)->order($order)->paginate($limit);
+                    $result = \think\Db::name($tableName)->where($where)->order($order)->paginate($limit, $simple, $config);
                 } else {
                     $result = \think\Db::name($tableName)->where($where)->limit($limit)->order($order)->select();
                 }
