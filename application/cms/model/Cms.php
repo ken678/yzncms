@@ -378,7 +378,7 @@ class Cms extends Modelbase
         foreach ($data as $key => $value) {
             switch ($fieldinfo[$key]['type']) {
                 case 'array':
-                    $newdata[$key] = parse_attr($newdata[$key]);
+                    $newdata[$key] = parse_attr($value);
                     break;
                 case 'radio':
                     if (!empty($value)) {
