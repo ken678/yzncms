@@ -94,7 +94,7 @@ class Cache_factory
             }
             $mo = '';
             if (empty($config['module'])) {
-                $mo = "Common/{$config['model']}";
+                $mo = "common/{$config['model']}";
             } else {
                 $mo = "{$config['module']}/{$config['model']}";
             }
