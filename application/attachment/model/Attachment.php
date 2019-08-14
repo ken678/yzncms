@@ -58,17 +58,12 @@ class Attachment extends Model
 
     /**
      * 添加水印
-     * @param string $file 要添加水印的文件路径
-     * @param string $watermark_img 水印图片id
-     * @param string $watermark_pos 水印位置
-     * @param string $watermark_alpha 水印透明度
-     * @author 蔡伟明 <314013107@qq.com>
      */
-    public function create_water($file = '', $watermark_img = '', $watermark_pos = '', $watermark_alpha = '')
+    public function create_water($file = '', $path = '', $watermark_pos = '', $watermark_alpha = '')
     {
         $uploadPath = config('upload_path');
-        $path = $this->getFilePath($watermark_img, 1);
-        $thumb_water_pic = realpath($uploadPath . '/' . $path);
+        //$path = $this->getFilePath($watermark_img, 1);
+        $thumb_water_pic = realpath(ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . $path);
         if (is_file($thumb_water_pic)) {
             // 读取图片
             $image = Image::open($file);
