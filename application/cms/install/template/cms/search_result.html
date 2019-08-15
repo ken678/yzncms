@@ -36,11 +36,11 @@
                 <div class="search_list">
                     <h5>按时间搜索</h5>
                     <div class="list-group">
-                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'','modelid'=>$modelid])}" class="list-group-item_gr {empty name="time"}active{/empty}">全部时间</a>
-                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'day','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="day"}active{/eq}">一天内</a>
-                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'week','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="week"}active{/eq}">一周内</a>
-                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'month','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="month"}active{/eq}">一月内</a>
-                        <a href="{:url('cms/index/search?keyword='.$keyword,['time'=>'year','modelid'=>$modelid])}" class="list-group-item_gr {eq name="time" value="year"}active{/eq}">一年内</a>
+                        <a href="?keyword={$keyword}&modelid={$modelid}&time=" class="list-group-item_gr {empty name="time"}active{/empty}">全部时间</a>
+                        <a href="?keyword={$keyword}&modelid={$modelid}&time=day" class="list-group-item_gr {eq name="time" value="day"}active{/eq}">一天内</a>
+                        <a href="?keyword={$keyword}&modelid={$modelid}&time=week" class="list-group-item_gr {eq name="time" value="week"}active{/eq}">一周内</a>
+                        <a href="?keyword={$keyword}&modelid={$modelid}&time=month" class="list-group-item_gr {eq name="time" value="month"}active{/eq}">一月内</a>
+                        <a href="?keyword={$keyword}&modelid={$modelid}&time=year" class="list-group-item_gr {eq name="time" value="year"}active{/eq}">一年内</a>
                     </div>
                     <h5>搜索历史</h5>
                     <div class="list-group">
