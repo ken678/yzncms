@@ -150,6 +150,7 @@ class Models extends Modelbase
 				`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
                 `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
 				`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+                `thumb` int(5) unsigned NOT NULL DEFAULT '0' COMMENT '缩略图',
 				`flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
 				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
 				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
@@ -195,6 +196,7 @@ EOF;
             'ifsystem' => 1,
             'status' => 1,
             'listorder' => 100,
+            'ifsearch' => 0,
             'iffixed' => 1,
             'remark' => '',
             'isadd' => 0,
@@ -223,6 +225,17 @@ EOF;
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
                 'isadd' => 1,
             ],
+
+            [
+                'name' => 'thumb',
+                'title' => '缩略图',
+                'type' => 'image',
+                'ifrequire' => 1,
+                'iffixed' => 0,
+                'setting' => "a:3:{s:6:\"define\";s:36:\"int(5) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'isadd' => 1,
+            ],
+
             [
                 'name' => 'flag',
                 'title' => '属性',
