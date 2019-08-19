@@ -57,6 +57,13 @@
   {{#  } }}
   {{ d.title }}
 </script>
+<script type="text/html" id="username">
+	{{# if(d.sysadd==1){ }}
+	{{ d.username }}
+	{{#  } else { }}
+	<span class="text-danger">{{ d.username }}</span>
+	{{#  } }}
+</script>
 <div id="remove" style="display: none;">
 	<div class="box-body" style="padding: 20px;">
 		<blockquote class="layui-elem-quote">只能将数据移动到相同模型的栏目下，不同模型的数据移动将被忽略</blockquote>
@@ -99,7 +106,7 @@ layui.use(['table', 'laydate'], function() {
                 { field: 'title', title: '标题',templet: '#title'},
                 { field: 'hits', width: 80, title: '点击量' },
                 { field: 'updatetime', width: 160, title: '更新时间' },
-                { field: 'username', width: 80, title: '发布人' },
+                { field: 'username', width: 80, title: '发布人',templet: '#username' },
                 { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
                 { field: 'status', width: 60, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">正常</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">待审核</button> {{#  } }} </div>'},
                 { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
