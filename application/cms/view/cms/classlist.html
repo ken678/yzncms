@@ -34,7 +34,6 @@
     <a href='{:url("delete",["catid"=>$catid])}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="title">
-  {{ d.title }}
   {{# if(d.flag.indexOf("1")!==-1){ }}
   <span class="text-danger">[置顶]</span>
   {{#  } }}
@@ -53,6 +52,10 @@
   {{# if(d.flag.indexOf("6")!==-1){ }}
   <span class="text-danger">[幻灯]</span>
   {{#  } }}
+  {{# if(d.thumb!==0){ }}
+  <span class="text-success">[有图]</span>
+  {{#  } }}
+  {{ d.title }}
 </script>
 <div id="remove" style="display: none;">
 	<div class="box-body" style="padding: 20px;">
@@ -93,7 +96,7 @@ layui.use(['table', 'laydate'], function() {
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 60, title: 'ID' },
-                { field: 'title', title: '标题'},
+                { field: 'title', title: '标题',templet: '#title'},
                 { field: 'hits', width: 80, title: '点击量' },
                 { field: 'updatetime', width: 160, title: '更新时间' },
                 { field: 'username', width: 80, title: '发布人' },
