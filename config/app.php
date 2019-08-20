@@ -141,5 +141,7 @@ return [
     'upload_path' => ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'uploads',
     // 资源文件路径
     'static_path' => ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'static',
+    /* 系统数据加密设置 */
+    'data_auth_key' => 'Mhc(jk`[t.7?P_Ty=A%41o+S{J390DKpFmvW@E}8', //默认数据加密KEY
 
 ];
