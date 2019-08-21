@@ -135,6 +135,7 @@ class Index extends Cmsbase
         if (empty($info)) {
             throw new \think\Exception('内容不存在或未审核!', 404);
         }
+
         //栏目扩展配置信息
         $setting = $category['setting'];
         //内容页模板
@@ -143,6 +144,22 @@ class Index extends Cmsbase
         $newstempid = explode(".", $template);
         $template = $newstempid[0];
         unset($newstempid);
+
+        //阅读收费
+        $paytype = isset($info['paytype']) ? $info['paytype'] : 0; //类型 0积分 1金钱
+        $readpoint = isset($info['readpoint']) ? $info['readpoint'] : 0; //金额
+        $allow_visitor = 1;
+        if ($readpoint) {
+            //检查是否支付过
+            $allow_visitor = self::_check_payment($catid . '_' . $id, $paytype);
+            if (!$allow_visitor) {
+                $http_referer = urlencode(\think\facade\Request::url(true));
+                $allow_visitor = sys_auth($catid . '_' . $id . '|' . $readpoint . '|' . $paytype) . '&http_referer=' . $http_referer;
+            } else {
+                $allow_visitor = 1;
+            }
+
+        }
 
         //SEO
         $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
@@ -308,7 +325,22 @@ class Index extends Cmsbase
         $this->assign("page", $page);
         $this->assign($info);
         return $this->fetch('/tags');
+    }
 
+    /**
+     * 检查支付状态
+     */
+    protected function _check_payment($flag, $paytype)
+    {
+        $this->userid = \app\member\service\User::instance()->id;
+        if (!$this->userid) {
+            return false;
+        }
+        if (\app\pay\model\Spend::spend_time($this->userid, '24', $flag)) {
+            return true;
+        }
+        echo \app\pay\model\Spend::getLastSql();
+        return false;
     }
 
 }
