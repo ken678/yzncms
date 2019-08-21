@@ -153,8 +153,31 @@ class Index extends MemberBase
 
     public function readpoint()
     {
-        var_dump(111);
+        $allow_visitor = $this->request->param('allow_visitor');
+        $auth = sys_auth($allow_visitor, 'DECODE');
+        if (strpos($auth, '|') === false) {
+            $this->error('非法操作！');
+        }
+        $auth_str = explode('|', $auth);
+        $flag = $auth_str[0];
+        if (!preg_match('/^([0-9]+)|([0-9]+)/', $flag)) {
+            $this->error('非法操作！');
+        }
+        $readpoint = intval($auth_str[1]);
+        $paytype = intval($auth_str[2]);
 
+        $flag_arr = explode('_', $flag);
+        $catid = $flag_arr[0];
+
+        if ($paytype) {
+            //积分
+            $this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag);
+
+        } else {
+            //金钱
+            $this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag);
+        }
+        $this->success("恭喜你！支付成功!");
     }
 
 }

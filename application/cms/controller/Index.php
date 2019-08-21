@@ -146,20 +146,19 @@ class Index extends Cmsbase
         unset($newstempid);
 
         //阅读收费
-        $paytype = isset($info['paytype']) ? $info['paytype'] : 0; //类型 0积分 1金钱
+        $paytype = isset($info['paytype']) && $info['paytype'] == '金钱' ? 1 : 0; //类型 0积分 1金钱
         $readpoint = isset($info['readpoint']) ? $info['readpoint'] : 0; //金额
         $allow_visitor = 1;
         if ($readpoint) {
             //检查是否支付过
             $allow_visitor = self::_check_payment($catid . '_' . $id, $paytype);
             if (!$allow_visitor) {
-                $http_referer = urlencode(\think\facade\Request::url(true));
-                $allow_visitor = sys_auth($catid . '_' . $id . '|' . $readpoint . '|' . $paytype) . '&http_referer=' . $http_referer;
+                //$http_referer = urlencode(\think\facade\Request::url(true));
+                $allow_visitor = sys_auth($catid . '_' . $id . '|' . $readpoint . '|' . $paytype);
             } else {
                 $allow_visitor = 1;
             }
         }
-
         //SEO
         $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
         $title = $info['title'] ? $info['title'] : $setting['meta_title'];
