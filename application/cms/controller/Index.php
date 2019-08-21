@@ -158,7 +158,6 @@ class Index extends Cmsbase
             } else {
                 $allow_visitor = 1;
             }
-
         }
 
         //SEO
@@ -339,7 +338,6 @@ class Index extends Cmsbase
         if (\app\pay\model\Spend::spend_time($this->userid, '24', $flag)) {
             return true;
         }
-        echo \app\pay\model\Spend::getLastSql();
         return false;
     }
 
