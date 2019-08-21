@@ -30,7 +30,11 @@ body {
                                 <span class="s3">来源：互联网</span></div>
                         </div>
                         <div class="newsview">
+                            {eq name="allow_visitor" value="1"}
                             {$content|raw}
+                            {else/}
+                            <CENTER><a href=""><font color="red">阅读此信息需要您支付 <B><I>{$readpoint} {if $paytype}元{else}点{/if}</I></B>，点击这里支付</font></a></CENTER>
+                            {/eq}
                         </div>
                         <div class="viewpage">
                             <div class="main_r_nav">
