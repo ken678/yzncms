@@ -210,7 +210,7 @@ class Cms extends Modelbase
                 }
             }
             //数据必填验证
-            if ($vo['ifrequire'] && empty(${$arr}[$name])) {
+            if ($vo['ifrequire'] && ${$arr}[$name] == '') {
                 throw new \Exception("'" . $vo['title'] . "'必须填写~");
             }
             //正则校验

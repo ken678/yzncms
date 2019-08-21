@@ -172,6 +172,9 @@ class Index extends Cmsbase
 
         $this->assign($info);
         $this->assign([
+            'paytype' => $paytype,
+            'readpoint' => $readpoint,
+            'allow_visitor' => $allow_visitor,
             'top_parentid' => $top_parentid,
             'SEO' => $seo,
             'catid' => $catid,
