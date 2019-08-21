@@ -1466,15 +1466,21 @@
 
 .newsview {
     min-height: 400px;
-    display: inline;
     margin-top: 30px;
     border-top: 1px solid #fff;
     margin-bottom: 25px;
     padding-bottom: 15px;
     font-size: 14px;
     line-height: 33px;
-    float: left;
     color: #777;
+}
+
+.allow_visitor{
+    font-size: 16px;
+    padding: 2%;
+    text-align: center;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
 }
 
 .newsshow h2 {

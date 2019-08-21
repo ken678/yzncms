@@ -151,4 +151,10 @@ class Index extends MemberBase
         return;
     }
 
+    public function readpoint()
+    {
+        var_dump(111);
+
+    }
+
 }
