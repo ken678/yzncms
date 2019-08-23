@@ -147,7 +147,7 @@ class Index extends Cmsbase
 
         //阅读收费
         $paytype = isset($info['paytype']) && $info['paytype'] == '金钱' ? 1 : 0; //类型 0积分 1金钱
-        $readpoint = isset($info['readpoint']) ? $info['readpoint'] : 0; //金额
+        $readpoint = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
         $allow_visitor = 1;
         if ($readpoint) {
             //检查是否支付过
