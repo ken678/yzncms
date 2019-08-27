@@ -460,13 +460,17 @@ class Category extends Adminbase
         return $catdir;
     }
 
+    /**
+     * 动态根据模型ID加载栏目模板
+     */
     public function public_tpl_file_list()
     {
         $id = $this->request->param('id/d');
-        $data = db('Model')->where(array("id" => $id))->find();
-        $data = ['code' => 0, 'data' => unserialize($data['setting'])];
-        return json($data);
-
+        $data = Db::name('Model')->where(array("id" => $id))->find();
+        if ($data) {
+            $json = ['code' => 0, 'data' => unserialize($data['setting'])];
+            return json($json);
+        }
     }
 
 }
