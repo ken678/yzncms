@@ -121,7 +121,7 @@ class Addons extends Adminbase
         $this->assign('data', $addon);
         if ($addon['custom_config']) {
             //加载配置文件config.html
-            $this->assign('custom_config', $this->fetch($addon['addon_path'] . $addon['custom_config']));
+            $this->assign('custom_config', $this->view->fetch($addon['addon_path'] . $addon['custom_config']));
         }
         return $this->fetch();
     }
