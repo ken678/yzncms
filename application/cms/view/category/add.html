@@ -218,10 +218,19 @@ layui.use('form', function(){
 	});
 
     form.on('select(filter)', function(data){
-        console.log(data.value); //得到被选中的值
-        /*form.val("layui-form", {
-           "setting[category_template]": "category_case.html"
-        })*/
+        //console.log(data.value); //得到被选中的值
+        if(!isNaN(data.value)){
+            $.get('{:url("public_tpl_file_list")}', {id:data.value}, function(res) {
+                if(res.code==0){
+                    form.val("layui-form", {
+                       "setting[category_template]": res.data.category_template,
+                       "setting[list_template]": res.data.list_template,
+                       "setting[show_template]": res.data.show_template,
+                    })
+                }
+            });
+        }
+
     });
 
 });

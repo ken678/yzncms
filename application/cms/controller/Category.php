@@ -460,4 +460,13 @@ class Category extends Adminbase
         return $catdir;
     }
 
+    public function public_tpl_file_list()
+    {
+        $id = $this->request->param('id/d');
+        $data = db('Model')->where(array("id" => $id))->find();
+        $data = ['code' => 0, 'data' => unserialize($data['setting'])];
+        return json($data);
+
+    }
+
 }
