@@ -126,10 +126,10 @@ INSERT INTO `yzn_category` VALUES ('14', '备案知识', 'record', '2', '1', '6'
 INSERT INTO `yzn_category` VALUES ('1', '关于我们', 'about', '3', '0', '0', '0', '1,2,3,4', '1', '0', '', 'cms/index/lists?catid=2', 'N;', '1', '1');
 INSERT INTO `yzn_category` VALUES ('18', '联系方式', 'fangshi', '1', '0', '8', '0,8', '18', '0', '0', '', '', 'a:4:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"page_template\";s:9:\"page.html\";}', '100', '1');
 
-INSERT INTO `yzn_model` VALUES ('1', 'cms', '文章模型', 'article', '文章模型', '', '2', '1546574975', '1546574975', '0', '1');
-INSERT INTO `yzn_model` VALUES ('2', 'cms', '图片模型', 'picture', '图片模型', '', '2', '1548754193', '1548754193', '0', '1');
-INSERT INTO `yzn_model` VALUES ('3', 'cms', '产品模型', 'product', '产品模型', '', '2', '1549165800', '1549165800', '0', '1');
-INSERT INTO `yzn_model` VALUES ('4', 'cms', '下载模型', 'download', '下载模型', '', '2', '1549624988', '1549624988', '0', '1');
+INSERT INTO `yzn_model` VALUES ('1', 'cms', '文章模型', 'article', '文章模型', 'a:3:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";}', '2', '1546574975', '1566893866', '0', '1');
+INSERT INTO `yzn_model` VALUES ('2', 'cms', '图片模型', 'picture', '图片模型', 'a:3:{s:17:\"category_template\";s:21:\"category_picture.html\";s:13:\"list_template\";s:17:\"list_picture.html\";s:13:\"show_template\";s:17:\"show_picture.html\";}', '2', '1548754193', '1566896531', '0', '1');
+INSERT INTO `yzn_model` VALUES ('3', 'cms', '产品模型', 'product', '产品模型', 'a:3:{s:17:\"category_template\";s:21:\"category_picture.html\";s:13:\"list_template\";s:17:\"list_picture.html\";s:13:\"show_template\";s:17:\"show_picture.html\";}', '2', '1549165800', '1566894329', '0', '1');
+INSERT INTO `yzn_model` VALUES ('4', 'cms', '下载模型', 'download', '下载模型', 'a:3:{s:17:\"category_template\";s:13:\"category.html\";s:13:\"list_template\";s:9:\"list.html\";s:13:\"show_template\";s:9:\"show.html\";}', '2', '1549624988', '1566894292', '0', '1');
 
 INSERT INTO `yzn_model_field` VALUES ('1', '1', 'id', '文档id', '', '', '', 'hidden', '', '1', '0', '1', '0', '0', '1', '1546574975', '1546574975', '100', '1');
 INSERT INTO `yzn_model_field` VALUES ('2', '1', 'catid', '栏目id', '', '', '', 'hidden', '', '1', '0', '1', '0', '0', '1', '1546574975', '1546574975', '100', '1');

@@ -24,6 +24,14 @@ class Models extends Adminbase
     {
         parent::initialize();
         $this->Models = new Models_Model;
+        //取得当前内容模型模板存放目录
+        $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "cms" . DIRECTORY_SEPARATOR;
+        //取得栏目频道模板列表
+        $this->tp_category = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'category*'));
+        //取得栏目列表模板列表
+        $this->tp_list = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'list*'));
+        //取得内容页模板列表
+        $this->tp_show = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'show*'));
     }
 
     //模型列表
@@ -52,6 +60,9 @@ class Models extends Adminbase
             }
             $this->success('模型新增成功！', url('index'));
         } else {
+            $this->assign("tp_category", $this->tp_category);
+            $this->assign("tp_list", $this->tp_list);
+            $this->assign("tp_show", $this->tp_show);
             return $this->fetch();
         }
     }
@@ -75,6 +86,10 @@ class Models extends Adminbase
             $id = $this->request->param('id/d', 0);
             $data = $this->Models->where(array("id" => $id))->find();
             $data['setting'] = unserialize($data['setting']);
+
+            $this->assign("tp_category", $this->tp_category);
+            $this->assign("tp_list", $this->tp_list);
+            $this->assign("tp_show", $this->tp_show);
             $this->assign("data", $data);
             return $this->fetch();
         }

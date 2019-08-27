@@ -8,7 +8,7 @@
 <div class="layui-card">
     <div class="layui-card-header">添加栏目</div>
     <div class="layui-card-body">
-        <form class="layui-form" method="post">
+        <form class="layui-form" method="post" lay-filter="layui-form">
             <div class="layui-tab">
                 <ul class="layui-tab-title">
                     <li class="layui-this">基本设置</li>
@@ -30,7 +30,7 @@
                         <div class="layui-form-item web_list">
                             <label>选择模型</label>
                                 <div class="w300">
-                                    <select name="modelid">
+                                    <select name="modelid" lay-filter="filter">
                                         <option>请选择模型</option>
                                         {volist name="models" id="vo"}
                                         <option value="{$vo.id}" {if condition=" $parentid_modelid eq $vo['id'] "}selected{/if}>{$vo.name}</option>
@@ -206,19 +206,24 @@ layui.use('form', function(){
 			$('#normal_add').hide();
 			$('#catdir_tr').hide();
 			$('#batch_add').show();
-
 			$('#catname').attr('disabled',true).attr('lay-verify','');
-			//$('#catdir').attr('disabled',true).attr('lay-verify','');
+
 		}
 		if(0==data.value){
 			$('#normal_add').show();
 			$('#catdir_tr').show();
 			$('#batch_add').hide();
-
 			$('#catname').attr('disabled',false).attr('lay-verify','required');
-			//$('#catdir').attr('disabled',false).attr('lay-verify','required');
 		}
 	});
+
+    form.on('select(filter)', function(data){
+        console.log(data.value); //得到被选中的值
+        /*form.val("layui-form", {
+           "setting[category_template]": "category_case.html"
+        })*/
+    });
+
 });
 </script>
 {/block}
