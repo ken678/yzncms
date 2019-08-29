@@ -43,7 +43,7 @@ function catpos($catid, $symbol = ' &gt; ')
     //获取当前栏目的 父栏目列表
     $arrparentid = array_filter(explode(',', getCategory($catid, 'arrparentid') . ',' . $catid));
     foreach ($arrparentid as $cid) {
-        $url = Category_Model::buildCatUrl(getCategory($cid, 'type'), $cid, getCategory($cid, 'url'));
+        $url = Category_Model::buildCatUrl($cid, getCategory($cid, 'url'));
         $parsestr[] = '<a href="' . $url . '" >' . getCategory($cid, 'catname') . '</a>';
     }
     $parsestr = implode($symbol, $parsestr);

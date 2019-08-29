@@ -13,7 +13,6 @@
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" href="{:url('add')}">新增栏目</a>
       <a class="layui-btn layui-btn-sm" href="{:url('singlepage')}">新增单页</a>
-      <a class="layui-btn layui-btn-sm" href="{:url('wadd')}">新增外部链接</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete")}'>批量删除</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger ajax-get" data-href="{:url('public_cache')}">更新栏目缓存<span class="layui-badge-dot layui-bg-orange"></span></a>
     </div>
@@ -44,7 +43,7 @@ layui.use('table', function() {
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'catname', title: '栏目名称' },
                 { field: 'catdir', width: 120, title: '唯一标识' },
-                { field: 'type',width: 100, title: '栏目类型',templet: '<div>{{#  if(d.type==1){ }} 单页 {{#  } else if(d.type==2){  }} 列表 {{#  } else if(d.type==3){ }} 链接 {{#  } else { }} 未知 {{#  } }}</div>' },
+                { field: 'type',width: 100, title: '栏目类型',templet: '<div>{{#  if(d.type==1){ }} 单页 {{#  } else if(d.type==2){  }} 列表 {{#  }  else { }} 未知 {{#  } }}</div>' },
                 { field: 'modelname',width: 120, title: '所属模型' },
                 { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
                 { field: 'status',  width: 100,align:"center", title: '状态',  templet: '#statusTpl', unresize: true },

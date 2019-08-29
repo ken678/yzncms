@@ -68,7 +68,7 @@ class CmsTagLib
         $categorys = Category_Model::where($where)->limit($num)->order($data['order'])->select();
         if (!empty($categorys)) {
             foreach ($categorys as &$vo) {
-                $vo['url'] = Category_Model::buildCatUrl($vo['type'], $vo['id'], $vo['url']);
+                $vo['url'] = Category_Model::buildCatUrl($vo['id'], $vo['url']);
                 $vo['image'] = get_file_path($vo['image']);
             }
         }

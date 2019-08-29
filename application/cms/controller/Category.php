@@ -61,7 +61,7 @@ class Category extends Adminbase
                 } elseif ($v['type'] == 3) {
                     $v['add_url'] = url("Category/wadd", array("parentid" => $v['id']));
                 }
-                $v['url'] = Category_Model::buildCatUrl($v['type'], $v['id'], $v['url']);
+                $v['url'] = Category_Model::buildCatUrl($v['id'], $v['url']);
                 $categorys[$v['id']] = $v;
             }
             $tree->init($categorys);
@@ -85,19 +85,19 @@ class Category extends Adminbase
             switch ($data['type']) {
                 //单页
                 case 1:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'page';
                     break;
                 //列表
                 case 2:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'setting', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'list';
                     break;
                 //链接
-                case 3:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
-                    $scene = 'link';
-                    break;
+                /*case 3:
+                $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
+                $scene = 'link';
+                break;*/
                 default:
                     return $this->error('栏目类型错误~');
             }
@@ -200,10 +200,10 @@ class Category extends Adminbase
     }
 
     //添加外部链接栏目
-    public function wadd()
+    /*public function wadd()
     {
-        return $this->add();
-    }
+    return $this->add();
+    }*/
 
     //添加单页
     public function singlepage()
@@ -228,19 +228,17 @@ class Category extends Adminbase
                 //单页
                 case 1:
                     $data['modelid'] = 0;
-                    $data['url'] = '';
                     $scene = 'page';
                     break;
                 //列表
                 case 2:
-                    $data['url'] = '';
                     $scene = 'list';
                     break;
                 //链接
-                case 3:
-                    $data['modelid'] = 0;
-                    $scene = 'link';
-                    break;
+                /*case 3:
+                $data['modelid'] = 0;
+                $scene = 'link';
+                break;*/
                 default:
                     return $this->error('栏目类型错误~');
             }
@@ -317,7 +315,8 @@ class Category extends Adminbase
                 //外部栏目
                 return $this->fetch();
             } else {
-                return $this->fetch("wedit");
+                $this->error('栏目类型错误！');
+                //return $this->fetch("wedit");
             }
         }
 

@@ -210,13 +210,13 @@ class Category extends Model
         return $arrchildid;
     }
 
-/**
- * 获取栏目相关信息
- * @param type $catid 栏目id
- * @param type $field 返回的字段，默认返回全部，数组
- * @param type $newCache 是否强制刷新
- * @return boolean
- */
+    /**
+     * 获取栏目相关信息
+     * @param type $catid 栏目id
+     * @param type $field 返回的字段，默认返回全部，数组
+     * @param type $newCache 是否强制刷新
+     * @return boolean
+     */
     public static function getCategory($catid, $field = '', $newCache = false)
     {
         if (empty($catid)) {
@@ -240,7 +240,7 @@ class Category extends Model
             } else {
                 //扩展配置
                 $cache['setting'] = unserialize($cache['setting']);
-                $cache['url'] = self::buildCatUrl($cache['type'], $catid, $cache['url']);
+                $cache['url'] = self::buildCatUrl($catid, $cache['url']);
                 //栏目扩展字段
                 //$cache['extend'] = $cache['setting']['extend'];
                 $cache['image'] = get_file_path($cache['image']);
@@ -260,20 +260,12 @@ class Category extends Model
         }
     }
 
-/**
- * 生成栏目URL
- */
-    public static function buildCatUrl($type, $id, $url = '')
+    /**
+     * 生成栏目URL
+     */
+    public static function buildCatUrl($id, $url = '')
     {
-        switch ($type) {
-            case 3: //自定义链接
-                $url = empty($url) ? '' : ((strpos($url, '://') !== false) ? $url : url($url));
-                break;
-            default:
-                $url = url('cms/index/lists', ['catid' => $id]);
-                break;
-        }
-        return $url;
+        return empty($url) ? url('cms/index/lists', ['catid' => $id]) : ((strpos($url, '://') !== false) ? $url : url($url));
     }
 
     //刷新栏目索引缓存
