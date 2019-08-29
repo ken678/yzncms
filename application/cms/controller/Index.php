@@ -116,7 +116,6 @@ class Index extends Cmsbase
         //栏目ID
         $catid = $this->request->param('catid/d', 0);
         $page = $page = $this->request->param('page/d', 1);
-
         //获取栏目数据
         $category = getCategory($catid);
         if (empty($category)) {
@@ -124,18 +123,18 @@ class Index extends Cmsbase
         }
         //模型ID
         $modelid = $category['modelid'];
-
         $modelInfo = cache('Model')[$modelid];
+        if (empty($modelInfo)) {
+            throw new \think\Exception('栏目不存在!', 404);
+        }
         //更新点击量
         Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
-
         //内容所有字段
         $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
         $info = $this->Cms_Model->getContent($modelid, "id='" . $id . "' and status='1'", true, '*', '', $ifcache);
         if (empty($info)) {
             throw new \think\Exception('内容不存在或未审核!', 404);
         }
-
         //栏目扩展配置信息
         $setting = $category['setting'];
         //内容页模板
@@ -144,7 +143,6 @@ class Index extends Cmsbase
         $newstempid = explode(".", $template);
         $template = $newstempid[0];
         unset($newstempid);
-
         //阅读收费
         $paytype = isset($info['paytype']) && $info['paytype'] == '金钱' ? 1 : 0; //类型 0积分 1金钱
         $readpoint = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
@@ -164,11 +162,9 @@ class Index extends Cmsbase
         $title = $info['title'] ? $info['title'] : $setting['meta_title'];
         $description = $info['description'] ? $info['description'] : $setting['meta_description'];
         $seo = seo($catid, $title, $description, $keywords);
-
         //获取顶级栏目ID
         $arrparentid = explode(',', $category['arrparentid']);
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
-
         $this->assign($info);
         $this->assign([
             'paytype' => $paytype,
