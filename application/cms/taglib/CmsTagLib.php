@@ -147,9 +147,9 @@ class CmsTagLib
         if (!isset($data['limit'])) {
             $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
         }
-        $return = Db::name('TagsContent')->where($where_str)->limit($data['limit'])->select();
+        $data = Db::name('TagsContent')->where($where_str)->limit($data['limit'])->select();
         //读取文章信息
-        foreach ($return as $k => $v) {
+        foreach ($data as $k => $v) {
             $r = model('cms/Cms')->getContent($v['modelid'], "id =" . $v['contentid'], false, '*', $data['limit'], $data['page']);
             if ($r) {
                 $return[$k] = array_merge($v, $r);
