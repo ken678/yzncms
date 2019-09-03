@@ -149,6 +149,11 @@ class Cms extends Modelbase
         if (empty($data)) {
             throw new \Exception("该信息不存在！");
         }
+        //处理tags
+        if (!empty($data['tags'])) {
+            $this->tag_dispose([], $data['id'], $data['catid'], $modeId);
+        }
+
         if ($no_delete) {
             Db::name($modelInfo['tablename'])->where('id', $id)->setField('status', -1);
         } else {
