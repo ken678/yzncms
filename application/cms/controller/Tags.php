@@ -16,6 +16,7 @@ namespace app\cms\controller;
 
 use app\cms\model\Tags as Tags_Model;
 use app\common\controller\Adminbase;
+use think\Db;
 
 class Tags extends Adminbase
 {
@@ -107,6 +108,161 @@ class Tags extends Adminbase
         } else {
             $this->error("菜单排序失败！");
         }
+    }
+
+    //tags数据重建
+    public function create()
+    {
+        if ($this->request->isPOST() || $this->request->param('modelid/d')) {
+            $modelid = $this->request->param('modelid/d', 0);
+            $_GET['modelid'] = $modelid;
+            $lun = $this->request->param('lun/d', 0); //第几轮 0=>1
+            $_GET['zlun'] = $zlun = $this->request->param('zlun/d', 0); //总轮数
+            $_GET['mo'] = $this->request->param('mo/d'); //模型id
+            if ($lun > (int) $_GET['zlun'] - 1) {
+                $lun = (int) $_GET['zlun'] - 1;
+            }
+            $lun = $lun < 0 ? 0 : $lun;
+            $mlun = 100;
+            $firstRow = $mlun * ($lun < 0 ? 0 : $lun);
+            $db = Db::name('TagsContent');
+            $tagdb = Db::name('Tags');
+            if (0 !== (int) $this->request->param('delete/d')) {
+                //清空
+                $db->delete(true);
+                $tagdb->delete(true);
+            }
+            unset($_GET['delete']);
+            $model = cache('Model');
+            if (1 == (int) $_GET['mo']) {
+
+            } else {
+                //模型总数
+                $_GET['mocount'] = 1;
+            }
+
+            //当全部模型重建时处理
+            if ($modelid == 0) {
+                $modelCONUT = Db::name("Model")->count();
+                $modelDATA = Db::name("Model")->where('type', 2)->order('id', 'ASC')->find();
+                $modelid = $modelDATA['id'];
+                $_GET['mo'] = 1;
+                $_GET['mocount'] = $modelCONUT;
+                $_GET['modelid'] = $modelid;
+            }
+            $models_v = $model[$modelid];
+            if (!is_array($models_v)) {
+                $this->error("该模型不存在！");
+                exit;
+            }
+            $tableName = $models_v['tablename'];
+            $count = Db::name($tableName)->count();
+            if ($count == 0) {
+                if (isset($_GET['mo'])) {
+                    /*$where = array();
+                    $where['type'] = 2;
+                    $where['id'] = array('GT', $modelid);*/
+                    $modelDATA = Db::name('Model')->where([
+                        ['type', '=', 2],
+                        ['id', '>', $modelid],
+                    ])->order('id', 'ASC')->find();
+                    if (!$modelDATA) {
+                        $this->success('Tags重建结束！', url('index'));
+                        exit;
+                    }
+                    unset($_GET['zlun']);
+                    unset($_GET['lun']);
+                    $modelid = $modelDATA['id'];
+                    $_GET['modelid'] = $modelid;
+                    $this->assign("waitSecond", 200);
+                    $this->success("模型：{$models_v['name']}，第 " . ($lun + 1) . "/{$zlun} 轮更新成功，进入下一轮更新中...", url('create', $_GET));
+                    exit;
+                } else {
+                    $this->error('该模型下没有信息！');
+                    exit;
+                }
+            }
+            //总轮数
+            $zlun = ceil($count / $mlun);
+            $_GET['zlun'] = $zlun;
+            $this->createUP($models_v, $firstRow, $mlun);
+            if ($lun == (int) $_GET['zlun'] - 1) {
+                if (isset($_GET['mo'])) {
+                    /*$where = array();
+                    $where['type'] = 2;
+                    $where['id'] = array('GT', $modelid);*/
+                    $modelDATA = Db::name('Model')->where([
+                        ['type', '=', 2],
+                        ['id', '>', $modelid],
+                    ])->order('id', 'ASC')->find();
+                    if (!$modelDATA) {
+                        $this->success("Tags重建结束！", url('index'));
+                        exit;
+                    }
+                    unset($_GET['zlun']);
+                    unset($_GET['lun']);
+                    $modelid = $modelDATA['id'];
+                    $_GET['modelid'] = $modelid;
+                } else {
+                    $this->success("Tags重建结束！", url('index'));
+                    exit;
+                }
+            } else {
+                $_GET['lun'] = $lun + 1;
+            }
+            $this->assign('waitSecond', 200);
+            $this->success("模型：" . $models_v['name'] . "，第 " . ($lun + 1) . "/$zlun 轮更新成功，进入下一轮更新中...", url('create', $_GET));
+            exit;
+        } else {
+            $model = cache('Model');
+            $mo = array();
+            foreach ($model as $k => $v) {
+                if ($v['type'] == 2) {
+                    $mo[$k] = $v['name'];
+                }
+            }
+            $this->assign('Model', $mo);
+            return $this->fetch();
+
+        }
+    }
+
+    //数据重建
+    protected function createUP($models_v, $firstRow, $mlun)
+    {
+        $db = Db::name('TagsContent');
+        $tagdb = Db::name('Tags');
+        $keywords = Db::name(ucwords($models_v['tablename']))->where("status", 1)->order("id", "ASC")->limit("{$firstRow},{$mlun}")->column('id,catid,tags');
+        foreach ($keywords as $keyword) {
+            $data = array();
+            $time = time();
+            $key = strpos($keyword['tags'], ',') !== false ? explode(',', $keyword['tags']) : explode(' ', $keyword['tags']);
+            foreach ($key as $key_v) {
+                if (empty($key_v) || $key_v == "") {
+                    continue;
+                }
+                $key_v = trim($key_v);
+                if ($tagdb->where('tag', $key_v)->find()) {
+                    $tagdb->where('tag', $key_v)->setIn('usetimes');
+                } else {
+                    $tagdb->insert(array(
+                        "tag" => $key_v,
+                        "usetimes" => 1,
+                        "create_time" => $time,
+                        "update_time" => $time,
+                    ));
+                }
+                $data = array(
+                    'tag' => $key_v,
+                    "modelid" => $models_v['id'],
+                    "contentid" => $keyword['id'],
+                    "catid" => $keyword['catid'],
+                    "updatetime" => $time,
+                );
+                $db->insert($data);
+            }
+        }
+        return true;
     }
 
 }
