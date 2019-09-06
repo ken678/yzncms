@@ -97,6 +97,7 @@ class Index extends Cmsbase
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
         $this->assign([
             'top_parentid' => $top_parentid,
+            'arrparentid' => $arrparentid,
             'SEO' => $seo,
             'catid' => $catid,
             'page' => $page,
@@ -171,6 +172,7 @@ class Index extends Cmsbase
             'readpoint' => $readpoint,
             'allow_visitor' => $allow_visitor,
             'top_parentid' => $top_parentid,
+            'arrparentid' => $arrparentid,
             'SEO' => $seo,
             'catid' => $catid,
             'page' => $page,
