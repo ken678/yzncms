@@ -53,13 +53,13 @@ function catpos($catid, $symbol = ' &gt; ')
 /**
  * 生成分类信息中的筛选菜单
  */
-function filters($modelid)
+function filters($modelid, $catid)
 {
     $data = get_filters_field($modelid);
     Request::filter('trim');
     $param = paramdecode(Request::param('condition'));
 
-    $catid = Request::param('catid');
+    //$catid = Request::param('catid');
     $conditionParam = [];
     foreach ($data as $name => $rs) {
         $all[0] = '不限';

@@ -11,14 +11,14 @@ body {
             <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
             <!-- 面包屑 -->
             <div class="bread-nav">
-                <a href="">首页</a>&gt; {:catpos($catid)}
+                <a href="{:url('cms/index/index')}">首页</a>&gt; {:catpos($catid)}
             </div>
         </div>
         <div class="content">
         	<!--S 筛选列表 -->
             <div class="product_box">
                 <div class="classify-screen">
-                    {volist name=":filters($modelid)" id="vo"}
+                    {volist name=":filters($modelid,$catid)" id="vo"}
                     <div class="classify-box clearfix">
                         <h5 class="classify-name">{$vo.title}：</h5>
                         <div class="classify-screen-con">
