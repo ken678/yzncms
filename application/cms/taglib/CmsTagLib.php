@@ -69,7 +69,7 @@ class CmsTagLib
         if (!empty($categorys)) {
             foreach ($categorys as &$vo) {
                 $vo['url'] = Category_Model::buildCatUrl($vo['id'], $vo['url']);
-                $vo['image'] = get_file_path($vo['image']);
+                $vo['image'] = empty($vo['image']) ? '' : get_file_path($vo['image']);
             }
         }
         return $categorys;

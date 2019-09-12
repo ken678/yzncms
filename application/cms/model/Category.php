@@ -243,7 +243,7 @@ class Category extends Model
                 $cache['url'] = self::buildCatUrl($catid, $cache['url']);
                 //栏目扩展字段
                 //$cache['extend'] = $cache['setting']['extend'];
-                $cache['image'] = get_file_path($cache['image']);
+                $cache['image'] = empty($cache['image']) ? '' : get_file_path($cache['image']);
                 Cache::set($key, $cache, 3600);
             }
         }
