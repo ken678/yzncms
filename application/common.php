@@ -256,7 +256,6 @@ function arr2str($arr, $glue = ',')
     if (is_string($arr)) {
         return $arr;
     }
-
     return implode($glue, $arr);
 }
 
@@ -445,7 +444,6 @@ function format_bytes($size, $delimiter = '')
     for ($i = 0; $size >= 1024 && $i < 5; $i++) {
         $size /= 1024;
     }
-
     return round($size, 2) . $delimiter . $units[$i];
 }
 
@@ -693,8 +691,6 @@ function safe_replace($string)
 
 /**
  * 字符串加密、解密函数
- *
- *
  * @param    string    $txt        字符串
  * @param    string    $operation    ENCODE为加密，DECODE为解密，可选参数，默认为ENCODE，
  * @param    string    $key        密钥：数字、字母、下划线
