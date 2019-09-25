@@ -88,7 +88,7 @@ class Attachment extends Model
         $isIds = strpos($id, ',') !== false;
         if ($isIds) {
             $ids = explode(',', $id);
-            $data_list = $this->where('id', 'in', $ids)->field('path,driver,thumb')->select();
+            $data_list = $this->where('id', 'in', $ids)->field('path,driver,thumb')->orderField('id', $ids)->select();
             $paths = [];
             foreach ($data_list as $key => $value) {
                 if ($value['driver'] == 'local') {
