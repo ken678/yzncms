@@ -158,10 +158,8 @@ class Tags extends Adminbase
             $tableName = $models_v['tablename'];
             $count = Db::name($tableName)->count();
             if ($count == 0) {
+                //结束
                 if (isset($_GET['mo'])) {
-                    /*$where = array();
-                    $where['type'] = 2;
-                    $where['id'] = array('GT', $modelid);*/
                     $modelDATA = Db::name('Model')->where([
                         ['type', '=', 2],
                         ['id', '>', $modelid],
@@ -174,8 +172,8 @@ class Tags extends Adminbase
                     unset($_GET['lun']);
                     $modelid = $modelDATA['id'];
                     $_GET['modelid'] = $modelid;
-                    $this->assign("waitSecond", 200);
-                    $this->success("模型：{$models_v['name']}，第 " . ($lun + 1) . "/{$zlun} 轮更新成功，进入下一轮更新中...", url('create', $_GET));
+                    //$this->assign("waitSecond", 200);
+                    $this->success("模型：{$models_v['name']}，第 " . ($lun + 1) . "/{$zlun} 轮更新成功，进入下一轮更新中...", url('create', $_GET), '', 1);
                     exit;
                 } else {
                     $this->error('该模型下没有信息！');
@@ -188,9 +186,6 @@ class Tags extends Adminbase
             $this->createUP($models_v, $firstRow, $mlun);
             if ($lun == (int) $_GET['zlun'] - 1) {
                 if (isset($_GET['mo'])) {
-                    /*$where = array();
-                    $where['type'] = 2;
-                    $where['id'] = array('GT', $modelid);*/
                     $modelDATA = Db::name('Model')->where([
                         ['type', '=', 2],
                         ['id', '>', $modelid],
@@ -210,8 +205,8 @@ class Tags extends Adminbase
             } else {
                 $_GET['lun'] = $lun + 1;
             }
-            $this->assign('waitSecond', 200);
-            $this->success("模型：" . $models_v['name'] . "，第 " . ($lun + 1) . "/$zlun 轮更新成功，进入下一轮更新中...", url('create', $_GET));
+            //$this->assign('waitSecond', 200);
+            $this->success("模型：" . $models_v['name'] . "，第 " . ($lun + 1) . "/$zlun 轮更新成功，进入下一轮更新中...", url('create', $_GET), '', 1);
             exit;
         } else {
             $model = cache('Model');
