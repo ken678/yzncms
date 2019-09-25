@@ -249,6 +249,7 @@ class Cms extends Modelbase
                 }
             }
             foreach ($list as $key => &$value) {
+                //内部字段不显示
                 if ($value['iscore']) {
                     unset($list[$key]);
                 }
