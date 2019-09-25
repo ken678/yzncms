@@ -125,12 +125,12 @@ class Tags extends Adminbase
             $lun = $lun < 0 ? 0 : $lun;
             $mlun = 100;
             $firstRow = $mlun * ($lun < 0 ? 0 : $lun);
-            $db = Db::name('TagsContent');
-            $tagdb = Db::name('Tags');
+            //$db = Db::name('TagsContent');
+            //$tagdb = Db::name('Tags');
             if (0 !== (int) $this->request->param('delete/d')) {
                 //清空
-                $db->delete(true);
-                $tagdb->delete(true);
+                Db::name('TagsContent')->delete(true);
+                Db::name('Tags')->delete(true);
             }
             unset($_GET['delete']);
             $model = cache('Model');
@@ -140,7 +140,6 @@ class Tags extends Adminbase
                 //模型总数
                 $_GET['mocount'] = 1;
             }
-
             //当全部模型重建时处理
             if ($modelid == 0) {
                 $modelCONUT = Db::name("Model")->count();
@@ -153,7 +152,6 @@ class Tags extends Adminbase
             $models_v = $model[$modelid];
             if (!is_array($models_v)) {
                 $this->error("该模型不存在！");
-                exit;
             }
             $tableName = $models_v['tablename'];
             $count = Db::name($tableName)->count();
@@ -166,18 +164,14 @@ class Tags extends Adminbase
                     ])->order('id', 'ASC')->find();
                     if (!$modelDATA) {
                         $this->success('Tags重建结束！', url('index'));
-                        exit;
                     }
                     unset($_GET['zlun']);
                     unset($_GET['lun']);
                     $modelid = $modelDATA['id'];
                     $_GET['modelid'] = $modelid;
-                    //$this->assign("waitSecond", 200);
                     $this->success("模型：{$models_v['name']}，第 " . ($lun + 1) . "/{$zlun} 轮更新成功，进入下一轮更新中...", url('create', $_GET), '', 1);
-                    exit;
                 } else {
                     $this->error('该模型下没有信息！');
-                    exit;
                 }
             }
             //总轮数
@@ -200,14 +194,11 @@ class Tags extends Adminbase
                     $_GET['modelid'] = $modelid;
                 } else {
                     $this->success("Tags重建结束！", url('index'));
-                    exit;
                 }
             } else {
                 $_GET['lun'] = $lun + 1;
             }
-            //$this->assign('waitSecond', 200);
             $this->success("模型：" . $models_v['name'] . "，第 " . ($lun + 1) . "/$zlun 轮更新成功，进入下一轮更新中...", url('create', $_GET), '', 1);
-            exit;
         } else {
             $model = cache('Model');
             $mo = array();
@@ -225,9 +216,7 @@ class Tags extends Adminbase
     //数据重建
     protected function createUP($models_v, $firstRow, $mlun)
     {
-        $db = Db::name('TagsContent');
-        $tagdb = Db::name('Tags');
-        $keywords = Db::name(ucwords($models_v['tablename']))->where("status", 1)->order("id", "ASC")->limit("{$firstRow},{$mlun}")->column('id,catid,tags');
+        $keywords = Db::name(ucwords($models_v['tablename']))->where("status", 1)->where('tags', '<>', '')->order("id", "ASC")->limit("{$firstRow},{$mlun}")->column('id,catid,tags');
         foreach ($keywords as $keyword) {
             $data = array();
             $time = time();
@@ -237,10 +226,10 @@ class Tags extends Adminbase
                     continue;
                 }
                 $key_v = trim($key_v);
-                if ($tagdb->where('tag', $key_v)->find()) {
-                    $tagdb->where('tag', $key_v)->setIn('usetimes');
+                if ($this->Tags->where('tag', $key_v)->find()) {
+                    $this->Tags->where('tag', $key_v)->setInc('usetimes');
                 } else {
-                    $tagdb->insert(array(
+                    $this->Tags->insert(array(
                         "tag" => $key_v,
                         "usetimes" => 1,
                         "create_time" => $time,
@@ -254,7 +243,7 @@ class Tags extends Adminbase
                     "catid" => $keyword['catid'],
                     "updatetime" => $time,
                 );
-                $db->insert($data);
+                Db::name('TagsContent')->insert($data);
             }
         }
         return true;
