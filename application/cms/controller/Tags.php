@@ -216,7 +216,10 @@ class Tags extends Adminbase
     //数据重建
     protected function createUP($models_v, $firstRow, $mlun)
     {
-        $keywords = Db::name(ucwords($models_v['tablename']))->where("status", 1)->where('tags', '<>', '')->order("id", "ASC")->limit("{$firstRow},{$mlun}")->column('id,catid,tags');
+        $keywords = Db::name(ucwords($models_v['tablename']))->where([
+            ["status", '=', 1],
+            ['tags', '<>', ''],
+        ])->order("id", "ASC")->limit($firstRow, $mlun)->column('id,catid,tags');
         foreach ($keywords as $keyword) {
             $data = array();
             $time = time();
