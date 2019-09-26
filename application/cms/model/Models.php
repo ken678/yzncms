@@ -201,6 +201,7 @@ EOF;
             'remark' => '',
             'isadd' => 0,
             'iscore' => 0,
+            'ifrequire' => 0,
         ];
         $data = [
             [
@@ -224,17 +225,6 @@ EOF;
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
                 'isadd' => 1,
             ],
-
-            [
-                'name' => 'thumb',
-                'title' => '缩略图',
-                'type' => 'image',
-                'ifrequire' => 1,
-                'iffixed' => 0,
-                'setting' => "a:3:{s:6:\"define\";s:36:\"int(5) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
-                'isadd' => 1,
-            ],
-
             [
                 'name' => 'flag',
                 'title' => '属性',
@@ -296,6 +286,15 @@ EOF;
                 'title' => '状态',
                 'type' => 'radio',
                 'setting' => "a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:18:\"0:禁用\r\n1:启用\";s:5:\"value\";s:1:\"1\";}",
+            ],
+            [
+                'name' => 'thumb',
+                'title' => '缩略图',
+                'type' => 'image',
+                'ifrequire' => 0,
+                'iffixed' => 0,
+                'setting' => "a:3:{s:6:\"define\";s:36:\"int(5) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'isadd' => 1,
             ],
             [
                 'name' => 'inputtime',
