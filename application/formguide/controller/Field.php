@@ -38,7 +38,7 @@ class Field extends AdminBase
         Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
         $fieldid = $this->request->param('id/d', 0);
         if ($this->request->isAjax()) {
-            $data = $this->modelfield->where(['modelid' => $fieldid])->select();
+            $data = $this->modelfield->where(['modelid' => $fieldid])->order('listorder,id')->select();
             return json(["code" => 0, "data" => $data]);
         } else {
             $this->assign("id", $fieldid);
