@@ -174,7 +174,7 @@ class Cms extends Modelbase
         if ([] != $ignoreField) {
             $query = $query->where('name', 'not in', $ignoreField);
         }
-        $filedTypeList = $query->column('name,title,type,ifsystem,ifrequire,pattern,errortips');
+        $filedTypeList = $query->order('listorder,id')->column('name,title,type,ifsystem,ifrequire,pattern,errortips');
         //字段规则
         $fieldRule = Db::name('field_type')->column('vrule', 'name');
         foreach ($filedTypeList as $name => $vo) {
