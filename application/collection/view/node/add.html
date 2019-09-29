@@ -9,11 +9,75 @@
                 <li>高级配置</li>
             </ul>
             <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">内容1</div>
-                <div class="layui-tab-item">内容2</div>
-                <div class="layui-tab-item">内容3</div>
+                <form class="layui-form" action="">
+                    <div class="layui-tab-item layui-show">
+                        <fieldset class="layui-elem-field">
+                            <legend>基本信息</legend>
+                            <div class="layui-field-box">
+                                <div class="layui-form-item">
+                                    <label>采集项目名</label>
+                                    <div>
+                                        <input type="text" name="data[name]" required lay-verify="required" placeholder="采集项目名" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label>页面编码</label>
+                                    <div>
+                                        <input type="radio" name="data[sourcecharset]" value="utf-8" title="utf-8" checked>
+                                        <input type="radio" name="data[sourcecharset]" value="gbk" title="gbk">
+                                        <input type="radio" name="data[sourcecharset]" value="big5" title="big5">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="layui-elem-field">
+                            <legend>网址采集</legend>
+                            <div class="layui-field-box">
+                                <div class="layui-form-item">
+                                    <label>网址类型</label>
+                                    <div>
+                                        <input type="radio" name="data[sourcetype]" lay-filter="urlType" value="1" title="序列网址" checked>
+                                        <input type="radio" name="data[sourcetype]" lay-filter="urlType" value="2" title="多个网页">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label>采集网址</label>
+                                    <div>
+                                        <input type="text" name="urlpage1" required lay-verify="required" placeholder="采集网址" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">(如：http://bbs.yzncms.com/?index-(*).htm,页码使用(*)做为通配符。</div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div>
+                                        <div class="layui-form-mid">页码从</div>
+                                        <div class="layui-input-inline" style="width:60px;">
+                                            <input type="text" class="layui-input" name="data[pagesize_start]" placeholder="开始页" value="1">
+                                        </div>
+                                        <div class="layui-form-mid">至</div>
+                                        <div class="layui-input-inline" style="width:60px;">
+                                            <input type="text" class="layui-input" name="data[pagesize_end]" value="10" placeholder="结束页">
+                                        </div>
+                                        <div class="layui-form-mid">页，每次增加</div>
+                                        <div class="layui-input-inline" style="width:60px;">
+                                            <input type="text" class="layui-input" name="data[par_num]" value="1" placeholder="加 ? 页">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="layui-tab-item">内容2</div>
+                    <div class="layui-tab-item">内容3</div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+layui.use('form', function() {
+    form.on('radio(urlType)', function(data) {
+
+    });
+});
+</script>
 {/block}
