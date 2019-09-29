@@ -93,6 +93,8 @@ class Cms extends Modelbase
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+        //更新栏目统计数据
+        $this->update_category_items($catid, 'add', 1);
         return $id;
     }
 
@@ -161,6 +163,8 @@ class Cms extends Modelbase
             if (2 == $modelInfo['type']) {
                 Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $id)->delete();
             }
+            //更新栏目统计
+            $this->update_category_items($data['catid'], 'delete');
         }
         //标签
         hook('contentDeleteEnd', $data);
@@ -315,13 +319,13 @@ class Cms extends Modelbase
             if (2 == getModel($modeId, 'type') && $moreifo) {
                 $extTable = $tableName . $this->ext_table;
                 if ($page) {
-                    $result = \think\Db::view($tableName, '*')
+                    $result = Db::view($tableName, '*')
                         ->where($where)
                         ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
                         ->order($order)
                         ->paginate($limit, $simple, $config);
                 } else {
-                    $result = \think\Db::view($tableName, '*')
+                    $result = Db::view($tableName, '*')
                         ->where($where)
                         ->limit($limit)
                         ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
@@ -330,9 +334,9 @@ class Cms extends Modelbase
                 }
             } else {
                 if ($page) {
-                    $result = \think\Db::name($tableName)->where($where)->order($order)->paginate($limit, $simple, $config);
+                    $result = Db::name($tableName)->where($where)->order($order)->paginate($limit, $simple, $config);
                 } else {
-                    $result = \think\Db::name($tableName)->where($where)->limit($limit)->order($order)->select();
+                    $result = Db::name($tableName)->where($where)->limit($limit)->order($order)->select();
                 }
             }
         }
@@ -489,10 +493,19 @@ class Cms extends Modelbase
         }
     }
 
-//创建内容链接
+    //创建内容链接
     public function buildContentUrl($catid, $id)
     {
         return url('cms/index/shows', ['catid' => $catid, 'id' => $id]);
+    }
+
+    private function update_category_items($catid, $action = 'add', $cache = 0)
+    {
+        if ($action == 'add') {
+            Db::name('Category')->where('id', $catid)->setInc('items');
+        } else {
+            Db::name('Category')->where('id', $catid)->setDec('items');
+        }
     }
 
     //会员配置缓存
