@@ -38,5 +38,7 @@ return array(
     //缓存，格式：缓存key=>array('module','model','action')
     'cache' => [],
     // 数据表，不要加表前缀[有数据库表时必填]
-    'tables' => [],
+    'tables' => [
+        'collection_node',
+    ],
 );
