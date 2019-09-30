@@ -52,7 +52,13 @@ class Node extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-
+            $data = $this->request->post();
+            try {
+                $this->Nodes->editNode($data);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
+            }
+            $this->success('修改成功！', url('index'));
         } else {
             $id = $this->request->param('id/d', 0);
             if (empty($id)) {
