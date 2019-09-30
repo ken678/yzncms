@@ -32,16 +32,16 @@ class Nodes extends Modelbase
         if (empty($data)) {
             throw new \Exception('数据不得为空！');
         }
-
+        $_data = $data['data'];
         $customize_config = isset($data['customize_config']) ? $data['customize_config'] : '';
-        $data = $data['data'];
-        $data['customize_config'] = array();
+        $_data['urlpage'] = isset($data['urlpage' . $_data['sourcetype']]) ? $data['urlpage' . $_data['sourcetype']] : '';
+        $_data['customize_config'] = array();
         if (is_array($customize_config)) {
             foreach ($customize_config['name'] as $k => $v) {
                 if (empty($v) || empty($customize_config['name'][$k])) {
                     continue;
                 }
-                $data['customize_config'][] = [
+                $_data['customize_config'][] = [
                     'title' => $customize_config['title'][$k],
                     'name' => $v,
                     'selector' => $customize_config['selector'][$k],
@@ -51,9 +51,9 @@ class Nodes extends Modelbase
 
             }
         }
-        $data['customize_config'] = serialize($data['customize_config']);
-        $data['setting'] = serialize($data['setting']);
-        self::allowField(true)->save($data);
+        $_data['customize_config'] = serialize($_data['customize_config']);
+        $_data['setting'] = serialize($_data['setting']);
+        self::allowField(true)->save($_data);
     }
 
 }

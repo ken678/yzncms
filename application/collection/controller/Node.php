@@ -51,6 +51,20 @@ class Node extends Adminbase
 
     public function edit()
     {
+        if ($this->request->isPost()) {
+
+        } else {
+            $id = $this->request->param('id/d', 0);
+            if (empty($id)) {
+                $this->error('请指定需要修改的采集点！');
+            }
+            $data = $this->Nodes->where(array('id' => $id))->find();
+            if (isset($data['customize_config'])) {
+                $data['customize_config'] = json_encode(unserialize($data['customize_config']));
+            }
+            $this->assign('data', $data);
+            return $this->fetch();
+        }
 
     }
 

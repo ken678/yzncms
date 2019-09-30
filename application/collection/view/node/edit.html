@@ -17,15 +17,15 @@
                                 <div class="layui-form-item">
                                     <label>采集项目名</label>
                                     <div>
-                                        <input type="text" name="data[name]" required lay-verify="required" placeholder="采集项目名" autocomplete="off" class="layui-input">
+                                        <input type="text" name="data[name]" required lay-verify="required" placeholder="采集项目名" autocomplete="off" class="layui-input" value="{$data.name}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label>页面编码</label>
                                     <div>
-                                        <input type="radio" name="data[sourcecharset]" value="utf-8" title="utf-8" checked>
-                                        <input type="radio" name="data[sourcecharset]" value="gbk" title="gbk">
-                                        <input type="radio" name="data[sourcecharset]" value="big5" title="big5">
+                                        <input type="radio" name="data[sourcecharset]" value="utf-8" title="utf-8" {eq name="data.sourcecharset" value="utf-8" }checked{/eq}>
+                                        <input type="radio" name="data[sourcecharset]" value="gbk" title="gbk" {eq name="data.sourcecharset" value="gbk" }checked{/eq}>
+                                        <input type="radio" name="data[sourcecharset]" value="big5" title="big5" {eq name="data.sourcecharset" value="big5" }checked{/eq}>
                                     </div>
                                 </div>
                             </div>
@@ -36,15 +36,15 @@
                                 <div class="layui-form-item">
                                     <label>网址类型</label>
                                     <div>
-                                        <input type="radio" name="data[sourcetype]" lay-filter="urlType" value="1" title="序列网址" checked>
-                                        <input type="radio" name="data[sourcetype]" lay-filter="urlType" value="2" title="多个网页">
+                                        <input type="radio" name="data[sourcetype]" lay-filter="urlType" value="1" title="序列网址" {eq name="data.sourcetype" value="1" }checked{/eq}>
+                                        <input type="radio" name="data[sourcetype]" lay-filter="urlType" value="2" title="多个网页" {eq name="data.sourcetype" value="2" }checked{/eq}>
                                     </div>
                                 </div>
-                                <div class="url_type">
+                                <div class="url_type" {eq name="data.sourcetype" value="2" }style="display:none;"{/eq}>
                                     <div class="layui-form-item">
                                         <label>采集网址</label>
                                         <div>
-                                            <input type="text" name="urlpage1" placeholder="采集网址" autocomplete="off" class="layui-input">
+                                            <input type="text" name="urlpage1" placeholder="采集网址" autocomplete="off" class="layui-input" value="{$data.urlpage}">
                                         </div>
                                         <div class="layui-form-mid layui-word-aux">(如：http://bbs.yzncms.com/?index-(*).htm,页码使用(*)做为通配符。</div>
                                     </div>
@@ -65,10 +65,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="layui-form-item layui-form-text url_type2" style="display:none;">
+                                <div class="layui-form-item layui-form-text url_type_2" {eq name="data.sourcetype" value="1" }style="display:none;"{/eq}>
                                     <label>采集网址</label>
                                     <div>
-                                        <textarea name="urlpage2" placeholder="采集网址" class="layui-textarea"></textarea>
+                                        <textarea name="urlpage2" placeholder="采集网址" class="layui-textarea">{$data.urlpage}</textarea>
                                     </div>
                                     <div class="layui-form-mid layui-word-aux">每行一条网址</div>
                                 </div>
@@ -94,15 +94,15 @@
                         <div class="layui-form-item">
                             <label>下载图片</label>
                             <div>
-                                <input type="radio" name="data[down_attachment]" value="1" title="是">
-                                <input type="radio" name="data[down_attachment]" value="0" title="否" checked>
+                                <input type="radio" name="data[down_attachment]" value="1" title="是" {eq name="data.down_attachment" value="1" }checked{/eq}>
+                                <input type="radio" name="data[down_attachment]" value="0" title="否" {eq name="data.down_attachment" value="0" }checked{/eq}>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label>图片水印</label>
                             <div>
-                                <input type="radio" name="data[watermark]" value="1" title="是">
-                                <input type="radio" name="data[watermark]" value="0" title="否" checked>
+                                <input type="radio" name="data[watermark]" value="1" title="是" {eq name="data.watermark" value="1" }checked{/eq}>
+                                <input type="radio" name="data[watermark]" value="0" title="否" {eq name="data.watermark" value="0" }checked{/eq}>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -142,9 +142,7 @@
                 <input type="text" class="layui-input" name="customize_config[filter][]" placeholder="内容过滤器" value="{{item.filter}}"  />
             </div>
             <label class="layui-form-mid">
-                {{# if (index == 0) { }}
                 <span class="layui-badge rules-del">-</span>&nbsp;&nbsp;
-                {{# } }}
                 <span class="layui-badge layui-bg-blue rules-add">+</span>
             </label>
         </div>
@@ -155,15 +153,15 @@
 layui.use(['laytpl', 'form'], function() {
     var form = layui.form,
         laytpl = layui.laytpl,
-        formData = [];
+        formData = {$data.customize_config|raw};
     form.on('radio(urlType)', function(data) {
         if (2 == data.value) {
             $('.url_type').hide();
-            $('.url_type2').show();
+            $('.url_type_2').show();
         }
         if (1 == data.value) {
             $('.url_type').show();
-            $('.url_type2').hide();
+            $('.url_type_2').hide();
         }
     });
 
