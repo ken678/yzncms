@@ -2,7 +2,7 @@
 {block name="main"}
 <div class="layui-card">
     <div class="layui-card-body">
-        <form class="layui-form" action="" method="post">
+        <form class="layui-form" method="post" lay-filter="layui-form">
             <div class="layui-tab layui-tab-card">
                 <ul class="layui-tab-title">
                     <li class="layui-this">网址规则</li>
@@ -76,12 +76,20 @@
                         </fieldset>
                         <div class="layui-form-item">
                             <div>
-                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                         </div>
                     </div>
-                    <div class="layui-tab-item" id="caijiBox"></div>
+                    <div class="layui-tab-item">
+                        <div id="caijiBox"></div>
+                        <div class="layui-form-item">
+                            <div>
+                                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="layui-tab-item">
                         <div class="layui-form-item">
                             <label>下载图片</label>
@@ -95,6 +103,12 @@
                             <div>
                                 <input type="radio" name="data[watermark]" value="1" title="是">
                                 <input type="radio" name="data[watermark]" value="0" title="否" checked>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div>
+                                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                         </div>
                     </div>
@@ -113,13 +127,16 @@
         {{# layui.each(d.rules, function(index, item) { }}
         <div class="layui-form-item rules-item">
             <div class="layui-input-inline" style="width:90px;">
-                <input type="text" class="layui-input" name="customize_config[name][]" placeholder="标题" value="{{item.title}}" />
+                <input type="text" class="layui-input" name="customize_config[title][]" placeholder="标题" value="{{item.title}}" />
             </div>
             <div class="layui-input-inline" style="width:90px;">
-                <input type="text" class="layui-input" name="customize_config[en_name][]" placeholder="字段名" value="{{item.name}}"  />
+                <input type="text" class="layui-input" name="customize_config[name][]" placeholder="字段名" value="{{item.name}}"  />
             </div>
             <div class="layui-input-inline" style="width:150px;">
                 <input type="text" class="layui-input" name="customize_config[selector][]" placeholder="选择器" value="{{item.selector}}"  />
+            </div>
+            <div class="layui-input-inline" style="width:60px;">
+                <input type="text" class="layui-input" name="customize_config[attr][]" placeholder="属性" value="{{item.attr}}"  />
             </div>
             <div class="layui-input-inline" style="width:140px;">
                 <input type="text" class="layui-input" name="customize_config[filter][]" placeholder="内容过滤器" value="{{item.filter}}"  />
@@ -174,7 +191,7 @@ layui.use(['laytpl', 'form'], function() {
 
     addRule = function(that) {
         var data = {
-            rules: [{"title":"","name":"","selector":"","filter":""}]
+            rules: [{ "title": "", "name": "", "selector": "", "attr": "", "filter": "" }]
         };
         laytpl($('#caijiTpl').html()).render(data, function(html) {
             that.parents('#caijiBox').append(html);

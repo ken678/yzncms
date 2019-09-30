@@ -14,18 +14,57 @@
 // +----------------------------------------------------------------------
 namespace app\collection\controller;
 
+use app\collection\model\Nodes as Nodes_Model;
 use app\common\controller\Adminbase;
 
 class Node extends Adminbase
 {
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->Nodes = new Nodes_Model;
+    }
+
     public function index()
     {
+        if ($this->request->isAjax()) {
+            $data = $this->Nodes->select();
+            return json(["code" => 0, "data" => $data]);
+        }
         return $this->fetch();
     }
 
     public function add()
     {
-        return $this->fetch();
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            try {
+                $this->Nodes->addNode($data);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
+            }
+            $this->success('新增成功！', url('index'));
+        } else {
+            return $this->fetch();
+        }
+    }
+
+    public function edit()
+    {
+
+    }
+
+    public function delete()
+    {
+        $nodeid = $this->request->param('ids/a', null);
+        if (!is_array($nodeid)) {
+            $nodeid = array($nodeid);
+        }
+        foreach ($nodeid as $tid) {
+            $this->Nodes->where(array('id' => $tid))->delete();
+        }
+        $this->success("删除成功！");
+
     }
 
 }
