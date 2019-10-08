@@ -45,7 +45,7 @@
                     <h5>搜索历史</h5>
                     <div class="list-group">
                         {volist name="shistory" id="vo"}
-                        <a href="{:url('cms/index/search',['keyword'=>$vo])}" class="list-group-item_gr" title="{$vo}">{$vo}</a>
+                        <a href="?keyword={$vo}" class="list-group-item_gr" title="{$vo}">{$vo}</a>
                         {/volist}
                     </div>
                 </div>
