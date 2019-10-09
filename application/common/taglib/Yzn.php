@@ -148,7 +148,13 @@ class Yzn extends Taglib
                 array_push($tableWhere, $tag['where']);
             }
         }
+        if ($page) {
+            $config = app('config')->pull('paginate');
+            $class = false !== strpos($config['type'], '\\') ? $config['type'] : '\\think\\paginator\\driver\\' . ucwords($config['type']);
+            $config['path'] = isset($config['path']) ? $config['path'] : call_user_func([$class, 'getCurrentPath']);
+        }
         //拼接php代码
+
         $parseStr = '<?php ';
         $parseStr .= '$cache = ' . $cache . ';';
         if ($table) {
@@ -161,10 +167,12 @@ class Yzn extends Taglib
                 $parseStr .= ' $get_db->order("' . $tag['order'] . '"); ';
             }
             if ($page) {
-                $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->paginate(' . $num . ');';
+                $parseStr .= '$_count=$get_db->where(' . self::arr_to_html($tableWhere) . ')->count();';
+                $parseStr .= '$_limit=((' . $page . ' - 1) * $num) < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
+                $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit($_limit,' . $num . ')->select();';
+                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,' . self::arr_to_html($config) . ');';
             } else {
                 $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
-
             }
             $parseStr .= 'endif;';
         } else {
@@ -178,12 +186,21 @@ class Yzn extends Taglib
             } else {
                 $parseStr .= ' $_sql = "' . str_replace('"', '\"', $sql) . '";';
             }
-            $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . " LIMIT " . $num . '");';
+            if ($page) {
+                $parseStr .= '$_limit=((' . $page . ' - 1) * $num) < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
+                $parseStr .= '$_count=count(\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . '"));';
+                $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT $_limit,' . $num . '");';
+                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,' . self::arr_to_html($config) . ');';
+            } else {
+                $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT ' . $num . '");';
+            }
             $parseStr .= 'endif;';
+
         }
         $parseStr .= 'if($cache):';
         $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
         $parseStr .= 'endif;';
+
         //判断分页
         if ($page) {
             $parseStr .= '$pages = $' . $return . '->render();';
@@ -195,7 +212,6 @@ class Yzn extends Taglib
             return $parseStr;
         }
         return;
-
     }
 
     /**
