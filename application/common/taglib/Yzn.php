@@ -158,7 +158,7 @@ class Yzn extends Taglib
         $parseStr = '<?php ';
         $parseStr .= '$cache = ' . $cache . ';';
         if ($table) {
-            $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tableWhere) . ');';
+            $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
             $parseStr .= 'if($cache && $_return = Cache::get($cacheID)):';
             $parseStr .= '$' . $return . ' = $_return;';
             $parseStr .= 'else: ';
