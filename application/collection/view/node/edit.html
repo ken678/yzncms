@@ -31,7 +31,7 @@
                             </div>
                         </fieldset>
                         <fieldset class="layui-elem-field">
-                            <legend>网址采集</legend>
+                            <legend>起始页网址</legend>
                             <div class="layui-field-box">
                                 <div class="layui-form-item">
                                     <label>网址类型</label>
@@ -71,6 +71,16 @@
                                         <textarea name="urlpage2" placeholder="采集网址" class="layui-textarea">{eq name="data.sourcetype" value="2" }{$data.urlpage}{/eq}</textarea>
                                     </div>
                                     <div class="layui-form-mid layui-word-aux">每行一条网址</div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="layui-elem-field">
+                            <legend>内容页网址</legend>
+                            <div class="layui-field-box">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-inline" style="width:150px;"><input type="text" class="layui-input" name="" placeholder="选择器" value=""> </div>
+                                    <div class="layui-input-inline" style="width:60px;"><input type="text" class="layui-input" name="" placeholder="属性" value=""> </div>
+                                    <div class="layui-input-inline" style="width:140px;"><input type="text" class="layui-input" name="" placeholder="内容过滤器" value=""> </div>
                                 </div>
                             </div>
                         </fieldset>
