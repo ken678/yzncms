@@ -45,7 +45,7 @@ class Models extends Models_Model
                        `uid` mediumint(8) unsigned NOT NULL,
                        `username` varchar(20) NOT NULL,
                        `inputtime` int(10) unsigned NOT NULL,
-                       `ip` bigint(20) unsigned DEFAULT '0',
+                       `ip` char(15) NOT NULL DEFAULT '',
                        PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
             //表名替换

@@ -42,8 +42,6 @@ class Info extends AdminBase
             $total = Db::name($tableName)->where($map)->count();
             $_list = Db::name($tableName)->page($page, $limit)->where($map)->order(['id' => 'desc'])->withAttr('inputtime', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
-            })->withAttr('ip', function ($value, $data) {
-                return long2ip($value);
             })->select();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);

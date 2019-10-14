@@ -42,7 +42,7 @@ class Formguide extends Cms_Model
         $dataAll = $this->dealModelPostData($formid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
         $data['inputtime'] = request()->time();
-        $data['ip'] = request()->ip(1);
+        $data['ip'] = request()->ip();
         try {
             //主表
             $id = Db::name($tablename)->insertGetId($data);
