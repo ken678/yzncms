@@ -28,11 +28,6 @@ class AdminUser extends Model
         return date('Y-m-d H:i:s', $value);
     }
 
-    public function getLastLoginIpAttr($value)
-    {
-        return long2ip($value);
-    }
-
     /**
      * 用户登录
      * @param string $username 用户名
@@ -57,11 +52,11 @@ class AdminUser extends Model
     public function autoLogin($userInfo)
     {
         /* 更新登录信息 */
-        $data = array(
-            'uid' => $userInfo['id'],
-            'last_login_time' => time(),
-            'last_login_ip' => request()->ip(1),
-        );
+        /*$data = array(
+        'uid' => $userInfo['id'],
+        'last_login_time' => time(),
+        'last_login_ip' => request()->ip(),
+        );*/
         $this->loginStatus((int) $userInfo['id']);
         /* 记录登录SESSION和COOKIES */
         $auth = [
@@ -183,7 +178,7 @@ class AdminUser extends Model
      */
     public function loginStatus($id)
     {
-        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip(1)];
+        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip()];
         return $this->save($data, ['id' => $id]);
     }
 }

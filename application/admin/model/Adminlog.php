@@ -22,11 +22,6 @@ class Adminlog extends Model
     protected $autoWriteTimestamp = true;
     protected $updateTime = false;
 
-    public function getIpAttr($value)
-    {
-        return long2ip($value);
-    }
-
     /**
      * 记录日志
      * @param type $message 说明
@@ -39,7 +34,7 @@ class Adminlog extends Model
             'status' => $status,
             'info' => "提示语:{$message}",
             'get' => request()->url(),
-            'ip' => request()->ip(1),
+            'ip' => request()->ip(),
         );
         return $this->save($data) !== false ? true : false;
     }

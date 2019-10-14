@@ -22,7 +22,7 @@ class Ems extends Model
 
     public function setIpAttr($value)
     {
-        return request()->ip(1);
+        return request()->ip();
     }
     /**
      * 验证码有效时长

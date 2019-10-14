@@ -46,7 +46,7 @@ class Sms extends Base
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
         }
-        $ipSendTotal = $this->Sms_Model->where(['ip' => $this->request->ip(1)])->whereTime('create_time', '-1 hours')->count();
+        $ipSendTotal = $this->Sms_Model->where(['ip' => $this->request->ip()])->whereTime('create_time', '-1 hours')->count();
         if ($ipSendTotal >= 5) {
             $this->error('发送频繁');
         }
