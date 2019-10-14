@@ -27,7 +27,7 @@ class Member extends Model
     protected $insert = ['status' => 1, 'reg_ip'];
     protected function setRegIpAttr()
     {
-        return request()->ip(1);
+        return request()->ip();
     }
 
     /**
@@ -264,7 +264,7 @@ class Member extends Model
      */
     public function loginStatus($userId)
     {
-        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip(1)];
+        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip()];
         return $this->save($data, ['id' => $userId]);
     }
 
