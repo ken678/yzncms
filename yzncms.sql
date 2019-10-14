@@ -45,7 +45,7 @@ CREATE TABLE `yzn_admin` (
   `encrypt` varchar(6) DEFAULT NULL COMMENT '加密因子',
   `nickname` char(16) NOT NULL COMMENT '昵称',
   `last_login_time` int(10) unsigned DEFAULT '0' COMMENT '最后登录时间',
-  `last_login_ip` bigint(20) unsigned DEFAULT '0' COMMENT '最后登录IP',
+  `last_login_ip` char(15) NOT NULL DEFAULT '' COMMENT '最后登录IP',
   `email` varchar(40) DEFAULT NULL,
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
@@ -55,8 +55,8 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1546940765', '2130706433', '530765310@qq.com', '1');
-INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '2', 'Sxq6dR', '御宅男', '1542781151', '2130706433', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1546940765', '127.0.0.1', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES ('2', 'ken678', '932e31f030b850a87702a86c0e16db16', '2', 'Sxq6dR', '御宅男', '1542781151', '127.0.0.1', '530765310@qq.com', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`
@@ -68,7 +68,7 @@ CREATE TABLE `yzn_adminlog` (
   `uid` smallint(3) NOT NULL DEFAULT '0' COMMENT '操作者ID',
   `info` text COMMENT '说明',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `ip` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `ip` char(15) NOT NULL DEFAULT '' COMMENT '操作IP',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='操作日志';
@@ -448,7 +448,7 @@ CREATE TABLE `yzn_sms` (
   `mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号',
   `code` varchar(10) NOT NULL DEFAULT '' COMMENT '验证码',
   `times` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '验证次数',
-  `ip` bigint(20) NOT NULL DEFAULT '0' COMMENT 'IP',
+  `ip` char(15) NOT NULL DEFAULT '' COMMENT '操作IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='短信验证码表';
@@ -463,7 +463,7 @@ CREATE TABLE `yzn_ems` (
   `email` varchar(100) NOT NULL DEFAULT '' COMMENT '邮箱',
   `code` varchar(10) NOT NULL DEFAULT '' COMMENT '验证码',
   `times` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '验证次数',
-  `ip` bigint(20) NOT NULL DEFAULT '0' COMMENT 'IP',
+  `ip` char(15) NOT NULL DEFAULT '' COMMENT '操作IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='邮箱验证码表';
