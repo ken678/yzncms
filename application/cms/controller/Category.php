@@ -93,11 +93,6 @@ class Category extends Adminbase
                     $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
                     $scene = 'list';
                     break;
-                //链接
-                /*case 3:
-                $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
-                $scene = 'link';
-                break;*/
                 default:
                     return $this->error('栏目类型错误~');
             }
@@ -110,7 +105,6 @@ class Category extends Adminbase
                 }
                 foreach ($batch_add as $rs) {
                     $cat = explode('|', $rs, 2);
-                    //if ($cat[0] && $cat[1]) {
                     $data['catname'] = $cat[0];
                     $data['catdir'] = isset($cat[1]) ? $cat[1] : '';
                     $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir']);
@@ -126,8 +120,6 @@ class Category extends Adminbase
                             model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                         }
                     }
-                    //}
-
                 }
                 $this->success("添加成功！", url("Category/index"));
             } else {
@@ -165,11 +157,7 @@ class Category extends Adminbase
                 }
             }
             //栏目列表 可以用缓存的方式
-            //$array = cache("Category");
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
-            /*foreach ($array as $k => $v) {
-            $array[$k] = getCategory($v['id']);
-            }*/
             if (!empty($array) && is_array($array)) {
                 $tree = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
@@ -198,12 +186,6 @@ class Category extends Adminbase
         }
 
     }
-
-    //添加外部链接栏目
-    /*public function wadd()
-    {
-    return $this->add();
-    }*/
 
     //添加单页
     public function singlepage()
@@ -234,11 +216,6 @@ class Category extends Adminbase
                 case 2:
                     $scene = 'list';
                     break;
-                //链接
-                /*case 3:
-                $data['modelid'] = 0;
-                $scene = 'link';
-                break;*/
                 default:
                     return $this->error('栏目类型错误~');
             }
@@ -277,11 +254,7 @@ class Category extends Adminbase
             }
 
             //栏目列表 可以用缓存的方式
-            //$array = cache("Category");
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
-            /*foreach ($array as $k => $v) {
-            $array[$k] = getCategory($v['id']);
-            }*/
             if (!empty($array) && is_array($array)) {
                 $tree = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
@@ -316,7 +289,6 @@ class Category extends Adminbase
                 return $this->fetch();
             } else {
                 $this->error('栏目类型错误！');
-                //return $this->fetch("wedit");
             }
         }
 
@@ -353,17 +325,13 @@ class Category extends Adminbase
 
     }
 
-    /**
-     * 清除栏目缓存
-     */
+    //清除栏目缓存
     protected function cache()
     {
         cache('Category', null);
     }
 
-    /**
-     * 修复栏目数据
-     */
+    //修复栏目数据
     private function repair()
     {
         $this->categorys = $categorys = array();
@@ -400,9 +368,22 @@ class Category extends Adminbase
         return true;
     }
 
-    /**
-     * 排序
-     */
+    //重新统计栏目信息数量
+    public function count_items()
+    {
+        $result = Db::name('Category')->order('listorder ASC, id ASC')->select();
+        $model_cache = cache("Model");
+        foreach ($result as $r) {
+            if ($r['type'] == 2) {
+                $modelid = $r['modelid'];
+                $number = Db::name(ucwords($model_cache[$modelid]['tablename']))->where('catid', $r['id'])->count();
+                Db::name('Category')->where('id', $r['id'])->update(['items' => $number]);
+            }
+        }
+        $this->success("栏目数量校正成功！");
+    }
+
+    //排序
     public function listorder()
     {
         $id = $this->request->param('id/d', 0);
@@ -415,9 +396,7 @@ class Category extends Adminbase
         }
     }
 
-    /**
-     * 状态
-     */
+    //状态
     public function setstate()
     {
         $id = $this->request->param('id/d');
@@ -433,9 +412,7 @@ class Category extends Adminbase
         }
     }
 
-    /**
-     * 获取栏目的拼音
-     */
+    //获取栏目的拼音
     private function get_dirpinyin($catname = '', $catdir = '', $id = 0)
     {
         $pinyin = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
@@ -459,9 +436,7 @@ class Category extends Adminbase
         return $catdir;
     }
 
-    /**
-     * 动态根据模型ID加载栏目模板
-     */
+    //动态根据模型ID加载栏目模板
     public function public_tpl_file_list()
     {
         $id = $this->request->param('id/d');
