@@ -48,11 +48,6 @@ class Account extends Model
         }
     }
 
-    public function getIpAttr($value)
-    {
-        return long2ip($value);
-    }
-
     /**
      * 发起订单支付
      * @param float  $money
@@ -73,7 +68,7 @@ class Account extends Model
                 'payamount' => 0,
                 'pay_type' => 'online',
                 'payment' => trim($epay[$pay_type]['title']),
-                'ip' => request()->ip(1),
+                'ip' => request()->ip(),
                 'status' => 'unpay',
             ];
             $order = self::create($data);

@@ -25,11 +25,6 @@ class Spend extends Model
     protected $createTime = 'addtime';
     protected $updateTime = false;
 
-    public function getIpAttr($value)
-    {
-        return long2ip($value);
-    }
-
     /**
      * 按用户名、时间、标识查询是否有消费记录
      * @param integer $userid      用户名
@@ -55,7 +50,7 @@ class Spend extends Model
         $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
         $data['msg'] = isset($msg) ? trim($msg) : '';
         $data['remarks'] = isset($remarks) ? trim($remarks) : '';
-        $data['ip'] = request()->ip(1);
+        $data['ip'] = request()->ip();
         if (self::create($data)) {
             if ($data['type'] == 1) {
                 //金钱方式消费
