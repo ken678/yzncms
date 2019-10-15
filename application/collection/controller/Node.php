@@ -79,14 +79,14 @@ class Node extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         if ($data = $this->Nodes->find($id)) {
-            $data['customize_config'] = unserialize($data['customize_config']);
             $event = \think\facade\App::controller('Collection', 'event');
-            $urls = $event->url_list($data);
+            $event->init($data);
+            $urls = $event->url_list();
             $total_page = count($urls);
             if ($total_page > 0) {
                 $page = $this->request->param('page/d', 1);
                 $url_list = $urls[$page];
-                $url = $event->get_url_lists($url_list, $data);
+                $url = $event->get_url_lists($url_list);
 
             }
         } else {

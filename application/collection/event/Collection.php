@@ -18,50 +18,48 @@ use QL\QueryList;
 
 class Collection
 {
-    /**
-     * 得到需要采集的网页列表页
-     * @param array $config 配置参数
-     * @param integer $num  返回数
-     */
-    public function url_list(&$config, $num = '')
+    public $_config;
+    public function init($config)
+    {
+        $config['customize_config'] = unserialize($config['customize_config']);
+        $this->_config = $config;
+    }
+
+    //得到需要采集的网页列表页
+    public function url_list($num = '')
     {
         $url = array();
-        switch ($config['sourcetype']) {
+        switch ($this->_config['sourcetype']) {
             case '1': //序列化
-                $num = empty($num) ? $config['pagesize_end'] : $num;
-                if ($num < $config['pagesize_start']) {
-                    $num = $config['pagesize_start'];
+                $num = empty($num) ? $this->_config['pagesize_end'] : $num;
+                if ($num < $this->_config['pagesize_start']) {
+                    $num = $this->_config['pagesize_start'];
                 }
-                for ($i = $config['pagesize_start']; $i <= $num; $i = $i + $config['par_num']) {
-                    $url[$i] = str_replace('(*)', $i, $config['urlpage']);
+                for ($i = $this->_config['pagesize_start']; $i <= $num; $i = $i + $this->_config['par_num']) {
+                    $url[$i] = str_replace('(*)', $i, $this->_config['urlpage']);
                 }
                 break;
             case '2': //多网址
-                $url = explode("\r\n", $config['urlpage']);
+                $url = explode("\r\n", $this->_config['urlpage']);
                 break;
             case '3': //单一网址
             case '4': //RSS
-                $url[] = $config['urlpage'];
+                $url[] = $this->_config['urlpage'];
                 break;
         }
         return $url;
     }
 
-    /**
-     * 获取文章网址
-     * @param string $url           采集地址
-     * @param array $config         配置
-     */
-    public function get_url_lists($url, &$config)
+    //获取文章网址
+    public function get_url_lists($url)
     {
         // 定义采集规则
         $rules = [
-            'url' => [$config['url_rule1'], $config['url_rule2'], $config['url_rule3'], function ($content) {
-                dump($url);
-
-                return $content;
+            'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3'], function ($dd) {
+                $dd += 'some str...';
+                return $dd;
             }],
-            'title' => [$config['url_rule1'], 'html', $config['url_rule3']],
+            'title' => [$this->_config['url_rule1'], 'html', $this->_config['url_rule3']],
         ];
         dump($rules);
         $list = QueryList::get($url)->rules($rules)->query()->getData();
@@ -74,7 +72,7 @@ class Collection
      * @param string $baseurl  基本URL
      * @param array $config    配置信息
      */
-    protected function url_check($url, $baseurl, $config)
+    protected function url_check($url, $baseurl)
     {
         $urlinfo = parse_url($baseurl);
 
@@ -83,8 +81,8 @@ class Collection
             if ($url[0] == '/') {
                 $url = $urlinfo['scheme'] . '://' . $urlinfo['host'] . $url;
             } else {
-                if ($config['page_base']) {
-                    $url = $config['page_base'] . $url;
+                if ($this->_config['page_base']) {
+                    $url = $this->_config['page_base'] . $url;
                 } else {
                     $url = $baseurl . $url;
                 }
