@@ -87,10 +87,18 @@ class Node extends Adminbase
                 $page = $this->request->param('page/d', 1);
                 $url_list = $urls[$page];
                 $url = $event->get_url_lists($url_list);
+                if (is_array($url) && !empty($url)) {
+                    foreach ($url as $v) {
+                        dump($v);
 
+                    }
+                }
+
+            } else {
+                $this->error('网址采集已完成！');
             }
         } else {
-
+            $this->error('采集任务不存在！');
         }
 
     }

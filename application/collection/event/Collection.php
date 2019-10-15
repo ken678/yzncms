@@ -55,15 +55,14 @@ class Collection
     {
         // 定义采集规则
         $rules = [
-            'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3'], function ($dd) {
-                $dd += 'some str...';
-                return $dd;
+            'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3'], function ($content) use ($url) {
+                $content = $this->url_check($content, $url);
+                return $content;
             }],
             'title' => [$this->_config['url_rule1'], 'html', $this->_config['url_rule3']],
         ];
-        dump($rules);
-        $list = QueryList::get($url)->rules($rules)->query()->getData();
-        dump($list);
+        $list = QueryList::get($url)->rules($rules)->query()->getData()->all();
+        return $list;
     }
 
     /**
@@ -75,13 +74,12 @@ class Collection
     protected function url_check($url, $baseurl)
     {
         $urlinfo = parse_url($baseurl);
-
         $baseurl = $urlinfo['scheme'] . '://' . $urlinfo['host'] . (substr($urlinfo['path'], -1, 1) === '/' ? substr($urlinfo['path'], 0, -1) : str_replace('\\', '/', dirname($urlinfo['path']))) . '/';
         if (strpos($url, '://') === false) {
             if ($url[0] == '/') {
                 $url = $urlinfo['scheme'] . '://' . $urlinfo['host'] . $url;
             } else {
-                if ($this->_config['page_base']) {
+                if (isset($this->_config['page_base'])) {
                     $url = $this->_config['page_base'] . $url;
                 } else {
                     $url = $baseurl . $url;
