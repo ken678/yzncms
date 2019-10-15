@@ -74,13 +74,40 @@ class Node extends Adminbase
 
     }
 
+    //网址采集
+    public function col_url_list()
+    {
+        $id = $this->request->param('id/d', 0);
+        if ($data = $this->Nodes->find($id)) {
+            $data['customize_config'] = unserialize($data['customize_config']);
+            $event = \think\facade\App::controller('Collection', 'event');
+            $urls = $event->url_list($data);
+            $total_page = count($urls);
+            if ($total_page > 0) {
+                $page = $this->request->param('page/d', 1);
+                $url_list = $urls[$page];
+                $url = $event->get_url_lists($url_list, $data);
+
+            }
+        } else {
+
+        }
+
+    }
+
+    //采集文章
+    public function col_content()
+    {
+
+    }
+
     public function delete()
     {
-        $nodeid = $this->request->param('ids/a', null);
-        if (!is_array($nodeid)) {
-            $nodeid = array($nodeid);
+        $nodeids = $this->request->param('ids/a', null);
+        if (!is_array($nodeids)) {
+            $nodeids = array($nodeids);
         }
-        foreach ($nodeid as $tid) {
+        foreach ($nodeids as $tid) {
             $this->Nodes->where(array('id' => $tid))->delete();
         }
         $this->success("删除成功！");

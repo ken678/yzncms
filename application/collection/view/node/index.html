@@ -15,6 +15,8 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
+	<a class="layui-btn layui-btn-xs layui-btn-normal layui-iframe" href="{:url('col_url_list')}?id={{ d.id }}" lay-data="{width:'800px',height:'400px',title:'正在采集'}">1.采集网址</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal layui-iframe" href="{:url('col_content')}?id={{ d.id }}" lay-data="{width:'800px',height:'400px',title:'正在采集'}">2.采集内容</a>
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
@@ -37,7 +39,7 @@ layui.use('table', function() {
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'name', title: '名称' },
                 { field: 'lastdate', width: 180, title: '最后采集时间', templet: '<div>{{#  if(d.lastdate){ }} {{d.lastdate}} {{#  } else { }} / {{#  } }}</div>' },
-                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 300, title: '操作', toolbar: '#barTool' }
             ]
         ],
         page: {}
