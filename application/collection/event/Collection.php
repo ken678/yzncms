@@ -55,14 +55,26 @@ class Collection
     {
         // 定义采集规则
         $rules = [
-            'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3'], function ($content) use ($url) {
-                $content = $this->url_check($content, $url);
-                return $content;
-            }],
+            'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
             'title' => [$this->_config['url_rule1'], 'html', $this->_config['url_rule3']],
         ];
-        $list = QueryList::get($url)->rules($rules)->query()->getData()->all();
-        return $list;
+        $list = QueryList::get($url)->rules($rules)->query()->getData();
+        $data = array();
+        foreach ($list as $k => $v) {
+            if ($this->_config['url_contain']) {
+                if (strpos($v['url'], $this->_config['url_contain']) === false) {
+                    continue;
+                }
+            }
+            if ($this->_config['url_except']) {
+                if (strpos($v['url'], $this->_config['url_except']) !== false) {
+                    continue;
+                }
+            }
+            $data[$k]['url'] = $this->url_check($v['url'], $url, $config);
+            $data[$k]['title'] = strip_tags($v['title']);
+        }
+        return $data;
     }
 
     /**

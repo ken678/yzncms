@@ -82,6 +82,18 @@
                                     <div class="layui-input-inline" style="width:60px;"><input type="text" class="layui-input" name="data[url_rule2]" placeholder="属性" value="{$data.url_rule2}"> </div>
                                     <div class="layui-input-inline" style="width:140px;"><input type="text" class="layui-input" name="data[url_rule3]" placeholder="内容过滤器" value="{$data.url_rule3}"> </div>
                                 </div>
+                                <div class="layui-form-item">
+                                    <div>
+                                        <div class="layui-form-mid">网址中必须包含</div>
+                                        <div class="layui-input-inline" style="width:150px;">
+                                            <input type="text" class="layui-input" name="data[url_contain]" value="{$data.url_contain}">
+                                        </div>
+                                        <div class="layui-form-mid">网址中不得包含</div>
+                                        <div class="layui-input-inline" style="width:150px;">
+                                            <input type="text" class="layui-input" name="data[url_except]" value="{$data.url_except}">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </fieldset>
                         <div class="layui-form-item">
