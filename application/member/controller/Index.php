@@ -42,7 +42,7 @@ class Index extends MemberBase
     //登录页面
     public function login()
     {
-        $cookie_url = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
+        $forward = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
         Cookie::set("forward", null);
         if (!empty($this->userid)) {
             $this->success("您已经是登陆状态！", $forward ? $forward : url("Index/index"));
@@ -62,10 +62,10 @@ class Index extends MemberBase
             }
             $userid = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userid > 0) {
-                if (!$cookie_url) {
-                    $cookie_url = url('index');
+                if (!$forward) {
+                    $forward = url('index');
                 }
-                $this->success('登录成功！', $cookie_url);
+                $this->success('登录成功！', $forward);
             } else {
                 //登陆失败
                 $this->error('账号或者密码错误！');
