@@ -225,7 +225,7 @@ class Addons extends Adminbase
         //更新插件行为实现
         $hooks_update = model('admin/Hooks')->updateHooks($addonName);
         if (!$hooks_update) {
-            $this->where("name='{$addon_name}'")->delete();
+            $this->where("name='{$addonName}'")->delete();
             $this->error('更新钩子处插件失败,请卸载后尝试重新安装！');
         }
         Cache::set('Hooks', null);
