@@ -96,7 +96,7 @@ class Tags extends Model
         }
         //新增的tags
         if (count($tagname) > 0) {
-            $this->addTag($tagname, $id, $catid, $modelid, $data);
+            $this->addTag($tagname, $id, $catid, $modelid);
         }
     }
 
