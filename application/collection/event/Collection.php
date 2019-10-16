@@ -21,7 +21,6 @@ class Collection
     public $_config;
     public function init($config)
     {
-        $config['customize_config'] = unserialize($config['customize_config']);
         $this->_config = $config;
     }
 
@@ -53,28 +52,33 @@ class Collection
     //获取文章网址
     public function get_url_lists($url)
     {
-        // 定义采集规则
-        $rules = [
-            'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
-            'title' => [$this->_config['url_rule1'], 'html', $this->_config['url_rule3']],
-        ];
-        $list = QueryList::get($url)->rules($rules)->query()->getData();
-        $data = array();
-        foreach ($list as $k => $v) {
-            if ($this->_config['url_contain']) {
-                if (strpos($v['url'], $this->_config['url_contain']) === false) {
-                    continue;
+        if ($url) {
+            // 定义采集规则
+            $rules = [
+                'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
+                'title' => [$this->_config['url_rule1'], 'html', $this->_config['url_rule3']],
+            ];
+            $list = QueryList::get($url)->rules($rules)->query()->getData();
+            $data = array();
+            foreach ($list as $k => $v) {
+                if ($this->_config['url_contain']) {
+                    if (strpos($v['url'], $this->_config['url_contain']) === false) {
+                        continue;
+                    }
                 }
-            }
-            if ($this->_config['url_except']) {
-                if (strpos($v['url'], $this->_config['url_except']) !== false) {
-                    continue;
+                if ($this->_config['url_except']) {
+                    if (strpos($v['url'], $this->_config['url_except']) !== false) {
+                        continue;
+                    }
                 }
+                $data[$k]['url'] = $this->url_check($v['url'], $url, $config);
+                $data[$k]['title'] = strip_tags($v['title']);
             }
-            $data[$k]['url'] = $this->url_check($v['url'], $url, $config);
-            $data[$k]['title'] = strip_tags($v['title']);
+            return $data;
+        } else {
+            return false;
         }
-        return $data;
+
     }
 
     /**

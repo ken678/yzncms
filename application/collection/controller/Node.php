@@ -79,20 +79,25 @@ class Node extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         if ($data = $this->Nodes->find($id)) {
+            $data['customize_config'] = unserialize($data['customize_config']);
             $event = \think\facade\App::controller('Collection', 'event');
             $event->init($data);
             $urls = $event->url_list();
             $total_page = count($urls);
             if ($total_page > 0) {
-                $page = $this->request->param('page/d', 1);
+                $page = $this->request->param('page/d', $data['pagesize_start']);
                 $url_list = $urls[$page];
                 $url = $event->get_url_lists($url_list);
                 if (is_array($url) && !empty($url)) {
                     foreach ($url as $v) {
-                        dump($v);
 
                     }
+                    $this->assign('url', $url);
                 }
+                $this->assign('total_page', $total_page);
+                $this->assign('id', $id);
+                $this->assign('page', $page);
+                return $this->fetch();
 
             } else {
                 $this->error('网址采集已完成！');

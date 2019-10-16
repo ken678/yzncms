@@ -1,0 +1,54 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<style type="text/css">
+.childrenBody {
+    background: #fff;
+}
+</style>
+<table class="layui-table" lay-even>
+    <colgroup>
+        <col width="150">
+        <col width="200">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>网址</th>
+            <th>标题</th>
+        </tr>
+    </thead>
+    <tbody>
+        {if $url}
+        {foreach $url as $key=>$vo }
+        <tr>
+            <td>{$vo.url}</td>
+            <td>{$vo.title}</td>
+        </tr>
+        {/foreach}
+        {/if}
+    </tbody>
+</table>
+{/block}
+{block name="layui"}{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use(['jquery', 'layer', 'element'], function() {
+    var $ = layui.jquery,
+        layer = layui.layer,
+        element = layui.element,
+        page = {$page},
+        total_page = {$total_page},
+        id = {$id};
+        var interval = setInterval(function(){
+            clearInterval(interval);
+            if (total_page >= page) {
+                location.href = '{:url("col_url_list")}?id='+id+'&page='+(page+1);
+            }else{
+                layer.msg('采集任务执行完毕', function(){
+                    parent.layui.layer.closeAll();
+                });
+            }
+
+        }, 2000);
+})
+</script>
+{/block}
