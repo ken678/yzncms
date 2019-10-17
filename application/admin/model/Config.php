@@ -32,7 +32,7 @@ class Config extends Model
         return $data;
     }
 
-    public static function getConfig($where = "status='1'", $fields = 'name,value,type,options', $order = 'listorder,id desc')
+    public function getConfig($where = "status='1'", $fields = 'name,value,type,options', $order = 'listorder,id desc')
     {
         $configs = self::where($where)->order($order)->column($fields);
         $newConfigs = [];
@@ -44,10 +44,8 @@ class Config extends Model
                 case 'array':
                     $newConfigs[$key] = parse_attr($value['value']);
                     break;
-                case 'radio':
-                    $newConfigs[$key] = isset($value['options'][$value['value']]) ? ['key' => $value['value'], 'value' => $value['options'][$value['value']]] : ['key' => $value['value'], 'value' => $value['value']];
-                    break;
                 case 'select':
+                case 'radio':
                     $newConfigs[$key] = isset($value['options'][$value['value']]) ? ['key' => $value['value'], 'value' => $value['options'][$value['value']]] : ['key' => $value['value'], 'value' => $value['value']];
                     break;
                 case 'checkbox':
