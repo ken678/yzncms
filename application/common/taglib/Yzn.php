@@ -30,10 +30,9 @@ class Yzn extends Taglib
     /**
      * 加载前台模板
      * 格式：{template file="Content/footer.html" theme="主题"/}
-     * @staticvar array $_templateParseCache
-     * @param type $attr file，theme
-     * @param type $content
-     * @return string|array 返回模板解析后的内容
+     * @param $tag
+     * @param $content
+     * @return false|string 返回模板解析后的内容
      */
     public function tagTemplate($tag, $content)
     {
@@ -62,6 +61,9 @@ class Yzn extends Taglib
 
     /**
      * yzn标签
+     * @param $tag
+     * @param $content
+     * @return string|void
      */
     public function tagYzn($tag, $content)
     {
@@ -108,6 +110,8 @@ class Yzn extends Taglib
 
     /**
      * 万能标签
+     * @param $content
+     * @return bool|string|void
      */
     public function tagGet($tag, $content)
     {
@@ -216,7 +220,8 @@ class Yzn extends Taglib
 
     /**
      * 转换数据为HTML代码
-     * @param array $data 数组
+     * @param $data 数组
+     * @return bool|string
      */
     private static function arr_to_html($data)
     {
@@ -245,22 +250,20 @@ class Yzn extends Taglib
         }
         return false;
     }
-
+    
     /**
      * 返回经addslashes处理过的字符串或数组
      * @param $string 需要处理的字符串或数组
-     * @return mixed
+     * @return array|string
      */
     protected static function newAddslashes($string)
     {
         if (!is_array($string)) {
             return addslashes($string);
         }
-
         foreach ($string as $key => $val) {
-            $string[$key] = $this->newAddslashes($val);
+            $string[$key] = self::newAddslashes($val);
         }
-
         return $string;
     }
 
