@@ -54,6 +54,7 @@ class Category extends Adminbase
                 } else {
                     $v['modelname'] = '/';
                 }
+                $v['catname'] = '<a href="' . url('edit', ['id' => $v['id']]) . '"">' . $v['catname'] . '</a>';
                 if ($v['type'] == 1) {
                     $v['add_url'] = url("Category/singlepage", array("parentid" => $v['id']));
                 } elseif ($v['type'] == 2) {
