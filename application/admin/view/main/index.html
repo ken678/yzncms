@@ -3,6 +3,16 @@
 <div class="layui-card">
     <div class="layui-card-header">控制台</div>
     <div class="layui-card-body">
+        {if $Think.config.app_debug}
+        <blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
+            安全提示：当前网站【调试模式】开启中，强烈建议在正式部署后关闭调试模式
+        </blockquote>
+        {/if}
+        {if $Think.config.app_trace}
+        <blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
+            安全提示：当前网站【Trace调试】开启中，强烈建议在正式部署后关闭Trace调试
+        </blockquote>
+        {/if}
         <blockquote class="layui-elem-quote layui-bg-green">
             <div id="nowTime"></div>
         </blockquote>
