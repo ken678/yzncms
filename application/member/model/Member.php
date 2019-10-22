@@ -16,9 +16,6 @@ namespace app\member\model;
 
 use \think\Model;
 
-/**
- * 模型
- */
 class Member extends Model
 {
     protected $autoWriteTimestamp = true;
@@ -32,8 +29,8 @@ class Member extends Model
 
     /**
      * 获取头像
-     * @param   string $value
-     * @param   array  $data
+     * @param $value
+     * @param $data
      * @return string
      */
     public function getAvatarAttr($value, $data)
@@ -81,9 +78,12 @@ class Member extends Model
 
     /**
      * 获取用户信息
-     * @param type $identifier 用户/UID
-     * @param type $password 明文密码，填写表示验证密码
-     * @return array|boolean
+     * @param $identifier 用户/UID
+     * @param null $password 明文密码，填写表示验证密码
+     * @return array|bool|false|\PDOStatement|string|Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getLocalUser($identifier, $password = null)
     {
@@ -117,11 +117,12 @@ class Member extends Model
 
     /**
      * 注册一个新用户
-     * @param string $username  用户名
-     * @param string $password  密码
-     * @param string $email     邮箱
-     * @param string $mobile    手机号
-     * @param array $extend    扩展参数
+     * @param $username 用户名
+     * @param $password 密码
+     * @param string $email 邮箱
+     * @param string $mobile 手机号
+     * @param array $extend 扩展参数
+     * @return bool|mixed
      */
     public function userRegister($username, $password, $email = '', $mobile = '', $extend = [])
     {
@@ -137,19 +138,22 @@ class Member extends Model
         if ($userid) {
             return $this->getAttr('id');
         }
-        $this->error = $Member->getError() ?: '注册失败！';
+        $this->error = '注册失败！';
         return false;
     }
 
     /**
      * 更新用户基本资料
-     * @param type $username 用户名
-     * @param type $oldpw 旧密码
-     * @param type $newpw 新密码，如不修改为空
-     * @param type $email Email，如不修改为空
-     * @param type $ignoreoldpw 是否忽略旧密码
-     * @param type $data 其他信息
-     * @return boolean
+     * @param $username 用户名
+     * @param $oldpw 旧密码
+     * @param string $newpw 新密码，如不修改为空
+     * @param string $email 如不修改为空
+     * @param int $ignoreoldpw 是否忽略旧密码
+     * @param array $data 其他信息
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function userEdit($username, $oldpw, $newpw = '', $email = '', $ignoreoldpw = 0, $data = array())
     {
@@ -188,8 +192,10 @@ class Member extends Model
 
     /**
      * 删除用户
-     * @param type $uid 用户UID
-     * @return boolean
+     * @param $uid 用户UID
+     * @return bool
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
     public function userDelete($uid)
     {
@@ -203,6 +209,7 @@ class Member extends Model
 
     /**
      * 自动登录用户
+     * @param $userInfo
      */
     public function autoLogin($userInfo)
     {
@@ -225,7 +232,8 @@ class Member extends Model
 
     /**
      * 根据积分算出用户组
-     * @param $point int 积分数
+     * @param int $point 积分数
+     * @return int|string|null
      */
     public function get_usergroup_bypoint($point = 0)
     {
@@ -246,6 +254,7 @@ class Member extends Model
         if ($point > max($grouppointlist)) {
             $groupid = key($grouppointlist);
         } else {
+            $tmp_k = key($grouppointlist);
             foreach ($grouppointlist as $k => $v) {
                 if ($point >= $v) {
                     $groupid = $tmp_k;
@@ -259,8 +268,8 @@ class Member extends Model
 
     /**
      * 更新登录状态信息
-     * @param type $userId
-     * @return type
+     * @param $userId
+     * @return false|int
      */
     public function loginStatus($userId)
     {
