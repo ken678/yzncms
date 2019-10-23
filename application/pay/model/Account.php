@@ -89,7 +89,7 @@ class Account extends Model
     {
         $data = array();
         $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
-        $data['trade_sn'] = date("Ymdhis") . sprintf("%08d", $userid) . mt_rand(1000, 9999);
+        $data['trade_sn'] = date("Ymdhis") . sprintf("%08d", $uid) . mt_rand(1000, 9999);
         $data['uid'] = isset($uid) && intval($uid) ? intval($uid) : 0;
         $data['username'] = isset($username) ? trim($username) : '';
         $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
