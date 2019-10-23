@@ -22,6 +22,19 @@ class Category extends Adminbase
 {
 
     //初始化
+    /**
+     * @var Category_Model
+     */
+    private $Category_Model;
+    /**
+     * @var string
+     */
+    private $filepath;
+    private $tp_category;
+    private $tp_list;
+    private $tp_show;
+    private $tp_page;
+
     protected function initialize()
     {
         parent::initialize();
@@ -95,7 +108,7 @@ class Category extends Adminbase
                     $scene = 'list';
                     break;
                 default:
-                    return $this->error('栏目类型错误~');
+                    $this->error('栏目类型错误~');
             }
             if ($data['isbatch']) {
                 unset($data['isbatch'], $data['info']['catname'], $data['info']['catdir']);
@@ -112,7 +125,7 @@ class Category extends Adminbase
 
                     $result = $this->validate($data, 'Category.' . $scene);
                     if (true !== $result) {
-                        return $this->error($result);
+                        $this->error($result);
                     }
                     $catid = $this->Category_Model->addCategory($data, $fields);
                     if ($catid) {
@@ -127,12 +140,12 @@ class Category extends Adminbase
                 $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir']);
                 $result = $this->validate($data, 'Category.' . $scene);
                 if (true !== $result) {
-                    return $this->error($result);
+                    $this->error($result);
                 }
-                $status = $this->Category_Model->addCategory($data, $fields);
-                if ($status) {
+                $res = $this->Category_Model->addCategory($data, $fields);
+                if ($res) {
                     if (isModuleInstall('member')) {
-                        model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                        model("cms/CategoryPriv")->update_priv($res['id'], $data['priv_groupid'], 0);
                     }
                     $this->success("添加成功！", url("Category/index"));
                 } else {
@@ -218,12 +231,12 @@ class Category extends Adminbase
                     $scene = 'list';
                     break;
                 default:
-                    return $this->error('栏目类型错误~');
+                    $this->error('栏目类型错误~');
             }
             $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir'], $catid);
             $result = $this->validate($data, 'Category.' . $scene);
             if (true !== $result) {
-                return $this->error($result);
+                $this->error($result);
             }
             $status = $this->Category_Model->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
@@ -253,7 +266,6 @@ class Category extends Adminbase
                     $models[] = $v;
                 }
             }
-
             //栏目列表 可以用缓存的方式
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             if (!empty($array) && is_array($array)) {
