@@ -73,7 +73,7 @@ class Tags extends Model
         if (!$tagname || !$id || !$catid || !$modelid) {
             return false;
         }
-        $tags = model("TagsContent")->where(array(
+        $tags = model("cms/TagsContent")->where(array(
             "modelid" => $modelid,
             "contentid" => $id,
             "catid" => $catid,
@@ -112,7 +112,7 @@ class Tags extends Model
         if (!$id || !$catid || !$modelid || !$tagname) {
             return false;
         }
-        $db_tags_content = model("TagsContent");
+        $db_tags_content = model("cms/TagsContent");
         if (is_array($tagname)) {
             foreach ($tagname as $name) {
                 $r = $this->where(array("tag" => $name))->find();
