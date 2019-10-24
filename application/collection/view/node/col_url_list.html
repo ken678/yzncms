@@ -40,7 +40,7 @@ layui.use(['jquery', 'layer', 'element'], function() {
         id = {$id};
         var interval = setInterval(function(){
             clearInterval(interval);
-            if (total_page >= page) {
+            if (total_page > page) {
                 location.href = '{:url("col_url_list")}?id='+id+'&page='+(page+1);
             }else{
                 layer.msg('采集任务执行完毕', function(){

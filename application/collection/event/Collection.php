@@ -71,7 +71,7 @@ class Collection
                         continue;
                     }
                 }
-                $data[$k]['url'] = $this->url_check($v['url'], $url, $config);
+                $data[$k]['url'] = $this->url_check($v['url'], $url);
                 $data[$k]['title'] = strip_tags($v['title']);
             }
             return $data;

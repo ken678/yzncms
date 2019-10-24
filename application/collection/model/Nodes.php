@@ -14,13 +14,9 @@
 // +----------------------------------------------------------------------
 namespace app\collection\model;
 
-use app\common\model\Modelbase;
 use \think\Model;
 
-/**
- * 模型
- */
-class Nodes extends Modelbase
+class Nodes extends Model
 {
     protected $name = 'collection_node';
 
