@@ -20,6 +20,11 @@ use think\Db;
 
 class Info extends AdminBase
 {
+    /**
+     * @var Formguide_Model
+     */
+    private $Formguide_Model;
+
     protected function initialize()
     {
         parent::initialize();
@@ -30,7 +35,6 @@ class Info extends AdminBase
     public function index()
     {
         $formid = $this->request->param('formid/d', 0);
-
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
@@ -39,8 +43,8 @@ class Info extends AdminBase
             $modelCache = cache("Model");
             $tableName = $modelCache[$formid]['tablename'];
 
-            $total = Db::name($tableName)->where($map)->count();
-            $_list = Db::name($tableName)->page($page, $limit)->where($map)->order(['id' => 'desc'])->withAttr('inputtime', function ($value, $data) {
+            $total = Db::name($tableName)->count();
+            $_list = Db::name($tableName)->page($page, $limit)->order(['id' => 'desc'])->withAttr('inputtime', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
             })->select();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
@@ -72,7 +76,6 @@ class Info extends AdminBase
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
         }
-
         $this->success('删除成功！');
     }
 
