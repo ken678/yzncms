@@ -99,7 +99,8 @@ class Node extends Adminbase
                         }
                         //是否采集过
                         if (!Content_Model::where(['url' => $v['url']])->find()) {
-                            Content_Model::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title']]);
+                            $html = $event->get_content($v['url'], $data);
+                            Content_Model::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title'], 'data' => serialize($html)]);
                         }
                     }
                     $this->assign('url', $url);

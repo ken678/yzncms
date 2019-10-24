@@ -78,6 +78,19 @@ class Collection
         } else {
             return false;
         }
+    }
+
+    /**
+     * 采集内容
+     */
+    public function get_content($url, $config)
+    {
+        $rules = [
+            'title' => ['h4.break-all', 'text'],
+            'content' => ['.card-body .message', 'text', '-.font-italic'],
+        ];
+        $cont = QueryList::get($url)->rules($rules)->query()->getData();
+        return $cont[0];
 
     }
 
