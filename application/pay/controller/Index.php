@@ -22,6 +22,9 @@ use app\pay\model\Spend as Spend_Model;
 class Index extends MemberBase
 {
     protected $noNeedLogin = ['epay'];
+    protected $Payment_Model;
+    protected $Account_Model;
+    protected $Spend_Model;
     //初始化
     protected function initialize()
     {
@@ -76,7 +79,6 @@ class Index extends MemberBase
         } else {
             return $this->fetch('/pay_list');
         }
-
     }
 
     //入账记录
@@ -117,7 +119,6 @@ class Index extends MemberBase
         } else {
             return $this->fetch('/change_credit');
         }
-
     }
 
     //企业支付通知和回调
@@ -133,7 +134,7 @@ class Index extends MemberBase
             }
             try {
                 $data = $pay->verify();
-                $payamount = $paytype == 'alipay' ? $data['total_amount'] : $data['total_fee'] / 100;
+                $payamount = $pay_type == 'alipay' ? $data['total_amount'] : $data['total_fee'] / 100;
                 $this->Account_Model->settle($data['out_trade_no'], $payamount);
             } catch (Exception $e) {
                 //写入日志
@@ -168,11 +169,9 @@ class Index extends MemberBase
 
         $flag_arr = explode('_', $flag);
         $catid = $flag_arr[0];
-
         if ($paytype) {
             //积分
             $this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag);
-
         } else {
             //金钱
             $this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag);
