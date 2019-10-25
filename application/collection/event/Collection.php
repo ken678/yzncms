@@ -80,26 +80,21 @@ class Collection
         }
     }
 
-    /**
-     * 采集内容
-     */
+    //采集内容
     public function get_content($url, $config)
     {
-        $rules = [
-            'title' => ['h4.break-all', 'text'],
-            'content' => ['.card-body .message', 'text', '-.font-italic'],
-        ];
+        foreach ($config['customize_config'] as $k => $v) {
+            if (empty($v['name'])) {
+                continue;
+            }
+            $rules[$v['name']] = [$v['selector'], $v['attr'], $v['filter']];
+        }
         $cont = QueryList::get($url)->rules($rules)->query()->getData();
         return $cont[0];
 
     }
 
-    /**
-     * URL地址检查
-     * @param string $url      需要检查的URL
-     * @param string $baseurl  基本URL
-     * @param array $config    配置信息
-     */
+    //URL地址检查
     protected function url_check($url, $baseurl)
     {
         $urlinfo = parse_url($baseurl);

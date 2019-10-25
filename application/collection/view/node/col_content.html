@@ -1,0 +1,45 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">文章列表</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm" href=''>全部</a>
+      <a class="layui-btn layui-btn-sm" href=''>未采集</a>
+      <a class="layui-btn layui-btn-sm" href=''>已采集</a>
+      <a class="layui-btn layui-btn-sm" href=''>已导入</a>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs layui-btn-normal layui-iframe" href="">查看</a>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#dataTable',
+        toolbar: '#toolbarDemo',
+        url: '{:url("col_content")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'status', title: '状态' },
+                { field: 'title', title: '标题'},
+                { field: 'url', title: '网址'},
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}

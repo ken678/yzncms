@@ -122,6 +122,7 @@ class Node extends Adminbase
     //采集文章
     public function col_content()
     {
+        return $this->fetch();
 
     }
 
