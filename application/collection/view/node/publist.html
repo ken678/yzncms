@@ -29,11 +29,11 @@ layui.use('table', function() {
     table.render({
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
-        url: '{:url("col_content")}',
+        url: '{:url("publist",["id"=>$nid])}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
-                { field: 'status', title: '状态' },
+                { field: 'status', title: '状态', width: 70},
                 { field: 'title', title: '标题'},
                 { field: 'url', title: '网址'},
             ]

@@ -40,5 +40,6 @@ return array(
     // 数据表，不要加表前缀[有数据库表时必填]
     'tables' => [
         'collection_node',
+        'collection_content',
     ],
 );

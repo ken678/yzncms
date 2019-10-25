@@ -22,6 +22,7 @@ class Uninstall extends UninstallBase
     //固定相关表
     private $modelTabList = array(
         'collection_node',
+        'collection_content',
     );
 
     //卸载

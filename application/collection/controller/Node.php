@@ -120,8 +120,19 @@ class Node extends Adminbase
     }
 
     //采集文章
-    public function col_content()
+    public function publist()
     {
+        $nid = $this->request->param('id/d', 0);
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 10);
+
+            $_list = Content_Model::where('nid', $nid)->page($page, $limit)->select();
+            $total = Content_Model::where('nid', $nid)->count();
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+        }
+        $this->assign('nid', $nid);
         return $this->fetch();
 
     }
