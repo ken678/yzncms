@@ -26,7 +26,7 @@ class Node extends Adminbase
     {
         parent::initialize();
         $this->Nodes_Model = new Nodes_Model;
-        //$this->Content_Model = new Content_Model;
+        $this->Content_Model = new Content_Model;
     }
 
     public function index()
@@ -119,9 +119,23 @@ class Node extends Adminbase
 
     }
 
-    //采集文章
-    public function col_content()
+    //文章列表
+    public function publist()
     {
+        $nid = $this->request->param('id/d', 0);
+        $type = $this->request->param('id/d', 0);
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page = $this->request->param('page/d', 1);
+            $data = $this->Content_Model
+                ->where(['nid' => $nid])
+                ->page($page, $limit)
+                ->order('id', 'desc')
+                ->select();
+            $total = $this->Content_Model->order('id', 'desc')->count();
+            return json(["code" => 0, "count" => $total, "data" => $data]);
+        }
+        $this->assign('nid', $nid);
         return $this->fetch();
 
     }

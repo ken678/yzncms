@@ -10,10 +10,9 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm" href=''>全部</a>
-      <a class="layui-btn layui-btn-sm" href=''>未采集</a>
-      <a class="layui-btn layui-btn-sm" href=''>已采集</a>
-      <a class="layui-btn layui-btn-sm" href=''>已导入</a>
+      <a class="layui-btn layui-btn-sm {empty name='Request.param.type'}layui-btn-danger{/empty}" href="{:url('publist',['id'=>$nid])}">全部</a>
+      <a class="layui-btn layui-btn-sm {if $Request.param.type==1}layui-btn-danger{/if}" href="{:url('publist',['id'=>$nid,'type'=>1])}">已采集</a>
+      <a class="layui-btn layui-btn-sm {if $Request.param.type==2}layui-btn-danger{/if}" href="{:url('publist',['id'=>$nid,'type'=>2])}">已导入</a>
     </div>
 </script>
 <script type="text/html" id="barTool">
@@ -29,13 +28,14 @@ layui.use('table', function() {
     table.render({
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
-        url: '{:url("col_content")}',
+        url: '{:url("publist",["id"=>$nid])}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
-                { field: 'status', title: '状态' },
+                { field: 'status', title: '状态', width: 60, },
                 { field: 'title', title: '标题'},
                 { field: 'url', title: '网址'},
+                { fixed: 'right', width: 80, title: '操作', toolbar: '#barTool' }
             ]
         ],
         page: {}
