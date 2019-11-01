@@ -137,7 +137,6 @@ class Node extends Adminbase
         }
         $this->assign('nid', $nid);
         return $this->fetch();
-
     }
 
     public function delete()
@@ -150,7 +149,6 @@ class Node extends Adminbase
             $this->Nodes_Model->where(array('id' => $tid))->delete();
         }
         $this->success("删除成功！");
-
     }
 
 }
