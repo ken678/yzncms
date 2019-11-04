@@ -33,14 +33,6 @@ return [
                         "name" => "采集任务",
                         "icon" => "icon-renwu",
                     ],
-                    [
-                        "route" => "collection/data/index",
-                        "type" => 1,
-                        "status" => 1,
-                        "name" => "数据管理",
-                        "icon" => "icon-tubiaoqiehuan",
-                    ],
-
                 ],
             ],
         ],

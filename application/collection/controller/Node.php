@@ -122,20 +122,25 @@ class Node extends Adminbase
     //文章列表
     public function publist()
     {
-        $nid = $this->request->param('id/d', 0);
-        $type = $this->request->param('id/d', 0);
+        $this->request->only(['id', 'type', 'limit', 'page']);
+        $param = $this->request->param();
+        $where = [];
+        $where[] = ['nid', '=', $param['id']];
+        if (!empty($param['type'])) {
+            $where[] = ['status', '=', $param['type']];
+        }
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
+            $limit = intval($param['limit']) < 10 ? 10 : $param['limit'];
+            $page = intval($param['page']) < 1 ? 1 : $param['page'];
             $data = $this->Content_Model
-                ->where(['nid' => $nid])
+                ->where($where)
                 ->page($page, $limit)
                 ->order('id', 'desc')
                 ->select();
             $total = $this->Content_Model->order('id', 'desc')->count();
             return json(["code" => 0, "count" => $total, "data" => $data]);
         }
-        $this->assign('nid', $nid);
+        $this->assign('param', $param);
         return $this->fetch();
     }
 
