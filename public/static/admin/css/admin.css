@@ -6,43 +6,25 @@
 .w400{width:400px!important;}
 .w500{width:500px!important;}
 .w600{width:600px!important;}
-.text-danger {
-    color: #d26a5c;
-}
-.text-info {
-    color: #70b9eb;
-}
-.text-warning {
-    color: #f3b760;
-}
-.text-success {
-    color: #46c37b;
-}
-.text-primary {
-    color: #5c90d2;
-}
+.text-danger {color: #d26a5c; }
+.text-info {color: #70b9eb; }
+.text-warning {color: #f3b760; }
+.text-success {color: #46c37b; }
+.text-primary {color: #5c90d2; }
 .text-center {text-align: center !important; }
-code {
-    padding: 2px 4px;
-    font-size: 90%;
-    color: #c7254e;
-    background-color: #f9f2f4;
-    border-radius: 4px;
-}
+code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f4; border-radius: 4px; }
 .childrenBody {padding: 15px;background-color: #F2F2F2; }
 .panel_box{ margin-bottom:5px;}
 .panel{ text-align:center; height:90px;}
-.panel_box a{display:block;overflow:hidden; height:80px; background-color:#f2f2f2 !important; }
+.panel_box a{display:block;overflow:hidden; height:80px;background: #fff;}
 .panel_icon{ width:40%; display: inline-block; line-height:80px; float:left; position:relative; height:100%;}
 .panel_icon i{ font-size:50px !important; color:#fff; display: inline-block;}
 .panel_word{ width:60%; display: inline-block; float:right; margin:13px 0 14px; }
 .panel_word span{ font-size:25px; display:block; height:34px; }
 .panel .loginTime{ font-size:15px; color:#1E9FFF; line-height:34px;}
 .panel em{ font-style:normal;}
-
 .layui-table-view{overflow: auto;}
 .layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px; }
-
 /*百度上传*/
 .thumbnail {
     display: block;
