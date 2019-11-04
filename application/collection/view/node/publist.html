@@ -3,16 +3,30 @@
 <div class="layui-card">
     <div class="layui-card-header">文章列表</div>
     <div class="layui-card-body">
-        <div class="layui-form">
-            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li {empty name='Request.param.type'}class="layui-this"{/empty}><a href="{:url('publist',['id'=>$param.id])}">全部</a></li>
+                <li {if $Request.param.type==1}class="layui-this"{/if}><a href="{:url('publist',['id'=>$param.id,'type'=>1])}">已采集</a></li>
+                <li {if $Request.param.type==2}class="layui-this"{/if}><a href="{:url('publist',['id'=>$param.id,'type'=>2])}">已导入</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form">
+                        <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm {empty name='Request.param.type'}layui-btn-danger{/empty}" href="{:url('publist',['id'=>$param.id])}">全部</a>
-      <a class="layui-btn layui-btn-sm {if $Request.param.type==1}layui-btn-danger{/if}" href="{:url('publist',['id'=>$param.id,'type'=>1])}">已采集</a>
-      <a class="layui-btn layui-btn-sm {if $Request.param.type==2}layui-btn-danger{/if}" href="{:url('publist',['id'=>$param.id,'type'=>2])}">已导入</a>
+      <a class="layui-btn layui-btn-sm layui-btn-warm">删除</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger">清空</a>
+      {if $Request.param.type==1}
+      <a class="layui-btn layui-btn-sm">导入</a>
+      <a class="layui-btn layui-btn-sm">全部导入</a>
+      {/if}
     </div>
 </script>
 <script type="text/html" id="barTool">
@@ -33,8 +47,8 @@ layui.use('table', function() {
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'status', title: '状态', width: 60, },
-                { field: 'title', title: '标题'},
-                { field: 'url', title: '网址'},
+                { field: 'title', title: '标题' },
+                { field: 'url', title: '网址' },
                 { fixed: 'right', width: 80, title: '操作', toolbar: '#barTool' }
             ]
         ],
