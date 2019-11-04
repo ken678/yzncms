@@ -1,73 +1,70 @@
 {extend name="index_layout"/}
 {block name="main"}
-<div class="layui-card">
-    <div class="layui-card-header">控制台</div>
-    <div class="layui-card-body">
-        {if $Think.config.app_debug}
-        <blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
-            安全提示：当前网站【调试模式】开启中，强烈建议在正式部署后关闭调试模式
-        </blockquote>
-        {/if}
-        {if $Think.config.app_trace}
-        <blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
-            安全提示：当前网站【Trace调试】开启中，强烈建议在正式部署后关闭Trace调试
-        </blockquote>
-        {/if}
-        <blockquote class="layui-elem-quote layui-bg-green">
-            <div id="nowTime"></div>
-        </blockquote>
-        <div class="layui-row layui-col-space10 panel_box">
-            <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-                <a href="http://bbs.yzncms.com" target="_blank">
-                    <div class="panel_icon layui-bg-black">
-                        <i class="icon iconfont icon-interactive layui-anim"></i>
-                    </div>
-                    <div class="panel_word">
-                        <span>论坛</span>
-                        <cite>交流社区</cite>
-                    </div>
-                </a>
+{if $Think.config.app_debug}
+<blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
+    安全提示：当前网站【调试模式】开启中，强烈建议在正式部署后关闭调试模式
+</blockquote>
+{/if}
+{if $Think.config.app_trace}
+<blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
+    安全提示：当前网站【Trace调试】开启中，强烈建议在正式部署后关闭Trace调试
+</blockquote>
+{/if}
+<blockquote class="layui-elem-quote layui-bg-green">
+    <div id="nowTime"></div>
+</blockquote>
+<div class="layui-row layui-col-space10 panel_box">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="http://bbs.yzncms.com" target="_blank">
+            <div class="panel_icon layui-bg-black">
+                <i class="icon iconfont icon-interactive layui-anim"></i>
             </div>
-            <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-                <a href="https://www.kancloud.cn/ken678/yzncms/352683" target="_blank">
-                    <div class="panel_icon layui-bg-red">
-                        <i class="icon iconfont icon-bangzhushouce layui-anim"></i>
-                    </div>
-                    <div class="panel_word">
-                        <span>文档</span>
-                        <cite>使用手册</cite>
-                    </div>
-                </a>
+            <div class="panel_word">
+                <span>论坛</span>
+                <cite>交流社区</cite>
             </div>
-            <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-                <a href="https://gitee.com/ken678/YZNCMS" target="_blank">
-                    <div class="panel_icon layui-bg-green">
-                        <i class="icon iconfont icon-oschina layui-anim"></i>
-                    </div>
-                    <div class="panel_word">
-                        <span>码云</span>
-                        <cite>模版下载链接</cite>
-                    </div>
-                </a>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="https://www.kancloud.cn/ken678/yzncms/352683" target="_blank">
+            <div class="panel_icon layui-bg-red">
+                <i class="icon iconfont icon-bangzhushouce layui-anim"></i>
             </div>
-            <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-                <a href="javascript:;">
-                    <div class="panel_icon layui-bg-blue">
-                        <i class="icon iconfont icon-time layui-anim"></i>
-                    </div>
-                    <div class="panel_word">
-                        <span class="loginTime"><?php if($userInfo['last_login_time'] > 0) { echo $userInfo['last_login_time'];} else { echo '--';}?></span>
-                        <cite>上次登录时间</cite>
-                    </div>
-                </a>
+            <div class="panel_word">
+                <span>文档</span>
+                <cite>使用手册</cite>
             </div>
-        </div>
-        <blockquote class="layui-elem-quote main_btn">
-            备注
-        </blockquote>
-        <div class="layui-row layui-col-space10">
-            <div class="layui-col-lg6 layui-col-md12">
-                <blockquote class="layui-elem-quote title">系统基本参数</blockquote>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="https://gitee.com/ken678/YZNCMS" target="_blank">
+            <div class="panel_icon layui-bg-green">
+                <i class="icon iconfont icon-oschina layui-anim"></i>
+            </div>
+            <div class="panel_word">
+                <span>码云</span>
+                <cite>模版下载链接</cite>
+            </div>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;">
+            <div class="panel_icon layui-bg-blue">
+                <i class="icon iconfont icon-time layui-anim"></i>
+            </div>
+            <div class="panel_word">
+                <span class="loginTime">
+                    <?php if($userInfo['last_login_time'] > 0) { echo $userInfo['last_login_time'];} else { echo '--';}?></span>
+                <cite>上次登录时间</cite>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-lg6 layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header" style="border-bottom: 1px solid #eee;">版本信息</div>
+            <div class="layui-card-body">
                 <table class="layui-table magt0">
                     <colgroup>
                         <col width="150">
@@ -103,6 +100,20 @@
                             <td class="time">{$sys_info.time}</td>
                         </tr>
                     </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-lg6 layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header" style="border-bottom: 1px solid #eee;">常见问题</div>
+            <div class="layui-card-body">
+                <table class="layui-table magt0">
+                    <colgroup>
+                        <col width="150">
+                        <col>
+                    </colgroup>
+
                 </table>
             </div>
         </div>
