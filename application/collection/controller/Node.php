@@ -144,6 +144,14 @@ class Node extends Adminbase
         return $this->fetch();
     }
 
+    public function show()
+    {
+        $id = $this->request->param('id/d', 0);
+        $data = $this->Content_Model->where('id', $id)->value('data');
+        $this->assign('data', unserialize($data));
+        return $this->fetch();
+    }
+
     public function delete()
     {
         $nodeids = $this->request->param('ids/a', null);
