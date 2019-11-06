@@ -41,5 +41,6 @@ return array(
     'tables' => [
         'collection_node',
         'collection_content',
+        'collection_program',
     ],
 );

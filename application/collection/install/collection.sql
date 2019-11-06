@@ -33,4 +33,15 @@ CREATE TABLE `yzn_collection_content` (
   KEY `nid` (`nid`),
   KEY `status` (`status`),
   KEY `url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='采集内容表';
+
+DROP TABLE IF EXISTS `yzn_collection_program`;
+CREATE TABLE `yzn_collection_program` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nid` int(10) unsigned NOT NULL DEFAULT '0',
+  `modelid` mediumint(6) unsigned NOT NULL DEFAULT '0',
+  `catid` int(10) unsigned NOT NULL DEFAULT '0',
+  `config` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `nid` (`nid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='采集方案表';
