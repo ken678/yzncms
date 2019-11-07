@@ -152,6 +152,12 @@ class Node extends Adminbase
         return $this->fetch();
     }
 
+    //导入文章
+    public function import()
+    {
+
+    }
+
     public function delete()
     {
         $nodeids = $this->request->param('ids/a', null);

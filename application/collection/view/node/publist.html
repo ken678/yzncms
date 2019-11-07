@@ -24,8 +24,8 @@
       <a class="layui-btn layui-btn-sm layui-btn-warm">删除</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger">清空</a>
       {if $Request.param.type==1}
-      <a class="layui-btn layui-btn-sm">导入</a>
-      <a class="layui-btn layui-btn-sm">全部导入</a>
+      <!--<a class="layui-btn layui-btn-sm">导入</a>-->
+      <a class="layui-btn layui-btn-sm" href="{:url('import',['type'=>'all','id'=>$param.id])}">全部导入</a>
       {/if}
     </div>
 </script>
