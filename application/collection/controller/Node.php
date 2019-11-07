@@ -16,6 +16,7 @@ namespace app\collection\controller;
 
 use app\collection\model\Content as Content_Model;
 use app\collection\model\Nodes as Nodes_Model;
+use app\collection\model\Program as Program_Model;
 use app\common\controller\Adminbase;
 
 class Node extends Adminbase
@@ -27,6 +28,7 @@ class Node extends Adminbase
         parent::initialize();
         $this->Nodes_Model = new Nodes_Model;
         $this->Content_Model = new Content_Model;
+        $this->Program_Model = new Program_Model;
     }
 
     public function index()
@@ -155,6 +157,13 @@ class Node extends Adminbase
     //导入文章
     public function import()
     {
+        $nid = $this->request->param('id/d', 0);
+        if ($this->request->isAjax()) {
+            $data = $this->Program_Model->where('nid', $nid)->select();
+            return json(["code" => 0, "data" => $data]);
+        }
+        $this->assign('id', $nid);
+        return $this->fetch();
 
     }
 

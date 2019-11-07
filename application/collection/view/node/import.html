@@ -1,0 +1,43 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">发布方案</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm" href='{:url("add_program")}'>添加方案</a>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+	<a href='' class="layui-btn layui-btn-xs">使用</a>
+    <a href='' class="layui-btn layui-btn-xs">编辑</a>
+    <a href='' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#dataTable',
+        toolbar: '#toolbarDemo',
+        url: '{:url("import",["id"=>$id])}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'name', title: '名称' },
+                { fixed: 'right', width: 180, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}
