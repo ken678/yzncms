@@ -1,0 +1,77 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">方案管理</div>
+    <div class="layui-card-body">
+        <form class="layui-form" method="post">
+            <fieldset class="layui-elem-field">
+                <legend>新建发布方案</legend>
+                <div class="layui-field-box">
+                    <div class="layui-form-item web_list">
+                        <label>栏目列表</label>
+                        <div class="w300">
+                            <select name="catid" lay-filter="filter">
+                                <option>请选择</option>
+                                {$category|raw}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            {if $catid}
+            <fieldset class="layui-elem-field">
+                <legend>标签与数据库对应关系</legend>
+                <div class="layui-field-box">
+                    <table class="layui-table" lay-size="sm" style="width:800px;">
+                        <thead>
+                            <tr>
+                                <th width="100">原数据库字段</th>
+                                <th width="100">数据库字段说明</th>
+                                <th width="200">标签字段（采集填充结果）</th>
+                                <th width="200">处理函数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $data as $key=>$vo }
+                            <tr>
+                                <td>{$vo.name}</td>
+                                <td>{$vo.title}</td>
+                                <td>
+                                    <select name="node_field[]">
+                                        <option value="">请选择</option>
+                                        <option value="title">标题</option>
+                                        <option value="type">分类</option>
+                                        <option value="content">内容</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="funcs[]">
+                                    </select>
+                                </td>
+                            </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+            <div class="layui-form-item">
+                <div>
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+                </div>
+            </div>
+            {/if}
+        </form>
+    </div>
+</div>
+{/block}
+{block name="layui"}
+<script>
+layui.use('form', function() {
+    var form = layui.form;
+    form.on('select(filter)', function(data) {
+        location.href = data.value
+    });
+});
+</script>
+{/block}

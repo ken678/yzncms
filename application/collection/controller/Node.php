@@ -18,6 +18,7 @@ use app\collection\model\Content as Content_Model;
 use app\collection\model\Nodes as Nodes_Model;
 use app\collection\model\Program as Program_Model;
 use app\common\controller\Adminbase;
+use think\Db;
 
 class Node extends Adminbase
 {
@@ -164,7 +165,40 @@ class Node extends Adminbase
         }
         $this->assign('id', $nid);
         return $this->fetch();
+    }
 
+    public function add_program()
+    {
+        $nid = $this->request->param('id/d', 0);
+        $catid = $this->request->param('catid/d', 0);
+        $tree = new \util\Tree();
+        $str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
+        $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
+        foreach ($array as $k => $v) {
+            if ($v['id'] == $catid) {
+                $array[$k]['selected'] = "selected";
+            }
+            //含子栏目和单页不可以发表
+            if ($v['child'] == 1 || $v['type'] == 1) {
+                $array[$k]['disabled'] = "disabled";
+                $array[$k]['catidurl'] = '';
+            } else {
+                $array[$k]['disabled'] = "";
+                $array[$k]['catidurl'] = url('add_program', ['id' => $nid, 'catid' => $v['id']]);
+            }
+        }
+        $tree->init($array);
+        $category = $tree->get_tree(0, $str, 0);
+
+        if ($catid) {
+            $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
+            $data = model('cms/cms')->getFieldList($modelid);
+            $this->assign("data", $data);
+        }
+        $this->assign("category", $category);
+        $this->assign('id', $nid);
+        $this->assign('catid', $catid);
+        return $this->fetch();
     }
 
     public function delete()
