@@ -90,9 +90,9 @@ class Content extends MemberBase
             $catid = $this->request->param('catid/d', 0);
             $tree = new \util\Tree();
             $str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
-            $array = cache("Category");
+            $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             foreach ($array as $k => $v) {
-                $array[$k] = $v = Db::name('Category')->find($v['id']);
+                //$array[$k] = $v = Db::name('Category')->find($v['id']);
                 if ($v['id'] == $catid) {
                     $array[$k]['selected'] = "selected";
                 }
