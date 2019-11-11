@@ -171,44 +171,51 @@ class Node extends Adminbase
     {
         $nid = $this->request->param('id/d', 0);
         $catid = $this->request->param('catid/d', 0);
-        $tree = new \util\Tree();
-        $str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
-        $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
-        foreach ($array as $k => $v) {
-            if ($v['id'] == $catid) {
-                $array[$k]['selected'] = "selected";
-            }
-            //含子栏目和单页不可以发表
-            if ($v['child'] == 1 || $v['type'] == 1) {
-                $array[$k]['disabled'] = "disabled";
-                $array[$k]['catidurl'] = '';
-            } else {
-                $array[$k]['disabled'] = "";
-                $array[$k]['catidurl'] = url('add_program', ['id' => $nid, 'catid' => $v['id']]);
-            }
-        }
-        $tree->init($array);
-        $category = $tree->get_tree(0, $str, 0);
-        if ($catid) {
-            $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
-            $data = model('cms/cms')->getFieldList($modelid);
-            $node_data = unserialize($this->Nodes_Model->where('id', $nid)->value('customize_config'));
-            $node_field = [];
-            if (is_array($node_data)) {
-                foreach ($node_data as $k => $v) {
-                    if (empty($v['name']) || empty($v['title'])) {
-                        continue;
-                    }
-                    $node_field[$v['name']] = $v['title'];
+        if ($this->request->isPost()) {
+            var_dump($nid);
+            var_dump($catid);
+
+        } else {
+            $tree = new \util\Tree();
+            $str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
+            $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
+            foreach ($array as $k => $v) {
+                if ($v['id'] == $catid) {
+                    $array[$k]['selected'] = "selected";
+                }
+                //含子栏目和单页不可以发表
+                if ($v['child'] == 1 || $v['type'] == 1) {
+                    $array[$k]['disabled'] = "disabled";
+                    $array[$k]['catidurl'] = '';
+                } else {
+                    $array[$k]['disabled'] = "";
+                    $array[$k]['catidurl'] = url('add_program', ['id' => $nid, 'catid' => $v['id']]);
                 }
             }
-            $this->assign("node_field", $node_field);
-            $this->assign("data", $data);
+            $tree->init($array);
+            $category = $tree->get_tree(0, $str, 0);
+            if ($catid) {
+                $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
+                $data = model('cms/cms')->getFieldList($modelid);
+                $node_data = unserialize($this->Nodes_Model->where('id', $nid)->value('customize_config'));
+                $node_field = [];
+                if (is_array($node_data)) {
+                    foreach ($node_data as $k => $v) {
+                        if (empty($v['name']) || empty($v['title'])) {
+                            continue;
+                        }
+                        $node_field[$v['name']] = $v['title'];
+                    }
+                }
+                $this->assign("node_field", $node_field);
+                $this->assign("data", $data);
+            }
+            $this->assign("category", $category);
+            $this->assign('id', $nid);
+            $this->assign('catid', $catid);
+            return $this->fetch();
         }
-        $this->assign("category", $category);
-        $this->assign('id', $nid);
-        $this->assign('catid', $catid);
-        return $this->fetch();
+
     }
 
     public function delete()

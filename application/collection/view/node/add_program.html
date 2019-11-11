@@ -26,9 +26,9 @@
                         <thead>
                             <tr>
                                 <th width="100">原数据库字段</th>
-                                <th width="100">数据库字段说明</th>
-                                <th width="200">标签字段（采集填充结果）</th>
-                                <th width="200">处理函数</th>
+                                <th width="120">数据库字段说明</th>
+                                <th width="180">标签字段（采集填充结果）</th>
+                                <th width="450">处理函数</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,8 +48,18 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select name="funcs[]">
-                                    </select>
+                                    <div class="layui-input-inline" style="min-width: 180px;">
+                                        <input type="text" name="funcs[]" autocomplete="off" placeholder="多个函数使用'|'分割" class="layui-input" id="url">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select>
+                                            <option data-fun="">快速选择</option>
+                                            <option data-fun="">过滤空格(trim)</option>
+                                            <option data-fun="">处理为组图(spider_photos)</option>
+                                            <option data-fun="">处理为下载列表(spider_downurls)</option>
+                                            <option data-fun="">获取关键字(spider_keywords)</option>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                             {/notin}
