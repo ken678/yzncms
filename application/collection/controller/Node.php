@@ -239,7 +239,37 @@ class Node extends Adminbase
             $this->assign('catid', $catid);
             return $this->fetch();
         }
+    }
 
+    //导入文章到模型
+    public function import_content()
+    {
+        $nid = $this->request->param('id/d', 0);
+        $pid = $this->request->param('pid/d', 0);
+
+        $program = $this->Program_Model->where('id', $pid)->find();
+        $program['config'] = unserialize($program['config']);
+
+        $data = $this->Content_Model->where('nid', $nid)->select();
+        $cms_model = new \app\cms\model\Cms;
+        foreach ($data as $k => $v) {
+            $sql['modelField'] = array('catid' => $program['catid'], 'status' => 1);
+            $v['data'] = unserialize($v['data']);
+
+            foreach ($program['config']['modelField'] as $a => $b) {
+                $sql['modelField'][$a] = $v['data'][$b];
+
+            }
+            foreach ($program['config']['modelFieldExt'] as $a => $b) {
+                $sql['modelFieldExt'][$a] = $v['data'][$b];
+            }
+            try {
+                $cms_model->addModelData($sql['modelField'], $sql['modelFieldExt']);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+        }
+        $this->success('操作成功！');
     }
 
     public function delete()
