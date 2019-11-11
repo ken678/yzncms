@@ -33,15 +33,18 @@
                         </thead>
                         <tbody>
                             {foreach $data as $key=>$vo }
+                            {notin name="vo.name" value="id,catid,flag,status"}
                             <tr>
                                 <td>{$vo.name}</td>
                                 <td>{$vo.title}</td>
                                 <td>
+                                    <input type="hidden" name="model_field[]" value="{$vo.name}">
+                                    <input type="hidden" name="model_type[]" value="{$vo.fieldArr}">
                                     <select name="node_field[]">
                                         <option value="">请选择</option>
-                                        <option value="title">标题</option>
-                                        <option value="type">分类</option>
-                                        <option value="content">内容</option>
+                                        {foreach $node_field as $key=>$vo }
+                                        <option value="{$key}">{$vo}</option>
+                                        {/foreach}
                                     </select>
                                 </td>
                                 <td>
@@ -49,6 +52,7 @@
                                     </select>
                                 </td>
                             </tr>
+                            {/notin}
                             {/foreach}
                         </tbody>
                     </table>
