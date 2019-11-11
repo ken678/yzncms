@@ -172,8 +172,32 @@ class Node extends Adminbase
         $nid = $this->request->param('id/d', 0);
         $catid = $this->request->param('catid/d', 0);
         if ($this->request->isPost()) {
-            var_dump($nid);
-            var_dump($catid);
+            $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
+            $config = [];
+            $data = $this->request->post();
+            foreach ($data['node_field'] as $k => $v) {
+                if (empty($v)) {
+                    continue;
+                }
+                $config[$data['model_type'][$k]][$data['model_field'][$k]] = $v;
+            }
+            foreach ($data['funcs'] as $k => $v) {
+                if (empty($v)) {
+                    continue;
+                }
+                $config['funcs'][$data['model_field'][$k]] = $v;
+            }
+            $result = $this->Program_Model->save([
+                'nid' => $nid,
+                'catid' => $catid,
+                'modelid' => $modelid,
+                'config' => serialize($config),
+            ]);
+            if (false !== $result) {
+                $this->success("添加成功！", url('import', ['id' => $nid]));
+            } else {
+                $this->error('添加失败！');
+            }
 
         } else {
             $tree = new \util\Tree();
