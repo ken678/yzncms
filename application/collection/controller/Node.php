@@ -255,6 +255,9 @@ class Node extends Adminbase
         foreach ($data as $k => $v) {
             $sql['modelField'] = array('catid' => $program['catid'], 'status' => 1);
             $v['data'] = unserialize($v['data']);
+            if (!$v['data']) {
+                continue;
+            }
 
             foreach ($program['config']['modelField'] as $a => $b) {
                 $sql['modelField'][$a] = $v['data'][$b];
