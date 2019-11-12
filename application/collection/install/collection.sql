@@ -38,6 +38,7 @@ CREATE TABLE `yzn_collection_content` (
 DROP TABLE IF EXISTS `yzn_collection_program`;
 CREATE TABLE `yzn_collection_program` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` char(100) NOT NULL DEFAULT '',
   `nid` int(10) unsigned NOT NULL DEFAULT '0',
   `modelid` mediumint(6) unsigned NOT NULL DEFAULT '0',
   `catid` int(10) unsigned NOT NULL DEFAULT '0',

@@ -171,6 +171,7 @@ class Node extends Adminbase
     {
         $nid = $this->request->param('id/d', 0);
         $catid = $this->request->param('catid/d', 0);
+        $title = $this->request->param('title/s', '');
         if ($this->request->isPost()) {
             $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
             $config = [];
@@ -191,6 +192,7 @@ class Node extends Adminbase
                 'nid' => $nid,
                 'catid' => $catid,
                 'modelid' => $modelid,
+                'title' => $title,
                 'config' => serialize($config),
             ]);
             if (false !== $result) {
@@ -219,8 +221,8 @@ class Node extends Adminbase
             $tree->init($array);
             $category = $tree->get_tree(0, $str, 0);
             if ($catid) {
-                $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
-                $data = model('cms/cms')->getFieldList($modelid);
+                $cat_info = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
+                $data = model('cms/cms')->getFieldList($cat_info['modelid']);
                 $node_data = unserialize($this->Nodes_Model->where('id', $nid)->value('customize_config'));
                 $node_field = [];
                 if (is_array($node_data)) {
@@ -234,6 +236,7 @@ class Node extends Adminbase
                 $this->assign("node_field", $node_field);
                 $this->assign("data", $data);
             }
+            $this->assign("catname", $cat_info['catname']);
             $this->assign("category", $category);
             $this->assign('id', $nid);
             $this->assign('catid', $catid);

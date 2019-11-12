@@ -7,7 +7,7 @@
             <fieldset class="layui-elem-field">
                 <legend>新建发布方案</legend>
                 <div class="layui-field-box">
-                    <div class="layui-form-item web_list">
+                    <div class="layui-form-item">
                         <label>栏目列表</label>
                         <div class="w300">
                             <select name="catid" lay-filter="filter">
@@ -16,6 +16,14 @@
                             </select>
                         </div>
                     </div>
+                    {if $catid}
+                    <div class="layui-form-item">
+                        <label>方案名称</label>
+                        <div class="w300">
+                            <input type="text" name="title" placeholder="请输入" autocomplete="off" class="layui-input" value="{$catname}">
+                        </div>
+                    </div>
+                    {/if}
                 </div>
             </fieldset>
             {if $catid}

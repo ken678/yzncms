@@ -14,7 +14,7 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-	<a href='{:url("import_content",["id"=>$id])}?pid={{d.id}}' class="layui-btn layui-btn-xs">使用</a>
+	<a href='{:url("import_content",["id"=>$id])}?pid={{d.id}}' class="layui-btn layui-btn-xs layui-btn-normal">使用</a>
     <a href='' class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("import_program_del")}?pid={{d.id}}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
@@ -31,12 +31,11 @@ layui.use('table', function() {
         url: '{:url("import",["id"=>$id])}',
         cols: [
             [
-                { type: 'checkbox', fixed: 'left' },
-                { field: 'name', title: '名称' },
+                { field: 'id', width: 70, title: 'ID' },
+                { field: 'title', title: '方案名称' },
                 { fixed: 'right', width: 180, title: '操作', toolbar: '#barTool' }
             ]
-        ],
-        page: {}
+        ]
     });
 });
 </script>
