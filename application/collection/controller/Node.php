@@ -140,7 +140,7 @@ class Node extends Adminbase
                 ->page($page, $limit)
                 ->order('id', 'desc')
                 ->select();
-            $total = $this->Content_Model->order('id', 'desc')->count();
+            $total = $this->Content_Model->where($where)->order('id', 'desc')->count();
             return json(["code" => 0, "count" => $total, "data" => $data]);
         }
         $this->assign('param', $param);
@@ -250,7 +250,10 @@ class Node extends Adminbase
         $program = $this->Program_Model->where('id', $pid)->find();
         $program['config'] = unserialize($program['config']);
 
-        $data = $this->Content_Model->where('nid', $nid)->select();
+        $data = $this->Content_Model->where([
+            ['nid', '=', $nid],
+            ['status', '=', 1],
+        ])->select();
         $cms_model = new \app\cms\model\Cms;
         foreach ($data as $k => $v) {
             $sql['modelField'] = array('catid' => $program['catid'], 'status' => 1);
@@ -258,7 +261,6 @@ class Node extends Adminbase
             if (!$v['data']) {
                 continue;
             }
-
             foreach ($program['config']['modelField'] as $a => $b) {
                 $sql['modelField'][$a] = $v['data'][$b];
 
@@ -271,8 +273,22 @@ class Node extends Adminbase
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
+            //更新状态
+            $this->Content_Model->where('id', $v['id'])->update(['status' => 2]);
+
         }
         $this->success('操作成功！');
+    }
+
+    public function import_program_del()
+    {
+        $pid = $this->request->param('pid/d', 0);
+        empty($pid) && $this->error('参数不能为空！');
+        if ($this->Program_Model->where('id', $pid)->delete()) {
+            $this->success("删除成功！");
+        } else {
+            $this->error('删除失败！');
+        }
     }
 
     public function delete()
