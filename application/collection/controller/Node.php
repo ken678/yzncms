@@ -129,7 +129,7 @@ class Node extends Adminbase
         $param = $this->request->param();
         $where = [];
         $where[] = ['nid', '=', $param['id']];
-        if (!empty($param['type'])) {
+        if (isset($param['type']) && !empty($param['type'])) {
             $where[] = ['status', '=', $param['type']];
         }
         if ($this->request->isAjax()) {
@@ -283,6 +283,29 @@ class Node extends Adminbase
         $this->success('操作成功！');
     }
 
+    //采集数据删除
+    public function content_del()
+    {
+        $nid = $this->request->param('id/d', 0);
+        $ids = $this->request->param('ids/a', null);
+        if (empty($ids) || !$nid) {
+            $this->error('参数错误！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
+        try {
+            foreach ($ids as $id) {
+                $this->Content_Model->where(['nid' => $nid, 'id' => $id])->delete();
+            }
+        } catch (\Exception $ex) {
+            $this->error($ex->getMessage());
+        }
+        $this->success('删除成功！');
+
+    }
+
+    //方案删除
     public function import_program_del()
     {
         $pid = $this->request->param('pid/d', 0);

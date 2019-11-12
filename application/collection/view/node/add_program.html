@@ -50,8 +50,8 @@
                                     <input type="hidden" name="model_type[]" value="{$vo.fieldArr}">
                                     <select name="node_field[]">
                                         <option value="">请选择</option>
-                                        {foreach $node_field as $key=>$vo }
-                                        <option value="{$key}">{$vo}</option>
+                                        {foreach $node_field as $key=>$name }
+                                        <option value="{$key}" {if $key==$vo.name}selected{/if}>{$name}</option>
                                         {/foreach}
                                     </select>
                                 </td>
