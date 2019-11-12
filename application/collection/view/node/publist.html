@@ -21,8 +21,10 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm layui-btn-warm confirm layui-batch-all" data-href='{:url("content_del",["id"=>$param.id])}'>删除</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('content_del',['id'=>$param.id,'type'=>$Request.param.type])}">全部清空</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("content_del",["id"=>$param.id])}'>批量删除</a>
+      {empty name="Request.param.type"}
+      <a class="layui-btn layui-btn-sm layui-btn-warm" href="{:url('content_del',['id'=>$param.id,'type'=>'all'])}">全部清空</a>
+      {/empty}
       {if $Request.param.type==1}
       <!--<a class="layui-btn layui-btn-sm">导入</a>-->
       <a class="layui-btn layui-btn-sm" href="{:url('import',['type'=>'all','id'=>$param.id])}">全部导入</a>

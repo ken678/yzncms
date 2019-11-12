@@ -288,18 +288,23 @@ class Node extends Adminbase
     {
         $nid = $this->request->param('id/d', 0);
         $ids = $this->request->param('ids/a', null);
-        if (empty($ids) || !$nid) {
-            $this->error('参数错误！');
-        }
-        if (!is_array($ids)) {
-            $ids = array(0 => $ids);
-        }
-        try {
-            foreach ($ids as $id) {
-                $this->Content_Model->where(['nid' => $nid, 'id' => $id])->delete();
+        $type = $this->request->param('type/s', '');
+        if ($type == "all") {
+            $this->Content_Model->where('nid', $nid)->delete();
+        } else {
+            if (empty($ids) || !$nid) {
+                $this->error('参数错误！');
             }
-        } catch (\Exception $ex) {
-            $this->error($ex->getMessage());
+            if (!is_array($ids)) {
+                $ids = array(0 => $ids);
+            }
+            try {
+                foreach ($ids as $id) {
+                    $this->Content_Model->where(['nid' => $nid, 'id' => $id])->delete();
+                }
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
         }
         $this->success('删除成功！');
 
