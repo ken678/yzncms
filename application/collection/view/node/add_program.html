@@ -51,21 +51,19 @@
                                     <select name="node_field[]">
                                         <option value="">请选择</option>
                                         {foreach $node_field as $key=>$name }
-                                        <option value="{$key}" {if $key==$vo.name}selected{/if}>{$name}</option>
+                                        <option value="{$key}" {if $key==$vo.name}selected{/if}>{$name} </option>
                                         {/foreach}
                                     </select>
                                 </td>
                                 <td>
                                     <div class="layui-input-inline" style="min-width: 180px;">
-                                        <input type="text" name="funcs[]" autocomplete="off" placeholder="多个函数使用'|'分割" class="layui-input" id="url">
+                                        <input type="text" name="funcs[]" autocomplete="off" placeholder="多个函数使用'|'分割" class="layui-input">
                                     </div>
                                     <div class="layui-input-inline">
-                                        <select>
+                                        <select lay-filter="funcs">
                                             <option data-fun="">快速选择</option>
-                                            <option data-fun="">过滤空格(trim)</option>
-                                            <option data-fun="">处理为组图(spider_photos)</option>
-                                            <option data-fun="">处理为下载列表(spider_downurls)</option>
-                                            <option data-fun="">获取关键字(spider_keywords)</option>
+                                            <option data-fun="trim">过滤空格(trim)</option>
+                                            <option data-fun="strtotime">转时间戳(strtotime)</option>
                                         </select>
                                     </div>
                                 </td>
@@ -94,6 +92,16 @@ layui.use('form', function() {
     form.on('select(filter)', function(data) {
         location.href = data.value
     });
+
+    form.on('select(funcs)', function(data) {
+        var dom = $(data.elem).parent().parent('td').find('.layui-input');
+        if (dom.val() == '') {
+            dom.val($(data.elem).find("option:selected").attr("data-fun"));
+        } else {
+            dom.val(dom.val() + '|' + $(data.elem).find("option:selected").attr("data-fun"));
+        }
+    });
+
 });
 </script>
 {/block}

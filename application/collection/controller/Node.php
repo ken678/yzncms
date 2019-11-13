@@ -265,11 +265,19 @@ class Node extends Adminbase
                 continue;
             }
             foreach ($program['config']['modelField'] as $a => $b) {
-                $sql['modelField'][$a] = $v['data'][$b];
-
+                if (isset($program['config']['funcs'][$a]) && function_exists($program['config']['funcs'][$a])) {
+                    $sql['modelField'][$a] = $program['config']['funcs'][$a]($v['data'][$b]);
+                } else {
+                    $sql['modelField'][$a] = $v['data'][$b];
+                }
             }
+
             foreach ($program['config']['modelFieldExt'] as $a => $b) {
-                $sql['modelFieldExt'][$a] = $v['data'][$b];
+                if (isset($program['config']['funcs'][$a]) && function_exists($program['config']['funcs'][$a])) {
+                    $sql['modelFieldExt'][$a] = $program['config']['funcs'][$a]($v['data'][$b]);
+                } else {
+                    $sql['modelFieldExt'][$a] = $v['data'][$b];
+                }
             }
             try {
                 $cms_model->addModelData($sql['modelField'], $sql['modelFieldExt']);
