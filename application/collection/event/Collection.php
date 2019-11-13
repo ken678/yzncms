@@ -19,6 +19,7 @@ use QL\QueryList;
 class Collection
 {
     public $_config;
+    public $_url;
     public function init($config)
     {
         $this->_config = $config;
@@ -83,15 +84,38 @@ class Collection
     //采集内容
     public function get_content($url, $config)
     {
+        $this->_url = $url;
         foreach ($config['customize_config'] as $k => $v) {
             if (empty($v['name'])) {
                 continue;
             }
-            $rules[$v['name']] = [$v['selector'], $v['attr'], $v['filter']];
+            $rules[$v['name']] = [$v['selector'], $v['attr'], $v['filter'], function ($content) use ($v) {
+                if ("html" == $v['attr']) {
+                    $content = preg_replace_callback('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', array(&$this, 'download_img_callback'), $content);
+                }
+                return $content;
+            }];
         }
         $cont = QueryList::get($url)->rules($rules)->query()->getData();
         return $cont[0];
 
+    }
+
+    /**
+     * 转换图片地址为绝对路径，为下载做准备。
+     * @param array $out 图片地址
+     */
+    protected function download_img_callback($matches)
+    {
+        return $this->download_img($matches[0], $matches[1]);
+    }
+    protected function download_img($old, $out)
+    {
+        if (!empty($old) && !empty($out) && strpos($out, '://') === false) {
+            return str_replace($out, $this->url_check($out, $this->_url), $old);
+        } else {
+            return $old;
+        }
     }
 
     //URL地址检查
