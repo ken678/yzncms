@@ -108,13 +108,15 @@ class Node extends Adminbase
                     }
                     $this->assign('url', $url);
                 }
+                if ($total_page <= $page) {
+                    $this->Nodes_Model->update(['lastdate' => time(), 'id' => $nid]);
+                }
                 $this->assign('total_page', $total_page);
                 $this->assign('id', $nid);
                 $this->assign('page', $page);
                 return $this->fetch();
-
             } else {
-                $this->error('网址采集已完成！');
+                $this->success('网址采集已完成！');
             }
         } else {
             $this->error('采集任务不存在！');
