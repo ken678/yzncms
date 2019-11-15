@@ -40,6 +40,7 @@ class Nodes extends Model
                     'name' => $v,
                     'selector' => $customize_config['selector'][$k],
                     'attr' => $customize_config['attr'][$k],
+                    'value' => $customize_config['value'][$k],
                     'filter' => $customize_config['filter'][$k],
                 ];
 
@@ -72,6 +73,7 @@ class Nodes extends Model
                         'name' => $v,
                         'selector' => $customize_config['selector'][$k],
                         'attr' => $customize_config['attr'][$k],
+                        'value' => $customize_config['value'][$k],
                         'filter' => $customize_config['filter'][$k],
                     ];
 

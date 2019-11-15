@@ -90,6 +90,9 @@ class Collection
                 continue;
             }
             $rules[$v['name']] = [$v['selector'], $v['attr'], $v['filter'], function ($content) use ($v) {
+                if (!empty($v['value'])) {
+                    return $v['value'];
+                }
                 if ("html" == $v['attr']) {
                     $content = preg_replace_callback('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', array(&$this, 'download_img_callback'), $content);
                 }

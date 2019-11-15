@@ -154,11 +154,14 @@
             <div class="layui-input-inline" style="width:90px;">
                 <input type="text" class="layui-input" name="customize_config[name][]" placeholder="字段名" value="{{item.name}}"  />
             </div>
-            <div class="layui-input-inline" style="width:150px;">
+            <div class="layui-input-inline" style="width:200px;">
                 <input type="text" class="layui-input" name="customize_config[selector][]" placeholder="选择器" value="{{item.selector}}"  />
             </div>
             <div class="layui-input-inline" style="width:60px;">
                 <input type="text" class="layui-input" name="customize_config[attr][]" placeholder="属性" value="{{item.attr}}"  />
+            </div>
+            <div class="layui-input-inline" style="width:150px;">
+                <input type="text" class="layui-input" name="customize_config[value][]" placeholder="固定值" value="{{item.value}}"  />
             </div>
             <div class="layui-input-inline" style="width:140px;">
                 <input type="text" class="layui-input" name="customize_config[filter][]" placeholder="内容过滤器" value="{{item.filter}}"  />
@@ -213,7 +216,7 @@ layui.use(['laytpl', 'form'], function() {
 
     addRule = function(that) {
         var data = {
-            rules: [{ "title": "", "name": "", "selector": "", "attr": "", "filter": "" }]
+            rules: [{ "title": "", "name": "", "selector": "", "attr": "","value": "", "filter": "" }]
         };
         laytpl($('#caijiTpl').html()).render(data, function(html) {
             that.parents('#caijiBox').append(html);
