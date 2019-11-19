@@ -60,12 +60,15 @@ class CmsTagLib
         $where = isset($data['where']) ? $data['where'] : "status=1";
         $order = isset($data['order']) ? $data['order'] : 'listorder,id desc';
         //每页显示总数
-        $num = isset($data['num']) ? (int) $data['num'] : 10;
+        //$num = isset($data['num']) ? (int) $data['num'] : 10;
+        if (!isset($data['limit'])) {
+            $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
+        }
         if (isset($data['catid'])) {
             $catid = (int) $data['catid'];
             $where .= empty($where) ? "parentid = " . $catid : " AND parentid = " . $catid;
         }
-        $categorys = Category_Model::where($where)->limit($num)->order($data['order'])->select();
+        $categorys = Category_Model::where($where)->limit($data['limit'])->order($data['order'])->select();
         if (!empty($categorys)) {
             foreach ($categorys as &$vo) {
                 $vo['url'] = Category_Model::buildCatUrl($vo['id'], $vo['url']);
