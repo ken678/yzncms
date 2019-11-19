@@ -246,6 +246,11 @@ class Node extends Adminbase
         }
     }
 
+    public function edit_program()
+    {
+
+    }
+
     //导入文章到模型
     public function import_content()
     {
@@ -267,16 +272,16 @@ class Node extends Adminbase
                 continue;
             }
             foreach ($program['config']['modelField'] as $a => $b) {
-                if (isset($program['config']['funcs'][$a]) && function_exists($program['config']['funcs'][$a])) {
-                    $sql['modelField'][$a] = $program['config']['funcs'][$a]($v['data'][$b]);
+                if (isset($program['config']['funcs'][$a])) {
+                    $sql['modelField'][$a] = $this->parseFunction($program['config']['funcs'][$a], $v['data'][$b]);
                 } else {
                     $sql['modelField'][$a] = $v['data'][$b];
                 }
             }
 
             foreach ($program['config']['modelFieldExt'] as $a => $b) {
-                if (isset($program['config']['funcs'][$a]) && function_exists($program['config']['funcs'][$a])) {
-                    $sql['modelFieldExt'][$a] = $program['config']['funcs'][$a]($v['data'][$b]);
+                if (isset($program['config']['funcs'][$a])) {
+                    $sql['modelFieldExt'][$a] = $this->parseFunction($program['config']['funcs'][$a], $v['data'][$b]);
                 } else {
                     $sql['modelFieldExt'][$a] = $v['data'][$b];
                 }
@@ -291,6 +296,25 @@ class Node extends Adminbase
 
         }
         $this->success('操作成功！');
+    }
+
+    public function parseFunction(&$_fun, $_str, $autoescape = true)
+    {
+        $varArray = explode('|', $_fun);
+        $length = count($varArray);
+
+        for ($i = 0; $i < $length; $i++) {
+            $args = explode('=', $varArray[$i], 2);
+            $fun = trim($args[0]);
+            if (isset($args[1])) {
+
+            } else {
+                if (!empty($args[0])) {
+                    $_str = $fun($_str);
+                }
+            }
+        }
+        return $_str;
     }
 
     //采集数据删除
