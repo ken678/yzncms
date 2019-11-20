@@ -118,6 +118,9 @@ class Category extends Adminbase
                     $this->error('请填写需要添加的栏目！');
                 }
                 foreach ($batch_add as $rs) {
+                    if (trim($rs) == '') {
+                        continue;
+                    }
                     $cat = explode('|', $rs, 2);
                     $data['catname'] = $cat[0];
                     $data['catdir'] = isset($cat[1]) ? $cat[1] : '';
