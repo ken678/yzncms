@@ -256,14 +256,13 @@ class Node extends Adminbase
     {
         $nid = $this->request->param('id/d', 0);
         $pid = $this->request->param('pid/d', 0);
-
         $program = $this->Program_Model->where('id', $pid)->find();
         $program['config'] = unserialize($program['config']);
-
         $data = $this->Content_Model->where([
             ['nid', '=', $nid],
             ['status', '=', 1],
         ])->select();
+
         $cms_model = new \app\cms\model\Cms;
         foreach ($data as $k => $v) {
             $sql['modelField'] = array('catid' => $program['catid'], 'status' => 1);
@@ -278,7 +277,6 @@ class Node extends Adminbase
                     $sql['modelField'][$a] = $v['data'][$b];
                 }
             }
-
             foreach ($program['config']['modelFieldExt'] as $a => $b) {
                 if (isset($program['config']['funcs'][$a])) {
                     $sql['modelFieldExt'][$a] = $this->parseFunction($program['config']['funcs'][$a], $v['data'][$b]);
@@ -298,23 +296,27 @@ class Node extends Adminbase
         $this->success('操作成功！');
     }
 
-    public function parseFunction(&$_fun, $_str, $autoescape = true)
+    public function parseFunction($match, $content)
     {
-        $varArray = explode('|', $_fun);
+        $varArray = explode('|', $match);
         $length = count($varArray);
-
         for ($i = 0; $i < $length; $i++) {
             $args = explode('=', $varArray[$i], 2);
             $fun = trim($args[0]);
             if (isset($args[1])) {
-
+                if (strstr($args[1], '###')) {
+                    /*$args[1] = str_replace('###', $content, $args[1]);
+                $content = call_user_func_array($fun, explode(',', $args[1]));*/
+                } else {
+                    $content = call_user_func_array($fun, array_merge([$content], explode(',', $args[1])));
+                }
             } else {
                 if (!empty($args[0])) {
-                    $_str = $fun($_str);
+                    $content = $fun($content);
                 }
             }
         }
-        return $_str;
+        return $content;
     }
 
     //采集数据删除
