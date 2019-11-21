@@ -293,7 +293,7 @@ class Node extends Adminbase
             $this->Content_Model->where('id', $v['id'])->update(['status' => 2]);
 
         }
-        $this->success('操作成功！');
+        $this->success('操作成功！', url('publist', ['type' => 2, 'id' => $nid]));
     }
 
     public function parseFunction($match, $content)
@@ -304,11 +304,12 @@ class Node extends Adminbase
             $args = explode('=', $varArray[$i], 2);
             $fun = trim($args[0]);
             if (isset($args[1])) {
-                if (strstr($args[1], '###')) {
-                    /*$args[1] = str_replace('###', $content, $args[1]);
-                $content = call_user_func_array($fun, explode(',', $args[1]));*/
+                $args[1] = explode(',', $args[1]);
+                if (false !== $key = array_search("###", $args[1])) {
+                    $args[1][$key] = $content;
+                    $content = call_user_func_array($fun, $args[1]);
                 } else {
-                    $content = call_user_func_array($fun, array_merge([$content], explode(',', $args[1])));
+                    $content = call_user_func_array($fun, array_merge([$content], $args[1]));
                 }
             } else {
                 if (!empty($args[0])) {
