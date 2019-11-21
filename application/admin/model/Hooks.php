@@ -65,7 +65,7 @@ class Hooks extends Model
             if (empty($this->where(['name' => $key])->find())) {
                 $description = $value['description'];
                 $type = (int) $value['type'];
-                $this->save([
+                self::create([
                     'name' => $key,
                     'description' => $description ?: "模块{$module}中的行为！",
                     'type' => $type ?: 1,
