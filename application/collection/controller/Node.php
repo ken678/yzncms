@@ -84,17 +84,23 @@ class Node extends Adminbase
     //网址采集
     public function col_url_list()
     {
+        @session_start();
+        \think\facade\Session::pause();
+
         $nid = $this->request->param('id/d', 0);
-        if ($data = $this->Nodes_Model->find($nid)) {
-            $data['customize_config'] = unserialize($data['customize_config']);
-            $event = \think\facade\App::controller('Collection', 'event');
-            $event->init($data);
-            $urls = $event->url_list();
-            $total_page = count($urls);
-            if ($total_page > 0) {
-                $page = $this->request->param('page/d', $data['pagesize_start']);
-                $url_list = $urls[$page];
-                $url = $event->get_url_lists($url_list);
+        $data = $this->Nodes_Model->find($nid);
+
+        $event = \think\facade\App::controller('Collection', 'event');
+        $event->init($data);
+
+        $data['customize_config'] = unserialize($data['customize_config']);
+
+        $urls = $event->url_list();
+        $total_page = count($urls);
+        if ($total_page > 0) {
+            foreach ($urls as $key => $vo) {
+                $url = $event->get_url_lists($vo);
+                $event->echo_msg("采集起始页：<a href='{$vo}' target='_blank'>{$vo}</a>", 'green');
                 if (is_array($url) && !empty($url)) {
                     foreach ($url as $v) {
                         if (empty($v['url']) || empty($v['title'])) {
@@ -102,24 +108,17 @@ class Node extends Adminbase
                         }
                         //是否采集过
                         if (!Content_Model::where(['url' => $v['url']])->find()) {
-                            $html = $event->get_content($v['url'], $data);
+                            $html = $event->get_content($v['url']);
+                            $event->echo_msg($echo_str . "采集内容页：<a href='{$v['url']}' target='_blank'>{$v['url']}</a>", 'black');
                             Content_Model::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title'], 'data' => serialize($html)]);
                         }
                     }
-                    $this->assign('url', $url);
                 }
-                if ($total_page <= $page) {
-                    $this->Nodes_Model->update(['lastdate' => time(), 'id' => $nid]);
-                }
-                $this->assign('total_page', $total_page);
-                $this->assign('id', $nid);
-                $this->assign('page', $page);
-                return $this->fetch();
-            } else {
-                $this->success('网址采集已完成！');
             }
+            $this->Nodes_Model->update(['lastdate' => time(), 'id' => $nid]);
+            $event->echo_msg('网址采集已完成！');
         } else {
-            $this->error('采集任务不存在！');
+            $event->echo_msg('网址采集已完成！');
         }
 
     }
