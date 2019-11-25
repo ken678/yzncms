@@ -84,6 +84,7 @@ class Node extends Adminbase
     //网址采集
     public function col_url_list()
     {
+        set_time_limit(0);
         @session_start();
         \think\facade\Session::pause();
 

@@ -166,21 +166,7 @@ class Collection
                 }
             }
             echo '<style type="text/css">body{padding:0 5px;font-size:14px;color:#000;}p{padding:0;margin:0;}a{color:#aaa;}</style>';
-
-            $allowOutput = false;
-            if ($outputSize > 1024 * 1024) {
-
-                $mobileDetect = new \util\MobileDetect();
-                if (!$mobileDetect->isMobile()) {
-
-                    $allowOutput = true;
-                }
-            } else {
-                $allowOutput = true;
-            }
-            if ($allowOutput) {
-                echo str_pad(' ', $outputSize > 1050 ? ($outputSize + 100) : 1050);
-            }
+            echo str_pad(' ', 1024 * 4);
         }
         echo '<p style="color:' . $color . ';">' . $str . '</p>' . $end_str;
         if (ob_get_level() > 0) {
