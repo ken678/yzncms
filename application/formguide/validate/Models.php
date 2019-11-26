@@ -20,7 +20,7 @@ class Models extends Validate
 {
     //定义验证规则
     protected $rule = [
-        'name|表单名称' => 'require|chs|max:30|unique:model',
+        'name|表单名称' => 'require|chsDash|max:30|unique:model',
         'tablename|表单键名' => 'require|lower|max:20|alpha|unique:model',
     ];
 
