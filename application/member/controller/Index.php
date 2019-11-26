@@ -128,7 +128,7 @@ class Index extends MemberBase
                         $data['status'] = 1;
                     }
                     //计算用户组
-                    //$data['groupid'] = $this->Member_Model->get_usergroup_bypoint($data['point']);
+                    $data['groupid'] = $this->Member_Model->get_usergroup_bypoint($data['point']);
                 }
                 //==============注册设置处理==============
 
