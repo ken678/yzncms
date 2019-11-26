@@ -60,8 +60,17 @@ class Index extends MemberBase
             if ($this->memberConfig['openverification'] && !captcha_check($verify)) {
                 $this->error('验证码错误！');
             }
-            $userid = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
-            if ($userid > 0) {
+            $userInfo = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
+            if ($userInfo) {
+                //检查用户积分，更新新用户组，除去邮箱认证、禁止访问、游客组用户、vip用户，如果该用户组不允许自助升级则不进行该操作
+                if ($userInfo['point'] >= 0 && !in_array($userInfo['groupid'], array('1', '7', '8'))) {
+                    if (!empty($this->memberGroup[$userInfo['groupid']]['allowupgrade'])) {
+                        $check_groupid = $this->Member_Model->get_usergroup_bypoint($userInfo['point']);
+                        if ($check_groupid != $userInfo['groupid']) {
+                            $this->Member_Model->allowField(true)->save(['groupid' => $check_groupid], ['id' => $userInfo['id']]);
+                        }
+                    }
+                }
                 if (!$forward) {
                     $forward = url('index');
                 }
@@ -119,7 +128,7 @@ class Index extends MemberBase
                         $data['status'] = 1;
                     }
                     //计算用户组
-                    $data['groupid'] = $this->Member_Model->get_usergroup_bypoint($data['point']);
+                    //$data['groupid'] = $this->Member_Model->get_usergroup_bypoint($data['point']);
                 }
                 //==============注册设置处理==============
 

@@ -73,7 +73,7 @@ class Member extends Model
             }
         }
         $this->autoLogin($userinfo);
-        return $userinfo['id'];
+        return $userinfo;
     }
 
     /**
