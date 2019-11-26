@@ -90,6 +90,11 @@ class Index extends MemberBase
         }
         if ($this->request->isPost()) {
             $post = $data = $this->request->post();
+            //验证码
+            if (!captcha_check($post['verify'])) {
+                $this->error('验证码输入错误！');
+                return false;
+            }
             $result = $this->validate($data, 'member.register');
             if (true !== $result) {
                 return $this->error($result);
