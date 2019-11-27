@@ -13,6 +13,8 @@ CREATE TABLE `yzn_member` (
   `avatar` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '头像',
   `groupid` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '用户组ID',
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '用户模型ID',
+  `vip` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'VIP会员',
+  `overduedate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '过期时间',
   `reg_ip` char(15) NOT NULL DEFAULT '' COMMENT '注册IP',
   `reg_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
   `last_login_ip` char(15) NOT NULL DEFAULT '' COMMENT '最后登录IP',

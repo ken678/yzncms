@@ -25,7 +25,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="password"  autocomplete="off" placeholder="密码" class="layui-input">
+                    <input type="password" name="password" autocomplete="off" placeholder="密码" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">不修改留空即可</div>
             </div>
@@ -37,9 +37,9 @@
             </div>
             <div class="layui-form-item web_list">
                 <label class="layui-form-label">会员组</label>
-                    <div class="layui-input-inline">
-                        {php} echo \util\Form::select($groupCache,$data['groupid'], 'name="groupid"', '') {/php}
-                    </div>
+                <div class="layui-input-inline">
+                    {php} echo \util\Form::select($groupCache,$data['groupid'], 'name="groupid"', '') {/php}
+                </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">积分点数</label>
@@ -47,6 +47,19 @@
                     <input type="text" name="point" lay-verify="required" autocomplete="off" placeholder="积分点数" class="layui-input" value="{$data.point}">
                 </div>
                 <div class="layui-form-mid layui-word-aux"> 请输入积分点数，积分点数将影响会员用户组</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">vip会员</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="vip" value="1" title="是" {if $data.vip == 1}checked{/if}>
+                    <input type="radio" name="vip" value="0" title="否" {if $data.vip == 0}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">过期时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="overduedate" class="layui-input" id="overduedate" value="{neq name='data.overduedate' value='0'}{$data.overduedate}{/neq}">
+                </div>
             </div>
             <input type="hidden" name="id" value="{$data.id}">
             <div class="layui-form-item">
@@ -58,4 +71,16 @@
         </form>
     </div>
 </div>
+{/block}
+{block name="script"}
+<script>
+layui.use('laydate', function() {
+    var laydate = layui.laydate;
+    laydate.render({
+        elem: '#overduedate'
+        ,type: 'datetime'
+        ,isInitValue: false
+    });
+});
+</script>
 {/block}

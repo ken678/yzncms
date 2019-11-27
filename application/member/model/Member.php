@@ -26,7 +26,9 @@ class Member extends Model
     {
         return request()->ip();
     }
-
+    protected $type = [
+        'overduedate' => 'timestamp',
+    ];
     /**
      * 获取头像
      * @param $value
