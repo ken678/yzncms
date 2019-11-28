@@ -31,18 +31,13 @@
                 <li class="layui-nav-item layui-this">
                     <a href="{:url('/')}"><i class="iconfont icon-homepage"></i>首页</a>
                 </li>
-                <!--<li class="layui-nav-item">
-                    <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
-                </li>-->
             </ul>
             <ul class="layui-nav fly-nav-user">
                 <!-- 登入后的状态 -->
                 <li class="layui-nav-item">
                     <a class="fly-nav-avatar" href="javascript:;">
 			          <cite class="layui-hide-xs">{$userinfo.username}</cite>
+                      <i class="iconfont icon-vip1 layui-hide-xs" title="VIP会员"></i>
 			          <i class="layui-badge fly-badge-vip layui-hide-xs">{$userinfo.groupname}</i>
 			          <img src="{$userinfo.avatar}">
 			        </a>
@@ -58,10 +53,10 @@
     </div>
     <div class="layui-container fly-marginTop fly-user-main">
         <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
-            <li class="layui-nav-item {eq name="Request.action" value="index" }layui-this{/eq}">
+            <li class="layui-nav-item {eq name='Request.action' value='index' }layui-this{/eq}">
                 <a href="{:url('member/index/index')}"><i class="iconfont icon-people"></i>&nbsp;用户中心</a>
             </li>
-            <li class="layui-nav-item {eq name="Request.action" value="profile" }layui-this{/eq}">
+            <li class="layui-nav-item {eq name='Request.action' value='profile' }layui-this{/eq}">
                 <a href="{:url('member/index/profile')}"><i class="iconfont icon-setup"></i>&nbsp;基本设置</a>
             </li>
             {:hook('userSidenavAfter')}
