@@ -63,7 +63,7 @@ class Member extends Adminbase
             $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
             if ($userid > 0) {
                 unset($data['username'], $data['password'], $data['email']);
-                //$data['overduedate'] = strtotime($data['overduedate']);
+                $data['overduedate'] = strtotime($data['overduedate']);
                 if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
                     $this->success("添加会员成功！", url("member/manage"));
                 } else {
@@ -108,7 +108,7 @@ class Member extends Adminbase
                 }
             }
             unset($data['username'], $data['password'], $data['email']);
-            //$data['overduedate'] = strtotime($data['overduedate']);
+            $data['overduedate'] = strtotime($data['overduedate']);
             //更新除基本资料外的其他信息
             if (false === $this->Member_Model->allowField(true)->save($data, ['id' => $userid])) {
                 $this->error('更新失败！');
@@ -117,7 +117,9 @@ class Member extends Adminbase
 
         } else {
             $userid = $this->request->param('id/d', 0);
-            $data = $this->Member_Model->where(["id" => $userid])->find();
+            $data = $this->Member_Model->where(["id" => $userid])->withAttr('overduedate', function ($value, $data) {
+                return date('Y-m-d H:i:s', $value);
+            })->find();
             if (empty($data)) {
                 $this->error("该会员不存在！");
             }

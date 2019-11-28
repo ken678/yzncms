@@ -26,9 +26,6 @@ class Member extends Model
     {
         return request()->ip();
     }
-    protected $type = [
-        'overduedate' => 'timestamp',
-    ];
     /**
      * 获取头像
      * @param $value
@@ -215,13 +212,25 @@ class Member extends Model
      */
     public function autoLogin($userInfo)
     {
-        /* 更新登录信息 */
-        $data = array(
-            'uid' => $userInfo['id'],
+        $data = [
             'last_login_time' => time(),
-            'last_login_ip' => request()->ip(1),
-        );
-        $this->loginStatus((int) $userInfo['id']);
+            'last_login_ip' => request()->ip(),
+        ];
+        //vip过期，更新vip和会员组
+        if ($userInfo['overduedate'] < time() && intval($userInfo['vip'])) {
+            $data['vip'] = 0;
+        }
+        //检查用户积分，更新新用户组，除去邮箱认证、禁止访问、游客组用户、vip用户，如果该用户组不允许自助升级则不进行该操作
+        if ($userInfo['point'] >= 0 && !in_array($userInfo['groupid'], array('1', '7', '8')) && empty($userInfo['vip'])) {
+            $grouplist = cache("Member_Group");
+            if (!empty($grouplist[$userInfo['groupid']]['allowupgrade'])) {
+                $check_groupid = $this->get_usergroup_bypoint($userInfo['point']);
+                if ($check_groupid != $userInfo['groupid']) {
+                    $data['groupid'] = $check_groupid;
+                }
+            }
+        }
+        $this->save($data, ['id' => $userInfo['id']]);
         /* 记录登录SESSION和COOKIES */
         $auth = [
             'uid' => $userInfo['id'],
