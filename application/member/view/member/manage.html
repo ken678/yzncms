@@ -31,7 +31,7 @@ layui.use('table', function() {
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'id', width: 80, title: '用户ID' },
-                { field: 'username', width: 150, title: '用户名' },
+                { field: 'username', width: 150, title: '用户名',templet: '<div>{{#  if(d.vip==1){ }} <span class="text-danger">[VIP]</span> {{#  } }}{{ d.username }}</div>'},
                 { field: 'nickname', width: 150, title: '昵称' },
                 { field: 'email',  title: '邮箱' },
                 { field: 'reg_ip', title: '注册IP' },
