@@ -35,6 +35,23 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label>升级价格</label>
+                <div>
+                    <div class="layui-form-mid">包日</div>
+                    <div class="layui-input-inline" style="width:80px;">
+                        <input type="text" class="layui-input" name="price_d" placeholder="包日" value="{$data.price_d}">
+                    </div>
+                    <div class="layui-form-mid">包月</div>
+                    <div class="layui-input-inline" style="width:80px;">
+                        <input type="text" class="layui-input" name="price_m" placeholder="包月" value="{$data.price_m}">
+                    </div>
+                    <div class="layui-form-mid">包年</div>
+                    <div class="layui-input-inline" style="width:80px;">
+                        <input type="text" class="layui-input" name="price_y" placeholder="包年" value="{$data.price_y}">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label>最大短消息数</label>
                 <div class="w300">
                     <input type="text" name="allowmessage" lay-verify="required" autocomplete="off" placeholder="最大短消息数" class="layui-input" value="{$data.allowmessage}">
