@@ -215,6 +215,7 @@ class Member extends Model
         $data = [
             'last_login_time' => time(),
             'last_login_ip' => request()->ip(),
+            'login' => $userInfo['login'] + 1,
         ];
         //vip过期，更新vip和会员组
         if ($userInfo['overduedate'] < time() && intval($userInfo['vip'])) {
