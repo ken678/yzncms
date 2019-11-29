@@ -385,6 +385,21 @@ class Index extends MemberBase
 
     }
 
+    //会员组升级
+    public function upgrade()
+    {
+        if (empty($this->memberGroup[$this->userinfo['groupid']]['allowupgrade'])) {
+            $this->error('此会员组不允许升级！');
+        }
+        if ($this->request->isPost()) {
+
+        } else {
+            $this->assign('memberGroup', $this->memberGroup);
+            return $this->fetch('/upgrade');
+        }
+
+    }
+
     //手动退出登录
     public function logout()
     {
