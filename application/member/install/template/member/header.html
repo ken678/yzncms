@@ -37,7 +37,9 @@
                 <li class="layui-nav-item">
                     <a class="fly-nav-avatar" href="javascript:;">
 			          <cite class="layui-hide-xs">{$userinfo.username}</cite>
+                      {if $userinfo.vip}
                       <i class="iconfont icon-vip1 layui-hide-xs" title="VIP会员"></i>
+                      {/if}
 			          <i class="layui-badge fly-badge-vip layui-hide-xs">{$userinfo.groupname}</i>
 			          <img src="{$userinfo.avatar}">
 			        </a>
