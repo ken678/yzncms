@@ -57,6 +57,8 @@ class Group extends Adminbase
                 return $this->error($result);
             }
             if ($this->Member_Group->groupAdd($data)) {
+                //更新缓存
+                $this->Member_Group->Membergroup_cache();
                 $this->success("添加成功！", url("group/index"));
             } else {
                 $this->error("添加失败！");
@@ -79,6 +81,8 @@ class Group extends Adminbase
                 return $this->error($result);
             }
             if ($this->Member_Group->groupEdit($data)) {
+                //更新缓存
+                $this->Member_Group->Membergroup_cache();
                 $this->success("修改成功！", url("group/index"));
             } else {
                 $this->error("修改失败！");
@@ -107,6 +111,8 @@ class Group extends Adminbase
             $this->error("没有指定需要删除的会员组别！");
         }
         if ($this->Member_Group->groupDelete($groupid)) {
+            //更新缓存
+            $this->Member_Group->Membergroup_cache();
             $this->success("删除成功！", url("group/index"));
         } else {
             $this->error($this->Member_Group->getError());

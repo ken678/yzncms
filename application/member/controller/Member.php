@@ -72,11 +72,8 @@ class Member extends Adminbase
                 }
             }
         } else {
-            foreach ($this->groupCache as $g) {
-                if (in_array($g['id'], array(8, 1, 7))) {
-                    continue;
-                }
-                $groupCache[$g['id']] = $g['name'];
+            foreach ($this->groupCache as $_key => $_value) {
+                $groupCache[$_key] = $_value['name'];
             }
             $this->assign('groupCache', $groupCache);
             return $this->fetch();
@@ -123,11 +120,8 @@ class Member extends Adminbase
             if (empty($data)) {
                 $this->error("该会员不存在！");
             }
-            foreach ($this->groupCache as $g) {
-                if (in_array($g['id'], array(8, 1, 7))) {
-                    continue;
-                }
-                $groupCache[$g['id']] = $g['name'];
+            foreach ($this->groupCache as $_key => $_value) {
+                $groupCache[$_key] = $_value['name'];
             }
             $this->assign('groupCache', $groupCache);
             $this->assign("data", $data);
