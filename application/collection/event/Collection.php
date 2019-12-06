@@ -59,7 +59,12 @@ class Collection
                 'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
                 'title' => [$this->_config['url_rule1'], 'html', $this->_config['url_rule3']],
             ];
-            $list = QueryList::get($url)->rules($rules)->query()->getData();
+            if ('utf-8' == $this->_config['sourcecharset']) {
+                $list = QueryList::get($url);
+            } else {
+                $list = QueryList::get($url)->removeHead()->encoding('UTF-8');
+            }
+            $list = $list->rules($rules)->query()->getData();
             $data = array();
             foreach ($list as $k => $v) {
                 if ($this->_config['url_contain']) {
@@ -99,7 +104,12 @@ class Collection
                 return $content;
             }];
         }
-        $cont = QueryList::get($url)->rules($rules)->query()->getData();
+        if ('utf-8' == $this->_config['sourcecharset']) {
+            $cont = QueryList::get($url);
+        } else {
+            $cont = QueryList::get($url)->removeHead()->encoding('UTF-8');
+        }
+        $cont = $cont->rules($rules)->query()->getData();
         return $cont[0];
 
     }
