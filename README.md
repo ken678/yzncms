@@ -37,8 +37,8 @@ PHP版本：php >= 5.6 (推荐php7.0+)
 [截图预览]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0305/183046_a3672965_555541.png "YZNCMS后台管理系统.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133448_0555dfbc_555541.png "YZNCMS后台管理系统.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133326_84f1f2ed_555541.png "YZNCMS后台管理系统.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133333_55b963a0_555541.png "YZNCMS后台管理系统1.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2019/1206/103253_1d73b130_555541.png "YZNCMS后台管理系统.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2019/1206/103408_28aa8e30_555541.png "YZNCMS后台管理系统.png")
 
 [捐赠]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")
