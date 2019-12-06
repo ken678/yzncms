@@ -22,13 +22,9 @@
     </div>
 </div>
 {/block}
-{block name="layui"}{/block}
 {block name="script"}
-<link rel="stylesheet" href="__STATIC__/libs/zTree/metroStyle.css">
 <script>
-layui.config({
-    base: "__STATIC__/libs/layui/extend/"
-}).use(['jquery', 'ztree'], function() {
+layui.use(['jquery', 'ztree'], function() {
     var $ = layui.$;
     //配置
     var setting = {
