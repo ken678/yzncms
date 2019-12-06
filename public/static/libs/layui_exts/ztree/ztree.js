@@ -167,5 +167,9 @@ a;return this.refresh()}});var N=e.cancelPreSelectedNode;e.cancelPreSelectedNode
 function(a,b){var c=i.getRoot(a);if(c.curEditNode===b)c.curEditNode=null;K&&K.apply(e,arguments)};var P=e.selectNode;e.selectNode=function(a,b,c){var d=i.getRoot(a);if(i.isSelectedNode(a,b)&&d.curEditNode==b&&b.editNameFlag)return!1;P&&P.apply(e,arguments);e.addHoverDom(a,b);return!0};var U=k.uCanDo;k.uCanDo=function(a,b){var c=i.getRoot(a);if(b&&(k.eqs(b.type,"mouseover")||k.eqs(b.type,"mouseout")||k.eqs(b.type,"mousedown")||k.eqs(b.type,"mouseup")))return!0;if(c.curEditNode)e.editNodeBlur=!1,c.curEditInput.focus();
 return!c.curEditNode&&(U?U.apply(e,arguments):!0)}})(jQuery);
 
+
+  //加载组件所需样式
+  layui.link(layui.cache.base + 'ztree/metroStyle.css?v=v3.5.36', function () {
+  }, 'ztree');
 	exports('ztree',{});
 });
