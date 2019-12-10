@@ -41,7 +41,7 @@ class Member extends Adminbase
             })->withAttr('last_login_time', function ($value, $data) {
                 return time_format($value);
             });
-            $total = count($_list);
+            $total = $this->Member_Model->where('status', 1)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
