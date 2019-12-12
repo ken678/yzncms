@@ -44,9 +44,9 @@ class Adminbase extends Base
             // 是否是超级管理员
             define('IS_ROOT', User::instance()->isAdministrator());
 
-            if (!IS_ROOT && config('admin_allow_ip')) {
+            if (!IS_ROOT && config('admin_forbid_ip')) {
                 // 检查IP地址访问
-                $arr = explode(',', config('admin_allow_ip'));
+                $arr = explode(',', config('admin_forbid_ip'));
                 foreach ($arr as $val) {
                     //是否是IP段
                     if (strpos($val, '*')) {
