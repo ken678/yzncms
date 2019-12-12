@@ -538,22 +538,23 @@ function genRandomString($len = 6)
  */
 function getModel($modelid, $name = '')
 {
-    static $cache;
     if (empty($modelid) || !is_numeric($modelid)) {
         return false;
     }
     $key = 'getModel_' . $modelid;
     /* 读取缓存数据 */
-    if (empty($cache)) {
-        $cache = Cache::get($key);
+    $cache = Cache::get($key);
+    if ($cache === 'false') {
+        return false;
     }
     if (empty($cache)) {
         //读取数据
         $cache = Db::name('Model')->where(array('id' => $modelid))->find();
         if (empty($cache)) {
-            return '';
+            Cache::set($key, 'false', 60);
+            return false;
         } else {
-            Cache::set($key, $cache, 3600);
+            Cache::set($key, $cache, 300);
         }
     }
     return is_null($name) ? $cache : $cache[$name];
