@@ -554,7 +554,7 @@ function getModel($modelid, $name = '')
             Cache::set($key, 'false', 60);
             return false;
         } else {
-            Cache::set($key, $cache, 300);
+            Cache::set($key, $cache, 3600);
         }
     }
     return is_null($name) ? $cache : $cache[$name];
