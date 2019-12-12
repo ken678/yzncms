@@ -394,6 +394,7 @@ class Index extends MemberBase
         if ($this->request->isPost()) {
 
         } else {
+            unset($this->memberGroup[$this->userinfo['groupid']]);
             $this->assign('memberGroup', $this->memberGroup);
             return $this->fetch('/upgrade');
         }

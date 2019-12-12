@@ -1,4 +1,35 @@
 {include file="header" /}
-
+<table class="layui-table">
+    <colgroup>
+        <col width="120">
+        <col>
+        <col width="300">
+        <col width="80">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>会员组</th>
+            <th>描述</th>
+            <th>会员资费</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+    	{foreach $memberGroup as $key=>$vo }
+    	{if $vo['point'] > $userinfo['point']}
+        <tr>
+            <td>{$vo.name}</td>
+            <td>{$vo.descriptio}</td>
+            <td>
+            	{$vo.price_y}/包年 
+            	{$vo.price_m}/包月 
+            	{$vo.price_d}/包日
+            </td>
+            <td><a href="" class="layui-btn  layui-btn-sm">升级</a></td>
+        </tr>
+        {/if}
+        {/foreach}
+    </tbody>
+</table>
 {include file="layui" /}
 {include file="footer" /}
