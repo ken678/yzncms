@@ -234,9 +234,9 @@ EOF;
             [
                 'name' => 'keywords',
                 'title' => 'SEO关键词',
-                'type' => 'text',
+                'type' => 'tags',
                 'iffixed' => 0,
-                'remark' => '多关键词之间用空格或者“,”隔开',
+                'remark' => '关键词用回车确认',
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
                 'isadd' => 1,
             ],
@@ -252,9 +252,9 @@ EOF;
             [
                 'name' => 'tags',
                 'title' => 'Tags标签',
-                'type' => 'text',
+                'type' => 'tags',
                 'iffixed' => 0,
-                'remark' => '多关键词之间用空格或者“,”隔开',
+                'remark' => '关键词用回车确认',
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
