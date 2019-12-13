@@ -1,16 +1,11 @@
 div.tagsinput {
-    border: 1px solid #CCC;
     background: #FFF;
     padding: 5px;
     width: 300px;
-    height: 100px;
+    height: 26px;
     overflow-y: auto;
     border: 1px solid #e6e6e6;
     border-radius: 3px;
-    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-    -moz-transition: border-color ease-in-out .15s, -moz-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
 }
 
 div.tagsinput span.tag a {
@@ -26,7 +21,6 @@ div.tagsinput input {
     font-family: helvetica;
     font-size: 13px;
     border: 1px solid transparent;
-    padding: 5px;
     background: 0 0;
     color: #000;
     outline: 0;
