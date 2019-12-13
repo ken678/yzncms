@@ -24,7 +24,6 @@
 </head>
 
 <body class="childrenBody">
-    {block name="main"}主内容{/block}
     {block name="layui"}
     <script type="text/javascript">
     //console.log(layui.cache);
@@ -32,15 +31,17 @@
         version: '1557143998899',
         base: '__STATIC__/libs/layui_exts/'
     }).extend({
-    	treeGrid:'treeGrid/treeGrid',
-    	clipboard:'clipboard/clipboard',
-    	notice:'notice/notice',
-    	iconPicker:'iconPicker/iconPicker',
-    	ztree:'ztree/ztree',
+        treeGrid: 'treeGrid/treeGrid',
+        clipboard: 'clipboard/clipboard',
+        notice: 'notice/notice',
+        iconPicker: 'iconPicker/iconPicker',
+        ztree: 'ztree/ztree',
+        tagsinput: 'tagsinput/tagsinput',
         common: '{/}__STATIC__/admin/js/common'
     }).use('common');
     </script>
     {/block}
+    {block name="main"}主内容{/block}
     {block name="script"}{/block}
 </body>
 

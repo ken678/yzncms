@@ -13,6 +13,25 @@
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
+{case value="tags"}
+<div class="layui-form-item">
+    <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
+    <div class="layui-form-field-label">
+        <input type="text" name="{$vo.fieldArr}[{$vo.name}]" class="layui-input tags-{$vo.name}" value="{$vo.value}">
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+</div>
+<script type="text/javascript">
+layui.use('tagsinput', function(){
+	var tags = $('.tags-{$vo.name}');
+	tags.tagsInput({
+		width: 'auto',
+		defaultText: '{$vo.title}',
+		height: '28px',
+	})
+})
+</script>
+{/case}
 {case value="number"}
 <div class="layui-form-item">
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
