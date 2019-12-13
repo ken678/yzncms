@@ -211,7 +211,7 @@ class Index extends MemberBase
     {
         if ($this->request->isPost()) {
             $email = $this->request->post('email');
-            $captcha = $this->request->request('captcha');
+            $captcha = $this->request->param('captcha');
             if (!$email || !$captcha) {
                 $this->error('参数不得为空！');
             }
@@ -242,8 +242,8 @@ class Index extends MemberBase
     public function changemobile()
     {
         if ($this->request->isPost()) {
-            $mobile = $this->request->request('mobile');
-            $captcha = $this->request->request('captcha');
+            $mobile = $this->request->param('mobile');
+            $captcha = $this->request->param('captcha');
             if (!$mobile || !$captcha) {
                 $this->error('参数不得为空！');
             }
@@ -273,7 +273,7 @@ class Index extends MemberBase
     public function actemail()
     {
         if ($this->request->isPost()) {
-            $captcha = $this->request->request('captcha');
+            $captcha = $this->request->param('captcha');
             if (!$captcha) {
                 $this->error('参数不得为空！');
             }
@@ -297,7 +297,7 @@ class Index extends MemberBase
     public function actmobile()
     {
         if ($this->request->isPost()) {
-            $captcha = $this->request->request('captcha');
+            $captcha = $this->request->param('captcha');
             if (!$captcha) {
                 $this->error('参数不得为空！');
             }
@@ -321,11 +321,11 @@ class Index extends MemberBase
     public function forget()
     {
         if ($this->request->isPost()) {
-            $type = $this->request->request("type");
-            $mobile = $this->request->request("mobile");
-            $email = $this->request->request("email");
-            $newpassword = $this->request->request("newpassword");
-            $captcha = $this->request->request("captcha");
+            $type = $this->request->param("type");
+            $mobile = $this->request->param("mobile");
+            $email = $this->request->param("email");
+            $newpassword = $this->request->param("newpassword");
+            $captcha = $this->request->param("captcha");
 
             // 验证数据
             $data = [
@@ -394,8 +394,10 @@ class Index extends MemberBase
         if ($this->request->isPost()) {
 
         } else {
+            $groupid = $this->request->param("groupid/d", 0);
             unset($this->memberGroup[$this->userinfo['groupid']]);
             $this->assign('memberGroup', $this->memberGroup);
+            $this->assign('groupid', $groupid);
             return $this->fetch('/upgrade');
         }
 

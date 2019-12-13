@@ -1,4 +1,6 @@
 {include file="header" /}
+{if $groupid > 0}
+{else}
 <table class="layui-table">
     <colgroup>
         <col width="120">
@@ -25,11 +27,12 @@
             	{$vo.price_m}/包月 
             	{$vo.price_d}/包日
             </td>
-            <td><a href="" class="layui-btn  layui-btn-sm">升级</a></td>
+            <td><a href="{:url('upgrade',['groupid'=>$vo['id']])}" class="layui-btn  layui-btn-sm">升级</a></td>
         </tr>
         {/if}
         {/foreach}
     </tbody>
 </table>
+{/if}
 {include file="layui" /}
 {include file="footer" /}
