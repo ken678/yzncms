@@ -1,5 +1,37 @@
 {include file="header" /}
 {if $groupid > 0}
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class="layui-this">自助升级</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">会员资费</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="upgrade_type" value="0" title="{$memberGroup[$groupid]['price_y']}年" checked>
+                        <input type="radio" name="upgrade_type" value="1" title="{$memberGroup[$groupid]['price_m']}月">
+                        <input type="radio" name="upgrade_type" value="2" title="{$memberGroup[$groupid]['price_d']}日">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">购买时限</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="upgrade_date" required lay-verify="required" placeholder="请输入时限" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">年</div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">购买</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {else}
 <table class="layui-table">
     <colgroup>
@@ -17,15 +49,15 @@
         </tr>
     </thead>
     <tbody>
-    	{foreach $memberGroup as $key=>$vo }
-    	{if $vo['point'] > $userinfo['point']}
+        {foreach $memberGroup as $key=>$vo }
+        {if $vo['point'] > $userinfo['point']}
         <tr>
             <td>{$vo.name}</td>
             <td>{$vo.descriptio}</td>
             <td>
-            	{$vo.price_y}/包年 
-            	{$vo.price_m}/包月 
-            	{$vo.price_d}/包日
+                {$vo.price_y}/包年
+                {$vo.price_m}/包月
+                {$vo.price_d}/包日
             </td>
             <td><a href="{:url('upgrade',['groupid'=>$vo['id']])}" class="layui-btn  layui-btn-sm">升级</a></td>
         </tr>
