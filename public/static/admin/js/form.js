@@ -261,8 +261,6 @@
              }
              $li.find('.file-state').html('<div class="layui-bg-green">' + response.info + '</div>');
              $li.find('img').attr('data-original', response.path);
-             // 上传成功后，再次初始化图片查看功能
-             //Dolphin.viewer();
          });
 
          // 文件上传失败，显示上传出错。
@@ -303,8 +301,6 @@
              } else {
                  $input_file.val('');
              }
-             // 删除后，再次初始化图片查看功能
-             //Dolphin.viewer();
          });
 
          // 将上传实例存起来
