@@ -439,9 +439,9 @@ class Cms extends Modelbase
                 case 'files':
                     $newdata[$key] = empty($value) ? [] : get_file_path($value);
                     break;
-                case 'tags':
-                    $newdata[$key] = explode(',', $value);
-                    break;
+                /*case 'tags':
+                $newdata[$key] = empty($value) ? [] : explode(',', $value);
+                break;*/
                 case 'Ueditor':
                     $newdata[$key] = htmlspecialchars_decode($value);
                     break;
