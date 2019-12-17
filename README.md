@@ -1,4 +1,8 @@
-### 本项目为最新项目  旧版本tp5.0版本的CMS 请附件里面下载
+# YznCMS1.0.0 后台开发框架
+[![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](http://bbs.yzncms.com/)
+[![YznCMS](https://img.shields.io/badge/YznCMS-1.0.0-brightgreen.svg)](http://bbs.yzncms.com/)
+[![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
+[![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
 [项目介绍]
 ```
@@ -27,7 +31,6 @@ PHP版本：php >= 5.6 (推荐php7.0+)
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 ```
-[常见问题]
 
 ```
 更多的常见问题见手册
