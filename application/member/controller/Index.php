@@ -423,9 +423,11 @@ class Index extends MemberBase
             $groupid = $this->request->param("groupid/d", 0);
             $grouppoint = $this->memberGroup[$this->userinfo['groupid']]['point'];
             unset($this->memberGroup[$this->userinfo['groupid']]);
-            $this->assign('memberGroup', $this->memberGroup);
-            $this->assign('groupid', $groupid);
-            $this->assign('grouppoint', $grouppoint);
+            $this->assign([
+                'memberGroup' => $this->memberGroup,
+                'groupid' => $groupid,
+                'grouppoint' => $grouppoint,
+            ]);
             return $this->fetch('/upgrade');
         }
 
