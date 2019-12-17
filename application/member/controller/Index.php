@@ -392,12 +392,40 @@ class Index extends MemberBase
             $this->error('此会员组不允许升级！');
         }
         if ($this->request->isPost()) {
+            $groupid = $this->request->param("groupid/d", 0);
+            if (empty($groupid) || in_array($groupid, [8, 1, 7])) {
+                $this->error('会员组类型错误！');
+            }
+            $upgrade_type = $this->request->param("upgrade_type/d", 0);
+            $upgrade_date = $this->request->param("upgrade_date/d", 1);
+
+            //消费类型，包年、包月、包日，价格
+            $typearr = array($this->memberGroup[$groupid]['price_y'], $this->memberGroup[$groupid]['price_m'], $this->memberGroup[$groupid]['price_d']);
+            //消费类型，包年、包月、包日，时间
+            $typedatearr = array('366', '31', '1');
+            //消费的价格
+            $cost = $typearr[$upgrade_type] * $upgrade_date;
+            //购买时间
+            $buydate = $typedatearr[$upgrade_type] * $upgrade_date * 86400;
+            $overduedate = $this->userinfo['overduedate'] > time() ? ($this->userinfo['overduedate'] + $buydate) : (time() + $buydate);
+
+            if ($this->userinfo['amount'] >= $cost) {
+                $this->Member_Model->where('id', $this->userinfo['id'])->update(['groupid' => $groupid, 'overduedate' => $overduedate, 'vip' => 1]);
+                //消费记录
+                $Spend_Model = new \app\pay\model\Spend;
+                $Spend_Model->_spend(1, $cost, $this->userinfo['id'], $this->userinfo['username'], '升级用户组');
+                $this->success('购买成功！');
+            } else {
+                $this->error('余额不足，请先充值！');
+            }
 
         } else {
             $groupid = $this->request->param("groupid/d", 0);
+            $grouppoint = $this->memberGroup[$this->userinfo['groupid']]['point'];
             unset($this->memberGroup[$this->userinfo['groupid']]);
             $this->assign('memberGroup', $this->memberGroup);
             $this->assign('groupid', $groupid);
+            $this->assign('grouppoint', $grouppoint);
             return $this->fetch('/upgrade');
         }
 

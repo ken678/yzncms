@@ -6,7 +6,7 @@
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
-            <form class="layui-form layui-form-pane" action="">
+            <form class="layui-form layui-form-pane" method="post" action="">
                 <div class="layui-form-item">
                     <label class="layui-form-label">会员资费</label>
                     <div class="layui-input-block">
@@ -50,7 +50,7 @@
     </thead>
     <tbody>
         {foreach $memberGroup as $key=>$vo }
-        {if $vo['point'] > $userinfo['point']}
+        {if $vo['point'] > $grouppoint}
         <tr>
             <td>{$vo.name}</td>
             <td>{$vo.descriptio}</td>
