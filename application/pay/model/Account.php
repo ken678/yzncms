@@ -97,7 +97,7 @@ class Account extends Model
         $data['usernote'] = $usernote;
         $data['pay_type'] = isset($pay_type) ? trim($pay_type) : 'selfincome';
         $data['payment'] = '后台充值';
-        $data['ip'] = request()->ip(1);
+        $data['ip'] = request()->ip();
         $data['adminnote'] = isset($adminnote) ? trim($adminnote) : '';
         $data['status'] = isset($status) ? trim($status) : 'succ';
         if (self::create($data)) {
