@@ -6,7 +6,7 @@
     {if count($fieldList)}
     <div class="layui-form-item">
         <div>
-            <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
+            <button class="layui-btn ajax-post1" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
             <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
         </div>
     </div>
@@ -16,7 +16,7 @@
 {block name="script"}
 <script type="text/javascript">
 layui.use(['form','layer'], function() {
-    $('.ajax-post').on('click', function(e) {
+    $('.ajax-post1').on('click', function(e) {
         var form = layui.form,
         layer = layui.layer,target,
         target_form = $(this).attr('target-form');
