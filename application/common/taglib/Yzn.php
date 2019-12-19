@@ -152,14 +152,14 @@ class Yzn extends Taglib
                 array_push($tableWhere, $tag['where']);
             }
         }
-        if ($page) {
-            $config = app('config')->pull('paginate');
-            $class = false !== strpos($config['type'], '\\') ? $config['type'] : '\\think\\paginator\\driver\\' . ucwords($config['type']);
-            $config['path'] = isset($config['path']) ? $config['path'] : call_user_func([$class, 'getCurrentPath']);
-        }
-        //拼接php代码
 
+        //拼接php代码
         $parseStr = '<?php ';
+        if ($page) {
+            $parseStr .= '$config=app("config")->pull("paginate");';
+            $parseStr .= '$class = false !== strpos($config["type"], "\\\\") ? $config["type"] : "\\\\think\\\\paginator\\\\driver\\\\" . ucwords($config["type"]);';
+            $parseStr .= '$config["path"] = isset($config["path"]) ? $config["path"] : call_user_func([$class, "getCurrentPath"]);';
+        }
         $parseStr .= '$cache = ' . $cache . ';';
         if ($table) {
             $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
@@ -194,7 +194,7 @@ class Yzn extends Taglib
                 $parseStr .= '$_limit=((' . $page . ' - 1) * $num) < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
                 $parseStr .= '$_count=count(\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . '"));';
                 $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT $_limit,' . $num . '");';
-                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,' . self::arr_to_html($config) . ');';
+                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,$config);';
             } else {
                 $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT ' . $num . '");';
             }
@@ -250,7 +250,7 @@ class Yzn extends Taglib
         }
         return false;
     }
-    
+
     /**
      * 返回经addslashes处理过的字符串或数组
      * @param $string 需要处理的字符串或数组
