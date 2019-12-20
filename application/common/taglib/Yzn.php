@@ -157,8 +157,7 @@ class Yzn extends Taglib
         $parseStr = '<?php ';
         if ($page) {
             $parseStr .= '$config=app("config")->pull("paginate");';
-            $parseStr .= '$class = false !== strpos($config["type"], "\\\\") ? $config["type"] : "\\\\think\\\\paginator\\\\driver\\\\" . ucwords($config["type"]);';
-            $parseStr .= '$config["path"] = isset($config["path"]) ? $config["path"] : call_user_func([$class, "getCurrentPath"]);';
+            $parseStr .= '$config["path"]=request()->baseUrl();';
         }
         $parseStr .= '$cache = ' . $cache . ';';
         if ($table) {
