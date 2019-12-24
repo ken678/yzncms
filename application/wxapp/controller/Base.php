@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\wxapp\controller;
 
-class Base
+class Base extends Controller
 {
     const JSON_SUCCESS_STATUS = 1;
     const JSON_ERROR_STATUS = 0;
