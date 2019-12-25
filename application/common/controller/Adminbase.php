@@ -21,22 +21,21 @@ define('IN_ADMIN', true);
 
 class Adminbase extends Base
 {
-    public $_userinfo; //当前登录账号信息
+    //无需登录的方法,同时也就不需要鉴权了
+    protected $noNeedLogin = [];
+    //无需鉴权的方法,但需要登录
+    protected $noNeedRight = [];
+    //当前登录账号信息
+    public $_userinfo;
+    public $rule;
+
     //初始化
     protected function initialize()
     {
         parent::initialize();
-
-        //过滤不需要登陆的行为
-        $allowUrl = [
-            'admin/index/login',
-            'admin/index/logout',
-        ];
-
-        $rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
-
-        if (!in_array($rule, $allowUrl)) {
-
+        $this->rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+        // 检测是否需要验证登录
+        if (!$this->match($this->noNeedLogin)) {
             if (defined('UID')) {
                 return;
             }
@@ -62,19 +61,35 @@ class Adminbase extends Base
                     }
                 }
             }
+
+            // 判断是否需要验证权限
             if (false == $this->competence()) {
                 //跳转到登录界面
                 $this->error('请先登陆', url('admin/index/login'));
             } else {
-                //是否超级管理员
-                if (!IS_ROOT) {
+                if (!$this->match($this->noNeedRight) && !IS_ROOT) {
                     //检测访问权限
-                    if (!$this->checkRule($rule, [1, 2])) {
+                    if (!$this->checkRule($this->rule, [1, 2])) {
                         $this->error('未授权访问!');
                     }
                 }
             }
         }
+    }
+
+    public function match($arr = [])
+    {
+        $arr = is_array($arr) ? $arr : explode(',', $arr);
+        if (!$arr) {
+            return false;
+        }
+        $arr = array_map('strtolower', $arr);
+        // 是否存在
+        if (in_array(strtolower($this->rule), $arr) || in_array('*', $arr)) {
+            return true;
+        }
+        // 没找到匹配
+        return false;
     }
 
     /**

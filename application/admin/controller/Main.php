@@ -19,6 +19,7 @@ use think\Db;
 
 class Main extends Adminbase
 {
+    protected $noNeedRight = ['admin/main/index'];
     //欢迎首页
     public function index()
     {
