@@ -39,7 +39,7 @@ class CmsTagLib
                 $catids_str = Category_Model::getCategory($catid, 'arrchildid');
                 $pos = strpos($catids_str, ',') + 1;
                 $catids_str = substr($catids_str, $pos);
-                array_push($where, "catid in(" . $catids_str . ")");
+                array_push($where, "catid in(" . $catids_str . ',' . $catid . ")");
             } else {
                 array_push($where, "catid = " . $catid);
             }
