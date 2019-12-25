@@ -303,13 +303,11 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
-INSERT INTO `yzn_menu` VALUES ('1', '首页', '', '0', 'admin', 'index', 'index', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('2', '控制面板', '', '0', 'admin', 'main', 'index', '', '0', '', '0', '1');
 INSERT INTO `yzn_menu` VALUES ('3', '设置', 'icon-setup', '0', 'admin', 'setting', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('4', '模块', 'icon-supply', '0', 'admin', 'module', 'index1', '', '1', '', '0', '9');
 INSERT INTO `yzn_menu` VALUES ('5', '扩展', 'icon-tools', '0', 'addons', 'addons', 'index1', '', '1', '', '0', '10');
@@ -355,7 +353,7 @@ INSERT INTO `yzn_menu` VALUES ('51', '角色授权', '', '17', 'admin', 'authMan
 INSERT INTO `yzn_menu` VALUES ('52', '模块安装', '', '44', 'admin', 'module', 'install', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('53', '模块卸载', '', '44', 'admin', 'module', 'uninstall', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('54', '本地安装', '', '44', 'admin', 'module', 'local', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('55', '缓存更新', '', '0', 'admin', 'index', 'cache', '', '0', '', '0', '0');
+
 
 -- ----------------------------
 -- Table structure for `yzn_module`
