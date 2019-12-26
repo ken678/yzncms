@@ -79,11 +79,11 @@ class Cms extends Adminbase
             if ($v['type'] != 2) {
                 continue;
             }
-            if ($modelid && $modelid != $v['modelid'] && $v['child'] == 0) {
+            if ($modelid && $modelid != $v['modelid']) {
                 continue;
             }
-            $v['disabled'] = $v['child'] ? 'disabled' : '';
-            $v['selected'] = $k == $catid ? 'selected' : '';
+            //$v['disabled'] = $v['child'] ? 'disabled' : '';
+            $v['selected'] = $v['id'] == $catid ? 'selected' : '';
             $categorys[$k] = $v;
         }
         $str = "<option value='\$id' \$selected \$disabled>\$spacer \$catname</option>";
