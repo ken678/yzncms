@@ -7,19 +7,20 @@
 .login-main form .verify-box input {display: inline-block; width: 60%; }
 .login-main .layui-elip{margin-bottom: 15px; }
 .login-main form .verify-box img {display: inline-block; margin-left: 2%; width: 36%; height: 38px; }
-.layadmin-user-jump-change {
-    float: right;
-}
-.layadmin-link {
-    color: #029789!important;
-}
-
-.login-main .layui-form-item label {position: absolute; color: #757575; left: 10px; top: 9px; line-height: 20px; background: #fff; padding: 0 5px; font-size: 14px; cursor: text; }
-.login-main .layui-form-item label{transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; }
+.lay-user-jump-change {float: right; }
+.lay-link {color: #029789!important; }
+.login-main .layui-form-item label.item {position: absolute; color: #757575; left: 10px; top: 9px; line-height: 20px; background: #fff; padding: 0 5px; font-size: 14px; cursor: text; }
+.login-main .layui-form-item label.item{transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; }
+.lay-user-login-other>* {display: inline-block; vertical-align: middle; margin-right: 10px; font-size: 14px }
+.lay-user-login-other {position: relative; font-size: 0; line-height: 38px; }
+.lay-user-login-other .layui-icon {position: relative; top: 2px; font-size: 26px }
+.lay-user-login-other a:hover {opacity: .8 }
+.layui-icon-login-qq {color: #3492ED }
+.layui-icon-login-wechat {color: #4DAF29 }
+.layui-icon-login-weibo {color: #CF1900 }
 .login-main .layui-form-item .layui-input-focus label{ top:-10px; font-size:12px; color:#ff6700;}
 .login-main .layui-form-item .layui-input-focus input{ border-color:#ff6700 !important;}
 .login-main .layui-form-item .layui-input-active label{ top:-10px; font-size:12px;}
-
 .login-main .layui-input-focus .layui-input::-webkit-input-placeholder{color:#757575;}
 .login-main .layui-input-focus .layui-input::-moz-placeholder{color:#757575;}
 .login-main .layui-input-focus .layui-input:-ms-input-placeholder{color:#757575;}
