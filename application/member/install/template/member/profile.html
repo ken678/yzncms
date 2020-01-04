@@ -34,6 +34,7 @@
                     <button class="layui-btn layui-iframe layui-btn-danger" type="button" href="{:url('actemail')}" lay-data="{width:'440px',height:'250px',title:'激活邮箱'}">激活</button>
 					{/eq}
                 </div>
+                {:hook("userConfig")}
                 <div class="layui-form-item"> <button class="layui-btn" key="set-mine" lay-filter="formSubmit" lay-submit="">确认修改</button> </div>
             </form>
         </div>
