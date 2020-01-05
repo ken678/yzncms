@@ -14,6 +14,13 @@
         layer.alert('如果您非得使用 IE 浏览器访问，那么请使用 IE10+');
     }
 
+    $('.lay-tips').hover(function() {
+        var title = $(this).attr('title');
+        layer.tips(title, $(this))
+    }, function() {
+        layer.closeAll('tips')
+    })
+
 
     layui.focusInsert = function(obj, str) {
         var result, val = obj.value;
