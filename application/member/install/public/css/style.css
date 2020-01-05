@@ -15,9 +15,6 @@
 .lay-user-login-other {position: relative; font-size: 0; line-height: 38px; }
 .lay-user-login-other .layui-icon {position: relative; top: 2px; font-size: 26px }
 .lay-user-login-other a:hover {opacity: .8 }
-.layui-icon-login-qq {color: #3492ED }
-.layui-icon-login-wechat {color: #4DAF29 }
-.layui-icon-login-weibo {color: #CF1900 }
 .login-main .layui-form-item .layui-input-focus label{ top:-10px; font-size:12px; color:#ff6700;}
 .login-main .layui-form-item .layui-input-focus input{ border-color:#ff6700 !important;}
 .login-main .layui-form-item .layui-input-active label{ top:-10px; font-size:12px;}
