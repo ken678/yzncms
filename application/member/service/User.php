@@ -79,7 +79,7 @@ class User
         if (empty($user)) {
             return 0;
         } else {
-            return Session::get('user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
+            return Session::get('user_auth_sign') == data_auth_sign($user) ? (int) $user['uid'] : 0;
         }
     }
 
