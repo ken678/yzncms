@@ -171,10 +171,14 @@ class Index extends MemberBase
         $catid = $flag_arr[0];
         if ($paytype) {
             //积分
-            $this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag);
+            if (!$this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag)) {
+                $this->error('支付失败！');
+            }
         } else {
             //金钱
-            $this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag);
+            if (!$this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag)) {
+                $this->error('支付失败！');
+            }
         }
         $this->success("恭喜你！支付成功!");
     }

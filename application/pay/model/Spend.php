@@ -47,10 +47,13 @@ class Spend extends Model
         $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
         $data['uid'] = isset($uid) && intval($uid) ? intval($uid) : 0;
         $data['username'] = isset($username) ? trim($username) : '';
-        $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
         $data['msg'] = isset($msg) ? trim($msg) : '';
         $data['remarks'] = isset($remarks) ? trim($remarks) : '';
         $data['ip'] = request()->ip();
+        //判断用户的金钱或积分是否足够。
+        if (!self::_check_user($data['uid'], $data['type'], $data['money'])) {
+            return false;
+        }
         if (self::create($data)) {
             if ($data['type'] == 1) {
                 //金钱方式消费
@@ -62,6 +65,38 @@ class Spend extends Model
             return true;
         }
         return false;
+    }
+
+/**
+ * 判断用户的金钱、积分是否足够
+ * @param integer $userid    用户ID
+ * @param integer $type      判断（1：金钱，2：积分）
+ * @param integer $value     数量
+ * @param $db                数据库连接
+ */
+    private static function _check_user($uid, $type, $value)
+    {
+        if ($user = Db::name('member')->where('id', $uid)->find()) {
+            if ($type == 1) {
+                //金钱消费
+                if ($user['amount'] < $value) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } elseif ($type == 0) {
+                //积分
+                if ($user['point'] < $value) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }
