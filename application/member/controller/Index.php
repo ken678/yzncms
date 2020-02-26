@@ -42,8 +42,9 @@ class Index extends MemberBase
     //登录页面
     public function login()
     {
-        $forward = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
-        Cookie::set("forward", null);
+        //$forward = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
+        //Cookie::set("forward", null);
+        $forward = $this->request->request('url', '', 'trim');
         if (!empty($this->userid)) {
             $this->success("您已经是登陆状态！", $forward ? $forward : url("Index/index"));
         }
@@ -62,16 +63,19 @@ class Index extends MemberBase
             }
             $userInfo = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
-                if (!$forward) {
-                    $forward = url('index');
-                }
-                $this->success('登录成功！', $forward);
+                $this->success('登录成功！', $forward ? $forward : url('index/index'));
             } else {
                 //登陆失败
                 $this->error('账号或者密码错误！');
             }
 
         } else {
+            //判断来源
+            $referer = $this->request->server('HTTP_REFERER');
+            if (!$forward && (strtolower(parse_url($referer, PHP_URL_HOST)) == strtolower($this->request->host()))
+                && !preg_match("/(index\/login|index\/register|index\/logout)/i", $referer)) {
+                $forward = $referer;
+            }
             $this->assign('forward', $forward);
             return $this->fetch('/login');
         }
