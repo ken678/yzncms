@@ -46,7 +46,7 @@ class Index extends MemberBase
         //Cookie::set("forward", null);
         $forward = $this->request->request('url', '', 'trim');
         if (!empty($this->userid)) {
-            $this->success("您已经是登陆状态！", $forward ? $forward : url("member/index"));
+            $this->success("您已经是登陆状态！", $forward ? $forward : url("index"));
         }
         if ($this->request->isPost()) {
             //登录验证
@@ -63,7 +63,7 @@ class Index extends MemberBase
             }
             $userInfo = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
-                $this->success('登录成功！', $forward ? $forward : url('member/index'));
+                $this->success('登录成功！', $forward ? $forward : url('index'));
             } else {
                 //登陆失败
                 $this->error('账号或者密码错误！');
@@ -91,7 +91,7 @@ class Index extends MemberBase
         //cookie("forward", null);
         $forward = $this->request->request('url', '', 'trim');
         if ($this->userid) {
-            $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("member/index"));
+            $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("index"));
         }
         if ($this->request->isPost()) {
             $post = $data = $this->request->post();
@@ -131,7 +131,7 @@ class Index extends MemberBase
                 if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
                     //注册登陆状态
                     $this->Member_Model->loginLocal($post['username'], $post['password']);
-                    $this->success('会员注册成功！', $forward ? $forward : url('member/index'));
+                    $this->success('会员注册成功！', $forward ? $forward : url('index'));
                 } else {
                     //删除
                     $this->Member_Model->userDelete($userid);
