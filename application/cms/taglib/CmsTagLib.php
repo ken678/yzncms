@@ -170,7 +170,7 @@ class CmsTagLib
         //当没有内容时的提示语
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
-        $target = !empty($data['target']) ? ' target="_blank" ' : ' target="_self" ';
+        $target = !empty($data['target']) ? ' target=_blank ' : '';
         $result = model('cms/Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND status=1 AND id <" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
@@ -191,7 +191,7 @@ class CmsTagLib
         //当没有内容时的提示语
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
-        $target = !empty($data['target']) ? ' target=\"_blank\" ' : '';
+        $target = !empty($data['target']) ? ' target=_blank ' : '';
         $result = model('cms/Cms')->getContent(Category_Model::getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND status=1 AND id >" . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title'] = $msg;
