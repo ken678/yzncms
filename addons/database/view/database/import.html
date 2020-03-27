@@ -1,0 +1,118 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">数据库还原</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('addons/database/index',['isadmin'=>1])}">数据库备份</a>
+              </div>
+        </script>
+        <script type="text/html" id="barTool">
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            <a class="layui-btn layui-btn-xs" lay-event="import">导入</a>
+            <a class="layui-btn layui-btn-xs" lay-event="down">下载</a>
+        </script>
+    </div>
+</div>
+{/block}
+{block name="layui"}{/block}
+{block name="script"}
+<script>
+layui.use(['table', 'form'], function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form,
+        layer = layui.layer;
+    table.render({
+        id: 'database',
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("addons/database/restore",["isadmin"=>1])}',
+        cols: [
+            [
+                { field: 'title', width: 250, title: '备份名称' },
+                { field: 'date', width: 250, title: '备份时间' },
+                { field: 'size', width: 120, title: '备份大小' },
+                { field: 'part', width: 200, title: '卷数' },
+                { field: 'compress', title: '压缩' },
+                { field: '', width: 120, title: '状态', templet: '<div>-</div>' },
+                { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+    });
+
+    //监听行工具事件
+    table.on('tool(table)', function(obj) {
+        var data = obj.data,code = ".";
+        if (obj.event === 'del') {
+            layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.post('{:url("addons/database/del",["isadmin"=>1])}', { 'time': data.time }, function(data) {
+                    if (data.code == 1) {
+                        if (data.url) {
+                            layer.msg(data.msg + ' 页面即将自动跳转~');
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            } else {
+                                location.reload();
+                            }
+                        }, 1500);
+                    } else {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            if (data.url) {
+                                location.href = data.url;
+                            }
+                        }, 1500);
+                    }
+
+                });
+            })
+        } else if (obj.event === 'down') {
+            window.open('{:url("addons/database/download",["isadmin"=>1])}' + "?time=" + data.time, '_self')
+        } else if (obj.event === 'import') {
+            var self = this,
+                url = '{:url("addons/database/import",["isadmin"=>1])}' + '?time=' + data.time;
+            layer.confirm('确定导入此条数据库吗？', { icon: 3, title: '提示' }, function(index) {
+                layer.close(index);
+                $.get(url, success, "json");
+                window.onbeforeunload = function() { return "正在还原数据库，请不要关闭！" }
+                return false;
+            });
+
+            function success(res) {
+                if (res.code) {
+                    if (res.data.gz) {
+                        res.msg += code;
+                        if (code.length === 5) {
+                            code = ".";
+                        } else {
+                            code += ".";
+                        }
+                    }
+                    $(self).parents('tr').find('td:eq(5)').find('div').text(res.msg);
+                    //$(self).parent().prev().text(res.info);
+                    if (res.data.part) {
+                        $.get(url, { "part": res.data.part, "start": res.data.start },
+                            success,
+                            "json"
+                        );
+                    } else {
+                        window.onbeforeunload = function() { return null; }
+                    }
+                } else {
+                    $(self).parents('tr').find('td:eq(5)').find('div').text(res.msg);
+                }
+            }
+        }
+    });
+
+});
+</script>
+{/block}
