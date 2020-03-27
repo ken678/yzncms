@@ -1,0 +1,32 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<form class="layui-form form-horizontal" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">敏感词</label>
+        <div class="layui-input-inline">
+            <input type="text" name="badword" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="{$info.badword}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">替换词</label>
+        <div class="layui-input-inline">
+            <input type="text" name="replaceword" placeholder="替换词" autocomplete="off" class="layui-input" value="{$info.replaceword}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formSubmit" lay-data="{pop: true, refresh: true}">立即提交</button>
+    </div>
+</form>
+{/block}
+{block name="script"}
+<style type="text/css">
+.layui-form-label {
+    width: 60px;
+    padding-left: 0;
+}
+.layui-form-item .layui-input-inline {
+    margin-left: 75px;
+}
+</style>
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+{/block}

@@ -1,0 +1,71 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">敏感词管理</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <blockquote class="layui-elem-quote">批量导入:每行一个关键词和替换词，中间用","隔开,替换词可为空</blockquote>
+            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("del")}'>批量删除</a>
+      <a class="layui-btn layui-btn-sm layui-iframe" href='{:url("add")}' lay-data="{width:'300px',height:'250px',title:'新增敏感词'}">新增敏感词</a>
+      <a class="layui-btn layui-btn-sm" href="javascript:;" id="data-import">批量导入</a>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs layui-iframe" lay-data="{width: '300px', height: '250px', title: '编辑敏感词'}">编辑</a>
+    <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+</script>
+{/block}
+{block name="script"}
+<script type="text/javascript" src="__STATIC__/admin/js/common.js"></script>
+<script>
+layui.use(['table', 'upload'], function() {
+    var table = layui.table,
+        upload = layui.upload;
+    table.render({
+        elem: '#dataTable',
+        toolbar: '#toolbarDemo',
+        url: '{:url("badword/index/index")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'listorder', width: 70, title: '排序', edit: 'text' },
+                { field: 'id', width: 70, title: 'ID' },
+                { field: 'badword', title: '敏感词' },
+                { field: 'replaceword', title: '替换词' },
+                { field: 'create_time', width: 120, align: "center", title: '发布时间' },
+                { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+        page: {}
+    });
+
+    //执行实例
+    var uploadInst = upload.render({
+        elem: '#data-import',
+        url: '{:url("import")}',
+        accept: 'file',
+        exts: 'txt',
+        done: function(res) {
+            //上传完毕回调
+            if (res.code == 1) {
+                layer.alert(res.msg);
+            } else {
+                layer.alert(res.msg);
+            }
+        },
+        error: function() {
+            //请求异常回调
+        }
+    });
+
+
+
+});
+</script>
+{/block}

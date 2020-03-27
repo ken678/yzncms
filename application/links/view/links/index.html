@@ -1,0 +1,84 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">友情链接列表</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete")}'>批量删除</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('links/links/add')}">新增链接</a>
+      <a class="layui-btn layui-btn-sm" href="{:url('links/links/terms')}">分类管理</a>
+    </div>
+</script>
+<script type="text/html" id="type">
+    {{# if(d.linktype ==0){ }}
+  文字链接
+  {{#  } else { }}
+  图片链接
+  {{#  } }}
+</script>
+<script type="text/html" id="image">
+    {{# if(d.image ==0){ }}
+  无
+  {{#  } else { }}
+  有
+  {{#  } }}
+
+</script>
+<script type="text/html" id="barTool">
+    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+</script>
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" name="status" value="{{d.id}}" data-href="{:url('setstate')}?id={{d.id}}" lay-skin="switch" lay-text="已通过|未通过" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#dataTable',
+        toolbar: '#toolbarDemo',
+        url: '{:url("links/links/index")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'listorder', width: 70, title: '排序', edit: 'text' },
+                { field: 'id', width: 70, title: 'ID' },
+                { field: 'name', title: '网站名称' },
+                { field: 'url', title: '网站网址' },
+                { field: 'image', width: 150, title: '网站LOGO', templet: '#image' },
+                { field: 'linktype', width: 150, title: '链接类型', templet: '#type' },
+                { field: 'termsid', width: 80, title: '分类ID' },
+                { field: 'inputtime', width: 180, title: '添加时间' },
+                { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
+                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+        page: {}
+    });
+
+    //监听单元格编辑
+    table.on('edit(dataTable)', function(obj) {
+        var value = obj.value,
+            data = obj.data;
+        $.post('{:url("links/links/listorder")}', { 'id': data.id, 'value': value }, function(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg);
+            } else {
+                layer.msg(data.msg);
+            }
+
+        })
+    });
+});
+</script>
+{/block}
