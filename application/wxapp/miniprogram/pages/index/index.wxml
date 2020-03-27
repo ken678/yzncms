@@ -1,4 +1,0 @@
-<view class="container">
-<!-- banner轮播 -->
-<include src="components/banner/banner.wxml" />
-</view>

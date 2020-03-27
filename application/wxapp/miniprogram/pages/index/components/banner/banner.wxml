@@ -1,8 +1,0 @@
-<!-- banner轮播 -->
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <navigator url="{{item.url}}" wx:for="{{bannerList}}" wx:key="key">
-    <swiper-item>
-      <image height="100%" src="{{item.image}}" width="100%"></image>
-    </swiper-item>
-  </navigator>
-</swiper>
