@@ -342,12 +342,9 @@ INSERT INTO `yzn_menu` VALUES ('38', '插件扩展', 'icon-tools', '5', 'addons'
 INSERT INTO `yzn_menu` VALUES ('39', '插件管理', 'icon-plugins-', '38', 'addons', 'addons', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('40', '行为管理', 'icon-hangweifenxi', '38', 'addons', 'addons', 'hooks', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('41', '插件后台列表', 'icon-liebiaosousuo', '5', 'addons', 'addons', 'addonadmin', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('42', '在线云平台', 'icon-cloud-download', '4', 'admin', 'cloud', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('43', '本地模块', 'icon-supply', '4', 'admin', 'module', 'index2', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('44', '模块管理', 'icon-mokuaishezhi', '43', 'admin', 'module', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('45', '模块后台列表', 'icon-liebiaosousuo', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('46', '模块商店', 'icon-caigou-xianxing', '42', 'admin', 'moduleshop', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('47', '插件商店', 'icon-caigou-xianxing', '42', 'admin', 'addonshop', 'index', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('48', '编辑角色', '', '17', 'admin', 'authManager', 'editGroup', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('49', '删除角色', '', '17', 'admin', 'authManager', 'deleteGroup', '', '1', '', '0', '0');
 INSERT INTO `yzn_menu` VALUES ('50', '访问授权', '', '17', 'admin', 'authManager', 'access', '', '1', '', '0', '0');
