@@ -12,18 +12,16 @@
 // +----------------------------------------------------------------------
 // | CMS路由
 // +----------------------------------------------------------------------
+//如果想要直接绑定域名 不加cms 将cms改成/ 也就是Route::group('/', function () {
+Route::group('cms', function () {
+    Route::rule('', 'cms/index/index');
+    Route::rule('index', 'cms/index/index');
+    Route::rule('lists/:catid/[:condition]', 'cms/index/lists')->pattern(['catid' => '\d+', 'condition' => '[0-9_&=a-zA-Z]+']);
+    Route::rule('shows/:catid/:id', 'cms/index/shows')->pattern(['catid' => '\d+', 'id' => '\d+']);
+    Route::rule('tag/[:tag]', 'cms/index/tags');
+    Route::rule('search', 'cms/index/search');
+});
 
-Route::rule('cms/index', 'cms/index/index');
-Route::rule('cms/lists/:catid/[:condition]', 'cms/index/lists')->pattern(['catid' => '\d+', 'condition' => '[0-9_&=a-zA-Z]+']);
-Route::rule('cms/shows/:catid/:id', 'cms/index/shows')->pattern(['catid' => '\d+', 'id' => '\d+']);
-Route::rule('cms/tag/[:tag]', 'cms/index/tags');
-Route::rule('cms/search', 'cms/index/search');
-
-//如果想要直接绑定域名 不加cms后缀 直接注释上面代码 如以下代码
-//Route::rule('/', 'cms/index/index');
-//Route::rule('index', 'cms/index/index');
-//Route::rule('lists/:catid/[:condition]', 'cms/index/lists')->pattern(['catid' => '\d+', 'condition' => '[0-9_&=a-zA-Z]+']);
-//更多...
 //更个性化的地址请参考TP手册路由章节
 
 //最后重要提示
