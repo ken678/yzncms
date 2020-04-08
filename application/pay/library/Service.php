@@ -68,6 +68,17 @@ class Service
                 case 'web':
                     //电脑支付,跳转
                     $html = $pay->web($params)->send();
+                    /*$html = $pay->scan($params);
+                    Session::set("alipayorderdata", [
+                    'out_trade_no' => $orderid, //你的订单号
+                    'body' => $title,
+                    'total_fee' => $amount * 100, //单位分
+                    "qr_code" => $html->qr_code,
+                    ]);
+                    $url = url('pay/api/alipay');
+                    header("location:{$url}");
+                    exit;
+                     */
                     break;
                 case 'wap':
                     //手机网页支付,跳转

@@ -39,7 +39,7 @@ class Api extends HomeBase
             $orderData = Session::get("wechatorderdata");
             $data = [
                 'body' => $orderData['body'],
-                'code_url' => $orderData['code_url'],
+                'qr_code' => $orderData['qr_code'],
                 'out_trade_no' => $orderData['out_trade_no'],
                 'return_url' => $orderData['return_url'],
                 'total_fee' => $orderData['total_fee'],
@@ -57,6 +57,35 @@ class Api extends HomeBase
             $this->assign("data", $data);
         }
         return $this->fetch('/wechat');
+    }
+
+    /**
+     * 微信支付
+     * @return string
+     */
+    public function alipay()
+    {
+        $config = Service::getConfig('alipay');
+        $orderData = Session::get("alipayorderdata");
+        $data = [
+            'body' => $orderData['body'],
+            'code_url' => $orderData['code_url'],
+            'out_trade_no' => $orderData['out_trade_no'],
+            'return_url' => $orderData['return_url'],
+            'total_fee' => $orderData['total_fee'],
+        ];
+        //检测订单状态
+        if ($this->request->isPost()) {
+            $pay = Pay::alipay($config);
+            $result = $pay->find($orderData['out_trade_no']);
+            if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
+                $this->success('', url('pay/index/pay_list'), ['trade_state' => $result['trade_state']]);
+            } else {
+                $this->error("查询失败");
+            }
+        }
+        $this->assign("data", $data);
+        return $this->fetch('/alipay');
     }
 
     /**
