@@ -45,7 +45,7 @@ class Index extends MemberBase
             ->whereTime('createtime', 'between', [date("Y-m-1", $time), date("Y-m-1", strtotime("+1 month", $time))])
             ->select();
         foreach ($list as $index => $item) {
-            $calendar->addEvent(date("Y-m-d", $item->getData('createtime')), date("Y-m-d", $item->getData('createtime')), "", false, "signed");
+            $calendar->addEvent(date("Y-m-d", $item->createtime), date("Y-m-d", $item->createtime), "", false, "signed");
         }
         $this->assign('fillupscore', $config['fillupscore']);
         //$this->assignconfig('isfillup', $config['isfillup']);
