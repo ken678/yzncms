@@ -154,7 +154,7 @@ class Date
                 break;
             }
         }
-        return "%d {$name}%s ago", $count, ($count > 1 ? 's' : '');
+        return "{$name} ago";
     }
 
     /**
