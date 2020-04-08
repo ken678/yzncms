@@ -108,14 +108,14 @@
                         if (ret.code == 1) {
                             var data = ret.data;
                             console.log(data);
-                            if (typeof data.trade_state != 'undefined') {
-                                if (data.trade_state == 'SUCCESS') {
+                            if (typeof data.trade_status != 'undefined') {
+                                if (data.trade_status == 'TRADE_SUCCESS' || data.trade_status == 'TRADE_FINISHED') {
                                     $(".qrcode-img-area .paid").removeClass("none");
                                     setTimeout(function() {
                                         location.href = ret.url;
                                     }, 3000);
                                     clearInterval(qi);
-                                } else if (data.trade_state == 'expired') {
+                                } else if (data.trade_status == 'expired') {
                                     $(".qrcode-img-area .expired").removeClass("none");
                                 } else {
                                     qi = setTimeout(function() {

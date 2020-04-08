@@ -78,8 +78,8 @@ class Api extends HomeBase
         if ($this->request->isPost()) {
             $pay = Pay::alipay($config);
             $result = $pay->find($orderData['out_trade_no']);
-            if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
-                $this->success('', url('pay/index/pay_list'), ['trade_state' => $result['trade_state']]);
+            if (in_array($result['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+                $this->success('', url('pay/index/pay_list'), ['trade_status' => $result['trade_status']]);
             } else {
                 $this->error("查询失败");
             }
