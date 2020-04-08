@@ -16,6 +16,7 @@ namespace addons\signin;
 
 use app\addons\util\Addon;
 use think\Db;
+use util\File;
 
 class Signin extends Addon
 {
@@ -45,6 +46,12 @@ class Signin extends Addon
 			  KEY `user_id` (`uid`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='签到表';
         ");
+        //前台模板
+        $installdir = ADDON_PATH . "signin" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
+        if (is_dir($installdir . "template" . DIRECTORY_SEPARATOR)) {
+            //拷贝模板到前台模板目录中去
+            File::copy_dir($installdir . "template" . DIRECTORY_SEPARATOR, TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR);
+        }
         return true;
     }
 
@@ -53,6 +60,9 @@ class Signin extends Addon
     {
         $prefix = config("database.prefix");
         Db::execute("DROP TABLE IF EXISTS {$prefix}signin;");
+        if (is_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'signin' . DIRECTORY_SEPARATOR)) {
+            File::del_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'signin' . DIRECTORY_SEPARATOR);
+        }
         return true;
     }
 

@@ -16,12 +16,13 @@ namespace addons\signin\Controller;
 
 use addons\signin\model\Signin as SigninModel;
 use app\addons\util\AddonsBase;
+use app\member\controller\MemberBase;
 use app\member\model\Member as Member_Model;
 use app\member\service\User;
 use think\Db;
 use util\Date;
 
-class Index extends AddonsBase
+class Index extends MemberBase
 {
     /**
      * 签到首页
