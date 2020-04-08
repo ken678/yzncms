@@ -81,8 +81,8 @@
 <div class="layui-tab layui-tab-brief">
     <ul class="layui-tab-title">
         <li class="layui-this">我的签到</li>
-        <!--<li>签到积分规则</li>
-        <li>排行榜</li>-->
+        <li>签到积分规则</li>
+        <!--<li>排行榜</li>-->
     </ul>
     <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-tab-item layui-show">
@@ -95,10 +95,31 @@
             </blockquote>
             {:$calendar->draw($date);}
         </div>
+        <div class="layui-tab-item">
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>连续签到天数</th>
+                        <th>获得积分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="signinscore" id="item"}
+                    <tr>
+                        <th scope="row">第{$key|str_replace='s','',###}天</th>
+                        <td>+{$item}</td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <script>
-layui.define(['layer'], function(exports) {
+layui.define(['layer', 'element'], function(exports) {
+     var element = layer = layui.layer,
+        $ = layui.jquery,
+        element = layui.element;
     $(document).on("click", ".btn-signin,.today", function() {
         $.ajax({
             type: 'post',
