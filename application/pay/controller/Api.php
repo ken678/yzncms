@@ -39,7 +39,7 @@ class Api extends HomeBase
             $orderData = Session::get("wechatorderdata");
             $data = [
                 'body' => $orderData['body'],
-                'qr_code' => $orderData['qr_code'],
+                'code_url' => $orderData['code_url'],
                 'out_trade_no' => $orderData['out_trade_no'],
                 'return_url' => $orderData['return_url'],
                 'total_fee' => $orderData['total_fee'],
@@ -69,7 +69,7 @@ class Api extends HomeBase
         $orderData = Session::get("alipayorderdata");
         $data = [
             'body' => $orderData['body'],
-            'code_url' => $orderData['code_url'],
+            'qr_code' => $orderData['qr_code'],
             'out_trade_no' => $orderData['out_trade_no'],
             'return_url' => $orderData['return_url'],
             'total_fee' => $orderData['total_fee'],

@@ -77,8 +77,7 @@ class Service
                     ]);
                     $url = url('pay/api/alipay');
                     header("location:{$url}");
-                    exit;
-                     */
+                    exit;*/
                     break;
                 case 'wap':
                     //手机网页支付,跳转
