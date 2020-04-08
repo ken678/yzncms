@@ -30,6 +30,13 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label>个人支付</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="config[isper]" value="1" title="启用" {if $info.config.isper==1}checked{/if}>
+                    <input type="radio" name="config[isper]" value="0" title="禁用" {if $info.config.isper==0}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label>日志</label>
                 <div class="layui-form-field-label">
                     <input type="radio" name="config[log]" value="1" title="启用" {if $info.config.log==1}checked{/if}>

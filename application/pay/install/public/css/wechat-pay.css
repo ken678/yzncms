@@ -1,4 +1,4 @@
-@charset "utf-8"; 
+@charset "utf-8";
 * { box-sizing: content-box;}
 body { background: #eff0f1; color: #666; margin: 0 auto; width: auto; min-width: 990px; min-height: 620px; font-family: "Microsoft Yahei", "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif; font-size: 12px;}
 html, body { margin: 0; padding: 0;}
@@ -17,7 +17,8 @@ input, button, select, textarea { outline: none}
 /*头部*/
 .header { height: 60px; background-color: #fff; border-bottom: 1px solid #d9d9d9;}
 .header .header-title { height: 60px;}
-.header .header-title .alipay-logo { display: block; width: 115px; position: relative; left: 0; top: 10px; float: left; height: 40px; background-position: 0 0; background-repeat: no-repeat; background-image: url(../images/wechat-pay.png);}
+.header .header-title .wechat-logo { display: block; width: 115px; position: relative; left: 0; top: 10px; float: left; height: 40px; background-position: 0 0; background-repeat: no-repeat; background-image: url(../images/wechat-pay.png);}
+.header .header-title .alipay-logo { display: block; width: 115px; position: relative; left: 0; top: 10px; float: left; height: 40px; background-position: 0 0; background-repeat: no-repeat; background-image: url(../images/alipay-pay.png);}
 .header .header-title .logo-title { font-size: 16px; font-weight: normal;	border-left: 1px solid #676d70; color: #676d70; height: 20px; float: left; margin: 18px 10px 10px; padding: 0px 10px;}
 
 /*内容*/
@@ -40,7 +41,8 @@ input, button, select, textarea { outline: none}
 .qrcode-area .qrcode-header .qrcode-header-money { font-size: 26px; font-weight: 700; color: #f60; margin-top: 10px;}
 .qrcode-area .qrcode-img-wrapper { position: relative; width: 170px; height: auto; min-height: 170px; margin: 0 auto; padding: 6px; border: 1px solid #d3d3d3; -webkit-box-shadow: 1px 1px 1px #ccc; box-shadow: 1px 1px 1px #ccc;}
 .qrcode-area .qrcode-img-area { width: 170px; height: 170px; text-align: center;position: relative;}
-.qrcode-area .qrcode-img-area .logo {position: absolute; top: 50%; left: 50%; height: 30px; width: 30px; margin-left: -15px; margin-top: -15px; background: #fff url(../images/logo-wechat.png) no-repeat center center; background-size: cover; border-radius: 3px; }
+.qrcode-area .qrcode-img-area .logo-alipay {position: absolute; top: 50%; left: 50%; height: 30px; width: 30px; margin-left: -15px; margin-top: -15px; background: #fff url(../images/logo-alipay.png) no-repeat center center; background-size: cover; border-radius: 3px; }
+.qrcode-area .qrcode-img-area .logo-wechat {position: absolute; top: 50%; left: 50%; height: 30px; width: 30px; margin-left: -15px; margin-top: -15px; background: #fff url(../images/logo-wechat.png) no-repeat center center; background-size: cover; border-radius: 3px; }
 .qrcode-area .qrcode-img-area .paid {position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: .95; background: #fff url(../images/paid.png) center center no-repeat; }
 .qrcode-area .qrcode-img-area .expired {position: absolute; top: 0; left: 0; height: 100%; width: 100%; opacity: .95; background: #fff url(../images/expired.png) center center no-repeat; }
 .qrcode-area .qrcode-img-area img{ width:168px; height:168px;}
