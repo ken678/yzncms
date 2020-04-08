@@ -1,13 +1,18 @@
 {template file="member/header.html"/}
 <style>
 .calendar {
-    color: #444;
     width: 100%;
     table-layout: fixed;
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    background-color: #fff;
+    color: #666;
 }
-
+.calendar-title{
+    border-bottom: 1px solid #e2e2e2;
+}
 .calendar-title th {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     padding: 15px;
     text-align: center;
@@ -22,7 +27,9 @@
 .calendar-title th {
     font-weight: normal;
 }
-
+.calendar-title th a:hover i{
+    color: #5FB878;
+}
 .calendar-title th span {
     margin: 0 5px;
     color: #666;
@@ -38,7 +45,7 @@
     vertical-align: middle;
     width: 14.28%;
     height: 60px;
-    line-height: 30px;
+    line-height: 40px;
 }
 
 .calendar tbody tr td.pad {
@@ -46,24 +53,25 @@
 }
 
 .calendar tbody tr td.day {}
-
+.calendar tbody tr td.day:hover div:first-child{
+    background-color: #eaeaea;
+    color: #333;
+}
 .calendar tbody tr td.day div:first-child {
     display: block;
-    width: 30px;
+    width: 40px;
     margin: 0 auto;
     cursor: pointer;
 }
 
 .calendar tbody tr td.signed div:first-child {
-    background: #f7b82e;
-    color: #fff;
-    border-radius: 30px;
+    background: #f7b82e !important;
+    color: #fff !important;
 }
 
 .calendar tbody tr td.today > div:first-child {
-    background: #17bc9b;
-    color: #fff;
-    border-radius: 30px;
+    background: #17bc9b !important;
+    color: #fff !important;
 }
 
 .signin-rank-table>tbody>tr>td {
@@ -85,7 +93,6 @@
                 今天签到可获得 <b>{$score}</b> 积分，请点击签到领取积分
                 {/if}
             </blockquote>
-            <div class="calendar calendar3"></div>
             {:$calendar->draw($date);}
         </div>
     </div>

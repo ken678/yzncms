@@ -82,7 +82,7 @@ class Calendar
             foreach ($events as $event) {
                 if (isset($event['start']) && isset($event['end'])) {
                     $classes = isset($event['classes']) ? $event['classes'] : false;
-                    $mask = isset($event['mask']) ? (bool)$event['mask'] : false;
+                    $mask = isset($event['mask']) ? (bool) $event['mask'] : false;
                     $summary = isset($event['summary']) ? $event['summary'] : false;
                     $this->addEvent($event['start'], $event['end'], $summary, $mask, $classes);
                 }
@@ -145,7 +145,7 @@ class Calendar
 
         $today = new DateTime();
 
-        $total_days_in_month = (int)$date->format('t');
+        $total_days_in_month = (int) $date->format('t');
 
         $color = $color ?: '';
 
@@ -155,12 +155,11 @@ class Calendar
 
         $calendar .= '<tr class="calendar-title">';
 
-
         $calendar .= '<th></th>';
         $calendar .= '<th colspan="5">';
-        $calendar .= '<a href="?date=' . date("Y-m-1", strtotime("-1 year", $time)) . '">&lt;&lt;</a><a href="?date=' . date("Y-m-1", strtotime("-1 month", $time)) . '">&lt;</a>';
+        $calendar .= '<a href="?date=' . date("Y-m-1", strtotime("-1 year", $time)) . '"><i class="layui-icon laydate-icon laydate-prev-y"></i></a><a href="?date=' . date("Y-m-1", strtotime("-1 month", $time)) . '"><i class="layui-icon laydate-icon laydate-prev-m"></i></a>';
         $calendar .= '<span>' . $date->format('Y年m月') . '</span>';
-        $calendar .= '<a href="?date=' . date("Y-m-1", strtotime("+1 month", $time)) . '">&gt;</a><a href="?date=' . date("Y-m-1", strtotime("+1 year", $time)) . '">&gt;&gt;</a>';
+        $calendar .= '<a href="?date=' . date("Y-m-1", strtotime("+1 month", $time)) . '"><i class="layui-icon laydate-icon laydate-next-m"></i></a><a href="?date=' . date("Y-m-1", strtotime("+1 year", $time)) . '"><i class="layui-icon laydate-icon laydate-next-y"></i></a>';
         $calendar .= '</th>';
         $calendar .= '<th><a href="?date=' . date("Y-m-d") . '">今天</a></th>';
 
