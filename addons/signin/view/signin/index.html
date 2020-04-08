@@ -1,0 +1,136 @@
+{template file="member/header.html"/}
+<style>
+.calendar {
+    color: #444;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.calendar-title th {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.calendar-header th {
+    padding: 10px;
+    text-align: center;
+}
+
+.calendar-title th {
+    font-weight: normal;
+}
+
+.calendar-title th span {
+    margin: 0 5px;
+    color: #666;
+}
+
+.calendar-title th a {
+    margin: 0 5px;
+    color: #666;
+}
+
+.calendar tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+    width: 14.28%;
+    height: 60px;
+    line-height: 30px;
+}
+
+.calendar tbody tr td.pad {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.calendar tbody tr td.day {}
+
+.calendar tbody tr td.day div:first-child {
+    display: block;
+    width: 30px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.calendar tbody tr td.signed div:first-child {
+    background: #f7b82e;
+    color: #fff;
+    border-radius: 30px;
+}
+
+.calendar tbody tr td.today > div:first-child {
+    background: #17bc9b;
+    color: #fff;
+    border-radius: 30px;
+}
+
+.signin-rank-table>tbody>tr>td {
+    vertical-align: middle;
+}
+</style>
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class="layui-this">我的签到</li>
+        <!--<li>签到积分规则</li>
+        <li>排行榜</li>-->
+    </ul>
+    <div class="layui-tab-content" style="padding: 20px 0;">
+        <div class="layui-tab-item layui-show">
+            <blockquote class="layui-elem-quote">
+                {if $signin}
+                你当前已经连续签到 <b>{$successions}</b> 天，明天继续签到可获得 <b>{$score}</b> 积分
+                {else /}
+                今天签到可获得 <b>{$score}</b> 积分，请点击签到领取积分
+                {/if}
+            </blockquote>
+            <div class="calendar calendar3"></div>
+            {:$calendar->draw($date);}
+        </div>
+    </div>
+</div>
+<script>
+layui.define(['layer'], function(exports) {
+    $(document).on("click", ".btn-signin,.today", function() {
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: "{:url('addons/signin/dosign')}",
+            success: function(res) {
+                layer.msg(res.msg, {
+                    time: 2500
+                }, function() {
+                    location.reload();
+                });
+            },
+            error: function(e) {}
+        })
+        return false;
+    });
+    {if $fillupscore}
+        $(document).on("click", ".expired[data-date]:not(.today):not(.signed)", function() {
+            var that = this;
+            layer.confirm("确认进行补签日期：" + $(this).data("date") + "？<br>补签将消耗" + "{$fillupscore}积分", function() {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: "{:url('addons/signin/fillup')}" + "?date=" + $(that).data("date"),
+                    success: function(res) {
+                        layer.msg(res.msg, {
+                            time: 1500
+                        }, function() {
+                            location.reload();
+                        });
+                    },
+                    error: function(e) {
+                        layer.alert(ret.msg);
+                    }
+                })
+            });
+            return false;
+        });
+    {/if}
+});
+</script>
+{template file="member/footer.html"/}
