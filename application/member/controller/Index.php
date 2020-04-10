@@ -410,7 +410,9 @@ class Index extends MemberBase
             }
             $upgrade_type = $this->request->param("upgrade_type/d", 0);
             $upgrade_date = $this->request->param("upgrade_date/d", 1);
-
+            if (0 >= intval($upgrade_date)) {
+                $this->error('购买时限必须大于0！');
+            }
             //消费类型，包年、包月、包日，价格
             $typearr = array($this->memberGroup[$groupid]['price_y'], $this->memberGroup[$groupid]['price_m'], $this->memberGroup[$groupid]['price_d']);
             //消费类型，包年、包月、包日，时间
