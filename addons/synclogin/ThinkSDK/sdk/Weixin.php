@@ -36,12 +36,12 @@ class Weixin extends Oauth
             'appid' => $this->AppKey,
             'redirect_uri' => $this->Callback,
             'response_type' => $this->ResponseType,
-            'scope' => 'snsapi_userinfo',
+            'scope' => 'snsapi_login',
             'state' => $md,
         );
         if ($this->display == 'mobile') {
             $this->GetRequestCodeURL = 'https://open.weixin.qq.com/connect/oauth2/authorize';
-            $params['scope'] = 'snsapi_login';
+            $params['scope'] = 'snsapi_userinfo';
         }
         return $this->GetRequestCodeURL . '?' . http_build_query($params) . "#wechat_redirect";
     }
