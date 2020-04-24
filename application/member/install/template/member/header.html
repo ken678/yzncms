@@ -16,6 +16,10 @@
     //全局变量
     var GV = {
         'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images", "module" => request()->module()])}',
+        'file_upload_url': '{$file_upload_url ? $file_upload_url : url("attachment/upload/upload", ["dir" => "files", "module" => request()->module()])}',
+        'WebUploader_swf': '__STATIC__/libs/webuploader/Uploader.swf',
+        'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/upload/upload", ["dir" => "images","from"=>"ueditor", "module" => request()->module()])}',
+        'ueditor_grabimg_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/Attachments/geturlfile")}',
         'profile_upload_url': '{$profile_upload_url ? $profile_upload_url : url("member/index/profile")}'
     };
     </script>
