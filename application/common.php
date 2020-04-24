@@ -14,6 +14,17 @@
 // +----------------------------------------------------------------------
 use think\Db;
 use think\facade\Cache;
+use think\facade\Request;
+use think\facade\Url;
+
+!defined('DS') && define('DS', DIRECTORY_SEPARATOR);
+// 插件目录
+define('ADDON_PATH', ROOT_PATH . 'addons' . DS);
+// 运行目录
+Url::root('/'); //强制隐藏index.php
+define('ROOT_URL', ltrim(dirname(Request::root()), DS) . '/');
+//模板目录
+define('TEMPLATE_PATH', ROOT_PATH . 'public' . DS . 'templates' . DS);
 
 // 加载用户函数文件
 include_once APP_PATH . 'function.php';
