@@ -62,9 +62,11 @@ class Config extends Model
                         }
                     }
                     break;
+                case 'file':
                 case 'image':
                     $newConfigs[$key] = empty($value['value']) ? '' : get_file_path($value['value']);
                     break;
+                case 'files':
                 case 'images':
                     $newConfigs[$key] = empty($value['value']) ? [] : get_file_path($value['value']);
                     if (!is_array($newConfigs[$key])) {
