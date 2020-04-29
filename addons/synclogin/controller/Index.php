@@ -184,8 +184,8 @@ class Index extends AddonsBase
 
         $user_info = \addons\synclogin\ThinkSDK\GetInfo::getInstance($type, $token);
         if ($uid = Db::name('sync_login')->field('uid')->where($map)->value('uid')) {
-            $user = $this->Member_Model->where('id', $uid)->count();
-            if (!($user > 0)) {
+            $user = $this->Member_Model->where('id', $uid)->find();
+            if (!$user) {
                 Db::name('sync_login')->where($map)->delete();
                 $uid = $this->addData($user_info);
             } else {
