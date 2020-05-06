@@ -1,6 +1,6 @@
 # 拥有大量免费模块，cms内容管理（建站神器）,会员，支付，表单，采集，第三方登录及上传等等大量插件
 # 本版本为稳定版本，基于tp5.1
-# 最新版本基本tp6.0,选择分支6.0下载
+# 最新版本基本tp6.0,选择分支6.0下载(功能重构中，暂时建议作为学习使用)
 # YznCMS1.0.0 后台开发框架
 [![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](http://bbs.yzncms.com/)
 [![YznCMS](https://img.shields.io/badge/YznCMS-1.0.0-brightgreen.svg)](http://bbs.yzncms.com/)
