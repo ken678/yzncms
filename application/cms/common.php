@@ -132,8 +132,14 @@ function structure_filters_sql($modelid)
             if ('radio' == $data[$k]['type']) {
                 $sql .= " AND `$k` = '$r'";
             } elseif ('checkbox' == $data[$k]['type']) {
-                $r = str_replace('_', ',', $r);
-                $sql .= " AND $k in('$r')";
+                if (strpos($r, '_')) {
+                    $r = explode('_', $r);
+                    foreach ($r as $key => $val) {
+                        $sql .= " AND FIND_IN_SET($val,`$k`)";
+                    }
+                } else {
+                    $sql .= " AND FIND_IN_SET($r,`$k`)";
+                }
             }
         }
     }
