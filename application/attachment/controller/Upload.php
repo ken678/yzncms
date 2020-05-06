@@ -112,7 +112,6 @@ class Upload extends Base
             return $this->error('未登录');
         }
         $this->uploadUrl = config('public_url') . 'uploads/';
-        $this->uploadPath = config('upload_path');
 
         //图片上传大小和类型
         $this->confing['imageMaxSize'] = $this->confing['catcherMaxSize'] = config('upload_image_size') * 1024;
@@ -318,7 +317,7 @@ class Upload extends Base
         }
 
         // 移动到框架应用根目录指定目录下
-        $info = $file->move($this->uploadPath . DIRECTORY_SEPARATOR . $dir);
+        $info = $file->move(ROOT_PATH . 'public/uploads' . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
             // 水印功能
             if ($watermark == '') {
@@ -333,7 +332,7 @@ class Upload extends Base
                 'uid' => $this->user_id,
                 'name' => $file->getInfo('name'),
                 'mime' => $file->getInfo('type'),
-                'path' => $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
+                'path' => $this->uploadUrl . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
                 'ext' => $info->getExtension(),
                 'size' => $info->getSize(),
                 'md5' => $info->hash('md5'),

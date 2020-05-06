@@ -21,16 +21,13 @@ use think\Db;
 
 class Attachments extends Adminbase
 {
-
     private $uploadUrl = '';
-    private $uploadPath = '';
 
     protected function initialize()
     {
         parent::initialize();
         $this->Attachment_Model = new Attachment_Model;
         $this->uploadUrl = config('public_url') . 'uploads/';
-        $this->uploadPath = config('upload_path');
     }
 
     //附件列表页
@@ -41,10 +38,6 @@ class Attachments extends Adminbase
             $page = $this->request->param('page/d', 10);
             $map = $this->buildparams();
             $_list = Attachment_Model::where($map)->page($page, $limit)->order('id', 'desc')->select();
-            foreach ($_list as $k => &$v) {
-                $v['path'] = $v['driver'] == 'local' ? $this->uploadUrl . $v['path'] : $v['path'];
-            }
-            unset($v);
             $total = Attachment_Model::where($map)->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
@@ -99,30 +92,30 @@ class Attachments extends Adminbase
                 if (!in_array($fileExt, ['.jpg', '.gif', '.png', '.bmp', '.jpeg', '.tiff'])) {
                     exit($content);
                 }
-                $filename = $this->uploadPath . DIRECTORY_SEPARATOR . 'temp' . DIRECTORY_SEPARATOR . md5($vo) . $fileExt;
+                $filename = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'temp' . DS . md5($vo) . $fileExt;
                 if (http_down($vo, $filename) !== false) {
                     $file_info['md5'] = hash_file('md5', $filename);
                     if ($file_exists = Attachment_Model::get(['md5' => $file_info['md5']])) {
                         unlink($filename);
-                        $localpath = $this->uploadUrl . $file_exists['path'];
+                        $localpath = $file_exists['path'];
                     } else {
                         $file_info['sha1'] = hash_file('sha1', $filename);
                         $file_info['size'] = filesize($filename);
                         $file_info['mime'] = mime_content_type($filename);
 
-                        $fpath = $type . DIRECTORY_SEPARATOR . date('Ymd');
-                        $savePath = $this->uploadPath . DIRECTORY_SEPARATOR . $fpath;
+                        $fpath = $type . DS . date('Ymd');
+                        $savePath = ROOT_PATH . 'public' . DS . 'uploads' . DS . $fpath;
                         if (!is_dir($savePath)) {
                             mkdir($savePath, 0755, true);
                         }
-                        $fname = DIRECTORY_SEPARATOR . md5(microtime(true)) . $fileExt;
+                        $fname = DS . md5(microtime(true)) . $fileExt;
                         $file_info['name'] = $vo;
-                        $file_info['path'] = str_replace(DIRECTORY_SEPARATOR, '/', $fpath . $fname);
+                        $file_info['path'] = $this->uploadUrl . str_replace(DS, '/', $fpath . $fname);
                         $file_info['ext'] = ltrim($fileExt, ".");
 
                         if (rename($filename, $savePath . $fname)) {
                             Attachment_Model::create($file_info);
-                            $localpath = $this->uploadUrl . $file_info['path'];
+                            $localpath = $file_info['path'];
                         }
                     }
                     $content = str_replace($vo, $localpath, $content);

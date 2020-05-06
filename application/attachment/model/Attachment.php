@@ -61,8 +61,6 @@ class Attachment extends Model
      */
     public function create_water($file = '', $path = '', $watermark_pos = '', $watermark_alpha = '')
     {
-        $uploadPath = config('upload_path');
-        //$path = $this->getFilePath($watermark_img, 1);
         $thumb_water_pic = realpath(ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . $path);
         if (is_file($thumb_water_pic)) {
             // 读取图片
@@ -91,21 +89,13 @@ class Attachment extends Model
             $data_list = $this->where('id', 'in', $ids)->field('path,driver,thumb')->orderField('id', $ids)->select();
             $paths = [];
             foreach ($data_list as $key => $value) {
-                if ($value['driver'] == 'local') {
-                    $paths[$key] = ($type == 0 ? $uploadPath : '') . $value['path'];
-                } else {
-                    $paths[$key] = $value['path'];
-                }
+                $paths[$key] = $value['path'];
             }
             return $paths;
         } else {
             $data = $this->where('id', $id)->field('path,driver,thumb')->find();
             if ($data) {
-                if ($data['driver'] == 'local') {
-                    return ($type == 0 ? $uploadPath : '') . $data['path'];
-                } else {
-                    return $data['path'];
-                }
+                return $data['path'];
             } else {
                 return false;
             }
@@ -124,13 +114,12 @@ class Attachment extends Model
 
     public function deleteFile($id)
     {
-        $path = config('upload_path');
         $isAdministrator = User::instance()->isAdministrator();
         $uid = (int) User::instance()->isLogin();
 
         $file_path = $isAdministrator ? self::where('id', $id)->field('path,thumb')->find() : self::where('id', $id)->where('uid', $uid)->field('path,thumb')->find();
         if (isset($file_path['path'])) {
-            $real_path = realpath($path . '/' . $file_path['path']);
+            $real_path = realpath(ROOT_PATH . 'public/' . $file_path['path']);
             if (is_file($real_path) && !unlink($real_path)) {
                 throw new \Exception("删除" . $real_path . "失败");
             }
