@@ -62,8 +62,6 @@ class Qiniu extends Addon
         } else {
             return $this->error('未登录');
         }
-        //$this->uploadUrl = config('public_url') . 'uploads/';
-        //$this->uploadPath = config('upload_path');
     }
 
     /**
