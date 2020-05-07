@@ -19,6 +19,13 @@
                 <div class="layui-form-mid layui-word-aux">开启后，误删的文章可以恢复,反之不可还原</div>
             </div>
             <div class="layui-form-item">
+                <label class="">百度熊掌号+百度站长推送</label>
+                <div class="layui-form-field-label">
+                    <input type="checkbox" name="setting[web_site_baidupush]" lay-skin="switch" lay-text="ON|OFF" value="1" {if 1 == $setting['web_site_baidupush']}checked='' {/if}>
+                </div>
+                <div class="layui-form-mid layui-word-aux">如果开启百度熊掌+百度站长推送，将在文章发布时自动进行推送(需要安装推送插件)</div>
+            </div>
+            <div class="layui-form-item">
                 <label class="">站点名称</label>
                 <div class="layui-form-field-label">
                     <input type="text" name="setting[site_name]" placeholder="请输入站点标题" class="layui-input" value="{$setting['site_name']}">

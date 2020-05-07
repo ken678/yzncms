@@ -6,6 +6,7 @@
 return array(
     'web_site_status' => '1',
     'web_site_recycle' => '0',
+    'web_site_baidupush' => '0',
     'site_name' => '御宅男工作室',
     'site_title' => '御宅男工作室',
     'site_keyword' => '御宅男CMS,CMS,YZNCMS,内容管理系统,CMS系统',

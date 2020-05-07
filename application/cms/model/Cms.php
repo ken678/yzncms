@@ -95,6 +95,11 @@ class Cms extends Modelbase
         }
         //更新栏目统计数据
         $this->update_category_items($catid, 'add', 1);
+        //推送到熊掌号和百度站长
+        $cmsConfig = cache("Cms_Config");
+        if ($cmsConfig['web_site_baidupush']) {
+            hook("baidupush", self::buildContentUrl($catid, $id, true, true));
+        }
         return $id;
     }
 
@@ -497,9 +502,9 @@ class Cms extends Modelbase
     }
 
     //创建内容链接
-    public function buildContentUrl($catid, $id)
+    public function buildContentUrl($catid, $id, $suffix = true, $domain = false)
     {
-        return url('cms/index/shows', ['catid' => $catid, 'id' => $id]);
+        return url('cms/index/shows', ['catid' => $catid, 'id' => $id], $suffix, $domain);
     }
 
     private function update_category_items($catid, $action = 'add', $cache = 0)

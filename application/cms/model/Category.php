@@ -24,6 +24,16 @@ use \think\Model;
 class Category extends Model
 {
     public $categorys;
+    public static function init()
+    {
+        $cmsConfig = cache("Cms_Config");
+        self::event('after_write', function ($row) use ($cmsConfig) {
+            if ($cmsConfig['web_site_baidupush']) {
+                hook("baidupush", self::buildCatUrl($row->id, '', true, true));
+            }
+        });
+    }
+
     //新增栏目
     public function addCategory($data, $fields)
     {
@@ -33,10 +43,10 @@ class Category extends Model
         }
         //序列化setting数据
         $data['setting'] = serialize($data['setting']);
-        $catid = self::create($data, $fields);
-        if ($catid) {
+        $res = $this->allowField($fields)->save($data);
+        if ($res) {
             cache('Category', null);
-            return $catid;
+            return $this->getAttr('id');
         } else {
             $this->error = '栏目添加失败！';
             return false;
@@ -103,9 +113,6 @@ class Category extends Model
         if (self::where('parentid', $catid)->find()) {
             throw new \Exception("栏目含有子栏目，不得删除！");
         }
-        /*if ($catInfo['child']) {
-        throw new \Exception("栏目含有子栏目，不得删除！");
-        }*/
         //检查是否存在数据，存在数据不执行删除
         if ($catInfo['modelid'] && $catInfo['type'] == 2) {
             $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
@@ -115,50 +122,6 @@ class Category extends Model
         }
         self::where('id', $catid)->delete();
         return true;
-        /*if (!$catid) {
-    return false;
-    }
-    $where = array();
-    $catInfo = self::get($catid);
-    //是否存在子栏目
-    if ($catInfo['child']) {
-    $arrchildid = explode(",", $catInfo['arrchildid']);
-    unset($arrchildid[0]);
-    $catid = array_merge($arrchildid, array($catid));
-    }
-    $where = ['id' => $catid];
-    //检查是否存在数据，存在数据不执行删除
-    if (is_array($catid)) {
-    $modeid = array();
-    foreach ($catid as $cid) {
-    $catinfo = getCategory($cid);
-    if ($catinfo['modelid'] && $catinfo['type'] == 2) {
-    $modeid[$catinfo['modelid']] = $catinfo['modelid'];
-    }
-    foreach ($modeid as $mid) {
-    $tbname = ucwords(getModel($mid, 'tablename'));
-    if ($tbname && Db::name($tbname)->where(['catid' => $catid])->find()) {
-    return false;
-    }
-    }
-    }
-    } else {
-    $catinfo = getCategory($catid);
-    $tbname = ucwords(getModel($catInfo['modelid'], 'tablename'));
-    //含资料无法删除
-    if ($tbname && $catinfo['type'] == 2 && Db::name($tbname)->where(["catid" => $catid])->find()) {
-    return false;
-    }
-    }
-    $status = self::where($where)->delete();
-    //更新缓存
-    cache('Category', null);
-    if (false !== $status) {
-    //TD
-    return true;
-    } else {
-    return false;
-    }*/
     }
 
     /**
@@ -263,9 +226,9 @@ class Category extends Model
     /**
      * 生成栏目URL
      */
-    public static function buildCatUrl($id, $url = '')
+    public static function buildCatUrl($id, $url = '', $suffix = true, $domain = false)
     {
-        return empty($url) ? url('cms/index/lists', ['catid' => $id]) : ((strpos($url, '://') !== false) ? $url : url($url));
+        return empty($url) ? url('cms/index/lists', ['catid' => $id], $suffix, $domain) : ((strpos($url, '://') !== false) ? $url : url($url));
     }
 
     //刷新栏目索引缓存
