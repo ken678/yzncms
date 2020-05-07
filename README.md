@@ -35,8 +35,17 @@ PHP版本：php >= 5.6 (推荐php7.0+)
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 ```
 
+[必看教程]
+
 ```
-更多的常见问题见手册
+模块直接绑定域名访问： https://www.kancloud.cn/ken678/yzncms/1003231
+URL重写： https://www.kancloud.cn/ken678/yzncms/1003231
+虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003231
+
+```
+
+```
+更多的常见问题和教程见手册
 ```
 
 
