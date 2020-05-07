@@ -602,15 +602,15 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
     $newimgname = 'thumb_' . $width . '_' . $height . '_' . basename($imgurl_replace);
     $newimgurl = dirname($imgurl_replace) . '/' . $newimgname;
     //检查生成的缩略图是否已经生成过
-    if (is_file(ROOT_PATH . 'public' . DS . $newimgurl)) {
+    if (is_file(ROOT_PATH . 'public' . DS . 'uploads' . DS . $newimgurl)) {
         return $uploadUrl . $newimgurl;
     }
     //检查文件是否存在，如果是开启远程附件的，估计就通过不了，以后在考虑完善！
-    if (!is_file(ROOT_PATH . 'public' . DS . $imgurl_replace)) {
+    if (!is_file(ROOT_PATH . 'public' . DS . 'uploads' . DS . $imgurl_replace)) {
         return $imgurl;
     }
     //取得图片相关信息
-    list($width_t, $height_t, $type, $attr) = getimagesize(ROOT_PATH . 'public' . DS . $imgurl_replace);
+    list($width_t, $height_t, $type, $attr) = getimagesize(ROOT_PATH . 'public' . DS . 'uploads' . DS . $imgurl_replace);
     //如果高是0，自动计算高
     if ($height <= 0) {
         $height = round(($width / $width_t) * $height_t);
@@ -619,7 +619,7 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
     if ($width >= $width_t || $height >= $height_t) {
         return $imgurl;
     }
-    model('attachment/Attachment')->create_thumb(ROOT_PATH . 'public' . DS . $imgurl_replace, ROOT_PATH . 'public' . DS . dirname($imgurl_replace) . '/', $newimgname, "{$width},{$height}", $thumbType);
+    model('attachment/Attachment')->create_thumb(ROOT_PATH . 'public' . DS . 'uploads' . DS . $imgurl_replace, ROOT_PATH . 'public' . DS . 'uploads' . DS . dirname($imgurl_replace) . '/', $newimgname, "{$width},{$height}", $thumbType);
     $_thumb_cache[$key] = $uploadUrl . $newimgurl;
     return $_thumb_cache[$key];
 
