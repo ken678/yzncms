@@ -18,9 +18,6 @@ use app\addons\util\Addon;
 use app\member\service\User;
 use think\Db;
 
-/**
- * 返回顶部插件
- */
 class Synclogin extends Addon
 {
 
