@@ -264,7 +264,7 @@ CREATE TABLE `yzn_hooks` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
 
 -- ----------------------------
 -- Records of yzn_hooks
@@ -285,6 +285,7 @@ INSERT INTO `yzn_hooks` VALUES ('13', 'uploadAfter', '第三方附件上传钩�
 INSERT INTO `yzn_hooks` VALUES ('14', 'uploadDelete', '第三方附件删除钩子', '2', '1509174020', '', '', '1', '1');
 INSERT INTO `yzn_hooks` VALUES ('15', 'syncLogin', '第三方登陆位置', '2', '1509174020', '', '', '1', '1');
 INSERT INTO `yzn_hooks` VALUES ('16', 'userConfig', '用户配置页面钩子', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('17', 'baidupush', '百度熊掌号+百度站长推送', '2', '1509174020', '', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
