@@ -38,7 +38,6 @@ PHP版本：php >= 5.6 (推荐php7.0+)
 [必看教程]
 
 ```
-模块直接绑定域名访问： https://www.kancloud.cn/ken678/yzncms/1003231
 URL重写： https://www.kancloud.cn/ken678/yzncms/1003231
 虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003231
 
