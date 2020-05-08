@@ -29,7 +29,7 @@ class Baidupush extends Addon
         'status' => 1,
         'author' => '御宅男',
         'version' => '1.0.0',
-        //'has_adminlist' => 1,
+        'has_adminlist' => 1,
     ];
 
     //安装

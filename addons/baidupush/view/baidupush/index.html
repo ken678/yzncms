@@ -1,0 +1,121 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">熊掌号+百度站长</div>
+    <div class="layui-card-body">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">熊掌号</li>
+                <li>百度站长</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="widget-body no-padding">
+                        {if isset($Config['status']['xiongzhan']) && (!in_array('xiongzhang', $Config['status']) || !$Config['appid'] || !$Config['token'])}
+                        <div class="alert alert-danger-light">
+                            <b>温馨提示</b><br>
+                            必须在插件配置中开启熊掌号推送<br>
+                            必须在插件配置中配置熊掌号 <code>appid</code> 和 <code>token</code> 才能进行推送
+                        </div>
+                        {/if}
+                        <form id="form-xiongzhang" class="layui-form" action="{:url('addons/baidupush/xiongzhang',['isadmin'=>1])}" method="post">
+                            <div class="layui-form-item">
+                                <label>推送事件：</label>
+                                <div class="w300">
+                                    <input type="radio" name="action" id="action-urls" value="urls" checked="checked" title="新增">
+                                    <input type="radio" name="action" id="action-del" value="del" title="删除">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label>推送类型：</label>
+                                <div class="w300">
+                                    <input type="radio" name="type" id="type-realtime" value="realtime" checked="checked" title="实时数据(天级)">
+                                    <input type="radio" name="type" id="type-batch" value="batch" title="历史数据(周级)">
+                                </div>
+                            </div>
+                            <div class="form-group layui-row layui-col-space10">
+                                <div class="layui-col-md4">
+                                    <label>推送链接：</label>
+                                    <textarea class="layui-textarea" name="urls" placeholder="一行一个链接" rows="10"></textarea>
+                                </div>
+                                <div class="layui-col-md4">
+                                    <label>推送结果：</label>
+                                    <textarea class="layui-textarea" name="result" rows="10" placeholder="结果"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button type="submit" class="layui-btn" lay-filter="form-xiongzhang" lay-submit {if !in_array('xiongzhang', $Config['status'])}disabled{/if}>立即推送</button>
+                                <button type="reset" class="layui-btn layui-btn-normal">重置</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="widget-body no-padding">
+                        {if isset($Config['status']['xiongzhan']) && (!in_array('zhanzhang', $Config['status']) || !$Config['site'] || !$Config['sitetoken'])}
+                        <div class="alert alert-danger-light">
+                            <b>温馨提示</b><br>
+                            必须在插件配置中开启百度站长推送<br>
+                            必须在插件配置中配置百度站长 <code>site</code> 和 <code>token</code> 才能进行推送
+                        </div>
+                        {/if}
+                        <form id="form-zhanzhang" class="layui-form" action="{:url('addons/baidupush/zhanzhang',['isadmin'=>1])}" method="post">
+                            <div class="layui-form-item">
+                                <label>推送事件：</label>
+                                <div class="w300">
+                                    <input type="radio" name="action" id="action-urls" value="urls" checked="checked" title="新增">
+                                    <input type="radio" name="action" id="action-del" value="del" title="删除">
+                                </div>
+                            </div>
+                            <div class="form-group layui-row layui-col-space10">
+                                <div class="layui-col-md4">
+                                    <label>推送链接：</label>
+                                    <textarea class="layui-textarea" name="urls" placeholder="一行一个链接" rows="10"></textarea>
+                                </div>
+                                <div class="layui-col-md4">
+                                    <label>推送结果：</label>
+                                    <textarea class="layui-textarea" name="result" rows="10" placeholder="结果"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button type="submit" class="layui-btn" lay-filter="form-zhanzhang" lay-submit {if !in_array('zhanzhang', $Config['status'])}disabled{/if}>立即推送</button>
+                                <button type="reset" class="layui-btn layui-btn-normal">重置</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="layui"}{/block}
+{block name="script"}
+<script>
+layui.use(['element', 'form'], function() {
+    var element = layui.element;
+    var form = layui.form;
+    form.on('submit(form-xiongzhang)', function(data) {
+        var _form = '';
+        _form = $(this).parents('form');
+        $.post(_form.attr('action'), _form.serialize()).success(function(data) {
+            var html = "状态：成功\n";
+            html += JSON.stringify(data);
+            $("#form-xiongzhang textarea[name=result]").val(html);
+        })
+        return false;
+
+    });
+    form.on('submit(form-zhanzhang)', function(data) {
+        var _form = '';
+        _form = $(this).parents('form');
+        $.post(_form.attr('action'), _form.serialize()).success(function(data) {
+            var html = "状态：成功\n";
+            html += JSON.stringify(data);
+            $("#form-zhanzhang textarea[name=result]").val(html);
+        })
+        return false;
+    });
+});
+</script>
+{/block}
