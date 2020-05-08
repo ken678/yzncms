@@ -33,8 +33,8 @@ class Ems
      */
     public function send()
     {
-        $client = new \GuzzleHttp\Client(['verify' => false]);
-        $aGetParam = array(
+        $this->error = '';
+        $postArr = array(
             "appid" => $this->config['appid'], //用于调用access_token，接口获取授权后的access token
             "signature" => $this->config['appkey'], //申请应用时分配的AppSecret
             "from" => $this->config['from'], //发件人地址
@@ -43,16 +43,21 @@ class Ems
             "subject" => $this->_params['subject'], //邮件标题
             "text" => $this->_params['text'], //纯文本邮件正文
         );
-
-        $response = $client->request('POST', 'https://api.mysubmail.com/mail/send', ['form_params' => $aGetParam]);
-        if (200 == $response->getStatusCode()) {
-            $res = json_decode($response->getBody()->getContents(), true);
+        $options = [
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json; charset=utf-8',
+            ),
+        ];
+        $result = \util\Http::sendRequest('https://api.mysubmail.com/mail/send', json_encode($postArr), 'POST', $options);
+        if ($result['ret']) {
+            $res = (array) json_decode($result['msg'], true);
             if (isset($res['status']) && $res['status'] == 'success') {
                 return true;
             }
-            $this->error = isset($res['msg']) ? $res['msg'] : '未知错误';
+
+            $this->error = isset($res['msg']) ? $res['msg'] : 'InvalidResult';
         } else {
-            $this->error = $response->getReasonPhrase();
+            $this->error = $result['msg'];
         }
         return false;
     }
