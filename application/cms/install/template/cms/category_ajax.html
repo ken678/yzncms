@@ -12,9 +12,9 @@
 {/yzn}
 
 {if !$__LIST__}
-    <div class="tc"><span>暂无更多数据</span></div>
+    <div class="loadmore loadmore-line loadmore-nodata"><span class="loadmore-tips">暂无更多数据</span></div>
 {else /}
-    <div class="text-center">
-        <a href="?page={:$page+1}" data-page="{$page}" class="btn-loadmore">加载更多</a>
+    <div class="tc">
+        <a href="?page={:$page+1}" data-page="{$page}" class="btn btn-loadmore">加载更多</a>
     </div>
 {/if}
