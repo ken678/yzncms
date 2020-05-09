@@ -3,7 +3,6 @@
 body {
     background: #f6f6f6;
 }
-
 </style>
 <div class="headline-bg"></div>
 <div class="main" style="position: relative;">
@@ -24,25 +23,32 @@ body {
             <div class="content-right">
                 <!--S 文章列表-->
                 <ul class="list">
-                {yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="4" page="$page" return="data"}
-                {volist name="data" id="vo"}
-                    <li class="item clearfix">
-                        <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo.title}">
-                            <div class="time fr"><span class="day">{$vo.updatetime|date="m-d"}</span><span class="year">{$vo.updatetime|date="Y"}</span></div>
-                            <h3>{$vo.title}</h3>
-                            <div class="txt">{$vo.description|str_cut=###,60}</div>
-                        </a>
-                    </li>
-                {/volist}
-                {/yzn}
+                {include file="category_ajax" /}
                 </ul>
                 <!--E 文章列表-->
-                <!--S 分页-->
-                {$pages|raw}
-                <!--E 分页-->
             </div>
             <!--E 右侧内容 -->
         </div>
     </div>
 </div>
+<script type="text/javascript">
+$(function() {
+    $(document).on("click", ".btn-loadmore", function() {
+        var that = this;
+        var page = parseInt($(this).data("page"));
+        page++;
+        $(that).prop("disabled", true);
+        $.ajax({
+            url: $(that).attr("href"),
+            type: "post",
+            success: function(res) {
+                $('.list').append(res.data);
+                $(that).remove();
+                return false;
+            },
+        });
+        return false;
+    })
+});
+</script>
 {include file="footer" /}

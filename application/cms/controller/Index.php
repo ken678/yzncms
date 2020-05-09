@@ -92,6 +92,9 @@ class Index extends Cmsbase
             $seo = seo($catid, $setting['meta_title'], $description, $keywords);
             $this->assign($info);
         }
+        if ($this->request->isAjax()) {
+            $this->success('', '', $this->fetch('/' . $template . '_ajax'));
+        }
         //获取顶级栏目ID
         $arrparentid = explode(',', $category['arrparentid']);
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
