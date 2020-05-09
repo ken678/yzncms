@@ -21,8 +21,7 @@ use think\facade\Url;
 // 插件目录
 define('ADDON_PATH', ROOT_PATH . 'addons' . DS);
 // 运行目录
-Url::root('/'); //强制隐藏index.php
-define('ROOT_URL', ltrim(dirname(Request::root()), DS) . '/');
+define('ROOT_URL', ltrim(dirname(Request::rootUrl()), DS) . '/');
 //模板目录
 define('TEMPLATE_PATH', ROOT_PATH . 'public' . DS . 'templates' . DS);
 
