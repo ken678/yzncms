@@ -185,15 +185,11 @@ class Upload extends Base
     protected function saveFile($dir = '', $from = '', $module = '', $thumb = 0, $thumbsize = '', $thumbtype = '', $watermark = 1, $sizelimit = -1, $extlimit = '')
     {
         if (!function_exists("finfo_open")) {
-            switch ($from) {
-                case 'ueditor':
-                    return json(['state' => '检测到环境未开启php_fileinfo拓展']);
-                default:
-                    return json([
-                        'code' => -1,
-                        'info' => '检测到环境未开启php_fileinfo拓展',
-                    ]);
-            }
+            return json([
+                'code' => -1,
+                'info' => '检测到环境未开启php_fileinfo拓展',
+                'state' => '检测到环境未开启php_fileinfo拓展', //兼容百度
+            ]);
         }
         // 附件大小限制
         $size_limit = $dir == 'images' ? config('upload_image_size') : config('upload_file_size');
@@ -207,7 +203,6 @@ class Upload extends Base
         // 附件类型限制
         $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
         $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
-
         // 水印参数
         $watermark = $this->request->post('watermark', '');
         // 获取附件数据
@@ -220,17 +215,12 @@ class Upload extends Base
         }
         $file = $this->request->file($file_input_name);
         if ($file == null) {
-            switch ($from) {
-                case 'ueditor':
-                    return json(['state' => '获取不到文件信息']);
-                default:
-                    return json([
-                        'code' => -1,
-                        'info' => '获取不到文件信息',
-                    ]);
-            }
+            return json([
+                'code' => -1,
+                'info' => '获取不到文件信息',
+                'state' => '获取不到文件信息', //兼容百度
+            ]);
         }
-
         // 判断附件是否已存在
         if ($file_exists = Attachment_Model::get(['md5' => $file->hash('md5')])) {
             if ($file_exists['driver'] == 'local') {
@@ -238,37 +228,24 @@ class Upload extends Base
             } else {
                 $file_path = $file_exists['path'];
             }
-            switch ($from) {
-                case 'ueditor':
-                    return json([
-                        "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
-                        "url" => $file_path, // 返回的地址
-                        "title" => $file_exists['name'], // 附件名
-                    ]);
-                    break;
-                default:
-                    return json([
-                        'code' => 0,
-                        'info' => $file_exists['name'] . '上传成功',
-                        'class' => 'success',
-                        'id' => $file_exists['id'],
-                        'path' => $file_path,
-                    ]);
-            }
+            return json([
+                'code' => 0,
+                'info' => $file_exists['name'] . '上传成功',
+                'class' => 'success',
+                'id' => $file_exists['id'],
+                'path' => $file_path,
+                "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
+                "url" => $file_path, // 返回的地址 兼容百度
+                "title" => $file_exists['name'], // 附件名 兼容百度
+            ]);
         }
-
         // 判断附件大小是否超过限制
         if ($size_limit > 0 && ($file->getInfo('size') > $size_limit)) {
-            switch ($from) {
-                case 'ueditor':
-                    return json(['state' => '附件过大']);
-                    break;
-                default:
-                    return json([
-                        'status' => 0,
-                        'info' => '附件过大',
-                    ]);
-            }
+            return json([
+                'status' => 0,
+                'info' => '附件过大',
+                'state' => '附件过大', //兼容百度
+            ]);
         }
         // 判断附件格式是否符合
         $file_name = $file->getInfo('name');
@@ -291,23 +268,16 @@ class Upload extends Base
         if (!preg_grep("/$file_ext/i", $ext_limit)) {
             $error_msg = '附件类型不正确！';
         }
-
         if (!in_array($file_ext, $ext_limit)) {
             $error_msg = '附件类型不正确！';
         }
         if ($error_msg != '') {
-            switch ($from) {
-                case 'ueditor':
-                    return json(['state' => $error_msg]);
-                    break;
-                default:
-                    return json([
-                        'code' => -1,
-                        'info' => $error_msg,
-                    ]);
-            }
+            return json([
+                'code' => -1,
+                'info' => $error_msg,
+                'state' => $error_msg, //兼容百度
+            ]);
         }
-
         // 附件上传钩子，用于第三方文件上传扩展
         if (config('upload_driver')['key'] != 'local') {
             $hook_result = Hook::listen('uploadAfter', ['file' => $file, 'from' => $from, 'module' => $module], true);
@@ -315,7 +285,6 @@ class Upload extends Base
                 return $hook_result;
             }
         }
-
         // 移动到框架应用根目录指定目录下
         $info = $file->move(ROOT_PATH . 'public/uploads' . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
@@ -325,7 +294,6 @@ class Upload extends Base
                     model('Attachment')->create_water($info->getRealPath(), config('upload_thumb_water_pic'));
                 }
             }
-
             // 获取附件信息
             $file_info = [
                 'aid' => $this->admin_id,
@@ -340,40 +308,28 @@ class Upload extends Base
                 'module' => $module,
             ];
             if ($file_add = Attachment_Model::create($file_info)) {
-                switch ($from) {
-                    case 'ueditor':
-                        return json([
-                            "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
-                            "url" => $file_info['path'], // 返回的地址
-                            "title" => $file_info['name'], // 附件名
-                        ]);
-                        break;
-                    default:
-                        return json([
-                            'code' => 0,
-                            'info' => $file_info['name'] . '上传成功',
-                            'id' => $file_add['id'],
-                            'path' => $file_info['thumb'],
-                        ]);
-                }
+                return json([
+                    'code' => 0,
+                    'info' => $file_info['name'] . '上传成功',
+                    'id' => $file_add['id'],
+                    'path' => $file_info['path'],
+                    "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
+                    "url" => $file_info['path'], // 返回的地址 兼容百度
+                    "title" => $file_info['name'], // 附件名 兼容百度
+                ]);
             } else {
-                switch ($from) {
-                    case 'ueditor':
-                        return json(['state' => '上传失败']);
-                        break;
-                    default:
-                        return json(['code' => 0, 'info' => '上传成功,写入数据库失败']);
-                }
+                return json([
+                    'code' => 0,
+                    'info' => '上传成功,写入数据库失败',
+                    'state' => '上传成功,写入数据库失败', //兼容百度
+                ]);
             }
         } else {
-            switch ($from) {
-                case 'ueditor':
-                    return json(['state' => '上传失败']);
-                    break;
-                default:
-                    return json(['code' => -1, 'info' => $file->getError()]);
-            }
-
+            return json([
+                'code' => -1,
+                'info' => $file->getError(),
+                'state' => '上传失败', //兼容百度
+            ]);
         }
     }
 
@@ -475,7 +431,6 @@ class Upload extends Base
             $list[$i]['mtime'] = $value['create_time'];
             $i++;
         }
-
         /* 返回数据 */
         $result = array(
             "state" => "SUCCESS",
@@ -484,7 +439,5 @@ class Upload extends Base
             "total" => Attachment_Model::where('ext', 'in', $allowExit)->count(),
         );
         return json($result);
-
     }
-
 }
