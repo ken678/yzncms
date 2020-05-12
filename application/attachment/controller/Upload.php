@@ -344,7 +344,7 @@ class Upload extends Base
                     case 'ueditor':
                         return json([
                             "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
-                            "url" => $this->uploadUrl . $file_info['path'], // 返回的地址
+                            "url" => $file_info['path'], // 返回的地址
                             "title" => $file_info['name'], // 附件名
                         ]);
                         break;
@@ -353,7 +353,7 @@ class Upload extends Base
                             'code' => 0,
                             'info' => $file_info['name'] . '上传成功',
                             'id' => $file_add['id'],
-                            'path' => empty($file_info['thumb']) ? $this->uploadUrl . $file_info['path'] : $this->uploadUrl . $file_info['thumb'],
+                            'path' => $file_info['thumb'],
                         ]);
                 }
             } else {
