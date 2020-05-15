@@ -43,7 +43,7 @@ class Category extends Model
         }
         //序列化setting数据
         $data['setting'] = serialize($data['setting']);
-        $res = $this->allowField($fields)->save($data);
+        $res = $this->allowField($fields)->isUpdate(false)->save($data);
         if ($res) {
             cache('Category', null);
             return $this->getAttr('id');
