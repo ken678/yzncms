@@ -238,15 +238,15 @@ INSERT INTO `yzn_field_type` VALUES ('switch', '开关', '5', 'tinyint(2) UNSIGN
 INSERT INTO `yzn_field_type` VALUES ('array', '数组', '6', 'varchar(512) NOT NULL DEFAULT \'\'', '0', '0', '');
 INSERT INTO `yzn_field_type` VALUES ('select', '下拉框', '7', 'char(10) NOT NULL DEFAULT \'\'', '1', '0', '');
 INSERT INTO `yzn_field_type` VALUES ('image', '单张图', '8', 'int(5) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isNumber');
+INSERT INTO `yzn_field_type` VALUES ('images', '多张图', '9', 'varchar(256) NOT NULL DEFAULT \'\'', '0', '0', '');
 INSERT INTO `yzn_field_type` VALUES ('tags', '标签', '10', 'varchar(255) NOT NULL DEFAULT \'\'', '0', '1', '');
 INSERT INTO `yzn_field_type` VALUES ('number', '数字', '11', 'int(10) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isNumber');
 INSERT INTO `yzn_field_type` VALUES ('datetime', '日期和时间', '12', 'int(10) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', '');
 INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', '13', 'text NOT NULL', '0', '1', '');
-INSERT INTO `yzn_field_type` VALUES ('images', '多张图', '9', 'varchar(256) NOT NULL DEFAULT \'\'', '0', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', '17', 'varchar(7) NOT NULL DEFAULT \'\'', '0', '0', '');
+INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', '14', 'text NOT NULL', '0', '1', '');
 INSERT INTO `yzn_field_type` VALUES ('files', '多文件', '15', 'varchar(255) NOT NULL DEFAULT \'\'', '0', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('summernote', '简洁编辑器', '14', 'text NOT NULL', '0', '1', '');
 INSERT INTO `yzn_field_type` VALUES ('file', '单文件', '16', 'int(5) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isNumber');
+INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', '17', 'varchar(7) NOT NULL DEFAULT \'\'', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for `yzn_hooks`
@@ -264,7 +264,7 @@ CREATE TABLE `yzn_hooks` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
 
 -- ----------------------------
 -- Records of yzn_hooks
@@ -286,6 +286,7 @@ INSERT INTO `yzn_hooks` VALUES ('14', 'uploadDelete', '第三方附件删除钩�
 INSERT INTO `yzn_hooks` VALUES ('15', 'syncLogin', '第三方登陆位置', '2', '1509174020', '', '', '1', '1');
 INSERT INTO `yzn_hooks` VALUES ('16', 'userConfig', '用户配置页面钩子', '2', '1509174020', '', '', '1', '1');
 INSERT INTO `yzn_hooks` VALUES ('17', 'baidupush', '百度熊掌号+百度站长推送', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('18', 'markdown', 'markdown编辑器', '2', '1509174020', '', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
