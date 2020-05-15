@@ -286,6 +286,9 @@ layui.use(['laydate'], function() {
     </div>
 </div>
 {/case}
+{case value="markdown"}
+    {:hook('markdown',$vo)}
+{/case}
 {/switch}
 
 {/volist}
