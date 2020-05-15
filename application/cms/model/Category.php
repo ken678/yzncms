@@ -43,14 +43,13 @@ class Category extends Model
         }
         //序列化setting数据
         $data['setting'] = serialize($data['setting']);
-        $res = $this->allowField($fields)->isUpdate(false)->save($data);
+        $res = self::create($data, $fields, true);
         if ($res) {
             cache('Category', null);
-            return $this->getAttr('id');
+            return $res->getAttr('id');
         } else {
             $this->error = '栏目添加失败！';
             return false;
-
         }
     }
 
