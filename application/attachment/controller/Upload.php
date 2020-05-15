@@ -207,6 +207,9 @@ class Upload extends Base
         $watermark = $this->request->post('watermark', '');
         // 获取附件数据
         switch ($from) {
+            case 'editormd':
+                $file_input_name = 'editormd-image-file';
+                break;
             case 'ueditor':
                 $file_input_name = 'upfile';
                 break;
@@ -219,6 +222,7 @@ class Upload extends Base
                 'code' => -1,
                 'info' => '获取不到文件信息',
                 'state' => '获取不到文件信息', //兼容百度
+                'message' => '获取不到文件信息', //兼容editormd
             ]);
         }
         // 判断附件是否已存在
@@ -231,12 +235,13 @@ class Upload extends Base
             return json([
                 'code' => 0,
                 'info' => $file_exists['name'] . '上传成功',
-                'class' => 'success',
                 'id' => $file_exists['id'],
                 'path' => $file_path,
                 "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
                 "url" => $file_path, // 返回的地址 兼容百度
                 "title" => $file_exists['name'], // 附件名 兼容百度
+                "success" => 1, //兼容editormd
+                "message" => $file_exists['name'], // 附件名 兼容editormd
             ]);
         }
         // 判断附件大小是否超过限制
@@ -245,6 +250,7 @@ class Upload extends Base
                 'status' => 0,
                 'info' => '附件过大',
                 'state' => '附件过大', //兼容百度
+                'message' => '附件过大', //兼容editormd
             ]);
         }
         // 判断附件格式是否符合
@@ -276,6 +282,7 @@ class Upload extends Base
                 'code' => -1,
                 'info' => $error_msg,
                 'state' => $error_msg, //兼容百度
+                'message' => $error_msg, //兼容editormd
             ]);
         }
         // 附件上传钩子，用于第三方文件上传扩展
@@ -316,12 +323,15 @@ class Upload extends Base
                     "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
                     "url" => $file_info['path'], // 返回的地址 兼容百度
                     "title" => $file_info['name'], // 附件名 兼容百度
+                    "success" => 1, //兼容editormd
+                    "message" => $file_info['name'], // 附件名 兼容editormd
                 ]);
             } else {
                 return json([
                     'code' => 0,
                     'info' => '上传成功,写入数据库失败',
                     'state' => '上传成功,写入数据库失败', //兼容百度
+                    'message' => '上传成功,写入数据库失败', //兼容editormd
                 ]);
             }
         } else {
@@ -329,6 +339,7 @@ class Upload extends Base
                 'code' => -1,
                 'info' => $file->getError(),
                 'state' => '上传失败', //兼容百度
+                'message' => '上传失败', //兼容editormd
             ]);
         }
     }
