@@ -145,10 +145,11 @@ class Category extends Adminbase
                 if (true !== $result) {
                     $this->error($result);
                 }
-                $res = $this->Category_Model->addCategory($data, $fields);
-                if ($res) {
+                //20200518 ethan update: $res should be a string, not arrays.
+                $catid = $this->Category_Model->addCategory($data, $fields);
+                if ($catid) {
                     if (isModuleInstall('member')) {
-                        model("cms/CategoryPriv")->update_priv($res['id'], $data['priv_groupid'], 0);
+                        model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                     }
                     $this->success("添加成功！", url("Category/index"));
                 } else {
