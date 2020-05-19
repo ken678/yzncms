@@ -12,8 +12,8 @@
   </div>
 </script>
 <script type="text/html" id="titleTpl">
-    {{#  if(d.uninstall == "" || d.uninstall == null || d.uninstall == undefined){ }}
-    {{#  if(d.configl == "" || d.configl == null || d.configl == undefined){ }}
+    {{#  if(d.uninstall == "" || d.uninstall == 'null' || d.uninstall == undefined){ }}
+    {{#  if(d.config !== "" && d.config !== 'null' && d.config !== undefined){ }}
     <a class="layui-btn layui-btn-xs" href='{:url("config")}?id={{d.id}}'>设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
