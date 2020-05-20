@@ -264,29 +264,30 @@ CREATE TABLE `yzn_hooks` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
 
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
-INSERT INTO `yzn_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('3', 'smsGet', '短信获取行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('4', 'smsSend', '短信发送行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('5', 'smsNotice', '短信发送通知', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('6', 'smsCheck', '检测短信验证是否正确', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('7', 'smsFlush', '清空短信验证行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('8', 'emsGet', '邮件获取行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('9', 'emsSend', '邮件发送行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('10', 'emsNotice', '邮件发送通知', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('11', 'emsCheck', '检测邮件验证是否正确', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('12', 'emsFlush', '清空邮件验证行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('13', 'uploadAfter', '第三方附件上传钩子', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('14', 'uploadDelete', '第三方附件删除钩子', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('15', 'syncLogin', '第三方登陆位置', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('16', 'userConfig', '用户配置页面钩子', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('17', 'baidupush', '百度熊掌号+百度站长推送', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('18', 'markdown', 'markdown编辑器', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('1', 'app_init', '应用初始化标签位', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('2', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('3', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('4', 'smsGet', '短信获取行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('5', 'smsSend', '短信发送行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('6', 'smsNotice', '短信发送通知', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('7', 'smsCheck', '检测短信验证是否正确', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('8', 'smsFlush', '清空短信验证行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('9', 'emsGet', '邮件获取行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('10', 'emsSend', '邮件发送行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('11', 'emsNotice', '邮件发送通知', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('12', 'emsCheck', '检测邮件验证是否正确', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('13', 'emsFlush', '清空邮件验证行为', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('14', 'uploadAfter', '第三方附件上传钩子', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('15', 'uploadDelete', '第三方附件删除钩子', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('16', 'syncLogin', '第三方登陆位置', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('17', 'userConfig', '用户配置页面钩子', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('18', 'baidupush', '百度熊掌号+百度站长推送', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES ('19', 'markdown', 'markdown编辑器', '2', '1509174020', '', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
