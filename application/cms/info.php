@@ -39,6 +39,10 @@ return array(
             'type' => 1,
             'description' => '会员左侧导航',
         ],
+        'app_init' => [
+            'type' => 2,
+            'description' => '应用初始化',
+        ],
     ],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache' => [

@@ -23,7 +23,14 @@ class Hooks extends _Hooks
     public function userSidenavAfter($content)
     {
         return $this->fetch('userSidenavAfter');
+    }
 
+    public function appInit()
+    {
+        //此函数需要全局调用
+        if (is_file(APP_PATH . 'cms' . DS . 'function.php')) {
+            include_once APP_PATH . 'cms' . DS . 'function.php';
+        }
     }
 
 }
