@@ -25,11 +25,12 @@ class InitHook
     // 行为扩展的执行入口必须是run
     public function run($params)
     {
-        $data = Cache::get('Hooks');
-        if (empty($data)) {
+        $hooks = Cache::get('Hooks');
+        if (empty($hooks)) {
+            $hooks = [];
             //所有模块和插件钩子
-            $hooks = Db::name('Hooks')->where('status', 1)->column('name,addons,modules');
-            foreach ($hooks as $key => $value) {
+            $res = Db::name('Hooks')->where('status', 1)->column('name,addons,modules');
+            foreach ($res as $key => $value) {
                 $hooks_class = [];
                 //模块
                 if ($value['modules']) {
@@ -44,16 +45,21 @@ class InitHook
                 if ($value['addons']) {
                     $data = Db::name('Addons')->whereIn('name', $value['addons'])->where('status', 1)->column('name');
                     if ($data) {
-                        $hooks_class = array_merge($hooks_class, array_map('get_addon_class', $data));
+                        $hooks_class = array_merge($hooks_class, array_filter(array_map('get_addon_class', $data)));
                     }
                 }
-                Hook::add($value['name'], $hooks_class);
+                if (!empty($hooks_class)) {
+                    $hooks[$value['name']] = $hooks_class;
+                }
             }
-            Cache::set('Hooks', Hook::get());
-        } else {
-            //批量导入插件
-            Hook::import($data, false);
+            Cache::set('Hooks', $hooks);
         }
+        if (isset($hooks['app_init'])) {
+            foreach ($hooks['app_init'] as $k => $v) {
+                Hook::exec([$v, 'appInit']);
+            }
+        }
+        Hook::import($hooks, false);
     }
 
 }
