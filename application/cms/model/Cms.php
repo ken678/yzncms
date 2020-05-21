@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\cms\model;
 
-use app\cms\model\Category as Category_Model;
 use app\common\model\Modelbase;
 use think\Db;
 use think\facade\Validate;
@@ -50,7 +49,7 @@ class Cms extends Modelbase
     public function addModelData($data, $dataExt = [])
     {
         $catid = (int) $data['catid'];
-        $modelid = Category_Model::getCategory($catid, 'modelid');
+        $modelid = getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
         if (!$this->table_exists($tablename)) {
@@ -98,7 +97,7 @@ class Cms extends Modelbase
         //推送到熊掌号和百度站长
         $cmsConfig = cache("Cms_Config");
         if ($cmsConfig['web_site_baidupush']) {
-            hook("baidupush", self::buildContentUrl($catid, $id, true, true));
+            hook("baidupush", buildContentUrl($catid, $id, true, true));
         }
         return $id;
     }
@@ -110,7 +109,7 @@ class Cms extends Modelbase
         $id = (int) $data['id'];
         unset($data['catid']);
         unset($data['id']);
-        $modelid = Category_Model::getCategory($catid, 'modelid');
+        $modelid = getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
         if (!$this->table_exists($tablename)) {
@@ -350,7 +349,7 @@ class Cms extends Modelbase
             $ModelField = cache('ModelField');
             foreach ($result as $key => $vo) {
                 $vo = $this->dealModelShowData($ModelField[$modeId], $vo);
-                $vo['url'] = $this->buildContentUrl($vo['catid'], $vo['id']);
+                $vo['url'] = buildContentUrl($vo['catid'], $vo['id']);
                 $result[$key] = $vo;
             }
         }
@@ -377,7 +376,7 @@ class Cms extends Modelbase
         if (!empty($dataInfo)) {
             $ModelField = cache('ModelField');
             $dataInfo = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
-            $dataInfo['url'] = $this->buildContentUrl($dataInfo['catid'], $dataInfo['id']);
+            $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
         }
         return $dataInfo;
     }
@@ -499,12 +498,6 @@ class Cms extends Modelbase
             $content = $dataExt['content'];
             $data['description'] = str_cut(str_replace(array("\r\n", "\t", '&ldquo;', '&rdquo;', '&nbsp;'), '', strip_tags($content)), 200);
         }
-    }
-
-    //创建内容链接
-    public function buildContentUrl($catid, $id, $suffix = true, $domain = false)
-    {
-        return url('cms/index/shows', ['catid' => $catid, 'id' => $id], $suffix, $domain);
     }
 
     private function update_category_items($catid, $action = 'add', $cache = 0)

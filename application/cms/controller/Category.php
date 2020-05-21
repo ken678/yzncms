@@ -75,7 +75,7 @@ class Category extends Adminbase
                 } elseif ($v['type'] == 3) {
                     $v['add_url'] = url("Category/wadd", array("parentid" => $v['id']));
                 }
-                $v['url'] = Category_Model::buildCatUrl($v['id'], $v['url']);
+                $v['url'] = buildCatUrl($v['id'], $v['url']);
                 $categorys[$v['id']] = $v;
             }
             $tree->init($categorys);

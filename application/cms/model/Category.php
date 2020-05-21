@@ -29,7 +29,7 @@ class Category extends Model
         $cmsConfig = cache("Cms_Config");
         self::event('after_write', function ($row) use ($cmsConfig) {
             if ($cmsConfig['web_site_baidupush']) {
-                hook("baidupush", self::buildCatUrl($row->id, '', true, true));
+                hook("baidupush", buildCatUrl($row->id, '', true, true));
             }
         });
     }
@@ -170,64 +170,6 @@ class Category extends Model
             }
         }
         return $arrchildid;
-    }
-
-    /**
-     * 获取栏目相关信息
-     * @param type $catid 栏目id
-     * @param type $field 返回的字段，默认返回全部，数组
-     * @param type $newCache 是否强制刷新
-     * @return boolean
-     */
-    public static function getCategory($catid, $field = '', $newCache = false)
-    {
-        if (empty($catid)) {
-            return false;
-        }
-        $key = 'getCategory_' . $catid;
-        //强制刷新缓存
-        if ($newCache) {
-            Cache::rm($key, null);
-        }
-        $cache = Cache::get($key);
-        if ($cache === 'false') {
-            return false;
-        }
-        if (empty($cache)) {
-            //读取数据
-            $cache = db('category')->where(['id' => $catid])->find();
-            if (empty($cache)) {
-                Cache::set($key, 'false', 60);
-                return false;
-            } else {
-                //扩展配置
-                $cache['setting'] = unserialize($cache['setting']);
-                $cache['url'] = self::buildCatUrl($catid, $cache['url']);
-                //栏目扩展字段
-                //$cache['extend'] = $cache['setting']['extend'];
-                $cache['image'] = empty($cache['image']) ? '' : get_file_path($cache['image']);
-                Cache::set($key, $cache, 3600);
-            }
-        }
-        if ($field) {
-            //支持var.property，不过只支持一维数组
-            if (false !== strpos($field, '.')) {
-                $vars = explode('.', $field);
-                return $cache[$vars[0]][$vars[1]];
-            } else {
-                return $cache[$field];
-            }
-        } else {
-            return $cache;
-        }
-    }
-
-    /**
-     * 生成栏目URL
-     */
-    public static function buildCatUrl($id, $url = '', $suffix = true, $domain = false)
-    {
-        return empty($url) ? url('cms/index/lists', ['catid' => $id], $suffix, $domain) : ((strpos($url, '://') !== false) ? $url : url($url));
     }
 
     //刷新栏目索引缓存

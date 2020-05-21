@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\model\Category as Category_Model;
 use app\cms\model\Cms as Cms_Model;
 use app\common\controller\Adminbase;
 use app\member\model\MemberContent as Member_Content_Model;
@@ -39,13 +38,13 @@ class Publish extends Adminbase
             $_list = Member_Content_Model::page($page, $limit)->order(array("id" => "DESC"))->select();
 
             foreach ($_list as $k => $v) {
-                $modelid = Category_Model::getCategory($v['catid'], 'modelid');
+                $modelid = getCategory($v['catid'], 'modelid');
                 $tablename = ucwords(getModel($modelid, 'tablename'));
                 $info = Db::name($tablename)->where(array("id" => $v['content_id'], "sysadd" => 0))->find();
                 if ($info) {
-                    $_list[$k]['url'] = $this->Cms_Model->buildContentUrl($v['catid'], $v['content_id']);
+                    $_list[$k]['url'] = buildContentUrl($v['catid'], $v['content_id']);
                     $_list[$k]['title'] = $info['title'];
-                    $_list[$k]['catname'] = Category_Model::getCategory($v['catid'], 'catname');
+                    $_list[$k]['catname'] = getCategory($v['catid'], 'catname');
                 }
             }
             $result = array("code" => 0, "count" => $total, "data" => $_list);
@@ -69,7 +68,7 @@ class Publish extends Adminbase
             //信息
             $info = Member_Content_Model::where('id', $id)->find();
             //取得栏目信息
-            $category = Category_Model::getCategory($info['catid']);
+            $category = getCategory($info['catid']);
             if (!$category) {
                 $this->success('栏目不存在！');
             }

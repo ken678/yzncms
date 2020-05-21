@@ -12,8 +12,6 @@
 // +----------------------------------------------------------------------
 // | cms函数文件
 // +----------------------------------------------------------------------
-
-use app\cms\model\Category as Category_Model;
 use think\facade\Cache;
 use think\facade\Request;
 
@@ -26,7 +24,43 @@ use think\facade\Request;
  */
 function getCategory($catid, $field = '', $newCache = false)
 {
-    return Category_Model::getCategory($catid, $field, $newCache);
+    if (empty($catid)) {
+        return false;
+    }
+    $key = 'getCategory_' . $catid;
+    //强制刷新缓存
+    if ($newCache) {
+        Cache::rm($key, null);
+    }
+    $cache = Cache::get($key);
+    if ($cache === 'false') {
+        return false;
+    }
+    if (empty($cache)) {
+        //读取数据
+        $cache = db('category')->where(['id' => $catid])->find();
+        if (empty($cache)) {
+            Cache::set($key, 'false', 60);
+            return false;
+        } else {
+            //扩展配置
+            $cache['setting'] = unserialize($cache['setting']);
+            $cache['url'] = buildCatUrl($catid, $cache['url']);
+            $cache['image'] = empty($cache['image']) ? '' : get_file_path($cache['image']);
+            Cache::set($key, $cache, 3600);
+        }
+    }
+    if ($field) {
+        //支持var.property，不过只支持一维数组
+        if (false !== strpos($field, '.')) {
+            $vars = explode('.', $field);
+            return $cache[$vars[0]][$vars[1]];
+        } else {
+            return $cache[$field];
+        }
+    } else {
+        return $cache;
+    }
 }
 
 /**
@@ -43,7 +77,7 @@ function catpos($catid, $symbol = ' &gt; ')
     //获取当前栏目的 父栏目列表
     $arrparentid = array_filter(explode(',', getCategory($catid, 'arrparentid') . ',' . $catid));
     foreach ($arrparentid as $cid) {
-        //$url = Category_Model::buildCatUrl($cid, getCategory($cid, 'url'));
+        //$url = buildCatUrl($cid, getCategory($cid, 'url'));
         $parsestr[] = '<a href="' . getCategory($cid, 'url') . '" >' . getCategory($cid, 'catname') . '</a>';
     }
     $parsestr = implode($symbol, $parsestr);
@@ -225,4 +259,18 @@ function seo($catid = '', $title = '', $description = '', $keyword = '')
         $seo[$k] = str_replace(array("\n", "\r"), '', $v);
     }
     return $seo;
+}
+
+/**
+ * 生成栏目URL
+ */
+function buildCatUrl($id, $url = '', $suffix = true, $domain = false)
+{
+    return empty($url) ? url('cms/index/lists', ['catid' => $id], $suffix, $domain) : ((strpos($url, '://') !== false) ? $url : url($url));
+}
+
+//创建内容链接
+function buildContentUrl($catid, $id, $suffix = true, $domain = false)
+{
+    return url('cms/index/shows', ['catid' => $catid, 'id' => $id], $suffix, $domain);
 }
