@@ -117,7 +117,7 @@ class Index extends HomeBase
         //是否允许游客提交
         if (isModuleInstall('member') && (int) $this->setting['allowunreg'] == 0) {
             //判断是否登陆
-            if (!\app\admin\service\User::instance()->id) {
+            if (!\app\member\service\User::instance()->id) {
                 $this->error('该表单不允许游客提交，请登陆后操作！', url('member/Index/login'));
             }
         }
