@@ -505,7 +505,7 @@ class Cms extends Modelbase
         if ($action == 'add') {
             Db::name('Category')->where('id', $catid)->setInc('items');
         } else {
-            Db::name('Category')->where('id', $catid)->setDec('items');
+            Db::name('Category')->where('id', $catid)->where('items', '>', 0)->setDec('items');
         }
     }
 
