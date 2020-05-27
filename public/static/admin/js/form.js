@@ -26,6 +26,29 @@
 
      });
 
+     //图片上传
+     $(".fachoose-image").on('click', function() {
+         layer.open({
+             type: 2,
+             title: '图片选择',
+             area: '840px',
+             offset: 'auto',
+             anim: 1,
+             closeBtn: 1,
+             shade: 0.3,
+             btn: ['确定', '取消'],
+             content: GV.image_select_url,
+             success: function(layero) {
+
+             },
+             yes: function(index) {
+                layer.close(index);
+
+             }
+         });
+
+     });
+
      // 文件上传
      $('.js-upload-file,.js-upload-files').each(function() {
          var $input_file = $(this).find('input');
@@ -35,7 +58,7 @@
          // 允许上传的后缀
          var $ext = $input_file.data('ext');
          // 文件限制大小
-         var $size = $input_file.data('size')*1024;
+         var $size = $input_file.data('size') * 1024;
          // 文件列表
          var $file_list = $('#file_list_' + $input_file_name);
          // 实例化上传
@@ -120,7 +143,7 @@
                      layer.alert('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
                      break;
                  case 'F_EXCEED_SIZE':
-                     layer.alert('图片不得超过' + ($size/1024) + 'kb，请重新上传！', { icon: 5 })
+                     layer.alert('图片不得超过' + ($size / 1024) + 'kb，请重新上传！', { icon: 5 })
                      break;
              }
          });
@@ -163,7 +186,7 @@
          // 允许上传的后缀
          var $ext = $input_file.data('ext');
          // 图片限制大小
-         var $size = $input_file.data('size')*1024;
+         var $size = $input_file.data('size') * 1024;
          // 优化retina, 在retina下这个值是2
          var ratio = window.devicePixelRatio || 1;
          // 缩略图大小
@@ -276,7 +299,7 @@
                      layer.alert('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
                      break;
                  case 'F_EXCEED_SIZE':
-                     layer.alert('图片不得超过' + ($size/1024) + 'kb，请重新上传！', { icon: 5 })
+                     layer.alert('图片不得超过' + ($size / 1024) + 'kb，请重新上传！', { icon: 5 })
                      break;
              }
          });
