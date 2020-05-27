@@ -45,6 +45,13 @@ class Attachments extends Adminbase
         return $this->fetch();
     }
 
+    //附件选
+    public function select()
+    {
+        //$map = $this->buildparams();
+        return $this->fetch();
+    }
+
     //附件删除
     public function delete()
     {
