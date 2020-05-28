@@ -15,11 +15,12 @@
 }
 
 #ImagesList .operate .check {
+    max-width: 170px;
+    overflow: hidden;
     float: left;
     margin-left: 11px;
     height: 18px;
     padding: 11px 0;
-    width: 74%;
     position: relative;
 }
 </style>
@@ -35,8 +36,8 @@
                 </div>
             </form>
         </blockquote>
-        <div class="layui-row layui-col-space30" id="ImagesList">
-            <ul>
+        <div class="layui-row" id="ImagesList">
+            <ul class="layui-col-space30">
                 {volist name="_list" id="vo"}
                 <li class="layui-col-md2 layui-col-sm3" data-file-id="{$vo.id}" data-file-path="{$vo.path}">
                     <div class="max_h">
@@ -51,6 +52,7 @@
                 {/volist}
             </ul>
         </div>
+        {$_list|raw}
     </div>
 </div>
 <script type="text/javascript">
