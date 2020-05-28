@@ -7,14 +7,14 @@
     overflow: hidden;
 }
 
-#Images .operate {
+#ImagesList .operate {
     display: block;
     height: 40px;
     width: 100%;
     background: #f4f5f9;
 }
 
-#Images .operate .check {
+#ImagesList .operate .check {
     float: left;
     margin-left: 11px;
     height: 18px;
@@ -35,27 +35,30 @@
                 </div>
             </form>
         </blockquote>
-        <div class="layui-row layui-col-space30" id="Images">
-            {volist name="_list" id="vo"}
-            <div class="layui-col-md2 layui-col-sm3">
-                <div class="max_h">
-                    <img src="{$vo.path}" alt="{$vo.name}" width="100%">
-                </div>
-                <div class="operate">
-                    <div class="check">
-                        <input type="checkbox" name="" title="{$vo.name}" lay-skin="primary">
+        <div class="layui-row layui-col-space30" id="ImagesList">
+            <ul>
+                {volist name="_list" id="vo"}
+                <li class="layui-col-md2 layui-col-sm3" data-file-id="{$vo.id}" data-file-path="{$vo.path}">
+                    <div class="max_h">
+                        <img src="{$vo.path}" alt="{$vo.name}" width="100%">
                     </div>
-                </div>
-            </div>
-            {/volist}
+                    <div class="operate">
+                        <div class="check">
+                            <input type="checkbox" title="{$vo.name}" lay-skin="primary" lay-filter="filter">
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
         </div>
     </div>
 </div>
 <script type="text/javascript">
 layui.use('form', function() {
-    $(".search_btn").on("click", function() {
-
-
+    var form = layui.form;
+    form.on('checkbox(filter)', function(data) {
+        $('#ImagesList li').removeClass('active')
+        $(data.elem).parents('li').toggleClass('active');
     });
 })
 </script>
