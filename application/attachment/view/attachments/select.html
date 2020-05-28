@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css">
+<script src="__STATIC__/libs/layui/layui.js"></script>
+<script src="__STATIC__/libs/jquery/jquery.min.js"></script>
+<style type="text/css">
+#Images img{height: 150px;}
+#Images .operate {
+    display: block;
+    height: 40px;
+    width: 100%;
+    background: #f4f5f9;
+}
+#Images .operate .check {
+    float: left;
+    margin-left: 11px;
+    height: 18px;
+    padding: 11px 0;
+    width: 74%;
+    position: relative;
+}
+</style>
+<div class="layui-fluid layui-form" id="Images">
+    <div class="layui-row layui-col-space30">
+        {volist name="_list" id="vo"}
+        <div class="layui-col-md2 layui-col-sm3">
+            <img src="{$vo.path}" alt="{$vo.name}" width="100%">
+            <div class="operate">
+                <div class="check">
+                   <input type="checkbox" name="" title="{$vo.name}" lay-skin="primary">
+                </div>
+            </div>
+        </div>
+        {/volist}
+    </div>
+</div>
+<script type="text/javascript">
+layui.use('form', function(){
+
+})
+</script>

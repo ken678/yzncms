@@ -35,7 +35,7 @@ class Attachments extends Adminbase
     {
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 10);
+            $page = $this->request->param('page/d', 1);
             $map = $this->buildparams();
             $_list = Attachment_Model::where($map)->page($page, $limit)->order('id', 'desc')->select();
             $total = Attachment_Model::where($map)->order('id', 'desc')->count();
@@ -48,7 +48,11 @@ class Attachments extends Adminbase
     //附件选
     public function select()
     {
-        //$map = $this->buildparams();
+        $limit = $this->request->param('limit/d', 10);
+        $page = $this->request->param('page/d', 1);
+        $map = $this->buildparams();
+        $_list = Attachment_Model::where($map)->page($page, $limit)->order('id', 'desc')->select();
+        $this->assign('_list', $_list);
         return $this->fetch();
     }
 
