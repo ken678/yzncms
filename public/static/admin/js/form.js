@@ -28,21 +28,22 @@
 
      //图片上传
      $(".fachoose-image").on('click', function() {
+         var that = this;
+         var multiple = $(this).data("multiple") ? $(this).data("multiple") : false;
          layer.open({
              type: 2,
              title: '图片选择',
-             area: '840px',
+             area: ['840px','600px'],
              offset: 'auto',
              anim: 1,
              closeBtn: 1,
              shade: 0.3,
              btn: ['确定', '取消'],
              content: GV.image_select_url,
-             success: function(layero) {
-
+             success: function(layero, index) {
              },
              yes: function(index) {
-                layer.close(index);
+                 layer.close(index);
 
              }
          });
