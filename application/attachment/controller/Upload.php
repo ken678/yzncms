@@ -436,7 +436,7 @@ class Upload extends Base
         $i = 0;
         foreach ($filelist as $value) {
             $list[$i]['id'] = $value['id'];
-            $list[$i]['url'] = $uploadUrl . 'uploads/' . $value['path'];
+            $list[$i]['url'] = $value['path'];
             $list[$i]['name'] = $value['name'];
             $list[$i]['size'] = format_bytes($value['size']);
             $list[$i]['mtime'] = $value['create_time'];
