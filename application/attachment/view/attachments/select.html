@@ -2,13 +2,18 @@
 <script src="__STATIC__/libs/layui/layui.js"></script>
 <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
 <style type="text/css">
-#Images img{height: 150px;}
+.max_h {
+    height: 115px;
+    overflow: hidden;
+}
+
 #Images .operate {
     display: block;
     height: 40px;
     width: 100%;
     background: #f4f5f9;
 }
+
 #Images .operate .check {
     float: left;
     margin-left: 11px;
@@ -18,22 +23,39 @@
     position: relative;
 }
 </style>
-<div class="layui-fluid layui-form" id="Images">
-    <div class="layui-row layui-col-space30">
-        {volist name="_list" id="vo"}
-        <div class="layui-col-md2 layui-col-sm3">
-            <img src="{$vo.path}" alt="{$vo.name}" width="100%">
-            <div class="operate">
-                <div class="check">
-                   <input type="checkbox" name="" title="{$vo.name}" lay-skin="primary">
+<div class="layui-form" style="padding-top: 15px;">
+    <div class="layui-fluid layui-form">
+        <blockquote class="layui-elem-quote quoteBox">
+            <form class="search-from" method="get">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" class="layui-input searchVal" placeholder="请输入附件名称">
+                    </div>
+                    <a class="layui-btn search_btn" data-type="reload">搜索</a>
+                </div>
+            </form>
+        </blockquote>
+        <div class="layui-row layui-col-space30" id="Images">
+            {volist name="_list" id="vo"}
+            <div class="layui-col-md2 layui-col-sm3">
+                <div class="max_h">
+                    <img src="{$vo.path}" alt="{$vo.name}" width="100%">
+                </div>
+                <div class="operate">
+                    <div class="check">
+                        <input type="checkbox" name="" title="{$vo.name}" lay-skin="primary">
+                    </div>
                 </div>
             </div>
+            {/volist}
         </div>
-        {/volist}
     </div>
 </div>
 <script type="text/javascript">
-layui.use('form', function(){
+layui.use('form', function() {
+    $(".search_btn").on("click", function() {
 
+
+    });
 })
 </script>
