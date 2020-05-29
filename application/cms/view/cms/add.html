@@ -17,7 +17,7 @@
 <script type="text/javascript">
 layui.use(['form','layer'], function() {
     var form = layui.form;
-    $(".content_attr").append("<input type='checkbox' name='get_introduce' title='是否截取到内容摘要' checked><input type='checkbox' name='auto_thumb' title='是否提取到缩略图' checked>");
+    $(".content_attr").append("<input type='checkbox' name='modelField[get_introduce]' title='是否截取到内容摘要' checked><input type='checkbox' name='modelField[auto_thumb]' title='是否提取到缩略图' checked>");
     form.render();
     $('.ajax-post1').on('click', function(e) {
         var form = layui.form,

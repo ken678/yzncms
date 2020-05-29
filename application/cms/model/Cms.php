@@ -494,10 +494,19 @@ class Cms extends Modelbase
     protected function description(&$data, $dataExt)
     {
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
-        if ($data['description'] == '' && isset($dataExt['content'])) {
+        if (isset($data['get_introduce']) && $data['description'] == '' && isset($dataExt['content'])) {
             $content = $dataExt['content'];
             $data['description'] = str_cut(str_replace(array("\r\n", "\t", '&ldquo;', '&rdquo;', '&nbsp;'), '', strip_tags($content)), 200);
         }
+        //自动提取缩略图
+        if (isset($data['auto_thumb']) && empty($data['thumb']) && isset($dataExt['content'])) {
+            if (preg_match_all("/(src)=([\"|']?)([^ \"'>]+\.(gif|jpg|jpeg|bmp|png))\\2/i", $dataExt['content'], $matches)) {
+                $thumb_id = Db::name('attachment')->where('path', $matches[3][0])->value('id');
+                $thumb_id && $data['thumb'] = $thumb_id;
+            }
+        }
+        unset($data['get_introduce']);
+        unset($data['auto_thumb']);
     }
 
     private function update_category_items($catid, $action = 'add', $cache = 0)
