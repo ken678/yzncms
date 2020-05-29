@@ -48,8 +48,10 @@ class Attachments extends Adminbase
     //附件选
     public function select()
     {
-        $map = $this->buildparams();
-        $_list = Attachment_Model::where($map)->order('id', 'desc')->paginate(16);
+        $name = $this->request->param('name/s', '', 'trim,safe_replace,strip_tags,htmlspecialchars');
+        $map = '';
+        $name && $map = "name like '%$name%'";
+        $_list = Attachment_Model::where($map)->order('id', 'desc')->paginate(16, false, ['query' => ['name' => $name]]);
         $this->assign('_list', $_list);
         return $this->fetch();
     }

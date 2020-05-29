@@ -24,15 +24,15 @@
     position: relative;
 }
 </style>
-<div class="layui-form" style="padding-top: 15px;">
+<form class="layui-form" action="" style="padding-top: 15px;">
     <div class="layui-fluid layui-form">
         <blockquote class="layui-elem-quote quoteBox">
             <form class="search-from" method="get">
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" name="keyword" class="layui-input searchVal" placeholder="请输入附件名称">
+                        <input type="text" name="name" class="layui-input searchVal" placeholder="请输入附件名称">
                     </div>
-                    <a class="layui-btn search_btn" data-type="reload">搜索</a>
+                    <button class="layui-btn search_btn" lay-submit>搜索</button>
                 </div>
             </form>
         </blockquote>
@@ -54,7 +54,7 @@
         </div>
         {$_list|raw}
     </div>
-</div>
+</form>
 <script type="text/javascript">
 layui.use('form', function() {
     var form = layui.form;
