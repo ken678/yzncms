@@ -59,7 +59,9 @@
 layui.use('form', function() {
     var form = layui.form;
     form.on('checkbox(filter)', function(data) {
-        $('#ImagesList li').removeClass('active')
+        {if request()->get('multiple') != 'true'}
+        $('#ImagesList li').removeClass('active');
+        {/if}
         $(data.elem).parents('li').toggleClass('active');
     });
 })
