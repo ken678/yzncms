@@ -64,7 +64,6 @@ layui.use(['layer', 'form'], function() {
                         } else {
                             inputObj.val(item.file_id);
                         }
-                        $li.find('.remove-file').attr('data-id', item.file_id);
                     } else {
                         inputObj.val(item.file_id);
                     }
