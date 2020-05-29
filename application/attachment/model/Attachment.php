@@ -82,7 +82,6 @@ class Attachment extends Model
      */
     public function getFilePath($id = '', $type = 0)
     {
-        $uploadPath = config('public_url') . 'uploads/';
         $isIds = strpos($id, ',') !== false;
         if ($isIds) {
             $ids = explode(',', $id);
