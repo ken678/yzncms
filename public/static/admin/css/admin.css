@@ -28,7 +28,8 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 /*百度上传*/
 .webuploader-container{
     position: relative;
-
+    display: inline-block;
+    vertical-align: middle;
 }
 .webuploader-element-invisible {
     position: absolute !important;
@@ -41,9 +42,6 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 }
 .webuploader-pick{
     padding: 0 18px;
-}
-#picker_thumb{
-    display: inline-block;
     height: 38px;
     line-height: 38px;
     background-color: #009688;
@@ -59,7 +57,6 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
     transition: all .3s;
     -webkit-transition: all .3s;
     box-sizing: border-box;
-    vertical-align: middle;
 }
 .thumbnail {
     display: block;
