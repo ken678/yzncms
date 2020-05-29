@@ -283,8 +283,8 @@ layui.use(['laydate'], function() {
         <script type="text/plain" class="js-ueditor" id="{$vo.name}" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</script>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
-    <div style="margin-top: 5px;">
-        <a class="layui-btn layui-btn-sm" id="{$vo.name}grabimg">图片本地化</a>
+    <div class="{$vo.name}_attr">
+        <a class="layui-btn layui-btn-sm" id="{$vo.name}grabimg" style="margin-top: 4px;">图片本地化</a>
     </div>
 </div>
 {/case}
