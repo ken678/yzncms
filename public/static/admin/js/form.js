@@ -32,9 +32,11 @@ layui.use(['layer', 'form'], function() {
     $(".fachoose-image").on('click', function() {
         var that = this;
         var multiple = $(this).data("multiple") ? $(this).data("multiple") : false;
-        var button = $("#" + $(that).attr("id"));
-        var input_id = $(button).data("input-id") ? $(button).data("input-id") : "";
+        var $input_file_name = $(that).attr("id");
+        var input_id = $(that).data("input-id") ? $(that).data("input-id") : "";
         var inputObj = $("#" + input_id);
+        // 图片列表
+        var $file_list = $('#file_list_' + input_id);
         layer.open({
             type: 2,
             title: '图片选择',
@@ -58,14 +60,18 @@ layui.use(['layer', 'form'], function() {
                 });
                 var data = [];
                 selectedList.forEach(function(item) {
+                    var $li = '<div class="file-item thumbnail"><img data-original="'+item.file_path+'" src="'+item.file_path+'" width="100" style="max-height: 100px;"><i class="iconfont icon-delete_fill remove-picture" data-id="'+item.file_id+'"></i></div>';
                     if (multiple) {
                         if (inputObj.val()) {
                             inputObj.val(inputObj.val() + ',' + item.file_id);
                         } else {
                             inputObj.val(item.file_id);
                         }
+                        $file_list.append($li);
                     } else {
                         inputObj.val(item.file_id);
+                        console.log($file_list);
+                        $file_list.html($li);
                     }
                 });
                 layer.close(index);
