@@ -227,18 +227,13 @@ class Upload extends Base
         }
         // 判断附件是否已存在
         if ($file_exists = Attachment_Model::get(['md5' => $file->hash('md5')])) {
-            if ($file_exists['driver'] == 'local') {
-                $file_path = $this->uploadUrl . $file_exists['path'];
-            } else {
-                $file_path = $file_exists['path'];
-            }
             return json([
                 'code' => 0,
                 'info' => $file_exists['name'] . '上传成功',
                 'id' => $file_exists['id'],
-                'path' => $file_path,
+                'path' => $file_exists['path'],
                 "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
-                "url" => $file_path, // 返回的地址 兼容百度
+                "url" => $file_exists['path'], // 返回的地址 兼容百度
                 "title" => $file_exists['name'], // 附件名 兼容百度
                 "success" => 1, //兼容editormd
                 "message" => $file_exists['name'], // 附件名 兼容editormd
