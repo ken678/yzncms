@@ -227,7 +227,7 @@ class Cms extends Modelbase
                 throw new \Exception("'" . $vo['title'] . "'必须填写~");
             }
             //正则校验
-            if ($vo['pattern'] && !Validate::regex(${$arr}[$name], $vo['pattern'])) {
+            if (${$arr}[$name] && $vo['pattern'] && !Validate::regex(${$arr}[$name], $vo['pattern'])) {
                 throw new \Exception("'" . $vo['title'] . "'" . (!empty($vo['errortips']) ? $vo['errortips'] : '正则校验失败') . "");
             }
             //数据格式验证
