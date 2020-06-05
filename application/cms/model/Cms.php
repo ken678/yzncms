@@ -55,8 +55,7 @@ class Cms extends Modelbase
         if (!$this->table_exists($tablename)) {
             throw new \Exception('数据表不存在！');
         }
-        //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
-        $this->description($data, $dataExt);
+        $this->getAfterText($data, $dataExt);
 
         if (!defined('IN_ADMIN') || (defined('IN_ADMIN') && IN_ADMIN == false)) {
             empty($data['uid']) ? \app\member\service\User::instance()->id : $data['uid'];
@@ -82,7 +81,7 @@ class Cms extends Modelbase
             $id = Db::name($tablename)->insertGetId($data);
             //TAG标签处理
             if (!empty($data['tags'])) {
-                $this->tag_dispose($data['tags'], $id, $catid, $modelid);
+                $this->tagDispose($data['tags'], $id, $catid, $modelid);
             }
             //附表
             if (!empty($dataExt)) {
@@ -93,7 +92,7 @@ class Cms extends Modelbase
             throw new \Exception($e->getMessage());
         }
         //更新栏目统计数据
-        $this->update_category_items($catid, 'add', 1);
+        $this->updateCategoryItems($catid, 'add', 1);
         //推送到熊掌号和百度站长
         $cmsConfig = cache("Cms_Config");
         if ($cmsConfig['web_site_baidupush']) {
@@ -115,13 +114,12 @@ class Cms extends Modelbase
         if (!$this->table_exists($tablename)) {
             throw new \Exception('数据表不存在！');
         }
-        //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
-        $this->description($data, $dataExt);
+        $this->getAfterText($data, $dataExt);
         //TAG标签处理
         if (!empty($data['tags'])) {
-            $this->tag_dispose($data['tags'], $id, $catid, $modelid);
+            $this->tagDispose($data['tags'], $id, $catid, $modelid);
         } else {
-            $this->tag_dispose([], $id, $catid, $modelid);
+            $this->tagDispose([], $id, $catid, $modelid);
         }
         $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
@@ -157,7 +155,7 @@ class Cms extends Modelbase
         }
         //处理tags
         if (!empty($data['tags'])) {
-            $this->tag_dispose([], $data['id'], $data['catid'], $modeId);
+            $this->tagDispose([], $data['id'], $data['catid'], $modeId);
         }
 
         if ($no_delete) {
@@ -168,7 +166,7 @@ class Cms extends Modelbase
                 Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $id)->delete();
             }
             //更新栏目统计
-            $this->update_category_items($data['catid'], 'delete');
+            $this->updateCategoryItems($data['catid'], 'delete');
         }
         //标签
         hook('contentDeleteEnd', $data);
@@ -466,7 +464,7 @@ class Cms extends Modelbase
     /**
      * TAG标签处理
      */
-    private function tag_dispose($tags, $id, $catid, $modelid)
+    private function tagDispose($tags, $id, $catid, $modelid)
     {
         $tags_mode = model('cms/Tags');
         if (!empty($tags)) {
@@ -489,9 +487,9 @@ class Cms extends Modelbase
     }
 
     /**
-     * 自动获取简介
+     * 文本处理
      */
-    protected function description(&$data, $dataExt)
+    protected function getAfterText(&$data, $dataExt)
     {
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         if (isset($data['get_introduce']) && $data['description'] == '' && isset($dataExt['content'])) {
@@ -509,7 +507,7 @@ class Cms extends Modelbase
         unset($data['auto_thumb']);
     }
 
-    private function update_category_items($catid, $action = 'add', $cache = 0)
+    private function updateCategoryItems($catid, $action = 'add', $cache = 0)
     {
         if ($action == 'add') {
             Db::name('Category')->where('id', $catid)->setInc('items');
