@@ -137,8 +137,7 @@ class Form
         //加载所需JS，防止重复加载
         if (!defined('IMAGES_upload_JS')) {
             $string .= '
-                <script type="text/javascript"  src="' . $static_url . '/libs/webuploader/webuploader.min.js"></script>
-                <link rel="stylesheet" href="' . $static_url . '/libs/webuploader/webuploader.css">';
+                <script type="text/javascript"  src="' . $static_url . '/libs/webuploader/webuploader.min.js"></script>';
             define('IMAGES_upload_JS', 1);
         }
         if (!defined('FORM_JS')) {
@@ -158,7 +157,7 @@ class Form
             $path = get_file_path($value) ? get_file_path($value) : $static_url . "/admin/img/none.png";
             $string .= "<div class='file-item thumbnail'><img data-original='{$path}' src='{$path}' width='100' style='max-height: 100px;'><i class='iconfont icon-delete_fill remove-picture' data-id='{$value}'></i></div>";
         }
-        $string .= "</div><input type='hidden' name='{$name}' data-multiple='{$multiple}' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'>上传单张图片</div>";
+        $string .= "</div><input type='hidden' name='{$name}' data-multiple='{$multiple}' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'><i class='layui-icon layui-icon-upload'></i> 上传单张图片</div> <button type='button' class='layui-btn fachoose-image' data-input-id='{$name}' id='fachoose-{$name}'><i class='iconfont icon-other'></i> 选择</button>";
         return $string;
     }
 
