@@ -149,6 +149,7 @@ layui.use(['laydate'], function() {
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
+            <button type="button" class="layui-btn fachoose-image" data-input-id="{$vo.name}" id="fachoose-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
         </div>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -173,6 +174,7 @@ layui.use(['laydate'], function() {
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$vo.name}" value="{$vo.value|default=''}">
             <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传多张图片</div>
+            <button type="button" class="layui-btn fachoose-image" data-multiple="true" data-input-id="{$vo.name}" id="fachoose-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
         </div>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
@@ -279,8 +281,6 @@ layui.use(['laydate'], function() {
 <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.all.min.js"></script>
 
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
-<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
-
 <script type="text/javascript" src="__STATIC__/admin/js/form.js"></script>
 
 <script type="text/javascript" src="__STATIC__/libs/Sortable.js"></script>
