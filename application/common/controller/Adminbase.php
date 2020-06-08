@@ -160,7 +160,7 @@ class Adminbase extends Base
      */
     protected function buildparams()
     {
-        $search_field = $this->request->param('search_field/s', '', 'trim');
+        $search_field = $this->request->param('search_field/s', 'name', 'trim');
         $keyword = $this->request->param('keyword/s', '', 'trim');
 
         $filter_time = $this->request->param('filter_time/s', '', 'trim');
