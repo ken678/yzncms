@@ -178,7 +178,7 @@ layui.define(['table', 'jquery', 'form'], function(exports) {
             //FIX位置
             var overHeight = (elem.offset().top + elem.outerHeight() + tableBox.outerHeight() - $(window).scrollTop()) > $(window).height();
             var overWidth = (elem.offset().left + tableBox.outerWidth()) > $(window).width();
-            overHeight && tableBox.css({ 'top': 'auto', 'bottom': '0px' });
+            overHeight && tableBox.css({ 'top': 'auto', 'bottom': '-' + $(window).scrollTop() + 'px' });
             overWidth && tableBox.css({ 'left': 'auto', 'right': '5px' })
 
             //关键词搜索
