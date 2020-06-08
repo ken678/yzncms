@@ -1,6 +1,7 @@
-layui.use(['layer', 'form'], function() {
+layui.use(['layer', 'form', 'tableSelect'], function() {
     var layer = layui.layer,
-        form = layui.form;
+        form = layui.form,
+        tableSelect = layui.tableSelect;
     // ueditor编辑器集合
     var ueditors = {};
     // 文件上传集合
@@ -28,58 +29,57 @@ layui.use(['layer', 'form'], function() {
 
     });
 
-    //图片上传
-    $(".fachoose-image").on('click', function() {
-        var that = this;
-        var multiple = $(this).data("multiple") ? $(this).data("multiple") : false;
-        var $input_file_name = $(that).attr("id");
-        var input_id = $(that).data("input-id") ? $(that).data("input-id") : "";
-        var inputObj = $("#" + input_id);
-        // 图片列表
-        var $file_list = $('#file_list_' + input_id);
-        layer.open({
-            type: 2,
-            title: '图片选择',
-            area: ['840px', '600px'],
-            offset: 'auto',
-            anim: 1,
-            closeBtn: 1,
-            shade: 0.3,
-            btn: ['确定', '取消'],
-            content: GV.image_select_url + "?multiple=" + multiple,
-            success: function(layero, index) {},
-            yes: function(index, layero) {
-                var selectedList = [];
-                var frame = layer.getChildFrame('html', index);
-                frame.find('#ImagesList > ul > li.active').each(function(index) {
-                    var $this = $(this);
-                    selectedList[index] = {
-                        file_id: $this.data('file-id'),
-                        file_path: $this.data('file-path')
-                    };
-                });
-                var data = [];
-                selectedList.forEach(function(item) {
-                    var $li = '<div class="file-item thumbnail"><img data-original="'+item.file_path+'" src="'+item.file_path+'" width="100" style="max-height: 100px;"><i class="iconfont icon-delete_fill remove-picture" data-id="'+item.file_id+'"></i></div>';
-                    if (multiple) {
-                        if (inputObj.val()) {
-                            inputObj.val(inputObj.val() + ',' + item.file_id);
+    //图片选择
+    if ($('.fachoose-image').length > 0) {
+        $.each($('.fachoose-image'), function(i, v) {
+            var input_id = $(this).data("input-id") ? $(this).data("input-id") : "",
+                inputObj = $("#" + input_id),
+                multiple = $(this).data("multiple") ? 'checkbox' : 'radio';
+            var $file_list = $('#file_list_' + input_id);
+            tableSelect.render({
+                elem: "#fachoose-" + input_id,
+                searchKey: 'keyword',
+                searchPlaceholder: '请输入图片名称',
+                table: {
+                    url: GV.image_select_url,
+                    cols: [
+                        [
+                            { type: multiple },
+                            { field: 'id', title: 'ID' },
+                            { field: 'url', minWidth: 120, search: false, title: '图片', imageHeight: 40, align: "center", templet: '<div><img src="{{d.path}}" height="100%"></div>' },
+                            { field: 'name', width: 120, title: '名称' },
+                            { field: 'mime', width: 120, title: 'Mime类型' },
+                            { field: 'create_time', width: 180, title: '上传时间', align: "center", search: 'range' },
+                        ]
+                    ]
+                },
+                done: function(e, data) {
+                    var selectedList = [];
+                    $.each(data.data, function(index, val) {
+                        selectedList[index] = {
+                            file_id: val.id,
+                            file_path: val.path
+                        };
+                    });
+                    selectedList.forEach(function(item) {
+                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '" width="100" style="max-height: 100px;"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i></div>';
+                        if (multiple == 'checkbox') {
+                            if (inputObj.val()) {
+                                inputObj.val(inputObj.val() + ',' + item.file_id);
+                            } else {
+                                inputObj.val(item.file_id);
+                            }
+                            $file_list.append($li);
                         } else {
                             inputObj.val(item.file_id);
+                            console.log($file_list.html());
+                            $file_list.html($li);
                         }
-                        $file_list.append($li);
-                    } else {
-                        inputObj.val(item.file_id);
-                        console.log($file_list);
-                        $file_list.html($li);
-                    }
-                });
-                layer.close(index);
-
-            }
+                    });
+                }
+            })
         });
-    });
-
+    }
 
     // 文件上传
     $('.js-upload-file,.js-upload-files').each(function() {
