@@ -271,9 +271,10 @@ layui.use(['laydate'], function() {
 
 {/volist}
 
-<script type="text/javascript">
-layui.use(['form'], function() {
-    var form = layui.form;
+<script>
+layui.config({
+    version: "1.0.0",
+    base: '__STATIC__/libs/layui_exts/tableSelect/'
 });
 </script>
 
