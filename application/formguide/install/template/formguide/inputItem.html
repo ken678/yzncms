@@ -137,11 +137,9 @@ layui.use(['laydate'], function() {
         <div class="js-upload-image">
             <div id="file_list_{$vo.name}" class="uploader-list">
                 {notempty name="$vo.value"}
-                <div class="layui-col-xs2">
-                    <div class="file-item thumbnail layui-row layui-col-space10">
-                        <img data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
-                        <i class="iconfont icon-delete_fill remove-picture" data-id="{$vo.value}"></i>
-                    </div>
+                <div class="file-item thumbnail layui-row">
+                    <img data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                    <i class="iconfont icon-delete_fill remove-picture" data-id="{$vo.value}"></i>
                 </div>
                 {/notempty}
             </div>
@@ -161,12 +159,10 @@ layui.use(['laydate'], function() {
             <div id="file_list_{$vo.name}" class="uploader-list">
                 {notempty name="$vo.value"}
                 {volist name="$vo.value|explode=',',###" id="v"}
-                <div class="layui-col-xs2">
-                    <div class="file-item thumbnail layui-row layui-col-space10">
-                        <img data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
-                        <i class="iconfont icon-delete_fill remove-picture" data-id="{$v}"></i>
-                        <i class="iconfont icon-yidong move-picture"></i>
-                    </div>
+                <div class="file-item thumbnail layui-row">
+                    <img data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                    <i class="iconfont icon-delete_fill remove-picture" data-id="{$v}"></i>
+                    <i class="iconfont icon-yidong move-picture"></i>
                 </div>
                 {/volist}
                 {/notempty}
