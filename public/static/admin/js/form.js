@@ -374,7 +374,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                     });
                     $input_file.val(ids.join(','));
                 },
-                placeHolderTemplate: '<div class="file-item thumbnail"></div>'
+                placeHolderTemplate: '<div class="file-item thumbnail" style="border:2px #009688 dashed;"></div>'
             })
         }
     });
