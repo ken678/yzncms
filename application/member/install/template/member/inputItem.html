@@ -138,11 +138,13 @@ layui.use(['laydate'], function() {
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
         <div class="js-upload-image">
-            <div id="file_list_{$vo.name}" class="uploader-list">
+            <div id="file_list_{$vo.name}" class="uploader-list layui-row layui-col-space10">
                 {notempty name="$vo.value"}
-                <div class="file-item thumbnail">
-                    <img data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
-                    <i class="iconfont icon-delete_fill remove-picture" data-id="{$vo.value}"></i>
+                <div class="layui-col-xs2">
+                    <div class="file-item thumbnail">
+                        <img data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                        <i class="iconfont icon-delete_fill remove-picture" data-id="{$vo.value}"></i>
+                    </div>
                 </div>
                 {/notempty}
             </div>
@@ -159,13 +161,15 @@ layui.use(['laydate'], function() {
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
         <div class="js-upload-images">
-            <div id="file_list_{$vo.name}" class="uploader-list">
+            <div id="file_list_{$vo.name}" class="uploader-list layui-row layui-col-space10">
                 {notempty name="$vo.value"}
                 {volist name="$vo.value|explode=',',###" id="v"}
-                <div class="file-item thumbnail">
-                    <img data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
-                    <i class="iconfont icon-delete_fill remove-picture" data-id="{$v}"></i>
-                    <i class="iconfont icon-yidong move-picture"></i>
+                <div class="layui-col-xs2">
+                    <div class="file-item thumbnail">
+                        <img data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                        <i class="iconfont icon-delete_fill remove-picture" data-id="{$v}"></i>
+                        <i class="iconfont icon-yidong move-picture"></i>
+                    </div>
                 </div>
                 {/volist}
                 {/notempty}
