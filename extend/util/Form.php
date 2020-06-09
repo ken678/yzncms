@@ -137,7 +137,8 @@ class Form
         //加载所需JS，防止重复加载
         if (!defined('IMAGES_upload_JS')) {
             $string .= '
-                <script type="text/javascript"  src="' . $static_url . '/libs/webuploader/webuploader.min.js"></script>';
+                <script type="text/javascript"  src="' . $static_url . '/libs/webuploader/webuploader.min.js"></script>
+                <link rel="stylesheet" href="' . $static_url . '/libs/webuploader/webuploader.css">';
             define('IMAGES_upload_JS', 1);
         }
         if (!defined('FORM_JS')) {
