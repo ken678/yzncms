@@ -361,19 +361,17 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
         webuploader.push(uploader);
         // 如果是多图上传，则实例化拖拽
         if ($multiple) {
-            new Sortable($file_list.get(0), {
-                group: "file_list",
-                handle: '.move-picture',
-                animation: 150,
-                ghostClass: "sortable-ghost",
-                onEnd: function(evt) {
+            $file_list.dragsort({
+                dragSelector: ".move-picture",
+                dragEnd: function () {
                     var ids = [];
                     $file_list.find('.remove-picture').each(function() {
                         ids.push($(this).data('id'));
                     });
                     $input_file.val(ids.join(','));
-                }
-            });
+                },
+                placeHolderTemplate: '<div class="layui-col-xs2"></div>'
+            })
         }
     });
 });
