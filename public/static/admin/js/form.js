@@ -62,7 +62,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                         };
                     });
                     selectedList.forEach(function(item) {
-                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '" width="100" style="max-height: 100px;"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i></div>';
+                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i></div>';
                         if (multiple == 'checkbox') {
                             if (inputObj.val()) {
                                 inputObj.val(inputObj.val() + ',' + item.file_id);
