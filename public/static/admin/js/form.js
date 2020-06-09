@@ -62,7 +62,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                         };
                     });
                     selectedList.forEach(function(item) {
-                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i></div>';
+                        var $li = '<div class="file-item thumbnail layui-col-xs2"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i></div>';
                         if (multiple == 'checkbox') {
                             if (inputObj.val()) {
                                 inputObj.val(inputObj.val() + ',' + item.file_id);
@@ -259,7 +259,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
         // 当有文件添加进来的时候
         uploader.on('fileQueued', function(file) {
             var $li = $(
-                    '<div id="' + file.id + '" class="file-item js-gallery thumbnail">' +
+                    '<div id="' + file.id + '" class="file-item js-gallery thumbnail layui-col-xs2">' +
                     '<img>' +
                     '<div class="info">' + file.name + '</div>' +
                     '<i class="iconfont icon-delete_fill remove-picture"></i>' +
