@@ -72,7 +72,6 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                             $file_list.append($li);
                         } else {
                             inputObj.val(item.file_id);
-                            console.log($file_list.html());
                             $file_list.html($li);
                         }
                     });
@@ -346,7 +345,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
 
         // 删除图片
         $file_list.delegate('.remove-picture', 'click', function() {
-            $(this).closest('.file-item').remove();
+            $(this).closest('.layui-col-xs2').remove();
             if ($multiple) {
                 var ids = [];
                 $file_list.find('.remove-picture').each(function() {
@@ -362,7 +361,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
         webuploader.push(uploader);
         // 如果是多图上传，则实例化拖拽
         if ($multiple) {
-            Sortable.create($file_list.get(0), {
+            new Sortable($file_list.get(0), {
                 group: "file_list",
                 handle: '.move-picture',
                 animation: 150,
