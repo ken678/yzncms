@@ -62,11 +62,11 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                         };
                     });
                     selectedList.forEach(function(item) {
-                        var $li = '<div class="layui-col-xs2"><div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i>';
+                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i>';
                         if (multiple == 'checkbox') {
                             $li += '<i class="iconfont icon-yidong move-picture"></i>';
                         }
-                        $li += '</div></div>';
+                        $li += '</div>';
                         if (multiple == 'checkbox') {
                             if (inputObj.val()) {
                                 inputObj.val(inputObj.val() + ',' + item.file_id);
@@ -262,7 +262,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
         // 当有文件添加进来的时候
         uploader.on('fileQueued', function(file) {
             var $li = $(
-                    '<div class="layui-col-xs2"><div id="' + file.id + '" class="file-item js-gallery thumbnail">' +
+                    '<div id="' + file.id + '" class="file-item js-gallery thumbnail">' +
                     '<img>' +
                     '<div class="info">' + file.name + '</div>' +
                     '<i class="iconfont icon-delete_fill remove-picture"></i>' +
@@ -271,7 +271,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                     '<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>' +
                     '</div>' +
                     '<div class="file-state img-state"><div class="layui-bg-blue">正在读取...</div>' +
-                    '</div></div>'
+                    '</div>'
                 ),
                 $img = $li.find('img');
 
@@ -349,7 +349,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
 
         // 删除图片
         $file_list.delegate('.remove-picture', 'click', function() {
-            $(this).closest('.layui-col-xs2').remove();
+            $(this).closest('.thumbnail').remove();
             if ($multiple) {
                 var ids = [];
                 $file_list.find('.remove-picture').each(function() {
@@ -374,7 +374,7 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                     });
                     $input_file.val(ids.join(','));
                 },
-                placeHolderTemplate: '<div class="layui-col-xs2"></div>'
+                placeHolderTemplate: '<div class="file-item thumbnail"></div>'
             })
         }
     });
