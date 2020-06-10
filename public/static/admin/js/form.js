@@ -1,6 +1,7 @@
-layui.use(['layer', 'form', 'tableSelect'], function() {
+layui.use(['layer', 'form', 'tableSelect','dragsort'], function() {
     var layer = layui.layer,
         form = layui.form,
+        dragsort = layui.dragsort,
         tableSelect = layui.tableSelect;
     // ueditor编辑器集合
     var ueditors = {};

@@ -1,7 +1,8 @@
 // jQuery List DragSort v0.5.2
 // Website: http://dragsort.codeplex.com/
 // License: http://dragsort.codeplex.com/license
-
+layui.define(['jquery'],function(exports) {
+var jQuery=layui.$;
 (function($) {
 
 	$.fn.dragsort = function(options) {
@@ -377,3 +378,6 @@
 	};
 
 })(jQuery);
+
+	exports('dragsort',{});
+});
