@@ -275,8 +275,11 @@ layui.use(['laydate'], function() {
 
 <script>
 layui.config({
-    version: "1.0.0",
-    base: '__STATIC__/libs/layui_exts/tableSelect/'
+    version: '1557143998899',
+    base: '__STATIC__/libs/layui_exts/'
+}).extend({
+    tableSelect: 'tableSelect/tableSelect',
+    dragsort:'dragsort/dragsort',
 });
 </script>
 
@@ -287,7 +290,6 @@ layui.config({
 
 <script type="text/javascript" src="__STATIC__/admin/js/form.js"></script>
 
-<script type="text/javascript" src="__STATIC__/libs/jquery.dragsort.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
 <script type="text/javascript">
 $('.uploader-list').each(function () {
