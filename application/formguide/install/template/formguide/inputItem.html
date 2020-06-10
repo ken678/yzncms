@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css">
+<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css?t=1590715645">
 <link rel="stylesheet" href="__STATIC__/libs/viewer/viewer.min.css">
 {volist name="fieldList" id="vo"}
 
@@ -141,7 +141,7 @@ layui.use(['laydate'], function() {
                 {notempty name="$vo.value"}
                 <div class="file-item thumbnail layui-row">
                     <img data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
-                    <i class="iconfont icon-delete_fill remove-picture" data-id="{$vo.value}"></i>
+                    <i class="iconfont icon-trash remove-picture" data-id="{$vo.value}"></i>
                 </div>
                 {/notempty}
             </div>
@@ -163,7 +163,7 @@ layui.use(['laydate'], function() {
                 {volist name="$vo.value|explode=',',###" id="v"}
                 <div class="file-item thumbnail layui-row">
                     <img data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
-                    <i class="iconfont icon-delete_fill remove-picture" data-id="{$v}"></i>
+                    <i class="iconfont icon-trash remove-picture" data-id="{$v}"></i>
                     <i class="iconfont icon-yidong move-picture"></i>
                 </div>
                 {/volist}
