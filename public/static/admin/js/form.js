@@ -62,11 +62,11 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                         };
                     });
                     selectedList.forEach(function(item) {
-                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i>';
+                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
                         if (multiple == 'checkbox') {
-                            $li += '<i class="iconfont icon-yidong move-picture"></i>';
+                            $li += '<i class="iconfont icon-yidong move-picture"></i> ';
                         }
-                        $li += '</div>';
+                        $li += '<i class="iconfont icon-delete_fill remove-picture" data-id="' + item.file_id + '"></i></div></div>';
                         if (multiple == 'checkbox') {
                             if (inputObj.val()) {
                                 inputObj.val(inputObj.val() + ',' + item.file_id);
@@ -265,9 +265,9 @@ layui.use(['layer', 'form', 'tableSelect'], function() {
                     '<div id="' + file.id + '" class="file-item js-gallery thumbnail">' +
                     '<img>' +
                     '<div class="info">' + file.name + '</div>' +
-                    '<i class="iconfont icon-delete_fill remove-picture"></i>' +
-                    ($multiple ? '<i class="iconfont icon-yidong move-picture"></i>' : '') +
-                    '<div class="progress progress-mini remove-margin active">' +
+                    '<div class="file-panel">' +
+                    ($multiple ? ' <i class="iconfont icon-yidong move-picture"></i> ' : '') +
+                    '<i class="iconfont icon-delete_fill remove-picture"></i></div><div class="progress progress-mini remove-margin active">' +
                     '<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>' +
                     '</div>' +
                     '<div class="file-state img-state"><div class="layui-bg-blue">正在读取...</div>' +
