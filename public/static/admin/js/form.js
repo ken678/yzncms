@@ -1,4 +1,4 @@
-layui.use(['layer', 'form', 'tableSelect','dragsort'], function() {
+layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
     var layer = layui.layer,
         form = layui.form,
         dragsort = layui.dragsort,
@@ -9,6 +9,28 @@ layui.use(['layer', 'form', 'tableSelect','dragsort'], function() {
     var webuploader = [];
     // 当前上传对象
     var curr_uploader = {};
+
+    // 放大图片
+    $('body').on('click', 'img', function() {
+        var title = $(this).attr('alt'),
+            src = $(this).attr('src'),
+            alt = $(this).attr('alt');
+        var photos = {
+            "title": title,
+            "id": Math.random(),
+            "data": [{
+                "alt": alt,
+                "pid": Math.random(),
+                "src": src,
+                "thumb": src
+            }]
+        };
+        layer.photos({
+            photos: photos,
+            anim: 5
+        });
+        return false;
+    });
 
     // ueditor编辑器
     $('.js-ueditor').each(function() {
