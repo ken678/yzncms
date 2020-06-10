@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css?t=1590715645">
-<link rel="stylesheet" href="__STATIC__/libs/viewer/viewer.min.css">
 {if isset($fieldList)}
 {volist name="fieldList" id="vo"}
 
@@ -283,12 +282,4 @@ layui.use(['laydate'], function() {
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
 
 <script type="text/javascript" src="__STATIC__/admin/js/form.js"></script>
-
-<script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
-
-<script type="text/javascript">
-$('.uploader-list').each(function () {
-    $(this).viewer();
-});
-</script>
 {/if}

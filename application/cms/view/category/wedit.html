@@ -99,18 +99,12 @@
 </div>
 {/block}
 {block name="script"}
-<script type="text/javascript" src="__STATIC__/libs/viewer/viewer.min.js"></script>
-<link rel="stylesheet" href="__STATIC__/libs/viewer/viewer.min.css">
 <script type="text/javascript">
 layui.use('form', function() {
     var form = layui.form;
     form.on('select(fasttype)', function(data) {
         $('#url').val($(data.elem).find("option:selected").attr("data-url"));
     });
-});
-
-$('.uploader-list').each(function () {
-    $(this).viewer();
 });
 </script>
 {/block}
