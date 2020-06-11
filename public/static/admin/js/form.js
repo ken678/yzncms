@@ -32,6 +32,21 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
         return false;
     });
 
+    //裁剪图片
+    if ($('.cropper').length > 0) {
+        $(document).on('click', '.cropper', function() {
+            var image = $(this).closest(".thumbnail").children('img').data('original');
+            layer.open({
+                type: 2,
+                area: ['800px', '620px'],
+                title: '裁剪',
+                maxmin: true,
+                content: GV.jcrop_upload_url + '?url=' + image
+            });
+
+        });
+    }
+
     // ueditor编辑器
     $('.js-ueditor').each(function() {
         var ueditor_name = $(this).attr('id');
