@@ -6,9 +6,8 @@
 .file-item.thumbnail .info{display: none; }
 .file-panel{position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
 .thumbnail:hover .file-panel{top: 0; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
-.file-item.thumbnail .remove-picture{font-size: 18px; color: #fff; cursor: pointer; display: none; z-index: 5;width: 16px; height: 16px; line-height: 16px;}
-.file-item.thumbnail .move-picture{font-size:18px; color: #fff; display: none; z-index: 5; width: 16px; height: 16px; line-height: 16px;cursor: move; }
-.file-item.thumbnail:hover .remove-picture, .file-item.thumbnail:hover .move-picture{display:inline-block; }
+.file-item.thumbnail .file-panel i{font-size: 18px; color: #fff;width: 16px; height: 16px; line-height: 16px;z-index: 5;cursor: pointer;}
+.file-item.thumbnail .file-panel i.move-picture{cursor: move; }
 .file-item .progress.progress-xs{margin-bottom: 5px; margin-top: 5px; }
 .file-item .error, .file-item .img-state{position: absolute; top: 4px; left: 4px; right: 4px; color: white; text-align: center; height: 20px; font-size: 14px; line-height: 20px; }
 .file-item .error{background: rgba(255, 0, 0, 0.67); }
