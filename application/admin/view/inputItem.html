@@ -160,6 +160,7 @@ layui.use(['laydate'], function() {
                 <div class="file-item thumbnail">
                     <img data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
                     <div class="file-panel">
+                        <i class="iconfont icon-tailor cropper" data-id="{$vo.value}"></i>
                     	<i class="iconfont icon-trash remove-picture" data-id="{$vo.value}"></i>
                     </div>
                 </div>
@@ -186,6 +187,7 @@ layui.use(['laydate'], function() {
                     <img data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
                     <div class="file-panel">
                     	<i class="iconfont icon-yidong move-picture"></i>
+                        <i class="iconfont icon-tailor cropper" data-id="{$v}"></i>
 	                    <i class="iconfont icon-trash remove-picture" data-id="{$v}"></i>
                     </div>
                 </div>

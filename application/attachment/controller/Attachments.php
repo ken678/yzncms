@@ -54,6 +54,11 @@ class Attachments extends Adminbase
         return $this->fetch();
     }
 
+    public function cropper()
+    {
+        return $this->fetch();
+    }
+
     //附件删除
     public function delete()
     {
