@@ -111,6 +111,7 @@ label.btn {
 }
 
 .img-container {
+    margin-bottom: 1rem;
   max-height: 497px;
   min-height: 200px;
 }
@@ -126,6 +127,7 @@ label.btn {
 }
 
 .docs-preview {
+  min-height: 18rem;
   margin-right: -1rem;
 }
 
@@ -141,21 +143,25 @@ label.btn {
 }
 
 .preview-lg {
+  border:2px solid #ddd;
   height: 9rem;
-  width: 11rem;
+  width: 16rem;
 }
 
 .preview-md {
+  border:2px solid #ddd;
   height: 4.5rem;
   width: 8rem;
 }
 
 .preview-sm {
+  border:2px solid #ddd;
   height: 2.25rem;
   width: 4rem;
 }
 
 .preview-xs {
+  border:2px solid #ddd;
   height: 1.125rem;
   margin-right: 0;
   width: 2rem;
