@@ -185,6 +185,7 @@
 
         //左边菜单点击
         $('#B_menubar').on('click', 'a', function(e) {
+            var loading = layer.load(0, {shade: false});
             e.preventDefault();
             e.stopPropagation();
             //iframe_height();
@@ -218,6 +219,7 @@
                 href: href,
                 id: data_id
             });
+            layer.close(loading);
 
         });
 
