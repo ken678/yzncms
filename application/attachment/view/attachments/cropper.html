@@ -177,7 +177,7 @@
                 success: function(res) {
                     if (res.code == 0) {
                         var arr = parent.$("#layui-layer" + index).data("arr");
-                        parent.$(".thumb-" + arr[0]).attr('src', res.path).addClass("thumb-" + res.id).removeClass("thumb-" + arr[0]);
+                        parent.$("." + arr[1] + "-" + arr[0]).attr('src', res.path).addClass(arr[1] + "-" + res.id).removeClass("thumb-" + arr[0]);
                         var ids = parent.$('#' + arr[1]).val().split(',');
                         let i = ids.indexOf(arr[0]);
                         ~i && (ids[i] = res.id);
