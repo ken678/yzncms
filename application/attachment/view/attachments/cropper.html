@@ -178,7 +178,10 @@
                     if (res.code == 0) {
                         var arr = parent.$("#layui-layer" + index).data("arr");
                         parent.$(".thumb-" + arr[0]).attr('src', res.path).addClass("thumb-" + res.id).removeClass("thumb-" + arr[0]);
-                        parent.$('#' + arr[1]).val(parent.$('#' + arr[1]).val().replace(arr[0], res.id));
+                        var ids = parent.$('#' + arr[1]).val().split(',');
+                        let i = ids.indexOf(arr[0]);
+                        ~i && (ids[i] = res.id);
+                        parent.$('#' + arr[1]).val(ids.join(','));
                         parent.$(".cropper[data-input-id=" + arr[0] + "]").attr('data-input-id', res.id);
                         //layer.alert(res.info);
                     } else {
