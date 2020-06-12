@@ -33,25 +33,25 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
     });
 
     //裁剪图片
-    if ($('.cropper').length > 0) {
-        $(document).on('click', '.cropper', function() {
-            var image = $(this).closest(".thumbnail").children('img').data('original');
-            var inputId = $(this).data("input-id");
-            var domId = $(this).data("id");
-            var index = layer.open({
-                type: 2,
-                shadeClose: true,
-                shade: false,
-                area: ['880px', '620px'],
-                title: '图片裁剪',
-                content: GV.jcrop_upload_url + '?url=' + image,
-                success: function (layero, index) {
-                    $(layero).data("dom", [inputId,domId]);
-                }
-            });
 
+    $(document).on('click', '.cropper', function() {
+        var inputId = $(this).attr("data-input-id");
+        var image = $(this).closest(".thumbnail").children('img').data('original');
+        console.log(inputId);
+        var dataId = $(this).data("id");
+        var index = layer.open({
+            type: 2,
+            shadeClose: true,
+            shade: false,
+            area: ['880px', '620px'],
+            title: '图片裁剪',
+            content: GV.jcrop_upload_url + '?url=' + image,
+            success: function(layero, index) {
+                $(layero).data("arr", [inputId,dataId]);
+            }
         });
-    }
+
+    });
 
     // ueditor编辑器
     $('.js-ueditor').each(function() {
@@ -106,11 +106,11 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
                         };
                     });
                     selectedList.forEach(function(item) {
-                        var $li = '<div class="file-item thumbnail"><img data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
+                        var $li = '<div class="file-item thumbnail"><img class="thumb-' + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
                         if (multiple == 'checkbox') {
                             $li += '<i class="iconfont icon-yidong move-picture"></i> ';
                         }
-                        $li += '<i class="iconfont icon-trash remove-picture" data-id="' + item.file_id + '"></i></div></div>';
+                        $li += '<i class="iconfont icon-tailor cropper" data-input-id="' + item.file_id + '" data-id="' + input_id + '"></i> <i class="iconfont icon-trash remove-picture" data-id="' + item.file_id + '"></i></div></div>';
                         if (multiple == 'checkbox') {
                             if (inputObj.val()) {
                                 inputObj.val(inputObj.val() + ',' + item.file_id);
@@ -311,7 +311,7 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
                     '<div class="info">' + file.name + '</div>' +
                     '<div class="file-panel">' +
                     ($multiple ? ' <i class="iconfont icon-yidong move-picture"></i> ' : '') +
-                    '<i class="iconfont icon-trash remove-picture"></i></div><div class="progress progress-mini remove-margin active">' +
+                    '<i class="iconfont icon-tailor cropper"></i> <i class="iconfont icon-trash remove-picture"></i></div><div class="progress progress-mini remove-margin active">' +
                     '<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>' +
                     '</div>' +
                     '<div class="file-state img-state"><div class="layui-bg-blue">正在读取...</div>' +
@@ -362,7 +362,9 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
                 }
             }
             $li.find('.file-state').html('<div class="layui-bg-green">' + response.info + '</div>');
-            $li.find('img').attr('data-original', response.path);
+            $li.find('img').attr('data-original', response.path).addClass('thumb-' + response.id);
+            $li.find('.file-panel .cropper').attr('data-input-id', response.id).attr('data-id',$input_file_name);
+            $li.find('.file-panel .remove-picture').attr('data-id', response.id);
         });
 
         // 文件上传失败，显示上传出错。
