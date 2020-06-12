@@ -37,7 +37,7 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
     $(document).on('click', '.cropper', function() {
         var inputId = $(this).attr("data-input-id");
         var image = $(this).closest(".thumbnail").children('img').data('original');
-        console.log(inputId);
+        //console.log(inputId);
         var dataId = $(this).data("id");
         var index = layer.open({
             type: 2,
@@ -47,7 +47,7 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
             title: '图片裁剪',
             content: GV.jcrop_upload_url + '?url=' + image,
             success: function(layero, index) {
-                $(layero).data("arr", [inputId,dataId]);
+                $(layero).data("arr", [inputId, dataId]);
             }
         });
 
@@ -106,7 +106,7 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
                         };
                     });
                     selectedList.forEach(function(item) {
-                        var $li = '<div class="file-item thumbnail"><img class="thumb-' + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
+                        var $li = '<div class="file-item thumbnail"><img class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
                         if (multiple == 'checkbox') {
                             $li += '<i class="iconfont icon-yidong move-picture"></i> ';
                         }
@@ -362,8 +362,8 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
                 }
             }
             $li.find('.file-state').html('<div class="layui-bg-green">' + response.info + '</div>');
-            $li.find('img').attr('data-original', response.path).addClass('thumb-' + response.id);
-            $li.find('.file-panel .cropper').attr('data-input-id', response.id).attr('data-id',$input_file_name);
+            $li.find('img').attr('data-original', response.path).addClass($input_file_name + '-' + response.id);
+            $li.find('.file-panel .cropper').attr('data-input-id', response.id).attr('data-id', $input_file_name);
             $li.find('.file-panel .remove-picture').attr('data-id', response.id);
         });
 
