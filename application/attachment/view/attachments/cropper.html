@@ -18,8 +18,14 @@
     .layui-container {
         width: 100% !important;
     }
-    .modal-body{width: 300px;}
-    .modal-body canvas{width: 100%;}
+
+    .modal-body {
+        width: 300px;
+    }
+
+    .modal-body canvas {
+        width: 100%;
+    }
     </style>
 </head>
 
@@ -98,7 +104,7 @@
             </div>
             <div id="getCroppedCanvasModal" style="display: none;">
                 <div class="modal-content" style="padding: 20px;">
-                   <h5 style="font-size: 16px;line-height: 2;">已剪裁</h5>
+                    <h5 style="font-size: 16px;line-height: 2;">已剪裁</h5>
                     <div class="modal-body"></div>
                     <a href="javascript:;" type="button" class="layui-btn layui-btn-sm layui-btn-fluid" id="download" download="cropped.jpg">下载图片</a>
                 </div>
@@ -114,294 +120,301 @@
     <script src="__STATIC__/libs/cropper/cropper.min.js"></script>
     <script type="text/javascript">
     layui.use(['layer', 'jquery'], function() {
-        $(function() {
-            var $ = layui.jquery,
-                layer = layui.layer;
-            var console = window.console || { log: function() {} };
-            var URL = window.URL || window.webkitURL;
-            var $image = $('#image');
-            var $download = $('#download');
-            /*var $dataX = $('#dataX');
-            var $dataY = $('#dataY');*/
-            var $dataHeight = $('#dataHeight');
-            var $dataWidth = $('#dataWidth');
-            /*var $dataRotate = $('#dataRotate');
-            var $dataScaleX = $('#dataScaleX');
-            var $dataScaleY = $('#dataScaleY');*/
-            var options = {
-                aspectRatio: 16 / 9,
-                preview: '.img-preview',
-                crop: function(e) {
-                    /*$dataX.val(Math.round(e.detail.x));
-                    $dataY.val(Math.round(e.detail.y));*/
-                    $dataHeight.val(Math.round(e.detail.height));
-                    $dataWidth.val(Math.round(e.detail.width));
-                    /*$dataRotate.val(e.detail.rotate);
-                    $dataScaleX.val(e.detail.scaleX);
-                    $dataScaleY.val(e.detail.scaleY);*/
-                }
-            };
-            var croppedOptions = {
-                minWidth: parseInt("{$Think.get.croppedMinWidth|default='0'}"),
-                minHeight: parseInt("{$Think.get.croppedMinHeight|default='0'}"),
-                maxWidth: parseInt("{$Think.get.croppedMaxWidth|default='2048'}"),
-                maxHeight: parseInt("{$Think.get.croppedMaxHeight|default='2048'}"),
-                fillColor: "{:$Think.get.croppedFillColor ? '#' . $Think.get.croppedFillColor : 'transparent'}",
-            };
-            if (parseInt("{$Think.get.croppedMinWidth|default='0'}") > 0) {
-                croppedOptions.width = parseInt("{$Think.get.croppedWidth}");
+
+        var $ = layui.jquery,
+            layer = layui.layer;
+        var console = window.console || { log: function() {} };
+        var URL = window.URL || window.webkitURL;
+        var $image = $('#image');
+        var $download = $('#download');
+        /*var $dataX = $('#dataX');
+        var $dataY = $('#dataY');*/
+        var $dataHeight = $('#dataHeight');
+        var $dataWidth = $('#dataWidth');
+        /*var $dataRotate = $('#dataRotate');
+        var $dataScaleX = $('#dataScaleX');
+        var $dataScaleY = $('#dataScaleY');*/
+        var options = {
+            aspectRatio: 16 / 9,
+            preview: '.img-preview',
+            crop: function(e) {
+                /*$dataX.val(Math.round(e.detail.x));
+                $dataY.val(Math.round(e.detail.y));*/
+                $dataHeight.val(Math.round(e.detail.height));
+                $dataWidth.val(Math.round(e.detail.width));
+                /*$dataRotate.val(e.detail.rotate);
+                $dataScaleX.val(e.detail.scaleX);
+                $dataScaleY.val(e.detail.scaleY);*/
             }
-            if (parseInt("{$Think.get.croppedMinHeight|default='0'}") > 0) {
-                croppedOptions.height = parseInt("{$Think.get.croppedHeight}");
-            }
-            var originalImageURL = $image.attr('src');
-            var uploadedImageName = 'cropped.jpg';
-            var uploadedImageType = 'image/jpeg';
-            var uploadedImageURL;
+        };
+        var originalImageURL = $image.attr('src');
+        var uploadedImageName = 'cropped.jpg';
+        var uploadedImageType = 'image/jpeg';
+        var uploadedImageURL;
 
-            // Cropper
-            $image.cropper(options);
+        // Cropper
+        $image.cropper(options);
 
-            $(document).on("click", ".getCroppedCanvas", function() {
-                layer.open({
-                    type: 1,
-                    title:false,
-                    area: '340px',
-                    content: $('#getCroppedCanvasModal')
-                });
-            })
-
-            //确认事件
-            $(document).on("click", ".btn-submit", function() {
-                layer.alert('内容');
-                var url = originalImageURL;
-                var data = $image.cropper('getData');
-                var dataURI = $image.cropper('getCroppedCanvas', croppedOptions).toDataURL('image/png');
-                data.dataURI = dataURI;
-                //console.log(data);
-
-                /*var arr = data.dataURI.split(','),
-                    mime = arr[0].match(/:(.*?);/)[1],
-                    bstr = atob(arr[1]),
-                    n = bstr.length,
-                    u8arr = new Uint8Array(n);
-                while (n--) {
-                    u8arr[n] = bstr.charCodeAt(n);
-                }
-                var urlArr = url.split('.');
-                var suffix = 'png';
-                url = urlArr.join('');
-                var filename = url.substr(url.lastIndexOf('/') + 1);
-                var exp = new RegExp("\\." + suffix + "$", "i");
-                filename = exp.test(filename) ? filename : filename + "." + suffix;
-                var file = new File([u8arr], filename, { type: mime });*/
-
-                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                parent.$("#layui-layer" + index).data("callback", data);
-                parent.layer.close(index);
+        $(document).on("click", ".getCroppedCanvas", function() {
+            layer.open({
+                type: 1,
+                title: false,
+                area: '340px',
+                content: $('#getCroppedCanvasModal')
             });
+        })
 
-            //取消事件
-            $(document).on("click", ".btn-cancel", function() {
-                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                parent.layer.close(index);
+        function doUpload(filename, fileobj, index) {
+            var formData = new FormData();
+            formData.append(filename, fileobj);
+            $.ajax({
+                url: '{:url("attachment/upload/upload", ["dir" => "images", "module" => "admin"])}',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(res) {
+                    if (res.code == 0) {
+                        var dom = parent.$("#layui-layer" + index).data("dom");
+                        parent.$("." + dom[1] + dom[0]).attr('src', res.path);
+                        parent.$("#" + dom[1]).val(parent.$("#" + dom[1]).val().replace(dom[0], res.id));
+                        //layer.alert(res.info);
+                    } else {
+                        //layer.alert(res.info);
+                    }
+                },
+                error: function() {
+                    //layer.alert("文件上传异常!");
+                }
             });
+        }
 
-            // Buttons
-            if (!$.isFunction(document.createElement('canvas').getContext)) {
-                $('button[data-method="getCroppedCanvas"]').prop('disabled', true);
+        function dataURLtoFile(dataurl) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            var urlArr = originalImageURL.split('.');
+            var suffix = 'png';
+            originalImageURL = urlArr.join('');
+            var filename = originalImageURL.substr(originalImageURL.lastIndexOf('/') + 1);
+            var exp = new RegExp("\\." + suffix + "$", "i");
+            filename = exp.test(filename) ? filename : filename + "." + suffix;
+            return new File([u8arr], filename, { type: mime });
+        }
+
+        //确认事件
+        $(document).on("click", ".btn-submit", function() {
+            var dataUrl = $image.cropper('getCroppedCanvas').toDataURL('image/png');
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            doUpload('file', dataURLtoFile(dataUrl), index);
+            parent.layer.close(index);
+        });
+
+        //取消事件
+        $(document).on("click", ".btn-cancel", function() {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+        });
+
+        // Buttons
+        if (!$.isFunction(document.createElement('canvas').getContext)) {
+            $('button[data-method="getCroppedCanvas"]').prop('disabled', true);
+        }
+
+        if (typeof document.createElement('cropper').style.transition === 'undefined') {
+            $('button[data-method="rotate"]').prop('disabled', true);
+            $('button[data-method="scale"]').prop('disabled', true);
+        }
+
+        // Download
+        /*if (typeof $download[0].download === 'undefined') {
+            $download.addClass('disabled');
+        }*/
+
+        // 选择比例
+        $('.docs-toggles').on('click', 'button', function() {
+            var $this = $(this);
+            var name = $this.data('name');
+            var type = $this.prop('type');
+            var cropBoxData;
+            var canvasData;
+
+
+            if (!$image.data('cropper')) {
+                return;
             }
 
-            if (typeof document.createElement('cropper').style.transition === 'undefined') {
-                $('button[data-method="rotate"]').prop('disabled', true);
-                $('button[data-method="scale"]').prop('disabled', true);
+            options[name] = $this.val();
+            $image.cropper('destroy').cropper(options);
+        });
+
+        // 按钮组操作
+        $('.docs-buttons').on('click', '[data-method]', function() {
+            var $this = $(this);
+            var data = $this.data();
+            var cropper = $image.data('cropper');
+            var cropped;
+            var $target;
+            var result;
+
+            if ($this.prop('disabled') || $this.hasClass('disabled')) {
+                return;
             }
 
-            // Download
-            /*if (typeof $download[0].download === 'undefined') {
-                $download.addClass('disabled');
-            }*/
+            if (cropper && data.method) {
+                data = $.extend({}, data); // Clone a new one
 
-            // 选择比例
-            $('.docs-toggles').on('click', 'button', function() {
-                var $this = $(this);
-                var name = $this.data('name');
-                var type = $this.prop('type');
-                var cropBoxData;
-                var canvasData;
+                if (typeof data.target !== 'undefined') {
+                    $target = $(data.target);
 
-
-                if (!$image.data('cropper')) {
-                    return;
-                }
-
-                options[name] = $this.val();
-                $image.cropper('destroy').cropper(options);
-            });
-
-            // 按钮组操作
-            $('.docs-buttons').on('click', '[data-method]', function() {
-                var $this = $(this);
-                var data = $this.data();
-                var cropper = $image.data('cropper');
-                var cropped;
-                var $target;
-                var result;
-
-                if ($this.prop('disabled') || $this.hasClass('disabled')) {
-                    return;
-                }
-
-                if (cropper && data.method) {
-                    data = $.extend({}, data); // Clone a new one
-
-                    if (typeof data.target !== 'undefined') {
-                        $target = $(data.target);
-
-                        if (typeof data.option === 'undefined') {
-                            try {
-                                data.option = JSON.parse($target.val());
-                            } catch (e) {
-                                console.log(e.message);
-                            }
-                        }
-                    }
-
-                    cropped = cropper.cropped;
-
-                    switch (data.method) {
-                        case 'rotate':
-                            if (cropped && options.viewMode > 0) {
-                                $image.cropper('clear');
-                            }
-
-                            break;
-
-                        case 'getCroppedCanvas':
-                            if (uploadedImageType === 'image/jpeg') {
-                                if (!data.option) {
-                                    data.option = {};
-                                }
-
-                                data.option.fillColor = '#fff';
-                            }
-
-                            break;
-                    }
-
-                    result = $image.cropper(data.method, data.option, data.secondOption);
-
-                    switch (data.method) {
-                        case 'rotate':
-                            if (cropped && options.viewMode > 0) {
-                                $image.cropper('crop');
-                            }
-
-                            break;
-
-                        case 'scaleX':
-                        case 'scaleY':
-                            $(this).data('option', -data.option);
-                            break;
-
-                        case 'getCroppedCanvas':
-                            if (result) {
-                                // Bootstrap's Modal
-                                $('#getCroppedCanvasModal').find('.modal-body').html(result);
-
-                                if (!$download.hasClass('disabled')) {
-                                    download.download = uploadedImageName;
-                                    $download.attr('href', result.toDataURL(uploadedImageType));
-                                }
-                            }
-
-                            break;
-
-                        case 'destroy':
-                            if (uploadedImageURL) {
-                                URL.revokeObjectURL(uploadedImageURL);
-                                uploadedImageURL = '';
-                                $image.attr('src', originalImageURL);
-                            }
-
-                            break;
-                    }
-
-                    if ($.isPlainObject(result) && $target) {
+                    if (typeof data.option === 'undefined') {
                         try {
-                            $target.val(JSON.stringify(result));
+                            data.option = JSON.parse($target.val());
                         } catch (e) {
                             console.log(e.message);
                         }
                     }
                 }
-            });
 
-            // 键盘支持
-            $(document.body).on('keydown', function(e) {
-                if (e.target !== this || !$image.data('cropper') || this.scrollTop > 300) {
+                cropped = cropper.cropped;
+
+                switch (data.method) {
+                    case 'rotate':
+                        if (cropped && options.viewMode > 0) {
+                            $image.cropper('clear');
+                        }
+
+                        break;
+
+                    case 'getCroppedCanvas':
+                        if (uploadedImageType === 'image/jpeg') {
+                            if (!data.option) {
+                                data.option = {};
+                            }
+
+                            data.option.fillColor = '#fff';
+                        }
+
+                        break;
+                }
+
+                result = $image.cropper(data.method, data.option, data.secondOption);
+
+                switch (data.method) {
+                    case 'rotate':
+                        if (cropped && options.viewMode > 0) {
+                            $image.cropper('crop');
+                        }
+
+                        break;
+
+                    case 'scaleX':
+                    case 'scaleY':
+                        $(this).data('option', -data.option);
+                        break;
+
+                    case 'getCroppedCanvas':
+                        if (result) {
+                            // Bootstrap's Modal
+                            $('#getCroppedCanvasModal').find('.modal-body').html(result);
+
+                            if (!$download.hasClass('disabled')) {
+                                download.download = uploadedImageName;
+                                $download.attr('href', result.toDataURL(uploadedImageType));
+                            }
+                        }
+
+                        break;
+
+                    case 'destroy':
+                        if (uploadedImageURL) {
+                            URL.revokeObjectURL(uploadedImageURL);
+                            uploadedImageURL = '';
+                            $image.attr('src', originalImageURL);
+                        }
+
+                        break;
+                }
+
+                if ($.isPlainObject(result) && $target) {
+                    try {
+                        $target.val(JSON.stringify(result));
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                }
+            }
+        });
+
+        // 键盘支持
+        $(document.body).on('keydown', function(e) {
+            if (e.target !== this || !$image.data('cropper') || this.scrollTop > 300) {
+                return;
+            }
+
+            switch (e.which) {
+                case 37:
+                    e.preventDefault();
+                    $image.cropper('move', -1, 0);
+                    break;
+
+                case 38:
+                    e.preventDefault();
+                    $image.cropper('move', 0, -1);
+                    break;
+
+                case 39:
+                    e.preventDefault();
+                    $image.cropper('move', 1, 0);
+                    break;
+
+                case 40:
+                    e.preventDefault();
+                    $image.cropper('move', 0, 1);
+                    break;
+            }
+        });
+
+        // 上传图片
+        var $inputImage = $('#inputImage');
+
+        if (URL) {
+            $inputImage.change(function() {
+                var files = this.files;
+                var file;
+
+                if (!$image.data('cropper')) {
                     return;
                 }
 
-                switch (e.which) {
-                    case 37:
-                        e.preventDefault();
-                        $image.cropper('move', -1, 0);
-                        break;
+                if (files && files.length) {
+                    file = files[0];
 
-                    case 38:
-                        e.preventDefault();
-                        $image.cropper('move', 0, -1);
-                        break;
+                    if (/^image\/\w+$/.test(file.type)) {
+                        uploadedImageName = file.name;
+                        uploadedImageType = file.type;
 
-                    case 39:
-                        e.preventDefault();
-                        $image.cropper('move', 1, 0);
-                        break;
+                        if (uploadedImageURL) {
+                            URL.revokeObjectURL(uploadedImageURL);
+                        }
 
-                    case 40:
-                        e.preventDefault();
-                        $image.cropper('move', 0, 1);
-                        break;
+                        uploadedImageURL = URL.createObjectURL(file);
+                        $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
+                        $inputImage.val('');
+                    } else {
+                        window.alert('Please choose an image file.');
+                    }
                 }
             });
-
-            // 上传图片
-            var $inputImage = $('#inputImage');
-
-            if (URL) {
-                $inputImage.change(function() {
-                    var files = this.files;
-                    var file;
-
-                    if (!$image.data('cropper')) {
-                        return;
-                    }
-
-                    if (files && files.length) {
-                        file = files[0];
-
-                        if (/^image\/\w+$/.test(file.type)) {
-                            uploadedImageName = file.name;
-                            uploadedImageType = file.type;
-
-                            if (uploadedImageURL) {
-                                URL.revokeObjectURL(uploadedImageURL);
-                            }
-
-                            uploadedImageURL = URL.createObjectURL(file);
-                            $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
-                            $inputImage.val('');
-                        } else {
-                            window.alert('Please choose an image file.');
-                        }
-                    }
-                });
-            } else {
-                $inputImage.prop('disabled', true).parent().addClass('disabled');
-            }
-
-        });
+        } else {
+            $inputImage.prop('disabled', true).parent().addClass('disabled');
+        }
     })
     </script>
 </body>
