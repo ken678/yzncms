@@ -176,9 +176,10 @@
                 processData: false,
                 success: function(res) {
                     if (res.code == 0) {
-                        var dom = parent.$("#layui-layer" + index).data("dom");
-                        parent.$("." + dom[1] + dom[0]).attr('src', res.path);
-                        parent.$("#" + dom[1]).val(parent.$("#" + dom[1]).val().replace(dom[0], res.id));
+                        var arr = parent.$("#layui-layer" + index).data("arr");
+                        parent.$(".thumb-" + arr[0]).attr('src', res.path).addClass("thumb-" + res.id).removeClass("thumb-" + arr[0]);
+                        parent.$('#' + arr[1]).val(parent.$('#' + arr[1]).val().replace(arr[0], res.id));
+                        parent.$(".cropper[data-input-id=" + arr[0] + "]").attr('data-input-id', res.id);
                         //layer.alert(res.info);
                     } else {
                         //layer.alert(res.info);
