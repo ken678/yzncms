@@ -36,13 +36,18 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
     if ($('.cropper').length > 0) {
         $(document).on('click', '.cropper', function() {
             var image = $(this).closest(".thumbnail").children('img').data('original');
+            var inputId = $(this).data("input-id");
+            var domId = $(this).data("id");
             var index = layer.open({
                 type: 2,
                 shadeClose: true,
                 shade: false,
                 area: ['880px', '620px'],
-                title: '裁剪',
-                content: GV.jcrop_upload_url + '?url=' + image
+                title: '图片裁剪',
+                content: GV.jcrop_upload_url + '?url=' + image,
+                success: function (layero, index) {
+                    $(layero).data("dom", [inputId,domId]);
+                }
             });
 
         });
