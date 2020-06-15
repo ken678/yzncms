@@ -198,7 +198,7 @@ INSERT INTO `yzn_config` VALUES ('7', 'mail_smtp_user', 'text', '用户名', 'em
 INSERT INTO `yzn_config` VALUES ('8', 'mail_smtp_pass', 'text', '密码', 'email', '', '', '1553653344', '1553658394', '1', '', '6');
 INSERT INTO `yzn_config` VALUES ('9', 'mail_verify_type', 'radio', '验证方式', 'email', '1:TLS\r\n2:SSL', '', '1553653426', '1553658395', '1', '2', '7');
 INSERT INTO `yzn_config` VALUES ('10', 'mail_from', 'text', '发件人邮箱', 'email', '', '', '1553653500', '1553658397', '1', '', '8');
-INSERT INTO `yzn_config` VALUES ('11', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', 'base:基础\r\nemail:邮箱\r\nsystem:系统\r\nupload:上传\r\ndevelop:开发', '0');
+INSERT INTO `yzn_config` VALUES ('11', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', '{\"base\":\"基础\",\"email\":\"邮箱\",\"system\":\"系统\",\"upload\":\"上传\",\"develop\":\"开发\"}', '0');
 INSERT INTO `yzn_config` VALUES ('12', 'theme', 'text', '主题风格', 'system', '', '', '1541752781', '1541756888', '1', 'default', '1');
 INSERT INTO `yzn_config` VALUES ('13', 'admin_forbid_ip', 'textarea', '后台禁止访问IP', 'system', '', '匹配IP段用\"*\"占位，如192.168.*.*，多个IP地址请用英文逗号\",\"分割', '1551244957', '1551244957', '1', '', '2');
 INSERT INTO `yzn_config` VALUES ('14', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1552436075', '1', '0', '2');
