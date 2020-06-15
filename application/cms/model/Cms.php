@@ -498,8 +498,8 @@ class Cms extends Modelbase
         }
         //自动提取缩略图
         if (isset($data['auto_thumb']) && empty($data['thumb']) && isset($dataExt['content'])) {
-            if (preg_match_all("/(src)=([\"|']?)([^ \"'>]+\.(gif|jpg|jpeg|bmp|png))\\2/i", $dataExt['content'], $matches)) {
-                $thumb_id = Db::name('attachment')->where('path', $matches[3][0])->value('id');
+            if (($path = $this->strModel($dataExt['content'])) !== null) {
+                $thumb_id = Db::name('attachment')->where('path', $path)->value('id');
                 $thumb_id && $data['thumb'] = $thumb_id;
             }
         }
@@ -516,6 +516,40 @@ class Cms extends Modelbase
         }
     }
 
+    private function strModel($str, $num = 1, $order = 'asc')
+    {
+        $topStr = null;
+        if ($order != 'asc') {
+            $funcStr = 'strrpos';
+        } else {
+            $funcStr = 'strpos';
+        }
+        for ($i = 1; $i <= $num; $i++) {
+            $firstNum = $funcStr($str, '<img');
+            if ($firstNum !== false) {
+                if ($order != 'asc') {
+                    $topStr = $str;
+                    $str = substr($str, 0, $firstNum);
+                } else {
+                    $str = substr($str, $firstNum + 4);
+                }
+            } else {
+                return null;
+            }
+        }
+        $str = $order == 'asc' ? $str : $topStr;
+        $firstNum1 = $funcStr($str, 'src=');
+        $type = substr($str, $firstNum1 + 4, 1);
+        $str2 = substr($str, $firstNum1 + 5);
+        if ($type == '\'') {
+            $position = strpos($str2, "'");
+        } else {
+            $position = strpos($str2, '"');
+        }
+        $imgPath = substr($str2, 0, $position);
+        return $imgPath;
+    }
+
     //会员配置缓存
     public function cms_cache()
     {
@@ -523,5 +557,4 @@ class Cms extends Modelbase
         cache("Cms_Config", $data);
         return $data;
     }
-
 }
