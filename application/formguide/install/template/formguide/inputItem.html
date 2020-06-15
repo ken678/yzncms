@@ -77,26 +77,14 @@
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
         <div class="layui-input-inline" style="width: 120px;">
-            <input type="text" name="{$vo.fieldArr}[{$vo.name}]" value="{$vo.value}" placeholder="请选择颜色" class="layui-input test-form-input-{$vo.name}">
+            <input type="text" name="{$vo.fieldArr}[{$vo.name}]" value="{$vo.value}" placeholder="请选择颜色" class="layui-input test-form-input">
         </div>
         <div class="layui-inline" style="left: -11px;">
-            <div class="layui-color-box-{$vo.name}"></div>
+            <div class="layui-color-box"></div>
         </div>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
-<script type="text/javascript">
-layui.use('colorpicker', function(){
-    var colorpicker = layui.colorpicker;
-    colorpicker.render({
-        elem: '.layui-color-box-{$vo.name}',
-        color:'{$vo.value}',
-        done: function(color){
-            $('.test-form-input-{$vo.name}').val(color);
-        }
-    });
-});
-</script>
 {/case}
 {case value="datetime"}
 <div class="layui-form">
@@ -108,19 +96,6 @@ layui.use('colorpicker', function(){
         {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
     </div>
 </div>
-<script type="text/javascript">
-layui.use(['laydate'], function() {
-    var laydate = layui.laydate;
-    lay('.test-item').each(function() {
-        laydate.render({
-            elem: this,
-            trigger: 'click',
-            type: 'datetime'
-        });
-    });
-
-});
-</script>
 {/case}
 {case value="textarea"}
 <div class="layui-form-item layui-form-text">
