@@ -1,7 +1,10 @@
-layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
+layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker', 'laydate'], function() {
     var layer = layui.layer,
         form = layui.form,
+        tagsinput = layui.tagsinput,
         dragsort = layui.dragsort,
+        colorpicker = layui.colorpicker,
+        laydate = layui.laydate,
         tableSelect = layui.tableSelect;
     // ueditor编辑器集合
     var ueditors = {};
@@ -33,7 +36,6 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
     });
 
     //裁剪图片
-
     $(document).on('click', '.cropper', function() {
         var inputId = $(this).attr("data-input-id");
         var image = $(this).closest(".thumbnail").children('img').data('original');
@@ -52,6 +54,35 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort'], function() {
         });
 
     });
+
+    //颜色
+    $('.layui-color-box').each(function() {
+        colorpicker.render({
+            elem: $(this),
+            color: $('.test-form-input').val(),
+            done: function(color) {
+                $('.test-form-input').val(color);
+            }
+        });
+    });
+
+    //时间
+    $('.test-item').each(function() {
+        laydate.render({
+            elem: this,
+            trigger: 'click',
+            type: 'datetime'
+        });
+    });
+
+    //tags标签
+    $('.form-tags').each(function() {
+        $(this).tagsInput({
+            width: 'auto',
+            defaultText: $(this).data('remark'),
+            height: '26px',
+        })
+    })
 
     // ueditor编辑器
     $('.js-ueditor').each(function() {
