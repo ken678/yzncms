@@ -40,13 +40,6 @@
 </div>
 {/case}
 {case value="array"}
-<!--<div class="layui-form-item layui-form-text">
-    <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
-    <div class="layui-form-field-label">
-        <textarea name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" class="layui-textarea">{$vo.value}</textarea>
-    </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
-</div>-->
 <div class="layui-form-item layui-form-text">
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label fieldlist" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}">
