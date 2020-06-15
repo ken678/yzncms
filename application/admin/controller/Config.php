@@ -71,9 +71,9 @@ class Config extends Adminbase
                     }
                 } else {
                     // 如果值是数组则转换成字符串，适用于复选框等类型
-                    if (is_array($data[$name])) {
-                        $data[$name] = implode(',', $data[$name]);
-                    }
+                    /*if (is_array($data[$name])) {
+                    $data[$name] = implode(',', $data[$name]);
+                    }*/
                     switch ($type) {
                         // 开关
                         case 'switch':

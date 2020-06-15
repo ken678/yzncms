@@ -42,7 +42,7 @@ class Config extends Model
             }
             switch ($value['type']) {
                 case 'array':
-                    $newConfigs[$key] = parse_attr($value['value']);
+                    $newConfigs[$key] = (array) json_decode($value['value'], true);
                     break;
                 case 'select':
                 case 'radio':
