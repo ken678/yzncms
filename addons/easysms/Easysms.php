@@ -57,6 +57,13 @@ class Easysms extends Addon
         ],
     ];
 
+    public function init()
+    {
+        $config = $this->getAddonConfig();
+        $this->config['default']['gateways'] = (array) $config['gateways'];
+        $this->config['gateways'][$config['gateways']] = (array) $config['config'];
+    }
+
     /**
      * 插件安装方法
      * @return bool
@@ -82,8 +89,8 @@ class Easysms extends Addon
      */
     public function smsSend($params)
     {
+        $this->init();
         $config = $this->getAddonConfig();
-
         $easySms = new \Overtrue\EasySms\EasySms($this->config);
         try {
             $result = $easySms->send($params->mobile, [
@@ -93,7 +100,8 @@ class Easysms extends Addon
                     'code' => $params->code,
                 ],
             ]);
-        } catch (\Exception $exception) {
+        } catch (\Exception $e) {
+            //var_dump($e->getResults());
             return false;
         }
         $is_suc = false;
@@ -113,6 +121,7 @@ class Easysms extends Addon
      */
     public function smsNotice($params)
     {
+        $this->init();
         $easySms = new \Overtrue\EasySms\EasySms($this->config);
         try {
             $result = $easySms->send($params['mobile'], [
