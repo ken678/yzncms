@@ -98,12 +98,29 @@ class Addons extends Adminbase
         if (!class_exists($addon_class)) {
             trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
         }
-        $addonObj = new $addon_class();
-        $addon['addon_path'] = $addonObj->addon_path;
-        $addon['custom_config'] = isset($addonObj->custom_config) ? $addonObj->custom_config : '';
+
         $db_config = $addon['config'];
         //载入插件配置数组
-        $addon['config'] = include $addonObj->config_file;
+        $addon['config'] = get_addon_fullconfig($addon['name']);
+        if ($this->request->isPost()) {
+            //保存插件设置
+            $params = $this->request->param('config/a');
+            foreach ($params as $k => $v) {
+                if (isset($addon['config'][$k])) {
+                    if ($addon['config'][$k]['type'] == 'array') {
+                        $params[$k] = (array) json_decode($params[$k], true);
+                    }
+                }
+            }
+            $flag = Db::name('Addons')->where(['id' => $addonId])->setField('config', json_encode($params));
+            if ($flag !== false) {
+                //更新插件缓存
+                //$this->addons->addons_cache();
+                $this->success('保存成功', url('index'));
+            } else {
+                $this->error('保存失败');
+            }
+        }
         if ($db_config) {
             $db_config = json_decode($db_config, true);
             foreach ($addon['config'] as $key => $value) {
@@ -119,33 +136,11 @@ class Addons extends Adminbase
             }
         }
         $this->assign('data', $addon);
-        if ($addon['custom_config']) {
-            //加载配置文件config.html
-            $this->assign('custom_config', $this->view->fetch($addon['addon_path'] . $addon['custom_config']));
+        $configFile = ADDON_PATH . $addon['name'] . DS . 'config.html';
+        if (is_file($configFile)) {
+            $this->assign('custom_config', $this->view->fetch($configFile));
         }
         return $this->fetch();
-    }
-
-    /**
-     * 保存插件设置
-     */
-    public function saveConfig()
-    {
-        $id = $this->request->param('id/d');
-        //获取插件信息
-        $info = Addons_Model::where(array('id' => $id))->find();
-        if (empty($info)) {
-            $this->error('该插件没有安装！');
-        }
-        $config = $this->request->param('config/a');
-        $flag = Db::name('Addons')->where(['id' => $id])->setField('config', json_encode($config));
-        if ($flag !== false) {
-            //更新插件缓存
-            //$this->addons->addons_cache();
-            $this->success('保存成功', url('index'));
-        } else {
-            $this->error('保存失败');
-        }
     }
 
     //启用插件

@@ -188,6 +188,27 @@ abstract class Addon
         return $config;
     }
 
+    /**
+     * 获取完整配置列表.
+     *
+     * @param string $name
+     *
+     * @return array
+     */
+    final public function getFullConfig($name = '')
+    {
+        $fullConfigArr = [];
+        if (empty($name)) {
+            $name = $this->getName();
+        }
+        $config_file = $this->addon_path . 'config.php';
+        if (is_file($config_file)) {
+            $fullConfigArr = include $config_file;
+        }
+
+        return $fullConfigArr;
+    }
+
     //必须实现安装
     abstract public function install();
 
