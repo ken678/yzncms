@@ -489,7 +489,7 @@ class Cms extends Modelbase
     /**
      * 文本处理
      */
-    protected function getAfterText(&$data, $dataExt)
+    protected function getAfterText(&$data, &$dataExt)
     {
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         if (isset($data['get_introduce']) && $data['description'] == '' && isset($dataExt['content'])) {
@@ -501,6 +501,41 @@ class Cms extends Modelbase
             if (($path = $this->strModel($dataExt['content'])) !== null) {
                 $thumb_id = Db::name('attachment')->where('path', $path)->value('id');
                 $thumb_id && $data['thumb'] = $thumb_id;
+            }
+        }
+        //关键词加链接
+        $autolinks = cache("Cms_Config")['autolinks'];
+        if (!empty($autolinks) && isset($dataExt['content'])) {
+            if (strpos($autolinks, '|')) {
+                //解析关键词数组
+                $kwsets = array_filter(preg_split("/(\r|\n|\r\n)/", $autolinks));
+                foreach ($kwsets as $kwset) {
+                    $kwarray[] = explode('|', $kwset);
+                }
+            }
+            foreach ($kwarray as $i => $row) {
+                $txt = trim($row['0']);
+                if ($txt) {
+                    $link = trim($row['1']);
+                    $set = trim($row['2']);
+                    $rel = '';
+                    $open = '_blank';
+
+                    //处理标记与打开方式
+                    if ($set) {
+                        if (false !== stripos($set, 'e')) {
+                            $rel = ' rel="external nofollow"';
+                        } elseif (false !== stripos($set, 'n')) {
+                            $rel = ' rel="nofollow"';
+                        }
+                        $open = false !== stripos($set, 'b') ? '_self' : $open;
+                    }
+
+                    $dataExt['content'] = false !== strpos($dataExt['content'], $txt)
+                    //正则排除参数和链接
+                     ? preg_replace('/(?!<[^>]*)' . $txt . '(?![^<]*(>|<\/[a|sc]))/s'
+                        , '<a href="' . $link . '"' . $rel . 'target="' . $open . '" title="' . $txt . '">' . $txt . '</a>', $dataExt['content']) : $dataExt['content'];
+                }
             }
         }
         unset($data['get_introduce']);

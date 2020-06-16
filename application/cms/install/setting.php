@@ -6,6 +6,8 @@
 return array(
     'web_site_status' => '1',
     'web_site_recycle' => '0',
+    'autolinks' => '百度|https://www.baidu.com/
+腾讯|https://www.qq.com/',
     'web_site_baidupush' => '0',
     'site_name' => '御宅男工作室',
     'site_title' => '御宅男工作室',
