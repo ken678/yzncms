@@ -39,7 +39,6 @@ abstract class Addon
     public $info = [];
     public $addon_path = '';
     public $config_file = '';
-    public $custom_config = '';
     public $admin_list = [];
     public $custom_adminlist = '';
     public $access_url = [];
