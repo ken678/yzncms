@@ -21,9 +21,6 @@ use app\addons\util\Addon;
  */
 class ReturnTop extends Addon
 {
-    //自定义配置页面
-    public $custom_config = 'config.html';
-
     //插件信息
     public $info = [
         'name' => 'returntop',
