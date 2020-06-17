@@ -46,7 +46,7 @@ class Easysms extends Addon
         // 可用的网关配置
         'gateways' => [
             'errorlog' => [
-                'file' => '/tmp/easy-sms.log',
+                'file' => APP_PATH . 'runtime/tmp/easy-sms.log',
             ],
             //阿里云
             'aliyun' => [
@@ -95,7 +95,7 @@ class Easysms extends Addon
         try {
             $result = $easySms->send($params->mobile, [
                 'content' => '您的验证码为: ' . $params->code,
-                'template' => $config['template'][$params->event],
+                'template' => isset($config['template'][$params->event]) ? $config['template'][$params->event] : 0,
                 'data' => [
                     'code' => $params->code,
                 ],
