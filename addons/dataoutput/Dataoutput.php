@@ -40,7 +40,7 @@ class Dataoutput extends Addon
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `name` varchar(20) NOT NULL COMMENT '任务名',
         `table` varchar(20) NOT NULL COMMENT '表',
-        `data` mediumtext NOT NULL,
+        `customize_config` text NOT NULL,
         `create_time` int(10) unsigned NOT NULL DEFAULT '0',
         PRIMARY KEY (`id`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

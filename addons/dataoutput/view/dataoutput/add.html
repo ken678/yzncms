@@ -3,26 +3,36 @@
 <div class="layui-card">
     <div class="layui-card-header">添加任务</div>
     <div class="layui-card-body">
-        <form class="layui-form" method="post" style="width: 400px;">
-            <div class="layui-form-item">
-                <label class="layui-form-label">任务名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="任务名称" class="layui-input">
+        <form class="layui-form" method="post">
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">基本配置</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form-item" style="width: 400px;">
+                            <label>任务名称</label>
+                            <div>
+                                <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="任务名称" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="width: 400px;">
+                            <label>数据表</label>
+                            <div>
+                                <select name="table" lay-verify="required" lay-filter="filter">
+                                    <option value=""></option>
+                                    {volist name="list" id="vo"}
+                                    <option value="{$vo.name}">{$vo.name}{notempty name="vo.comment"}[{$vo.comment}]{/notempty}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="fieldBox" style="display: none;"></div>
+                    </div>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">数据表</label>
-                <div class="layui-input-block">
-                    <select name="table" lay-verify="required">
-                        <option value=""></option>
-                        {volist name="list" id="vo"}
-                        <option value="{$vo.name}">{$vo.name}{notempty name="vo.comment"}[{$vo.comment}]{/notempty}</option>
-                        {/volist}
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
+                <div>
                     <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
                     <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
                 </div>
@@ -30,4 +40,70 @@
         </form>
     </div>
 </div>
+{/block}
+{block name="script"}
+<script type="text/html" id="fieldTpl">
+    {{# layui.each(d.list, function(index, item) { }}
+<div class="layui-form-item rules-item">
+    <div class="layui-input-inline" style="width:150px;">
+        <input type="text" class="layui-input" value="{{item.Field}}" disabled />
+    </div>
+    <div class="layui-input-inline" style="width:150px;">
+        <input type="text" class="layui-input" name="customize_config[comment][]" placeholder="表头名称" value="{{item.Comment}}"  />
+    </div>
+    <div class="layui-form-mid layui-word-aux">数据格式化</div>
+    <div class="layui-input-inline" style="width:100px;">
+        <select name="customize_config[format][]">
+            <option value=""></option>
+            <option value="text">文本</option>
+            <option value="date">日期</option>
+            <option value="selectd">选择框</option>
+            <option value="function">函数</option>
+        </select>
+    </div>
+    <div class="layui-input-inline" style="width:200px;">
+        <input type="text" class="layui-input" name="customize_config[function][]" placeholder="格式化为“函数”时，填写" value=""  />
+    </div>
+    <label class="layui-form-mid">
+        <span class="layui-badge rules-del">-</span>&nbsp;&nbsp;
+    </label>
+</div>
+{{# }); }}
+
+</script>
+<script type="text/javascript">
+layui.use(['laytpl', 'form'], function() {
+    var form = layui.form,
+        laytpl = layui.laytpl;
+    form.on('select(filter)', function(data) {
+        console.log(data);
+        var href = '{:url("addons/dataoutput/fieldlist",["isadmin"=>1])}' + "&tablename=" + data.value;
+        $.get(href, {}, function(res) {
+            if (res.code == 0) {
+                $('#fieldBox').show();
+                var formData = { //数据
+                    "list": res.data
+                }
+                laytpl($('#fieldTpl').html()).render(formData, function(html) {
+                    //console.log(html);
+                    $('#fieldBox').html(html);
+                    form.render();
+                });
+            }
+
+        })
+    });
+
+    // 删除规则
+    $(document).on('click', '.rules-del', function() {
+        var that = $(this),
+            obj = that.parents('.rules-item'),
+            len = obj.siblings('.rules-item').length;
+        if (parseInt(len) <= 0) {
+            addRule(that);
+        }
+        obj.remove();
+    });
+})
+</script>
 {/block}

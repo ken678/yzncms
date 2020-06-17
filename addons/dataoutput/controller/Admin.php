@@ -42,4 +42,12 @@ class Admin extends Adminaddon
         return $this->fetch();
     }
 
+    public function fieldlist()
+    {
+        $name = $this->request->param('tablename/s', '');
+        $data = Db::query("show full columns from {$name}");
+        $result = array("code" => 0, "data" => $data);
+        return json($result);
+    }
+
 }
