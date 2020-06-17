@@ -1,0 +1,47 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">任务列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <a class="layui-btn layui-btn-sm" href='{:url("add",["isadmin"=>1])}'>添加任务</a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete",["isadmin"=>1])}'>批量删除</a>
+            </div>
+        </script>
+    </div>
+</div>
+<script type="text/html" id="barTool">
+    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+</script>
+{/block}
+{block name="layui"}{/block}
+{block name="script"}
+<script>
+layui.use(['table', 'form'], function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form,
+        layer = layui.layer;
+    table.render({
+        id: 'database',
+        elem: '#table',
+        toolbar: '#toolbarDemo',
+        url: '{:url("addons/dataoutput/index",["isadmin"=>1])}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'id', width: 80, title: 'ID', sort: true },
+                { field: 'name', title: '任务名称' },
+                { field: 'table', width: 200, title: '数据表' },
+                { field: 'create_time', width: 200, title: '创建时间' },
+                { fixed: 'right', width: 250, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+    });
+
+});
+</script>
+{/block}

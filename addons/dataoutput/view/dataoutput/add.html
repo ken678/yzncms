@@ -1,0 +1,33 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">添加任务</div>
+    <div class="layui-card-body">
+        <form class="layui-form" method="post" style="width: 400px;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="任务名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据表</label>
+                <div class="layui-input-block">
+                    <select name="table" lay-verify="required">
+                        <option value=""></option>
+                        {volist name="list" id="vo"}
+                        <option value="{$vo.name}">{$vo.name}{notempty name="vo.comment"}[{$vo.comment}]{/notempty}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
