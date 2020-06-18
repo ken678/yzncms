@@ -36,10 +36,18 @@ class Admin extends Adminaddon
 
     public function add()
     {
-        $list = Db::query('SHOW TABLE STATUS');
-        $list = array_map('array_change_key_case', $list); //全部小写
-        $this->assign('list', $list);
-        return $this->fetch();
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            Db::name('dataoutput')->save($_data);
+            $this->success('新增成功！', url('index', ['isadmin' => 1]));
+
+        } else {
+            $list = Db::query('SHOW TABLE STATUS');
+            $list = array_map('array_change_key_case', $list); //全部小写
+            $this->assign('list', $list);
+            return $this->fetch();
+        }
+
     }
 
     public function fieldlist()
