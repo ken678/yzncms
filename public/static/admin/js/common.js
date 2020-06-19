@@ -5,7 +5,9 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
         $ = layui.jquery,
         form = layui.form,
         notice = layui.notice;
-
+    layer.config({
+        skin: 'layui-layer-yzn'
+    });
     layui.formatDateTime = function(timeStamp) {
         var date = new Date();
         date.setTime(timeStamp * 1000);
@@ -58,8 +60,67 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
                 var ret = { code: -1, msg: e.message, data: null };
             }
             return ret;
+        },
+        open: function(title, url, width, height, isResize) {
+            isResize = isResize === undefined ? true : isResize;
+            var index = layer.open({
+                title: title,
+                type: 2,
+                area: [width, height],
+                content: url,
+                maxmin: true,
+                moveOut: true,
+                success: function(layero, index) {
+                    var body = layer.getChildFrame('body', index);
+                    if (body.length > 0) {
+                        $.each(body, function(i, v) {
+
+                            $(v).before('<style>\n' +
+                                'html, body {\n' +
+                                '    background: #ffffff;\n' +
+                                '}\n' +
+                                '</style>');
+                        });
+                    }
+                }
+            });
+            if (isResize) {
+                $(window).on("resize", function() {
+                    layer.full(index);
+                })
+            }
         }
     };
+
+    // 监听弹出层的打开
+    $('body').on('click', '[data-open]', function() {
+        var clienWidth = $(this).attr('data-width'),
+            clientHeight = $(this).attr('data-height'),
+            dataFull = $(this).attr('data-full');
+
+        if (clienWidth === undefined || clientHeight === undefined) {
+            var width = document.body.clientWidth,
+                height = document.body.clientHeight;
+            if (width >= 800 && height >= 600) {
+                clienWidth = '800px';
+                clientHeight = '600px';
+            } else {
+                clienWidth = '100%';
+                clientHeight = '100%';
+            }
+        }
+        if (dataFull === 'true') {
+            clienWidth = '100%';
+            clientHeight = '100%';
+        }
+
+        fly.open(
+            $(this).attr('data-title'),
+            $(this).attr('data-open'),
+            clienWidth,
+            clientHeight,
+        );
+    });
 
     /**
      * iframe弹窗
