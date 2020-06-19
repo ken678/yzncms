@@ -14,14 +14,15 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-layui.use(['form','layer'], function() {
+layui.use(['form', 'layer'], function() {
     var form = layui.form;
     $(".content_attr").append("<input type='checkbox' name='modelField[get_introduce]' title='是否截取到内容摘要' checked><input type='checkbox' name='modelField[auto_thumb]' title='是否提取到缩略图' checked>");
     form.render();
     $('.ajax-post1').on('click', function(e) {
         var form = layui.form,
-        layer = layui.layer,target,
-        target_form = $(this).attr('target-form');
+            layer = layui.layer,
+            target,
+            target_form = $(this).attr('target-form');
         target = $('.form-horizontal').attr("action");
         $.post(target, $('.form-horizontal').serialize()).success(function(data) {
             if (data.code == 1) {
@@ -30,7 +31,8 @@ layui.use(['form','layer'], function() {
                 }, function() {
                     location.href = '{:url("add",["catid"=>$catid])}';
                 }, function() {
-                    location.href = '{:url("classlist",["catid"=>$catid])}';
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
                 });
             } else {
                 layer.msg(data.msg);

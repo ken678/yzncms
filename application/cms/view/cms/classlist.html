@@ -23,14 +23,14 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm" href="{:url('add',['catid'=>$catid])}">新增内容</a>
+      <a class="layui-btn layui-btn-sm" data-open="{:url('add',['catid'=>$catid])}" data-title="新增内容" data-full="true">新增内容</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete",["catid"=>$catid])}'>批量删除</a>
       <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="move">批量移动</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('recycle',['catid'=>$catid])}">回收站</a>
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a href='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a class="layui-btn layui-btn-xs" data-open='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' data-title="编辑内容" data-full="true">编辑</a>
     <a href='{:url("delete",["catid"=>$catid])}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="title">

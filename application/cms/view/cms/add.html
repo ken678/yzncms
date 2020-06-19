@@ -31,7 +31,8 @@ layui.use(['form','layer'], function() {
                 }, function() {
                     location.href = '{:url("add",["catid"=>$catid])}';
                 }, function() {
-                    location.href = '{:url("classlist",["catid"=>$catid])}';
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
                 });
             } else {
                 layer.msg(data.msg);
