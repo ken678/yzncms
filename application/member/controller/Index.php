@@ -61,6 +61,18 @@ class Index extends MemberBase
             if ($this->memberConfig['openverification'] && !captcha_check($verify)) {
                 $this->error('验证码错误！');
             }
+            $rule = [
+                'username|用户名' => 'require|alphaDash|length:3,20',
+                'password|密码' => 'require|length:3,20',
+            ];
+            $data = [
+                'username' => $username,
+                'password' => $password,
+            ];
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result);
+            }
             $userInfo = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
                 $this->success('登录成功！', $forward ? $forward : url('index'));
