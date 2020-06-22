@@ -141,7 +141,7 @@ class Field extends Adminbase
     /**
      * 删除字段
      */
-    public function delete()
+    public function del()
     {
         //字段ID
         $fieldid = $this->request->param('id/d', '');

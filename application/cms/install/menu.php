@@ -64,7 +64,7 @@ return [
                                 "name" => "编辑",
                             ],
                             [
-                                "route" => "cms/cms/delete",
+                                "route" => "cms/cms/del",
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "删除",
@@ -125,7 +125,7 @@ return [
                                 "name" => "编辑",
                             ],
                             [
-                                "route" => "cms/tags/delete",
+                                "route" => "cms/tags/del",
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "删除",
@@ -180,7 +180,7 @@ return [
                                 "name" => "编辑栏目",
                             ],
                             [
-                                "route" => "cms/category/delete",
+                                "route" => "cms/category/del",
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "删除栏目",
@@ -231,7 +231,7 @@ return [
                                 "name" => "字段编辑",
                             ],
                             [
-                                "route" => "cms/field/delete",
+                                "route" => "cms/field/del",
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "字段删除",
@@ -280,7 +280,7 @@ return [
                                 "name" => "修改模型",
                             ],
                             [
-                                "route" => "cms/models/delete",
+                                "route" => "cms/models/del",
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "删除模型",

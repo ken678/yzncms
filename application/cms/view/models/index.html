@@ -14,10 +14,10 @@
 <script type="text/html" id="barTool">
 	<a href='{:url("field/index")}?id={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-normal">字段管理</a>
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("delete")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="statusTpl">
-    <input type="checkbox" name="status" data-href="{:url('setstate')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="status" data-href="{:url('multi')}?id={{d.id}}&param=status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 {/block}
 {block name="script"}

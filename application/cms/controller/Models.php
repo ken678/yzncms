@@ -14,16 +14,17 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\model\Models as Models_Model;
+use app\cms\model\Models as ModelsModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
 class Models extends Adminbase
 {
+    protected $modelClass = null;
     protected function initialize()
     {
         parent::initialize();
-        $this->Models = new Models_Model;
+        $this->modelClass = new ModelsModel;
         //取得当前内容模型模板存放目录
         $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "cms" . DIRECTORY_SEPARATOR;
         //取得栏目频道模板列表
@@ -38,7 +39,7 @@ class Models extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $data = $this->Models->where(['module' => 'cms'])->select();
+            $data = $this->modelClass->where(['module' => 'cms'])->select();
             return json(["code" => 0, "data" => $data]);
         }
         return $this->fetch();
@@ -54,7 +55,7 @@ class Models extends Adminbase
                 return $this->error($result);
             }
             try {
-                $this->Models->addModel($data);
+                $this->modelClass->addModel($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -77,14 +78,14 @@ class Models extends Adminbase
                 return $this->error($result);
             }
             try {
-                $this->Models->editModel($data);
+                $this->modelClass->editModel($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
             $this->success('模型修改成功！', url('index'));
         } else {
             $id = $this->request->param('id/d', 0);
-            $data = $this->Models->where(array("id" => $id))->find();
+            $data = $this->modelClass->where(array("id" => $id))->find();
             $data['setting'] = unserialize($data['setting']);
 
             $this->assign("tp_category", $this->tp_category);
@@ -96,7 +97,7 @@ class Models extends Adminbase
     }
 
     //模型删除
-    public function delete()
+    public function del()
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
@@ -106,30 +107,21 @@ class Models extends Adminbase
             $this->error("该模型使用中，删除栏目后再删除！");
         }
         //这里可以根据缓存获取表名
-        $modeldata = $this->Models->where(array("id" => $id))->find();
+        $modeldata = $this->modelClass->where(array("id" => $id))->find();
         if (!$modeldata) {
             $this->error("要删除的模型不存在！");
         }
         try {
-            $this->Models->deleteModel($id);
+            $this->modelClass->deleteModel($id);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
         $this->success("删除成功！", url("index"));
     }
 
-    //模型状态
-    public function setstate()
+    public function multi()
     {
-        $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
         cache("Model", null);
-        $status = $this->request->param('status/d');
-        if (Models_Model::update(['status' => $status], ['id' => $id])) {
-            $this->success("操作成功！");
-        } else {
-            $this->error('操作失败！');
-        }
-
+        return parent::multi();
     }
 }

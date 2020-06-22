@@ -60,7 +60,7 @@ class Attachments extends Adminbase
     }
 
     //附件删除
-    public function delete()
+    public function del()
     {
         $ids = $this->request->param('ids/a', null);
         if (empty($ids)) {

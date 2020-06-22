@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\model\Tags as Tags_Model;
+use app\cms\model\Tags as TagsModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -23,7 +23,7 @@ class Tags extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Tags = new Tags_Model;
+        $this->modelClass = new TagsModel;
     }
 
     /**
@@ -34,13 +34,13 @@ class Tags extends Adminbase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 10);
-            $_list = $this->Tags->order(['listorder', 'id' => 'desc'])->page($page, $limit)->select();
+            $_list = $this->modelClass->order(['listorder', 'id' => 'desc'])->page($page, $limit)->select();
             foreach ($_list as $k => &$v) {
                 $v['url'] = url('cms/index/tags', ['tag' => $v['tag']]);
             }
             unset($v);
 
-            $total = $this->Tags->count();
+            $total = $this->modelClass->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -55,7 +55,7 @@ class Tags extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            if ($this->Tags->save($data, ['id' => $data['tagid']]) !== false) {
+            if ($this->modelClass->save($data, ['id' => $data['tagid']]) !== false) {
                 if ($data['oldtagsname'] != $data['tag']) {
                     model('TagsContent')->save(['tag' => $data['tag']], ['tag' => $data['oldtagsname']]);
                 }
@@ -68,7 +68,7 @@ class Tags extends Adminbase
             if (empty($id)) {
                 $this->error('请指定需要修改的tags！');
             }
-            $data = Tags_Model::get($id);
+            $data = TagsModel::get($id);
             $this->assign('data', $data);
             return $this->fetch();
         }
@@ -78,36 +78,21 @@ class Tags extends Adminbase
     /**
      * tags删除
      */
-    public function delete()
+    public function del()
     {
         $tagid = $this->request->param('ids/a', null);
         if (!is_array($tagid)) {
             $tagid = array($tagid);
         }
         foreach ($tagid as $tid) {
-            $info = $this->Tags->where(array('id' => $tid))->find();
+            $info = $this->modelClass->where(array('id' => $tid))->find();
             if (!empty($info)) {
-                if ($this->Tags->where(array('tag' => $info['tag']))->delete() !== false) {
+                if ($this->modelClass->where(array('tag' => $info['tag']))->delete() !== false) {
                     model('TagsContent')->where(array('tag' => $info['tag']))->delete();
                 }
             }
         }
         $this->success("删除成功！");
-    }
-
-    /**
-     * tags排序
-     */
-    public function listorder()
-    {
-        $id = $this->request->param('id/d', 0);
-        $listorder = $this->request->param('value/d', 0);
-        $rs = $this->Tags->allowField(['listorder'])->isUpdate(true)->save(['id' => $id, 'listorder' => $listorder]);
-        if ($rs) {
-            $this->success("菜单排序成功！");
-        } else {
-            $this->error("菜单排序失败！");
-        }
     }
 
     //tags数据重建
@@ -229,10 +214,10 @@ class Tags extends Adminbase
                     continue;
                 }
                 $key_v = trim($key_v);
-                if ($this->Tags->where('tag', $key_v)->find()) {
-                    $this->Tags->where('tag', $key_v)->setInc('usetimes');
+                if ($this->modelClass->where('tag', $key_v)->find()) {
+                    $this->modelClass->where('tag', $key_v)->setInc('usetimes');
                 } else {
-                    $this->Tags->insert(array(
+                    $this->modelClass->insert(array(
                         "tag" => $key_v,
                         "usetimes" => 1,
                         "create_time" => $time,

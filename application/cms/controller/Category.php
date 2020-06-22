@@ -14,21 +14,13 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\model\Category as Category_Model;
+use app\cms\model\Category as CategoryModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
 class Category extends Adminbase
 {
 
-    //初始化
-    /**
-     * @var Category_Model
-     */
-    private $Category_Model;
-    /**
-     * @var string
-     */
     private $filepath;
     private $tp_category;
     private $tp_list;
@@ -38,7 +30,7 @@ class Category extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Category_Model = new Category_Model;
+        $this->modelClass = new CategoryModel;
         //取得当前内容模型模板存放目录
         $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "cms" . DIRECTORY_SEPARATOR;
         //取得栏目频道模板列表
@@ -130,7 +122,7 @@ class Category extends Adminbase
                     if (true !== $result) {
                         $this->error($result);
                     }
-                    $catid = $this->Category_Model->addCategory($data, $fields);
+                    $catid = $this->modelClass->addCategory($data, $fields);
                     if ($catid) {
                         if (isModuleInstall('member')) {
                             //更新会员组权限
@@ -146,14 +138,14 @@ class Category extends Adminbase
                     $this->error($result);
                 }
                 //20200518 ethan update: $res should be a string, not arrays.
-                $catid = $this->Category_Model->addCategory($data, $fields);
+                $catid = $this->modelClass->addCategory($data, $fields);
                 if ($catid) {
                     if (isModuleInstall('member')) {
                         model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                     }
                     $this->success("添加成功！", url("Category/index"));
                 } else {
-                    $error = $this->Category_Model->getError();
+                    $error = $this->modelClass->getError();
                     $this->error($error ? $error : '栏目添加失败！');
                 }
             }
@@ -242,7 +234,7 @@ class Category extends Adminbase
             if (true !== $result) {
                 $this->error($result);
             }
-            $status = $this->Category_Model->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
+            $status = $this->modelClass->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
                 if (isModuleInstall('member')) {
                     //更新会员组权限
@@ -250,7 +242,7 @@ class Category extends Adminbase
                 }
                 $this->success("修改成功！", url("Category/index"));
             } else {
-                $error = $this->Category_Model->getError();
+                $error = $this->modelClass->getError();
                 $this->error($error ? $error : '栏目修改失败！');
             }
 
@@ -312,7 +304,7 @@ class Category extends Adminbase
     }
 
     //删除栏目
-    public function delete()
+    public function del()
     {
         $ids = $this->request->param('ids/a', null);
         if (empty($ids)) {
@@ -323,7 +315,7 @@ class Category extends Adminbase
         }
         try {
             foreach ($ids as $id) {
-                $this->Category_Model->deleteCatid($id);
+                $this->modelClass->deleteCatid($id);
             }
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
@@ -364,20 +356,20 @@ class Category extends Adminbase
         if (is_array($categorys)) {
             foreach ($categorys as $catid => $cat) {
                 //获取父栏目ID列表
-                $arrparentid = $this->Category_Model->get_arrparentid($catid);
+                $arrparentid = $this->modelClass->get_arrparentid($catid);
                 //栏目配置信息反序列化
                 $setting = unserialize($cat['setting']);
                 //获取子栏目ID列表
-                $arrchildid = $this->Category_Model->get_arrchildid($catid);
+                $arrchildid = $this->modelClass->get_arrchildid($catid);
                 $child = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
                 //检查所有父id 子栏目id 等相关数据是否正确，不正确更新
                 if ($categorys[$catid]['arrparentid'] !== $arrparentid || $categorys[$catid]['arrchildid'] !== $arrchildid || $categorys[$catid]['child'] !== $child) {
-                    Category_Model::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
+                    CategoryModel::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
                 }
                 \think\facade\Cache::rm('getCategory_' . $catid, null);
                 //删除在非正常显示的栏目
                 if ($cat['parentid'] != 0 && !isset($this->categorys[$cat['parentid']])) {
-                    $this->Category_Model->deleteCatid($catid);
+                    $this->modelClass->deleteCatid($catid);
                 }
             }
 
@@ -400,33 +392,12 @@ class Category extends Adminbase
         $this->success("栏目数量校正成功！");
     }
 
-    //排序
-    public function listorder()
-    {
-        $id = $this->request->param('id/d', 0);
-        $listorder = $this->request->param('value/d', 0);
-        $rs = Category_Model::update(['listorder' => $listorder], ['id' => $id], true);
-        if ($rs) {
-            $this->success("排序成功！");
-        } else {
-            $this->error("排序失败！");
-        }
-    }
-
-    //状态
-    public function setstate()
+    public function multi()
     {
         $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/d');
-        if (Category_Model::update(['status' => $status], ['id' => $id])) {
-            //更新栏目缓存
-            cache('Category', null);
-            getCategory($id, '', true);
-            $this->success('操作成功！');
-        } else {
-            $this->error('操作失败！');
-        }
+        cache('Category', null);
+        getCategory($id, '', true);
+        return parent::multi();
     }
 
     //获取栏目的拼音

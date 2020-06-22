@@ -275,7 +275,7 @@ class Cms extends Adminbase
     }
 
     //删除
-    public function delete()
+    public function del()
     {
         $catid = $this->request->param('catid/d', 0);
         $ids = $this->request->param('ids/a', null);
@@ -417,6 +417,13 @@ class Cms extends Adminbase
         } else {
             $this->error('操作失败！');
         }
+    }
+
+    //批量更新
+    public function multi()
+    {
+        // 管理员禁止批量操作
+        $this->error();
     }
 
 }
