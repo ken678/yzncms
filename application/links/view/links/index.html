@@ -10,7 +10,7 @@
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete")}'>批量删除</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("del")}'>批量删除</a>
       <a class="layui-btn layui-btn-sm" href="{:url('links/links/add')}">新增链接</a>
       <a class="layui-btn layui-btn-sm" href="{:url('links/links/terms')}">分类管理</a>
     </div>
@@ -32,10 +32,10 @@
 </script>
 <script type="text/html" id="barTool">
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="statusTpl">
-    <input type="checkbox" name="status" value="{{d.id}}" data-href="{:url('setstate')}?id={{d.id}}" lay-skin="switch" lay-text="已通过|未通过" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="status" value="{{d.id}}" data-href="{:url('multi')}?id={{d.id}}&param=status" lay-skin="switch" lay-text="已通过|未通过" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 {/block}
 {block name="script"}
@@ -70,7 +70,7 @@ layui.use('table', function() {
     table.on('edit(dataTable)', function(obj) {
         var value = obj.value,
             data = obj.data;
-        $.post('{:url("links/links/listorder")}', { 'id': data.id, 'value': value }, function(data) {
+        $.post('{:url("multi")}', {'id':data.id,'value':value,'param':'listorder'}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             } else {

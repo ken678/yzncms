@@ -15,7 +15,7 @@
 namespace app\links\controller;
 
 use app\common\controller\Adminbase;
-use app\links\model\Links as Links_Model;
+use app\links\model\Links as LinksModel;
 use think\Db;
 
 /**
@@ -23,10 +23,11 @@ use think\Db;
  */
 class Links extends Adminbase
 {
+    protected $modelClass = null;
     protected function initialize()
     {
         parent::initialize();
-        $this->Links_Model = new Links_Model;
+        $this->modelClass = new LinksModel;
     }
 
     /**
@@ -37,8 +38,8 @@ class Links extends Adminbase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
-            $_list = $this->Links_Model->order('id', 'desc')->page($page, $limit)->select();
-            $total = $this->Links_Model->order('id', 'desc')->count();
+            $_list = $this->modelClass->order('id', 'desc')->page($page, $limit)->select();
+            $total = $this->modelClass->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -64,7 +65,7 @@ class Links extends Adminbase
             if (!empty($data['terms']['name'])) {
                 $data['termsid'] = $this->addTerms($data['terms']['name']);
             }
-            $status = $this->Links_Model->allowField(true)->save($data);
+            $status = $this->modelClass->allowField(true)->save($data);
             if ($status) {
                 $this->success("添加成功！", url("links/index"));
             } else {
@@ -101,7 +102,7 @@ class Links extends Adminbase
             if (!empty($data['terms']['name'])) {
                 $data['termsid'] = $this->addTerms($data['terms']['name']);
             }
-            $status = $this->Links_Model->allowField(true)->save($data, ['id' => $data['id']]);
+            $status = $this->modelClass->allowField(true)->save($data, ['id' => $data['id']]);
             if ($status) {
                 $this->success("编辑成功！", url("links/index"));
             } else {
@@ -110,7 +111,7 @@ class Links extends Adminbase
 
         } else {
             $id = $this->request->param('id', 0);
-            $data = $this->Links_Model->where(array("id" => $id))->find();
+            $data = $this->modelClass->where(array("id" => $id))->find();
             if (!$data) {
                 $this->error("该信息不存在！");
             }
@@ -120,54 +121,6 @@ class Links extends Adminbase
             return $this->fetch();
         }
 
-    }
-
-    /**
-     * 删除友情链接
-     */
-    public function delete($ids = 0)
-    {
-        empty($ids) && $this->error('参数错误！');
-        if (!is_array($ids)) {
-            $ids = array($ids);
-        }
-        $res = $this->Links_Model->where('id', 'in', $ids)->delete();
-        if ($res !== false) {
-            $this->success('删除成功！');
-        } else {
-            $this->error('删除失败！');
-        }
-
-    }
-
-    /**
-     * 友情链接状态
-     */
-    public function setstate()
-    {
-        $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/d');
-        if ($this->Links_Model->where('id', $id)->setField(['status' => $status])) {
-            $this->success("操作成功！");
-        } else {
-            $this->error('操作失败！');
-        }
-    }
-
-    /**
-     * 友情链接排序
-     */
-    public function listorder()
-    {
-        $id = $this->request->param('id/d', 0);
-        $listorder = $this->request->param('value/d', 0);
-        $rs = $this->Links_Model->where(['id' => $id])->setField(['listorder' => $listorder]);
-        if ($rs !== false) {
-            $this->success("排序更新成功！");
-        } else {
-            $this->error("排序失败！");
-        }
     }
 
     //分类管理

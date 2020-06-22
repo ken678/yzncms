@@ -30,22 +30,16 @@ return [
                 "name" => "链接编辑",
             ],
             [
-                "route" => "links/links/delete",
+                "route" => "links/links/del",
                 "type" => 1,
                 "status" => 0,
                 "name" => "链接删除",
             ],
             [
-                "route" => "links/links/setstate",
+                "route" => "links/links/multi",
                 "type" => 1,
                 "status" => 0,
-                "name" => "链接状态",
-            ],
-            [
-                "route" => "links/links/listorder",
-                "type" => 1,
-                "status" => 0,
-                "name" => "链接排序",
+                "name" => "批量操作",
             ],
             [
                 "route" => "links/links/terms",
