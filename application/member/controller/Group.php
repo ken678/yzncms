@@ -104,7 +104,7 @@ class Group extends Adminbase
     /**
      * 会员组删除
      */
-    public function delete()
+    public function del()
     {
         $groupid = $this->request->param('id/d', 0);
         if (empty($groupid)) {

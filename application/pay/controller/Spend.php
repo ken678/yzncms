@@ -41,7 +41,7 @@ class Spend extends Adminbase
     }
 
     //删除消费记录
-    public function delete()
+    public function del()
     {
         $ids = $this->request->param('ids/a');
         empty($ids) && $this->error('参数错误！');

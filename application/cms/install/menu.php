@@ -192,16 +192,10 @@ return [
                                 "name" => "更新栏目",
                             ],
                             [
-                                "route" => "cms/category/listorder",
+                                "name" => "cms/category/multi",
                                 "type" => 1,
                                 "status" => 0,
-                                "name" => "排序",
-                            ],
-                            [
-                                "route" => "cms/category/setstate",
-                                "type" => 1,
-                                "status" => 0,
-                                "name" => "状态设置",
+                                "title" => "批量更新",
                             ],
                         ],
                     ],

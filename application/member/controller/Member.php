@@ -130,7 +130,7 @@ class Member extends Adminbase
     /**
      * 会员删除
      */
-    public function delete()
+    public function del()
     {
         $ids = $this->request->param('ids/a', null);
         if (empty($ids)) {

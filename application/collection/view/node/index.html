@@ -11,7 +11,7 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" href='{:url("add")}'>添加采集任务</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete")}'>批量删除</a>
+      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("del")}'>批量删除</a>
     </div>
 </script>
 
@@ -22,7 +22,7 @@
 <script type="text/html" id="barTool">
     <!--<a class="layui-btn layui-btn-xs layui-btn-normal layui-iframe" href="" >测试</a>-->
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 {/block}
 {block name="script"}

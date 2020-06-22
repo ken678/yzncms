@@ -359,7 +359,7 @@ class Node extends Adminbase
         }
     }
 
-    public function delete()
+    public function del()
     {
         $nodeids = $this->request->param('ids/a', null);
         if (!is_array($nodeids)) {

@@ -14,7 +14,7 @@
 <script type="text/html" id="barTool">
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
     {{#  if(d.issystem!=1){ }}
-    <a href='{:url("delete")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
     {{#  } }}
 </script>
 <script type="text/html" id="issystem">
