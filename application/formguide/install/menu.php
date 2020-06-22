@@ -32,7 +32,7 @@ return [
                 "name" => "编辑表单",
             ],
             [
-                "route" => "formguide/formguide/delete",
+                "route" => "formguide/formguide/del",
                 "type" => 1,
                 "status" => 0,
                 "name" => "删除表单",
@@ -56,7 +56,7 @@ return [
                 "name" => "编辑字段",
             ],
             [
-                "route" => "formguide/field/delete",
+                "route" => "formguide/field/del",
                 "type" => 1,
                 "status" => 0,
                 "name" => "删除字段",
@@ -68,7 +68,7 @@ return [
                 "name" => "信息列表",
             ],
             [
-                "route" => "formguide/info/delete",
+                "route" => "formguide/info/del",
                 "type" => 1,
                 "status" => 0,
                 "name" => "信息删除",

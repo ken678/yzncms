@@ -15,7 +15,7 @@
 <script type="text/html" id="barTool">
     {{#  if(!d.iffixed){ }}
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("delete")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
     {{#  } }}
 </script>
 {/block}
@@ -49,7 +49,7 @@ layui.use('table', function() {
     table.on('edit(table)', function(obj) {
         var value = obj.value,
             data = obj.data;
-        $.post('{:url("listorder")}', { 'id': data.id, 'value': value }, function(data) {
+        $.post('{:url("multi")}', {'id':data.id,'value':value,'param':'listorder'}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             } else {

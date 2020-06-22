@@ -104,7 +104,7 @@ class Formguide extends Adminbase
     }
 
     //表单删除
-    public function delete()
+    public function del()
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');

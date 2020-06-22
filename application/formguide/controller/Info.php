@@ -59,7 +59,7 @@ class Info extends AdminBase
     }
 
     //删除信息
-    public function delete()
+    public function del()
     {
         $formid = $this->request->param('formid/d', 0);
         $ids = $this->request->param('ids/a', null);

@@ -15,20 +15,21 @@
 namespace app\formguide\controller;
 
 use app\common\controller\Adminbase;
-use app\formguide\model\ModelField as Model_Field;
+use app\formguide\model\ModelField as ModelField;
 use think\Db;
 use think\facade\Cookie;
 
 class Field extends AdminBase
 {
     public $fields, $banfie;
+    protected $modelClass = null;
     //初始化
     protected function initialize()
     {
         parent::initialize();
         //允许使用的字段列表
         $this->banfie = array("text", "checkbox", "textarea", "radio", "select", "image", "number", "Ueditor", "color", "file");
-        $this->modelfield = new Model_Field;
+        $this->modelClass = new ModelField;
     }
 
     //首页
@@ -38,7 +39,7 @@ class Field extends AdminBase
         Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
         $fieldid = $this->request->param('id/d', 0);
         if ($this->request->isAjax()) {
-            $data = $this->modelfield->where(['modelid' => $fieldid])->order('listorder,id')->select();
+            $data = $this->modelClass->where(['modelid' => $fieldid])->order('listorder,id')->select();
             return json(["code" => 0, "data" => $data]);
         } else {
             $this->assign("id", $fieldid);
@@ -57,7 +58,7 @@ class Field extends AdminBase
                 return $this->error($result);
             }
             try {
-                $res = $this->modelfield->addField($data);
+                $res = $this->modelClass->addField($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -89,14 +90,14 @@ class Field extends AdminBase
                 return $this->error($result);
             }
             try {
-                $this->modelfield->editField($data, $fieldid);
+                $this->modelClass->editField($data, $fieldid);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
             $this->success("更新成功！", Cookie::get('__forward__'));
         } else {
             //字段信息
-            $fieldData = Model_Field::get($fieldid);
+            $fieldData = ModelField::get($fieldid);
             //字段扩展配置
             $fieldData['setting'] = unserialize($fieldData['setting']);
             if (empty($fieldData)) {
@@ -118,33 +119,17 @@ class Field extends AdminBase
     }
 
     //删除
-    public function delete()
+    public function del()
     {
         $fieldid = $this->request->param('id/d', 0);
         if (empty($fieldid)) {
             $this->error('字段ID不能为空！');
         }
         try {
-            $this->modelfield->deleteField($fieldid);
+            $this->modelClass->deleteField($fieldid);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
         $this->success("字段删除成功！");
     }
-
-    /**
-     * 排序
-     */
-    public function listorder()
-    {
-        $id = $this->request->param('id/d', 0);
-        $listorder = $this->request->param('value/d', 0);
-        $rs = Model_Field::update(['listorder' => $listorder], ['id' => $id], true);
-        if ($rs) {
-            $this->success("排序成功！");
-        } else {
-            $this->error("排序失败！");
-        }
-    }
-
 }
