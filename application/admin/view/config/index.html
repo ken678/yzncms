@@ -28,10 +28,10 @@
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('{{d.name}}')}{/literal}">代码调用</a>
     {{# } }}
     <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="switchTpl">
-    <input type="checkbox" name="status" data-href="{:url('setstate')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
+    <input type="checkbox" name="status" data-href="{:url('multi')}?id={{d.id}}&param=status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 {/block}
 {block name="script"}
@@ -69,7 +69,7 @@ layui.use(['table','clipboard'], function() {
     //监听单元格编辑
     table.on('edit(dataTable)', function(obj) {
         var value = obj.value,data = obj.data;
-        $.post('{:url("admin/config/listorder")}', {'id': data.id,'value':value }, function(data) {
+        $.post('{:url("multi")}', {'id': data.id,'value':value,'param':'listorder'}, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
             }else{

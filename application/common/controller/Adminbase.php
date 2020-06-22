@@ -28,6 +28,15 @@ class Adminbase extends Base
     //当前登录账号信息
     public $_userinfo;
     public $rule;
+    //Multi方法可批量修改的字段.
+    protected $multiFields = 'status,listorder';
+    //模型对象
+    protected $modelClass = null;
+
+    /*
+     * 引入后台控制器的traits
+     */
+    use \app\admin\library\traits\Curd;
 
     //初始化
     protected function initialize()
@@ -181,6 +190,16 @@ class Adminbase extends Base
             $map[] = [$filter_time, 'between time', [$arr[0] . ' 00:00:00', $arr[1] . ' 23:59:59']];
         }
         return $map;
+    }
+
+    /**
+     * 构建请求参数
+     * @param array $excludeFields 忽略构建搜索的字段
+     * @return array
+     */
+    protected function buildTableParames($excludeFields = [])
+    {
+
     }
 
 }

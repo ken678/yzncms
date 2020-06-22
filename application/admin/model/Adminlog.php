@@ -39,14 +39,4 @@ class Adminlog extends Model
         return $this->save($data) !== false ? true : false;
     }
 
-    /**
-     * 删除一个月前的日志
-     * @return boolean
-     */
-    public function deleteAMonthago()
-    {
-        $status = $this->where('create_time', '<= time', time() - (86400 * 30))->delete();
-        return $status !== false ? true : false;
-    }
-
 }

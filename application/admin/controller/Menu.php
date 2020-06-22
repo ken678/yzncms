@@ -14,12 +14,20 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\Menu as Menu_Model;
+use app\admin\model\Menu as MenuModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
 class Menu extends Adminbase
 {
+
+    protected $modelClass = null;
+
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->modelClass = new MenuModel;
+    }
 
     //后台菜单首页
     public function index()
@@ -28,7 +36,7 @@ class Menu extends Adminbase
             $tree = new \util\Tree();
             $tree->icon = array('', '', '');
             $tree->nbsp = '';
-            $result = Menu_Model::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
+            $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
 
             $tree->init($result);
             $_list = $tree->getTreeList($tree->getTreeArray(0), 'title');
@@ -55,7 +63,7 @@ class Menu extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if (Menu_Model::create($data)) {
+            if (MenuModel::create($data)) {
                 $this->success("添加成功！", url("index"));
             } else {
                 $this->error('添加失败！');
@@ -63,7 +71,7 @@ class Menu extends Adminbase
         } else {
             $tree = new \util\Tree();
             $parentid = $this->request->param('parentid/d', '');
-            $result = Menu_Model::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
+            $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
             $array = array();
             foreach ($result as $r) {
                 $r['selected'] = $r['id'] == $parentid ? 'selected' : '';
@@ -93,7 +101,7 @@ class Menu extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if (Menu_Model::update($data)) {
+            if (MenuModel::update($data)) {
                 $this->success("编辑成功！", url("index"));
             } else {
                 $this->error('编辑失败！');
@@ -101,8 +109,8 @@ class Menu extends Adminbase
         } else {
             $tree = new \util\Tree();
             $id = $this->request->param('id/d', '');
-            $rs = Menu_Model::where(["id" => $id])->find();
-            $result = Menu_Model::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
+            $rs = MenuModel::where(["id" => $id])->find();
+            $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
             $array = array();
             foreach ($result as $r) {
                 $r['selected'] = $r['id'] == $rs['parentid'] ? 'selected' : '';
@@ -121,50 +129,20 @@ class Menu extends Adminbase
     /**
      * 菜单删除
      */
-    public function delete()
+    public function del()
     {
         $id = $this->request->param('id/d');
         if (empty($id)) {
             $this->error('ID错误');
         }
-        $result = Menu_Model::where(["parentid" => $id])->find();
+        $result = MenuModel::where(["parentid" => $id])->find();
         if ($result) {
             $this->error("含有子菜单，无法删除！");
         }
-        if (Menu_Model::destroy($id) !== false) {
+        if (MenuModel::destroy($id) !== false) {
             $this->success("删除菜单成功！");
         } else {
             $this->error("删除失败！");
-        }
-    }
-
-    /**
-     * 菜单排序
-     */
-    public function listorder()
-    {
-        $id = $this->request->param('id/d', 0);
-        $listorder = $this->request->param('value/d', 0);
-        $rs = Menu_Model::update(['id' => $id, 'listorder' => $listorder]);
-        if ($rs) {
-            $this->success("菜单排序成功！");
-        } else {
-            $this->error("菜单排序失败！");
-        }
-    }
-
-    /**
-     * 菜单状态
-     */
-    public function setstate()
-    {
-        $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/d');
-        if (Menu_Model::update(['status' => $status], ['id' => $id])) {
-            $this->success('操作成功！');
-        } else {
-            $this->error('操作失败！');
         }
     }
 

@@ -111,4 +111,11 @@ class Manager extends Adminbase
         }
     }
 
+    //批量更新.
+    public function multi()
+    {
+        // 管理员禁止批量操作
+        $this->error();
+    }
+
 }

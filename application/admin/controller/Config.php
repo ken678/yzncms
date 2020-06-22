@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\Config as Config_Model;
+use app\admin\model\Config as ConfigModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -26,6 +26,7 @@ class Config extends Adminbase
         parent::initialize();
         //允许使用的字段列表
         $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "Ueditor", "file", "files", 'color', 'tags', 'markdown');
+        $this->modelClass = new ConfigModel;
     }
 
     //配置首页
@@ -56,7 +57,7 @@ class Config extends Adminbase
             //字段规则
             $fieldRule = Db::name('field_type')->column('vrule', 'name');
             // 查询该分组下所有的配置项名和类型
-            $items = Config_Model::where('group', $group)->where('status', 1)->column('name,type');
+            $items = ConfigModel::where('group', $group)->where('status', 1)->column('name,type');
             foreach ($items as $name => $type) {
                 //查看是否赋值
                 if (!isset($data[$name])) {
@@ -86,13 +87,13 @@ class Config extends Adminbase
                     return $this->error("'" . $name . "'格式错误~");
                 }
                 if (isset($data[$name])) {
-                    Config_Model::where(['name' => $name])->setField('value', $data[$name]);
+                    ConfigModel::where(['name' => $name])->setField('value', $data[$name]);
                 }
             }
             cache('Config', null);
             return $this->success('设置更新成功');
         } else {
-            $configList = Config_Model::where('group', $group)
+            $configList = ConfigModel::where('group', $group)
                 ->where('status', 1)
                 ->order('listorder,id desc')
                 ->column('name,title,remark,type,value,options');
@@ -131,7 +132,7 @@ class Config extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if (Config_Model::create($data)) {
+            if (ConfigModel::create($data)) {
                 cache('Config', null); //清空缓存配置
                 $this->success('配置添加成功~', url('index'));
             } else {
@@ -156,7 +157,7 @@ class Config extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if (Config_Model::update($data)) {
+            if (ConfigModel::update($data)) {
                 cache('Config', null); //清空缓存配置
                 $this->success('配置编辑成功~', url('index'));
             } else {
@@ -168,7 +169,7 @@ class Config extends Adminbase
                 return '参数错误';
             }
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
-            $info = Config_Model::get($id);
+            $info = ConfigModel::get($id);
             $this->assign([
                 'groupArray' => config('config_group'),
                 'fieldType' => $fieldType,
@@ -181,43 +182,14 @@ class Config extends Adminbase
     //删除配置
     public function del()
     {
-        $id = $this->request->param('id/d');
-        if (!is_numeric($id) || $id < 0) {
-            return '参数错误';
-        }
-        if (Config_Model::where(['id' => $id])->delete()) {
-            cache('Config', null); //清空缓存配置
-            $this->success('删除成功');
-        } else {
-            $this->error('删除失败！');
-        }
+        cache('Config', null); //清空缓存配置
+        return parent::del();
     }
 
-    //排序
-    public function listorder()
+    public function multi()
     {
-        $id = $this->request->param('id/d', 0);
-        $listorder = $this->request->param('value/d', 0);
-        $rs = Config_Model::update(['listorder' => $listorder], ['id' => $id], true);
-        if ($rs) {
-            $this->success("排序成功！");
-        } else {
-            $this->error("排序失败！");
-        }
-    }
-
-    //设置配置状态
-    public function setstate($id, $status)
-    {
-        $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/d');
-        if (Config_Model::update(['status' => $status], ['id' => $id])) {
-            cache('Config', null); //清空缓存配置
-            $this->success('操作成功！');
-        } else {
-            $this->error('操作失败！');
-        }
+        cache('Config', null); //清空缓存配置
+        return parent::multi();
     }
 
 }

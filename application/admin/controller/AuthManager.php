@@ -218,7 +218,25 @@ class AuthManager extends Adminbase
         } else {
             return true;
         }
+    }
 
+    //添加
+    public function add()
+    {
+        $this->error();
+    }
+
+    //编辑
+    public function edit()
+    {
+        $this->error();
+    }
+
+    //批量更新
+    public function multi()
+    {
+        // 管理员禁止批量操作
+        $this->error();
     }
 
 }
