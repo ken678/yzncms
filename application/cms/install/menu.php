@@ -192,10 +192,10 @@ return [
                                 "name" => "更新栏目",
                             ],
                             [
-                                "name" => "cms/category/multi",
+                                "route" => "cms/category/multi",
                                 "type" => 1,
                                 "status" => 0,
-                                "title" => "批量更新",
+                                "name" => "批量更新",
                             ],
                         ],
                     ],
