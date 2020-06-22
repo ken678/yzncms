@@ -273,7 +273,7 @@ layui.define(['table', 'element', 'layer', 'form', 'notice'], function(exports) 
         if (this.checked) {
             status = 1;
         }
-        $.get(that.attr('data-href'), { status: status }, function(res) {
+        $.get(that.attr('data-href'), { value: status }, function(res) {
             if (res.code === 1) {
                 notice.success(res.msg);
             } else {
