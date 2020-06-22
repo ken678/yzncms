@@ -402,7 +402,7 @@ class Cms extends Adminbase
     {
         $catid = $this->request->param('catid/d', 0);
         $id = $this->request->param('id/d', 0);
-        $status = $this->request->param('status/d');
+        $status = $this->request->param('value/d');
         $modelid = getCategory($catid, 'modelid');
         $modelCache = cache("Model");
         if (empty($modelCache[$modelid])) {
