@@ -114,9 +114,5 @@ layui.define(['layer', 'table'], function(exports) {
         },
     }
 
-
-
-
-
     exports(MOD_NAME, yzn);
 });
