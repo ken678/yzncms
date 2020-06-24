@@ -26,7 +26,7 @@ class Attachments extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Attachment_Model = new Attachment_Model;
+        $this->modelClass = new Attachment_Model;
         $this->uploadUrl = config('public_url') . 'uploads/';
     }
 
@@ -34,11 +34,9 @@ class Attachments extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 8);
-            $page = $this->request->param('page/d', 1);
-            $map = $this->buildparams();
-            $_list = Attachment_Model::where($map)->page($page, $limit)->order('id', 'desc')->select();
-            $total = Attachment_Model::where($map)->order('id', 'desc')->count();
+            list($page, $limit, $where) = $this->buildTableParames();
+            $_list = Attachment_Model::where($where)->page($page, $limit)->order('id', 'desc')->select();
+            $total = Attachment_Model::where($where)->order('id', 'desc')->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -71,7 +69,7 @@ class Attachments extends Adminbase
         }
         foreach ($ids as $id) {
             try {
-                $this->Attachment_Model->deleteFile($id);
+                $this->modelClass->deleteFile($id);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }

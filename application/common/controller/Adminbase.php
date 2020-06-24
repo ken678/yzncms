@@ -165,6 +165,61 @@ class Adminbase extends Base
     }
 
     /**
+     * 构建请求参数
+     * @param array $excludeFields 忽略构建搜索的字段
+     * @return array
+     */
+    protected function buildTableParames($excludeFields = [])
+    {
+        $get = $this->request->get('', null, null);
+        $page = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
+        $limit = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 15;
+        $filters = isset($get['filter']) && !empty($get['filter']) ? $get['filter'] : '{}';
+        $ops = isset($get['op']) && !empty($get['op']) ? $get['op'] : '{}';
+        // json转数组
+        $filters = json_decode($filters, true);
+        $ops = json_decode($ops, true);
+        $where = [];
+        $excludes = [];
+
+        // 判断是否关联查询
+        $tableName = lcfirst($this->modelClass->getName());
+
+        foreach ($filters as $key => $val) {
+            if (in_array($key, $excludeFields)) {
+                $excludes[$key] = $val;
+                continue;
+            }
+            $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
+            if ($this->relationSerach && count(explode('.', $key)) == 1) {
+                $key = "{$tableName}.{$key}";
+            }
+            switch (strtolower($op)) {
+                case '=':
+                    $where[] = [$key, '=', $val];
+                    break;
+                case '%*%':
+                    $where[] = [$key, 'LIKE', "%{$val}%"];
+                    break;
+                case '*%':
+                    $where[] = [$key, 'LIKE', "{$val}%"];
+                    break;
+                case '%*':
+                    $where[] = [$key, 'LIKE', "%{$val}"];
+                    break;
+                case 'range':
+                    /*[$beginTime, $endTime] = explode(' - ', $val);
+                    $where[] = [$key, '>=', strtotime($beginTime)];
+                    $where[] = [$key, '<=', strtotime($endTime)];*/
+                    break;
+                default:
+                    $where[] = [$key, $op, "%{$val}"];
+            }
+        }
+        return [$page, $limit, $where, $excludes];
+    }
+
+    /**
      * 生成查询所需要的条件,排序方式
      */
     protected function buildparams()
@@ -190,16 +245,6 @@ class Adminbase extends Base
             $map[] = [$filter_time, 'between time', [$arr[0] . ' 00:00:00', $arr[1] . ' 23:59:59']];
         }
         return $map;
-    }
-
-    /**
-     * 构建请求参数
-     * @param array $excludeFields 忽略构建搜索的字段
-     * @return array
-     */
-    protected function buildTableParames($excludeFields = [])
-    {
-
     }
 
 }
