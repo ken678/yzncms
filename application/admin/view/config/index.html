@@ -36,15 +36,19 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['table','clipboard'], function() {
-    var table = layui.table,
+layui.use(['yznTable','clipboard'], function() {
+    var table = layui.yznTable,
         $ = layui.$,
         form = layui.form,
         clipboard =  layui.clipboard;
     table.render({
+        id:'dataTable',
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
         url: '{:url("index",["group"=>$group])}',
+        init:{
+            modify_url:'{:url("multi")}',
+        },
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
@@ -67,7 +71,7 @@ layui.use(['table','clipboard'], function() {
     });
 
     //监听单元格编辑
-    table.on('edit(dataTable)', function(obj) {
+    /*table.on('edit(dataTable)', function(obj) {
         var value = obj.value,data = obj.data;
         $.post('{:url("multi")}', {'id': data.id,'value':value,'param':'listorder'}, function(data) {
             if (data.code == 1) {
@@ -77,7 +81,7 @@ layui.use(['table','clipboard'], function() {
             }
 
         })
-    });
+    });*/
 });
 </script>
 {/block}
