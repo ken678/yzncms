@@ -1,11 +1,14 @@
 /**
  @ Name：简单封下table
  */
-layui.define(['form', 'table','yzn'], function(exports) {
+layui.define(['form', 'table', 'yzn', 'laydate','laytpl','element'], function(exports) {
     var MOD_NAME = 'yznTable',
         $ = layui.$,
         table = layui.table,
         yzn = layui.yzn,
+        laydate = layui.laydate,
+        element = layui.element,
+        laytpl = layui.laytpl,
         form = layui.form;
 
     var init = {
@@ -14,23 +17,23 @@ layui.define(['form', 'table','yzn'], function(exports) {
     };
 
     yznTable = {
-        parame: function(param, defaultParam) {
-            return param !== undefined ? param : defaultParam;
-        },
         render: function(options) {
             options.init = options.init || init;
-            options.modifyReload = yznTable.parame(options.modifyReload, true);
+            options.modifyReload = yzn.parame(options.modifyReload, true);
             options.id = options.id || options.table_render_id;
             options.elem = options.elem || options.init.table_elem;
             options.cols = options.cols || [];
             options.layFilter = options.id + '_LayFilter';
-            options.search = yznTable.parame(options.search, true);
+            options.search = yzn.parame(options.search, true);
             options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
                 title: '搜索',
                 layEvent: 'TABLE_SEARCH',
                 icon: 'layui-icon-search',
                 extend: 'data-table-id="' + options.id + '"'
             }];
+
+            // 判断元素对象是否有嵌套的
+            options.cols = yznTable.formatCols(options.cols, options.init);
 
             // 初始化表格lay-filter
             $(options.elem).attr('lay-filter', options.layFilter);
@@ -55,10 +58,10 @@ layui.define(['form', 'table','yzn'], function(exports) {
             var formHtml = '';
             $.each(cols, function(i, d) {
                 d.field = d.field || false;
-                d.fieldAlias = yznTable.parame(d.fieldAlias, d.field);
+                d.fieldAlias = yzn.parame(d.fieldAlias, d.field);
                 d.title = d.title || d.field || '';
                 d.selectList = d.selectList || {};
-                d.search = yznTable.parame(d.search, true);
+                d.search = yzn.parame(d.search, true);
                 d.searchTip = d.searchTip || '请输入' + d.title || '';
                 d.searchValue = d.searchValue || '';
                 d.searchOp = d.searchOp || '%*%';
@@ -141,6 +144,64 @@ layui.define(['form', 'table','yzn'], function(exports) {
                 });
             }
         },
+        formatCols: function(cols, init) {
+            for (i in cols) {
+                var col = cols[i];
+                for (index in col) {
+                    var val = col[index];
+
+                    // 判断是否包含初始化数据
+                    if (val.init === undefined) {
+                        cols[i][index]['init'] = init;
+                    }
+
+                    // 格式化列操作栏
+                    if (val.templet === yznTable.tool && val.operat === undefined) {
+                        cols[i][index]['operat'] = ['edit', 'delete'];
+                    }
+
+                    // 判断是否包含开关组件
+                    if (val.templet === yznTable.switch && val.filter === undefined) {
+                        cols[i][index]['filter'] = val.field;
+                    }
+
+                    // 判断是否含有搜索下拉列表
+                    if (val.selectList !== undefined && val.search === undefined) {
+                        cols[i][index]['search'] = 'select';
+                    }
+
+                    // 判断是否初始化对齐方式
+                    if (val.align === undefined) {
+                        cols[i][index]['align'] = 'center';
+                    }
+
+                    // 部分字段开启排序
+                    var sortDefaultFields = ['id', 'sort'];
+                    if (val.sort === undefined && sortDefaultFields.indexOf(val.field) >= 0) {
+                        cols[i][index]['sort'] = true;
+                    }
+
+                    // 初始化图片高度
+                    if (val.templet === yznTable.image && val.imageHeight === undefined) {
+                        cols[i][index]['imageHeight'] = 40;
+                    }
+
+                    // 判断是否多层对象
+                    if (val.field !== undefined && val.field.split(".").length > 1) {
+                        if (val.templet === undefined) {
+                            cols[i][index]['templet'] = yznTable.value;
+                        }
+                    }
+
+                    // 判断是否列表数据转换
+                    if (val.selectList !== undefined && val.templet === undefined) {
+                        cols[i][index]['templet'] = yznTable.list;
+                    }
+
+                }
+            }
+            return cols;
+        },
         listenTableSearch: function(tableId) {
             form.on('submit(' + tableId + '_filter)', function(data) {
                 var dataField = data.field;
@@ -213,6 +274,32 @@ layui.define(['form', 'table','yzn'], function(exports) {
                         table.reload(tableId);
                     });
                 });
+            }
+        },
+        image: function(data, option) {
+            console.log(data);
+            console.log(option);
+            option.imageWidth = option.imageWidth || 200;
+            option.imageHeight = option.imageHeight || 40;
+            option.imageSplit = option.imageSplit || '|';
+            option.imageJoin = option.imageJoin || '<br>';
+            option.title = option.title || option.field;
+            var field = option.field,
+                title = data[option.title];
+            try {
+                var value = eval("data." + field);
+            } catch (e) {
+                var value = undefined;
+            }
+            if (value === undefined) {
+                return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
+            } else {
+                var values = value.split(option.imageSplit),
+                    valuesHtml = [];
+                values.forEach((value, index) => {
+                    valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                });
+                return valuesHtml.join(option.imageJoin);
             }
         },
     }
