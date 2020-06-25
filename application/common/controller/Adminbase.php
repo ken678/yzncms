@@ -208,9 +208,9 @@ class Adminbase extends Base
                     $where[] = [$key, 'LIKE', "%{$val}"];
                     break;
                 case 'range':
-                    /*[$beginTime, $endTime] = explode(' - ', $val);
+                    [$beginTime, $endTime] = explode(' - ', $val);
                     $where[] = [$key, '>=', strtotime($beginTime)];
-                    $where[] = [$key, '<=', strtotime($endTime)];*/
+                    $where[] = [$key, '<=', strtotime($endTime)];
                     break;
                 default:
                     $where[] = [$key, $op, "%{$val}"];
