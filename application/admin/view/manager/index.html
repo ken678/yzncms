@@ -4,17 +4,12 @@
     <div class="layui-card-header">管理员管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="table" lay-filter="table"></table>
-            <script type="text/html" id="toolbarDemo">
-                <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{:url('add')}">添加管理员</a>
-              </div>
-            </script>
+            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
             <script type="text/html" id="barTool">
                 {{#  if(d.id == 1){ }}
-                <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+                <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
                 {{#  } else { }}
-                <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+                <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
                 <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
                 {{#  } }}
             </script>
@@ -24,12 +19,21 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-layui.use('table', function() {
-    var table = layui.table,
-        $ = layui.$;
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTableRenderId',
+        add_url: '{:url("add")}',
+    };
+
+
     table.render({
-        elem: '#table',
-        toolbar: '#toolbarDemo',
+        init: init,
+        id: 'dataTable',
+        elem: '#dataTable',
+        toolbar: ['refresh','add'],
         url: '{:url("index")}',
         cols: [
             [

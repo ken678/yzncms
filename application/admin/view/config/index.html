@@ -14,11 +14,6 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-    <a class="layui-btn layui-btn-sm" href="{:url('add')}">新增配置项</a>
-  </div>
-</script>
 <script type="text/html" id="barTool">
     {{# if(d.type=='radio' || d.type=='select'){ }}
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('{{d.name}}')['key']} 值：{:config('{{d.name}}')['value']}{/literal}">代码调用</a>
@@ -27,7 +22,7 @@
     {{# } else { }}
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('{{d.name}}')}{/literal}">代码调用</a>
     {{# } }}
-    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' data-title="编辑" class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="switchTpl">
@@ -41,15 +36,21 @@ layui.use(['yznTable','clipboard'], function() {
         $ = layui.$,
         form = layui.form,
         clipboard =  layui.clipboard;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTableRenderId',
+        add_url: "{:url('add')}",
+        modify_url:'{:url("multi")}',
+    };
+
     table.render({
+        init: init,
         id:'dataTable',
         elem: '#dataTable',
-        toolbar: '#toolbarDemo',
+        toolbar: ['refresh','add'],
         url: '{:url("index",["group"=>$group])}',
         search:false,
-        init:{
-            modify_url:'{:url("multi")}',
-        },
         cols: [
             [
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
