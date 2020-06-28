@@ -80,7 +80,13 @@ layui.use(['table', 'yznTable'], function() {
         table = layui.table,
         yznTable = layui.yznTable;
 
+    var init = {
+        table_elem: '#currentTable',
+        modify_url: '{:url("listorder",["catid"=>$catid])}',
+    };
+
     yznTable.render({
+        init:init,
         id:'currentTable',
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
@@ -102,20 +108,6 @@ layui.use(['table', 'yznTable'], function() {
         page: {}
     });
 
-
-    //监听单元格编辑
-    table.on('edit(currentTable_LayFilter)', function(obj) {
-        var value = obj.value,
-            data = obj.data;
-        $.post('{:url("cms/cms/listorder",["catid"=>$catid])}', { 'id': data.id, 'value': value }, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            } else {
-                layer.msg(data.msg);
-            }
-
-        })
-    });
 
     $('body').on('click', '.move', function () {
         var checkStatus = table.checkStatus('currentTable'),
