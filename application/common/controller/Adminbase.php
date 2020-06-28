@@ -32,6 +32,10 @@ class Adminbase extends Base
     protected $multiFields = 'status,listorder';
     //模型对象
     protected $modelClass = null;
+    /**
+     * 是否是关联查询
+     */
+    protected $relationSearch = false;
 
     /*
      * 引入后台控制器的traits
@@ -169,8 +173,9 @@ class Adminbase extends Base
      * @param array $excludeFields 忽略构建搜索的字段
      * @return array
      */
-    protected function buildTableParames($excludeFields = [])
+    protected function buildTableParames($excludeFields = [], $relationSearch = null)
     {
+        $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch;
         $get = $this->request->get('', null, null);
         $page = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
         $limit = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 15;
@@ -191,7 +196,7 @@ class Adminbase extends Base
                 continue;
             }
             $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
-            if ($this->relationSerach && count(explode('.', $key)) == 1) {
+            if ($relationSearch && count(explode('.', $key)) == 1) {
                 $key = "{$tableName}.{$key}";
             }
             switch (strtolower($op)) {
