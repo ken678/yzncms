@@ -30,7 +30,7 @@ layui.use('yznTable', function() {
                 { field: 'get', title: '操作URL' },
                 { field: 'create_time', width: 180, title: '时间', search: 'range'},
                 { field: 'ip', width: 120, title: 'IP' },
-                { field: 'status', width: 80, title: '状态',align: "center", templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">成功</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">失败</button> {{#  } }} </div>' },
+                { field: 'status', width: 80, title: '状态',align: "center", templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">成功</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">失败</button> {{#  } }} </div>',selectList: {0: '失败', 1: '成功'}},
             ]
         ],
         page: {}
