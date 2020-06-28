@@ -5,9 +5,81 @@ layui.define(['layer', 'table'], function(exports) {
     var layer = layui.layer;
 
     var MOD_NAME = 'yzn';
+    layer.config({
+        skin: 'layui-layer-yzn'
+    });
+
     yzn = {
         config: {
             shade: [0.02, '#000'],
+        },
+        open: function(title, url, width, height, isResize) {
+            isResize = isResize === undefined ? true : isResize;
+            var index = layer.open({
+                title: title,
+                type: 2,
+                area: [width, height],
+                content: url,
+                maxmin: true,
+                moveOut: true,
+                success: function(layero, index) {
+                    var body = layer.getChildFrame('body', index);
+                    if (body.length > 0) {
+                        $.each(body, function(i, v) {
+
+                            // todo 优化弹出层背景色修改
+                            $(v).before('<style>\n' +
+                                'html, body {\n' +
+                                '    background: #ffffff;\n' +
+                                '}\n' +
+                                '</style>');
+                        });
+                    }
+                }
+            });
+            if (yzn.checkMobile() || width === undefined || height === undefined) {
+                layer.full(index);
+            }
+            if (isResize) {
+                $(window).on("resize", function() {
+                    layer.full(index);
+                })
+            }
+        },
+        checkMobile: function() {
+            var userAgentInfo = navigator.userAgent;
+            var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+            var mobile_flag = false;
+            //根据userAgent判断是否是手机
+            for (var v = 0; v < mobileAgents.length; v++) {
+                if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+                    mobile_flag = true;
+                    break;
+                }
+            }
+            var screen_width = window.screen.width;
+            var screen_height = window.screen.height;
+            //根据屏幕分辨率判断是否是手机
+            if (screen_width < 600 && screen_height < 800) {
+                mobile_flag = true;
+            }
+            return mobile_flag;
+        },
+        formatDateTime: function(timeStamp) {
+            var date = new Date();
+            date.setTime(timeStamp * 1000);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            var d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ('0' + h) : h;
+            var minute = date.getMinutes();
+            var second = date.getSeconds();
+            minute = minute < 10 ? ('0' + minute) : minute;
+            second = second < 10 ? ('0' + second) : second;
+            return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
         },
         parame: function(param, defaultParam) {
             return param !== undefined ? param : defaultParam;

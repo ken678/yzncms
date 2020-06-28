@@ -1,7 +1,7 @@
 /**
  @ Name：简单封下table
  */
-layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','yznForm'], function(exports) {
+layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm'], function(exports) {
     var MOD_NAME = 'yznTable',
         $ = layui.$,
         table = layui.table,
@@ -42,6 +42,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','yznForm'],
             if (options.search === true) {
                 yznTable.renderSearch(options.cols, options.elem, options.id);
             }
+
+            // 初始化表格左上方工具栏
+            options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
+            options.toolbar = yznTable.renderToolbar(options.toolbar, options.elem, options.id, options.init);
+
             var newTable = table.render(options);
             // 监听表格搜索开关显示
             yznTable.listenToolbar(options.layFilter, options.id);
@@ -50,6 +55,60 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','yznForm'],
             // 监听表格文本框编辑
             yznTable.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
             return newTable;
+        },
+        renderToolbar: function(data, elem, tableId, init) {
+            data = data || [];
+            var toolbarHtml = '';
+            $.each(data, function(i, v) {
+                if (v === 'refresh') {
+                    toolbarHtml += ' <button class="layui-btn layui-btn-sm" data-table-refresh="' + tableId + '"><i class="iconfont icon-shuaxin1"></i> </button>\n';
+                } else if (v === 'add') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
+                } else if (v === 'delete') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
+                } else if (typeof v === "object") {
+                    $.each(v, function(ii, vv) {
+                        vv.class = vv.class || '';
+                        vv.icon = vv.icon || '';
+                        vv.auth = vv.auth || '';
+                        vv.url = vv.url || '';
+                        vv.method = vv.method || 'open';
+                        vv.title = vv.title || vv.text;
+                        vv.text = vv.text || vv.title;
+                        vv.extend = vv.extend || '';
+                        vv.checkbox = vv.checkbox || false;
+                        toolbarHtml += yznTable.buildToolbarHtml(vv, tableId);
+                    });
+                }
+            });
+            return '<div>' + toolbarHtml + '</div>';
+        },
+        buildToolbarHtml: function(toolbar, tableId) {
+            var html = '';
+            toolbar.class = toolbar.class || '';
+            toolbar.icon = toolbar.icon || '';
+            toolbar.auth = toolbar.auth || '';
+            toolbar.url = toolbar.url || '';
+            toolbar.extend = toolbar.extend || '';
+            toolbar.method = toolbar.method || 'open';
+            toolbar.field = toolbar.field || 'id';
+            toolbar.title = toolbar.title || toolbar.text;
+            toolbar.text = toolbar.text || toolbar.title;
+            toolbar.checkbox = toolbar.checkbox || false;
+
+            var formatToolbar = toolbar;
+            formatToolbar.icon = formatToolbar.icon !== '' ? '<i class="' + formatToolbar.icon + '"></i> ' : '';
+            formatToolbar.class = formatToolbar.class !== '' ? 'class="' + formatToolbar.class + '" ' : '';
+            if (toolbar.method === 'open') {
+                formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
+            } else {
+                formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
+            }
+            formatToolbar.checkbox = toolbar.checkbox ? ' data-checkbox="true" ' : '';
+            formatToolbar.tableId = tableId !== undefined ? ' data-table="' + tableId + '" ' : '';
+            html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
+
+            return html;
         },
         renderSearch: function(cols, elem, tableId) {
             // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
@@ -245,7 +304,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','yznForm'],
             });
         },
         listenEdit: function(tableInit, layFilter, tableId, modifyReload) {
-        	console.log(tableInit.modify_url);
+            console.log(tableInit.modify_url);
             tableInit.modify_url = tableInit.modify_url || false;
             tableId = tableId || init.table_render_id;
             if (tableInit.modify_url !== false) {
