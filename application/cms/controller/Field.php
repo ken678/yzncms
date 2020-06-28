@@ -178,7 +178,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/d');
+        $status = $this->request->param('value/d');
         if (Model_Field::update(['status' => $status], ['id' => $id])) {
             $this->success("操作成功！");
         } else {
@@ -190,7 +190,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
-        $ifsearch = $this->request->param('status/d');
+        $ifsearch = $this->request->param('value/d');
         if (Model_Field::update(['ifsearch' => $ifsearch], ['id' => $id])) {
             $this->success("操作成功！");
         } else {
@@ -205,7 +205,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/d');
+        $status = $this->request->param('value/d');
 
         $field = Model_Field::get($id);
         if ($field->ifrequire && 0 == $status) {
@@ -226,7 +226,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         empty($id) && $this->error('参数不能为空！');
-        $status = $this->request->param('status/d');
+        $status = $this->request->param('value/d');
 
         $field = Model_Field::get($id);
         if (!$field->isadd && $status) {
