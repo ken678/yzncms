@@ -33,7 +33,7 @@ class Config extends Adminbase
     public function index($group = 'base')
     {
         if ($this->request->isAjax()) {
-            $_list = Db::view('config', 'id,name,title,type,listorder,status,update_time')
+            $_list = $this->modelClass->view('config', 'id,name,title,type,listorder,status,update_time')
                 ->where('group', $group)
                 ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
                 ->order('listorder,id desc')
