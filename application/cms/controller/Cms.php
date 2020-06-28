@@ -44,22 +44,22 @@ class Cms extends Adminbase
         //栏目所属模型
         $modelid = $catInfo['modelid'];
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $map = $this->buildparams();
-
             //检查模型是否被禁用
             if (!getModel($modelid, 'status')) {
                 $this->error('模型被禁用！');
             }
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
+
+            $this->modelClass = Db::name($tableName);
+            list($page, $limit, $where) = $this->buildTableParames();
+
             $conditions = [
                 ['catid', '=', $catid],
                 ['status', '<>', -1],
             ];
-            $total = Db::name($tableName)->where($map)->where($conditions)->count();
-            $list = Db::name($tableName)->page($page, $limit)->where($map)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
+            $total = Db::name($tableName)->where($where)->where($conditions)->count();
+            $list = Db::name($tableName)->page($page, $limit)->where($where)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);

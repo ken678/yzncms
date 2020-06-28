@@ -6,26 +6,13 @@
 }
 </style>
 <div class="layui-form">
-        <blockquote class="layui-elem-quote quoteBox">
-            <form class="layui-form search-from" method="get">
-                <div class="layui-inline">
-                    <div class="layui-input-inline">
-                        <input type="text" class="layui-input" id="laydate" placeholder="搜索时间范围">
-                    </div>
-                    <div class="layui-input-inline">
-                        <input type="text" name="keyword" class="layui-input searchVal" placeholder="请输入标题关键词">
-                    </div>
-                    <a class="layui-btn search_btn" data-type="reload">搜索</a>
-                </div>
-            </form>
-        </blockquote>
     <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
 </div>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
       <a class="layui-btn layui-btn-sm" data-open="{:url('add',['catid'=>$catid])}" data-title="新增内容" data-full="true">新增内容</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("del",["catid"=>$catid])}'>批量删除</a>
-      <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="move">批量移动</a>
+      <a class="layui-btn layui-btn-sm layui-btn-normal move">批量移动</a>
       <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('recycle',['catid'=>$catid])}">回收站</a>
     </div>
 </script>
@@ -34,7 +21,7 @@
     <a href='{:url("del",["catid"=>$catid])}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="title">
-  {{# if(d.flag.indexOf("1")!==-1){ }}
+    {{# if(d.flag.indexOf("1")!==-1){ }}
   <span class="text-danger">[置顶]</span>
   {{#  } }}
   {{# if(d.flag.indexOf("2")!==-1){ }}
@@ -58,27 +45,27 @@
   {{ d.title }}
 </script>
 <script type="text/html" id="username">
-	{{# if(d.sysadd==1){ }}
-	{{ d.username }}
-	{{#  } else { }}
-	<span class="text-danger">{{ d.username }}</span>
-	{{#  } }}
+    {{# if(d.sysadd==1){ }}
+  {{ d.username }}
+  {{#  } else { }}
+  <span class="text-danger">{{ d.username }}</span>
+  {{#  } }}
 </script>
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" data-href='{:url("setstate",["catid"=>$catid])}?id={{d.id}}' value="{{d.id}}" lay-skin="switch" lay-text="通过|待审核" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 <div id="remove" style="display: none;">
-	<div class="box-body" style="padding: 20px;">
-		<blockquote class="layui-elem-quote">只能将数据移动到相同模型的栏目下，不同模型的数据移动将被忽略</blockquote>
-		<div class="layui-form">
-		    <div class="layui-form-item">
-	            <select name="remove" lay-verify="required">
-	                <option></option>
-	                {$string|raw}
-	            </select>
-		    </div>
-		</div>
-	</div>
+    <div class="box-body" style="padding: 20px;">
+        <blockquote class="layui-elem-quote">只能将数据移动到相同模型的栏目下，不同模型的数据移动将被忽略</blockquote>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <select name="remove" lay-verify="required">
+                    <option></option>
+                    {$string|raw}
+                </select>
+            </div>
+        </div>
+    </div>
 </div>
 <style type="text/css">
 .layui-layer-page .layui-layer-content {
@@ -88,69 +75,55 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['table', 'laydate'], function() {
+layui.use(['table', 'yznTable'], function() {
     var table = layui.table,
         $ = layui.$,
         form = layui.form,
-        laydate = layui.laydate;
-    laydate.render({
-        elem: '#laydate',
-        range: true,
-    });
-    table.render({
+        table = layui.table,
+        yznTable = layui.yznTable;
+
+    yznTable.render({
+        id:'currentTable',
         elem: '#dataTable',
         toolbar: '#toolbarDemo',
-        url: '{:url("cms/cms/classlist",["catid"=>$catid])}',
+        url: '{:url("classlist",["catid"=>$catid])}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 60, title: 'ID' },
-                { field: 'title', title: '标题',templet: '#title'},
+                { field: 'title',align: "left", title: '标题', templet: '#title' },
                 { field: 'hits', width: 80, title: '点击量' },
                 { field: 'updatetime', width: 160, title: '更新时间' },
-                { field: 'username', width: 80, title: '发布人',templet: '#username' },
-                { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
-                { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
+                { field: 'username', width: 80, title: '发布人', templet: '#username' },
+                { field: 'url', width: 60, align: "center", title: 'URL', templet: '<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>',search: false},
+                { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true,selectList: {0: '待审核', 1: '通过'}},
                 { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
             ]
         ],
         page: {}
     });
 
-    $(".search_btn").on("click", function() {
-        table.reload("dataTable", {
-            page: {
-                curr: 1 //重新从第 1 页开始
-            },
-            where: {
-                search_field: 'title',
-                keyword: $(".searchVal").val(),
-                filter_time: 'inputtime',
-                filter_time_range: $("#laydate").val()
-            }
-        })
-    });
 
-        //监听单元格编辑
-    table.on('edit(dataTable)', function(obj) {
-        var value = obj.value,data = obj.data;
-        $.post('{:url("cms/cms/listorder",["catid"=>$catid])}', {'id': data.id,'value':value }, function(data) {
+    //监听单元格编辑
+    table.on('edit(currentTable_LayFilter)', function(obj) {
+        var value = obj.value,
+            data = obj.data;
+        $.post('{:url("cms/cms/listorder",["catid"=>$catid])}', { 'id': data.id, 'value': value }, function(data) {
             if (data.code == 1) {
                 layer.msg(data.msg);
-            }else{
+            } else {
                 layer.msg(data.msg);
             }
 
         })
     });
 
-    table.on('toolbar(dataTable)', function(obj) {
-            var checkStatus = table.checkStatus(obj.config.id),
-                
-                ids = [],
-                id = tag = '';
-        if (obj.event === 'move') {
+    $('body').on('click', '.move', function () {
+        var checkStatus = table.checkStatus('currentTable'),
+
+            ids = [],
+            id = tag = '';
             var data = checkStatus.data;
             if (data.length > 0) {
                 for (let i in data) {
@@ -159,33 +132,31 @@ layui.use(['table', 'laydate'], function() {
                     //ids.push(data[i].id);
                 }
                 layer.open({
-                  title: false,
-				  type: 1,
-				  content: $('#remove'),
-				  area: ['300px', '250px'],
-                  btn: ['移动'],
-                  yes: function(index, layero){
-                      var tocatid = $("select[name='remove']").val();
-                      if (tocatid == 0) {
+                    title: '批量移动',
+                    type: 1,
+                    content: $('#remove'),
+                    area: ['300px', '250px'],
+                    btn: ['移动'],
+                    yes: function(index, layero) {
+                        var tocatid = $("select[name='remove']").val();
+                        if (tocatid == 0) {
                             layer.msg("请选择移动的栏目");
                             return;
-                      }
-                      $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id,'tocatid':tocatid}, function(data) {
-                           if (data.code == 1) {
-                              layer.msg(data.msg);
-                              layer.close(index);
-                           }else{
-                            layer.msg(data.msg);
-                           }
-                      })
-                  }
+                        }
+                        $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
+                            if (data.code == 1) {
+                                layer.msg(data.msg);
+                                layer.close(index);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        })
+                    }
 
-				});
+                });
             } else {
                 layer.msg("请选择需要移动的数据");
             }
-
-        }
     });
 
 });
