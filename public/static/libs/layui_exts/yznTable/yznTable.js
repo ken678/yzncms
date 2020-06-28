@@ -207,6 +207,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','yznForm'],
                 var dataField = data.field;
                 var formatFilter = {},
                     formatOp = {};
+
                 $.each(dataField, function(key, val) {
                     if (val !== '') {
                         formatFilter[key] = val;
