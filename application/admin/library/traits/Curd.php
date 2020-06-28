@@ -22,16 +22,17 @@ trait Curd
     public function index()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
+            list($page, $limit, $where) = $this->buildTableParames();
             $order = $this->request->param("order/s", "DESC");
             $sort = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
 
             $count = $this->modelClass
+                ->where($where)
                 ->order($sort, $order)
                 ->count();
 
             $data = $this->modelClass
+                ->where($where)
                 ->order($sort, $order)
                 ->page($page, $limit)
                 ->select();
