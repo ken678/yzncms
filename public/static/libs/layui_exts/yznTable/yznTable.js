@@ -1,7 +1,7 @@
 /**
  @ Name：简单封下table
  */
-layui.define(['form', 'table', 'yzn', 'laydate','laytpl','element'], function(exports) {
+layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','yznForm'], function(exports) {
     var MOD_NAME = 'yznTable',
         $ = layui.$,
         table = layui.table,
@@ -183,7 +183,7 @@ layui.define(['form', 'table', 'yzn', 'laydate','laytpl','element'], function(ex
 
                     // 初始化图片高度
                     if (val.templet === yznTable.image && val.imageHeight === undefined) {
-                        cols[i][index]['imageHeight'] = 40;
+                        cols[i][index]['imageHeight'] = 30;
                     }
 
                     // 判断是否多层对象
@@ -277,10 +277,8 @@ layui.define(['form', 'table', 'yzn', 'laydate','laytpl','element'], function(ex
             }
         },
         image: function(data, option) {
-            console.log(data);
-            console.log(option);
-            option.imageWidth = option.imageWidth || 200;
-            option.imageHeight = option.imageHeight || 40;
+            option.imageWidth = option.imageWidth || 80;
+            option.imageHeight = option.imageHeight || 30;
             option.imageSplit = option.imageSplit || '|';
             option.imageJoin = option.imageJoin || '<br>';
             option.title = option.title || option.field;
@@ -302,8 +300,51 @@ layui.define(['form', 'table', 'yzn', 'laydate','laytpl','element'], function(ex
                 return valuesHtml.join(option.imageJoin);
             }
         },
+        url: function(data, option) {
+            var field = option.field;
+            try {
+                var value = eval("data." + field);
+            } catch (e) {
+                var value = undefined;
+            }
+            return '<a class="yzn-table-url" href="' + value + '" target="_blank" class="label bg-green">' + value + '</a>';
+        },
+        price: function(data, option) {
+            var field = option.field;
+            try {
+                var value = eval("data." + field);
+            } catch (e) {
+                var value = undefined;
+            }
+            return '<span>￥' + value + '</span>';
+        },
+        icon: function(data, option) {
+            var field = option.field;
+            try {
+                var value = eval("data." + field);
+            } catch (e) {
+                var value = undefined;
+            }
+            return '<i class="' + value + '"></i>';
+        },
+        text: function(data, option) {
+            var field = option.field;
+            try {
+                var value = eval("data." + field);
+            } catch (e) {
+                var value = undefined;
+            }
+            return '<span class="line-limit-length">' + value + '</span>';
+        },
+        value: function(data, option) {
+            var field = option.field;
+            try {
+                var value = eval("data." + field);
+            } catch (e) {
+                var value = undefined;
+            }
+            return '<span>' + value + '</span>';
+        },
     }
-
-
     exports(MOD_NAME, yznTable);
 });
