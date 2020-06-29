@@ -5,7 +5,7 @@
     background: #fff;
 }
 </style>
-<table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+<table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
 <script type="text/html" id="barTool">
     <a class="layui-btn layui-btn-xs" data-open='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' data-title="编辑内容" data-full="true">编辑</a>
     <a href='{:url("del",["catid"=>$catid])}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
@@ -82,7 +82,7 @@ layui.use(['table', 'yznTable'], function() {
     yznTable.render({
         init: init,
         id: 'currentTable',
-        elem: '#dataTable',
+        elem: '#currentTable',
         toolbar: ['refresh', 'add', 'delete',
             [{
                html:'<a class="layui-btn layui-btn-sm layui-btn-normal move">批量移动</a>'

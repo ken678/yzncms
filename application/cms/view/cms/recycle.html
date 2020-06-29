@@ -36,10 +36,7 @@ layui.use('yznTable', function() {
         url: "{:url('recycle',['catid'=>$catid])}",
         toolbar: ['refresh',
             [{
-                text: '返回',
-                method: 'url',
-                url:'javascript:history.back(-1);',
-                class: 'layui-btn layui-btn-sm',
+                html:'<a class="layui-btn layui-btn-sm" href="javascript:history.back(-1);">返回</a>'
             }],
             [{
                 html: '<a class="layui-btn layui-btn-sm confirm" data-href="{:url("restore",["catid"=>$catid])}" data-batch-all="currentTable">还原</a>',
