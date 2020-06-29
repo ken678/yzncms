@@ -33,6 +33,7 @@ layui.use('yznTable', function() {
         elem: '#currentTable',
         toolbar: ['refresh','add'],
         url: '{:url("index")}',
+        search:false,
         cols: [
             [
                 { field: 'title',width: 200, title: '授权',templet: "<div><a class='layui-btn layui-btn-xs' href='{:url('access?group_name=')}?title={{d.title}}&group_id={{d.id}}'>访问授权</a></div>" },

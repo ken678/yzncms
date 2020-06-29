@@ -23,7 +23,7 @@ class Manager extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Admin_User = new Admin_User;
+        $this->modelClass = new Admin_User;
     }
 
     /**
@@ -32,15 +32,28 @@ class Manager extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
+
+            list($page, $limit, $where) = $this->buildTableParames();
             $this->AuthGroup_Model = new AuthGroup_Model();
-            $_list = $this->Admin_User
+
+            $count = $this->modelClass
+                ->where($where)
                 ->order(array('id' => 'ASC'))
                 ->withAttr('roleid', function ($value, $data) {
                     return $this->AuthGroup_Model->getRoleIdName($value);
                 })
+                ->count();
+
+            $_list = $this->modelClass
+                ->where($where)
+                ->order(array('id' => 'ASC'))
+                ->withAttr('roleid', function ($value, $data) {
+                    return $this->AuthGroup_Model->getRoleIdName($value);
+                })
+                ->page($page, $limit)
                 ->select();
             $total = count($_list);
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            $result = array("code" => 0, 'count' => $count, "data" => $_list);
             return json($result);
         }
         return $this->fetch();
@@ -57,10 +70,10 @@ class Manager extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->Admin_User->createManager($data)) {
+            if ($this->modelClass->createManager($data)) {
                 $this->success("添加管理员成功！", url('admin/manager/index'));
             } else {
-                $error = $this->Admin_User->getError();
+                $error = $this->modelClass->getError();
                 $this->error($error ? $error : '添加失败！');
             }
 
@@ -81,14 +94,14 @@ class Manager extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->Admin_User->editManager($data)) {
+            if ($this->modelClass->editManager($data)) {
                 $this->success("修改成功！");
             } else {
                 $this->error($this->User->getError() ?: '修改失败！');
             }
         } else {
             $id = $this->request->param('id/d');
-            $data = $this->Admin_User->where(array("id" => $id))->find();
+            $data = $this->modelClass->where(array("id" => $id))->find();
             if (empty($data)) {
                 $this->error('该信息不存在！');
             }
@@ -104,10 +117,10 @@ class Manager extends Adminbase
     public function del()
     {
         $id = $this->request->param('id/d');
-        if ($this->Admin_User->deleteManager($id)) {
+        if ($this->modelClass->deleteManager($id)) {
             $this->success("删除成功！");
         } else {
-            $this->error($this->Admin_User->getError() ?: '删除失败！');
+            $this->error($this->modelClass->getError() ?: '删除失败！');
         }
     }
 
