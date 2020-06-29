@@ -29,10 +29,7 @@ layui.use(['yznTable'], function() {
         id: 'currentTable',
         toolbar: ['refresh','delete',
             [{
-                text: '数据重建',
-                url:'{:url("create")}',
-                method: 'url',
-                class: 'layui-btn layui-btn-sm layui-btn-warm',
+                html:'<a class="layui-btn layui-btn-sm layui-btn-warm" href="{:url("create")}">数据重建</a>'
             }],
         ],
         url: '{:url("index")}',

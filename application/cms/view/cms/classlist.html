@@ -6,14 +6,6 @@
 }
 </style>
 <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm" data-open="{:url('add',['catid'=>$catid])}" data-title="新增内容" data-full="true">新增内容</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("del",["catid"=>$catid])}'>批量删除</a>
-      <a class="layui-btn layui-btn-sm layui-btn-normal move">批量移动</a>
-      <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('recycle',['catid'=>$catid])}">回收站</a>
-    </div>
-</script>
 <script type="text/html" id="barTool">
     <a class="layui-btn layui-btn-xs" data-open='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' data-title="编辑内容" data-full="true">编辑</a>
     <a href='{:url("del",["catid"=>$catid])}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
@@ -93,15 +85,10 @@ layui.use(['table', 'yznTable'], function() {
         elem: '#dataTable',
         toolbar: ['refresh', 'add', 'delete',
             [{
-                text: '批量移动',
-                method: 'no',
-                class: 'layui-btn layui-btn-sm layui-btn-normal move',
+               html:'<a class="layui-btn layui-btn-sm layui-btn-normal move">批量移动</a>'
             }],
             [{
-                text: '回收站',
-                url: "{:url('recycle',['catid'=>$catid])}",
-                method: 'url',
-                class: 'layui-btn layui-btn-sm layui-btn-danger',
+                html:'<a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url("recycle",["catid"=>$catid])}">回收站</a>'
             }],
         ],
         url: '{:url("classlist",["catid"=>$catid])}',
