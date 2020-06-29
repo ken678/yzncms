@@ -8,7 +8,7 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
 
     var init = {
         table_elem: '#currentTable',
-        table_render_id: 'currentTableRenderId',
+        table_render_id: 'currentTable',
     };
 
     var yznForm = {
@@ -123,6 +123,48 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
             tableId = init.table_render_id;
         }
         table.reload(tableId);
+    });
+
+    // 监听请求
+    $('body').on('click', '[data-request]', function() {
+        var title = $(this).attr('data-title'),
+            url = $(this).attr('data-request'),
+            tableId = $(this).attr('data-table'),
+            addons = $(this).attr('data-addons'),
+            checkbox = $(this).attr('data-checkbox');
+
+        var postData = {};
+        if (checkbox === 'true') {
+            tableId = tableId || init.table_render_id;
+            var checkStatus = table.checkStatus(tableId),
+                data = checkStatus.data;
+            if (data.length <= 0) {
+                yzn.msg.error('请勾选需要操作的数据');
+                return false;
+            }
+            var ids = [];
+            $.each(data, function(i, v) {
+                ids.push(v.id);
+            });
+            postData.id = ids;
+        }
+
+        if (addons !== true && addons !== 'true') {
+            //url = admin.url(url);
+        }
+        title = title || '确定进行该操作？';
+        tableId = tableId || init.table_render_id;
+        yzn.msg.confirm(title, function() {
+            yzn.request.post({
+                url: url,
+                data: postData,
+            }, function(res) {
+                yzn.msg.success(res.msg, function() {
+                    table.reload(tableId);
+                });
+            })
+        });
+        return false;
     });
 
     // 数据表格多删除

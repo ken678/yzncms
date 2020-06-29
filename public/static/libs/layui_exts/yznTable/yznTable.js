@@ -13,7 +13,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
 
     var init = {
         table_elem: '#currentTable',
-        table_render_id: 'currentTableRenderId',
+        table_render_id: 'currentTable',
     };
 
     yznTable = {
@@ -304,7 +304,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             });
         },
         listenEdit: function(tableInit, layFilter, tableId, modifyReload) {
-            console.log(tableInit.modify_url);
+            //console.log(tableInit.modify_url);
             tableInit.modify_url = tableInit.modify_url || false;
             tableId = tableId || init.table_render_id;
             if (tableInit.modify_url !== false) {
