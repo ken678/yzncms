@@ -1,9 +1,10 @@
-layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
+layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         yzn = layui.yzn,
         table = layui.table,
         form = layui.form,
+        element = layui.element,
         notice = layui.notice;
 
     var init = {
@@ -167,23 +168,24 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
         return false;
     });
 
-    // 数据表格多删除
-    $('body').on('click', '[data-table-delete]', function() {
-        var tableId = $(this).attr('data-table-delete'),
-            url = $(this).attr('data-url');
+    // 列表页批量操作按钮组
+    $('body').on('click', '[data-batch-all]', function() {
+        var that = $(this),
+        tableId = that.attr('data-batch-all'),
+            url = that.attr('data-href');
         tableId = tableId || init.table_render_id;
         url = url !== undefined ? url : window.location.href;
         var checkStatus = table.checkStatus(tableId),
             data = checkStatus.data;
         if (data.length <= 0) {
-            yzn.msg.error('请勾选需要删除的数据');
+            yzn.msg.error('请选择要操作的数据');
             return false;
         }
         var ids = [];
         $.each(data, function(i, v) {
             ids.push(v.id);
         });
-        yzn.msg.confirm('确定删除？', function() {
+        yzn.msg.confirm('您确定要执行此操作吗？', function() {
             yzn.request.post({
                 url: url,
                 data: {
@@ -197,6 +199,62 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
         });
         return false;
     });
+
+    /**
+     * 列表页批量操作按钮组
+     * @attr href 操作地址
+     * @attr data-table table容器ID
+     * @class confirm 类似系统confirm
+     * @attr tips confirm提示内容
+     */
+    /*$(document).on('click', '.layui-batch-all', function() {
+        var that = $(this),
+            query = '',
+            code = function(that) {
+                var href = that.attr('href') ? that.attr('href') : that.attr('data-href');
+                var tableObj = that.attr('data-table') ? that.attr('data-table') : 'dataTable';
+                if (!href) {
+                    notice.info('请设置data-href参数');
+                    return false;
+                }
+
+                if ($('.checkbox-ids:checked').length <= 0) {
+                    var checkStatus = table.checkStatus(tableObj);
+                    if (checkStatus.data.length <= 0) {
+                        notice.info('请选择要操作的数据');
+                        return false;
+                    }
+                    for (var i in checkStatus.data) {
+                        if (i > 0) {
+                            query += '&';
+                        }
+                        query += 'ids[]=' + checkStatus.data[i].id;
+                    }
+                } else {
+                    if (that.parents('form')[0]) {
+                        query = that.parents('form').serialize();
+                    } else {
+                        query = $('#pageListForm').serialize();
+                    }
+                }
+
+                yzn.request.post(href, query, function(res) {
+                    if (res.code === 1) {
+                        table.reload('dataTable');
+                    }
+                });
+            };
+        if (that.hasClass('confirm')) {
+            var tips = that.attr('tips') ? that.attr('tips') : '您确定要执行此操作吗？';
+            layer.confirm(tips, { icon: 3, title: '提示信息' }, function(index) {
+                code(that);
+                layer.close(index);
+            });
+        } else {
+            code(that);
+        }
+        return false;
+    });*/
 
     // 监听弹出层的打开
     $('body').on('click', '[data-open]', function() {
@@ -254,7 +312,7 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
      * @title 弹窗标题
      * @lay-data {width: '弹窗宽度', height: '弹窗高度', idSync: '是否同步ID', table: '数据表ID(同步ID时必须)', type: '弹窗类型'}
      */
-    $(document).on('click', '.layui-iframe', function() {
+    /*$(document).on('click', '.layui-iframe', function() {
         var that = $(this),
             query = '';
         var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: !that.attr('data-href') ? that.attr('href') : that.attr('data-href'), title: that.attr('title') };
@@ -299,7 +357,7 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
 
         layer.open({ type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height] });
         return false;
-    });
+    });*/
 
     $(document).on('click', '.layui-tr-del', function() {
         var that = $(this),
@@ -322,61 +380,7 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
         return false;
     });
 
-    /**
-     * 列表页批量操作按钮组
-     * @attr href 操作地址
-     * @attr data-table table容器ID
-     * @class confirm 类似系统confirm
-     * @attr tips confirm提示内容
-     */
-    $(document).on('click', '.layui-batch-all', function() {
-        var that = $(this),
-            query = '',
-            code = function(that) {
-                var href = that.attr('href') ? that.attr('href') : that.attr('data-href');
-                var tableObj = that.attr('data-table') ? that.attr('data-table') : 'dataTable';
-                if (!href) {
-                    notice.info('请设置data-href参数');
-                    return false;
-                }
 
-                if ($('.checkbox-ids:checked').length <= 0) {
-                    var checkStatus = table.checkStatus(tableObj);
-                    if (checkStatus.data.length <= 0) {
-                        notice.info('请选择要操作的数据');
-                        return false;
-                    }
-                    for (var i in checkStatus.data) {
-                        if (i > 0) {
-                            query += '&';
-                        }
-                        query += 'ids[]=' + checkStatus.data[i].id;
-                    }
-                } else {
-                    if (that.parents('form')[0]) {
-                        query = that.parents('form').serialize();
-                    } else {
-                        query = $('#pageListForm').serialize();
-                    }
-                }
-
-                yzn.request.post(href, query, function(res) {
-                    if (res.code === 1) {
-                        table.reload('dataTable');
-                    }
-                });
-            };
-        if (that.hasClass('confirm')) {
-            var tips = that.attr('tips') ? that.attr('tips') : '您确定要执行此操作吗？';
-            layer.confirm(tips, { icon: 3, title: '提示信息' }, function(index) {
-                code(that);
-                layer.close(index);
-            });
-        } else {
-            code(that);
-        }
-        return false;
-    });
 
     /**
      * 通用状态设置开关
@@ -463,7 +467,7 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
     });*/
 
     //ajax get请求
-    $(document).on('click', '.ajax-get', function() {
+    /*$(document).on('click', '.ajax-get', function() {
         var that = $(this),
             href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href'),
             refresh = !that.attr('refresh') ? 'true' : that.attr('refresh');
@@ -499,10 +503,10 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
             });
         };
         return false;
-    });
+    });*/
 
     //通用表单post提交
-    $('.ajax-post').on('click', function(e) {
+    /*$('.ajax-post').on('click', function(e) {
         var target, query, _form,
             target_form = $(this).attr('target-form'),
             that = this,
@@ -572,7 +576,7 @@ layui.define(['form', 'yzn', 'table', 'notice'], function(exports) {
             }
         });
         return false;
-    });
+    });*/
 
     // 放大图片
     $('body').on('click', '[data-image]', function() {

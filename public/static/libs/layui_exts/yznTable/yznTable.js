@@ -65,7 +65,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 } else if (v === 'add') {
                     toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
                 } else if (v === 'delete') {
-                    toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-href="' + init.delete_url + '" data-batch-all="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
                 } else if (typeof v === "object") {
                     $.each(v, function(ii, vv) {
                         vv.class = vv.class || '';
@@ -77,6 +77,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                         vv.text = vv.text || vv.title;
                         vv.extend = vv.extend || '';
                         vv.checkbox = vv.checkbox || false;
+                        vv.html = vv.html || '';
                         toolbarHtml += yznTable.buildToolbarHtml(vv, tableId);
                     });
                 }
@@ -95,6 +96,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             toolbar.title = toolbar.title || toolbar.text;
             toolbar.text = toolbar.text || toolbar.title;
             toolbar.checkbox = toolbar.checkbox || false;
+            toolbar.html = toolbar.html || '';
+
+            if(toolbar.html !== ''){
+                return toolbar.html;
+            }
 
             var formatToolbar = toolbar;
             formatToolbar.icon = formatToolbar.icon !== '' ? '<i class="' + formatToolbar.icon + '"></i> ' : '';
@@ -102,22 +108,14 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
 
             if (toolbar.method === 'open') {
                 formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
-            } else if (toolbar.method === 'url') {
-                var isurl = true;
-                formatToolbar.method = formatToolbar.method !== '' ? 'href="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
-            } else if (toolbar.method === 'no') {
-                formatToolbar.method = formatToolbar.method !== '' ? 'data-title="' + formatToolbar.title + '" ' : '';
             }else{
                 formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
             }
+
             formatToolbar.checkbox = toolbar.checkbox ? ' data-checkbox="true" ' : '';
             formatToolbar.tableId = tableId !== undefined ? ' data-table="' + tableId + '" ' : '';
 
-            if (isurl) {
-                html = '<a ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</a>';
-            } else {
-                html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
-            }
+            html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
             return html;
         },
         renderSearch: function(cols, elem, tableId) {
