@@ -3,7 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-header">{$auth_group['id']?'编辑':'新增'}权限组</div>
     <div class="layui-card-body">
-        <form class="layui-form" action="{:url('writeGroup')}" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">父级</label>
                 <div class="layui-input-block w300">
@@ -36,7 +36,7 @@
             {/present}
             <div class="layui-form-item">
                 <div class="layui-input-block w300">
-                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn" lay-submit="{:url('writeGroup')}" lay-filter="formSubmit">立即提交</button>
                     <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>

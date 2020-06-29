@@ -9,7 +9,7 @@
                 {/volist}
             </ul>
             <div class="layui-tab-content">
-                <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+                <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
             </div>
         </div>
     </div>
@@ -39,15 +39,14 @@ layui.use(['yznTable','clipboard'], function() {
 
     var init = {
         table_elem: '#currentTable',
-        table_render_id: 'currentTableRenderId',
         add_url: "{:url('add')}",
         modify_url:'{:url("multi")}',
     };
 
     table.render({
         init: init,
-        id:'dataTable',
-        elem: '#dataTable',
+        id:'currentTable',
+        elem: '#currentTable',
         toolbar: ['refresh','add'],
         url: '{:url("index",["group"=>$group])}',
         search:false,
