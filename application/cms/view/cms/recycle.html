@@ -9,7 +9,7 @@
     <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
 </div>
 <script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs ajax-get" data-href="{:url('restore')}?catid={{d.catid}}&ids={{d.id}}">还原</a>
+    <a class="layui-btn layui-btn-xs" data-request="{:url('restore')}?catid={{d.catid}}&ids={{d.id}}">还原</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del" data-href="{:url('destroy')}?catid={{d.catid}}&ids={{d.id}}">销毁</a>
 </script>
 {/block}
