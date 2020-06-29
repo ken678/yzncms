@@ -7,7 +7,7 @@
     <div class="layui-form-item">
         <div>
             <button class="layui-btn ajax-post1" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
-            <!--<button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>-->
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
     {/if}
@@ -31,6 +31,7 @@ layui.use(['form','layer'], function() {
                 }, function() {
                     location.href = '{:url("add",["catid"=>$catid])}';
                 }, function() {
+                    parent.layui.table.reload('currentTable');
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 });
