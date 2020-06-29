@@ -117,6 +117,28 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
 
     yznForm.listen();
 
+    // 放大图片
+    $('body').on('click', '[data-image]', function() {
+        var title = $(this).attr('data-image'),
+            src = $(this).attr('src'),
+            alt = $(this).attr('alt');
+        var photos = {
+            "title": title,
+            "id": Math.random(),
+            "data": [{
+                "alt": alt,
+                "pid": Math.random(),
+                "src": src,
+                "thumb": src
+            }]
+        };
+        layer.photos({
+            photos: photos,
+            anim: 5
+        });
+        return false;
+    });
+
     // 监听动态表格刷新
     $('body').on('click', '[data-table-refresh]', function() {
         var tableId = $(this).attr('data-table-refresh');
@@ -200,6 +222,102 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
         return false;
     });
 
+    // 监听弹出层的打开
+    $('body').on('click', '[data-open]', function() {
+
+        var clienWidth = $(this).attr('data-width'),
+            clientHeight = $(this).attr('data-height'),
+            dataFull = $(this).attr('data-full'),
+            checkbox = $(this).attr('data-checkbox'),
+            url = $(this).attr('data-open'),
+            tableId = $(this).attr('data-table');
+
+        if (checkbox === 'true') {
+            tableId = tableId || init.table_render_id;
+            var checkStatus = table.checkStatus(tableId),
+                data = checkStatus.data;
+            if (data.length <= 0) {
+                yzn.msg.error('请勾选需要操作的数据');
+                return false;
+            }
+            var ids = [];
+            $.each(data, function(i, v) {
+                ids.push(v.id);
+            });
+            if (url.indexOf("?") === -1) {
+                url += '?id=' + ids.join(',');
+            } else {
+                url += '&id=' + ids.join(',');
+            }
+        }
+
+        if (clienWidth === undefined || clientHeight === undefined) {
+            var width = document.body.clientWidth,
+                height = document.body.clientHeight;
+            if (width >= 800 && height >= 600) {
+                clienWidth = '800px';
+                clientHeight = '600px';
+            } else {
+                clienWidth = '100%';
+                clientHeight = '100%';
+            }
+        }
+        if (dataFull === 'true') {
+            clienWidth = '100%';
+            clientHeight = '100%';
+        }
+
+        yzn.open(
+            $(this).attr('data-title'), url, clienWidth, clientHeight,
+        );
+    });
+
+    /**
+     * 通用状态设置开关
+     * @attr data-href 请求地址
+     */
+    form.on('switch(switchStatus)', function(data) {
+        var that = $(this),
+            status = 0;
+        if (!that.attr('data-href')) {
+            notice.info('请设置data-href参数');
+            return false;
+        }
+        if (this.checked) {
+            status = 1;
+        }
+        $.get(that.attr('data-href'), { value: status }, function(res) {
+            if (res.code === 1) {
+                notice.success(res.msg);
+            } else {
+                notice.error(res.msg);
+                that.trigger('click');
+                form.render('checkbox');
+            }
+        });
+    });
+
+    $(document).on('click', '.layui-tr-del', function() {
+        var that = $(this),
+            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+        layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
+            if (!href) {
+                notice.info('请设置data-href参数');
+                return false;
+            }
+            $.get(href, function(res) {
+                if (res.code == 1) {
+                    notice.success(res.msg);
+                    that.parents('tr').remove();
+                } else {
+                    notice.error(res.msg);
+                }
+            });
+            layer.close(index);
+        });
+        return false;
+    });
+
     /**
      * 列表页批量操作按钮组
      * @attr href 操作地址
@@ -256,55 +374,7 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
         return false;
     });*/
 
-    // 监听弹出层的打开
-    $('body').on('click', '[data-open]', function() {
 
-        var clienWidth = $(this).attr('data-width'),
-            clientHeight = $(this).attr('data-height'),
-            dataFull = $(this).attr('data-full'),
-            checkbox = $(this).attr('data-checkbox'),
-            url = $(this).attr('data-open'),
-            tableId = $(this).attr('data-table');
-
-        if (checkbox === 'true') {
-            tableId = tableId || init.table_render_id;
-            var checkStatus = table.checkStatus(tableId),
-                data = checkStatus.data;
-            if (data.length <= 0) {
-                yzn.msg.error('请勾选需要操作的数据');
-                return false;
-            }
-            var ids = [];
-            $.each(data, function(i, v) {
-                ids.push(v.id);
-            });
-            if (url.indexOf("?") === -1) {
-                url += '?id=' + ids.join(',');
-            } else {
-                url += '&id=' + ids.join(',');
-            }
-        }
-
-        if (clienWidth === undefined || clientHeight === undefined) {
-            var width = document.body.clientWidth,
-                height = document.body.clientHeight;
-            if (width >= 800 && height >= 600) {
-                clienWidth = '800px';
-                clientHeight = '600px';
-            } else {
-                clienWidth = '100%';
-                clientHeight = '100%';
-            }
-        }
-        if (dataFull === 'true') {
-            clienWidth = '100%';
-            clientHeight = '100%';
-        }
-
-        yzn.open(
-            $(this).attr('data-title'), url, clienWidth, clientHeight,
-        );
-    });
 
     /**
      * iframe弹窗
@@ -359,53 +429,6 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
         return false;
     });*/
 
-    $(document).on('click', '.layui-tr-del', function() {
-        var that = $(this),
-            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
-        layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
-            if (!href) {
-                notice.info('请设置data-href参数');
-                return false;
-            }
-            $.get(href, function(res) {
-                if (res.code == 1) {
-                    notice.success(res.msg);
-                    that.parents('tr').remove();
-                } else {
-                    notice.error(res.msg);
-                }
-            });
-            layer.close(index);
-        });
-        return false;
-    });
-
-
-
-    /**
-     * 通用状态设置开关
-     * @attr data-href 请求地址
-     */
-    form.on('switch(switchStatus)', function(data) {
-        var that = $(this),
-            status = 0;
-        if (!that.attr('data-href')) {
-            notice.info('请设置data-href参数');
-            return false;
-        }
-        if (this.checked) {
-            status = 1;
-        }
-        $.get(that.attr('data-href'), { value: status }, function(res) {
-            if (res.code === 1) {
-                notice.success(res.msg);
-            } else {
-                notice.error(res.msg);
-                that.trigger('click');
-                form.render('checkbox');
-            }
-        });
-    });
 
     /**
      * 监听表单提交
@@ -577,28 +600,6 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
         });
         return false;
     });*/
-
-    // 放大图片
-    $('body').on('click', '[data-image]', function() {
-        var title = $(this).attr('data-image'),
-            src = $(this).attr('src'),
-            alt = $(this).attr('alt');
-        var photos = {
-            "title": title,
-            "id": Math.random(),
-            "data": [{
-                "alt": alt,
-                "pid": Math.random(),
-                "src": src,
-                "thumb": src
-            }]
-        };
-        layer.photos({
-            photos: photos,
-            anim: 5
-        });
-        return false;
-    });
 
     exports(MOD_NAME, {});
 });
