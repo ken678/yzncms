@@ -1,8 +1,9 @@
 /**
  @ Name：简单封下基本操作
  */
-layui.define(['layer', 'table'], function(exports) {
-    var layer = layui.layer;
+layui.define(['layer','notice'], function(exports) {
+    var layer = layui.layer,
+        notice = layui.notice;
 
     var MOD_NAME = 'yzn';
     layer.config({
@@ -136,6 +137,28 @@ layui.define(['layer', 'table'], function(exports) {
                     }
                 });
             }
+        },
+        notice:{
+            // 成功消息
+            success: function(msg) {
+                var index = notice.success(msg);
+                return index;
+            },
+            // 失败消息
+            error: function(msg) {
+                var index = notice.error(msg);
+                return index;
+            },
+            // 警告消息框
+            warning: function(msg) {
+                var index = notice.warning(msg);
+                return index;
+            },
+            // 消息提示
+            info: function(msg) {
+                var index = notice.info(msg);
+                return index;
+            },
         },
         msg: {
             // 成功消息

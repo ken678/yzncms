@@ -61,11 +61,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             var toolbarHtml = '';
             $.each(data, function(i, v) {
                 if (v === 'refresh') {
-                    toolbarHtml += ' <button class="layui-btn layui-btn-sm" data-table-refresh="' + tableId + '"><i class="iconfont icon-shuaxin1"></i> </button>\n';
+                    toolbarHtml += ' <button class="layui-btn layui-btn-sm yzn-btn-primary" data-table-refresh="' + tableId + '"><i class="iconfont icon-shuaxin1"></i> </button>\n';
                 } else if (v === 'add') {
-                    toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
+                    toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="iconfont icon-add"></i> 添加</button>\n';
                 } else if (v === 'delete') {
-                    toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-href="' + init.delete_url + '" data-batch-all="' + tableId + '"><i class="fa fa-trash-o"></i> 删除</button>\n';
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-href="' + init.delete_url + '" data-batch-all="' + tableId + '"><i class="iconfont icon-trash"></i> 删除</button>\n';
                 } else if (typeof v === "object") {
                     $.each(v, function(ii, vv) {
                         vv.class = vv.class || '';
