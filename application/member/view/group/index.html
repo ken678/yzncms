@@ -3,16 +3,11 @@
 <div class="layui-card">
     <div class="layui-card-header">会员组列表</div>
     <div class="layui-card-body">
-        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-sm" href="{:url('add')}">添加会员组</a>
-    </div>
-</script>
 <script type="text/html" id="barTool">
-    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
     {{#  if(d.issystem!=1){ }}
     <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
     {{#  } }}
@@ -75,19 +70,25 @@
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
-    var table = layui.table,
-        $ = layui.$,
-        form = layui.form;
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        add_url: "{:url('add')}",
+    };
+
     table.render({
-        elem: '#table',
-        toolbar: '#toolbarDemo',
+        init: init,
+        id: 'currentTable',
+        elem: '#currentTable',
+        toolbar: ['refresh', 'add'],
         url: '{:url("index")}',
         cols: [
             [
                 { field: 'id', width: 80, title: 'ID' },
                 { field: 'listorder', width: 100, title: '排序',edit:'text' },
-                { field: 'name', title: '会员组名' },
+                { field: 'name',align: "left", title: '会员组名' },
                 { field: 'issystem', width: 100,  title: '系统组',align:"center",templet: '#issystem' },
                 { field: '_count', width: 100,align:"center", title: '会员数' },
                 { field: 'starnum',width: 100,align:"center",  title: '星星数' },
