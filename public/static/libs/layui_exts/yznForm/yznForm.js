@@ -490,7 +490,7 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
     });*/
 
     //ajax get请求
-    /*$(document).on('click', '.ajax-get', function() {
+    $(document).on('click', '.ajax-get', function() {
         var that = $(this),
             href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href'),
             refresh = !that.attr('refresh') ? 'true' : that.attr('refresh');
@@ -526,10 +526,10 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
             });
         };
         return false;
-    });*/
+    });
 
     //通用表单post提交
-    /*$('.ajax-post').on('click', function(e) {
+    $('.ajax-post').on('click', function(e) {
         var target, query, _form,
             target_form = $(this).attr('target-form'),
             that = this,
@@ -599,7 +599,7 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
             }
         });
         return false;
-    });*/
+    });
 
     exports(MOD_NAME, {});
 });
