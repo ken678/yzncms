@@ -98,7 +98,7 @@ class Info extends AdminBase
             if ($v['type'] == "datetime") {
                 $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "',templet: function(d){ return layui.formatDateTime(d." . $v['name'] . ") } },\n";
             } elseif ($v['type'] != "image" && $v['type'] != "images" && $v['type'] != "file" && $v['type'] != "files") {
-                $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "' },\n";
+                $htmlstr .= "{ field: '" . $v['name'] . "', align: 'left',title: '" . $v['title'] . "' },\n";
             }
         }
         return $htmlstr;
