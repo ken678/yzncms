@@ -3,7 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-header">添加栏目</div>
     <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="" method="post">
+        <form class="layui-form" method="post">
             <div class="layui-form-item">
                 <label>网站名称</label>
                 <div class="w300">
@@ -70,8 +70,8 @@
             <input name="id" type="hidden" value="{$data.id}">
             <div class="layui-form-item">
                 <div>
-                    <button class="layui-btn ajax-post" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript :history.back(-1);">返回</button>
+                    <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>

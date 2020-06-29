@@ -4,35 +4,41 @@
     <div class="layui-card-header">分类列表</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="table" lay-filter="table"></table>
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
         </div>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm" href="{:url('links/links/add')}">新增链接</a>
-      <a class="layui-btn layui-btn-sm" href="{:url('links/links/terms')}">分类管理</a>
-    </div>
-</script>
 <script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs" href='{:url("termsedit")}?id={{ d.id }}'>编辑</a>
+    <a class="layui-btn layui-btn-xs" data-open='{:url("termsedit")}?id={{ d.id }}' data-full='false'>编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del" href='{:url("termsdelete")}?id={{ d.id }}'>删除</a>
 </script>
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
-    var table = layui.table,
-        $ = layui.$,
-        form = layui.form;
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+    };
+
     table.render({
-        elem: '#table',
-        toolbar: '#toolbarDemo',
-        url: '{:url("links/links/terms")}',
+        init: init,
+        id: 'currentTable',
+        elem: '#currentTable',
+        toolbar: ['refresh',
+            [{
+                html: '<a class="layui-btn layui-btn-sm" href="{:url("index")}">链接管理</a>'
+            },
+            {
+                html: '<a class="layui-btn layui-btn-sm" href="{:url("terms")}">分类管理</a>'
+            }],
+        ],
+        url: '{:url("terms")}',
         cols: [
             [
                 { field: 'id', width: 70, title: 'ID' },
-                { field: 'name', title: '分类名称'},
+                { field: 'name',align: "left", title: '分类名称' },
                 { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
             ]
         ],
