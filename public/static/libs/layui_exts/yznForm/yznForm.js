@@ -1,4 +1,4 @@
-layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
+layui.define(['form', 'yzn', 'table', 'notice', 'element'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         yzn = layui.yzn,
@@ -193,7 +193,7 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
     // 列表页批量操作按钮组
     $('body').on('click', '[data-batch-all]', function() {
         var that = $(this),
-        tableId = that.attr('data-batch-all'),
+            tableId = that.attr('data-batch-all'),
             url = that.attr('data-href');
         tableId = tableId || init.table_render_id;
         url = url !== undefined ? url : window.location.href;
@@ -265,6 +265,9 @@ layui.define(['form', 'yzn', 'table', 'notice','element'], function(exports) {
         if (dataFull === 'true') {
             clienWidth = '100%';
             clientHeight = '100%';
+        } else if (dataFull === 'false') {
+            clienWidth = '800px';
+            clientHeight = '600px';
         }
 
         yzn.open(
