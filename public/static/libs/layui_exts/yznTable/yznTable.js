@@ -99,15 +99,25 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             var formatToolbar = toolbar;
             formatToolbar.icon = formatToolbar.icon !== '' ? '<i class="' + formatToolbar.icon + '"></i> ' : '';
             formatToolbar.class = formatToolbar.class !== '' ? 'class="' + formatToolbar.class + '" ' : '';
+
             if (toolbar.method === 'open') {
                 formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
-            } else {
+            } else if (toolbar.method === 'url') {
+                var isurl = true;
+                formatToolbar.method = formatToolbar.method !== '' ? 'href="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
+            } else if (toolbar.method === 'no') {
+                formatToolbar.method = formatToolbar.method !== '' ? 'data-title="' + formatToolbar.title + '" ' : '';
+            }else{
                 formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
             }
             formatToolbar.checkbox = toolbar.checkbox ? ' data-checkbox="true" ' : '';
             formatToolbar.tableId = tableId !== undefined ? ' data-table="' + tableId + '" ' : '';
-            html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
 
+            if (isurl) {
+                html = '<a ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</a>';
+            } else {
+                html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
+            }
             return html;
         },
         renderSearch: function(cols, elem, tableId) {
