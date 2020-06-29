@@ -4,36 +4,43 @@
     <div class="layui-card-header">Tags管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
         </div>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("del")}'>批量删除</a>
-      <a class="layui-btn layui-btn-sm layui-btn-warm" href='{:url("create")}'>数据重建</a>
-    </div>
-</script>
 <script type="text/html" id="barTool">
-    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
-    var table = layui.table,
-        $ = layui.$,
-        form = layui.form;
+layui.use(['yznTable'], function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        delete_url: "{:url('del')}",
+        modify_url: '{:url("multi")}',
+    };
+
     table.render({
-        elem: '#dataTable',
-        toolbar: '#toolbarDemo',
+        init: init,
+        id: 'currentTable',
+        toolbar: ['refresh','delete',
+            [{
+                text: '数据重建',
+                url:'{:url("create")}',
+                method: 'url',
+                class: 'layui-btn layui-btn-sm layui-btn-warm',
+            }],
+        ],
         url: '{:url("index")}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
-                { field: 'tag', title: 'Tags名称' },
+                { field: 'tag', align: "left", title: 'Tags名称' },
                 { field: 'usetimes', width: 100, title: '信息总数' },
                 { field: 'hits', width: 100, title: '点击量' },
                 { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>'},
@@ -43,19 +50,6 @@ layui.use('table', function() {
             ]
         ],
         page: {}
-    });
-    //监听单元格编辑
-    table.on('edit(dataTable)', function(obj) {
-        var value = obj.value,
-            data = obj.data;
-        $.post('{:url("multi")}', {'id':data.id,'value':value,'param':'listorder'}, function(data) {
-            if (data.code == 1) {
-                layer.msg(data.msg);
-            } else {
-                layer.msg(data.msg);
-            }
-
-        })
     });
 });
 </script>
