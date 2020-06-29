@@ -82,26 +82,40 @@ layui.use(['table', 'yznTable'], function() {
 
     var init = {
         table_elem: '#currentTable',
+        add_url: "{:url('add',['catid'=>$catid])}",
+        delete_url: "{:url('del',['catid'=>$catid])}",
         modify_url: '{:url("listorder",["catid"=>$catid])}',
     };
 
     yznTable.render({
-        init:init,
-        id:'currentTable',
+        init: init,
+        id: 'currentTable',
         elem: '#dataTable',
-        toolbar: '#toolbarDemo',
+        toolbar: ['refresh', 'add', 'delete',
+            [{
+                text: '批量移动',
+                method: 'no',
+                class: 'layui-btn layui-btn-sm layui-btn-normal move',
+            }],
+            [{
+                text: '回收站',
+                url: "{:url('recycle',['catid'=>$catid])}",
+                method: 'url',
+                class: 'layui-btn layui-btn-sm layui-btn-danger',
+            }],
+        ],
         url: '{:url("classlist",["catid"=>$catid])}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 60, title: 'ID' },
-                { field: 'title',align: "left", title: '标题', templet: '#title' },
+                { field: 'title', align: "left", title: '标题', templet: '#title' },
                 { field: 'hits', width: 80, title: '点击量' },
                 { field: 'updatetime', width: 160, title: '更新时间' },
                 { field: 'username', width: 80, title: '发布人', templet: '#username' },
-                { field: 'url', width: 60, align: "center", title: 'URL', templet: '<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>',search: false},
-                { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true,selectList: {0: '待审核', 1: '通过'}},
+                { field: 'url', width: 60, align: "center", title: 'URL', templet: '<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>', search: false },
+                { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true, selectList: { 0: '待审核', 1: '通过' } },
                 { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
             ]
         ],
@@ -109,44 +123,44 @@ layui.use(['table', 'yznTable'], function() {
     });
 
 
-    $('body').on('click', '.move', function () {
+    $('body').on('click', '.move', function() {
         var checkStatus = table.checkStatus('currentTable'),
 
             ids = [],
             id = tag = '';
-            var data = checkStatus.data;
-            if (data.length > 0) {
-                for (let i in data) {
-                    id += tag + data[i].id;
-                    tag = '|';
-                    //ids.push(data[i].id);
-                }
-                layer.open({
-                    title: '批量移动',
-                    type: 1,
-                    content: $('#remove'),
-                    area: ['300px', '250px'],
-                    btn: ['移动'],
-                    yes: function(index, layero) {
-                        var tocatid = $("select[name='remove']").val();
-                        if (tocatid == 0) {
-                            layer.msg("请选择移动的栏目");
-                            return;
-                        }
-                        $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
-                            if (data.code == 1) {
-                                layer.msg(data.msg);
-                                layer.close(index);
-                            } else {
-                                layer.msg(data.msg);
-                            }
-                        })
-                    }
-
-                });
-            } else {
-                layer.msg("请选择需要移动的数据");
+        var data = checkStatus.data;
+        if (data.length > 0) {
+            for (let i in data) {
+                id += tag + data[i].id;
+                tag = '|';
+                //ids.push(data[i].id);
             }
+            layer.open({
+                title: '批量移动',
+                type: 1,
+                content: $('#remove'),
+                area: ['300px', '250px'],
+                btn: ['移动'],
+                yes: function(index, layero) {
+                    var tocatid = $("select[name='remove']").val();
+                    if (tocatid == 0) {
+                        layer.msg("请选择移动的栏目");
+                        return;
+                    }
+                    $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg);
+                            layer.close(index);
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    })
+                }
+
+            });
+        } else {
+            layer.msg("请选择需要移动的数据");
+        }
     });
 
 });
