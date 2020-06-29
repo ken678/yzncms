@@ -32,7 +32,7 @@ CREATE TABLE `yzn_pay_payment` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='支付模块表';
 
-INSERT INTO `yzn_pay_payment` VALUES ('1', 'alipay', '支付宝','icon-zhifubao-copy-copy', '支付宝是国内领先的独立第三方支付平台，由阿里巴巴集团创办。致力于为中国电子商务提供“简单、安全、快速”的在线支付解决方案。', '', '1');
+INSERT INTO `yzn_pay_payment` VALUES ('1', 'alipay', '支付宝','icon-zhifubao', '支付宝是国内领先的独立第三方支付平台，由阿里巴巴集团创办。致力于为中国电子商务提供“简单、安全、快速”的在线支付解决方案。', '', '1');
 INSERT INTO `yzn_pay_payment` VALUES ('2', 'wechat', '微信','icon-weixin', '腾讯集团旗下中国领先的第三方支付平台，致力于为用户和企业提供安全、便捷、专业的在线支付服务', '', '1');
 
 

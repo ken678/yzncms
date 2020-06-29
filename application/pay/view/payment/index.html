@@ -5,32 +5,29 @@
     background: #fff;
 }
 </style>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-sm" type="button" href="{:url('pay_list')}"><i class="iconfont icon-undo"></i>&nbsp;返回</a>
-    </div>
-</script>
-<div class="layui-form">
-    <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
-</div>
+<table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
 <script type="text/html" id="barTool">
-    <a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">配置</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' data-full="false" class="layui-btn layui-btn-xs">配置</a>
 </script>
 {/block}
 {block name="script"}
 <script>
-layui.use(['table', 'laydate'], function() {
-    var table = layui.table,
-        $ = layui.$,
-        form = layui.form,
-        laydate = layui.laydate;
-    laydate.render({
-        elem: '#laydate',
-        range: true,
-    });
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+    };
+
     table.render({
-        elem: '#dataTable',
-        toolbar: '#toolbarDemo',
+        init: init,
+        id: 'currentTable',
+        elem: '#currentTable',
+        toolbar: ['refresh',
+            [{
+               html:'<a class="layui-btn layui-btn-sm" type="button" href="{:url("pay_list")}"><i class="iconfont icon-undo"></i>&nbsp;返回</a>'
+            }],
+        ],
         url: '{:url("index")}',
         cols: [
             [
@@ -42,7 +39,6 @@ layui.use(['table', 'laydate'], function() {
                 { fixed: 'right', width: 100, title: '操作', toolbar: '#barTool' }
             ]
         ],
-        page: {}
     });
 });
 </script>
