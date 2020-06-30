@@ -88,6 +88,7 @@ layui.use(['table', 'yznTable'], function() {
                 text: '添加',
                 url: init.add_url,
                 method: 'open',
+                icon: 'iconfont icon-add',
                 class: 'layui-btn layui-btn-normal layui-btn-sm',
                 extend: 'data-full="true"',
             }], , 'delete',
@@ -138,22 +139,22 @@ layui.use(['table', 'yznTable'], function() {
                 yes: function(index, layero) {
                     var tocatid = $("select[name='remove']").val();
                     if (tocatid == 0) {
-                        layer.msg("请选择移动的栏目");
+                        layer.msg("请选择移动的栏目",{icon: 2});
                         return;
                     }
                     $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
                         if (data.code == 1) {
-                            layer.msg(data.msg);
+                            layer.msg(data.msg,{icon: 1});
                             layer.close(index);
                         } else {
-                            layer.msg(data.msg);
+                            layer.msg(data.msg,{icon: 2});
                         }
                     })
                 }
 
             });
         } else {
-            layer.msg("请选择需要移动的数据");
+            layer.msg("请选择需要移动的数据",{icon: 2});
         }
     });
 
