@@ -454,14 +454,17 @@ function parse_attr($value = '')
 
 /**
  * 时间戳格式化
- * @param int $time
+ * @param int $timestamp
  * @return string 完整的时间显示
  */
-function time_format($time = null, $type = 0)
+function time_format($timestamp = null, $type = 0)
 {
+    if ($timestamp == 0) {
+        return '';
+    }
     $types = array('Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d');
-    $time = $time === null ? $_SERVER['REQUEST_TIME'] : intval($time);
-    return date($types[$type], $time);
+    $timestamp = $timestamp === null ? $_SERVER['REQUEST_TIME'] : intval($timestamp);
+    return date($types[$type], $timestamp);
 }
 
 /**

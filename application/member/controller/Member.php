@@ -15,7 +15,7 @@
 namespace app\member\controller;
 
 use app\common\controller\Adminbase;
-use app\member\model\Member as Member_Model;
+use app\member\model\Member as MemberModel;
 use think\Db;
 
 class Member extends Adminbase
@@ -24,7 +24,7 @@ class Member extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Member_Model = new Member_Model;
+        $this->modelClass = new MemberModel;
         $this->groupCache = cache("Member_Group"); //会员模型
     }
 
@@ -34,15 +34,13 @@ class Member extends Adminbase
     public function manage()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 10);
-            $_list = $this->Member_Model->where('status', 1)->page($page, $limit)->select()->withAttr('last_login_time', function ($value, $data) {
+            list($page, $limit, $where) = $this->buildTableParames();
+            $_list = $this->modelClass->where($where)->where('status', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
                 return time_format($value);
-            });
-            $total = $this->Member_Model->where('status', 1)->count();
+            })->select();
+            $total = $this->modelClass->where($where)->where('status', 1)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
-
         }
         return $this->fetch();
     }
@@ -58,11 +56,11 @@ class Member extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
+            $userid = $this->modelClass->userRegister($data['username'], $data['password'], $data['email']);
             if ($userid > 0) {
                 unset($data['username'], $data['password'], $data['email']);
                 $data['overduedate'] = strtotime($data['overduedate']);
-                if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
+                if (false !== $this->modelClass->save($data, ['id' => $userid])) {
                     $this->success("添加会员成功！", url("member/manage"));
                 } else {
                     //service("Passport")->userDelete($memberinfo['userid']);
@@ -91,28 +89,28 @@ class Member extends Adminbase
                 return $this->error($result);
             }
             //获取用户信息
-            $userinfo = Member_Model::get($userid);
+            $userinfo = MemberModel::get($userid);
             if (empty($userinfo)) {
                 $this->error('该会员不存在！');
             }
             //修改基本资料
             if ($userinfo['username'] != $data['username'] || !empty($data['password']) || $userinfo['email'] != $data['email']) {
-                $res = $this->Member_Model->userEdit($userinfo['username'], '', $data['password'], $data['email'], 1);
+                $res = $this->modelClass->userEdit($userinfo['username'], '', $data['password'], $data['email'], 1);
                 if (!$res) {
-                    $this->error($this->Member_Model->getError());
+                    $this->error($this->modelClass->getError());
                 }
             }
             unset($data['username'], $data['password'], $data['email']);
             $data['overduedate'] = strtotime($data['overduedate']);
             //更新除基本资料外的其他信息
-            if (false === $this->Member_Model->allowField(true)->save($data, ['id' => $userid])) {
+            if (false === $this->modelClass->allowField(true)->save($data, ['id' => $userid])) {
                 $this->error('更新失败！');
             }
             $this->success("更新成功！", url("member/manage"));
 
         } else {
             $userid = $this->request->param('id/d', 0);
-            $data = $this->Member_Model->where(["id" => $userid])->withAttr('overduedate', function ($value, $data) {
+            $data = $this->modelClass->where(["id" => $userid])->withAttr('overduedate', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
             })->find();
             if (empty($data)) {
@@ -140,9 +138,9 @@ class Member extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $uid) {
-            $info = $this->Member_Model->find($uid);
+            $info = $this->modelClass->find($uid);
             if (!empty($info)) {
-                $this->Member_Model->userDelete($uid);
+                $this->modelClass->userDelete($uid);
             }
         }
         $this->success("删除成功！");
@@ -155,14 +153,11 @@ class Member extends Adminbase
     public function userverify()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 10);
-            $_list = $this->Member_Model->where('status', '<>', 1)->page($page, $limit)->select()->withAttr('reg_ip', function ($value, $data) {
-                return long2ip($value);
-            })->withAttr('last_login_time', function ($value, $data) {
+            list($page, $limit, $where) = $this->buildTableParames();
+            $_list = $this->modelClass->where($where)->where('status', '<>', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
                 return time_format($value);
-            });
-            $total = count($_list);
+            })->select();
+            $total = $this->modelClass->where($where)->where('status', '<>', 1)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
@@ -183,7 +178,7 @@ class Member extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $uid) {
-            $info = Member_Model::where('id', $uid)->update(['status' => 1]);
+            $info = MemberModel::where('id', $uid)->update(['status' => 1]);
         }
         $this->success("审核成功！");
     }
