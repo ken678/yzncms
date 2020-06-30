@@ -61,7 +61,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             var toolbarHtml = '';
             $.each(data, function(i, v) {
                 if (v === 'refresh') {
-                    toolbarHtml += ' <button class="layui-btn layui-btn-sm yzn-btn-primary" data-table-refresh="' + tableId + '"><i class="iconfont icon-shuaxin1"></i> </button>\n';
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm yzn-btn-primary" data-table-refresh="' + tableId + '"><i class="iconfont icon-shuaxin1"></i> </button>\n';
                 } else if (v === 'add') {
                     toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="iconfont icon-add"></i> 添加</button>\n';
                 } else if (v === 'delete') {
@@ -115,7 +115,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             formatToolbar.checkbox = toolbar.checkbox ? ' data-checkbox="true" ' : '';
             formatToolbar.tableId = tableId !== undefined ? ' data-table="' + tableId + '" ' : '';
 
-            html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>';
+            html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>\n';
             return html;
         },
         renderSearch: function(cols, elem, tableId) {
