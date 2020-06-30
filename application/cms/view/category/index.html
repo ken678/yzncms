@@ -76,7 +76,7 @@ layui.use('yznTable', function() {
                 { field: 'catdir', width: 120, title: '唯一标识' },
                 { field: 'type', width: 100, title: '栏目类型', templet: '<div>{{#  if(d.type==1){ }} 单页 {{#  } else if(d.type==2){  }} 列表 {{#  }  else { }} 未知 {{#  } }}</div>' },
                 { field: 'modelname', width: 120, title: '所属模型' },
-                { field: 'url', width: 60, align: "center", title: 'URL', templet: '<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>' },
+                { field: 'url', width: 60, align: "center", title: 'URL', templet: table.url },
                 { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
                 { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
             ]

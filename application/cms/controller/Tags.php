@@ -32,15 +32,13 @@ class Tags extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 10);
-            $_list = $this->modelClass->order(['listorder', 'id' => 'desc'])->page($page, $limit)->select();
+            list($page, $limit, $where) = $this->buildTableParames();
+            $_list = $this->modelClass->where($where)->order(['listorder', 'id' => 'desc'])->page($page, $limit)->select();
             foreach ($_list as $k => &$v) {
                 $v['url'] = url('cms/index/tags', ['tag' => $v['tag']]);
             }
             unset($v);
-
-            $total = $this->modelClass->count();
+            $total = $this->modelClass->where($where)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
