@@ -3,8 +3,16 @@
 <div class="layui-card">
     <div class="layui-card-header">短消息管理</div>
     <div class="layui-card-body">
-        <div class="layui-form">
-            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this"><a href="{:url('index')}">短消息管理</a></li>
+                <li><a href="{:url('group')}">群发短消息管理</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -28,32 +36,28 @@ layui.use('yznTable', function() {
         elem: '#currentTable',
         toolbar: ['refresh', 'delete',
             [{
-                    text: '发送短消息',
-                    url: "{:url('send_one')}",
-                    method: 'open',
-                    auth: 'add',
-                    class: 'layui-btn layui-btn-sm',
-                    extend: 'data-full="false"',
-                },
-                {
-                    html: '<a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url("group")}">切换群发消息<span class="layui-badge-dot layui-bg-orange"></span></a>'
-                }
-            ],
+                text: '发送短消息',
+                url: "{:url('send_one')}",
+                method: 'open',
+                auth: 'add',
+                class: 'layui-btn layui-btn-sm',
+                extend: 'data-full="false"',
+            }],
         ],
         url: '{:url("index")}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'id', width: 70, title: 'ID' },
-                { field: 'subject',align: "left", width: 200, title: '标题' },
-                { field: 'content',align: "left", title: '内容' },
+                { field: 'subject', align: "left", width: 200, title: '标题' },
+                { field: 'content', align: "left", title: '内容' },
                 { field: 'send_from', width: 120, title: '发件人' },
                 { field: 'send_to', width: 120, title: '收件人' },
-                { field: 'create_time', width: 200, align: "center", title: '发送时间', search: 'range'},
+                { field: 'create_time', width: 200, align: "center", title: '发送时间', search: 'range' },
                 { fixed: 'right', width: 80, title: '操作', toolbar: '#barTool' }
             ]
         ],
-        page:{}
+        page: {}
     });
 });
 </script>
