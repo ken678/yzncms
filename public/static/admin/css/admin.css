@@ -27,7 +27,8 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px; }
 
 .layui-table-tool .yzn-btn-primary{color: #fff; background-color: #2c3e50; }
-.layui-table-tool .layui-btn-sm i {font-size: 14px!important;}
+.layui-table-tool .layui-btn-sm i {font-size: 14px !important;}
+.layui-table-tool .layui-btn + .layui-btn {margin-left: 2px !important;}
 
 /**弹出层样式*/
 .layui-layer-yzn .layui-layer-title {background: #2c3e50 !important; color: #fff !important; border-bottom: none; }
