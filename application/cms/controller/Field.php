@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\model\ModelField as Model_Field;
+use app\cms\model\ModelField as ModelField;
 use app\common\controller\Adminbase;
 use think\Db;
 use think\facade\Cookie;
@@ -26,7 +26,7 @@ class Field extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelfield = new Model_Field;
+        $this->modelClass = new ModelField;
 
     }
 
@@ -39,17 +39,17 @@ class Field extends Adminbase
         if (empty($modelid)) {
             $this->error('参数错误！');
         }
-        $model = Db::name("Model")->field(true)->where(array("id" => $modelid))->find();
+        $model = Db::name("Model")->where("id", $modelid)->find();
         if (empty($model)) {
             $this->error('该模型不存在！');
         }
-        // 记录当前列表页的cookie
-        Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
-        //根据模型读取字段列表
-        $banFields = ['id', 'catid', 'did', 'status', 'uid'];
-        $data = $this->modelfield->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->select();
         if ($this->request->isAjax()) {
-            $result = array("code" => 0, "data" => $data);
+            //根据模型读取字段列表
+            $banFields = ['id', 'catid', 'did', 'status', 'uid'];
+            list($page, $limit, $where) = $this->buildTableParames();
+            $total = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->count();
+            $data = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->page($page, $limit)->select();
+            $result = array("code" => 0, "count" => $total, "data" => $data);
             return json($result);
         }
         $this->assign("modelid", $modelid);
@@ -73,11 +73,11 @@ class Field extends Adminbase
                 return $this->error($result);
             }
             try {
-                $res = $this->modelfield->addField($data);
+                $res = $this->modelClass->addField($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success('新增成功', Cookie::get('__forward__'));
+            $this->success('新增成功');
         } else {
             $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
             $modelInfo = Db::name('model')->where('id', $modelid)->find();
@@ -109,14 +109,14 @@ class Field extends Adminbase
                 return $this->error($result);
             }
             try {
-                $this->modelfield->editField($data, $fieldid);
+                $this->modelClass->editField($data, $fieldid);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success("更新成功！", Cookie::get('__forward__'));
+            $this->success("更新成功！");
         } else {
             //字段信息
-            $fieldData = Model_Field::get($fieldid);
+            $fieldData = ModelField::get($fieldid);
             //字段扩展配置
             $fieldData['setting'] = unserialize($fieldData['setting']);
             if (empty($fieldData)) {
@@ -149,7 +149,7 @@ class Field extends Adminbase
             $this->error('字段ID不能为空！');
         }
         try {
-            $this->modelfield->deleteField($fieldid);
+            $this->modelClass->deleteField($fieldid);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -163,7 +163,7 @@ class Field extends Adminbase
     {
         $id = $this->request->param('id/d', 0);
         $listorder = $this->request->param('value/d', 0);
-        $rs = $this->modelfield->allowField(['listorder'])->isUpdate(true)->save(['id' => $id, 'listorder' => $listorder]);
+        $rs = $this->modelClass->allowField(['listorder'])->isUpdate(true)->save(['id' => $id, 'listorder' => $listorder]);
         if ($rs) {
             $this->success("菜单排序成功！");
         } else {
@@ -179,7 +179,7 @@ class Field extends Adminbase
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
         $status = $this->request->param('value/d');
-        if (Model_Field::update(['status' => $status], ['id' => $id])) {
+        if (ModelField::update(['status' => $status], ['id' => $id])) {
             $this->success("操作成功！");
         } else {
             $this->error('操作失败！');
@@ -191,7 +191,7 @@ class Field extends Adminbase
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
         $ifsearch = $this->request->param('value/d');
-        if (Model_Field::update(['ifsearch' => $ifsearch], ['id' => $id])) {
+        if (ModelField::update(['ifsearch' => $ifsearch], ['id' => $id])) {
             $this->success("操作成功！");
         } else {
             $this->error('操作失败！');
@@ -207,7 +207,7 @@ class Field extends Adminbase
         empty($id) && $this->error('参数不能为空！');
         $status = $this->request->param('value/d');
 
-        $field = Model_Field::get($id);
+        $field = ModelField::get($id);
         if ($field->ifrequire && 0 == $status) {
             $this->error("必填字段不可以设置为隐藏！");
         }
@@ -228,7 +228,7 @@ class Field extends Adminbase
         empty($id) && $this->error('参数不能为空！');
         $status = $this->request->param('value/d');
 
-        $field = Model_Field::get($id);
+        $field = ModelField::get($id);
         if (!$field->isadd && $status) {
             $this->error("隐藏字段不可以设置为必填！");
         }

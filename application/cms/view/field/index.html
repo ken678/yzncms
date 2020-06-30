@@ -62,14 +62,15 @@ layui.use('yznTable', function() {
                 { field: 'title',align: "left", title: '标题' },
                 { field: 'type', width: 120, title: '字段类型' },
                 { field: 'ifsystem', width: 60, align: "center", title: '主表', templet: '<div>{{#  if(d.ifsystem){ }} 是 {{#  } }} </div>' },
-                { field: 'create_time', width: 180, title: '创建时间' },
-                { field: 'ifsearch', width: 90, align: "center", title: '搜索', templet: '#ifsearchTpl', unresize: true },
-                { field: 'ifrequire', width: 90, align: "center", title: '必填', templet: '#ifrequireTpl', unresize: true },
-                { field: 'isadd', width: 100, align: "center", title: '投稿显示', templet: '#isaddTpl', unresize: true },
-                { field: 'status', width: 100, align: "center", title: '状态', templet: '#switchTpl', unresize: true },
+                { field: 'create_time', width: 180, title: '创建时间' , search: 'range'},
+                { field: 'ifsearch', width: 90, align: "center", title: '搜索', templet: '#ifsearchTpl', unresize: true, selectList: { 0: '否', 1: '是' } },
+                { field: 'ifrequire', width: 90, align: "center", title: '必填', templet: '#ifrequireTpl', unresize: true, selectList: { 0: '否', 1: '是' } },
+                { field: 'isadd', width: 100, align: "center", title: '投稿显示', templet: '#isaddTpl', unresize: true , selectList: { 0: '隐藏', 1: '显示' }},
+                { field: 'status', width: 100, align: "center", title: '状态', templet: '#switchTpl', unresize: true, selectList: { 0: '禁用', 1: '启用' }},
                 { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
             ]
-        ]
+        ],
+        page: {}
     });
 });
 </script>
