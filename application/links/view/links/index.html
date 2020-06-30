@@ -3,9 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-header">友情链接列表</div>
     <div class="layui-card-body">
-        <div class="layui-form">
-            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
-        </div>
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
     </div>
 </div>
 <script type="text/html" id="type">
@@ -24,7 +22,7 @@
 
 </script>
 <script type="text/html" id="barTool">
-    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' data-full="true" class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="statusTpl">
@@ -47,7 +45,15 @@ layui.use('yznTable', function() {
         init: init,
         id: 'currentTable',
         elem: '#currentTable',
-        toolbar: ['refresh', 'delete', 'add',
+        toolbar: ['refresh',
+            [{
+                text: '添加',
+                url: "{:url('add')}",
+                method: 'open',
+                class: 'layui-btn layui-btn-normal layui-btn-sm',
+                icon: 'iconfont icon-add',
+                extend: 'data-full="true"',
+            }], 'delete',
             [{
                 html: '<a class="layui-btn layui-btn-sm" href="{:url("terms")}">分类管理</a>'
             }],
@@ -60,11 +66,11 @@ layui.use('yznTable', function() {
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'name', title: '网站名称' },
                 { field: 'url', title: '网站网址' },
-                { field: 'image', width: 150, title: '网站LOGO', templet: '#image' },
-                { field: 'linktype', width: 150, title: '链接类型', templet: '#type' },
+                { field: 'image', width: 150, title: '网站LOGO', templet: '#image', selectList: { 0: '无', 1: '有' }},
+                { field: 'linktype', width: 150, title: '链接类型', templet: '#type', selectList: { 0: '文字链接', 1: '图片链接' }},
                 { field: 'termsid', width: 80, title: '分类ID' },
-                { field: 'inputtime', width: 180, title: '添加时间' },
-                { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true },
+                { field: 'inputtime', width: 180, title: '添加时间', search: 'range' },
+                { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true, selectList: { 0: '未通过', 1: '已通过' } },
                 { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
             ]
         ],

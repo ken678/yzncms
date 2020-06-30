@@ -28,13 +28,14 @@ layui.use('yznTable', function() {
         elem: '#currentTable',
         toolbar: ['refresh',
             [{
-                html: '<a class="layui-btn layui-btn-sm" href="{:url("index")}">链接管理</a>'
+                html: '<a class="layui-btn layui-btn-normal layui-btn-sm" href="{:url("index")}">链接管理</a>'
             },
             {
                 html: '<a class="layui-btn layui-btn-sm" href="{:url("terms")}">分类管理</a>'
             }],
         ],
         url: '{:url("terms")}',
+        search:false,
         cols: [
             [
                 { field: 'id', width: 70, title: 'ID' },

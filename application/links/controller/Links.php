@@ -31,22 +31,6 @@ class Links extends Adminbase
     }
 
     /**
-     * 友情链接列表
-     */
-    public function index()
-    {
-        if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $_list = $this->modelClass->order('id', 'desc')->page($page, $limit)->select();
-            $total = $this->modelClass->order('id', 'desc')->count();
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
-            return json($result);
-        }
-        return $this->fetch();
-    }
-
-    /**
      * 新增友情链接
      */
     public function add()
