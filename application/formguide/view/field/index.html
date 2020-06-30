@@ -46,9 +46,9 @@ layui.use('yznTable', function() {
                 { field: 'name',align: "left",  title: '字段名称' },
                 { field: 'title', width: 120, title: '别名' },
                 { field: 'type', width: 120, title: '字段类型' },
-                { field: 'create_time', width: 180, title: '创建时间' },
-                { field: 'ifrequire', width: 80, align: "center", title: '必填', templet: '<div>{{#  if(d.ifrequire){ }} <button class="layui-btn layui-btn layui-btn-xs">是</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">否</button> {{#  } }} </div>' },
-                { field: 'status', width: 80, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">启用</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>' },
+                { field: 'create_time', width: 180, title: '创建时间', search: 'range' },
+                { field: 'ifrequire', width: 80, align: "center", title: '必填', templet: '<div>{{#  if(d.ifrequire){ }} <button class="layui-btn layui-btn layui-btn-xs">是</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">否</button> {{#  } }} </div>', selectList: { 0: '否', 1: '是' } },
+                { field: 'status', width: 80, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">启用</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>', selectList: { 0: '禁用', 1: '启用' } },
                 { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
             ]
         ],

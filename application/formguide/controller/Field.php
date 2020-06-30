@@ -35,12 +35,12 @@ class Field extends AdminBase
     //首页
     public function index()
     {
-        // 记录当前列表页的cookie
-        Cookie::set('__forward__', $_SERVER['REQUEST_URI']);
         $fieldid = $this->request->param('id/d', 0);
         if ($this->request->isAjax()) {
-            $data = $this->modelClass->where(['modelid' => $fieldid])->order('listorder,id')->select();
-            return json(["code" => 0, "data" => $data]);
+            list($page, $limit, $where) = $this->buildTableParames();
+            $count = $this->modelClass->where($where)->where(['modelid' => $fieldid])->count();
+            $data = $this->modelClass->where($where)->where(['modelid' => $fieldid])->page($page, $limit)->order($sort, $order)->select();
+            return json(["code" => 0, 'count' => $count, "data" => $data]);
         } else {
             $this->assign("id", $fieldid);
             return $this->fetch();
@@ -62,7 +62,7 @@ class Field extends AdminBase
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success('新增成功', Cookie::get('__forward__'));
+            $this->success('新增成功');
         } else {
             $fieldid = $this->request->param('id/d', 0);
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,default_define,ifoption,ifstring');
@@ -94,7 +94,7 @@ class Field extends AdminBase
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success("更新成功！", Cookie::get('__forward__'));
+            $this->success("更新成功！");
         } else {
             //字段信息
             $fieldData = ModelField::get($fieldid);

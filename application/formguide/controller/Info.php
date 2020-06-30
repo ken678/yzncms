@@ -36,15 +36,14 @@ class Info extends AdminBase
     {
         $formid = $this->request->param('formid/d', 0);
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            //$map = $this->buildparams();
-
             $modelCache = cache("Model");
             $tableName = $modelCache[$formid]['tablename'];
 
-            $total = Db::name($tableName)->count();
-            $_list = Db::name($tableName)->page($page, $limit)->order(['id' => 'desc'])->withAttr('inputtime', function ($value, $data) {
+            $this->modelClass = Db::name($tableName);
+            list($page, $limit, $where) = $this->buildTableParames();
+
+            $total = Db::name($tableName)->where($where)->count();
+            $_list = Db::name($tableName)->where($where)->page($page, $limit)->order(['id' => 'desc'])->withAttr('inputtime', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
             })->select();
             $result = array("code" => 0, "count" => $total, "data" => $_list);

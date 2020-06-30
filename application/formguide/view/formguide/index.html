@@ -32,6 +32,7 @@ layui.use('yznTable', function() {
         elem: '#currentTable',
         toolbar: ['refresh', 'add'],
         url: '{:url("index")}',
+        search:false,
         cols: [
             [
                 { field: 'id', width: 60, title: 'ID' },
@@ -43,7 +44,6 @@ layui.use('yznTable', function() {
                 { fixed: 'right', width: 350, title: '操作', toolbar: '#barTool' }
             ]
         ],
-        page: {}
     });
 });
 </script>
