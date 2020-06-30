@@ -250,26 +250,15 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element'], function(exports) {
                 url += '&id=' + ids.join(',');
             }
         }
-
         if (clienWidth === undefined || clientHeight === undefined) {
-            var width = document.body.clientWidth,
-                height = document.body.clientHeight;
-            if (width >= 800 && height >= 600) {
-                clienWidth = '800px';
-                clientHeight = '600px';
-            } else {
-                clienWidth = '100%';
-                clientHeight = '100%';
-            }
+            clienWidth = $(window).width() >= 800 ? '800px' : '100%';
+            clientHeight = $(window).height() >= 600 ? '600px' : '100%';
+
         }
         if (dataFull === 'true') {
             clienWidth = '100%';
             clientHeight = '100%';
-        } else if (dataFull === 'false') {
-            clienWidth = '800px';
-            clientHeight = '600px';
         }
-
         yzn.open(
             $(this).attr('data-title'), url, clienWidth, clientHeight,
         );
