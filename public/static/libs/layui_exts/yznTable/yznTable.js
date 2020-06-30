@@ -376,7 +376,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             } catch (e) {
                 var value = undefined;
             }
-            return '<a class="yzn-table-url" href="' + value + '" target="_blank" class="label bg-green">' + value + '</a>';
+            return '<a class="layui-btn layui-btn-primary layui-btn-xs" href="' + value + '" target="_blank"><i class="iconfont icon-lianjie"></i></a></a>';
         },
         price: function(data, option) {
             var field = option.field;
