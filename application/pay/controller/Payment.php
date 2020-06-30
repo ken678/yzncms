@@ -15,9 +15,9 @@
 namespace app\pay\controller;
 
 use app\common\controller\Adminbase;
-use app\pay\model\Account as Account_Model;
-use app\pay\model\Payment as Payment_Model;
-use app\pay\model\Spend as Spend_Model;
+use app\pay\model\Account as AccountModel;
+use app\pay\model\Payment as PaymentModel;
+use app\pay\model\Spend as SpendModel;
 use think\Db;
 
 class Payment extends Adminbase
@@ -25,9 +25,9 @@ class Payment extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Payment_Model = new Payment_Model;
-        $this->Account_Model = new Account_Model;
-        $this->Spend_Model = new Spend_Model;
+        $this->PaymentModel = new PaymentModel;
+        $this->modelClass = new AccountModel;
+        $this->SpendModel = new SpendModel;
 
     }
 
@@ -43,10 +43,10 @@ class Payment extends Adminbase
             if ($userinfo) {
                 if ($data['pay_unit']) {
                     //增加
-                    $this->Account_Model->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->_userinfo['username']);
+                    $this->modelClass->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->_userinfo['username']);
                 } else {
                     //减少
-                    $this->Spend_Model->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], '后台充值', $data['usernote']);
+                    $this->SpendModel->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], '后台充值', $data['usernote']);
                 }
                 $this->success("充值成功！");
             } else {
@@ -58,26 +58,11 @@ class Payment extends Adminbase
         }
     }
 
-    //入账列表
+    //支付模块列表
     public function pay_list()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $map = $this->buildparams();
-            $total = $this->Account_Model->where($map)->count();
-            $data = $this->Account_Model->where($map)->page($page, $limit)->order('id', 'desc')->select();
-            return json(["code" => 0, "count" => $total, "data" => $data]);
-        } else {
-            return $this->fetch();
-        }
-    }
-
-    //支付模块列表
-    public function index()
-    {
-        if ($this->request->isAjax()) {
-            $data = $this->Payment_Model->select();
+            $data = $this->PaymentModel->select();
             return json(["code" => 0, "data" => $data]);
         } else {
             return $this->fetch();
@@ -93,7 +78,7 @@ class Payment extends Adminbase
             $config = $this->request->param('config/a');
             $data['status'] = $this->request->param('status/d', 0);
             $data['config'] = serialize($config);
-            if ($this->Payment_Model->allowField(true)->save($data, ['id' => $id])) {
+            if ($this->PaymentModel->allowField(true)->save($data, ['id' => $id])) {
                 cache('Pay_Config', null);
                 $this->success("更新成功！", url('index'));
             } else {
@@ -101,26 +86,9 @@ class Payment extends Adminbase
             }
         } else {
             $id = $this->request->param('id/d', 0);
-            $info = $this->Payment_Model->where('id', $id)->find();
+            $info = $this->PaymentModel->where('id', $id)->find();
             $this->assign('info', $info);
             return $this->fetch($info['name']);
         }
     }
-
-    //删除入账记录
-    public function del()
-    {
-        $ids = $this->request->param('ids/a');
-        empty($ids) && $this->error('参数错误！');
-        if (!is_array($ids)) {
-            $ids = array($ids);
-        }
-        $res = $this->Account_Model->where('id', 'in', $ids)->delete();
-        if ($res !== false) {
-            $this->success('删除成功！');
-        } else {
-            $this->error('删除失败！');
-        }
-    }
-
 }
