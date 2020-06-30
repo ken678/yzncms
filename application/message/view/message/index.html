@@ -49,10 +49,11 @@ layui.use('yznTable', function() {
                 { field: 'content',align: "left", title: '内容' },
                 { field: 'send_from', width: 120, title: '发件人' },
                 { field: 'send_to', width: 120, title: '收件人' },
-                { field: 'create_time', width: 200, align: "center", title: '发送时间' },
+                { field: 'create_time', width: 200, align: "center", title: '发送时间', search: 'range'},
                 { fixed: 'right', width: 80, title: '操作', toolbar: '#barTool' }
             ]
         ],
+        page:{}
     });
 });
 </script>

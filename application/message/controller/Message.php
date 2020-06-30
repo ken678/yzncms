@@ -15,9 +15,9 @@
 namespace app\message\controller;
 
 use app\common\controller\Adminbase;
-use app\member\model\Member as Member_Model;
-use app\message\model\Message as Message_Model;
-use app\message\model\MessageGroup as MessageGroup_Model;
+use app\member\model\Member as MemberModel;
+use app\message\model\Message as MessageModel;
+use app\message\model\MessageGroup as MessageGroupModel;
 
 class Message extends Adminbase
 {
@@ -26,21 +26,8 @@ class Message extends Adminbase
     {
         parent::initialize();
         $this->groupCache = cache("Member_Group"); //会员模型
-        $this->Message_Model = new Message_Model;
-        $this->MessageGroup_Model = new MessageGroup_Model;
-    }
-
-    public function index()
-    {
-        if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $_list = $this->Message_Model->page($page, $limit)->select();
-            $total = count($_list);
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
-            return json($result);
-        }
-        return $this->fetch();
+        $this->modelClass = new MessageModel;
+        $this->MessageGroupModel = new MessageGroupModel;
     }
 
     /**
@@ -49,13 +36,13 @@ class Message extends Adminbase
     public function group()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $_list = $this->MessageGroup_Model->page($page, $limit)->select();
+
+            list($page, $limit, $where) = $this->buildTableParames();
+            $_list = $this->MessageGroupModel->where($where)->page($page, $limit)->select();
             foreach ($_list as $k => $v) {
                 $_list[$k]['groupname'] = $this->groupCache[$v['groupid']]['name'];
             }
-            $total = count($_list);
+            $total = $this->MessageGroupModel->where($where)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -73,7 +60,7 @@ class Message extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->MessageGroup_Model->allowField(true)->save($data)) {
+            if ($this->MessageGroupModel->allowField(true)->save($data)) {
                 $this->success('发送成功！');
             } else {
                 $this->error('发送失败！');
@@ -104,10 +91,10 @@ class Message extends Adminbase
             /*if ($data['send_from'] == $this->_userinfo['username']) {
             return $this->error('不能发给自己');
             }*/
-            if (!Member_Model::getByUsername($data['send_to'])) {
+            if (!MemberModel::getByUsername($data['send_to'])) {
                 return $this->error('用户不存在');
             }
-            if ($this->Message_Model->allowField(true)->save($data)) {
+            if ($this->modelClass->allowField(true)->save($data)) {
                 $this->success('发送成功！');
             } else {
                 $this->error('发送失败！');
@@ -128,7 +115,7 @@ class Message extends Adminbase
         if (!is_array($ids)) {
             $ids = array($ids);
         }
-        $res = $this->Message_Model->where('id', 'in', $ids)->delete();
+        $res = $this->modelClass->where('id', 'in', $ids)->delete();
         if ($res !== false) {
             $this->success('删除成功！');
         } else {
@@ -147,7 +134,7 @@ class Message extends Adminbase
         if (!is_array($ids)) {
             $ids = array($ids);
         }
-        $res = $this->MessageGroup_Model->where('id', 'in', $ids)->delete();
+        $res = $this->MessageGroupModel->where('id', 'in', $ids)->delete();
         if ($res !== false) {
             $this->success('删除成功！');
         } else {
