@@ -1,10 +1,18 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-header">分类列表</div>
+    <div class="layui-card-header">友情链接列表</div>
     <div class="layui-card-body">
-        <div class="layui-form">
-            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li><a href="{:url('index')}">友情链接列表</a></li>
+                <li class="layui-this"><a href="{:url('terms')}">分类列表</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -26,14 +34,7 @@ layui.use('yznTable', function() {
         init: init,
         id: 'currentTable',
         elem: '#currentTable',
-        toolbar: ['refresh',
-            [{
-                html: '<a class="layui-btn layui-btn-normal layui-btn-sm" href="{:url("index")}">链接管理</a>'
-            },
-            {
-                html: '<a class="layui-btn layui-btn-sm" href="{:url("terms")}">分类管理</a>'
-            }],
-        ],
+        toolbar: ['refresh'],
         url: '{:url("terms")}',
         search:false,
         cols: [

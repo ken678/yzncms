@@ -3,7 +3,17 @@
 <div class="layui-card">
     <div class="layui-card-header">友情链接列表</div>
     <div class="layui-card-body">
-        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this"><a href="{:url('index')}">友情链接列表</a></li>
+                <li><a href="{:url('terms')}">分类列表</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/html" id="type">
@@ -53,10 +63,7 @@ layui.use('yznTable', function() {
                 class: 'layui-btn layui-btn-normal layui-btn-sm',
                 icon: 'iconfont icon-add',
                 extend: 'data-full="true"',
-            }], 'delete',
-            [{
-                html: '<a class="layui-btn layui-btn-sm" href="{:url("terms")}">分类管理</a>'
-            }],
+            }], 'delete'
         ],
         url: '{:url("index")}',
         cols: [
@@ -66,8 +73,8 @@ layui.use('yznTable', function() {
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'name', title: '网站名称' },
                 { field: 'url', title: '网站网址' },
-                { field: 'image', width: 150, title: '网站LOGO', templet: '#image', selectList: { 0: '无', 1: '有' }},
-                { field: 'linktype', width: 150, title: '链接类型', templet: '#type', selectList: { 0: '文字链接', 1: '图片链接' }},
+                { field: 'image', width: 150, title: '网站LOGO', templet: '#image', selectList: { 0: '无', 1: '有' } },
+                { field: 'linktype', width: 150, title: '链接类型', templet: '#type', selectList: { 0: '文字链接', 1: '图片链接' } },
                 { field: 'termsid', width: 80, title: '分类ID' },
                 { field: 'inputtime', width: 180, title: '添加时间', search: 'range' },
                 { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true, selectList: { 0: '未通过', 1: '已通过' } },
