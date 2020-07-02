@@ -23,7 +23,7 @@ define('ADDON_PATH', ROOT_PATH . 'addons' . DS);
 // 运行目录
 define('ROOT_URL', ltrim(dirname(Request::rootUrl()), DS) . '/');
 //模板目录
-define('TEMPLATE_PATH', ROOT_PATH . 'public' . DS . 'templates' . DS);
+define('TEMPLATE_PATH', ROOT_PATH . 'templates' . DS);
 
 // 加载用户函数文件
 include_once APP_PATH . 'function.php';
