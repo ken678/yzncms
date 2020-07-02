@@ -171,9 +171,9 @@ class Cms extends Adminbase
                     return $this->error('模型被冻结不可操作~');
                 }
                 if (Db::name(ucwords($tableName))->where('id', 'in', $ids)->update(['catid' => $tocatid])) {
-                    $this->success('栏目修改成功~');
+                    $this->success('移动成功~');
                 } else {
-                    $this->error('栏目修改失败~');
+                    $this->error('移动失败~');
                 }
             } else {
                 $this->error('请选择需要移动的信息！');
