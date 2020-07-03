@@ -30,6 +30,9 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-table-tool .layui-btn-sm i {font-size: 14px !important;}
 .layui-table-tool .layui-btn + .layui-btn {margin-left: 2px !important;}
 
+.editor_tool .layui-btn+.layui-btn {margin-left: 0px;}
+.editor_tool .layui-form-checkbox {margin-right: 0px;}
+
 /**弹出层样式*/
 .layui-layer-yzn .layui-layer-title {background: #2c3e50 !important; color: #fff !important; border-bottom: none; }
 .layui-layer-yzn .layui-layer-title ~ .layui-layer-setwin {top: 0px; height: 42px; }
