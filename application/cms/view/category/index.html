@@ -10,7 +10,7 @@
     </div>
 </div>
 <script type="text/html" id="barTool">
-    <a data-open="{{d.add_url}}" class="layui-btn layui-btn-xs layui-btn-normal">添加子栏目</a>
+    <a data-open="{{d.add_url}}" data-full="true" class="layui-btn layui-btn-xs layui-btn-normal">添加子栏目</a>
     <a data-open='{:url("edit")}?id={{ d.id }}' data-full="true" class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
