@@ -202,8 +202,20 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
                     ueditors[ueditor_name].setContent(data);
                     layer.msg("图片本地化完成");
                 }, 'html');
+        });
+        //过滤敏感字
+        $('#' + ueditor_name + 'filterword').click(function() {
+            var con = ueditors[ueditor_name].getContent();
+            $.post(GV.filter_word_url, { 'content': con }).success(function(res) {
+                if (res.code == 0) {
+                    if ($.isArray(res.data)) {
+                        layer.msg("违禁词：" + res.data.join(","),{icon:2});
+                    }
+                } else {
+                    layer.msg("内容没有违禁词！",{icon:1});
+                }
+            })
         })
-
     });
 
     //图片选择
