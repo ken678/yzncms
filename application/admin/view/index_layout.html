@@ -21,6 +21,7 @@
         'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/upload/upload", ["dir" => "images","from"=>"ueditor", "module" => request()->module()])}',
         'ueditor_grabimg_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/Attachments/geturlfile")}',
         'image_select_url': '{$image_select_url ? $image_select_url : url("attachment/Attachments/select")}',
+        'filter_word_url': '{$filter_word_url ? $filter_word_url : url("admin/ajax/filterWord")}',
     };
     </script>
 </head>
