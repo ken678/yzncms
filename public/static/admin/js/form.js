@@ -17,28 +17,6 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
     // 当前上传对象
     var curr_uploader = {};
 
-    // 放大图片
-    $('body').on('click', 'img', function() {
-        var title = $(this).attr('alt'),
-            src = $(this).attr('src'),
-            alt = $(this).attr('alt');
-        var photos = {
-            "title": title,
-            "id": Math.random(),
-            "data": [{
-                "alt": alt,
-                "pid": Math.random(),
-                "src": src,
-                "thumb": src
-            }]
-        };
-        layer.photos({
-            photos: photos,
-            anim: 5
-        });
-        return false;
-    });
-
     //裁剪图片
     $(document).on('click', '.cropper', function() {
         var inputId = $(this).attr("data-input-id");
@@ -251,7 +229,7 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
                         };
                     });
                     selectedList.forEach(function(item) {
-                        var $li = '<div class="file-item thumbnail"><img class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
+                        var $li = '<div class="file-item thumbnail"><img data-image class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
                         if (multiple == 'checkbox') {
                             $li += '<i class="iconfont icon-yidong move-picture"></i> ';
                         }
@@ -452,7 +430,7 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
         uploader.on('fileQueued', function(file) {
             var $li = $(
                     '<div id="' + file.id + '" class="file-item js-gallery thumbnail">' +
-                    '<img>' +
+                    '<img data-image>' +
                     '<div class="info">' + file.name + '</div>' +
                     '<div class="file-panel">' +
                     ($multiple ? ' <i class="iconfont icon-yidong move-picture"></i> ' : '') +
