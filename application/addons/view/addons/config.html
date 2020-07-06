@@ -1,5 +1,6 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
+<link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css?t=1590715645">
 <form class="layui-form" action="" method="post">
     {empty name="custom_config"}
         <div class="layui-card">
@@ -100,6 +101,31 @@
                             <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
                         </div>
                         {/case}
+                        {case value="image"}
+                        <div class="layui-form-item">
+                            <label class="">{$form.title}</label>
+                            <div class="layui-form-field-label">
+                                <div class="js-upload-image">
+                                    <div id="file_list_{$o_key}" class="uploader-list">
+                                        {notempty name="form.value"}
+                                        <div class="file-item thumbnail">
+                                            <img class="{$o_key}-{$form.value}" data-original="{$form.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$form.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                                            <div class="file-panel">
+                                                <i class="iconfont icon-tailor cropper" data-input-id="{$form.value}" data-id="{$o_key}"></i>
+                                                <i class="iconfont icon-trash remove-picture" data-id="{$form.value}"></i>
+                                            </div>
+                                        </div>
+                                        {/notempty}
+                                    </div>
+                                    <input type="hidden" name="config[{$o_key}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$o_key}" value="{$form.value|default=''}">
+                                    <div class="layui-clear"></div>
+                                    <div id="picker_{$o_key}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
+                                    <button type="button" class="layui-btn fachoose-image" data-input-id="{$o_key}" id="fachoose-{$o_key}"><i class="iconfont icon-other"></i> 选择</button>
+                                </div>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                        </div>
+                        {/case}
                  {/switch}
             {/foreach}
             </div>
@@ -115,5 +141,6 @@
         <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
     </div>
 </form>
+<script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
 <script type="text/javascript" src="__STATIC__/admin/js/form.js?t=1590725734"></script>
 {/block}
