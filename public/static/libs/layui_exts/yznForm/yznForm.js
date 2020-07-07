@@ -1,4 +1,4 @@
-layui.define(['form', 'yzn', 'table', 'notice', 'element','dragsort', 'laytpl'], function(exports) {
+layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl','laydate'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         yzn = layui.yzn,
@@ -7,6 +7,7 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element','dragsort', 'laytpl'],
         dragsort = layui.dragsort,
         element = layui.element,
         laytpl = layui.laytpl,
+        laydate = layui.laydate,
         notice = layui.notice;
 
     var init = {
@@ -226,7 +227,6 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element','dragsort', 'laytpl'],
 
     // 监听弹出层的打开
     $('body').on('click', '[data-open]', function() {
-
         var clienWidth = $(this).attr('data-width'),
             clientHeight = $(this).attr('data-height'),
             dataFull = $(this).attr('data-full'),
@@ -311,6 +311,31 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element','dragsort', 'laytpl'],
         });
         return false;
     });
+
+    if ($(".layui-form .datetime").size() > 0) {
+        $(".layui-form .datetime").each(function () {
+            var format = $(this).attr('data-date'),
+                type = $(this).attr('data-date-type'),
+                range = $(this).attr('data-date-range');
+            if (type === undefined || type === '' || type === null) {
+                type = 'datetime';
+            }
+            var options = {
+                elem: this,
+                type: type,
+            };
+            if (format !== undefined && format !== '' && format !== null) {
+                options['format'] = format;
+            }
+            if (range !== undefined) {
+                if (range === null || range === '') {
+                    range = '-';
+                }
+                options['range'] = range;
+            }
+            laydate.render(options);
+        });
+    }
 
     //绑定fieldlist
     if ($(".fieldlist").size() > 0) {

@@ -37,8 +37,6 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
 
     });
 
-
-
     //颜色
     $('.layui-color-box').each(function() {
         colorpicker.render({
@@ -47,15 +45,6 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
             done: function(color) {
                 $('.test-form-input').val(color);
             }
-        });
-    });
-
-    //时间
-    $('.test-item').each(function() {
-        laydate.render({
-            elem: this,
-            trigger: 'click',
-            type: 'datetime'
         });
     });
 
