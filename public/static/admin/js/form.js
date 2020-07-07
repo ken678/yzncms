@@ -1,11 +1,9 @@
-layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker', 'laydate', 'laytpl'], function() {
+layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker'], function() {
     var layer = layui.layer,
         form = layui.form,
         tagsinput = layui.tagsinput,
         dragsort = layui.dragsort,
         colorpicker = layui.colorpicker,
-        laydate = layui.laydate,
-        laytpl = layui.laytpl,
         tableSelect = layui.tableSelect;
     layer.config({
         skin: 'layui-layer-yzn'
