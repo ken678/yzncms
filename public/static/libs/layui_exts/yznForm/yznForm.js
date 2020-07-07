@@ -1,4 +1,4 @@
-layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl','laydate'], function(exports) {
+layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         yzn = layui.yzn,
@@ -313,7 +313,7 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl',
     });
 
     if ($(".layui-form .datetime").size() > 0) {
-        $(".layui-form .datetime").each(function () {
+        $(".layui-form .datetime").each(function() {
             var format = $(this).attr('data-date'),
                 type = $(this).attr('data-date-type'),
                 range = $(this).attr('data-date-range');
@@ -338,7 +338,7 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl',
     }
 
     //绑定fieldlist
-    if ($(".fieldlist").size() > 0) {
+    if ($(".layui-form .fieldlist").size() > 0) {
         //刷新隐藏textarea的值
         var refresh = function(name) {
             var data = {};
@@ -376,7 +376,7 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl',
             refresh($(this).closest(".fieldlist").data("name"));
         });
         //追加控制
-        $(".fieldlist").on("click", ".btn-append,.append", function(e, row) {
+        $(".layui-form .fieldlist").on("click", ".btn-append,.append", function(e, row) {
             var container = $(this).closest(".fieldlist");
             //var tagName = container.data("tag") || "dd";
             var index = container.data("index");
@@ -398,14 +398,14 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl',
             //$(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
         });
         //移除控制
-        $(".fieldlist").on("click", ".btn-remove", function() {
+        $(".layui-form .fieldlist").on("click", ".btn-remove", function() {
             var container = $(this).closest(".fieldlist");
             //var tagName = container.data("tag") || "dd";
             $(this).closest($(".rules-item")).remove();
             refresh(container.data("name"));
         });
         //渲染数据&拖拽排序
-        $(".fieldlist").each(function() {
+        $(".layui-form .fieldlist").each(function() {
             var container = this;
             //var tagName = $(this).data("tag") || "dd";
             $(this).dragsort({
@@ -432,6 +432,42 @@ layui.define(['form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl',
                     value: j
                 });
             });
+        });
+    }
+
+    // ueditor编辑器集合
+    var ueditors = {};
+    // ueditor编辑器
+    if ($(".layui-form .js-ueditor").size() > 0) {
+        $('.layui-form .js-ueditor').each(function() {
+            var ueditor_name = $(this).attr('id');
+            ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
+                initialFrameHeight: 400, //初始化编辑器高度,默认320
+                autoHeightEnabled: false, //是否自动长高
+                maximumWords: 50000, //允许的最大字符数
+                serverUrl: GV.ueditor_upload_url,
+            });
+            $('#' + ueditor_name + 'grabimg').click(function() {
+                var con = ueditors[ueditor_name].getContent();
+                $.post(GV.ueditor_grabimg_url, { 'content': con, 'type': 'images' },
+                    function(data) {
+                        ueditors[ueditor_name].setContent(data);
+                        layer.msg("图片本地化完成");
+                    }, 'html');
+            });
+            //过滤敏感字
+            $('#' + ueditor_name + 'filterword').click(function() {
+                var con = ueditors[ueditor_name].getContent();
+                $.post(GV.filter_word_url, { 'content': con }).success(function(res) {
+                    if (res.code == 0) {
+                        if ($.isArray(res.data)) {
+                            layer.msg("违禁词：" + res.data.join(","), { icon: 2 });
+                        }
+                    } else {
+                        layer.msg("内容没有违禁词！", { icon: 1 });
+                    }
+                })
+            })
         });
     }
 

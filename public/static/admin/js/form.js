@@ -5,11 +5,7 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
         dragsort = layui.dragsort,
         colorpicker = layui.colorpicker,
         tableSelect = layui.tableSelect;
-    layer.config({
-        skin: 'layui-layer-yzn'
-    });
-    // ueditor编辑器集合
-    var ueditors = {};
+
     // 文件上传集合
     var webuploader = [];
     // 当前上传对象
@@ -54,38 +50,6 @@ layui.use(['layer', 'form', 'tableSelect', 'dragsort', 'tagsinput', 'colorpicker
             height: '26px',
         })
     })
-
-    // ueditor编辑器
-    $('.js-ueditor').each(function() {
-        var ueditor_name = $(this).attr('id');
-        ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
-            initialFrameHeight: 400, //初始化编辑器高度,默认320
-            autoHeightEnabled: false, //是否自动长高
-            maximumWords: 50000, //允许的最大字符数
-            serverUrl: GV.ueditor_upload_url,
-        });
-        $('#' + ueditor_name + 'grabimg').click(function() {
-            var con = ueditors[ueditor_name].getContent();
-            $.post(GV.ueditor_grabimg_url, { 'content': con, 'type': 'images' },
-                function(data) {
-                    ueditors[ueditor_name].setContent(data);
-                    layer.msg("图片本地化完成");
-                }, 'html');
-        });
-        //过滤敏感字
-        $('#' + ueditor_name + 'filterword').click(function() {
-            var con = ueditors[ueditor_name].getContent();
-            $.post(GV.filter_word_url, { 'content': con }).success(function(res) {
-                if (res.code == 0) {
-                    if ($.isArray(res.data)) {
-                        layer.msg("违禁词：" + res.data.join(","),{icon:2});
-                    }
-                } else {
-                    layer.msg("内容没有违禁词！",{icon:1});
-                }
-            })
-        })
-    });
 
     //图片选择
     if ($('.fachoose-image').length > 0) {
