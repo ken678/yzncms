@@ -17,6 +17,7 @@
     var GV = {
         'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images", "module" => request()->module()])}',
         'file_upload_url': '{$file_upload_url ? $file_upload_url : url("attachment/upload/upload", ["dir" => "files", "module" => request()->module()])}',
+        'jcrop_upload_url': '{$jcrop_upload_url ? $jcrop_upload_url : url("attachment/Attachments/cropper")}',
         'WebUploader_swf': '__STATIC__/libs/webuploader/Uploader.swf',
         'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/upload/upload", ["dir" => "images","from"=>"ueditor", "module" => request()->module()])}',
         'ueditor_grabimg_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/Attachments/geturlfile")}',
@@ -30,8 +31,8 @@
     <div class="fly-header layui-bg-black">
         <div class="layui-container">
             <a class="fly-logo" href="{:url('index')}">
-		      <img src="__STATIC__/modules/member/img/logo.png" alt="layui">
-		    </a>
+              <img src="__STATIC__/modules/member/img/logo.png" alt="layui">
+            </a>
             <ul class="layui-nav fly-nav layui-hide-xs">
                 <li class="layui-nav-item layui-this">
                     <a href="{:url('/')}"><i class="iconfont icon-homepage"></i>首页</a>
@@ -41,13 +42,13 @@
                 <!-- 登入后的状态 -->
                 <li class="layui-nav-item">
                     <a class="fly-nav-avatar" href="javascript:;">
-			          <cite class="layui-hide-xs">{$userinfo.username}</cite>
+                      <cite class="layui-hide-xs">{$userinfo.username}</cite>
                       {if $userinfo.vip}
                       <i class="iconfont icon-vip1 layui-hide-xs" title="VIP会员"></i>
                       {/if}
-			          <i class="layui-badge fly-badge-vip layui-hide-xs">{$userinfo.groupname}</i>
-			          <img src="{$userinfo.avatar}">
-			        </a>
+                      <i class="layui-badge fly-badge-vip layui-hide-xs">{$userinfo.groupname}</i>
+                      <img src="{$userinfo.avatar}">
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a href="{:url('member/index/index')}"><i class="layui-icon">&#xe612;</i>用户中心</a></dd>
                         <dd><a href="{:url('member/index/profile')}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>

@@ -1,4 +1,4 @@
-﻿layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(exports) {
+﻿layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util','yznForm'], function(exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         laytpl = layui.laytpl,
@@ -6,6 +6,7 @@
         element = layui.element,
         upload = layui.upload,
         util = layui.util,
+        yznForm=layui.yznForm,
         device = layui.device(),
         DISABLED = 'layui-btn-disabled';
 
