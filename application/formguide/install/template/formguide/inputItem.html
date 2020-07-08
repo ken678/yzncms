@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="__STATIC__/common/font/iconfont.css">
 <link rel="stylesheet" href="__STATIC__/libs/webuploader/webuploader.css?t=1590715645">
 {volist name="fieldList" id="vo"}
 
@@ -252,10 +253,13 @@ layui.config({
     version: '1557143998899',
     base: '__STATIC__/libs/layui_exts/'
 }).extend({
+    notice: 'notice/notice',
+    yzn: 'yzn/yzn',
+    yznForm: 'yznForm/yznForm',
     tagsinput: 'tagsinput/tagsinput',
     tableSelect: 'tableSelect/tableSelect',
     dragsort:'dragsort/dragsort',
-});
+}).use('yznForm');
 </script>
 
 <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>
