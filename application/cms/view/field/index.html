@@ -29,7 +29,7 @@
 <script type="text/html" id="barTool">
     {{#  if(!d.iffixed){ }}
     <a data-open='{:url("edit")}?fieldid={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("delete")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
     {{#  } }}
 </script>
 {/block}
