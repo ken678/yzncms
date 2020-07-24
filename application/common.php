@@ -512,12 +512,15 @@ function get_file_name($id = '')
 
 /**
  * 获取附件路径
- * @param int $id 附件id
+ * @param string $value
  * @return string
  */
-function get_file_path($id)
+function get_file_path($path)
 {
-    $path = model('attachment/Attachment')->getFilePath($id);
+    //如果是图片路径就直接返回
+    if (preg_match('/^\d+(,\d+)*$/', $path)) {
+        $path = model('attachment/Attachment')->getFilePath($path);
+    }
     return $path ? $path : "";
 }
 
