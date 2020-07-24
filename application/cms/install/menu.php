@@ -82,6 +82,12 @@ return [
                                 "name" => "批量移动",
                             ],
                             [
+                                "route" => "cms/cms/setstate",
+                                "type" => 1,
+                                "status" => 0,
+                                "name" => "状态",
+                            ],
+                            [
                                 "route" => "cms/cms/recycle",
                                 "type" => 1,
                                 "status" => 0,
@@ -129,6 +135,12 @@ return [
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "删除",
+                            ],
+                            [
+                                "route" => "cms/tags/multi",
+                                "type" => 1,
+                                "status" => 0,
+                                "name" => "批量更新",
                             ],
                         ],
                     ],
@@ -184,12 +196,6 @@ return [
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "删除栏目",
-                            ],
-                            [
-                                "route" => "cms/category/public_cache",
-                                "type" => 1,
-                                "status" => 0,
-                                "name" => "更新栏目",
                             ],
                             [
                                 "route" => "cms/category/multi",
@@ -290,6 +296,12 @@ return [
                                 "type" => 1,
                                 "status" => 0,
                                 "name" => "设置模型状态",
+                            ],
+                            [
+                                "route" => "cms/models/multi",
+                                "type" => 1,
+                                "status" => 0,
+                                "name" => "批量更新",
                             ],
                         ],
                     ],

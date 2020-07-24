@@ -27,6 +27,11 @@ class Category extends Adminbase
     private $tp_show;
     private $tp_page;
 
+    protected $noNeedRight = [
+        'cms/category/count_items',
+        'cms/category/public_cache',
+    ];
+
     protected function initialize()
     {
         parent::initialize();
