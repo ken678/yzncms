@@ -16,7 +16,7 @@
 </div>
 <script type="text/html" id="barTool">
     {{# if(d.type=='radio' || d.type=='select'){ }}
-    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('{{d.name}}')['key']} 值：{:config('{{d.name}}')['value']}{/literal}">代码调用</a>
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('{{d.name}}')} 值：{:config('{{d.name}}_text')}{/literal}">代码调用</a>
     {{# } else if(d.type=='checkbox' || d.type=='array' || d.type=='images' || d.type=='files'){ }}
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{volist name=&quot;:config('{{d.name}}')&quot; id='vo'}  值：{$key}  描述：{$vo} <br> {/volist}{/literal}">代码调用</a>
     {{# } else { }}

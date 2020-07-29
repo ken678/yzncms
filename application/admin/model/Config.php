@@ -46,7 +46,13 @@ class Config extends Model
                     break;
                 case 'select':
                 case 'radio':
-                    $newConfigs[$key] = isset($value['options'][$value['value']]) ? ['key' => $value['value'], 'value' => $value['options'][$value['value']]] : ['key' => $value['value'], 'value' => $value['value']];
+                    $newConfigs[$key] = $value['value'];
+                    if (isset($value['options'][$value['value']])) {
+                        $newConfigs[$key . '_text'] = $value['options'][$value['value']];
+                    } else {
+                        $newConfigs[$key . '_text'] = $value['value'];
+                    }
+                    //$newConfigs[$key] = isset($value['options'][$value['value']]) ? ['key' => $value['value'], 'value' => $value['options'][$value['value']]] : ['key' => $value['value'], 'value' => $value['value']];
                     break;
                 case 'checkbox':
                     if (empty($value['value'])) {
