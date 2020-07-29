@@ -393,20 +393,14 @@ class Cms extends Modelbase
                     $newdata[$key] = (array) json_decode($value, true);
                     break;
                 case 'radio':
-                    if (!empty($value)) {
-                        if (!empty($fieldinfo[$key]['options'])) {
-                            $optionArr = parse_attr($fieldinfo[$key]['options']);
-                            $newdata[$key] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
-                        }
-                    }
-                    break;
                 case 'select':
                     if (!empty($value)) {
                         if (!empty($fieldinfo[$key]['options'])) {
                             $optionArr = parse_attr($fieldinfo[$key]['options']);
-                            $newdata[$key] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
+                            $newdata[$key . '_text'] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
                         }
                     }
+                    $newdata[$key] = $value;
                     break;
                 case 'checkbox':
                     if (!empty($value)) {
