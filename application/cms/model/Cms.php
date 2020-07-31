@@ -214,7 +214,8 @@ class Cms extends Modelbase
                     case 'date':
                         ${$arr}[$name] = strtotime(${$arr}[$name]);
                         break;
-                    // 百度编辑器
+                    // 编辑器
+                    case 'markdown':
                     case 'Ueditor':
                         ${$arr}[$name] = htmlspecialchars(stripslashes(${$arr}[$name]));
                         break;
@@ -291,10 +292,8 @@ class Cms extends Modelbase
                 if ($value['type'] == 'date') {
                     $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
                 }
-
-                if ($value['type'] == 'Ueditor') {
+                if ($value['type'] == 'Ueditor' || $value['type'] == 'markdown') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
-
                 }
             }
         }
@@ -441,6 +440,10 @@ class Cms extends Modelbase
                 /*case 'tags':
                 $newdata[$key] = empty($value) ? [] : explode(',', $value);
                 break;*/
+                case 'markdown':
+                    $parser = new \util\Parser;
+                    $newdata[$key] = $parser->makeHtml(htmlspecialchars_decode($value));
+                    break;
                 case 'Ueditor':
                     $newdata[$key] = htmlspecialchars_decode($value);
                     break;
