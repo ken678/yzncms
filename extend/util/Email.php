@@ -72,14 +72,14 @@ class Email
         $this->mail->isSMTP();
         $this->mail->Host = $this->options['mail_smtp_host']; //SMTP服务器
         // 设置为“需要验证”
-        if ($this->options['mail_auth']['key']) {
+        if ($this->options['mail_auth']) {
             $this->mail->SMTPAuth = true;
         } else {
             $this->mail->SMTPAuth = false;
         }
         $this->mail->Username = $this->options['mail_smtp_user']; //SMTP username
         $this->mail->Password = $this->options['mail_smtp_pass']; // SMTP password
-        $this->mail->SMTPSecure = isset($securArr[$this->options['mail_verify_type']['key']]) ? $securArr[$this->options['mail_verify_type']['key']] : ''; //支持TLS加密,还接受了ssl
+        $this->mail->SMTPSecure = isset($securArr[$this->options['mail_verify_type']]) ? $securArr[$this->options['mail_verify_type']] : ''; //支持TLS加密,还接受了ssl
         $this->mail->Port = $this->options['mail_smtp_port']; //TCP端口连接
 
         //设置发件人
@@ -140,7 +140,7 @@ class Email
     public function send()
     {
         $result = false;
-        switch ($this->options['mail_type']['key']) {
+        switch ($this->options['mail_type']) {
             case 1:
                 try
                 {
