@@ -281,7 +281,7 @@ class Upload extends Base
             ]);
         }
         // 附件上传钩子，用于第三方文件上传扩展
-        if (config('upload_driver')['key'] != 'local') {
+        if (config('upload_driver') != 'local') {
             $hook_result = Hook::listen('uploadAfter', ['file' => $file, 'from' => $from, 'module' => $module], true);
             if (false !== $hook_result) {
                 return $hook_result;

@@ -66,7 +66,7 @@ class Attachment extends Model
             // 读取图片
             $image = Image::open($file);
             // 添加水印
-            $watermark_pos = $watermark_pos == '' ? config('upload_thumb_water_position')['key'] : $watermark_pos;
+            $watermark_pos = $watermark_pos == '' ? config('upload_thumb_water_position') : $watermark_pos;
             $watermark_alpha = $watermark_alpha == '' ? config('upload_thumb_water_alpha') : $watermark_alpha;
             $image->water($thumb_water_pic, $watermark_pos, $watermark_alpha);
             // 保存水印图片，覆盖原图
