@@ -368,7 +368,7 @@ class Cms extends Modelbase
             $extTable = $tableName . $this->ext_table;
             $dataInfo = Db::view($tableName, '*')->where($where)->cache($cache)->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')->find();
         } else {
-            $dataInfo = Db::name($tableName)->field($field)->cache($cache)->where($where)->find();
+            $dataInfo = Db::name($tableName)->field($field)->cache($cache)->where($where)->order($order)->find();
         }
         if (!empty($dataInfo)) {
             $ModelField = cache('ModelField');
