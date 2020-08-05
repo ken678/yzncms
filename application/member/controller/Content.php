@@ -88,7 +88,7 @@ class Content extends MemberBase
             }
             $catid = $this->request->param('catid/d', 0);
             $tree = new \util\Tree();
-            $str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
+            $str = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             foreach ($array as $k => $v) {
                 //$array[$k] = $v = Db::name('Category')->find($v['id']);
@@ -105,7 +105,7 @@ class Content extends MemberBase
                 }
             }
             $tree->init($array);
-            $categoryselect = $tree->getTree(0, $str, 0);
+            $categoryselect = $tree->getTree(0, $str);
             //如果有选择栏目的情况下
             if ($catid) {
                 $category = Db::name('Category')->find($catid);

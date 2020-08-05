@@ -89,9 +89,9 @@ class Cms extends Adminbase
             $v['selected'] = $v['id'] == $catid ? 'selected' : '';
             $categorys[$k] = $v;
         }
-        $str = "<option value='\$id' \$selected \$disabled>\$spacer \$catname</option>";
+        $str = "<option value=@id @selected @disabled>@spacer @catname</option>";
         $tree->init($categorys);
-        $string = $tree->getTree(0, $str);
+        $string = $tree->getTree(0, $str, $catid);
 
         $this->assign('string', $string);
         $this->assign('catid', $catid);

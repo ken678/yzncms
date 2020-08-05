@@ -205,7 +205,8 @@ class Node extends Adminbase
 
         } else {
             $tree = new \util\Tree();
-            $str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
+            //$str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
+            $str = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             foreach ($array as $k => $v) {
                 if ($v['id'] == $catid) {
@@ -221,7 +222,7 @@ class Node extends Adminbase
                 }
             }
             $tree->init($array);
-            $category = $tree->getTree(0, $str, 0);
+            $category = $tree->getTree(0, $str);
             if ($catid) {
                 $cat_info = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
                 $data = model('cms/cms')->getFieldList($cat_info['modelid']);
