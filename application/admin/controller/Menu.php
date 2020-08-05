@@ -79,7 +79,7 @@ class Menu extends Adminbase
             }
             $str = "<option value='\$id' \$selected>\$spacer \$title</option>";
             $tree->init($array);
-            $select_categorys = $tree->get_tree(0, $str);
+            $select_categorys = $tree->getTree(0, $str);
             $this->assign("select_categorys", $select_categorys);
             return $this->fetch();
         }
@@ -118,7 +118,7 @@ class Menu extends Adminbase
             }
             $str = "<option value='\$id' \$selected>\$spacer \$title</option>";
             $tree->init($array);
-            $select_categorys = $tree->get_tree(0, $str);
+            $select_categorys = $tree->getTree(0, $str);
             $this->assign("data", $rs);
             $this->assign("select_categorys", $select_categorys);
             return $this->fetch();

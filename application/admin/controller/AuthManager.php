@@ -99,7 +99,7 @@ class AuthManager extends Adminbase
         $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
         $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
         $tree->init($_list);
-        $Groupdata = $tree->get_tree(0, $str, 0);
+        $Groupdata = $tree->getTree(0, $str, 0);
         $this->assign("Groupdata", $Groupdata);
         return $this->fetch('edit_group');
 
@@ -114,7 +114,7 @@ class AuthManager extends Adminbase
         $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
         $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
         $tree->init($_list);
-        $Groupdata = $tree->get_tree(0, $str, $auth_group['parentid']);
+        $Groupdata = $tree->getTree(0, $str, $auth_group['parentid']);
         $this->assign("Groupdata", $Groupdata);
         $this->assign('auth_group', $auth_group);
         return $this->fetch();
