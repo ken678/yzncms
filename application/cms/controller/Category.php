@@ -177,7 +177,7 @@ class Category extends Adminbase
                 $tree = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
                 $tree->nbsp = '&nbsp;&nbsp;';
-                $str = "<option value='\$id' \$selected>\$spacer \$catname</option>";
+                $str = "<option value=@id @selected @disabled>@spacer @catname</option>";
                 $tree->init($array);
                 $categorydata = $tree->getTree(0, $str, $parentid);
             } else {
@@ -273,7 +273,7 @@ class Category extends Adminbase
                 $tree = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
                 $tree->nbsp = '&nbsp;&nbsp;';
-                $str = "<option value='\$id' \$selected>\$spacer \$catname</option>";
+                $str = "<option value=@id @selected @disabled>@spacer @catname</option>";
                 $tree->init($array);
                 $categorydata = $tree->getTree(0, $str, $data['parentid']);
             } else {
