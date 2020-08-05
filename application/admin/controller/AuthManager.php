@@ -96,10 +96,9 @@ class AuthManager extends Adminbase
             $this->assign('auth_group', array('title' => null, 'id' => null, 'description' => null, 'rules' => null, 'status' => 1));
         }
         $tree = new \util\Tree();
-        $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
         $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
         $tree->init($_list);
-        $Groupdata = $tree->getTree(0, $str, 0);
+        $Groupdata = $tree->getTree(0);
         $this->assign("Groupdata", $Groupdata);
         return $this->fetch('edit_group');
 
@@ -111,10 +110,9 @@ class AuthManager extends Adminbase
         $id = $this->request->param('id/d');
         $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroup_Model::TYPE_ADMIN))->find($id);
         $tree = new \util\Tree();
-        $str = "'<option value='\$id' \$selected>\$spacer\$title</option>";
         $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
         $tree->init($_list);
-        $Groupdata = $tree->getTree(0, $str, $auth_group['parentid']);
+        $Groupdata = $tree->getTree(0, '', $auth_group['parentid']);
         $this->assign("Groupdata", $Groupdata);
         $this->assign('auth_group', $auth_group);
         return $this->fetch();
