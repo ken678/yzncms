@@ -141,7 +141,7 @@
             <div id="file_list_{$vo.name}" class="uploader-list">
                 {notempty name="$vo.value"}
                 <div class="file-item thumbnail">
-                    <img class="{$vo.name}-{$vo.value}" data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                    <img data-image class="{$vo.name}-{$vo.value}" data-original="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$vo.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
                     <div class="file-panel">
                         <i class="iconfont icon-tailor cropper" data-input-id="{$vo.value}" data-id="{$vo.name}"></i>
                     	<i class="iconfont icon-trash remove-picture" data-id="{$vo.value}"></i>
@@ -167,7 +167,7 @@
                 {notempty name="$vo.value"}
                 {volist name="$vo.value|explode=',',###" id="v"}
                 <div class="file-item thumbnail">
-                    <img class="{$vo.name}-{$v}" data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                    <img data-image class="{$vo.name}-{$v}" data-original="{$v|get_file_path}" src="{$v|get_file_path|default='__STATIC__/admin/img/none.png'}">
                     <div class="file-panel">
                     	<i class="iconfont icon-yidong move-picture"></i>
                         <i class="iconfont icon-tailor cropper" data-input-id="{$v}" data-id="{$vo.name}"></i>
