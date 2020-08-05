@@ -105,7 +105,7 @@ class Content extends MemberBase
                 }
             }
             $tree->init($array);
-            $categoryselect = $tree->get_tree(0, $str, 0);
+            $categoryselect = $tree->getTree(0, $str, 0);
             //如果有选择栏目的情况下
             if ($catid) {
                 $category = Db::name('Category')->find($catid);
