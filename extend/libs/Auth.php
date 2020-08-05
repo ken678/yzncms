@@ -33,6 +33,7 @@ use think\facade\Request;
  */
 class Auth
 {
+    protected static $instance;
     /**
      * 当前请求实例
      * @var Request
@@ -59,6 +60,21 @@ class Auth
         }
         // 初始化request
         $this->request = Request::instance();
+    }
+
+    /**
+     * 初始化
+     * @access public
+     * @param array $options 参数
+     * @return Auth
+     */
+    public static function instance($options = [])
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new static($options);
+        }
+
+        return self::$instance;
     }
 
     /**
