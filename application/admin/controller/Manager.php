@@ -12,6 +12,7 @@ namespace app\admin\controller;
 
 use app\admin\model\AdminUser as Admin_User;
 use app\admin\model\AuthGroup as AuthGroup_Model;
+use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -24,6 +25,8 @@ class Manager extends Adminbase
     {
         parent::initialize();
         $this->modelClass = new Admin_User;
+        $roles = User::instance()->getGroups();
+        $this->assign("roles", $roles);
     }
 
     /**
@@ -78,7 +81,6 @@ class Manager extends Adminbase
             }
 
         } else {
-            $this->assign("roles", model('admin/AuthGroup')->getGroups());
             return $this->fetch();
         }
     }
@@ -106,7 +108,6 @@ class Manager extends Adminbase
                 $this->error('该信息不存在！');
             }
             $this->assign("data", $data);
-            $this->assign("roles", model('admin/AuthGroup')->getGroups());
             return $this->fetch();
         }
     }

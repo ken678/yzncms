@@ -16,7 +16,7 @@ namespace app\admin\service;
 
 use think\facade\Session;
 
-class User
+class User extends \libs\Auth
 {
     //当前登录会员详细信息
     private static $userInfo = array();
@@ -55,6 +55,12 @@ class User
             }
             return null;
         }
+    }
+
+    public function getGroups($uid = null)
+    {
+        $uid = is_null($uid) ? $this->id : $uid;
+        return parent::getGroups($uid);
     }
 
     /**
@@ -113,7 +119,7 @@ class User
      * @param type $identifier 用户名或者用户ID
      * @return boolean|array
      */
-    private function getUserInfo($identifier, $password = null)
+    public function getUserInfo($identifier, $password = null)
     {
         if (empty($identifier)) {
             return false;
