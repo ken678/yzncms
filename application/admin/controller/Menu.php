@@ -77,9 +77,8 @@ class Menu extends Adminbase
                 $r['selected'] = $r['id'] == $parentid ? 'selected' : '';
                 $array[] = $r;
             }
-            $str = "<option value='\$id' \$selected>\$spacer \$title</option>";
-            $tree->init($array);
-            $select_categorys = $tree->getTree(0, $str);
+            $tree->init($result);
+            $select_categorys = $tree->getTree(0, '', $parentid);
             $this->assign("select_categorys", $select_categorys);
             return $this->fetch();
         }
@@ -116,9 +115,8 @@ class Menu extends Adminbase
                 $r['selected'] = $r['id'] == $rs['parentid'] ? 'selected' : '';
                 $array[] = $r;
             }
-            $str = "<option value='\$id' \$selected>\$spacer \$title</option>";
             $tree->init($array);
-            $select_categorys = $tree->getTree(0, $str);
+            $select_categorys = $tree->getTree(0, '', $rs['parentid']);
             $this->assign("data", $rs);
             $this->assign("select_categorys", $select_categorys);
             return $this->fetch();
