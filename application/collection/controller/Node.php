@@ -221,7 +221,7 @@ class Node extends Adminbase
                 }
             }
             $tree->init($array);
-            $category = $tree->get_tree(0, $str, 0);
+            $category = $tree->getTree(0, $str, 0);
             if ($catid) {
                 $cat_info = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
                 $data = model('cms/cms')->getFieldList($cat_info['modelid']);
