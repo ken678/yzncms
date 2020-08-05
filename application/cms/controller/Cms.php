@@ -91,7 +91,7 @@ class Cms extends Adminbase
         }
         $str = "<option value='\$id' \$selected \$disabled>\$spacer \$catname</option>";
         $tree->init($categorys);
-        $string = $tree->get_tree(0, $str);
+        $string = $tree->getTree(0, $str);
 
         $this->assign('string', $string);
         $this->assign('catid', $catid);
