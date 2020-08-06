@@ -145,7 +145,7 @@ class Auth
             ->where('a.id', $uid)
             ->where('g.status', 1)
             ->join($this->_config['AUTH_GROUP'] . ' g', "g.id = a.roleid")
-            ->field('a.id,roleid,title,rules')
+            ->field('a.id as uid,g.id,g.parentid,roleid,title,rules')
             ->select();
         $groups[$uid] = $user_groups ?: array();
         return $groups[$uid];
