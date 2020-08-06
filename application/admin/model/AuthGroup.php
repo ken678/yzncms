@@ -29,18 +29,6 @@ class AuthGroup extends Model
     protected $resultSetType = 'collection';
 
     /**
-     * 返回用户组列表
-     * 默认返回正常状态的管理员用户组列表
-     * @param array $where   查询条件,供where()方法使用
-     */
-    public function getGroups($where = array())
-    {
-        $map = array('status' => 1, 'type' => self::TYPE_ADMIN, 'module' => 'admin');
-        $map = array_merge($map, $where);
-        return $this->where($map)->select();
-    }
-
-    /**
      * 根据角色Id获取角色名
      * @param int $Groupid 角色id
      * @return string 返回角色名

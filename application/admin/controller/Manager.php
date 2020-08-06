@@ -21,10 +21,16 @@ use think\Db;
  */
 class Manager extends Adminbase
 {
+    protected $childrenGroupIds = [];
+    protected $childrenAdminIds = [];
     protected function initialize()
     {
         parent::initialize();
         $this->modelClass = new Admin_User;
+
+        $this->childrenAdminIds = User::instance()->getChildrenAdminIds(true);
+        $this->childrenGroupIds = User::instance()->getChildrenGroupIds(true);
+
         $roles = User::instance()->getGroups();
         $this->assign("roles", $roles);
     }
@@ -41,6 +47,7 @@ class Manager extends Adminbase
 
             $count = $this->modelClass
                 ->where($where)
+                ->where('id', 'in', $this->childrenAdminIds)
                 ->order(array('id' => 'ASC'))
                 ->withAttr('roleid', function ($value, $data) {
                     return $this->AuthGroup_Model->getRoleIdName($value);
@@ -49,6 +56,7 @@ class Manager extends Adminbase
 
             $_list = $this->modelClass
                 ->where($where)
+                ->where('id', 'in', $this->childrenAdminIds)
                 ->order(array('id' => 'ASC'))
                 ->withAttr('roleid', function ($value, $data) {
                     return $this->AuthGroup_Model->getRoleIdName($value);

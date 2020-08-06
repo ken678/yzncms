@@ -14,7 +14,9 @@
 // +----------------------------------------------------------------------
 namespace app\admin\service;
 
+use think\Db;
 use think\facade\Session;
+use util\Tree;
 
 class User extends \libs\Auth
 {
@@ -55,6 +57,78 @@ class User extends \libs\Auth
             }
             return null;
         }
+    }
+
+    /**
+     * 取出当前管理员所拥有权限的分组.
+     *
+     * @param bool $withself 是否包含当前所在的分组
+     *
+     * @return array
+     */
+    public function getChildrenGroupIds($withself = false)
+    {
+        //取出当前管理员所有的分组
+        $groups = $this->getGroups();
+        $groupIds = [];
+        foreach ($groups as $k => $v) {
+            $groupIds[] = $v['id'];
+        }
+        $originGroupIds = $groupIds;
+        foreach ($groups as $k => $v) {
+            if (in_array($v['parentid'], $originGroupIds)) {
+                $groupIds = array_diff($groupIds, [$v['id']]);
+                unset($groups[$k]);
+            }
+        }
+        // 取出所有分组
+        $groupList = \app\admin\model\AuthGroup::where('status', 1)->select()->toArray();
+        $objList = [];
+        foreach ($groups as $k => $v) {
+            if ($v['rules'] === '*') {
+                $objList = $groupList;
+                break;
+            }
+            // 取出包含自己的所有子节点
+            $childrenList = Tree::instance()->init($groupList)->getChildren($v['id'], true);
+            $obj = Tree::instance()->init($childrenList)->getTreeArray($v['parentid']);
+            $objList = array_merge($objList, Tree::instance()->getTreeList($obj));
+        }
+        $childrenGroupIds = [];
+        foreach ($objList as $k => $v) {
+            $childrenGroupIds[] = $v['id'];
+        }
+        if (!$withself) {
+            $childrenGroupIds = array_diff($childrenGroupIds, $groupIds);
+        }
+        return $childrenGroupIds;
+    }
+
+    /**
+     * 取出当前管理员所拥有权限的管理员.
+     *
+     * @param bool $withself 是否包含自身
+     *
+     * @return array
+     */
+    public function getChildrenAdminIds($withself = false)
+    {
+        $childrenAdminIds = [];
+        if (!$this->isAdministrator()) {
+            $groupIds = $this->getChildrenGroupIds(false);
+            $childrenAdminIds = Db::name('Admin')->where('roleid', 'in', $groupIds)->column('id');
+        } else {
+            //超级管理员拥有所有人的权限
+            $childrenAdminIds = Db::name('Admin')->column('id');
+        }
+        if ($withself) {
+            if (!in_array($this->id, $childrenAdminIds)) {
+                $childrenAdminIds[] = $this->id;
+            }
+        } else {
+            $childrenAdminIds = array_diff($childrenAdminIds, [$this->id]);
+        }
+        return $childrenAdminIds;
     }
 
     public function getGroups($uid = null)
