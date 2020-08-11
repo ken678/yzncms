@@ -15,6 +15,7 @@ use app\admin\model\AuthGroup as AuthGroup_Model;
 use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\Db;
+use util\Tree;
 
 /**
  * 管理员管理
@@ -31,8 +32,28 @@ class Manager extends Adminbase
         $this->childrenAdminIds = User::instance()->getChildrenAdminIds(true);
         $this->childrenGroupIds = User::instance()->getChildrenGroupIds(true);
 
-        $roles = User::instance()->getGroups();
-        $this->assign("roles", $roles);
+        $groupList = AuthGroup_Model::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
+        Tree::instance()->init($groupList);
+        $groupdata = [];
+        if (User::instance()->isAdministrator()) {
+            $result = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
+            foreach ($result as $k => $v) {
+                $groupdata[$v['id']] = $v['title'];
+            }
+        } else {
+            $result = [];
+            $groups = User::instance()->getGroups();
+            foreach ($groups as $m => $n) {
+                $childlist = Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['id']), 'title');
+                //$temp = [];
+                foreach ($childlist as $k => $v) {
+                    $groupdata[$v['id']] = $v['title'];
+                }
+                //$result[$n['title']] = $temp;
+            }
+            //$groupdata = $result;
+        }
+        $this->assign('groupdata', $groupdata);
     }
 
     /**

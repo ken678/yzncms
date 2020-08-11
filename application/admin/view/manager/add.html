@@ -41,11 +41,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">权限组</label>
                 <div class="layui-input-inline">
-                    <select name="roleid" lay-filter="roleid" lay-verify="required">
-                        {volist name="roles" id="vo"}
-                        <option value="{$vo['id']}">{$vo['title']}</option>
-                        {/volist}
-                    </select>
+                    {php}echo \util\Form::select($groupdata,'','name="roleid" lay-filter="roleid" lay-verify="required"');{/php}
                 </div>
             </div>
             <div class="layui-form-item">
