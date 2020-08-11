@@ -147,11 +147,27 @@ class Manager extends Adminbase
     public function del()
     {
         $id = $this->request->param('id/d');
-        if ($this->modelClass->deleteManager($id)) {
-            $this->success("删除成功！");
-        } else {
-            $this->error($this->modelClass->getError() ?: '删除失败！');
+        if (empty($id)) {
+            $this->error('请指定需要删除的用户ID！');
         }
+        if ($id == 1) {
+            $this->error('禁止对超级管理员执行该操作！');
+        }
+        $ids = array_intersect($this->childrenAdminIds, array_filter(explode(',', $id)));
+
+        $adminList = $this->modelClass->where('id', 'in', $ids)->where('roleid', 'in', $this->childrenGroupIds)->select();
+        if ($adminList) {
+            $deleteIds = [];
+            foreach ($adminList as $k => $v) {
+                $deleteIds[] = $v->id;
+            }
+            $deleteIds = array_values(array_diff($deleteIds, [$this->_userinfo['id']]));
+            if ($deleteIds) {
+                $this->modelClass->destroy($deleteIds);
+                $this->success("删除成功！");
+            }
+        }
+        $this->error('没有权限删除！');
     }
 
     //批量更新.
