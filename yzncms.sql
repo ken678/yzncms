@@ -117,7 +117,7 @@ CREATE TABLE `yzn_auth_group` (
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
-INSERT INTO `yzn_auth_group` VALUES ('1', '0', 'admin', '1', '超级管理员', '拥有所有权限', '', '1');
+INSERT INTO `yzn_auth_group` VALUES ('1', '0', 'admin', '1', '超级管理员', '拥有所有权限', '*', '1');
 INSERT INTO `yzn_auth_group` VALUES ('2', '1', 'admin', '1', '编辑', '编辑', '', '1');
 
 -- ----------------------------
