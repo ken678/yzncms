@@ -102,6 +102,9 @@ class Manager extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
+            if (!in_array($data['roleid'], $this->childrenGroupIds)) {
+                $this->error('没有权限操作！');
+            }
             if ($this->modelClass->createManager($data)) {
                 $this->success("添加管理员成功！", url('admin/manager/index'));
             } else {
@@ -121,9 +124,15 @@ class Manager extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post('');
+            if (!in_array($data['id'], $this->childrenAdminIds)) {
+                $this->error('没有权限操作！');
+            }
             $result = $this->validate($data, 'AdminUser.update');
             if (true !== $result) {
                 return $this->error($result);
+            }
+            if (!in_array($data['roleid'], $this->childrenGroupIds)) {
+                $this->error('没有权限操作！');
             }
             if ($this->modelClass->editManager($data)) {
                 $this->success("修改成功！");
@@ -132,6 +141,9 @@ class Manager extends Adminbase
             }
         } else {
             $id = $this->request->param('id/d');
+            if (!in_array($id, $this->childrenAdminIds)) {
+                $this->error('没有权限操作！');
+            }
             $data = $this->modelClass->where(array("id" => $id))->find();
             if (empty($data)) {
                 $this->error('该信息不存在！');
