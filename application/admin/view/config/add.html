@@ -18,7 +18,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">配置类型</label>
                 <div class="layui-input-inline w300">
-                    <select name="type" lay-filter="type" lay-verify="required">
+                    <select name="type" lay-filter="fieldType" lay-verify="required">
                         <option value=""></option>
                         {volist name="fieldType" id="vo"}
                         <option value="{$vo.name}" data-ifoption="{$vo.ifoption}">{$vo.title}[{$vo.name}]</option>
@@ -48,7 +48,7 @@
                 <div class="layui-form-mid layui-word-aux">配置类型为<code>数组</code>时请按如下格式填写：
                     <br>{"键值1":"键名1","键值2":"键名2"}</div>
             </div>
-            <div class="layui-form-item layui-form-text" id="options">
+            <div class="layui-form-item layui-form-text" id="options" style="display: none;">
                 <label class="layui-form-label">配置项</label>
                 <div class="layui-input-inline w300">
                     <textarea name="options" placeholder="键值:键名
@@ -56,9 +56,10 @@
 键值:键名
 ....." class="layui-textarea"></textarea>
                 </div>
-                <div class="layui-form-mid layui-word-aux">配置类型为<code>单选按钮,下拉框,复选框</code>时请按如下格式填写：
-                    <br>键值:键名
-                    <br>键值:键名</div>
+                <div class="layui-form-mid layui-word-aux">如：
+                    <br>1:北京
+                    <br>2:上海
+                    <br>3:广东</div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">配置备注</label>
@@ -81,4 +82,18 @@
         </form>
     </div>
 </div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use('form', function() {
+    var form = layui.form;
+    form.on('select(fieldType)', function(data) {
+        if (data.value == 'checkbox' || data.value == 'select' || data.value == 'radio') {
+            $('#options').show();
+        }else{
+            $('#options').hide();
+        }
+    });
+});
+</script>
 {/block}
