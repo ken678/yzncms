@@ -141,11 +141,6 @@ class Form
                 <link rel="stylesheet" href="' . $static_url . '/libs/webuploader/webuploader.css">';
             define('IMAGES_upload_JS', 1);
         }
-        if (!defined('FORM_JS')) {
-            $string .= '
-                <script type="text/javascript"  src="' . $static_url . '/admin/js/form.js"></script>';
-            define('FORM_JS', 1);
-        }
 
         if (!$id) {
             $id = $name;
