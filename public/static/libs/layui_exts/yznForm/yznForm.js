@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -12,6 +12,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         tagsinput = layui.tagsinput,
         colorpicker = layui.colorpicker,
         notice = layui.notice,
+        xmselect = layui.xmSelect,
         tableSelect = layui.tableSelect;
 
     // 文件上传集合
@@ -160,6 +161,29 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
             height: '26px',
         })
     })
+
+    if ($('.form-selects').length > 0) {
+        $('.form-selects').each(function() {
+            var name = $(this).data("name");
+            var list = $(this).data("list");
+            var value = $(this).data("value");
+
+            var newArr = [];
+            $.each(list, function(i, j) {
+                var vote = {};
+                vote.value = i;
+                vote.name = j;
+                newArr.push(vote);
+            })
+            console.log(newArr);
+            xmSelect.render({
+                el: document.querySelector('.form-selects'),
+                initValue: value !== "" ? value.split(',') : [],
+                name: name,
+                data: newArr
+            })
+        })
+    }
 
     //颜色
     $('.layui-color-box').each(function() {
@@ -531,7 +555,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
             try {
                 json = JSON.parse(textarea.val());
             } catch (e) {}
-            console.log(222);
             $.each(json, function(i, j) {
                 $(".btn-append,.append", container).trigger('click', template ? j : {
                     key: i,
