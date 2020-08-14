@@ -358,6 +358,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             } catch (e) {
                 var value = undefined;
             }
+            console.log(data.mime);
+            if (data.mime.indexOf("image") == -1) {
+                return "";
+            }
             if (value === undefined) {
                 return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
             } else {
