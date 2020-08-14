@@ -88,7 +88,7 @@
 layui.use('form', function() {
     var form = layui.form;
     form.on('select(fieldType)', function(data) {
-        if (data.value == 'checkbox' || data.value == 'select' || data.value == 'radio') {
+        if (data.value == 'checkbox' || data.value == 'select' || data.value == 'selects' || data.value == 'radio') {
             $('#options').show();
         }else{
             $('#options').hide();
