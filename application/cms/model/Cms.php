@@ -401,6 +401,7 @@ class Cms extends Modelbase
                     }
                     $newdata[$key] = $value;
                     break;
+                case 'selects':
                 case 'checkbox':
                     if (!empty($value)) {
                         if (!empty($fieldinfo[$key]['options'])) {
