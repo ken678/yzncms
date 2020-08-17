@@ -163,6 +163,18 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         })
     })
 
+    if ($(".selectpage").size() > 0) {
+        $('.selectpage').selectPage({
+            eAjaxSuccess: function (data) {
+                console.log(data);
+                data.list =typeof data.data !== 'undefined' ? data.data : [];
+                data.totalRow = typeof data.count !== 'undefined' ? data.count : data.data.length;
+                return data;
+            }
+        })
+
+    }
+
     if ($('.form-selects').length > 0) {
         $('.form-selects').each(function() {
             var name = $(this).data("name");

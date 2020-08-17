@@ -10,6 +10,7 @@
  */
 layui.define(['jquery'],function(exports) {
 var jQuery=layui.$;
+
 ;(function($){
 	"use strict";
 	/**
@@ -213,6 +214,13 @@ var jQuery=layui.$;
 	 * @param {Object} option
 	 */
 	var SelectPage = function(input, option) {
+        //特殊字段处理
+        $.each({data: 'source', keyField: 'primaryKey', showField: 'field', pageSize: 'perPage'}, function (i, j) {
+            if (typeof option[j] !== 'undefined') {
+                option[i] = option[j];
+                delete option[j];
+            }
+        });
 		this.setOption(option);
 		this.setLanguage();
 		this.setCssClass();
