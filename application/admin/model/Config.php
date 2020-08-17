@@ -54,6 +54,7 @@ class Config extends Model
                     }
                     //$newConfigs[$key] = isset($value['options'][$value['value']]) ? ['key' => $value['value'], 'value' => $value['options'][$value['value']]] : ['key' => $value['value'], 'value' => $value['value']];
                     break;
+                case 'selects':
                 case 'checkbox':
                     if (empty($value['value'])) {
                         $newConfigs[$key] = [];
