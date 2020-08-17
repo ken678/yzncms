@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect','selectPage'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -13,6 +13,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         colorpicker = layui.colorpicker,
         notice = layui.notice,
         xmselect = layui.xmSelect,
+        selectPage = layui.selectPage,
         tableSelect = layui.tableSelect;
 
     // 文件上传集合
