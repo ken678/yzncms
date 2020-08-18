@@ -2270,7 +2270,6 @@ var jQuery=layui.$;
 })(window.jQuery);
 
   //加载组件所需样式
-  layui.link(layui.cache.base + 'selectPage/selectpage.css?v=v2.19', function () {
-  }, 'selectPage');
+  layui.link(layui.cache.base + 'selectPage/selectpage.css?v=v2.19');
 	exports('selectPage',{});
 });
