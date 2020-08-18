@@ -48,18 +48,42 @@
                 <div class="layui-form-mid layui-word-aux">配置类型为<code>数组</code>时请按如下格式填写：
                     <br>{"键值1":"键名1","键值2":"键名2"}</div>
             </div>
-            <div class="layui-form-item layui-form-text" id="options" {if $info.type !== 'checkbox' &&  $info.type !== 'select' &&  $info.type !== 'selects' && $info.type !== 'radio' } style="display: none;" {/if}>
+            <div class="layui-form-item layui-form-text" id="options" {if $info.type !== 'checkbox' &&  $info.type !== 'select' &&  $info.type !== 'selects' && $info.type !== 'radio' && $info.type !== 'selectpage' } style="display: none;" {/if}>
                 <label class="layui-form-label">配置项</label>
                 <div class="layui-input-inline w300">
-                    <textarea name="options" placeholder="键值:键名
+                    <textarea name="options" placeholder="{if $info.type !== 'selectpage'}
 键值:键名
 键值:键名
-....." class="layui-textarea">{$info.options}</textarea>
+键值:键名
+.....
+{else}
+url:提供数据源的URL地址
+field:列表显示读取的字段,默认[name]
+key:列表选中后渲染的字段,默认[id]
+pagination:是否开启分页,默认[true]
+limit:分页大小,默认[10]
+multiple:是否支持多选,默认[false]
+max:最多可选择数量
+order:排序字段，默认[id]
+{/if}
+" class="layui-textarea">{$info.options}</textarea>
                 </div>
                 <div class="layui-form-mid layui-word-aux">如：
-                    <br>1:北京
-                    <br>2:上海
-                    <br>3:广东</div>
+                    {if $info.type !== 'selectpage'}
+<br>1:北京
+<br>2:上海
+<br>3:广东
+                    {else}
+<br>url:admin/manager/index
+<br>field:username
+<br>key:id
+<br>pagination:true
+<br>limit:10
+<br>multiple:true
+<br>max:20
+<br>order:id
+                    {/if}
+                </div>
             </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">配置备注</label>
@@ -89,10 +113,14 @@
 layui.use('form', function() {
     var form = layui.form;
     form.on('select(fieldType)', function(data) {
-        if (data.value == 'checkbox' || data.value == 'select' || data.value == 'selects' || data.value == 'radio') {
+        if (data.value == 'checkbox' || data.value == 'select' || data.value == 'selects' || data.value == 'radio' || data.value == 'selectpage') {
             $('#options').show();
         }else{
             $('#options').hide();
+        }
+        if (data.value == 'selectpage') {
+            $('#options textarea').attr('placeholder','url:提供数据源的URL地址\nfield:列表显示读取的字段,默认[name]\nkey:列表选中后渲染的字段,默认[id]\npagination:是否开启分页,默认[true]\nlimit:分页大小,默认[10]\nmultiple:是否支持多选,默认[false]\nmax:最多可选择数量\norder:排序字段，默认[id]');
+            $('#options .layui-word-aux').html("url:admin/manager/index<br>field:username<br>key:id<br>pagination:true<br>page_size:10<br>multiple:true<br>max:20<br>order:id")
         }
     });
 });

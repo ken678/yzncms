@@ -110,16 +110,13 @@
 {/case}
 {case value="selectpage"}
 <div class="layui-form-item form-group">
-    <label for="c-user_id">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
+    <label>{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
-        <input id="c-user_id" class="form-control selectpage" type="text" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" data-field="info"  value="{$vo.value}">
+        <input class="form-control layui-input selectpage" type="text" name="{$vo.fieldArr}[{$vo.name}]" data-source="{$vo.options.url|url}" data-multiple="{$vo.options.multiple|default='false'}" data-field="{$vo.options.field|default='name'}" data-primary-key="{$vo.options.key|default='id'}" data-max-select-limit="{$vo.options.max|default='20'}" data-pagination="{$vo.options.pagination|default='true'}" data-page-size="{$vo.options.limit|default='10'}" data-order-by="{$vo.options.order|default='id'}"  value="{$vo.value}">
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
-
-
-
 {case value="color"}
 <div class="layui-form-item">
     <label>{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
