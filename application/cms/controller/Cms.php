@@ -110,13 +110,17 @@ class Cms extends Adminbase
         //栏目所属模型
         $modelid = $catInfo['modelid'];
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $map = $this->buildparams();
             $modelCache = cache("Model");
             $tableName = $modelCache[$modelid]['tablename'];
-            $total = Db::name($tableName)->where($map)->where(['catid' => $catid, 'status' => -1])->count();
-            $_list = Db::name($tableName)->page($page, $limit)->where($map)->where(['catid' => $catid, 'status' => -1])->order(['listorder', 'id' => 'desc'])->select();
+            $this->modelClass = Db::name($tableName);
+            list($page, $limit, $where) = $this->buildTableParames();
+            $conditions = [
+                ['catid', '=', $catid],
+                ['status', '=', -1],
+            ];
+            $total = Db::name($tableName)->where($where)->where($conditions)->count();
+            $_list = Db::name($tableName)->where($where)->page($page, $limit)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
+
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
