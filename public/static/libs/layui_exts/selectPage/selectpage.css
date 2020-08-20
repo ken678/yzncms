@@ -128,6 +128,8 @@ ul.sp_results > li.sp_selected {
  * 多选模式相关样式
  */
 div.sp_container_combo{
+    overflow: hidden;
+    background: #fff;
 	height: 36px;
 	line-height: 36px;
     border: 1px solid #E6E6E6;
