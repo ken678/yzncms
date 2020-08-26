@@ -777,7 +777,43 @@ var jQuery=layui.$;
 				if(!p.multiple && data.length > 1) data = [data[0]];
 				self.afterInit(self, data);
 			} else {//ajax data source mode to init selected item
-				$.ajax({
+                var _paramsFunc = p.params, _params = {}, searchKey = p.searchField;
+                var _orgParams = {
+                    searchTable: p.dbTable,
+                    searchKey: p.keyField,
+                    searchValue: key,
+                    orderBy: p.orderBy,
+                    showField: p.showField,
+                    keyField: p.keyField,
+                    keyValue: key,
+                    searchField: p.searchField
+                };
+                if (_paramsFunc) {
+                    var result = $.isFunction(_paramsFunc) ? _paramsFunc(self) : _paramsFunc;
+                    if (result && $.isPlainObject(result)) {
+                        _params = $.extend({}, _orgParams, result);
+                    } else {
+                        _params = _orgParams;
+                    }
+                } else {
+                    _params = _orgParams;
+                }
+                $.ajax({
+                    dataType: 'json',
+                    type: 'POST',
+                    url: p.data,
+                    data: _params,
+                    success: function (json) {
+                        var d = null;
+                        if (p.eAjaxSuccess && $.isFunction(p.eAjaxSuccess))
+                            d = p.eAjaxSuccess(json);
+                        self.afterInit(self, d.list);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        self.ajaxErrorNotify(self, errorThrown);
+                    }
+                });
+				/*$.ajax({
 					dataType: 'json',
                     type: 'POST',
 					url: p.data,
@@ -794,7 +830,7 @@ var jQuery=layui.$;
 					error: function() {
 						self.ajaxErrorNotify(self);
 					}
-				});
+				});*/
 			}
 		}
 	};
@@ -1305,7 +1341,11 @@ var jQuery=layui.$;
 			pageNumber: which_page_num,
 			pageSize: p.pageSize,
 			andOr: p.andOr,
-			searchTable: p.dbTable
+			searchTable: p.dbTable,
+            orderBy: p.orderBy,
+            showField: self.option.showField,
+            keyField: self.option.keyField,
+            searchField: self.option.searchField
 		};
 		if(p.orderBy !== false) _orgParams.orderBy = p.orderBy;
         _orgParams[searchKey] = q_word[0];
