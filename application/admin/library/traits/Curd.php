@@ -22,6 +22,10 @@ trait Curd
     public function index()
     {
         if ($this->request->isAjax()) {
+            //如果发送的来源是Selectpage，则转发到Selectpage
+            if ($this->request->request('keyField')) {
+                return $this->selectpage();
+            }
             list($page, $limit, $where) = $this->buildTableParames();
             $order = $this->request->param("order/s", "DESC");
             $sort = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
