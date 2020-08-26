@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect','selectPage'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -32,19 +32,34 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
             yznForm.api.formSubmit(preposeCallback, ok, no, ex);
         },
         api: {
-            form: function(url, data, ok, no, ex, refreshTable) {
+            form: function(url, data, ok, no, ex, refreshTable, type) {
                 if (refreshTable === undefined) {
                     refreshTable = true;
                 }
-                ok = ok || function(res) {
-                    res.msg = res.msg || '';
-                    yzn.msg.success(res.msg, function() {
-                        yznForm.api.closeCurrentOpen({
-                            refreshTable: refreshTable
+                if (type === 'notable') {
+                    ok = ok || function(res) {
+                        res.msg = res.msg || '';
+                        yzn.msg.success(res.msg, function() {
+                            if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                                location.href = res.url;
+                            } else {
+                                location.reload();
+                            }
                         });
-                    });
-                    return false;
-                };
+                        return false;
+                    };
+                } else {
+                    ok = ok || function(res) {
+                        res.msg = res.msg || '';
+                        yzn.msg.success(res.msg, function() {
+                            yznForm.api.closeCurrentOpen({
+                                refreshTable: refreshTable
+                            });
+                        });
+                        return false;
+                    };
+                }
+
                 yzn.request.post({
                     url: url,
                     data: data,
@@ -120,7 +135,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
                             }
-                            yznForm.api.form(url, dataField, ok, no, ex, refresh);
+                            yznForm.api.form(url, dataField, ok, no, ex, refresh, type);
                             return false;
                         });
                     });
@@ -165,9 +180,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
 
     if ($(".selectpage").size() > 0) {
         $('.selectpage').selectPage({
-            eAjaxSuccess: function (data) {
+            eAjaxSuccess: function(data) {
                 console.log(data);
-                data.list =typeof data.data !== 'undefined' ? data.data : [];
+                data.list = typeof data.data !== 'undefined' ? data.data : [];
                 data.totalRow = typeof data.count !== 'undefined' ? data.count : data.data.length;
                 return data;
             }
