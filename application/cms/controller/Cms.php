@@ -52,6 +52,10 @@ class Cms extends Adminbase
             $tableName = $modelCache[$modelid]['tablename'];
 
             $this->modelClass = Db::name($tableName);
+            //如果发送的来源是Selectpage，则转发到Selectpage
+            if ($this->request->request('keyField')) {
+                return $this->selectpage();
+            }
             list($page, $limit, $where) = $this->buildTableParames();
 
             $conditions = [
