@@ -36,7 +36,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
                 if (refreshTable === undefined) {
                     refreshTable = true;
                 }
-                if (type === 'notable') {
+                if (type === 'layui-form') {
                     ok = ok || function(res) {
                         res.msg = res.msg || '';
                         yzn.msg.success(res.msg, function() {
