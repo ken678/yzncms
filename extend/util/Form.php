@@ -26,7 +26,7 @@ class Form
      */
     public static function select($array = array(), $id = 0, $str = '', $default_option = '')
     {
-        $string = '<select ' . $str . '>';
+        $string           = '<select ' . $str . '>';
         $default_selected = (empty($id) && $default_option) ? 'selected' : '';
         if ($default_option) {
             $string .= "<option value='' $default_selected>$default_option</option>";
@@ -68,7 +68,7 @@ class Form
         }
         $i = 1;
         foreach ($array as $key => $value) {
-            $key = trim($key);
+            $key     = trim($key);
             $checked = ($id && in_array($key, $id)) ? 'checked' : '';
             $string .= '<input type="checkbox" lay-skin="primary" ' . $str . ' id="' . $field . '_' . $i . '" ' . $checked . ' value="' . htmlspecialchars($key) . '" title="' . htmlspecialchars($value) . '"> ';
 
@@ -89,7 +89,7 @@ class Form
      */
     public static function select_category($id = 0, $str = '', $default_option = '', $modelid = 0, $type = -1, $onlysub = 0)
     {
-        $tree = new \util\Tree();
+        $tree   = new \util\Tree();
         $result = cache('Category');
         $string = '<select ' . $str . '>';
         if ($default_option) {
@@ -98,7 +98,7 @@ class Form
         $categorys = [];
         if (is_array($result)) {
             foreach ($result as $r) {
-                $r = getCategory($r['id']);
+                $r             = getCategory($r['id']);
                 $r['selected'] = '';
                 if (is_array($id)) {
                     $r['selected'] = in_array($r['id'], $id) ? 'selected' : '';
@@ -111,7 +111,7 @@ class Form
                 }
             }
         }
-        $str = "<option value='\$id' \$selected>\$spacer \$catname</option>";
+        $str  = "<option value='\$id' \$selected>\$spacer \$catname</option>";
         $str2 = "<optgroup label='\$spacer \$catname'></optgroup>";
         $tree->init($categorys);
         $string .= $tree->get_tree_category(0, $str, $str2);
@@ -132,7 +132,7 @@ class Form
      */
     public static function images($name, $id = '', $value = '', $multiple = 'false', $ext = '', $size = 0, $watermark = 0)
     {
-        $string = '';
+        $string     = '';
         $static_url = ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static');
         //加载所需JS，防止重复加载
         if (!defined('IMAGES_upload_JS')) {
@@ -151,7 +151,7 @@ class Form
         $string .= "<div id='file_list_{$name}' class='uploader-list'>";
         if (!empty($value)) {
             $path = get_file_path($value) ? get_file_path($value) : $static_url . "/admin/img/none.png";
-            $string .= "<div class='file-item thumbnail'><img class='{$name}-{$value}' data-original='{$path}' src='{$path}'><div class='file-panel'><i class='iconfont icon-tailor cropper' data-id='{$value}'></i> <i class='iconfont icon-trash remove-picture' data-id='{$value}'></i></div></div>";
+            $string .= "<div class='file-item thumbnail'><img data-image class='{$name}-{$value}' data-original='{$path}' src='{$path}'><div class='file-panel'><i class='iconfont icon-tailor cropper' data-input-id='{$value}' data-id='{$name}'></i> <i class='iconfont icon-trash remove-picture' data-id='{$value}'></i></div></div>";
         }
         $string .= "</div><input type='hidden' name='{$name}' data-multiple='{$multiple}' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'><i class='layui-icon layui-icon-upload'></i> 上传单张图片</div> <button type='button' class='layui-btn fachoose-image' data-input-id='{$name}' id='fachoose-{$name}'><i class='iconfont icon-other'></i> 选择</button>";
         return $string;
