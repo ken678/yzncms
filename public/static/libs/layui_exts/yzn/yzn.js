@@ -43,7 +43,11 @@ layui.define(['layer','notice'], function(exports) {
             }
             if (isResize) {
                 $(window).on("resize", function() {
-                    layer.full(index);
+                    //layer.full(index);
+                    layer.style(index, {
+                        top: 0,
+                        height: $(window).height()
+                    })
                 })
             }
         },
