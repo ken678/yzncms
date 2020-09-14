@@ -1,6 +1,6 @@
 <?php
 
-namespace HyperDown;
+namespace util;
 
 /**
  * Parser
@@ -135,11 +135,11 @@ class Parser
      */
     public function makeHtml($text)
     {
-        $this->_footnotes = array();
+        $this->_footnotes   = array();
         $this->_definitions = array();
-        $this->_holders = array();
-        $this->_uniqid = md5(uniqid());
-        $this->_id = 0;
+        $this->_holders     = array();
+        $this->_uniqid      = md5(uniqid());
+        $this->_id          = 0;
 
         usort($this->blockParsers, function ($a, $b) {
             return $a[1] < $b[1] ? -1 : 1;
@@ -250,7 +250,7 @@ class Parser
     private function parse($text, $inline = false, $offset = 0)
     {
         $blocks = $this->parseBlock($text, $lines);
-        $html = '';
+        $html   = '';
 
         // inline mode for single normal block
         if ($inline && count($blocks) == 1 && $blocks[0][0] == 'normal') {
@@ -259,12 +259,12 @@ class Parser
 
         foreach ($blocks as $block) {
             list($type, $start, $end, $value) = $block;
-            $extract = array_slice($lines, $start, $end - $start + 1);
-            $method = 'parse' . ucfirst($type);
+            $extract                          = array_slice($lines, $start, $end - $start + 1);
+            $method                           = 'parse' . ucfirst($type);
 
             $extract = $this->call('before' . ucfirst($method), $extract, $value);
-            $result = $this->{$method}($extract, $value, $start + $offset, $end + $offset);
-            $result = $this->call('after' . ucfirst($method), $result, $value);
+            $result  = $this->{$method}($extract, $value, $start + $offset, $end + $offset);
+            $result  = $this->call('after' . ucfirst($method), $result, $value);
 
             $html .= $result;
         }
@@ -315,7 +315,7 @@ class Parser
      */
     public function markLines(array $lines, $start)
     {
-        $i = -1;
+        $i    = -1;
         $self = $this;
 
         return $this->_line ? array_map(function ($line) use ($self, $start, &$i) {
@@ -361,7 +361,7 @@ class Parser
         $args = array_slice($args, 1);
 
         foreach ($this->_hooks[$type] as $callback) {
-            $value = call_user_func_array($callback, $args);
+            $value   = call_user_func_array($callback, $args);
             $args[0] = $value;
         }
 
@@ -419,7 +419,7 @@ class Parser
         $text = preg_replace_callback(
             "/<(https?:\/\/.+)>/i",
             function ($matches) use ($self) {
-                $url = $self->cleanUrl($matches[1]);
+                $url  = $self->cleanUrl($matches[1]);
                 $link = $self->call('parseLink', $matches[1]);
 
                 return $self->makeHolder(
@@ -459,7 +459,7 @@ class Parser
                 $id = array_search($matches[1], $self->_footnotes);
 
                 if (false === $id) {
-                    $id = count($self->_footnotes) + 1;
+                    $id                    = count($self->_footnotes) + 1;
                     $self->_footnotes[$id] = $self->parseInline($matches[1], '', false);
                 }
 
@@ -475,8 +475,8 @@ class Parser
             "/!\[((?:[^\]]|\\\\\]|\\\\\[)*?)\]\(((?:[^\)]|\\\\\)|\\\\\()+?)\)/",
             function ($matches) use ($self) {
                 $escaped = htmlspecialchars($self->escapeBracket($matches[1]));
-                $url = $self->escapeBracket($matches[2]);
-                $url = $self->cleanUrl($url);
+                $url     = $self->escapeBracket($matches[2]);
+                $url     = $self->cleanUrl($url);
                 return $self->makeHolder(
                     "<img src=\"{$url}\" alt=\"{$escaped}\" title=\"{$escaped}\">"
                 );
@@ -645,21 +645,21 @@ class Parser
      */
     private function parseBlock($text, &$lines)
     {
-        $lines = explode("\n", $text);
-        $this->_blocks = array();
+        $lines          = explode("\n", $text);
+        $this->_blocks  = array();
         $this->_current = 'normal';
-        $this->_pos = -1;
+        $this->_pos     = -1;
 
         $state = array(
             'special' => implode("|", array_keys($this->_specialWhiteList)),
-            'empty' => 0,
-            'html' => false,
+            'empty'   => 0,
+            'html'    => false,
         );
 
         // analyze by line
         foreach ($lines as $key => $line) {
             $block = $this->getBlock();
-            $args = array($block, $key, $line, &$state, $lines);
+            $args  = array($block, $key, $line, &$state, $lines);
 
             if ($this->_current != 'normal') {
                 $pass = call_user_func_array($this->_parsers[$this->_current], $args);
@@ -693,7 +693,7 @@ class Parser
     private function parseBlockList($block, $key, $line, &$state)
     {
         if (preg_match("/^(\s*)((?:[0-9]+\.)|\-|\+|\*)\s+/i", $line, $matches)) {
-            $space = strlen($matches[1]);
+            $space          = strlen($matches[1]);
             $state['empty'] = 0;
 
             // opened
@@ -1013,7 +1013,7 @@ class Parser
                     }
                 }
 
-                $rows = preg_split("/(\+|\|)/", $matches[1]);
+                $rows   = preg_split("/(\+|\|)/", $matches[1]);
                 $aligns = array();
                 foreach ($rows as $row) {
                     $align = 'none';
@@ -1176,7 +1176,7 @@ class Parser
         while (isset($blocks[$key])) {
             $moved = false;
 
-            $block = &$blocks[$key];
+            $block     = &$blocks[$key];
             $prevBlock = isset($blocks[$key - 1]) ? $blocks[$key - 1] : null;
             $nextBlock = isset($blocks[$key + 1]) ? $blocks[$key + 1] : null;
 
@@ -1234,8 +1234,8 @@ class Parser
     private function parseCode(array $lines, array $parts, $start)
     {
         list($blank, $lang) = $parts;
-        $lang = trim($lang);
-        $count = strlen($blank);
+        $lang               = trim($lang);
+        $count              = strlen($blank);
 
         if (!preg_match("/^[_a-z0-9-\+\#\:\.]+$/i", $lang)) {
             $lang = null;
@@ -1243,8 +1243,8 @@ class Parser
             $parts = explode(':', $lang);
             if (count($parts) > 1) {
                 list($lang, $rel) = $parts;
-                $lang = trim($lang);
-                $rel = trim($rel);
+                $lang             = trim($lang);
+                $rel              = trim($rel);
             }
         }
 
@@ -1381,24 +1381,24 @@ class Parser
      */
     private function parseList(array $lines, $value, $start)
     {
-        $html = '';
-        $minSpace = 99999;
+        $html           = '';
+        $minSpace       = 99999;
         $secondMinSpace = 99999;
-        $found = false;
-        $secondFound = false;
-        $rows = array();
+        $found          = false;
+        $secondFound    = false;
+        $rows           = array();
 
         // count levels
         foreach ($lines as $key => $line) {
             if (preg_match("/^(\s*)((?:[0-9]+\.?)|\-|\+|\*)(\s+)(.*)$/i", $line, $matches)) {
-                $space = strlen($matches[1]);
-                $type = false !== strpos('+-*', $matches[2]) ? 'ul' : 'ol';
+                $space    = strlen($matches[1]);
+                $type     = false !== strpos('+-*', $matches[2]) ? 'ul' : 'ol';
                 $minSpace = min($space, $minSpace);
-                $found = true;
+                $found    = true;
 
                 if ($space > 0) {
                     $secondMinSpace = min($space, $secondMinSpace);
-                    $secondFound = true;
+                    $secondFound    = true;
                 }
 
                 $rows[] = array($space, $type, $line, $matches[4]);
@@ -1410,16 +1410,16 @@ class Parser
 
                     if ($space > 0) {
                         $secondMinSpace = min($space, $secondMinSpace);
-                        $secondFound = true;
+                        $secondFound    = true;
                     }
                 }
             }
         }
 
-        $minSpace = $found ? $minSpace : 0;
+        $minSpace       = $found ? $minSpace : 0;
         $secondMinSpace = $secondFound ? $secondMinSpace : $minSpace;
 
-        $lastType = '';
+        $lastType  = '';
         $leftLines = array();
         $leftStart = 0;
 
@@ -1444,7 +1444,7 @@ class Parser
 
                     $leftStart = $key;
                     $leftLines = array($text);
-                    $lastType = $type;
+                    $lastType  = $type;
                 }
             } else {
                 $leftLines[] = preg_replace("/^\s{" . $secondMinSpace . "}/", '', $row);
@@ -1467,10 +1467,10 @@ class Parser
     private function parseTable(array $lines, array $value, $start)
     {
         list($ignores, $aligns) = $value;
-        $head = count($ignores) > 0 && array_sum($ignores) > 0;
+        $head                   = count($ignores) > 0 && array_sum($ignores) > 0;
 
-        $html = '<table>';
-        $body = $head ? null : true;
+        $html   = '<table>';
+        $body   = $head ? null : true;
         $output = false;
 
         foreach ($lines as $key => $line) {
@@ -1483,7 +1483,7 @@ class Parser
                 continue;
             }
 
-            $line = trim($line);
+            $line   = trim($line);
             $output = true;
 
             if ($line[0] == '|') {
@@ -1502,7 +1502,7 @@ class Parser
                 }
             }, explode('|', $line));
             $columns = array();
-            $last = -1;
+            $last    = -1;
 
             foreach ($rows as $row) {
                 if (strlen($row) > 0) {
@@ -1529,7 +1529,7 @@ class Parser
 
             foreach ($columns as $key => $column) {
                 list($num, $text) = $column;
-                $tag = $head ? 'th' : 'td';
+                $tag              = $head ? 'th' : 'td';
 
                 $html .= "<{$tag}";
                 if ($num > 1) {
@@ -1608,10 +1608,10 @@ class Parser
     private function parseFootnote(array $lines, array $value)
     {
         list($space, $note) = $value;
-        $index = array_search($note, $this->_footnotes);
+        $index              = array_search($note, $this->_footnotes);
 
         if (false !== $index) {
-            $lines[0] = preg_replace("/^\[\^((?:[^\]]|\\]|\\[)+?)\]:/", '', $lines[0]);
+            $lines[0]                 = preg_replace("/^\[\^((?:[^\]]|\\]|\\[)+?)\]:/", '', $lines[0]);
             $this->_footnotes[$index] = $lines;
         }
 
@@ -1758,14 +1758,14 @@ class Parser
             return $this->startBlock($type, 0, $value);
         }
 
-        $last = $this->_blocks[$this->_pos][2];
+        $last                          = $this->_blocks[$this->_pos][2];
         $this->_blocks[$this->_pos][2] = $last - $step;
 
         if ($this->_blocks[$this->_pos][1] <= $this->_blocks[$this->_pos][2]) {
             $this->_pos++;
         }
 
-        $this->_current = $type;
+        $this->_current             = $type;
         $this->_blocks[$this->_pos] = array(
             $type, $last - $step + 1, $last, $value,
         );
@@ -1782,12 +1782,12 @@ class Parser
             return $this;
         }
 
-        $prev = $this->_blocks[$this->_pos - 1];
+        $prev    = $this->_blocks[$this->_pos - 1];
         $current = $this->_blocks[$this->_pos];
 
-        $prev[2] = $current[2];
+        $prev[2]                        = $current[2];
         $this->_blocks[$this->_pos - 1] = $prev;
-        $this->_current = $prev[0];
+        $this->_current                 = $prev[0];
         unset($this->_blocks[$this->_pos]);
         $this->_pos--;
 
