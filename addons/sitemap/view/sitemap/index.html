@@ -1,0 +1,116 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">SiteMap地图管理</div>
+    <div class="layui-card-body">
+        <form class="layui-form form-horizontal" action="" method="post">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label w100">首页权重</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="index[priority]">
+                            <option value="0" selected="">1</option>
+                            <option value="1">0.9</option>
+                            <option value="2">0.8</option>
+                            <option value="3">0.7</option>
+                            <option value="4">0.6</option>
+                            <option value="5">0.5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label w100"> 更新频率</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="index[changefreq]">
+                            <option value="always" selected="">经常</option>
+                            <option value="hourly">每小时</option>
+                            <option value="daily">每天</option>
+                            <option value="weekly">每周</option>
+                            <option value="monthly">每月</option>
+                            <option value="yearly">每年</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label w100">栏目权重</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="category[priority]">
+                            <option value="0" selected="">1</option>
+                            <option value="1">0.9</option>
+                            <option value="2">0.8</option>
+                            <option value="3">0.7</option>
+                            <option value="4">0.6</option>
+                            <option value="5">0.5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label w100"> 更新频率</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="category[changefreq]">
+                            <option value="always">经常</option>
+                            <option value="hourly" selected="">每小时</option>
+                            <option value="daily">每天</option>
+                            <option value="weekly">每周</option>
+                            <option value="monthly">每月</option>
+                            <option value="yearly">每年</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label w100">内容权重</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="content[priority]">
+                            <option value="0">1</option>
+                            <option value="1">0.9</option>
+                            <option value="2" selected="">0.8</option>
+                            <option value="3">0.7</option>
+                            <option value="4">0.6</option>
+                            <option value="5">0.5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label w100"> 更新频率</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="content[changefreq]">
+                            <option value="always">经常</option>
+                            <option value="hourly">每小时</option>
+                            <option value="daily" selected="">每天</option>
+                            <option value="weekly">每周</option>
+                            <option value="monthly">每月</option>
+                            <option value="yearly">每年</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label w100">内容链接数量</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" required lay-verify="required" placeholder="Sitemap记录条数" autocomplete="off" class="layui-input" value="500">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label w100">文件格式</label>
+                <div>
+                    <input type="radio" name="type" value="0" title="XML格式" checked>
+                    <input type="radio" name="type" value="1" title="TXT格式">
+                </div>
+            </div>
+            {if isset($make_xml_time)}<blockquote class="layui-elem-quote">sitemap.xml:修改时间：{$make_xml_time}&nbsp;&nbsp;</blockquote>{/if}
+            {if isset($make_txt_time)}<blockquote class="layui-elem-quote">sitemap.txt:修改时间：{$make_txt_time}&nbsp;&nbsp;</blockquote>{/if}
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" name="root" lay-submit="" data-refresh="false" lay-filter="*">生成到运行根目录</button>
+                    <!--<button class="layui-btn" name="down" lay-submit="" lay-filter="*">下载到本地</button>-->
+                    <button class="layui-btn layui-btn-normal" type="button" onClick="javascript :history.back(-1);">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
