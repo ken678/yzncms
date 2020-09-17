@@ -81,6 +81,14 @@ class Admin extends Adminaddon
                     }
                 }
             }
+            //标签
+            $tags = Db::name('tags')->order('create_time desc')->field('tag,update_time')->select();
+            if (!empty($tags)) {
+                foreach ($tags as $vo) {
+                    $item = $this->_sitemap_item($rootUrl . url('cms/index/tags', ['tag' => $vo['tag']]), intval($data['tag']['priority']), $data['tag']['changefreq'], time());
+                    $this->_add_data($item);
+                }
+            }
             if (!$type) {
                 try {
                     foreach ($this->data as $val) {

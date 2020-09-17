@@ -89,6 +89,34 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label w100">标签权重</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="tag[priority]">
+                            <option value="0">1</option>
+                            <option value="1">0.9</option>
+                            <option value="2">0.8</option>
+                            <option value="3">0.7</option>
+                            <option value="4" selected="">0.6</option>
+                            <option value="5">0.5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label w100"> 更新频率</label>
+                    <div class="layui-input-inline">
+                        <select class="form-control" name="tag[changefreq]">
+                            <option value="always">经常</option>
+                            <option value="hourly">每小时</option>
+                            <option value="daily">每天</option>
+                            <option value="weekly" selected="">每周</option>
+                            <option value="monthly">每月</option>
+                            <option value="yearly">每年</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label w100">内容链接数量</label>
                 <div class="layui-input-inline">
                     <input type="text" name="num" required lay-verify="required" placeholder="Sitemap记录条数" autocomplete="off" class="layui-input" value="500">
