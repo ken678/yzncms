@@ -6,7 +6,7 @@
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
 [模块插件清单]
-|  名称 | 简介  |　类型　|　价格　|
+|  名称 | 简介  |类型　　|价格　　|
 |---|---|---|---|
 |cms内容管理|这是一个功能强大的内容管理模块！自定义模块，字段不在话下，支持近二十种类型字段|模块|免费|
 |cms小程序|cms自带的小程序，接口都是读取cms的文章，近期推出|模块|免费|
