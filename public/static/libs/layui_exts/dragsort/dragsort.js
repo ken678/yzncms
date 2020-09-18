@@ -32,7 +32,8 @@ var jQuery=layui.$;
 
 				init: function() {
 					//set options to default values if not set
-					opts.tagName = $(this.container).children().size() == 0 ? "li" : $(this.container).children().get(0).tagName.toLowerCase();
+					opts.tagName = opts.tagName == "" ? ($(this.container).children().size() == 0 ? "div" : $(this.container).children().get(0).tagName.toLowerCase()) : opts.tagName;
+					//opts.tagName = $(this.container).children().size() == 0 ? "li" : $(this.container).children().get(0).tagName.toLowerCase();
 					if (opts.itemSelector == "")
 						opts.itemSelector = opts.tagName;
 					if (opts.dragSelector == "")
@@ -367,6 +368,7 @@ var jQuery=layui.$;
 	};
 
 	$.fn.dragsort.defaults = {
+		tagName:"",
 		itemSelector: "",
 		dragSelector: "",
 		dragSelectorExclude: "input, textarea",

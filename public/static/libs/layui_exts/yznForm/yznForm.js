@@ -768,7 +768,20 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
             setTimeout(function() {
                 $('#' + file.id).find('.progress').remove();
             }, 500);
-
+        if ($multiple) {
+            $file_list.dragsort({
+                //itemSelector:".move-picture",
+                dragSelector: ".move-picture",
+                dragEnd: function() {
+                    var ids = [];
+                    $file_list.find('.remove-picture').each(function() {
+                        ids.push($(this).data('id'));
+                    });
+                    $input_file.val(ids.join(','));
+                },
+                placeHolderTemplate: '<div class="file-item thumbnail" style="border:1px #009688 dashed;"></div>'
+            })
+        }
         });
 
         // 删除图片
@@ -790,6 +803,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         // 如果是多图上传，则实例化拖拽
         if ($multiple) {
             $file_list.dragsort({
+                //itemSelector:".move-picture",
                 dragSelector: ".move-picture",
                 dragEnd: function() {
                     var ids = [];
