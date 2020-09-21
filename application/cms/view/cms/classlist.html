@@ -32,7 +32,7 @@
   {{# if(d.thumb!==''){ }}
   <span class="text-success">[有图]</span>
   {{#  } }}
-  {{ d.title }}
+  <a  data-open='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' data-title="编辑内容" data-full="true">{{ d.title }}</a>
 </script>
 <script type="text/html" id="username">
     {{# if(d.sysadd==1){ }}
