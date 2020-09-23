@@ -81,7 +81,7 @@ URL重写： https://www.kancloud.cn/ken678/yzncms/1003231
 
 
 
-## [捐赠]  
+## [友情捐赠]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/181152_57b5113e_555541.jpeg "mm_facetoface_collect_qrcode_1547113957376_01.jpg")
 
