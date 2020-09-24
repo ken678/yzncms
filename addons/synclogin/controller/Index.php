@@ -23,9 +23,9 @@ use think\Db;
 class Index extends AddonsBase
 {
     private $access_token = '';
-    private $openid = '';
-    private $type = '';
-    private $token = array();
+    private $openid       = '';
+    private $type         = '';
+    private $token        = array();
     //会员模型相关配置
     protected $memberConfig = array();
 
@@ -39,10 +39,10 @@ class Index extends AddonsBase
 
     private function getSession()
     {
-        $session = session('SYNCLOGIN');
-        $this->token = $session['TOKEN'];
-        $this->type = $session['TYPE'];
-        $this->openid = $session['OPENID'];
+        $session            = session('SYNCLOGIN');
+        $this->token        = $session['TOKEN'];
+        $this->type         = $session['TYPE'];
+        $this->openid       = $session['OPENID'];
         $this->access_token = $session['ACCESS_TOKEN'];
     }
 
@@ -52,7 +52,7 @@ class Index extends AddonsBase
         $type = $this->request->param('type');
         empty($type) && $this->error('参数错误');
         //加载ThinkOauth类并实例化一个对象
-        $sns = Oauth::getInstance($type);
+        $sns          = Oauth::getInstance($type);
         $addon_config = get_addon_config('synclogin');
         if (0 == $addon_config['display']) {
             $sns->setDisplay('mobile');
@@ -65,15 +65,15 @@ class Index extends AddonsBase
     //授权回调地址
     public function callback()
     {
-        $type = $this->request->param('type/s');
-        $code = $this->request->param('code/s');
+        $type     = $this->request->param('type/s');
+        $code     = $this->request->param('code/s');
         $is_login = User::instance()->isLogin();
         if ($type == null || $code == null) {
             $this->error('参数错误');
         }
         $sns = Oauth::getInstance($type);
         // 获取TOKEN
-        $token = $sns->getAccessToken($code);
+        $token  = $sns->getAccessToken($code);
         $openid = !empty($token['unionid']) ? $token['unionid'] : $token['openid'];
         if (empty($token)) {
             $this->error('参数错误');
@@ -83,11 +83,15 @@ class Index extends AddonsBase
         $this->getSession(); // 重新获取session
         //获取当前第三方登录用户信息
         if (is_array($token)) {
+            //是否完全登录状态
+            $check = $this->checkIsSync(array('type_uid' => $openid, 'type' => $type));
+            if ($is_login && $check) {
+                $this->loginWithoutpwd($is_login);
+            }
             if ($is_login) {
                 $this->dealIsLogin($is_login);
             } else {
                 $addon_config = get_addon_config('synclogin');
-                $check = $this->checkIsSync(array('type_uid' => $openid, 'type' => $type));
                 if ($addon_config['bind'] && !$check) {
                     $this->redirect(url('addons/synclogin/bind'));
                 } else {
@@ -105,7 +109,7 @@ class Index extends AddonsBase
         if (!$this->token) {
             $this->error('无效的token');
         }
-        $tip = $this->request->param('tip/s');
+        $tip               = $this->request->param('tip/s');
         $tip == '' && $tip = 'new';
         $this->assign('tip', $tip);
         return $this->fetch('bind');
@@ -133,7 +137,7 @@ class Index extends AddonsBase
     //绑定新账号
     public function newAccount()
     {
-        $post = $data = $this->request->post();
+        $post   = $data   = $this->request->post();
         $result = $this->validate($data, 'addons\synclogin\validate\Member');
         if (true !== $result) {
             return $this->error($result);
@@ -158,10 +162,10 @@ class Index extends AddonsBase
     //绑定已有账号
     public function bindAccount()
     {
-        $username = $this->request->param('username');
-        $password = $this->request->param('password');
+        $username   = $this->request->param('username');
+        $password   = $this->request->param('password');
         $cookieTime = $this->request->param('cookieTime', 0);
-        $userInfo = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
+        $userInfo   = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
         if ($userInfo) {
             $this->addSyncLoginData($userInfo['id']);
             if (!$forward) {
@@ -176,11 +180,11 @@ class Index extends AddonsBase
     //跳过绑定或自动新增账号
     public function prepare()
     {
-        $openid = $this->openid;
-        $type = $this->type;
-        $token = $this->token;
+        $openid       = $this->openid;
+        $type         = $this->type;
+        $token        = $this->token;
         $access_token = $this->access_token;
-        $map = array('type_uid' => $openid, 'type' => $type);
+        $map          = array('type_uid' => $openid, 'type' => $type);
 
         $user_info = \addons\synclogin\ThinkSDK\GetInfo::getInstance($type, $token);
         if ($uid = Db::name('sync_login')->field('uid')->where($map)->value('uid')) {
@@ -189,7 +193,7 @@ class Index extends AddonsBase
                 Db::name('sync_login')->where($map)->delete();
                 $uid = $this->addData($user_info);
             } else {
-                $syncdata['oauth_token'] = $access_token;
+                $syncdata['oauth_token']        = $access_token;
                 $syncdata['oauth_token_secret'] = $openid;
                 Db::name('sync_login')->where($map)->update($syncdata);
             }
@@ -205,9 +209,9 @@ class Index extends AddonsBase
         // 先随机一个用户名,随后再变更为u+数字id
         $username = genRandomString(10);
         $password = genRandomString(6);
-        $domain = request()->host();
-        $uid = $this->Member_Model->userRegister($username, $password, $username . '@' . $domain);
-        $fields = ['username' => 'u' . $uid, 'email' => 'u' . $uid . '@' . $domain];
+        $domain   = request()->host();
+        $uid      = $this->Member_Model->userRegister($username, $password, $username . '@' . $domain);
+        $fields   = ['username' => 'u' . $uid, 'email' => 'u' . $uid . '@' . $domain];
         if (isset($$user_info['nickname'])) {
             $fields['nickname'] = $$user_info['nickname'];
         }
@@ -247,7 +251,7 @@ class Index extends AddonsBase
         //新会员注册需要邮件验证
         if ($this->memberConfig['enablemailcheck']) {
             $data['groupid'] = 7;
-            $data['status'] = 0;
+            $data['status']  = 0;
         } else {
             //新会员注册需要管理员审核
             if ($this->memberConfig['registerverify']) {
@@ -266,11 +270,11 @@ class Index extends AddonsBase
      */
     private function addSyncLoginData($uid)
     {
-        $data['uid'] = $uid;
-        $data['type_uid'] = $this->openid;
-        $data['oauth_token'] = $this->access_token;
+        $data['uid']                = $uid;
+        $data['type_uid']           = $this->openid;
+        $data['oauth_token']        = $this->access_token;
         $data['oauth_token_secret'] = $this->openid;
-        $data['type'] = $this->type;
+        $data['type']               = $this->type;
 
         if (!Db::name('sync_login')->where($data)->count()) {
             Db::name('sync_login')->insert($data);
@@ -281,8 +285,8 @@ class Index extends AddonsBase
     protected function dealIsLogin($uid = 0)
     {
         $session = session('SYNCLOGIN');
-        $openid = $session['OPENID'];
-        $type = $session['TYPE'];
+        $openid  = $session['OPENID'];
+        $type    = $session['TYPE'];
         if ($this->checkIsSync(array('type_uid' => $openid, 'type' => $type))) {
             $this->error('该帐号已经被绑定！');
         }
