@@ -20,20 +20,17 @@
             <form class="layui-form" action="{:url('login')}">
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
-                        <label class="item">用户名</label>
                         <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
-                        <label class="item">密码</label>
                         <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
                     </div>
                 </div>
                 {eq name="Member_config.openverification" value="1"}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item verify-box">
-                        <label class="item">验证码</label>
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                         <img id="verify" src="{:url('api/checkcode/getVerify','font_size=18&imageW=130&imageH=38')}" alt="验证码" class="captcha">
                     </div>
@@ -45,7 +42,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline login-btn">
-                        <button class="layui-btn" lay-filter="login" lay-submit>登录</button>
+                        <button class="layui-btn" lay-filter="submit" lay-submit>登录</button>
                     </div>
                 </div>
                 <div class="layui-form-item">

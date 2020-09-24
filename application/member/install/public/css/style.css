@@ -15,17 +15,6 @@
 .lay-user-login-other {position: relative; font-size: 0; line-height: 38px; }
 .lay-user-login-other .layui-icon {position: relative; top: 2px; font-size: 26px }
 .lay-user-login-other a:hover {opacity: .8 }
-.login-main .layui-form-item .layui-input-focus label{ top:-10px; font-size:12px; color:#ff6700;}
-.login-main .layui-form-item .layui-input-focus input{ border-color:#ff6700 !important;}
-.login-main .layui-form-item .layui-input-active label{ top:-10px; font-size:12px;}
-.login-main .layui-input-focus .layui-input::-webkit-input-placeholder{color:#757575;}
-.login-main .layui-input-focus .layui-input::-moz-placeholder{color:#757575;}
-.login-main .layui-input-focus .layui-input:-ms-input-placeholder{color:#757575;}
-.login-main .layui-input-focus .layui-input::placeholder{color:#757575;}
-.login-main .layui-input-focus .layui-input::-webkit-input-placeholder{transition: color 0.2s linear 0.2s;-webkit-transition: color 0.2s linear 0.2s;}
-.login-main .layui-input-focus .layui-input::-moz-placeholder{transition: color 0.2s linear 0.2s;}
-.login-main .layui-input-focus .layui-input:-ms-input-placeholder{transition: color 0.2s linear 0.2s;}
-.login-main .layui-input-focus .layui-input::placeholder{transition: color 0.2s linear 0.2s;-webkit-transition: color 0.2s linear 0.2s;}
 
 @media screen and (max-width: 450px) {
     .layui-form-item .layui-input-inline {

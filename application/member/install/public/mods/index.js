@@ -50,7 +50,7 @@
     });
 
     //登录
-    form.on("submit(login)", function(data) {
+    form.on("submit(submit)", function(data) {
         var action = $(data.form).attr('action');
         $.post(action, $(data.form).serialize(), success, "json");
         return false;
@@ -71,23 +71,6 @@
             }
         }
     });
-
-    //表单输入效果
-    $(".login-main .input-item").click(function(e) {
-        e.stopPropagation();
-        $(this).addClass("layui-input-focus").find(".layui-input").focus();
-    })
-    $(".login-main .input-item .layui-input").focus(function() {
-        $(this).parent().addClass("layui-input-focus");
-    })
-    $(".login-main .input-item .layui-input").blur(function() {
-        $(this).parent().removeClass("layui-input-focus");
-        if ($(this).val() != '') {
-            $(this).parent().addClass("layui-input-active");
-        } else {
-            $(this).parent().removeClass("layui-input-active");
-        }
-    })
 
     //刷新验证码
     $("#verify").click(function() {
