@@ -70,6 +70,25 @@ class User
      */
     public function userRegister($username, $password, $email = '', $mobile = '', $extend = [])
     {
+        $rule = [
+            'username|用户名' => 'unique:member|require|alphaDash|length:3,20',
+            'nickname|昵称'  => 'unique:member|chsDash|length:3,20',
+            'mobile|手机'    => 'unique:member|require|mobile',
+            'password|密码'  => 'require|length:3,20|confirm',
+            'email|邮箱'     => 'unique:member|require|email',
+        ];
+        $post = [
+            'username' => $username,
+            'password' => $password,
+            'email'    => $email,
+        ];
+        $post     = array_merge($post, $extend);
+        $validate = Validate::make($rule);
+        $result   = $validate->check($post);
+        if (true !== $result) {
+            $this->error = $validate->getError();
+            return false;
+        }
         $passwordinfo = encrypt_password($password); //对密码进行处理
         $data         = array(
             "mobile"   => $mobile,
@@ -126,6 +145,20 @@ class User
      */
     public function loginLocal($account, $password = null, $is_remember_me = 604800)
     {
+        $rule = [
+            'account|账户'  => 'require|length:3,30',
+            'password|密码' => 'require|length:3,30',
+        ];
+        $data = [
+            'account'  => $account,
+            'password' => $password,
+        ];
+        $validate = Validate::make($rule);
+        $result   = $validate->check($data);
+        if (true !== $result) {
+            $this->error = $validate->getError();
+            return false;
+        }
         $userinfo = $this->getLocalUser($account);
         if (empty($userinfo)) {
             return false;

@@ -62,24 +62,12 @@ class Index extends MemberBase
             if ($this->memberConfig['openverification'] && !captcha_check($verify)) {
                 $this->error('验证码错误！');
             }
-            $rule = [
-                'account|账户'  => 'require|length:3,30',
-                'password|密码' => 'require|length:3,30',
-            ];
-            $data = [
-                'account'  => $account,
-                'password' => $password,
-            ];
-            $result = $this->validate($data, $rule);
-            if (true !== $result) {
-                $this->error($result);
-            }
             $userInfo = $this->UserService->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
                 $this->success('登录成功！', $forward ? $forward : url('index'));
             } else {
                 //登陆失败
-                $this->error('账号或者密码错误！');
+                $this->error($this->UserService->getError() ?: '账号或者密码错误！');
             }
 
         } else {
@@ -113,15 +101,11 @@ class Index extends MemberBase
                 $this->error('验证码输入错误！');
                 return false;
             }
-            $result = $this->validate($data, 'member.register');
-            if (true !== $result) {
-                return $this->error($result);
-            }
             $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
             if ($userid > 0) {
                 $this->success('会员注册成功！', $forward ? $forward : url('index'));
             } else {
-                $this->error($this->Member_Model->getError() ?: '帐号注册失败！');
+                $this->error($this->UserService->getError() ?: '帐号注册失败！');
             }
         } else {
             //判断来源
