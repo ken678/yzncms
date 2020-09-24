@@ -51,7 +51,7 @@ class Index extends MemberBase
         }
         if ($this->request->isPost()) {
             //登录验证
-            $username   = $this->request->param('username');
+            $account    = $this->request->param('account');
             $password   = $this->request->param('password');
             $verify     = $this->request->param('verify');
             $cookieTime = $this->request->param('cookieTime', 0);
@@ -63,18 +63,18 @@ class Index extends MemberBase
                 $this->error('验证码错误！');
             }
             $rule = [
-                'username|用户名' => 'require|alphaDash|length:3,20',
-                'password|密码'  => 'require|length:3,20',
+                'account|账户'  => 'require|length:3,30',
+                'password|密码' => 'require|length:3,30',
             ];
             $data = [
-                'username' => $username,
+                'account'  => $account,
                 'password' => $password,
             ];
             $result = $this->validate($data, $rule);
             if (true !== $result) {
                 $this->error($result);
             }
-            $userInfo = $this->UserService->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
+            $userInfo = $this->UserService->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
                 $this->success('登录成功！', $forward ? $forward : url('index'));
             } else {
@@ -151,7 +151,7 @@ class Index extends MemberBase
             if (true !== $result) {
                 $this->error($result);
             }
-            $userinfo = $this->UserService->getLocalUser($this->userid);
+            $userinfo = Member_Model::get($this->userid);
             if (empty($userinfo)) {
                 $this->error('该会员不存在！');
             }

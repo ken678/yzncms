@@ -16,6 +16,7 @@ namespace app\member\service;
 
 use app\member\model\Member as Member_Model;
 use think\facade\Session;
+use think\facade\Validate;
 
 class User
 {
@@ -118,21 +119,14 @@ class User
 
     /**
      * 会员登录
-     * @param $identifier 用户/UID
+     * @param $account 账户
      * @param $password 明文密码，填写表示验证密码
      * @param $is_remember_me cookie有效期
      * @return boolean
      */
-    public function loginLocal($identifier, $password = null, $is_remember_me = 604800)
+    public function loginLocal($account, $password = null, $is_remember_me = 604800)
     {
-        $map = [];
-        if (is_int($identifier)) {
-            $map['id']  = $identifier;
-            $identifier = intval($identifier);
-        } else {
-            $map['username'] = $identifier;
-        }
-        $userinfo = $this->getLocalUser($identifier);
+        $userinfo = $this->getLocalUser($account);
         if (empty($userinfo)) {
             return false;
         }
@@ -150,22 +144,23 @@ class User
 
     /**
      * 获取用户信息
-     * @param $identifier 用户/UID
+     * @param $account 账户
      * @param $password 明文密码，填写表示验证密码
      */
-    public function getLocalUser($identifier, $password = null)
+    public function getLocalUser($account, $password = null)
     {
-        $map = array();
-        if (empty($identifier)) {
+        if (empty($account)) {
             $this->error = '参数为空！';
             return false;
         }
-        if (is_int($identifier)) {
-            $map['id'] = $identifier;
+        if (Validate::isEmail($account)) {
+            $field = 'email';
+        } elseif (Validate::isMobile($account)) {
+            $field = 'mobile';
         } else {
-            $map['username'] = $identifier;
+            $field = 'username';
         }
-        $userinfo = Member_Model::where($map)->find();
+        $userinfo = Member_Model::where([$field => $account])->find();
         if (empty($userinfo)) {
             $this->error = '该用户不存在！';
             return false;
@@ -263,7 +258,7 @@ class User
     public function getInfo()
     {
         if (empty(self::$userInfo)) {
-            self::$userInfo = $this->getLocalUser($this->isLogin());
+            self::$userInfo = Member_Model::where('id', $this->isLogin())->find();
         }
         return !empty(self::$userInfo) ? self::$userInfo : false;
     }
