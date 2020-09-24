@@ -72,7 +72,7 @@ class User
     {
         $rule = [
             'username|用户名' => 'unique:member|require|alphaDash|length:3,20',
-            'nickname|昵称'  => 'unique:member|chsDash|length:3,20',
+            'nickname|昵称'  => 'chsDash|length:3,20',
             'mobile|手机'    => 'unique:member|require|mobile',
             'password|密码'  => 'require|length:3,20|confirm',
             'email|邮箱'     => 'unique:member|require|email',
