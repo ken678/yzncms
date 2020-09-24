@@ -26,15 +26,11 @@ class Index extends AddonsBase
     private $openid       = '';
     private $type         = '';
     private $token        = array();
-    //会员模型相关配置
-    protected $memberConfig = array();
 
     public function initialize()
     {
         parent::initialize();
         $this->getSession();
-        $this->memberConfig = cache("Member_Config");
-        $this->Member_Model = new Member_Model;
     }
 
     private function getSession()
@@ -142,17 +138,10 @@ class Index extends AddonsBase
         if (true !== $result) {
             return $this->error($result);
         }
-        $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
+        $userid = User::instance()->userRegister($data['username'], $data['password'], $data['email']);
         if ($userid > 0) {
-            unset($data['username'], $data['password'], $data['email']);
-            //注册设置处理
-            $data = $this->registerAfter($data);
-            if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
-                $this->addSyncLoginData($userid);
-                $this->Member_Model->loginLocal($post['username'], $post['password']);
-                $this->success('账号绑定成功！', url('member/index/index'));
-            }
-
+            $this->addSyncLoginData($userid);
+            $this->success('账号绑定成功！', url('member/index/index'));
         } else {
             $this->error('账号绑定失败，请重试！');
         }
@@ -165,7 +154,7 @@ class Index extends AddonsBase
         $username   = $this->request->param('username');
         $password   = $this->request->param('password');
         $cookieTime = $this->request->param('cookieTime', 0);
-        $userInfo   = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
+        $userInfo   = User::instance()->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
         if ($userInfo) {
             $this->addSyncLoginData($userInfo['id']);
             if (!$forward) {
@@ -188,7 +177,7 @@ class Index extends AddonsBase
 
         $user_info = \addons\synclogin\ThinkSDK\GetInfo::getInstance($type, $token);
         if ($uid = Db::name('sync_login')->field('uid')->where($map)->value('uid')) {
-            $user = $this->Member_Model->where('id', $uid)->find();
+            $user = Member_Model::where('id', $uid)->find();
             if (!$user) {
                 Db::name('sync_login')->where($map)->delete();
                 $uid = $this->addData($user_info);
@@ -210,20 +199,21 @@ class Index extends AddonsBase
         $username = genRandomString(10);
         $password = genRandomString(6);
         $domain   = request()->host();
-        $uid      = $this->Member_Model->userRegister($username, $password, $username . '@' . $domain);
-        $fields   = ['username' => 'u' . $uid, 'email' => 'u' . $uid . '@' . $domain];
-        if (isset($$user_info['nickname'])) {
-            $fields['nickname'] = $$user_info['nickname'];
+        $uid      = User::instance()->userRegister($username, $password, $username . '@' . $domain);
+        if ($uid > 0) {
+            $fields = ['username' => 'u' . $uid, 'email' => 'u' . $uid . '@' . $domain];
+            if (isset($$user_info['nickname'])) {
+                $fields['nickname'] = $$user_info['nickname'];
+            }
+            if (isset($$user_info['avatar'])) {
+                $fields['avatar'] = htmlspecialchars(strip_tags($user_info['avatar']));
+            }
+            // 记录数据到sync_login表中
+            $this->addSyncLoginData($uid);
+            return $uid;
+        } else {
+            $this->error('新增账号失败，请重试！');
         }
-        if (isset($$user_info['avatar'])) {
-            $fields['avatar'] = htmlspecialchars(strip_tags($user_info['avatar']));
-        }
-        //注册设置处理
-        $fields = $this->registerAfter($fields);
-        $this->Member_Model->save($fields, ['id' => $uid]);
-        // 记录数据到sync_login表中
-        $this->addSyncLoginData($uid);
-        return $uid;
     }
 
     /**
@@ -232,37 +222,14 @@ class Index extends AddonsBase
     private function loginWithoutpwd($uid)
     {
         if (0 < $uid) {
-            $data = $this->Member_Model->where('id', $uid)->find();
-            if ($this->Member_Model->loginLocal($data['username'])) {
+            $data = Member_Model::where('id', $uid)->find();
+            if (User::instance()->loginLocal($data['username'])) {
                 //登陆用户
                 $this->success('登陆成功！', url('member/index/index'));
             } else {
-                $this->error($this->Member_Model->getError());
+                $this->error('登录失败！');
             }
         }
-    }
-
-    private function registerAfter($data)
-    {
-        //新注册用户积分
-        $data['point'] = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
-        //新会员注册默认赠送资金
-        $data['amount'] = $this->memberConfig['defualtamount'] ? $this->memberConfig['defualtamount'] : 0;
-        //新会员注册需要邮件验证
-        if ($this->memberConfig['enablemailcheck']) {
-            $data['groupid'] = 7;
-            $data['status']  = 0;
-        } else {
-            //新会员注册需要管理员审核
-            if ($this->memberConfig['registerverify']) {
-                $data['status'] = 0;
-            } else {
-                $data['status'] = 1;
-            }
-            //计算用户组
-            $data['groupid'] = $this->Member_Model->get_usergroup_bypoint($data['point']);
-        }
-        return $data;
     }
 
     /**
