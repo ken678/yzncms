@@ -30,6 +30,7 @@ class Index extends MemberBase
     {
         parent::initialize();
         $this->Member_Model = new Member_Model;
+        $this->UserService  = User::instance();
     }
 
     //会员中心首页
@@ -50,9 +51,9 @@ class Index extends MemberBase
         }
         if ($this->request->isPost()) {
             //登录验证
-            $username = $this->request->param('username');
-            $password = $this->request->param('password');
-            $verify = $this->request->param('verify');
+            $username   = $this->request->param('username');
+            $password   = $this->request->param('password');
+            $verify     = $this->request->param('verify');
             $cookieTime = $this->request->param('cookieTime', 0);
             //验证码
             if (empty($verify) && $this->memberConfig['openverification']) {
@@ -63,7 +64,7 @@ class Index extends MemberBase
             }
             $rule = [
                 'username|用户名' => 'require|alphaDash|length:3,20',
-                'password|密码' => 'require|length:3,20',
+                'password|密码'  => 'require|length:3,20',
             ];
             $data = [
                 'username' => $username,
@@ -73,7 +74,7 @@ class Index extends MemberBase
             if (true !== $result) {
                 $this->error($result);
             }
-            $userInfo = $this->Member_Model->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
+            $userInfo = $this->UserService->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
                 $this->success('登录成功！', $forward ? $forward : url('index'));
             } else {
@@ -106,9 +107,9 @@ class Index extends MemberBase
             $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("index"));
         }
         if ($this->request->isPost()) {
-            $post = $data = $this->request->post();
+            $data = $this->request->post();
             //验证码
-            if (!captcha_check($post['verify'])) {
+            if (!captcha_check($data['verify'])) {
                 $this->error('验证码输入错误！');
                 return false;
             }
@@ -116,39 +117,9 @@ class Index extends MemberBase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $userid = $this->Member_Model->userRegister($data['username'], $data['password'], $data['email']);
+            $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
             if ($userid > 0) {
-                unset($data['username'], $data['password'], $data['email']);
-                //==============注册设置处理==============
-                //新注册用户积分
-                $data['point'] = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
-                //新会员注册默认赠送资金
-                $data['amount'] = $this->memberConfig['defualtamount'] ? $this->memberConfig['defualtamount'] : 0;
-                //新会员注册需要邮件验证
-                if ($this->memberConfig['enablemailcheck']) {
-                    $data['groupid'] = 7;
-                    $data['status'] = 0;
-                } else {
-                    //新会员注册需要管理员审核
-                    if ($this->memberConfig['registerverify']) {
-                        $data['status'] = 0;
-                    } else {
-                        $data['status'] = 1;
-                    }
-                    //计算用户组
-                    $data['groupid'] = $this->Member_Model->get_usergroup_bypoint($data['point']);
-                }
-                //==============注册设置处理==============
-
-                if (false !== $this->Member_Model->save($data, ['id' => $userid])) {
-                    //注册登陆状态
-                    $this->Member_Model->loginLocal($post['username'], $post['password']);
-                    $this->success('会员注册成功！', $forward ? $forward : url('index'));
-                } else {
-                    //删除
-                    $this->Member_Model->userDelete($userid);
-                    $this->error("会员注册失败！");
-                }
+                $this->success('会员注册成功！', $forward ? $forward : url('index'));
             } else {
                 $this->error($this->Member_Model->getError() ?: '帐号注册失败！');
             }
@@ -174,13 +145,13 @@ class Index extends MemberBase
             //验证数据合法性
             $rule = [
                 'nickname|昵称' => 'chsDash|length:3,20',
-                'avatar|头像' => 'number',
+                'avatar|头像'   => 'number',
             ];
             $result = $this->validate($data, $rule);
             if (true !== $result) {
                 $this->error($result);
             }
-            $userinfo = $this->Member_Model->getLocalUser($this->userid);
+            $userinfo = $this->UserService->getLocalUser($this->userid);
             if (empty($userinfo)) {
                 $this->error('该会员不存在！');
             }
@@ -200,18 +171,18 @@ class Index extends MemberBase
     public function changepwd()
     {
         if ($this->request->isPost()) {
-            $oldPassword = $this->request->post("oldpassword");
-            $newPassword = $this->request->post("newpassword");
+            $oldPassword   = $this->request->post("oldpassword");
+            $newPassword   = $this->request->post("newpassword");
             $renewPassword = $this->request->post("renewpassword");
             // 验证数据
             $data = [
-                'oldpassword' => $oldPassword,
-                'newpassword' => $newPassword,
+                'oldpassword'   => $oldPassword,
+                'newpassword'   => $newPassword,
                 'renewpassword' => $renewPassword,
             ];
             $rule = [
-                'oldpassword|旧密码' => 'require|length:6,30',
-                'newpassword|新密码' => 'require|length:6,30',
+                'oldpassword|旧密码'    => 'require|length:6,30',
+                'newpassword|新密码'    => 'require|length:6,30',
                 'renewpassword|确认密码' => 'require|length:6,30|confirm:newpassword',
             ];
             $result = $this->validate($data, $rule);
@@ -234,7 +205,7 @@ class Index extends MemberBase
     public function changeemail()
     {
         if ($this->request->isPost()) {
-            $email = $this->request->post('email');
+            $email   = $this->request->post('email');
             $captcha = $this->request->param('captcha');
             if (!$email || !$captcha) {
                 $this->error('参数不得为空！');
@@ -246,7 +217,7 @@ class Index extends MemberBase
                 $this->error('邮箱已占用');
             }
             $Ems_Model = new Ems_Model();
-            $result = $Ems_Model->check($email, $captcha, 'changeemail');
+            $result    = $Ems_Model->check($email, $captcha, 'changeemail');
             if (!$result) {
                 $this->error('验证码错误！');
             }
@@ -266,7 +237,7 @@ class Index extends MemberBase
     public function changemobile()
     {
         if ($this->request->isPost()) {
-            $mobile = $this->request->param('mobile');
+            $mobile  = $this->request->param('mobile');
             $captcha = $this->request->param('captcha');
             if (!$mobile || !$captcha) {
                 $this->error('参数不得为空！');
@@ -278,7 +249,7 @@ class Index extends MemberBase
                 $this->error('手机号已占用');
             }
             $Sms_Model = new Sms_Model();
-            $result = $Sms_Model->check($mobile, $captcha, 'changemobile');
+            $result    = $Sms_Model->check($mobile, $captcha, 'changemobile');
             if (!$result) {
                 $this->error('验证码错误！');
             }
@@ -302,7 +273,7 @@ class Index extends MemberBase
                 $this->error('参数不得为空！');
             }
             $Ems_Model = new Ems_Model();
-            $result = $Ems_Model->check($this->userinfo['email'], $captcha, 'actemail');
+            $result    = $Ems_Model->check($this->userinfo['email'], $captcha, 'actemail');
             if (!$result) {
                 $this->error('验证码错误！');
             }
@@ -326,7 +297,7 @@ class Index extends MemberBase
                 $this->error('参数不得为空！');
             }
             $Sms_Model = new Sms_Model();
-            $result = $Sms_Model->check($this->userinfo['mobile'], $captcha, 'actmobile');
+            $result    = $Sms_Model->check($this->userinfo['mobile'], $captcha, 'actmobile');
             if (!$result) {
                 $this->error('验证码错误！');
             }
@@ -345,23 +316,23 @@ class Index extends MemberBase
     public function forget()
     {
         if ($this->request->isPost()) {
-            $type = $this->request->param("type");
-            $mobile = $this->request->param("mobile");
-            $email = $this->request->param("email");
+            $type        = $this->request->param("type");
+            $mobile      = $this->request->param("mobile");
+            $email       = $this->request->param("email");
             $newpassword = $this->request->param("newpassword");
-            $captcha = $this->request->param("captcha");
+            $captcha     = $this->request->param("captcha");
 
             // 验证数据
             $data = [
-                'mobile' => $mobile,
-                'email' => $email,
-                'captcha' => $captcha,
+                'mobile'      => $mobile,
+                'email'       => $email,
+                'captcha'     => $captcha,
                 'newpassword' => $newpassword,
             ];
             $rule = [
-                'mobile|手机号' => 'require|mobile',
-                'email|邮箱' => 'require|email',
-                'captcha|验证码' => 'require|number|length:4',
+                'mobile|手机号'      => 'require|mobile',
+                'email|邮箱'        => 'require|email',
+                'captcha|验证码'     => 'require|number|length:4',
                 'newpassword|新密码' => 'require|length:6,30',
             ];
             if ($type == "mobile") {
@@ -380,7 +351,7 @@ class Index extends MemberBase
                     $this->error('用户不存在！');
                 }
                 $Sms_Model = new Sms_Model();
-                $result = $Sms_Model->check($mobile, $captcha, 'resetpwd');
+                $result    = $Sms_Model->check($mobile, $captcha, 'resetpwd');
                 if (!$result) {
                     $this->error('验证码错误！');
                 }
@@ -390,7 +361,7 @@ class Index extends MemberBase
                     $this->error('用户不存在！');
                 }
                 $Ems_Model = new Ems_Model();
-                $result = $Ems_Model->check($email, $captcha, 'resetpwd');
+                $result    = $Ems_Model->check($email, $captcha, 'resetpwd');
                 if (!$result) {
                     $this->error('验证码错误！');
                 }
@@ -432,7 +403,7 @@ class Index extends MemberBase
             //消费的价格
             $cost = $typearr[$upgrade_type] * $upgrade_date;
             //购买时间
-            $buydate = $typedatearr[$upgrade_type] * $upgrade_date * 86400;
+            $buydate     = $typedatearr[$upgrade_type] * $upgrade_date * 86400;
             $overduedate = $this->userinfo['overduedate'] > time() ? ($this->userinfo['overduedate'] + $buydate) : (time() + $buydate);
 
             if ($this->userinfo['amount'] >= $cost) {
@@ -446,13 +417,13 @@ class Index extends MemberBase
             }
 
         } else {
-            $groupid = $this->request->param("groupid/d", 0);
+            $groupid    = $this->request->param("groupid/d", 0);
             $grouppoint = $this->memberGroup[$this->userinfo['groupid']]['point'];
             unset($this->memberGroup[$this->userinfo['groupid']]);
             $this->assign([
                 'memberGroup' => $this->memberGroup,
-                'groupid' => $groupid,
-                'grouppoint' => $grouppoint,
+                'groupid'     => $groupid,
+                'grouppoint'  => $grouppoint,
             ]);
             return $this->fetch('/upgrade');
         }

@@ -15,8 +15,8 @@
 namespace app\member\controller;
 
 use app\common\controller\Adminbase;
-use app\member\model\Member as MemberModel;
-use think\Db;
+use app\member\model\Member as Member_Model;
+use app\member\service\User;
 
 class Member extends Adminbase
 {
@@ -24,7 +24,7 @@ class Member extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass = new MemberModel;
+        $this->modelClass = new Member_Model;
         $this->groupCache = cache("Member_Group"); //会员模型
     }
 
@@ -35,10 +35,10 @@ class Member extends Adminbase
     {
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list = $this->modelClass->where($where)->where('status', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
+            $_list                      = $this->modelClass->where($where)->where('status', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
                 return time_format($value);
             })->select();
-            $total = $this->modelClass->where($where)->where('status', 1)->count();
+            $total  = $this->modelClass->where($where)->where('status', 1)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -51,12 +51,12 @@ class Member extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data   = $this->request->post();
             $result = $this->validate($data, 'member');
             if (true !== $result) {
                 return $this->error($result);
             }
-            $userid = $this->modelClass->userRegister($data['username'], $data['password'], $data['email']);
+            $userid = User::instance()->userRegister($data['username'], $data['password'], $data['email']);
             if ($userid > 0) {
                 unset($data['username'], $data['password'], $data['email']);
                 $data['overduedate'] = strtotime($data['overduedate']);
@@ -83,13 +83,13 @@ class Member extends Adminbase
     {
         if ($this->request->isPost()) {
             $userid = $this->request->param('id/d', 0);
-            $data = $this->request->post();
+            $data   = $this->request->post();
             $result = $this->validate($data, 'member.edit');
             if (true !== $result) {
                 return $this->error($result);
             }
             //获取用户信息
-            $userinfo = MemberModel::get($userid);
+            $userinfo = Member_Model::get($userid);
             if (empty($userinfo)) {
                 $this->error('该会员不存在！');
             }
@@ -110,7 +110,7 @@ class Member extends Adminbase
 
         } else {
             $userid = $this->request->param('id/d', 0);
-            $data = $this->modelClass->where(["id" => $userid])->withAttr('overduedate', function ($value, $data) {
+            $data   = $this->modelClass->where(["id" => $userid])->withAttr('overduedate', function ($value, $data) {
                 return date('Y-m-d H:i:s', $value);
             })->find();
             if (empty($data)) {
@@ -154,10 +154,10 @@ class Member extends Adminbase
     {
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list = $this->modelClass->where($where)->where('status', '<>', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
+            $_list                      = $this->modelClass->where($where)->where('status', '<>', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
                 return time_format($value);
             })->select();
-            $total = $this->modelClass->where($where)->where('status', '<>', 1)->count();
+            $total  = $this->modelClass->where($where)->where('status', '<>', 1)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
@@ -178,7 +178,7 @@ class Member extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $uid) {
-            $info = MemberModel::where('id', $uid)->update(['status' => 1]);
+            $info = Member_Model::where('id', $uid)->update(['status' => 1]);
         }
         $this->success("审核成功！");
     }
