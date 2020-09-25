@@ -65,10 +65,10 @@ layui.use(['yznTable','clipboard'], function() {
 
     var clipboard = new clipboard('.copy');
     clipboard.on('success', function(e) {
-        layer.msg("复制成功");
+        layer.msg("复制成功",{ icon: 1});
     });
     clipboard.on('error', function(e) {
-        layer.msg("复制失败！请手动调用");
+        layer.msg("复制失败！请手动调用",{ icon: 2});
     });
 });
 </script>
