@@ -239,7 +239,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
 
                     // 判断是否初始化对齐方式
                     if (val.align === undefined) {
-                        cols[i][index]['align'] = 'center';
+                        cols[i][index]['align'] = 'left';
                     }
 
                     // 部分字段开启排序
