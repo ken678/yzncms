@@ -108,7 +108,6 @@ class Index extends HomeBase
         }
         //跳转地址
         $forward = $this->setting['forward'] ? ((strpos($this->setting['forward'], '://') !== false) ? $this->setting['forward'] : url($this->setting['forward'])) : '';
-        dump($forward);
         $this->success('提交成功！', $forward);
     }
 
