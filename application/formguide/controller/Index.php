@@ -35,19 +35,19 @@ class Index extends HomeBase
     {
         parent::initialize();
         $this->Model_form = cache("Model_form");
-        $this->formid = $this->request->param('id/d', 0);
+        $this->formid     = $this->request->param('id/d', 0);
         //模型
         $this->modelInfo = $this->Model_form[$this->formid];
         if (empty($this->modelInfo)) {
             $this->error('该表单不存在或者已经关闭！');
         }
         if (!empty($this->formid)) {
-            $model_cache = cache("Model");
+            $model_cache     = cache("Model");
             $this->tableName = $model_cache[$this->formid]['tablename'];
         }
         //配置
         $this->modelInfo['setting'] = $this->setting = unserialize($this->modelInfo['setting']);
-        $this->Formguide_Model = new Formguide_Model;
+        $this->Formguide_Model      = new Formguide_Model;
         $this->assign('id', $this->formid);
     }
 
@@ -55,15 +55,15 @@ class Index extends HomeBase
     public function index()
     {
         //模板
-        $show_template = $this->setting['show_template'] ? $this->setting['show_template'] : "show";
-        $modelid = $this->request->param('id/d', 0);
-        $fieldList = $this->Formguide_Model->getFieldList($modelid);
-        $seo = [];
-        $seo['site_title'] = $this->modelInfo['name'] . "_自定义表单";
-        $seo['keyword'] = "";
+        $show_template      = $this->setting['show_template'] ? $this->setting['show_template'] : "show";
+        $modelid            = $this->request->param('id/d', 0);
+        $fieldList          = $this->Formguide_Model->getFieldList($modelid);
+        $seo                = [];
+        $seo['site_title']  = $this->modelInfo['name'] . "_自定义表单";
+        $seo['keyword']     = "";
         $seo['description'] = $this->modelInfo['description'];
         $this->assign([
-            'SEO' => $seo,
+            'SEO'       => $seo,
             'modelInfo' => $this->modelInfo,
             'fieldList' => $fieldList,
         ]);
@@ -103,11 +103,12 @@ class Index extends HomeBase
             //$ems['email'] = explode(",", $this->setting['mails']);
             $ems['email'] = $this->setting['mails'];
             $ems['title'] = "[" . $this->modelInfo['name'] . "]表单消息提醒！";
-            $ems['msg'] = "刚刚有人在[" . $this->modelInfo['name'] . "]中提交了新的信息，请进入后台查看！";
-            $result = hook('emsNotice', $ems, true, true);
+            $ems['msg']   = "刚刚有人在[" . $this->modelInfo['name'] . "]中提交了新的信息，请进入后台查看！";
+            $result       = hook('emsNotice', $ems, true, true);
         }
         //跳转地址
-        $forward = $this->setting['forward'] ?: '';
+        $forward = $this->setting['forward'] ? ((strpos($this->setting['forward'], '://') !== false) ? $this->setting['forward'] : url($this->setting['forward'])) : '';
+        dump($forward);
         $this->success('提交成功！', $forward);
     }
 
@@ -123,7 +124,7 @@ class Index extends HomeBase
         }
         //是否允许同一IP多次提交
         if ((int) $this->setting['allowmultisubmit'] == 0) {
-            $ip = $this->request->ip(1);
+            $ip    = $this->request->ip(1);
             $count = Db::name($this->tableName)->where("ip", $ip)->count();
             if ($count) {
                 $this->error('你已经提交过了！');
