@@ -26,6 +26,11 @@ class User
     //错误信息
     protected $error = null;
 
+    public function __construct()
+    {
+        $this->memberConfig = cache("Member_Config");
+    }
+
     /**
      * 获取示例
      * @param array $options 实例配置
@@ -74,9 +79,12 @@ class User
             'username|用户名' => 'unique:member|require|alphaDash|length:3,20',
             'nickname|昵称'  => 'chsDash|length:3,20',
             'mobile|手机'    => 'unique:member|require|mobile',
-            'password|密码'  => 'require|length:3,20|confirm',
+            'password|密码'  => 'require|length:3,20',
             'email|邮箱'     => 'unique:member|require|email',
         ];
+        if ($this->memberConfig['password_confirm']) {
+            $rule['password|密码'] = "require|length:3,20|confirm";
+        }
         $post = [
             'username' => $username,
             'password' => $password,
@@ -101,9 +109,9 @@ class User
         $user = new Member_Model();
         $res  = $user->save($data);
         if ($res) {
-            $data               = array_merge($data, $extend);
-            $userid             = $user->id;
-            $this->memberConfig = cache("Member_Config");
+            $data   = array_merge($data, $extend);
+            $userid = $user->id;
+
             unset($data['username'], $data['password'], $data['email'], $data['mobile']);
             //新注册用户积分
             $data['point'] = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
@@ -257,9 +265,8 @@ class User
     {
         $groupid = 2;
         if (empty($point)) {
-            $member_setting = cache("Member_Config");
             //新会员默认点数
-            $point = $member_setting['defualtpoint'] ? $member_setting['defualtpoint'] : 0;
+            $point = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
         }
         //获取会有组缓存
         $grouplist = cache("Member_Group");

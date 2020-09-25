@@ -26,6 +26,14 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label>显示密码确认</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="setting[password_confirm]" value="1" title="是" {if 1 == $setting['password_confirm']}checked{/if}>
+                    <input type="radio" name="setting[password_confirm]" value="0" title="否" {if 0 == $setting['password_confirm']}checked{/if}>
+                </div>
+                <div class="layui-form-mid layui-word-aux">显示或隐藏注册时候的密码确认</div>
+            </div>
+            <div class="layui-form-item">
                 <label>1元人民币购买积分数量</label>
                 <div class="layui-form-field-label">
                      <input type="number" name="setting[rmb_point_rate]" required="" lay-verify="required" placeholder="1元人民币购买积分数量" autocomplete="off" class="layui-input" value="{$setting.rmb_point_rate}">

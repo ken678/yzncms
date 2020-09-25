@@ -38,11 +38,13 @@
                         <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
                     </div>
                 </div>
+                {eq name="Member_config.password_confirm" value="1"}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
                         <input type="password" name="password_confirm" lay-verify="required" autocomplete="off" placeholder="密码确认" class="layui-input">
                     </div>
                 </div>
+                {/eq}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
                         <input type="text" name="nickname" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
