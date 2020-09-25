@@ -33,6 +33,13 @@
                 </div>
                 <div class="layui-form-mid layui-word-aux">显示或隐藏注册时候的密码确认</div>
             </div>
+             <div class="layui-form-item">
+                <label>注册时不显示昵称</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="setting[remove_nickname]" value="1" title="是" {if 1 == $setting['remove_nickname']}checked{/if}>
+                    <input type="radio" name="setting[remove_nickname]" value="0" title="否" {if 0 == $setting['remove_nickname']}checked{/if}>
+                </div>
+            </div>
             <div class="layui-form-item">
                 <label>1元人民币购买积分数量</label>
                 <div class="layui-form-field-label">

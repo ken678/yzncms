@@ -45,11 +45,13 @@
                     </div>
                 </div>
                 {/eq}
+                {eq name="Member_config.remove_nickname" value="0"}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
                         <input type="text" name="nickname" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
                     </div>
                 </div>
+                {/eq}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item verify-box">
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
