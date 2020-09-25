@@ -38,7 +38,7 @@ form .verify-box img {
             </div>
         </div>
         <div class="content">
-            <form class="layui-form" method="post" action="{:url('formguide/index/post')}" style="width: 300px">
+            <form class="layui-form" method="post">
                 <input type="hidden" name="id" value="{$id}" />
                 {include file="inputItem" /}
                 {if count($fieldList)}
@@ -52,7 +52,7 @@ form .verify-box img {
                 {/if}
                 <div class="layui-form-item">
                     <div>
-                        <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                        <button class="layui-btn" lay-submit="{:url('formguide/index/post')}" lay-filter="formSubmit">立即提交</button>
                     </div>
                 </div>
                 {/if}
