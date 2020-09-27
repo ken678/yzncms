@@ -78,7 +78,7 @@ class User
         $rule = [
             'username|用户名' => 'unique:member|require|alphaDash|length:3,20',
             'nickname|昵称'  => 'chsDash|length:3,20',
-            'mobile|手机'    => 'unique:member|require|mobile',
+            'mobile|手机'    => 'unique:member|mobile',
             'password|密码'  => 'require|length:3,20',
             'email|邮箱'     => 'unique:member|require|email',
         ];
@@ -181,6 +181,23 @@ class User
         }
         $this->autoLogin($userinfo);
         return $userinfo;
+    }
+
+    /**
+     * 直接登录账号
+     * @param int $uid
+     * @return boolean
+     */
+    public function direct($uid)
+    {
+        $userinfo = Member_Model::get($uid);
+        if ($userinfo) {
+            $this->autoLogin($userinfo);
+            return $userinfo;
+        } else {
+            $this->error = '登录失败！';
+            return false;
+        }
     }
 
     /**
