@@ -22,25 +22,23 @@ use think\facade\Hook;
 
 class Upload extends Base
 {
-    //上传用户
-    public $upname = null;
     //上传用户ID
     public $admin_id = 0;
-    public $user_id = 0;
+    public $user_id  = 0;
     //会员组
     public $groupid = 0;
     //是否后台
     public $isadmin = 0;
     //上传模块
-    public $module = 'cms';
-    private $uploadUrl = '';
+    public $module      = 'cms';
+    private $uploadUrl  = '';
     private $uploadPath = '';
     //编辑器初始配置
     private $confing = array(
         /* 上传图片配置项 */
-        "imageActionName" => "uploadimage", /* 执行上传图片的action名称 */
-        "imageFieldName" => "upfile", /* 提交的图片表单名称 */
-        "imageMaxSize" => 2048000, /* 上传大小限制，单位B */
+        "imageActionName"         => "uploadimage", /* 执行上传图片的action名称 */
+        "imageFieldName"       => "upfile", /* 提交的图片表单名称 */
+        "imageMaxSize"     => 2048000, /* 上传大小限制，单位B */
         "imageAllowFiles" => [".png", ".jpg", ".jpeg", ".gif", ".bmp"], /* 上传图片格式显示 */
         "imageCompressEnable" => true, /* 是否压缩图片,默认是true */
         "imageCompressBorder" => 1600, /* 图片压缩最长边限制 */
@@ -48,52 +46,52 @@ class Upload extends Base
         "imageUrlPrefix" => "", /* 图片访问路径前缀 */
         'imagePathFormat' => '',
         /* 涂鸦图片上传配置项 */
-        "scrawlActionName" => "uploadscrawl", /* 执行上传涂鸦的action名称 */
-        "scrawlFieldName" => "upfile", /* 提交的图片表单名称 */
+        "scrawlActionName"        => "uploadscrawl", /* 执行上传涂鸦的action名称 */
+        "scrawlFieldName"      => "upfile", /* 提交的图片表单名称 */
         'scrawlPathFormat' => '',
-        "scrawlMaxSize" => 2048000, /* 上传大小限制，单位B */
-        'scrawlUrlPrefix' => '',
-        'scrawlInsertAlign' => 'none',
+        "scrawlMaxSize"           => 2048000, /* 上传大小限制，单位B */
+        'scrawlUrlPrefix'      => '',
+        'scrawlInsertAlign'       => 'none',
         /* 截图工具上传 */
-        "snapscreenActionName" => "uploadimage", /* 执行上传截图的action名称 */
+        "snapscreenActionName"    => "uploadimage", /* 执行上传截图的action名称 */
         'snapscreenPathFormat' => '',
-        'snapscreenUrlPrefix' => '',
-        'snapscreenInsertAlign' => 'none',
+        'snapscreenUrlPrefix'     => '',
+        'snapscreenInsertAlign'   => 'none',
         /* 抓取远程图片配置 */
-        'catcherLocalDomain' => array('127.0.0.1', 'localhost', 'img.baidu.com'),
-        "catcherActionName" => "catchimage", /* 执行抓取远程图片的action名称 */
-        'catcherFieldName' => 'source',
-        'catcherPathFormat' => '',
-        'catcherUrlPrefix' => '',
-        'catcherMaxSize' => 0,
-        'catcherAllowFiles' => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
+        'catcherLocalDomain'      => array('127.0.0.1', 'localhost', 'img.baidu.com'),
+        "catcherActionName"       => "catchimage", /* 执行抓取远程图片的action名称 */
+        'catcherFieldName'     => 'source',
+        'catcherPathFormat'       => '',
+        'catcherUrlPrefix'        => '',
+        'catcherMaxSize'          => 0,
+        'catcherAllowFiles'       => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
         /* 上传视频配置 */
-        "videoActionName" => "uploadvideo", /* 执行上传视频的action名称 */
-        "videoFieldName" => "upfile", /* 提交的视频表单名称 */
-        'videoPathFormat' => '',
-        'videoUrlPrefix' => '',
-        'videoMaxSize' => 0,
-        'videoAllowFiles' => array(".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg", ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid"),
+        "videoActionName"         => "uploadvideo", /* 执行上传视频的action名称 */
+        "videoFieldName"       => "upfile", /* 提交的视频表单名称 */
+        'videoPathFormat'  => '',
+        'videoUrlPrefix'          => '',
+        'videoMaxSize'            => 0,
+        'videoAllowFiles'         => array(".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg", ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid"),
         /* 上传文件配置 */
-        "fileActionName" => "uploadfile", /* controller里,执行上传视频的action名称 */
-        'fileFieldName' => 'upfile',
-        'filePathFormat' => '',
-        'fileUrlPrefix' => '',
-        'fileMaxSize' => 0,
-        'fileAllowFiles' => array(".flv", ".swf"),
+        "fileActionName"          => "uploadfile", /* controller里,执行上传视频的action名称 */
+        'fileFieldName'        => 'upfile',
+        'filePathFormat'          => '',
+        'fileUrlPrefix'           => '',
+        'fileMaxSize'             => 0,
+        'fileAllowFiles'          => array(".flv", ".swf"),
         /* 列出指定目录下的图片 */
-        "imageManagerActionName" => "listimage", /* 执行图片管理的action名称 */
+        "imageManagerActionName"  => "listimage", /* 执行图片管理的action名称 */
         'imageManagerListPath' => '',
-        'imageManagerListSize' => 20,
-        'imageManagerUrlPrefix' => '',
+        'imageManagerListSize'    => 20,
+        'imageManagerUrlPrefix'   => '',
         'imageManagerInsertAlign' => 'none',
-        'imageManagerAllowFiles' => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
+        'imageManagerAllowFiles'  => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
         /* 列出指定目录下的文件 */
-        "fileManagerActionName" => "listfile", /* 执行文件管理的action名称 */
-        'fileManagerListPath' => '',
-        'fileManagerUrlPrefix' => '',
-        'fileManagerListSize' => '',
-        'fileManagerAllowFiles' => array(".flv", ".swf"),
+        "fileManagerActionName"   => "listfile", /* 执行文件管理的action名称 */
+        'fileManagerListPath'  => '',
+        'fileManagerUrlPrefix'    => '',
+        'fileManagerListSize'     => '',
+        'fileManagerAllowFiles'   => array(".flv", ".swf"),
     );
 
     protected function initialize()
@@ -102,14 +100,15 @@ class Upload extends Base
         //检查是否后台登录，后台登录下优先级最高，用于权限判断
         if (admin_user::instance()->isLogin()) {
             $this->isadmin = 1;
-            $this->upname = admin_user::instance()->username;
+            //$this->upname   = admin_user::instance()->username;
             $this->admin_id = admin_user::instance()->id;
         } elseif (home_user::instance()->isLogin()) {
-            $this->upname = home_user::instance()->username;
+            //$this->upname  = home_user::instance()->username;
             $this->user_id = home_user::instance()->id;
             $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
         } else {
-            return $this->error('未登录');
+            $this->user_id = 0;
+            //return $this->error('未登录');
         }
         $this->uploadUrl = config('public_url') . 'uploads/';
 
@@ -166,7 +165,7 @@ class Upload extends Base
             return false;
         }
         //如果是前台上传，判断用户组权限
-        if ($this->isadmin == 0) {
+        if ($this->isadmin == 0 && $this->user_id != 0) {
             $member_group = cache('Member_Group');
             if ((int) $member_group[$this->groupid]['allowattachment'] < 1) {
                 return "所在的用户组没有附件上传权限！";
@@ -186,8 +185,8 @@ class Upload extends Base
     {
         if (!function_exists("finfo_open")) {
             return json([
-                'code' => -1,
-                'info' => '检测到环境未开启php_fileinfo拓展',
+                'code'  => -1,
+                'info'  => '检测到环境未开启php_fileinfo拓展',
                 'state' => '检测到环境未开启php_fileinfo拓展', //兼容百度
             ]);
         }
@@ -219,22 +218,22 @@ class Upload extends Base
         $file = $this->request->file($file_input_name);
         if ($file == null) {
             return json([
-                'code' => -1,
-                'info' => '获取不到文件信息',
-                'state' => '获取不到文件信息', //兼容百度
+                'code'    => -1,
+                'info'    => '获取不到文件信息',
+                'state'   => '获取不到文件信息', //兼容百度
                 'message' => '获取不到文件信息', //兼容editormd
             ]);
         }
         // 判断附件是否已存在
         if ($file_exists = Attachment_Model::get(['md5' => $file->hash('md5')])) {
             return json([
-                'code' => 0,
-                'info' => $file_exists['name'] . '上传成功',
-                'id' => $file_exists['id'],
-                'path' => $file_exists['path'],
-                "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
-                "url" => $file_exists['path'], // 返回的地址 兼容百度
-                "title" => $file_exists['name'], // 附件名 兼容百度
+                'code'    => 0,
+                'info'    => $file_exists['name'] . '上传成功',
+                'id'      => $file_exists['id'],
+                'path'    => $file_exists['path'],
+                "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
+                "url"     => $file_exists['path'], // 返回的地址 兼容百度
+                "title"   => $file_exists['name'], // 附件名 兼容百度
                 "success" => 1, //兼容editormd
                 "message" => $file_exists['name'], // 附件名 兼容editormd
             ]);
@@ -242,15 +241,15 @@ class Upload extends Base
         // 判断附件大小是否超过限制
         if ($size_limit > 0 && ($file->getInfo('size') > $size_limit)) {
             return json([
-                'status' => 0,
-                'info' => '附件过大',
-                'state' => '附件过大', //兼容百度
+                'status'  => 0,
+                'info'    => '附件过大',
+                'state'   => '附件过大', //兼容百度
                 'message' => '附件过大', //兼容editormd
             ]);
         }
         // 判断附件格式是否符合
         $file_name = $file->getInfo('name');
-        $file_ext = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
+        $file_ext  = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
         $error_msg = '';
         if ($ext_limit == '') {
             $error_msg = '获取文件后缀限制信息失败！';
@@ -274,9 +273,9 @@ class Upload extends Base
         }
         if ($error_msg != '') {
             return json([
-                'code' => -1,
-                'info' => $error_msg,
-                'state' => $error_msg, //兼容百度
+                'code'    => -1,
+                'info'    => $error_msg,
+                'state'   => $error_msg, //兼容百度
                 'message' => $error_msg, //兼容editormd
             ]);
         }
@@ -298,42 +297,42 @@ class Upload extends Base
             }
             // 获取附件信息
             $file_info = [
-                'aid' => $this->admin_id,
-                'uid' => $this->user_id,
-                'name' => $file->getInfo('name'),
-                'mime' => $file->getInfo('type'),
-                'path' => $this->uploadUrl . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
-                'ext' => $info->getExtension(),
-                'size' => $info->getSize(),
-                'md5' => $info->hash('md5'),
-                'sha1' => $info->hash('sha1'),
+                'aid'    => $this->admin_id,
+                'uid'    => $this->user_id,
+                'name'   => $file->getInfo('name'),
+                'mime'   => $file->getInfo('type'),
+                'path'   => $this->uploadUrl . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
+                'ext'    => $info->getExtension(),
+                'size'   => $info->getSize(),
+                'md5'    => $info->hash('md5'),
+                'sha1'   => $info->hash('sha1'),
                 'module' => $module,
             ];
             if ($file_add = Attachment_Model::create($file_info)) {
                 return json([
-                    'code' => 0,
-                    'info' => $file_info['name'] . '上传成功',
-                    'id' => $file_add['id'],
-                    'path' => $file_info['path'],
-                    "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
-                    "url" => $file_info['path'], // 返回的地址 兼容百度
-                    "title" => $file_info['name'], // 附件名 兼容百度
+                    'code'    => 0,
+                    'info'    => $file_info['name'] . '上传成功',
+                    'id'      => $file_add['id'],
+                    'path'    => $file_info['path'],
+                    "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
+                    "url"     => $file_info['path'], // 返回的地址 兼容百度
+                    "title"   => $file_info['name'], // 附件名 兼容百度
                     "success" => 1, //兼容editormd
                     "message" => $file_info['name'], // 附件名 兼容editormd
                 ]);
             } else {
                 return json([
-                    'code' => 0,
-                    'info' => '上传成功,写入数据库失败',
-                    'state' => '上传成功,写入数据库失败', //兼容百度
+                    'code'    => 0,
+                    'info'    => '上传成功,写入数据库失败',
+                    'state'   => '上传成功,写入数据库失败', //兼容百度
                     'message' => '上传成功,写入数据库失败', //兼容editormd
                 ]);
             }
         } else {
             return json([
-                'code' => -1,
-                'info' => $file->getError(),
-                'state' => '上传失败', //兼容百度
+                'code'    => -1,
+                'info'    => $file->getError(),
+                'state'   => '上传失败', //兼容百度
                 'message' => '上传失败', //兼容editormd
             ]);
         }
@@ -398,8 +397,8 @@ class Upload extends Base
     protected function showFileList($type = '')
     {
         /* 获取参数 */
-        $size = input('get.size/d', 0);
-        $start = input('get.start/d', 0);
+        $size      = input('get.size/d', 0);
+        $start     = input('get.start/d', 0);
         $allowExit = input('get.exit', '');
         if ($size == 0) {
             $size = 20;
@@ -421,26 +420,26 @@ class Upload extends Base
         if (empty($filelist)) {
             return json(array(
                 "state" => "没有找到附件",
-                "list" => [],
+                "list"  => [],
                 "start" => $start,
                 "total" => 0
             ));
         }
         $uploadUrl = config('public_url');
-        $list = [];
-        $i = 0;
+        $list      = [];
+        $i         = 0;
         foreach ($filelist as $value) {
-            $list[$i]['id'] = $value['id'];
-            $list[$i]['url'] = $value['path'];
-            $list[$i]['name'] = $value['name'];
-            $list[$i]['size'] = format_bytes($value['size']);
+            $list[$i]['id']    = $value['id'];
+            $list[$i]['url']   = $value['path'];
+            $list[$i]['name']  = $value['name'];
+            $list[$i]['size']  = format_bytes($value['size']);
             $list[$i]['mtime'] = $value['create_time'];
             $i++;
         }
         /* 返回数据 */
         $result = array(
             "state" => "SUCCESS",
-            "list" => $list,
+            "list"  => $list,
             "start" => $start,
             "total" => Attachment_Model::where('ext', 'in', $allowExit)->count(),
         );
