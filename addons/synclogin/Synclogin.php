@@ -23,12 +23,12 @@ class Synclogin extends Addon
 
     //插件信息
     public $info = [
-        'name' => 'synclogin',
-        'title' => '第三方登录',
+        'name'        => 'synclogin',
+        'title'       => '第三方登录',
         'description' => 'QQ，微信和新浪等第三方登录',
-        'status' => 1,
-        'author' => '御宅男',
-        'version' => '1.0.0',
+        'status'      => 1,
+        'author'      => '御宅男',
+        'version'     => '1.0.0',
         //'has_adminlist' => 1,
     ];
 
@@ -50,9 +50,7 @@ class Synclogin extends Addon
         `type` varchar(255) NOT NULL,
         `oauth_token` varchar(255) NOT NULL,
         `oauth_token_secret` varchar(255) NOT NULL,
-        `is_sync` tinyint(4) NOT NULL,
         `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态描述',
-        `open_id` varchar(255) NOT NULL COMMENT '微信公众号open_id',
         PRIMARY KEY (`id`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
         ");
@@ -83,7 +81,7 @@ class Synclogin extends Addon
         $arr = array();
         if (is_array($config['type'])) {
             foreach ($config['type'] as &$v) {
-                $arr[$v]['name'] = strtolower($v);
+                $arr[$v]['name']    = strtolower($v);
                 $arr[$v]['is_bind'] = $this->check_is_bind_account(User::instance()->isLogin(), strtolower($v));
                 if ($arr[$v]['is_bind']) {
                     $token = Db::name('sync_login')->where(array('type' => strtolower($v), 'uid' => User::instance()->isLogin()))->find();
