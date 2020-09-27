@@ -262,7 +262,7 @@ class Index extends MemberBase
                 $this->error('验证码错误！');
             }
             //只修改邮箱
-            $this->Member_Model->save(['ischeck_email' => 1], ['id' => 1]);
+            $this->Member_Model->save(['ischeck_email' => 1], ['id' => $this->userid]);
             $Ems_Model->flush($this->userinfo['email'], 'actemail');
             $this->success('激活成功！');
         } else {
@@ -286,7 +286,7 @@ class Index extends MemberBase
                 $this->error('验证码错误！');
             }
             //只修改手机号
-            $this->Member_Model->save(['ischeck_mobile' => 1], ['id' => 1]);
+            $this->Member_Model->save(['ischeck_mobile' => 1], ['id' => $this->userid]);
             $Sms_Model->flush($this->userinfo['mobile'], 'actmobile');
             $this->success('激活成功！');
         } else {
