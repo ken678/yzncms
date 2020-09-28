@@ -1,12 +1,15 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
+<style type="text/css">
+.btn-repeat{position: absolute;right: 7px;top: 7px;}
+</style>
 <form class="layui-form form-horizontal" method="post">
     {include file="admin@inputItem" /}
     <input type="hidden" name="modelField[catid]" value="{$catid}">
     {if count($fieldList)}
     <div class="layui-form-item">
         <div>
-            <button class="layui-btn ajax-post1" lay-submit lay-filter="*" target-form="form-horizontal">立即提交</button>
+            <button class="layui-btn ajax-post1" target-form="form-horizontal">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -19,6 +22,19 @@ layui.use(['form','layer'], function() {
     var form = layui.form;
     $(".content_attr").append("<input type='checkbox' name='modelField[get_introduce]' title='是否截取到内容摘要' checked> <input type='checkbox' name='modelField[auto_thumb]' title='是否提取到缩略图' checked>");
     form.render();
+    //标题检查
+    var input =$("input[name='modelField[title]']");
+    input.after("<button type='button' class='layui-btn layui-btn-sm btn-repeat'>重复检测</button>");
+    $('.btn-repeat').on('click', function(e) {
+        $.get("{:url('check_title')}", {'catid':{$catid},'data':input.val()}, function(res) {
+            if(res.code==1){
+                layer.msg(res.msg,{icon: 1});
+            }else{
+                layer.msg(res.msg,{icon: 0});
+            }
+        })
+    });
+
     $('.ajax-post1').on('click', function(e) {
         var form = layui.form,
         layer = layui.layer,target,

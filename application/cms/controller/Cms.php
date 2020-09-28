@@ -49,7 +49,7 @@ class Cms extends Adminbase
                 $this->error('模型被禁用！');
             }
             $modelCache = cache("Model");
-            $tableName = $modelCache[$modelid]['tablename'];
+            $tableName  = $modelCache[$modelid]['tablename'];
 
             $this->modelClass = Db::name($tableName);
             //如果发送的来源是Selectpage，则转发到Selectpage
@@ -63,7 +63,7 @@ class Cms extends Adminbase
                 ['status', '<>', -1],
             ];
             $total = Db::name($tableName)->where($where)->where($conditions)->count();
-            $list = Db::name($tableName)->page($page, $limit)->where($where)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
+            $list  = Db::name($tableName)->page($page, $limit)->where($where)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
@@ -71,17 +71,17 @@ class Cms extends Adminbase
                     $v['thumb'] = get_file_path($v['thumb']);
                 }
                 $v['url'] = buildContentUrl($v['catid'], $v['id']);
-                $_list[] = $v;
+                $_list[]  = $v;
             }
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
         /*移动栏目 复制栏目*/
-        $tree = new \util\Tree();
+        $tree       = new \util\Tree();
         $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-        $categorys = array();
-        $result = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+        $categorys  = array();
+        $result     = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
         foreach ($result as $k => $v) {
             if ($v['type'] != 2) {
                 continue;
@@ -114,11 +114,11 @@ class Cms extends Adminbase
         //栏目所属模型
         $modelid = $catInfo['modelid'];
         if ($this->request->isAjax()) {
-            $modelCache = cache("Model");
-            $tableName = $modelCache[$modelid]['tablename'];
-            $this->modelClass = Db::name($tableName);
+            $modelCache                 = cache("Model");
+            $tableName                  = $modelCache[$modelid]['tablename'];
+            $this->modelClass           = Db::name($tableName);
             list($page, $limit, $where) = $this->buildTableParames();
-            $conditions = [
+            $conditions                 = [
                 ['catid', '=', $catid],
                 ['status', '=', -1],
             ];
@@ -142,8 +142,8 @@ class Cms extends Adminbase
             $this->error('该栏目不存在！');
         }
         //栏目所属模型
-        $modelid = $catInfo['modelid'];
-        $ids = $this->request->param('ids');
+        $modelid   = $catInfo['modelid'];
+        $ids       = $this->request->param('ids');
         $modelInfo = cache('Model');
         $modelInfo = $modelInfo[$modelid];
         if ($ids) {
@@ -176,7 +176,7 @@ class Cms extends Adminbase
                 if (!$modelid) {
                     $this->error('该模型不存在！');
                 }
-                $ids = array_filter(explode('|', $ids), 'intval');
+                $ids       = array_filter(explode('|', $ids), 'intval');
                 $tableName = Db::name('model')->where('id', $modelid)->where('status', 1)->value('tablename');
                 if (!$tableName) {
                     return $this->error('模型被冻结不可操作~');
@@ -198,7 +198,7 @@ class Cms extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data  = $this->request->post();
             $catid = intval($data['modelField']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
@@ -223,24 +223,24 @@ class Cms extends Adminbase
             }
             $this->success('操作成功！');
         } else {
-            $catid = $this->request->param('catid/d', 0);
+            $catid    = $this->request->param('catid/d', 0);
             $category = getCategory($catid);
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
             if ($category['type'] == 2) {
-                $modelid = $category['modelid'];
+                $modelid   = $category['modelid'];
                 $fieldList = $this->Cms_Model->getFieldList($modelid);
                 $this->assign([
-                    'catid' => $catid,
+                    'catid'     => $catid,
                     'fieldList' => $fieldList,
                 ]);
                 return $this->fetch();
             } else if ($category['type'] == 1) {
                 $Page_Model = new Page_Model;
-                $info = $Page_Model->getPage($catid);
+                $info       = $Page_Model->getPage($catid);
                 $this->assign([
-                    'info' => $info,
+                    'info'  => $info,
                     'catid' => $catid,
                 ]);
                 return $this->fetch('singlepage');
@@ -253,7 +253,7 @@ class Cms extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data                  = $this->request->post();
             $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
             try {
                 $this->Cms_Model->editModelData($data['modelField'], $data['modelFieldExt']);
@@ -263,17 +263,17 @@ class Cms extends Adminbase
             $this->success('编辑成功！');
 
         } else {
-            $catid = $this->request->param('catid/d', 0);
-            $id = $this->request->param('id/d', 0);
+            $catid    = $this->request->param('catid/d', 0);
+            $id       = $this->request->param('id/d', 0);
             $category = getCategory($catid);
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
             if ($category['type'] == 2) {
-                $modelid = $category['modelid'];
+                $modelid   = $category['modelid'];
                 $fieldList = $this->Cms_Model->getFieldList($modelid, $id);
                 $this->assign([
-                    'catid' => $catid,
+                    'catid'     => $catid,
                     'fieldList' => $fieldList,
                 ]);
                 return $this->fetch();
@@ -289,14 +289,14 @@ class Cms extends Adminbase
     public function del()
     {
         $catid = $this->request->param('catid/d', 0);
-        $ids = $this->request->param('ids/a', null);
+        $ids   = $this->request->param('ids/a', null);
         if (empty($ids) || !$catid) {
             $this->error('参数错误！');
         }
         if (!is_array($ids)) {
             $ids = array(0 => $ids);
         }
-        $modelid = getCategory($catid, 'modelid');
+        $modelid   = getCategory($catid, 'modelid');
         $cmsConfig = cache("Cms_Config");
         try {
             foreach ($ids as $id) {
@@ -313,14 +313,14 @@ class Cms extends Adminbase
     public function destroy()
     {
         $catid = $this->request->param('catid/d', 0);
-        $ids = $this->request->param('ids/a', null);
+        $ids   = $this->request->param('ids/a', null);
         if (empty($ids) || !$catid) {
             $this->error('参数错误！');
         }
         if (!is_array($ids)) {
             $ids = array(0 => $ids);
         }
-        $modelid = getCategory($catid, 'modelid');
+        $modelid   = getCategory($catid, 'modelid');
         $cmsConfig = cache("Cms_Config");
         try {
             foreach ($ids as $id) {
@@ -337,10 +337,10 @@ class Cms extends Adminbase
     public function panl()
     {
         $info['category'] = Db::name('Category')->count();
-        $info['model'] = Db::name('Model')->where(['module' => 'cms'])->count();
-        $info['tags'] = Db::name('Tags')->count();
-        $info['doc'] = 0;
-        $modellist = cache('Model');
+        $info['model']    = Db::name('Model')->where(['module' => 'cms'])->count();
+        $info['tags']     = Db::name('Tags')->count();
+        $info['doc']      = 0;
+        $modellist        = cache('Model');
         foreach ($modellist as $model) {
             if ($model['module'] !== 'cms') {
                 continue;
@@ -355,7 +355,7 @@ class Cms extends Adminbase
     //显示栏目菜单列表
     public function public_categorys()
     {
-        $json = [];
+        $json      = [];
         $categorys = Db::name('Category')->order(array('listorder', 'id' => 'ASC'))->select();
         foreach ($categorys as $rs) {
             //剔除无子栏目外部链接
@@ -363,21 +363,21 @@ class Cms extends Adminbase
                 continue;
             }
             $data = array(
-                'id' => $rs['id'],
+                'id'       => $rs['id'],
                 'parentid' => $rs['parentid'],
-                'catname' => $rs['catname'],
-                'type' => $rs['type'],
+                'catname'  => $rs['catname'],
+                'type'     => $rs['type'],
             );
             //终极栏目
             if ($rs['child'] !== 0) {
                 $data['isParent'] = true;
             }
             $data['target'] = 'right';
-            $data['url'] = url('cms/cms/classlist', array('catid' => $rs['id']));
+            $data['url']    = url('cms/cms/classlist', array('catid' => $rs['id']));
             //单页
             if ($rs['type'] == 1) {
                 $data['target'] = 'right';
-                $data['url'] = url('cms/cms/add', array('catid' => $rs['id']));
+                $data['url']    = url('cms/cms/add', array('catid' => $rs['id']));
             }
             $json[] = $data;
         }
@@ -390,10 +390,10 @@ class Cms extends Adminbase
      */
     public function listorder()
     {
-        $catid = $this->request->param('catid/d', 0);
-        $id = $this->request->param('id/d', 0);
-        $listorder = $this->request->param('value/d', 0);
-        $modelid = getCategory($catid, 'modelid');
+        $catid      = $this->request->param('catid/d', 0);
+        $id         = $this->request->param('id/d', 0);
+        $listorder  = $this->request->param('value/d', 0);
+        $modelid    = getCategory($catid, 'modelid');
         $modelCache = cache("Model");
         if (empty($modelCache[$modelid])) {
             return false;
@@ -411,10 +411,10 @@ class Cms extends Adminbase
      */
     public function setstate()
     {
-        $catid = $this->request->param('catid/d', 0);
-        $id = $this->request->param('id/d', 0);
-        $status = $this->request->param('value/d');
-        $modelid = getCategory($catid, 'modelid');
+        $catid      = $this->request->param('catid/d', 0);
+        $id         = $this->request->param('id/d', 0);
+        $status     = $this->request->param('value/d');
+        $modelid    = getCategory($catid, 'modelid');
         $modelCache = cache("Model");
         if (empty($modelCache[$modelid])) {
             return false;
@@ -427,6 +427,28 @@ class Cms extends Adminbase
             $this->success('操作成功！');
         } else {
             $this->error('操作失败！');
+        }
+    }
+
+    public function check_title()
+    {
+        $title = $this->request->param('data/s', '');
+        $catid = $this->request->param('catid/d', 0);
+        if (empty($title)) {
+            $this->success('标题没有重复！');
+            return false;
+        }
+        $modelid    = getCategory($catid, 'modelid');
+        $modelCache = cache("Model");
+        if (empty($modelCache[$modelid])) {
+            $this->error('模型不存在！');
+            return false;
+        };
+        $tableName = ucwords($modelCache[$modelid]['tablename']);
+        if (Db::name($tableName)->where('title', $title)->find()) {
+            $this->error('标题有重复！');
+        } else {
+            $this->success('标题没有重复！');
         }
     }
 
