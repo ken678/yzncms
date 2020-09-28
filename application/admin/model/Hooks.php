@@ -36,7 +36,8 @@ class Hooks extends Model
         }
         //获取这个插件总的方法列表，数组
         $methods = get_class_methods($addons_class);
-        $hooks = $this->column('name');
+        $methods = array_map(function ($item) {return \think\Loader::parseName($item, 0, false);}, $methods);
+        $hooks  = $this->column('name');
         $common = array_intersect($hooks, $methods);
         if (!empty($common)) {
             foreach ($common as $hook) {
@@ -64,17 +65,17 @@ class Hooks extends Model
             //检查是否有同样的行为
             if (empty($this->where(['name' => $key])->find())) {
                 $description = $value['description'];
-                $type = (int) $value['type'];
+                $type        = (int) $value['type'];
                 self::create([
-                    'name' => $key,
+                    'name'        => $key,
                     'description' => $description ?: "模块{$module}中的行为！",
-                    'type' => $type ?: 1,
-                    'status' => 1,
-                    'system' => 0,
+                    'type'        => $type ?: 1,
+                    'status'      => 1,
+                    'system'      => 0,
                 ]);
             }
         }
-        $hooks = $this->column('name');
+        $hooks  = $this->column('name');
         $common = array_intersect($hooks, array_keys($hooksRule));
         if (!empty($common)) {
             foreach ($common as $hook) {
@@ -125,7 +126,8 @@ class Hooks extends Model
         }
         //获取这个插件总的方法列表，数组
         $methods = get_class_methods($addons_class);
-        $hooks = $this->column('name');
+        $methods = array_map(function ($item) {return \think\Loader::parseName($item, 0, false);}, $methods);
+        $hooks  = $this->column('name');
         $common = array_intersect($hooks, $methods);
         if ($common) {
             foreach ($common as $hook) {
@@ -149,7 +151,7 @@ class Hooks extends Model
         }
         //TODO 删除钩子 暂时先不删除 后期看是否加上
 
-        $hooks = $this->column('name');
+        $hooks  = $this->column('name');
         $common = array_intersect($hooks, array_keys($hooksRule));
         if ($common) {
             foreach ($common as $hook) {

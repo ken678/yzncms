@@ -48,7 +48,7 @@ class Sms extends Model
         $sms = self::where(['mobile' => $mobile, 'event' => $event])
             ->order('id', 'DESC')
             ->find();
-        hook('smsGet', $sms);
+        hook('sms_get', $sms);
         return $sms ? $sms : null;
     }
 
@@ -62,10 +62,10 @@ class Sms extends Model
      */
     public function send($mobile, $code = null, $event = 'default')
     {
-        $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $time = time();
-        $sms = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'create_time' => $time]);
-        $result = hook('smsSend', $sms, true, true);
+        $code   = is_null($code) ? mt_rand(1000, 9999) : $code;
+        $time   = time();
+        $sms    = self::create(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'create_time' => $time]);
+        $result = hook('sms_send', $sms, true, true);
         if (!$result) {
             $sms->delete();
             return false;
@@ -84,7 +84,7 @@ class Sms extends Model
     public function check($mobile, $code, $event = 'default')
     {
         $time = time() - $this->expire;
-        $sms = self::where(['mobile' => $mobile, 'event' => $event])
+        $sms  = self::where(['mobile' => $mobile, 'event' => $event])
             ->order('id', 'DESC')
             ->find();
         if ($sms) {
@@ -95,7 +95,7 @@ class Sms extends Model
                     $sms->save();
                     return false;
                 } else {
-                    $result = hook('smsCheck', $sms);
+                    $result = hook('sms_check', $sms);
                     return $result;
                 }
             } else {
@@ -119,7 +119,7 @@ class Sms extends Model
     {
         self::where(['mobile' => $mobile, 'event' => $event])
             ->delete();
-        hook('smsFlush');
+        hook('sms_flush');
         return true;
     }
 }

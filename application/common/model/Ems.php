@@ -48,7 +48,7 @@ class Ems extends Model
         $ems = self::where(['email' => $email, 'event' => $event])
             ->order('id', 'DESC')
             ->find();
-        hook('emsGet', $ems);
+        hook('ems_get', $ems);
         return $ems ? $ems : null;
     }
 
@@ -62,10 +62,10 @@ class Ems extends Model
      */
     public function send($email, $code = null, $event = 'default')
     {
-        $code = is_null($code) ? mt_rand(1000, 9999) : $code;
-        $time = time();
-        $ems = self::create(['event' => $event, 'email' => $email, 'code' => $code, 'create_time' => $time]);
-        $result = hook('emsSend', $ems, true, true);
+        $code   = is_null($code) ? mt_rand(1000, 9999) : $code;
+        $time   = time();
+        $ems    = self::create(['event' => $event, 'email' => $email, 'code' => $code, 'create_time' => $time]);
+        $result = hook('ems_send', $ems, true, true);
         if (!$result) {
             $ems->delete();
             return false;
@@ -84,7 +84,7 @@ class Ems extends Model
     public function check($email, $code, $event = 'default')
     {
         $time = time() - $this->expire;
-        $ems = self::where(['email' => $email, 'event' => $event])
+        $ems  = self::where(['email' => $email, 'event' => $event])
             ->order('id', 'DESC')
             ->find();
         if ($ems) {
@@ -95,7 +95,7 @@ class Ems extends Model
                     $ems->save();
                     return false;
                 } else {
-                    $result = hook('emsCheck', $ems);
+                    $result = hook('ems_check', $ems);
                     return true;
                 }
             } else {
@@ -118,7 +118,7 @@ class Ems extends Model
     public function flush($email, $event = 'default')
     {
         self::where(['email' => $email, 'event' => $event])->delete();
-        hook('emsFlush');
+        hook('ems_flush');
         return true;
     }
 

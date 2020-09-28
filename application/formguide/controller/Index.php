@@ -104,7 +104,7 @@ class Index extends HomeBase
             $ems['email'] = $this->setting['mails'];
             $ems['title'] = "[" . $this->modelInfo['name'] . "]表单消息提醒！";
             $ems['msg']   = "刚刚有人在[" . $this->modelInfo['name'] . "]中提交了新的信息，请进入后台查看！";
-            $result       = hook('emsNotice', $ems, true, true);
+            $result       = hook('ems_notice', $ems, true, true);
         }
         //跳转地址
         $forward = $this->setting['forward'] ? ((strpos($this->setting['forward'], '://') !== false) ? $this->setting['forward'] : url($this->setting['forward'])) : '';

@@ -28,8 +28,8 @@ class Ems extends Base
     {
         $this->Ems_Model = new Ems_Model();
         parent::initialize();
-        \think\facade\Hook::add('emsSend', function ($params) {
-            $obj = \util\Email::instance();
+        \think\facade\Hook::add('ems_send', function ($params) {
+            $obj    = \util\Email::instance();
             $result = $obj
                 ->to($params->email)
                 ->subject('验证码')
