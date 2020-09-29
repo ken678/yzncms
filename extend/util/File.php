@@ -16,7 +16,6 @@ namespace util;
 
 class File
 {
-
     /**
      * 创建目录
      * @param $dir  目录名
@@ -107,7 +106,7 @@ class File
     public static function copy_dir($surDir, $toDir)
     {
         $surDir = rtrim($surDir, '/') . '/';
-        $toDir = rtrim($toDir, '/') . '/';
+        $toDir  = rtrim($toDir, '/') . '/';
         if (!file_exists($surDir)) {
             return false;
         }
@@ -138,7 +137,7 @@ class File
      */
     public static function get_dirs($dir)
     {
-        $dir = rtrim($dir, '/') . '/';
+        $dir          = rtrim($dir, '/') . '/';
         $dirArray[][] = null;
         if (false != ($handle = opendir($dir))) {
             $i = 0;
@@ -156,6 +155,72 @@ class File
             closedir($handle);
         }
         return $dirArray;
+    }
+
+    /**
+     * 取得目录下面的文件信息
+     * @access public
+     * @param mixed $pathname 路径
+     */
+    public static function listFile($pathname, $pattern = '*')
+    {
+        if (strpos($pattern, '|') !== false) {
+            $patterns = explode('|', $pattern);
+        } else {
+            $patterns[0] = $pattern;
+        }
+        $i   = 0;
+        $dir = [];
+        if (is_dir($path)) {
+            $path = rtrim($path, '/') . '/';
+        }
+        foreach ($patterns as $pattern) {
+            $list = glob($pathname . $pattern);
+            if ($list !== false) {
+                foreach ($list as $file) {
+                    //$dir[$i]['filename']    = basename($file);
+                    //basename取中文名出问题.改用此方法
+                    //编码转换.把中文的调整一下.
+                    $dir[$i]['filename'] = preg_replace('/^.+[\\\\\\/]/', '', $file);
+                    $dir[$i]['pathname'] = realpath($file);
+                    $dir[$i]['owner']    = fileowner($file);
+                    $dir[$i]['perms']    = fileperms($file);
+                    $dir[$i]['inode']    = fileinode($file);
+                    $dir[$i]['group']    = filegroup($file);
+                    $dir[$i]['path']     = dirname($file);
+                    $dir[$i]['atime']    = fileatime($file);
+                    $dir[$i]['ctime']    = filectime($file);
+                    $dir[$i]['size']     = filesize($file);
+                    $dir[$i]['type']     = filetype($file);
+                    $dir[$i]['ext']      = is_file($file) ? strtolower(substr(strrchr(basename($file), '.'), 1)) : '';
+                    $dir[$i]['mtime']    = filemtime($file);
+                    $dir[$i]['isDir']    = is_dir($file);
+                    $dir[$i]['isFile']   = is_file($file);
+                    $dir[$i]['isLink']   = is_link($file);
+                    //$dir[$i]['isExecutable']= function_exists('is_executable')?is_executable($file):'';
+                    $dir[$i]['isReadable'] = is_readable($file);
+                    $dir[$i]['isWritable'] = is_writable($file);
+                    $i++;
+                }
+            }
+        }
+        // 对结果排序 保证目录在前面
+        usort($dir, function ($a, $b) {
+            if (($a["isDir"] && $b["isDir"]) || (!$a["isDir"] && !$b["isDir"])) {
+                return $a["filename"] > $b["filename"] ? 1 : -1;
+            } else {
+                if ($a["isDir"]) {
+                    return -1;
+                } elseif ($b["isDir"]) {
+                    return 1;
+                }
+                if ($a["filename"] == $b["filename"]) {
+                    return 0;
+                }
+                return $a["filename"] > $b["filename"] ? -1 : 1;
+            }
+        });
+        return $dir;
     }
 
     /**
@@ -201,7 +266,7 @@ class File
     public function cache($name, $value = '', $path = DATA_PATH, $cached = true)
     {
         static $_cache = array();
-        $filename = $path . $name . '.php';
+        $filename      = $path . $name . '.php';
         if ('' !== $value) {
             if (is_null($value)) {
                 // 删除缓存
@@ -224,7 +289,7 @@ class File
 
         // 获取缓存数据
         if (is_file($filename)) {
-            $value = include $filename;
+            $value         = include $filename;
             $_cache[$name] = $value;
         } else {
             $value = false;
