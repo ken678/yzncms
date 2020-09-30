@@ -25,9 +25,9 @@ use \think\Model;
 class Cms extends Modelbase
 {
     protected $autoWriteTimestamp = true;
-    protected $insert = ['status' => 1];
-    protected $ext_table = '_data';
-    protected $name = 'ModelField';
+    protected $insert             = ['status' => 1];
+    protected $ext_table          = '_data';
+    protected $name               = 'ModelField';
 
     /**
      * 根据模型ID，返回表名
@@ -48,7 +48,7 @@ class Cms extends Modelbase
     //添加模型内容
     public function addModelData($data, $dataExt = [])
     {
-        $catid = (int) $data['catid'];
+        $catid   = (int) $data['catid'];
         $modelid = getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
@@ -63,12 +63,12 @@ class Cms extends Modelbase
             $data['sysadd'] = 0;
         } else {
             //添加用户名
-            $data['uid'] = \app\admin\service\User::instance()->id;
+            $data['uid']      = \app\admin\service\User::instance()->id;
             $data['username'] = \app\admin\service\User::instance()->username;
-            $data['sysadd'] = 1;
+            $data['sysadd']   = 1;
         }
         //处理数据
-        $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
+        $dataAll              = $this->dealModelPostData($modelid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
         if (!isset($data['inputtime'])) {
             $data['inputtime'] = request()->time();
@@ -105,7 +105,7 @@ class Cms extends Modelbase
     public function editModelData($data, $dataExt = [])
     {
         $catid = (int) $data['catid'];
-        $id = (int) $data['id'];
+        $id    = (int) $data['id'];
         unset($data['catid']);
         unset($data['id']);
         $modelid = getCategory($catid, 'modelid');
@@ -121,7 +121,7 @@ class Cms extends Modelbase
         } else {
             $this->tagDispose([], $id, $catid, $modelid);
         }
-        $dataAll = $this->dealModelPostData($modelid, $data, $dataExt);
+        $dataAll              = $this->dealModelPostData($modelid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
 
         if (!isset($data['updatetime'])) {
@@ -140,7 +140,7 @@ class Cms extends Modelbase
             };
         }
         //标签
-        hook('contentEditEnd', $data);
+        hook('content_edit_end', $data);
     }
 
     //删除模型内容
@@ -169,7 +169,7 @@ class Cms extends Modelbase
             $this->updateCategoryItems($data['catid'], 'delete');
         }
         //标签
-        hook('contentDeleteEnd', $data);
+        hook('content_delete_end', $data);
     }
 
     //处理post提交的模型数据
@@ -249,7 +249,7 @@ class Cms extends Modelbase
             //编辑信息时查询出已有信息
             if ($id) {
                 $modelInfo = Db::name('Model')->where('id', $modelId)->field('tablename,type')->find();
-                $dataInfo = Db::name($modelInfo['tablename'])->where('id', $id)->find();
+                $dataInfo  = Db::name($modelInfo['tablename'])->where('id', $id)->find();
                 //查询附表信息
                 if ($modelInfo['type'] == 2 && !empty($dataInfo)) {
                     $dataInfoExt = Db::name($modelInfo['tablename'] . $this->ext_table)->where('did', $dataInfo['id'])->find();
@@ -315,7 +315,7 @@ class Cms extends Modelbase
     public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null, $simple = false, $config = [])
     {
         $tableName = $this->getModelTableName($modeId);
-        $result = [];
+        $result    = [];
         if (isset($tableName) && !empty($tableName)) {
             if (2 == getModel($modeId, 'type') && $moreifo) {
                 $extTable = $tableName . $this->ext_table;
@@ -345,8 +345,8 @@ class Cms extends Modelbase
         if (!empty($result)) {
             $ModelField = cache('ModelField');
             foreach ($result as $key => $vo) {
-                $vo = $this->dealModelShowData($ModelField[$modeId], $vo);
-                $vo['url'] = buildContentUrl($vo['catid'], $vo['id']);
+                $vo           = $this->dealModelShowData($ModelField[$modeId], $vo);
+                $vo['url']    = buildContentUrl($vo['catid'], $vo['id']);
                 $result[$key] = $vo;
             }
         }
@@ -371,8 +371,8 @@ class Cms extends Modelbase
             $dataInfo = Db::name($tableName)->field($field)->cache($cache)->where($where)->order($order)->find();
         }
         if (!empty($dataInfo)) {
-            $ModelField = cache('ModelField');
-            $dataInfo = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
+            $ModelField      = cache('ModelField');
+            $dataInfo        = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
             $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
         }
         return $dataInfo;
@@ -395,7 +395,7 @@ class Cms extends Modelbase
                 case 'select':
                     if (!empty($value)) {
                         if (!empty($fieldinfo[$key]['options'])) {
-                            $optionArr = parse_attr($fieldinfo[$key]['options']);
+                            $optionArr               = parse_attr($fieldinfo[$key]['options']);
                             $newdata[$key . '_text'] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
                         }
                     }
@@ -406,7 +406,7 @@ class Cms extends Modelbase
                     if (!empty($value)) {
                         if (!empty($fieldinfo[$key]['options'])) {
                             $optionArr = parse_attr($fieldinfo[$key]['options']);
-                            $valueArr = explode(',', $value);
+                            $valueArr  = explode(',', $value);
                             foreach ($valueArr as $v) {
                                 if (isset($optionArr[$v])) {
                                     $newdata[$key][$v] = $optionArr[$v];
@@ -442,7 +442,7 @@ class Cms extends Modelbase
                 $newdata[$key] = empty($value) ? [] : explode(',', $value);
                 break;*/
                 case 'markdown':
-                    $parser = new \util\Parser;
+                    $parser        = new \util\Parser;
                     $newdata[$key] = $parser->makeHtml(htmlspecialchars_decode($value));
                     break;
                 case 'Ueditor':
@@ -491,13 +491,13 @@ class Cms extends Modelbase
     {
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         if (isset($data['get_introduce']) && $data['description'] == '' && isset($dataExt['content'])) {
-            $content = $dataExt['content'];
+            $content             = $dataExt['content'];
             $data['description'] = str_cut(str_replace(array("\r\n", "\t", '&ldquo;', '&rdquo;', '&nbsp;'), '', strip_tags($content)), 200);
         }
         //自动提取缩略图
         if (isset($data['auto_thumb']) && empty($data['thumb']) && isset($dataExt['content'])) {
             if (($path = $this->strModel($dataExt['content'])) !== null) {
-                $thumb_id = Db::name('attachment')->where('path', $path)->value('id');
+                $thumb_id                   = Db::name('attachment')->where('path', $path)->value('id');
                 $thumb_id && $data['thumb'] = $thumb_id;
             }
         }
@@ -515,8 +515,8 @@ class Cms extends Modelbase
                 $txt = trim($row['0']);
                 if ($txt) {
                     $link = trim($row['1']);
-                    $set = trim($row['2']);
-                    $rel = '';
+                    $set  = trim($row['2']);
+                    $rel  = '';
                     $open = '_blank';
 
                     //处理标记与打开方式
@@ -562,7 +562,7 @@ class Cms extends Modelbase
             if ($firstNum !== false) {
                 if ($order != 'asc') {
                     $topStr = $str;
-                    $str = substr($str, 0, $firstNum);
+                    $str    = substr($str, 0, $firstNum);
                 } else {
                     $str = substr($str, $firstNum + 4);
                 }
@@ -570,10 +570,10 @@ class Cms extends Modelbase
                 return null;
             }
         }
-        $str = $order == 'asc' ? $str : $topStr;
+        $str       = $order == 'asc' ? $str : $topStr;
         $firstNum1 = $funcStr($str, 'src=');
-        $type = substr($str, $firstNum1 + 4, 1);
-        $str2 = substr($str, $firstNum1 + 5);
+        $type      = substr($str, $firstNum1 + 4, 1);
+        $str2      = substr($str, $firstNum1 + 5);
         if ($type == '\'') {
             $position = strpos($str2, "'");
         } else {

@@ -14,21 +14,21 @@
 // +----------------------------------------------------------------------
 return array(
     //模块名称[必填]
-    'name' => '支付模块',
+    'name'        => '支付模块',
     //模块简介[选填]
-    'introduce' => '支付宝和微信支付模块！',
+    'introduce'   => '支付宝和微信支付模块！',
     //模块作者[选填]
-    'author' => 'yzncms',
+    'author'      => 'yzncms',
     //作者地址[选填]
-    'authorsite' => 'http://www.yzncms.com',
+    'authorsite'  => 'http://www.yzncms.com',
     //作者邮箱[选填]
     'authoremail' => '530765310@qq.com',
     //版本号，请不要带除数字外的其他字符[必填]
-    'version' => '1.0.0',
+    'version'     => '1.0.0',
     //适配最低yzncms版本[必填]
-    'adaptation' => '1.0.0',
+    'adaptation'  => '1.0.0',
     //签名[必填]
-    'sign' => 'b803d6de0bf866df8350ca074efdd02e',
+    'sign'        => 'b803d6de0bf866df8350ca074efdd02e',
     //依赖模块
     'need_module' => [
         ['member', '1.0.0'],
@@ -36,22 +36,22 @@ return array(
     //依赖插件
     'need_plugin' => [],
     //行为注册
-    'tags' => [
-        'userSidenavAfter' => [
-            'type' => 1,
+    'tags'        => [
+        'user_sidenav_after' => [
+            'type'        => 1,
             'description' => '会员左侧导航',
         ],
     ],
     //缓存，格式：缓存key=>array('module','model','action')
-    'cache' => [
+    'cache'       => [
         'Pay_Config' => [
-            'name' => '支付配置',
-            'model' => 'Payment',
+            'name'   => '支付配置',
+            'model'  => 'Payment',
             'action' => 'pay_cache',
         ],
     ],
     // 数据表，不要加表前缀[有数据库表时必填]
-    'tables' => [
+    'tables'      => [
         'pay_account',
         'pay_payment',
         'pay_spend',
