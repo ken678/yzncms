@@ -274,6 +274,7 @@ class Cms extends Adminbase
                 $fieldList = $this->Cms_Model->getFieldList($modelid, $id);
                 $this->assign([
                     'catid'     => $catid,
+                    'id'        => $id,
                     'fieldList' => $fieldList,
                 ]);
                 return $this->fetch();
@@ -434,6 +435,7 @@ class Cms extends Adminbase
     {
         $title = $this->request->param('data/s', '');
         $catid = $this->request->param('catid/d', 0);
+        $id    = $this->request->param('id/d', 0);
         if (empty($title)) {
             $this->success('标题没有重复！');
             return false;
@@ -445,7 +447,9 @@ class Cms extends Adminbase
             return false;
         };
         $tableName = ucwords($modelCache[$modelid]['tablename']);
-        if (Db::name($tableName)->where('title', $title)->find()) {
+        $repeat    = Db::name($tableName)->where('title', $title);
+        empty($id) ?: $repeat->where('id', '<>', $id);
+        if ($repeat->find()) {
             $this->error('标题有重复！');
         } else {
             $this->success('标题没有重复！');

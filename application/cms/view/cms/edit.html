@@ -24,7 +24,7 @@ layui.use(['form', 'layer'], function() {
     var input =$("input[name='modelField[title]']");
     input.after("<button type='button' class='layui-btn layui-btn-sm btn-repeat'>重复检测</button>");
     $('.btn-repeat').on('click', function(e) {
-        $.get("{:url('check_title')}", {'catid':{$catid},'data':input.val()}, function(res) {
+        $.get("{:url('check_title')}", {'catid':{$catid},'id':{$id},'data':input.val()}, function(res) {
             if(res.code==1){
                 layer.msg(res.msg,{icon: 1});
             }else{
