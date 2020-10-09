@@ -26,41 +26,38 @@ require ADDON_PATH . 'qiniu/SDK/autoload.php';
 
 class Qiniu extends Addon
 {
-    //上传用户
-    public $upname = null;
     //上传用户ID
     public $admin_id = 0;
-    public $user_id = 0;
+    public $user_id  = 0;
     //会员组
     public $groupid = 0;
     //是否后台
-    public $isadmin = 0;
-    private $uploadUrl = '';
+    public $isadmin     = 0;
+    private $uploadUrl  = '';
     private $uploadPath = '';
 
     //插件信息
     public $info = [
-        'name' => 'qiniu',
-        'title' => '七牛云插件',
+        'name'        => 'qiniu',
+        'title'       => '七牛云插件',
         'description' => '七牛云插件',
-        'status' => 1,
-        'author' => '御宅男',
-        'version' => '1.0.0',
+        'status'      => 1,
+        'author'      => '御宅男',
+        'version'     => '1.0.0',
     ];
 
     public function isLogin()
     {
         //检查是否后台登录，后台登录下优先级最高，用于权限判断
         if (admin_user::instance()->isLogin()) {
-            $this->isadmin = 1;
-            $this->upname = admin_user::instance()->username;
+            $this->isadmin  = 1;
             $this->admin_id = admin_user::instance()->id;
         } elseif (home_user::instance()->isLogin()) {
-            $this->upname = home_user::instance()->username;
             $this->user_id = home_user::instance()->id;
             $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
         } else {
-            return $this->error('未登录');
+            $this->user_id = 0;
+            //return $this->error('未登录');
         }
     }
 
@@ -70,7 +67,7 @@ class Qiniu extends Addon
     public function uploadAfter($params = [])
     {
         $this->isLogin();
-        $file = $params['file'];
+        $file   = $params['file'];
         $config = get_addon_config('qiniu');
 
         $error_msg = '';
@@ -84,16 +81,11 @@ class Qiniu extends Addon
             $error_msg = '未填写七牛【Domain】';
         }
         if ($error_msg != '') {
-            switch ($params['from']) {
-                case 'ueditor':
-                    return json(['state' => $error_msg]);
-                    break;
-                default:
-                    return json([
-                        'code' => -1,
-                        'info' => $error_msg,
-                    ]);
-            }
+            return json([
+                'code'  => -1,
+                'info'  => $error_msg,
+                'state' => $error_msg, //兼容百度
+            ]);
         }
         // 文件信息
         $config['domain'] = rtrim($config['domain'], '/') . '/';
@@ -105,8 +97,8 @@ class Qiniu extends Addon
         $filePath = $info['tmp_name'];
         // 上传到七牛后保存的文件名
         $file_name = explode('.', $info['name']);
-        $ext = end($file_name);
-        $key = $file->hash('md5') . '.' . $ext;
+        $ext       = end($file_name);
+        $key       = $file->hash('md5') . '.' . $ext;
         // 构建鉴权对象
         $auth = new Auth($config['accessKey'], $config['secrectKey']);
         // 初始化空间
@@ -118,58 +110,47 @@ class Qiniu extends Addon
         // 调用 UploadManager 的 putFile 方法进行文件的上传
         list($ret, $err) = $uploadMgr->putFile($token, $key, $filePath);
         if ($err !== null) {
-            switch ($params['from']) {
-                case 'ueditor':
-                    return json(['state' => '上传失败:' . $err]);
-                    break;
-                default:
-                    return json([
-                        'code' => -1,
-                        'info' => '上传失败:' . $err,
-                    ]);
-            }
+            return json([
+                'code'    => -1,
+                'info'    => '上传失败:' . $err,
+                'state'   => '上传失败:' . $err, //兼容百度
+                'message' => '上传失败:' . $err, //兼容editormd
+            ]);
         } else {
             // 获取附件信息
             $data = [
-                'aid' => $this->admin_id,
-                'uid' => $this->user_id,
-                'name' => $info['name'],
-                'mime' => $info['type'],
-                'path' => $config['domain'] . $key . '?v=' . rand(111111, 999999),
-                'ext' => $file->getExtension(),
-                'size' => $file->getSize(),
-                'md5' => $file->hash('md5'),
-                'sha1' => $file->hash('sha1'),
+                'aid'    => $this->admin_id,
+                'uid'    => $this->user_id,
+                'name'   => $info['name'],
+                'mime'   => $info['type'],
+                'path'   => $config['domain'] . $key . '?v=' . rand(111111, 999999),
+                'ext'    => $file->getExtension(),
+                'size'   => $file->getSize(),
+                'md5'    => $file->hash('md5'),
+                'sha1'   => $file->hash('sha1'),
                 'module' => $params['module'],
                 'driver' => 'qiniu',
             ];
             if ($file_add = Attachment_Model::create($data)) {
                 // 返回结果
-                switch ($params['from']) {
-                    case 'ueditor':
-                        return json([
-                            "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
-                            "url" => $data['path'], // 返回的地址
-                            "title" => $data['name'], // 附件名
-                        ]);
-                        break;
-                    default:
-                        return json([
-                            'code' => 0,
-                            'info' => '上传成功',
-                            'class' => 'success',
-                            'id' => $file_add['id'],
-                            'path' => $data['path'],
-                        ]);
-                }
+                return json([
+                    'code'    => 0,
+                    'info'    => $data['name'] . '上传成功',
+                    'id'      => $file_add['id'],
+                    'path'    => $data['path'],
+                    "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
+                    "url"     => $data['path'], // 返回的地址 兼容百度
+                    "title"   => $data['name'], // 附件名 兼容百度
+                    "success" => 1, //兼容editormd
+                    "message" => $data['name'], // 附件名 兼容editormd
+                ]);
             } else {
-                switch ($params['from']) {
-                    case 'ueditor':
-                        return json(['state' => '上传失败']);
-                        break;
-                    default:
-                        return json(['code' => -1, 'info' => '上传失败']);
-                }
+                return json([
+                    'code'    => 0,
+                    'info'    => '上传成功,写入数据库失败',
+                    'state'   => '上传成功,写入数据库失败', //兼容百度
+                    'message' => '上传成功,写入数据库失败', //兼容editormd
+                ]);
             }
 
         }
@@ -219,7 +200,7 @@ class Qiniu extends Addon
                 unset($options['qiniu']);
             }
             $options = $this->implode_attr($options);
-            $result = Db::name('config')
+            $result  = Db::name('config')
                 ->where(['name' => 'upload_driver', 'group' => 'upload'])
                 ->update(['options' => $options, 'value' => 'local']);
 
