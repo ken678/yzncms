@@ -612,6 +612,22 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
                         layer.msg("图片本地化完成");
                     }, 'html');
             });
+            //分词检测
+            if(ueditor_name=='content'){
+                $('#getwords').click(function() {
+                    var con = ueditors['content'].getContentTxt();
+                    $.post(GV.ueditor_getwords_url, { 'content': con},
+                        function(data) {
+                            if(data.code==0){
+                                $(".tags-keywords").importTags(data.arr);
+                                //$(".tags-keywords").val(data.arr);
+                            }else{
+                                layer.msg(data.msg,{icon:2});
+                            }
+                        });
+                });  
+            }
+
             //过滤敏感字
             $('#' + ueditor_name + 'filterword').click(function() {
                 var con = ueditors[ueditor_name].getContent();
