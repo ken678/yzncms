@@ -228,6 +228,8 @@ class Cms extends Adminbase
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
+            $cmsConfig = cache("Cms_Config");
+            $this->assign("cmsConfig", $cmsConfig);
             if ($category['type'] == 2) {
                 $modelid   = $category['modelid'];
                 $fieldList = $this->Cms_Model->getFieldList($modelid);
@@ -269,6 +271,8 @@ class Cms extends Adminbase
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
+            $cmsConfig = cache("Cms_Config");
+            $this->assign("cmsConfig", $cmsConfig);
             if ($category['type'] == 2) {
                 $modelid   = $category['modelid'];
                 $fieldList = $this->Cms_Model->getFieldList($modelid, $id);
