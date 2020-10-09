@@ -24,22 +24,63 @@ class Admin extends Adminaddon
     {
         $content = $this->request->param('content/s', '');
         $config  = get_addon_config('getwords');
-        $max     = $config['max'];
-        $client  = new AipNlp($config['appid'], $config['apikey'], $config['secretkey']);
-        $result  = $client->lexer($content);
         $arr     = [];
-        if (isset($result['items'])) {
-            $max = count($result['items']) > $max ? $max : count($result['items']);
-            foreach ($result['items'] as $k => $v) {
-                if (in_array($v['pos'], ['n', 'nr', 'nt', 'nw']) && $v['byte_length'] > 2) {
-                    $arr[] = $v['item'];
+        switch ($config['type']) {
+            case 'baidu':
+                $max    = $config['max'];
+                $client = new AipNlp($config['appid'], $config['apikey'], $config['secretkey']);
+                $result = $client->lexer($content);
+                if (isset($result['items'])) {
+                    $max = count($result['items']) > $max ? $max : count($result['items']);
+                    foreach ($result['items'] as $k => $v) {
+                        if (in_array($v['pos'], ['n', 'nr', 'nt', 'nw']) && $v['byte_length'] > 2) {
+                            $arr[] = $v['item'];
+                        }
+                    }
+                    $arr = array_slice(array_unique($arr), 0, $max);
+                    $arr = implode(',', $arr);
                 }
-            }
-            $arr = array_slice(array_unique($arr), 0, $max);
-            $arr = implode(',', $arr);
-        } else {
-            $arr = "";
+                break;
+            case 'xfyun':
+                $max       = $config['max'];
+                $XAppid    = $config['appid'];
+                $Apikey    = $config['apikey'];
+                $XCurTime  = time();
+                $XParam    = "";
+                $XCheckSum = "";
+                $Param     = array(
+                    "type" => "dependent",
+                );
+                $Post = array(
+                    'text' => $content,
+                );
+                $XParam    = base64_encode(json_encode($Param));
+                $XCheckSum = md5($Apikey . $XCurTime . $XParam);
+
+                $options = [
+                    CURLOPT_HTTPHEADER => array(
+                        'X-CurTime:' . $XCurTime,
+                        'X-Param:' . $XParam,
+                        'X-Appid:' . $XAppid,
+                        'X-CheckSum:' . $XCheckSum,
+                        'Content-Type:application/x-www-form-urlencoded; charset=utf-8',
+                    ),
+                ];
+                $result = \util\Http::sendRequest('http://ltpapi.xfyun.cn/v1/ke', http_build_query($Post), 'POST', $options);
+                if ($result['ret']) {
+                    $res = (array) json_decode($result['msg'], true);
+                    if ($res['code'] == 0) {
+                        $max = count($res['data']['ke']) > $max ? $max : count($res['data']['ke']);
+                        foreach ($res['data']['ke'] as $t) {
+                            $arr[] = $t['word'];
+                        }
+                        $arr = array_slice(array_unique($arr), 0, $max);
+                        $arr = implode(',', $arr);
+                    }
+                }
+                break;
         }
+        $arr = empty($arr) ? '' : $arr;
         return json(["code" => 0, "arr" => $arr]);
     }
 }
