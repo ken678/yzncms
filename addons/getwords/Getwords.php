@@ -23,7 +23,7 @@ class Getwords extends Addon
     public $info = [
         'name'        => 'getwords',
         'title'       => '中文分词',
-        'description' => '百度自然语言处理',
+        'description' => '支持百度，讯飞分词',
         'status'      => 1,
         'author'      => '御宅男',
         'version'     => '1.0.0',
