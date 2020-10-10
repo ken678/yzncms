@@ -201,7 +201,9 @@
                     if (res.code == 0) {
                         $.post(GV.profile_upload_url, {
                             avatar: res.id
-                        }, function(res) {
+                        }, function(data) {
+                        	layer.msg('上传成功！', { icon: 1});
+                        	$('.avatar-img').attr('src', res.path);
                             //location.reload();
                         });
                     } else {
