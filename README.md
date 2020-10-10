@@ -40,6 +40,7 @@ YznCMSV1.0(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台�
 
 手册地址：https://www.kancloud.cn/ken678/yzncms
 官方博客：http://blog.yzncms.com/
+演示地址：发送到邮箱【530765310@qq.com】获取演示地址
 官网地址：建设中...
 社区地址：http://bbs.yzncms.com(在线商城建设中，所有插件及模块暂时在论坛下载)
 软件著作权编号：2020SR0038539
