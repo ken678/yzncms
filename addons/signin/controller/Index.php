@@ -15,9 +15,7 @@
 namespace addons\signin\Controller;
 
 use addons\signin\model\Signin as SigninModel;
-use app\addons\util\AddonsBase;
 use app\member\controller\MemberBase;
-use app\member\model\Member as Member_Model;
 use app\member\service\User;
 use think\Db;
 use util\Date;
@@ -30,17 +28,17 @@ class Index extends MemberBase
      */
     public function index()
     {
-        $config = get_addon_config('signin');
+        $config   = get_addon_config('signin');
         $signdata = $config['signinscore'];
-        $date = $this->request->request('date', date("Y-m-d"), "trim");
-        $time = strtotime($date);
+        $date     = $this->request->request('date', date("Y-m-d"), "trim");
+        $time     = strtotime($date);
 
-        $lastdata = SigninModel::where('uid', User::instance()->isLogin())->order('createtime', 'desc')->find();
+        $lastdata    = SigninModel::where('uid', User::instance()->isLogin())->order('createtime', 'desc')->find();
         $successions = $lastdata && $lastdata['createtime'] > Date::unixtime('day', -1) ? $lastdata['successions'] : 0;
-        $signin = SigninModel::where('uid', User::instance()->isLogin())->whereTime('createtime', 'today')->find();
+        $signin      = SigninModel::where('uid', User::instance()->isLogin())->whereTime('createtime', 'today')->find();
 
         $calendar = new \addons\signin\library\Calendar();
-        $list = SigninModel::where('uid', User::instance()->isLogin())
+        $list     = SigninModel::where('uid', User::instance()->isLogin())
             ->field('id,createtime')
             ->whereTime('createtime', 'between', [date("Y-m-1", $time), date("Y-m-1", strtotime("+1 month", $time))])
             ->select();
@@ -56,7 +54,7 @@ class Index extends MemberBase
         $score = isset($signdata['s' . $successions]) ? $signdata['s' . $successions] : $signdata['sn'];
         $this->assign('signin', $signin);
         $this->assign('score', $score);
-        $this->assign('signinscore', $config['signinscore']);
+        $this->assign('config', $config);
         return $this->fetch();
     }
 
@@ -66,12 +64,12 @@ class Index extends MemberBase
     public function dosign()
     {
         if ($this->request->isPost()) {
-            $config = get_addon_config('signin');
+            $config   = get_addon_config('signin');
             $signdata = $config['signinscore'];
 
-            $lastdata = SigninModel::where('uid', User::instance()->isLogin())->order('createtime', 'desc')->find();
+            $lastdata    = SigninModel::where('uid', User::instance()->isLogin())->order('createtime', 'desc')->find();
             $successions = $lastdata && $lastdata['createtime'] > Date::unixtime('day', -1) ? $lastdata['successions'] : 0;
-            $signin = SigninModel::where('uid', User::instance()->isLogin())->whereTime('createtime', 'today')->find();
+            $signin      = SigninModel::where('uid', User::instance()->isLogin())->whereTime('createtime', 'today')->find();
             if ($signin) {
                 $this->error('今天已签到,请明天再来!');
             } else {
@@ -96,8 +94,8 @@ class Index extends MemberBase
      */
     public function fillup()
     {
-        $date = $this->request->request('date');
-        $time = strtotime($date);
+        $date   = $this->request->request('date');
+        $time   = strtotime($date);
         $config = get_addon_config('signin');
         if (!$config['isfillup']) {
             $this->error('暂未开启签到补签');
@@ -128,7 +126,7 @@ class Index extends MemberBase
             $this->error("该日期无需补签到");
         }
         $successions = 1;
-        $prev = $signin = SigninModel::where('uid', User::instance()->isLogin())
+        $prev        = $signin        = SigninModel::where('uid', User::instance()->isLogin())
             ->whereTime('createtime', 'between', [date("Y-m-d", strtotime("-1 day", $time)), date("Y-m-d 23:59:59", strtotime("-1 day", $time))])
             ->find();
         if ($prev) {

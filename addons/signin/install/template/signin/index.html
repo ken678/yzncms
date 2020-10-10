@@ -68,6 +68,9 @@
 .signin-rank-table>tbody>tr>td {
     vertical-align: middle;
 }
+.layui-field-box p{
+        margin-bottom: 5px;
+}
 </style>
 <div class="layui-tab layui-tab-brief">
     <ul class="layui-tab-title">
@@ -88,6 +91,16 @@
                 {:$calendar->draw($date);}
             </div>
             <div class="layui-col-md5">
+                {if $config.isfillup}
+                <fieldset class="layui-elem-field">
+                    <legend>补签说明</legend>
+                    <div class="layui-field-box">
+                         <p>1. 补签消耗 <strong style="color:#FF5722;">{$config.fillupscore}</strong> 积分。</p>
+                         <p>2. 漏签 <strong style="color:#FF5722;">{$config.fillupdays}</strong> 天内，可以补签。</p>
+                         <p>3. 每月可补签 <strong style="color:#FF5722;">{$config.fillupnumsinmonth}</strong> 次。</p>
+                    </div>
+                </fieldset>
+                {/if}
                 <fieldset class="layui-elem-field">
                     <legend>签到积分规则</legend>
                     <div class="layui-field-box">
@@ -99,7 +112,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {volist name="signinscore" id="item"}
+                                {volist name="config.signinscore" id="item"}
                                 <tr>
                                     <th scope="row">第{$key|str_replace='s','',###}天</th>
                                     <td>+{$item}</td>
