@@ -82,7 +82,7 @@ class Calendar
             foreach ($events as $event) {
                 if (isset($event['start']) && isset($event['end'])) {
                     $classes = isset($event['classes']) ? $event['classes'] : false;
-                    $mask = isset($event['mask']) ? (bool) $event['mask'] : false;
+                    $mask    = isset($event['mask']) ? (bool) $event['mask'] : false;
                     $summary = isset($event['summary']) ? $event['summary'] : false;
                     $this->addEvent($event['start'], $event['end'], $summary, $mask, $classes);
                 }
@@ -149,7 +149,7 @@ class Calendar
 
         $color = $color ?: '';
 
-        $calendar .= '<table class="calendar ' . $color . '">';
+        $calendar .= '<table class="layui-table calendar ' . $color . '" lay-size="lg">';
 
         $calendar .= '<thead>';
 
@@ -217,8 +217,8 @@ class Calendar
                 }
             }
 
-            $today_class = ($running_day->format('Y-m-d') == $today->format('Y-m-d')) ? ' today' : '';
-            $future_class = $running_day->format('U') > time() ? ' future' : '';
+            $today_class   = ($running_day->format('Y-m-d') == $today->format('Y-m-d')) ? ' today' : '';
+            $future_class  = $running_day->format('U') > time() ? ' future' : '';
             $expired_class = $running_day->format('U') < $today->format('U') ? ' expired' : '';
 
             $calendar .= '<td class="day' . $class . $expired_class . $today_class . $future_class . '" data-date="' . $running_day->format("Y-m-d") . '" title="' . htmlentities($event_summary) . '">';
