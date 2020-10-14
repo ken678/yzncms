@@ -16,7 +16,7 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <!--<a href='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>-->
+    <a data-open='{:url("cms/cms/edit")}?catid={{ d.catid }}&id={{ d.content_id }}' class="layui-btn layui-btn-xs" data-title="编辑内容" data-full="true">编辑</a>
     <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="status">

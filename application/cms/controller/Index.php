@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\controller\Homebase;
 use app\cms\model\Cms as Cms_Model;
 use think\Db;
 
@@ -32,9 +31,9 @@ class Index extends Cmsbase
     public function index()
     {
         $page = $this->request->param('page/d', 1);
-        $seo = seo();
+        $seo  = seo();
         $this->assign([
-            'SEO' => $seo,
+            'SEO'  => $seo,
             'page' => $page,
         ]);
         return $this->fetch('/index');
@@ -47,7 +46,7 @@ class Index extends Cmsbase
     {
         //栏目ID
         $catid = $this->request->param('catid/d', 0);
-        $page = $this->request->param('page/d', 1);
+        $page  = $this->request->param('page/d', 1);
         //获取栏目数据
         $category = getCategory($catid);
         if (empty($category)) {
@@ -55,7 +54,7 @@ class Index extends Cmsbase
         }
         //模型ID
         $modelid = $category['modelid'];
-        $models = cache('Model');
+        $models  = cache('Model');
 
         //栏目扩展配置信息
         $setting = $category['setting'];
@@ -67,7 +66,7 @@ class Index extends Cmsbase
             $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
             //判断使用模板类型，如果有子栏目使用频道页模板
             $template = $category['child'] ? "{$template}" : "{$template_list}";
-            $tpar = explode(".", $template, 2);
+            $tpar     = explode(".", $template, 2);
             //去除完后缀的模板
             $template = $tpar[0];
             unset($tpar);
@@ -78,33 +77,33 @@ class Index extends Cmsbase
             //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
             $template = "{$template}";
             //去除后缀
-            $tpar = explode(".", $template, 2);
+            $tpar     = explode(".", $template, 2);
             $template = $tpar[0];
             unset($tpar);
             $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
-            $info = model('Page')->getPage($catid, $ifcache);
+            $info    = model('Page')->getPage($catid, $ifcache);
             if ($info) {
                 $info = $info->toArray();
             }
             //SEO
-            $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
+            $keywords    = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
             $description = $info['description'] ? $info['description'] : $setting['meta_description'];
-            $seo = seo($catid, $setting['meta_title'], $description, $keywords);
+            $seo         = seo($catid, $setting['meta_title'], $description, $keywords);
             $this->assign($info);
         }
         if ($this->request->isAjax()) {
             $this->success('', '', $this->fetch('/' . $template . '_ajax'));
         }
         //获取顶级栏目ID
-        $arrparentid = explode(',', $category['arrparentid']);
+        $arrparentid  = explode(',', $category['arrparentid']);
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
         $this->assign([
             'top_parentid' => $top_parentid,
-            'arrparentid' => $arrparentid,
-            'SEO' => $seo,
-            'catid' => $catid,
-            'page' => $page,
-            'modelid' => $modelid,
+            'arrparentid'  => $arrparentid,
+            'SEO'          => $seo,
+            'catid'        => $catid,
+            'page'         => $page,
+            'modelid'      => $modelid,
         ]);
         return $this->fetch('/' . $template);
 
@@ -119,14 +118,14 @@ class Index extends Cmsbase
         $id = $this->request->param('id/d', 0);
         //栏目ID
         $catid = $this->request->param('catid/d', 0);
-        $page = $page = $this->request->param('page/d', 1);
+        $page  = $page  = $this->request->param('page/d', 1);
         //获取栏目数据
         $category = getCategory($catid);
         if (empty($category)) {
             $this->error('栏目不存在！');
         }
         //模型ID
-        $modelid = $category['modelid'];
+        $modelid   = $category['modelid'];
         $modelInfo = cache('Model')[$modelid];
         if (empty($modelInfo)) {
             throw new \think\Exception('栏目不存在!', 404);
@@ -135,7 +134,7 @@ class Index extends Cmsbase
         Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
         //内容所有字段
         $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
-        $info = $this->Cms_Model->getContent($modelid, "id='" . $id . "' and status='1'", true, '*', '', $ifcache);
+        $info    = $this->Cms_Model->getContent($modelid, "id='" . $id . "' and status='1'", true, '*', '', $ifcache);
         if (empty($info)) {
             throw new \think\Exception('内容不存在或未审核!', 404);
         }
@@ -145,11 +144,11 @@ class Index extends Cmsbase
         $template = $setting['show_template'] ? $setting['show_template'] : 'show';
         //去除模板文件后缀
         $newstempid = explode(".", $template);
-        $template = $newstempid[0];
+        $template   = $newstempid[0];
         unset($newstempid);
         //阅读收费
-        $paytype = isset($info['paytype']) && $info['paytype'] == '金额' ? 1 : 0; //类型 0积分 1金钱
-        $readpoint = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
+        $paytype       = isset($info['paytype']) && $info['paytype'] == '金额' ? 1 : 0; //类型 0积分 1金钱
+        $readpoint     = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
         $allow_visitor = 1;
         if ($readpoint > 0) {
             //检查是否支付过
@@ -162,24 +161,24 @@ class Index extends Cmsbase
             }
         }
         //SEO
-        $keywords = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
-        $title = $info['title'] ? $info['title'] : $setting['meta_title'];
+        $keywords    = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
+        $title       = $info['title'] ? $info['title'] : $setting['meta_title'];
         $description = $info['description'] ? $info['description'] : $setting['meta_description'];
-        $seo = seo($catid, $title, $description, $keywords);
+        $seo         = seo($catid, $title, $description, $keywords);
         //获取顶级栏目ID
-        $arrparentid = explode(',', $category['arrparentid']);
+        $arrparentid  = explode(',', $category['arrparentid']);
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
         $this->assign($info);
         $this->assign([
-            'paytype' => $paytype,
-            'readpoint' => $readpoint,
+            'paytype'       => $paytype,
+            'readpoint'     => $readpoint,
             'allow_visitor' => $allow_visitor,
-            'top_parentid' => $top_parentid,
-            'arrparentid' => $arrparentid,
-            'SEO' => $seo,
-            'catid' => $catid,
-            'page' => $page,
-            'modelid' => $modelid,
+            'top_parentid'  => $top_parentid,
+            'arrparentid'   => $arrparentid,
+            'SEO'           => $seo,
+            'catid'         => $catid,
+            'page'          => $page,
+            'modelid'       => $modelid,
         ]);
         return $this->fetch('/' . $template);
     }
@@ -210,19 +209,19 @@ class Index extends Cmsbase
         //按时间搜索
         if ($time == 'day') {
             $search_time = time() - 86400;
-            $sql_time = ' AND inputtime > ' . $search_time;
+            $sql_time    = ' AND inputtime > ' . $search_time;
         } elseif ($time == 'week') {
             $search_time = time() - 604800;
-            $sql_time = ' AND inputtime > ' . $search_time;
+            $sql_time    = ' AND inputtime > ' . $search_time;
         } elseif ($time == 'month') {
             $search_time = time() - 2592000;
-            $sql_time = ' AND inputtime > ' . $search_time;
+            $sql_time    = ' AND inputtime > ' . $search_time;
         } elseif ($time == 'year') {
             $search_time = time() - 31536000;
-            $sql_time = ' AND inputtime > ' . $search_time;
+            $sql_time    = ' AND inputtime > ' . $search_time;
         } else {
             $search_time = 0;
-            $sql_time = '';
+            $sql_time    = '';
         }
         //搜索历史记录
         $shistory = cookie("shistory");
@@ -277,16 +276,16 @@ class Index extends Cmsbase
         $count = $list->total();
         debug('end');
         $this->assign([
-            'time' => $time,
-            'modelid' => $modelid,
-            'keyword' => $keyword,
-            'shistory' => $shistory,
-            'SEO' => $seo,
-            'list' => $list,
-            'count' => $count,
-            'modellist' => $modellist,
+            'time'        => $time,
+            'modelid'     => $modelid,
+            'keyword'     => $keyword,
+            'shistory'    => $shistory,
+            'SEO'         => $seo,
+            'list'        => $list,
+            'count'       => $count,
+            'modellist'   => $modellist,
             'search_time' => debug('begin', 'end', 6), //运行时间
-            'pages' => $list->render(),
+            'pages'       => $list->render(),
         ]);
         if (!empty($keyword)) {
             return $this->fetch('/search_result');
@@ -301,9 +300,9 @@ class Index extends Cmsbase
      */
     public function tags()
     {
-        $page = $page = $this->request->param('page/d', 1);
+        $page  = $page  = $this->request->param('page/d', 1);
         $tagid = $this->request->param('tagid/d', 0);
-        $tag = $this->request->param('tag/s', '');
+        $tag   = $this->request->param('tag/s', '');
         $where = array();
         if (!empty($tag)) {
             $where['tag'] = $tag;

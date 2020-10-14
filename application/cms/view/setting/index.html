@@ -69,8 +69,11 @@
                             <div class="layui-form-field-label">
                                 <textarea name="setting[autolinks]" placeholder="请输入关键字链接" class="layui-textarea" style="width: 300px;">{$setting['autolinks']}</textarea>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">每行1组以"关键词<strong style="color:red;">|</strong>(半角竖线)链接"形式填写, 可用第2个竖线追加参数:<strong style="color:red;">n</strong>代表nofollow标记, <strong style="color:red;">e</strong>代表external nofollow标记, <strong style="color:red;">b</strong>代表本窗口打开.</br> 例: google<strong>|</strong>http://www.google.com<strong>|</strong>n 即此链接带nofollow(默认新窗口打开)</div>
+                            <div class="layui-form-mid layui-word-aux">每行1组以"关键词<b class="text-danger">|</b>(半角竖线)链接"形式填写, 可用第2个竖线追加参数:<b class="text-danger">n</b>代表nofollow标记, <b class="text-danger">e</b>代表external nofollow标记, <b class="text-danger">b</b>代表本窗口打开.</br> 例: google<strong>|</strong>http://www.google.com<strong>|</strong>n 即此链接带nofollow(默认新窗口打开)</div>
                         </div>
+			            <div class="layui-form-item">
+			                <div class="layui-form-mid layui-word-aux">违禁词库位于<b class="text-danger">data/words.txt</b>一行一个</div>
+			            </div>
                     </div>
                 </div>
             </div>
