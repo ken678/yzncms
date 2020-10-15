@@ -52,12 +52,12 @@ class Category extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $models = cache('Model');
-            $tree = new \util\Tree();
+            $models     = cache('Model');
+            $tree       = new \util\Tree();
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
-            $categorys = array();
-            $result = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+            $categorys  = array();
+            $result     = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
             foreach ($result as $k => $v) {
                 if (isset($models[$v['modelid']]['name'])) {
                     $v['modelname'] = $models[$v['modelid']]['name'];
@@ -72,12 +72,12 @@ class Category extends Adminbase
                 } elseif ($v['type'] == 3) {
                     $v['add_url'] = url("Category/wadd", array("parentid" => $v['id']));
                 }
-                $v['url'] = buildCatUrl($v['id'], $v['url']);
+                $v['url']            = buildCatUrl($v['id'], $v['url']);
                 $categorys[$v['id']] = $v;
             }
             $tree->init($categorys);
-            $_list = $tree->getTreeList($tree->getTreeArray(0), 'catname');
-            $total = count($_list);
+            $_list  = $tree->getTreeList($tree->getTreeArray(0), 'catname');
+            $total  = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -96,13 +96,13 @@ class Category extends Adminbase
             switch ($data['type']) {
                 //单页
                 case 1:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
-                    $scene = 'page';
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
+                    $scene  = 'page';
                     break;
                 //列表
                 case 2:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
-                    $scene = 'list';
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
+                    $scene  = 'list';
                     break;
                 default:
                     $this->error('栏目类型错误~');
@@ -118,10 +118,10 @@ class Category extends Adminbase
                     if (trim($rs) == '') {
                         continue;
                     }
-                    $cat = explode('|', $rs, 2);
+                    $cat             = explode('|', $rs, 2);
                     $data['catname'] = $cat[0];
-                    $data['catdir'] = isset($cat[1]) ? $cat[1] : '';
-                    $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir']);
+                    $data['catdir']  = isset($cat[1]) ? $cat[1] : '';
+                    $data['catdir']  = $this->get_dirpinyin($data['catname'], $data['catdir']);
 
                     $result = $this->validate($data, 'Category.' . $scene);
                     if (true !== $result) {
@@ -138,7 +138,7 @@ class Category extends Adminbase
                 $this->success("添加成功！", url("Category/index"));
             } else {
                 $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir']);
-                $result = $this->validate($data, 'Category.' . $scene);
+                $result         = $this->validate($data, 'Category.' . $scene);
                 if (true !== $result) {
                     $this->error($result);
                 }
@@ -165,7 +165,7 @@ class Category extends Adminbase
             }
             //输出可用模型
             $modelsdata = cache("Model");
-            $models = array();
+            $models     = array();
             foreach ($modelsdata as $v) {
                 if ($v['status'] == 1 && $v['module'] == 'cms') {
                     $models[] = $v;
@@ -174,10 +174,10 @@ class Category extends Adminbase
             //栏目列表 可以用缓存的方式
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             if (!empty($array) && is_array($array)) {
-                $tree = new \util\Tree();
+                $tree       = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
                 $tree->nbsp = '&nbsp;&nbsp;';
-                $str = "<option value=@id @selected @disabled>@spacer @catname</option>";
+                $str        = "<option value=@id @selected @disabled>@spacer @catname</option>";
                 $tree->init($array);
                 $categorydata = $tree->getTree(0, $str, $parentid);
             } else {
@@ -225,7 +225,7 @@ class Category extends Adminbase
                 //单页
                 case 1:
                     $data['modelid'] = 0;
-                    $scene = 'page';
+                    $scene           = 'page';
                     break;
                 //列表
                 case 2:
@@ -235,11 +235,11 @@ class Category extends Adminbase
                     $this->error('栏目类型错误~');
             }
             $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir'], $catid);
-            $result = $this->validate($data, 'Category.' . $scene);
+            $result         = $this->validate($data, 'Category.' . $scene);
             if (true !== $result) {
                 $this->error($result);
             }
-            $status = $this->modelClass->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
+            $status = $this->modelClass->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
                 if (isModuleInstall('member')) {
                     //更新会员组权限
@@ -256,12 +256,12 @@ class Category extends Adminbase
             if (empty($catid)) {
                 $this->error('请选择需要修改的栏目！');
             }
-            $data = Db::name('category')->where(['id' => $catid])->find();
+            $data    = Db::name('category')->where(['id' => $catid])->find();
             $setting = unserialize($data['setting']);
 
             //输出可用模型
             $modelsdata = cache("Model");
-            $models = array();
+            $models     = array();
             foreach ($modelsdata as $v) {
                 if ($v['status'] == 1 && $v['module'] == 'cms') {
                     $models[] = $v;
@@ -270,10 +270,10 @@ class Category extends Adminbase
             //栏目列表 可以用缓存的方式
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             if (!empty($array) && is_array($array)) {
-                $tree = new \util\Tree();
+                $tree       = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
                 $tree->nbsp = '&nbsp;&nbsp;';
-                $str = "<option value=@id @selected @disabled>@spacer @catname</option>";
+                $str        = "<option value=@id @selected @disabled>@spacer @catname</option>";
                 $tree->init($array);
                 $categorydata = $tree->getTree(0, $str, $data['parentid']);
             } else {
@@ -366,7 +366,7 @@ class Category extends Adminbase
                 $setting = unserialize($cat['setting']);
                 //获取子栏目ID列表
                 $arrchildid = $this->modelClass->get_arrchildid($catid);
-                $child = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
+                $child      = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
                 //检查所有父id 子栏目id 等相关数据是否正确，不正确更新
                 if ($categorys[$catid]['arrparentid'] !== $arrparentid || $categorys[$catid]['arrchildid'] !== $arrchildid || $categorys[$catid]['child'] !== $child) {
                     CategoryModel::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
@@ -385,12 +385,12 @@ class Category extends Adminbase
     //重新统计栏目信息数量
     public function count_items()
     {
-        $result = Db::name('Category')->order('listorder ASC, id ASC')->select();
+        $result      = Db::name('Category')->order('listorder ASC, id ASC')->select();
         $model_cache = cache("Model");
         foreach ($result as $r) {
             if ($r['type'] == 2) {
                 $modelid = $r['modelid'];
-                $number = Db::name(ucwords($model_cache[$modelid]['tablename']))->where('catid', $r['id'])->count();
+                $number  = Db::name(ucwords($model_cache[$modelid]['tablename']))->where('catid', $r['id'])->count();
                 Db::name('Category')->where('id', $r['id'])->update(['items' => $number]);
             }
         }
@@ -432,7 +432,7 @@ class Category extends Adminbase
     //动态根据模型ID加载栏目模板
     public function public_tpl_file_list()
     {
-        $id = $this->request->param('id/d');
+        $id   = $this->request->param('id/d');
         $data = Db::name('Model')->where(array("id" => $id))->find();
         if ($data) {
             $json = ['code' => 0, 'data' => unserialize($data['setting'])];

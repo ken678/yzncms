@@ -45,8 +45,9 @@ function getCategory($catid, $field = '', $newCache = false)
         } else {
             //扩展配置
             $cache['setting'] = unserialize($cache['setting']);
-            $cache['url'] = buildCatUrl($catid, $cache['url']);
-            $cache['image'] = empty($cache['image']) ? '' : get_file_path($cache['image']);
+            $cache['url']     = buildCatUrl($catid, $cache['url']);
+            $cache['image']   = empty($cache['image']) ? '' : get_file_path($cache['image']);
+            $cache['icon']    = empty($cache['icon']) ? '' : get_file_path($cache['icon']);
             Cache::set($key, $cache, 3600);
         }
     }
@@ -96,7 +97,7 @@ function filters($modelid, $catid)
     //$catid = Request::param('catid');
     $conditionParam = [];
     foreach ($data as $name => $rs) {
-        $all[0] = '不限';
+        $all[0]                 = '不限';
         $data[$name]['options'] = array_merge($all, $data[$name]['options']);
         //判断是否是单选条件
         $ifradio = 'checkbox' == $data[$name]['type'] ? false : true;
@@ -104,9 +105,9 @@ function filters($modelid, $catid)
             //单选选中参数
             if (!empty($param[$name])) {
                 $conditionParam[$name]['options'][$param[$name]]['active'] = true;
-                $nowParam = $param;
-                $nowParam[$name] = '';
-                $conditionParam[$name]['options'][$param[$name]]['param'] = paramencode($nowParam);
+                $nowParam                                                  = $param;
+                $nowParam[$name]                                           = '';
+                $conditionParam[$name]['options'][$param[$name]]['param']  = paramencode($nowParam);
                 unset($nowParam);
             }
         } else {
@@ -116,10 +117,10 @@ function filters($modelid, $catid)
                 foreach ($paramContent as $k => $v) {
                     $nowParamContent = $paramContent;
                     unset($nowParamContent[$k]);
-                    $nowParam = $param;
-                    $nowParam[$name] = implode('_', $nowParamContent);
+                    $nowParam                                       = $param;
+                    $nowParam[$name]                                = implode('_', $nowParamContent);
                     $conditionParam[$name]['options'][$v]['active'] = true;
-                    $conditionParam[$name]['options'][$v]['param'] = paramencode($nowParam);
+                    $conditionParam[$name]['options'][$v]['param']  = paramencode($nowParam);
                     unset($nowParam);
                     unset($nowParamContent);
                 }
@@ -127,7 +128,7 @@ function filters($modelid, $catid)
             }
         }
         $conditionParam[$name]['title'] = $rs['title'];
-        $conditionParam[$name]['name'] = $rs['name'];
+        $conditionParam[$name]['name']  = $rs['name'];
         //未选中 active param title url
         foreach ($data[$name]['options'] as $k => $v) {
             $conditionParam[$name]['options'][$k]['title'] = $v;
@@ -136,12 +137,12 @@ function filters($modelid, $catid)
                 //未选中条件参数生成
                 $conditionParam[$name]['options'][$k]['active'] = 0;
                 if ($ifradio) {
-                    $nowParam = $param;
-                    $nowParam[$name] = $k;
+                    $nowParam                                      = $param;
+                    $nowParam[$name]                               = $k;
                     $conditionParam[$name]['options'][$k]['param'] = paramencode($nowParam);
                 } else {
-                    $nowParam = $param;
-                    $nowParam[$name] = empty($param[$name]) ? $k : $param[$name] . '_' . $k;
+                    $nowParam                                      = $param;
+                    $nowParam[$name]                               = empty($param[$name]) ? $k : $param[$name] . '_' . $k;
                     $conditionParam[$name]['options'][$k]['param'] = paramencode($nowParam);
                 }
             }
@@ -157,10 +158,10 @@ function filters($modelid, $catid)
 
 function structure_filters_sql($modelid)
 {
-    $data = get_filters_field($modelid);
+    $data       = get_filters_field($modelid);
     $fields_key = array_keys($data);
-    $sql = '`status` = \'1\'';
-    $param = paramdecode(Request::param('condition'));
+    $sql        = '`status` = \'1\'';
+    $param      = paramdecode(Request::param('condition'));
     foreach ($param as $k => $r) {
         if (isset($data[$k]['type']) && in_array($k, $fields_key) && intval($r) != 0) {
             if ('radio' == $data[$k]['type']) {
@@ -202,7 +203,7 @@ function get_filters_field($modelid)
 
 function paramdecode($str)
 {
-    $arr = [];
+    $arr  = [];
     $arr1 = explode('&', $str);
     foreach ($arr1 as $vo) {
         if (!empty($vo)) {
@@ -251,10 +252,10 @@ function seo($catid = '', $title = '', $description = '', $keyword = '')
     if (!empty($catid)) {
         $cat = getCategory($catid);
     }
-    $seo['site_title'] = isset($site['site_title']) && !empty($site['site_title']) ? $site['site_title'] : $site['site_name'];
-    $seo['keyword'] = !empty($keyword) ? $keyword : $site['site_keyword'];
+    $seo['site_title']  = isset($site['site_title']) && !empty($site['site_title']) ? $site['site_title'] : $site['site_name'];
+    $seo['keyword']     = !empty($keyword) ? $keyword : $site['site_keyword'];
     $seo['description'] = isset($description) && !empty($description) ? $description : (isset($cat['setting']['meta_description']) && !empty($cat['setting']['meta_description']) ? $cat['setting']['meta_description'] : (isset($site['site_description']) && !empty($site['site_description']) ? $site['site_description'] : ''));
-    $seo['title'] = (isset($title) && !empty($title) ? $title . ' - ' : '') . (isset($cat['setting']['meta_title']) && !empty($cat['setting']['meta_title']) ? $cat['setting']['meta_title'] . ' - ' : (isset($cat['catname']) && !empty($cat['catname']) ? $cat['catname'] . ' - ' : ''));
+    $seo['title']       = (isset($title) && !empty($title) ? $title . ' - ' : '') . (isset($cat['setting']['meta_title']) && !empty($cat['setting']['meta_title']) ? $cat['setting']['meta_title'] . ' - ' : (isset($cat['catname']) && !empty($cat['catname']) ? $cat['catname'] . ' - ' : ''));
     foreach ($seo as $k => $v) {
         $seo[$k] = str_replace(array("\n", "\r"), '', $v);
     }

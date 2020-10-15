@@ -16,7 +16,6 @@ namespace app\cms\taglib;
 
 use app\cms\model\Category as Category_Model;
 use think\Db;
-use think\facade\Cache;
 
 class CmsTagLib
 {
@@ -37,7 +36,7 @@ class CmsTagLib
             $catid = (int) $attr['catid'];
             if (getCategory($catid, 'child')) {
                 $catids_str = getCategory($catid, 'arrchildid');
-                $pos = strpos($catids_str, ',') + 1;
+                $pos        = strpos($catids_str, ',') + 1;
                 $catids_str = substr($catids_str, $pos);
                 array_push($where, "catid in(" . $catids_str . ',' . $catid . ")");
             } else {
@@ -71,8 +70,9 @@ class CmsTagLib
         $categorys = Category_Model::where($where)->limit($data['limit'])->order($data['order'])->select();
         if (!empty($categorys)) {
             foreach ($categorys as &$vo) {
-                $vo['url'] = buildCatUrl($vo['id'], $vo['url']);
+                $vo['url']   = buildCatUrl($vo['id'], $vo['url']);
                 $vo['image'] = empty($vo['image']) ? '' : get_file_path($vo['image']);
+                $vo['icon']  = empty($vo['icon']) ? '' : get_file_path($vo['icon']);
             }
         }
         return $categorys;
@@ -97,7 +97,7 @@ class CmsTagLib
             $data['where'] = $data['where'] . " AND FIND_IN_SET('" . intval($data['flag']) . "',flag)";
         }
         $data['field'] = isset($data['field']) ? $data['field'] : '*';
-        $moreifo = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
+        $moreifo       = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
 
         //如果设置了catid，则根据catid判断modelid,传入的modelid失效
         if ($catid) {
@@ -171,10 +171,10 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=_blank ' : '';
-        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND status=1 AND id <" . $data['id'], false, 'catid,id,title',"id desc");
+        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND status=1 AND id <" . $data['id'], false, 'catid,id,title', "id desc");
         if (!$result) {
-            $result['title'] = $msg;
-            $result['url'] = 'javascript:alert("' . $msg . '");';
+            $result['title']  = $msg;
+            $result['url']    = 'javascript:alert("' . $msg . '");';
             $result['target'] = $target;
         } else {
             $result['target'] = $target;
@@ -194,8 +194,8 @@ class CmsTagLib
         $target = !empty($data['target']) ? ' target=_blank ' : '';
         $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND status=1 AND id >" . $data['id'], false, 'catid,id,title');
         if (!$result) {
-            $result['title'] = $msg;
-            $result['url'] = 'javascript:alert("' . $msg . '");';
+            $result['title']  = $msg;
+            $result['url']    = 'javascript:alert("' . $msg . '");';
             $result['target'] = $target;
         } else {
             $result['target'] = $target;
