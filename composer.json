@@ -25,8 +25,7 @@
         "overtrue/pinyin": "~4.0",
         "yansongda/pay": "^2.7",
         "endroid/qr-code": "^2.5",
-        "overtrue/easy-sms": "^1.1",
-        "phpoffice/phpspreadsheet": "^1.8"
+        "overtrue/easy-sms": "^1.1"
     },
     "autoload": {
         "psr-4": {
