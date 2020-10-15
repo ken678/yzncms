@@ -55,7 +55,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES ('1', 'admin', '9724b5e6c56b95f5723009ef81961bfe', '1', 'Wo0bAa', '御宅男', '1546940765', '127.0.0.1', '530765310@qq.com', '1');
+INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765, '127.0.0.1', '530765310@qq.com', 1);
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`
@@ -117,8 +117,8 @@ CREATE TABLE `yzn_auth_group` (
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
-INSERT INTO `yzn_auth_group` VALUES ('1', '0', 'admin', '1', '超级管理员', '拥有所有权限', '*', '1');
-INSERT INTO `yzn_auth_group` VALUES ('2', '1', 'admin', '1', '编辑', '编辑', '', '1');
+INSERT INTO `yzn_auth_group` VALUES (1, 0, 'admin', 1, '超级管理员', '拥有所有权限', '*', 1);
+INSERT INTO `yzn_auth_group` VALUES (2, 1, 'admin', 1, '编辑', '编辑', '', 1);
 
 -- ----------------------------
 -- Table structure for `yzn_auth_rule`
@@ -155,11 +155,11 @@ CREATE TABLE `yzn_cache` (
 -- ----------------------------
 -- Records of yzn_cache
 -- ----------------------------
-INSERT INTO `yzn_cache` VALUES ('1', 'Config', '网站配置', 'admin', 'Config', 'config_cache', '1');
-INSERT INTO `yzn_cache` VALUES ('2', 'Menu', '后台菜单', 'admin', 'Menu', 'menu_cache', '1');
-INSERT INTO `yzn_cache` VALUES ('3', 'Module', '可用模块列表', 'admin', 'Module', 'module_cache', '1');
-INSERT INTO `yzn_cache` VALUES ('4', 'Model', '模型列表', 'admin', 'Models', 'model_cache', '1');
-INSERT INTO `yzn_cache` VALUES ('5', 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', '1');
+INSERT INTO `yzn_cache` VALUES (1, 'Config', '网站配置', 'admin', 'Config', 'config_cache', 1);
+INSERT INTO `yzn_cache` VALUES (2, 'Menu', '后台菜单', 'admin', 'Menu', 'menu_cache', 1);
+INSERT INTO `yzn_cache` VALUES (3, 'Module', '可用模块列表', 'admin', 'Module', 'module_cache', 1);
+INSERT INTO `yzn_cache` VALUES (4, 'Model', '模型列表', 'admin', 'Models', 'model_cache', 1);
+INSERT INTO `yzn_cache` VALUES (5, 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', 1);
 
 -- ----------------------------
 -- Table structure for `yzn_config`
@@ -187,28 +187,28 @@ CREATE TABLE `yzn_config` (
 -- ----------------------------
 -- Records of yzn_config
 -- ----------------------------
-INSERT INTO `yzn_config` VALUES ('1', 'web_site_icp', 'text', '备案信息', 'base', '', '', '1551244923', '1551244971', '1', '', '1');
-INSERT INTO `yzn_config` VALUES ('2', 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', '1551244957', '1551244957', '1', '', '100');
-INSERT INTO `yzn_config` VALUES ('3', 'mail_type', 'radio', '邮件发送模式', 'email', '1:SMTP\r\n2:Mail', '', '1553652833', '1553652915', '1', '1', '1');
-INSERT INTO `yzn_config` VALUES ('4', 'mail_smtp_host', 'text', '邮件服务器', 'email', '', '错误的配置发送邮件会导致服务器超时', '1553652889', '1553652917', '1', 'smtp.163.com', '2');
-INSERT INTO `yzn_config` VALUES ('5', 'mail_smtp_port', 'text', '邮件发送端口', 'email', '', '不加密默认25,SSL默认465,TLS默认587', '1553653165', '1553653292', '1', '465', '3');
-INSERT INTO `yzn_config` VALUES ('6', 'mail_auth', 'radio', '身份认证', 'email', '0:关闭\r\n1:开启', '', '1553658375', '1553658392', '1', '1', '4');
-INSERT INTO `yzn_config` VALUES ('7', 'mail_smtp_user', 'text', '用户名', 'email', '', '', '1553653267', '1553658393', '1', '', '5');
-INSERT INTO `yzn_config` VALUES ('8', 'mail_smtp_pass', 'text', '密码', 'email', '', '', '1553653344', '1553658394', '1', '', '6');
-INSERT INTO `yzn_config` VALUES ('9', 'mail_verify_type', 'radio', '验证方式', 'email', '1:TLS\r\n2:SSL', '', '1553653426', '1553658395', '1', '2', '7');
-INSERT INTO `yzn_config` VALUES ('10', 'mail_from', 'text', '发件人邮箱', 'email', '', '', '1553653500', '1553658397', '1', '', '8');
-INSERT INTO `yzn_config` VALUES ('11', 'config_group', 'array', '配置分组', 'system', '', '', '1494408414', '1494408414', '1', '{\"base\":\"基础\",\"email\":\"邮箱\",\"system\":\"系统\",\"upload\":\"上传\",\"develop\":\"开发\"}', '0');
-INSERT INTO `yzn_config` VALUES ('12', 'theme', 'text', '主题风格', 'system', '', '', '1541752781', '1541756888', '1', 'default', '1');
-INSERT INTO `yzn_config` VALUES ('13', 'admin_forbid_ip', 'textarea', '后台禁止访问IP', 'system', '', '匹配IP段用\"*\"占位，如192.168.*.*，多个IP地址请用英文逗号\",\"分割', '1551244957', '1551244957', '1', '', '2');
-INSERT INTO `yzn_config` VALUES ('14', 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457656', '1552436075', '1', '0', '2');
-INSERT INTO `yzn_config` VALUES ('15', 'upload_image_ext', 'text', '允许上传的图片后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457657', '1552436074', '1', 'gif,jpg,jpeg,bmp,png', '1');
-INSERT INTO `yzn_config` VALUES ('16', 'upload_file_size', 'text', '文件上传大小限制', 'upload', '', '0为不限制大小，单位：kb', '1540457658', '1552436078', '1', '0', '3');
-INSERT INTO `yzn_config` VALUES ('17', 'upload_file_ext', 'text', '允许上传的文件后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', '1540457659', '1552436080', '1', 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z', '4');
-INSERT INTO `yzn_config` VALUES ('18', 'upload_driver', 'radio', '上传驱动', 'upload', 'local:本地', '图片或文件上传驱动', '1541752781', '1552436085', '1', 'local', '9');
-INSERT INTO `yzn_config` VALUES ('19', 'upload_thumb_water', 'switch', '添加水印', 'upload', '', '', '1552435063', '1552436080', '1', '0', '5');
-INSERT INTO `yzn_config` VALUES ('20', 'upload_thumb_water_pic', 'image', '水印图片', 'upload', '', '只有开启水印功能才生效', '1552435183', '1552436081', '1', '', '6');
-INSERT INTO `yzn_config` VALUES ('21', 'upload_thumb_water_position', 'radio', '水印位置', 'upload', '1:左上角\r\n2:上居中\r\n3:右上角\r\n4:左居中\r\n5:居中\r\n6:右居中\r\n7:左下角\r\n8:下居中\r\n9:右下角', '只有开启水印功能才生效', '1552435257', '1552436082', '1', '9', '7');
-INSERT INTO `yzn_config` VALUES ('22', 'upload_thumb_water_alpha', 'text', '水印透明度', 'upload', '', '请输入0~100之间的数字，数字越小，透明度越高', '1552435299', '1552436083', '1', '50', '8');
+INSERT INTO `yzn_config` VALUES (1, 'web_site_icp', 'text', '备案信息', 'base', '', '', 1551244923, 1551244971, 1, '', 1);
+INSERT INTO `yzn_config` VALUES (2, 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', 1551244957, 1551244957, 1, '', 100);
+INSERT INTO `yzn_config` VALUES (3, 'mail_type', 'radio', '邮件发送模式', 'email', '1:SMTP\r\n2:Mail', '', 1553652833, 1553652915, 1, '1', 1);
+INSERT INTO `yzn_config` VALUES (4, 'mail_smtp_host', 'text', '邮件服务器', 'email', '', '错误的配置发送邮件会导致服务器超时', 1553652889, 1553652917, 1, 'smtp.163.com', 2);
+INSERT INTO `yzn_config` VALUES (5, 'mail_smtp_port', 'text', '邮件发送端口', 'email', '', '不加密默认25,SSL默认465,TLS默认587', 1553653165, 1553653292, 1, '465', 3);
+INSERT INTO `yzn_config` VALUES (6, 'mail_auth', 'radio', '身份认证', 'email', '0:关闭\r\n1:开启', '', 1553658375, 1553658392, 1, '1', 4);
+INSERT INTO `yzn_config` VALUES (7, 'mail_smtp_user', 'text', '用户名', 'email', '', '', 1553653267, 1553658393, 1, '', 5);
+INSERT INTO `yzn_config` VALUES (8, 'mail_smtp_pass', 'text', '密码', 'email', '', '', 1553653344, 1553658394, 1, '', 6);
+INSERT INTO `yzn_config` VALUES (9, 'mail_verify_type', 'radio', '验证方式', 'email', '1:TLS\r\n2:SSL', '', 1553653426, 1553658395, 1, '2', 7);
+INSERT INTO `yzn_config` VALUES (10, 'mail_from', 'text', '发件人邮箱', 'email', '', '', 1553653500, 1553658397, 1, '', 8);
+INSERT INTO `yzn_config` VALUES (11, 'config_group', 'array', '配置分组', 'system', '', '', 1494408414, 1494408414, 1, '{\"base\":\"基础\",\"email\":\"邮箱\",\"system\":\"系统\",\"upload\":\"上传\",\"develop\":\"开发\"}', 0);
+INSERT INTO `yzn_config` VALUES (12, 'theme', 'text', '主题风格', 'system', '', '', 1541752781, 1541756888, 1, 'default', 1);
+INSERT INTO `yzn_config` VALUES (13, 'admin_forbid_ip', 'textarea', '后台禁止访问IP', 'system', '', '匹配IP段用\"*\"占位，如192.168.*.*，多个IP地址请用英文逗号\",\"分割', 1551244957, 1551244957, 1, '', 2);
+INSERT INTO `yzn_config` VALUES (14, 'upload_image_size', 'text', '图片上传大小限制', 'upload', '', '0为不限制大小，单位：kb', 1540457656, 1552436075, 1, '0', 2);
+INSERT INTO `yzn_config` VALUES (15, 'upload_image_ext', 'text', '允许上传的图片后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', 1540457657, 1552436074, 1, 'gif,jpg,jpeg,bmp,png', 1);
+INSERT INTO `yzn_config` VALUES (16, 'upload_file_size', 'text', '文件上传大小限制', 'upload', '', '0为不限制大小，单位：kb', 1540457658, 1552436078, 1, '0', 3);
+INSERT INTO `yzn_config` VALUES (17, 'upload_file_ext', 'text', '允许上传的文件后缀', 'upload', '', '多个后缀用逗号隔开，不填写则不限制类型', 1540457659, 1552436080, 1, 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z', 4);
+INSERT INTO `yzn_config` VALUES (18, 'upload_driver', 'radio', '上传驱动', 'upload', 'local:本地', '图片或文件上传驱动', 1541752781, 1552436085, 1, 'local', 9);
+INSERT INTO `yzn_config` VALUES (19, 'upload_thumb_water', 'switch', '添加水印', 'upload', '', '', 1552435063, 1552436080, 1, '0', 5);
+INSERT INTO `yzn_config` VALUES (20, 'upload_thumb_water_pic', 'image', '水印图片', 'upload', '', '只有开启水印功能才生效', 1552435183, 1552436081, 1, '', 6);
+INSERT INTO `yzn_config` VALUES (21, 'upload_thumb_water_position', 'radio', '水印位置', 'upload', '1:左上角\r\n2:上居中\r\n3:右上角\r\n4:左居中\r\n5:居中\r\n6:右居中\r\n7:左下角\r\n8:下居中\r\n9:右下角', '只有开启水印功能才生效', 1552435257, 1552436082, 1, '9', 7);
+INSERT INTO `yzn_config` VALUES (22, 'upload_thumb_water_alpha', 'text', '水印透明度', 'upload', '', '请输入0~100之间的数字，数字越小，透明度越高', 1552435299, 1552436083, 1, '50', 8);
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`
@@ -229,25 +229,25 @@ CREATE TABLE `yzn_field_type` (
 -- ----------------------------
 -- Records of yzn_field_type
 -- ----------------------------
-INSERT INTO `yzn_field_type` VALUES ('text', '输入框', '1', 'varchar(255) NOT NULL DEFAULT \'\'', '0', '1', '');
-INSERT INTO `yzn_field_type` VALUES ('checkbox', '复选框', '2', 'varchar(32) NOT NULL DEFAULT \'\'', '1', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('textarea', '多行文本', '3', 'varchar(255) NOT NULL DEFAULT \'\'', '0', '1', '');
-INSERT INTO `yzn_field_type` VALUES ('radio', '单选按钮', '4', 'char(10) NOT NULL DEFAULT \'\'', '1', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('switch', '开关', '5', 'tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isBool');
-INSERT INTO `yzn_field_type` VALUES ('array', '数组', '6', 'varchar(512) NOT NULL DEFAULT \'\'', '0', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('select', '下拉框', '7', 'char(10) NOT NULL DEFAULT \'\'', '1', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('selects', '下拉框(多选)', '8', 'varchar(32) NOT NULL DEFAULT \'\'', '1', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('selectpage', '高级下拉框', '9', 'varchar(32) NOT NULL DEFAULT \'\'', '1', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('image', '单张图', '10', 'int(5) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isNumber');
-INSERT INTO `yzn_field_type` VALUES ('images', '多张图', '11', 'varchar(256) NOT NULL DEFAULT \'\'', '0', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('tags', '标签', '12', 'varchar(255) NOT NULL DEFAULT \'\'', '0', '1', '');
-INSERT INTO `yzn_field_type` VALUES ('number', '数字', '13', 'int(10) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isNumber');
-INSERT INTO `yzn_field_type` VALUES ('datetime', '日期和时间', '14', 'int(10) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', '15', 'text NOT NULL', '0', '1', '');
-INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', '16', 'text NOT NULL', '0', '1', '');
-INSERT INTO `yzn_field_type` VALUES ('files', '多文件', '17', 'varchar(255) NOT NULL DEFAULT \'\'', '0', '0', '');
-INSERT INTO `yzn_field_type` VALUES ('file', '单文件', '18', 'int(5) UNSIGNED NOT NULL DEFAULT \'0\'', '0', '0', 'isNumber');
-INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', '19', 'varchar(7) NOT NULL DEFAULT \'\'', '0', '0', '');
+INSERT INTO `yzn_field_type` VALUES ('text', '输入框', 1, 'varchar(255) NOT NULL DEFAULT \'\'', 0, 1, '');
+INSERT INTO `yzn_field_type` VALUES ('checkbox', '复选框', 2, 'varchar(32) NOT NULL DEFAULT \'\'', 1, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('textarea', '多行文本', 3, 'varchar(255) NOT NULL DEFAULT \'\'', 0, 1, '');
+INSERT INTO `yzn_field_type` VALUES ('radio', '单选按钮', 4, 'char(10) NOT NULL DEFAULT \'\'', 1, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('switch', '开关', 5, 'tinyint(2) UNSIGNED NOT NULL DEFAULT \'0\'', 0, 0, 'isBool');
+INSERT INTO `yzn_field_type` VALUES ('array', '数组', 6, 'varchar(512) NOT NULL DEFAULT \'\'', 0, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('select', '下拉框', 7, 'char(10) NOT NULL DEFAULT \'\'', 1, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('selects', '下拉框(多选)', 8, 'varchar(32) NOT NULL DEFAULT \'\'', 1, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('selectpage', '高级下拉框', 9, 'varchar(32) NOT NULL DEFAULT \'\'', 1, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('image', '单张图', 10, 'int(5) UNSIGNED NOT NULL DEFAULT \'0\'', 0, 0, 'isNumber');
+INSERT INTO `yzn_field_type` VALUES ('images', '多张图', 11, 'varchar(256) NOT NULL DEFAULT \'\'', 0, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('tags', '标签', 12, 'varchar(255) NOT NULL DEFAULT \'\'', 0, 1, '');
+INSERT INTO `yzn_field_type` VALUES ('number', '数字', 13, 'int(10) UNSIGNED NOT NULL DEFAULT \'0\'', 0, 0, 'isNumber');
+INSERT INTO `yzn_field_type` VALUES ('datetime', '日期和时间', 14, 'int(10) UNSIGNED NOT NULL DEFAULT \'0\'', 0, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', 15, 'text NOT NULL', 0, 1, '');
+INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 16, 'text NOT NULL', 0, 1, '');
+INSERT INTO `yzn_field_type` VALUES ('files', '多文件', 17, 'varchar(255) NOT NULL DEFAULT \'\'', 0, 0, '');
+INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 18, 'int(5) UNSIGNED NOT NULL DEFAULT \'0\'', 0, 0, 'isNumber');
+INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 19, 'varchar(7) NOT NULL DEFAULT \'\'', 0, 0, '');
 
 -- ----------------------------
 -- Table structure for `yzn_hooks`
@@ -270,25 +270,25 @@ CREATE TABLE `yzn_hooks` (
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
-INSERT INTO `yzn_hooks` VALUES ('1', 'app_init', '应用初始化标签位', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('2', 'page_header', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('3', 'page_footer', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('4', 'sms_get', '短信获取行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('5', 'sms_send', '短信发送行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('6', 'sms_notice', '短信发送通知', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('7', 'sms_check', '检测短信验证是否正确', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('8', 'sms_flush', '清空短信验证行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('9', 'ems_get', '邮件获取行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('10', 'ems_send', '邮件发送行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('11', 'ems_notice', '邮件发送通知', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('12', 'ems_check', '检测邮件验证是否正确', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('13', 'ems_flush', '清空邮件验证行为', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('14', 'upload_after', '第三方附件上传钩子', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('15', 'upload_delete', '第三方附件删除钩子', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('16', 'sync_login', '第三方登陆位置', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('17', 'user_config', '用户配置页面钩子', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('18', 'baidupush', '百度熊掌号+百度站长推送', '2', '1509174020', '', '', '1', '1');
-INSERT INTO `yzn_hooks` VALUES ('19', 'markdown', 'markdown编辑器', '2', '1509174020', '', '', '1', '1');
+INSERT INTO `yzn_hooks` VALUES (1, 'app_init', '应用初始化标签位', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (2, 'page_header', '页面header钩子，一般用于加载插件CSS文件和代码', 1, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (3, 'page_footer', '页面footer钩子，一般用于加载插件JS文件和JS代码', 1, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (4, 'sms_get', '短信获取行为', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (5, 'sms_send', '短信发送行为', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (6, 'sms_notice', '短信发送通知', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (7, 'sms_check', '检测短信验证是否正确', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (8, 'sms_flush', '清空短信验证行为', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (9, 'ems_get', '邮件获取行为', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (10, 'ems_send', '邮件发送行为', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (11, 'ems_notice', '邮件发送通知', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (12, 'ems_check', '检测邮件验证是否正确', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (13, 'ems_flush', '清空邮件验证行为', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (14, 'upload_after', '第三方附件上传钩子', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (15, 'upload_delete', '第三方附件删除钩子', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (16, 'sync_login', '第三方登陆位置', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (17, 'user_config', '用户配置页面钩子', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (18, 'baidupush', '百度熊掌号+百度站长推送', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (19, 'markdown', 'markdown编辑器', 2, 1509174020, '', '', 1, 1);
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
@@ -314,51 +314,51 @@ CREATE TABLE `yzn_menu` (
 -- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
-INSERT INTO `yzn_menu` VALUES ('3', '设置', 'icon-setup', '0', 'admin', 'setting', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('4', '模块', 'icon-supply', '0', 'admin', 'module', 'index1', '', '1', '', '0', '9');
-INSERT INTO `yzn_menu` VALUES ('5', '扩展', 'icon-tools', '0', 'addons', 'addons', 'index1', '', '1', '', '0', '10');
-INSERT INTO `yzn_menu` VALUES ('10', '系统配置', 'icon-zidongxiufu', '3', 'admin', 'config', 'index1', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('11', '配置管理', 'icon-apartment', '10', 'admin', 'config', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('12', '删除日志', '', '20', 'admin', 'adminlog', 'deletelog', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('13', '网站设置', 'icon-setup', '10', 'admin', 'config', 'setting', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('14', '菜单管理', 'icon-other', '10', 'admin', 'menu', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('15', '权限管理', 'icon-guanliyuan', '3', 'admin', 'manager', 'index1', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('16', '管理员管理', 'icon-guanliyuan', '15', 'admin', 'manager', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('17', '角色管理', 'icon-group', '15', 'admin', 'authManager', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('18', '添加管理员', '', '16', 'admin', 'manager', 'add', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('19', '编辑管理员', '', '16', 'admin', 'manager', 'edit', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('20', '管理日志', 'icon-rizhi', '15', 'admin', 'adminlog', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('21', '删除管理员', '', '16', 'admin', 'manager', 'del', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('22', '添加角色', '', '17', 'admin', 'authManager', 'createGroup', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('23', '附件管理', 'icon-accessory', '10', 'attachment', 'attachments', 'index', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('24', '新增配置', '', '11', 'admin', 'config', 'add', '', '1', '', '0', '1');
-INSERT INTO `yzn_menu` VALUES ('25', '编辑配置', '', '11', 'admin', 'config', 'edit', '', '1', '', '0', '2');
-INSERT INTO `yzn_menu` VALUES ('26', '删除配置', '', '11', 'admin', 'config', 'del', '', '1', '', '0', '3');
-INSERT INTO `yzn_menu` VALUES ('27', '批量更新', '', '11', 'admin', 'config', 'multi', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('28', '新增菜单', '', '14', 'admin', 'menu', 'add', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('29', '编辑菜单', '', '14', 'admin', 'menu', 'edit', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('30', '删除菜单', '', '14', 'admin', 'menu', 'del', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('31', '批量更新', '', '14', 'admin', 'menu', 'multi', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('32', '附件上传', '', '23', 'attachment', 'attachments', 'upload', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('33', '附件删除', '', '23', 'attachment', 'attachments', 'del', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('34', '编辑器附件', '', '23', 'attachment', 'ueditor', 'run', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('35', '图片列表', '', '23', 'attachment', 'attachments', 'showFileLis', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('36', '图片本地化', '', '23', 'attachment', 'attachments', 'getUrlFile', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('37', '图片选择', '', '23', 'attachment', 'attachments', 'select', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('38', '插件扩展', 'icon-tools', '5', 'addons', 'addons', 'index2', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('39', '插件管理', 'icon-plugins-', '38', 'addons', 'addons', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('40', '行为管理', 'icon-hangweifenxi', '38', 'addons', 'addons', 'hooks', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('41', '插件后台列表', 'icon-liebiaosousuo', '5', 'addons', 'addons', 'addonadmin', '', '0', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('43', '本地模块', 'icon-supply', '4', 'admin', 'module', 'index2', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('44', '模块管理', 'icon-mokuaishezhi', '43', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('45', '模块后台列表', 'icon-liebiaosousuo', '4', 'admin', 'module', 'index', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('48', '编辑角色', '', '17', 'admin', 'authManager', 'editGroup', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('49', '删除角色', '', '17', 'admin', 'authManager', 'deleteGroup', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('50', '访问授权', '', '17', 'admin', 'authManager', 'access', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('51', '角色授权', '', '17', 'admin', 'authManager', 'writeGroup', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('52', '模块安装', '', '44', 'admin', 'module', 'install', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('53', '模块卸载', '', '44', 'admin', 'module', 'uninstall', '', '1', '', '0', '0');
-INSERT INTO `yzn_menu` VALUES ('54', '本地安装', '', '44', 'admin', 'module', 'local', '', '1', '', '0', '0');
+INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (4, '模块', 'icon-supply', 0, 'admin', 'module', 'index1', '', 1, '', 0, 9);
+INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-tools', 0, 'addons', 'addons', 'index1', '', 1, '', 0, 10);
+INSERT INTO `yzn_menu` VALUES (10, '系统配置', 'icon-zidongxiufu', 3, 'admin', 'config', 'index1', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (11, '配置管理', 'icon-apartment', 10, 'admin', 'config', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (12, '删除日志', '', 20, 'admin', 'adminlog', 'deletelog', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (13, '网站设置', 'icon-setup', 10, 'admin', 'config', 'setting', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (14, '菜单管理', 'icon-other', 10, 'admin', 'menu', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (15, '权限管理', 'icon-guanliyuan', 3, 'admin', 'manager', 'index1', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-guanliyuan', 15, 'admin', 'manager', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (17, '角色管理', 'icon-group', 15, 'admin', 'authManager', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (18, '添加管理员', '', 16, 'admin', 'manager', 'add', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (19, '编辑管理员', '', 16, 'admin', 'manager', 'edit', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (20, '管理日志', 'icon-rizhi', 15, 'admin', 'adminlog', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (21, '删除管理员', '', 16, 'admin', 'manager', 'del', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (22, '添加角色', '', 17, 'admin', 'authManager', 'createGroup', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (23, '附件管理', 'icon-accessory', 10, 'attachment', 'attachments', 'index', '', 1, '', 0, 1);
+INSERT INTO `yzn_menu` VALUES (24, '新增配置', '', 11, 'admin', 'config', 'add', '', 1, '', 0, 1);
+INSERT INTO `yzn_menu` VALUES (25, '编辑配置', '', 11, 'admin', 'config', 'edit', '', 1, '', 0, 2);
+INSERT INTO `yzn_menu` VALUES (26, '删除配置', '', 11, 'admin', 'config', 'del', '', 1, '', 0, 3);
+INSERT INTO `yzn_menu` VALUES (27, '批量更新', '', 11, 'admin', 'config', 'multi', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (28, '新增菜单', '', 14, 'admin', 'menu', 'add', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (29, '编辑菜单', '', 14, 'admin', 'menu', 'edit', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (30, '删除菜单', '', 14, 'admin', 'menu', 'del', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (31, '批量更新', '', 14, 'admin', 'menu', 'multi', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (32, '附件上传', '', 23, 'attachment', 'attachments', 'upload', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (33, '附件删除', '', 23, 'attachment', 'attachments', 'del', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (34, '编辑器附件', '', 23, 'attachment', 'ueditor', 'run', '', 0, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (35, '图片列表', '', 23, 'attachment', 'attachments', 'showFileLis', '', 0, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (36, '图片本地化', '', 23, 'attachment', 'attachments', 'getUrlFile', '', 0, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (37, '图片选择', '', 23, 'attachment', 'attachments', 'select', '', 0, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-tools', 5, 'addons', 'addons', 'index2', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-plugins-', 38, 'addons', 'addons', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (40, '行为管理', 'icon-hangweifenxi', 38, 'addons', 'addons', 'hooks', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'addons', 'addons', 'addonadmin', '', 0, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (43, '本地模块', 'icon-supply', 4, 'admin', 'module', 'index2', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (44, '模块管理', 'icon-mokuaishezhi', 43, 'admin', 'module', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (45, '模块后台列表', 'icon-liebiaosousuo', 4, 'admin', 'module', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (48, '编辑角色', '', 17, 'admin', 'authManager', 'editGroup', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (49, '删除角色', '', 17, 'admin', 'authManager', 'deleteGroup', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (50, '访问授权', '', 17, 'admin', 'authManager', 'access', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (51, '角色授权', '', 17, 'admin', 'authManager', 'writeGroup', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (52, '模块安装', '', 44, 'admin', 'module', 'install', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (53, '模块卸载', '', 44, 'admin', 'module', 'uninstall', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (54, '本地安装', '', 44, 'admin', 'module', 'local', '', 1, '', 0, 0);
 
 
 -- ----------------------------
