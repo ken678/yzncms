@@ -21,7 +21,7 @@ use think\facade\Url;
 // 插件目录
 define('ADDON_PATH', ROOT_PATH . 'addons' . DS);
 // 运行目录
-define('ROOT_URL', ltrim(dirname(Request::rootUrl()), DS) . '/');
+define('ROOT_URL', Request::rootUrl() . '/');
 //模板目录
 define('TEMPLATE_PATH', ROOT_PATH . 'templates' . DS);
 
@@ -53,10 +53,10 @@ function cache($name, $value = '', $options = null)
             return $cache->get($name);
         }
     } elseif (is_null($value)) {
-//删除缓存
+        //删除缓存
         return $cache->remove($name);
     } else {
-//缓存数据
+        //缓存数据
         if (is_array($options)) {
             $expire = isset($options['expire']) ? $options['expire'] : null;
         } else {
@@ -72,7 +72,7 @@ function cache($name, $value = '', $options = null)
 function fun($fun)
 {
     list($module_name, $fun) = explode('@', $fun);
-    $path = APP_PATH . $module_name . DIRECTORY_SEPARATOR;
+    $path                    = APP_PATH . $module_name . DS;
     if (is_file($path . 'common.php')) {
         include_once $path . 'common.php';
     }
@@ -120,7 +120,7 @@ function get_addon_class($name, $type = 'hook', $class = null)
         $class = explode('.', $class);
 
         $class[count($class) - 1] = \think\Loader::parseName(end($class), 1);
-        $class = implode('\\', $class);
+        $class                    = implode('\\', $class);
     } else {
         $class = \think\Loader::parseName(is_null($class) ? $name : $class, 1);
     }
@@ -299,31 +299,31 @@ function arr2str($arr, $glue = ',')
  */
 function str_cut($sourcestr, $length, $dot = '...')
 {
-    $returnstr = '';
-    $i = 0;
-    $n = 0;
+    $returnstr  = '';
+    $i          = 0;
+    $n          = 0;
     $str_length = strlen($sourcestr); //字符串的字节数
     while (($n < $length) && ($i <= $str_length)) {
         $temp_str = substr($sourcestr, $i, 1);
-        $ascnum = Ord($temp_str); //得到字符串中第$i位字符的ascii码
+        $ascnum   = Ord($temp_str); //得到字符串中第$i位字符的ascii码
         if ($ascnum >= 224) { //如果ASCII位高与224，
             $returnstr = $returnstr . substr($sourcestr, $i, 3); //根据UTF-8编码规范，将3个连续的字符计为单个字符
-            $i = $i + 3; //实际Byte计为3
+            $i         = $i + 3; //实际Byte计为3
             $n++; //字串长度计1
         } elseif ($ascnum >= 192) { //如果ASCII位高与192，
             $returnstr = $returnstr . substr($sourcestr, $i, 2); //根据UTF-8编码规范，将2个连续的字符计为单个字符
-            $i = $i + 2; //实际Byte计为2
+            $i         = $i + 2; //实际Byte计为2
             $n++; //字串长度计1
         } elseif ($ascnum >= 65 && $ascnum <= 90) {
             //如果是大写字母，
             $returnstr = $returnstr . substr($sourcestr, $i, 1);
-            $i = $i + 1; //实际的Byte数仍计1个
+            $i         = $i + 1; //实际的Byte数仍计1个
             $n++; //但考虑整体美观，大写字母计成一个高位字符
         } else {
 //其他情况下，包括小写字母和半角标点符号，
             $returnstr = $returnstr . substr($sourcestr, $i, 1);
-            $i = $i + 1; //实际的Byte数计1个
-            $n = $n + 0.5; //小写字母和半角标点等与半个高位字符宽...
+            $i         = $i + 1; //实际的Byte数计1个
+            $n         = $n + 0.5; //小写字母和半角标点等与半个高位字符宽...
         }
     }
     if ($str_length > strlen($returnstr)) {
@@ -423,7 +423,7 @@ function list_to_tree($list, $pk = 'id', $pid = 'parentid', $child = '_child', $
                 $tree[] = &$list[$key];
             } else {
                 if (isset($refer[$parentId])) {
-                    $parent = &$refer[$parentId];
+                    $parent           = &$refer[$parentId];
                     $parent[$child][] = &$list[$key];
                 }
             }
@@ -444,7 +444,7 @@ function parse_attr($value = '')
         $value = array();
         foreach ($array as $val) {
             list($k, $v) = explode(':', $val);
-            $value[$k] = $v;
+            $value[$k]   = $v;
         }
     } else {
         $value = $array;
@@ -462,7 +462,7 @@ function time_format($timestamp = null, $type = 0)
     if ($timestamp == 0) {
         return '';
     }
-    $types = array('Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d');
+    $types     = array('Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d');
     $timestamp = $timestamp === null ? $_SERVER['REQUEST_TIME'] : intval($timestamp);
     return date($types[$type], $timestamp);
 }
@@ -532,8 +532,8 @@ function get_file_path($path)
  */
 function encrypt_password($password, $encrypt = '')
 {
-    $pwd = array();
-    $pwd['encrypt'] = $encrypt ? $encrypt : genRandomString();
+    $pwd             = array();
+    $pwd['encrypt']  = $encrypt ? $encrypt : genRandomString();
     $pwd['password'] = md5(trim($password) . $pwd['encrypt']);
     return $encrypt ? $pwd['password'] : $pwd;
 }
@@ -605,7 +605,7 @@ function getModel($modelid, $name = '')
 function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'none.png')
 {
     static $_thumb_cache = array();
-    $smallpic = config('public_url') . 'static/admin/img/' . $smallpic;
+    $smallpic            = config('public_url') . 'static/admin/img/' . $smallpic;
     if (empty($imgurl)) {
         return $smallpic;
     }
@@ -618,11 +618,11 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
         return $smallpic;
     }
 
-    $uploadUrl = config('public_url') . 'uploads/';
+    $uploadUrl      = config('public_url') . 'uploads/';
     $imgurl_replace = str_replace($uploadUrl, '', $imgurl);
 
     $newimgname = 'thumb_' . $width . '_' . $height . '_' . basename($imgurl_replace);
-    $newimgurl = dirname($imgurl_replace) . '/' . $newimgname;
+    $newimgurl  = dirname($imgurl_replace) . '/' . $newimgname;
     //检查生成的缩略图是否已经生成过
     if (is_file(ROOT_PATH . 'public' . DS . 'uploads' . DS . $newimgurl)) {
         return $uploadUrl . $newimgurl;
@@ -658,7 +658,7 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
 function http_down($url, $filename = "", $timeout = 60)
 {
     if (empty($filename)) {
-        $filename = ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'temp' . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_BASENAME);
+        $filename = ROOT_PATH . 'public' . DS . 'temp' . DS . pathinfo($url, PATHINFO_BASENAME);
     }
     $path = dirname($filename);
     if (!is_dir($path) && !mkdir($path, 0755, true)) {
@@ -685,8 +685,8 @@ function http_down($url, $filename = "", $timeout = 60)
     } else {
         $opts = [
             "http" => [
-                "method" => "GET",
-                "header" => "",
+                "method"  => "GET",
+                "header"  => "",
                 "timeout" => $timeout,
             ],
         ];
@@ -734,19 +734,19 @@ function safe_replace($string)
 function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
 {
     $ckey_length = 4;
-    $key = md5($key != '' ? $key : config('data_auth_key'));
-    $keya = md5(substr($key, 0, 16));
-    $keyb = md5(substr($key, 16, 16));
-    $keyc = $ckey_length ? ($operation == 'DECODE' ? substr($string, 0, $ckey_length) : substr(md5(microtime()), -$ckey_length)) : '';
+    $key         = md5($key != '' ? $key : config('data_auth_key'));
+    $keya        = md5(substr($key, 0, 16));
+    $keyb        = md5(substr($key, 16, 16));
+    $keyc        = $ckey_length ? ($operation == 'DECODE' ? substr($string, 0, $ckey_length) : substr(md5(microtime()), -$ckey_length)) : '';
 
-    $cryptkey = $keya . md5($keya . $keyc);
+    $cryptkey   = $keya . md5($keya . $keyc);
     $key_length = strlen($cryptkey);
 
-    $string = $operation == 'DECODE' ? base64_decode(strtr(substr($string, $ckey_length), '-_', '+/')) : sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
+    $string        = $operation == 'DECODE' ? base64_decode(strtr(substr($string, $ckey_length), '-_', '+/')) : sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
     $string_length = strlen($string);
 
     $result = '';
-    $box = range(0, 255);
+    $box    = range(0, 255);
 
     $rndkey = array();
     for ($i = 0; $i <= 255; $i++) {
@@ -754,16 +754,16 @@ function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
     }
 
     for ($j = $i = 0; $i < 256; $i++) {
-        $j = ($j + $box[$i] + $rndkey[$i]) % 256;
-        $tmp = $box[$i];
+        $j       = ($j + $box[$i] + $rndkey[$i]) % 256;
+        $tmp     = $box[$i];
         $box[$i] = $box[$j];
         $box[$j] = $tmp;
     }
 
     for ($a = $j = $i = 0; $i < $string_length; $i++) {
-        $a = ($a + 1) % 256;
-        $j = ($j + $box[$a]) % 256;
-        $tmp = $box[$a];
+        $a       = ($a + 1) % 256;
+        $j       = ($j + $box[$a]) % 256;
+        $tmp     = $box[$a];
         $box[$a] = $box[$j];
         $box[$j] = $tmp;
         $result .= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
