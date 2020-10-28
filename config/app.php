@@ -141,5 +141,8 @@ return [
 
     /* 系统数据加密设置 */
     'data_auth_key'          => 'Mhc(jk`[t.7?P_Ty=A%41o+S{J390DKpFmvW@E}8', //默认数据加密KEY
-
+    //是否同一账号同一时间只能在一个地方登录
+    'login_unique'           => false,
+    //是否开启IP变动检测
+    'loginip_check'          => true,
 ];
