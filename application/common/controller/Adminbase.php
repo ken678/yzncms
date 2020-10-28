@@ -15,6 +15,7 @@
 namespace app\common\controller;
 
 use app\admin\service\User;
+use think\facade\Session;
 
 //定义是后台
 define('IN_ADMIN', true);
@@ -111,21 +112,10 @@ class Adminbase extends Base
      */
     private function competence()
     {
-        //检查是否登录
-        /*$uid = (int) User::instance()->isLogin();
-        if (empty($uid)) {
-        return false;
-        }*/
         //获取当前登录用户信息
-        $this->_userinfo = $userInfo = User::instance()->getInfo();
+        $this->_userinfo = $userInfo = Session::get('admin');
         if (empty($userInfo)) {
             User::instance()->logout();
-            return false;
-        }
-        //是否锁定
-        if (!$userInfo['status']) {
-            User::instance()->logout();
-            $this->error('您的帐号已经被锁定！', url('admin/index/login'));
             return false;
         }
         return $userInfo;
@@ -176,15 +166,15 @@ class Adminbase extends Base
     protected function buildTableParames($excludeFields = [], $relationSearch = null)
     {
         $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch;
-        $get = $this->request->get('', null, null);
-        $page = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
-        $limit = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 15;
-        $filters = isset($get['filter']) && !empty($get['filter']) ? $get['filter'] : '{}';
-        $ops = isset($get['op']) && !empty($get['op']) ? $get['op'] : '{}';
+        $get            = $this->request->get('', null, null);
+        $page           = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
+        $limit          = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 15;
+        $filters        = isset($get['filter']) && !empty($get['filter']) ? $get['filter'] : '{}';
+        $ops            = isset($get['op']) && !empty($get['op']) ? $get['op'] : '{}';
         // json转数组
-        $filters = json_decode($filters, true);
-        $ops = json_decode($ops, true);
-        $where = [];
+        $filters  = json_decode($filters, true);
+        $ops      = json_decode($ops, true);
+        $where    = [];
         $excludes = [];
 
         $tableName = lcfirst($this->modelClass->getName());
@@ -213,8 +203,8 @@ class Adminbase extends Base
                     break;
                 case 'range':
                     list($beginTime, $endTime) = explode(' - ', $val);
-                    $where[] = [$key, '>=', strtotime($beginTime)];
-                    $where[] = [$key, '<=', strtotime($endTime)];
+                    $where[]                   = [$key, '>=', strtotime($beginTime)];
+                    $where[]                   = [$key, '<=', strtotime($endTime)];
                     break;
                 default:
                     $where[] = [$key, $op, "%{$val}"];
@@ -236,7 +226,7 @@ class Adminbase extends Base
         $this->request->filter(['strip_tags', 'htmlspecialchars']);
 
         //搜索关键词,客户端输入以空格分开,这里接收为数组
-        $word = (array)$this->request->request("q_word/a");
+        $word = (array) $this->request->request("q_word/a");
         //当前页
         $page = $this->request->request("pageNumber");
         //分页大小
@@ -244,7 +234,7 @@ class Adminbase extends Base
         //搜索条件
         $andor = $this->request->request("andOr", "and", "strtoupper");
         //排序方式
-        $orderby = (array)$this->request->request("orderBy/a");
+        $orderby = (array) $this->request->request("orderBy/a");
         //显示的字段
         $field = $this->request->request("showField");
         //主键
@@ -252,14 +242,14 @@ class Adminbase extends Base
         //主键值
         $primaryvalue = $this->request->request("keyValue");
         //搜索字段
-        $searchfield = (array)$this->request->request("searchField/a");
+        $searchfield = (array) $this->request->request("searchField/a");
         //自定义搜索条件
-        $custom = (array)$this->request->request("custom/a");
+        $custom = (array) $this->request->request("custom/a");
         //是否返回树形结构
         $istree = $this->request->request("isTree", 0);
         $ishtml = $this->request->request("isHtml", 0);
         if ($istree) {
-            $word = [];
+            $word     = [];
             $pagesize = 99999;
         }
         $order = [];
@@ -271,13 +261,13 @@ class Adminbase extends Base
         //如果有primaryvalue,说明当前是初始化传值
         if ($primaryvalue !== null) {
             //$where = [$primarykey => ['in', $primaryvalue]];
-            $where = [$primarykey => explode(',', $primaryvalue)];
+            $where    = [$primarykey => explode(',', $primaryvalue)];
             $pagesize = 99999;
         } else {
             $where = function ($query) use ($word, $andor, $field, $searchfield, $custom) {
-                $logic = $andor == 'AND' ? '&' : '|';
+                $logic       = $andor == 'AND' ? '&' : '|';
                 $searchfield = is_array($searchfield) ? implode($logic, $searchfield) : $searchfield;
-                $word = array_filter($word);
+                $word        = array_filter($word);
                 if ($word) {
                     foreach ($word as $k => $v) {
                         $query->where(str_replace(',', $logic, $searchfield), "like", "%{$v}%");
@@ -296,13 +286,13 @@ class Adminbase extends Base
         }
         /*$adminIds = $this->getDataLimitAdminIds();
         if (is_array($adminIds)) {
-            $this->model->where($this->dataLimitField, 'in', $adminIds);
+        $this->model->where($this->dataLimitField, 'in', $adminIds);
         }*/
-        $list = [];
+        $list  = [];
         $total = $this->modelClass->where($where)->count();
         if ($total > 0) {
             /*if (is_array($adminIds)) {
-                $this->model->where($this->dataLimitField, 'in', $adminIds);
+            $this->model->where($this->dataLimitField, 'in', $adminIds);
             }*/
             $datalist = $this->modelClass->where($where)
                 ->order($order)
@@ -314,7 +304,7 @@ class Adminbase extends Base
                 $list[] = [
                     $primarykey => isset($item[$primarykey]) ? $item[$primarykey] : '',
                     $field      => isset($item[$field]) ? $item[$field] : '',
-                    'pid'       => isset($item['pid']) ? $item['pid'] : 0
+                    'pid'       => isset($item['pid']) ? $item['pid'] : 0,
                 ];
             }
             if ($istree && !$primaryvalue) {
