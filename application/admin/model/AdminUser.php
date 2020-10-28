@@ -14,58 +14,17 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
-use think\facade\Session;
 use think\Model;
 
 class AdminUser extends Model
 {
     // 设置当前模型对应的完整数据表名称
-    protected $name = 'admin';
+    protected $name   = 'admin';
     protected $insert = ['status' => 1];
 
     public function getLastLoginTimeAttr($value)
     {
         return date('Y-m-d H:i:s', $value);
-    }
-
-    /**
-     * 用户登录
-     * @param string $username 用户名
-     * @param string $password 密码
-     * @return bool|mixed
-     */
-    public function login($username = '', $password = '')
-    {
-        $username = trim($username);
-        $password = trim($password);
-        $userInfo = $this->getUserInfo($username, $password);
-        if (false == $userInfo) {
-            return false;
-        }
-        $this->autoLogin($userInfo);
-        return true;
-    }
-
-    /**
-     * 自动登录用户
-     */
-    public function autoLogin($userInfo)
-    {
-        /* 更新登录信息 */
-        /*$data = array(
-        'uid' => $userInfo['id'],
-        'last_login_time' => time(),
-        'last_login_ip' => request()->ip(),
-        );*/
-        $this->loginStatus((int) $userInfo['id']);
-        /* 记录登录SESSION和COOKIES */
-        $auth = [
-            'uid' => $userInfo['id'],
-            'username' => $userInfo['username'],
-            'last_login_time' => $userInfo['last_login_time'],
-        ];
-        Session::set('admin_user_auth', $auth);
-        Session::set('admin_user_auth_sign', data_auth_sign($auth));
     }
 
     /**
@@ -79,10 +38,10 @@ class AdminUser extends Model
             $this->error = '没有数据！';
             return false;
         }
-        $passwordinfo = encrypt_password($data['password']); //对密码进行处理
+        $passwordinfo     = encrypt_password($data['password']); //对密码进行处理
         $data['password'] = $passwordinfo['password'];
-        $data['encrypt'] = $passwordinfo['encrypt'];
-        $id = $this->allowField(true)->save($data);
+        $data['encrypt']  = $passwordinfo['encrypt'];
+        $id               = $this->allowField(true)->save($data);
         if ($id) {
             return $id;
         }
@@ -111,8 +70,8 @@ class AdminUser extends Model
             unset($data['password']);
             unset($data['encrypt']);
         } else {
-            $passwordinfo = encrypt_password($data['password']); //对密码进行处理
-            $data['encrypt'] = $passwordinfo['encrypt'];
+            $passwordinfo     = encrypt_password($data['password']); //对密码进行处理
+            $data['encrypt']  = $passwordinfo['encrypt'];
             $data['password'] = $passwordinfo['password'];
         }
         $status = $this->allowField(true)->isUpdate(true)->save($data);
@@ -124,37 +83,26 @@ class AdminUser extends Model
      * @param type $identifier 用户名或者用户ID
      * @return boolean|array
      */
-    public function getUserInfo($identifier, $password = null)
-    {
-        if (empty($identifier)) {
-            return false;
-        }
-        $map = array();
-        //判断是uid还是用户名
-        if (is_int($identifier)) {
-            $map['id'] = $identifier;
-        } else {
-            $map['username'] = $identifier;
-        }
-        $userInfo = $this->where($map)->find();
-        if (empty($userInfo)) {
-            return false;
-        }
-        //密码验证
-        if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {
-            return false;
-        }
-        return $userInfo;
-    }
-
-    /**
-     * 更新登录状态信息
-     * @param type $id
-     * @return type
-     */
-    public function loginStatus($id)
-    {
-        $data = ['last_login_time' => time(), 'last_login_ip' => request()->ip()];
-        return $this->save($data, ['id' => $id]);
-    }
+    /*public function getUserInfo($identifier, $password = null)
+{
+if (empty($identifier)) {
+return false;
+}
+$map = array();
+//判断是uid还是用户名
+if (is_int($identifier)) {
+$map['id'] = $identifier;
+} else {
+$map['username'] = $identifier;
+}
+$userInfo = $this->where($map)->find();
+if (empty($userInfo)) {
+return false;
+}
+//密码验证
+if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {
+return false;
+}
+return $userInfo;
+}*/
 }

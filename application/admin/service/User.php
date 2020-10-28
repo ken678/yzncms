@@ -14,17 +14,21 @@
 // +----------------------------------------------------------------------
 namespace app\admin\service;
 
+use app\admin\model\AdminUser;
 use think\Db;
+use think\facade\Config;
+use think\facade\Cookie;
 use think\facade\Session;
+use util\Random;
 use util\Tree;
 
 class User extends \libs\Auth
 {
     //当前登录会员详细信息
-    private static $userInfo = array();
-
+    private static $userInfo   = array();
+    protected $error           = '';
     protected static $instance = null;
-    const administratorRoleId = 1;
+    const administratorRoleId  = 1;
 
     /**
      * 获取示例
@@ -40,23 +44,9 @@ class User extends \libs\Auth
         return self::$instance;
     }
 
-    /**
-     * 魔术方法
-     * @param type $name
-     * @return null
-     */
     public function __get($name)
     {
-        //从缓存中获取
-        if (isset(self::$userInfo[$name])) {
-            return self::$userInfo[$name];
-        } else {
-            $userInfo = $this->getInfo();
-            if (!empty($userInfo)) {
-                return $userInfo[$name];
-            }
-            return null;
-        }
+        return Session::get('admin.' . $name);
     }
 
     /**
@@ -69,7 +59,7 @@ class User extends \libs\Auth
     public function getChildrenGroupIds($withself = false)
     {
         //取出当前管理员所有的分组
-        $groups = $this->getGroups();
+        $groups   = $this->getGroups();
         $groupIds = [];
         foreach ($groups as $k => $v) {
             $groupIds[] = $v['id'];
@@ -83,7 +73,7 @@ class User extends \libs\Auth
         }
         // 取出所有分组
         $groupList = \app\admin\model\AuthGroup::where('status', 1)->select()->toArray();
-        $objList = [];
+        $objList   = [];
         foreach ($groups as $k => $v) {
             if ($v['rules'] === '*') {
                 $objList = $groupList;
@@ -91,8 +81,8 @@ class User extends \libs\Auth
             }
             // 取出包含自己的所有子节点
             $childrenList = Tree::instance()->init($groupList)->getChildren($v['id'], true);
-            $obj = Tree::instance()->init($childrenList)->getTreeArray($v['parentid']);
-            $objList = array_merge($objList, Tree::instance()->getTreeList($obj));
+            $obj          = Tree::instance()->init($childrenList)->getTreeArray($v['parentid']);
+            $objList      = array_merge($objList, Tree::instance()->getTreeList($obj));
         }
         $childrenGroupIds = [];
         foreach ($objList as $k => $v) {
@@ -115,7 +105,7 @@ class User extends \libs\Auth
     {
         $childrenAdminIds = [];
         if (!$this->isAdministrator()) {
-            $groupIds = $this->getChildrenGroupIds(false);
+            $groupIds         = $this->getChildrenGroupIds(false);
             $childrenAdminIds = Db::name('Admin')->where('roleid', 'in', $groupIds)->column('id');
         } else {
             //超级管理员拥有所有人的权限
@@ -138,15 +128,97 @@ class User extends \libs\Auth
     }
 
     /**
-     * 获取当前登录用户资料
-     * @return array
+     * 用户登录
+     * @param string $username 用户名
+     * @param string $password 密码
+     * @return bool|mixed
      */
-    public function getInfo()
+    public function login($username = '', $password = '', $keeptime = 0)
     {
-        if (empty(self::$userInfo)) {
-            self::$userInfo = $this->getUserInfo($this->isLogin());
+        $username = trim($username);
+        $password = trim($password);
+        $admin    = AdminUser::get(['username' => $username]);
+        if (!$admin) {
+            $this->setError('用户名不正确');
+            return false;
         }
-        return !empty(self::$userInfo) ? self::$userInfo : false;
+        if ($admin['status'] !== 1) {
+            $this->setError('管理员已经被禁止登录');
+            return false;
+        }
+        if ($admin->password != encrypt_password($password, $admin->encrypt)) {
+            //$admin->loginfailure++;
+            $admin->save();
+            $this->setError('密码不正确');
+            return false;
+        }
+        //$admin->loginfailure = 0;
+        $admin->last_login_time = time();
+        $admin->last_login_ip   = request()->ip();
+        $admin->token           = Random::uuid();
+        $admin->save();
+        Session::set("admin", $admin->toArray());
+        $auth = [
+            'uid'             => $admin->id,
+            'username'        => $admin->username,
+            'last_login_time' => $admin->last_login_time,
+        ];
+        Session::set('admin_user_auth', $auth);
+        Session::set('admin_user_auth_sign', data_auth_sign($auth));
+        $this->keeplogin($keeptime);
+        return true;
+    }
+
+    /**
+     * 刷新保持登录的Cookie
+     *
+     * @param int $keeptime
+     * @return  boolean
+     */
+    protected function keeplogin($keeptime = 0)
+    {
+        if ($keeptime) {
+            $expiretime = time() + $keeptime;
+            $key        = md5(md5($this->id) . md5($keeptime) . md5($expiretime) . $this->token);
+            $data       = [$this->id, $keeptime, $expiretime, $key];
+            Cookie::set('keeplogin', implode('|', $data), 86400 * 30);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 自动登录
+     * @return boolean
+     */
+    public function autologin()
+    {
+        $keeplogin = Cookie::get('keeplogin');
+        if (!$keeplogin) {
+            return false;
+        }
+        list($id, $keeptime, $expiretime, $key) = explode('|', $keeplogin);
+        if ($id && $keeptime && $expiretime && $key && $expiretime > time()) {
+            $admin = AdminUser::get($id);
+            if (!$admin || !$admin->token) {
+                return false;
+            }
+            //token有变更
+            if ($key != md5(md5($id) . md5($keeptime) . md5($expiretime) . $admin->token)) {
+                return false;
+            }
+            $ip = request()->ip();
+            //IP有变动
+            if ($admin->last_login_ip != $ip) {
+                return false;
+            }
+            Session::set("admin", $admin->toArray());
+            //刷新自动登录的时效
+            $this->keeplogin($keeptime);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -155,6 +227,25 @@ class User extends \libs\Auth
      */
     public function isLogin()
     {
+        $admin = Session::get('admin');
+        if (!$admin) {
+            return 0;
+        }
+        //判断是否同一时间同一账号只能在一个地方登录
+        if (Config::get('login_unique')) {
+            $my = AdminUser::get($admin['id']);
+            if (!$my || $my['token'] != $admin['token']) {
+                $this->logout();
+                return false;
+            }
+        }
+        //判断管理员IP是否变动
+        if (Config::get('loginip_check')) {
+            if (!isset($admin['last_login_ip']) || $admin['last_login_ip'] != request()->ip()) {
+                $this->logout();
+                return false;
+            }
+        }
         $user = Session::get('admin_user_auth');
         if (empty($user)) {
             return 0;
@@ -169,36 +260,26 @@ class User extends \libs\Auth
      */
     public function isAdministrator($uid = null)
     {
-        $userInfo = $this->getInfo();
+        $userInfo = Session::get('admin');
         if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
             return true;
         }
         return false;
-        /*$uid = is_null($uid) ? $this->isLogin() : $uid;
-    return $uid && (intval($uid) === self::administratorRoleId);*/
     }
 
     /**
-     * 注销登录状态
-     * @return boolean
+     * 注销登录
      */
     public function logout()
     {
-        Session::clear();
-        return true;
-    }
-
-    /**
-     * 获取用户信息
-     * @param type $identifier 用户名或者用户ID
-     * @return boolean|array
-     */
-    public function getUserInfo($identifier, $password = null)
-    {
-        if (empty($identifier)) {
-            return false;
+        $admin = AdminUser::get(intval($this->id));
+        if ($admin) {
+            $admin->token = '';
+            $admin->save();
         }
-        return model('admin/AdminUser')->getUserInfo($identifier, $password);
+        Session::delete("admin");
+        Cookie::delete("keeplogin");
+        return true;
     }
 
     /**
@@ -208,7 +289,19 @@ class User extends \libs\Auth
      */
     public function getError()
     {
-        return $this->error;
+        return $this->error ? $this->error : '';
+    }
+
+    /**
+     * 设置错误信息
+     *
+     * @param string $error 错误信息
+     * @return Auth
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+        return $this;
     }
 
 }

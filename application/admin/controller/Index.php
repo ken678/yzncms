@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\AdminUser;
 use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\facade\Cache;
@@ -45,7 +44,8 @@ class Index extends Adminbase
             $this->redirect('admin/index/index');
         }
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data      = $this->request->post();
+            $keeplogin = $this->request->post('keeplogin');
             //验证码
             if (!captcha_check($data['verify'])) {
                 $this->error('验证码输入错误！');
@@ -54,20 +54,23 @@ class Index extends Adminbase
             // 验证数据
             $rule = [
                 'username|用户名' => 'require|alphaDash|length:3,20',
-                'password|密码' => 'require|length:3,20',
+                'password|密码'  => 'require|length:3,20',
             ];
             $result = $this->validate($data, $rule);
             if (true !== $result) {
                 $this->error($result);
             }
-            $AdminUser = new AdminUser;
-            if ($AdminUser->login($data['username'], $data['password'])) {
+            if (User::instance()->login($data['username'], $data['password'], $keeplogin ? 86400 : 0)) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
-                $this->error("用户名或者密码错误，登陆失败！", url('admin/index/login'));
+                $msg = User::instance()->getError();
+                $msg = $msg ? $msg : '用户名或者密码错误!';
+                $this->error($msg, url('admin/index/login'));
             }
-
         } else {
+            if (User::instance()->autologin()) {
+                $this->redirect('admin/index/index');
+            }
             return $this->fetch();
         }
 
