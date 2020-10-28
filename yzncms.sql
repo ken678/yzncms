@@ -47,6 +47,7 @@ CREATE TABLE `yzn_admin` (
   `last_login_time` int(10) unsigned DEFAULT '0' COMMENT '最后登录时间',
   `last_login_ip` char(15) NOT NULL DEFAULT '' COMMENT '最后登录IP',
   `email` varchar(40) DEFAULT NULL,
+  `token` varchar(60) NOT NULL DEFAULT '' COMMENT 'Session标识',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `username` (`username`)
@@ -55,7 +56,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765, '127.0.0.1', '530765310@qq.com', 1);
+INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765, '127.0.0.1', '530765310@qq.com', '',1);
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`
