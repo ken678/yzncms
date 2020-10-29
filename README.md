@@ -42,8 +42,7 @@ YznCMSV1.0(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台�
 手册地址：https://www.kancloud.cn/ken678/yzncms
 官方博客：http://blog.yzncms.com/
 演示地址：发送到邮箱【530765310@qq.com】获取演示地址
-官网地址：建设中...
-社区地址：http://bbs.yzncms.com(在线商城建设中，所有插件及模块暂时在论坛下载)
+社区地址：http://bbs.yzncms.com
 软件著作权编号：2020SR0038539
 ```
 ## [环境要求]
@@ -63,6 +62,7 @@ PHP版本：php >= 5.6 (推荐php7.0+)
 第一步：修改数据库配置 根目录/config/database.php  
 第二步：将根目录的yzncms.sql文件导入数据库即可  
 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
+ps:如果你还是不会搭建，可以将FTP，服务器信息发送给邮箱530765310@qq.com进行免费搭建（仅限点赞用户）
 ```
 
 ## [必看教程]
