@@ -26,8 +26,9 @@
     <div id="mydiv">
         <div class="login-main">
             <div class="layui-elip">YZNCMS管理系统&nbsp;<span class="version">v{$Think.config.version.yzncms_version}</span><span class="bg1"></span><span class="bg2"></span></div>
-            <form class="layui-form" action="{:url('admin/index/login')}">
+            <form class="layui-form" action="{:url('login')}">
                 <div class="layui-form-item">
+                    {:token()}
                     <div class="layui-input-inline input-item">
                         <label class="layui-icon layui-icon-username"></label>
                         <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
@@ -43,47 +44,61 @@
                         <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
                     </div>
                     <div class="layui-input-inline login-btn">
-                        <button class="layui-btn layui-btn-normal" lay-filter="login" lay-submit>登录</button>
+                        <button class="layui-btn layui-btn-normal" lay-filter="formSubmit" lay-submit>登录</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <script type="text/javascript" src="__STATIC__/libs/layui/layui.js"></script>
+    <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
+    {include file='layui' /}
     <script type="text/javascript">
-    layui.use(['form', 'layer', 'jquery'], function() {
+    layui.use(['form', 'layer','yznForm'], function() {
         var form = layui.form,
             layer = layui.layer,
-            $ = layui.jquery;
-        //登录
-        form.on("submit(login)", function(data) {
-            var action = $(data.form).attr('action');
-            $.post(action, $(data.form).serialize(), success, "json");
-            return false;
+            yznForm = layui.yznForm;
 
-            function success(data) {
-                if (data.code) {
-                    layer.msg('登入成功', {
-                        offset: '15px',
-                        icon: 1,
-                        time: 1000
-                    }, function() {
-                        window.location.href = data.url;
-                    });
-                } else {
-                    layer.msg(data.msg, { icon: 5 });
-                    //刷新验证码
-                    $("#verify").click();
-                }
-            }
-        });
+            //登录
+            yznForm.listen('', function (res) {
+                layer.msg('登入成功', {
+                    offset: '15px',
+                    icon: 1,
+                    time: 1000
+                }, function() {
+                    window.location.href = res.url;
+                });
+            }, function (res) {
+                layer.msg(res.msg, { icon: 5 });
+                //刷新验证码
+                $("#verify").click();
+            });
+            /*form.on("submit(login)", function(data) {
+                /*var action = $(data.form).attr('action');
+                $.post(action, $(data.form).serialize(), success, "json");
+                return false;
 
-        //刷新验证码
-        $("#verify").click(function() {
-            var verifyimg = $("#verify").attr("src");
-            $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
-        });
-    })
+                function success(data) {
+                    if (data.code) {
+                        layer.msg('登入成功', {
+                            offset: '15px',
+                            icon: 1,
+                            time: 1000
+                        }, function() {
+                            window.location.href = data.url;
+                        });
+                    } else {
+                        layer.msg(data.msg, { icon: 5 });
+                        //刷新验证码
+                        $("#verify").click();
+                    }
+                }*/
+    });
+    //刷新验证码
+    $("#verify").click(function() {
+        var verifyimg = $("#verify").attr("src");
+        $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+    });
     </script>
 </body>
 

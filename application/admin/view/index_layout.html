@@ -29,26 +29,7 @@
 <body class="childrenBody">
     {block name="main"}主内容{/block}
     {block name="layui"}
-    <script type="text/javascript">
-    layui.config({
-        version: '155714399890',
-        base: '__STATIC__/libs/layui_exts/'
-    }).extend({
-        yzn: 'yzn/yzn',
-        yznForm: 'yznForm/yznForm',
-        yznTable: 'yznTable/yznTable',
-        treeGrid: 'treeGrid/treeGrid',
-        clipboard: 'clipboard/clipboard',
-        notice: 'notice/notice',
-        iconPicker: 'iconPicker/iconPicker',
-        tableSelect: 'tableSelect/tableSelect',
-        ztree: 'ztree/ztree',
-        dragsort: 'dragsort/dragsort',
-        tagsinput: 'tagsinput/tagsinput',
-        xmSelect: 'xmSelect/xm-select',
-        selectPage: 'selectPage/selectpage'
-    }).use('yznForm');
-    </script>
+    {include file='layui' /}
     {/block}
     {block name="script"}{/block}
 </body>

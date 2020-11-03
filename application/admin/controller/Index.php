@@ -40,6 +40,7 @@ class Index extends Adminbase
     //登录判断
     public function login()
     {
+        $url = $this->request->get('url', 'index/index');
         if (User::instance()->isLogin()) {
             $this->redirect('admin/index/index');
         }
@@ -55,17 +56,18 @@ class Index extends Adminbase
             $rule = [
                 'username|用户名' => 'require|alphaDash|length:3,20',
                 'password|密码'  => 'require|length:3,20',
+                '__token__'    => 'require|token',
             ];
             $result = $this->validate($data, $rule);
             if (true !== $result) {
-                $this->error($result);
+                $this->error($result, $url, ['token' => $this->request->token()]);
             }
             if (User::instance()->login($data['username'], $data['password'], $keeplogin ? 86400 : 0)) {
                 $this->success('恭喜您，登陆成功', url('admin/Index/index'));
             } else {
                 $msg = User::instance()->getError();
                 $msg = $msg ? $msg : '用户名或者密码错误!';
-                $this->error($msg, url('admin/index/login'));
+                $this->error($msg, $url, ['token' => $this->request->token()]);
             }
         } else {
             if (User::instance()->autologin()) {
