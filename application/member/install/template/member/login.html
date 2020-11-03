@@ -18,6 +18,7 @@
         <div class="login-main">
             <div class="layui-elip">会员登录</div>
             <form class="layui-form" action="{:url('login')}">
+                {:token()}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
                         <input type="text" name="account" lay-verify="required" autocomplete="off" placeholder="账号/手机/邮箱" class="layui-input">
@@ -42,7 +43,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline login-btn">
-                        <button class="layui-btn" lay-filter="submit" lay-submit>登录</button>
+                        <button class="layui-btn" lay-filter="formSubmit" lay-submit>登录</button>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -55,6 +56,33 @@
         </div>
     </div>
     {include file="layui" /}
+    <script type="text/javascript">
+    layui.use(['form', 'layer','yznForm'], function() {
+        var form = layui.form,
+            layer = layui.layer,
+            yznForm = layui.yznForm;
+
+            //登录
+            yznForm.listen('', function (res) {
+                layer.msg(res.msg, {
+                    offset: '15px',
+                    icon: 1,
+                    time: 1000
+                }, function() {
+                    window.location.href = res.url;
+                });
+            }, function (res) {
+                //刷新验证码
+                $("#verify").click();
+                layer.msg(res.msg, { icon: 5 });
+            });
+    });
+    //刷新验证码
+    $("#verify").click(function() {
+        var verifyimg = $("#verify").attr("src");
+        $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+    });
+    </script>
 </body>
 
 </html>

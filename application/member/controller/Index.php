@@ -43,8 +43,6 @@ class Index extends MemberBase
     //登录页面
     public function login()
     {
-        //$forward = $_REQUEST['forward'] ? $_REQUEST['forward'] : Cookie::get('__forward__');
-        //Cookie::set("forward", null);
         $forward = $this->request->request('url', '', 'trim');
         if (!empty($this->userid)) {
             $this->success("您已经是登陆状态！", $forward ? $forward : url("index"));
@@ -55,12 +53,28 @@ class Index extends MemberBase
             $password   = $this->request->param('password');
             $verify     = $this->request->param('verify');
             $cookieTime = $this->request->param('cookieTime', 0);
+            $token      = $this->request->param('__token__');
+
+            $rule = [
+                'account|账户'  => 'require|length:3,30',
+                'password|密码' => 'require|length:3,30',
+                '__token__'   => 'require|token',
+            ];
+            $data = [
+                'account'   => $account,
+                'password'  => $password,
+                '__token__' => $token,
+            ];
             //验证码
             if (empty($verify) && $this->memberConfig['openverification']) {
                 $this->error('验证码错误！');
             }
             if ($this->memberConfig['openverification'] && !captcha_check($verify)) {
                 $this->error('验证码错误！');
+            }
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result, null, ['token' => $this->request->token()]);
             }
             $userInfo = $this->UserService->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
@@ -88,8 +102,6 @@ class Index extends MemberBase
         if (empty($this->memberConfig['allowregister'])) {
             $this->error("系统不允许新会员注册！");
         }
-        //$forward = $_REQUEST['forward'] ?: cookie("forward");
-        //cookie("forward", null);
         $forward = $this->request->request('url', '', 'trim');
         if ($this->userid) {
             $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("index"));
@@ -101,11 +113,26 @@ class Index extends MemberBase
                 $this->error('验证码输入错误！');
                 return false;
             }
+            $rule = [
+                'username|用户名' => 'unique:member|require|alphaDash|length:3,20',
+                'nickname|昵称'  => 'chsDash|length:3,20',
+                'mobile|手机'    => 'unique:member|mobile',
+                'password|密码'  => 'require|length:3,20',
+                'email|邮箱'     => 'unique:member|require|email',
+                '__token__'    => 'require|token',
+            ];
+            if ($this->memberConfig['password_confirm']) {
+                $rule['password|密码'] = "require|length:3,20|confirm";
+            }
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result, null, ['token' => $this->request->token()]);
+            }
             $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
-            if ($userid > 0) {
+            if ($userid) {
                 $this->success('会员注册成功！', $forward ? $forward : url('index'));
             } else {
-                $this->error($this->UserService->getError() ?: '帐号注册失败！');
+                $this->error($this->UserService->getError() ?: '帐号注册失败！', null, ['token' => $this->request->token()]);
             }
         } else {
             //判断来源
@@ -305,6 +332,7 @@ class Index extends MemberBase
             $email       = $this->request->param("email");
             $newpassword = $this->request->param("newpassword");
             $captcha     = $this->request->param("captcha");
+            $token       = $this->request->param('__token__');
 
             // 验证数据
             $data = [
@@ -312,12 +340,14 @@ class Index extends MemberBase
                 'email'       => $email,
                 'captcha'     => $captcha,
                 'newpassword' => $newpassword,
+                '__token__'   => $token,
             ];
             $rule = [
                 'mobile|手机号'      => 'require|mobile',
                 'email|邮箱'        => 'require|email',
                 'captcha|验证码'     => 'require|number|length:4',
                 'newpassword|新密码' => 'require|length:6,30',
+                '__token__'       => 'require|token',
             ];
             if ($type == "mobile") {
                 unset($rule['email|邮箱']);
@@ -332,25 +362,25 @@ class Index extends MemberBase
             if ($type == 'mobile') {
                 $user = $this->Member_Model->where('mobile', $mobile)->find();
                 if (!$user) {
-                    $this->error('用户不存在！');
+                    $this->error('用户不存在！', null, ['token' => $this->request->token()]);
                 }
                 $Sms_Model = new Sms_Model();
                 $result    = $Sms_Model->check($mobile, $captcha, 'resetpwd');
                 if (!$result) {
-                    $this->error('验证码错误！');
+                    $this->error('验证码错误！', null, ['token' => $this->request->token()]);
                 }
             } elseif ($type == 'email') {
                 $user = $this->Member_Model->where('email', $email)->find();
                 if (!$user) {
-                    $this->error('用户不存在！');
+                    $this->error('用户不存在！', null, ['token' => $this->request->token()]);
                 }
                 $Ems_Model = new Ems_Model();
                 $result    = $Ems_Model->check($email, $captcha, 'resetpwd');
                 if (!$result) {
-                    $this->error('验证码错误！');
+                    $this->error('验证码错误！', null, ['token' => $this->request->token()]);
                 }
             } else {
-                $this->error('类型错误！');
+                $this->error('类型错误！', null, ['token' => $this->request->token()]);
             }
             $res = $this->Member_Model->userEdit($user['username'], '', $newpassword, '', 1);
             if (!$res) {

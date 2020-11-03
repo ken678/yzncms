@@ -18,6 +18,7 @@
         <div class="login-main">
             <div class="layui-elip">密码忘记</div>
             <form class="layui-form" action="{:url('forget')}">
+                {:token()}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
                         <div class="layui-form-field-label">
@@ -49,7 +50,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline login-btn">
-                        <button class="layui-btn" lay-filter="submit" lay-submit>确定</button>
+                        <button class="layui-btn" lay-filter="formSubmit" lay-submit>确定</button>
                     </div>
                 </div>
                 <div class="layui-trans layui-form-item layadmin-user-login-other">
@@ -59,6 +60,26 @@
         </div>
     </div>
     {include file="layui" /}
+    <script type="text/javascript">
+    layui.use(['form', 'layer','yznForm'], function() {
+        var form = layui.form,
+            layer = layui.layer,
+            yznForm = layui.yznForm;
+
+            //登录
+            yznForm.listen('', function (res) {
+                layer.msg(res.msg, {
+                    offset: '15px',
+                    icon: 1,
+                    time: 1000
+                }, function() {
+                    window.location.href = res.url;
+                });
+            }, function (res) {
+                layer.msg(res.msg, { icon: 5 });
+            });
+    });
+    </script>
 </body>
 
 </html>

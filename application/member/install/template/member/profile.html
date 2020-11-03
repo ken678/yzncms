@@ -63,4 +63,37 @@
     </div>
 </div>
 {include file="layui" /}
+<script type="text/javascript">
+    //上传图片
+    if ($('.upload-img')[0]) {
+        layui.use('upload', function(upload) {
+            var avatarAdd = $('.avatar-add');
+            upload.render({
+                elem: '.upload-img',
+                url: GV.image_upload_url,
+                size: 50,
+                before: function() {
+                    avatarAdd.find('.loading').show();
+                },
+                done: function(res) {
+                    if (res.code == 0) {
+                        $.post(GV.profile_upload_url, {
+                            avatar: res.id
+                        }, function(data) {
+                            layer.msg('上传成功！', { icon: 1});
+                            $('.avatar-img').attr('src', res.path);
+                            //location.reload();
+                        });
+                    } else {
+                        layer.msg(res.info, { icon: 5 });
+                    }
+                    avatarAdd.find('.loading').hide();
+                },
+                error: function() {
+                    avatarAdd.find('.loading').hide();
+                }
+            });
+        });
+    }
+</script>
 {include file="footer" /}
