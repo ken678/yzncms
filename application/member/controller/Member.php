@@ -24,8 +24,9 @@ class Member extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass = new Member_Model;
-        $this->groupCache = cache("Member_Group"); //会员模型
+        $this->modelClass  = new Member_Model;
+        $this->UserService = User::instance();
+        $this->groupCache  = cache("Member_Group"); //会员模型
     }
 
     /**
@@ -51,13 +52,13 @@ class Member extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data   = $this->request->post();
-            $result = $this->validate($data, 'member');
+            $data = $this->request->post();
+            /*$result = $this->validate($data, 'member');
             if (true !== $result) {
-                return $this->error($result);
-            }
-            $userid = User::instance()->userRegister($data['username'], $data['password'], $data['email']);
-            if ($userid > 0) {
+            return $this->error($result);
+            }*/
+            $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
+            if ($userid) {
                 unset($data['username'], $data['password'], $data['email']);
                 $data['overduedate'] = strtotime($data['overduedate']);
                 if (false !== $this->modelClass->save($data, ['id' => $userid])) {
@@ -66,6 +67,8 @@ class Member extends Adminbase
                     //service("Passport")->userDelete($memberinfo['userid']);
                     $this->error("添加会员失败！");
                 }
+            } else {
+                $this->error($this->UserService->getError() ?: '帐号注册失败！');
             }
         } else {
             foreach ($this->groupCache as $_key => $_value) {
