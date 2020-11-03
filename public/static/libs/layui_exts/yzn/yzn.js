@@ -125,7 +125,17 @@ layui.define(['layer','notice'], function(exports) {
                     dataType: "json",
                     data: option.data,
                     timeout: 60000,
+                    complete: function(xhr, textStatus) {
+                        var token = xhr.getResponseHeader('__token__');
+                        if (token) {
+                            $("input[name='__token__']").val(token);
+                        }
+                    },
                     success: function(res) {
+                        //刷新客户端token
+                        if (res && typeof res === 'object' && typeof res.token !== 'undefined') {
+                            $("input[name='__token__']").val(data.token);
+                        }
                         yzn.msg.close(index);
                         if (eval('res.' + option.statusName) == option.statusCode) {
                             return ok(res);
