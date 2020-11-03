@@ -52,11 +52,11 @@ class Member extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
-            /*$result = $this->validate($data, 'member');
+            $data   = $this->request->post();
+            $result = $this->validate($data, 'member');
             if (true !== $result) {
-            return $this->error($result);
-            }*/
+                return $this->error($result);
+            }
             $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
             if ($userid) {
                 unset($data['username'], $data['password'], $data['email']);
