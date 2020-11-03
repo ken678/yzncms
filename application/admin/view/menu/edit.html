@@ -59,7 +59,7 @@
             <input type="hidden" name="id" value="{$data.id}" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn" lay-submit="" data-refresh="false" lay-filter="formSubmit">立即提交</button>
                     <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
                 </div>
             </div>
@@ -69,36 +69,38 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-layui.use(['iconPicker', 'form', 'layer'], function() {
+layui.use(['iconPicker', 'form', 'layer','yznForm'], function() {
     var iconPicker = layui.iconPicker,
         form = layui.form,
         layer = layui.layer,
-        $ = layui.$;
+        $ = layui.$,
+        yznForm = layui.yznForm;
+        yznForm.listen();
         iconPicker.render({
             elem: '#iconPicker4',
             type: 'fontClass'
         });
 
-            iconPicker.render({
-                // 选择器，推荐使用input
-                elem: '#iconPicker',
-                // 数据类型：fontClass/unicode，推荐使用fontClass
-                type: 'fontClass',
-                // 是否开启搜索：true/false，默认true
-                search: true,
-                // 是否开启分页：true/false，默认true
-                page: true,
-                // 每页显示数量，默认12
-                limit: 12,
-                // 点击回调
-                click: function (data) {
-                    console.log(data);
-                },
-                // 渲染成功后的回调
-                success: function(d) {
-                    console.log(d);
-                }
-            });
+        iconPicker.render({
+            // 选择器，推荐使用input
+            elem: '#iconPicker',
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false，默认true
+            search: true,
+            // 是否开启分页：true/false，默认true
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            // 点击回调
+            click: function (data) {
+                //console.log(data);
+            },
+            // 渲染成功后的回调
+            success: function(d) {
+                //console.log(d);
+            }
+        });
 });
 </script>
 {/block}

@@ -37,10 +37,18 @@
             <div class="layui-form-item">
                 <div class="layui-input-block w300">
                     <button class="layui-btn" lay-submit="{:url('writeGroup')}" lay-filter="formSubmit">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
+    yznForm.listen();
+});
+</script>
 {/block}

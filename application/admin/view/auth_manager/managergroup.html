@@ -14,8 +14,7 @@
             <input type="hidden" name="id" value="{$group_id}" />
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn ajax-post" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+                    <button class="layui-btn ajax-post2" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
                 </div>
             </div>
         </form>
@@ -80,7 +79,7 @@ layui.use(['jquery', 'ztree'], function() {
         var layer = layui.layer,
             form = layui.form;
         //通用表单post提交
-        $('.ajax-post').on('click', function(e) {
+        $('.ajax-post2').on('click', function(e) {
             var target, query, _form;
             var target_form = $(this).attr('target-form');
             var that = this;

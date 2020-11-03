@@ -85,8 +85,10 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-layui.use('form', function() {
-    var form = layui.form;
+layui.use(['form','yznForm'], function() {
+    var form = layui.form,
+    yznForm = layui.yznForm;
+    yznForm.listen();
     form.on('select(fieldType)', function(data) {
         if (data.value == 'checkbox' || data.value == 'select' || data.value == 'selects' || data.value == 'radio' || data.value == 'selectpage') {
             $('#options').show();
