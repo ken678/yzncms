@@ -956,6 +956,59 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     });
 
     /**
+     * 普通按钮点击iframe弹窗
+     * @href 弹窗地址
+     * @title 弹窗标题
+     * @lay-data {width: '弹窗宽度', height: '弹窗高度', idSync: '是否同步ID', table: '数据表ID(同步ID时必须)', type: '弹窗类型'}
+     */
+    $(document).on('click', '.layui-iframe', function() {
+        var that = $(this),
+            query = '';
+        var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: !that.attr('data-href') ? that.attr('href') : that.attr('data-href'), title: that.attr('title') };
+        var opt = new Function('return ' + that.attr('lay-data'))() || {};
+
+        opt.url = opt.url || def.url;
+        opt.title = opt.title || def.title;
+        opt.width = opt.width || def.width;
+        opt.height = opt.height || def.height;
+        opt.type = opt.type || def.type;
+        opt.table = opt.table || def.table;
+        opt.idSync = opt.idSync || def.idSync;
+
+        if (!opt.url) {
+            notice.info('请设置data-href参数');
+            return false;
+        }
+
+        if (opt.idSync) { // ID 同步
+            if ($('.checkbox-ids:checked').length <= 0) {
+                var checkStatus = table.checkStatus(opt.table);
+                if (checkStatus.data.length <= 0) {
+                    notice.info('请选择要操作的数据');
+                    return false;
+                }
+
+                for (var i in checkStatus.data) {
+                    query += '&id[]=' + checkStatus.data[i].id;
+                }
+            } else {
+                $('.checkbox-ids:checked').each(function() {
+                    query += '&id[]=' + $(this).val();
+                })
+            }
+        }
+
+        if (opt.url.indexOf('?') >= 0) {
+            opt.url += '&iframe=yes' + query;
+        } else {
+            opt.url += '?iframe=yes' + query;
+        }
+
+        layer.open({ type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height] });
+        return false;
+    });
+
+    /**
      * 列表页批量操作按钮组
      * @attr href 操作地址
      * @attr data-table table容器ID
@@ -1008,61 +1061,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         } else {
             code(that);
         }
-        return false;
-    });*/
-
-
-
-    /**
-     * iframe弹窗
-     * @href 弹窗地址
-     * @title 弹窗标题
-     * @lay-data {width: '弹窗宽度', height: '弹窗高度', idSync: '是否同步ID', table: '数据表ID(同步ID时必须)', type: '弹窗类型'}
-     */
-    /*$(document).on('click', '.layui-iframe', function() {
-        var that = $(this),
-            query = '';
-        var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: !that.attr('data-href') ? that.attr('href') : that.attr('data-href'), title: that.attr('title') };
-        var opt = new Function('return ' + that.attr('lay-data'))() || {};
-
-        opt.url = opt.url || def.url;
-        opt.title = opt.title || def.title;
-        opt.width = opt.width || def.width;
-        opt.height = opt.height || def.height;
-        opt.type = opt.type || def.type;
-        opt.table = opt.table || def.table;
-        opt.idSync = opt.idSync || def.idSync;
-
-        if (!opt.url) {
-            notice.info('请设置data-href参数');
-            return false;
-        }
-
-        if (opt.idSync) { // ID 同步
-            if ($('.checkbox-ids:checked').length <= 0) {
-                var checkStatus = table.checkStatus(opt.table);
-                if (checkStatus.data.length <= 0) {
-                    notice.info('请选择要操作的数据');
-                    return false;
-                }
-
-                for (var i in checkStatus.data) {
-                    query += '&id[]=' + checkStatus.data[i].id;
-                }
-            } else {
-                $('.checkbox-ids:checked').each(function() {
-                    query += '&id[]=' + $(this).val();
-                })
-            }
-        }
-
-        if (opt.url.indexOf('?') >= 0) {
-            opt.url += '&iframe=yes' + query;
-        } else {
-            opt.url += '?iframe=yes' + query;
-        }
-
-        layer.open({ type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height] });
         return false;
     });*/
 
