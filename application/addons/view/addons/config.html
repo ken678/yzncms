@@ -143,3 +143,11 @@
 </form>
 <script type="text/javascript" src="__STATIC__/libs/webuploader/webuploader.min.js"></script>
 {/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
+    yznForm.listen();
+});
+</script>
+{/block}
