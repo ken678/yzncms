@@ -77,7 +77,7 @@
             <div class="layui-form-item">
                 <div>
                     <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
-                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
             {/if}
@@ -87,8 +87,11 @@
 {/block}
 {block name="layui"}
 <script>
-layui.use('form', function() {
-    var form = layui.form;
+layui.use(['form','yznForm'], function() {
+    var form = layui.form,
+    yznForm = layui.yznForm;
+
+    yznForm.listen();
     form.on('select(filter)', function(data) {
         location.href = data.value
     });

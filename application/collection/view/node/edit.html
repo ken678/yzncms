@@ -175,56 +175,58 @@
     {{# } }}
 </script>
 <script type="text/javascript">
-layui.use(['laytpl', 'form'], function() {
+layui.use(['laytpl', 'form','yznForm'], function() {
     var form = layui.form,
         laytpl = layui.laytpl,
+        yznForm = layui.yznForm,
         formData = {$data.customize_config|raw};
-    form.on('radio(urlType)', function(data) {
-        if (2 == data.value) {
-            $('.url_type').hide();
-            $('.url_type_2').show();
-        }
-        if (1 == data.value) {
-            $('.url_type').show();
-            $('.url_type_2').hide();
-        }
-    });
 
-    laytpl($('#caijiTpl').html()).render({ rules: formData || [] }, function(html) {
-        $('#caijiBox').html(html);
-        form.render();
-    });
+        yznForm.listen();
+        form.on('radio(urlType)', function(data) {
+            if (2 == data.value) {
+                $('.url_type').hide();
+                $('.url_type_2').show();
+            }
+            if (1 == data.value) {
+                $('.url_type').show();
+                $('.url_type_2').hide();
+            }
+        });
 
-    // 添加规则
-    $(document).on('click', '.rules-add', function() {
-        var that = $(this);
-        addRule(that);
-    });
-
-    // 删除规则
-    $(document).on('click', '.rules-del', function() {
-        var that = $(this),
-            obj = that.parents('.rules-item'),
-            len = obj.siblings('.rules-item').length;
-        if (parseInt(len) <= 0) {
-            addRule(that);
-        }
-        obj.remove();
-    });
-
-    addRule = function(that) {
-        var data = {
-            rules: [{ "title": "", "name": "", "selector": "", "attr": "","value": "", "filter": "" }]
-        };
-        laytpl($('#caijiTpl').html()).render(data, function(html) {
-            that.parents('#caijiBox').append(html);
+        laytpl($('#caijiTpl').html()).render({ rules: formData || [] }, function(html) {
+            $('#caijiBox').html(html);
             form.render();
         });
-        if (that.attr('data-init') == 'yes') {
-            that.parents('.rules-item').remove();
-        }
-    };
 
+        // 添加规则
+        $(document).on('click', '.rules-add', function() {
+            var that = $(this);
+            addRule(that);
+        });
+
+        // 删除规则
+        $(document).on('click', '.rules-del', function() {
+            var that = $(this),
+                obj = that.parents('.rules-item'),
+                len = obj.siblings('.rules-item').length;
+            if (parseInt(len) <= 0) {
+                addRule(that);
+            }
+            obj.remove();
+        });
+
+        addRule = function(that) {
+            var data = {
+                rules: [{ "title": "", "name": "", "selector": "", "attr": "","value": "", "filter": "" }]
+            };
+            laytpl($('#caijiTpl').html()).render(data, function(html) {
+                that.parents('#caijiBox').append(html);
+                form.render();
+            });
+            if (that.attr('data-init') == 'yes') {
+                that.parents('.rules-item').remove();
+            }
+        };
 });
 </script>
 {/block}
