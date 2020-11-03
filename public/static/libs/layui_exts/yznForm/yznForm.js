@@ -145,7 +145,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         }
     }
 
-    yznForm.listen();
+    //yznForm.listen();
 
     // 放大图片
     $('body').on('click', '[data-image]', function() {
@@ -1238,5 +1238,5 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         return false;
     });
 
-    exports(MOD_NAME, {});
+    exports(MOD_NAME, yznForm);
 });
