@@ -6,7 +6,7 @@
 .layui-layout-admin .layui-logo {font-weight: bold; color: #ffffff !important; height: 60px !important; line-height: 60px !important; overflow: hidden; line-height: 64px; transition: all .2s !important;    background-color: #192027 !important; }
 .layui-layout-admin .layui-logo a{display: block;}
 .layui-layout-admin .layui-logo h1 {display: inline-block;color: #bfbbbb; font-weight: 600; font-size: 18px; font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif; vertical-align: middle;font-weight: normal;}
-.layui-layout-admin .layui-logo i{color: #fff;font-size: 32px;font-weight: normal;vertical-align: middle;display: none;}
+.layui-layout-admin .layui-logo i{color: #fff;font-size: 24px;font-weight: normal;vertical-align: middle;display: none;}
 
 /**左侧菜单更多下拉样式*/
 .layui-menu-left .layui-nav-more,.layui-menu-left-zoom .layui-nav-more {font-family: layui-icon !important; font-size: 12px; font-style: normal; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow: hidden; width: auto; height: auto; line-height: normal; border: none; display: inline-block; margin-top: -6px !important; }
@@ -20,7 +20,7 @@
 
 /*顶部工具条*/
 .layui-header .layui-tool {position: absolute !important; top: 0; left: 210px; width: 60px; height: 100%; line-height: 60px; text-align: center; color: #ffffff !important; transition: all .2s; }
-.layui-header .layui-tool i {color: #565656; font-size: 24px; }
+.layui-header .layui-tool i {color: #565656; font-size: 18px; }
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {color: rgba(107, 107, 107, 0.7); }
 .layui-header .layui-layout-left {left: 260px !important; }
 .layui-mini .layui-header .layui-layout-left.layui-header-menu.layui-pc-show {left: 120px !important; }
