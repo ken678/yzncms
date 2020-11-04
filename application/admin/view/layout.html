@@ -16,14 +16,14 @@
         <div class="layui-header">
         	<div class="layui-logo">
 	            <a href="#">
-	            	<i class="iconfont icon-yingyong"></i>
+	            	<i class="layui-icon layui-icon-component"></i>
 	            	<h1>YZNCMS后台</h1>
 	            </a>
         	</div>
         	<div class="layui-header-content">
         		<a href="javascript:;">
 	        		<div class="layui-tool">
-	        			<i class="icon iconfont icon-shouqi" title="展开" data-side-fold="1"></i>
+	        			<i class="layui-icon layui-icon-shrink-right" title="展开" data-side-fold="1"></i>
 	        		</div>
         		</a>
                 <!--电脑端头部菜单-->
@@ -41,8 +41,9 @@
 		        </ul>
 
 		        <ul class="layui-nav layui-layout-right">
-		            <li class="layui-nav-item"><a href="{$Think.ROOT_URL}" target="_blank"><i class="iconfont icon-homepage"></i><span class="winner-hide">&nbsp;站点主页</span></a></li>
-		            <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-richangqingli"></i><span class="winner-hide">&nbsp;清理缓存</span></a>
+		            <li class="layui-nav-item"><a href="{$Think.ROOT_URL}" target="_blank"><i class="iconfont icon-homepage"></i></a></li>
+                    <li class="layui-nav-item"><a href="javascript:;" ><i class="layui-icon layui-icon-screen-full"></i></a></li>
+		            <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-empty"></i></a>
 		                <dl class="layui-nav-child" id="deletecache">
 		                    <dd><a href="javascript:;" data-type="all">一键清理缓存<span class="layui-badge-dot"></span></a></dd>
 		                    <dd><a href="javascript:;" data-type="data">清理数据缓存</a></dd>
@@ -511,12 +512,12 @@
             var isShow = $('.layui-tool [data-side-fold]').attr('data-side-fold');
             if (isShow == 1) { // 缩放
                 $('.layui-tool [data-side-fold]').attr('data-side-fold', 0);
-                $('.layui-tool [data-side-fold]').attr('class', 'icon iconfont icon-zhankai');
+                $('.layui-tool [data-side-fold]').attr('class', 'layui-icon layui-icon-spread-left');
                 $('.layui-layout-body').removeClass('layui-all');
                 $('.layui-layout-body').addClass('layui-mini');
             } else { // 正常
                 $('.layui-tool [data-side-fold]').attr('data-side-fold', 1);
-                $('.layui-tool [data-side-fold]').attr('class', 'icon iconfont icon-shouqi');
+                $('.layui-tool [data-side-fold]').attr('class', 'layui-icon layui-icon-shrink-right');
                 $('.layui-layout-body').removeClass('layui-mini');
                 $('.layui-layout-body').addClass('layui-all');
                 layer.close(window.openTips);
@@ -538,12 +539,12 @@
             var isShow = $('.layui-tool [data-side-fold]').attr('data-side-fold');
             if (isShow == 1) { // 缩放
                 $('.layui-tool [data-side-fold]').attr('data-side-fold', 0);
-                $('.layui-tool [data-side-fold]').attr('class', 'icon iconfont icon-zhankai');
+                $('.layui-tool [data-side-fold]').attr('class', 'layui-icon layui-icon-spread-left');
                 $('.layui-layout-body').removeClass('layui-all');
                 $('.layui-layout-body').addClass('layui-mini');
             } else { // 正常
                 $('.layui-tool [data-side-fold]').attr('data-side-fold', 1);
-                $('.layui-tool [data-side-fold]').attr('class', 'icon iconfont icon-shouqi');
+                $('.layui-tool [data-side-fold]').attr('class', 'layui-icon layui-icon-shrink-right');
                 $('.layui-layout-body').removeClass('layui-mini');
                 $('.layui-layout-body').addClass('layui-all');
                 layer.close(window.openTips);
@@ -579,7 +580,7 @@
         $('body').on('click', '.layui-make', function () {
             if (checkMobile()) {
                 $('.layui-tool i').attr('data-side-fold', 1);
-                $('.layui-tool i').attr('class', 'icon iconfont icon-shouqi');
+                $('.layui-tool i').attr('class', 'layui-icon layui-icon-shrink-right');
                 $('.layui-layout-body').removeClass('layui-mini');
                 $('.layui-layout-body').addClass('layui-all');
             }
