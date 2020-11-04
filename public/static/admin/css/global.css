@@ -25,7 +25,7 @@
 .layui-mini .layui-header .layui-layout-left.layui-header-menu.layui-pc-show {left: 120px !important; }
 .layui-header .layui-mobile-show {display: none; }
 .layui-header .topLevelMenus {float: left; }
-.layui-header .topLevelMenus .layui-nav-item.layui-this {background-color: #e4e4e4 !important; }
+.layui-header .topLevelMenus .layui-nav-item.layui-this {background-color: #f1f1f1 !important; }
 .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {width: 0 !important; height: 0 !important; }
 .layui-tab#top_tabs_box {border-top: 1px solid #f5f5f5; padding-right: 138px; height: 40px; border-bottom: 1px solid #f5f5f5; }
 .layui-tab .tab-right {background: #fff; right: 0px; top: 1px; height: 40px; width: 175px; position: absolute; text-align: center; }
@@ -36,7 +36,26 @@
 .layui-tab .tab-go-right {background: #fff; right: 60; top: 0; height: 40px; border-bottom: 1px solid #f5f5f5; width: 40px; position: absolute; text-align: center; border-left: 1px solid #f5f5f4; z-index: 999; border-right: 1px solid #f5f5f5; }
 .layui-tab .tab-go-right i {cursor: pointer; color: #666; font-size: 20px; line-height: 40px; }
 .layui-tab .layui-tab-title li {border-right: 1px solid #f5f5f5;color: #acafb1; }
-.layui-tab .layui-tab-title .layui-this { color: #696969; }
+.layui-tab .layui-tab-title .layui-this { color: #696969;background-color: #f6f6f6;}
+.layui-tab .layui-tab-title li:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 0;
+    background-color: #292B34;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.layui-tab .layui-tab-title li.layui-this:after {width: 100%; border: none; height: 2px; background-color: #292B34; }
+.layui-tab .layui-tab-title li:hover:after {
+    width: 100%;
+}
+
+
+
 .layui-tab .layui-tab-title .layui-this:after {border: none; }
 .layui-header .layui-nav .layui-nav-more {border-top-color: rgba(160, 160, 160, 0.7) !important; }
 .layui-header .layui-nav .layui-nav-mored, .layui-header .layui-nav-itemed > a .layui-nav-more {border-color: transparent transparent rgba(160, 160, 160, 0.7) !important; }
