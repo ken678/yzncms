@@ -80,10 +80,9 @@ URL重写： https://www.kancloud.cn/ken678/yzncms/1003231
 
 
 ## [截图预览]  
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0703/084951_547ade99_555541.png "YZNCMS后台管理系统.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2019/1206/103253_1d73b130_555541.png "YZNCMS后台管理系统.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2018/1225/133448_0555dfbc_555541.png "YZNCMS后台管理系统.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0305/183046_a3672965_555541.png "YZNCMS后台管理系统.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165618_3f12f7f5_555541.png "YZNCMS后台管理系统")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165632_61e32825_555541.png "YZNCMS后台管理系统")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165745_b4e41e16_555541.png "YZNCMS后台管理系统")
 
 
 
