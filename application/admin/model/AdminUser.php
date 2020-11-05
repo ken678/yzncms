@@ -60,7 +60,7 @@ class AdminUser extends Model
             $this->error = '没有修改的数据！';
             return false;
         }
-        $info = $this->where(array('id' => $data['id']))->find();
+        $info = $this->where('id', $data['id'])->find();
         if (empty($info)) {
             $this->error = '该管理员不存在！';
             return false;

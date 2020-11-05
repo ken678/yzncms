@@ -14,7 +14,7 @@ use app\admin\model\AdminUser as Admin_User;
 use app\admin\model\AuthGroup as AuthGroup_Model;
 use app\admin\service\User;
 use app\common\controller\Adminbase;
-use think\Db;
+use think\facade\Session;
 use util\Tree;
 
 /**
@@ -64,7 +64,7 @@ class Manager extends Adminbase
         if ($this->request->isAjax()) {
 
             list($page, $limit, $where) = $this->buildTableParames();
-            $this->AuthGroup_Model = new AuthGroup_Model();
+            $this->AuthGroup_Model      = new AuthGroup_Model();
 
             $count = $this->modelClass
                 ->where($where)
@@ -84,7 +84,7 @@ class Manager extends Adminbase
                 })
                 ->page($page, $limit)
                 ->select();
-            $total = count($_list);
+            $total  = count($_list);
             $result = array("code" => 0, 'count' => $count, "data" => $_list);
             return json($result);
         }
@@ -97,7 +97,7 @@ class Manager extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post('');
+            $data   = $this->request->post('');
             $result = $this->validate($data, 'AdminUser.insert');
             if (true !== $result) {
                 return $this->error($result);
@@ -135,16 +135,18 @@ class Manager extends Adminbase
                 $this->error('没有权限操作！');
             }
             if ($this->modelClass->editManager($data)) {
+                $info = $this->modelClass->where("id", $id)->find();
+                Session::set("admin", $info);
                 $this->success("修改成功！");
             } else {
-                $this->error($this->User->getError() ?: '修改失败！');
+                $this->error('修改失败！');
             }
         } else {
             $id = $this->request->param('id/d');
             if (!in_array($id, $this->childrenAdminIds)) {
                 $this->error('没有权限操作！');
             }
-            $data = $this->modelClass->where(array("id" => $id))->find();
+            $data = $this->modelClass->where("id", $id)->find();
             if (empty($data)) {
                 $this->error('该信息不存在！');
             }
