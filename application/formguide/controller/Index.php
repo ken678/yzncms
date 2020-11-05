@@ -18,6 +18,7 @@ namespace app\formguide\controller;
 use app\common\controller\Homebase;
 use app\formguide\model\Formguide as Formguide_Model;
 use think\Db;
+use think\Validate;
 
 class Index extends HomeBase
 {
@@ -73,13 +74,18 @@ class Index extends HomeBase
     //表单提交
     public function post()
     {
+        $token = $this->request->post('__token__');
+        //验证Token
+        if (!Validate::make()->check(['__token__' => $token], ['__token__' => 'require|token'])) {
+            $this->error('令牌错误！', null, ['__token__' => $this->request->token()]);
+        }
         //验证权限
         $this->competence();
         //提交间隔
         if ($this->setting['interval']) {
             $formguide = cookie('formguide_' . $this->formid);
             if ($formguide) {
-                $this->error("操作过快，请歇息后再次提交！");
+                $this->error("操作过快，请歇息后再次提交！", null, ['__token__' => $this->request->token()]);
             }
         }
         $data = $this->request->post();
@@ -87,7 +93,7 @@ class Index extends HomeBase
         if ($this->setting['isverify']) {
             // 验证码
             if (!captcha_check($data['captcha'])) {
-                $this->error('验证码错误或失效');
+                $this->error('验证码错误或失效', null, ['__token__' => $this->request->token()]);
             }
         }
         try {
