@@ -40,11 +40,11 @@ class Links extends Adminbase
             //验证器
             $rule = [
                 'name|网站名称' => 'require',
-                'url|网站链接' => 'require|url',
+                'url|网站链接'  => 'require|url',
             ];
-            $validate = new \think\Validate($rule);
-            if (!$validate->check($data)) {
-                $this->error($validate->getError());
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result);
             }
             if (!empty($data['terms']['name'])) {
                 $data['termsid'] = $this->addTerms($data['terms']['name']);
@@ -71,17 +71,12 @@ class Links extends Adminbase
             $data = $this->request->post();
             //验证器
             $rule = [
-                'name' => 'require',
-                'url' => 'require|url',
+                'name|网站名称' => 'require',
+                'url|网站链接'  => 'require|url',
             ];
-            $msg = [
-                'name.require' => '网站名称不得为空',
-                'url.require' => '网站链接不得为空',
-                'url.url' => '网站链接不是有效URL',
-            ];
-            $validate = new \think\Validate($rule, $msg);
-            if (!$validate->check($data)) {
-                $this->error($validate->getError());
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result);
             }
             if (!empty($data['terms']['name'])) {
                 $data['termsid'] = $this->addTerms($data['terms']['name']);
@@ -94,7 +89,7 @@ class Links extends Adminbase
             }
 
         } else {
-            $id = $this->request->param('id', 0);
+            $id   = $this->request->param('id', 0);
             $data = $this->modelClass->where(array("id" => $id))->find();
             if (!$data) {
                 $this->error("该信息不存在！");
@@ -111,8 +106,8 @@ class Links extends Adminbase
     public function terms()
     {
         if ($this->request->isAjax()) {
-            $_list = Db::name('Terms')->where(["module" => "links"])->select();
-            $total = count($_list);
+            $_list  = Db::name('Terms')->where(["module" => "links"])->select();
+            $total  = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -130,7 +125,7 @@ class Links extends Adminbase
                 $this->error("更新失败！");
             }
         } else {
-            $id = $this->request->param('id/d', 0);
+            $id   = $this->request->param('id/d', 0);
             $info = Db::name('Terms')->where(["id" => $id, "module" => "links"])->find();
             if (!$info) {
                 $this->error("该分类不存在！");
