@@ -22,6 +22,7 @@
 .layui-header .layui-tool {position: absolute !important; top: 0; left: 210px; width: 60px; height: 100%; line-height: 60px; text-align: center; color: #ffffff !important; transition: all .2s; }
 .layui-header .layui-tool i {color: #565656; font-size: 18px; }
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {color: rgba(107, 107, 107, 0.7); }
+.layui-layout-admin .layui-header .layui-nav.layui-layout-right .layui-nav-item dd.layui-this a {background-color: #f6f6f6;}
 .layui-header .layui-layout-left {left: 260px !important; }
 .layui-mini .layui-header .layui-layout-left.layui-header-menu.layui-pc-show {left: 120px !important; }
 .layui-header .layui-mobile-show {display: none; }
