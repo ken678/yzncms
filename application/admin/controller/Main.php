@@ -23,7 +23,6 @@ class Main extends Adminbase
     //欢迎首页
     public function index()
     {
-        $this->assign('userInfo', $this->_userinfo);
         if (IS_ROOT && $this->_userinfo['password'] == encrypt_password('admin', $this->_userinfo['encrypt'])) {
             $this->assign('default_pass', 1);
         }

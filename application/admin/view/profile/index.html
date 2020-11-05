@@ -1,0 +1,99 @@
+{extend name="index_layout"/}
+{block name="main"}
+<style type="text/css">
+.admin-info {padding: 50px 20px 35px 20px; }
+.admin-info .photo {display: block; width: 130px; height: 130px; margin: 0 auto; border-radius: 50%; }
+.admin-info .photo img {display: block; width: 100%; height: 100%; border: none; border-radius: 50%; }
+.layui-user {display: block; width: 100%; height: 30px; line-height: 30px; text-align: center; padding-top: 15px; color: #333; font-size: 16px; }
+.login-time {display: block; width: 100%; height: 30px; line-height: 30px; text-align: center; font-size: 14px; color: #666777; }
+</style>
+<div class="layui-row layui-col-space20">
+    <div class="layui-col-sm4 layui-col-md3 layui-col-lg3">
+        <div class="layui-card">
+            <div class="layui-card-header">个人资料</div>
+            <div class="layui-card-body">
+                <div class="admin-info">
+                    <div class="photo">
+                        <img id="avatar" src="__STATIC__/admin/img/avatar.png">
+                    </div>
+                    <h3 class="layui-user">{$userInfo.email}</h3>
+                    <p class="login-time">上次登录：<?php if($userInfo['last_login_time'] > 0) { echo $userInfo['last_login_time'];} else { echo '--';}?></p>
+                </div>
+                <form class="layui-form" method="post">
+                    <input type="hidden" name="id" value="1">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" autocomplete="off" placeholder="用户名" class="layui-input" value="{$userInfo.username}" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="password" autocomplete="off" placeholder="不修改留空即可" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">E-mail</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="email" lay-verify="required|email" autocomplete="off" placeholder="E-mail" class="layui-input" value="{$userInfo.email}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">真实姓名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="nickname" autocomplete="off" placeholder="真实姓名" class="layui-input" value="{$userInfo.nickname}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="{:url('update')}" lay-filter="formSubmit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-sm8 layui-col-md9 layui-col-lg9">
+        <div class="layui-card">
+            <div class="layui-card-header">操作日志</div>
+            <div class="layui-card-body">
+                <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use(['yznTable','yznForm'], function() {
+    var table = layui.yznTable,
+    yznForm=layui.yznForm;
+
+    yznForm.listen();
+
+    var init = {
+        table_elem: '#currentTable',
+    };
+
+    table.render({
+        id: 'currentTable',
+        elem: '#currentTable',
+        toolbar: ['refresh'],
+        url: '{:url("index")}',
+        cols: [
+            [
+                { field: 'id', width: 80, title: 'ID', sort: true },
+                { field: 'info', title: '提示' },
+                { field: 'get', title: '操作URL' },
+                { field: 'create_time', width: 180, title: '时间', search: 'range' },
+                { field: 'ip', width: 120, title: 'IP' },
+                { field: 'status', width: 80, title: '状态', align: "center", templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">成功</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">失败</button> {{#  } }} </div>', selectList: { 0: '失败', 1: '成功' } },
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}
