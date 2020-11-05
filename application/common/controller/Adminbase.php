@@ -119,6 +119,7 @@ class Adminbase extends Base
             User::instance()->logout();
             return false;
         }
+        $this->assign('userInfo', $this->_userinfo);
         return $userInfo;
 
     }
