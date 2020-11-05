@@ -135,8 +135,10 @@ class Manager extends Adminbase
                 $this->error('没有权限操作！');
             }
             if ($this->modelClass->editManager($data)) {
-                $info = $this->modelClass->where("id", $id)->find();
-                Session::set("admin", $info);
+                $info = $this->modelClass->where("id", $data['id'])->find();
+                if ($data['id'] == User::instance()->isLogin()) {
+                    Session::set("admin", $info);
+                }
                 $this->success("修改成功！");
             } else {
                 $this->error('修改失败！');
