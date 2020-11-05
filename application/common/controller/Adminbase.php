@@ -16,6 +16,7 @@ namespace app\common\controller;
 
 use app\admin\service\User;
 use think\facade\Session;
+use think\Validate;
 
 //定义是后台
 define('IN_ADMIN', true);
@@ -323,4 +324,15 @@ class Adminbase extends Base
         return json(['data' => $list, 'count' => $total]);
     }
 
+    //刷新Token
+    protected function token()
+    {
+        $token = $this->request->param('__token__');
+        //验证Token
+        if (!Validate::make()->check(['__token__' => $token], ['__token__' => 'require|token'])) {
+            $this->error('令牌错误！', '', ['__token__' => $this->request->token()]);
+        }
+        //刷新Token
+        $this->request->token();
+    }
 }
