@@ -36,10 +36,21 @@ class Content extends MemberBase
             $this->error("今日投稿数量已达上限！");
         }
         if ($this->request->isPost()) {
-            $data = $this->request->post(false);
-            $data['modelField']['uid'] = $this->userid;
+            $data  = $this->request->post();
+            $token = $this->request->post('__token__');
+            // 验证数据
+            $rule = [
+                'modelField.title|标题' => 'require|length:3,100',
+                'modelField.catid|栏目' => 'require|integer',
+                '__token__'           => 'require|token',
+            ];
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result, null, ['token' => $this->request->token()]);
+            }
+            $data['modelField']['uid']      = $this->userid;
             $data['modelField']['username'] = $this->userinfo['username'];
-            $catid = intval($data['modelField']['catid']);
+            $catid                          = intval($data['modelField']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
             }
@@ -68,12 +79,12 @@ class Content extends MemberBase
             //添加投稿记录
             if ($id) {
                 Member_Content_Model::create([
-                    'catid' => $catid,
-                    'content_id' => $id,
-                    'uid' => $data['modelField']['uid'],
-                    'username' => $data['modelField']['username'],
+                    'catid'       => $catid,
+                    'content_id'  => $id,
+                    'uid'         => $data['modelField']['uid'],
+                    'username'    => $data['modelField']['username'],
                     'create_time' => time(),
-                    'status' => $data['modelField']['status'],
+                    'status'      => $data['modelField']['status'],
                 ]);
             }
             if ($data['modelField']['status'] == 1) {
@@ -87,8 +98,8 @@ class Content extends MemberBase
                 return $this->fetch('/declaration');
             }
             $catid = $this->request->param('catid/d', 0);
-            $tree = new \util\Tree();
-            $str = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
+            $tree  = new \util\Tree();
+            $str   = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             foreach ($array as $k => $v) {
                 //$array[$k] = $v = Db::name('Category')->find($v['id']);
@@ -113,10 +124,10 @@ class Content extends MemberBase
                     $this->error('该栏目不存在！');
                 }
                 if ($category['type'] == 2) {
-                    $modelid = $category['modelid'];
+                    $modelid   = $category['modelid'];
                     $fieldList = $this->Cms_Model->getFieldList($modelid);
                     $this->assign([
-                        'catid' => $catid,
+                        'catid'     => $catid,
                         'fieldList' => $fieldList,
                     ]);
                 }
@@ -171,7 +182,7 @@ class Content extends MemberBase
             }
 
         } else {
-            $id = $this->request->param('id/d', 0);
+            $id   = $this->request->param('id/d', 0);
             $info = Member_Content_Model::where(array('uid' => $this->userid, 'id' => $id))->find();
             if (empty($info)) {
                 $this->error('稿件不存在！');
@@ -190,7 +201,7 @@ class Content extends MemberBase
             }
             $fieldList = $this->Cms_Model->getFieldList($modelid, $info['content_id']);
             $this->assign([
-                'catid' => $catid,
+                'catid'     => $catid,
                 'fieldList' => $fieldList,
             ]);
             return $this->fetch('/edit');
@@ -202,8 +213,8 @@ class Content extends MemberBase
     {
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 10);
-            $type = $this->request->param('type/s', "");
+            $page  = $this->request->param('page/d', 10);
+            $type  = $this->request->param('type/s', "");
             $where = array('uid' => $this->userid);
             if ('check' == $type) {
                 $where['status'] = 1;
@@ -214,12 +225,12 @@ class Content extends MemberBase
             $total = Member_Content_Model::where($where)->count();
             $_list = Member_Content_Model::where($where)->page($page, $limit)->order(array("id" => "DESC"))->select();
             foreach ($_list as $k => $v) {
-                $modelid = getCategory($v['catid'], 'modelid');
+                $modelid   = getCategory($v['catid'], 'modelid');
                 $tablename = ucwords(getModel($modelid, 'tablename'));
-                $info = Db::name($tablename)->where(array("id" => $v['content_id'], "sysadd" => 0))->find();
+                $info      = Db::name($tablename)->where(array("id" => $v['content_id'], "sysadd" => 0))->find();
                 if ($info) {
-                    $_list[$k]['url'] = buildContentUrl($v['catid'], $v['content_id']);
-                    $_list[$k]['title'] = $info['title'];
+                    $_list[$k]['url']     = buildContentUrl($v['catid'], $v['content_id']);
+                    $_list[$k]['title']   = $info['title'];
                     $_list[$k]['catname'] = getCategory($v['catid'], 'catname');
                 }
             }
