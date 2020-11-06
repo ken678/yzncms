@@ -318,6 +318,8 @@ CREATE TABLE `yzn_menu` (
 INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (4, '模块', 'icon-supply', 0, 'admin', 'module', 'index1', '', 1, '', 0, 9);
 INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-tools', 0, 'addons', 'addons', 'index1', '', 1, '', 0, 10);
+INSERT INTO `yzn_menu` VALUES (8, '个人资料', '', 10, 'admin', 'profile', 'index', '', 0, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (9, '资料更新', '', 10, 'admin', 'profile', 'update', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (10, '系统配置', 'icon-zidongxiufu', 3, 'admin', 'config', 'index1', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (11, '配置管理', 'icon-apartment', 10, 'admin', 'config', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (12, '删除日志', '', 20, 'admin', 'adminlog', 'deletelog', '', 1, '', 0, 0);
