@@ -110,6 +110,9 @@ class User
                 $data['groupid'] = $this->get_usergroup_bypoint($data['point']);
             }
             if (false !== $user->save($data, ['id' => $userid])) {
+                $_user = $user::get($userid);
+                //注册成功的事件
+                hook("user_register_successed", $_user);
                 //注册登陆状态
                 $this->loginLocal($username, $password);
                 return $userid;
