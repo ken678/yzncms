@@ -18,7 +18,6 @@ use app\addons\model\Addons as Addons_Model;
 use app\common\controller\Adminbase;
 use think\Db;
 use think\facade\Cache;
-use ZipArchive;
 
 class Addons extends Adminbase
 {
@@ -41,11 +40,12 @@ class Addons extends Adminbase
                     $class = get_addon_class($value);
                     if (!class_exists($class)) {
                         // 实例化插件失败忽略执行
-                        $addons[$value]['uninstall'] = -1;
+                        unset($addons[$value]);
+                        //$addons[$value]['uninstall'] = -1;
                         continue;
                     }
                     //获取插件配置
-                    $obj = new $class();
+                    $obj            = new $class();
                     $addons[$value] = $obj->info;
                     if ($addons[$value]) {
                         $addons[$value]['uninstall'] = 1;
@@ -207,7 +207,7 @@ class Addons extends Adminbase
         }
         // 复制静态资源
         $sourceAssetsDir = self::getSourceAssetsDir($addonName);
-        $destAssetsDir = self::getDestAssetsDir($addonName);
+        $destAssetsDir   = self::getDestAssetsDir($addonName);
         if (is_dir($sourceAssetsDir)) {
             \util\File::copy_dir($sourceAssetsDir, $destAssetsDir);
         }
@@ -237,7 +237,7 @@ class Addons extends Adminbase
             $this->error('请选择需要卸载的插件！');
         }
         //获取插件信息
-        $info = Addons_Model::where(array('id' => $addonId))->find();
+        $info  = Addons_Model::where(array('id' => $addonId))->find();
         $class = get_addon_class($info['name']);
         if (empty($info) || !class_exists($class)) {
             $this->error('该插件不存在！');
@@ -249,7 +249,7 @@ class Addons extends Adminbase
             $this->error('该插件未安装，无需卸载！');
         }
         //卸载插件
-        $addonObj = new $class();
+        $addonObj  = new $class();
         $uninstall = $addonObj->uninstall();
         if ($uninstall !== true) {
             if (method_exists($addonObj, 'getError')) {
@@ -300,8 +300,8 @@ class Addons extends Adminbase
 
             //上传临时文件地址
             $filename = $files->getInfo('tmp_name');
-            $zip = new \util\PclZip($filename);
-            $status = $zip->extract(PCLZIP_OPT_PATH, ADDON_PATH . $addonName);
+            $zip      = new \util\PclZip($filename);
+            $status   = $zip->extract(PCLZIP_OPT_PATH, ADDON_PATH . $addonName);
             if ($status) {
                 $this->success('插件解压成功，可以进入插件管理进行安装！', url('index'));
             } else {
