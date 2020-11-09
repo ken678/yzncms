@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css">
     <link rel="stylesheet" href="__STATIC__/admin/css/global.css">
     <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css">
+    <style id="layui-bg-color"></style>
 </head>
 
 <body class="layui-layout-body layui-all layui-multi-module">
@@ -56,6 +57,9 @@
 		                    <dd><a href="{:url('admin/index/logout')}"><i class="iconfont icon-tuichu"></i>&nbsp;安全退出</a></dd>
 		                </dl>
 		            </li>
+                    <li class="layui-nav-item layui-select-bgcolor" lay-unselect="">
+                        <a href="javascript:;" data-bgcolor="配色方案"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                    </li>
 		        </ul>
         	</div>
         </div>
@@ -107,9 +111,17 @@
     </div>
     <script src="__STATIC__/libs/layui/layui.js"></script>
     <script type="text/javascript">
-    layui.use(['element', 'layer', 'jquery'], function() {
+    layui.config({
+      base: '__STATIC__/libs/layui_exts/'
+    }).extend({
+      theme: 'theme/theme',
+    });
+    </script>
+    <script type="text/javascript">
+    layui.use(['element', 'layer', 'jquery','theme'], function() {
         var $ = layui.jquery,
             element = layui.element,
+            theme = layui.theme,
             layer = layui.layer;
         var SUBMENU_CONFIG = <?php echo $SUBMENU_CONFIG; ?>;
         var openTabNum = 10; //最大可打开窗口数量
@@ -131,6 +143,11 @@
         $('#J_B_main_block').html(html.join(''));
         $('.layui-menu-header-mobile').html(html2.join(''));
         element.render(); //重新渲染
+
+        theme.render({
+            bgColorDefault: false,
+            listen: true,
+        });
         //维持在线
         /*setInterval(function() {
             online();
@@ -423,7 +440,6 @@
 
         })
 
-
         //通过菜单id查找菜单配置对象
         function getMenuByID(mid, menugroup) {
             var ret = {};
@@ -463,12 +479,6 @@
             }
             return ret;
         }
-
-        //隐藏左侧导航
-        /*$(".hideMenu").click(function() {
-            $(".layui-layout-admin").toggleClass("showMenu");
-
-        })*/
 
         //左侧收缩时候
         $("body").on("mouseenter", ".layui-nav-tree .menu-li", function () {
@@ -533,7 +543,6 @@
             location.href = location.pathname + location.search;
         }
 
-
         //手机设备的简单适配
         $('body').on('click', '.site-tree-mobile', function () {
             var loading = layer.load(0, {shade: false, time: 2 * 1000});
@@ -553,7 +562,6 @@
             //element.init();
             layer.close(loading);
         });
-
 
         //用于维持在线
         function online() {}
@@ -671,8 +679,6 @@
                 }
             });
         });
-
-
     })
     </script>
 </body>
