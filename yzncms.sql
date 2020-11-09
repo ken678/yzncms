@@ -286,10 +286,11 @@ INSERT INTO `yzn_hooks` VALUES (12, 'ems_check', '检测邮件验证是否正确
 INSERT INTO `yzn_hooks` VALUES (13, 'ems_flush', '清空邮件验证行为', 2, 1509174020, '', '', 1, 1);
 INSERT INTO `yzn_hooks` VALUES (14, 'upload_after', '第三方附件上传钩子', 2, 1509174020, '', '', 1, 1);
 INSERT INTO `yzn_hooks` VALUES (15, 'upload_delete', '第三方附件删除钩子', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (16, 'sync_login', '第三方登陆位置', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (17, 'user_config', '用户配置页面钩子', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (16, 'sync_login', '第三方登陆位置', 1, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (17, 'user_config', '用户配置页面钩子', 1, 1509174020, '', '', 1, 1);
 INSERT INTO `yzn_hooks` VALUES (18, 'baidupush', '百度熊掌号+百度站长推送', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (19, 'markdown', 'markdown编辑器', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (19, 'markdown', 'markdown编辑器', 1, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (20, 'user_register_successed', '用户登录后钩子', 2, 1509174020, '', '', 1, 1);
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
