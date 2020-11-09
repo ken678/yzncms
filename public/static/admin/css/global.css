@@ -19,8 +19,8 @@
 .layui-menu-left .layui-nav-itemed .layui-nav-child a {padding-left: 40px; }
 
 /*顶部工具条*/
-.layui-header .layui-tool {position: absolute !important; top: 0; left: 210px; width: 60px; height: 100%; line-height: 60px; text-align: center; color: #ffffff !important; transition: all .2s; }
-.layui-header .layui-tool i {color: #565656; font-size: 18px; }
+.layui-header .layui-tool {position: absolute !important; top: 0; left: 225px; width: 55px; height: 100%; line-height: 60px; text-align: center; color: #ffffff !important; transition: all .2s; }
+.layui-header .layui-tool i {color: #565656; display: block; color: #bbe3df; width: 32px; height: 32px; line-height: 32px; border-radius: 3px; text-align: center; margin-top: 15px; cursor: pointer; }
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {color: rgba(107, 107, 107, 0.7); }
 .layui-layout-admin .layui-header .layui-nav.layui-layout-right .layui-nav-item dd.layui-this a {background-color: #f6f6f6;}
 .layui-header .layui-layout-left {left: 260px !important; }
@@ -105,7 +105,7 @@ iframe {position: absolute; height: 100%; width: 100%; border: none; }
 
 /*PC版样式*/
 @media screen and (min-width: 1025px) {
-  .layui-mini .layui-header .layui-tool {left: 70px !important; }
+  .layui-mini .layui-header .layui-tool {left: 85px !important; }
   .layui-mini .layui-layout-admin .layui-logo i {display: block; }
   .layui-mini .layui-layout-admin .layui-logo h1 {display: none; }
   /*侧边*/
