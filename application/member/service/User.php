@@ -84,32 +84,33 @@ class User
             "encrypt"  => $passwordinfo['encrypt'],
             "amount"   => 0,
         );
+        $newdata = array_merge($data, $extend);
+        hook("user_register_init", $newdata);
+
         $user = new Member_Model();
         $res  = $user->save($data);
         if ($res) {
-            $data   = array_merge($data, $extend);
             $userid = $user->id;
-
-            unset($data['username'], $data['password'], $data['email'], $data['mobile']);
+            unset($newdata['username'], $newdata['password'], $newdata['email'], $newdata['mobile']);
             //新注册用户积分
-            $data['point'] = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
+            $newdata['point'] = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
             //新会员注册默认赠送资金
-            $data['amount'] = $this->memberConfig['defualtamount'] ? $this->memberConfig['defualtamount'] : 0;
+            $newdata['amount'] = $this->memberConfig['defualtamount'] ? $this->memberConfig['defualtamount'] : 0;
             //新会员注册需要邮件验证
             if ($this->memberConfig['enablemailcheck']) {
-                $data['groupid'] = 7;
-                $data['status']  = 0;
+                $newdata['groupid'] = 7;
+                $newdata['status']  = 0;
             } else {
                 //新会员注册需要管理员审核
                 if ($this->memberConfig['registerverify']) {
-                    $data['status'] = 0;
+                    $newdata['status'] = 0;
                 } else {
-                    $data['status'] = 1;
+                    $newdata['status'] = 1;
                 }
                 //计算用户组
-                $data['groupid'] = $this->get_usergroup_bypoint($data['point']);
+                $newdata['groupid'] = $this->get_usergroup_bypoint($newdata['point']);
             }
-            if (false !== $user->save($data, ['id' => $userid])) {
+            if (false !== $user->save($newdata, ['id' => $userid])) {
                 $_user = $user::get($userid);
                 //注册成功的事件
                 hook("user_register_successed", $_user);
