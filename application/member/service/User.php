@@ -85,7 +85,7 @@ class User
             "amount"   => 0,
         );
         $newdata = array_merge($data, $extend);
-        hook("user_register_init", $newdata);
+        hook("user_register_init", $newdata, true, true);
 
         $user = new Member_Model();
         $res  = $user->save($data);
@@ -111,11 +111,11 @@ class User
                 $newdata['groupid'] = $this->get_usergroup_bypoint($newdata['point']);
             }
             if (false !== $user->save($newdata, ['id' => $userid])) {
+                //注册登陆状态
+                $this->loginLocal($username, $password);
                 $_user = $user::get($userid);
                 //注册成功的事件
                 hook("user_register_successed", $_user);
-                //注册登陆状态
-                $this->loginLocal($username, $password);
                 return $userid;
             } else {
                 //删除
