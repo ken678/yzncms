@@ -321,7 +321,7 @@ CREATE TABLE `yzn_menu` (
 -- ----------------------------
 INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (4, '模块', 'icon-apps-line', 0, 'admin', 'module', 'index1', '', 1, '', 0, 9);
-INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-tools', 0, 'addons', 'addons', 'index1', '', 1, '', 0, 10);
+INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-equalizer-line', 0, 'addons', 'addons', 'index1', '', 1, '', 0, 10);
 INSERT INTO `yzn_menu` VALUES (8, '个人资料', '', 10, 'admin', 'profile', 'index', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (9, '资料更新', '', 10, 'admin', 'profile', 'update', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (10, '系统配置', 'icon-zidongxiufu', 3, 'admin', 'config', 'index1', '', 1, '', 0, 0);
@@ -334,7 +334,7 @@ INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-user-settings-line',
 INSERT INTO `yzn_menu` VALUES (17, '角色管理', 'icon-user-shared-2-line', 15, 'admin', 'authManager', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (18, '添加管理员', '', 16, 'admin', 'manager', 'add', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (19, '编辑管理员', '', 16, 'admin', 'manager', 'edit', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (20, '管理日志', 'icon-rizhi', 15, 'admin', 'adminlog', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (20, '管理日志', 'icon-history', 15, 'admin', 'adminlog', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (21, '删除管理员', '', 16, 'admin', 'manager', 'del', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (22, '添加角色', '', 17, 'admin', 'authManager', 'createGroup', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (23, '附件管理', 'icon-accessory', 10, 'attachment', 'attachments', 'index', '', 1, '', 0, 1);
@@ -352,7 +352,7 @@ INSERT INTO `yzn_menu` VALUES (34, '编辑器附件', '', 23, 'attachment', 'ued
 INSERT INTO `yzn_menu` VALUES (35, '图片列表', '', 23, 'attachment', 'attachments', 'showFileLis', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (36, '图片本地化', '', 23, 'attachment', 'attachments', 'getUrlFile', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (37, '图片选择', '', 23, 'attachment', 'attachments', 'select', '', 0, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-tools', 5, 'addons', 'addons', 'index2', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-equalizer-line', 5, 'addons', 'addons', 'index2', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-apartment', 38, 'addons', 'addons', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (40, '行为管理', 'icon-reactjs-fill', 38, 'addons', 'addons', 'hooks', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'addons', 'addons', 'addonadmin', '', 0, '', 0, 0);
