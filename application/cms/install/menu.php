@@ -151,14 +151,14 @@ return [
                 "type"   => 1,
                 "status" => 1,
                 "name"   => "相关设置",
-                "icon"   => "icon-zidongxiufu",
+                "icon"   => "icon-file-settings-line",
                 "child"  => [
                     [
                         "route"  => "cms/setting/index",
                         "type"   => 1,
                         "status" => 1,
                         "name"   => "CMS配置",
-                        "icon"   => "icon-setup",
+                        "icon"   => "icon-file-settings-line",
                     ],
                     [
                         "route"  => "cms/category/index",
