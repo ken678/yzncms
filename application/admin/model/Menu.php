@@ -16,7 +16,6 @@ namespace app\admin\model;
 
 use app\admin\model\AuthRule;
 use app\admin\service\User;
-use \think\Db;
 use \think\Model;
 
 class Menu extends Model
@@ -46,10 +45,10 @@ class Menu extends Model
         if (is_array($data)) {
             $ret = null;
             foreach ($data as $a) {
-                $id = $a['id'];
-                $name = $a['app'];
+                $id         = $a['id'];
+                $name       = $a['app'];
                 $controller = $a['controller'];
-                $action = $a['action'];
+                $action     = $a['action'];
                 //附带参数
                 $fu = "";
                 if ($a['parameter']) {
@@ -57,14 +56,14 @@ class Menu extends Model
                 }
                 $array = array(
                     "menuid" => $id,
-                    "id" => $id . $name,
-                    "title" => $a['title'],
-                    "icon" => $a['icon'],
+                    "id"     => $id . $name,
+                    "title"  => $a['title'],
+                    "icon"   => $a['icon'],
                     "parent" => $parent,
-                    "url" => url("{$name}/{$controller}/{$action}{$fu}", array("menuid" => $id)),
+                    "url"    => url("{$name}/{$controller}/{$action}{$fu}", array("menuid" => $id)),
                 );
                 $ret[$id . $name] = $array;
-                $child = $this->getTree($a['id'], $id, $Level);
+                $child            = $this->getTree($a['id'], $id, $Level);
                 //由于后台管理界面只支持三层，超出的不层级的不显示
                 if ($child && $Level <= 3) {
                     $ret[$id . $name]['items'] = $child;
@@ -82,14 +81,14 @@ class Menu extends Model
     final public function adminMenu($parentid, $with_self = false)
     {
         $parentid = (int) $parentid;
-        $result = $this->where(array('parentid' => $parentid, 'status' => 1))->order('listorder ASC,id ASC')->cache(60)->select()->toArray();
+        $result   = $this->where(array('parentid' => $parentid, 'status' => 1))->order('listorder ASC,id ASC')->cache(60)->select()->toArray();
         if (empty($result)) {
             $result = array();
         }
         if ($with_self) {
             $parentInfo = $this->where(array('id' => $parentid))->find();
-            $result2[] = $parentInfo ? $parentInfo : array();
-            $result = array_merge($result2, $result);
+            $result2[]  = $parentInfo ? $parentInfo : array();
+            $result     = array_merge($result2, $result);
         }
         //是否超级管理员
         if (User::instance()->isAdministrator()) {
@@ -185,14 +184,14 @@ class Menu extends Model
                 $this->error = '菜单信息配置有误，route 不能为空！';
                 return false;
             }
-            $route = $this->menuRoute($rs['route'], $moduleNama);
-            $pid = $parentid ?: ((is_null($rs['parentid']) || !isset($rs['parentid'])) ? (int) $defaultMenuParentid : $rs['parentid']);
+            $route   = $this->menuRoute($rs['route'], $moduleNama);
+            $pid     = $parentid ?: ((is_null($rs['parentid']) || !isset($rs['parentid'])) ? (int) $defaultMenuParentid : $rs['parentid']);
             $newData = array_merge(array(
-                'title' => $rs['name'],
-                'icon' => isset($rs['icon']) ? $rs['icon'] : '',
-                'parentid' => $pid,
-                'status' => isset($rs['status']) ? $rs['status'] : 0,
-                'tip' => isset($rs['remark']) ? $rs['remark'] : '',
+                'title'     => $rs['name'],
+                'icon'      => isset($rs['icon']) ? $rs['icon'] : '',
+                'parentid'  => $pid,
+                'status'    => isset($rs['status']) ? $rs['status'] : 0,
+                'tip'       => isset($rs['remark']) ? $rs['remark'] : '',
                 'listorder' => isset($rs['listorder']) ? $rs['listorder'] : 0,
             ), $route);
 
@@ -225,9 +224,9 @@ class Menu extends Model
             array_unshift($route, $moduleNama);
         }
         $data = array(
-            'app' => $route[0],
+            'app'        => $route[0],
             'controller' => $route[1],
-            'action' => $route[2],
+            'action'     => $route[2],
         );
         return $data;
     }
@@ -250,23 +249,24 @@ class Menu extends Model
         }
         $data = array(
             //父ID
-            "parentid" => $menuId,
+            "parentid"   => $menuId,
+            'icon'       => isset($info['icon']) ? $info['icon'] : 'icon-circle-line',
             //模块目录名称，也是项目名称
-            "app" => "addons",
+            "app"        => "addons",
             //插件名称
             "controller" => $info['name'],
             //方法名称
-            "action" => "index",
+            "action"     => "index",
             //附加参数 例如：a=12&id=777
-            "parameter" => "isadmin=1",
+            "parameter"  => "isadmin=1",
             //状态，1是显示，0是不显示
-            "status" => 1,
+            "status"     => 1,
             //名称
-            "title" => $info['title'],
+            "title"      => $info['title'],
             //备注
-            "tip" => $info['title'] . "插件管理后台！",
+            "tip"        => $info['title'] . "插件管理后台！",
             //排序
-            "listorder" => 0,
+            "listorder"  => 0,
         );
         //添加插件后台
         $parentid = self::create($data);
@@ -288,23 +288,23 @@ class Menu extends Model
                 }
                 $data = array(
                     //父ID
-                    "parentid" => $parentid->getAttr('parentid'),
+                    "parentid"   => $parentid->getAttr('parentid'),
                     //模块目录名称，也是项目名称
-                    "app" => "addons",
+                    "app"        => "addons",
                     //文件名称，比如LinksAction.class.php就填写 Links
                     "controller" => $info['name'],
                     //方法名称
-                    "action" => $menu['action'],
+                    "action"     => $menu['action'],
                     //附加参数 例如：a=12&id=777
-                    "parameter" => 'isadmin=1',
+                    "parameter"  => 'isadmin=1',
                     //状态，1是显示，0是不显示
-                    "status" => (int) $menu['status'],
+                    "status"     => (int) $menu['status'],
                     //名称
-                    "title" => $menu['title'],
+                    "title"      => $menu['title'],
                     //备注
-                    "tip" => $menu['tip'] ?: '',
+                    "tip"        => $menu['tip'] ?: '',
                     //排序
-                    "listorder" => (int) $menu['listorder'],
+                    "listorder"  => (int) $menu['listorder'],
                 );
                 self::create($data);
             }
