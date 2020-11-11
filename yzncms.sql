@@ -354,7 +354,7 @@ INSERT INTO `yzn_menu` VALUES (36, '图片本地化', '', 23, 'attachment', 'att
 INSERT INTO `yzn_menu` VALUES (37, '图片选择', '', 23, 'attachment', 'attachments', 'select', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-tools', 5, 'addons', 'addons', 'index2', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-plugins-', 38, 'addons', 'addons', 'index', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (40, '行为管理', 'icon-hangweifenxi', 38, 'addons', 'addons', 'hooks', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (40, '行为管理', 'icon-reactjs-fill', 38, 'addons', 'addons', 'hooks', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'addons', 'addons', 'addonadmin', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (43, '本地模块', 'icon-apps-line', 4, 'admin', 'module', 'index2', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (44, '模块管理', 'icon-mokuaishezhi', 43, 'admin', 'module', 'index', '', 1, '', 0, 0);
