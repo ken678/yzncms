@@ -320,7 +320,7 @@ CREATE TABLE `yzn_menu` (
 -- Records of yzn_menu
 -- ----------------------------
 INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (4, '模块', 'icon-supply', 0, 'admin', 'module', 'index1', '', 1, '', 0, 9);
+INSERT INTO `yzn_menu` VALUES (4, '模块', 'icon-apps-line', 0, 'admin', 'module', 'index1', '', 1, '', 0, 9);
 INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-tools', 0, 'addons', 'addons', 'index1', '', 1, '', 0, 10);
 INSERT INTO `yzn_menu` VALUES (8, '个人资料', '', 10, 'admin', 'profile', 'index', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (9, '资料更新', '', 10, 'admin', 'profile', 'update', '', 0, '', 0, 0);
@@ -356,7 +356,7 @@ INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-tools', 5, 'addons', 'a
 INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-plugins-', 38, 'addons', 'addons', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (40, '行为管理', 'icon-hangweifenxi', 38, 'addons', 'addons', 'hooks', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'addons', 'addons', 'addonadmin', '', 0, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (43, '本地模块', 'icon-supply', 4, 'admin', 'module', 'index2', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (43, '本地模块', 'icon-apps-line', 4, 'admin', 'module', 'index2', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (44, '模块管理', 'icon-mokuaishezhi', 43, 'admin', 'module', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (45, '模块后台列表', 'icon-liebiaosousuo', 4, 'admin', 'module', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (48, '编辑角色', '', 17, 'admin', 'authManager', 'editGroup', '', 1, '', 0, 0);
