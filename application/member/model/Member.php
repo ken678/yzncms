@@ -96,8 +96,13 @@ class Member extends Model
      */
     public function userDelete($uid)
     {
+        $user = self::get($uid);
+        if (!$user) {
+            return false;
+        }
         //删除本地用户数据开始
-        if (self::where(["id" => $uid])->delete() !== false) {
+        if (self::destroy($uid) !== false) {
+            hook("user_delete_successed", $user);
             return true;
         }
         $this->error = '删除会员失败！';
