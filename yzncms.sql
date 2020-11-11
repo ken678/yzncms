@@ -329,9 +329,9 @@ INSERT INTO `yzn_menu` VALUES (11, '配置管理', 'icon-apartment', 10, 'admin'
 INSERT INTO `yzn_menu` VALUES (12, '删除日志', '', 20, 'admin', 'adminlog', 'deletelog', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (13, '网站设置', 'icon-setup', 10, 'admin', 'config', 'setting', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (14, '菜单管理', 'icon-other', 10, 'admin', 'menu', 'index', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (15, '权限管理', 'icon-guanliyuan', 3, 'admin', 'manager', 'index1', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-guanliyuan', 15, 'admin', 'manager', 'index', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (17, '角色管理', 'icon-group', 15, 'admin', 'authManager', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (15, '权限管理', 'icon-user-settings-line', 3, 'admin', 'manager', 'index1', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-user-settings-line', 15, 'admin', 'manager', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (17, '角色管理', 'icon-user-shared-2-line', 15, 'admin', 'authManager', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (18, '添加管理员', '', 16, 'admin', 'manager', 'add', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (19, '编辑管理员', '', 16, 'admin', 'manager', 'edit', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (20, '管理日志', 'icon-rizhi', 15, 'admin', 'adminlog', 'index', '', 1, '', 0, 0);
@@ -353,11 +353,11 @@ INSERT INTO `yzn_menu` VALUES (35, '图片列表', '', 23, 'attachment', 'attach
 INSERT INTO `yzn_menu` VALUES (36, '图片本地化', '', 23, 'attachment', 'attachments', 'getUrlFile', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (37, '图片选择', '', 23, 'attachment', 'attachments', 'select', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-tools', 5, 'addons', 'addons', 'index2', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-plugins-', 38, 'addons', 'addons', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-apartment', 38, 'addons', 'addons', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (40, '行为管理', 'icon-reactjs-fill', 38, 'addons', 'addons', 'hooks', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'addons', 'addons', 'addonadmin', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (43, '本地模块', 'icon-apps-line', 4, 'admin', 'module', 'index2', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (44, '模块管理', 'icon-mokuaishezhi', 43, 'admin', 'module', 'index', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (44, '模块管理', 'icon-apartment', 43, 'admin', 'module', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (45, '模块后台列表', 'icon-liebiaosousuo', 4, 'admin', 'module', 'index', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (48, '编辑角色', '', 17, 'admin', 'authManager', 'editGroup', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (49, '删除角色', '', 17, 'admin', 'authManager', 'deleteGroup', '', 1, '', 0, 0);
