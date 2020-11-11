@@ -430,8 +430,8 @@ layui.define(["jquery", "layer"], function (exports) {
                     '<ul>\n' + bgColorHtml + '</ul>\n' +
                     '</div>\n' +
                     '<div class="more-menu-list">\n' +
-                    '<a class="more-menu-item" href="https://www.kancloud.cn/ken678/yzncms" target="_blank"><i class="iconfont icon-shiyongwendang" style="font-size: 19px;"></i> 开发文档</a>\n' +
-                    '<a class="more-menu-item" href="https://gitee.com/ken678/YZNCMS" target="_blank"><i class="iconfont icon-oschina" style="font-size: 16px;"></i> 开源地址</a>\n' +
+                    '<a class="more-menu-item" href="https://www.kancloud.cn/ken678/yzncms" target="_blank"><i class="iconfont icon-book-2-line"></i> 开发文档</a>\n' +
+                    '<a class="more-menu-item" href="https://gitee.com/ken678/YZNCMS" target="_blank"><i class="iconfont icon-oschina"></i> 开源地址</a>\n' +
                     '<a class="more-menu-item" href="https://blog.yzncms.com/" target="_blank"><i class="iconfont icon-mine"></i> 官方博客</a>\n' +
                     '<a class="more-menu-item" href="https://bbs.yzncms.com/" target="_blank"><i class="iconfont icon-interactive"></i> 官方论坛</a>\n' +
                     '</div>' +
