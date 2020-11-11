@@ -266,7 +266,7 @@ CREATE TABLE `yzn_hooks` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='插件和模块钩子';
 
 -- ----------------------------
 -- Records of yzn_hooks
@@ -292,7 +292,8 @@ INSERT INTO `yzn_hooks` VALUES (18, 'baidupush', '百度熊掌号+百度站长�
 INSERT INTO `yzn_hooks` VALUES (19, 'markdown', 'markdown编辑器', 1, 1509174020, '', '', 1, 1);
 INSERT INTO `yzn_hooks` VALUES (20, 'user_register_init', '用户注册前钩子', 2, 1509174020, '', '', 1, 1);
 INSERT INTO `yzn_hooks` VALUES (21, 'user_register_successed', '用户注册后钩子', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (22, 'register_input', '注册表单钩子', 1, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (22, 'user_delete_successed', '用户删除后钩子', 2, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (23, 'register_input', '注册表单钩子', 1, 1509174020, '', '', 1, 1);
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
