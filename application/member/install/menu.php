@@ -12,7 +12,7 @@ return [
         //名称
         "name"      => "会员",
         //图标
-        "icon"      => "icon-people",
+        "icon"      => "icon-user-line",
         //备注
         "remark"    => "",
         //排序
@@ -24,7 +24,7 @@ return [
                 "type"   => 1,
                 "status" => 1,
                 "name"   => "会员管理",
-                "icon"   => "icon-people",
+                "icon"   => "icon-user-line",
                 "child"  => [
                     [
                         "route"  => "member/setting/setting",
