@@ -42,7 +42,7 @@ class Module
      */
     public function __construct()
     {
-        $this->extresPath = ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR;
+        $this->extresPath   = ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR;
         $this->templatePath = TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR;
     }
 
@@ -60,7 +60,7 @@ class Module
         $dirs_arr = array_diff($dirs, $this->systemModuleList);
 
         // 读取数据库已经安装模块表
-        $modules = Module_Model::order('listorder asc')->select();
+        //$modules = Module_Model::order('listorder asc')->select();
 
         //数量
         //$count = count($dirs_arr);
@@ -84,43 +84,43 @@ class Module
         }
         $config = array(
             //模块目录
-            'module' => $name,
+            'module'      => $name,
             //模块名称
-            'name' => $name,
+            'name'        => $name,
             //模块简介
-            'introduce' => '',
+            'introduce'   => '',
             //模块作者
-            'author' => '',
+            'author'      => '',
             //作者地址
-            'authorsite' => '',
+            'authorsite'  => '',
             //作者邮箱
             'authoremail' => '',
             //版本号，请不要带除数字外的其他字符
-            'version' => '',
+            'version'     => '',
             //适配最低yzncms版本，
-            'adaptation' => '',
+            'adaptation'  => '',
             //签名
-            'sign' => '',
+            'sign'        => '',
             //依赖模块
             'need_module' => array(),
             //依赖模块
             'need_plugin' => array(),
             //行为
-            'tags' => array(),
+            'tags'        => array(),
             //缓存
-            'cache' => array(),
+            'cache'       => array(),
         );
 
         // 从配置文件获取
         if (is_file($this->appPath . $name . DIRECTORY_SEPARATOR . 'info.php')) {
             $moduleConfig = include $this->appPath . $name . DIRECTORY_SEPARATOR . 'info.php';
-            $config = array_merge($config, $moduleConfig);
+            $config       = array_merge($config, $moduleConfig);
         }
 
         //检查是否安装，如果安装了，加载模块安装后的相关配置信息
         if ($this->isInstall($name)) {
             $moduleList = cache('Module');
-            $config = array_merge($moduleList[$name], $config);
+            $config     = array_merge($moduleList[$name], $config);
         }
         return $config;
     }
