@@ -21,17 +21,9 @@ use think\Model;
  */
 class Module extends Model
 {
+    protected $autoWriteTimestamp = true;
     //自动完成
     protected $auto = ['iscore' => 0, 'status' => 1];
-    protected $insert = ['installtime', 'updatetime'];
-    protected function setInstalltimeAttr($value)
-    {
-        return time();
-    }
-    protected function setUpdatetimeAttr($value)
-    {
-        return time();
-    }
 
     /**
      * 更新缓存
@@ -39,13 +31,13 @@ class Module extends Model
      */
     public function module_cache()
     {
-        $data = $this->column(true, 'module');
+        $data = self::column(true, 'module');
         if (empty($data)) {
             return false;
         }
         $module = array();
         foreach ($data as &$v) {
-            to_time($v, 'installtime');
+            to_time($v, 'create_time');
             $module[$v['module']] = $v;
         }
         unset($v);

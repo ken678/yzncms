@@ -11,7 +11,7 @@
         </div>
     </script>
     <script type="text/html" id="titleTpl">
-    {{#  if(d.installtime == "" || d.installtime == null || d.installtime == undefined){ }}
+    {{#  if(d.create_time == "" || d.create_time == null || d.create_time == undefined){ }}
         <a class="layui-btn layui-btn-xs" href="{:url('install')}?module={{ d.module }}">安装</a>
     {{#  } else { }}
         {{#  if(d.iscore == 0){ }}
@@ -37,7 +37,7 @@ layui.use(['table', 'upload'], function() {
                 { field: 'version', width: 150, title: '版本' },
                 { field: 'author', width: 150, title: '作者' },
                 { field: 'introduce', title: '简介' },
-                { field: 'installtime', width: 200, title: '安装时间', templet: '<div>{{#  if(d.installtime){ }} {{d.installtime}} {{#  } else { }} / {{#  } }}</div>' },
+                { field: 'create_time', width: 200, title: '安装时间', templet: '<div>{{#  if(d.create_time){ }} {{d.create_time}} {{#  } else { }} / {{#  } }}</div>' },
                 { fixed: 'right', width: 150, title: '操作', templet: '#titleTpl' }
             ]
         ]
