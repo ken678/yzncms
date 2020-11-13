@@ -22,12 +22,12 @@ class Signin extends Addon
 {
     //插件信息
     public $info = [
-        'name' => 'signin',
-        'title' => '会员签到插件',
+        'name'        => 'signin',
+        'title'       => '会员签到插件',
         'description' => '会员签到插件',
-        'status' => 1,
-        'author' => '御宅男',
-        'version' => '1.0.0',
+        'status'      => 1,
+        'author'      => '御宅男',
+        'version'     => '1.0.0',
     ];
 
     //安装
@@ -41,7 +41,7 @@ class Signin extends Addon
 			  `uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
 			  `successions` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '连续签到次数',
 			  `type` enum('normal','fillup') DEFAULT 'normal' COMMENT '签到类型',
-			  `createtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+			  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
 			  PRIMARY KEY (`id`),
 			  KEY `user_id` (`uid`)
 			) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='签到表';
