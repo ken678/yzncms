@@ -11,7 +11,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\AdminUser as Admin_User;
-use app\admin\model\AuthGroup as AuthGroup_Model;
+use app\admin\model\AuthGroup as AuthGroupModel;
 use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\facade\Session;
@@ -32,7 +32,7 @@ class Manager extends Adminbase
         $this->childrenAdminIds = User::instance()->getChildrenAdminIds(true);
         $this->childrenGroupIds = User::instance()->getChildrenGroupIds(true);
 
-        $groupList = AuthGroup_Model::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
+        $groupList = AuthGroupModel::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
         Tree::instance()->init($groupList);
         $groupdata = [];
         if (User::instance()->isAdministrator()) {
@@ -64,14 +64,14 @@ class Manager extends Adminbase
         if ($this->request->isAjax()) {
 
             list($page, $limit, $where) = $this->buildTableParames();
-            $this->AuthGroup_Model      = new AuthGroup_Model();
+            $this->AuthGroupModel       = new AuthGroupModel();
 
             $count = $this->modelClass
                 ->where($where)
                 ->where('id', 'in', $this->childrenAdminIds)
                 ->order(array('id' => 'ASC'))
                 ->withAttr('roleid', function ($value, $data) {
-                    return $this->AuthGroup_Model->getRoleIdName($value);
+                    return $this->AuthGroupModel->getRoleIdName($value);
                 })
                 ->count();
 
@@ -80,7 +80,7 @@ class Manager extends Adminbase
                 ->where('id', 'in', $this->childrenAdminIds)
                 ->order(array('id' => 'ASC'))
                 ->withAttr('roleid', function ($value, $data) {
-                    return $this->AuthGroup_Model->getRoleIdName($value);
+                    return $this->AuthGroupModel->getRoleIdName($value);
                 })
                 ->page($page, $limit)
                 ->select();

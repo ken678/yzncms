@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\Controller;
 
-use app\admin\model\AuthGroup as AuthGroup_Model;
+use app\admin\model\AuthGroup as AuthGroupModel;
 use app\admin\model\AuthRule;
 use app\common\controller\Adminbase;
 use think\Db;
@@ -24,14 +24,14 @@ class AuthManager extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->AuthGroup_Model = new AuthGroup_Model;
+        $this->AuthGroupModel = new AuthGroupModel;
     }
 
     //权限管理首页
     public function index()
     {
         if ($this->request->isAjax()) {
-            $tree = new \util\Tree();
+            $tree  = new \util\Tree();
             $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->select();
             $tree->init($_list);
             $result = [];
@@ -49,25 +49,25 @@ class AuthManager extends Adminbase
     {
         $this->updateRules(); //更新节点
 
-        $result = model('admin/Menu')->returnNodes(false);
+        $result   = model('admin/Menu')->returnNodes(false);
         $group_id = $this->request->param('group_id/d');
-        $rules = Db::name('AuthGroup')
+        $rules    = Db::name('AuthGroup')
             ->where('status', '<>', 0)
             ->where('id', '=', $group_id)
-            ->where(['type' => AuthGroup_Model::TYPE_ADMIN])
+            ->where(['type' => AuthGroupModel::TYPE_ADMIN])
             ->value('rules');
 
-        $map = array('status' => 1);
+        $map        = array('status' => 1);
         $main_rules = Db::name('AuthRule')->where($map)->column('name,id');
-        $json = array();
+        $json       = array();
         foreach ($result as $rs) {
             $data = array(
-                'nid' => $rs['id'],
-                'checked' => $rs['id'],
+                'nid'      => $rs['id'],
+                'checked'  => $rs['id'],
                 'parentid' => $rs['parentid'],
-                'name' => $rs['title'],
-                'id' => $main_rules[$rs['url']],
-                'checked' => $this->isCompetence($main_rules[$rs['url']], $rules) ? true : false,
+                'name'     => $rs['title'],
+                'id'       => $main_rules[$rs['url']],
+                'checked'  => $this->isCompetence($main_rules[$rs['url']], $rules) ? true : false,
             );
             $json[] = $data;
         }
@@ -78,7 +78,7 @@ class AuthManager extends Adminbase
 
     public function isCompetence($id, $ids)
     {
-        $ids = explode(',', $ids);
+        $ids  = explode(',', $ids);
         $info = in_array($id, $ids);
         if ($info) {
             return true;
@@ -95,7 +95,7 @@ class AuthManager extends Adminbase
             //清除编辑权限的值
             $this->assign('auth_group', array('title' => null, 'id' => null, 'description' => null, 'rules' => null, 'status' => 1));
         }
-        $tree = new \util\Tree();
+        $tree  = new \util\Tree();
         $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
         $tree->init($_list);
         $Groupdata = $tree->getTree(0);
@@ -107,10 +107,10 @@ class AuthManager extends Adminbase
     //编辑管理员用户组
     public function editGroup()
     {
-        $id = $this->request->param('id/d');
-        $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroup_Model::TYPE_ADMIN))->find($id);
-        $tree = new \util\Tree();
-        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
+        $id         = $this->request->param('id/d');
+        $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN))->find($id);
+        $tree       = new \util\Tree();
+        $_list      = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
         $tree->init($_list);
         $Groupdata = $tree->getTree(0, '', $auth_group['parentid']);
         $this->assign("Groupdata", $Groupdata);
@@ -123,10 +123,10 @@ class AuthManager extends Adminbase
     public function deleteGroup()
     {
         $Groupid = $this->request->param('id/d');
-        if ($this->AuthGroup_Model->GroupDelete($Groupid)) {
+        if ($this->AuthGroupModel->GroupDelete($Groupid)) {
             $this->success("删除成功！");
         } else {
-            $error = $this->AuthGroup_Model->getError();
+            $error = $this->AuthGroupModel->getError();
             $this->error($error ? $error : '删除失败！');
         }
     }
@@ -134,21 +134,21 @@ class AuthManager extends Adminbase
     //管理员用户组数据写入/更新
     public function writeGroup()
     {
-        $data = $this->request->post();
+        $data           = $this->request->post();
         $data['module'] = 'admin';
-        $data['type'] = AuthGroup_Model::TYPE_ADMIN;
+        $data['type']   = AuthGroupModel::TYPE_ADMIN;
         if (isset($data['id']) && !empty($data['id'])) {
             //更新
-            $r = $this->AuthGroup_Model->allowField(true)->save($data, ['id' => $data['id']]);
+            $r = $this->AuthGroupModel->allowField(true)->save($data, ['id' => $data['id']]);
         } else {
             $result = $this->validate($data, 'AuthGroup');
             if (true !== $result) {
                 return $this->error($result);
             }
-            $r = $this->AuthGroup_Model->allowField(true)->save($data);
+            $r = $this->AuthGroupModel->allowField(true)->save($data);
         }
         if ($r === false) {
-            $this->error('操作失败' . $this->AuthGroup_Model->getError());
+            $this->error('操作失败' . $this->AuthGroupModel->getError());
         } else {
             $this->success('操作成功!');
         }
@@ -162,32 +162,32 @@ class AuthManager extends Adminbase
     public function updateRules()
     {
         //需要新增的节点必然位于$nodes
-        $nodes = model("admin/Menu")->returnNodes(false);
+        $nodes    = model("admin/Menu")->returnNodes(false);
         $AuthRule = model('AuthRule');
         //需要更新和删除的节点必然位于$rules
         $rules = $AuthRule->where('type', 'in', '1,2')->order('name')->select()->toArray();
         //构建insert数据
         $data = array(); //保存需要插入和更新的新节点
         foreach ($nodes as $value) {
-            $temp['name'] = $value['url'];
-            $temp['title'] = $value['title'];
+            $temp['name']   = $value['url'];
+            $temp['title']  = $value['title'];
             $temp['module'] = $value['app'];
             if ($value['parentid'] > 0) {
                 $temp['type'] = AuthRule::RULE_URL;
             } else {
                 $temp['type'] = AuthRule::RULE_MAIN;
             }
-            $temp['status'] = 1;
+            $temp['status']                                                    = 1;
             $data[strtolower($temp['name'] . $temp['module'] . $temp['type'])] = $temp; //去除重复项
         }
         $update = array(); //保存需要更新的节点
-        $ids = array(); //保存需要删除的节点的id
+        $ids    = array(); //保存需要删除的节点的id
         foreach ($rules as $index => $rule) {
             $key = strtolower($rule['name'] . $rule['module'] . $rule['type']);
             if (isset($data[$key])) {
                 //如果数据库中的规则与配置的节点匹配,说明是需要更新的节点
                 $data[$key]['id'] = $rule['id']; //为需要更新的节点补充id值
-                $update[] = $data[$key];
+                $update[]         = $data[$key];
                 unset($data[$key]); //排除已存在的
                 unset($rules[$index]);
                 unset($rule['condition']);

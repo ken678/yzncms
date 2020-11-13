@@ -16,7 +16,6 @@ namespace app\admin\controller;
 
 use app\admin\model\Adminlog as AdminlogModel;
 use app\common\controller\Adminbase;
-use think\Db;
 
 class Adminlog extends Adminbase
 {
