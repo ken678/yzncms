@@ -23,13 +23,13 @@ use think\Db;
 class ModelField extends Modelbase
 {
     protected $autoWriteTimestamp = true;
-    protected $insert = ['status' => 1];
-    protected $ext_table = '_data';
+    protected $insert             = ['status' => 1];
+    protected $ext_table          = '_data';
 
     //添加字段
     public function addField($data = null)
     {
-        $data['name'] = strtolower($data['name']);
+        $data['name']     = strtolower($data['name']);
         $data['ifsystem'] = isset($data['ifsystem']) ? intval($data['ifsystem']) : 0;
         //模型id
         $modelid = $data['modelid'];
@@ -44,7 +44,7 @@ class ModelField extends Modelbase
             throw new \Exception("字段'" . $data['name'] . "`已经存在");
         }
 
-        $data['isadd'] = isset($data['isadd']) ? intval($data['isadd']) : 0;
+        $data['isadd']     = isset($data['isadd']) ? intval($data['isadd']) : 0;
         $data['ifrequire'] = isset($data['ifrequire']) ? intval($data['ifrequire']) : 0;
         if ($data['ifrequire'] && !$data['isadd']) {
             throw new \Exception('必填字段不可以隐藏！');
@@ -57,13 +57,13 @@ EOF;
         Db::execute($sql);
         $fieldInfo = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
         //只有主表文本类字段才可支持搜索
-        $data['ifsearch'] = isset($data['ifsearch']) ? ($fieldInfo['ifstring'] && $data['ifsystem'] ? intval($data['ifsearch']) : 0) : 0;
-        $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
-        $data['iffixed'] = 0;
+        $data['ifsearch']           = isset($data['ifsearch']) ? ($fieldInfo['ifstring'] && $data['ifsystem'] ? intval($data['ifsearch']) : 0) : 0;
+        $data['status']             = isset($data['status']) ? intval($data['status']) : 0;
+        $data['iffixed']            = 0;
         $data['setting']['options'] = $fieldInfo['ifoption'] ? $data['setting']['options'] : '';
         //附加属性值
         $data['setting'] = serialize($data['setting']);
-        $fieldid = self::create($data, true);
+        $fieldid         = self::create($data, true);
         if ($fieldid) {
             //清理缓存
             cache('ModelField', null);
@@ -85,7 +85,7 @@ EOF;
      */
     public function editField($data, $fieldid = 0)
     {
-        $data['name'] = strtolower($data['name']);
+        $data['name']     = strtolower($data['name']);
         $data['ifsystem'] = isset($data['ifsystem']) ? intval($data['ifsystem']) : 0;
         if (!$fieldid && !isset($data['fieldid'])) {
             throw new \Exception('缺少字段id！');
@@ -109,7 +109,7 @@ EOF;
         if ($this->where('name', $data['name'])->where('modelid', $modelid)->where('id', '<>', $fieldid)->value('id')) {
             throw new \Exception("字段'" . $data['name'] . "`已经存在");
         }
-        $data['isadd'] = isset($data['isadd']) ? intval($data['isadd']) : 0;
+        $data['isadd']     = isset($data['isadd']) ? intval($data['isadd']) : 0;
         $data['ifrequire'] = isset($data['ifrequire']) ? intval($data['ifrequire']) : 0;
         if ($data['ifrequire'] && !$data['isadd']) {
             throw new \Exception('必填字段不可以隐藏！');
@@ -126,7 +126,7 @@ EOF;
         $fieldInfo = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
         //只有主表文本类字段才可支持搜索
         $data['ifsearch'] = isset($data['ifsearch']) ? ($fieldInfo['ifstring'] && $data['ifsystem'] ? intval($data['ifsearch']) : 0) : 0;
-        $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
+        $data['status']   = isset($data['status']) ? intval($data['status']) : 0;
         //$data['options'] = $fieldInfo['ifoption'] ? $data['options'] : '';
         $data['setting']['options'] = $fieldInfo['ifoption'] ? $data['setting']['options'] : '';
         //附加属性值

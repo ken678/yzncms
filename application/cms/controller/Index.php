@@ -147,10 +147,11 @@ class Index extends Cmsbase
         $template   = $newstempid[0];
         unset($newstempid);
         //阅读收费
-        $paytype       = isset($info['paytype']) && $info['paytype'] == '金额' ? 1 : 0; //类型 0积分 1金钱
+        //$paytype       = isset($info['paytype']) && $info['paytype'] == '金额' ? 1 : 0; //类型 0积分 1金钱
         $readpoint     = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
         $allow_visitor = 1;
         if ($readpoint > 0) {
+            $paytype = isset($info['paytype']) && $info['paytype'] ? $info['paytype'] : 0;
             //检查是否支付过
             $allow_visitor = self::_check_payment($catid . '_' . $id, $paytype);
             if (!$allow_visitor) {
@@ -170,7 +171,6 @@ class Index extends Cmsbase
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
         $this->assign($info);
         $this->assign([
-            'paytype'       => $paytype,
             'readpoint'     => $readpoint,
             'allow_visitor' => $allow_visitor,
             'top_parentid'  => $top_parentid,
