@@ -32,11 +32,11 @@
 .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {width: 0 !important; height: 0 !important; }
 .layui-tab#top_tabs_box {border-top: 1px solid #f5f5f5; padding-right: 138px; height: 40px; border-bottom: 1px solid #f5f5f5; }
 .layui-tab .tab-right {background: #fff; right: 0px; top: 1px; height: 40px; width: 175px; position: absolute; text-align: center; }
-.layui-tab .tab-go-refresh{border-bottom: 1px solid #f5f5f5;z-index: 99;background: #fff;position: absolute; top: 1px; width: 40px; height:40px; text-align: center; cursor: pointer; transition: all .3s; -webkit-transition: all .3s; border-right: 1px solid #f5f5f5;}
+.layui-tab .tab-go-refresh{border-bottom: 1px solid #f5f5f5;z-index: 99;background: #fff;position: absolute; top: 1px; width: 40px; height:39px; text-align: center; cursor: pointer; transition: all .3s; -webkit-transition: all .3s; border-right: 1px solid #f5f5f5;}
 .layui-tab .tab-go-refresh i{ color: #666; font-size: 20px; line-height: 40px; cursor: pointer}
-.layui-tab .tab-go-left {border-color: #f5f5f5; left:41px; top: 1px; height: 40px; border-right: 1px solid #f5f5f5; border-bottom: 1px solid #f5f5f5; width: 39px; position: absolute; text-align: center; background: #fff; z-index: 999; }
+.layui-tab .tab-go-left {border-color: #f5f5f5; left:41px; top: 1px; height: 39px; border-right: 1px solid #f5f5f5; border-bottom: 1px solid #f5f5f5; width: 39px; position: absolute; text-align: center; background: #fff; z-index: 999; }
 .layui-tab .tab-go-left i { color: #666; font-size: 20px; line-height: 40px; cursor: pointer; }
-.layui-tab .tab-go-right {background: #fff; right: 60; top: 0; height: 40px; border-bottom: 1px solid #f5f5f5; width: 40px; position: absolute; text-align: center; border-left: 1px solid #f5f5f4; z-index: 999; border-right: 1px solid #f5f5f5; }
+.layui-tab .tab-go-right {background: #fff; right: 60; top: 0; height: 39px; border-bottom: 1px solid #f5f5f5; width: 40px; position: absolute; text-align: center; border-left: 1px solid #f5f5f4; z-index: 999; border-right: 1px solid #f5f5f5; }
 .layui-tab .tab-go-right i {cursor: pointer; color: #666; font-size: 20px; line-height: 40px; }
 .layui-tab .layui-tab-title li {border-right: 1px solid #f5f5f5;color: #acafb1;min-width: 0;max-width: 160px;overflow: hidden; }
 .layui-tab .layui-tab-title .layui-this { color: #696969;background-color: #f6f6f6;}
