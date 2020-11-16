@@ -22,8 +22,8 @@ class Spend extends Model
     protected $name = 'pay_spend';
     // 定义时间戳字段名
     protected $autoWriteTimestamp = true;
-    protected $createTime = 'addtime';
-    protected $updateTime = false;
+    protected $createTime         = 'addtime';
+    protected $updateTime         = false;
 
     /**
      * 按用户名、时间、标识查询是否有消费记录
@@ -41,19 +41,18 @@ class Spend extends Model
      */
     public function _spend($type, $money, $uid = '', $username = '', $msg = '', $remarks = '')
     {
-        $data = array();
-        $data['type'] = isset($type) && intval($type) ? intval($type) : 0;
+        $data             = array();
+        $data['type']     = isset($type) && intval($type) ? intval($type) : 0;
         $data['creat_at'] = date('YmdHis') . mt_rand(1000, 9999);
-        $data['money'] = isset($money) && floatval($money) ? floatval($money) : 0;
-        $data['uid'] = isset($uid) && intval($uid) ? intval($uid) : 0;
+        $data['money']    = isset($money) && floatval($money) ? floatval($money) : 0;
+        $data['uid']      = isset($uid) && intval($uid) ? intval($uid) : 0;
         $data['username'] = isset($username) ? trim($username) : '';
-        $data['msg'] = isset($msg) ? trim($msg) : '';
-        $data['remarks'] = isset($remarks) ? trim($remarks) : '';
-        $data['ip'] = request()->ip();
+        $data['msg']      = isset($msg) ? trim($msg) : '';
+        $data['remarks']  = isset($remarks) ? trim($remarks) : '';
+        $data['ip']       = request()->ip();
         //判断用户的金钱或积分是否足够。
-        if (!self::_check_user($data['uid'], $data['type'], $data['money'])) {
-            return false;
-        }
+        self::_check_user($data['uid'], $data['type'], $data['money']);
+
         if (self::create($data)) {
             if ($data['type'] == 1) {
                 //金钱方式消费
@@ -64,7 +63,7 @@ class Spend extends Model
             }
             return true;
         }
-        return false;
+        throw new \Exception("充值失败！");
     }
 
 /**
@@ -80,22 +79,22 @@ class Spend extends Model
             if ($type == 1) {
                 //金钱消费
                 if ($user['amount'] < $value) {
-                    return false;
+                    throw new \Exception("余额不足，请先充值！");
                 } else {
                     return true;
                 }
             } elseif ($type == 0) {
                 //积分
                 if ($user['point'] < $value) {
-                    return false;
+                    throw new \Exception("积分不足，请先充值！");
                 } else {
                     return true;
                 }
             } else {
-                return false;
+                throw new \Exception("充值异常！");
             }
         } else {
-            return false;
+            throw new \Exception("此用户不存在！");
         }
     }
 

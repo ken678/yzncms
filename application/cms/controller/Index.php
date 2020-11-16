@@ -25,9 +25,7 @@ class Index extends Cmsbase
         $this->Cms_Model = new Cms_Model;
     }
 
-    /**
-     * 首页
-     */
+    // 首页
     public function index()
     {
         $page = $this->request->param('page/d', 1);
@@ -39,9 +37,7 @@ class Index extends Cmsbase
         return $this->fetch('/index');
     }
 
-    /**
-     * 列表页
-     */
+    // 列表页
     public function lists()
     {
         //栏目ID
@@ -109,9 +105,7 @@ class Index extends Cmsbase
 
     }
 
-    /**
-     * 内容页
-     */
+    // 内容页
     public function shows()
     {
         //ID
@@ -183,9 +177,7 @@ class Index extends Cmsbase
         return $this->fetch('/' . $template);
     }
 
-    /**
-     * 搜索
-     */
+    // 搜索
     public function search()
     {
         $seo = seo('', '搜索结果');
@@ -295,9 +287,7 @@ class Index extends Cmsbase
 
     }
 
-    /**
-     * tags
-     */
+    // tags
     public function tags()
     {
         $page  = $page  = $this->request->param('page/d', 1);
@@ -328,9 +318,43 @@ class Index extends Cmsbase
         return $this->fetch('/tags');
     }
 
-    /**
-     * 检查支付状态
-     */
+    // 阅读付费
+    public function readpoint()
+    {
+        if (isModuleInstall('pay') && isModuleInstall('member')) {
+            $userinfo = \app\member\service\User::instance()->getInfo();
+            if (!$userinfo) {
+                $this->error('请先登录！', url('member/index/login'));
+            }
+            $Spend_Model   = new \app\pay\model\Spend;
+            $allow_visitor = $this->request->param('allow_visitor');
+            $auth          = sys_auth($allow_visitor, 'DECODE');
+            if (strpos($auth, '|') === false) {
+                $this->error('非法操作！');
+            }
+            $auth_str = explode('|', $auth);
+            $flag     = $auth_str[0];
+            if (!preg_match('/^([0-9]+)|([0-9]+)/', $flag)) {
+                $this->error('非法操作！');
+            }
+            $readpoint = intval($auth_str[1]);
+            $paytype   = intval($auth_str[2]);
+
+            $flag_arr = explode('_', $flag);
+            $catid    = $flag_arr[0];
+            try {
+                $Spend_Model->_spend($paytype, floatval($readpoint), $userinfo['id'], $userinfo['username'], '阅读付费', $flag);
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
+            }
+            $this->success("恭喜你！支付成功!");
+        } else {
+            $this->error('请先在后台安装支付和会员模块！');
+        }
+
+    }
+
+    // 检查支付状态
     protected function _check_payment($flag, $paytype)
     {
         $this->userid = \app\member\service\User::instance()->id;

@@ -31,14 +31,14 @@ class Index extends MemberBase
         parent::initialize();
         $this->Payment_Model = new Payment_Model;
         $this->Account_Model = new Account_Model;
-        $this->Spend_Model = new Spend_Model;
+        $this->Spend_Model   = new Spend_Model;
     }
 
     //充值
     public function pay()
     {
         if ($this->request->isPost()) {
-            $money = $this->request->request('money/f');
+            $money    = $this->request->request('money/f');
             $pay_type = $this->request->request('pay_type/s');
             if (!$money || $money < 0) {
                 $this->error("支付金额必须大于0");
@@ -69,10 +69,10 @@ class Index extends MemberBase
     {
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
+            $page  = $this->request->param('page/d', 1);
 
-            $_list = $this->Account_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
-            $total = $this->Account_Model->where('uid', $this->userinfo['id'])->count();
+            $_list  = $this->Account_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
+            $total  = $this->Account_Model->where('uid', $this->userinfo['id'])->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
@@ -86,10 +86,10 @@ class Index extends MemberBase
     {
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
+            $page  = $this->request->param('page/d', 1);
 
-            $_list = $this->Spend_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
-            $total = $this->Spend_Model->where('uid', $this->userinfo['id'])->count();
+            $_list  = $this->Spend_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
+            $total  = $this->Spend_Model->where('uid', $this->userinfo['id'])->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
@@ -124,7 +124,7 @@ class Index extends MemberBase
     //企业支付通知和回调
     public function epay()
     {
-        $type = $this->request->param('type');
+        $type     = $this->request->param('type');
         $pay_type = $this->request->param('pay_type');
         if ($type == 'notify') {
             $pay = \app\pay\library\Service::checkNotify($pay_type);
@@ -133,7 +133,7 @@ class Index extends MemberBase
                 return;
             }
             try {
-                $data = $pay->verify();
+                $data      = $pay->verify();
                 $payamount = $pay_type == 'alipay' ? $data['total_amount'] : $data['total_fee'] / 100;
                 $this->Account_Model->settle($data['out_trade_no'], $payamount);
             } catch (Exception $e) {
@@ -151,36 +151,4 @@ class Index extends MemberBase
         }
         return;
     }
-
-    public function readpoint()
-    {
-        $allow_visitor = $this->request->param('allow_visitor');
-        $auth = sys_auth($allow_visitor, 'DECODE');
-        if (strpos($auth, '|') === false) {
-            $this->error('非法操作！');
-        }
-        $auth_str = explode('|', $auth);
-        $flag = $auth_str[0];
-        if (!preg_match('/^([0-9]+)|([0-9]+)/', $flag)) {
-            $this->error('非法操作！');
-        }
-        $readpoint = intval($auth_str[1]);
-        $paytype = intval($auth_str[2]);
-
-        $flag_arr = explode('_', $flag);
-        $catid = $flag_arr[0];
-        if ($paytype) {
-            //积分
-            if (!$this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag)) {
-                $this->error('支付失败！');
-            }
-        } else {
-            //金钱
-            if (!$this->Spend_Model->_spend($paytype, floatval($readpoint), $this->userinfo['id'], $this->userinfo['username'], '阅读付费', $flag)) {
-                $this->error('支付失败！');
-            }
-        }
-        $this->success("恭喜你！支付成功!");
-    }
-
 }

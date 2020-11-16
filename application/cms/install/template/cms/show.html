@@ -34,7 +34,7 @@ body {
                             {$content|raw}
                             {else/}
                             <div class="allow_visitor">
-                                <a href="{:url('pay/index/readpoint',['allow_visitor' => $allow_visitor])}"><font color="red">阅读此信息需要您支付 <B><I>{$readpoint} {if $paytype}元{else}点{/if}</I></B>，点击这里支付</font></a>
+                                <a href="{:url('cms/index/readpoint',['allow_visitor' => $allow_visitor])}"><font color="red">阅读此信息需要您支付 <B><I>{$readpoint} {if $paytype}元{else}点{/if}</I></B>，点击这里支付</font></a>
                             </div>
                             {/eq}
                         </div>
