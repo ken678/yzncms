@@ -21,6 +21,9 @@
 .login-main form .verify-box img {display: inline-block; margin-left: 2%; width: 36%; height: 38px; }
 .login-main .layui-form-item .layui-input {padding-left: 38px; }
 .login-main .layui-icon{position: absolute; left: 1px; top: 1px; width: 38px; line-height: 36px; text-align: center; color: #999; }
+.login-main .layui-form-checked[lay-skin=primary] i {border-color: #1e9fff!important; background-color: #1e9fff; color: #fff; width: 14px; height: 14px; line-height: 14px; }
+.login-main  .layui-form-checkbox[lay-skin=primary] i {width: 14px; height: 14px; line-height: 14px; }
+.login-main .layui-form-checkbox[lay-skin=primary]:hover i {border-color: #1e9fff; color: #fff; }
 @media screen and (max-width: 450px) {
     .login-main {
         width: 300px;
