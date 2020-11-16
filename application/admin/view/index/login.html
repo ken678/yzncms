@@ -43,6 +43,9 @@
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                         <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
                     </div>
+                    <div class="layui-input-inline input-item">
+                    	<input type="checkbox" name="keeplogin" title="保持会话" lay-skin="primary">
+                    </div>
                     <div class="layui-input-inline login-btn">
                         <button class="layui-btn layui-btn-normal" lay-filter="formSubmit" lay-submit>登录</button>
                     </div>
@@ -73,26 +76,6 @@
                 //刷新验证码
                 $("#verify").click();
             });
-            /*form.on("submit(login)", function(data) {
-                /*var action = $(data.form).attr('action');
-                $.post(action, $(data.form).serialize(), success, "json");
-                return false;
-
-                function success(data) {
-                    if (data.code) {
-                        layer.msg('登入成功', {
-                            offset: '15px',
-                            icon: 1,
-                            time: 1000
-                        }, function() {
-                            window.location.href = data.url;
-                        });
-                    } else {
-                        layer.msg(data.msg, { icon: 5 });
-                        //刷新验证码
-                        $("#verify").click();
-                    }
-                }*/
     });
     //刷新验证码
     $("#verify").click(function() {
