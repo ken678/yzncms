@@ -44,7 +44,7 @@
 .layui-tab .layui-tab-title li:after {content: ''; position: absolute; top: auto;bottom: 0; left: 0; width: 0; height: 2px; border-radius: 0; background-color: #292B34; transition: all .3s; -webkit-transition: all .3s; }
 .layui-tab .layui-tab-title li.layui-this:after {width: 100%; border: none; height: 2px; background-color: #292B34; }
 .layui-layout-admin .layui-header .layui-layout-right{padding: 0;}
-
+.layui-header .layui-nav-item .layui-icon {position: relative; top: 1px; font-size: 16px; }
 
 /**选择配色方案 */
 .layui-color .color-title {padding: 10px 0 10px 20px; border-bottom: 1px solid #d9dada; margin-bottom: 8px; }
