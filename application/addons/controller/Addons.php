@@ -111,8 +111,8 @@ class Addons extends Adminbase
      */
     public function state()
     {
-        $name   = $this->request->get('name');
-        $action = $this->request->get('action');
+        $name   = $this->request->param('name');
+        $action = $this->request->param('action');
 
         if (!$name) {
             $this->error('参数不得为空！');
