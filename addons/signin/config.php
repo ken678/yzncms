@@ -1,9 +1,10 @@
 <?php
 
 return array(
-    'signinscore' => array(
+    0 => array(
+        'name'  => 'signinscore',
         'title' => '签到积分',
-        'type' => 'array',
+        'type'  => 'array',
         'value' => [
             's1' => '1',
             's2' => '2',
@@ -14,36 +15,38 @@ return array(
             's7' => '7',
             'sn' => '7',
         ],
-        'tip' => '签到赠送的积分',
+        'tip'   => '签到赠送的积分',
     ),
-    'isfillup' => array(
-        'title' => '是否开启补签',
-        'type' => 'radio',
+    1 => array(
+        'name'    => 'isfillup',
+        'title'   => '是否开启补签',
+        'type'    => 'radio',
         'options' => [
             1 => '是',
             0 => '否',
         ],
-        'value' => 1,
-        'tip' => '是否开启补签',
+        'value'   => 1,
+        'tip'     => '是否开启补签',
     ),
-    'fillupscore' => array(
+    2 => array(
+        'name'  => 'fillupscore',
         'title' => '补签消耗积分',
-        'type' => 'text',
+        'type'  => 'text',
         'value' => 100,
-        'tip' => '补签时消耗的积分',
+        'tip'   => '补签时消耗的积分',
     ),
-    'fillupdays' => array(
-        'name' => 'fillupdays',
+    3 => array(
+        'name'  => 'fillupdays',
         'title' => '补签天数内',
-        'type' => 'text',
+        'type'  => 'text',
         'value' => 3,
-        'tip' => '多少天数内漏签的可以补签',
+        'tip'   => '多少天数内漏签的可以补签',
     ),
-    'fillupnumsinmonth' => array(
-        'name' => 'fillupnumsinmonth',
+    4 => array(
+        'name'  => 'fillupnumsinmonth',
         'title' => '每月可补签次数',
-        'type' => 'text',
+        'type'  => 'text',
         'value' => 1,
-        'tip' => '每月可补签次数',
+        'tip'   => '每月可补签次数',
     ),
 );

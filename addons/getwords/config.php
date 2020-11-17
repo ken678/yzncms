@@ -1,7 +1,8 @@
 <?php
 
 return array(
-    'type'      => array(
+    0 => array(
+        'name'    => 'type',
         'title'   => '分词平台',
         'type'    => 'radio',
         'options' => array(
@@ -11,25 +12,29 @@ return array(
         'value'   => 'baidu',
         'tip'     => '',
     ),
-    'appid'     => array(
+    1 => array(
+        'name'  => 'appid',
         'title' => '你的 App ID',
         'type'  => 'text',
         'value' => '',
         'tip'   => '',
     ),
-    'apikey'    => array(
+    2 => array(
+        'name'  => 'apikey',
         'title' => '你的 Api Key',
         'type'  => 'text',
         'value' => '',
         'tip'   => '',
     ),
-    'secretkey' => array(
+    3 => array(
+        'name'  => 'secretkey',
         'title' => '你的 Secret Key',
         'type'  => 'text',
         'value' => '',
         'tip'   => '讯飞不用填写此项',
     ),
-    'max'       => array(
+    4 => array(
+        'name'  => 'max',
         'title' => '最多获取数量',
         'type'  => 'text',
         'value' => '5',
