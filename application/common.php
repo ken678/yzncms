@@ -32,10 +32,10 @@ include_once APP_PATH . 'function.php';
 
 /**
  * 系统缓存缓存管理
- * cache('model') 获取model缓存
- * cache('model',null) 删除model缓存
- * @param mixed $name 缓存名称
- * @param mixed $value 缓存值
+ * cache('model')        获取model缓存
+ * cache('model',null)   删除model缓存
+ * @param mixed $name    缓存名称
+ * @param mixed $value   缓存值
  * @param mixed $options 缓存参数
  * @return mixed
  */
@@ -123,9 +123,7 @@ function isModuleInstall($moduleName)
 
 /**
  * 获得插件自动加载的配置.
- *
  * @param  bool  $truncate  是否清除手动配置的钩子
- *
  * @return array
  */
 function get_addon_autoload_config($truncate = false)
@@ -209,8 +207,8 @@ function get_addon_list()
 
 /**
  * 获取插件类的类名
- * @param $name 插件名
- * @param string $type 返回命名空间类型
+ * @param $name         插件名
+ * @param string $type  返回命名空间类型
  * @param string $class 当前类名
  * @return string
  */
@@ -239,10 +237,10 @@ function get_addon_class($name, $type = 'hook', $class = null)
 
 /**
  * 处理插件钩子
- * @param string $hook 钩子名称
- * @param mixed $params 传入参数
+ * @param string $hook        钩子名称
+ * @param mixed $params       传入参数
  * @param  boolean $is_return 是否返回（true:返回值，false:直接输入）
- * @param  bool   $once   只获取一个有效返回值
+ * @param  bool   $once       只获取一个有效返回值
  * @return void
  */
 function hook($hook, $params = [], $is_return = false, $once = false)
@@ -283,9 +281,7 @@ function get_addon_config($name)
 
 /**
  * 获取插件类的配置数组.
- *
  * @param  string  $name  插件名
- *
  * @return array
  */
 function get_addon_fullconfig($name)
@@ -300,10 +296,8 @@ function get_addon_fullconfig($name)
 
 /**
  * 写入配置文件.
- *
  * @param  string  $name  插件名
  * @param  array  $array  配置数据
- *
  * @throws Exception
  * @return bool
  */
@@ -345,10 +339,8 @@ function get_addon_instance($name)
 
 /**
  * 设置基础配置信息.
- *
  * @param  string  $name  插件名
  * @param  array  $array  配置数据
- *
  * @throws Exception
  * @return bool
  */
@@ -487,7 +479,7 @@ function str_cut($sourcestr, $length, $dot = '...')
             $i         = $i + 1; //实际的Byte数仍计1个
             $n++; //但考虑整体美观，大写字母计成一个高位字符
         } else {
-//其他情况下，包括小写字母和半角标点符号，
+            //其他情况下，包括小写字母和半角标点符号，
             $returnstr = $returnstr . substr($sourcestr, $i, 1);
             $i         = $i + 1; //实际的Byte数计1个
             $n         = $n + 0.5; //小写字母和半角标点等与半个高位字符宽...
@@ -531,7 +523,7 @@ function to_ip(&$arr, $field = 'ip')
 /**
  * 对查询结果集进行排序
  * @access public
- * @param array $list 查询结果
+ * @param array $list   查询结果
  * @param string $field 排序的字段名
  * @param array $sortby 排序类型
  * asc正向排序 desc逆向排序 nat自然排序
@@ -567,8 +559,8 @@ function list_sort_by($list, $field, $sortby = 'asc')
 
 /**
  * 把返回的数据集转换成Tree
- * @param array $list 要转换的数据集
- * @param string $pid parent标记字段
+ * @param array $list   要转换的数据集
+ * @param string $pid   parent标记字段
  * @param string $level level标记字段
  * @return array
  * @author 麦当苗儿 <zuojiazi@vip.qq.com>
@@ -708,7 +700,7 @@ function encrypt_password($password, $encrypt = '')
 /**
  * 产生一个指定长度的随机字符串,并返回给用户
  * @param type $len 产生字符串的长度
- * @return string 随机字符串
+ * @return string   随机字符串
  */
 function genRandomString($len = 6)
 {
@@ -762,11 +754,11 @@ function getModel($modelid, $name = '')
 
 /**
  * 生成缩略图
- * @param type $imgurl 图片地址
- * @param type $width 缩略图宽度
- * @param type $height 缩略图高度
+ * @param type $imgurl    图片地址
+ * @param type $width     缩略图宽度
+ * @param type $height    缩略图高度
  * @param type $thumbType 缩略图生成方式
- * @param type $smallpic 图片不存在时显示默认图片
+ * @param type $smallpic  图片不存在时显示默认图片
  * @return type
  */
 function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'none.png')
@@ -816,11 +808,11 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
 
 /**
  * 下载远程文件，默认保存在temp下
- * @param  string  $url     网址
- * @param  string  $filename    保存文件名
- * @param  integer $timeout 过期时间
- * @param  bool $repalce 是否覆盖已存在文件
- * @return string 本地文件名
+ * @param  string  $url      网址
+ * @param  string  $filename 保存文件名
+ * @param  integer $timeout  过期时间
+ * @param  bool $repalce     是否覆盖已存在文件
+ * @return string            本地文件名
  */
 function http_down($url, $filename = "", $timeout = 60)
 {
@@ -893,9 +885,9 @@ function safe_replace($string)
 /**
  * 字符串加密、解密函数
  * @param    string    $txt        字符串
- * @param    string    $operation    ENCODE为加密，DECODE为解密，可选参数，默认为ENCODE，
+ * @param    string    $operation  ENCODE为加密，DECODE为解密，可选参数，默认为ENCODE，
  * @param    string    $key        密钥：数字、字母、下划线
- * @param    string    $expiry        过期时间
+ * @param    string    $expiry     过期时间
  * @return    string
  */
 function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
