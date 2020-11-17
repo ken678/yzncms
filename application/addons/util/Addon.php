@@ -36,12 +36,14 @@ abstract class Addon
      *  'version'=>'0.1'
      *  )
      */
-    public $info = [];
-    public $addon_path = '';
-    public $config_file = '';
-    public $admin_list = [];
+    public $info             = [];
+    public $addon_path       = '';
+    public $config_file      = '';
+    public $admin_list       = [];
     public $custom_adminlist = '';
-    public $access_url = [];
+    public $access_url       = [];
+    // 插件信息作用域
+    protected $infoRange = 'addoninfo';
 
     public function __construct()
     {
@@ -53,9 +55,9 @@ abstract class Addon
         }
         // 初始化视图模型
         $config['view_path'] = $this->addon_path;
-        $config = array_merge(Config::get('template.'), $config);
-        $this->view = new View();
-        $this->view = $this->view->init($config);
+        $config              = array_merge(Config::get('template.'), $config);
+        $this->view          = new View();
+        $this->view          = $this->view->init($config);
         //加载插件函数文件
         if (file_exists($this->addon_path . 'common.php')) {
             include_once $this->addon_path . 'common.php';
@@ -148,6 +150,25 @@ abstract class Addon
     }
 
     /**
+     * 读取基础配置信息
+     * @param string $name
+     * @return array
+     */
+    final public function getInfo($name = '')
+    {
+        if (empty($name)) {
+            $name = $this->getName();
+        }
+        $info = cache($this->infoRange . $name);
+        if ($info) {
+            return $info;
+        }
+        $info = Db::name('addons')->where('name', $name)->find();
+        cache($this->infoRange . $name, $info);
+        return $info ? $info : [];
+    }
+
+    /**
      * @title 获取插件的配置数组
      * @param string $name 可选模块名
      * @return array|mixed|null
@@ -161,9 +182,9 @@ abstract class Addon
         if (isset($_config[$name])) {
             return $_config[$name];
         }
-        $map['name'] = $name;
+        $map['name']   = $name;
         $map['status'] = 1;
-        $config = Db::name('Addons')->where($map)->value('config');
+        $config        = Db::name('Addons')->where($map)->value('config');
         if ($config) {
             $config = json_decode($config, true);
         } else {
