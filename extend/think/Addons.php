@@ -16,7 +16,7 @@
 // +----------------------------------------------------------------------
 namespace think;
 
-use think\facade\Config;
+use think\facade\Config as Configs;
 use think\View;
 
 abstract class Addons
@@ -39,7 +39,7 @@ abstract class Addons
 
         // 初始化视图模型
         $config['view_path'] = $this->addon_path;
-        $config              = array_merge(Config::get('template.'), $config);
+        $config              = array_merge(Configs::get('template.'), $config);
         $this->view          = new View();
         $this->view          = $this->view->init($config);
         //加载插件函数文件
@@ -68,7 +68,7 @@ abstract class Addons
         if (empty($name)) {
             $name = $this->name;
         }
-        $info = Config::get($this->infoRange . $name);
+        $info = Configs::get($this->infoRange . $name);
         if ($info) {
             return $info;
         }
@@ -77,7 +77,7 @@ abstract class Addons
             $info = parse_ini_file($info_file, true, INI_SCANNER_TYPED) ?: [];
             //$info['url'] = addon_url($name);
         }
-        Config::set($this->infoRange . $name, $info);
+        Configs::set($this->infoRange . $name, $info);
         return $info ? $info : [];
     }
 
@@ -107,7 +107,7 @@ abstract class Addons
         if (empty($name)) {
             $name = $this->name;
         }
-        $config = Config::get($this->configRange . $name);
+        $config = Configs::get($this->configRange . $name);
         if ($config) {
             return $config;
         }
@@ -119,7 +119,7 @@ abstract class Addons
             }
             unset($temp_arr);
         }
-        Config::set($this->configRange . $name, $config);
+        Configs::set($this->configRange . $name, $config);
         return $config;
     }
 
@@ -156,7 +156,7 @@ abstract class Addons
         }
         $info = $this->getInfo($name);
         $info = array_merge($info, $value);
-        Config::set($this->infoRange . $name, $info);
+        Configs::set($this->infoRange . $name, $info);
         return $info;
     }
 

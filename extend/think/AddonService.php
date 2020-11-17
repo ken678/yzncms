@@ -17,7 +17,6 @@
 namespace think;
 
 use think\Exception;
-use think\facade\Cache;
 use util\Sql;
 
 class AddonService
@@ -75,7 +74,7 @@ class AddonService
                 throw new Exceptionr('更新钩子处插件失败,请卸载后尝试重新安装！');
             }
             self::runSQL($name);
-            Cache::set('Hooks', null);
+            \think\facade\Cache::set('Hooks', null);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -126,7 +125,7 @@ class AddonService
                 $addon->uninstall();
             };
             self::runSQL($name, 'uninstall');
-            Cache::set('Hooks', null);
+            \think\facade\Cache::set('Hooks', null);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
