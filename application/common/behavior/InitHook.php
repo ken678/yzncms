@@ -16,6 +16,7 @@ namespace app\common\behavior;
 
 use think\Db;
 use think\facade\Cache;
+use think\facade\Config;
 use think\facade\Hook;
 
 // 初始化钩子信息
@@ -42,11 +43,19 @@ class InitHook
                     }
                 }
                 //插件
-                if ($value['addons']) {
-                    $data = Db::name('Addons')->whereIn('name', $value['addons'])->where('status', 1)->column('name');
-                    if ($data) {
-                        $hooks_class = array_merge($hooks_class, array_filter(array_map('get_addon_class', $data)));
+                $hooks_class = Config::get('app_debug') ? [] : Cache::get('hooks', []);
+                if (empty($hooks_class)) {
+                    $hooks_class = (array) Config::get('addons.hooks', []);
+                    // 初始化钩子
+                    foreach ($hooks_class as $key => $values) {
+                        if (is_string($values)) {
+                            $values = explode(',', $values);
+                        } else {
+                            $values = (array) $values;
+                        }
+                        $hooks_class[$key] = array_filter(array_map('get_addon_class', $values));
                     }
+                    Cache::set('hooks', $hooks_class);
                 }
                 if (!empty($hooks_class)) {
                     $hooks[$value['name']] = $hooks_class;
