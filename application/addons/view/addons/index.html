@@ -12,9 +12,9 @@
     <a class="layui-btn layui-btn-xs" href='{:url("config")}?name={{d.name}}'>设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("enable")}?name={{d.name}}' data-table="currentTable">启用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("state",["action"=>"enable"])}?name={{d.name}}' data-table="currentTable">启用</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("disable")}?name={{d.name}}' data-table="currentTable">禁用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("state",["action"=>"disable"])}?name={{d.name}}' data-table="currentTable">禁用</a>
     {{#  } }}
     <a class="layui-btn layui-btn-xs layui-btn-danger confirm" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable">卸载</a>
 {{#  } else { }}
