@@ -96,7 +96,7 @@ class Ems extends Model
                     return false;
                 } else {
                     $result = hook('ems_check', $ems, true, true);
-                    return true;
+                    return $result;
                 }
             } else {
                 // 过期则清空该邮箱验证码
