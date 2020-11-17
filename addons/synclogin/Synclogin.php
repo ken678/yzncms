@@ -78,9 +78,10 @@ class Synclogin extends Addons
         $this->assign($param);
         $config = $this->getAddonConfig();
         $this->assign('config', $config);
-        $arr = array();
-        if (is_array($config['type'])) {
-            foreach ($config['type'] as &$v) {
+        $arr  = array();
+        $type = explode(',', $config['type']);
+        if (is_array($type)) {
+            foreach ($type as &$v) {
                 $arr[$v]['name']    = strtolower($v);
                 $arr[$v]['is_bind'] = $this->check_is_bind_account(User::instance()->isLogin(), strtolower($v));
                 if ($arr[$v]['is_bind']) {
