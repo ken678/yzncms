@@ -183,7 +183,7 @@ abstract class Addons
         if (empty($name)) {
             $name = $this->name;
         }
-        $config = Config::get($name, $this->configRange);
+        $config = Config::get($this->configRange . $name);
         if ($config) {
             return $config;
         }
