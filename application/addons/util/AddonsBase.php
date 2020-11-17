@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\addons\util;
 
-use app\addons\model\Addons as Addons_model;
 use app\common\controller\Base;
 
 class AddonsBase extends Base
@@ -30,29 +29,7 @@ class AddonsBase extends Base
     {
         parent::initialize();
         $this->addonName = \think\Loader::parseName($this->request->controller());
-        $this->Addons_model = new Addons_model;
-        $this->addonInfo = $this->Addons_model->where(array('name' => $this->addonName))->find();
-        if (empty($this->addonInfo)) {
-            $this->error('该插件没有安装！');
-        }
-        if (!$this->addonInfo['status']) {
-            $this->error('该插件已被禁用！');
-        }
         $this->addonPath = ADDON_PATH . $this->addonName . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * 获取插件配置
-     * @staticvar array $_config
-     * @return type
-     */
-    final public function getAddonConfig()
-    {
-        $config = $this->addonInfo['config'];
-        if ($config) {
-            $config = json_decode($config, true);
-        }
-        return $config;
     }
 
     /**
