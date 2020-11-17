@@ -1038,7 +1038,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
            if (opt.callback) {
                opt.callback(that, res);
            } else {
-               that.text(res.msg);
+               layer.msg(res.msg,{icon: 1});
+               //that.text(res.msg);
                setTimeout(function() {
                    that.text(text).prop('disabled', false);
                    if (opt.pop == true) {
@@ -1058,14 +1059,16 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
                }, opt.time);
            }
         }, function(res) {
-            that.text(res.msg).removeClass('layui-btn-normal').addClass('layui-btn-danger');
+            layer.msg(res.msg,{icon: 2});
+            //that.text(res.msg).removeClass('layui-btn-normal').addClass('layui-btn-danger');
             setTimeout(function() {
-                that.prop('disabled', false).removeClass('layui-btn-danger').text(text);
+                that.prop('disabled', false);
+                //that.prop('disabled', false).removeClass('layui-btn-danger').text(text);
             }, opt.time);
         });
         return false;
     });
-    
+
     /**
      * 列表页批量操作按钮组
      * @attr href 操作地址
