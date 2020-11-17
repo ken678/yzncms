@@ -36,8 +36,8 @@ class Sms extends Base
     public function send()
     {
         $mobile = $this->request->request("mobile");
-        $event = $this->request->request("event");
-        $event = $event ? $event : 'register';
+        $event  = $this->request->request("event");
+        $event  = $event ? $event : 'register';
 
         if (!$mobile || !Validate::isMobile($mobile)) {
             $this->error('手机号不正确');
@@ -59,6 +59,9 @@ class Sms extends Base
             } elseif (in_array($event, ['changepwd', 'resetpwd']) && !$userinfo) {
                 $this->error('未注册');
             }
+        }
+        if (!\think\facade\Hook::get('sms_send')) {
+            $this->error('请在后台插件管理安装短信验证插件');
         }
         $ret = $this->Sms_Model->send($mobile, null, $event);
         if ($ret) {
