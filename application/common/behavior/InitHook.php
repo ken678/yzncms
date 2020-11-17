@@ -26,9 +26,9 @@ class InitHook
     // 行为扩展的执行入口必须是run
     public function run($params)
     {
-        $hooks = Cache::get('Hooks');
-        if (empty($hooks)) {
-            $hooks = [];
+        $Modules = Cache::get('Modules', []);
+        if (empty($Modules)) {
+            $Modules = [];
             //所有模块和插件钩子
             $res = Db::name('Hooks')->where('status', 1)->column('name,addons,modules');
             foreach ($res as $key => $value) {
@@ -42,27 +42,29 @@ class InitHook
                         }
                     }
                 }
-                //插件
-                $hooks_class = Config::get('app_debug') ? [] : Cache::get('hooks', []);
-                if (empty($hooks_class)) {
-                    $hooks_class = (array) Config::get('addons.hooks', []);
-                    // 初始化钩子
-                    foreach ($hooks_class as $key => $values) {
-                        if (is_string($values)) {
-                            $values = explode(',', $values);
-                        } else {
-                            $values = (array) $values;
-                        }
-                        $hooks_class[$key] = array_filter(array_map('get_addon_class', $values));
-                    }
-                    Cache::set('hooks', $hooks_class);
-                }
                 if (!empty($hooks_class)) {
-                    $hooks[$value['name']] = $hooks_class;
+                    $Modules[$value['name']] = $hooks_class;
                 }
             }
-            Cache::set('Hooks', $hooks);
+            Cache::set('Modules', $Modules);
         }
+
+        //插件
+        $hooks = Cache::get('hooks', []);
+        if (empty($hooks)) {
+            $hooks = (array) Config::get('addons.hooks', []);
+            // 初始化钩子
+            foreach ($hooks as $key => $values) {
+                if (is_string($values)) {
+                    $values = explode(',', $values);
+                } else {
+                    $values = (array) $values;
+                }
+                $hooks[$key] = array_filter(array_map('get_addon_class', $values));
+            }
+            Cache::set('hooks', $hooks);
+        }
+        $hooks = array_merge_recursive($Modules, $hooks);
         if (isset($hooks['app_init'])) {
             foreach ($hooks['app_init'] as $k => $v) {
                 Hook::exec([$v, 'appInit']);
