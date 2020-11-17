@@ -33,41 +33,6 @@ class Addons extends Adminbase
             }
             $result = array("code" => 0, "data" => $addons);
             return json($result);
-
-            /*//取得模块目录名称
-        $dirs = array_map('basename', glob(ADDON_PATH . '*', GLOB_ONLYDIR));
-        if ($dirs === false || !file_exists(ADDON_PATH)) {
-        $this->error = '插件目录不可读或者不存在';
-        return false;
-        }
-        // 读取数据库插件表
-        $addons = Addons_Model::order('id desc')->column(true, 'name');
-        //遍历插件列表
-        foreach ($dirs as $value) {
-        //是否已经安装过
-        if (!isset($addons[$value])) {
-        $class = get_addon_class($value);
-        if (!class_exists($class)) {
-        // 实例化插件失败忽略执行
-        unset($addons[$value]);
-        //$addons[$value]['uninstall'] = -1;
-        continue;
-        }
-        //获取插件配置
-        $obj            = new $class();
-        $addons[$value] = $obj->info;
-        if ($addons[$value]) {
-        $addons[$value]['uninstall'] = 1;
-        unset($addons[$value]['status']);
-        //是否有配置
-        //$config = $obj->getAddonConfig();
-        //$addons[$value]['config'] = $config;
-        }
-        }
-        }
-        int_to_string($addons, array('status' => array(-1 => '损坏', 0 => '禁用', 1 => '启用', null => '未安装')));
-        $result = array("code" => 0, "data" => $addons);
-        return json($result);*/
         }
         return $this->fetch();
 
@@ -135,66 +100,10 @@ class Addons extends Adminbase
         }
         $this->assign('data', ['info' => $info, 'config' => $config]);
         $configFile = ADDON_PATH . $name . DIRECTORY_SEPARATOR . 'config.html';
-        $viewFile   = is_file($configFile) ? $configFile : '';
-        return $this->fetch($viewFile);
-        /*$name = $name ? $name : $this->request->get("name");
-    if (empty($addonId)) {
-    $this->error('请选择需要操作的插件！');
-    }
-    //获取插件信息
-    $addon = Addons_Model::where(array('id' => $addonId))->find();
-    if (!$addon) {
-    $this->error('该插件没有安装！');
-    }
-    $addon = $addon->toArray();
-    //实例化插件入口类
-    $addon_class = get_addon_class($addon['name']);
-    if (!class_exists($addon_class)) {
-    trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
-    }
-
-    $db_config = $addon['config'];
-    //载入插件配置数组
-    $addon['config'] = get_addon_fullconfig($addon['name']);
-    if ($this->request->isPost()) {
-    //保存插件设置
-    $params = $this->request->param('config/a');
-    foreach ($params as $k => $v) {
-    if (isset($addon['config'][$k])) {
-    if ($addon['config'][$k]['type'] == 'array') {
-    $params[$k] = (array) json_decode($params[$k], true);
-    }
-    }
-    }
-    $flag = Db::name('Addons')->where(['id' => $addonId])->setField('config', json_encode($params));
-    if ($flag !== false) {
-    //更新插件缓存
-    //$this->addons->addons_cache();
-    $this->success('保存成功', url('index'));
-    } else {
-    $this->error('保存失败');
-    }
-    }
-    if ($db_config) {
-    $db_config = json_decode($db_config, true);
-    foreach ($addon['config'] as $key => $value) {
-    if ($value['type'] != 'group') {
-    $addon['config'][$key]['value'] = isset($db_config[$key]) ? $db_config[$key] : '';
-    } else {
-    foreach ($value['options'] as $gourp => $options) {
-    foreach ($options['options'] as $gkey => $value) {
-    $addon['config'][$key]['options'][$gourp]['options'][$gkey]['value'] = $db_config[$gkey];
-    }
-    }
-    }
-    }
-    }
-    $this->assign('data', $addon);
-    $configFile = ADDON_PATH . $addon['name'] . DS . 'config.html';
-    if (is_file($configFile)) {
-    $this->assign('custom_config', $this->view->fetch($configFile));
-    }
-    return $this->fetch();*/
+        if (is_file($configFile)) {
+            $this->assign('custom_config', $this->view->fetch($configFile));
+        }
+        return $this->fetch();
     }
 
     /**
