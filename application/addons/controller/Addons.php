@@ -26,10 +26,9 @@ class Addons extends Adminbase
         if ($this->request->isAjax()) {
             $addons = get_addon_list();
             $list   = [];
-            foreach ($addons as $k => $v) {
-                $config               = get_addon_config($v['name']);
-                $addons[$k]['config'] = $config ? 1 : 0;
-
+            foreach ($addons as $k => &$v) {
+                $config      = get_addon_config($v['name']);
+                $v['config'] = $config ? 1 : 0;
             }
             $result = array("code" => 0, "data" => $addons);
             return json($result);
