@@ -12,7 +12,7 @@
                         <div class="layui-form-item">
                             <label class="">{$form.title}</label>
                             <div class="layui-form-field-label">
-                                <input type="text" name="config[{$o_key}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                                <input type="text" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                             </div>
                             <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
                         </div>
@@ -20,14 +20,14 @@
 						{case value="array"}
 						<div class="layui-form-item">
 						    <label class="">{$form.title}</label>
-						    <div class="layui-form-field-label fieldlist" data-name="config[{$o_key}]" data-id="{$o_key}">
+						    <div class="layui-form-field-label fieldlist" data-name="config[{$form.name}]" data-id="{$form.name}">
 						        <div class="arrBox"></div>
 						        <button type="button" class="layui-btn btn-append">追加</button>
-						        <textarea name="config[{$o_key}]" class="layui-textarea layui-hide">{$form.value|json_encode}</textarea>
+						        <textarea name="config[{$form.name}]" class="layui-textarea layui-hide">{$form.value|json_encode}</textarea>
 						    </div>
 						    <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
 						</div>
-						<script type="text/html" id="{$o_key}Tpl">
+						<script type="text/html" id="{$form.name}Tpl">
 						    <div class="layui-form-item rules-item">
 						    {{# layui.each(d.lists, function(index, item) { }}
 						    <div class="layui-input-inline" style="width:120px;">
@@ -52,7 +52,7 @@
 						        {php}
 									is_null($form["value"]) && $form["value"] = array();
 								{/php}
-						        <input type="checkbox" name="config[{$o_key}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value"} checked{/in}>
+						        <input type="checkbox" name="config[{$form.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value"} checked{/in}>
 						        {/foreach}
 						    </div>
 						    <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
@@ -62,7 +62,7 @@
                         <div class="layui-form-item">
                             <label class="">{$form.title}</label>
                             <div class="layui-form-field-label">
-                                <textarea placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$o_key}]">{$form.value}</textarea>
+                                <textarea placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$form.name}]">{$form.value}</textarea>
                             </div>
                             <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
                         </div>
@@ -71,7 +71,7 @@
                         <div class="layui-form-item">
                             <label class="">{$form.title}</label>
                             <div class="layui-form-field-label">
-                                <input type="password" name="config[{$o_key}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                                <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                             </div>
                             <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
                         </div>
@@ -81,7 +81,7 @@
                             <label class="">{$form.title}</label>
                             <div class="layui-form-field-label">
                                 {foreach name="form.options" item="opt" key="opt_k"}
-                                <input type="radio" name="config[{$o_key}]" value="{$opt_k}" title="{$opt}" {eq name="form.value" value="$opt_k"} checked{/eq}>
+                                <input type="radio" name="config[{$form.name}]" value="{$opt_k}" title="{$opt}" {eq name="form.value" value="$opt_k"} checked{/eq}>
                                 {/foreach}
                             </div>
                                 <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
@@ -91,7 +91,7 @@
                         <div class="layui-form-item">
                             <label class="">{$form.title}</label>
                             <div class="layui-form-field-label">
-                                <select name="config[{$o_key}]">
+                                <select name="config[{$form.name}]">
                                     <option value=""></option>
                                     {foreach name="form.options" item="opt" key="opt_k"}
                                     <option value="{$opt_k}" {eq name="form.value" value="$opt_k"}selected{/eq}>{$opt}</option>
@@ -106,21 +106,21 @@
                             <label class="">{$form.title}</label>
                             <div class="layui-form-field-label">
                                 <div class="js-upload-image">
-                                    <div id="file_list_{$o_key}" class="uploader-list">
+                                    <div id="file_list_{$form.name}" class="uploader-list">
                                         {notempty name="form.value"}
                                         <div class="file-item thumbnail">
-                                            <img class="{$o_key}-{$form.value}" data-original="{$form.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$form.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
+                                            <img class="{$form.name}-{$form.value}" data-original="{$form.value|get_file_path|default='__STATIC__/admin/img/none.png'}" src="{$form.value|get_file_path|default='__STATIC__/admin/img/none.png'}">
                                             <div class="file-panel">
-                                                <i class="iconfont icon-tailor cropper" data-input-id="{$form.value}" data-id="{$o_key}"></i>
+                                                <i class="iconfont icon-tailor cropper" data-input-id="{$form.value}" data-id="{$form.name}"></i>
                                                 <i class="iconfont icon-trash remove-picture" data-id="{$form.value}"></i>
                                             </div>
                                         </div>
                                         {/notempty}
                                     </div>
-                                    <input type="hidden" name="config[{$o_key}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$o_key}" value="{$form.value|default=''}">
+                                    <input type="hidden" name="config[{$form.name}]" data-multiple="false" data-watermark='' data-thumb='' data-size="{:config('upload_image_size')}" data-ext="{:config('upload_image_ext')}" id="{$form.name}" value="{$form.value|default=''}">
                                     <div class="layui-clear"></div>
-                                    <div id="picker_{$o_key}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
-                                    <button type="button" class="layui-btn fachoose-image" data-input-id="{$o_key}" id="fachoose-{$o_key}"><i class="iconfont icon-other"></i> 选择</button>
+                                    <div id="picker_{$form.name}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
+                                    <button type="button" class="layui-btn fachoose-image" data-input-id="{$form.name}" id="fachoose-{$form.name}"><i class="iconfont icon-other"></i> 选择</button>
                                 </div>
                             </div>
                             <div class="layui-form-mid layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
