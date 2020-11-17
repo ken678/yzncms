@@ -16,7 +16,6 @@ namespace app\common\behavior;
 
 use think\Db;
 use think\facade\Cache;
-use think\facade\Config;
 use think\facade\Hook;
 
 // 初始化钩子信息
@@ -52,7 +51,7 @@ class InitHook
         //插件
         $hooks = Cache::get('hooks', []);
         if (empty($hooks)) {
-            $hooks = (array) Config::get('addons.hooks', []);
+            $hooks = (array) \think\facade\Config::get('addons.hooks', []);
             // 初始化钩子
             foreach ($hooks as $key => $values) {
                 if (is_string($values)) {
