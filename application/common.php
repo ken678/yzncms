@@ -144,7 +144,7 @@ function get_addon_autoload_config($truncate = false)
     $addons            = get_addon_list();
     $domain            = [];
     foreach ($addons as $name => $addon) {
-        if (!$addon['status']) {
+        if (0 >= $addon['status']) {
             continue;
         }
         // 读取出所有公共方法
