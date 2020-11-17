@@ -166,6 +166,20 @@ function hook($hook, $params = [], $is_return = false, $once = false)
 }
 
 /**
+ * 读取插件的基础信息
+ * @param string $name 插件名
+ * @return array
+ */
+function get_addon_info($name)
+{
+    $addon = get_addon_instance($name);
+    if (!$addon) {
+        return [];
+    }
+    return $addon->getInfo($name);
+}
+
+/**
  * 获取插件类的配置值值
  * @param string $name 插件名
  * @return array
