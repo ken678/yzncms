@@ -87,9 +87,10 @@ abstract class Addons
      */
     final public function checkInfo()
     {
+        $info            = $this->getInfo();
         $info_check_keys = ['name', 'title', 'description', 'status', 'author', 'version'];
         foreach ($info_check_keys as $value) {
-            if (!array_key_exists($value, $this->info)) {
+            if (!array_key_exists($value, $info)) {
                 return false;
             }
 
