@@ -71,7 +71,7 @@ class AddonService
             $hooks_update = model('admin/Hooks')->updateHooks($name);
             if (!$hooks_update) {
                 $this->where("name='{$name}'")->delete();
-                throw new Exceptionr('更新钩子处插件失败,请卸载后尝试重新安装！');
+                throw new Exception('更新钩子处插件失败,请卸载后尝试重新安装！');
             }
             self::runSQL($name);
             \think\facade\Cache::rm('hooks');
