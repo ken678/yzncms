@@ -14,17 +14,17 @@
 // +----------------------------------------------------------------------
 namespace addons\qiniu;
 
-use app\addons\util\Addon;
 use app\admin\service\User as admin_user;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\member\service\User as home_user;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
+use think\Addons;
 use think\Db;
 
 require ADDON_PATH . 'qiniu/SDK/autoload.php';
 
-class Qiniu extends Addon
+class Qiniu extends Addons
 {
     //上传用户ID
     public $admin_id = 0;

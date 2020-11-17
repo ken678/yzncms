@@ -15,18 +15,18 @@
 namespace addons\saiyouems;
 
 use addons\saiyouems\lib\Ems;
-use app\addons\util\Addon;
+use think\Addons;
 
-class Saiyouems extends Addon
+class Saiyouems extends Addons
 {
     //插件信息
     public $info = [
-        'name' => 'saiyouems',
-        'title' => '邮箱插件',
+        'name'        => 'saiyouems',
+        'title'       => '邮箱插件',
         'description' => '邮箱插件-by赛邮',
-        'status' => 1,
-        'author' => '御宅男',
-        'version' => '1.0.0',
+        'status'      => 1,
+        'author'      => '御宅男',
+        'version'     => '1.0.0',
     ];
 
     //安装
@@ -48,7 +48,7 @@ class Saiyouems extends Addon
      */
     public function emsSend($params)
     {
-        $ems = new Ems();
+        $ems    = new Ems();
         $result = $ems->email($params['email'])->subject('邮件验证')->text("你的邮件验证码是：{$params['code']}")->send();
         return $result;
     }
@@ -60,7 +60,7 @@ class Saiyouems extends Addon
      */
     public function emsNotice($params)
     {
-        $ems = new Ems();
+        $ems    = new Ems();
         $result = $ems->email($params['email'])->subject($params['title'])->text($params['msg'])->send();
         return $result;
     }

@@ -14,26 +14,26 @@
 // +----------------------------------------------------------------------
 namespace addons\easysms;
 
-use app\addons\util\Addon;
+use think\Addons;
 
-class Easysms extends Addon
+class Easysms extends Addons
 {
     //插件信息
     public $info = [
-        'name' => 'easysms',
-        'title' => '多通道短信发送插件',
+        'name'        => 'easysms',
+        'title'       => '多通道短信发送插件',
         'description' => '支持目前市面20+家短信服务商,自动轮询选择可用的服务商',
-        'status' => 1,
-        'author' => '御宅男',
-        'version' => '1.0.0',
+        'status'      => 1,
+        'author'      => '御宅男',
+        'version'     => '1.0.0',
     ];
 
     public $config = [
         // HTTP 请求的超时时间（秒）
-        'timeout' => 5.0,
+        'timeout'  => 5.0,
 
         // 默认发送配置
-        'default' => [
+        'default'  => [
             // 网关调用策略，默认：顺序调用
             'strategy' => \Overtrue\EasySms\Strategies\OrderStrategy::class,
 
@@ -49,18 +49,18 @@ class Easysms extends Addon
                 'file' => APP_PATH . 'runtime/tmp/easy-sms.log',
             ],
             //阿里云
-            'aliyun' => [
-                'access_key_id' => '',
+            'aliyun'   => [
+                'access_key_id'     => '',
                 'access_key_secret' => '',
-                'sign_name' => '',
+                'sign_name'         => '',
             ],
         ],
     ];
 
     public function init()
     {
-        $config = $this->getAddonConfig();
-        $this->config['default']['gateways'] = (array) $config['gateways'];
+        $config                                        = $this->getAddonConfig();
+        $this->config['default']['gateways']           = (array) $config['gateways'];
         $this->config['gateways'][$config['gateways']] = (array) $config['config'];
     }
 
@@ -90,13 +90,13 @@ class Easysms extends Addon
     public function smsSend($params)
     {
         $this->init();
-        $config = $this->getAddonConfig();
+        $config  = $this->getAddonConfig();
         $easySms = new \Overtrue\EasySms\EasySms($this->config);
         try {
             $result = $easySms->send($params->mobile, [
-                'content' => '您的验证码为: ' . $params->code,
+                'content'  => '您的验证码为: ' . $params->code,
                 'template' => isset($config['template'][$params->event]) ? $config['template'][$params->event] : 0,
-                'data' => [
+                'data'     => [
                     'code' => $params->code,
                 ],
             ]);
@@ -125,9 +125,9 @@ class Easysms extends Addon
         $easySms = new \Overtrue\EasySms\EasySms($this->config);
         try {
             $result = $easySms->send($params['mobile'], [
-                'content' => $params['msg'],
+                'content'  => $params['msg'],
                 'template' => $params['template'],
-                'data' => isset($params['data']) ? $params['data'] : [],
+                'data'     => isset($params['data']) ? $params['data'] : [],
             ]);
         } catch (\Exception $exception) {
             return false;

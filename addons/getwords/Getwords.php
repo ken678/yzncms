@@ -14,9 +14,9 @@
 // +----------------------------------------------------------------------
 namespace addons\getwords;
 
-use app\addons\util\Addon;
+use think\Addons;
 
-class Getwords extends Addon
+class Getwords extends Addons
 {
 
     //插件信息

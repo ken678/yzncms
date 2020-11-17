@@ -14,11 +14,11 @@
 // +----------------------------------------------------------------------
 namespace addons\synclogin;
 
-use app\addons\util\Addon;
 use app\member\service\User;
+use think\Addons;
 use think\Db;
 
-class Synclogin extends Addon
+class Synclogin extends Addons
 {
 
     //插件信息

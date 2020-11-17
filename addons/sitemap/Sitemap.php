@@ -14,9 +14,9 @@
 // +----------------------------------------------------------------------
 namespace addons\sitemap;
 
-use app\addons\util\Addon;
+use think\Addons;
 
-class Sitemap extends Addon
+class Sitemap extends Addons
 {
     //插件信息
     public $info = [

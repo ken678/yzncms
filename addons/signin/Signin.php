@@ -14,11 +14,11 @@
 // +----------------------------------------------------------------------
 namespace addons\signin;
 
-use app\addons\util\Addon;
+use think\Addons;
 use think\Db;
 use util\File;
 
-class Signin extends Addon
+class Signin extends Addons
 {
     //插件信息
     public $info = [
@@ -36,15 +36,15 @@ class Signin extends Addon
         $prefix = config("database.prefix");
         Db::execute("DROP TABLE IF EXISTS {$prefix}signin;");
         Db::execute("
-			CREATE TABLE IF NOT EXISTS `{$prefix}signin` (
-			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-			  `uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
-			  `successions` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '连续签到次数',
-			  `type` enum('normal','fillup') DEFAULT 'normal' COMMENT '签到类型',
-			  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-			  PRIMARY KEY (`id`),
-			  KEY `user_id` (`uid`)
-			) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='签到表';
+            CREATE TABLE IF NOT EXISTS `{$prefix}signin` (
+              `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+              `uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+              `successions` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '连续签到次数',
+              `type` enum('normal','fillup') DEFAULT 'normal' COMMENT '签到类型',
+              `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+              PRIMARY KEY (`id`),
+              KEY `user_id` (`uid`)
+            ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='签到表';
         ");
         //前台模板
         $installdir = ADDON_PATH . "signin" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
