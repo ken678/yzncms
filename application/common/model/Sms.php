@@ -95,7 +95,7 @@ class Sms extends Model
                     $sms->save();
                     return false;
                 } else {
-                    $result = hook('sms_check', $sms);
+                    $result = hook('sms_check', $sms, true, true);
                     return $result;
                 }
             } else {

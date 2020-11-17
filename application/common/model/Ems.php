@@ -95,7 +95,7 @@ class Ems extends Model
                     $ems->save();
                     return false;
                 } else {
-                    $result = hook('ems_check', $ems);
+                    $result = hook('ems_check', $ems, true, true);
                     return true;
                 }
             } else {
