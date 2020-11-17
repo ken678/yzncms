@@ -16,24 +16,6 @@ Date: 2019-02-27 13:23:24
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `yzn_addons`
--- ----------------------------
-DROP TABLE IF EXISTS `yzn_addons`;
-CREATE TABLE `yzn_addons` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(40) NOT NULL COMMENT '插件名或标识',
-  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '中文名',
-  `description` text COMMENT '插件描述',
-  `config` text COMMENT '配置',
-  `author` varchar(40) DEFAULT '' COMMENT '作者',
-  `version` varchar(20) DEFAULT '' COMMENT '版本号',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '安装时间',
-  `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有后台列表',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='插件表';
-
--- ----------------------------
 -- Table structure for `yzn_admin`
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_admin`;
