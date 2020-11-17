@@ -14,45 +14,27 @@
 // +----------------------------------------------------------------------
 namespace app\addons\util;
 
-use think\Db;
 use think\facade\Config;
 use think\View;
 
 abstract class Addon
 {
-    /**
-     * 视图实例对象
-     * @var view
-     * @access protected
-     */
-    protected $view = null;
-    /**
-     * $info = array(
-     *  'name'=>'Editor',
-     *  'title'=>'编辑器',
-     *  'description'=>'用于增强整站长文本的输入和显示',
-     *  'status'=>1,
-     *  'author'=>'thinkphp',
-     *  'version'=>'0.1'
-     *  )
-     */
-    public $info             = [];
-    public $addon_path       = '';
-    public $config_file      = '';
-    public $admin_list       = [];
-    public $custom_adminlist = '';
-    public $access_url       = [];
+    // 当前插件标识
+    protected $name;
+    protected $view    = null;
+    public $addon_path = '';
+
+    // 插件配置作用域
+    protected $configRange = 'addonconfig';
     // 插件信息作用域
     protected $infoRange = 'addoninfo';
 
     public function __construct()
     {
+        $this->name = $this->getName();
         // 获取当前插件目录
         $this->addon_path = ADDON_PATH . $this->getName() . DIRECTORY_SEPARATOR;
-        // 读取当前插件配置信息
-        if (is_file($this->addon_path . 'config.php')) {
-            $this->config_file = $this->addon_path . 'config.php';
-        }
+
         // 初始化视图模型
         $config['view_path'] = $this->addon_path;
         $config              = array_merge(Config::get('template.'), $config);
@@ -157,15 +139,38 @@ abstract class Addon
     final public function getInfo($name = '')
     {
         if (empty($name)) {
-            $name = $this->getName();
+            $name = $this->name;
         }
-        $info = cache($this->infoRange . $name);
+        $info = Config::get($this->infoRange . $name);
         if ($info) {
             return $info;
         }
-        $info = Db::name('addons')->where('name', $name)->find();
-        cache($this->infoRange . $name, $info);
+        $info_file = $this->addon_path . 'info.ini';
+        if (is_file($info_file)) {
+            $info = parse_ini_file($info_file, true, INI_SCANNER_TYPED) ?: [];
+            //$info['url'] = addon_url($name);
+        }
+        Config::set($this->infoRange . $name, $info);
+
         return $info ? $info : [];
+    }
+
+    /**
+     * 设置插件信息数据.
+     * @param $name
+     * @param array $value
+     * @return array
+     */
+    final public function setInfo($name = '', $value = [])
+    {
+        if (empty($name)) {
+            $name = $this->name;
+        }
+        $info = $this->getInfo($name);
+        $info = array_merge($info, $value);
+        Config::set($this->infoRange . $name, $info);
+
+        return $info;
     }
 
     /**
@@ -175,36 +180,22 @@ abstract class Addon
      */
     final public function getAddonConfig($name = '')
     {
-        static $_config = [];
         if (empty($name)) {
-            $name = $this->getName();
+            $name = $this->name;
         }
-        if (isset($_config[$name])) {
-            return $_config[$name];
-        }
-        $map['name']   = $name;
-        $map['status'] = 1;
-        $config        = Db::name('Addons')->where($map)->value('config');
+        $config = Config::get($name, $this->configRange);
         if ($config) {
-            $config = json_decode($config, true);
-        } else {
-            if (is_file($this->config_file)) {
-                $temp_arr = include $this->config_file;
-                foreach ($temp_arr as $key => $value) {
-                    if ($value['type'] == 'group') {
-                        foreach ($value['options'] as $gkey => $gvalue) {
-                            foreach ($gvalue['options'] as $ikey => $ivalue) {
-                                $config[$ikey] = $ivalue['value'];
-                            }
-                        }
-                    } else {
-                        $config[$key] = $temp_arr[$key]['value'];
-                    }
-                }
-                unset($temp_arr);
-            }
+            return $config;
         }
-        $_config[$name] = $config;
+        $config_file = $this->addon_path . 'config.php';
+        if (is_file($config_file)) {
+            $temp_arr = include $config_file;
+            foreach ($temp_arr as $key => $value) {
+                $config[$value['name']] = $value['value'];
+            }
+            unset($temp_arr);
+        }
+        Config::set($this->configRange . $name, $config);
         return $config;
     }
 

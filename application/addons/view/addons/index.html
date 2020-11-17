@@ -7,18 +7,18 @@
     </div>
 </div>
 <script type="text/html" id="titleTpl">
-    {{#  if(d.uninstall == "" || d.uninstall == 'null' || d.uninstall == undefined){ }}
+{{#  if(d.status >= 0){ }}
     {{#  if(d.config !== "" && d.config !== 'null' && d.config !== undefined){ }}
-    <a class="layui-btn layui-btn-xs" href='{:url("config")}?id={{d.id}}'>设置</a>
+    <a class="layui-btn layui-btn-xs" href='{:url("config")}?name={{d.name}}'>设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("enable")}?id={{d.id}}' data-table="currentTable">启用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("enable")}?name={{d.name}}' data-table="currentTable">启用</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("disable")}?id={{d.id}}' data-table="currentTable">禁用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("disable")}?name={{d.name}}' data-table="currentTable">禁用</a>
     {{#  } }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger confirm" data-request='{:url("uninstall")}?id={{d.id}}' data-table="currentTable">卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger confirm" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable">卸载</a>
 {{#  } else { }}
-    <a class="layui-btn layui-btn-xs confirm" data-request='{:url("install")}?addon_name={{d.name}}' data-table="currentTable">安装</a>
+    <a class="layui-btn layui-btn-xs confirm" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable">安装</a>
 {{#  } }}
 </script>
 {/block}
