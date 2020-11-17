@@ -1,12 +1,11 @@
-﻿layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util','yznForm','yzn'], function(exports) {
+﻿layui.define(['layer', 'laytpl', 'form', 'element', 'util','yznForm'], function(exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         laytpl = layui.laytpl,
         form = layui.form,
         element = layui.element,
-        upload = layui.upload,
+        yznForm = layui.yznForm,
         util = layui.util,
-        yzn=layui.yzn,
         device = layui.device(),
         DISABLED = 'layui-btn-disabled';
 
@@ -98,63 +97,6 @@
         })
         return false;
     })
-
-    /**
-     * 监听表单提交
-     * @attr action 请求地址
-     * @attr data-form 表单DOM
-     */
-    form.on('submit(layui-Submit)', function(data) {
-        var _form = '',
-            that = $(this),
-            text = that.text(),
-            opt = {},
-            def = { pop: false, refresh: true, jump: false, callback: null,time: 3000};
-        if ($(this).attr('data-form')) {
-            _form = $(that.attr('data-form'));
-        } else {
-            _form = that.parents('form');
-        }
-        if (that.attr('lay-data')) {
-            opt = new Function('return ' + that.attr('lay-data'))();
-        }
-        opt = Object.assign({}, def, opt);
-
-        that.prop('disabled', true);
-        yzn.request.post({
-            url: _form.attr('action'),
-            data: _form.serialize(),
-        }, function(res) {
-           if (opt.callback) {
-               opt.callback(that, res);
-           } else {
-               that.text(res.msg);
-               setTimeout(function() {
-                   that.text(text).prop('disabled', false);
-                   if (opt.pop == true) {
-                       if (opt.refresh == true) {
-                           parent.location.reload();
-                       } else if (opt.jump == true && res.url != '') {
-                           parent.location.href = res.url;
-                       }
-                       parent.layui.layer.closeAll();
-                   } else if (opt.refresh == true) {
-                       if (res.url != '') {
-                           location.href = res.url;
-                       } else {
-                           history.back(-1);
-                       }
-                   }
-               }, opt.time);
-           }
-        }, function(res) {
-            that.text(res.msg).removeClass('layui-btn-normal').addClass('layui-btn-danger');
-            setTimeout(function() {
-                that.prop('disabled', false).removeClass('layui-btn-danger').text(text);
-            }, opt.time);
-        });
-        return false;
-    });
 
     //加载特定模块
     if (layui.cache.page && layui.cache.page !== 'index') {
