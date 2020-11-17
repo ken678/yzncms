@@ -128,7 +128,7 @@
            if (opt.callback) {
                opt.callback(that, res);
            } else {
-               that.addClass('layui-btn-normal').text(res.msg);
+               that.text(res.msg);
                setTimeout(function() {
                    that.text(text).prop('disabled', false);
                    if (opt.pop == true) {
@@ -148,9 +148,9 @@
                }, opt.time);
            }
         }, function(res) {
-            that.text(res.msg).prop('disabled', false).removeClass('layui-btn-normal').addClass('layui-btn-danger');
+            that.text(res.msg).removeClass('layui-btn-normal').addClass('layui-btn-danger');
             setTimeout(function() {
-                that.removeClass('layui-btn-danger').text(text);
+                that.prop('disabled', false).removeClass('layui-btn-danger').text(text);
             }, opt.time);
         });
         return false;
