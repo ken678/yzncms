@@ -91,7 +91,7 @@
                 }, 1000);
             } else {
                 $(that).removeClass("layui-btn-disabled").text("获取验证码").attr("disabled", false);
-                layer.msg(data.msg);
+                layer.msg(data.msg,{icon: 2});
             }
 
         })
