@@ -17,7 +17,7 @@ namespace think;
 use think\facade\Config;
 use think\View;
 
-abstract class Addon
+abstract class Addons
 {
     // 当前插件标识
     protected $name;
