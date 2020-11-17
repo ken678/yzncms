@@ -36,16 +36,6 @@ class Qiniu extends Addons
     private $uploadUrl  = '';
     private $uploadPath = '';
 
-    //插件信息
-    public $info = [
-        'name'        => 'qiniu',
-        'title'       => '七牛云插件',
-        'description' => '七牛云插件',
-        'status'      => 1,
-        'author'      => '御宅男',
-        'version'     => '1.0.0',
-    ];
-
     public function isLogin()
     {
         //检查是否后台登录，后台登录下优先级最高，用于权限判断

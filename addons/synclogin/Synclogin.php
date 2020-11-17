@@ -20,23 +20,6 @@ use think\Db;
 
 class Synclogin extends Addons
 {
-
-    //插件信息
-    public $info = [
-        'name'        => 'synclogin',
-        'title'       => '第三方登录',
-        'description' => 'QQ，微信和新浪等第三方登录',
-        'status'      => 1,
-        'author'      => '御宅男',
-        'version'     => '1.0.0',
-        //'has_adminlist' => 1,
-    ];
-
-    //后台菜单
-    public $admin_list = array(
-
-    );
-
     //安装
     public function install()
     {

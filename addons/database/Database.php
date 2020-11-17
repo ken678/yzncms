@@ -18,17 +18,6 @@ use think\Addons;
 
 class Database extends Addons
 {
-    //插件信息
-    public $info = [
-        'name'          => 'database',
-        'title'         => '数据库备份',
-        'description'   => '简单的数据库备份',
-        'status'        => 1,
-        'author'        => '御宅男',
-        'version'       => '1.0.0',
-        'has_adminlist' => 1,
-    ];
-
     //后台菜单
     public $admin_list = array(
         array(

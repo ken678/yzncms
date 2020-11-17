@@ -18,16 +18,6 @@ use think\Addons;
 
 class ReturnTop extends Addons
 {
-    //插件信息
-    public $info = [
-        'name'        => 'returntop',
-        'title'       => '返回顶部',
-        'description' => '回到顶部美化，随机或指定显示，100款样式，每天一种换，天天都用新样式',
-        'status'      => 1,
-        'author'      => '御宅男',
-        'version'     => '1.0.0',
-    ];
-
     //安装
     public function install()
     {

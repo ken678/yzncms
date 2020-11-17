@@ -19,16 +19,6 @@ use think\Addons;
 
 class Saiyouems extends Addons
 {
-    //插件信息
-    public $info = [
-        'name'        => 'saiyouems',
-        'title'       => '邮箱插件',
-        'description' => '邮箱插件-by赛邮',
-        'status'      => 1,
-        'author'      => '御宅男',
-        'version'     => '1.0.0',
-    ];
-
     //安装
     public function install()
     {

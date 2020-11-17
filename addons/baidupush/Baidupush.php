@@ -19,18 +19,6 @@ use think\Addons;
 
 class Baidupush extends Addons
 {
-
-    //插件信息
-    public $info = [
-        'name'          => 'baidupush',
-        'title'         => '百度推送',
-        'description'   => '百度熊掌号+百度站长推送',
-        'status'        => 1,
-        'author'        => '御宅男',
-        'version'       => '1.0.0',
-        'has_adminlist' => 1,
-    ];
-
     //安装
     public function install()
     {

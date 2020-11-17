@@ -20,16 +20,6 @@ use util\File;
 
 class Signin extends Addons
 {
-    //插件信息
-    public $info = [
-        'name'        => 'signin',
-        'title'       => '会员签到插件',
-        'description' => '会员签到插件',
-        'status'      => 1,
-        'author'      => '御宅男',
-        'version'     => '1.0.0',
-    ];
-
     //安装
     public function install()
     {

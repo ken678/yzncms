@@ -18,16 +18,6 @@ use think\Addons;
 
 class Easysms extends Addons
 {
-    //插件信息
-    public $info = [
-        'name'        => 'easysms',
-        'title'       => '多通道短信发送插件',
-        'description' => '支持目前市面20+家短信服务商,自动轮询选择可用的服务商',
-        'status'      => 1,
-        'author'      => '御宅男',
-        'version'     => '1.0.0',
-    ];
-
     public $config = [
         // HTTP 请求的超时时间（秒）
         'timeout'  => 5.0,

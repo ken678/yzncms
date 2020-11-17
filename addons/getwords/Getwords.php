@@ -18,17 +18,6 @@ use think\Addons;
 
 class Getwords extends Addons
 {
-
-    //插件信息
-    public $info = [
-        'name'        => 'getwords',
-        'title'       => '中文分词',
-        'description' => '支持百度，讯飞分词',
-        'status'      => 1,
-        'author'      => '御宅男',
-        'version'     => '1.0.0',
-    ];
-
     //安装
     public function install()
     {
