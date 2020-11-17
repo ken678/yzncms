@@ -11,6 +11,8 @@
 
 // +----------------------------------------------------------------------
 // | 插件基类 插件需要继承此类
+// | https://github.com/5ini99/think-addons
+// | https://github.com/karsonzhang/fastadmin-addons
 // +----------------------------------------------------------------------
 namespace think;
 
@@ -33,7 +35,7 @@ abstract class Addons
     {
         $this->name = $this->getName();
         // 获取当前插件目录
-        $this->addon_path = ADDON_PATH . $this->getName() . DIRECTORY_SEPARATOR;
+        $this->addon_path = ADDON_PATH . $this->name . DIRECTORY_SEPARATOR;
 
         // 初始化视图模型
         $config['view_path'] = $this->addon_path;
@@ -47,66 +49,6 @@ abstract class Addons
     }
 
     /**
-     * 模板变量赋值
-     * @access protected
-     * @param mixed $name 要显示的模板变量
-     * @param mixed $value 变量的值
-     * @return void
-     */
-    final protected function assign($name, $value = '')
-    {
-        $this->view->assign($name, $value);
-    }
-
-    /**
-     * 加载模板和页面输出 可以返回输出内容
-     * @access public
-     * @param string $template 模板文件名或者内容
-     * @param array $vars 模板输出变量
-     * @param array $replace 替换内容
-     * @param array $config 模板参数
-     */
-    public function fetch($template = '', $vars = [], $replace = [], $config = [])
-    {
-        if (!is_file($template)) {
-            $template = '/' . $template;
-        }
-        // 关闭模板布局
-        $this->view->engine->layout(false);
-
-        echo $this->view->fetch($template, $vars, $replace, $config);
-    }
-    /**
-     * 渲染内容输出
-     * @access public
-     * @param string $content 内容
-     * @param array $vars 模板输出变量
-     * @param array $replace 替换内容
-     * @param array $config 模板参数
-     * @return mixed
-     */
-    public function display($content, $vars = [], $replace = [], $config = [])
-    {
-        // 关闭模板布局
-        $this->view->engine->layout(false);
-
-        echo $this->view->display($content, $vars, $replace, $config);
-    }
-    /**
-     * 渲染内容输出
-     * @access public
-     * @param string $content 内容
-     * @param array $vars 模板输出变量
-     * @return mixed
-     */
-    public function show($content, $vars = [])
-    {
-        // 关闭模板布局
-        $this->view->engine->layout(false);
-
-        echo $this->view->fetch($content, $vars, [], [], true);
-    }
-    /**
      * @title 获取当前模块名
      * @return string
      */
@@ -114,21 +56,6 @@ abstract class Addons
     {
         $data = explode('\\', get_class($this));
         return strtolower(array_pop($data));
-    }
-    /**
-     * @title 获取当前模块名
-     * @return string
-     */
-    final public function checkInfo()
-    {
-        $info_check_keys = ['name', 'title', 'description', 'status', 'author', 'version'];
-        foreach ($info_check_keys as $value) {
-            if (!array_key_exists($value, $this->info)) {
-                return false;
-            }
-
-        }
-        return true;
     }
 
     /**
@@ -151,26 +78,23 @@ abstract class Addons
             //$info['url'] = addon_url($name);
         }
         Config::set($this->infoRange . $name, $info);
-
         return $info ? $info : [];
     }
 
     /**
-     * 设置插件信息数据.
-     * @param $name
-     * @param array $value
-     * @return array
+     * @title 获取当前模块名
+     * @return string
      */
-    final public function setInfo($name = '', $value = [])
+    final public function checkInfo()
     {
-        if (empty($name)) {
-            $name = $this->name;
-        }
-        $info = $this->getInfo($name);
-        $info = array_merge($info, $value);
-        Config::set($this->infoRange . $name, $info);
+        $info_check_keys = ['name', 'title', 'description', 'status', 'author', 'version'];
+        foreach ($info_check_keys as $value) {
+            if (!array_key_exists($value, $this->info)) {
+                return false;
+            }
 
-        return $info;
+        }
+        return true;
     }
 
     /**
@@ -216,8 +140,86 @@ abstract class Addons
         if (is_file($config_file)) {
             $fullConfigArr = include $config_file;
         }
-
         return $fullConfigArr;
+    }
+
+    /**
+     * 设置插件信息数据.
+     * @param $name
+     * @param array $value
+     * @return array
+     */
+    final public function setInfo($name = '', $value = [])
+    {
+        if (empty($name)) {
+            $name = $this->name;
+        }
+        $info = $this->getInfo($name);
+        $info = array_merge($info, $value);
+        Config::set($this->infoRange . $name, $info);
+        return $info;
+    }
+
+    /**
+     * 模板变量赋值
+     * @access protected
+     * @param mixed $name 要显示的模板变量
+     * @param mixed $value 变量的值
+     * @return void
+     */
+    final protected function assign($name, $value = '')
+    {
+        $this->view->assign($name, $value);
+    }
+
+    /**
+     * 加载模板和页面输出 可以返回输出内容
+     * @access public
+     * @param string $template 模板文件名或者内容
+     * @param array $vars 模板输出变量
+     * @param array $replace 替换内容
+     * @param array $config 模板参数
+     */
+    public function fetch($template = '', $vars = [], $replace = [], $config = [])
+    {
+        if (!is_file($template)) {
+            $template = '/' . $template;
+        }
+        // 关闭模板布局
+        $this->view->engine->layout(false);
+
+        echo $this->view->fetch($template, $vars, $replace, $config);
+    }
+
+    /**
+     * 渲染内容输出
+     * @access public
+     * @param string $content 内容
+     * @param array $vars 模板输出变量
+     * @param array $replace 替换内容
+     * @param array $config 模板参数
+     * @return mixed
+     */
+    public function display($content, $vars = [], $replace = [], $config = [])
+    {
+        // 关闭模板布局
+        $this->view->engine->layout(false);
+
+        echo $this->view->display($content, $vars, $replace, $config);
+    }
+    /**
+     * 渲染内容输出
+     * @access public
+     * @param string $content 内容
+     * @param array $vars 模板输出变量
+     * @return mixed
+     */
+    public function show($content, $vars = [])
+    {
+        // 关闭模板布局
+        $this->view->engine->layout(false);
+
+        echo $this->view->fetch($content, $vars, [], [], true);
     }
 
     //必须实现安装
