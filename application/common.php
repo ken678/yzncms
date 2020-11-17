@@ -106,6 +106,58 @@ function fun($fun)
 }
 
 /**
+ * 检查模块是否已经安装
+ * @param type $moduleName 模块名称
+ * @return boolean
+ */
+function isModuleInstall($moduleName)
+{
+    $appCache = cache('Module');
+    if (isset($appCache[$moduleName])) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 获得插件列表
+ * @return array
+ */
+function get_addon_list()
+{
+    $results = scandir(ADDON_PATH);
+    $list    = [];
+    foreach ($results as $name) {
+        if ($name === '.' or $name === '..') {
+            continue;
+        }
+        if (is_file(ADDON_PATH . $name)) {
+            continue;
+        }
+        $addonDir = ADDON_PATH . $name . DS;
+        if (!is_dir($addonDir)) {
+            continue;
+        }
+        if (!is_file($addonDir . ucfirst($name) . '.php')) {
+            continue;
+        }
+        //这里不采用get_addon_info是因为会有缓存
+        //$info = get_addon_info($name);
+        $info_file = $addonDir . 'info.ini';
+        if (!is_file($info_file)) {
+            continue;
+        }
+        $info = parse_ini_file($info_file, true, INI_SCANNER_TYPED) ?: [];
+        if (!isset($info['name'])) {
+            continue;
+        }
+        //$info['url'] = addon_url($name);
+        $list[$name] = $info;
+    }
+    return $list;
+}
+
+/**
  * 获取插件类的类名
  * @param $name 插件名
  * @param string $type 返回命名空间类型
@@ -133,20 +185,6 @@ function get_addon_class($name, $type = 'hook', $class = null)
             $namespace = "\\addons\\" . $name . "\\" . $class;
     }
     return class_exists($namespace) ? $namespace : '';
-}
-
-/**
- * 检查模块是否已经安装
- * @param type $moduleName 模块名称
- * @return boolean
- */
-function isModuleInstall($moduleName)
-{
-    $appCache = cache('Module');
-    if (isset($appCache[$moduleName])) {
-        return true;
-    }
-    return false;
 }
 
 /**
@@ -181,7 +219,7 @@ function get_addon_info($name)
 
 /**
  * 获取插件类的配置值值
- * @param string $name 插件名
+ * @param  string  $name  插件名
  * @return array
  */
 function get_addon_config($name)
@@ -190,7 +228,7 @@ function get_addon_config($name)
     if (!$addon) {
         return [];
     }
-    return $addon->getAddonConfig();
+    return $addon->getAddonConfig($name);
 }
 
 /**
@@ -211,6 +249,31 @@ function get_addon_fullconfig($name)
 }
 
 /**
+ * 写入配置文件.
+ *
+ * @param  string  $name  插件名
+ * @param  array  $array  配置数据
+ *
+ * @throws Exception
+ * @return bool
+ */
+function set_addon_fullconfig($name, $array)
+{
+    $file = ADDON_PATH . $name . DS . 'config.php';
+    if (!\util\File::is_really_writable($file)) {
+        throw new Exception('文件没有写入权限');
+    }
+    if ($handle = fopen($file, 'w')) {
+        fwrite($handle, "<?php\n\n" . 'return ' . var_export($array, true) . ";\n");
+        fclose($handle);
+    } else {
+        throw new Exception('文件没有写入权限');
+    }
+
+    return true;
+}
+
+/**
  * 获取插件的单例
  * @param $name
  * @return mixed|null
@@ -228,6 +291,46 @@ function get_addon_instance($name)
     } else {
         return null;
     }
+}
+
+/**
+ * 设置基础配置信息.
+ *
+ * @param  string  $name  插件名
+ * @param  array  $array  配置数据
+ *
+ * @throws Exception
+ * @return bool
+ */
+function set_addon_info($name, $array)
+{
+    $file  = ADDON_PATH . $name . DS . 'info.ini';
+    $addon = get_addon_instance($name);
+    $array = $addon->setInfo($name, $array);
+    if (!isset($array['name']) || !isset($array['title']) || !isset($array['version'])) {
+        throw new Exception('插件配置写入失败');
+    }
+    $res = [];
+    foreach ($array as $key => $val) {
+        if (is_array($val)) {
+            $res[] = "[$key]";
+            foreach ($val as $skey => $sval) {
+                $res[] = "$skey = " . (is_numeric($sval) ? $sval : $sval);
+            }
+        } else {
+            $res[] = "$key = " . (is_numeric($val) ? $val : $val);
+        }
+    }
+    if ($handle = fopen($file, 'w')) {
+        fwrite($handle, implode("\n", $res) . "\n");
+        fclose($handle);
+        //清空当前配置缓存
+        Config::set('addoninfo' . $name, null);
+    } else {
+        throw new Exception('文件没有写入权限');
+    }
+
+    return true;
 }
 
 /**
