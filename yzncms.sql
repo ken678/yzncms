@@ -242,7 +242,6 @@ CREATE TABLE `yzn_hooks` (
   `description` text NOT NULL COMMENT '描述',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
   `modules` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的模块 ''，''分割',
   `system` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否系统',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
@@ -253,29 +252,29 @@ CREATE TABLE `yzn_hooks` (
 -- ----------------------------
 -- Records of yzn_hooks
 -- ----------------------------
-INSERT INTO `yzn_hooks` VALUES (1, 'app_init', '应用初始化标签位', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (2, 'page_header', '页面header钩子，一般用于加载插件CSS文件和代码', 1, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (3, 'page_footer', '页面footer钩子，一般用于加载插件JS文件和JS代码', 1, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (4, 'sms_get', '短信获取行为', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (5, 'sms_send', '短信发送行为', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (6, 'sms_notice', '短信发送通知', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (7, 'sms_check', '检测短信验证是否正确', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (8, 'sms_flush', '清空短信验证行为', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (9, 'ems_get', '邮件获取行为', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (10, 'ems_send', '邮件发送行为', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (11, 'ems_notice', '邮件发送通知', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (12, 'ems_check', '检测邮件验证是否正确', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (13, 'ems_flush', '清空邮件验证行为', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (14, 'upload_after', '第三方附件上传钩子', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (15, 'upload_delete', '第三方附件删除钩子', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (16, 'sync_login', '第三方登陆位置', 1, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (17, 'user_config', '用户配置页面钩子', 1, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (18, 'baidupush', '百度熊掌号+百度站长推送', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (19, 'markdown', 'markdown编辑器', 1, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (20, 'user_register_init', '用户注册前钩子', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (21, 'user_register_successed', '用户注册后钩子', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (22, 'user_delete_successed', '用户删除后钩子', 2, 1509174020, '', '', 1, 1);
-INSERT INTO `yzn_hooks` VALUES (23, 'register_input', '注册表单钩子', 1, 1509174020, '', '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (1, 'app_init', '应用初始化标签位', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (2, 'page_header', '页面header钩子，一般用于加载插件CSS文件和代码', 1, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (3, 'page_footer', '页面footer钩子，一般用于加载插件JS文件和JS代码', 1, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (4, 'sms_get', '短信获取行为', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (5, 'sms_send', '短信发送行为', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (6, 'sms_notice', '短信发送通知', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (7, 'sms_check', '检测短信验证是否正确', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (8, 'sms_flush', '清空短信验证行为', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (9, 'ems_get', '邮件获取行为', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (10, 'ems_send', '邮件发送行为', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (11, 'ems_notice', '邮件发送通知', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (12, 'ems_check', '检测邮件验证是否正确', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (13, 'ems_flush', '清空邮件验证行为', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (14, 'upload_after', '第三方附件上传钩子', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (15, 'upload_delete', '第三方附件删除钩子', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (16, 'sync_login', '第三方登陆位置', 1, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (17, 'user_config', '用户配置页面钩子', 1, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (18, 'baidupush', '百度熊掌号+百度站长推送', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (19, 'markdown', 'markdown编辑器', 1, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (20, 'user_register_init', '用户注册前钩子', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (21, 'user_register_successed', '用户注册后钩子', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (22, 'user_delete_successed', '用户删除后钩子', 2, 1509174020, '', 1, 1);
+INSERT INTO `yzn_hooks` VALUES (23, 'register_input', '注册表单钩子', 1, 1509174020, '', 1, 1);
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
