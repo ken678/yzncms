@@ -67,12 +67,6 @@ class AddonService
                 //添加菜单
                 model('admin/Menu')->addAddonMenu($info, $admin_list);
             }
-            //更新插件行为实现
-            $hooks_update = model('admin/Hooks')->updateHooks($name);
-            if (!$hooks_update) {
-                $this->where("name='{$name}'")->delete();
-                throw new Exception('更新钩子处插件失败,请卸载后尝试重新安装！');
-            }
             self::runSQL($name);
             \think\facade\Cache::rm('hooks');
         } catch (Exception $e) {
@@ -114,10 +108,6 @@ class AddonService
             //删除插件后台菜单
             if (isset($info['has_adminlist']) && $info['has_adminlist']) {
                 model('admin/Menu')->delAddonMenu($info);
-            }
-            $hooks_update = model('admin/Hooks')->removeHooks($name);
-            if ($hooks_update === false) {
-                throw new Exception('卸载插件所挂载的钩子数据失败！');
             }
             $class = get_addon_class($name);
             if (class_exists($class)) {
