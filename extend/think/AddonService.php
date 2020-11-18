@@ -202,10 +202,59 @@ class AddonService
     }
 
     /**
+     * 离线安装
+     * @param string $file 插件压缩包
+     */
+    public static function local($file)
+    {
+        $addonTmpDir = ROOT_PATH . 'runtime' . DS . 'addons' . DS;
+        if (!is_dir($addonTmpDir)) {
+            @mkdir($addonTmpDir, 0755, true);
+        }
+        $info = $file->rule('uniqid')->validate(['size' => 10240000, 'ext' => 'zip'])->move($addonTmpDir);
+        if ($info) {
+            $tmpName     = substr($info->getFilename(), 0, stripos($info->getFilename(), '.'));
+            $tmpAddonDir = ADDON_PATH . $tmpName . DS;
+            $tmpFile     = $addonTmpDir . $info->getSaveName();
+            $filename    = $file->getInfo('tmp_name');
+            try {
+                $zip = new \util\PclZip($filename);
+                $zip->extract(PCLZIP_OPT_PATH, $tmpAddonDir);
+                unset($info);
+                @unlink($tmpFile);
+
+                $infoFile = $tmpAddonDir . 'info.ini';
+                if (!is_file($infoFile)) {
+                    throw new Exception('插件信息不存在');
+                }
+                $config = parse_ini_file($infoFile, true, INI_SCANNER_TYPED) ?: [];
+                $name   = isset($config['name']) ? $config['name'] : '';
+                if (!$name) {
+                    throw new Exception('插件配置信息不正确');
+                }
+                if (!preg_match("/^[a-zA-Z0-9]+$/", $name)) {
+                    throw new Exception('插件名称不正确');
+                }
+                $newAddonDir = ADDON_PATH . $name . DS;
+                if (is_dir($newAddonDir)) {
+                    throw new Exception('上传的插件已经存在');
+                }
+                //重命名插件文件夹
+                rename($tmpAddonDir, $newAddonDir);
+            } catch (Exception $e) {
+                unset($info);
+                @unlink($tmpFile);
+                throw new Exception($e->getMessage());
+            }
+
+        } else {
+            throw new Exception($file->getError());
+        }
+    }
+
+    /**
      * 刷新插件缓存文件.
-     *
      * @throws Exception
-     *
      * @return bool
      */
     public static function refresh()
