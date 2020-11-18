@@ -58,7 +58,8 @@ class InitHook
                 } else {
                     $values = (array) $values;
                 }
-                $hooks[$key] = array_filter(array_map('get_addon_class', $values));
+                //$hooks[$key] = array_filter(array_map('get_addon_class', $values));
+                $hooks[$key] = array_filter($values);
             }
             Cache::set('hooks', $hooks);
         }
