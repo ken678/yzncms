@@ -47,7 +47,7 @@ class Easysms extends Addons
         ],
     ];
 
-    public function init()
+    protected function init()
     {
         $config                                        = $this->getAddonConfig();
         $this->config['default']['gateways']           = (array) $config['gateways'];
