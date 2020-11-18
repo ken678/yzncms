@@ -210,7 +210,7 @@ class AddonService
      */
     public static function refresh()
     {
-        $file = app()->getRootPath() . 'config' . DS . 'addons.php';
+        $file = ROOT_PATH . 'config' . DS . 'addons.php';
 
         $config = get_addon_autoload_config(true);
         if ($config['autoload']) {
