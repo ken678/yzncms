@@ -25,33 +25,6 @@ class Hooks extends Model
     protected $autoWriteTimestamp = true;
 
     /**
-     * 更新插件里的所有钩子对应的插件
-     */
-    public function updateHooks($addons_name)
-    {
-        $addons_class = get_addon_class($addons_name); //获取插件名
-        if (!class_exists($addons_class)) {
-            $this->error = "未实现{$addons_name}插件的入口文件";
-            return false;
-        }
-        //获取这个插件总的方法列表，数组
-        $methods = get_class_methods($addons_class);
-        $methods = array_map(function ($item) {return \think\Loader::parseName($item, 0, false);}, $methods);
-        $hooks  = $this->column('name');
-        $common = array_intersect($hooks, $methods);
-        if (!empty($common)) {
-            foreach ($common as $hook) {
-                $flag = $this->updateAddons($hook, array($addons_name), 'addons');
-                if (false === $flag) {
-                    $this->removeHooks($addons_name);
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
      * 更新插件里的所有钩子对应的模块
      */
     public function updateModules($module, $hooksRule)
@@ -79,11 +52,7 @@ class Hooks extends Model
         $common = array_intersect($hooks, array_keys($hooksRule));
         if (!empty($common)) {
             foreach ($common as $hook) {
-                $flag = $this->updateAddons($hook, array($module), 'modules');
-                if (false === $flag) {
-                    $this->removeHooks($module);
-                    return false;
-                }
+                $this->updateAddons($hook, array($module));
             }
         }
         return true;
@@ -93,11 +62,10 @@ class Hooks extends Model
      * 更新单个钩子处的插件
      * @param  [type] 钩子名称   [description]
      * @param  [type] 插件名称 [description]
-     * @return [type]              [description]
      */
-    public function updateAddons($hook_name, $name, $type)
+    public function updateAddons($hook_name, $name)
     {
-        $o_addons = $this->where(['name' => $hook_name])->value($type);
+        $o_addons = $this->where(['name' => $hook_name])->value('modules');
         if ($o_addons) {
             $o_addons = str2arr($o_addons);
         }
@@ -107,37 +75,11 @@ class Hooks extends Model
         } else {
             $addons = $name;
         }
-        $flag = $this->where(['name' => $hook_name])->setField($type, arr2str($addons));
+        $flag = $this->where(['name' => $hook_name])->setField('modules', arr2str($addons));
         if (false === $flag) {
-            $this->where(['name' => $hook_name])->setField($type, arr2str($o_addons));
+            $this->where(['name' => $hook_name])->setField('modules', arr2str($o_addons));
         }
-
         return $flag;
-    }
-
-    /**
-     * 去除插件所有钩子里对应的插件数据
-     */
-    public function removeHooks($addons_name)
-    {
-        $addons_class = get_addon_class($addons_name);
-        if (!class_exists($addons_class)) {
-            return false;
-        }
-        //获取这个插件总的方法列表，数组
-        $methods = get_class_methods($addons_class);
-        $methods = array_map(function ($item) {return \think\Loader::parseName($item, 0, false);}, $methods);
-        $hooks  = $this->column('name');
-        $common = array_intersect($hooks, $methods);
-        if ($common) {
-            foreach ($common as $hook) {
-                $flag = $this->removeAddons($hook, array($addons_name), 'addons');
-                if (false === $flag) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     /**
@@ -150,12 +92,11 @@ class Hooks extends Model
             return false;
         }
         //TODO 删除钩子 暂时先不删除 后期看是否加上
-
         $hooks  = $this->column('name');
         $common = array_intersect($hooks, array_keys($hooksRule));
         if ($common) {
             foreach ($common as $hook) {
-                $flag = $this->removeAddons($hook, array($module), 'modules');
+                $flag = $this->removeAddons($hook, array($module));
                 if (false === $flag) {
                     return false;
                 }
@@ -169,31 +110,19 @@ class Hooks extends Model
      * $hook_name 钩子名称
      * $addons_name 插件名称
      */
-    public function removeAddons($hook_name, $name, $type)
+    public function removeAddons($hook_name, $name)
     {
-        $o_addons = $this->where(['name' => $hook_name])->value($type);
+        $o_addons = $this->where(['name' => $hook_name])->value('modules');
         $o_addons = str2arr($o_addons);
         if ($o_addons) {
             $addons = array_diff($o_addons, $name);
         } else {
             return true;
         }
-        $flag = $this->where(['name' => $hook_name])->setField($type, arr2str($addons));
+        $flag = $this->where(['name' => $hook_name])->setField('modules', arr2str($addons));
         if (false === $flag) {
-            $this->where(['name' => $hook_name])->setField($type, arr2str($o_addons));
+            $this->where(['name' => $hook_name])->setField('modules', arr2str($o_addons));
         }
         return $flag;
     }
-
-    /**
-     * 卸载模块时删除对应模块安装时创建的规则！
-     * @param type $module 模块标识
-     * @return boolean
-     */
-    public function moduleHooksUninstall($module)
-    {
-        return true;
-
-    }
-
 }
