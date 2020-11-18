@@ -190,17 +190,14 @@ class Module
             //拷贝模板到前台模板目录中去
             File::copy_dir($this->installdir . "public" . DIRECTORY_SEPARATOR, $this->extresPath . strtolower($name) . '/');
         }
-        //安装行为
-        if (!empty($config['tags'])) {
-            model('admin/Hooks')->updateModules($name, $config['tags']);
-        }
         //安装结束，最后调用安装脚本完成
         if (!$this->runInstallScript($name, 'end')) {
             return false;
         }
+        $this->refresh();
         //更新缓存
         cache('Module', null);
-        Cache::set('Hooks', null);
+        //Cache::set('Hooks', null);
         return true;
     }
 
@@ -265,17 +262,45 @@ class Module
         if (is_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR)) {
             File::del_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR);
         }
-        //去除对应行为
-        if (!empty($config['tags'])) {
-            model('admin/Hooks')->removeModules($name, $config['tags']);
-        }
         //卸载结束，最后调用卸载脚本完成
         if (!$this->runInstallScript($name, 'end', 'uninstall')) {
             return false;
         }
+        $this->refresh();
         //更新缓存
         cache('Module', null);
-        Cache::set('Hooks', null);
+        //Cache::set('Hooks', null);
+        return true;
+    }
+
+    /**
+     * 刷新插件缓存文件.
+     * @throws Exception
+     * @return bool
+     */
+    public function refresh()
+    {
+        $file = app()->getRootPath() . 'config' . DS . 'addons.php';
+
+        $config = get_addon_autoload_config(true);
+        if ($config['autoload']) {
+            return;
+        }
+
+        if (!\util\File::is_really_writable($file)) {
+            //throw new Exception('addons.php文件没有写入权限');
+            $this->error = 'addons.php文件没有写入权限';
+            return false;
+        }
+
+        if ($handle = fopen($file, 'w')) {
+            fwrite($handle, "<?php\n\n" . 'return ' . var_export($config, true) . ';');
+            fclose($handle);
+        } else {
+            $this->error = '文件没有写入权限';
+            return false;
+            //throw new Exception('文件没有写入权限');
+        }
         return true;
     }
 
