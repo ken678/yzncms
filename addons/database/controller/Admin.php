@@ -26,19 +26,19 @@ class Admin extends Adminaddon
     {
         parent::initialize();
         //获取插件配置
-        $config = $this->getAddonConfig();
+        $config = get_addon_config('database');
         if (empty($config)) {
             $this->error('请先进行相关配置！');
         }
         $this->databaseConfig = array(
             //数据库备份根路径（路径必须以 / 结尾）
-            'path' => ROOT_PATH . $config['path'],
+            'path'     => ROOT_PATH . $config['path'],
             //数据库备份卷大小 （该值用于限制压缩后的分卷最大长度。单位：B；建议设置20M）
-            'part' => (int) $config['part'],
+            'part'     => (int) $config['part'],
             //数据库备份文件是否启用压缩 （压缩备份文件需要PHP环境支持gzopen,gzwrite函数）
             'compress' => (int) $config['compress'],
             //数据库备份文件压缩级别 （数据库备份文件的压缩级别，该配置在开启压缩时生效） 1普通 4一般 9最高
-            'level' => (int) $config['level'],
+            'level'    => (int) $config['level'],
         );
     }
 
@@ -46,8 +46,8 @@ class Admin extends Adminaddon
     public function index()
     {
         if ($this->request->isAjax()) {
-            $list = Db::query('SHOW TABLE STATUS');
-            $list = array_map('array_change_key_case', $list); //全部小写
+            $list   = Db::query('SHOW TABLE STATUS');
+            $list   = array_map('array_change_key_case', $list); //全部小写
             $result = array("code" => 0, "data" => $list);
             return json($result);
         }
@@ -105,7 +105,7 @@ class Admin extends Adminaddon
             $tables = session('backup_tables');
             //备份指定表
             $Database = new Database(session('backup_file'), session('backup_config'));
-            $start = $Database->backup($tables[$id], $start);
+            $start    = $Database->backup($tables[$id], $start);
             if (false === $start) {
                 //出错
                 return $this->error('备份出错！');
@@ -123,7 +123,7 @@ class Admin extends Adminaddon
                     return $this->success('备份完成！');
                 }
             } else {
-                $tab = array('id' => $id, 'start' => $start[0]);
+                $tab  = array('id' => $id, 'start' => $start[0]);
                 $rate = floor(100 * ($start[0] / $start[1]));
                 return $this->success("正在备份...({$rate}%)", '', array('tab' => $tab));
             }
@@ -154,7 +154,7 @@ class Admin extends Adminaddon
                     $part = $name[6];
 
                     if (isset($list["{$date} {$time}"])) {
-                        $info = $list["{$date} {$time}"];
+                        $info         = $list["{$date} {$time}"];
                         $info['part'] = max($info['part'], $part);
                         $info['size'] = $info['size'] + filesize($file);
                     } else {
@@ -162,12 +162,12 @@ class Admin extends Adminaddon
                         $info['size'] = filesize($file);
                     }
 
-                    $extension = strtoupper($fileInfo['extension']);
+                    $extension        = strtoupper($fileInfo['extension']);
                     $info['compress'] = ($extension === 'SQL') ? '-' : $extension;
-                    $info['date'] = date('Y-m-d H:i:s', strtotime("{$date} {$time}"));
-                    $info['time'] = strtotime("{$date} {$time}");
-                    $info['title'] = date('Ymd-His', strtotime("{$date} {$time}"));
-                    $list[$key] = $info;
+                    $info['date']     = date('Y-m-d H:i:s', strtotime("{$date} {$time}"));
+                    $info['time']     = strtotime("{$date} {$time}");
+                    $info['title']    = date('Ymd-His', strtotime("{$date} {$time}"));
+                    $list[$key]       = $info;
                 }
             }
             $result = array("code" => 0, "data" => $list);
@@ -190,7 +190,7 @@ class Admin extends Adminaddon
             if (empty($path)) {
                 $this->error('下载文件不存在！');
             }
-            $file = $path[0];
+            $file      = $path[0];
             $file_part = pathinfo($file);
 
             $basename = $file_part['basename'];
@@ -213,14 +213,14 @@ class Admin extends Adminaddon
         $start = $this->request->param('start', null);
         if (is_numeric($time) && is_null($part) && is_null($start)) {
             //获取备份文件信息
-            $name = date('Ymd-His', $time) . '-*.sql*';
-            $path = $this->databaseConfig['path'] . $name;
+            $name  = date('Ymd-His', $time) . '-*.sql*';
+            $path  = $this->databaseConfig['path'] . $name;
             $files = glob($path);
-            $list = array();
+            $list  = array();
             foreach ($files as $name) {
-                $basename = basename($name);
-                $match = sscanf($basename, '%4s%2s%2s-%2s%2s%2s-%d');
-                $gz = preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql.gz$/', $basename);
+                $basename        = basename($name);
+                $match           = sscanf($basename, '%4s%2s%2s-%2s%2s%2s-%d');
+                $gz              = preg_match('/^\d{8,8}-\d{6,6}-\d+\.sql.gz$/', $basename);
                 $list[$match[6]] = array($match[6], $name, $gz);
             }
             ksort($list);
@@ -233,8 +233,8 @@ class Admin extends Adminaddon
                 return $this->error('备份文件可能已经损坏，请检查！');
             }
         } elseif (is_numeric($part) && is_numeric($start)) {
-            $list = session('backup_list');
-            $db = new Database($list[$part], array('path' => realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR, 'compress' => $list[$part][2]));
+            $list  = session('backup_list');
+            $db    = new Database($list[$part], array('path' => realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR, 'compress' => $list[$part][2]));
             $start = $db->import($start);
             if (false === $start) {
                 return $this->error('还原数据出错！');
@@ -294,7 +294,7 @@ class Admin extends Adminaddon
         if ($tables) {
             if (is_array($tables)) {
                 $tables = implode('`,`', $tables);
-                $list = Db::query("OPTIMIZE TABLE `{$tables}`");
+                $list   = Db::query("OPTIMIZE TABLE `{$tables}`");
                 if ($list) {
                     return $this->success("数据表优化完成！");
                 } else {
@@ -317,7 +317,7 @@ class Admin extends Adminaddon
         if ($tables) {
             if (is_array($tables)) {
                 $tables = implode('`,`', $tables);
-                $list = Db::query("REPAIR TABLE `{$tables}`");
+                $list   = Db::query("REPAIR TABLE `{$tables}`");
                 if ($list) {
                     return $this->success("数据表修复完成！");
                 } else {
