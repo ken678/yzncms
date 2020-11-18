@@ -36,21 +36,6 @@ class Qiniu extends Addons
     private $uploadUrl  = '';
     private $uploadPath = '';
 
-    public function isLogin()
-    {
-        //检查是否后台登录，后台登录下优先级最高，用于权限判断
-        if (admin_user::instance()->isLogin()) {
-            $this->isadmin  = 1;
-            $this->admin_id = admin_user::instance()->id;
-        } elseif (home_user::instance()->isLogin()) {
-            $this->user_id = home_user::instance()->id;
-            $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
-        } else {
-            $this->user_id = 0;
-            //return $this->error('未登录');
-        }
-    }
-
     /**
      * 上传附件
      */
@@ -202,7 +187,22 @@ class Qiniu extends Addons
         return true;
     }
 
-    public function implode_attr($array = [])
+    protected function isLogin()
+    {
+        //检查是否后台登录，后台登录下优先级最高，用于权限判断
+        if (admin_user::instance()->isLogin()) {
+            $this->isadmin  = 1;
+            $this->admin_id = admin_user::instance()->id;
+        } elseif (home_user::instance()->isLogin()) {
+            $this->user_id = home_user::instance()->id;
+            $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
+        } else {
+            $this->user_id = 0;
+            //return $this->error('未登录');
+        }
+    }
+
+    protected function implode_attr($array = [])
     {
         $result = [];
         foreach ($array as $key => $value) {
