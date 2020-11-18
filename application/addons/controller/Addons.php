@@ -16,7 +16,6 @@ namespace app\addons\controller;
 
 use app\common\controller\Adminbase;
 use think\AddonService;
-use think\Db;
 
 class Addons extends Adminbase
 {
@@ -35,20 +34,6 @@ class Addons extends Adminbase
         }
         return $this->fetch();
 
-    }
-
-    //插件钩子列表
-    public function hooks()
-    {
-        if ($this->request->isAjax()) {
-            $list = Db::name("hooks")->select();
-            int_to_string($list, array(
-                'type' => [1 => '视图', 2 => '控制器'],
-            ));
-            $result = array("code" => 0, "data" => $list);
-            return json($result);
-        }
-        return $this->fetch();
     }
 
     /**
