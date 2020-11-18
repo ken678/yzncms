@@ -160,7 +160,7 @@ function get_addon_autoload_config($truncate = false)
                 $config['hooks'][$hook] = explode(',', $config['hooks'][$hook]);
             }
             if (!in_array($name, $config['hooks'][$hook])) {
-                $config['hooks'][$hook][] = $name;
+                $config['hooks'][$hook][] = get_addon_class($name);
             }
         }
     }
