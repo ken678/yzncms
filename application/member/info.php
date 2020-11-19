@@ -33,17 +33,6 @@ return array(
     'need_module' => [],
     //依赖插件
     'need_plugin' => [],
-    //行为注册
-    'tags'        => [
-        'content_delete_end' => [
-            'type'        => 2,
-            'description' => '内容删除后调用',
-        ],
-        'content_edit_end'   => [
-            'type'        => 2,
-            'description' => '内容编辑后调用',
-        ],
-    ],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache'       => [
         'Member_Config' => [

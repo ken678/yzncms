@@ -33,17 +33,6 @@ return array(
     'need_module' => [],
     //依赖插件
     'need_plugin' => [],
-    //行为注册
-    'tags'        => [
-        'user_sidenav_after' => [
-            'type'        => 1,
-            'description' => '会员左侧导航',
-        ],
-        'app_init'           => [
-            'type'        => 2,
-            'description' => '应用初始化',
-        ],
-    ],
     //缓存，格式：缓存key=>array('module','model','action')
     'cache'       => [
         'Category'   => [
