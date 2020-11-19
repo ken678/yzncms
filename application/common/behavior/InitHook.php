@@ -14,30 +14,23 @@
 // +----------------------------------------------------------------------
 namespace app\common\behavior;
 
-use think\facade\Cache;
 use think\facade\Hook;
 
-// 初始化钩子信息
 class InitHook
 {
     // 行为扩展的执行入口必须是run
     public function run($params)
     {
-        //插件
-        $hooks = Cache::get('hooks', []);
-        if (empty($hooks)) {
-            $hooks = (array) \think\facade\Config::get('addons.hooks', []);
-            // 初始化钩子
-            foreach ($hooks as $key => $values) {
-                if (is_string($values)) {
-                    $values = explode(',', $values);
-                } else {
-                    $values = (array) $values;
-                }
-                //$hooks[$key] = array_filter(array_map('get_addon_class', $values));
-                $hooks[$key] = array_filter($values);
+        $hooks = (array) \think\facade\Config::get('addons.hooks', []);
+        // 初始化钩子
+        foreach ($hooks as $key => $values) {
+            if (is_string($values)) {
+                $values = explode(',', $values);
+            } else {
+                $values = (array) $values;
             }
-            Cache::set('hooks', $hooks);
+            //$hooks[$key] = array_filter(array_map('get_addon_class', $values));
+            $hooks[$key] = array_filter($values);
         }
         if (isset($hooks['app_init'])) {
             foreach ($hooks['app_init'] as $k => $v) {
