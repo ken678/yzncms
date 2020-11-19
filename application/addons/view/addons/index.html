@@ -64,9 +64,11 @@ layui.use(['yznTable', 'upload'], function() {
         exts: 'zip',
         done: function(res) {
             //上传完毕回调
-            layer.alert(res.msg, {}, function() {
+            layer.alert(res.msg, {}, function(index) {
                 if (res.code != 0) {
                     location.reload();
+                }else{
+                	layer.close(index);
                 }
             });
         },
