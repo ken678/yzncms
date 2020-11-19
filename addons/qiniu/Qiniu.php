@@ -67,13 +67,15 @@ class Qiniu extends Addons
         // 移动到框架应用根目录/uploads/ 目录下
         //$info = $file->move($this->uploadPath . DIRECTORY_SEPARATOR . 'temp', '');
         // 文件信息
-        $info = $file->getInfo();
+        $info   = $file->getInfo();
+        $suffix = strtolower(pathinfo($info['name'], PATHINFO_EXTENSION));
+        $suffix = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
         // 要上传文件的本地路径
         $filePath = $info['tmp_name'];
         // 上传到七牛后保存的文件名
         $file_name = explode('.', $info['name']);
         $ext       = end($file_name);
-        $key       = $file->hash('md5') . '.' . $ext;
+        $key       = $params['dir'] . '/' . date('Ymd') . '/' . $file->hash('md5') . '.' . $ext;
         // 构建鉴权对象
         $auth = new Auth($config['accessKey'], $config['secrectKey']);
         // 初始化空间
@@ -99,7 +101,7 @@ class Qiniu extends Addons
                 'name'   => $info['name'],
                 'mime'   => $info['type'],
                 'path'   => $config['domain'] . $key . '?v=' . rand(111111, 999999),
-                'ext'    => $file->getExtension(),
+                'ext'    => $suffix,
                 'size'   => $file->getSize(),
                 'md5'    => $file->hash('md5'),
                 'sha1'   => $file->hash('sha1'),
@@ -127,7 +129,6 @@ class Qiniu extends Addons
                     'message' => '上传成功,写入数据库失败', //兼容editormd
                 ]);
             }
-
         }
     }
 
