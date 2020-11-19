@@ -244,9 +244,9 @@ class AddonService
             } catch (Exception $e) {
                 unset($info);
                 @unlink($tmpFile);
+                @\util\File::del_dir($tmpAddonDir);
                 throw new Exception($e->getMessage());
             }
-
         } else {
             throw new Exception($file->getError());
         }
