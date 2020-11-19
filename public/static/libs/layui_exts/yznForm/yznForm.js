@@ -311,11 +311,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
 
     // 监听请求
     $('body').on('click', '[data-request]', function() {
-        var title = $(this).attr('data-title'),
-            url = $(this).attr('data-request'),
-            tableId = $(this).attr('data-table'),
-            addons = $(this).attr('data-addons'),
-            checkbox = $(this).attr('data-checkbox');
+        var that = $(this);
+        var title = $(this).data('title'),
+            url = $(this).data('request'),
+            tableId = $(this).data('table'),
+            checkbox = $(this).data('checkbox');
 
         var postData = {};
         if (checkbox === 'true') {
@@ -333,21 +333,24 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
             postData.id = ids;
         }
 
-        if (addons !== true && addons !== 'true') {
-            //url = admin.url(url);
-        }
         title = title || '确定进行该操作？';
         tableId = tableId || init.table_render_id;
-        yzn.msg.confirm(title, function() {
+
+        func = function() {
             yzn.request.post({
                 url: url,
                 data: postData,
             }, function(res) {
                 yzn.msg.success(res.msg, function() {
-                    table.reload(tableId);
+                    tableId && table.reload(tableId);
                 });
             })
-        });
+        }
+        if (typeof(that.attr('confirm')) == 'undefined') {
+           func();
+        }else{
+           yzn.msg.confirm(title, func);
+        }
         return false;
     });
 
