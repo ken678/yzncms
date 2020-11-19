@@ -14,7 +14,7 @@
 // | https://github.com/5ini99/think-addons
 // | https://github.com/karsonzhang/fastadmin-addons
 // +----------------------------------------------------------------------
-namespace think;
+namespace sys;
 
 use think\Exception;
 use util\Sql;
