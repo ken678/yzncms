@@ -216,9 +216,8 @@ class AddonService
             $tmpName     = substr($info->getFilename(), 0, stripos($info->getFilename(), '.'));
             $tmpAddonDir = ADDON_PATH . $tmpName . DS;
             $tmpFile     = $addonTmpDir . $info->getSaveName();
-            $filename    = $file->getInfo('tmp_name');
             try {
-                $zip = new \util\PclZip($filename);
+                $zip = new \util\PclZip($tmpFile);
                 $zip->extract(PCLZIP_OPT_PATH, $tmpAddonDir);
                 unset($info);
                 @unlink($tmpFile);
