@@ -42,8 +42,8 @@ class Module
      */
     public function __construct()
     {
-        $this->extresPath   = ROOT_PATH . 'public' . DIRECTORY_SEPARATOR . 'static' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR;
-        $this->templatePath = TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR;
+        $this->extresPath   = ROOT_PATH . 'public' . DS . 'static' . DS . 'modules' . DS;
+        $this->templatePath = TEMPLATE_PATH . 'default' . DS;
     }
 
     /**
@@ -59,11 +59,6 @@ class Module
         // 正常模块(包括已安装和未安装)
         $dirs_arr = array_diff($dirs, $this->systemModuleList);
 
-        // 读取数据库已经安装模块表
-        //$modules = Module_Model::order('listorder asc')->select();
-
-        //数量
-        //$count = count($dirs_arr);
         $list = [];
         foreach ($dirs_arr as $module) {
             $list[$module] = $this->getInfoFromFile($module);
@@ -105,15 +100,13 @@ class Module
             'need_module' => array(),
             //依赖模块
             'need_plugin' => array(),
-            //行为
-            'tags'        => array(),
             //缓存
             'cache'       => array(),
         );
 
         // 从配置文件获取
-        if (is_file($this->appPath . $name . DIRECTORY_SEPARATOR . 'info.php')) {
-            $moduleConfig = include $this->appPath . $name . DIRECTORY_SEPARATOR . 'info.php';
+        if (is_file($this->appPath . $name . DS . 'info.php')) {
+            $moduleConfig = include $this->appPath . $name . DS . 'info.php';
             $config       = array_merge($config, $moduleConfig);
         }
 
@@ -180,15 +173,15 @@ class Module
             }
         }
         //前台模板
-        $this->installdir = $this->appPath . "{$name}" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
-        if (is_dir($this->installdir . "template" . DIRECTORY_SEPARATOR)) {
+        $this->installdir = $this->appPath . "{$name}" . DS . "install" . DS;
+        if (is_dir($this->installdir . "template" . DS)) {
             //拷贝模板到前台模板目录中去
-            File::copy_dir($this->installdir . "template" . DIRECTORY_SEPARATOR, $this->templatePath);
+            File::copy_dir($this->installdir . "template" . DS, $this->templatePath);
         }
         //静态资源文件
-        if (file_exists($this->installdir . "public" . DIRECTORY_SEPARATOR)) {
+        if (file_exists($this->installdir . "public" . DS)) {
             //拷贝模板到前台模板目录中去
-            File::copy_dir($this->installdir . "public" . DIRECTORY_SEPARATOR, $this->extresPath . strtolower($name) . '/');
+            File::copy_dir($this->installdir . "public" . DS, $this->extresPath . strtolower($name) . '/');
         }
         //安装结束，最后调用安装脚本完成
         if (!$this->runInstallScript($name, 'end')) {
@@ -197,7 +190,6 @@ class Module
         $this->refresh();
         //更新缓存
         cache('Module', null);
-        //Cache::set('Hooks', null);
         return true;
     }
 
@@ -255,12 +247,12 @@ class Module
         $this->uninstallMenu($name);
 
         //删除模块前台模板
-        if (is_dir($this->templatePath . $name . DIRECTORY_SEPARATOR)) {
-            File::del_dir($this->templatePath . $name . DIRECTORY_SEPARATOR);
+        if (is_dir($this->templatePath . $name . DS)) {
+            File::del_dir($this->templatePath . $name . DS);
         }
         //静态资源移除
-        if (is_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR)) {
-            File::del_dir($this->extresPath . strtolower($name) . DIRECTORY_SEPARATOR);
+        if (is_dir($this->extresPath . strtolower($name) . DS)) {
+            File::del_dir($this->extresPath . strtolower($name) . DS);
         }
         //卸载结束，最后调用卸载脚本完成
         if (!$this->runInstallScript($name, 'end', 'uninstall')) {
@@ -269,7 +261,6 @@ class Module
         $this->refresh();
         //更新缓存
         cache('Module', null);
-        //Cache::set('Hooks', null);
         return true;
     }
 
@@ -320,7 +311,7 @@ class Module
                 return false;
             }
         }
-        $path = $this->appPath . "{$name}" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR . "{$file}.php";
+        $path = $this->appPath . "{$name}" . DS . "install" . DS . "{$file}.php";
         //检查是否有安装脚本
         if (!file_exists($path)) {
             return true;
@@ -421,7 +412,7 @@ class Module
                 return false;
             }
         }
-        $sql_file = $this->appPath . "{$name}" . DIRECTORY_SEPARATOR . "{$Dir}" . DIRECTORY_SEPARATOR . "{$name}.sql";
+        $sql_file = $this->appPath . "{$name}" . DS . "{$Dir}" . DS . "{$name}.sql";
         if (file_exists($sql_file)) {
             $sql_statement = Sql::getSqlFromFile($sql_file);
             if (!empty($sql_statement)) {
