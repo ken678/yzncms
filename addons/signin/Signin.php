@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\signin;
 
-use think\Addons;
+use sys\Addons;
 use think\Db;
 use util\File;
 

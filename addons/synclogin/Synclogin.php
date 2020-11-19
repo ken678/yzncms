@@ -15,7 +15,7 @@
 namespace addons\synclogin;
 
 use app\member\service\User;
-use think\Addons;
+use sys\Addons;
 use think\Db;
 
 class Synclogin extends Addons

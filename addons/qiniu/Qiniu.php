@@ -19,7 +19,7 @@ use app\attachment\model\Attachment as Attachment_Model;
 use app\member\service\User as home_user;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
-use think\Addons;
+use sys\Addons;
 use think\Db;
 
 require ADDON_PATH . 'qiniu/SDK/autoload.php';
