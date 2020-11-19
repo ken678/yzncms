@@ -8,7 +8,7 @@
 </div>
 <script type="text/html" id="titleTpl">
 {{#  if(d.status >= 0){ }}
-    {{#  if(d.config !== "" && d.config !== 'null' && d.config !== undefined){ }}
+    {{#  if(d.config == 1 ){ }}
     <a class="layui-btn layui-btn-xs" href='{:url("config")}?name={{d.name}}'>设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
