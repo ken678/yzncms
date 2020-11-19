@@ -15,7 +15,7 @@
 namespace app\addons\controller;
 
 use app\common\controller\Adminbase;
-use think\AddonService;
+use sys\AddonService;
 
 class Addons extends Adminbase
 {
