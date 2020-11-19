@@ -12,13 +12,13 @@
     <a class="layui-btn layui-btn-xs" href='{:url("config")}?name={{d.name}}'>设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("state",["action"=>"enable"])}?name={{d.name}}' data-table="currentTable">启用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("state",["action"=>"enable"])}?name={{d.name}}' data-table="currentTable" confirm>启用</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("state",["action"=>"disable"])}?name={{d.name}}' data-table="currentTable">禁用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("state",["action"=>"disable"])}?name={{d.name}}' data-table="currentTable" confirm>禁用</a>
     {{#  } }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger confirm" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable">卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" data-url='{:url("uninstall")}?name={{d.name}}'>卸载</a>
 {{#  } else { }}
-    <a class="layui-btn layui-btn-xs confirm" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable">安装</a>
+    <a class="layui-btn layui-btn-xs" data-url='{:url("install")}?name={{d.name}}'>安装</a>
 {{#  } }}
 </script>
 {/block}
@@ -54,6 +54,21 @@ layui.use(['yznTable', 'upload'], function() {
                 { fixed: 'right', width: 180, title: '操作', templet: '#titleTpl' }
             ]
         ]
+    });
+
+    // 监听请求
+    $('body').on('click', '[data-url]', function() {
+        var url = $(this).data('url');
+        yzn.msg.confirm('确定进行该操作？',function() {
+            yzn.request.get({
+                url: url
+            }, function(res) {
+                yzn.msg.success(res.msg, function() {
+                   location.reload();
+                });
+            });
+        })
+        return false;
     });
 
     //执行实例
