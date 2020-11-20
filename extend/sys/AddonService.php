@@ -66,7 +66,7 @@ class AddonService
                 $addon->install();
             }
             if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                $admin_list = $addon->admin_list;
+                $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : '';
                 //添加菜单
                 model('admin/Menu')->addAddonMenu($info, $admin_list);
             }
