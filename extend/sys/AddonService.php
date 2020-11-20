@@ -93,7 +93,7 @@ class AddonService
             throw new Exception('插件不存在！');
         }
         // 移除插件基础资源目录
-        $destAssetsDir = self::getDestAssetsDir($addonName);
+        $destAssetsDir = self::getDestAssetsDir($name);
         if (is_dir($destAssetsDir)) {
             \util\File::del_dir($destAssetsDir);
         }
