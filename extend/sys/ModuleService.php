@@ -16,6 +16,7 @@
 namespace sys;
 
 use app\admin\model\Module as ModuleModel;
+use app\common\library\Cache as CacheLib;
 use think\Db;
 use think\Exception;
 use think\facade\Cache;
@@ -90,7 +91,7 @@ class ModuleService
             self::runInstallScript($name);
             self::installMenu($name);
             if (!empty($config['cache'])) {
-                model('common/Cache')->installModuleCache($config['cache'], $config);
+                CacheLib::installModuleCache($config['cache'], $config);
             }
         } catch (Exception $e) {
             self::installRollback($name);
@@ -141,7 +142,7 @@ class ModuleService
             ModuleModel::where('module', $name)->delete();
             self::runInstallScript($name, 'run', 'uninstall');
             if (!empty($config['cache'])) {
-                model('common/Cache')->deleteCacheModule($name);
+                CacheLib::deleteCacheModule($name);
             }
             //删除菜单项
             Db::name('menu')->where('app', $name)->delete();
