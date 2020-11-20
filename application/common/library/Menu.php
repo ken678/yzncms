@@ -19,6 +19,82 @@ use think\Exception;
 
 class Menu
 {
+
+    /**
+     * 添加插件后台管理菜单
+     * @param type $info
+     * @param type $adminlist
+     * @return boolean
+     */
+    public static function addAddonMenu($info, $admin_list = null)
+    {
+        if (empty($info)) {
+            throw new Exception('没有数据！');
+        }
+        //查询出“插件后台列表”菜单ID
+        $menuId = MenuModel::where(array("app" => "addons", "controller" => "addons", "action" => "addonadmin"))->value('id') ?: 41;
+        $data   = array(
+            //父ID
+            "parentid"   => $menuId,
+            'icon'       => isset($info['icon']) ? $info['icon'] : 'icon-circle-line',
+            //模块目录名称，也是项目名称
+            "app"        => "addons",
+            //插件名称
+            "controller" => $info['name'],
+            //方法名称
+            "action"     => "index",
+            //附加参数 例如：a=12&id=777
+            "parameter"  => "isadmin=1",
+            //状态，1是显示，0是不显示
+            "status"     => 1,
+            //名称
+            "title"      => $info['title'],
+            //备注
+            "tip"        => $info['title'] . "插件管理后台！",
+            //排序
+            "listorder"  => 0,
+        );
+        //添加插件后台
+        $parentid = MenuModel::create($data);
+        //显示“插件后台列表”菜单
+        MenuModel::where('id', $menuId)->update(array('status' => 1));
+        //插件具体菜单
+        if (!empty($admin_list)) {
+            foreach ($admin_list as $key => $menu) {
+                //检查参数是否存在
+                if (empty($menu['title']) || empty($menu['action'])) {
+                    continue;
+                }
+                //如果是index，跳过，因为已经有了。。。
+                if ($menu['action'] == 'index') {
+                    continue;
+                }
+                $data = array(
+                    //父ID
+                    "parentid"   => $parentid->getAttr('parentid'),
+                    //模块目录名称，也是项目名称
+                    "app"        => "addons",
+                    //文件名称，比如LinksAction.class.php就填写 Links
+                    "controller" => $info['name'],
+                    //方法名称
+                    "action"     => $menu['action'],
+                    //附加参数 例如：a=12&id=777
+                    "parameter"  => 'isadmin=1',
+                    //状态，1是显示，0是不显示
+                    "status"     => (int) $menu['status'],
+                    //名称
+                    "title"      => $menu['title'],
+                    //备注
+                    "tip"        => $menu['tip'] ?: '',
+                    //排序
+                    "listorder"  => (int) $menu['listorder'],
+                );
+                MenuModel::create($data);
+            }
+        }
+        return true;
+    }
+
     /**
      * 模块安装时进行菜单注册
      * @param array $data 菜单数据
@@ -61,6 +137,30 @@ class Menu
         }
         //清除缓存
         cache('Menu', null);
+        return true;
+    }
+
+    /**
+     * 删除对应插件菜单和权限
+     * @param type $info 插件信息
+     * @return boolean
+     */
+    public static function delAddonMenu($info)
+    {
+        if (empty($info)) {
+            throw new Exception('没有数据！');
+        }
+        //查询出“插件后台列表”菜单ID
+        $menuId = MenuModel::where(array("app" => "Addons", "controller" => "Addons", "action" => "addonadmin"))->value('id') ?: 41;
+        //删除对应菜单
+        MenuModel::where(array('app' => 'Addons', 'controller' => $info['name']))->delete();
+        //删除权限
+        //M("Access")->where(array("app" => "Addons", 'controller' => $info['name']))->delete();
+        //检查“插件后台列表”菜单下还有没有菜单，没有就隐藏
+        $count = MenuModel::where('parentid', $menuId)->count();
+        if (!$count) {
+            MenuModel::where('id', $menuId)->update(array('status' => 0));
+        }
         return true;
     }
 
