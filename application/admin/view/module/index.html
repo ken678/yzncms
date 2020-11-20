@@ -3,33 +3,39 @@
 <div class="layui-card">
     <div class="layui-card-header">模块管理</div>
     <div class="layui-card-body">
-        <table class="layui-hide" id="table" lay-filter="table"></table>
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
     </div>
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <a class="layui-btn layui-btn-sm" id="local-install">本地安装</a>
-        </div>
-    </script>
-    <script type="text/html" id="titleTpl">
-    {{#  if(d.create_time == "" || d.create_time == null || d.create_time == undefined){ }}
-        <a class="layui-btn layui-btn-xs" href="{:url('install')}?module={{ d.module }}">安装</a>
-    {{#  } else { }}
-        {{#  if(d.iscore == 0){ }}
-        <a class="layui-btn layui-btn-xs layui-btn-danger" href="{:url('uninstall')}?module={{ d.module }}">卸载</a>
-        {{#  } }}
-    {{#  } }}
-    </script>
 </div>
+<script type="text/html" id="titleTpl">
+{{#  if(d.create_time == "" || d.create_time == null || d.create_time == undefined){ }}
+    <a class="layui-btn layui-btn-xs" href="{:url('install')}?module={{ d.module }}">安装</a>
+{{#  } else { }}
+    {{#  if(d.iscore == 0){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-danger" href="{:url('uninstall')}?module={{ d.module }}">卸载</a>
+    {{#  } }}
+{{#  } }}
+</script>
 {/block}
 {block name="script"}
 <script>
-layui.use(['table', 'upload'], function() {
-    var table = layui.table,
+layui.use(['yznTable', 'upload'], function() {
+    var table = layui.yznTable,
         $ = layui.$,
         upload = layui.upload;
+
+    var init = {
+        table_elem: '#currentTable',
+    };
+
     table.render({
-        elem: '#table',
-        toolbar: '#toolbarDemo',
+        init: init,
+        id: 'currentTable',
+        elem: '#currentTable',
+        toolbar: ['refresh',
+            [{
+               html:'<a class="layui-btn layui-btn-sm" id="local-install">本地安装</a>'
+            }],
+        ],
         url: '{:url("index")}',
         cols: [
             [
