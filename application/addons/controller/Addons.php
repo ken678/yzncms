@@ -160,13 +160,12 @@ class Addons extends Adminbase
      */
     public function local()
     {
-        $info = [];
         $file = $this->request->file('file');
         try {
-            $info = AddonService::local($file);
+            AddonService::local($file);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
-        $this->success('插件解压成功，可以进入插件管理进行安装！', url('index'));
+        $this->success('插件解压成功，可以进入插件管理进行安装！');
     }
 }
