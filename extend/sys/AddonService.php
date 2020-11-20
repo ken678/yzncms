@@ -26,16 +26,12 @@ class AddonService
 {
     /**
      * 安装插件.
-     *
      * @param string $name   插件名称
-     * @param bool   $force  是否覆盖
-     * @param array  $extend 扩展参数
-     *
+     * @param boolean $force  是否覆盖
      * @throws Exception
-     *
      * @return bool
      */
-    public static function install($name)
+    public static function install($name, $force = false)
     {
         try {
             // 检查插件是否完整
@@ -81,15 +77,12 @@ class AddonService
 
     /**
      * 卸载插件.
-     *
      * @param string $name
-     * @param bool   $force 是否强制卸载
-     *
+     * @param boolean $force 是否强制卸载
      * @throws Exception
-     *
      * @return bool
      */
-    public static function uninstall($name)
+    public static function uninstall($name, $force = false)
     {
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
@@ -103,7 +96,7 @@ class AddonService
         try {
             // 默认禁用该插件
             $info = get_addon_info($name);
-            if ($info['status']) {
+            if (0 >= $info['status']) {
                 $info['status'] = -1;
                 set_addon_info($name, $info);
             }
@@ -127,10 +120,8 @@ class AddonService
 
     /**
      * 启用.
-     *
      * @param string $name  插件名称
      * @param bool   $force 是否强制覆盖
-     *
      * @return bool
      */
     public static function enable($name, $force = false)
@@ -164,12 +155,9 @@ class AddonService
 
     /**
      * 禁用.
-     *
      * @param string $name  插件名称
      * @param bool   $force 是否强制禁用
-     *
      * @throws Exception
-     *
      * @return bool
      */
     public static function disable($name, $force = false)
@@ -384,11 +372,8 @@ class AddonService
 
     /**
      * 检测插件是否完整.
-     *
      * @param string $name 插件名称
-     *
      * @throws Exception
-     *
      * @return bool
      */
     public static function check($name)
