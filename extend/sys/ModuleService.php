@@ -196,9 +196,9 @@ class ModuleService
                 @unlink($tmpFile);
                 throw new Exception('无法打开压缩文件');
             }
-
-            //$config = self::getInfoPhp($zip);
-
+            if (!$zip->hasEntry('info.php')) {
+                throw new Exception('模块info.php文件不存在');
+            }
             // 判断插件标识
             /*$name = isset($config['name']) ? $config['name'] : '';
             if (!$name) {
