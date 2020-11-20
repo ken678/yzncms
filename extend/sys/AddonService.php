@@ -18,6 +18,7 @@ namespace sys;
 
 use PhpZip\Exception\ZipException;
 use PhpZip\ZipFile;
+use think\Db;
 use think\Exception;
 use util\Sql;
 
@@ -299,11 +300,13 @@ class AddonService
      */
     public static function runSQL($name = '', $Dir = 'install')
     {
-        $sql_file = ADDON_PATH . "{$name}" . DS . "{$Dir}" . DS . "{$Dir}.sql";
+        $sql_file = ADDON_PATH . "{$name}" . DS . "{$Dir}.sql";
         if (file_exists($sql_file)) {
             $sql_statement = Sql::getSqlFromFile($sql_file);
             if (!empty($sql_statement)) {
                 foreach ($sql_statement as $value) {
+                    $value = str_ireplace('__PREFIX__', config('database.prefix'), $value);
+                    $value = str_ireplace('INSERT INTO ', 'INSERT IGNORE INTO ', $value);
                     try {
                         Db::execute($value);
                     } catch (\Exception $e) {
