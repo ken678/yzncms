@@ -169,38 +169,4 @@ class Addons extends Adminbase
         }
         $this->success('插件解压成功，可以进入插件管理进行安装！', url('index'));
     }
-
-    //本地安装
-    /*public function local()
-{
-if ($this->request->isPost()) {
-$files       = $this->request->file('file');
-$addonTmpDir = ROOT_PATH . 'runtime' . DS . 'addons' . DS;
-if (!is_dir($addonTmpDir)) {
-@mkdir($addonTmpDir, 0755, true);
-}
-if ($files == null) {
-$this->error("请选择上传文件！");
-}
-$info = $files->rule('uniqid')->validate(['size' => 10240000, 'ext' => 'zip'])->move($addonTmpDir);
-
-//插件名称
-$addonName = pathinfo($files->getInfo('name'));
-$addonName = $addonName['filename'];
-//检查插件目录是否存在
-if (file_exists(ADDON_PATH . $addonName)) {
-$this->error('该插件目录已经存在！');
-}
-
-//上传临时文件地址
-$filename = $files->getInfo('tmp_name');
-$zip      = new \util\PclZip($filename);
-$status   = $zip->extract(PCLZIP_OPT_PATH, ADDON_PATH . $addonName);
-if ($status) {
-$this->success('插件解压成功，可以进入插件管理进行安装！', url('index'));
-} else {
-$this->error('插件解压失败！');
-}
-}
-}*/
 }
