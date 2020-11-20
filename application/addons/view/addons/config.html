@@ -4,7 +4,7 @@
 <form class="layui-form" action="" method="post">
     {empty name="custom_config"}
         <div class="layui-card">
-            <div class="layui-card-header">插件配置-{$data.title}</div>
+            <div class="layui-card-header">插件配置-{$data.info.title}</div>
             <div class="layui-card-body">
             {foreach name="data['config']" item="form" key="o_key"}
                  {switch name="form.type"}
