@@ -15,7 +15,6 @@
 namespace addons\signin;
 
 use sys\Addons;
-use think\Db;
 use util\File;
 
 class Signin extends Addons
@@ -23,19 +22,6 @@ class Signin extends Addons
     //安装
     public function install()
     {
-        $prefix = config("database.prefix");
-        Db::execute("DROP TABLE IF EXISTS {$prefix}signin;");
-        Db::execute("
-            CREATE TABLE IF NOT EXISTS `{$prefix}signin` (
-              `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-              `uid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
-              `successions` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '连续签到次数',
-              `type` enum('normal','fillup') DEFAULT 'normal' COMMENT '签到类型',
-              `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-              PRIMARY KEY (`id`),
-              KEY `user_id` (`uid`)
-            ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='签到表';
-        ");
         //前台模板
         $installdir = ADDON_PATH . "signin" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
         if (is_dir($installdir . "template" . DIRECTORY_SEPARATOR)) {
@@ -48,8 +34,6 @@ class Signin extends Addons
     //卸载
     public function uninstall()
     {
-        $prefix = config("database.prefix");
-        Db::execute("DROP TABLE IF EXISTS {$prefix}signin;");
         if (is_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'signin' . DIRECTORY_SEPARATOR)) {
             File::del_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'signin' . DIRECTORY_SEPARATOR);
         }
