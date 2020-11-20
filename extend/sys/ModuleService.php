@@ -17,6 +17,7 @@ namespace sys;
 
 use app\admin\model\Module as ModuleModel;
 use app\common\library\Cache as CacheLib;
+use app\common\library\Menu as MenuLib;
 use think\Db;
 use think\Exception;
 use think\facade\Cache;
@@ -89,7 +90,7 @@ class ModuleService
         try {
             ModuleModel::create($config);
             self::runInstallScript($name);
-            self::installMenu($name);
+            self::installMenu($name, $config);
             if (!empty($config['cache'])) {
                 CacheLib::installModuleCache($config['cache'], $config);
             }
@@ -197,9 +198,9 @@ class ModuleService
      * @param type $file 文件
      * @return boolean
      */
-    private static function installMenu($name = '', $file = 'menu')
+    private static function installMenu($name, $config)
     {
-        $path = APP_PATH . "{$name}" . DS . "install" . DS . "{$file}.php";
+        $path = APP_PATH . "{$name}" . DS . "install" . DS . "menu.php";
         //检查是否有安装脚本
         if (!file_exists($path)) {
             return true;
@@ -208,7 +209,7 @@ class ModuleService
         if (empty($menu)) {
             return true;
         }
-        $status = model('admin/Menu')->installModuleMenu($menu, self::getInfo($name));
+        $status = MenuLib::installModuleMenu($menu, $config);
         return true;
     }
 
