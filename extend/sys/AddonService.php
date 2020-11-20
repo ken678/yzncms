@@ -70,7 +70,6 @@ class AddonService
                 model('admin/Menu')->addAddonMenu($info, $admin_list);
             }
             self::runSQL($name);
-            \think\facade\Cache::rm('hooks');
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -117,7 +116,6 @@ class AddonService
                 $addon->uninstall();
             };
             self::runSQL($name, 'uninstall');
-            \think\facade\Cache::rm('hooks');
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
