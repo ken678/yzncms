@@ -14,14 +14,15 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-//use app\admin\model\Module as ModuleModel;
 use app\common\controller\Adminbase;
-use sys\Module as ModuleService;
+use sys\ModuleService;
 use think\Controller;
 use think\Db;
 
 class Module extends Adminbase
 {
+    //系统模块，隐藏
+    protected $systemModuleList = ['admin', 'index', 'api', 'attachment', 'common', 'addons', 'template', 'error'];
     //初始化
     protected function initialize()
     {
@@ -33,7 +34,12 @@ class Module extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $list = $this->ModuleService->getAll();
+            $dirs     = array_map('basename', glob(APP_PATH . '*', GLOB_ONLYDIR));
+            $dirs_arr = array_diff($dirs, $this->systemModuleList);
+            $list     = [];
+            foreach ($dirs_arr as $module) {
+                $list[$module] = ModuleService::getInfo($module);
+            }
             $result = array("code" => 0, "data" => $list);
             return json($result);
         }
@@ -43,23 +49,22 @@ class Module extends Adminbase
     //模块安装
     public function install()
     {
+        $name = $this->request->param('module');
+        if (empty($name)) {
+            $this->error('请选择需要安装的模块！');
+        }
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
+            $this->error('模块标识错误！');
+        }
         if ($this->request->isPost()) {
-            $module = $this->request->param('module');
-            if (empty($module)) {
-                $this->error('请选择需要安装的模块！');
+            try {
+                ModuleService::install($name);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
-            if ($this->ModuleService->install($module)) {
-                $this->success('模块安装成功！一键清理缓存后生效！', url('admin/Module/index'));
-            } else {
-                $error = $this->ModuleService->getError();
-                $this->error($error ? $error : '模块安装失败！');
-            }
+            $this->success('模块安装成功！一键清理缓存后生效！');
         } else {
-            $module = $this->request->param('module', '');
-            if (empty($module)) {
-                $this->error('请选择需要安装的模块！');
-            }
-            $config = $this->ModuleService->getInfoFromFile($module);
+            $config = ModuleService::getInfo($name);
             //版本检查
             if ($config['adaptation']) {
                 if (version_compare(config('version.yzncms_version'), $config['adaptation'], '>=') == false) {
@@ -85,12 +90,12 @@ class Module extends Adminbase
                 foreach ($config['tables'] as $table) {
                     if (Db::query("SHOW TABLES LIKE '" . config('database.prefix') . "{$table}'")) {
                         $table_check[] = [
-                            'table' => config('database.prefix') . "{$table}",
+                            'table'  => config('database.prefix') . "{$table}",
                             'result' => '<span class="text-danger">存在同名</span>',
                         ];
                     } else {
                         $table_check[] = [
-                            'table' => config('database.prefix') . "{$table}",
+                            'table'  => config('database.prefix') . "{$table}",
                             'result' => '<i class="iconfont icon-success text-success"></i>',
                         ];
                     }
@@ -110,23 +115,22 @@ class Module extends Adminbase
     //模块卸载
     public function uninstall()
     {
+        $name = $this->request->param('module');
+        if (empty($name)) {
+            $this->error('请选择需要卸载的模块！');
+        }
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
+            $this->error('模块标识错误！');
+        }
         if ($this->request->isPost()) {
-            $module = $this->request->param('module');
-            if (empty($module)) {
-                $this->error('请选择需要安装的模块！');
+            try {
+                ModuleService::uninstall($name, true);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
-            if ($this->ModuleService->uninstall($module)) {
-                $this->success("模块卸载成功！一键清理缓存后生效！", url("admin/Module/index"));
-            } else {
-                $error = $this->ModuleService->getError();
-                $this->error($error ? $error : "模块卸载失败！", url("admin/Module/index"));
-            }
+            $this->success("模块卸载成功！一键清理缓存后生效！");
         } else {
-            $module = $this->request->param('module', '');
-            if (empty($module)) {
-                $this->error('请选择需要安装的模块！');
-            }
-            $config = $this->ModuleService->getInfoFromFile($module);
+            $config = ModuleService::getInfo($name);
             $this->assign('config', $config);
             return $this->fetch();
 
@@ -152,15 +156,14 @@ class Module extends Adminbase
             } else {
                 $curr_version = Db::name('Addons')->where('name', $value[0])->value('version');
             }
-            $result = version_compare($curr_version, $value[1], $value[2]);
+            $result     = version_compare($curr_version, $value[1], $value[2]);
             $need[$key] = [
-                $type => $value[0],
-                'version' => $curr_version ? $curr_version : '未安装',
+                $type          => $value[0],
+                'version'      => $curr_version ? $curr_version : '未安装',
                 'version_need' => $value[2] . $value[1],
-                'result' => $result ? '<i class="iconfont icon-success text-success"></i>' : '<i class="iconfont icon-delete text-danger"></i>',
+                'result'       => $result ? '<i class="iconfont icon-success text-success"></i>' : '<i class="iconfont icon-delete text-danger"></i>',
             ];
         }
-
         return $need;
     }
 
@@ -185,8 +188,8 @@ class Module extends Adminbase
 
             //上传临时文件地址
             $filename = $files->getInfo('tmp_name');
-            $zip = new \util\PclZip($filename);
-            $status = $zip->extract(PCLZIP_OPT_PATH, APP_PATH . $moduleName);
+            $zip      = new \util\PclZip($filename);
+            $status   = $zip->extract(PCLZIP_OPT_PATH, APP_PATH . $moduleName);
             if ($status) {
                 $this->success('模块解压成功，可以进入模块管理进行安装！', url('index'));
             } else {
