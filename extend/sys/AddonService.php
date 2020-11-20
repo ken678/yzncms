@@ -96,7 +96,7 @@ class AddonService
         try {
             // 默认禁用该插件
             $info = get_addon_info($name);
-            if (0 >= $info['status']) {
+            if ($info['status'] != -1) {
                 $info['status'] = -1;
                 set_addon_info($name, $info);
             }
