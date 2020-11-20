@@ -314,7 +314,7 @@ class AddonService
             $info   = $zip->getEntryContents('info.ini');
             $config = parse_ini_string($info);
         } catch (ZipException $e) {
-            throw new Exception('无法解压此插件！');
+            throw new Exception('插件info.ini文件不存在！');
         }
         return $config;
     }
