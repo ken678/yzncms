@@ -16,6 +16,7 @@
 // +----------------------------------------------------------------------
 namespace sys;
 
+use app\common\library\Menu as MenuLib;
 use PhpZip\Exception\ZipException;
 use PhpZip\ZipFile;
 use think\Db;
@@ -64,7 +65,7 @@ class AddonService
             if (isset($info['has_adminlist']) && $info['has_adminlist']) {
                 $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : '';
                 //添加菜单
-                model('admin/Menu')->addAddonMenu($info, $admin_list);
+                MenuLib::addAddonMenu($info, $admin_list);
             }
             self::runSQL($name);
         } catch (Exception $e) {
@@ -102,7 +103,7 @@ class AddonService
             }
             //删除插件后台菜单
             if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                model('admin/Menu')->delAddonMenu($info);
+                MenuLib::delAddonMenu($info);
             }
             $class = get_addon_class($name);
             if (class_exists($class)) {
