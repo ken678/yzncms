@@ -129,15 +129,8 @@ class AddonService
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
         }
-
-        $info           = get_addon_info($name);
-        $info['status'] = 1;
-        //unset($info['url']);
-        set_addon_info($name, $info);
-
         //执行启用脚本
         try {
-            //AddonsModel::update(['status' => 1], ['name' => $name]);
             $class = get_addon_class($name);
             if (class_exists($class)) {
                 $addon = new $class();
@@ -148,6 +141,10 @@ class AddonService
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
+
+        $info           = get_addon_info($name);
+        $info['status'] = 1;
+        set_addon_info($name, $info);
         // 刷新
         self::refresh();
         return true;
@@ -165,12 +162,6 @@ class AddonService
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
         }
-
-        $info           = get_addon_info($name);
-        $info['status'] = 0;
-        //unset($info['url']);
-        set_addon_info($name, $info);
-
         // 执行禁用脚本
         try {
             $class = get_addon_class($name);
@@ -184,7 +175,9 @@ class AddonService
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-
+        $info           = get_addon_info($name);
+        $info['status'] = 0;
+        set_addon_info($name, $info);
         // 刷新
         self::refresh();
         return true;
