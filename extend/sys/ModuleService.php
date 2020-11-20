@@ -18,6 +18,8 @@ namespace sys;
 use app\admin\model\Module as ModuleModel;
 use app\common\library\Cache as CacheLib;
 use app\common\library\Menu as MenuLib;
+use PhpZip\Exception\ZipException;
+use PhpZip\ZipFile;
 use think\Db;
 use think\Exception;
 use think\facade\Cache;
@@ -169,6 +171,72 @@ class ModuleService
     }
 
     /**
+     * 离线安装
+     * @param string $file 插件压缩包
+     */
+    public static function local($file)
+    {
+        $modulesTempDir = self::getModulesBackupDir();
+        if (!$file || !$file instanceof \think\File) {
+            throw new Exception('没有文件上传或服务器上传限制');
+        }
+        $uploadFile = $file->rule('uniqid')->validate(['size' => 102400000, 'ext' => 'zip'])->move($modulesTempDir);
+        if (!$uploadFile) {
+            // 上传失败获取错误信息
+            throw new Exception($file->getError());
+        }
+        $tmpFile = $modulesTempDir . $uploadFile->getSaveName();
+        $info    = [];
+        $zip     = new ZipFile();
+        try {
+            // 打开插件压缩包
+            try {
+                $zip->openFile($tmpFile);
+            } catch (ZipException $e) {
+                @unlink($tmpFile);
+                throw new Exception('无法打开压缩文件');
+            }
+
+            //$config = self::getInfoPhp($zip);
+
+            // 判断插件标识
+            /*$name = isset($config['name']) ? $config['name'] : '';
+            if (!$name) {
+            throw new Exception('模块info.php文件不正确');
+            }*/
+            $name = pathinfo($file->getInfo('name'));
+            $name = $name['filename'];
+
+            // 判断插件是否存在
+            if (!preg_match("/^[a-zA-Z0-9]+$/", $name)) {
+                throw new Exception('模块名称不正确');
+            }
+
+            // 判断新模块是否存在
+            $newModuleDir = self::getModuleDir($name);
+            if (is_dir($newModuleDir)) {
+                throw new Exception('模块已经存在');
+            }
+
+            //创建模块目录
+            @mkdir($newModuleDir, 0755, true);
+            // 解压到插件目录
+            try {
+                $zip->extractTo($newModuleDir);
+            } catch (ZipException $e) {
+                @unlink($newModuleDir);
+                throw new Exception('无法解压缩文件');
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        } finally {
+            $zip->close();
+            unset($uploadFile);
+            @unlink($tmpFile);
+        }
+    }
+
+    /**
      * 刷新插件缓存文件.
      * @throws Exception
      * @return bool
@@ -265,6 +333,45 @@ class ModuleService
             }
         }
         return true;
+    }
+
+    /**
+     * 匹配配置文件中info信息
+     * @param ZipFile $zip
+     * @return array|false
+     * @throws Exception
+     */
+    protected static function getInfoPhp($zip)
+    {
+        $config = [];
+        // 读取插件信息
+        try {
+            $config = $zip->getEntryContents('info.php');
+        } catch (ZipException $e) {
+            throw new Exception('无法解压缩文件');
+        }
+        return $config;
+    }
+
+    /**
+     * 获取模块备份目录
+     */
+    public static function getModulesBackupDir()
+    {
+        $dir = ROOT_PATH . 'runtime' . DS . 'modules' . DS;
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755, true);
+        }
+        return $dir;
+    }
+
+    /**
+     * 获取指定模块的目录
+     */
+    public static function getModuleDir($name)
+    {
+        $dir = APP_PATH . $name . DS;
+        return $dir;
     }
 
     /**
