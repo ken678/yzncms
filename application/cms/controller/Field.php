@@ -17,7 +17,6 @@ namespace app\cms\controller;
 use app\cms\model\ModelField as ModelField;
 use app\common\controller\Adminbase;
 use think\Db;
-use think\facade\Cookie;
 
 class Field extends Adminbase
 {
@@ -45,11 +44,11 @@ class Field extends Adminbase
         }
         if ($this->request->isAjax()) {
             //根据模型读取字段列表
-            $banFields = ['id', 'catid', 'did', 'status', 'uid'];
+            $banFields                  = ['id', 'catid', 'did', 'status', 'uid'];
             list($page, $limit, $where) = $this->buildTableParames();
-            $total = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->count();
-            $data = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->page($page, $limit)->select();
-            $result = array("code" => 0, "count" => $total, "data" => $data);
+            $total                      = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->count();
+            $data                       = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->page($page, $limit)->select();
+            $result                     = array("code" => 0, "count" => $total, "data" => $data);
             return json($result);
         }
         $this->assign("modelid", $modelid);
@@ -67,7 +66,7 @@ class Field extends Adminbase
         }
         if ($this->request->isPost()) {
             //增加字段
-            $data = $this->request->param();
+            $data   = $this->request->param();
             $result = $this->validate($data, 'ModelField');
             if (true !== $result) {
                 return $this->error($result);
@@ -79,12 +78,12 @@ class Field extends Adminbase
             }
             $this->success('新增成功');
         } else {
-            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
+            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifstring');
             $modelInfo = Db::name('model')->where('id', $modelid)->find();
             $this->assign(
                 [
                     'modelType' => $modelInfo['type'],
-                    "modelid" => $modelid,
+                    "modelid"   => $modelid,
                     'fieldType' => $fieldType,
                 ]
             );
@@ -103,7 +102,7 @@ class Field extends Adminbase
             $this->error('字段ID不能为空！');
         }
         if ($this->request->isPost()) {
-            $data = $this->request->param();
+            $data   = $this->request->param();
             $result = $this->validate($data, 'ModelField');
             if (true !== $result) {
                 return $this->error($result);
@@ -127,10 +126,10 @@ class Field extends Adminbase
             if (empty($modedata)) {
                 $this->error('该模型不存在！');
             }
-            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifoption,ifstring');
+            $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifstring');
             $this->assign([
-                'data' => $fieldData,
-                'fieldid' => $fieldid,
+                'data'      => $fieldData,
+                'fieldid'   => $fieldid,
                 'fieldType' => $fieldType,
             ]);
             return $this->fetch();
@@ -161,9 +160,9 @@ class Field extends Adminbase
      */
     public function listorder()
     {
-        $id = $this->request->param('id/d', 0);
+        $id        = $this->request->param('id/d', 0);
         $listorder = $this->request->param('value/d', 0);
-        $rs = $this->modelClass->allowField(['listorder'])->isUpdate(true)->save(['id' => $id, 'listorder' => $listorder]);
+        $rs        = $this->modelClass->allowField(['listorder'])->isUpdate(true)->save(['id' => $id, 'listorder' => $listorder]);
         if ($rs) {
             $this->success("菜单排序成功！");
         } else {

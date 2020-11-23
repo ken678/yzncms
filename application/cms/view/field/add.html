@@ -167,7 +167,6 @@ layui.use(['layer', 'form','yznForm'], function() {
         yznForm.listen();
         form.on('select(fieldtype)', function(data) {
             $('#define').val($(data.elem).find("option:selected").attr("data-define"));
-            //var ifoption = $(data.elem).find("option:selected").attr("data-ifoption");
             var ifstring = $(data.elem).find("option:selected").attr("data-ifstring");
             //搜索隐显
             if (ifstring == '1') {
@@ -175,11 +174,6 @@ layui.use(['layer', 'form','yznForm'], function() {
             } else {
                 $('#ifsearch').hide();
             }
-            /*if (ifoption == '1') {
-                $('#options').show();
-            } else {
-                $('#options').hide();
-            }*/
             if (data.value == 'checkbox' || data.value == 'select' || data.value == 'selects' || data.value == 'radio' || data.value == 'selectpage') {
                 $('#options').show();
             }else{
