@@ -37,7 +37,7 @@ class Baidupush extends Addons
         $urls   = is_string($params) ? [$params] : $params;
         $extra  = $extra ? $extra : 'urls';
         $status = explode(',', $config['status']);
-        foreach ($statu as $index => $item) {
+        foreach ($status as $index => $item) {
             if ($extra == 'urls' || $extra == 'append') {
                 Push::connect(['type' => $item])->realtime($urls);
             } elseif ($extra == 'del' || $extra == 'delete') {
