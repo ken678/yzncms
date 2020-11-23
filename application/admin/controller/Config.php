@@ -25,7 +25,7 @@ class Config extends Adminbase
     {
         parent::initialize();
         //允许使用的字段列表
-        $this->banfie = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown');
+        $this->banfie     = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown');
         $this->modelClass = new ConfigModel;
     }
 
@@ -43,7 +43,7 @@ class Config extends Adminbase
         } else {
             $this->assign([
                 'groupArray' => config('config_group'),
-                'group' => $group,
+                'group'      => $group,
             ]);
             return $this->fetch();
         }
@@ -114,8 +114,8 @@ class Config extends Adminbase
             }
             $this->assign([
                 'groupArray' => config('config_group'),
-                'fieldList' => $configList,
-                'group' => $group,
+                'fieldList'  => $configList,
+                'group'      => $group,
             ]);
             return $this->fetch();
         }
@@ -126,9 +126,9 @@ class Config extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data           = $this->request->post();
             $data['status'] = isset($data['status']) ? intval($data['status']) : 1;
-            $result = $this->validate($data, 'Config');
+            $result         = $this->validate($data, 'Config');
             if (true !== $result) {
                 return $this->error($result);
             }
@@ -139,10 +139,10 @@ class Config extends Adminbase
                 $this->error('配置添加失败！');
             }
         } else {
-            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
+            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
             $this->assign([
                 'groupArray' => config('config_group'),
-                'fieldType' => $fieldType,
+                'fieldType'  => $fieldType,
             ]);
             return $this->fetch();
         }
@@ -152,7 +152,7 @@ class Config extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data   = $this->request->post();
             $result = $this->validate($data, 'Config');
             if (true !== $result) {
                 return $this->error($result);
@@ -168,12 +168,12 @@ class Config extends Adminbase
             if (!is_numeric($id) || $id < 0) {
                 return '参数错误';
             }
-            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifoption,ifstring');
-            $info = ConfigModel::get($id);
+            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
+            $info      = ConfigModel::get($id);
             $this->assign([
                 'groupArray' => config('config_group'),
-                'fieldType' => $fieldType,
-                'info' => $info,
+                'fieldType'  => $fieldType,
+                'info'       => $info,
             ]);
             return $this->fetch();
         }

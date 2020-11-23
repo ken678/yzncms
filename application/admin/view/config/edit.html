@@ -21,7 +21,7 @@
                     <select name="type" lay-filter="fieldType" lay-verify="required">
                         <option value=""></option>
                         {volist name="fieldType" id="vo"}
-                        <option value="{$vo.name}" data-ifoption="{$vo.ifoption}" {if $info.type==$vo.name}selected{/if}>{$vo.title}[{$vo.name}]</option>
+                        <option value="{$vo.name}" {if $info.type==$vo.name}selected{/if}>{$vo.title}[{$vo.name}]</option>
                         {/volist}
                     </select>
                 </div>
