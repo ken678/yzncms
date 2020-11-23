@@ -52,6 +52,8 @@ class ModelField extends Modelbase
 
         if ($data['setting']['value'] === '') {
             $default = '';
+        } elseif (strstr(strtolower($data['setting']['define']), 'text') || strstr(strtolower($data['setting']['define']), 'blob')) {
+            $default = '';
         } elseif (is_numeric($data['setting']['value'])) {
             $default = ' DEFAULT ' . $data['setting']['value'];
         } else {
@@ -125,6 +127,8 @@ EOF;
         }
 
         if ($data['setting']['value'] === '') {
+            $default = '';
+        } elseif (strstr(strtolower($data['setting']['define']), 'text') || strstr(strtolower($data['setting']['define']), 'blob')) {
             $default = '';
         } elseif (is_numeric($data['setting']['value'])) {
             $default = ' DEFAULT ' . $data['setting']['value'];
