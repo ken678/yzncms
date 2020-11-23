@@ -49,11 +49,19 @@ class ModelField extends Modelbase
         if ($data['ifrequire'] && !$data['isadd']) {
             throw new \Exception('必填字段不可以隐藏！');
         }
-        $dfaultvalue = empty($data['setting']['value']) ? $this->setDfaultValue($data) : $data['setting']['value'];
+
+        if ($data['setting']['value'] === '') {
+            $default = '';
+        } elseif (is_numeric($data['setting']['value'])) {
+            $default = ' DEFAULT ' . $data['setting']['value'];
+        } else {
+            $default = '';
+        }
+
         //先将字段存在设置的主表或附表里面 再将数据存入ModelField
         $sql = <<<EOF
             ALTER TABLE `{$tablename}`
-            ADD COLUMN `{$data['name']}` {$data['setting']['define']} DEFAULT '{$dfaultvalue}' COMMENT '{$data['title']}';
+            ADD COLUMN `{$data['name']}` {$data['setting']['define']} {$default} COMMENT '{$data['title']}';
 EOF;
         Db::execute($sql);
         $fieldInfo = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
@@ -115,10 +123,18 @@ EOF;
         if ($data['ifrequire'] && !$data['isadd']) {
             throw new \Exception('必填字段不可以隐藏！');
         }
-        $dfaultvalue = empty($data['setting']['value']) ? $this->setDfaultValue($data) : $data['setting']['value'];
-        $sql         = <<<EOF
+
+        if ($data['setting']['value'] === '') {
+            $default = '';
+        } elseif (is_numeric($data['setting']['value'])) {
+            $default = ' DEFAULT ' . $data['setting']['value'];
+        } else {
+            $default = '';
+        }
+
+        $sql = <<<EOF
             ALTER TABLE `{$tablename}`
-            CHANGE COLUMN `{$info['name']}` `{$data['name']}` {$data['setting']['define']} DEFAULT '{$dfaultvalue}' COMMENT '{$data['title']}';
+            CHANGE COLUMN `{$info['name']}` `{$data['name']}` {$data['setting']['define']} {$default} COMMENT '{$data['title']}';
 EOF;
         try {
             Db::execute($sql);
@@ -168,16 +184,6 @@ EOF;
         Db::execute($sql);
         self::get($fieldid)->delete();
         return true;
-    }
-
-    //设置默认值var为空，int为0 //TODO 后续需要调整为生成sql 目前暂时先这样简单处理
-    protected function setDfaultValue($data)
-    {
-        if (false !== strstr(strtolower($data['setting']['define']), 'int')) {
-            return 0;
-        } else {
-            return null;
-        }
     }
 
     /**
