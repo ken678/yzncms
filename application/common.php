@@ -165,7 +165,7 @@ function get_addon_autoload_config($truncate = false)
     $modules = Db::name('Module')->where('status', 1)->select();
     foreach ($modules as $name => $addon) {
         $name = $addon['module'];
-        if (is_file(APP_PATH . $name . DIRECTORY_SEPARATOR . 'behavior' . DIRECTORY_SEPARATOR . 'hooks.php')) {
+        if (is_file(APP_PATH . $name . DIRECTORY_SEPARATOR . 'behavior' . DIRECTORY_SEPARATOR . 'Hooks.php')) {
             $methods = (array) get_class_methods('\\app\\' . $name . '\\behavior\\Hooks');
             $hooks   = array_diff($methods, $base);
             foreach ($hooks as $hook) {
