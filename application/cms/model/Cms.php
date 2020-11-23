@@ -181,8 +181,7 @@ class Cms extends Modelbase
             $query = $query->where('name', 'not in', $ignoreField);
         }
         $filedTypeList = $query->order('listorder,id')->column('name,title,type,ifsystem,ifrequire,pattern,errortips');
-        //字段规则
-        $fieldRule = Db::name('field_type')->column('vrule', 'name');
+
         foreach ($filedTypeList as $name => $vo) {
             $arr = $vo['ifsystem'] ? 'data' : 'dataExt';
             if (!isset(${$arr}[$name])) {
@@ -230,7 +229,7 @@ class Cms extends Modelbase
                 throw new \Exception("'" . $vo['title'] . "'" . (!empty($vo['errortips']) ? $vo['errortips'] : '正则校验失败') . "");
             }
             //数据格式验证
-            if (!empty($fieldRule[$vo['type']]) && !empty(${$arr}[$name]) && !Validate::{$fieldRule[$vo['type']]}(${$arr}[$name])) {
+            if (!empty(${$arr}[$name]) && in_array($vo['type'], ['image', 'number', 'file']) && !Validate::isNumber(${$arr}[$name])) {
                 throw new \Exception("'" . $vo['title'] . "'格式错误~");
                 //安全过滤
             } else {

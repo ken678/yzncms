@@ -54,8 +54,6 @@ class Config extends Adminbase
     {
         if ($this->request->isPost()) {
             $data = $this->request->post('modelField/a');
-            //字段规则
-            $fieldRule = Db::name('field_type')->column('vrule', 'name');
             // 查询该分组下所有的配置项名和类型
             $items = ConfigModel::where('group', $group)->where('status', 1)->column('name,type');
             foreach ($items as $name => $type) {
@@ -83,7 +81,7 @@ class Config extends Adminbase
                     }
                 }
                 //数据格式验证
-                if (!empty($fieldRule[$type]) && !empty($data[$name]) && !\think\facade\Validate::{$fieldRule[$type]}($data[$name])) {
+                if (!empty($data[$name]) && in_array($type, ['image', 'number', 'file']) && !\think\facade\Validate::isNumber($data[$name])) {
                     return $this->error("'" . $name . "'格式错误~");
                 }
                 if (isset($data[$name])) {
