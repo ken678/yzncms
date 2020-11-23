@@ -116,7 +116,7 @@ class Models extends Modelbase
     {
         $modeldata = self::where("id", $id)->find();
         if (!$modeldata) {
-            throw new \Exception('数据不存在！');
+            throw new \Exception('要删除的模型不存在！');
         }
         //删除模型数据
         self::destroy($id);

@@ -102,11 +102,6 @@ class Models extends Adminbase
         if ($r) {
             $this->error("该模型使用中，删除栏目后再删除！");
         }
-        //这里可以根据缓存获取表名
-        $modeldata = $this->modelClass->where("id", $id)->find();
-        if (!$modeldata) {
-            $this->error("要删除的模型不存在！");
-        }
         try {
             $this->modelClass->deleteModel($id);
         } catch (\Exception $e) {
