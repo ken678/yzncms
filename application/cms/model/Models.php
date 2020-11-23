@@ -25,8 +25,8 @@ use \think\Model;
 class Models extends Modelbase
 {
 
-    protected $name = 'model';
-    protected $ext_table = '_data';
+    protected $name               = 'model';
+    protected $ext_table          = '_data';
     protected $autoWriteTimestamp = true;
 
     /**
@@ -39,7 +39,7 @@ class Models extends Modelbase
         if (empty($data)) {
             throw new \Exception('数据不得为空！');
         }
-        $data['module'] = $module;
+        $data['module']  = $module;
         $data['setting'] = serialize($data['setting']);
         //添加模型记录
         if (self::allowField(true)->save($data)) {
@@ -114,7 +114,7 @@ class Models extends Modelbase
      */
     public function deleteModel($id)
     {
-        $modeldata = self::where(array("id" => $id))->find();
+        $modeldata = self::where("id", $id)->find();
         if (!$modeldata) {
             throw new \Exception('数据不存在！');
         }
@@ -141,41 +141,41 @@ class Models extends Modelbase
     protected function createTable($data)
     {
         $data['tablename'] = strtolower($data['tablename']);
-        $table = Config::get("database.prefix") . $data['tablename'];
+        $table             = Config::get("database.prefix") . $data['tablename'];
         if ($this->table_exists($data['tablename'])) {
             throw new \Exception('创建失败！' . $table . '表已经存在~');
         }
         $sql = <<<EOF
-				CREATE TABLE `{$table}` (
-				`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+                CREATE TABLE `{$table}` (
+                `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
                 `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
-				`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+                `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
                 `thumb` int(5) unsigned NOT NULL DEFAULT '0' COMMENT '缩略图',
-				`flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
-				`keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
-				`description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
+                `flag` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '属性',
+                `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO关键词',
+                `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'SEO描述',
                 `tags` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT 'Tags标签',
-				`listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
-				`uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-				`username` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
-				`sysadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否后台添加',
+                `listorder` smallint(5) unsigned NOT NULL DEFAULT '100' COMMENT '排序',
+                `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+                `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名',
+                `sysadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否后台添加',
                 `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
-				`inputtime` int(10) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
-				`updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                `inputtime` int(10) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
+                `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
                 `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-				PRIMARY KEY (`id`)
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
+                PRIMARY KEY (`id`)
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
 
         $res = Db::execute($sql);
         if ($data['type'] == 2) {
             // 新建附属表
             $sql = <<<EOF
-				CREATE TABLE `{$table}{$this->ext_table}` (
-				`did` mediumint(8) unsigned NOT NULL DEFAULT '0',
-				`content` text COLLATE utf8_unicode_ci COMMENT '内容',
-				PRIMARY KEY (`did`)
-				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
+                CREATE TABLE `{$table}{$this->ext_table}` (
+                `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
+                `content` text COLLATE utf8_unicode_ci COMMENT '内容',
+                PRIMARY KEY (`did`)
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
             $res = Db::execute($sql);
         }
@@ -188,153 +188,153 @@ EOF;
     protected function addFieldRecord($modelid, $type)
     {
         $default = [
-            'modelid' => $modelid,
-            'pattern' => '',
-            'errortips' => '',
+            'modelid'     => $modelid,
+            'pattern'     => '',
+            'errortips'   => '',
             'create_time' => request()->time(),
             'update_time' => request()->time(),
-            'ifsystem' => 1,
-            'status' => 1,
-            'listorder' => 100,
-            'ifsearch' => 0,
-            'iffixed' => 1,
-            'remark' => '',
-            'isadd' => 0,
-            'iscore' => 0,
-            'ifrequire' => 0,
+            'ifsystem'    => 1,
+            'status'      => 1,
+            'listorder'   => 100,
+            'ifsearch'    => 0,
+            'iffixed'     => 1,
+            'remark'      => '',
+            'isadd'       => 0,
+            'iscore'      => 0,
+            'ifrequire'   => 0,
         ];
         $data = [
             [
-                'name' => 'id',
+                'name'  => 'id',
                 'title' => '文档id',
-                'type' => 'hidden',
+                'type'  => 'hidden',
                 'isadd' => 1,
             ],
             [
-                'name' => 'catid',
+                'name'  => 'catid',
                 'title' => '栏目id',
-                'type' => 'hidden',
+                'type'  => 'hidden',
                 'isadd' => 1,
             ],
             [
-                'name' => 'title',
-                'title' => '标题',
-                'type' => 'text',
-                'ifsearch' => 1,
+                'name'      => 'title',
+                'title'     => '标题',
+                'type'      => 'text',
+                'ifsearch'  => 1,
                 'ifrequire' => 1,
-                'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
-                'isadd' => 1,
+                'setting'   => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'isadd'     => 1,
             ],
             [
-                'name' => 'flag',
-                'title' => '属性',
-                'type' => 'checkbox',
+                'name'    => 'flag',
+                'title'   => '属性',
+                'type'    => 'checkbox',
                 'setting' => "a:3:{s:6:\"define\";s:31:\"varchar(32) NOT NULL DEFAULT ''\";s:7:\"options\";s:76:\"1:置顶[1]\r\n2:头条[2]\r\n3:特荐[3]\r\n4:推荐[4]\r\n5:热点[5]\r\n6:幻灯[6]\";s:5:\"value\";s:0:\"\";}",
             ],
             [
-                'name' => 'keywords',
-                'title' => 'SEO关键词',
-                'type' => 'tags',
+                'name'    => 'keywords',
+                'title'   => 'SEO关键词',
+                'type'    => 'tags',
                 'iffixed' => 0,
-                'remark' => '关键词用回车确认',
+                'remark'  => '关键词用回车确认',
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
-                'isadd' => 1,
+                'isadd'   => 1,
             ],
             [
-                'name' => 'description',
-                'title' => 'SEO摘要',
-                'type' => 'textarea',
+                'name'    => 'description',
+                'title'   => 'SEO摘要',
+                'type'    => 'textarea',
                 'iffixed' => 0,
-                'remark' => '如不填写，则自动截取附表中编辑器的200字符',
+                'remark'  => '如不填写，则自动截取附表中编辑器的200字符',
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
-                'isadd' => 1,
+                'isadd'   => 1,
             ],
             [
-                'name' => 'tags',
-                'title' => 'Tags标签',
-                'type' => 'tags',
+                'name'    => 'tags',
+                'title'   => 'Tags标签',
+                'type'    => 'tags',
                 'iffixed' => 0,
-                'remark' => '关键词用回车确认',
+                'remark'  => '关键词用回车确认',
                 'setting' => "a:3:{s:6:\"define\";s:32:\"varchar(255) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
-                'name' => 'uid',
-                'title' => '用户id',
-                'type' => 'number',
+                'name'   => 'uid',
+                'title'  => '用户id',
+                'type'   => 'number',
                 'iscore' => 1,
             ],
             [
-                'name' => 'username',
-                'title' => '用户名',
-                'type' => 'text',
+                'name'   => 'username',
+                'title'  => '用户名',
+                'type'   => 'text',
                 'iscore' => 1,
             ],
             [
-                'name' => 'sysadd',
-                'title' => '是否后台添加',
-                'type' => 'number',
+                'name'   => 'sysadd',
+                'title'  => '是否后台添加',
+                'type'   => 'number',
                 'iscore' => 1,
             ],
             [
-                'name' => 'listorder',
-                'title' => '排序',
-                'type' => 'number',
+                'name'    => 'listorder',
+                'title'   => '排序',
+                'type'    => 'number',
                 'setting' => "a:3:{s:6:\"define\";s:40:\"tinyint(3) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:3:\"100\";}",
             ],
             [
-                'name' => 'status',
-                'title' => '状态',
-                'type' => 'radio',
+                'name'    => 'status',
+                'title'   => '状态',
+                'type'    => 'radio',
                 'setting' => "a:3:{s:6:\"define\";s:40:\"tinyint(2) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:18:\"0:禁用\r\n1:启用\";s:5:\"value\";s:1:\"1\";}",
             ],
             [
-                'name' => 'thumb',
-                'title' => '缩略图',
-                'type' => 'image',
+                'name'      => 'thumb',
+                'title'     => '缩略图',
+                'type'      => 'image',
                 'ifrequire' => 0,
-                'iffixed' => 0,
-                'setting' => "a:3:{s:6:\"define\";s:36:\"int(5) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
-                'isadd' => 1,
+                'iffixed'   => 0,
+                'setting'   => "a:3:{s:6:\"define\";s:36:\"int(5) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'isadd'     => 1,
             ],
             [
-                'name' => 'inputtime',
-                'title' => '创建时间',
-                'type' => 'datetime',
+                'name'      => 'inputtime',
+                'title'     => '创建时间',
+                'type'      => 'datetime',
                 'listorder' => 200,
-                'setting' => "a:3:{s:6:\"define\";s:37:\"int(10) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'setting'   => "a:3:{s:6:\"define\";s:37:\"int(10) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
             ],
             [
-                'name' => 'updatetime',
-                'title' => '更新时间',
-                'type' => 'datetime',
+                'name'      => 'updatetime',
+                'title'     => '更新时间',
+                'type'      => 'datetime',
                 'listorder' => 200,
-                'setting' => "a:3:{s:6:\"define\";s:37:\"int(10) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
-                'iscore' => 1,
+                'setting'   => "a:3:{s:6:\"define\";s:37:\"int(10) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'iscore'    => 1,
             ],
             [
-                'name' => 'hits',
-                'title' => '点击量',
-                'type' => 'number',
+                'name'      => 'hits',
+                'title'     => '点击量',
+                'type'      => 'number',
                 'listorder' => 200,
-                'setting' => "a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}",
+                'setting'   => "a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}",
             ],
         ];
         if ($type == 2) {
             array_push($data, [
-                'name' => 'did',
-                'title' => '附表文档id',
-                'type' => 'hidden',
-                'iscore' => 1,
+                'name'     => 'did',
+                'title'    => '附表文档id',
+                'type'     => 'hidden',
+                'iscore'   => 1,
                 'ifsystem' => 0,
             ],
                 [
-                    'name' => 'content',
-                    'title' => '内容',
-                    'type' => 'Ueditor',
+                    'name'     => 'content',
+                    'title'    => '内容',
+                    'type'     => 'Ueditor',
                     'ifsystem' => 0,
-                    'iffixed' => 0,
-                    'setting' => "a:3:{s:6:\"define\";s:13:\"text NOT NULL\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
-                    'isadd' => 1,
+                    'iffixed'  => 0,
+                    'setting'  => "a:3:{s:6:\"define\";s:13:\"text NOT NULL\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                    'isadd'    => 1,
                 ]);
 
         }
