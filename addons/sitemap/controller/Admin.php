@@ -55,7 +55,7 @@ class Admin extends Adminaddon
             $List = Db::name('Page')->order('updatetime desc')->field('catid,updatetime')->select();
             if (!empty($List)) {
                 foreach ($List as $vo) {
-                    $item = $this->_sitemap_item($rootUrl . url('cms/index/lists', ['catid' => $vo['catid']]), intval($data['content']['priority']), $data['content']['changefreq'], $v['updatetime']);
+                    $item = $this->_sitemap_item($rootUrl . url('cms/index/lists', ['catid' => $vo['catid']]), intval($data['content']['priority']), $data['content']['changefreq'], $vo['updatetime']);
                     $this->_add_data($item);
                 }
             }
