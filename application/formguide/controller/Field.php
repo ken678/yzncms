@@ -17,7 +17,6 @@ namespace app\formguide\controller;
 use app\common\controller\Adminbase;
 use app\formguide\model\ModelField as ModelField;
 use think\Db;
-use think\facade\Cookie;
 
 class Field extends AdminBase
 {
@@ -28,7 +27,7 @@ class Field extends AdminBase
     {
         parent::initialize();
         //允许使用的字段列表
-        $this->banfie = array("text", "checkbox", "textarea", "radio", "select", "image", "number", "Ueditor", "color", "file");
+        $this->banfie     = array("text", "checkbox", "textarea", "radio", "select", "image", "number", "Ueditor", "color", "file");
         $this->modelClass = new ModelField;
     }
 
@@ -38,8 +37,10 @@ class Field extends AdminBase
         $fieldid = $this->request->param('id/d', 0);
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
-            $count = $this->modelClass->where($where)->where(['modelid' => $fieldid])->count();
-            $data = $this->modelClass->where($where)->where(['modelid' => $fieldid])->page($page, $limit)->order($sort, $order)->select();
+            $order                      = $this->request->param("order/s", "DESC");
+            $sort                       = $this->request->param("sort", 'id');
+            $count                      = $this->modelClass->where($where)->where(['modelid' => $fieldid])->count();
+            $data                       = $this->modelClass->where($where)->where(['modelid' => $fieldid])->page($page, $limit)->order($sort, $order)->select();
             return json(["code" => 0, 'count' => $count, "data" => $data]);
         } else {
             $this->assign("id", $fieldid);
@@ -52,7 +53,7 @@ class Field extends AdminBase
     {
         if ($this->request->isPost()) {
             //增加字段
-            $data = $this->request->post();
+            $data   = $this->request->post();
             $result = $this->validate($data, 'ModelField');
             if (true !== $result) {
                 return $this->error($result);
@@ -64,13 +65,13 @@ class Field extends AdminBase
             }
             $this->success('新增成功');
         } else {
-            $fieldid = $this->request->param('id/d', 0);
+            $fieldid   = $this->request->param('id/d', 0);
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,default_define,ifoption,ifstring');
             $modelInfo = Db::name('model')->where('id', $fieldid)->find();
             $this->assign(
                 [
                     'modelType' => $modelInfo['type'],
-                    "modelid" => $fieldid,
+                    "modelid"   => $fieldid,
                     'fieldType' => $fieldType,
                 ]
             );
@@ -84,7 +85,7 @@ class Field extends AdminBase
     {
         $fieldid = $this->request->param('id/d', 0);
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data   = $this->request->post();
             $result = $this->validate($data, 'ModelField');
             if (true !== $result) {
                 return $this->error($result);
@@ -110,8 +111,8 @@ class Field extends AdminBase
             }
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,default_define,ifoption,ifstring');
             $this->assign([
-                'data' => $fieldData,
-                'fieldid' => $fieldid,
+                'data'      => $fieldData,
+                'fieldid'   => $fieldid,
                 'fieldType' => $fieldType,
             ]);
             return $this->fetch();
