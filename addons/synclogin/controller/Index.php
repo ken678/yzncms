@@ -158,10 +158,7 @@ class Index extends AddonsBase
         $userInfo   = $this->UserService->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
         if ($userInfo) {
             $this->addSyncLoginData($userInfo['id']);
-            if (!$forward) {
-                $forward = url('member/index/index');
-            }
-            $this->success('账号绑定成功！', $forward);
+            $this->success('账号绑定成功！', url('member/index/index'));
         } else {
             $this->error('账号绑定失败，请重试！');
         }
