@@ -158,8 +158,8 @@ class Yzn extends Taglib
         //拼接php代码
         $parseStr = '<?php ';
         if ($page) {
-            $parseStr .= '$config=app("config")->pull("paginate");';
-            $parseStr .= '$config["path"]=request()->baseUrl();';
+            $config         = app("config")->pull("paginate");
+            $config["path"] = request()->baseUrl();
         }
         $parseStr .= '$cache = ' . $cache . ';';
         if ($table) {
