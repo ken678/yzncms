@@ -125,7 +125,7 @@ class CmsTagLib
         }
         if (isset($data['tagid'])) {
             if (strpos($data['tagid'], ',') !== false) {
-                $r = Db::name('Tags')->where('id', 'in', $tagid)->value('tagid,tag');
+                $r = Db::name('Tags')->where('id', 'in', $data['tagid'])->value('tagid,tag');
                 array_push($where, "tag in(" . $r . ")");
             } else {
                 $r = Db::name('Tags')->where(['id' => (int) $data['tagid']])->find();
