@@ -171,9 +171,6 @@ class File
         }
         $i   = 0;
         $dir = [];
-        if (is_dir($path)) {
-            $path = rtrim($path, '/') . '/';
-        }
         foreach ($patterns as $pattern) {
             $list = glob($pathname . $pattern);
             if ($list !== false) {
