@@ -23,8 +23,8 @@ class Yzn extends Taglib
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         'template' => ['attr' => 'file', 'close' => 0],
-        'yzn' => ['attr' => 'module,action,num,cache,type,catid,id,page,msg,blank,return,moreinfo', 'close' => 1, 'level' => 3],
-        'get' => ['attr' => 'sql,table,num,cache,page,return,order', 'close' => 1, 'level' => 3],
+        'yzn'      => ['attr' => 'module,action,num,cache,type,catid,id,page,msg,blank,return,moreinfo', 'close' => 1, 'level' => 3],
+        'get'      => ['attr' => 'sql,table,num,cache,page,return,order', 'close' => 1, 'level' => 3],
     ];
 
     /**
@@ -36,8 +36,8 @@ class Yzn extends Taglib
      */
     public function tagTemplate($tag, $content)
     {
-        $config = cache('Config');
-        $theme = isset($tag['theme']) ?: $config['theme'];
+        $config       = cache('Config');
+        $theme        = isset($tag['theme']) ?: $config['theme'];
         $templateFile = $tag['file'];
         //不是直接指定模板路径的
         if (false === strpos($templateFile, config('template.view_suffix'))) {
@@ -124,10 +124,12 @@ class Yzn extends Taglib
         //当前分页参数
         $page = $tag['page'] = (isset($tag['page'])) ? ((substr($tag['page'], 0, 1) == '$') ? $tag['page'] : (int) $tag['page']) : 0;
         //SQL语句
+        $sql = "";
         if (isset($tag['sql'])) {
             $tag['sql'] = $sql = str_replace(array("think_", "yzn_"), config('database.prefix'), strtolower($tag['sql']));
         }
         //表名
+        $table = "";
         if (isset($tag['table'])) {
             $table = str_replace(config('database.prefix'), '', $tag['table']);
         }
@@ -139,7 +141,7 @@ class Yzn extends Taglib
             return false;
         }
         //如果使用table参数方式，使用类似tp的查询语言效果
-        if (isset($table) && $table) {
+        if ($table) {
             $table = strtolower($table);
             //条件
             $tableWhere = array();
@@ -171,7 +173,7 @@ class Yzn extends Taglib
             }
             if ($page) {
                 $parseStr .= '$_count=$get_db->where(' . self::arr_to_html($tableWhere) . ')->count();';
-                $parseStr .= '$_limit=((' . $page . ' - 1) * $num) < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
+                $parseStr .= '$_limit=((' . $page . ' - 1) * ' . $num . ') < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
                 $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit($_limit,' . $num . ')->select();';
                 $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,' . self::arr_to_html($config) . ');';
             } else {
@@ -190,7 +192,7 @@ class Yzn extends Taglib
                 $parseStr .= ' $_sql = "' . str_replace('"', '\"', $sql) . '";';
             }
             if ($page) {
-                $parseStr .= '$_limit=((' . $page . ' - 1) * $num) < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
+                $parseStr .= '$_limit=((' . $page . ' - 1) * ' . $num . ') < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
                 $parseStr .= '$_count=count(\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . '"));';
                 $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT $_limit,' . $num . '");';
                 $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,$config);';
