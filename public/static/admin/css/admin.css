@@ -18,7 +18,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .panel{ text-align:center; height:90px;}
 .panel_box a{display:block;overflow:hidden; height:80px;background: #fff;}
 .panel_icon{ width:40%; display: inline-block; line-height:80px; float:left; position:relative; height:100%;}
-.panel_icon i{ font-size:50px !important; color:#fff; display: inline-block;}
+.panel_icon i{ font-size:40px !important; color:#fff; display: inline-block;}
 .panel_word{ width:60%; display: inline-block; float:right; margin:13px 0 14px; }
 .panel_word span{ font-size:25px; display:block; height:34px; }
 .panel .loginTime{ font-size:15px; color:#1E9FFF; line-height:34px;}
