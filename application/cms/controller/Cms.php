@@ -395,7 +395,7 @@ class Cms extends Adminbase
         if (count($models) > 0) {
             $table1 = $models[0]['tablename'];
             unset($models[0]);
-            $field = 'any_value(b.id) as id,any_value(a.username) as username,any_value(catid) as catid,any_value(uid) as uid,any_value(FROM_UNIXTIME(inputtime, "' . $format . '")) as inputtimes,COUNT(*) AS num';
+            $field = 'a.username,uid,FROM_UNIXTIME(inputtime, "' . $format . '") as inputtimes,COUNT(*) AS num';
             $dbObj = Db::name($table1)->alias('b')->field($field)->where('inputtime', 'between time', [$start_time, $end_time])->join('admin a', 'a.id = b.uid');
             foreach ($models as $k => $v) {
                 $dbObj->union(function ($query) use ($field, $start_time, $end_time, $v) {
