@@ -341,20 +341,104 @@ class Cms extends Adminbase
     //面板
     public function panl()
     {
-        $info['category'] = Db::name('Category')->count();
-        $info['model']    = Db::name('Model')->where(['module' => 'cms'])->count();
-        $info['tags']     = Db::name('Tags')->count();
-        $info['doc']      = 0;
-        $modellist        = cache('Model');
-        foreach ($modellist as $model) {
-            if ($model['module'] !== 'cms') {
-                continue;
+        if ($this->request->isPost()) {
+            $date                         = $this->request->post('date');
+            list($xAxisData, $seriesData) = $this->getAdminPostData($date);
+            $this->success('', '', ['xAxisData' => $xAxisData, 'seriesData' => $seriesData]);
+        } else {
+            $info['category'] = Db::name('Category')->count();
+            $info['model']    = Db::name('Model')->where(['module' => 'cms'])->count();
+            $info['tags']     = Db::name('Tags')->count();
+            $info['doc']      = 0;
+            $modellist        = cache('Model');
+            foreach ($modellist as $model) {
+                if ($model['module'] !== 'cms') {
+                    continue;
+                }
+                $tmp = Db::name($model['tablename'])->count();
+                $info['doc'] += $tmp;
             }
-            $tmp = Db::name($model['tablename'])->count();
-            $info['doc'] += $tmp;
+            list($xAxisData, $seriesData) = $this->getAdminPostData();
+            $this->assign('xAxisData', $xAxisData);
+            $this->assign('seriesData', $seriesData);
+
+            $this->assign('info', $info);
+            return $this->fetch();
         }
-        $this->assign('info', $info);
-        return $this->fetch();
+
+    }
+
+    protected function getAdminPostData($date = '')
+    {
+        if ($date) {
+            list($start, $end) = explode(' - ', $date);
+            $start_time        = strtotime($start);
+            $end_time          = strtotime($end);
+        } else {
+            $start_time = \util\Date::unixtime('day', 0, 'begin');
+            $end_time   = \util\Date::unixtime('day', 0, 'end');
+        }
+        $diff_time = $end_time - $start_time;
+        $format    = '%Y-%m-%d';
+        if ($diff_time > 86400 * 30 * 2) {
+            $format = '%Y-%m';
+        } else {
+            if ($diff_time > 86400) {
+                $format = '%Y-%m-%d';
+            } else {
+                $format = '%H:00';
+            }
+        }
+        //获取所有表名
+        $models = array_values(cache('Model'));
+        $list   = $xAxisData   = $seriesData   = [];
+        if (count($models) > 0) {
+            $table1 = $models[0]['tablename'];
+            unset($models[0]);
+            $field = 'any_value(b.id) as id,any_value(a.username) as username,any_value(catid) as catid,any_value(uid) as uid,any_value(FROM_UNIXTIME(inputtime, "' . $format . '")) as inputtimes,COUNT(*) AS num';
+            $dbObj = Db::name($table1)->alias('b')->field($field)->where('inputtime', 'between time', [$start_time, $end_time])->join('admin a', 'a.id = b.uid');
+            foreach ($models as $k => $v) {
+                $dbObj->union(function ($query) use ($field, $start_time, $end_time, $v) {
+                    $query->name($v['tablename'])->alias('b')->field($field)->where('inputtime', 'between time', [$start_time, $end_time])->join('admin a', 'a.id = b.uid')->group('uid,inputtimes');
+                });
+            };
+            $res = $dbObj->group('uid,inputtimes')->select();
+            if ($diff_time > 84600 * 30 * 2) {
+                $start_time = strtotime('last month', $start_time);
+                while (($start_time = strtotime('next month', $start_time)) <= $end_time) {
+                    $column[] = date('Y-m', $start_time);
+                }
+            } else {
+                if ($diff_time > 86400) {
+                    for ($time = $start_time; $time <= $end_time;) {
+                        $column[] = date("Y-m-d", $time);
+                        $time += 86400;
+                    }
+                } else {
+                    for ($time = $start_time; $time <= $end_time;) {
+                        $column[] = date("H:00", $time);
+                        $time += 3600;
+                    }
+                }
+            }
+            $xAxisData = array_fill_keys($column, 0);
+            foreach ($res as $k => $v) {
+                if (!isset($list[$v['username']])) {
+                    $list[$v['username']] = $xAxisData;
+                }
+                $list[$v['username']][$v['inputtimes']] = $v['num'];
+            }
+            foreach ($list as $index => $item) {
+                $seriesData[] = [
+                    'name'      => $index,
+                    'type'      => 'line',
+                    'smooth'    => true,
+                    'areaStyle' => [],
+                    'data'      => array_values($item),
+                ];
+            }
+        }
+        return [array_keys($xAxisData), $seriesData];
     }
 
     //显示栏目菜单列表

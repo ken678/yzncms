@@ -1,5 +1,10 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
+<style type="text/css">
+.layui-btn-group .layui-btn {
+    margin-right: 5px!important;border-radius: 2px;border-left: none;
+}
+</style>
 <div class="layui-row layui-col-space10 panel_box">
     <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="javascript:;">
@@ -52,6 +57,18 @@
         <div class="layui-card">
             <div class="layui-card-header" style="border-bottom: 1px solid #eee;">文章发布统计</div>
             <div class="layui-card-body">
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-sm btn-refresh yzn-btn-primary"><i class="iconfont icon-shuaxin1"></i> </button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="1">今天</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="2">最近7天</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="3">最近30天</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="4">上月</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="5">本月</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="6">今年</button>
+                    <div class="layui-input-inline">
+                       <input type="text" class="layui-input" id="datatime" placeholder="请选择日期范围" style="width: 300px;height: 30px;line-height: 30px;font-size: 14px;">
+                    </div>
+                </div>
                 <div id="echarts-records" style="height:400px;width:100%;margin-top:15px;"></div>
             </div>
         </div>
@@ -60,10 +77,13 @@
 
 {/block}
 {block name="script"}
+{php}use \util\Date;{/php}
 <script type="text/javascript">
-layui.use(['jquery','echarts'], function() {
+layui.use(['jquery','echarts','laydate','yzn'], function() {
     var $ = layui.jquery,
-    echarts = layui.echarts;
+    echarts = layui.echarts,
+    yzn = layui.yzn,
+    laydate = layui.laydate;
 
     // 基于准备好的dom，初始化echarts实例
     var echartsRecords = echarts.init(document.getElementById('echarts-records'),'walden');
@@ -73,9 +93,7 @@ layui.use(['jquery','echarts'], function() {
         tooltip: {
             trigger: 'axis'
         },
-        legend: {
-            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
-        },
+        legend: {},
         grid: {
             left: '3%',
             right: '4%',
@@ -90,38 +108,12 @@ layui.use(['jquery','echarts'], function() {
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日']
+            data: {$xAxisData|raw|json_encode}
         },
         yAxis: {
             type: 'value'
         },
-        series: [
-            {
-                name:'邮件营销',
-                type:'line',
-                data:[120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name:'联盟广告',
-                type:'line',
-                data:[220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name:'视频广告',
-                type:'line',
-                data:[150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name:'直接访问',
-                type:'line',
-                data:[320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name:'搜索引擎',
-                type:'line',
-                data:[820, 932, 901, 934, 1290, 1330, 1320]
-            }
-        ]
+        series: {$seriesData|raw|json_encode}
     };
     // 使用刚指定的配置项和数据显示图表。
     echartsRecords.setOption(optionRecords);
@@ -129,6 +121,66 @@ layui.use(['jquery','echarts'], function() {
     window.onresize = function(){
         echartsRecords.resize();
     }
+
+    laydate.render({
+      elem: '#datatime',type: 'datetime',range: true,max: 'nowTime',done: function(value, date, endDate){
+        refreshEchart(value);
+      }
+    });
+
+    //点击按钮
+    $(document).on("click", ".btn-time", function () {
+        var type=$(this).data('type');
+        switch(type) {
+             case 1:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", 0, "end"))}'; 
+                break;
+             case 2:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("week", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("week", 0, "end"))}'; 
+                break;
+             case 3:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", -30, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", 0, "end"))}'; 
+                break;
+             case 4:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", -1, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", -1, "end"))}'; 
+                break;
+             case 5:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", 0, "end"))}'; 
+                break;
+             case 6:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("year", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("year", 0, "end"))}'; 
+                break;
+        }
+        refreshEchart(start_time + ' - ' + end_time);
+
+    });
+
+    //点击刷新
+    $(document).on("click", ".btn-refresh", function () {
+        var value = $("#datatime").val();
+        refreshEchart(value);
+
+    });
+
+    var refreshEchart = function (date) {
+        var ok =  function(res) {
+            optionRecords.xAxis.data = res.data.xAxisData;
+            optionRecords.series = res.data.seriesData;
+            echartsRecords.clear();
+            echartsRecords.setOption(optionRecords, true);
+            return false;
+        };
+        yzn.request.post({
+            url: '{:url("cms/cms/panl")}',
+            data: {date: date}
+        }, ok);
+    };
 
     //icon动画
     $(".panel a").hover(function() {
