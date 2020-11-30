@@ -11,7 +11,7 @@ body {
             <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
             <!-- 面包屑 -->
             <div class="bread-nav">
-                <a href="">首页</a>&gt; {:catpos($catid)}
+                <a href="{$siteurl}">首页</a>&gt; {:catpos($catid)}
             </div>
         </div>
         <div class="content">

@@ -17,7 +17,9 @@
     <div class="header">
         <div class="w1200">
             <div class="logo fl">
-                <img src="__IMG_PATH__/logo.png" alt="" />
+                <a href="{$siteurl}">
+                    <img src="__IMG_PATH__/logo.png" alt="" />
+                </a>
 		    </div>
             <div class="topright fr">
             	<!--S 搜索栏-->
@@ -36,7 +38,7 @@
                 <!--S 导航-->
                 <div class="nav fl">
                     <ul class="navlist">
-                        <li {if !isset($catid)}class="hover"{/if}><a href="{:url('cms/index/index')}" title="首页">首页</a></li>
+                        <li {if !isset($catid)}class="hover"{/if}><a href="{$siteurl}" title="首页">首页</a></li>
                         {yzn module="cms" action="category" catid="0" cache="3600" order="listorder ASC" num="10" return="data"}
                         {volist name="data" id="vo"}
                         <li {if isset($catid) && in_array($catid,explode(',',$vo['arrchildid']))}class='hover'{/if}>
