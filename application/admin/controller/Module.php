@@ -62,7 +62,7 @@ class Module extends Adminbase
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success('模块安装成功！一键清理缓存后生效！');
+            $this->success('模块安装成功！一键清理缓存后生效！', url('index'));
         } else {
             $config = ModuleService::getInfo($name);
             //版本检查
