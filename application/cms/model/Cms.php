@@ -334,9 +334,9 @@ class Cms extends Modelbase
                 }
             } else {
                 if ($page) {
-                    $result = Db::name($tableName)->where($where)->order($order)->paginate($limit, $simple, $config);
+                    $result = Db::name($tableName)->where($where)->order($order)->field($field)->paginate($limit, $simple, $config);
                 } else {
-                    $result = Db::name($tableName)->where($where)->limit($limit)->order($order)->select();
+                    $result = Db::name($tableName)->where($where)->limit($limit)->order($order)->field($field)->select();
                 }
             }
         }
