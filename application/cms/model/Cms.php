@@ -319,13 +319,13 @@ class Cms extends Modelbase
             if (2 == getModel($modeId, 'type') && $moreifo) {
                 $extTable = $tableName . $this->ext_table;
                 if ($page) {
-                    $result = Db::view($tableName, '*')
+                    $result = Db::view($tableName, $field)
                         ->where($where)
                         ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
                         ->order($order)
                         ->paginate($limit, $simple, $config);
                 } else {
-                    $result = Db::view($tableName, '*')
+                    $result = Db::view($tableName, $field)
                         ->where($where)
                         ->limit($limit)
                         ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
