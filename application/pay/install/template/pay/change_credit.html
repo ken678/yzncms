@@ -26,15 +26,29 @@
                     <div class="layui-form-mid layui-word-aux">可兑换积分数：<font id="point" style="color:#F00; font-size:18px; font-weight:700">0</font>点 <font id="alert" style="color:#F00; font-size:18px;font-weight:700"></font></div>
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit>立即提交</button>
+                    <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 {template file="member/layui.html"/}
-<script language="JavaScript">
-$(document).ready(function() {
+<script type="text/javascript">
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
+    //登录
+    yznForm.listen('', function (res) {
+        layer.msg(res.msg, {
+            offset: '15px',
+            icon: 1,
+            time: 1000
+        }, function() {
+            window.location.href = res.url;
+        });
+    }, function (res) {
+        layer.msg(res.msg, { icon: 5 });
+    });
+
     $("#point").html($("#money").val() * {if isset($Member_config['rmb_point_rate'])}{$Member_config['rmb_point_rate']}{else}10{/if});
     $("#money").keyup(function() {
         $(this).val($(this).val().replace(/[^\d]/g, ''));
