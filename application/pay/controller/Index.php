@@ -107,15 +107,16 @@ class Index extends MemberBase
                 $this->error("兑换金额必须大于0");
             }
             $point = $money * $this->memberConfig['rmb_point_rate'];
-            //扣除金钱
-            if ($this->Spend_Model->_spend(1, floatval($money), $this->userinfo['id'], $this->userinfo['username'], '积分兑换')) {
+
+            try {
+                //扣除金钱
+                $this->Spend_Model->_spend(1, floatval($money), $this->userinfo['id'], $this->userinfo['username'], '积分兑换');
                 //增加积分
                 \think\Db::name('member')->where(['id' => $this->userinfo['id'], 'username' => $this->userinfo['username']])->setInc('point', $point);
-                $this->success("兑换成功！");
-            } else {
-                $this->error('兑换失败！');
+            } catch (\Exception $ex) {
+                $this->error($ex->getMessage());
             }
-
+            $this->success("兑换成功！");
         } else {
             return $this->fetch('/change_credit');
         }
