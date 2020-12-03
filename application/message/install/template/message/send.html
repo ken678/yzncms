@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit>立即提交</button>
+                    <button class="layui-btn" lay-submit data-type="layui-form" data-refresh="true">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </form>
@@ -42,4 +42,10 @@
     </div>
 </div>
 {template file="member/layui.html"/}
+<script type="text/javascript">
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
+    yznForm.listen();
+});
+</script>
 {template file="member/footer.html"/}
