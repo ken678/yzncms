@@ -32,34 +32,53 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
             yznForm.api.formSubmit(preposeCallback, ok, no, ex);
         },
         api: {
-            form: function(url, data, ok, no, ex, refreshTable, type) {
-                if (refreshTable === undefined) {
-                    refreshTable = true;
+            form: function(url, data, ok, no, ex,refresh,type,pop) {
+                if (refresh === undefined) {
+                    refresh = true;
                 }
                 if (type === 'layui-form') {
                     ok = ok || function(res) {
                         res.msg = res.msg || '';
-                        yzn.msg.success(res.msg, function() {
+                        /*yzn.msg.success(res.msg, function() {
                             if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
                                 location.href = res.url;
                             } else {
                                 location.reload();
                             }
-                        });
-                        return false;
+                        });*/
+                        yzn.msg.success(res.msg);
+                        $("button[data-type='layui-form']").prop('disabled', true);
+                        setTimeout(function() {
+                           $("button[data-type='layui-form']").prop('disabled', false);
+                           if (pop === true) {
+                               if (refresh == true) {
+                                   parent.location.reload();
+                               } else if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                                   parent.location.href = res.url;
+                               }
+                               parent.layui.layer.closeAll();
+                           } else if (refresh == true) {
+                               if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                                   location.href = res.url;
+                               } else {
+                                   //history.back(-1);
+                                   location.reload();
+                               }
+                           }
+                       }, 3000);
+                       return false;
                     };
                 } else {
                     ok = ok || function(res) {
                         res.msg = res.msg || '';
                         yzn.msg.success(res.msg, function() {
                             yznForm.api.closeCurrentOpen({
-                                refreshTable: refreshTable
+                                refreshTable: refresh
                             });
                         });
                         return false;
                     };
                 }
-
                 yzn.request.post({
                     url: url,
                     data: data,
@@ -100,6 +119,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
                         var filter = $(this).attr('lay-filter'),
                             type = $(this).attr('data-type'),
                             refresh = $(this).attr('data-refresh'),
+                            pop = $(this).attr('data-pop'),
                             url = $(this).attr('lay-submit');
                         // 表格搜索不做自动提交
                         if (type === 'tableSearch') {
@@ -110,6 +130,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
                             refresh = false;
                         } else {
                             refresh = true;
+                        }
+                        if (pop === 'true') {
+                            pop = true;
+                        } else {
+                            pop = false;
                         }
                         // 自动添加layui事件过滤器
                         if (filter === undefined || filter === '') {
@@ -135,7 +160,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
                             }
-                            yznForm.api.form(url, dataField, ok, no, ex, refresh, type);
+                            yznForm.api.form(url, dataField, ok, no, ex, refresh, type,pop);
                             return false;
                         });
                     });
