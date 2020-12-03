@@ -25,7 +25,7 @@
             <button class="layui-btn btn-captcha" type="button" data-event="actmobile" data-type="mobile" data-url="{:url('api/sms/send')}">获取验证码</button>
         </div>
         <div class="layui-form-item">
-            <button class="layui-btn" key="set-mine" lay-filter="layui-Submit" lay-submit=""  lay-data="{pop:true, refresh: true}">确认修改</button>
+            <button class="layui-btn" lay-submit data-type="layui-form" data-pop="true" data-refresh="true">确认修改</button>
         </div>
     </form>
     <style type="text/css">
@@ -40,6 +40,12 @@
     }
     </style>
     {include file="layui" /}
+    <script type="text/javascript">
+    layui.use('yznForm', function() {
+        var yznForm = layui.yznForm;
+        yznForm.listen();
+    });
+    </script>
 </body>
 
 </html>

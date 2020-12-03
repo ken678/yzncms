@@ -22,7 +22,7 @@
                 <input type="hidden" name="modelField[catid]" value="{$catid}">
                 <div class="layui-form-item">
                     <div>
-                        <button class="layui-btn" lay-submit lay-filter="*" data-type="layui-form">立即提交</button>
+                        <button class="layui-btn" lay-submit data-type="layui-form" data-refresh="true">立即提交</button>
                     </div>
                 </div>
                 {/if}
@@ -32,8 +32,11 @@
 </div>
 {template file="member/layui.html"/}
 <script>
-layui.use('form', function() {
-    var form = layui.form;
+layui.use(['form','yznForm'], function() {
+    var form = layui.form,
+    yznForm = layui.yznForm;
+
+    yznForm.listen();
     form.on('select(filter)', function(data) {
         location.href = data.value
     });
