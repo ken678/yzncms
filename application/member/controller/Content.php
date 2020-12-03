@@ -31,7 +31,7 @@ class Content extends MemberBase
     {
         $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
         //没有认证用户不得投稿
-        if (empty($this->userinfo['ischeck_email']) && empty($this->userinfo['ischeck_mobile'])) {
+        if (empty($this->userinfo['ischeck_email']) || empty($this->userinfo['ischeck_mobile'])) {
             $this->error("投稿必须激活邮箱和手机！");
         }
         //判断每日投稿数
