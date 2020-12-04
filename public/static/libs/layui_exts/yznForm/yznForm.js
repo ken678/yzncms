@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'xmSelect', 'selectPage'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -10,8 +10,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         laytpl = layui.laytpl,
         notice = layui.notice,
         xmselect = layui.xmSelect,
-        selectPage = layui.selectPage,
-        tableSelect = layui.tableSelect;
+        selectPage = layui.selectPage;
 
     // 文件上传集合
     var webuploader = [];
@@ -241,6 +240,64 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     	})
     }
 
+    // 绑定图片选择
+    if ($('.layui-form .fachoose-image').length > 0) {
+    	layui.define('tableSelect', function(exports) {
+    		var tableSelect = layui.tableSelect;
+	        $.each($('.layui-form .fachoose-image'), function(i, v) {
+	            var input_id = $(this).data("input-id") ? $(this).data("input-id") : "",
+	                inputObj = $("#" + input_id),
+	                multiple = $(this).data("multiple") ? 'checkbox' : 'radio';
+	            var $file_list = $('#file_list_' + input_id);
+	            tableSelect.render({
+	                elem: "#fachoose-" + input_id,
+	                searchKey: 'keyword',
+	                searchPlaceholder: '请输入图片名称',
+	                table: {
+	                    url: GV.image_select_url,
+	                    cols: [
+	                        [
+	                            { type: multiple },
+	                            { field: 'id', title: 'ID' },
+	                            { field: 'url', minWidth: 120, search: false, title: '图片', imageHeight: 40, align: "center", templet: '<div><img src="{{d.path}}" height="100%"></div>' },
+	                            { field: 'name', width: 120, title: '名称' },
+	                            { field: 'mime', width: 120, title: 'Mime类型' },
+	                            { field: 'create_time', width: 180, title: '上传时间', align: "center", search: 'range' },
+	                        ]
+	                    ]
+	                },
+	                done: function(e, data) {
+	                    var selectedList = [];
+	                    $.each(data.data, function(index, val) {
+	                        selectedList[index] = {
+	                            file_id: val.id,
+	                            file_path: val.path
+	                        };
+	                    });
+	                    selectedList.forEach(function(item) {
+	                        var $li = '<div class="file-item thumbnail"><img data-image class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
+	                        if (multiple == 'checkbox') {
+	                            $li += '<i class="iconfont icon-yidong move-picture"></i> ';
+	                        }
+	                        $li += '<i class="iconfont icon-tailor cropper" data-input-id="' + item.file_id + '" data-id="' + input_id + '"></i> <i class="iconfont icon-trash remove-picture" data-id="' + item.file_id + '"></i></div></div>';
+	                        if (multiple == 'checkbox') {
+	                            if (inputObj.val()) {
+	                                inputObj.val(inputObj.val() + ',' + item.file_id);
+	                            } else {
+	                                inputObj.val(item.file_id);
+	                            }
+	                            $file_list.append($li);
+	                        } else {
+	                            inputObj.val(item.file_id);
+	                            $file_list.html($li);
+	                        }
+	                    });
+	                }
+	            })
+	        });
+    	})
+    }
+
     if ($(".selectpage").size() > 0) {
         $('.selectpage').selectPage({
             eAjaxSuccess: function(data) {
@@ -311,61 +368,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         });
 
     });
-
-    //图片选择
-    if ($('.fachoose-image').length > 0) {
-        $.each($('.fachoose-image'), function(i, v) {
-            var input_id = $(this).data("input-id") ? $(this).data("input-id") : "",
-                inputObj = $("#" + input_id),
-                multiple = $(this).data("multiple") ? 'checkbox' : 'radio';
-            var $file_list = $('#file_list_' + input_id);
-            tableSelect.render({
-                elem: "#fachoose-" + input_id,
-                searchKey: 'keyword',
-                searchPlaceholder: '请输入图片名称',
-                table: {
-                    url: GV.image_select_url,
-                    cols: [
-                        [
-                            { type: multiple },
-                            { field: 'id', title: 'ID' },
-                            { field: 'url', minWidth: 120, search: false, title: '图片', imageHeight: 40, align: "center", templet: '<div><img src="{{d.path}}" height="100%"></div>' },
-                            { field: 'name', width: 120, title: '名称' },
-                            { field: 'mime', width: 120, title: 'Mime类型' },
-                            { field: 'create_time', width: 180, title: '上传时间', align: "center", search: 'range' },
-                        ]
-                    ]
-                },
-                done: function(e, data) {
-                    var selectedList = [];
-                    $.each(data.data, function(index, val) {
-                        selectedList[index] = {
-                            file_id: val.id,
-                            file_path: val.path
-                        };
-                    });
-                    selectedList.forEach(function(item) {
-                        var $li = '<div class="file-item thumbnail"><img data-image class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
-                        if (multiple == 'checkbox') {
-                            $li += '<i class="iconfont icon-yidong move-picture"></i> ';
-                        }
-                        $li += '<i class="iconfont icon-tailor cropper" data-input-id="' + item.file_id + '" data-id="' + input_id + '"></i> <i class="iconfont icon-trash remove-picture" data-id="' + item.file_id + '"></i></div></div>';
-                        if (multiple == 'checkbox') {
-                            if (inputObj.val()) {
-                                inputObj.val(inputObj.val() + ',' + item.file_id);
-                            } else {
-                                inputObj.val(item.file_id);
-                            }
-                            $file_list.append($li);
-                        } else {
-                            inputObj.val(item.file_id);
-                            $file_list.html($li);
-                        }
-                    });
-                }
-            })
-        });
-    }
 
 
     // 监听动态表格刷新
