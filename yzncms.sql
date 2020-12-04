@@ -230,6 +230,7 @@ INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 16, 'text 
 INSERT INTO `yzn_field_type` VALUES ('files', '多文件', 17, 'varchar(255) NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 18, 'int(5) UNSIGNED NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 19, 'varchar(7) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 20, 'varchar(255) NOT NULL', 0, 0);
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
