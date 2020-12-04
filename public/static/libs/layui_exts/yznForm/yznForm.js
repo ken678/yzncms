@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'colorpicker', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -9,7 +9,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         element = layui.element,
         laytpl = layui.laytpl,
         laydate = layui.laydate,
-        colorpicker = layui.colorpicker,
         notice = layui.notice,
         xmselect = layui.xmSelect,
         selectPage = layui.selectPage,
@@ -249,16 +248,21 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         })
     }
 
-    //颜色
-    $('.layui-color-box').each(function() {
-        colorpicker.render({
-            elem: $(this),
-            color: $('.test-form-input').val(),
-            done: function(color) {
-                $('.test-form-input').val(color);
-            }
-        });
-    });
+    // 绑定颜色组件
+    if ($('.layui-color-box').length > 0) {
+        layui.define('colorpicker', function(exports) {
+            var colorpicker = layui.colorpicker;
+            $('.layui-color-box').each(function() {
+                colorpicker.render({
+                    elem: $(this),
+                    color: $('.test-form-input').val(),
+                    done: function(color) {
+                        $('.test-form-input').val(color);
+                    }
+                });
+            });
+        })
+    }
 
     //裁剪图片
     $(document).on('click', '.cropper', function() {
