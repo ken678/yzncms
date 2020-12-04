@@ -105,6 +105,8 @@ return [
     'route_annotation'       => false,
     // 域名根，如thinkphp.cn
     'url_domain_root'        => '',
+    // IP代理获取标识 如果获取客户端IP异常，请设置false
+    'http_agent_ip'          => 'HTTP_X_REAL_IP',
     // 是否自动转换URL中的控制器和操作名
     'url_convert'            => true,
     // 默认的访问控制器层
