@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'xmSelect', 'selectPage'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'xmSelect'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -9,8 +9,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         element = layui.element,
         laytpl = layui.laytpl,
         notice = layui.notice,
-        xmselect = layui.xmSelect,
-        selectPage = layui.selectPage;
+        xmselect = layui.xmSelect;
 
     // 文件上传集合
     var webuploader = [];
@@ -190,7 +189,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         return false;
     });
 
-    // 绑定tags标签
+    // 绑定tags标签组件
     if ($(".form-tags").size() > 0) {
         layui.define('tagsinput', function(exports) {
             var tagsinput = layui.tagsinput;
@@ -240,7 +239,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     	})
     }
 
-    // 绑定图片选择
+    // 绑定图片选择组件
     if ($('.layui-form .fachoose-image').length > 0) {
     	layui.define('tableSelect', function(exports) {
     		var tableSelect = layui.tableSelect;
@@ -298,16 +297,19 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     	})
     }
 
-    if ($(".selectpage").size() > 0) {
-        $('.selectpage').selectPage({
-            eAjaxSuccess: function(data) {
-                console.log(data);
-                data.list = typeof data.data !== 'undefined' ? data.data : [];
-                data.totalRow = typeof data.count !== 'undefined' ? data.count : data.data.length;
-                return data;
-            }
-        })
-
+    // 绑定selectpage组件
+    if ($(".layui-form .selectpage").size() > 0) {
+    	layui.define('selectPage', function(exports) {
+    		var selectPage = layui.selectPage;
+	        $('.layui-form .selectpage').selectPage({
+	            eAjaxSuccess: function(data) {
+	                //console.log(data);
+	                data.list = typeof data.data !== 'undefined' ? data.data : [];
+	                data.totalRow = typeof data.count !== 'undefined' ? data.count : data.data.length;
+	                return data;
+	            }
+	        })
+    	})
     }
 
     if ($('.form-selects').length > 0) {
