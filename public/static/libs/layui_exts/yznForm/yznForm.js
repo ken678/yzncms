@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'colorpicker', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -9,7 +9,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         element = layui.element,
         laytpl = layui.laytpl,
         laydate = layui.laydate,
-        tagsinput = layui.tagsinput,
         colorpicker = layui.colorpicker,
         notice = layui.notice,
         xmselect = layui.xmSelect,
@@ -194,14 +193,19 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         return false;
     });
 
-    //tags标签
-    $('.form-tags').each(function() {
-        $(this).tagsInput({
-            width: 'auto',
-            defaultText: $(this).data('remark'),
-            height: '26px',
+    // 绑定tags标签
+    if ($(".form-tags").size() > 0) {
+        layui.define('tagsinput', function(exports) {
+            var tagsinput = layui.tagsinput;
+            $('.form-tags').each(function() {
+                $(this).tagsInput({
+                    width: 'auto',
+                    defaultText: $(this).data('remark'),
+                    height: '26px',
+                })
+            })
         })
-    })
+    }
 
     //绑定城市选择组件
     if ($("[data-toggle='city-picker']").size() > 0) {
