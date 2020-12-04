@@ -957,3 +957,10 @@ function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
         return $keyc . rtrim(strtr(base64_encode($result), '+/', '-_'), '=');
     }
 }
+
+if (!function_exists('cal_days_in_month')) {
+    function cal_days_in_month($calendar, $month, $year)
+    {
+        return date('t', mktime(0, 0, 0, $month, 1, $year));
+    }
+}
