@@ -297,6 +297,15 @@
     </div>
 </div>
 {/case}
+{case value="city"}
+<div class="layui-form-item layui-form-text">
+    <label>{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
+    <div class="layui-form-field-label">
+        <input type="text" autocomplete="on" class="layui-input" name="{$vo.fieldArr}[{$vo.name}]" id="{$vo.name}" value="{$vo.value}" data-toggle="city-picker" placeholder="请选择"/>
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+</div>
+{/case}
 {case value="markdown"}
     {:hook('markdown',$vo)}
 {/case}

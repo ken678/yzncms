@@ -25,7 +25,7 @@ class Config extends Adminbase
     {
         parent::initialize();
         //允许使用的字段列表
-        $this->banfie     = array("text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown');
+        $this->banfie     = ["text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown', 'city'];
         $this->modelClass = new ConfigModel;
     }
 
