@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect', 'selectPage','citypicker'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tagsinput', 'colorpicker', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -14,8 +14,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         notice = layui.notice,
         xmselect = layui.xmSelect,
         selectPage = layui.selectPage,
-        tableSelect = layui.tableSelect,
-        citypicker = layui.citypicker;
+        tableSelect = layui.tableSelect;
 
     // 文件上传集合
     var webuploader = [];
@@ -203,6 +202,13 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
             height: '26px',
         })
     })
+
+    //绑定城市选择组件
+    if ($("[data-toggle='city-picker']").size() > 0) {
+        layui.define('citypicker', function(exports) {
+            var citypicker = layui.citypicker;
+        })
+    }
 
     if ($(".selectpage").size() > 0) {
         $('.selectpage').selectPage({
