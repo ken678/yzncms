@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'laydate', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'tableSelect', 'xmSelect', 'selectPage'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -8,7 +8,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         dragsort = layui.dragsort,
         element = layui.element,
         laytpl = layui.laytpl,
-        laydate = layui.laydate,
         notice = layui.notice,
         xmselect = layui.xmSelect,
         selectPage = layui.selectPage,
@@ -211,6 +210,35 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         layui.define('citypicker', function(exports) {
             var citypicker = layui.citypicker;
         })
+    }
+
+    // 绑定时间组件
+    if ($(".layui-form .datetime").size() > 0) {
+    	layui.define('laydate', function(exports) {
+    		var laydate = layui.laydate;
+	        $(".layui-form .datetime").each(function() {
+	            var format = $(this).attr('data-date'),
+	                type = $(this).attr('data-date-type'),
+	                range = $(this).attr('data-date-range');
+	            if (type === undefined || type === '' || type === null) {
+	                type = 'datetime';
+	            }
+	            var options = {
+	                elem: this,
+	                type: type,
+	            };
+	            if (format !== undefined && format !== '' && format !== null) {
+	                options['format'] = format;
+	            }
+	            if (range !== undefined) {
+	                if (range === null || range === '') {
+	                    range = '-';
+	                }
+	                options['range'] = range;
+	            }
+	            laydate.render(options);
+	        });
+    	})
     }
 
     if ($(".selectpage").size() > 0) {
@@ -512,31 +540,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         });
         return false;
     });
-
-    if ($(".layui-form .datetime").size() > 0) {
-        $(".layui-form .datetime").each(function() {
-            var format = $(this).attr('data-date'),
-                type = $(this).attr('data-date-type'),
-                range = $(this).attr('data-date-range');
-            if (type === undefined || type === '' || type === null) {
-                type = 'datetime';
-            }
-            var options = {
-                elem: this,
-                type: type,
-            };
-            if (format !== undefined && format !== '' && format !== null) {
-                options['format'] = format;
-            }
-            if (range !== undefined) {
-                if (range === null || range === '') {
-                    range = '-';
-                }
-                options['range'] = range;
-            }
-            laydate.render(options);
-        });
-    }
 
     //绑定fieldlist
     if ($(".layui-form .fieldlist").size() > 0) {
