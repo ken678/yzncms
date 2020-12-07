@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl', 'xmSelect'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -8,8 +8,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         dragsort = layui.dragsort,
         element = layui.element,
         laytpl = layui.laytpl,
-        notice = layui.notice,
-        xmselect = layui.xmSelect;
+        notice = layui.notice;
 
     // 文件上传集合
     var webuploader = [];
@@ -165,8 +164,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         }
     }
 
-    //yznForm.listen();
-
     // 放大图片
     $('body').on('click', '[data-image]', function() {
         var title = $(this).attr('data-image'),
@@ -312,25 +309,29 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     	})
     }
 
-    if ($('.form-selects').length > 0) {
-        $('.form-selects').each(function() {
-            var name = $(this).data("name");
-            var list = $(this).data("list");
-            var value = $(this).data("value");
+    // 绑定下拉框多选
+    if ($('.layui-form .form-selects').length > 0) {
+        layui.define('xmSelect', function(exports) {
+            var xmselect = layui.xmSelect;
+            $('.layui-form .form-selects').each(function() {
+                var name = $(this).data("name");
+                var list = $(this).data("list");
+                var value = $(this).data("value");
 
-            var newArr = [];
-            $.each(list, function(i, j) {
-                var vote = {};
-                vote.value = i;
-                vote.name = j;
-                newArr.push(vote);
-            })
-            console.log(newArr);
-            xmSelect.render({
-                el: document.querySelector('.form-selects'),
-                initValue: value !== "" ? value.split(',') : [],
-                name: name,
-                data: newArr
+                var newArr = [];
+                $.each(list, function(i, j) {
+                    var vote = {};
+                    vote.value = i;
+                    vote.name = j;
+                    newArr.push(vote);
+                })
+                console.log(newArr);
+                xmSelect.render({
+                    el: document.querySelector('.form-selects'),
+                    initValue: value !== "" ? value.split(',') : [],
+                    name: name,
+                    data: newArr
+                })
             })
         })
     }
