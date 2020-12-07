@@ -197,7 +197,10 @@ layui.use(['layer', 'form','yznForm'], function() {
             }
             if (data.value == 'selectpage') {
                 $('#options textarea').attr('placeholder','url:提供数据源的URL地址\nfield:列表显示读取的字段,默认[name]\nkey:列表选中后渲染的字段,默认[id]\npagination:是否开启分页,默认[true]\nlimit:分页大小,默认[10]\nmultiple:是否支持多选,默认[false]\nmax:最多可选择数量\norder:排序字段，默认[id]');
-                $('#options .layui-word-aux').html("如<br>url:admin/manager/index<br>field:username<br>key:id<br>pagination:true<br>page_size:10<br>multiple:true<br>max:20<br>order:id")
+                $('#options .layui-word-aux').html("如<br>url:admin/manager/index<br>field:username<br>key:id<br>pagination:true<br>page_size:10<br>multiple:true<br>max:20<br>order:id");
+            }else{
+                $('#options textarea').attr('placeholder','键值:键名\n键值:键名\n键值:键名\n.....');
+                $('#options .layui-word-aux').html("<br>1:北京<br>2:上海<br>3:广东");
             }
         });
         form.on('select(fasttype)', function(data) {
