@@ -134,14 +134,6 @@ class Form
     {
         $string     = '';
         $static_url = ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static');
-        //加载所需JS，防止重复加载
-        if (!defined('IMAGES_upload_JS')) {
-            $string .= '
-                <script type="text/javascript"  src="' . $static_url . '/libs/webuploader/webuploader.min.js"></script>
-                <link rel="stylesheet" href="' . $static_url . '/libs/webuploader/webuploader.css">';
-            define('IMAGES_upload_JS', 1);
-        }
-
         if (!$id) {
             $id = $name;
         }
