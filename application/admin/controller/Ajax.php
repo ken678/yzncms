@@ -24,12 +24,24 @@ class Ajax extends Adminbase
         $content = $this->request->post('content');
         // 获取感词库文件路径
         $wordFilePath = ROOT_PATH . 'data/words.txt';
-        $handle = \util\SensitiveHelper::init()->setTreeByFile($wordFilePath);
-        $word = $handle->getBadWord($content);
+        $handle       = \util\SensitiveHelper::init()->setTreeByFile($wordFilePath);
+        $word         = $handle->getBadWord($content);
         if ($word) {
             $this->error('内容包含违禁词！', null, $word);
         } else {
             $this->success('内容没有违禁词！');
         }
+    }
+
+    /**
+     * 生成后缀图标
+     */
+    public function icon()
+    {
+        $suffix = $this->request->request("suffix");
+        header('Content-type: image/svg+xml');
+        $suffix = $suffix ? $suffix : "FILE";
+        echo build_suffix_image($suffix);
+        exit;
     }
 }
