@@ -12,7 +12,7 @@ return [
         //名称
         "name"      => "支付管理",
         //图标
-        "icon"      => "icon-money-cny-box-line",
+        "icon"      => "icon-money",
         //备注
         "remark"    => "",
         //排序
