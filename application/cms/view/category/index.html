@@ -38,30 +38,32 @@ layui.use('yznTable', function() {
                     text: '新增栏目',
                     url: "{:url('add')}",
                     method: 'open',
-                    class: 'layui-btn layui-btn-sm',
-                    icon: '',
+                    class: 'layui-btn layui-btn-sm layui-btn-normal',
+                    icon: 'iconfont icon-add',
                     extend: 'data-full="true"',
                 },
                 {
                     text: '新增单页',
                     url: "{:url('singlepage')}",
                     method: 'open',
-                    class: 'layui-btn layui-btn-sm',
-                    icon: '',
+                    class: 'layui-btn layui-btn-sm layui-btn-normal',
+                    icon: 'iconfont icon-add',
                     extend: 'data-full="true"',
-                },
-                {
+                }
+            ], 'delete', [{
                     text: '栏目数据校正',
                     url: "{:url('count_items')}",
                     method: 'request',
-                    class: 'layui-btn layui-btn-sm layui-btn-normal',
+                    class: 'layui-btn layui-btn-sm',
+                    icon:'iconfont icon-right',
                     extend: 'data-table="currentTable"',
-                }
-            ], 'delete', [{
+                },
+                {
                 text: "更新栏目缓存",
                 url: "{:url('public_cache')}",
                 method: 'request',
-                class: 'layui-btn layui-btn-sm layui-btn-danger',
+                class: 'layui-btn layui-btn-sm',
+                icon:'iconfont icon-shuaxin1',
                 extend: 'data-table="currentTable"',
             }]
         ],
