@@ -27,7 +27,7 @@ layui.use('yznTable', function() {
         elem: '#currentTable',
         toolbar: ['refresh', 'delete',
             [{
-                html: '<a class="layui-btn layui-btn-sm confirm" data-href="{:url("pass")}" data-batch-all="currentTable">审核通过</a>',
+                html: '<a class="layui-btn layui-btn-sm confirm" data-href="{:url("pass")}" data-batch-all="currentTable"><i class="iconfont icon-right"></i>&nbsp;审核通过</a>',
             }],
         ],
         url: '{:url("userverify")}',
