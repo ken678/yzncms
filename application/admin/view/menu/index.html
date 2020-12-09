@@ -11,8 +11,8 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm yzn-btn-primary" data-treetable-refresh="currentTable"><i class="iconfont icon-shuaxin1"></i> </button>
-    <button class="layui-btn layui-btn-sm" data-open="{:url('add')}" >新增后台菜单</button>
-    <button class="layui-btn layui-btn-sm layui-btn-normal" id="openAll">展开或折叠全部</button>
+    <button class="layui-btn layui-btn-sm" data-open="{:url('add')}" ><i class="iconfont icon-add"></i>&nbsp;新增后台菜单</button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal" id="openAll"><i class="iconfont icon-add"></i>&nbsp;展开或折叠全部</button>
 </div>
 </script>
 <script type="text/html" id="barTool">
@@ -72,8 +72,12 @@ layui.use(['table', 'treeGrid', 'yznTable'], function() {
     renderTable();
 
     $('#openAll').click(function(e) {
+        var that = this;
         var treedata = treeGrid.getDataTreeList(tableId);
         treeGrid.treeOpenAll(tableId, !treedata[0][treeGrid.config.cols.isOpen]);
+        var show = $("i", that).hasClass("icon-add");
+        $("i", that).toggleClass("icon-add", !show);
+        $("i", that).toggleClass("icon-min", show);
     })
 
     $('body').on('click', '[data-treetable-refresh]', function() {
