@@ -38,4 +38,11 @@
     </div>
 </div>
 {template file="member/layui.html"/}
+<script type="text/javascript">
+//刷新验证码
+$("#verify").click(function() {
+    var verifyimg = $("#verify").attr("src");
+    $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+});
+</script>
 {template file="member/footer.html"/}
