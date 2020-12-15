@@ -32,18 +32,18 @@ class Publish extends Adminbase
     {
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 10);
+            $page  = $this->request->param('page/d', 10);
 
             $total = Member_Content_Model::count();
             $_list = Member_Content_Model::page($page, $limit)->order(array("id" => "DESC"))->select();
 
             foreach ($_list as $k => $v) {
-                $modelid = getCategory($v['catid'], 'modelid');
+                $modelid   = getCategory($v['catid'], 'modelid');
                 $tablename = ucwords(getModel($modelid, 'tablename'));
-                $info = Db::name($tablename)->where(array("id" => $v['content_id'], "sysadd" => 0))->find();
+                $info      = Db::name($tablename)->where(array("id" => $v['content_id'], "sysadd" => 0))->find();
                 if ($info) {
-                    $_list[$k]['url'] = buildContentUrl($v['catid'], $v['content_id']);
-                    $_list[$k]['title'] = $info['title'];
+                    $_list[$k]['url']     = buildContentUrl($v['catid'], $v['content_id'], $info['url']);
+                    $_list[$k]['title']   = $info['title'];
                     $_list[$k]['catname'] = getCategory($v['catid'], 'catname');
                 }
             }
@@ -92,13 +92,13 @@ class Publish extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $id) {
-            $info = Member_Content_Model::get($id);
+            $info         = Member_Content_Model::get($id);
             $info->status = 1;
             $info->save();
 
-            $modelid = getCategory($info['catid'], 'modelid');
+            $modelid     = getCategory($info['catid'], 'modelid');
             $model_cache = cache("Model");
-            $tablename = ucwords($model_cache[$modelid]['tablename']);
+            $tablename   = ucwords($model_cache[$modelid]['tablename']);
             Db::name($tablename)->where('id', $info['content_id'])->setField('status', 1);
         }
         $this->success('操作成功！');
@@ -116,13 +116,13 @@ class Publish extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $id) {
-            $info = Member_Content_Model::get($id);
+            $info         = Member_Content_Model::get($id);
             $info->status = -1;
             $info->save();
 
-            $modelid = getCategory($info['catid'], 'modelid');
+            $modelid     = getCategory($info['catid'], 'modelid');
             $model_cache = cache("Model");
-            $tablename = ucwords($model_cache[$modelid]['tablename']);
+            $tablename   = ucwords($model_cache[$modelid]['tablename']);
             Db::name($tablename)->where('id', $info['content_id'])->setField('status', 0);
         }
         $this->success('操作成功！');

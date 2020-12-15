@@ -96,7 +96,7 @@ class Cms extends Modelbase
         //推送到熊掌号和百度站长
         $cmsConfig = cache("Cms_Config");
         if ($cmsConfig['web_site_baidupush']) {
-            hook("baidupush", buildContentUrl($catid, $id, '', true, true));
+            hook("baidupush", buildContentUrl($catid, $id, $data['url'], true, true));
         }
         return $id;
     }
@@ -354,7 +354,7 @@ class Cms extends Modelbase
             $ModelField = cache('ModelField');
             foreach ($result as $key => $vo) {
                 $vo           = $this->dealModelShowData($ModelField[$modeId], $vo);
-                $vo['url']    = buildContentUrl($vo['catid'], $vo['id']);
+                $vo['url']    = buildContentUrl($vo['catid'], $vo['id'], $vo['url']);
                 $result[$key] = $vo;
             }
         }
@@ -381,7 +381,7 @@ class Cms extends Modelbase
         if (!empty($dataInfo)) {
             $ModelField      = cache('ModelField');
             $dataInfo        = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
-            $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id']);
+            $dataInfo['url'] = buildContentUrl($dataInfo['catid'], $dataInfo['id'], $dataInfo['url']);
         }
         return $dataInfo;
     }

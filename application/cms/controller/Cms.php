@@ -70,7 +70,7 @@ class Cms extends Adminbase
                 if (isset($v['thumb'])) {
                     $v['thumb'] = get_file_path($v['thumb']);
                 }
-                $v['url'] = buildContentUrl($v['catid'], $v['id']);
+                $v['url'] = buildContentUrl($v['catid'], $v['id'], $v['url']);
                 $_list[]  = $v;
             }
             $result = array("code" => 0, "count" => $total, "data" => $_list);
