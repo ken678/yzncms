@@ -279,9 +279,18 @@ class Cms extends Modelbase
                 if (!$id) {
                     $value['value'] = $value['setting']['value'];
                 }
-                if ('' != $value['options']) {
+                if ($value['type'] == 'custom') {
+                    if ($value['options'] != '') {
+                        $tpar             = explode(".", $value['options'], 2);
+                        $value['options'] = \think\Response::create('admin@custom/' . $tpar[0], 'view')->assign('vo', $value)->getContent();
+                        unset($tpar);
+                    }
+                } elseif ($value['options'] != '') {
                     $value['options'] = parse_attr($value['options']);
                 }
+                /*if ('' != $value['options']) {
+                $value['options'] = parse_attr($value['options']);
+                }*/
                 if ($value['type'] == 'checkbox') {
                     $value['value'] = empty($value['value']) ? [] : explode(',', $value['value']);
                 }
