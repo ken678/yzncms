@@ -162,6 +162,7 @@ class Models extends Modelbase
                 `hits` mediumint(8) UNSIGNED DEFAULT 0 COMMENT '点击量' ,
                 `inputtime` int(10) unsigned NOT NULL DEFAULT '0'  COMMENT '创建时间',
                 `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
                 `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
                 PRIMARY KEY (`id`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
@@ -317,6 +318,15 @@ EOF;
                 'type'      => 'number',
                 'listorder' => 200,
                 'setting'   => "a:3:{s:6:\"define\";s:42:\"mediumint(8) UNSIGNED NOT NULL DEFAULT '0'\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:1:\"0\";}",
+            ],
+            [
+                'name'      => 'url',
+                'title'     => '链接地址',
+                'type'      => 'text',
+                'listorder' => 300,
+                'setting'   => "a:3:{s:6:\"define\";s:32:\"varchar(100) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
+                'remark'    => '有值时生效，内部链接格式:模块/控制器/操作?参数=参数值&...，外部链接则必须http://开头',
+                'isadd'     => 1,
             ],
         ];
         if ($type == 2) {
