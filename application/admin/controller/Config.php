@@ -99,7 +99,14 @@ class Config extends Adminbase
                 ->order('listorder,id desc')
                 ->column('name,title,remark,type,value,options');
             foreach ($configList as &$value) {
-                if ($value['options'] != '') {
+                $value['fieldArr'] = 'modelField';
+                if ($value['type'] == 'custom') {
+                    if ($value['options'] != '') {
+                        $tpar             = explode(".", $value['options'], 2);
+                        $value['options'] = \think\Response::create('admin@custom/' . $tpar[0], 'view')->assign('vo', $value)->getContent();
+                        unset($tpar);
+                    }
+                } elseif ($value['options'] != '') {
                     $value['options'] = parse_attr($value['options']);
                 }
                 if ($value['type'] == 'checkbox') {
@@ -111,7 +118,6 @@ class Config extends Adminbase
                 if ($value['type'] == 'Ueditor') {
                     $value['value'] = htmlspecialchars_decode($value['value']);
                 }
-                $value['fieldArr'] = 'modelField';
             }
             $this->assign([
                 'groupArray' => config('config_group'),
