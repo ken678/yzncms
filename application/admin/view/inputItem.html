@@ -305,6 +305,9 @@
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
+{case value="custom"}
+   {$vo.options|raw}
+{/case}
 {case value="markdown"}
     {:hook('markdown',$vo)}
 {/case}
