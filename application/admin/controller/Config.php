@@ -24,8 +24,11 @@ class Config extends Adminbase
     protected function initialize()
     {
         parent::initialize();
+        $filepath = APP_PATH . 'admin' . DIRECTORY_SEPARATOR . "view" . DIRECTORY_SEPARATOR . 'custom' . DIRECTORY_SEPARATOR;
+        $custom   = str_replace($filepath . DIRECTORY_SEPARATOR, '', glob($filepath . DIRECTORY_SEPARATOR . 'custom*'));
         //允许使用的字段列表
-        $this->banfie     = ["text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown', 'city', 'custom'];
+        $this->banfie = ["text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown', 'city', 'custom'];
+        $this->assign('custom', $custom);
         $this->modelClass = new ConfigModel;
     }
 
