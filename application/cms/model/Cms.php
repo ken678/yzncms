@@ -96,7 +96,7 @@ class Cms extends Modelbase
         //推送到熊掌号和百度站长
         $cmsConfig = cache("Cms_Config");
         if ($cmsConfig['web_site_baidupush']) {
-            hook("baidupush", buildContentUrl($catid, $id, true, true));
+            hook("baidupush", buildContentUrl($catid, $id, '', true, true));
         }
         return $id;
     }
