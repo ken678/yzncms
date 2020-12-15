@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 'laytpl'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -7,7 +7,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         form = layui.form,
         dragsort = layui.dragsort,
         element = layui.element,
-        laytpl = layui.laytpl,
         notice = layui.notice;
 
     // 文件上传集合
@@ -187,7 +186,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     });
 
     // 绑定tags标签组件
-    if ($(".form-tags").size() > 0) {
+    if ($(".layui-form .form-tags").size() > 0) {
         layui.define('tagsinput', function(exports) {
             var tagsinput = layui.tagsinput;
             $('.form-tags').each(function() {
@@ -200,7 +199,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         })
     }
 
-    //绑定城市选择组件
+    // 绑定城市选择组件
     if ($("[data-toggle='city-picker']").size() > 0) {
         layui.define('citypicker', function(exports) {
             var citypicker = layui.citypicker;
@@ -309,7 +308,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     	})
     }
 
-    // 绑定下拉框多选
+    // 绑定下拉框多选组件
     if ($('.layui-form .form-selects').length > 0) {
         layui.define('xmSelect', function(exports) {
             var xmselect = layui.xmSelect;
@@ -337,7 +336,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
     }
 
     // 绑定颜色组件
-    if ($('.layui-color-box').length > 0) {
+    if ($('.layui-form .layui-color-box').length > 0) {
         layui.define('colorpicker', function(exports) {
             var colorpicker = layui.colorpicker;
             $('.layui-color-box').each(function() {
@@ -352,7 +351,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         })
     }
 
-    // 绑定图片上传
+    // 绑定图片上传组件
     if ($('.js-upload-image,.js-upload-images').length > 0) {
         layui.define('webuploader', function(exports) {
             var webuploader=layui.webuploader;
@@ -546,8 +545,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         })
     }
 
-
-    // 绑定文件上传
+    // 绑定文件上传组件
     if ($('.js-upload-file,.js-upload-files').length > 0) {
         layui.define('webuploader', function(exports) {
             var webuploader=layui.webuploader;
@@ -674,6 +672,105 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         })
     }
 
+    // 绑定fieldlist组件
+    if ($(".layui-form .fieldlist").size() > 0) {
+        layui.define('laytpl', function(exports) {
+            var laytpl = layui.laytpl;
+            //刷新隐藏textarea的值
+            var refresh = function(name) {
+                var data = {};
+                var textarea = $("textarea[name='" + name + "']");
+                var container = $(".fieldlist[data-name='" + name + "']");
+                var template = container.data("template");
+                $.each($("input,select,textarea", container).serializeArray(), function(i, j) {
+                    var reg = /\[(\w+)\]\[(\w+)\]$/g;
+                    var match = reg.exec(j.name);
+                    if (!match)
+                        return true;
+                    match[1] = "x" + parseInt(match[1]);
+                    if (typeof data[match[1]] == 'undefined') {
+                        data[match[1]] = {};
+                    }
+                    data[match[1]][match[2]] = j.value;
+                });
+                var result = template ? [] : {};
+                $.each(data, function(i, j) {
+                    if (j) {
+                        if (!template) {
+                            if (j.key != '') {
+                                result[j.key] = j.value;
+                            }
+                        } else {
+                            result.push(j);
+                        }
+                    }
+                });
+                //console.log(result);
+                textarea.val(JSON.stringify(result));
+            };
+            //监听文本框改变事件
+            $(document).on('change keyup changed', ".fieldlist input,.fieldlist textarea,.fieldlist select", function() {
+                refresh($(this).closest(".fieldlist").data("name"));
+            });
+            //追加控制
+            $(".layui-form .fieldlist").on("click", ".btn-append,.append", function(e, row) {
+                var container = $(this).closest(".fieldlist");
+                //var tagName = container.data("tag") || "dd";
+                var index = container.data("index");
+                var name = container.data("name");
+                var id = container.data("id");
+                var template = container.data("template");
+                var data = container.data();
+                index = index ? parseInt(index) : 0;
+                container.data("index", index + 1);
+                row = row ? row : {};
+                var vars = {
+                    lists: [{ 'index': index, 'name': name, 'data': data, 'row': row }]
+                };
+                laytpl($("#" + id + "Tpl").html()).render(vars, function(html) {
+                    $(html).insertBefore($(".arrBox", container));
+                });
+                //var html = template ? Template(template, vars) : Template.render(Form.config.fieldlisttpl, vars);
+                //$(html).insertBefore($(tagName + ":last", container));
+                //$(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
+            });
+            //移除控制
+            $(".layui-form .fieldlist").on("click", ".btn-remove", function() {
+                var container = $(this).closest(".fieldlist");
+                //var tagName = container.data("tag") || "dd";
+                $(this).closest($(".rules-item")).remove();
+                refresh(container.data("name"));
+            });
+            //渲染数据&拖拽排序
+            $(".layui-form .fieldlist").each(function() {
+                var container = this;
+                //var tagName = $(this).data("tag") || "dd";
+                $(this).dragsort({
+                    //itemSelector: $(".rules-item"),
+                    dragSelector: ".btn-dragsort",
+                    dragEnd: function() {
+                        refresh($(this).closest(".fieldlist").data("name"));
+                    },
+                    //placeHolderTemplate: '<div style="border:1px #009688 dashed;"></div>'
+                });
+                var textarea = $("textarea[name='" + $(this).data("name") + "']");
+                if (textarea.val() == '') {
+                    return true;
+                }
+                var template = $(this).data("template");
+                var json = {};
+                try {
+                    json = JSON.parse(textarea.val());
+                } catch (e) {}
+                $.each(json, function(i, j) {
+                    $(".btn-append,.append", container).trigger('click', template ? j : {
+                        key: i,
+                        value: j
+                    });
+                });
+            });
+        })
+    }
 
     //裁剪图片
     $(document).on('click', '.cropper', function() {
@@ -869,103 +966,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         return false;
     });
 
-    //绑定fieldlist
-    if ($(".layui-form .fieldlist").size() > 0) {
-        //刷新隐藏textarea的值
-        var refresh = function(name) {
-            var data = {};
-            var textarea = $("textarea[name='" + name + "']");
-            var container = $(".fieldlist[data-name='" + name + "']");
-            var template = container.data("template");
-            $.each($("input,select,textarea", container).serializeArray(), function(i, j) {
-                var reg = /\[(\w+)\]\[(\w+)\]$/g;
-                var match = reg.exec(j.name);
-                if (!match)
-                    return true;
-                match[1] = "x" + parseInt(match[1]);
-                if (typeof data[match[1]] == 'undefined') {
-                    data[match[1]] = {};
-                }
-                data[match[1]][match[2]] = j.value;
-            });
-            var result = template ? [] : {};
-            $.each(data, function(i, j) {
-                if (j) {
-                    if (!template) {
-                        if (j.key != '') {
-                            result[j.key] = j.value;
-                        }
-                    } else {
-                        result.push(j);
-                    }
-                }
-            });
-            //console.log(result);
-            textarea.val(JSON.stringify(result));
-        };
-        //监听文本框改变事件
-        $(document).on('change keyup changed', ".fieldlist input,.fieldlist textarea,.fieldlist select", function() {
-            refresh($(this).closest(".fieldlist").data("name"));
-        });
-        //追加控制
-        $(".layui-form .fieldlist").on("click", ".btn-append,.append", function(e, row) {
-            var container = $(this).closest(".fieldlist");
-            //var tagName = container.data("tag") || "dd";
-            var index = container.data("index");
-            var name = container.data("name");
-            var id = container.data("id");
-            var template = container.data("template");
-            var data = container.data();
-            index = index ? parseInt(index) : 0;
-            container.data("index", index + 1);
-            row = row ? row : {};
-            var vars = {
-                lists: [{ 'index': index, 'name': name, 'data': data, 'row': row }]
-            };
-            laytpl($("#" + id + "Tpl").html()).render(vars, function(html) {
-                $(html).insertBefore($(".arrBox", container));
-            });
-            //var html = template ? Template(template, vars) : Template.render(Form.config.fieldlisttpl, vars);
-            //$(html).insertBefore($(tagName + ":last", container));
-            //$(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
-        });
-        //移除控制
-        $(".layui-form .fieldlist").on("click", ".btn-remove", function() {
-            var container = $(this).closest(".fieldlist");
-            //var tagName = container.data("tag") || "dd";
-            $(this).closest($(".rules-item")).remove();
-            refresh(container.data("name"));
-        });
-        //渲染数据&拖拽排序
-        $(".layui-form .fieldlist").each(function() {
-            var container = this;
-            //var tagName = $(this).data("tag") || "dd";
-            $(this).dragsort({
-                //itemSelector: $(".rules-item"),
-                dragSelector: ".btn-dragsort",
-                dragEnd: function() {
-                    refresh($(this).closest(".fieldlist").data("name"));
-                },
-                //placeHolderTemplate: '<div style="border:1px #009688 dashed;"></div>'
-            });
-            var textarea = $("textarea[name='" + $(this).data("name") + "']");
-            if (textarea.val() == '') {
-                return true;
-            }
-            var template = $(this).data("template");
-            var json = {};
-            try {
-                json = JSON.parse(textarea.val());
-            } catch (e) {}
-            $.each(json, function(i, j) {
-                $(".btn-append,.append", container).trigger('click', template ? j : {
-                    key: i,
-                    value: j
-                });
-            });
-        });
-    }
-
     // ueditor编辑器集合
     var ueditors = {};
     // ueditor编辑器
@@ -1131,101 +1131,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort', 
         });
         return false;
     });
-
-    /**
-     * 列表页批量操作按钮组
-     * @attr href 操作地址
-     * @attr data-table table容器ID
-     * @class confirm 类似系统confirm
-     * @attr tips confirm提示内容
-     */
-    /*$(document).on('click', '.layui-batch-all', function() {
-        var that = $(this),
-            query = '',
-            code = function(that) {
-                var href = that.attr('href') ? that.attr('href') : that.attr('data-href');
-                var tableObj = that.attr('data-table') ? that.attr('data-table') : 'dataTable';
-                if (!href) {
-                    notice.info('请设置data-href参数');
-                    return false;
-                }
-
-                if ($('.checkbox-ids:checked').length <= 0) {
-                    var checkStatus = table.checkStatus(tableObj);
-                    if (checkStatus.data.length <= 0) {
-                        notice.info('请选择要操作的数据');
-                        return false;
-                    }
-                    for (var i in checkStatus.data) {
-                        if (i > 0) {
-                            query += '&';
-                        }
-                        query += 'ids[]=' + checkStatus.data[i].id;
-                    }
-                } else {
-                    if (that.parents('form')[0]) {
-                        query = that.parents('form').serialize();
-                    } else {
-                        query = $('#pageListForm').serialize();
-                    }
-                }
-
-                yzn.request.post(href, query, function(res) {
-                    if (res.code === 1) {
-                        table.reload('dataTable');
-                    }
-                });
-            };
-        if (that.hasClass('confirm')) {
-            var tips = that.attr('tips') ? that.attr('tips') : '您确定要执行此操作吗？';
-            layer.confirm(tips, { icon: 3, title: '提示信息' }, function(index) {
-                code(that);
-                layer.close(index);
-            });
-        } else {
-            code(that);
-        }
-        return false;
-    });*/
-
-    //ajax get请求
-    /*$(document).on('click', '.ajax-get', function() {
-        var that = $(this),
-            href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href'),
-            refresh = !that.attr('refresh') ? 'true' : that.attr('refresh');
-        if (!href) {
-            layer.msg('请设置data-href参数');
-            return false;
-        }
-        if ($(this).hasClass('confirm')) {
-            layer.confirm('确认要执行该操作吗?', { icon: 3, title: '提示' }, function(index) {
-                $.get(href, {}, function(res) {
-                    layer.msg(res.msg, {}, function() {
-                        if (refresh == 'true' || refresh == 'yes') {
-                            if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
-                                location.href = res.url;
-                            } else {
-                                location.reload();
-                            }
-                        }
-                    });
-                });
-            });
-        } else {
-            $.get(href, {}, function(res) {
-                layer.msg(res.msg, {}, function() {
-                    if (refresh == 'true') {
-                        if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
-                            location.href = res.url;
-                        } else {
-                            location.reload();
-                        }
-                    }
-                });
-            });
-        };
-        return false;
-    });*/
 
     //通用表单post提交
     $('.ajax-post').on('click', function(e) {
