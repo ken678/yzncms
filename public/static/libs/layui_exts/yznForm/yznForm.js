@@ -1,4 +1,4 @@
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort','ueditor'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -7,7 +7,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort','
         form = layui.form,
         dragsort = layui.dragsort,
         element = layui.element,
-        ueditor = layui.ueditor,
         notice = layui.notice;
 
     // 文件上传集合
@@ -773,6 +772,60 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort','
         })
     }
 
+    // ueditor编辑器集合
+    var ueditors = {};
+    // 绑定ueditor编辑器组件
+    if ($(".layui-form .js-ueditor").size() > 0) {
+        layui.define('ueditor', function(exports) {
+            var ueditor = layui.ueditor;
+            $('.layui-form .js-ueditor').each(function() {
+                var ueditor_name = $(this).attr('id');
+                ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
+                    initialFrameHeight: 400, //初始化编辑器高度,默认320
+                    autoHeightEnabled: false, //是否自动长高
+                    maximumWords: 50000, //允许的最大字符数
+                    serverUrl: GV.ueditor_upload_url,
+                });
+                $('#' + ueditor_name + 'grabimg').click(function() {
+                    var con = ueditors[ueditor_name].getContent();
+                    $.post(GV.ueditor_grabimg_url, { 'content': con, 'type': 'images' },
+                        function(data) {
+                            ueditors[ueditor_name].setContent(data);
+                            layer.msg("图片本地化完成");
+                        }, 'html');
+                });
+                //分词检测
+                if(ueditor_name=='content'){
+                    $('#getwords').click(function() {
+                        var con = ueditors['content'].getContentTxt();
+                        $.post(GV.ueditor_getwords_url, { 'content': con},
+                            function(data) {
+                                if(data.code==0){
+                                    $(".tags-keywords").importTags(data.arr);
+                                    //$(".tags-keywords").val(data.arr);
+                                }else{
+                                    layer.msg(data.msg,{icon:2});
+                                }
+                            });
+                    });  
+                }
+                //过滤敏感字
+                $('#' + ueditor_name + 'filterword').click(function() {
+                    var con = ueditors[ueditor_name].getContent();
+                    $.post(GV.filter_word_url, { 'content': con }).success(function(res) {
+                        if (res.code == 0) {
+                            if ($.isArray(res.data)) {
+                                layer.msg("违禁词：" + res.data.join(","), { icon: 2 });
+                            }
+                        } else {
+                            layer.msg("内容没有违禁词！", { icon: 1 });
+                        }
+                    })
+                })
+            });
+        })
+    }
+
     //裁剪图片
     $(document).on('click', '.cropper', function() {
         var inputId = $(this).attr("data-input-id");
@@ -966,58 +1019,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort','
         });
         return false;
     });
-
-    // ueditor编辑器集合
-    var ueditors = {};
-    // ueditor编辑器
-    if ($(".layui-form .js-ueditor").size() > 0) {
-        $('.layui-form .js-ueditor').each(function() {
-            var ueditor_name = $(this).attr('id');
-            ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
-                initialFrameHeight: 400, //初始化编辑器高度,默认320
-                autoHeightEnabled: false, //是否自动长高
-                maximumWords: 50000, //允许的最大字符数
-                serverUrl: GV.ueditor_upload_url,
-            });
-            $('#' + ueditor_name + 'grabimg').click(function() {
-                var con = ueditors[ueditor_name].getContent();
-                $.post(GV.ueditor_grabimg_url, { 'content': con, 'type': 'images' },
-                    function(data) {
-                        ueditors[ueditor_name].setContent(data);
-                        layer.msg("图片本地化完成");
-                    }, 'html');
-            });
-            //分词检测
-            if(ueditor_name=='content'){
-                $('#getwords').click(function() {
-                    var con = ueditors['content'].getContentTxt();
-                    $.post(GV.ueditor_getwords_url, { 'content': con},
-                        function(data) {
-                            if(data.code==0){
-                                $(".tags-keywords").importTags(data.arr);
-                                //$(".tags-keywords").val(data.arr);
-                            }else{
-                                layer.msg(data.msg,{icon:2});
-                            }
-                        });
-                });  
-            }
-
-            //过滤敏感字
-            $('#' + ueditor_name + 'filterword').click(function() {
-                var con = ueditors[ueditor_name].getContent();
-                $.post(GV.filter_word_url, { 'content': con }).success(function(res) {
-                    if (res.code == 0) {
-                        if ($.isArray(res.data)) {
-                            layer.msg("违禁词：" + res.data.join(","), { icon: 2 });
-                        }
-                    } else {
-                        layer.msg("内容没有违禁词！", { icon: 1 });
-                    }
-                })
-            })
-        });
-    }
 
     /**
      * 普通按钮点击iframe弹窗
