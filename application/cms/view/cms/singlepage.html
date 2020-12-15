@@ -24,16 +24,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="">内容</label>
             <div class="layui-form-field-label">
-                <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.config.js"></script>
-                <script type="text/javascript" src="__STATIC__/libs/ueditor/ueditor.all.min.js"></script>
-                <script type="text/javascript">
-                var modelFieldExtcontent = UE.getEditor('modelFieldcontent', {
-                    initialFrameWidth: null,
-                    initialFrameHeight: 250,
-                    serverUrl: GV.ueditor_upload_url
-                });
-                </script>
-                <script type="text/plain" id="modelFieldcontent" name="modelField[content]">{$info['content']|raw}</script>
+                <script type="text/plain" class="js-ueditor" id="content" name="modelField[content]">{$info['content']|raw}</script>
             </div>
         </div>
         <input type="hidden" name="modelField[catid]" value="{$catid}">
