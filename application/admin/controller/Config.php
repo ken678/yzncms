@@ -103,7 +103,7 @@ class Config extends Adminbase
                 if ($value['type'] == 'custom') {
                     if ($value['options'] != '') {
                         $tpar             = explode(".", $value['options'], 2);
-                        $value['options'] = \think\Response::create('admin@custom/' . $tpar[0], 'view')->assign('vo', $value)->getContent();
+                        $value['options'] = $this->fetch('admin@custom/' . $tpar[0], ['vo' => $value])->getContent();
                         unset($tpar);
                     }
                 } elseif ($value['options'] != '') {
