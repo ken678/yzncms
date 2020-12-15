@@ -326,7 +326,6 @@ EOF;
                 'listorder' => 300,
                 'setting'   => "a:3:{s:6:\"define\";s:32:\"varchar(100) NOT NULL DEFAULT ''\";s:7:\"options\";s:0:\"\";s:5:\"value\";s:0:\"\";}",
                 'remark'    => '有值时生效，内部链接格式:模块/控制器/操作?参数=参数值&...，外部链接则必须http://开头',
-                'isadd'     => 1,
             ],
         ];
         if ($type == 2) {
