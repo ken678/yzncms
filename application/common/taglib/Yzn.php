@@ -158,8 +158,8 @@ class Yzn extends Taglib
         //拼接php代码
         $parseStr = '<?php ';
         if ($page) {
-            $config         = app("config")->pull("paginate");
-            $config["path"] = request()->baseUrl();
+            $parseStr .= '$config=app("config")->pull("paginate");';
+            $parseStr .= '$config["path"]=request()->baseUrl();';
         }
         $parseStr .= '$cache = ' . $cache . ';';
         if ($table) {
@@ -175,7 +175,7 @@ class Yzn extends Taglib
                 $parseStr .= '$_count=$get_db->where(' . self::arr_to_html($tableWhere) . ')->count();';
                 $parseStr .= '$_limit=((' . $page . ' - 1) * ' . $num . ') < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
                 $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit($_limit,' . $num . ')->select();';
-                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,' . self::arr_to_html($config) . ');';
+                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,$config);';
             } else {
                 $parseStr .= '$' . $return . '=$get_db->where(' . self::arr_to_html($tableWhere) . ')->limit(' . $num . ')->select();';
             }
@@ -195,7 +195,7 @@ class Yzn extends Taglib
                 $parseStr .= '$_limit=((' . $page . ' - 1) * ' . $num . ') < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
                 $parseStr .= '$_count=count(\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . '"));';
                 $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT $_limit,' . $num . '");';
-                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,' . self::arr_to_html($config) . ');';
+                $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,$config);';
             } else {
                 $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT ' . $num . '");';
             }
