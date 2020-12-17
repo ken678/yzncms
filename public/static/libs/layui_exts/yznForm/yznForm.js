@@ -677,7 +677,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         layui.define('laytpl', function(exports) {
             var laytpl = layui.laytpl;
             //刷新隐藏textarea的值
-            var refresh = function(name) {
+            var refresh = function(name,obj=null) {
                 var data = {};
                 var textarea = $("textarea[name='" + name + "']");
                 var container = $(".fieldlist[data-name='" + name + "']");
@@ -691,7 +691,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     if (typeof data[match[1]] == 'undefined') {
                         data[match[1]] = {};
                     }
-                    data[match[1]][match[2]] = j.value;
+                    if(obj!==null && $(obj.elem).attr('name')==j.name){
+                        data[match[1]][match[2]] = obj.value;
+                    }else{
+                        data[match[1]][match[2]] = j.value;
+                    }
                 });
                 var result = template ? [] : {};
                 $.each(data, function(i, j) {
@@ -712,6 +716,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             $(document).on('change keyup changed', ".fieldlist input,.fieldlist textarea,.fieldlist select", function() {
                 refresh($(this).closest(".fieldlist").data("name"));
             });
+            form.on('radio', function(data){
+              refresh($(this).closest(".fieldlist").data("name"),data);
+            });  
             //追加控制
             $(".layui-form .fieldlist").on("click", ".btn-append,.append", function(e, row) {
                 var container = $(this).closest(".fieldlist");
@@ -730,6 +737,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 laytpl($("#" + id + "Tpl").html()).render(vars, function(html) {
                     $(html).insertBefore($(".arrBox", container));
                 });
+                form.render();
                 //var html = template ? Template(template, vars) : Template.render(Form.config.fieldlisttpl, vars);
                 //$(html).insertBefore($(tagName + ":last", container));
                 //$(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
@@ -768,6 +776,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         value: j
                     });
                 });
+                form.render();
             });
         })
     }
