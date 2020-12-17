@@ -716,7 +716,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             $(document).on('change keyup changed', ".fieldlist input,.fieldlist textarea,.fieldlist select", function() {
                 refresh($(this).closest(".fieldlist").data("name"));
             });
-            form.on('radio', function(data){
+            form.on('radio(fieldlist)', function(data){
+              refresh($(this).closest(".fieldlist").data("name"),data);
+            }); 
+            form.on('select(fieldlist)', function(data){
               refresh($(this).closest(".fieldlist").data("name"),data);
             });  
             //追加控制
