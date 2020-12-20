@@ -66,7 +66,7 @@ class Index extends Cmsbase
             //去除完后缀的模板
             $template = $tpar[0];
             unset($tpar);
-            $seo = seo($catid, $setting['meta_title'], $setting['meta_description'], $setting['meta_keywords']);
+            $seo = seo($catid, '', $setting['meta_description'], $setting['meta_keywords']);
             //单页
         } else if ($category['type'] == 1) {
             $template = $setting['page_template'] ? $setting['page_template'] : 'page';
