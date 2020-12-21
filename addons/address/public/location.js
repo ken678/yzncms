@@ -136,7 +136,7 @@ layui.define(['layer', 'locationX'], function (exports) {
             map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
             var point = new BMap.Point(o.config.longitude ? o.config.longitude : 116.404, o.config.latitude ? o.config.latitude : 39.915); // 创建点坐标
             map.centerAndZoom(point, o.config.zoom);
-            map.setDefaultCursor("url('" + layui.cache.base + "location/img/location.cur') 17 35,auto");   //设置地图默认的鼠标指针样式
+            map.setDefaultCursor("url('" + layui.cache.base + "../../addons/address/img/location.cur') 17 35,auto");   //设置地图默认的鼠标指针样式
             var marker = new BMap.Marker(map.getCenter());  // 创建标注
             map.addOverlay(marker);               // 将标注添加到地图中
             map.addEventListener("click", function (e) {
@@ -487,7 +487,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                     center: [o.config.longitude ? o.config.longitude : 116.404, o.config.latitude ? o.config.latitude : 39.915],
                     layers: layers
                 });
-            map.setDefaultCursor("url('" + layui.cache.base + "location/img/location_blue.cur') 17 35,auto");
+            map.setDefaultCursor("url('" + layui.cache.base + "../../addons/address/img/location_blue.cur') 17 35,auto");
 
             // 初始化中间点标记
             var marker = new AMap.Marker({
@@ -722,7 +722,7 @@ layui.define(['layer', 'locationX'], function (exports) {
     };
 
 
-    layui.link(layui.cache.base + 'location/location.css');  // 加载css
+    layui.link(layui.cache.base + '../../addons/address/location.css');  // 加载css
 
     /*导出模块,用一个location对象来管理obj，不需要外部new obj*/
     var location = function () {
