@@ -59,7 +59,7 @@
 .layui-color .layui-input-block {margin-left: 15px; min-height: 36px; }
 .layui-color .more-menu-list {width: 100%; margin-top: 30px; }
 .layui-color .more-menu-item:first-child {border-top: 1px solid #e8e8e8; }
-.layui-color .more-menu-item .layui-icon {font-size: 18px; padding-right: 10px; }
+.layui-color .more-menu-item i {font-size: 18px; padding-right: 10px; }
 .layui-color .more-menu-item {color: #595959; height: 50px; line-height: 50px; font-size: 16px; padding: 0 25px; border-bottom: 1px solid #e8e8e8; font-style: normal; display: block; }
 .layui-color .more-menu-item:hover {background-color: whitesmoke; }
 .layui-color .more-menu-item:after {color: #8c8c8c; right: 16px; content: "\e602"; position: absolute; font-family: layui-icon !important; }
