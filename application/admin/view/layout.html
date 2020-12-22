@@ -79,7 +79,7 @@
         <div class="site-mobile-shade"></div>
         <div class="layui-body" id="B_frame">
             <div class="layui-tab mag0" id="top_tabs_box" lay-filter="Tab">
-                <div class="tab-go-refresh" id="J_refresh"><i class="iconfont icon-shuaxin1"></i></div>
+                <div class="tab-go-refresh" id="J_refresh"><i class="layui-icon iconfont icon-shuaxin1"></i></div>
                 <div class="tab-go-left" id="page-prev"><i class="layui-icon layui-icon-left"></i></div>
                 <ul class="layui-tab-title top_tab" id="B_history">
                     <li class="layui-this" lay-id="default"><i class="iconfont icon-homepage"></i>&nbsp;后台首页
@@ -409,18 +409,25 @@
             }
         }
 
-        //刷新
+        //tab点击刷新
         $('#J_refresh').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
-            var index = layer.load();
-            var id = $('#B_history .layui-this').attr('lay-id'),
-                iframe = $('#iframe_' + id);
-            if (iframe[0].contentWindow) {
-                //common.js
-                reloadPage(iframe[0].contentWindow);
-                layer.close(index);
-            }
+            const J_refresh = $("#J_refresh i");
+            J_refresh.removeClass("icon-shuaxin1 iconfont");
+            J_refresh.addClass("layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading");
+            var index = layer.load(0,{time: 4*1000});
+            setTimeout(function() {
+                J_refresh.addClass("icon-shuaxin1 iconfont");
+                J_refresh.removeClass("layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading");
+                var id = $('#B_history .layui-this').attr('lay-id'),
+                    iframe = $('#iframe_' + id);
+                if (iframe[0].contentWindow) {
+                    //common.js
+                    reloadPage(iframe[0].contentWindow);
+                    layer.close(index);
+                }
+            }, 600)
         });
 
         //关闭全部选项卡
