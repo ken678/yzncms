@@ -7,9 +7,8 @@
 layui.define(["jquery", "layer"], function (exports) {
     var $ = layui.$,
         layer = layui.layer;
-
+        
     var theme = {
-
         /**
          * 主题配置项
          * @param bgcolorId
@@ -430,10 +429,10 @@ layui.define(["jquery", "layer"], function (exports) {
                     '<ul>\n' + bgColorHtml + '</ul>\n' +
                     '</div>\n' +
                     '<div class="more-menu-list">\n' +
-                    '<a class="more-menu-item" href="https://www.kancloud.cn/ken678/yzncms" target="_blank"><i class="iconfont icon-book-2-line"></i> 开发文档</a>\n' +
-                    '<a class="more-menu-item" href="https://gitee.com/ken678/YZNCMS" target="_blank"><i class="iconfont icon-oschina"></i> 开源地址</a>\n' +
-                    '<a class="more-menu-item" href="https://blog.yzncms.com/" target="_blank"><i class="iconfont icon-lianjie"></i> 官方博客</a>\n' +
-                    '<a class="more-menu-item" href="https://bbs.yzncms.com/" target="_blank"><i class="iconfont icon-interactive"></i> 官方论坛</a>\n' +
+                    '<a class="more-menu-item" href="https://www.kancloud.cn/ken678/yzncms" target="_blank"><i class="layui-icon layui-icon-read"></i>开发文档</a>\n' +
+                    '<a class="more-menu-item" href="https://gitee.com/ken678/YZNCMS" target="_blank"><i class="layui-icon layui-icon-fonts-code"></i>开源地址</a>\n' +
+                    '<a class="more-menu-item" href="https://blog.yzncms.com/" target="_blank"><i class="iconfont icon-lianjie"></i>官方博客</a>\n' +
+                    '<a class="more-menu-item" href="https://bbs.yzncms.com/" target="_blank"><i class="layui-icon layui-icon-survey"></i>官方论坛</a>\n' +
                     '</div>' +
                     '</div>';
                 layer.open({
@@ -455,7 +454,6 @@ layui.define(["jquery", "layer"], function (exports) {
                 });
                 layer.close(loading);
             });
-
             $('body').on('click', '[data-select-bgcolor]', function () {
                 var bgcolorId = $(this).attr('data-select-bgcolor');
                 $('.layui-color .color-content ul .layui-this').attr('class', '');
