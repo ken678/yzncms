@@ -367,16 +367,17 @@ class Category extends Adminbase
                         $v['listorder_check'] = '';
                         $v['move_check']      = '';
                     }
+                    $categorys[$k] = $v;
                 }
                 $str = "<tr>
-    <td align='center'><input type='checkbox'  value='1' onclick='select_all(@catid, this)' lay-skin='primary'></td>
+    <td align='center'><input type='checkbox'  value='1' data-name='@id' lay-skin='primary'></td>
     <td>@spacer@catname</td>
-    <td align='center'><input type='checkbox' name='priv[@catid][]' @init_check  lay-skin='primary' value='init' ></td>
-    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @add_check lay-skin='primary' value='add' ></td>
-    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @edit_check lay-skin='primary' value='edit' ></td>
-    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @delete_check  lay-skin='primary' value='delete' ></td>
-    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @listorder_check lay-skin='primary' value='listorder' ></td>
-    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @move_check lay-skin='primary' value='remove' ></td>
+    <td align='center'><input type='checkbox' name='priv[@id][]' @init_check  lay-skin='primary' value='init' ></td>
+    <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @add_check lay-skin='primary' value='add' ></td>
+    <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @edit_check lay-skin='primary' value='edit' ></td>
+    <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @delete_check  lay-skin='primary' value='delete' ></td>
+    <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @listorder_check lay-skin='primary' value='listorder' ></td>
+    <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @move_check lay-skin='primary' value='remove' ></td>
             </tr>";
                 $tree->init($categorys);
                 $categorydata = $tree->getTree(0, $str);
