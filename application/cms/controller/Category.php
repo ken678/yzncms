@@ -340,12 +340,21 @@ class Category extends Adminbase
                 $this->error('请指定需要授权的角色！');
             }
             if ($this->request->isAjax()) {
-
+                $data = $this->request->post();
+                $priv = array();
+                foreach ($data['priv'] as $k => $v) {
+                    foreach ($v as $e => $q) {
+                        $priv[] = array("roleid" => $id, "catid" => $k, "action" => $q, "is_admin" => 1);
+                    }
+                }
+                Db::name("CategoryPriv")->where("roleid", $id)->delete();
+                Db::name("CategoryPriv")->insertAll($priv);
+                $this->success("栏目授权成功！");
             } else {
                 $tree          = new \util\Tree();
                 $tree->icon    = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
                 $tree->nbsp    = '&nbsp;&nbsp;&nbsp;';
-                $category_priv = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+                $category_priv = Db::name('CategoryPriv')->where("roleid", $id)->select();
                 $priv          = [];
                 foreach ($category_priv as $k => $v) {
                     $priv[$v['catid']][$v['action']] = true;
@@ -361,13 +370,14 @@ class Category extends Adminbase
                         $v['move_check']      = '';
                     } else {
                         $v['disabled']        = '';
-                        $v['init_check']      = '';
-                        $v['add_check']       = '';
-                        $v['delete_check']    = '';
-                        $v['listorder_check'] = '';
-                        $v['move_check']      = '';
+                        $v['add_check']       = isset($priv[$v['id']]['add']) ? 'checked' : '';
+                        $v['delete_check']    = isset($priv[$v['id']]['delete']) ? 'checked' : '';
+                        $v['listorder_check'] = isset($priv[$v['id']]['listorder']) ? 'checked' : '';
+                        $v['move_check']      = isset($priv[$v['id']]['remove']) ? 'checked' : '';
+                        $v['edit_check']      = isset($priv[$v['id']]['edit']) ? 'checked' : '';
                     }
-                    $categorys[$k] = $v;
+                    $v['init_check'] = isset($priv[$v['id']]['init']) ? 'checked' : '';
+                    $categorys[$k]   = $v;
                 }
                 $str = "<tr>
     <td align='center'><input type='checkbox'  value='1' data-name='@id' lay-skin='primary'></td>
@@ -387,7 +397,7 @@ class Category extends Adminbase
         }
         if ($this->request->isAjax()) {
             $AuthGroupModel = new \app\admin\model\AuthGroup();
-            $_list          = Db::view('Admin', 'id,username')->view('AuthGroup', 'title', 'AuthGroup.id=Admin.roleid')->order('id', 'desc')->select();
+            $_list          = Db::view('Admin', 'username')->view('AuthGroup', 'id,title', 'AuthGroup.id=Admin.roleid')->order('id', 'desc')->select();
             $result         = array("code" => 0, "data" => $_list);
             return json($result);
         } else {
