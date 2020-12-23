@@ -51,6 +51,13 @@ layui.use('yznTable', function() {
                     extend: 'data-full="true"',
                 }
             ], 'delete', [{
+                    text: '栏目授权',
+                    url: "{:url('cat_priv')}",
+                    method: 'open',
+                    class: 'layui-btn layui-btn-sm layui-btn-normal',
+                    icon: 'iconfont icon-setup',
+                },
+                {
                     text: '栏目数据校正',
                     url: "{:url('count_items')}",
                     method: 'request',

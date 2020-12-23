@@ -1,0 +1,38 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="50">
+                    <col>
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th align="center"><input type="checkbox" onclick="select_all(0, this)" lay-skin='primary'></th>
+                        <th align="left">栏目名称</th>
+                        <th align="center">查看</th>
+                        <th align="center">添加</th>
+                        <th align="center">修改</th>
+                        <th align="center">删除</th>
+                        <th align="center">排序</th>
+                        <th align="center">移动</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {$categorys|raw}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+{/block}

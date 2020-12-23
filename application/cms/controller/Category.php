@@ -330,6 +330,70 @@ class Category extends Adminbase
         $this->success("栏目删除成功！", url('cms/category/public_cache'));
     }
 
+    //栏目授权
+    public function cat_priv()
+    {
+        $act = $this->request->param('act');
+        $id  = $this->request->param('id');
+        if ($act == 'authorization') {
+            if (empty($id)) {
+                $this->error('请指定需要授权的角色！');
+            }
+            if ($this->request->isAjax()) {
+
+            } else {
+                $tree          = new \util\Tree();
+                $tree->icon    = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
+                $tree->nbsp    = '&nbsp;&nbsp;&nbsp;';
+                $category_priv = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+                $priv          = [];
+                foreach ($category_priv as $k => $v) {
+                    $priv[$v['catid']][$v['action']] = true;
+                }
+                $categorys = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+                foreach ($categorys as $k => $v) {
+                    if ($v['type'] == 1 || $v['child']) {
+                        $v['disabled']        = 'disabled';
+                        $v['init_check']      = '';
+                        $v['add_check']       = '';
+                        $v['delete_check']    = '';
+                        $v['listorder_check'] = '';
+                        $v['move_check']      = '';
+                    } else {
+                        $v['disabled']        = '';
+                        $v['init_check']      = '';
+                        $v['add_check']       = '';
+                        $v['delete_check']    = '';
+                        $v['listorder_check'] = '';
+                        $v['move_check']      = '';
+                    }
+                }
+                $str = "<tr>
+    <td align='center'><input type='checkbox'  value='1' onclick='select_all(@catid, this)' lay-skin='primary'></td>
+    <td>@spacer@catname</td>
+    <td align='center'><input type='checkbox' name='priv[@catid][]' @init_check  lay-skin='primary' value='init' ></td>
+    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @add_check lay-skin='primary' value='add' ></td>
+    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @edit_check lay-skin='primary' value='edit' ></td>
+    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @delete_check  lay-skin='primary' value='delete' ></td>
+    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @listorder_check lay-skin='primary' value='listorder' ></td>
+    <td align='center'><input type='checkbox' name='priv[@catid][]' @disabled @move_check lay-skin='primary' value='remove' ></td>
+            </tr>";
+                $tree->init($categorys);
+                $categorydata = $tree->getTree(0, $str);
+                $this->assign("categorys", $categorydata);
+                return $this->fetch('authorization');
+            }
+        }
+        if ($this->request->isAjax()) {
+            $AuthGroupModel = new \app\admin\model\AuthGroup();
+            $_list          = Db::view('Admin', 'id,username')->view('AuthGroup', 'title', 'AuthGroup.id=Admin.roleid')->order('id', 'desc')->select();
+            $result         = array("code" => 0, "data" => $_list);
+            return json($result);
+        } else {
+            return $this->fetch();
+        }
+    }
+
     //更新栏目缓存并修复
     public function public_cache()
     {
