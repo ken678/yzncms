@@ -396,9 +396,18 @@ class Category extends Adminbase
             }
         }
         if ($this->request->isAjax()) {
+            $priv_num      = [];
+            $category_priv = Db::name('CategoryPriv')->group("roleid")->field("count(roleid) as num,roleid")->select();
+            foreach ($category_priv as $k => $v) {
+                $priv_num[$v['roleid']] = $v['num'];
+            }
             $AuthGroupModel = new \app\admin\model\AuthGroup();
             $_list          = Db::view('Admin', 'username')->view('AuthGroup', 'id,title', 'AuthGroup.id=Admin.roleid')->order('id', 'desc')->select();
-            $result         = array("code" => 0, "data" => $_list);
+            foreach ($_list as $k => $v) {
+                $_list[$k]['admin'] = $v['id'] == 1 ? true : false;
+                $_list[$k]['num']   = isset($priv_num[$v['id']]) ? $priv_num[$v['id']] : 0;
+            }
+            $result = array("code" => 0, "data" => $_list);
             return json($result);
         } else {
             return $this->fetch();
