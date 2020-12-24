@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
+use app\admin\service\User;
 use app\cms\model\Cms as Cms_Model;
 use app\cms\model\Page as Page_Model;
 use app\common\controller\Adminbase;
@@ -102,63 +103,10 @@ class Cms extends Adminbase
         return $this->fetch();
     }
 
-    //回收站
-    public function recycle()
-    {
-        $catid = $this->request->param('catid/d', 0);
-        //当前栏目信息
-        $catInfo = getCategory($catid);
-        if (empty($catInfo)) {
-            $this->error('该栏目不存在！');
-        }
-        //栏目所属模型
-        $modelid = $catInfo['modelid'];
-        if ($this->request->isAjax()) {
-            $modelCache                 = cache("Model");
-            $tableName                  = $modelCache[$modelid]['tablename'];
-            $this->modelClass           = Db::name($tableName);
-            list($page, $limit, $where) = $this->buildTableParames();
-            $conditions                 = [
-                ['catid', '=', $catid],
-                ['status', '=', -1],
-            ];
-            $total = Db::name($tableName)->where($where)->where($conditions)->count();
-            $_list = Db::name($tableName)->where($where)->page($page, $limit)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
-
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
-            return json($result);
-        }
-        $this->assign('catid', $catid);
-        return $this->fetch();
-    }
-
-    //还原回收站
-    public function restore()
-    {
-        $catid = $this->request->param('catid/d', 0);
-        //当前栏目信息
-        $catInfo = getCategory($catid);
-        if (empty($catInfo)) {
-            $this->error('该栏目不存在！');
-        }
-        //栏目所属模型
-        $modelid   = $catInfo['modelid'];
-        $ids       = $this->request->param('ids');
-        $modelInfo = cache('Model');
-        $modelInfo = $modelInfo[$modelid];
-        if ($ids) {
-            if (!is_array($ids)) {
-                $ids = array(0 => $ids);
-            }
-            Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', 1);
-        }
-        $this->success('还原成功！');
-
-    }
-
     //移动文章
     public function remove()
     {
+        $this->check_priv('remove');
         if ($this->request->isPost()) {
             $catid = $this->request->param('catid/d', 0);
             if (!$catid) {
@@ -189,14 +137,13 @@ class Cms extends Adminbase
             } else {
                 $this->error('请选择需要移动的信息！');
             }
-
         }
-
     }
 
-    //添加栏目
+    //添加信息
     public function add()
     {
+        $this->check_priv('add');
         if ($this->request->isPost()) {
             $data  = $this->request->post();
             $catid = intval($data['modelField']['catid']);
@@ -254,6 +201,7 @@ class Cms extends Adminbase
     //编辑信息
     public function edit()
     {
+        $this->check_priv('edit');
         if ($this->request->isPost()) {
             $data                  = $this->request->post();
             $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
@@ -285,14 +233,13 @@ class Cms extends Adminbase
             } else {
                 return $this->fetch('singlepage');
             }
-
         }
-
     }
 
     //删除
     public function del()
     {
+        $this->check_priv('delete');
         $catid = $this->request->param('catid/d', 0);
         $ids   = $this->request->param('ids/a', null);
         if (empty($ids) || !$catid) {
@@ -365,7 +312,6 @@ class Cms extends Adminbase
             $this->assign('info', $info);
             return $this->fetch();
         }
-
     }
 
     protected function getAdminPostData($date = '')
@@ -444,12 +390,29 @@ class Cms extends Adminbase
     //显示栏目菜单列表
     public function public_categorys()
     {
-        $json      = [];
+        $isAdministrator = User::instance()->isAdministrator();
+        $json            = $priv_catids            = [];
+        //栏目权限 超级管理员例外
+        if ($isAdministrator !== true) {
+            $role_id     = User::instance()->roleid;
+            $priv_result = Db::name('CategoryPriv')->where(['roleid' => $role_id, 'action' => 'init'])->select();
+            foreach ($priv_result as $_v) {
+                $priv_catids[] = $_v['catid'];
+            }
+        }
         $categorys = Db::name('Category')->order(array('listorder', 'id' => 'ASC'))->select();
         foreach ($categorys as $rs) {
             //剔除无子栏目外部链接
             if ($rs['type'] == 3 && $rs['child'] == 0) {
                 continue;
+            }
+            //只显示有init权限的，超级管理员除外
+            if ($isAdministrator !== true && !in_array($rs['catid'], $priv_catids)) {
+                $arrchildid      = explode(',', $rs['arrchildid']);
+                $array_intersect = array_intersect($priv_catids, $arrchildid);
+                if (empty($array_intersect)) {
+                    continue;
+                }
             }
             $data = array(
                 'id'       => $rs['id'],
@@ -479,6 +442,7 @@ class Cms extends Adminbase
      */
     public function listorder()
     {
+        $this->check_priv('listorder');
         $catid      = $this->request->param('catid/d', 0);
         $id         = $this->request->param('id/d', 0);
         $listorder  = $this->request->param('value/d', 0);
@@ -495,9 +459,60 @@ class Cms extends Adminbase
         }
     }
 
-    /**
-     * 状态
-     */
+    //回收站
+    public function recycle()
+    {
+        $catid = $this->request->param('catid/d', 0);
+        //当前栏目信息
+        $catInfo = getCategory($catid);
+        if (empty($catInfo)) {
+            $this->error('该栏目不存在！');
+        }
+        //栏目所属模型
+        $modelid = $catInfo['modelid'];
+        if ($this->request->isAjax()) {
+            $modelCache                 = cache("Model");
+            $tableName                  = $modelCache[$modelid]['tablename'];
+            $this->modelClass           = Db::name($tableName);
+            list($page, $limit, $where) = $this->buildTableParames();
+            $conditions                 = [
+                ['catid', '=', $catid],
+                ['status', '=', -1],
+            ];
+            $total = Db::name($tableName)->where($where)->where($conditions)->count();
+            $_list = Db::name($tableName)->where($where)->page($page, $limit)->where($conditions)->order(['listorder', 'id' => 'desc'])->select();
+
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+        }
+        $this->assign('catid', $catid);
+        return $this->fetch();
+    }
+
+    //还原回收站
+    public function restore()
+    {
+        $catid = $this->request->param('catid/d', 0);
+        //当前栏目信息
+        $catInfo = getCategory($catid);
+        if (empty($catInfo)) {
+            $this->error('该栏目不存在！');
+        }
+        //栏目所属模型
+        $modelid   = $catInfo['modelid'];
+        $ids       = $this->request->param('ids');
+        $modelInfo = cache('Model');
+        $modelInfo = $modelInfo[$modelid];
+        if ($ids) {
+            if (!is_array($ids)) {
+                $ids = array(0 => $ids);
+            }
+            Db::name($modelInfo['tablename'])->where('id', 'in', $ids)->setField('status', 1);
+        }
+        $this->success('还原成功！');
+    }
+
+    //状态
     public function setstate()
     {
         $catid      = $this->request->param('catid/d', 0);
@@ -549,6 +564,17 @@ class Cms extends Adminbase
     {
         // 管理员禁止批量操作
         $this->error();
+    }
+
+    protected function check_priv($action)
+    {
+        if (User::instance()->isAdministrator() !== true) {
+            $catid      = $this->request->param('catid/d', 0);
+            $priv_datas = Db::name('CategoryPriv')->where(['catid' => $catid, 'is_admin' => 1, 'roleid' => User::instance()->roleid, 'action' => $action])->find();
+            if (empty($priv_datas)) {
+                $this->error('您没有操作该项的权限！');
+            }
+        }
     }
 
 }
