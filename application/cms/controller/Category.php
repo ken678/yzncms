@@ -368,6 +368,8 @@ class Category extends Adminbase
                         $v['delete_check']    = '';
                         $v['listorder_check'] = '';
                         $v['move_check']      = '';
+                        $v['edit_check']      = '';
+                        $v['status_check']    = '';
                     } else {
                         $v['disabled']        = '';
                         $v['add_check']       = isset($priv[$v['id']]['add']) ? 'checked' : '';
@@ -375,6 +377,7 @@ class Category extends Adminbase
                         $v['listorder_check'] = isset($priv[$v['id']]['listorder']) ? 'checked' : '';
                         $v['move_check']      = isset($priv[$v['id']]['remove']) ? 'checked' : '';
                         $v['edit_check']      = isset($priv[$v['id']]['edit']) ? 'checked' : '';
+                        $v['status_check']    = isset($priv[$v['id']]['status']) ? 'checked' : '';
                     }
                     $v['init_check'] = isset($priv[$v['id']]['init']) ? 'checked' : '';
                     $categorys[$k]   = $v;
@@ -387,6 +390,7 @@ class Category extends Adminbase
     <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @edit_check lay-skin='primary' value='edit' ></td>
     <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @delete_check  lay-skin='primary' value='delete' ></td>
     <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @listorder_check lay-skin='primary' value='listorder' ></td>
+    <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @status_check lay-skin='primary' value='status' ></td>
     <td align='center'><input type='checkbox' name='priv[@id][]' @disabled @move_check lay-skin='primary' value='remove' ></td>
             </tr>";
                 $tree->init($categorys);

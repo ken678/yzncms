@@ -515,6 +515,7 @@ class Cms extends Adminbase
     //状态
     public function setstate()
     {
+        $this->check_priv('status');
         $catid      = $this->request->param('catid/d', 0);
         $id         = $this->request->param('id/d', 0);
         $status     = $this->request->param('value/d');
