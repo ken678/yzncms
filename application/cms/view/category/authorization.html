@@ -61,7 +61,6 @@ layui.use(['yznForm', 'form'], function() {
                     }
                 });
             }
-            form.render('checkbox');
         } else {
             if (name == 0) {
                 $.each($("input[type='checkbox']"), function(i, rs) {
@@ -72,8 +71,8 @@ layui.use(['yznForm', 'form'], function() {
                     rs.checked = false;
                 });
             }
-            form.render('checkbox');
         }
+        form.render('checkbox');
     })
 });
 </script>
