@@ -186,6 +186,12 @@ return [
                                 "name"   => "添加外部链接",
                             ],
                             [
+                                "route"  => "cms/category/cat_priv",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "栏目授权",
+                            ],
+                            [
                                 "route"  => "cms/category/edit",
                                 "type"   => 1,
                                 "status" => 0,
