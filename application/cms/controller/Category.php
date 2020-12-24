@@ -398,10 +398,13 @@ class Category extends Adminbase
                 $this->assign("categorys", $categorydata);
                 return $this->fetch('authorization');
             }
+        } elseif ($act == 'remove') {
+            Db::name('CategoryPriv')->where('roleid', $id)->delete();
+            $this->success('删除成功！');
         }
         if ($this->request->isAjax()) {
             $priv_num      = [];
-            $category_priv = Db::name('CategoryPriv')->group("roleid")->field("count(roleid) as num,roleid")->select();
+            $category_priv = Db::name('CategoryPriv')->field("count(*) as num,roleid")->group("roleid")->select();
             foreach ($category_priv as $k => $v) {
                 $priv_num[$v['roleid']] = $v['num'];
             }

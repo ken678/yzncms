@@ -8,6 +8,9 @@
 <script type="text/html" id="barTool">
     {{#  if(d.admin === false){ }}
     <a href='{:url("cat_priv",["act"=>"authorization"])}?id={{d.id}}' class="layui-btn layui-btn-xs">授权</a>
+    {{#  if(d.num > 0){ }}
+    <a confirm data-request='{:url("cat_priv",["act"=>"remove"])}?id={{d.id}}' data-title="确认移除该管理员所有栏目授权？" data-table="currentTable" class="layui-btn layui-btn-xs layui-btn-danger">移除</a>
+    {{#  } }} 
     {{#  } }} 
 </script>
 {/block}
@@ -31,7 +34,7 @@ layui.use('yznTable', function() {
             [
                 { field: 'username', title: '用户名' },
                 { field: 'title', title: '所属角色' },
-                { field: 'num', title: '栏目数量' },
+                { field: 'num', title: '授权数量' },
                 { fixed: 'right', title: '操作', width: 120, templet: '#barTool' }
             ]
         ]
