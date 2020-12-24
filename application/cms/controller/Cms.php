@@ -407,7 +407,7 @@ class Cms extends Adminbase
                 continue;
             }
             //只显示有init权限的，超级管理员除外
-            if ($isAdministrator !== true && !in_array($rs['catid'], $priv_catids)) {
+            if ($isAdministrator !== true && !in_array($rs['id'], $priv_catids)) {
                 $arrchildid      = explode(',', $rs['arrchildid']);
                 $array_intersect = array_intersect($priv_catids, $arrchildid);
                 if (empty($array_intersect)) {
