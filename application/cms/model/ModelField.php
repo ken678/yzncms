@@ -55,7 +55,7 @@ class ModelField extends Modelbase
         } elseif (strstr(strtolower($data['setting']['define']), 'text') || strstr(strtolower($data['setting']['define']), 'blob')) {
             $default = '';
         } else {
-            $default = ' DEFAULT ' . $data['setting']['value'];
+            $default = " DEFAULT '{$data['setting']['value']}'";
         }
 
         //先将字段存在设置的主表或附表里面 再将数据存入ModelField
@@ -129,7 +129,7 @@ EOF;
         } elseif (strstr(strtolower($data['setting']['define']), 'text') || strstr(strtolower($data['setting']['define']), 'blob')) {
             $default = '';
         } else {
-            $default = ' DEFAULT ' . $data['setting']['value'];
+            $default = " DEFAULT '{$data['setting']['value']}'";
         }
 
         $sql = <<<EOF
