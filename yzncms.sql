@@ -252,7 +252,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -303,6 +303,11 @@ INSERT INTO `yzn_menu` VALUES (51, '角色授权', '', 17, 'admin', 'authManager
 INSERT INTO `yzn_menu` VALUES (52, '模块安装', '', 44, 'admin', 'module', 'install', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (53, '模块卸载', '', 44, 'admin', 'module', 'uninstall', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (54, '本地安装', '', 44, 'admin', 'module', 'local', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (55, '插件设置', '', 39, 'addons', 'addons', 'config', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (56, '插件安装', '', 39, 'addons', 'addons', 'install', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (57, '插件卸载', '', 39, 'addons', 'addons', 'uninstall', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (58, '插件状态', '', 39, 'addons', 'addons', 'state', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (59, '本地安装', '', 39, 'addons', 'addons', 'local', '', 1, '', 0, 0);
 
 
 -- ----------------------------
