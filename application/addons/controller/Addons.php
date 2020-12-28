@@ -14,11 +14,21 @@
 // +----------------------------------------------------------------------
 namespace app\addons\controller;
 
+use app\admin\service\User;
 use app\common\controller\Adminbase;
 use sys\AddonService;
 
 class Addons extends Adminbase
 {
+    //初始化
+    protected function initialize()
+    {
+        parent::initialize();
+        if (!User::instance()->isAdministrator() && in_array($this->request->action(), ['install', 'uninstall', 'local'])) {
+            $this->error('非超级管理员禁止操作！');
+        }
+    }
+
     //显示插件列表
     public function index()
     {
