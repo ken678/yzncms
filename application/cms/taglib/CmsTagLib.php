@@ -101,8 +101,9 @@ class CmsTagLib
                 $data['where'] .= " AND (" . implode(' OR ', $flag) . ")";
             }
         }
-        $data['field'] = isset($data['field']) ? $data['field'] : '*';
-        $moreifo       = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
+        $data['field']  = isset($data['field']) ? $data['field'] : '*';
+        $data['simple'] = isset($data['simple']) ? (is_numeric($data['simple']) ? (int) $data['simple'] : (bool) $data['simple']) : false;
+        $moreifo        = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
 
         //如果设置了catid，则根据catid判断modelid,传入的modelid失效
         if ($catid) {
@@ -115,7 +116,7 @@ class CmsTagLib
             }
             $modelid = intval($data['modelid']);
         }
-        $result = model('cms/Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page']);
+        $result = model('cms/Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page'], $data['simple']);
         return $result;
     }
 
