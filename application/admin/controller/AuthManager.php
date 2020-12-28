@@ -180,7 +180,7 @@ class AuthManager extends Adminbase
             if (!in_array($data['parentid'], $this->childrenGroupIds)) {
                 $this->error('父角色超出权限范围!');
             }
-            if (in_array($data['parentid'], $this->childrenGroupIds)) {
+            if (in_array($data['parentid'], Tree::instance()->getChildrenIds($data['id'], true))) {
                 $this->error('父角色不能是自身！');
             }
             //更新
