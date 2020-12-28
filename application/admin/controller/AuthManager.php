@@ -15,6 +15,7 @@ use app\admin\model\AuthRule;
 use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\Db;
+use util\Tree;
 
 /**
  * 权限管理控制器
@@ -23,28 +24,49 @@ class AuthManager extends Adminbase
 {
     //当前登录管理员所有子组别
     protected $childrenGroupIds = [];
+    //当前组别列表数据
+    protected $groupdata = [];
 
     protected function initialize()
     {
         parent::initialize();
         $this->AuthGroupModel   = new AuthGroupModel;
         $this->childrenGroupIds = User::instance()->getChildrenGroupIds(true);
+
+        $groupList = AuthGroupModel::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
+        Tree::instance()->init($groupList);
+        $result = [];
+        if (User::instance()->isAdministrator()) {
+            $result = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
+        } else {
+            $groups = User::instance()->getGroups();
+            foreach ($groups as $m => $n) {
+                $result = array_merge($result, Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['parentid']), 'title'));
+            }
+        }
+
+        $groupName = [];
+        foreach ($result as $k => $v) {
+            $groupName[$v['id']] = $v['title'];
+        }
+        $this->groupdata = $groupName;
+        $this->assign('groupdata', $this->groupdata);
     }
 
     //权限管理首页
     public function index()
     {
         if ($this->request->isAjax()) {
-            $tree  = new \util\Tree();
-            $_list = Db::name('AuthGroup')->where('id', 'in', $this->childrenGroupIds)->where('module', 'admin')->order(['id' => 'ASC'])->select();
-            $tree->init($_list);
+            $result    = AuthGroupModel::all(array_keys($this->groupdata))->toArray();
+            $groupList = [];
+            foreach ($result as $k => $v) {
+                $groupList[$v['id']] = $v;
+            }
             $result = [];
-            if (User::instance()->isAdministrator()) {
-                $result = $tree->getTreeList($tree->getTreeArray(0), 'title');
-            } else {
-                $groups = User::instance()->getGroups();
-                foreach ($groups as $m => $n) {
-                    $result = array_merge($result, $tree->getTreeList($tree->getTreeArray($n['parentid']), 'title'));
+            foreach ($this->groupdata as $k => $v) {
+                if (isset($groupList[$k])) {
+                    $groupList[$k]['title'] = $v;
+                    $result[]               = $groupList[$k];
                 }
             }
             $result = array("code" => 0, "data" => $result);
@@ -70,7 +92,7 @@ class AuthManager extends Adminbase
             ->where('status', '<>', 0)
             ->where('id', '=', $group_id)
             ->where(['type' => AuthGroupModel::TYPE_ADMIN])
-            ->value('rules');
+            ->find();
 
         $map        = array('status' => 1);
         $main_rules = Db::name('AuthRule')->where($map)->column('name,id');
@@ -82,11 +104,11 @@ class AuthManager extends Adminbase
                 'parentid' => $rs['parentid'],
                 'name'     => $rs['title'],
                 'id'       => $main_rules[$rs['url']],
-                'checked'  => $this->isCompetence($main_rules[$rs['url']], $rules) ? true : false,
+                'checked'  => $this->isCompetence($main_rules[$rs['url']], $rules['rules']) ? true : false,
             );
             $json[] = $data;
         }
-        $this->assign('group_id', $group_id);
+        $this->assign('rules', $rules);
         $this->assign('json', json_encode($json));
         return $this->fetch('managergroup');
     }
@@ -155,8 +177,11 @@ class AuthManager extends Adminbase
         $data['module'] = 'admin';
         $data['type']   = AuthGroupModel::TYPE_ADMIN;
         if (isset($data['id']) && !empty($data['id'])) {
-            if (!in_array($data['id'], $this->childrenGroupIds)) {
+            if (!in_array($data['parentid'], $this->childrenGroupIds)) {
                 $this->error('父角色超出权限范围!');
+            }
+            if (in_array($data['parentid'], $this->childrenGroupIds)) {
+                $this->error('父角色不能是自身！');
             }
             //更新
             $r = $this->AuthGroupModel->allowField(true)->save($data, ['id' => $data['id']]);
