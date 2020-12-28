@@ -11,6 +11,7 @@
 
 namespace app\admin\model;
 
+use think\Db;
 use think\Model;
 
 /**
@@ -19,12 +20,12 @@ use think\Model;
  */
 class AuthGroup extends Model
 {
-    const TYPE_ADMIN = 1; // 管理员用户组类型标识
-    const MEMBER = 'admin';
-    const AUTH_EXTEND = 'auth_extend'; // 动态权限扩展信息表
-    const AUTH_GROUP = 'auth_group'; // 用户组表名
+    const TYPE_ADMIN                = 1; // 管理员用户组类型标识
+    const MEMBER                    = 'admin';
+    const AUTH_EXTEND               = 'auth_extend'; // 动态权限扩展信息表
+    const AUTH_GROUP                = 'auth_group'; // 用户组表名
     const AUTH_EXTEND_CATEGORY_TYPE = 1; // 分类权限标识
-    const AUTH_EXTEND_MODEL_TYPE = 2; //分类权限标识
+    const AUTH_EXTEND_MODEL_TYPE    = 2; //分类权限标识
 
     protected $resultSetType = 'collection';
 
@@ -68,6 +69,11 @@ class AuthGroup extends Model
     {
         if (empty($Groupid) || $Groupid == 1) {
             $this->error = '超级管理员角色不能被删除！';
+            return false;
+        }
+        $admin = Db::name('Admin')->where('roleid', $Groupid)->find();
+        if ($admin) {
+            $this->error = '该角色下有管理员！';
             return false;
         }
         //角色信息

@@ -21,20 +21,22 @@ use think\Db;
  */
 class AuthManager extends Adminbase
 {
+    //当前登录管理员所有子组别
+    protected $childrenGroupIds = [];
 
     protected function initialize()
     {
         parent::initialize();
-        $this->AuthGroupModel = new AuthGroupModel;
+        $this->AuthGroupModel   = new AuthGroupModel;
+        $this->childrenGroupIds = User::instance()->getChildrenGroupIds(true);
     }
 
     //权限管理首页
     public function index()
     {
         if ($this->request->isAjax()) {
-            $childrenGroupIds = User::instance()->getChildrenGroupIds(true);
-            $tree             = new \util\Tree();
-            $_list            = Db::name('AuthGroup')->where('id', 'in', $childrenGroupIds)->where('module', 'admin')->order(['id' => 'ASC'])->select();
+            $tree  = new \util\Tree();
+            $_list = Db::name('AuthGroup')->where('id', 'in', $this->childrenGroupIds)->where('module', 'admin')->order(['id' => 'ASC'])->select();
             $tree->init($_list);
             $result = [];
             if (User::instance()->isAdministrator()) {
@@ -116,7 +118,10 @@ class AuthManager extends Adminbase
     //编辑管理员用户组
     public function editGroup()
     {
-        $id         = $this->request->param('id/d');
+        $id = $this->request->param('id/d');
+        if (!in_array($id, $this->childrenGroupIds)) {
+            $this->error('你没有权限访问!');
+        }
         $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN))->find($id);
         $tree       = new \util\Tree();
         $_list      = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
@@ -147,12 +152,18 @@ class AuthManager extends Adminbase
         $data['module'] = 'admin';
         $data['type']   = AuthGroupModel::TYPE_ADMIN;
         if (isset($data['id']) && !empty($data['id'])) {
+            if (!in_array($data['id'], $this->childrenGroupIds)) {
+                $this->error('父角色超出权限范围!');
+            }
             //更新
             $r = $this->AuthGroupModel->allowField(true)->save($data, ['id' => $data['id']]);
         } else {
             $result = $this->validate($data, 'AuthGroup');
             if (true !== $result) {
                 return $this->error($result);
+            }
+            if (!in_array($data['parentid'], $this->childrenGroupIds)) {
+                $this->error('父角色超出权限范围!');
             }
             $r = $this->AuthGroupModel->allowField(true)->save($data);
         }
