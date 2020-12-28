@@ -15,7 +15,6 @@
 namespace app\cms\taglib;
 
 use app\cms\model\Category as Category_Model;
-use think\Db;
 
 class CmsTagLib
 {
@@ -94,7 +93,13 @@ class CmsTagLib
             $data['order'] = array('updatetime' => 'DESC', 'id' => 'DESC');
         }
         if (isset($data['flag'])) {
-            $data['where'] = $data['where'] . " AND FIND_IN_SET('" . intval($data['flag']) . "',flag)";
+            $flag = [];
+            foreach (explode(',', $data['flag']) as $k => $v) {
+                $flag[] = "FIND_IN_SET('" . $v . "', flag)";
+            }
+            if ($flag) {
+                $data['where'] .= " AND (" . implode(' OR ', $flag) . ")";
+            }
         }
         $data['field'] = isset($data['field']) ? $data['field'] : '*';
         $moreifo       = isset($data['moreinfo']) ? $data['moreinfo'] : 0;
@@ -126,26 +131,26 @@ class CmsTagLib
         if (isset($data['tagid'])) {
             if (strpos($data['tagid'], ',') !== false) {
                 $r = Db::name('Tags')->where('id', 'in', $data['tagid'])->value('tagid,tag');
-                array_push($where, "tag in(" . $r . ")");
+                array_push($where, "tagin(" . $r . ")");
             } else {
                 $r = Db::name('Tags')->where(['id' => (int) $data['tagid']])->find();
                 array_push($where, "tag = '" . $r['tag'] . "'");
             }
         } else {
             if (is_array($data['tag'])) {
-                array_push($where, "tag in(" . $data['tag'] . ")");
+                array_push($where, "tagin(" . $data['tag'] . ")");
             } else {
                 $tags = strpos($data['tag'], ',') !== false ? explode(',', $data['tag']) : explode(' ', $data['tag']);
                 if (count($tags) == 1) {
                     array_push($where, "tag = '" . $data['tag'] . "'");
                 } else {
-                    array_push($where, "tag in('" . implode("','", $tags) . "' )");
+                    array_push($where, "tagin('" . implode("', '", $tags) . "')");
                 }
             }
         }
         $where_str = "";
         if (0 < count($where)) {
-            $where_str = implode(" AND ", $where);
+            $where_str = implode(" and ", $where);
         }
         if (!isset($data['limit'])) {
             $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
@@ -153,7 +158,7 @@ class CmsTagLib
         $data = Db::name('TagsContent')->where($where_str)->limit($data['limit'])->select();
         //读取文章信息
         foreach ($data as $k => $v) {
-            $r = model('cms/Cms')->getContent($v['modelid'], "id =" . $v['contentid'], false, '*', $data['limit'], $data['page']);
+            $r = model('cms/Cms')->getContent($v['modelid'], "id = " . $v['contentid'], false, '*', $data['limit'], $data['page']);
             if ($r) {
                 $return[$k] = array_merge($v, $r);
             }
@@ -171,7 +176,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=_blank ' : '';
-        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND status=1 AND id <" . $data['id'], false, 'catid,id,title', "id desc");
+        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " and status = 1 and id < " . $data['id'], false, 'catid,id,title', "iddesc");
         if (!$result) {
             $result['title']  = $msg;
             $result['url']    = 'javascript:alert("' . $msg . '");';
@@ -192,7 +197,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=_blank ' : '';
-        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid =" . $data['catid'] . " AND status=1 AND id >" . $data['id'], false, 'catid,id,title');
+        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " and status = 1 and id > " . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title']  = $msg;
             $result['url']    = 'javascript:alert("' . $msg . '");';
