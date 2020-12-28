@@ -41,10 +41,8 @@ layui.use(['jquery', 'ztree'], function() {
                 }
             },
             onClick: function(event, treeId, treeNode) {
-                //栏目ID
-                var catid = treeNode.catid;
                 //保存当前点击的栏目ID
-                //$.cookie("tree_catid", catid);
+                layui.data("tree_catid", {key: 'catid',value: treeNode.id});
             }
         }
     };
@@ -64,11 +62,11 @@ layui.use(['jquery', 'ztree'], function() {
             }
         });
         //定位到上次打开的栏目，进行展开tree_catid
-        /*var tree_catid = $.cookie('tree_catid');
+        var tree_catid = layui.data('tree_catid').catid;
         if (tree_catid) {
-            var nodes = zTree.getNodesByParam("catid", tree_catid, null);
+            var nodes = zTree.getNodesByParam("id", tree_catid, null);
             zTree.selectNode(nodes[0]);
-        }*/
+        }
     });
 
 
