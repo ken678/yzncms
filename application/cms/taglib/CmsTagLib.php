@@ -131,26 +131,26 @@ class CmsTagLib
         if (isset($data['tagid'])) {
             if (strpos($data['tagid'], ',') !== false) {
                 $r = Db::name('Tags')->where('id', 'in', $data['tagid'])->value('tagid,tag');
-                array_push($where, "tagin(" . $r . ")");
+                array_push($where, "tag in(" . $r . ")");
             } else {
                 $r = Db::name('Tags')->where(['id' => (int) $data['tagid']])->find();
                 array_push($where, "tag = '" . $r['tag'] . "'");
             }
         } else {
             if (is_array($data['tag'])) {
-                array_push($where, "tagin(" . $data['tag'] . ")");
+                array_push($where, "tag in(" . $data['tag'] . ")");
             } else {
                 $tags = strpos($data['tag'], ',') !== false ? explode(',', $data['tag']) : explode(' ', $data['tag']);
                 if (count($tags) == 1) {
                     array_push($where, "tag = '" . $data['tag'] . "'");
                 } else {
-                    array_push($where, "tagin('" . implode("', '", $tags) . "')");
+                    array_push($where, "tag in('" . implode("', '", $tags) . "')");
                 }
             }
         }
         $where_str = "";
         if (0 < count($where)) {
-            $where_str = implode(" and ", $where);
+            $where_str = implode(" AND ", $where);
         }
         if (!isset($data['limit'])) {
             $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
@@ -176,7 +176,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=_blank ' : '';
-        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " and status = 1 and id < " . $data['id'], false, 'catid,id,title', "iddesc");
+        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 and id < " . $data['id'], false, 'catid,id,title', "iddesc");
         if (!$result) {
             $result['title']  = $msg;
             $result['url']    = 'javascript:alert("' . $msg . '");';
@@ -197,7 +197,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=_blank ' : '';
-        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " and status = 1 and id > " . $data['id'], false, 'catid,id,title');
+        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 and id > " . $data['id'], false, 'catid,id,title');
         if (!$result) {
             $result['title']  = $msg;
             $result['url']    = 'javascript:alert("' . $msg . '");';
