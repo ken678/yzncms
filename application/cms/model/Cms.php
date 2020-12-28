@@ -327,25 +327,18 @@ class Cms extends Modelbase
         if (isset($tableName) && !empty($tableName)) {
             if (2 == getModel($modeId, 'type') && $moreifo) {
                 $extTable = $tableName . $this->ext_table;
+                $cmsModel = Db::view($tableName, $field)->where($where)->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')->order($order);
                 if ($page) {
-                    $result = Db::view($tableName, $field)
-                        ->where($where)
-                        ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                        ->order($order)
-                        ->paginate($limit, $simple, $config);
+                    $result = $cmsModel->paginate($limit, $simple, $config);
                 } else {
-                    $result = Db::view($tableName, $field)
-                        ->where($where)
-                        ->limit($limit)
-                        ->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')
-                        ->order($order)
-                        ->select();
+                    $result = $cmsModel->limit($limit)->select();
                 }
             } else {
+                $cmsModel = Db::name($tableName)->where($where)->order($order)->field($field);
                 if ($page) {
-                    $result = Db::name($tableName)->where($where)->order($order)->field($field)->paginate($limit, $simple, $config);
+                    $result = $cmsModel->paginate($limit, $simple, $config);
                 } else {
-                    $result = Db::name($tableName)->where($where)->limit($limit)->order($order)->field($field)->select();
+                    $result = $cmsModel->limit($limit)->select();
                 }
             }
         }
