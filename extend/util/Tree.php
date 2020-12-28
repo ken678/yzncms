@@ -29,12 +29,12 @@ class Tree
      * 生成树型结构所需修饰符号，可以换成图片
      * @var array
      */
-    public $icon = array('│', '├', '└');
-    public $nbsp = "&nbsp;";
-    public $id = "id";
+    public $icon    = array('│', '├', '└');
+    public $nbsp    = "&nbsp;";
+    public $id      = "id";
     public $pidname = 'parentid';
-    public $child = 'child';
-    public $ret = '';
+    public $child   = 'child';
+    public $ret     = '';
 
     /**
      * 初始化.
@@ -112,7 +112,7 @@ class Tree
             }
             if ($value[$this->pidname] == $myid) {
                 $newarr[] = $value;
-                $newarr = array_merge($newarr, $this->getChildren($value['id']));
+                $newarr   = array_merge($newarr, $this->getChildren($value['id']));
             } elseif ($withself && $value['id'] == $myid) {
                 $newarr[] = $value;
             }
@@ -129,7 +129,7 @@ class Tree
     public function getChildrenIds($myid, $withself = false)
     {
         $childrenlist = $this->getChildren($myid, $withself);
-        $childrenids = [];
+        $childrenids  = [];
         foreach ($childrenlist as $k => $v) {
             $childrenids[] = $v['id'];
         }
@@ -143,7 +143,7 @@ class Tree
      */
     public function getParent($myid)
     {
-        $pid = 0;
+        $pid    = 0;
         $newarr = [];
         foreach ($this->arr as $value) {
             if (!isset($value['id'])) {
@@ -173,7 +173,7 @@ class Tree
      */
     public function getParents($myid, $withself = false)
     {
-        $pid = 0;
+        $pid    = 0;
         $newarr = [];
         foreach ($this->arr as $value) {
             if (!isset($value['id'])) {
@@ -188,7 +188,7 @@ class Tree
             }
         }
         if ($pid) {
-            $arr = $this->getParents($pid, true);
+            $arr    = $this->getParents($pid, true);
             $newarr = array_merge($arr, $newarr);
         }
         return $newarr;
@@ -225,14 +225,14 @@ class Tree
         if (!$itemtpl) {
             $itemtpl = '<option value=@id @selected @disabled>@spacer @title</option>';
         }
-        $ret = '';
+        $ret    = '';
         $number = 1;
         $childs = $this->getChild($myid);
         if ($childs) {
             $total = count($childs);
             foreach ($childs as $value) {
                 $id = $value['id'];
-                $j = $k = '';
+                $j  = $k  = '';
                 if ($number == $total) {
                     $j .= $this->icon[2];
                     $k = $itemprefix ? $this->nbsp : '';
@@ -243,11 +243,11 @@ class Tree
                 $spacer = $itemprefix ? $itemprefix . $j : '';
                 if ('' !== $selectedids) {
                     $selected = $selectedids && in_array($id, (is_array($selectedids) ? $selectedids : explode(',', $selectedids))) ? 'selected' : '';
-                    $value = array_merge($value, ['selected' => $selected]);
+                    $value    = array_merge($value, ['selected' => $selected]);
                 }
                 if ('' !== $disabledids) {
                     $disabled = $disabledids && in_array($id, (is_array($disabledids) ? $disabledids : explode(',', $disabledids))) ? 'disabled' : '';
-                    $value = array_merge($value, ['disabled' => $disabled]);
+                    $value    = array_merge($value, ['disabled' => $disabled]);
                 }
                 $value = array_merge($value, array('spacer' => $spacer));
                 $value = array_combine(array_map(function ($k) {
@@ -274,7 +274,7 @@ class Tree
      */
     public function getTreeUl($myid, $itemtpl, $selectedids = '', $disabledids = '', $wraptag = 'ul', $wrapattr = '')
     {
-        $str = '';
+        $str    = '';
         $childs = $this->getChild($myid);
         if ($childs) {
             foreach ($childs as $value) {
@@ -282,11 +282,11 @@ class Tree
                 unset($value['child']);
                 $selected = $selectedids && in_array($id, (is_array($selectedids) ? $selectedids : explode(',', $selectedids))) ? 'selected' : '';
                 $disabled = $disabledids && in_array($id, (is_array($disabledids) ? $disabledids : explode(',', $disabledids))) ? 'disabled' : '';
-                $value = array_merge($value, array('selected' => $selected, 'disabled' => $disabled));
-                $value = array_combine(array_map(function ($k) {
+                $value    = array_merge($value, array('selected' => $selected, 'disabled' => $disabled));
+                $value    = array_combine(array_map(function ($k) {
                     return '@' . $k;
                 }, array_keys($value)), $value);
-                $nstr = strtr($itemtpl, $value);
+                $nstr      = strtr($itemtpl, $value);
                 $childdata = $this->getTreeUl($id, $itemtpl, $selectedids, $disabledids, $wraptag, $wrapattr);
                 $childlist = $childdata ? "<{$wraptag} {$wrapattr}>" . $childdata . "</{$wraptag}>" : "";
                 $str .= strtr($nstr, array('@childlist' => $childlist));
@@ -305,7 +305,7 @@ class Tree
     public function get_tree_category($myid, $str, $str2, $sid = 0, $adds = '')
     {
         $number = 1;
-        $child = $this->getChild($myid);
+        $child  = $this->getChild($myid);
         if (is_array($child)) {
             $total = count($child);
             foreach ($child as $id => $a) {
@@ -371,9 +371,9 @@ class Tree
      */
     public function getTreeArray($myid, $itemprefix = '')
     {
-        $child = $this->getChild($myid);
-        $n = 0;
-        $data = [];
+        $child  = $this->getChild($myid);
+        $n      = 0;
+        $data   = [];
         $number = 1;
         if (is_array($child)) {
             $total = count($child);
@@ -386,9 +386,9 @@ class Tree
                     $j .= $this->icon[1];
                     $k = $itemprefix ? $this->icon[0] : '';
                 }
-                $spacer = $itemprefix ? $itemprefix . $j : '';
+                $spacer          = $itemprefix ? $itemprefix . $j : '';
                 $value['spacer'] = $spacer;
-                $data[$n] = $value;
+                $data[$n]        = $value;
 
                 $data[$n]['childlist'] = $this->getTreeArray($value[$this->id], $itemprefix . $k . $this->nbsp);
                 $n++;
@@ -409,7 +409,7 @@ class Tree
         foreach ($data as $k => $v) {
             $childlist = isset($v['childlist']) ? $v['childlist'] : [];
             unset($v['childlist']);
-            $v[$field] = $v['spacer'] . ' ' . $v[$field];
+            $v[$field]     = $v['spacer'] . ' ' . $v[$field];
             $v['haschild'] = $childlist ? 1 : 0;
             if ($v[$this->id]) {
                 $arr[] = $v;
