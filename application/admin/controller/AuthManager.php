@@ -12,6 +12,7 @@ namespace app\admin\Controller;
 
 use app\admin\model\AuthGroup as AuthGroupModel;
 use app\admin\model\AuthRule;
+use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -31,11 +32,19 @@ class AuthManager extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $tree  = new \util\Tree();
-            $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->select();
+            $childrenGroupIds = User::instance()->getChildrenGroupIds(true);
+            $tree             = new \util\Tree();
+            $_list            = Db::name('AuthGroup')->where('id', 'in', $childrenGroupIds)->where('module', 'admin')->order(['id' => 'ASC'])->select();
             $tree->init($_list);
             $result = [];
-            $result = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            if (User::instance()->isAdministrator()) {
+                $result = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            } else {
+                $groups = User::instance()->getGroups();
+                foreach ($groups as $m => $n) {
+                    $result = array_merge($result, $tree->getTreeList($tree->getTreeArray($n['parentid'], 'title')));
+                }
+            }
             $result = array("code" => 0, "data" => $result);
             return json($result);
         } else {
