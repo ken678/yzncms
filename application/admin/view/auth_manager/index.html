@@ -5,8 +5,15 @@
     <div class="layui-card-body">
         <div class="layui-form">
             <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+            <script type="text/html" id="authTool">
+                {{#  if(d.id == {$userInfo.roleid}){ }}
+                <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
+                {{#  } else { }}
+                <a class='layui-btn layui-btn-xs' href='{:url("access?group_name=")}?title={{d.title}}&group_id={{d.id}}'>访问授权</a>
+                {{#  } }}
+            </script>
             <script type="text/html" id="barTool">
-                {{#  if(d.id == 1){ }}
+                {{#  if(d.id == {$userInfo.roleid}){ }}
                 <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
                 {{#  } else { }}
                 <a data-open='{:url("editgroup")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
@@ -36,7 +43,7 @@ layui.use('yznTable', function() {
         search:false,
         cols: [
             [
-                { field: 'title',width: 200, title: '授权',templet: "<div><a class='layui-btn layui-btn-xs' href='{:url('access?group_name=')}?title={{d.title}}&group_id={{d.id}}'>访问授权</a></div>" },
+                { field: 'title',width: 200, title: '授权',templet: '#authTool' },
                 { field: 'title', width: 200, align: 'left', title: '权限组'},
                 { field: 'description', title: '描述' },
                 { field: 'status', width: 100,title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">正常</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>' },
