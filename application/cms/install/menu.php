@@ -88,6 +88,12 @@ return [
                                 "name"   => "状态",
                             ],
                             [
+                                "route"  => "cms/cms/check_title",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "标题检查",
+                            ],
+                            [
                                 "route"  => "cms/cms/recycle",
                                 "type"   => 1,
                                 "status" => 0,
