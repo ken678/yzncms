@@ -571,6 +571,7 @@ class Cms extends Adminbase
     {
         if (User::instance()->isAdministrator() !== true) {
             $catid      = $this->request->param('catid/d', 0);
+            $action     = getCategory($catid, 'type') == 1 ? 'init' : $action;
             $priv_datas = Db::name('CategoryPriv')->where(['catid' => $catid, 'is_admin' => 1, 'roleid' => User::instance()->roleid, 'action' => $action])->find();
             if (empty($priv_datas)) {
                 $this->error('您没有操作该项的权限！');
