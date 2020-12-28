@@ -58,11 +58,15 @@ class AuthManager extends Adminbase
     //访问授权页面
     public function access()
     {
+        $group_id = $this->request->param('group_id/d');
+        if (!in_array($group_id, $this->childrenGroupIds)) {
+            $this->error('你没有权限访问!');
+        }
         $this->updateRules(); //更新节点
 
-        $result   = model('admin/Menu')->returnNodes(false);
-        $group_id = $this->request->param('group_id/d');
-        $rules    = Db::name('AuthGroup')
+        $result = model('admin/Menu')->returnNodes(false);
+
+        $rules = Db::name('AuthGroup')
             ->where('status', '<>', 0)
             ->where('id', '=', $group_id)
             ->where(['type' => AuthGroupModel::TYPE_ADMIN])
@@ -96,7 +100,6 @@ class AuthManager extends Adminbase
         } else {
             return false;
         }
-
     }
 
     //创建管理员用户组
@@ -172,7 +175,6 @@ class AuthManager extends Adminbase
         } else {
             $this->success('操作成功!');
         }
-
     }
 
     /**
