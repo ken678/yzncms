@@ -42,7 +42,7 @@ class AuthManager extends Adminbase
             } else {
                 $groups = User::instance()->getGroups();
                 foreach ($groups as $m => $n) {
-                    $result = array_merge($result, $tree->getTreeList($tree->getTreeArray($n['parentid'], 'title')));
+                    $result = array_merge($result, $tree->getTreeList($tree->getTreeArray($n['parentid']), 'title'));
                 }
             }
             $result = array("code" => 0, "data" => $result);
