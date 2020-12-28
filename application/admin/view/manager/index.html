@@ -6,8 +6,8 @@
         <div class="layui-form">
             <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
             <script type="text/html" id="barTool">
-                {{#  if(d.id == 1){ }}
-                <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
+                {{#  if(d.id == {$userInfo.id}){ }}
+                <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
                 {{#  } else { }}
                 <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs">编辑</a>
                 <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
