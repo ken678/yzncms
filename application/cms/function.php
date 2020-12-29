@@ -17,17 +17,18 @@ use think\facade\Request;
 
 /**
  * 获取栏目相关信息
- * @param type $catid 栏目id
+ * @param type $catid 栏目id或者栏目标识
  * @param type $field 返回的字段，默认返回全部，数组
  * @param type $newCache 是否强制刷新
  * @return boolean
  */
-function getCategory($catid, $field = '', $newCache = false)
+function getCategory($cat, $fields = '', $newCache = false)
 {
-    if (empty($catid)) {
+    if (empty($cat)) {
         return false;
     }
-    $key = 'getCategory_' . $catid;
+    $field = is_numeric($catid) ? 'id' : 'catdir';
+    $key   = 'getCategory_' . $cat;
     //强制刷新缓存
     if ($newCache) {
         Cache::rm($key, null);
@@ -38,26 +39,26 @@ function getCategory($catid, $field = '', $newCache = false)
     }
     if (empty($cache)) {
         //读取数据
-        $cache = db('category')->where(['id' => $catid])->find();
+        $cache = db('category')->where($field, $cat)->find();
         if (empty($cache)) {
             Cache::set($key, 'false', 60);
             return false;
         } else {
             //扩展配置
             $cache['setting'] = unserialize($cache['setting']);
-            $cache['url']     = buildCatUrl($catid, $cache['url']);
+            $cache['url']     = buildCatUrl($cat, $cache['url']);
             $cache['image']   = empty($cache['image']) ? '' : get_file_path($cache['image']);
             $cache['icon']    = empty($cache['icon']) ? '' : get_file_path($cache['icon']);
             Cache::set($key, $cache, 3600);
         }
     }
-    if ($field) {
+    if ($fields) {
         //支持var.property，不过只支持一维数组
-        if (false !== strpos($field, '.')) {
-            $vars = explode('.', $field);
+        if (false !== strpos($fields, '.')) {
+            $vars = explode('.', $fields);
             return $cache[$vars[0]][$vars[1]];
         } else {
-            return $cache[$field];
+            return $cache[$fields];
         }
     } else {
         return $cache;
