@@ -266,13 +266,15 @@ function seo($catid = '', $title = '', $description = '', $keyword = '')
 /**
  * 生成栏目URL
  */
-function buildCatUrl($id, $url = '', $suffix = true, $domain = false)
+function buildCatUrl($cat, $url = '', $suffix = true, $domain = false)
 {
-    return empty($url) ? url('cms/index/lists', ['catid' => $id], $suffix, $domain) : ((strpos($url, '://') !== false) ? $url : url($url));
+    $field = is_numeric($cat) ? 'catid' : 'catdir';
+    return empty($url) ? url('cms/index/lists', [$field => $cat], $suffix, $domain) : ((strpos($url, '://') !== false) ? $url : url($url));
 }
 
 //创建内容链接
-function buildContentUrl($catid, $id, $url = '', $suffix = true, $domain = false)
+function buildContentUrl($cat, $id, $url = '', $suffix = true, $domain = false)
 {
-    return empty($url) ? url('cms/index/shows', ['catid' => $catid, 'id' => $id], $suffix, $domain) : ((strpos($url, '://') !== false) ? $url : url($url));
+    $field = is_numeric($cat) ? 'catid' : 'catdir';
+    return empty($url) ? url('cms/index/shows', [$field => $cat, 'id' => $id], $suffix, $domain) : ((strpos($url, '://') !== false) ? $url : url($url));
 }
