@@ -36,7 +36,7 @@ layui.define(['table', 'jquery', 'form'], function(exports) {
             var tableBox = '<div class="tableSelect layui-anim layui-anim-upbit" style="left:' + l + ';top:' + t + ';border: 1px solid #d2d2d2;background-color: #fff;box-shadow: 0 2px 4px rgba(0,0,0,.12);padding:10px 10px 0 10px;position: absolute;z-index:66666666;margin: 5px 0;border-radius: 2px;min-width:530px;">';
             tableBox += '<div class="tableSelectBar">';
             tableBox += '<form class="layui-form" action="" style="display:inline-block;">';
-            tableBox += '<input style="display:inline-block;width:190px;height:30px;vertical-align:middle;margin-right:-1px;border: 1px solid #C9C9C9;" type="text" name="' + opt.searchKey + '" placeholder="' + opt.searchPlaceholder + '" autocomplete="off" class="layui-input"><button class="layui-btn layui-btn-sm layui-btn-primary tableSelect_btn_search" lay-submit lay-filter="tableSelect_btn_search"><i class="layui-icon layui-icon-search"></i></button>';
+            tableBox += '<input style="display:inline-block;width:190px;height:30px;vertical-align:middle;margin-right:-1px;border: 1px solid #C9C9C9;" type="text" id="c-' + opt.searchKey + '" name="' + opt.searchKey + '" placeholder="' + opt.searchPlaceholder + '" autocomplete="off" class="layui-input"><button class="layui-btn layui-btn-sm layui-btn-primary tableSelect_btn_search" lay-submit lay-filter="tableSelect_btn_search"><i class="layui-icon layui-icon-search"></i></button>';
             tableBox += '</form>';
             tableBox += '<button style="float:right;" class="layui-btn layui-btn-sm tableSelect_btn_select">选择<span></span></button>';
             tableBox += '</div>';
@@ -181,10 +181,22 @@ layui.define(['table', 'jquery', 'form'], function(exports) {
             overHeight && tableBox.css({ 'top': 'auto', 'bottom': '-' + $(window).scrollTop() + 'px' });
             overWidth && tableBox.css({ 'left': 'auto', 'right': '5px' })
 
-            //关键词搜索
+            //关键词搜索 兼容附件搜索
             form.on('submit(tableSelect_btn_search)', function(data) {
+                var formatFilter = {},formatOp = {};
+                $.each(data.field, function(key, val) {
+                    if (val !== '') {
+                        formatFilter[key] = val;
+                        var op = $('#c-' + key).attr('data-search-op');
+                        op = op || '%*%';
+                        formatOp[key] = op;
+                    }
+                });
                 tableSelect_table.reload({
-                    where: data.field,
+                    where: {
+                        filter: JSON.stringify(formatFilter),
+                        op: JSON.stringify(formatOp)
+                    },
                     page: {
                         curr: 1
                     }
