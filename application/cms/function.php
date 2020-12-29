@@ -27,7 +27,7 @@ function getCategory($cat, $fields = '', $newCache = false)
     if (empty($cat)) {
         return false;
     }
-    $field = is_numeric($catid) ? 'id' : 'catdir';
+    $field = is_numeric($cat) ? 'id' : 'catdir';
     $key   = 'getCategory_' . $cat;
     //强制刷新缓存
     if ($newCache) {
