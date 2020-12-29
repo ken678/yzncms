@@ -15,6 +15,7 @@
 namespace app\cms\taglib;
 
 use app\cms\model\Category as Category_Model;
+use think\Db;
 
 class CmsTagLib
 {
