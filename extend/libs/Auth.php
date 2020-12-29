@@ -41,11 +41,11 @@ class Auth
     protected $request;
     //默认配置
     protected $_config = array(
-        'AUTH_ON' => true, // 认证开关
-        'AUTH_TYPE' => 1, // 认证方式，1为实时认证；2为登录认证。
+        'AUTH_ON'    => true, // 认证开关
+        'AUTH_TYPE'  => 1, // 认证方式，1为实时认证；2为登录认证。
         'AUTH_GROUP' => 'auth_group', // 用户组数据表名
-        'AUTH_RULE' => 'auth_rule', // 权限规则表
-        'AUTH_USER' => 'admin', // 用户信息表
+        'AUTH_RULE'  => 'auth_rule', // 权限规则表
+        'AUTH_USER'  => 'admin', // 用户信息表
     );
 
     /**
@@ -108,7 +108,7 @@ class Auth
             if ($mode == 'url' && $query != $auth) {
                 parse_str($query, $param); //解析规则中的param
                 $intersect = array_intersect_assoc($REQUEST, $param);
-                $auth = preg_replace('/\?.*$/U', '', $auth);
+                $auth      = preg_replace('/\?.*$/U', '', $auth);
                 if (in_array($auth, $name) && $intersect == $param) {
                     //如果节点相符且url参数满足
                     $list[] = $auth;
@@ -159,7 +159,7 @@ class Auth
     protected function getAuthList($uid, $type)
     {
         static $_authList = array(); //保存用户验证通过的权限列表
-        $t = implode(',', (array) $type);
+        $t                = implode(',', (array) $type);
         if (isset($_authList[$uid . $t])) {
             return $_authList[$uid . $t];
         }
@@ -168,7 +168,7 @@ class Auth
         }
         //读取用户所属用户组
         $groups = $this->getGroups($uid);
-        $ids = array(); //保存用户所属用户组设置的所有权限规则id
+        $ids    = array(); //保存用户所属用户组设置的所有权限规则id
         foreach ($groups as $g) {
             $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
         }
@@ -189,7 +189,7 @@ class Auth
         foreach ($rules as $rule) {
             if (!empty($rule['condition'])) {
                 //根据condition进行验证
-                $user = $this->getUserInfo($uid); //获取用户信息,一维数组
+                $user    = $this->getUserInfo($uid); //获取用户信息,一维数组
                 $command = preg_replace('/\{(\w*?)\}/', '$user[\'\\1\']', $rule['condition']);
                 //dump($command);//debug
                 @(eval('$condition=(' . $command . ');'));
@@ -207,6 +207,18 @@ class Auth
             $_SESSION['_AUTH_LIST_' . $uid . $t] = $authList;
         }
         return array_unique($authList);
+    }
+
+    public function getRuleIds($uid)
+    {
+        //读取用户所属用户组
+        $groups = $this->getGroups($uid);
+        $ids    = []; //保存用户所属用户组设置的所有权限规则id
+        foreach ($groups as $g) {
+            $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
+        }
+        $ids = array_unique($ids);
+        return $ids;
     }
 
     /**
