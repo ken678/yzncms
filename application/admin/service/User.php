@@ -127,6 +127,12 @@ class User extends \libs\Auth
         return parent::getGroups($uid);
     }
 
+    public function getRuleIds($uid = null)
+    {
+        $uid = is_null($uid) ? $this->id : $uid;
+        return parent::getRuleIds($uid);
+    }
+
     /**
      * 用户登录
      * @param string $username 用户名

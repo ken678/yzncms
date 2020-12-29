@@ -176,12 +176,24 @@ class AuthManager extends Adminbase
         $data           = $this->request->post();
         $data['module'] = 'admin';
         $data['type']   = AuthGroupModel::TYPE_ADMIN;
+        $parentmodel    = AuthGroupModel::get($data['parentid']);
+        if (!$parentmodel) {
+            $this->error('父角色不存在!');
+        }
         if (isset($data['id']) && !empty($data['id'])) {
             if (!in_array($data['parentid'], $this->childrenGroupIds)) {
                 $this->error('父角色超出权限范围!');
             }
             if (in_array($data['parentid'], Tree::instance()->getChildrenIds($data['id'], true))) {
                 $this->error('父角色不能是自身！');
+            }
+            if (isset($data['rules'])) {
+                $parentrules   = explode(',', $parentmodel->rules);
+                $currentrules  = User::instance()->getRuleIds();
+                $rules         = explode(',', $data['rules']);
+                $rules         = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
+                $rules         = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
+                $data['rules'] = implode(',', $rules);
             }
             //更新
             $r = $this->AuthGroupModel->allowField(true)->save($data, ['id' => $data['id']]);
