@@ -246,7 +246,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
 	            var $file_list = $('#file_list_' + input_id);
 	            tableSelect.render({
 	                elem: "#fachoose-" + input_id,
-	                searchKey: 'keyword',
+	                searchKey: 'name',
 	                searchPlaceholder: '请输入图片名称',
 	                table: {
 	                    url: GV.image_select_url,
