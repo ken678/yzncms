@@ -22,11 +22,11 @@ use DateTimeZone;
  */
 class Date
 {
-    const YEAR = 31536000;
-    const MONTH = 2592000;
-    const WEEK = 604800;
-    const DAY = 86400;
-    const HOUR = 3600;
+    const YEAR   = 31536000;
+    const MONTH  = 2592000;
+    const WEEK   = 604800;
+    const DAY    = 86400;
+    const HOUR   = 3600;
     const MINUTE = 60;
 
     /**
@@ -54,10 +54,10 @@ class Date
         }
         // Create timezone objects
         $zone_remote = new DateTimeZone($remote);
-        $zone_local = new DateTimeZone($local);
+        $zone_local  = new DateTimeZone($local);
         // Create date objects from timezones
         $time_remote = new DateTime($now, $zone_remote);
-        $time_local = new DateTime($now, $zone_local);
+        $time_local  = new DateTime($now, $zone_local);
         // Find the offset
         $offset = $zone_remote->getOffset($time_remote) - $zone_local->getOffset($time_local);
         return $offset;
@@ -137,7 +137,7 @@ class Date
     public static function human($remote, $local = null)
     {
         $timediff = (is_null($local) || $local ? time() : $local) - $remote;
-        $chunks = array(
+        $chunks   = array(
             array(60 * 60 * 24 * 365, 'year'),
             array(60 * 60 * 24 * 30, 'month'),
             array(60 * 60 * 24 * 7, 'week'),
@@ -149,7 +149,7 @@ class Date
 
         for ($i = 0, $j = count($chunks); $i < $j; $i++) {
             $seconds = $chunks[$i][0];
-            $name = $chunks[$i][1];
+            $name    = $chunks[$i][1];
             if (($count = floor($timediff / $seconds)) != 0) {
                 break;
             }
@@ -172,11 +172,11 @@ class Date
      */
     public static function unixtime($type = 'day', $offset = 0, $position = 'begin', $year = null, $month = null, $day = null, $hour = null, $minute = null)
     {
-        $year = is_null($year) ? date('Y') : $year;
-        $month = is_null($month) ? date('m') : $month;
-        $day = is_null($day) ? date('d') : $day;
-        $hour = is_null($hour) ? date('H') : $hour;
-        $minute = is_null($minute) ? date('i') : $minute;
+        $year     = is_null($year) ? date('Y') : $year;
+        $month    = is_null($month) ? date('m') : $month;
+        $day      = is_null($day) ? date('d') : $day;
+        $hour     = is_null($hour) ? date('H') : $hour;
+        $minute   = is_null($minute) ? date('i') : $minute;
         $position = in_array($position, array('begin', 'start', 'first', 'front'));
 
         switch ($type) {
@@ -195,12 +195,12 @@ class Date
                 mktime(23, 59, 59, $month, $day - date("w", mktime(0, 0, 0, $month, $day, $year)) + 7 - 7 * (-$offset), $year);
                 break;
             case 'month':
-                $time = $position ? mktime(0, 0, 0, $month + $offset, 1, $year) : mktime(23, 59, 59, $month + $offset, cal_days_in_month(CAL_GREGORIAN, $month + $offset, $year), $year);
+                $time = $position ? mktime(0, 0, 0, $month + $offset, 1, $year) : mktime(23, 59, 59, $month + $offset, self::cal_days_in_month($month + $offset, $year), $year);
                 break;
             case 'quarter':
                 $time = $position ?
                 mktime(0, 0, 0, 1 + ((ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) - 1) * 3, 1, $year) :
-                mktime(23, 59, 59, (ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) * 3, cal_days_in_month(CAL_GREGORIAN, (ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) * 3, $year), $year);
+                mktime(23, 59, 59, (ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) * 3, self::cal_days_in_month((ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) * 3, $year), $year);
                 break;
             case 'year':
                 $time = $position ? mktime(0, 0, 0, 1, 1, $year + $offset) : mktime(23, 59, 59, 12, 31, $year + $offset);
@@ -210,5 +210,10 @@ class Date
                 break;
         }
         return $time;
+    }
+
+    public static function cal_days_in_month($month, $year)
+    {
+        return date('t', mktime(0, 0, 0, $month, 1, $year));
     }
 }
