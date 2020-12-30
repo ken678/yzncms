@@ -47,12 +47,13 @@ class Index extends Adminbase
             $data      = $this->request->post();
             $keeplogin = $this->request->post('keeplogin');
             //验证码
-            if (!captcha_check($data['verify'])) {
-                $this->error('验证码输入错误！');
-                return false;
-            }
+            /*if (!captcha_check($data['verify'])) {
+            $this->error('验证码输入错误！');
+            return false;
+            }*/
             // 验证数据
             $rule = [
+                'verify|验证码'   => 'require|captcha',
                 'username|用户名' => 'require|alphaDash|length:3,20',
                 'password|密码'  => 'require|length:3,20',
                 '__token__'    => 'require|token',
