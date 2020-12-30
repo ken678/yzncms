@@ -75,6 +75,9 @@
                 layer.msg(res.msg, { icon: 5 });
                 //刷新验证码
                 $("#verify").click();
+                if (false === $('.layui-form').triggerHandler("error.form")) {
+                    return false;
+                }
             });
     });
     //刷新验证码
