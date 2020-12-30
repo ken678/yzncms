@@ -43,7 +43,6 @@
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                         <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
                     </div>
-                    {:hook('login_form')}
                     <div class="layui-input-inline input-item">
                     	<input type="checkbox" name="keeplogin" title="保持会话" lay-skin="primary">
                     </div>
@@ -84,6 +83,7 @@
         $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
     });
     </script>
+    {:hook('login_form')}
 </body>
 
 </html>
