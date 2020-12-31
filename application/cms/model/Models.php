@@ -42,12 +42,11 @@ class Models extends Modelbase
         $data['module']  = $module;
         $data['setting'] = serialize($data['setting']);
         //添加模型记录
-        if (self::allowField(true)->save($data)) {
-            $id = $this->getAttr('id');
+        if ($res = self::create($data)) {
             cache("Model", null);
             //创建模型表和模型字段
             if ($this->createTable($data)) {
-                $this->addFieldRecord($id, $data['type']);
+                $this->addFieldRecord($res->id, $data['type']);
             }
         }
     }
