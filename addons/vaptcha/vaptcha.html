@@ -8,26 +8,21 @@
 </style>
 <script src="https://v.vaptcha.com/v3.js"></script>
 <script>
-$(".verify-box").html('<input type="hidden" name="verify" class="form-control" /><div class="layui-input-inline input-item"><div class="vaptcha-container" id="vaptchaContainer"><div class="vaptcha-init-main"><div class="vaptcha-init-loading"><a href="/" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif" /></a><span class="vaptcha-text">Vaptcha启动中...</span></div></div></div></div>');
-layui.use(['form', 'layer', 'yznForm'], function() {
-    var form = layui.form,layer = layui.layer,yznForm = layui.yznForm;
+$(document).ready(function() {
+    $(".verify-box").html('<input type="hidden" name="verify" class="form-control" /><div class="layui-input-inline input-item"><div class="vaptcha-container" id="vaptchaContainer"><div class="vaptcha-init-main"><div class="vaptcha-init-loading"><a href="/" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif" /></a><span class="vaptcha-text">Vaptcha启动中...</span></div></div></div></div>');
     vaptcha({
         vid: '{$config.appvid}', //验证单元id
         type: 'click', //显示类型 点击式
         https: false, //使用https 默认 true
-        container: '#vaptchaContainer', // 嵌入式、点击式必填
+        container: '#vaptchaContainer',
         scene: 1, //场景值 不填默认为0
-        offline_server: '{:url("addons/vaptcha/init")}', //离线模式服务端地址，若尚未配置离线模式，请填写任意地址即可。
+        offline_server: '{:url("addons/vaptcha/init")}',
         //可选参数
-        //mode: 'offline' // 测试离线模式时使用 用于调试，上线请删除
-        //lang: 'auto', // 语言 默认auto,可选值auto,zh-CN,en,zh-TW,jp
-        //https: true, // 使用https 默认 true
-        //style: 'dark' //按钮样式 默认dark，可选值 dark,light
-        //color: '#57ABFF' //按钮颜色 默认值#57ABFF
+        //mode: 'offline' // 离线模式时使用
     }).then(function(obj) {
+        obj.renderTokenInput('.layui-form');
         obj.render();
         $('input[name="verify"]').val('ok');
-        obj.renderTokenInput('.layui-form');
         $('.layui-form').on("error.form", function (e, data) {
             obj.reset();
         });
