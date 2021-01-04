@@ -15,6 +15,7 @@
 namespace addons\v9toyzn\Controller;
 
 use app\addons\util\Adminaddon;
+use app\admin\service\User as admin_user;
 use think\Db;
 use think\facade\Cache;
 
@@ -109,10 +110,12 @@ class Admin extends Adminaddon
     {
         $db_config = Cache::get('db_config');
         $cursor    = Db::connect($db_config)->name('attachment')->cursor();
+        $admin_id  = admin_user::instance()->id;
         foreach ($cursor as $key => $value) {
             $path   = str_replace("/", DS, '/uploads/images/' . $value['filepath']);
             $data[] = [
                 'id'     => $value['aid'],
+                'aid'    => $admin_id,
                 'uid'    => 0,
                 'name'   => $value['filename'],
                 'path'   => '/uploads/images/' . $value['filepath'],
@@ -133,22 +136,26 @@ class Admin extends Adminaddon
         $db_config  = Cache::get('db_config');
         $res        = Db::connect($db_config)->name('model')->where('type', 0)->select();
         $modelClass = new \app\cms\model\Models;
+        $data       = [];
         foreach ($res as $key => $value) {
-            $value['id']         = $value['modelid'];
-            $value['listorders'] = $value['sort'];
-            $value['type']       = 2;
-            $value['status']     = $value['disabled'] ? 0 : 1;
-            $value['setting']    = array(
+            $data['id']          = $value['modelid'];
+            $data['name']        = $value['name'];
+            $data['description'] = $value['description'];
+            $data['tablename']   = $value['tablename'];
+            $data['listorders']  = $value['sort'];
+            $data['type']        = 2;
+            $data['status']      = $value['disabled'] ? 0 : 1;
+            $data['setting']     = array(
                 'category_template' => $value['category_template'] . '.html',
                 'list_template]'    => $value['list_template'] . '.html',
                 'show_template'     => $value['show_template'] . '.html',
             );
-            $result = $this->validate($value, 'app\cms\validate\Models');
+            $result = $this->validate($data, 'app\cms\validate\Models');
             if (true !== $result) {
                 $this->error($result);
             }
             try {
-                $modelClass->addModel($value);
+                $modelClass->addModel($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -158,6 +165,7 @@ class Admin extends Adminaddon
 
     public function step3()
     {
+        cache('Category', null);
         $db_config  = Cache::get('db_config');
         $pinyin     = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
         $modelClass = new \app\cms\model\Category;
@@ -189,7 +197,6 @@ class Admin extends Adminaddon
             $modelClass->addCategory($value, ['id', 'parentid', 'catname', 'arrparentid', 'arrchildid', 'child', 'items', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'status']);
             unset($value);
         }
-        cache('Category', null);
         $this->success('栏目转换完毕 开始转换列表内容！', url('addons/v9toyzn/step4', ['isadmin' => 1]));
     }
     public function step4()
