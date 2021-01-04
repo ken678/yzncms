@@ -173,7 +173,7 @@ EOF;
             $sql = <<<EOF
                 CREATE TABLE `{$table}{$this->ext_table}` (
                 `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
-                `content` text COLLATE utf8_unicode_ci COMMENT '内容',
+                `content` mediumtext COLLATE utf8_unicode_ci COMMENT '内容',
                 PRIMARY KEY (`did`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='{$data['name']}模型表';
 EOF;
