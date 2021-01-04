@@ -225,8 +225,8 @@ INSERT INTO `yzn_field_type` VALUES ('images', '多张图', 11, 'varchar(256) NO
 INSERT INTO `yzn_field_type` VALUES ('tags', '标签', 12, 'varchar(255) NOT NULL', 0, 1);
 INSERT INTO `yzn_field_type` VALUES ('number', '数字', 13, 'int(10) UNSIGNED NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('datetime', '日期和时间', 14, 'int(10) UNSIGNED NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', 15, 'text NOT NULL', 0, 1);
-INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 16, 'text NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', 15, 'mediumtext NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 16, 'mediumtext NOT NULL', 0, 1);
 INSERT INTO `yzn_field_type` VALUES ('files', '多文件', 17, 'varchar(255) NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 18, 'int(5) UNSIGNED NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 19, 'varchar(7) NOT NULL', 0, 0);
