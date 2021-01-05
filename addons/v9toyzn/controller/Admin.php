@@ -37,7 +37,6 @@ class Admin extends Adminaddon
         'page',
         'attachment',
     );
-    private $v9prefix  = 'v9_';
     private $ext_table = '_data';
 
     public function index()
@@ -61,16 +60,16 @@ class Admin extends Adminaddon
             //检查phpcms表是否正常
             $db2 = Db::connect($db_config);
             foreach ($this->v9modelTabList as $tablename) {
-                $res = $db2->query("SHOW TABLES LIKE '{$this->v9prefix}{$tablename}'");
+                $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$tablename}'");
                 if (!$res) {
-                    $this->error("表{$this->v9prefix}{$tablename}不存在,请检查phpcms表结构是否正常！");
+                    $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
                 }
                 if ('model' == $tablename) {
-                    $modelTable = $db2->table($this->v9prefix . $tablename)->where('type', 0)->select();
+                    $modelTable = $db2->table($db_config['prefix'] . $tablename)->where('type', 0)->select();
                     foreach ($modelTable as $k => $v) {
-                        $res = $db2->query("SHOW TABLES LIKE '{$this->v9prefix}{$v['tablename']}'");
+                        $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$v['tablename']}'");
                         if (!$res) {
-                            $this->error("表{$this->v9prefix}{$tablename}不存在,请检查phpcms表结构是否正常！");
+                            $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
                         }
                         $v9table[] = $v['tablename'];
                     }
@@ -217,8 +216,8 @@ class Admin extends Adminaddon
                         'description' => $value['description'],
                         'listorder'   => $value['listorder'],
                         'status'      => $value['status'] === 99 ? 1 : 0,
-                        'inputtime'   => date('Y-m-s h:i:s', $value['inputtime']),
-                        'updatetime'  => date('Y-m-s h:i:s', $value['updatetime']),
+                        'inputtime'   => date('Y-m-d h:i:s', $value['inputtime']),
+                        'updatetime'  => date('Y-m-d h:i:s', $value['updatetime']),
                     ];
                     if ($value['thumb']) {
                         $value['thumb']              = strrchr($value['thumb'], '/');
