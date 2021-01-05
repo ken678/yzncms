@@ -45,15 +45,71 @@
                     <button class="layui-btn" lay-submit>开始转换</button>
                 </div>
             </div>
+            <div id="change_div" style="display: none;padding: 20px;background: #f2f2f2;">
+                <div class="scroller" style="height:300px" id="change_html"></div>
+            </div>
         </form>
     </div>
 </div>
 {/block}
-{block name="layui"}{/block}
 {block name="script"}
 <script type="text/javascript">
-layui.use('form', function() {
-    var form = layui.form;
+layui.use(['form', 'yzn', 'layer'], function() {
+    var form = layui.form,
+        layer = layui.layer,
+        yzn = layui.yzn;
+
+    form.on('submit', function(data) {
+        $('.layui-btn').attr('disabled', true);
+        $('.layui-btn').html('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 转换中');
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "{:url('addons/v9toyzn/init', ['isadmin' => 1])}",
+            data: data.field,
+            success: function(res) {
+                if (res.code == 1) {
+                    $('#change_div').show();
+                    $('#change_html').html('<p>'+res.msg+'</p>');
+                    start_change(0);
+                } else {
+                    layer.msg(res.msg, { icon: 2 });
+                }
+            },
+            error: function(xhr, textstatus, thrown) {
+
+            }
+        });
+        return false;
+    });
 });
+
+function start_change(page) {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "{:url('addons/v9toyzn/start', ['isadmin' => 1])}?page=" + page,
+        success: function(res) {
+            if (res.code == 1) {
+                if (res.data.code == 1) {
+                    start_change(res.data.page);
+                    $('#change_html').append('<p>'+res.msg+'</p>');
+                } else if (res.data.code == 2) {
+                    $('.layui-btn').attr('disabled', false);
+                    $('.layui-btn').html('开始转换');
+                    layer.msg(res.msg, { icon: 1 });
+                } else {
+
+                }
+
+            } else {
+                layer.msg(res.msg, { icon: 2 });
+            }
+        },
+        error: function(xhr, textstatus, thrown) {
+
+        }
+    });
+}
 </script>
 {/block}

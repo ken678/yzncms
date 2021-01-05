@@ -39,73 +39,96 @@ class Admin extends Adminaddon
     );
     private $ext_table = '_data';
 
-    public function index()
+    public function init()
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-            if (empty($data['hostname']) || empty($data['database']) || empty($data['username']) || empty($data['password']) || empty($data['prefix'])) {
-                $this->error('数据库配置不得为空！');
-            }
+        $data = $this->request->post();
+        if (empty($data['hostname']) || empty($data['database']) || empty($data['username']) || empty($data['password']) || empty($data['prefix'])) {
+            $this->error('数据库配置不得为空！');
+        }
+        $db_config = [
+            'type'     => 'mysql',
+            'hostname' => $data['hostname'],
+            'database' => $data['database'],
+            'username' => $data['username'],
+            'password' => $data['password'],
+            'charset'  => 'utf8',
+            'prefix'   => $data['prefix'],
+        ];
+        Cache::set('db_config', $db_config, 3600);
 
-            $db_config = [
-                'type'     => 'mysql',
-                'hostname' => $data['hostname'],
-                'database' => $data['database'],
-                'username' => $data['username'],
-                'password' => $data['password'],
-                'charset'  => 'utf8',
-                'prefix'   => $data['prefix'],
-            ];
-            Cache::set('db_config', $db_config, 3600);
-            //检查phpcms表是否正常
-            $db2 = Db::connect($db_config);
-            foreach ($this->v9modelTabList as $tablename) {
-                $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$tablename}'");
-                if (!$res) {
-                    $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
-                }
-                if ('model' == $tablename) {
-                    $modelTable = $db2->table($db_config['prefix'] . $tablename)->where('type', 0)->select();
-                    foreach ($modelTable as $k => $v) {
-                        $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$v['tablename']}'");
-                        if (!$res) {
-                            $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
-                        }
-                        $v9table[] = $v['tablename'];
+        $db_task = [
+            ['fun' => 'step1', 'msg' => '数据表清空完毕!'],
+            ['fun' => 'step2', 'msg' => '附件表转换完毕!'],
+            ['fun' => 'step3', 'msg' => '模型表转换完毕!'],
+            ['fun' => 'step4', 'msg' => '栏目转换完毕!'],
+            ['fun' => 'step5', 'msg' => '内容页转换完毕!'],
+            ['fun' => 'step6', 'msg' => '单页转换完毕!'],
+        ];
+        Cache::set('db_task', $db_task, 3600);
+        //检查phpcms表是否正常
+        $db2 = Db::connect($db_config);
+        foreach ($this->v9modelTabList as $tablename) {
+            $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$tablename}'");
+            if (!$res) {
+                $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
+            }
+            if ('model' == $tablename) {
+                $modelTable = $db2->table($db_config['prefix'] . $tablename)->where('type', 0)->select();
+                foreach ($modelTable as $k => $v) {
+                    $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$v['tablename']}'");
+                    if (!$res) {
+                        $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
                     }
+                    $v9table[] = $v['tablename'];
                 }
             }
-            Cache::set('v9_table', $v9table, 3600);
-            //清空yzncms的表
-            $yznprefix  = config('database.prefix');
-            $table_list = Db::name('model')->where('module', 'cms')->field('tablename,type,id')->select();
-            if ($table_list) {
-                foreach ($table_list as $val) {
-                    $tablename = $yznprefix . $val['tablename'];
-                    Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
-                    if ($val['type'] == 2) {
-                        Db::execute("DROP TABLE IF EXISTS `{$tablename}{$this->ext_table}`;");
-                    }
-                    Db::name('model_field')->where(['modelid' => $val['id']])->delete();
-                }
-            }
-            //删除模型中的表
-            Db::name('model')->where('module', 'cms')->delete();
-            foreach ($this->modelTabList as $tablename) {
-                if (!empty($tablename)) {
-                    $tablename = $yznprefix . $tablename;
-                    Db::execute("TRUNCATE `{$tablename}`;");
-                }
-            }
-            Db::execute("TRUNCATE `{$yznprefix}attachment`;");
-            cache('Model', null);
-            $this->success('数据表检查和清空完毕 开始转换附件表！', url('addons/v9toyzn/step1', ['isadmin' => 1]));
+        }
+        Cache::set('v9_table', $v9table, 3600);
+        $this->success('phpcms数据表结构检查完毕！');
+    }
+
+    public function start()
+    {
+        $page    = $this->request->param('page/d', 0);
+        $db_task = Cache::get('db_task');
+        if (isset($db_task[$page])) {
+            $fun = $db_task[$page]['fun'];
+            $this->$fun();
+            $this->success($db_task[$page]['msg'], null, ['code' => 1, 'page' => $page + 1]);
         } else {
-            return $this->fetch();
+            $this->success('所有数据转换完毕', null, ['code' => 2]);
         }
     }
 
     public function step1()
+    {
+        //清空yzncms的表
+        $yznprefix  = config('database.prefix');
+        $table_list = Db::name('model')->where('module', 'cms')->field('tablename,type,id')->select();
+        if ($table_list) {
+            foreach ($table_list as $val) {
+                $tablename = $yznprefix . $val['tablename'];
+                Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
+                if ($val['type'] == 2) {
+                    Db::execute("DROP TABLE IF EXISTS `{$tablename}{$this->ext_table}`;");
+                }
+                Db::name('model_field')->where(['modelid' => $val['id']])->delete();
+            }
+        }
+        //删除模型中的表
+        Db::name('model')->where('module', 'cms')->delete();
+        foreach ($this->modelTabList as $tablename) {
+            if (!empty($tablename)) {
+                $tablename = $yznprefix . $tablename;
+                Db::execute("TRUNCATE `{$tablename}`;");
+            }
+        }
+        Db::execute("TRUNCATE `{$yznprefix}attachment`;");
+        cache('Model', null);
+        //$this->success('yzncms表清空完毕！', url('addons/v9toyzn/step1', ['isadmin' => 1]), ['page', 1]);
+    }
+
+    public function step2()
     {
         $db_config = Cache::get('db_config');
         $cursor    = Db::connect($db_config)->name('attachment')->cursor();
@@ -127,10 +150,9 @@ class Admin extends Adminaddon
             ];
         }
         Db::name('attachment')->insertAll($data);
-        $this->success('附件表转换完毕 开始转换模型！', url('addons/v9toyzn/step2', ['isadmin' => 1]));
     }
 
-    public function step2()
+    public function step3()
     {
         $db_config  = Cache::get('db_config');
         $res        = Db::connect($db_config)->name('model')->where('type', 0)->select();
@@ -159,10 +181,9 @@ class Admin extends Adminaddon
                 $this->error($e->getMessage());
             }
         }
-        $this->success('模型表转换完毕 开始转换栏目！', url('addons/v9toyzn/step3', ['isadmin' => 1]));
     }
 
-    public function step3()
+    public function step4()
     {
         cache('Category', null);
         $db_config  = Cache::get('db_config');
@@ -196,9 +217,9 @@ class Admin extends Adminaddon
             $modelClass->addCategory($value, ['id', 'parentid', 'catname', 'arrparentid', 'arrchildid', 'child', 'items', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'status']);
             unset($value);
         }
-        $this->success('栏目转换完毕 开始转换列表内容！', url('addons/v9toyzn/step4', ['isadmin' => 1]));
     }
-    public function step4()
+
+    public function step5()
     {
         $v9_table  = Cache::get('v9_table');
         $db_config = Cache::get('db_config');
@@ -235,10 +256,9 @@ class Admin extends Adminaddon
             }
 
         };
-        $this->success('栏目转换完毕 开始转换单页内容！', url('addons/v9toyzn/step5', ['isadmin' => 1]));
     }
 
-    public function step5()
+    public function step6()
     {
         $db_config = Cache::get('db_config');
         $cursor    = Db::connect($db_config)->name('page')->cursor();
@@ -253,7 +273,6 @@ class Admin extends Adminaddon
             ];
         }
         Db::name('page')->insertAll($data);
-        $this->success('所有数据转换完毕！', url('addons/v9toyzn/index', ['isadmin' => 1]));
     }
 
     private function string2array($data)
