@@ -39,6 +39,7 @@ class Admin extends Adminaddon
     );
     private $ext_table = '_data';
 
+    //初始化
     public function init()
     {
         $data = $this->request->post();
@@ -56,15 +57,6 @@ class Admin extends Adminaddon
         ];
         Cache::set('db_config', $db_config, 3600);
 
-        $db_task = [
-            ['fun' => 'step1', 'msg' => '数据表清空完毕!'],
-            ['fun' => 'step2', 'msg' => '附件表转换完毕!'],
-            ['fun' => 'step3', 'msg' => '模型表转换完毕!'],
-            ['fun' => 'step4', 'msg' => '栏目转换完毕!'],
-            ['fun' => 'step5', 'msg' => '内容页转换完毕!'],
-            ['fun' => 'step6', 'msg' => '单页转换完毕!'],
-        ];
-        Cache::set('db_task', $db_task, 3600);
         //检查phpcms表是否正常
         $db2 = Db::connect($db_config);
         foreach ($this->v9modelTabList as $tablename) {
@@ -87,10 +79,18 @@ class Admin extends Adminaddon
         $this->success('phpcms数据表结构检查完毕！');
     }
 
+    //任务执行
     public function start()
     {
         $page    = $this->request->param('page/d', 0);
-        $db_task = Cache::get('db_task');
+        $db_task = [
+            ['fun' => 'step1', 'msg' => '数据表清空完毕!'],
+            ['fun' => 'step2', 'msg' => '附件表转换完毕!'],
+            ['fun' => 'step3', 'msg' => '模型表转换完毕!'],
+            ['fun' => 'step4', 'msg' => '栏目转换完毕!'],
+            ['fun' => 'step5', 'msg' => '内容页转换完毕!'],
+            ['fun' => 'step6', 'msg' => '单页转换完毕!'],
+        ];
         if (isset($db_task[$page])) {
             $fun = $db_task[$page]['fun'];
             $this->$fun();
@@ -125,7 +125,6 @@ class Admin extends Adminaddon
         }
         Db::execute("TRUNCATE `{$yznprefix}attachment`;");
         cache('Model', null);
-        //$this->success('yzncms表清空完毕！', url('addons/v9toyzn/step1', ['isadmin' => 1]), ['page', 1]);
     }
 
     public function step2()
@@ -133,20 +132,25 @@ class Admin extends Adminaddon
         $db_config = Cache::get('db_config');
         $cursor    = Db::connect($db_config)->name('attachment')->cursor();
         $admin_id  = admin_user::instance()->id;
+        $finfo     = finfo_open(FILEINFO_MIME_TYPE);
         foreach ($cursor as $key => $value) {
-            $path   = str_replace("/", DS, '/uploads/images/' . $value['filepath']);
-            $data[] = [
-                'id'     => $value['aid'],
-                'aid'    => $admin_id,
-                'uid'    => 0,
-                'name'   => $value['filename'],
-                'path'   => '/uploads/images/' . $value['filepath'],
-                'module' => 'admin',
-                'md5'    => hash_file('md5', ROOT_PATH . 'public' . $path),
-                'sha1'   => hash_file('sha1', ROOT_PATH . 'public' . $path),
-                'size'   => $value['filesize'],
-                'ext'    => $value['fileext'],
-                'status' => 1,
+            $path     = ROOT_PATH . 'public' . str_replace("/", DS, '/uploads/images/' . $value['filepath']);
+            $is_exist = file_exists($path) ? true : false;
+            $data[]   = [
+                'id'          => $value['aid'],
+                'aid'         => $admin_id,
+                'uid'         => 0,
+                'name'        => $value['filename'],
+                'path'        => '/uploads/images/' . $value['filepath'],
+                'module'      => 'cms',
+                'md5'         => $is_exist ? hash_file('md5', $path) : '',
+                'sha1'        => $is_exist ? hash_file('sha1', $path) : '',
+                'size'        => $value['filesize'],
+                'ext'         => $value['fileext'],
+                'mime'        => $is_exist ? finfo_file($finfo, $path) : '',
+                'create_time' => $value['uploadtime'],
+                'update_time' => $value['uploadtime'],
+                'status'      => 1,
             ];
         }
         Db::name('attachment')->insertAll($data);

@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div id="change_div" style="display: none;padding: 20px;background: #f2f2f2;">
-                <div class="scroller" style="height:300px" id="change_html"></div>
+                <div class="scroller" style="height:250px" id="change_html"></div>
             </div>
         </form>
     </div>
@@ -60,8 +60,7 @@ layui.use(['form', 'yzn', 'layer'], function() {
         yzn = layui.yzn;
 
     form.on('submit', function(data) {
-        $('.layui-btn').attr('disabled', true);
-        $('.layui-btn').html('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 转换中');
+        $('.layui-btn').addClass('layui-btn-disabled').prop('disabled', true).html('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i> 转换中...');
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -95,8 +94,7 @@ function start_change(page) {
                     start_change(res.data.page);
                     $('#change_html').append('<p>'+res.msg+'</p>');
                 } else if (res.data.code == 2) {
-                    $('.layui-btn').attr('disabled', false);
-                    $('.layui-btn').html('开始转换');
+                    $('.layui-btn').attr('disabled', false).removeClass("layui-btn-disabled").html('开始转换');
                     layer.msg(res.msg, { icon: 1 });
                 } else {
 
