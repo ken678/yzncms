@@ -106,6 +106,7 @@ layui.use(['table', 'yznTable'], function() {
                 { field: 'listorder', width: 70, title: '排序', edit: 'text' },
                 { field: 'id', width: 60, title: 'ID' },
                 { field: 'title', align: "left", title: '标题', templet: '#title' },
+                { field: 'flag', width: 100, title: '标识',hide: true, selectList: { 1: '置顶', 2: '头条', 3: '特荐', 4: '推荐', 5: '热点', 6: '幻灯' } },
                 { field: 'thumb', width: 100, title: '图片', search: false, templet: yznTable.image },
                 { field: 'hits', width: 80, title: '点击量' },
                 { field: 'updatetime', width: 160, title: '更新时间', search: 'range' },
