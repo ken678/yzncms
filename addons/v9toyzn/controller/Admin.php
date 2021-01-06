@@ -56,6 +56,14 @@ class Admin extends Adminaddon
             'prefix'   => $data['prefix'],
         ];
         Cache::set('db_config', $db_config, 3600);
+        $db_task = [
+            ['fun' => 'step1', 'msg' => '数据表清空完毕!'],
+            ['fun' => 'step2', 'msg' => '附件表转换完毕!'],
+            ['fun' => 'step3', 'msg' => '模型表转换完毕!'],
+            ['fun' => 'step4', 'msg' => '栏目转换完毕!'],
+            ['fun' => 'step5', 'msg' => '内容页转换完毕!'],
+            ['fun' => 'step6', 'msg' => '单页转换完毕!'],
+        ];
 
         //检查phpcms表是否正常
         $db2 = Db::connect($db_config);
@@ -75,6 +83,12 @@ class Admin extends Adminaddon
                 }
             }
         }
+        //检查是否存在友情链接
+        $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}link'");
+        if ($res && isModuleInstall('links')) {
+            $db_task[] = ['fun' => 'step7', 'msg' => '友情链接转换完毕!'];
+        }
+        Cache::set('db_task', $db_task, 3600);
         Cache::set('v9_table', $v9table, 3600);
         $this->success('phpcms数据表结构检查完毕！');
     }
@@ -83,14 +97,7 @@ class Admin extends Adminaddon
     public function start()
     {
         $page    = $this->request->param('page/d', 0);
-        $db_task = [
-            ['fun' => 'step1', 'msg' => '数据表清空完毕!'],
-            ['fun' => 'step2', 'msg' => '附件表转换完毕!'],
-            ['fun' => 'step3', 'msg' => '模型表转换完毕!'],
-            ['fun' => 'step4', 'msg' => '栏目转换完毕!'],
-            ['fun' => 'step5', 'msg' => '内容页转换完毕!'],
-            ['fun' => 'step6', 'msg' => '单页转换完毕!'],
-        ];
+        $db_task = Cache::get('db_task');
         if (isset($db_task[$page])) {
             $fun = $db_task[$page]['fun'];
             $this->$fun();
@@ -114,6 +121,10 @@ class Admin extends Adminaddon
                 }
                 Db::name('model_field')->where(['modelid' => $val['id']])->delete();
             }
+        }
+        if (isModuleInstall('links')) {
+            Db::execute("TRUNCATE `{$yznprefix}terms`;");
+            Db::execute("TRUNCATE `{$yznprefix}links`;");
         }
         //删除模型中的表
         Db::name('model')->where('module', 'cms')->delete();
@@ -212,7 +223,10 @@ class Admin extends Adminaddon
             $value['type']   = $value['type'] == 0 ? 2 : 1;
             if ($value['image']) {
                 $value['image'] = strrchr($value['image'], '/');
-                $value['image'] = Db::name('attachment')->where('path', 'like', '%' . $value['image'])->value('id');
+                $image_id       = Db::name('attachment')->where('path', 'like', '%' . $value['image'])->value('id');
+                $value['image'] = $image_id ? $image_id : 0;
+            } else {
+                $value['image'] = 0;
             }
             $result = $this->validate($value, 'app\cms\validate\Category.list');
             if (true !== $result) {
@@ -246,7 +260,10 @@ class Admin extends Adminaddon
                     ];
                     if ($value['thumb']) {
                         $value['thumb']              = strrchr($value['thumb'], '/');
-                        $data['modelField']['thumb'] = Db::name('attachment')->where('path', 'like', '%' . $value['thumb'])->value('id');
+                        $thumb_id                    = Db::name('attachment')->where('path', 'like', '%' . $value['thumb'])->value('id');
+                        $data['modelField']['thumb'] = $thumb_id ? $thumb_id : 0;
+                    } else {
+                        $data['modelField']['thumb'] = 0;
                     }
                     $data['modelFieldExt'] = [
                         'did'     => $value['id'],
@@ -277,6 +294,44 @@ class Admin extends Adminaddon
             ];
         }
         Db::name('page')->insertAll($data);
+    }
+
+    public function step7()
+    {
+        $db_config = Cache::get('db_config');
+        $terms     = $links     = [];
+        $cursor    = Db::connect($db_config)->name('type')->where('module', 'link')->cursor();
+        foreach ($cursor as $key => $value) {
+            $terms[] = [
+                'id'       => $value['id'],
+                'parentid' => $value['parentid'],
+                'name'     => $value['name'],
+                'module'   => 'links',
+            ];
+        }
+        Db::name('terms')->insertAll($terms);
+        $cursor = Db::connect($db_config)->name('link')->cursor();
+        foreach ($cursor as $key => $value) {
+            $links[$key] = [
+                'id'          => $value['linkid'],
+                'termsid'     => $value['typeid'],
+                'linktype'    => $value['linktype'],
+                'name'        => $value['name'],
+                'url'         => $value['url'],
+                'listorder'   => $value['listorder'],
+                'inputtime'   => $value['addtime'],
+                'description' => $value['introduce'],
+                'status'      => $value['passed'],
+            ];
+            if ($value['logo']) {
+                $value['logo']        = strrchr($value['logo'], '/');
+                $logo_id              = Db::name('attachment')->where('path', 'like', '%' . $value['logo'])->value('id');
+                $links[$key]['image'] = $logo_id ? $logo_id : 0;
+            } else {
+                $links[$key]['image'] = 0;
+            };
+        };
+        Db::name('links')->insertAll($links);
     }
 
     private function string2array($data)

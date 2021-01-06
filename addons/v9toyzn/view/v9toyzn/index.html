@@ -99,9 +99,9 @@ function start_change(page) {
                 } else {
 
                 }
-
             } else {
                 layer.msg(res.msg, { icon: 2 });
+                $('.layui-btn').attr('disabled', false).removeClass("layui-btn-disabled").html('重新转换');
             }
         },
         error: function(xhr, textstatus, thrown) {
