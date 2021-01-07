@@ -113,7 +113,7 @@ class Upload extends Base
         $this->uploadUrl = config('public_url') . 'uploads/';
 
         //图片上传大小和类型
-        $this->confing['imageMaxSize'] = $this->confing['catcherMaxSize'] = config('upload_image_size') * 1024;
+        $this->confing['imageMaxSize'] = $this->confing['catcherMaxSize'] = 0 == config('upload_image_size') ? 1024 * 1024 * 1024 : config('upload_image_size') * 1024;
         if (!empty(config('upload_image_ext'))) {
             $imageallowext = parse_attr(config('upload_image_ext'));
             foreach ($imageallowext as $k => $rs) {
@@ -123,7 +123,7 @@ class Upload extends Base
         }
 
         //附件上传大小和类型
-        $this->confing['fileMaxSize'] = $this->confing['videoMaxSize'] = config('upload_file_size') * 1024;
+        $this->confing['fileMaxSize'] = $this->confing['videoMaxSize'] = 0 == config('upload_file_size') ? 1024 * 1024 * 1024 : config('upload_file_size') * 1024;
         if (!empty(config('upload_file_ext'))) {
             $fileallowext = parse_attr(config('upload_file_ext'));
             foreach ($fileallowext as $k => $rs) {
