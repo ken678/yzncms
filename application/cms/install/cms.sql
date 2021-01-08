@@ -7,7 +7,7 @@ CREATE TABLE `yzn_category` (
   `modelid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '模型ID',
   `parentid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
   `arrparentid` varchar(255) NOT NULL DEFAULT '' COMMENT '所有父ID',
-  `arrchildid` mediumtext  NOT NULL COMMENT '所有子栏目ID',
+  `arrchildid` mediumtext COMMENT '所有子栏目ID',
   `child` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否存在子栏目，1存在',
   `image` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '栏目图片',
   `icon` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '栏目图标',
