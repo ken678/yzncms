@@ -995,7 +995,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         var that = $(this),
             status = 0;
         if (!that.attr('data-href')) {
-            notice.info('请设置data-href参数');
+            notice.info({message:'请设置data-href参数'});
             return false;
         }
         if (this.checked) {
@@ -1003,9 +1003,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         }
         $.get(that.attr('data-href'), { value: status }, function(res) {
             if (res.code === 1) {
-                notice.success(res.msg);
+                notice.success({message:res.msg});
             } else {
-                notice.error(res.msg);
+                notice.error({message:res.msg});
                 that.trigger('click');
                 form.render('checkbox');
             }
@@ -1017,15 +1017,15 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
         layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
             if (!href) {
-                notice.info('请设置data-href参数');
+                notice.info({message:'请设置data-href参数'});
                 return false;
             }
             $.get(href, function(res) {
                 if (res.code == 1) {
-                    notice.success(res.msg);
+                    notice.success({message:res.msg});
                     that.parents('tr').remove();
                 } else {
-                    notice.error(res.msg);
+                    notice.error({message:res.msg});
                 }
             });
             layer.close(index);
@@ -1054,7 +1054,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         opt.idSync = opt.idSync || def.idSync;
 
         if (!opt.url) {
-            notice.info('请设置data-href参数');
+            notice.info({message:'请设置data-href参数'});
             return false;
         }
 
@@ -1062,7 +1062,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             if ($('.checkbox-ids:checked').length <= 0) {
                 var checkStatus = table.checkStatus(opt.table);
                 if (checkStatus.data.length <= 0) {
-                    notice.info('请选择要操作的数据');
+                    notice.info({message:'请选择要操作的数据'});
                     return false;
                 }
 

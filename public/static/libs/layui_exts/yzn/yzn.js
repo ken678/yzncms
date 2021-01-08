@@ -9,6 +9,13 @@ layui.define(['layer','notice'], function(exports) {
     layer.config({
         skin: 'layui-layer-yzn'
     });
+    notice.settings({
+       timeout: 3000,//消失时间
+       theme: 'dark', // 主题 dark light
+       position: 'topRight', // 位置 bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+       displayMode: 0, //0无限制 1同类型存在不显示 2同类型存在先移除
+       progressBar: true,//进度条
+    });
 
     yzn = {
         config: {
@@ -155,22 +162,22 @@ layui.define(['layer','notice'], function(exports) {
         notice:{
             // 成功消息
             success: function(msg) {
-                var index = notice.success(msg);
+                var index = notice.success({message:msg});
                 return index;
             },
             // 失败消息
             error: function(msg) {
-                var index = notice.error(msg);
+                var index = notice.error({message:msg});
                 return index;
             },
             // 警告消息框
             warning: function(msg) {
-                var index = notice.warning(msg);
+                var index = notice.warning({message:msg});
                 return index;
             },
             // 消息提示
             info: function(msg) {
-                var index = notice.info(msg);
+                var index = notice.info({message:msg});
                 return index;
             },
         },
