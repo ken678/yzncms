@@ -29,6 +29,45 @@ class Admin extends Adminaddon
         'page',
         'attachment',
     );
+    private $v9fieldList = array(
+        'catid',
+        'typeid',
+        'title',
+        'thumb',
+        'attachment',
+        'keywords',
+        'description',
+        'updatetime',
+        'content',
+        'voteid',
+        'pages',
+        'inputtime',
+        'posids',
+        'url',
+        'listorder',
+        'status',
+        'template',
+        'groupids_view',
+        'readpoint',
+        'relation',
+        'allow_comment',
+        'copyfrom',
+        'username',
+        'downfiles',
+        'downfile',
+        'systems',
+        'copytype',
+        'language',
+        'classtype',
+        'version',
+        'filesize',
+        'islink',
+        'stars',
+        'pictureurls',
+        'video_category',
+        'video',
+        'vision',
+    );
     //yzncms固定相关表
     private $modelTabList = array(
         'model',
@@ -60,9 +99,10 @@ class Admin extends Adminaddon
             ['fun' => 'step1', 'msg' => '数据表清空完毕!'],
             ['fun' => 'step2', 'msg' => '附件表转换完毕!'],
             ['fun' => 'step3', 'msg' => '模型表转换完毕!'],
-            ['fun' => 'step4', 'msg' => '栏目转换完毕!'],
-            ['fun' => 'step5', 'msg' => '内容页转换完毕!'],
-            ['fun' => 'step6', 'msg' => '单页转换完毕!'],
+            ['fun' => 'step4', 'msg' => '模型字段表转换完毕!'],
+            ['fun' => 'step5', 'msg' => '栏目转换完毕!'],
+            ['fun' => 'step6', 'msg' => '内容页转换完毕!'],
+            ['fun' => 'step7', 'msg' => '单页转换完毕!'],
         ];
 
         //检查phpcms表是否正常
@@ -86,7 +126,7 @@ class Admin extends Adminaddon
         //检查是否存在友情链接
         $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}link'");
         if ($res && isModuleInstall('links')) {
-            $db_task[] = ['fun' => 'step7', 'msg' => '友情链接转换完毕!'];
+            $db_task[] = ['fun' => 'step8', 'msg' => '友情链接转换完毕!'];
         }
         Cache::set('db_task', $db_task, 3600);
         Cache::set('v9_table', $v9table, 3600);
@@ -200,6 +240,70 @@ class Admin extends Adminaddon
 
     public function step4()
     {
+        $db_config  = Cache::get('db_config');
+        $cursor     = Db::connect($db_config)->name('model_field')->cursor();
+        $ids        = Db::connect($db_config)->name('model')->where('type', 0)->column('modelid');
+        $modelClass = new \app\cms\model\ModelField;
+        $v9fields   = $data   = [];
+        foreach ($cursor as $key => $value) {
+            if (!in_array($value['field'], $this->v9fieldList) && in_array($value['modelid'], $ids) && in_array($value['formtype'], ['text', 'textarea', 'editor'])) {
+                switch ($value['formtype']) {
+                    case 'text':
+                    case 'textarea':
+                        $define = "varchar(255) NOT NULL";
+                        $type   = 'text';
+                        break;
+                    case 'image':
+                        $define = "int(5) UNSIGNED NOT NULL";
+                        $type   = 'image';
+                        break;
+                    case 'editor':
+                        $define = "text NOT NULL";
+                        $type   = 'Ueditor';
+                        break;
+                }
+                $data = [
+                    'modelid'    => $value['modelid'],
+                    'name'       => $value['field'],
+                    'title'      => $value['name'],
+                    'ifsystem'   => $value['issystem'],
+                    'listordert' => $value['listorder'],
+                    'isadd'      => $value['isadd'],
+                    'ifsearch'   => $value['issearch'],
+                    'ifcore'     => $value['iscore'],
+                    'type'       => $type,
+                    'setting'    => ['define' => $define],
+                    'status'     => 1,
+                ];
+                $v9fields[$value['modelid']][] = [
+                    'name'       => $value['field'],
+                    'title'      => $value['name'],
+                    'ifsystem'   => $value['issystem'],
+                    'listordert' => $value['listorder'],
+                    'isadd'      => $value['isadd'],
+                    'ifsearch'   => $value['issearch'],
+                    'ifcore'     => $value['iscore'],
+                    'type'       => $type,
+                    'setting'    => ['define' => $define],
+                    'status'     => 1,
+                ];
+                $result = $this->validate($data, 'app\cms\validate\ModelField');
+                if (true !== $result) {
+                    return $this->error($result);
+                }
+                try {
+                    $res = $modelClass->addField($data);
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
+                }
+            }
+        }
+        Cache::set('v9_fields', $v9fields, 3600);
+
+    }
+
+    public function step5()
+    {
         cache('Category', null);
         $db_config  = Cache::get('db_config');
         $pinyin     = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
@@ -237,14 +341,15 @@ class Admin extends Adminaddon
         }
     }
 
-    public function step5()
+    public function step6()
     {
         $v9_table  = Cache::get('v9_table');
         $db_config = Cache::get('db_config');
+        $v9_fields = Cache::get('v9_fields');
         $Cms_Model = new \app\cms\model\Cms;
         $data      = [];
         foreach ($v9_table as $key => $value) {
-            $cursor = Db::connect($db_config)->name($value)->alias('a')->join(['v9_' . $value . '_data' => 'w'], 'w.id=a.id')->cursor();
+            $cursor = Db::connect($db_config)->name($value)->alias('a')->join(['v9_' . $value . '_data' => 'w'], 'w.id=a.id')->join(['v9_category' => 'c'], 'c.catid=a.catid')->field('a.*,w.*,c.modelid')->cursor();
             foreach ($cursor as $key => $value) {
                 try {
                     $data['modelField'] = [
@@ -269,6 +374,15 @@ class Admin extends Adminaddon
                         'did'     => $value['id'],
                         'content' => $value['content'],
                     ];
+                    if (isset($v9_fields[$value['modelid']])) {
+                        foreach ($v9_fields[$value['modelid']] as $k => $v) {
+                            if ($v['ifsystem']) {
+                                $data['modelField'][$v['name']] = $value[$v['name']];
+                            } else {
+                                $data['modelFieldExt'][$v['name']] = $value[$v['name']];
+                            }
+                        }
+                    }
                     $Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
                     unset($data);
                 } catch (\Exception $ex) {
@@ -279,7 +393,7 @@ class Admin extends Adminaddon
         };
     }
 
-    public function step6()
+    public function step7()
     {
         $db_config = Cache::get('db_config');
         $cursor    = Db::connect($db_config)->name('page')->cursor();
@@ -296,7 +410,7 @@ class Admin extends Adminaddon
         Db::name('page')->insertAll($data);
     }
 
-    public function step7()
+    public function step8()
     {
         $db_config = Cache::get('db_config');
         $terms     = $links     = [];
