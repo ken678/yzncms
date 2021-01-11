@@ -63,7 +63,7 @@ class Admin extends Adminaddon
         'filesize',
         'islink',
         'stars',
-        'pictureurls',
+        //'pictureurls',
         'video_category',
         'video',
         'vision',
@@ -130,6 +130,8 @@ class Admin extends Adminaddon
         }
         Cache::set('db_task', $db_task, 3600);
         Cache::set('v9_table', $v9table, 3600);
+        unset($db2);
+        unset($res);
         $this->success('phpcms数据表结构检查完毕！');
     }
 
@@ -183,7 +185,7 @@ class Admin extends Adminaddon
         $db_config = Cache::get('db_config');
         $admin_id  = admin_user::instance()->id;
         $finfo     = finfo_open(FILEINFO_MIME_TYPE);
-        Db::connect($db_config)->name('attachment')->chunk(100, function ($cursor) use ($admin_id, $finfo) {
+        $res       = Db::connect($db_config)->name('attachment')->chunk(100, function ($cursor) use ($admin_id, $finfo) {
             foreach ($cursor as $key => $value) {
                 $path     = ROOT_PATH . 'public' . str_replace("/", DS, '/uploads/images/' . $value['filepath']);
                 $is_exist = file_exists($path) ? true : false;
@@ -206,6 +208,7 @@ class Admin extends Adminaddon
             };
             Db::name('attachment')->insertAll($data);
         });
+        unset($res);
     }
 
     public function step3()
@@ -248,7 +251,7 @@ class Admin extends Adminaddon
         $modelClass = new \app\cms\model\ModelField;
         $v9fields   = $data   = [];
         foreach ($cursor as $key => $value) {
-            if (!in_array($value['field'], $this->v9fieldList) && in_array($value['modelid'], $ids) && in_array($value['formtype'], ['text', 'textarea', 'image', 'editor'])) {
+            if (!in_array($value['field'], $this->v9fieldList) && in_array($value['modelid'], $ids) && in_array($value['formtype'], ['text', 'textarea', 'image', 'images', 'editor'])) {
                 switch ($value['formtype']) {
                     case 'text':
                     case 'textarea':
@@ -259,6 +262,11 @@ class Admin extends Adminaddon
                     case 'image':
                         $define = "int(5) UNSIGNED NOT NULL";
                         $type   = 'image';
+                        $val    = "";
+                        break;
+                    case 'images':
+                        $define = "varchar(256) NOT NULL";
+                        $type   = 'images';
                         $val    = "";
                         break;
                     case 'editor':
@@ -350,6 +358,8 @@ class Admin extends Adminaddon
 
     public function step6()
     {
+        set_time_limit(0);
+        ini_set('memory_limit', '500M');
         $v9_table  = Cache::get('v9_table');
         $db_config = Cache::get('db_config');
         $v9_fields = Cache::get('v9_fields');
@@ -386,12 +396,14 @@ class Admin extends Adminaddon
                         foreach ($v9_fields[$value['modelid']] as $k => $v) {
                             switch ($v['type']) {
                                 case 'image':
-                                    if ($value[$v['name']]) {
-                                        $value[$v['name']] = strrchr($value[$v['name']], '/');
-                                        $image_id          = Db::name('attachment')->where('path', 'like', '%' . $value[$v['name']])->value('id');
-                                        $value[$v['name']] = $image_id ? $image_id : 0;
+                                    $value[$v['name']] = $this->getImage($value[$v['name']]);
+                                    break;
+                                case 'images':
+                                    if (strpos($value[$v['name']], 'alt')) {
+                                        $value[$v['name']] = array_column($this->string2array($value[$v['name']]), 'url');
+                                        $value[$v['name']] = implode(",", array_map([$this, 'getImage'], $value[$v['name']]));
                                     } else {
-                                        $value[$v['name']] = 0;
+                                        $value[$v['name']] = "";
                                     }
                                     break;
                             }
@@ -427,6 +439,7 @@ class Admin extends Adminaddon
             ];
         }
         Db::name('page')->insertAll($data);
+        unset($cursor);
     }
 
     public function step8()
@@ -482,5 +495,16 @@ class Admin extends Adminaddon
             $array = json_decode($data, true);
         }
         return $array;
+    }
+
+    private function getImage($val)
+    {
+        if (!empty($val)) {
+            $val      = strrchr($val, '/');
+            $image_id = Db::name('attachment')->where('path', 'like', '%' . $val)->value('id');
+            return $image_id ? $image_id : 0;
+        } else {
+            return 0;
+        }
     }
 }
