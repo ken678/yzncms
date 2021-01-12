@@ -1,5 +1,15 @@
 <?php
 
+
+
+
+
+
+
+
+
+
+
 namespace Composer;
 
 use Composer\Semver\VersionParser;
@@ -19,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '27662d78364bb0109018121aeba728ee3115a4aa',
+    'reference' => 'dbf572ad1d9ce45260ae2762c769de53fff1660b',
     'name' => 'topthink/think',
   ),
   'versions' => 
@@ -283,12 +293,12 @@ private static $installed = array (
     ),
     'topthink/framework' => 
     array (
-      'pretty_version' => 'v5.1.40',
-      'version' => '5.1.40.0',
+      'pretty_version' => 'v5.1.41',
+      'version' => '5.1.41.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'df0f92d58c70207c9ce9526fa7743eeff0831328',
+      'reference' => '7137741a323a4a60cfca334507cd1812fac91bb2',
     ),
     'topthink/think' => 
     array (
@@ -297,7 +307,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '27662d78364bb0109018121aeba728ee3115a4aa',
+      'reference' => 'dbf572ad1d9ce45260ae2762c769de53fff1660b',
     ),
     'topthink/think-captcha' => 
     array (
