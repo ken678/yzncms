@@ -380,14 +380,8 @@ class Admin extends Adminaddon
                         'inputtime'   => date('Y-m-d h:i:s', $value['inputtime']),
                         'updatetime'  => date('Y-m-d h:i:s', $value['updatetime']),
                     ];
-                    if ($value['thumb']) {
-                        $value['thumb']              = strrchr($value['thumb'], '/');
-                        $thumb_id                    = Db::name('attachment')->where('path', 'like', '%' . $value['thumb'])->value('id');
-                        $data['modelField']['thumb'] = $thumb_id ? $thumb_id : 0;
-                    } else {
-                        $data['modelField']['thumb'] = 0;
-                    }
-                    $data['modelFieldExt'] = [
+                    $data['modelField']['thumb'] = $this->getImage($value['thumb']);
+                    $data['modelFieldExt']       = [
                         'did'     => $value['id'],
                         'content' => $value['content'],
                     ];
