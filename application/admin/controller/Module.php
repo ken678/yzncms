@@ -132,7 +132,7 @@ class Module extends Adminbase
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success("模块卸载成功！一键清理缓存后生效！");
+            $this->success("模块卸载成功！一键清理缓存后生效！", url('index'));
         } else {
             $config = ModuleService::getInfo($name);
             $this->assign('config', $config);
