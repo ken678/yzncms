@@ -516,7 +516,7 @@ class Cms extends Modelbase
                 $txt = trim($row['0']);
                 if ($txt) {
                     $link = trim($row['1']);
-                    $set  = trim($row['2']);
+                    $set  = isset($row['2']) ? trim($row['2']) : '';
                     $rel  = '';
                     $open = '_blank';
 
