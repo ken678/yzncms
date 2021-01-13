@@ -43,7 +43,7 @@ class Category extends Model
         }
         //序列化setting数据
         $data['setting'] = serialize($data['setting']);
-        $res = self::create($data, $fields, true);
+        $res             = self::create($data, $fields, true);
         if ($res) {
             cache('Category', null);
             return $res->getAttr('id');
@@ -77,11 +77,11 @@ class Category extends Model
             if (!empty($idstr)) {
                 $arr = self::all($idstr);
                 foreach ($arr as $key => $val) {
-                    $setting = unserialize($val->getAttr('setting'));
+                    $setting                      = unserialize($val->getAttr('setting'));
                     $setting['category_template'] = $data['setting']['category_template'];
-                    $setting['list_template'] = $data['setting']['list_template'];
-                    $setting['show_template'] = $data['setting']['show_template'];
-                    $rs = self::where('id', $val->getAttr('id'))->update(['setting' => serialize($setting)]);
+                    $setting['list_template']     = $data['setting']['list_template'];
+                    $setting['show_template']     = $data['setting']['show_template'];
+                    $rs                           = self::where('id', $val->getAttr('id'))->update(['setting' => serialize($setting)]);
                 }
             }
         }
@@ -175,11 +175,12 @@ class Category extends Model
     //刷新栏目索引缓存
     public function category_cache()
     {
-        $data = self::order("listorder ASC")->select();
+        $data        = self::order("listorder ASC")->select();
         $CategoryIds = array();
         foreach ($data as $r) {
             $CategoryIds[$r['id']] = array(
-                'id' => $r['id'],
+                'id'       => $r['id'],
+                'catdir'   => $r['catdir'],
                 'parentid' => $r['parentid'],
             );
         }
