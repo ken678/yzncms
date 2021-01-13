@@ -92,7 +92,8 @@ function catpos($catid, $symbol = ' &gt; ')
  */
 function filters($modelid, $catid)
 {
-    $data = get_filters_field($modelid);
+    $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+    $data     = get_filters_field($modelid);
     Request::filter('trim');
     $param = paramdecode(Request::param('condition'));
 
@@ -148,7 +149,13 @@ function filters($modelid, $catid)
                     $conditionParam[$name]['options'][$k]['param'] = paramencode($nowParam);
                 }
             }
-            $conditionParam[$name]['options'][$k]['url'] = url('cms/index/lists', ['catid' => $catid, 'condition' => $conditionParam[$name]['options'][$k]['param']]);
+            if ($url_mode == 1) {
+                $field = 'catid';
+            } else {
+                $field = 'catdir';
+                $catid = getCategory($catid, 'catdir');
+            }
+            $conditionParam[$name]['options'][$k]['url'] = url('cms/index/lists', [$field => $catid, 'condition' => $conditionParam[$name]['options'][$k]['param']]);
             ksort($conditionParam[$name]['options']);
         }
         if (!isset($param[$rs['name']]) && empty($param[$rs['name']])) {
