@@ -68,8 +68,13 @@
                                     <select lay-filter="fasttype">
                                         <option data-url="">常用内部链接</option>
                                         <option data-url="cms/index/index">首页</option>
+                                        {if isset(cache("Cms_Config")['site_url_mode']) && 1==cache("Cms_Config")['site_url_mode']}
                                         <option data-url="cms/index/lists?catid=2">列表页/单页</option>
                                         <option data-url="cms/index/shows?catid=2&id=1">详情页</option>
+                                        {else}
+                                        <option data-url="cms/index/lists?catdir=Introduction">列表页/单页</option>
+                                        <option data-url="cms/index/shows?catdir=Introduction&id=1">详情页</option>
+                                        {/if}
                                         {if isModuleInstall('formguide')}
                                         <option data-url="formguide/index/index?id=2">表单页</option>
                                         {/if}

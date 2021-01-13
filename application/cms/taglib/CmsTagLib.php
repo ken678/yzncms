@@ -55,9 +55,9 @@ class CmsTagLib
      */
     public function Category($data)
     {
-
-        $where = isset($data['where']) ? $data['where'] : "status=1";
-        $order = isset($data['order']) ? $data['order'] : 'listorder,id desc';
+        $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+        $where    = isset($data['where']) ? $data['where'] : "status=1";
+        $order    = isset($data['order']) ? $data['order'] : 'listorder,id desc';
         //每页显示总数
         //$num = isset($data['num']) ? (int) $data['num'] : 10;
         if (!isset($data['limit'])) {
@@ -70,7 +70,8 @@ class CmsTagLib
         $categorys = Category_Model::where($where)->limit($data['limit'])->order($data['order'])->select();
         if (!empty($categorys)) {
             foreach ($categorys as &$vo) {
-                $vo['url']   = buildCatUrl($vo['id'], $vo['url']);
+                $cat         = $url_mode == 1 ? $vo['id'] : $vo['catdir'];
+                $vo['url']   = buildCatUrl($cat, $vo['url']);
                 $vo['image'] = empty($vo['image']) ? '' : get_file_path($vo['image']);
                 $vo['icon']  = empty($vo['icon']) ? '' : get_file_path($vo['icon']);
             }

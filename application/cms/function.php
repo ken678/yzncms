@@ -73,14 +73,15 @@ function getCategory($cat, $fields = '', $newCache = false)
  */
 function catpos($catid, $symbol = ' &gt; ')
 {
+    $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
     if (getCategory($catid) == false) {
         return '';
     }
     //获取当前栏目的 父栏目列表
     $arrparentid = array_filter(explode(',', getCategory($catid, 'arrparentid') . ',' . $catid));
     foreach ($arrparentid as $cid) {
-        //$url = buildCatUrl($cid, getCategory($cid, 'url'));
-        $parsestr[] = '<a href="' . getCategory($cid, 'url') . '" >' . getCategory($cid, 'catname') . '</a>';
+        $cat        = $url_mode == 1 ? $cid : getCategory($cid, 'catdir');
+        $parsestr[] = '<a href="' . getCategory($cat, 'url') . '" >' . getCategory($cat, 'catname') . '</a>';
     }
     $parsestr = implode($symbol, $parsestr);
     return $parsestr;

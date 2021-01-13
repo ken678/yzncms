@@ -1,4 +1,13 @@
-{php}$catid=request()->param('catid/d',0);$page=request()->param('page/d',1);$offset=($page-1)*5;$limit="$offset,5";{/php}
+{php}
+$catid=request()->param('catid/d',0);
+if (empty($catid)) {
+    $cat = request()->param('catdir/s', '');
+    $catid = getCategory($cat,'id');
+}
+$page=request()->param('page/d',1);
+$offset=($page-1)*5;
+$limit="$offset,5";
+{/php}
 {yzn module="cms" action="lists" catid="$catid" order="listorder ASC" limit="$limit" return="data"}
 {volist name="data" id="vo"}
 <li class="item clearfix">
