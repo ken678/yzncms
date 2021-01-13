@@ -40,14 +40,17 @@ class Index extends Cmsbase
     // 列表页
     public function lists()
     {
-        //栏目ID
-        $catid = $this->request->param('catid/d', 0);
-        $page  = $this->request->param('page/d', 1);
+        $cat = $this->request->param('catid/d', 0);
+        if (empty($cat)) {
+            $cat = $this->request->param('catdir/s', '');
+        }
+        $page = $this->request->param('page/d', 1);
         //获取栏目数据
-        $category = getCategory($catid);
+        $category = getCategory($cat);
         if (empty($category)) {
             $this->error('栏目不存在！');
         }
+        $catid = $category['id'];
         //模型ID
         $modelid = $category['modelid'];
         $models  = cache('Model');
@@ -109,15 +112,18 @@ class Index extends Cmsbase
     public function shows()
     {
         //ID
-        $id = $this->request->param('id/d', 0);
-        //栏目ID
-        $catid = $this->request->param('catid/d', 0);
-        $page  = $page  = $this->request->param('page/d', 1);
+        $id  = $this->request->param('id/d', 0);
+        $cat = $this->request->param('catid/d', 0);
+        if (empty($cat)) {
+            $cat = $this->request->param('catdir/s', '');
+        }
+        $page = $page = $this->request->param('page/d', 1);
         //获取栏目数据
-        $category = getCategory($catid);
+        $category = getCategory($cat);
         if (empty($category)) {
             $this->error('栏目不存在！');
         }
+        $catid = $category['id'];
         //模型ID
         $modelid   = $category['modelid'];
         $modelInfo = cache('Model')[$modelid];
