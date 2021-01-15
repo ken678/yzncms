@@ -94,7 +94,7 @@ class Admin extends Adminaddon
             'charset'  => 'utf8',
             'prefix'   => $data['prefix'],
         ];
-        Cache::set('db_config', $db_config, 3600);
+        Cache::set('db_config', $db_config, 600);
         $db_task = [
             ['fun' => 'step1', 'msg' => '数据表清空完毕!'],
             ['fun' => 'step2', 'msg' => '附件表转换完毕!'],
@@ -128,8 +128,8 @@ class Admin extends Adminaddon
         if ($res && isModuleInstall('links')) {
             $db_task[] = ['fun' => 'step8', 'msg' => '友情链接转换完毕!'];
         }
-        Cache::set('db_task', $db_task, 3600);
-        Cache::set('v9_table', $v9table, 3600);
+        Cache::set('db_task', $db_task, 600);
+        Cache::set('v9_table', $v9table, 600);
         unset($db2);
         unset($res);
         $this->success('phpcms数据表结构检查完毕！');
@@ -185,7 +185,7 @@ class Admin extends Adminaddon
         $db_config = Cache::get('db_config');
         $admin_id  = admin_user::instance()->id;
         $finfo     = finfo_open(FILEINFO_MIME_TYPE);
-        $res       = Db::connect($db_config)->name('attachment')->chunk(100, function ($cursor) use ($admin_id, $finfo) {
+        Db::connect($db_config)->name('attachment')->chunk(100, function ($cursor) use ($admin_id, $finfo) {
             foreach ($cursor as $key => $value) {
                 $path     = ROOT_PATH . 'public' . str_replace("/", DS, '/uploads/images/' . $value['filepath']);
                 $is_exist = file_exists($path) ? true : false;
@@ -208,7 +208,11 @@ class Admin extends Adminaddon
             };
             Db::name('attachment')->insertAll($data);
         });
-        unset($res);
+        $res = Db::name('attachment')->withAttr('path', function ($value, $data) {
+            return strrchr($value, '/');
+        })->select();
+        $path_list = array_column($res, 'id', 'path');
+        Cache::set('path_list', $path_list, 600);
     }
 
     public function step3()
@@ -310,9 +314,9 @@ class Admin extends Adminaddon
                     $this->error($e->getMessage());
                 }
             }
+            unset($cursor);
         }
-        unset($cursor);
-        Cache::set('v9_fields', $v9fields, 3600);
+        Cache::set('v9_fields', $v9fields, 600);
 
     }
 
@@ -366,12 +370,13 @@ class Admin extends Adminaddon
         $Cms_Model = new \app\cms\model\Cms;
         $data      = [];
         foreach ($v9_table as $key => $value) {
-            $cursor = Db::connect($db_config)->name($value)->alias('a')->join(['v9_' . $value . '_data' => 'w'], 'w.id=a.id')->join(['v9_category' => 'c'], 'c.catid=a.catid')->field('a.*,w.*,c.modelid')->cursor();
+            $cursor = Db::connect($db_config)->name($value)->alias('a')->join(['v9_' . $value . '_data' => 'w'], 'w.id=a.id')->join(['v9_category' => 'c'], 'c.catid=a.catid')->field('a.*,w.*,c.modelid')->select();
             foreach ($cursor as $key => $value) {
                 try {
                     $data['modelField'] = [
                         'id'          => $value['id'],
                         'catid'       => $value['catid'],
+                        'modelid'     => $value['modelid'], //优化
                         'title'       => $value['title'],
                         'keywords'    => $value['keywords'] ? explode(" ", $value['keywords']) : '',
                         'description' => $value['description'],
@@ -413,9 +418,9 @@ class Admin extends Adminaddon
                 } catch (\Exception $ex) {
                     //$this->error($ex->getMessage());
                 }
+                //unset($cursor);
             }
         };
-        unset($cursor);
     }
 
     public function step7()
@@ -493,10 +498,12 @@ class Admin extends Adminaddon
 
     private function getImage($val)
     {
+        $path_list = Cache::get('path_list');
         if (!empty($val)) {
-            $val      = strrchr($val, '/');
-            $image_id = Db::name('attachment')->where('path', 'like', '%' . $val)->value('id');
-            return $image_id ? $image_id : 0;
+            $val = strrchr($val, '/');
+            //$image_id = Db::name('attachment')->where('path', 'like', '%' . $val)->value('id');
+            //return $image_id ? $image_id : 0;
+            return isset($path_list[$val]) ? $path_list[$val] : 0;
         } else {
             return 0;
         }
