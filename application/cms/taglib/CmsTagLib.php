@@ -179,7 +179,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=_blank ' : '';
-        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 AND id < " . $data['id'], false, 'catid,id,title,url', "id desc");
+        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 AND id < " . $data['id'], false, '*', "id desc");
         if (!$result) {
             $result['title']  = $msg;
             $result['url']    = 'javascript:alert("' . $msg . '");';
@@ -200,7 +200,7 @@ class CmsTagLib
         $msg = !empty($data['msg']) ? $data['msg'] : '已经没有了';
         //是否新窗口打开
         $target = !empty($data['target']) ? ' target=_blank ' : '';
-        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 AND id > " . $data['id'], false, 'catid,id,title,url');
+        $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 AND id > " . $data['id'], false, '*');
         if (!$result) {
             $result['title']  = $msg;
             $result['url']    = 'javascript:alert("' . $msg . '");';
