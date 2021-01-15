@@ -49,7 +49,7 @@ class Cms extends Modelbase
     public function addModelData($data, $dataExt = [])
     {
         $catid   = (int) $data['catid'];
-        $modelid = getCategory($catid, 'modelid');
+        $modelid = isset($data['modelid']) ? (int) $data['modelid'] : getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
         if (!$this->table_exists($tablename)) {
