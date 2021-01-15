@@ -181,12 +181,10 @@ class CmsTagLib
         $target = !empty($data['target']) ? ' target=_blank ' : '';
         $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 AND id < " . $data['id'], false, '*', "id desc");
         if (!$result) {
-            $result['title']  = $msg;
-            $result['url']    = 'javascript:alert("' . $msg . '");';
-            $result['target'] = $target;
-        } else {
-            $result['target'] = $target;
+            $result['title'] = $msg;
+            $result['url']   = 'javascript:alert("' . $msg . '");';
         }
+        $result['target'] = $target;
         return $result;
 
     }
@@ -202,12 +200,10 @@ class CmsTagLib
         $target = !empty($data['target']) ? ' target=_blank ' : '';
         $result = model('cms/Cms')->getContent(getCategory($data['catid'], 'modelid'), "catid = " . $data['catid'] . " AND status = 1 AND id > " . $data['id'], false, '*');
         if (!$result) {
-            $result['title']  = $msg;
-            $result['url']    = 'javascript:alert("' . $msg . '");';
-            $result['target'] = $target;
-        } else {
-            $result['target'] = $target;
+            $result['title'] = $msg;
+            $result['url']   = 'javascript:alert("' . $msg . '");';
         }
+        $result['target'] = $target;
         return $result;
     }
 
