@@ -351,6 +351,7 @@ class Cms extends Modelbase
         //数据格式化处理
         if (!empty($result)) {
             $ModelField = cache('ModelField');
+            $Category   = cache('Category');
             foreach ($result as $key => $vo) {
                 $vo           = $this->dealModelShowData($ModelField[$modeId], $vo);
                 $cat          = $url_mode == 1 ? $vo['catid'] : (isset($Category[$vo['catid']]) ? $Category[$vo['catid']]['id'] : getCategory($vo['catid'], 'catdir'));
