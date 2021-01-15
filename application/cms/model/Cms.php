@@ -354,7 +354,7 @@ class Cms extends Modelbase
             $Category   = cache('Category');
             foreach ($result as $key => $vo) {
                 $vo           = $this->dealModelShowData($ModelField[$modeId], $vo);
-                $cat          = $url_mode == 1 ? $vo['catid'] : (isset($Category[$vo['catid']]) ? $Category[$vo['catid']]['id'] : getCategory($vo['catid'], 'catdir'));
+                $cat          = $url_mode == 1 ? $vo['catid'] : (isset($Category[$vo['catid']]) ? $Category[$vo['catid']]['catdir'] : getCategory($vo['catid'], 'catdir'));
                 $vo['url']    = buildContentUrl($cat, $vo['id'], $vo['url']);
                 $result[$key] = $vo;
             }
