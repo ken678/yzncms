@@ -23,16 +23,19 @@ class Admin extends Adminaddon
     protected $filename = 'sitemap.xml';
     protected $data     = [];
     protected $directory;
+    protected $url_mode = 1;
 
     protected function initialize()
     {
         parent::initialize();
+        $this->url_mode  = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
         $this->directory = (defined('IF_PUBLIC') ? ROOT_PATH . 'public/' : ROOT_PATH);
     }
 
     public function index()
     {
         if ($this->request->isPost()) {
+            $Category    = cache('Category');
             $data        = $this->request->post();
             $Sitemap     = new Sitemap_Class();
             $rootUrl     = $this->request->domain();
@@ -43,10 +46,11 @@ class Admin extends Adminaddon
             $this->_add_data($item);
 
             //栏目
-            $List = Db::name('Category')->where('status', 1)->order('id desc')->field('id,url')->select();
+            $List = Db::name('Category')->where('status', 1)->order('id desc')->field('id,url,catdir')->select();
             if (!empty($List)) {
                 foreach ($List as $vo) {
-                    $item = $this->_sitemap_item($rootUrl . url('cms/index/lists', ['catid' => $vo['id']]), intval($data['category']['priority']), $data['category']['changefreq'], time());
+                    $cat  = $this->url_mode == 1 ? $vo['id'] : $vo['catdir'];
+                    $item = $this->_sitemap_item($rootUrl . buildCatUrl($cat), intval($data['category']['priority']), $data['category']['changefreq'], time());
                     $this->_add_data($item);
                 }
             }
@@ -55,7 +59,8 @@ class Admin extends Adminaddon
             $List = Db::name('Page')->order('updatetime desc')->field('catid,updatetime')->select();
             if (!empty($List)) {
                 foreach ($List as $vo) {
-                    $item = $this->_sitemap_item($rootUrl . url('cms/index/lists', ['catid' => $vo['catid']]), intval($data['content']['priority']), $data['content']['changefreq'], $vo['updatetime']);
+                    $cat  = $this->url_mode == 1 ? $vo['catid'] : (isset($Category[$vo['catid']]) ? $Category[$vo['catid']]['id'] : getCategory($vo['catid'], 'catdir'));
+                    $item = $this->_sitemap_item($rootUrl . buildCatUrl($cat), intval($data['content']['priority']), $data['content']['changefreq'], $vo['updatetime']);
                     $this->_add_data($item);
                 }
             }
@@ -70,7 +75,8 @@ class Admin extends Adminaddon
                         $volist = Db::name($vo['tablename'])->where('status', 1)->order('updatetime desc')->field('id,catid,updatetime')->select();
                         if (!empty($volist)) {
                             foreach ($volist as $v) {
-                                $item = $this->_sitemap_item($rootUrl . url('cms/index/shows', ['catid' => $v['catid'], 'id' => $v['id']]), intval($data['content']['priority']), $data['content']['changefreq'], $v['updatetime']);
+                                $cat  = $this->url_mode == 1 ? $v['catid'] : (isset($Category[$v['catid']]) ? $Category[$v['catid']]['catdir'] : getCategory($v['catid'], 'catdir'));
+                                $item = $this->_sitemap_item($rootUrl . buildContentUrl($cat, $v['id']), intval($data['content']['priority']), $data['content']['changefreq'], $v['updatetime']);
                                 $this->_add_data($item);
                                 $num++;
                                 if ($num >= $data['num']) {
