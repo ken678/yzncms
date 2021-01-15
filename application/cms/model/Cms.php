@@ -384,7 +384,7 @@ class Cms extends Modelbase
             $ModelField      = cache('ModelField');
             $Category        = cache('Category');
             $dataInfo        = $this->dealModelShowData($ModelField[$modeId], $dataInfo);
-            $cat             = $url_mode == 1 ? $dataInfo['catid'] : getCategory($dataInfo['catid'], 'catdir');
+            $cat             = $url_mode == 1 ? $dataInfo['catid'] : (isset($Category[$dataInfo['catid']]) ? $Category[$dataInfo['catid']]['catdir'] : getCategory($dataInfo['catid'], 'catdir'));
             $dataInfo['url'] = buildContentUrl($cat, $dataInfo['id'], $dataInfo['url']);
         }
         return $dataInfo;
