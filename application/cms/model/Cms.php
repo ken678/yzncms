@@ -100,7 +100,7 @@ class Cms extends Modelbase
         $this->updateCategoryItems($catid, 'add', 1);
         //推送到熊掌号和百度站长
         $cmsConfig = cache("Cms_Config");
-        if ($cmsConfig['web_site_baidupush']) {
+        if (isset($cmsConfig['web_site_baidupush']) && $cmsConfig['web_site_baidupush']) {
             hook("baidupush", buildContentUrl($catid, $id, $data['url'], true, true));
         }
         return $id;
