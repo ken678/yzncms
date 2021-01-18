@@ -231,7 +231,7 @@ class Admin extends Adminaddon
             $data['status']      = $value['disabled'] ? 0 : 1;
             $data['setting']     = array(
                 'category_template' => $value['category_template'] . '.html',
-                'list_template]'    => $value['list_template'] . '.html',
+                'list_template'     => $value['list_template'] . '.html',
                 'show_template'     => $value['show_template'] . '.html',
             );
             $result = $this->validate($data, 'app\cms\validate\Models');
@@ -255,63 +255,86 @@ class Admin extends Adminaddon
         $modelClass = new \app\cms\model\ModelField;
         $v9fields   = $data   = [];
         foreach ($cursor as $key => $value) {
-            if (!in_array($value['field'], $this->v9fieldList) && in_array($value['modelid'], $ids) && in_array($value['formtype'], ['text', 'textarea', 'image', 'images', 'editor'])) {
+            if (!in_array($value['field'], $this->v9fieldList) && in_array($value['modelid'], $ids) && in_array($value['formtype'], ['text', 'textarea', 'image', 'images', 'editor', 'box'])) {
+                $isadd = true;
                 switch ($value['formtype']) {
                     case 'text':
                     case 'textarea':
-                        $define = "varchar(255) NOT NULL";
-                        $type   = 'text';
-                        $val    = "";
+                        $define  = "varchar(255) NOT NULL";
+                        $type    = 'text';
+                        $val     = '';
+                        $options = '';
+                        break;
+                    case 'box':
+                        $setting = $this->string2array($value['setting']);
+                        if (isset($setting['boxtype']) && ($setting['boxtype'] == 'radio' || $setting['boxtype'] == 'select')) {
+                            $key_arr = explode(PHP_EOL, $setting['options']);
+                            foreach ($key_arr as $k => $v) {
+                                $arr         = explode('|', $v);
+                                $key_arr[$k] = $arr[1] . ':' . $arr[0];
+                            }
+                            $define  = "char(10) NOT NULL";
+                            $type    = $setting['boxtype'] == 'radio' ? 'radio' : 'select';
+                            $options = implode(PHP_EOL, $key_arr);
+                            $val     = $setting['defaultvalue'];
+                        } else {
+                            $isadd = false;
+                        }
                         break;
                     case 'image':
-                        $define = "int(5) UNSIGNED NOT NULL";
-                        $type   = 'image';
-                        $val    = "";
+                        $define  = "int(5) UNSIGNED NOT NULL";
+                        $type    = 'image';
+                        $val     = '';
+                        $options = '';
                         break;
                     case 'images':
-                        $define = "varchar(256) NOT NULL";
-                        $type   = 'images';
-                        $val    = "";
+                        $define  = "varchar(256) NOT NULL";
+                        $type    = 'images';
+                        $val     = '';
+                        $options = '';
                         break;
                     case 'editor':
-                        $define = "text NOT NULL";
-                        $type   = 'Ueditor';
-                        $val    = "";
+                        $define  = "text NOT NULL";
+                        $type    = 'Ueditor';
+                        $val     = '';
+                        $options = '';
                         break;
                 }
-                $data = [
-                    'modelid'    => $value['modelid'],
-                    'name'       => $value['field'],
-                    'title'      => $value['name'],
-                    'ifsystem'   => $value['issystem'],
-                    'listordert' => $value['listorder'],
-                    'isadd'      => $value['isadd'],
-                    'ifsearch'   => $value['issearch'],
-                    'ifcore'     => $value['iscore'],
-                    'type'       => $type,
-                    'setting'    => ['define' => $define, 'value' => $val],
-                    'status'     => 1,
-                ];
-                $v9fields[$value['modelid']][] = [
-                    'name'       => $value['field'],
-                    'title'      => $value['name'],
-                    'ifsystem'   => $value['issystem'],
-                    'listordert' => $value['listorder'],
-                    'isadd'      => $value['isadd'],
-                    'ifsearch'   => $value['issearch'],
-                    'ifcore'     => $value['iscore'],
-                    'type'       => $type,
-                    'setting'    => ['define' => $define, 'value' => $val],
-                    'status'     => 1,
-                ];
-                $result = $this->validate($data, 'app\cms\validate\ModelField');
-                if (true !== $result) {
-                    return $this->error($result);
-                }
-                try {
-                    $res = $modelClass->addField($data);
-                } catch (\Exception $e) {
-                    $this->error($e->getMessage());
+                if ($isadd) {
+                    $data = [
+                        'modelid'    => $value['modelid'],
+                        'name'       => $value['field'],
+                        'title'      => $value['name'],
+                        'ifsystem'   => $value['issystem'],
+                        'listordert' => $value['listorder'],
+                        'isadd'      => $value['isadd'],
+                        'ifsearch'   => $value['issearch'],
+                        'ifcore'     => $value['iscore'],
+                        'type'       => $type,
+                        'setting'    => ['define' => $define, 'value' => $val, 'options' => $options],
+                        'status'     => 1,
+                    ];
+                    $v9fields[$value['modelid']][] = [
+                        'name'       => $value['field'],
+                        'title'      => $value['name'],
+                        'ifsystem'   => $value['issystem'],
+                        'listordert' => $value['listorder'],
+                        'isadd'      => $value['isadd'],
+                        'ifsearch'   => $value['issearch'],
+                        'ifcore'     => $value['iscore'],
+                        'type'       => $type,
+                        'setting'    => ['define' => $define, 'value' => $val, 'options' => $options],
+                        'status'     => 1,
+                    ];
+                    $result = $this->validate($data, 'app\cms\validate\ModelField');
+                    if (true !== $result) {
+                        return $this->error($result);
+                    }
+                    try {
+                        $res = $modelClass->addField($data);
+                    } catch (\Exception $e) {
+                        $this->error($e->getMessage());
+                    }
                 }
             }
             unset($cursor);
@@ -370,7 +393,7 @@ class Admin extends Adminaddon
         $Cms_Model = new \app\cms\model\Cms;
         $data      = [];
         foreach ($v9_table as $key => $value) {
-            $cursor = Db::connect($db_config)->name($value)->alias('a')->join(['v9_' . $value . '_data' => 'w'], 'w.id=a.id')->join(['v9_category' => 'c'], 'c.catid=a.catid')->field('a.*,w.*,c.modelid')->select();
+            $cursor = Db::connect($db_config)->name($value)->alias('a')->join([$db_config['prefix'] . $value . '_data' => 'w'], 'w.id=a.id')->join([$db_config['prefix'] . 'category' => 'c'], 'c.catid=a.catid')->field('a.*,w.*,c.modelid')->select();
             foreach ($cursor as $key => $value) {
                 try {
                     $data['modelField'] = [
