@@ -24,6 +24,7 @@ use think\facade\Request;
  */
 function getCategory($cat, $fields = '', $newCache = false)
 {
+    $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
     if (empty($cat)) {
         return false;
     }
@@ -45,8 +46,9 @@ function getCategory($cat, $fields = '', $newCache = false)
             return false;
         } else {
             //扩展配置
+            $field            = 1 == $url_mode ? 'id' : 'catdir';
             $cache['setting'] = unserialize($cache['setting']);
-            $cache['url']     = buildCatUrl($cat, $cache['url']);
+            $cache['url']     = buildCatUrl($cache[$field], $cache['url']);
             $cache['image']   = empty($cache['image']) ? '' : get_file_path($cache['image']);
             $cache['icon']    = empty($cache['icon']) ? '' : get_file_path($cache['icon']);
             Cache::set($key, $cache, 3600);
@@ -73,15 +75,13 @@ function getCategory($cat, $fields = '', $newCache = false)
  */
 function catpos($catid, $symbol = ' &gt; ')
 {
-    $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
     if (getCategory($catid) == false) {
         return '';
     }
     //获取当前栏目的 父栏目列表
     $arrparentid = array_filter(explode(',', getCategory($catid, 'arrparentid') . ',' . $catid));
     foreach ($arrparentid as $cid) {
-        $cat        = $url_mode == 1 ? $cid : getCategory($cid, 'catdir');
-        $parsestr[] = '<a href="' . getCategory($cat, 'url') . '" >' . getCategory($cat, 'catname') . '</a>';
+        $parsestr[] = '<a href="' . getCategory($cid, 'url') . '" >' . getCategory($cid, 'catname') . '</a>';
     }
     $parsestr = implode($symbol, $parsestr);
     return $parsestr;
