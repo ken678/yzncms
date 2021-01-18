@@ -333,12 +333,12 @@ class Admin extends Adminaddon
             $value['status']  = $value['ismenu'] ? 1 : 0;
             $setting          = $this->string2array($value['setting']);
             $value['setting'] = array(
-                'meta_title'        => $setting['meta_title'],
-                'meta_keywords'     => $setting['meta_keywords'],
-                'meta_description'  => $setting['category_template'] . '.html',
-                'category_template' => $setting['meta_description'],
-                'list_template]'    => $setting['list_template'] . '.html',
-                'show_template'     => $setting['show_template'] . '.html',
+                'meta_title'        => isset($setting['meta_title']) ? $setting['meta_title'] : '',
+                'meta_keywords'     => isset($setting['meta_keywords']) ? $setting['meta_keywords'] : '',
+                'category_template' => isset($setting['meta_description']) ? $setting['meta_description'] : '',
+                'meta_description'  => isset($setting['category_template']) ? $setting['category_template'] . '.html' : 'category.html',
+                'list_template]'    => isset($setting['list_template']) ? $setting['list_template'] . '.html' : 'list.html',
+                'show_template'     => isset($setting['show_template']) ? $setting['show_template'] . '.html' : 'show.html',
             );
             $value['catdir'] = $pinyin->permalink($value['catname'], '');
             $value['catdir'] = substr($value['catdir'], 0, 10);
@@ -376,6 +376,9 @@ class Admin extends Adminaddon
                     $data['modelField'] = [
                         'id'          => $value['id'],
                         'catid'       => $value['catid'],
+                        'tags'        => '',
+                        'url'         => '',
+                        'hits'        => 0,
                         'modelid'     => $value['modelid'], //优化
                         'title'       => $value['title'],
                         'keywords'    => $value['keywords'] ? explode(" ", $value['keywords']) : '',
