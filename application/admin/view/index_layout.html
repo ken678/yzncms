@@ -26,7 +26,7 @@
     </script>
 </head>
 
-<body class="childrenBody">
+<body class="childrenBody {:defined('IS_DIALOG') && IS_DIALOG ? 'is-dialog' : ''}">
     {block name="main"}主内容{/block}
     {block name="layui"}
     {include file='admin@layui' /}
