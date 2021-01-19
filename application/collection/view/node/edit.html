@@ -95,21 +95,9 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <div class="layui-form-item">
-                            <div>
-                                <button class="layui-btn" lay-submit>立即提交</button>
-                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                            </div>
-                        </div>
                     </div>
                     <div class="layui-tab-item">
                         <div id="caijiBox"></div>
-                        <div class="layui-form-item">
-                            <div>
-                                <button class="layui-btn" lay-submit>立即提交</button>
-                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                            </div>
-                        </div>
                     </div>
                     <div class="layui-tab-item">
                         <div class="layui-form-item">
@@ -126,15 +114,15 @@
                                 <input type="radio" name="data[watermark]" value="0" title="否" {eq name="data.watermark" value="0" }checked{/eq}>
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <div>
-                                <button class="layui-btn" lay-submit>立即提交</button>
-                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <input type="hidden" name="data[id]" value="{$data.id}">
+                <div class="layui-form-item layer-footer">
+                    <div>
+                        <button class="layui-btn" lay-submit>立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
         </form>
     </div>
 </div>
