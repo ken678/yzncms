@@ -22,6 +22,7 @@
 .text-center {text-align: center !important; }
 code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f4; border-radius: 4px; }
 .childrenBody {padding: 15px;background-color: #F2F2F2;}
+.is-dialog .layer-footer {display: none;}
 .panel_box{ margin-bottom:5px;}
 .panel{ text-align:center; height:90px;}
 .panel_box a{display:block;overflow:hidden; height:80px;background: #fff;    border: 1px solid #eee;}
