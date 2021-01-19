@@ -27,18 +27,20 @@ layui.define(['layer','notice'], function(exports) {
                 title: title,
                 type: 2,
                 area: [width, height],
-                content: url,
+                content: url+ (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1",
                 maxmin: true,
                 moveOut: true,
                 success: function(layero, index) {
-                    var body = layer.getChildFrame('body', index);
-                    if (body.length > 0) {
-                        $.each(body, function(i, v) {
-
+                    var that = this;
+                    var frame = layer.getChildFrame('body', index);
+                    //var layerfooter = frame.find(".layer-footer");
+                    yzn.layerfooter(layero, index, that);
+                    if (frame.length > 0) {
+                        $.each(frame, function(i, v) {
                             // todo 优化弹出层背景色修改
                             $(v).before('<style>\n' +
                                 'html, body {\n' +
-                                '    background: #ffffff;\n' +
+                                '    background: #ffffff !important;\n' +
                                 '}\n' +
                                 '</style>');
                         });
@@ -56,6 +58,29 @@ layui.define(['layer','notice'], function(exports) {
                         height: $(window).height()
                     })
                 })
+            }
+        },
+        layerfooter: function (layero, index, that) {
+            var frame = layer.getChildFrame('html', index);
+            var layerfooter = frame.find(".layer-footer");
+            //表单按钮
+            if (layerfooter.size() > 0) {
+                $(".layui-layer-footer", layero).remove();
+                var footer = $("<div />").addClass('layui-layer-btn layui-layer-footer');
+                footer.html(layerfooter.html());
+                footer.insertAfter(layero.find('.layui-layer-content'));
+                //绑定事件
+                footer.on("click", ".layui-btn", function () {
+                    if ($(this).hasClass("disabled") || $(this).parent().hasClass("disabled")) {
+                        return;
+                    }
+                    var index = footer.find('.layui-btn').index(this);
+                    $(".layui-btn:eq(" + index + ")", layerfooter).trigger("click");
+                });
+                var titHeight = layero.find('.layui-layer-title').outerHeight() || 0;
+                var btnHeight = layero.find('.layui-layer-btn').outerHeight() || 0;
+                //重设iframe高度
+                $("iframe", layero).height(layero.height() - titHeight - btnHeight);
             }
         },
         checkMobile: function() {

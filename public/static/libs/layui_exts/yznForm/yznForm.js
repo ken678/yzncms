@@ -163,6 +163,15 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         }
     }
 
+    //修复含有fixed-footer类的body边距
+    if ($(".fixed-footer").size() > 0) {
+        $(document.body).css("padding-bottom", $(".fixed-footer").outerHeight());
+    }
+    //修复不在iframe时layer-footer隐藏的问题
+    if ($(".layer-footer").size() > 0 && self === top) {
+        $(".layer-footer").show();
+    }
+
     // 放大图片
     $('body').on('click', '[data-image]', function() {
         var title = $(this).attr('data-image'),
