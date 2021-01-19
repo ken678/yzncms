@@ -1,93 +1,88 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<div class="layui-card">
-    <div class="layui-card-header">添加表单</div>
-    <div class="layui-card-body">
-        <form class="layui-form w300" method="post">
-            <div class="layui-form-item">
-                <label>表单名称</label>
-                <div class="layui-form-field-label">
-                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="表单名称" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>表单键名</label>
-                <div class="layui-form-field-label">
-                    <input type="text" name="tablename" lay-verify="required" autocomplete="off" placeholder="表单键名" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">由小写字母组成</div>
-            </div>
-            <div class="layui-form-item">
-                <label>简介</label>
-                <div class="w300">
-                    <textarea name="description" placeholder="表单的相关描述" class="layui-textarea"></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>跳转地址</label>
-                <div class="layui-form-field-label">
-                    <input type="text" name="setting[forward]" autocomplete="off" placeholder="提交后跳转地址" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">有值时生效，内部链接格式:模块/控制器/操作?参数=参数值&amp;...，外部链接则必须http://开头</div>
-            </div>
-            <div class="layui-form-item">
-                <label>邮件地址</label>
-                <div class="layui-form-field-label">
-                    <input type="text" name="setting[mails]" autocomplete="off" placeholder="接受邮件的地址" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">留空为不接收，多个地址请用“,”隔开</div>
-            </div>
-            <div class="layui-form-item">
-                <label>提交间隔</label>
-                <div class="layui-form-field-label">
-                    <input type="text" name="setting[interval]" autocomplete="off" placeholder="提交间隔" class="layui-input" value="0">
-                </div>
-                <div class="layui-form-mid layui-word-aux">单位秒，0为不限</div>
-            </div>
-            <div class="layui-form-item">
-                <label>IP多次提交</label>
-                <div class="layui-form-field-label">
-                    <input type="radio" name="setting[allowmultisubmit]" value="1" title="是" >
-                    <input type="radio" name="setting[allowmultisubmit]" value="0" title="否" checked>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>游客提交</label>
-                <div class="layui-form-field-label">
-                    <input type="radio" name="setting[allowunreg]" value="1" title="是" >
-                    <input type="radio" name="setting[allowunreg]" value="0" title="否" checked>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>开启验证码</label>
-                <div class="layui-form-field-label">
-                    <input type="radio" name="setting[isverify]" value="1" title="是" >
-                    <input type="radio" name="setting[isverify]" value="0" title="否" checked>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>状态</label>
-                <div class="layui-form-field-label">
-                    <input type="radio" name="status" value="1" title="启用" checked>
-                    <input type="radio" name="status" value="0" title="禁用">
-                </div>
-            </div>
-            <div class="layui-form-item web_list">
-                <label>模板选择</label>
-                <div class="w300">
-                    {php} echo \util\Form::select($show_template, $data['setting']['show_template'], 'name="setting[show_template]"') {/php}
-                </div>
-                <div class="layui-form-mid layui-word-aux">新增模板以show_xx.html形式</div>
-            </div>
-            <div class="layui-form-item">
-                <div>
-                    <button class="layui-btn" lay-submit>立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
-            </div>
-        </form>
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">表单名称</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="表单名称" class="layui-input">
+        </div>
     </div>
-</div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">表单键名</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="tablename" lay-verify="required" autocomplete="off" placeholder="表单键名" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">由小写字母组成</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">简介</label>
+        <div class="layui-input-inline w300">
+            <textarea name="description" placeholder="表单的相关描述" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">跳转地址</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="setting[forward]" autocomplete="off" placeholder="提交后跳转地址" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">有值时生效，内部链接格式:模块/控制器/操作?参数=参数值&amp;...，外部链接则必须http://开头</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮件地址</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="setting[mails]" autocomplete="off" placeholder="接受邮件的地址" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">留空为不接收，多个地址请用“,”隔开</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">提交间隔</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="setting[interval]" autocomplete="off" placeholder="提交间隔" class="layui-input" value="0">
+        </div>
+        <div class="layui-form-mid layui-word-aux">单位秒，0为不限</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">IP多次提交</label>
+        <div class="layui-input-inline w300">
+            <input type="radio" name="setting[allowmultisubmit]" value="1" title="是" >
+            <input type="radio" name="setting[allowmultisubmit]" value="0" title="否" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">游客提交</label>
+        <div class="layui-input-inline w300">
+            <input type="radio" name="setting[allowunreg]" value="1" title="是" >
+            <input type="radio" name="setting[allowunreg]" value="0" title="否" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开启验证码</label>
+        <div class="layui-input-inline w300">
+            <input type="radio" name="setting[isverify]" value="1" title="是" >
+            <input type="radio" name="setting[isverify]" value="0" title="否" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline w300">
+            <input type="radio" name="status" value="1" title="启用" checked>
+            <input type="radio" name="status" value="0" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item web_list">
+        <label class="layui-form-label">模板选择</label>
+        <div class="layui-input-inline w300">
+            {php} echo \util\Form::select($show_template, $data['setting']['show_template'], 'name="setting[show_template]"') {/php}
+        </div>
+        <div class="layui-form-mid layui-word-aux">新增模板以show_xx.html形式</div>
+    </div>
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 {/block}
 {block name="script"}
 <script type="text/javascript">
