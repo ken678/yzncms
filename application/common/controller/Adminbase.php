@@ -49,6 +49,8 @@ class Adminbase extends Base
     {
         parent::initialize();
         $this->rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+        // 定义是否Dialog请求
+        !defined('IS_DIALOG') && define('IS_DIALOG', $this->request->param("dialog") ? true : false);
         // 检测是否需要验证登录
         if (!$this->match($this->noNeedLogin)) {
             if (defined('UID')) {
