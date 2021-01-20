@@ -1,11 +1,6 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<style type="text/css">
-.childrenBody {
-    background: #fff;
-}
-</style>
-<form class="layui-form layui-form-pane" method="post" style="max-width: 450px;">
+<form class="layui-form" method="post" style="max-width: 450px;">
     <div class="layui-form-item">
         <label class="layui-form-label">充值类型</label>
         <div class="layui-input-block">
@@ -42,9 +37,10 @@
             <input type="checkbox" name="sendemail" title="发送e-mail通知会员" lay-skin="primary" checked>
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-data="{pop:true, refresh: true}">立即提交</button>
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
