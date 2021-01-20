@@ -32,7 +32,7 @@
 
 </script>
 <script type="text/html" id="barTool">
-    <a data-open='{:url("edit")}?id={{ d.id }}' data-full="true" class="layui-btn layui-btn-xs">编辑</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" data-width="900px" data-height="600px">编辑</a>
     <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 <script type="text/html" id="statusTpl">
@@ -62,7 +62,7 @@ layui.use('yznTable', function() {
                 method: 'open',
                 class: 'layui-btn layui-btn-normal layui-btn-sm',
                 icon: 'iconfont icon-add',
-                extend: 'data-full="true"',
+                extend: 'data-width="900px" data-height="600px"',
             }], 'delete'
         ],
         url: '{:url("index")}',

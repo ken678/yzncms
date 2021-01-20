@@ -1,81 +1,76 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<div class="layui-card">
-    <div class="layui-card-header">添加栏目</div>
-    <div class="layui-card-body">
-        <form class="layui-form" method="post">
-            <div class="layui-form-item">
-                <label>网站名称</label>
-                <div class="w300">
-                    <input type="text" name="name" autocomplete="off" placeholder="网站名称" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>网站网址</label>
-                <div class="w300">
-                    <input type="text" name="url" autocomplete="off" placeholder="http://" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item web_seo">
-                <label>网站简介</label>
-                <div class="w300">
-                    <textarea name="description" placeholder="网站简介" class="layui-textarea"></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>链接类型</label>
-                <div class="w300">
-                    <input type="radio" name="linktype" value="0" checked title="文字链接" lay-filter="type">
-                    <input type="radio" name="linktype" value="1" title="logo链接" lay-filter="type">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>所属分类</label>
-                <div class="w300">
-                    <select name="termsid">
-                        <option value="">==分类选择==</option>
-                        {volist name="Terms" id="vo"}
-                         <option value="{$vo.id}">{$vo.name}</option>
-                        {/volist}
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>创建新分类</label>
-                <div class="w300">
-                    <input type="text" name="terms[name]" autocomplete="off" placeholder="创建新分类" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>排序</label>
-                <div class="w300">
-                    <input type="number" name="listorder" autocomplete="off" placeholder="排序" class="layui-input" value="100">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label>状态</label>
-                <div class="w300">
-                    <input type="radio" name="status" value="1" checked title="已通过" lay-filter="status">
-                    <input type="radio" name="status" value="0" title="未通过" lay-filter="status">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label>网站Logo</label>
-                <div class="layui-form-field-label">
-                    <div class="js-upload-image">
-                        {php}echo \util\Form::images('image'){/php}
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div>
-                    <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
-            </div>
-        </form>
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <label>网站名称</label>
+        <div class="w300">
+            <input type="text" name="name" autocomplete="off" placeholder="网站名称" class="layui-input">
+        </div>
     </div>
-</div>
+    <div class="layui-form-item">
+        <label>网站网址</label>
+        <div class="w300">
+            <input type="text" name="url" autocomplete="off" placeholder="http://" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item web_seo">
+        <label>网站简介</label>
+        <div class="w300">
+            <textarea name="description" placeholder="网站简介" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label>链接类型</label>
+        <div class="w300">
+            <input type="radio" name="linktype" value="0" checked title="文字链接" lay-filter="type">
+            <input type="radio" name="linktype" value="1" title="logo链接" lay-filter="type">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label>所属分类</label>
+        <div class="w300">
+            <select name="termsid">
+                <option value="">==分类选择==</option>
+                {volist name="Terms" id="vo"}
+                 <option value="{$vo.id}">{$vo.name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label>创建新分类</label>
+        <div class="w300">
+            <input type="text" name="terms[name]" autocomplete="off" placeholder="创建新分类" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label>排序</label>
+        <div class="w300">
+            <input type="number" name="listorder" autocomplete="off" placeholder="排序" class="layui-input" value="100">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label>状态</label>
+        <div class="w300">
+            <input type="radio" name="status" value="1" checked title="已通过" lay-filter="status">
+            <input type="radio" name="status" value="0" title="未通过" lay-filter="status">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label>网站Logo</label>
+        <div class="layui-form-field-label">
+            <div class="js-upload-image">
+                {php}echo \util\Form::images('image'){/php}
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layer-footer">
+        <div>
+            <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 {/block}
 {block name="script"}
 <script type="text/javascript">
