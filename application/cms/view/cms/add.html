@@ -45,7 +45,8 @@ layui.use(['form','layer','yznForm'], function() {
         layer.confirm(res.msg, {
             btn: ['继续添加', '返回列表'] //按钮
         }, function() {
-            location.href = '{:url("add",["catid"=>$catid])}';
+            $(window).scrollTop(0);
+            location.reload();
         }, function() {
             parent.layui.table.reload('currentTable');
             var index = parent.layer.getFrameIndex(window.name);

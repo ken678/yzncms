@@ -40,19 +40,7 @@ layui.use(['form', 'layer','yznForm'], function() {
         })
     });
 
-    yznForm.listen('', function (res) {
-        layer.confirm(res.msg, {
-            btn: ['继续添加', '返回列表'] //按钮
-        }, function() {
-            location.href = '{:url("add",["catid"=>$catid])}';
-        }, function() {
-            parent.layui.table.reload('currentTable');
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
-        });
-    }, function (res) {
-        layer.msg(res.msg, { icon: 5 });
-    });
+    yznForm.listen('');
 })
 </script>
 {/block}
