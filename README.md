@@ -1,5 +1,5 @@
 # YznCMS1.0.0 后台开发框架
-### 本版本为稳定版本，基于tp5.1，商用请使用此版本（6.0为学习测试版本）
+### 后端基于thinkphp5.1框架,永久免费可商用的后台系统
 
 [![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](http://bbs.yzncms.com/)
 [![YznCMS](https://img.shields.io/badge/YznCMS-1.0.0-brightgreen.svg)](http://bbs.yzncms.com/)
