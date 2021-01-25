@@ -81,9 +81,8 @@ class Index extends MemberBase
                 $this->success('登录成功！', $forward ? $forward : url('index'));
             } else {
                 //登陆失败
-                $this->error($this->UserService->getError() ?: '账号或者密码错误！');
+                $this->error($this->UserService->getError() ?: '账号或者密码错误！', null, ['token' => $this->request->token()]);
             }
-
         } else {
             //判断来源
             $referer = $this->request->server('HTTP_REFERER');
