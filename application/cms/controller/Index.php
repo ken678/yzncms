@@ -351,7 +351,7 @@ class Index extends Cmsbase
             try {
                 $Spend_Model->_spend($paytype, floatval($readpoint), $userinfo['id'], $userinfo['username'], '阅读付费', $flag);
             } catch (\Exception $ex) {
-                $this->error($ex->getMessage());
+                $this->error($ex->getMessage(), url('pay/index/pay'));
             }
             $this->success("恭喜你！支付成功!");
         } else {
