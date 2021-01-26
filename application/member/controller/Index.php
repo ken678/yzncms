@@ -43,7 +43,7 @@ class Index extends MemberBase
     //登录页面
     public function login()
     {
-        $forward = $this->request->request('url', '', 'trim');
+        $forward = $this->request->request('forward', '', 'trim');
         if (!empty($this->userid)) {
             $this->success("您已经是登陆状态！", $forward ? $forward : url("index"));
         }

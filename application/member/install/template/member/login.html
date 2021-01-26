@@ -18,6 +18,7 @@
         <div class="login-main">
             <div class="layui-elip">会员登录</div>
             <form class="layui-form" action="{:url('login')}">
+                <input type="hidden" name="forward" value="{$forward}" />
                 {:token()}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
