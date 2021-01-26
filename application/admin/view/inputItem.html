@@ -17,7 +17,7 @@
 <div class="layui-form-item">
     <label>{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label">
-        <input type="text" name="{$vo.fieldArr}[{$vo.name}]" class="layui-input form-tags tags-{$vo.name}" value="{$vo.value}" data-remark="{$vo.remark|default='输入后空格确认'}">
+        <input type="text" name="{$vo.fieldArr}[{$vo.name}]" class="layui-input form-tags tags-{$vo.name}" value="{$vo.value}" data-remark="{$vo.remark|default='输入回车键确认'}">
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
