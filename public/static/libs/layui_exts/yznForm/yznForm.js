@@ -26,11 +26,16 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         },
         api: {
             form: function(url, data, ok, no, ex,refresh,type,pop) {
+                var submitBtn = $(".layer-footer button[lay-submit]");
+                submitBtn.addClass("disabled");
                 if (refresh === undefined) {
                     refresh = true;
                 }
                 if (type === 'layui-form') {
                     ok = ok || function(res) {
+                        setTimeout(function() {
+                            submitBtn.removeClass("disabled");
+                        }, 3000);
                         res.msg = res.msg || '';
                         /*yzn.msg.success(res.msg, function() {
                             if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
@@ -63,6 +68,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     };
                 } else {
                     ok = ok || function(res) {
+                        setTimeout(function() {
+                            submitBtn.removeClass("disabled");
+                        }, 3000);
                         res.msg = res.msg || '';
                         yzn.msg.success(res.msg, function() {
                             yznForm.api.closeCurrentOpen({
@@ -72,6 +80,14 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         return false;
                     };
                 }
+                no = no || function(res) {
+                    setTimeout(function() {
+                        submitBtn.removeClass("disabled");
+                    }, 3000);
+                    var msg = res.msg == undefined ? '返回数据格式有误' : res.msg;
+                    yzn.msg.error(msg);
+                    return false;
+                };
                 yzn.request.post({
                     url: url,
                     data: data,
