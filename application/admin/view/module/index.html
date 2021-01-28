@@ -8,10 +8,10 @@
 </div>
 <script type="text/html" id="titleTpl">
 {{#  if(d.create_time == "" || d.create_time == null || d.create_time == undefined){ }}
-    <a class="layui-btn layui-btn-xs" href="{:url('install')}?module={{ d.module }}">安装</a>
+    <a class="layui-btn layui-btn-xs" data-open="{:url('install')}?module={{ d.module }}" data-table="currentTable">安装</a>
 {{#  } else { }}
     {{#  if(d.iscore == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger" href="{:url('uninstall')}?module={{ d.module }}">卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" data-open="{:url('uninstall')}?module={{ d.module }}" data-table="currentTable">卸载</a>
     {{#  } }}
 {{#  } }}
 </script>
