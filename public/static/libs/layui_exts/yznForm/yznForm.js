@@ -984,6 +984,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             dataFull = $(this).attr('data-full'),
             checkbox = $(this).attr('data-checkbox'),
             url = $(this).attr('data-open'),
+            title = $(this).attr("title") || $(this).data("title"),
             tableId = $(this).attr('data-table');
 
         if (checkbox === 'true') {
@@ -1013,8 +1014,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             clienWidth = '100%';
             clientHeight = '100%';
         }
-        yzn.open(
-            $(this).attr('data-title'), url, clienWidth, clientHeight,
+        yzn.open(title, url, clienWidth, clientHeight,
         );
     });
 
