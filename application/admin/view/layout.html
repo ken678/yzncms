@@ -533,13 +533,11 @@
             if (isShow == 1) { // 缩放
                 $('.layui-tool [data-side-fold]').attr('data-side-fold', 0);
                 $('.layui-tool [data-side-fold]').attr('class', 'layui-icon layui-icon-spread-left');
-                $('.layui-layout-body').removeClass('layui-all');
-                $('.layui-layout-body').addClass('layui-mini');
+                $('.layui-layout-body').removeClass('layui-all').addClass('layui-mini');
             } else { // 正常
                 $('.layui-tool [data-side-fold]').attr('data-side-fold', 1);
                 $('.layui-tool [data-side-fold]').attr('class', 'layui-icon layui-icon-shrink-right');
-                $('.layui-layout-body').removeClass('layui-mini');
-                $('.layui-layout-body').addClass('layui-all');
+                $('.layui-layout-body').removeClass('layui-mini').addClass('layui-all');
                 layer.close(window.openTips);
             }
             //element.init();
