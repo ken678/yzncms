@@ -36,7 +36,7 @@
 <script type="text/javascript">
 layui.use('yznForm', function() {
     var yznForm = layui.yznForm;
-    //登录
+
     yznForm.listen('', function (res) {
         layer.msg(res.msg, {
             offset: '15px',
@@ -45,8 +45,7 @@ layui.use('yznForm', function() {
         }, function() {
             window.location.href = res.url;
         });
-    }, function (res) {
-        layer.msg(res.msg, { icon: 5 });
+        return false;
     });
 
     $("#point").html($("#money").val() * {if isset($Member_config['rmb_point_rate'])}{$Member_config['rmb_point_rate']}{else}10{/if});
