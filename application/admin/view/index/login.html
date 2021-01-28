@@ -71,8 +71,9 @@
                 }, function() {
                     window.location.href = res.url;
                 });
+                return false;
             }, function (res) {
-                layer.msg(res.msg, { icon: 5 });
+                //layer.msg(res.msg, { icon: 5 });
                 //刷新验证码
                 $("#verify").click();
                 if (false === $('.layui-form').triggerHandler("error.form")) {
