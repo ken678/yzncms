@@ -250,6 +250,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 var options = {
                     elem: this,
                     type: type,
+                    trigger:'click',
                 };
                 if (format !== undefined && format !== '' && format !== null) {
                     options['format'] = format;
