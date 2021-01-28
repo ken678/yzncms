@@ -40,66 +40,52 @@
 |阿里云邮箱|阿里云的邮箱推送|插件|授权|
 
 ## [项目介绍]
-```
-YznCMSV1.0(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
+`YznCMSV1.0(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。`
+- 手册地址：https://www.kancloud.cn/ken678/yzncms
+- 官方博客：http://blog.yzncms.com/
+- 演示地址：发送到邮箱【530765310@qq.com】获取演示地址
+- 社区地址：http://bbs.yzncms.com
+- 软件著作权编号：2020SR0038539
 
-手册地址：https://www.kancloud.cn/ken678/yzncms
-官方博客：http://blog.yzncms.com/
-演示地址：发送到邮箱【530765310@qq.com】获取演示地址
-社区地址：http://bbs.yzncms.com
-软件著作权编号：2020SR0038539
-```
 ## [环境要求]
-```
-支持系统：WinXP/Win2003/Vista/Win7/Win8/Linux
-WEB服务器：iis/apache/nginx
-PHP版本：php >= 7.0
-数据库：MySQL >= 5.0
-```
+- 支持系统：WinXP/Win2003/Vista/Win7/Win8/Linux
+- WEB服务器：iis/apache/nginx
+- PHP版本：php >= 7.0
+- 数据库：MySQL >= 5.0
+
 ## [空间要求]
-```
-服务器需支持将域名绑定public目录
-如果您的服务器不支持绑定目录（也就是你需要二级目录安装） 请查看public目录下的index.php入口文件 有详细具体操作
-```
+- 服务器需支持将域名绑定public目录
+- 如果您的服务器不支持绑定目录（也就是你需要二级目录安装） 请查看public目录下的index.php入口文件 有详细具体操作
+
+
 ## [安装教程]
-```
-第一步：修改数据库配置 根目录/config/database.php  
-第二步：将根目录的yzncms.sql文件导入数据库即可  
-第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
-ps:如果你还是不会搭建，可以将FTP，服务器信息发送给邮箱530765310@qq.com进行免费搭建（仅限点赞用户）
-```
+- 第一步：修改数据库配置 根目录/config/database.php  
+- 第二步：将根目录的yzncms.sql文件导入数据库即可  
+- 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
+- 如果你还是不会搭建，可以将FTP，服务器信息发送给邮箱530765310@qq.com进行免费搭建（仅限点赞用户）
+
 
 ## [必看教程]
+- URL重写： https://www.kancloud.cn/ken678/yzncms/1003231
+- 虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003254
 
-```
-URL重写： https://www.kancloud.cn/ken678/yzncms/1003231
-虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003254
 
-```
 ## [如何授权]
-
-```
-1.截止2020/6/17 赞助过任意金额(≥1分)的 可以直接获取资格
-2.提交1款免费开源模块（需审核）
-3.提交3款免费开源插件（需审核）
-4.提交讲解清晰易懂的教学视频（需审核）
-5.定期举行授权活动，第二期活动链接：https://blog.yzncms.com/shows/25/101.html
-（审核前,请先咨询作者,满足条件即可拉进官方授权群，享受丰富的插件,模块,各种资源及便捷的交流学习）
-```
+- 截止2020/6/17 赞助过任意金额(≥1分)的 可以直接获取资格
+- 提交1款免费开源模块（需审核）
+- 提交3款免费开源插件（需审核）
+- 提交讲解清晰易懂的教学视频（需审核）
+- 定期举行授权活动，第二期活动链接：https://blog.yzncms.com/shows/25/101.html
+- 审核前,请先咨询作者,满足条件即可拉进官方授权群，享受丰富的插件,模块,各种资源及便捷的交流学习
 
 
-```
-更多的常见问题和教程见手册
-```
-
+> 更多的常见问题和教程见手册
 
 ## [截图预览]
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1229/133034_265df309_555541.gif "GIF (1).gif")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165618_3f12f7f5_555541.png "YZNCMS后台管理系统")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165632_61e32825_555541.png "YZNCMS后台管理系统")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165745_b4e41e16_555541.png "YZNCMS后台管理系统")
-
-
 
 ## [友情捐赠]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")
