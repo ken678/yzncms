@@ -63,7 +63,6 @@
             layer = layui.layer,
             yznForm = layui.yznForm;
 
-            //登录
             yznForm.listen('', function (res) {
                 layer.msg(res.msg, {
                     offset: '15px',
@@ -72,10 +71,11 @@
                 }, function() {
                     window.location.href = res.url;
                 });
+                return false;
             }, function (res) {
                 //刷新验证码
                 $("#verify").click();
-                layer.msg(res.msg, { icon: 5 });
+                //layer.msg(res.msg, { icon: 5 });
             });
     });
     //刷新验证码
