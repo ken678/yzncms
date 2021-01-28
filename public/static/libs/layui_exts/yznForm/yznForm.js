@@ -25,52 +25,56 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             yznForm.api.formSubmit(preposeCallback, ok, no, ex);
         },
         api: {
-            form: function(url, data, ok, no, ex,refresh,type,pop) {
+            form: function(url, data, ok, no, ex, refresh, type, pop) {
                 var submitBtn = $(".layer-footer button[lay-submit]");
                 submitBtn.addClass("disabled");
                 if (refresh === undefined) {
                     refresh = true;
                 }
-                if (type === 'layui-form') {
-                    ok = ok || function(res) {
+                yzn.request.post({
+                    url: url,
+                    data: data,
+                }, function(res) {
+                    if (type === 'layui-form') {
                         setTimeout(function() {
                             submitBtn.removeClass("disabled");
                         }, 3000);
-                        res.msg = res.msg || '';
-                        /*yzn.msg.success(res.msg, function() {
-                            if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
-                                location.href = res.url;
-                            } else {
-                                location.reload();
+                        if (typeof ok === 'function') {
+                            if (false === ok.call($(this),res)) {
+                                return false;
                             }
-                        });*/
+                        }
+                        res.msg = res.msg || '';
                         yzn.msg.success(res.msg);
-                        $("button[data-type='layui-form']").prop('disabled', true);
+                        //$("button[data-type='layui-form']").prop('disabled', true);
                         setTimeout(function() {
-                           $("button[data-type='layui-form']").prop('disabled', false);
-                           if (pop === true) {
-                               if (refresh == true) {
-                                   parent.location.reload();
-                               } else if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
-                                   parent.location.href = res.url;
-                               }
-                               parent.layui.layer.closeAll();
-                           } else if (refresh == true) {
-                               if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
-                                   location.href = res.url;
-                               } else {
-                                   //history.back(-1);
-                                   location.reload();
-                               }
-                           }
-                       }, 3000);
-                       return false;
-                    };
-                } else {
-                    ok = ok || function(res) {
+                            //$("button[data-type='layui-form']").prop('disabled', false);
+                            if (pop === true) {
+                                if (refresh == true) {
+                                    parent.location.reload();
+                                } else if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                                    parent.location.href = res.url;
+                                }
+                                parent.layui.layer.closeAll();
+                            } else if (refresh == true) {
+                                if (typeof(res.url) != 'undefined' && res.url != null && res.url != '') {
+                                    location.href = res.url;
+                                } else {
+                                    //history.back(-1);
+                                    location.reload();
+                                }
+                            }
+                        }, 3000);
+                        return false;
+                    } else {
                         setTimeout(function() {
                             submitBtn.removeClass("disabled");
                         }, 3000);
+                        if (typeof ok === 'function') {
+                            if (false === ok.call($(this),res)) {
+                                return false;
+                            }
+                        }
                         res.msg = res.msg || '';
                         yzn.msg.success(res.msg, function() {
                             yznForm.api.closeCurrentOpen({
@@ -78,20 +82,18 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             });
                         });
                         return false;
-                    };
-                }
-                no = no || function(res) {
-                    setTimeout(function() {
-                        submitBtn.removeClass("disabled");
-                    }, 3000);
+                    }
+                }, function(res) {
+                    submitBtn.removeClass("disabled");
+                    if (typeof no === 'function') {
+                        if (false === no.call($(this),res)) {
+                            return false;
+                        }
+                    }
                     var msg = res.msg == undefined ? '返回数据格式有误' : res.msg;
                     yzn.msg.error(msg);
                     return false;
-                };
-                yzn.request.post({
-                    url: url,
-                    data: data,
-                }, ok, no, ex);
+                }, ex);
                 return false;
             },
             closeCurrentOpen: function(option) {
@@ -169,7 +171,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
                             }
-                            yznForm.api.form(url, dataField, ok, no, ex, refresh, type,pop);
+                            yznForm.api.form(url, dataField, ok, no, ex, refresh, type, pop);
                             return false;
                         });
                     });
@@ -233,104 +235,104 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
 
     // 绑定时间组件
     if ($(".layui-form .datetime").size() > 0) {
-    	layui.define('laydate', function(exports) {
-    		var laydate = layui.laydate;
-	        $(".layui-form .datetime").each(function() {
-	            var format = $(this).attr('data-date'),
-	                type = $(this).attr('data-date-type'),
-	                range = $(this).attr('data-date-range');
-	            if (type === undefined || type === '' || type === null) {
-	                type = 'datetime';
-	            }
-	            var options = {
-	                elem: this,
-	                type: type,
-	            };
-	            if (format !== undefined && format !== '' && format !== null) {
-	                options['format'] = format;
-	            }
-	            if (range !== undefined) {
-	                if (range === null || range === '') {
-	                    range = '-';
-	                }
-	                options['range'] = range;
-	            }
-	            laydate.render(options);
-	        });
-    	})
+        layui.define('laydate', function(exports) {
+            var laydate = layui.laydate;
+            $(".layui-form .datetime").each(function() {
+                var format = $(this).attr('data-date'),
+                    type = $(this).attr('data-date-type'),
+                    range = $(this).attr('data-date-range');
+                if (type === undefined || type === '' || type === null) {
+                    type = 'datetime';
+                }
+                var options = {
+                    elem: this,
+                    type: type,
+                };
+                if (format !== undefined && format !== '' && format !== null) {
+                    options['format'] = format;
+                }
+                if (range !== undefined) {
+                    if (range === null || range === '') {
+                        range = '-';
+                    }
+                    options['range'] = range;
+                }
+                laydate.render(options);
+            });
+        })
     }
 
     // 绑定图片选择组件
     if ($('.layui-form .fachoose-image').length > 0) {
-    	layui.define('tableSelect', function(exports) {
-    		var tableSelect = layui.tableSelect;
-	        $.each($('.layui-form .fachoose-image'), function(i, v) {
-	            var input_id = $(this).data("input-id") ? $(this).data("input-id") : "",
-	                inputObj = $("#" + input_id),
-	                multiple = $(this).data("multiple") ? 'checkbox' : 'radio';
-	            var $file_list = $('#file_list_' + input_id);
-	            tableSelect.render({
-	                elem: "#fachoose-" + input_id,
-	                searchKey: 'name',
-	                searchPlaceholder: '请输入图片名称',
-	                table: {
-	                    url: GV.image_select_url,
-	                    cols: [
-	                        [
-	                            { type: multiple },
-	                            { field: 'id', title: 'ID' },
-	                            { field: 'url', minWidth: 120, search: false, title: '图片', imageHeight: 40, align: "center", templet: '<div><img src="{{d.path}}" height="100%"></div>' },
-	                            { field: 'name', width: 120, title: '名称' },
-	                            { field: 'mime', width: 120, title: 'Mime类型' },
-	                            { field: 'create_time', width: 180, title: '上传时间', align: "center", search: 'range' },
-	                        ]
-	                    ]
-	                },
-	                done: function(e, data) {
-	                    var selectedList = [];
-	                    $.each(data.data, function(index, val) {
-	                        selectedList[index] = {
-	                            file_id: val.id,
-	                            file_path: val.path
-	                        };
-	                    });
-	                    selectedList.forEach(function(item) {
-	                        var $li = '<div class="file-item thumbnail"><img data-image class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
-	                        if (multiple == 'checkbox') {
-	                            $li += '<i class="iconfont icon-yidong move-picture"></i> ';
-	                        }
-	                        $li += '<i class="iconfont icon-tailor cropper" data-input-id="' + item.file_id + '" data-id="' + input_id + '"></i> <i class="iconfont icon-trash remove-picture" data-id="' + item.file_id + '"></i></div></div>';
-	                        if (multiple == 'checkbox') {
-	                            if (inputObj.val()) {
-	                                inputObj.val(inputObj.val() + ',' + item.file_id);
-	                            } else {
-	                                inputObj.val(item.file_id);
-	                            }
-	                            $file_list.append($li);
-	                        } else {
-	                            inputObj.val(item.file_id);
-	                            $file_list.html($li);
-	                        }
-	                    });
-	                }
-	            })
-	        });
-    	})
+        layui.define('tableSelect', function(exports) {
+            var tableSelect = layui.tableSelect;
+            $.each($('.layui-form .fachoose-image'), function(i, v) {
+                var input_id = $(this).data("input-id") ? $(this).data("input-id") : "",
+                    inputObj = $("#" + input_id),
+                    multiple = $(this).data("multiple") ? 'checkbox' : 'radio';
+                var $file_list = $('#file_list_' + input_id);
+                tableSelect.render({
+                    elem: "#fachoose-" + input_id,
+                    searchKey: 'name',
+                    searchPlaceholder: '请输入图片名称',
+                    table: {
+                        url: GV.image_select_url,
+                        cols: [
+                            [
+                                { type: multiple },
+                                { field: 'id', title: 'ID' },
+                                { field: 'url', minWidth: 120, search: false, title: '图片', imageHeight: 40, align: "center", templet: '<div><img src="{{d.path}}" height="100%"></div>' },
+                                { field: 'name', width: 120, title: '名称' },
+                                { field: 'mime', width: 120, title: 'Mime类型' },
+                                { field: 'create_time', width: 180, title: '上传时间', align: "center", search: 'range' },
+                            ]
+                        ]
+                    },
+                    done: function(e, data) {
+                        var selectedList = [];
+                        $.each(data.data, function(index, val) {
+                            selectedList[index] = {
+                                file_id: val.id,
+                                file_path: val.path
+                            };
+                        });
+                        selectedList.forEach(function(item) {
+                            var $li = '<div class="file-item thumbnail"><img data-image class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
+                            if (multiple == 'checkbox') {
+                                $li += '<i class="iconfont icon-yidong move-picture"></i> ';
+                            }
+                            $li += '<i class="iconfont icon-tailor cropper" data-input-id="' + item.file_id + '" data-id="' + input_id + '"></i> <i class="iconfont icon-trash remove-picture" data-id="' + item.file_id + '"></i></div></div>';
+                            if (multiple == 'checkbox') {
+                                if (inputObj.val()) {
+                                    inputObj.val(inputObj.val() + ',' + item.file_id);
+                                } else {
+                                    inputObj.val(item.file_id);
+                                }
+                                $file_list.append($li);
+                            } else {
+                                inputObj.val(item.file_id);
+                                $file_list.html($li);
+                            }
+                        });
+                    }
+                })
+            });
+        })
     }
 
     // 绑定selectpage组件
     if ($(".layui-form .selectpage").size() > 0) {
-    	layui.define('selectPage', function(exports) {
-    		var selectPage = layui.selectPage;
-	        $('.layui-form .selectpage').selectPage({
-	            eAjaxSuccess: function(data) {
-	                //console.log(data);
-	                data.list = typeof data.data !== 'undefined' ? data.data : [];
-	                data.totalRow = typeof data.count !== 'undefined' ? data.count : data.data.length;
-	                return data;
-	            }
-	        })
-    	})
+        layui.define('selectPage', function(exports) {
+            var selectPage = layui.selectPage;
+            $('.layui-form .selectpage').selectPage({
+                eAjaxSuccess: function(data) {
+                    //console.log(data);
+                    data.list = typeof data.data !== 'undefined' ? data.data : [];
+                    data.totalRow = typeof data.count !== 'undefined' ? data.count : data.data.length;
+                    return data;
+                }
+            })
+        })
     }
 
     // 绑定下拉框多选组件
@@ -379,7 +381,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
     // 绑定图片上传组件
     if ($('.js-upload-image,.js-upload-images').length > 0) {
         layui.define('webuploader', function(exports) {
-            var webuploader=layui.webuploader;
+            var webuploader = layui.webuploader;
             $('.js-upload-image,.js-upload-images').each(function() {
                 var $input_file = $(this).find('input');
                 var $input_file_name = $input_file.attr('id');
@@ -519,20 +521,20 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     setTimeout(function() {
                         $('#' + file.id).find('.progress').remove();
                     }, 500);
-                if ($multiple) {
-                    $file_list.dragsort({
-                        //itemSelector:".move-picture",
-                        dragSelector: ".move-picture",
-                        dragEnd: function() {
-                            var ids = [];
-                            $file_list.find('.remove-picture').each(function() {
-                                ids.push($(this).data('id'));
-                            });
-                            $input_file.val(ids.join(','));
-                        },
-                        placeHolderTemplate: '<div class="file-item thumbnail" style="border:1px #009688 dashed;"></div>'
-                    })
-                }
+                    if ($multiple) {
+                        $file_list.dragsort({
+                            //itemSelector:".move-picture",
+                            dragSelector: ".move-picture",
+                            dragEnd: function() {
+                                var ids = [];
+                                $file_list.find('.remove-picture').each(function() {
+                                    ids.push($(this).data('id'));
+                                });
+                                $input_file.val(ids.join(','));
+                            },
+                            placeHolderTemplate: '<div class="file-item thumbnail" style="border:1px #009688 dashed;"></div>'
+                        })
+                    }
                 });
 
                 // 删除图片
@@ -573,7 +575,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
     // 绑定文件上传组件
     if ($('.js-upload-file,.js-upload-files').length > 0) {
         layui.define('webuploader', function(exports) {
-            var webuploader=layui.webuploader;
+            var webuploader = layui.webuploader;
             $('.js-upload-file,.js-upload-files').each(function() {
                 var $input_file = $(this).find('input');
                 var $input_file_name = $input_file.attr('id');
@@ -693,7 +695,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 });
                 // 将上传实例存起来
                 webuploaders.push(uploader);
-            });  
+            });
         })
     }
 
@@ -702,7 +704,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         layui.define('laytpl', function(exports) {
             var laytpl = layui.laytpl;
             //刷新隐藏textarea的值
-            var refresh = function(name,obj=null) {
+            var refresh = function(name, obj = null) {
                 var data = {};
                 var textarea = $("textarea[name='" + name + "']");
                 var container = $(".fieldlist[data-name='" + name + "']");
@@ -716,9 +718,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     if (typeof data[match[1]] == 'undefined') {
                         data[match[1]] = {};
                     }
-                    if(obj!==null && $(obj.elem).attr('name')==j.name){
+                    if (obj !== null && $(obj.elem).attr('name') == j.name) {
                         data[match[1]][match[2]] = obj.value;
-                    }else{
+                    } else {
                         data[match[1]][match[2]] = j.value;
                     }
                 });
@@ -741,12 +743,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             $(document).on('change keyup changed', ".fieldlist input,.fieldlist textarea,.fieldlist select", function() {
                 refresh($(this).closest(".fieldlist").data("name"));
             });
-            form.on('radio(fieldlist)', function(data){
-              refresh($(this).closest(".fieldlist").data("name"),data);
-            }); 
-            form.on('select(fieldlist)', function(data){
-              refresh($(this).closest(".fieldlist").data("name"),data);
-            });  
+            form.on('radio(fieldlist)', function(data) {
+                refresh($(this).closest(".fieldlist").data("name"), data);
+            });
+            form.on('select(fieldlist)', function(data) {
+                refresh($(this).closest(".fieldlist").data("name"), data);
+            });
             //追加控制
             $(".layui-form .fieldlist").on("click", ".btn-append,.append", function(e, row) {
                 var container = $(this).closest(".fieldlist");
@@ -818,7 +820,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             $('.layui-form .js-ueditor').each(function() {
                 var ueditor_name = $(this).attr('id');
                 ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
-                    initialFrameWidth:'100%',
+                    initialFrameWidth: '100%',
                     initialFrameHeight: 400, //初始化编辑器高度,默认320
                     autoHeightEnabled: false, //是否自动长高
                     maximumWords: 50000, //允许的最大字符数
@@ -833,19 +835,19 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         }, 'html');
                 });
                 //分词检测
-                if(ueditor_name=='content'){
+                if (ueditor_name == 'content') {
                     $('#getwords').click(function() {
                         var con = ueditors['content'].getContentTxt();
-                        $.post(GV.ueditor_getwords_url, { 'content': con},
+                        $.post(GV.ueditor_getwords_url, { 'content': con },
                             function(data) {
-                                if(data.code==0){
+                                if (data.code == 0) {
                                     $(".tags-keywords").importTags(data.arr);
                                     //$(".tags-keywords").val(data.arr);
-                                }else{
-                                    layer.msg(data.msg,{icon:2});
+                                } else {
+                                    layer.msg(data.msg, { icon: 2 });
                                 }
                             });
-                    });  
+                    });
                 }
                 //过滤敏感字
                 $('#' + ueditor_name + 'filterword').click(function() {
@@ -932,9 +934,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             })
         }
         if (typeof(that.attr('confirm')) == 'undefined') {
-           func();
-        }else{
-           yzn.msg.confirm(title, func);
+            func();
+        } else {
+            yzn.msg.confirm(title, func);
         }
         return false;
     });
@@ -1020,7 +1022,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         var that = $(this),
             status = 0;
         if (!that.attr('data-href')) {
-            notice.info({message:'请设置data-href参数'});
+            notice.info({ message: '请设置data-href参数' });
             return false;
         }
         if (this.checked) {
@@ -1028,9 +1030,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         }
         $.get(that.attr('data-href'), { value: status }, function(res) {
             if (res.code === 1) {
-                notice.success({message:res.msg});
+                notice.success({ message: res.msg });
             } else {
-                notice.error({message:res.msg});
+                notice.error({ message: res.msg });
                 that.trigger('click');
                 form.render('checkbox');
             }
@@ -1042,15 +1044,15 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
         layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
             if (!href) {
-                notice.info({message:'请设置data-href参数'});
+                notice.info({ message: '请设置data-href参数' });
                 return false;
             }
             $.get(href, function(res) {
                 if (res.code == 1) {
-                    notice.success({message:res.msg});
+                    notice.success({ message: res.msg });
                     that.parents('tr').remove();
                 } else {
-                    notice.error({message:res.msg});
+                    notice.error({ message: res.msg });
                 }
             });
             layer.close(index);
@@ -1079,7 +1081,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         opt.idSync = opt.idSync || def.idSync;
 
         if (!opt.url) {
-            notice.info({message:'请设置data-href参数'});
+            notice.info({ message: '请设置data-href参数' });
             return false;
         }
 
@@ -1087,7 +1089,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             if ($('.checkbox-ids:checked').length <= 0) {
                 var checkStatus = table.checkStatus(opt.table);
                 if (checkStatus.data.length <= 0) {
-                    notice.info({message:'请选择要操作的数据'});
+                    notice.info({ message: '请选择要操作的数据' });
                     return false;
                 }
 
@@ -1122,7 +1124,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             that = $(this),
             text = that.text(),
             opt = {},
-            def = { pop: false, refresh: true, jump: false, callback: null,time: 3000};
+            def = { pop: false, refresh: true, jump: false, callback: null, time: 3000 };
         if ($(this).attr('data-form')) {
             _form = $(that.attr('data-form'));
         } else {
@@ -1138,31 +1140,31 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             url: _form.attr('action'),
             data: _form.serialize(),
         }, function(res) {
-           if (opt.callback) {
-               opt.callback(that, res);
-           } else {
-               layer.msg(res.msg,{icon: 1});
-               //that.text(res.msg);
-               setTimeout(function() {
-                   that.text(text).prop('disabled', false);
-                   if (opt.pop == true) {
-                       if (opt.refresh == true) {
-                           parent.location.reload();
-                       } else if (opt.jump == true && res.url != '') {
-                           parent.location.href = res.url;
-                       }
-                       parent.layui.layer.closeAll();
-                   } else if (opt.refresh == true) {
-                       if (res.url != '') {
-                           location.href = res.url;
-                       } else {
-                           history.back(-1);
-                       }
-                   }
-               }, opt.time);
-           }
+            if (opt.callback) {
+                opt.callback(that, res);
+            } else {
+                layer.msg(res.msg, { icon: 1 });
+                //that.text(res.msg);
+                setTimeout(function() {
+                    that.text(text).prop('disabled', false);
+                    if (opt.pop == true) {
+                        if (opt.refresh == true) {
+                            parent.location.reload();
+                        } else if (opt.jump == true && res.url != '') {
+                            parent.location.href = res.url;
+                        }
+                        parent.layui.layer.closeAll();
+                    } else if (opt.refresh == true) {
+                        if (res.url != '') {
+                            location.href = res.url;
+                        } else {
+                            history.back(-1);
+                        }
+                    }
+                }, opt.time);
+            }
         }, function(res) {
-            layer.msg(res.msg,{icon: 2});
+            layer.msg(res.msg, { icon: 2 });
             //that.text(res.msg).removeClass('layui-btn-normal').addClass('layui-btn-danger');
             setTimeout(function() {
                 that.prop('disabled', false);
