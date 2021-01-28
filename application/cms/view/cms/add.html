@@ -52,8 +52,7 @@ layui.use(['form','layer','yznForm'], function() {
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
-    }, function (res) {
-        layer.msg(res.msg, { icon: 5 });
+        return false;
     });
 })
 </script>
