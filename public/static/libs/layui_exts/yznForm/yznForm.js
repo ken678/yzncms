@@ -27,7 +27,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         api: {
             form: function(url, data, ok, no, ex, refresh, type, pop) {
                 var submitBtn = $(".layer-footer button[lay-submit]");
-                submitBtn.addClass("disabled");
+                submitBtn.addClass("layui-btn-disabled").prop('disabled', true);
                 if (refresh === undefined) {
                     refresh = true;
                 }
@@ -35,10 +35,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     url: url,
                     data: data,
                 }, function(res) {
+                    setTimeout(function() {
+                        submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
+                    }, 3000);
                     if (type === 'layui-form') {
-                        setTimeout(function() {
-                            submitBtn.removeClass("disabled");
-                        }, 3000);
                         if (typeof ok === 'function') {
                             if (false === ok.call($(this),res)) {
                                 return false;
@@ -46,9 +46,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         }
                         res.msg = res.msg || '';
                         yzn.msg.success(res.msg);
-                        //$("button[data-type='layui-form']").prop('disabled', true);
                         setTimeout(function() {
-                            //$("button[data-type='layui-form']").prop('disabled', false);
                             if (pop === true) {
                                 if (refresh == true) {
                                     parent.location.reload();
@@ -67,9 +65,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         }, 3000);
                         return false;
                     } else {
-                        setTimeout(function() {
-                            submitBtn.removeClass("disabled");
-                        }, 3000);
                         if (typeof ok === 'function') {
                             if (false === ok.call($(this),res)) {
                                 return false;
@@ -84,7 +79,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         return false;
                     }
                 }, function(res) {
-                    submitBtn.removeClass("disabled");
+                    submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
                     if (typeof no === 'function') {
                         if (false === no.call($(this),res)) {
                             return false;
@@ -93,7 +88,15 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     var msg = res.msg == undefined ? '返回数据格式有误' : res.msg;
                     yzn.msg.error(msg);
                     return false;
-                }, ex);
+                }, function(res) {
+                    submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
+                    if (typeof ex === 'function') {
+                        if (false === ex.call($(this),res)) {
+                            return false;
+                        }
+                    }
+                    return false;
+                });
                 return false;
             },
             closeCurrentOpen: function(option) {
