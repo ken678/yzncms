@@ -9,7 +9,7 @@
                 {{#  if(d.id == {$userInfo.roleid}){ }}
                 <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
                 {{#  } else { }}
-                <a class='layui-btn layui-btn-xs' href='{:url("access?group_name=")}?title={{d.title}}&group_id={{d.id}}'>访问授权</a>
+                <a class='layui-btn layui-btn-xs' data-open='{:url("access?group_name=")}?title={{d.title}}&group_id={{d.id}}' title="访问授权">访问授权</a>
                 {{#  } }}
             </script>
             <script type="text/html" id="barTool">

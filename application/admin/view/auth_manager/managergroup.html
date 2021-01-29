@@ -1,31 +1,27 @@
 {extend name="index_layout"/}
 {block name="main"}
-<div class="layui-card">
-    <div class="layui-card-header">编辑访问权限</div>
-    <div class="layui-card-body">
-        <form class="layui-form form-horizontal" action="{:url('writeGroup')}" method="post">
-            <div class="zTreeDemoBackground left">
-                <ul class="ztree" style="margin-left: 5px;margin-top:5px; padding: 0;">
-                    <li><a title="全部展开、折叠 "><span class="button ico_open"></span><span id="ztree_expandAll">全部展开、折叠 </span></a> </li>
-                </ul>
-                <ul id="treeDemo" class="ztree"></ul>
-            </div>
-            <input type="hidden" name="rules" value="" />
-            <input type="hidden" name="id" value="{$rules.id}" />
-            <input type="hidden" name="parentid" value="{$rules.parentid}">
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn ajax-post2" lay-submit="" lay-filter="*" target-form="form-horizontal">立即提交</button>
-                </div>
-            </div>
-        </form>
+<form class="layui-form" method="post">
+    <div class="zTreeDemoBackground left">
+        <ul class="ztree" style="margin-left: 5px;margin-top:5px; padding: 0;">
+            <li><a title="全部展开、折叠 "><span class="button ico_open"></span><span id="ztree_expandAll">全部展开、折叠 </span></a> </li>
+        </ul>
+        <ul id="treeDemo" class="ztree"></ul>
     </div>
-</div>
+    <input type="hidden" name="rules" value="" />
+    <input type="hidden" name="id" value="{$rules.id}" />
+    <input type="hidden" name="parentid" value="{$rules.parentid}">
+    <div class="layui-form-item layer-footer">
+        <div class="">
+            <button class="layui-btn" lay-submit="{:url('writeGroup')}">立即提交</button>
+        </div>
+    </div>
+</form>
 {/block}
 {block name="script"}
 <script>
-layui.use(['jquery', 'ztree'], function() {
-    var $ = layui.$;
+layui.use(['jquery', 'ztree','yznForm'], function() {
+    var $ = layui.$,
+        yznForm = layui.yznForm;
     //配置
     var setting = {
         //设置 zTree 的节点上是否显示 checkbox / radio
@@ -76,67 +72,21 @@ layui.use(['jquery', 'ztree'], function() {
         });
     });
 
-    layui.use(['layer', 'form'], function() {
-        var layer = layui.layer,
-            form = layui.form;
-        //通用表单post提交
-        $('.ajax-post2').on('click', function(e) {
-            var target, query, _form;
-            var target_form = $(this).attr('target-form');
-            var that = this;
-            var nead_confirm = false;
-
-            _form = $('.' + target_form);
-            //处理被选中的数据
-            _form.find('input[name="rules"]').val("");
-            var nodes = zTree.getCheckedNodes(true);
-            var str = "";
-            $.each(nodes, function(i, value) {
-                if (str != "") {
-                    str += ",";
-                }
-                str += value.id;
-            });
-            _form.find('input[name="rules"]').val(str);
-
-            if ($(this).hasClass('confirm')) {
-                if (!confirm('确认要执行该操作吗?')) {
-                    return false;
-                }
+    $('.layui-btn').click(function() {
+        _form = $('.layui-form');
+        //处理被选中的数据
+        _form.find('input[name="rules"]').val("");
+        var nodes = zTree.getCheckedNodes(true);
+        var str = "";
+        $.each(nodes, function(i, value) {
+            if (str != "") {
+                str += ",";
             }
-            if ($(this).attr('url') !== undefined) {
-                target = $(this).attr('url');
-            } else {
-                target = _form.attr("action");
-            }
-            query = _form.serialize();
-
-            $.post(target, query).success(function(data) {
-                if (data.code == 1) {
-                    if (data.url) {
-                        layer.msg(data.msg + ' 页面即将自动跳转~');
-                    } else {
-                        layer.msg(data.msg);
-                    }
-                    setTimeout(function() {
-                        if (data.url) {
-                            location.href = data.url;
-                        } else {
-                            location.reload();
-                        }
-                    }, 1500);
-                } else {
-                    layer.msg(data.msg);
-                    setTimeout(function() {
-                        if (data.url) {
-                            location.href = data.url;
-                        }
-                    }, 1500);
-                }
-            });
-            return false;
+            str += value.id;
         });
-    });
+        _form.find('input[name="rules"]').val(str);
+        yznForm.listen();
+    })
 });
 </script>
 {/block}
