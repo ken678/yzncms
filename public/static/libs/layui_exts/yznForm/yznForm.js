@@ -26,6 +26,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
         },
         api: {
             form: function(url, data, ok, no, ex, refresh, type, pop) {
+                var that = this;
                 var submitBtn = $(".layer-footer button[lay-submit]");
                 submitBtn.addClass("layui-btn-disabled").prop('disabled', true);
                 if (refresh === undefined) {
@@ -38,12 +39,15 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     setTimeout(function() {
                         submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
                     }, 3000);
-                    if (type === 'layui-form') {
-                        if (typeof ok === 'function') {
-                            if (false === ok.call($(this),res)) {
-                                return false;
-                            }
+                    if (false === $('.layui-form').triggerHandler("success.form")) {
+                        return false;
+                    }
+                    if (typeof ok === 'function') {
+                        if (false === ok.call($(this), res)) {
+                            return false;
                         }
+                    }
+                    if (type === 'layui-form') {
                         res.msg = res.msg || '';
                         yzn.msg.success(res.msg);
                         setTimeout(function() {
@@ -65,11 +69,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         }, 3000);
                         return false;
                     } else {
-                        if (typeof ok === 'function') {
-                            if (false === ok.call($(this),res)) {
-                                return false;
-                            }
-                        }
                         res.msg = res.msg || '';
                         yzn.msg.success(res.msg, function() {
                             yznForm.api.closeCurrentOpen({
@@ -80,8 +79,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     }
                 }, function(res) {
                     submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
+                    if (false === $('.layui-form').triggerHandler("error.form")) {
+                        return false;
+                    }
                     if (typeof no === 'function') {
-                        if (false === no.call($(this),res)) {
+                        if (false === no.call($(this), res)) {
                             return false;
                         }
                     }
@@ -91,7 +93,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 }, function(res) {
                     submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
                     if (typeof ex === 'function') {
-                        if (false === ex.call($(this),res)) {
+                        if (false === ex.call($(this), res)) {
                             return false;
                         }
                     }
@@ -250,7 +252,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 var options = {
                     elem: this,
                     type: type,
-                    trigger:'click',
+                    trigger: 'click',
                 };
                 if (format !== undefined && format !== '' && format !== null) {
                     options['format'] = format;
@@ -1014,8 +1016,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             clienWidth = '100%';
             clientHeight = '100%';
         }
-        yzn.open(title, url, clienWidth, clientHeight,
-        );
+        yzn.open(title, url, clienWidth, clientHeight, );
     });
 
     /**
