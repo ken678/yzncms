@@ -15,14 +15,15 @@
 	if(self!=top) top.location=self.location;
 //-->
 </script>
+<style type="text/css">
+body {
+    background-color: #2D2D2D
+}
+</style>
+{:hook('admin_login_style')}
 </head>
 
 <body>
-    <style type="text/css">
-    body {
-        background-color: #2D2D2D
-    }
-    </style>
     <div id="mydiv">
         <div class="login-main">
             <div class="layui-elip">YZNCMS管理系统&nbsp;<span class="version">v{$Think.config.version.yzncms_version}</span><span class="bg1"></span><span class="bg2"></span></div>
@@ -81,7 +82,7 @@
         $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
     });
     </script>
-    {:hook('login_form')}
+    {:hook('admin_login_form')}
 </body>
 
 </html>
