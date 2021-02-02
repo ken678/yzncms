@@ -32,11 +32,15 @@ class Loginbg extends Addons
 
     public function adminLoginStyle()
     {
-        //$config = $this->getAddonConfig();
-        $gettime     = 6;
-        $json_string = file_get_contents('https://www.bing.com/HPImageArchive.aspx?format=js&idx=' . $gettime . '&n=1');
-        $data        = json_decode($json_string);
-        $background  = "https://www.bing.com" . $data->{"images"}[0]->{"urlbase"} . "_1920x1080.jpg";
+        $config = $this->getAddonConfig();
+        if ($config['mode'] == 'random' || $config['mode'] == 'daily') {
+            $gettime     = $config['mode'] == 'random' ? mt_rand(-1, 7) : 0;
+            $json_string = file_get_contents('https://www.bing.com/HPImageArchive.aspx?format=js&idx=' . $gettime . '&n=1');
+            $data        = json_decode($json_string);
+            $background  = "https://www.bing.com" . $data->{"images"}[0]->{"urlbase"} . "_1920x1080.jpg";
+        } else {
+            $background = $config['pic'] ? get_file_path($config['pic']) : '';
+        }
         $this->assign('background', $background);
         return $this->fetch('loginbg');
     }
