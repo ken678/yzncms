@@ -85,10 +85,10 @@ class Cms extends Adminbase
         $result     = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
         foreach ($result as $k => $v) {
             if ($v['type'] != 2) {
-                continue;
+                $v['disabled'] = 'disabled';
             }
             if ($modelid && $modelid != $v['modelid']) {
-                continue;
+                $v['disabled'] = 'disabled';
             }
             //$v['disabled'] = $v['child'] ? 'disabled' : '';
             $v['selected'] = $v['id'] == $catid ? 'selected' : '';
