@@ -46,7 +46,7 @@ class Vaptcha extends Addons
                 Validate::setTypeMsg('captcha', '请先完成验证！');
                 return false;
             }
-            $config = get_addon_config('vaptcha');
+            $config = $this->getAddonConfig();
             if (!$config['appvid'] || !$config['appkey']) {
                 Validate::setTypeMsg('captcha', '请先在后台中配置vaptcha验证的参数信息');
                 return false;
@@ -64,7 +64,7 @@ class Vaptcha extends Addons
 
     public function adminLoginForm()
     {
-        $config = get_addon_config('vaptcha');
+        $config = $this->getAddonConfig();
         $this->assign('config', $config);
         return $this->fetch('vaptcha');
     }
