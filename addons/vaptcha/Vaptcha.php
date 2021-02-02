@@ -62,7 +62,7 @@ class Vaptcha extends Addons
         });
     }
 
-    public function loginForm()
+    public function adminLoginForm()
     {
         $config = get_addon_config('vaptcha');
         $this->assign('config', $config);
