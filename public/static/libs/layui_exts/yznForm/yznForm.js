@@ -439,6 +439,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     }
 
                 })
+
+                element.on('tab', function(data){
+                     uploader.refresh();
+                });
                 //console.log(uploader);
                 // 当有文件添加进来的时候
                 uploader.on('fileQueued', function(file) {
@@ -616,6 +620,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         title: 'Files',
                         extensions: $ext
                     }
+                });
+
+                element.on('tab', function(data){
+                     uploader.refresh();
                 });
 
                 // 当有文件添加进来的时候
