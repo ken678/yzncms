@@ -72,6 +72,7 @@ layui.use(['form', 'yzn', 'layer'], function() {
                     $('#change_html').html('<p>'+res.msg+'</p>');
                     start_change(0);
                 } else {
+                    $('.layui-btn').attr('disabled', false).removeClass("layui-btn-disabled").html('开始转换');
                     layer.msg(res.msg, { icon: 2 });
                 }
             },
