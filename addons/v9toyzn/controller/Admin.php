@@ -106,32 +106,37 @@ class Admin extends Adminaddon
         ];
 
         //检查phpcms表是否正常
-        $db2 = Db::connect($db_config);
-        foreach ($this->v9modelTabList as $tablename) {
-            $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$tablename}'");
-            if (!$res) {
+        $v9table = [];
+        try {
+            $db2 = Db::connect($db_config);
+            foreach ($this->v9modelTabList as $tablename) {
+                $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$tablename}'");
+                /*if (!$res) {
                 $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
-            }
-            if ('model' == $tablename) {
-                $modelTable = $db2->table($db_config['prefix'] . $tablename)->where('type', 0)->select();
-                foreach ($modelTable as $k => $v) {
-                    $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$v['tablename']}'");
-                    if (!$res) {
+                }*/
+                if ('model' == $tablename) {
+                    $modelTable = $db2->table($db_config['prefix'] . $tablename)->where('type', 0)->select();
+                    foreach ($modelTable as $k => $v) {
+                        $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}{$v['tablename']}'");
+                        /*if (!$res) {
                         $this->error("表{$db_config['prefix']}{$tablename}不存在,请检查phpcms表结构是否正常！");
+                        }*/
+                        $v9table[] = $v['tablename'];
                     }
-                    $v9table[] = $v['tablename'];
                 }
             }
+            //检查是否存在友情链接
+            $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}link'");
+            if ($res && isModuleInstall('links')) {
+                $db_task[] = ['fun' => 'step8', 'msg' => '友情链接转换完毕!'];
+            }
+            Cache::set('db_task', $db_task, 600);
+            Cache::set('v9_table', $v9table, 600);
+            unset($db2);
+            unset($res);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
-        //检查是否存在友情链接
-        $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}link'");
-        if ($res && isModuleInstall('links')) {
-            $db_task[] = ['fun' => 'step8', 'msg' => '友情链接转换完毕!'];
-        }
-        Cache::set('db_task', $db_task, 600);
-        Cache::set('v9_table', $v9table, 600);
-        unset($db2);
-        unset($res);
         $this->success('phpcms数据表结构检查完毕！');
     }
 
