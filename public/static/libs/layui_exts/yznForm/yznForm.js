@@ -417,8 +417,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     // 不压缩图片
                     resize: false,
                     compress: false,
-                    // swf文件路径
-                    swf: GV.WebUploader_swf,
                     pick: {
                         id: '#picker_' + $input_file_name,
                         multiple: $multiple
@@ -603,8 +601,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     auto: true,
                     // 去重
                     duplicate: true,
-                    // swf文件路径
-                    swf: GV.WebUploader_swf,
                     // 文件接收服务端。
                     server: GV.file_upload_url,
                     // 选择文件的按钮。可选。
