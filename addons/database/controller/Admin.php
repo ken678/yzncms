@@ -74,14 +74,14 @@ class Admin extends Adminaddon
             //检查是否有正在执行的任务
             $lock = "{$config['path']}backup.lock";
             if (is_file($lock)) {
-                return $this->error('检测到有一个备份任务正在执行，请稍后再试！');
+                $this->error('检测到有一个备份任务正在执行，请稍后再试！');
             } else {
                 //创建锁文件
                 file_put_contents($lock, time());
             }
             //检查备份目录是否可写
             if (!is_writeable($config['path'])) {
-                return $this->error('备份目录不存在或不可写，请检查后重试！');
+                $this->error('备份目录不存在或不可写，请检查后重试！');
             }
             session('backup_config', $config);
             //生成备份文件信息
@@ -96,9 +96,9 @@ class Admin extends Adminaddon
             $Database = new Database($file, $config);
             if (false !== $Database->create()) {
                 $tab = array('id' => 0, 'start' => 0);
-                return $this->success('初始化成功！', '', array('tables' => $tables, 'tab' => $tab));
+                $this->success('初始化成功！', '', array('tables' => $tables, 'tab' => $tab));
             } else {
-                return $this->error('初始化失败，备份文件创建失败！');
+                $this->error('初始化失败，备份文件创建失败！');
             }
         } elseif ($this->request->isGet() && is_numeric($id) && is_numeric($start)) {
             //备份数据
@@ -108,12 +108,12 @@ class Admin extends Adminaddon
             $start    = $Database->backup($tables[$id], $start);
             if (false === $start) {
                 //出错
-                return $this->error('备份出错！');
+                $this->error('备份出错！');
             } elseif (0 === $start) {
                 //下一表
                 if (isset($tables[++$id])) {
                     $tab = array('id' => $id, 'start' => 0);
-                    return $this->success('备份完成！', '', array('tab' => $tab));
+                    $this->success('备份完成！', '', array('tab' => $tab));
                 } else {
                     //备份完成，清空缓存
                     unlink(session('backup_config.path') . 'backup.lock');
@@ -125,11 +125,11 @@ class Admin extends Adminaddon
             } else {
                 $tab  = array('id' => $id, 'start' => $start[0]);
                 $rate = floor(100 * ($start[0] / $start[1]));
-                return $this->success("正在备份...({$rate}%)", '', array('tab' => $tab));
+                $this->success("正在备份...({$rate}%)", '', array('tab' => $tab));
             }
 
         } else {
-            return $this->error('参数错误！');
+            $this->error('参数错误！');
         }
 
     }
@@ -228,37 +228,37 @@ class Admin extends Adminaddon
             $last = end($list);
             if (count($list) === $last[0]) {
                 session('backup_list', $list); //缓存备份列表
-                return $this->success('初始化完成！', '', array('part' => 1, 'start' => 0));
+                $this->success('初始化完成！', '', array('part' => 1, 'start' => 0));
             } else {
-                return $this->error('备份文件可能已经损坏，请检查！');
+                $this->error('备份文件可能已经损坏，请检查！');
             }
         } elseif (is_numeric($part) && is_numeric($start)) {
             $list  = session('backup_list');
             $db    = new Database($list[$part], array('path' => realpath(config('data_backup_path')) . DIRECTORY_SEPARATOR, 'compress' => $list[$part][2]));
             $start = $db->import($start);
             if (false === $start) {
-                return $this->error('还原数据出错！');
+                $this->error('还原数据出错！');
             } elseif (0 === $start) {
                 //下一卷
                 if (isset($list[++$part])) {
                     $data = array('part' => $part, 'start' => 0);
-                    return $this->success("正在还原...#{$part}", '', $data);
+                    $this->success("正在还原...#{$part}", '', $data);
                 } else {
                     session('backup_list', null);
-                    return $this->success('还原完成！');
+                    $this->success('还原完成！');
                 }
             } else {
                 $data = array('part' => $part, 'start' => $start[0]);
                 if ($start[1]) {
                     $rate = floor(100 * ($start[0] / $start[1]));
-                    return $this->success("正在还原...#{$part} ({$rate}%)", '', $data);
+                    $this->success("正在还原...#{$part} ({$rate}%)", '', $data);
                 } else {
                     $data['gz'] = 1;
-                    return $this->success("正在还原...#{$part}", '', $data);
+                    $this->success("正在还原...#{$part}", '', $data);
                 }
             }
         } else {
-            return $this->error('参数错误！');
+            $this->error('参数错误！');
         }
     }
 
@@ -274,12 +274,12 @@ class Admin extends Adminaddon
             $path = $this->databaseConfig['path'] . $name;
             array_map("unlink", glob($path));
             if (count(glob($path))) {
-                return $this->error('备份文件删除失败，请检查权限！');
+                $this->error('备份文件删除失败，请检查权限！');
             } else {
-                return $this->success('备份文件删除成功！');
+                $this->success('备份文件删除成功！');
             }
         } else {
-            return $this->error('参数错误！');
+            $this->error('参数错误！');
         }
     }
 
@@ -296,13 +296,13 @@ class Admin extends Adminaddon
                 $tables = implode('`,`', $tables);
                 $list   = Db::query("OPTIMIZE TABLE `{$tables}`");
                 if ($list) {
-                    return $this->success("数据表优化完成！");
+                    $this->success("数据表优化完成！");
                 } else {
-                    return $this->error("数据表优化出错请重试！");
+                    $this->error("数据表优化出错请重试！");
                 }
             }
         } else {
-            return $this->error("请指定要优化的表！");
+            $this->error("请指定要优化的表！");
         }
     }
 
@@ -319,13 +319,13 @@ class Admin extends Adminaddon
                 $tables = implode('`,`', $tables);
                 $list   = Db::query("REPAIR TABLE `{$tables}`");
                 if ($list) {
-                    return $this->success("数据表修复完成！");
+                    $this->success("数据表修复完成！");
                 } else {
-                    return $this->error("数据表修复出错请重试！");
+                    $this->error("数据表修复出错请重试！");
                 }
             }
         } else {
-            return $this->error("请指定要修复的表！");
+            $this->error("请指定要修复的表！");
         }
     }
 

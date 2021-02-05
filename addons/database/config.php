@@ -4,7 +4,7 @@ return [
         'name'  => 'path',
         'title' => '数据库备份路径',
         'type'  => 'text',
-        'value' => '/Data/',
+        'value' => '/data/',
         'style' => "width:200px;",
         'tips'  => '路径必须以 / 结尾',
     ],
