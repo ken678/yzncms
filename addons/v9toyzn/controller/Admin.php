@@ -468,7 +468,9 @@ class Admin extends Adminaddon
                 'updatetime'  => $value['updatetime'],
             ];
         }
-        Db::name('page')->insertAll($data);
+        if ($data) {
+            Db::name('page')->insertAll($data);
+        }
         unset($cursor);
     }
 
@@ -485,7 +487,9 @@ class Admin extends Adminaddon
                 'module'   => 'links',
             ];
         }
-        Db::name('terms')->insertAll($terms);
+        if ($terms) {
+            Db::name('terms')->insertAll($terms);
+        }
         $cursor = Db::connect($db_config)->name('link')->cursor();
         foreach ($cursor as $key => $value) {
             $links[$key] = [
@@ -507,7 +511,9 @@ class Admin extends Adminaddon
                 $links[$key]['image'] = 0;
             };
         };
-        Db::name('links')->insertAll($links);
+        if ($links) {
+            Db::name('links')->insertAll($links);
+        }
     }
 
     private function string2array($data)
