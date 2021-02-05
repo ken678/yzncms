@@ -1,3 +1,4 @@
+//封装表单操作 部分参考EasyAdmin和fastadmin
 layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,

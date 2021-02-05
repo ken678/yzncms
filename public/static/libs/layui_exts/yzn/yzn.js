@@ -1,6 +1,4 @@
-/**
- @ Name：简单封下基本操作
- */
+//封装基本操作 部分参考EasyAdmin和fastadmin
 layui.define(['layer','notice'], function(exports) {
     var layer = layui.layer,
         notice = layui.notice;
@@ -21,9 +19,10 @@ layui.define(['layer','notice'], function(exports) {
         config: {
             shade: [0.02, '#000'],
         },
-        open: function(title, url, width, height, isResize) {
+        open: function(title, url, width, height,options, isResize) {
             isResize = isResize === undefined ? true : isResize;
-            var index = layer.open({
+
+            options = $.extend({
                 title: title,
                 type: 2,
                 area: [width, height],
@@ -67,19 +66,31 @@ layui.define(['layer','notice'], function(exports) {
                                 '</style>');
                         });
                     }
+                    if (yzn.checkMobile() || width === undefined || height === undefined) {
+                        layer.full(index);
+                    }
+                    if (isResize) {
+                        $(window).on("resize", function() {
+                            //layer.full(index);
+                            layer.style(index, {
+                                top: 0,
+                                height: $(window).height()
+                            })
+                        })
+                    }
                 }
-            });
-            if (yzn.checkMobile() || width === undefined || height === undefined) {
-                layer.full(index);
-            }
-            if (isResize) {
-                $(window).on("resize", function() {
-                    //layer.full(index);
-                    layer.style(index, {
-                        top: 0,
-                        height: $(window).height()
-                    })
-                })
+            }, options ? options : {})
+            return layer.open(options);
+        },
+        //关闭窗口并回传数据
+        close: function (data) {
+            var index = parent.layer.getFrameIndex(window.name);
+            var callback = parent.$("#layui-layer" + index).data("callback");
+            //再执行关闭
+            parent.layer.close(index);
+            //再调用回传函数
+            if (typeof callback === 'function') {
+                callback.call(undefined, data);
             }
         },
         layerfooter: function (layero, index, that) {
