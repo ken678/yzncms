@@ -146,6 +146,7 @@ layui.use(['table', 'yznTable'], function() {
                     }
                     $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
                         if (data.code == 1) {
+                            table.reload('currentTable');
                             layer.msg(data.msg,{icon: 1});
                             layer.close(index);
                         } else {
