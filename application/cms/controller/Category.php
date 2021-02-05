@@ -342,14 +342,19 @@ class Category extends Adminbase
             if ($this->request->isAjax()) {
                 $data = $this->request->post();
                 $priv = array();
-                foreach ($data['priv'] as $k => $v) {
-                    foreach ($v as $e => $q) {
-                        $priv[] = array("roleid" => $id, "catid" => $k, "action" => $q, "is_admin" => 1);
+                if (isset($data['priv'])) {
+                    foreach ($data['priv'] as $k => $v) {
+                        foreach ($v as $e => $q) {
+                            $priv[] = array("roleid" => $id, "catid" => $k, "action" => $q, "is_admin" => 1);
+                        }
                     }
+                    Db::name("CategoryPriv")->where("roleid", $id)->delete();
+                    Db::name("CategoryPriv")->insertAll($priv);
+                    $this->success("栏目授权成功！");
+                } else {
+                    $this->error('请指定需要授权的栏目！');
                 }
-                Db::name("CategoryPriv")->where("roleid", $id)->delete();
-                Db::name("CategoryPriv")->insertAll($priv);
-                $this->success("栏目授权成功！");
+
             } else {
                 $tree          = new \util\Tree();
                 $tree->icon    = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
