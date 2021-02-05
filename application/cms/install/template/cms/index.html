@@ -28,7 +28,7 @@
             {volist name="data" id="vo"}
             	<li>
             		<a href="{$vo.url}" class="pr">
-            			<img src="https://via.placeholder.com/380x285" alt="{$vo.title}">
+            			<img src="{$vo.thumb|default='https://via.placeholder.com/380x285'}" alt="{$vo.title}">
             			<div class="top-Floor pa transition"> <span class="white-cross pa"></span></div>
             		</a>
             		<a href="{$vo.url}" class="case_a transition pr">

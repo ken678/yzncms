@@ -42,7 +42,7 @@ body {
                     {yzn module="cms" action="lists" where="$where" catid="$catid" cache="3600" order="listorder ASC" num="8" page="$page" return="data"}
                     {volist name="data" id="vo" mod="4"}
                     <li {eq name="mod" value="3" }style="margin-right:0;" {/eq}> <div class="_con">
-                        <div class="_img"><img  src="https://via.placeholder.com/270x210" alt="{$vo.title}"></div>
+                        <div class="_img"><img src="{$vo.thumb|default='https://via.placeholder.com/270x210'}" alt="{$vo.title}"></div>
                             <div class="_info">
                                 <h3>{$vo.title|str_cut=###,12}</h3>
                                 <div class="txt">
