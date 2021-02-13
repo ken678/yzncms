@@ -14,12 +14,17 @@
 // +----------------------------------------------------------------------
 namespace app\api\controller;
 
-use app\common\controller\Base;
+use app\common\controller\Api;
 use app\common\model\Sms as Sms_Model;
 use app\member\model\Member;
 use think\facade\Validate;
 
-class Sms extends Base
+/**
+ * @title 手机短信接口
+ * @controller api\controller\Sms
+ * @group base
+ */
+class Sms extends Api
 {
     /**
      * 初始化
@@ -31,7 +36,15 @@ class Sms extends Base
     }
 
     /**
-     * 发送验证码
+     * @title 发送验证码
+     * @desc 最基础的接口注释写法
+     * @author 御宅男
+     * @url /api/Sms/send
+     * @method GET
+     * @tag 手机 验证码
+     * @param name:mobile type:string require:1 desc:手机号
+     * @param name:event type:string require:1 desc:事件名称
+     * @return name:data type:array ref:definitions\dictionary
      */
     public function send()
     {
@@ -73,7 +86,16 @@ class Sms extends Base
     }
 
     /**
-     * 检测验证码
+     * @title 检测验证码
+     * @desc 最基础的接口注释写法
+     * @author 御宅男
+     * @url /api/Sms/check
+     * @method GET
+     * @tag 手机 验证码
+     * @param name:mobile type:string require:1 desc:手机号
+     * @param name:event type:string require:1 desc:事件名称
+     * @param name:captcha type:string require:1 desc:验证码
+     * @return name:data type:array ref:definitions\dictionary
      */
     public function check()
     {
