@@ -27,30 +27,30 @@ class Service
     {
         if (!is_array($amount)) {
             $params = [
-                'amount' => $amount,
-                'orderid' => $orderid,
-                'type' => $type,
-                'title' => $title,
+                'amount'    => $amount,
+                'orderid'   => $orderid,
+                'type'      => $type,
+                'title'     => $title,
                 'notifyurl' => $notifyurl,
                 'returnurl' => $returnurl,
-                'method' => $method,
+                'method'    => $method,
             ];
         } else {
             $params = $amount;
         }
 
-        $type = isset($params['type']) && in_array($params['type'], ['alipay', 'wechat']) ? $params['type'] : 'wechat';
-        $method = isset($params['method']) ? $params['method'] : 'web';
-        $orderid = isset($params['orderid']) ? $params['orderid'] : date("YmdHis") . mt_rand(100000, 999999);
-        $openid = isset($params['openid']) ? $params['openid'] : '';
-        $title = isset($params['title']) ? $params['title'] : "支付";
-        $amount = isset($params['amount']) ? $params['amount'] : 1;
-        $html = '';
+        $type      = isset($params['type']) && in_array($params['type'], ['alipay', 'wechat']) ? $params['type'] : 'wechat';
+        $method    = isset($params['method']) ? $params['method'] : 'web';
+        $orderid   = isset($params['orderid']) ? $params['orderid'] : date("YmdHis") . mt_rand(100000, 999999);
+        $openid    = isset($params['openid']) ? $params['openid'] : '';
+        $title     = isset($params['title']) ? $params['title'] : "支付";
+        $amount    = isset($params['amount']) ? $params['amount'] : 1;
+        $html      = '';
         $notifyurl = isset($params['notifyurl']) ? $params['notifyurl'] : url('');
         $returnurl = isset($params['returnurl']) ? $params['returnurl'] : url('');
 
-        $request = request();
-        $config = Service::getConfig($type);
+        $request              = request();
+        $config               = Service::getConfig($type);
         $config['notify_url'] = $notifyurl;
         $config['return_url'] = $returnurl;
         if ($type == 'alipay') {
@@ -60,7 +60,7 @@ class Service
             $params = [
                 'out_trade_no' => $orderid, //你的订单号
                 'total_amount' => $amount, //单位元
-                'subject' => $title,
+                'subject'      => $title,
             ];
             //如果是移动端自动切换为wap
             $method = $request->isMobile() ? 'wap' : $method;
@@ -71,9 +71,9 @@ class Service
                         $html = $pay->scan($params);
                         Session::set("alipayorderdata", [
                             'out_trade_no' => $orderid, //你的订单号
-                            'body' => $title,
-                            'total_fee' => $amount * 100, //单位分
-                            "qr_code" => $html->qr_code,
+                            'body'         => $title,
+                            'total_fee'    => $amount * 100, //单位分
+                            "qr_code"      => $html->qr_code,
                         ]);
                         $url = url('pay/api/alipay');
                         header("location:{$url}");
@@ -93,11 +93,11 @@ class Service
             //如果是移动端自动切换为wap
             $method = $request->isMobile() ? 'wap' : $method;
             //创建支付对象
-            $pay = Pay::wechat($config);
+            $pay    = Pay::wechat($config);
             $params = [
                 'out_trade_no' => $orderid, //你的订单号
-                'body' => $title,
-                'total_fee' => $amount * 100, //单位分
+                'body'         => $title,
+                'total_fee'    => $amount * 100, //单位分
             ];
             switch ($method) {
                 case 'web':
@@ -105,9 +105,9 @@ class Service
                     $html = $pay->scan($params);
                     Session::set("wechatorderdata", [
                         'out_trade_no' => $orderid, //你的订单号
-                        'body' => $title,
-                        'total_fee' => $amount * 100, //单位分
-                        "code_url" => $html->code_url,
+                        'body'         => $title,
+                        'total_fee'    => $amount * 100, //单位分
+                        "code_url"     => $html->code_url,
                         //"code_url" => "weixin://wxpay/bizpayurl?pr=4aXtmGv",
                     ]);
                     $url = url('pay/api/wechat');
@@ -141,7 +141,7 @@ class Service
             return false;
         }
         try {
-            $pay = Pay::$type(self::getConfig($type));
+            $pay  = Pay::$type(self::getConfig($type));
             $data = $pay->verify();
             if ($type == 'alipay') {
                 if (in_array($data['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
@@ -174,12 +174,8 @@ class Service
             return true;
         }
         try {
-            $pay = Pay::$type(self::getConfig($type));
-            $get = request()->get('', null, 'trim');
-            //去除空值
-            $get = array_filter($get, create_function('$v', 'return !empty($v);'));
-            $data = $type == 'wechat' ? file_get_contents("php://input") : $get;
-            $data = $pay->verify($data);
+            $pay  = Pay::$type(self::getConfig($type));
+            $data = $pay->verify();
             if ($data) {
                 return $pay;
             }
@@ -203,7 +199,7 @@ class Service
         }
         if ($config['log']) {
             $config['log'] = [
-                'file' => \think\facade\Env::get('runtime_path') . 'log/epaylogs/' . $type . '-' . date("Y-m-d") . '.log',
+                'file'  => \think\facade\Env::get('runtime_path') . 'log/epaylogs/' . $type . '-' . date("Y-m-d") . '.log',
                 'level' => 'debug',
             ];
         } else {
