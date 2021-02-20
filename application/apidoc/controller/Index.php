@@ -175,7 +175,9 @@ class Index extends Controller
         } else {
             $list = $this->getApiList($version);
         }
-
+        if (isset($this->config['groups']) && count($this->config['groups']) > 0) {
+            array_unshift($this->config['groups'], ['title' => '全部', 'name' => 0]);
+        }
         $data = array(
             "title"      => $this->config['title'],
             "version"    => $version,
