@@ -11,9 +11,11 @@ use util\Http;
  */
 class Wechat
 {
-    private $app_id     = '';
-    private $app_secret = '';
-    private $scope      = 'snsapi_userinfo';
+    private $app_id            = '';
+    private $app_secret        = '';
+    private $scope             = 'snsapi_userinfo';
+    private $GrantType         = 'authorization_code';
+    private $GetRequestCodeURL = 'https://open.weixin.qq.com/connect/oauth2/authorize';
 
     public function __construct($app_id, $app_secret)
     {
@@ -32,7 +34,14 @@ class Wechat
         $redirect_uri = urlencode($redirect_uri);
         $state        = \util\Random::alnum();
         Session::set('state', $state);
-        return "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$this->app_id}&redirect_uri={$redirect_uri}&response_type=code&scope={$this->scope}&state={$state}#wechat_redirect";
+        $params = array(
+            'appid'         => $this->app_id,
+            'redirect_uri'  => $redirect_uri,
+            'response_type' => 'code',
+            'scope'         => $this->scope,
+            'state'         => $state,
+        );
+        return $this->GetRequestCodeURL . '?' . http_build_query($params) . "#wechat_redirect";
     }
 
     /**
@@ -76,7 +85,7 @@ class Wechat
             'appid'      => $this->app_id,
             'secret'     => $this->app_secret,
             'code'       => $code,
-            'grant_type' => 'authorization_code',
+            'grant_type' => $this->GrantType,
         ];
         $ret = Http::sendRequest('https://api.weixin.qq.com/sns/oauth2/access_token', $params, 'GET');
         if ($ret['ret']) {

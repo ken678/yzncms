@@ -1,3 +1,53 @@
+{if $type=='jsapi'}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css">
+    <script src="__STATIC__/libs/layui/layui.js"></script>
+    <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
+    <title>微信支付</title>
+</head>
+<body>
+<div class="layui-container"> 
+    <div class="layui-row" style="margin-top:20px;">
+        <div class="col-xs-12">
+            <button type="button" class="layui-btn layui-btn-lg layui-btn-fluid"><i class="layui-icon layui-icon-loading-1 layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>正在发起微信支付</button>
+        </div>
+    </div>
+</div>
+<script>
+layui.use('layer', function(){})
+function onBridgeReady() {
+    WeixinJSBridge.invoke('getBrandWCPayRequest', {$orderData.jsapi|raw|json_encode}, function(res) {
+        if (res.err_msg == "get_brand_wcpay_request:ok") {
+            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            layer.msg('支付成功！');
+            window.location.href = '{$orderData.returnurl}';
+        } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+            layer.msg('您取消了支付');
+        } else if (res.err_msg == "get_brand_wcpay_request:fail") {
+            layer.msg('支付失败');
+        }else{
+            layer.msg(typeof res.err_msg!='undefined' ? res.err_msg : (typeof res.errMsg !=='undefined' ? res.errMsg : "未知支付状态"));
+        }
+    });
+}
+
+if (typeof WeixinJSBridge == "undefined") {
+    if (document.addEventListener) {
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    } else if (document.attachEvent) {
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+} else {
+    onBridgeReady();
+}
+</script>
+{elseif $type=='pc' /}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <html lang="zh-CN">
@@ -141,6 +191,7 @@
 
     });
     </script>
+{/if}
 </body>
 
 </html>

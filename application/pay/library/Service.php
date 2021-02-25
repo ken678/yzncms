@@ -53,6 +53,8 @@ class Service
         $config               = Service::getConfig($type);
         $config['notify_url'] = $notifyurl;
         $config['return_url'] = $returnurl;
+        $isWechat             = strpos($request->server('HTTP_USER_AGENT'), 'MicroMessenger') !== false;
+
         if ($type == 'alipay') {
             //创建支付对象
             $pay = Pay::alipay($config);
@@ -90,8 +92,6 @@ class Service
                 default:
             }
         } else {
-            //如果是移动端自动切换为wap
-            $method = $request->isMobile() ? 'wap' : $method;
             //创建支付对象
             $pay    = Pay::wechat($config);
             $params = [
@@ -99,7 +99,22 @@ class Service
                 'body'         => $title,
                 'total_fee'    => $amount * 100, //单位分
             ];
+            if ($method == 'web') {
+                if ($request->isMobile() && $isWechat) {
+                    $params['openid'] = self::getOpenid();
+                    $method           = 'mp';
+                }
+            }
             switch ($method) {
+                case 'mp':
+                    $jsapi               = $pay->mp($params);
+                    $params["jsapi"]     = $jsapi;
+                    $params["returnurl"] = $returnurl;
+                    Session::set("wechatorderdata", $params);
+                    $url = url('pay/api/wechat');
+                    header("location:{$url}");
+                    exit;
+                    break;
                 case 'web':
                     //电脑支付,跳转到自定义展示页面
                     $html = $pay->scan($params);
@@ -217,6 +232,26 @@ class Service
         $config['return_url'] = empty($config['return_url']) ? addon_url('epay/api/returnx', [], false) . '/type/' . $type : $config['return_url'];
         $config['return_url'] = !preg_match("/^(http:\/\/|https:\/\/)/i", $config['return_url']) ? request()->root(true) . $config['return_url'] : $config['return_url'];*/
         return $config;
+    }
+
+    /**
+     * 获取微信Openid
+     *
+     * @return mixed|string
+     */
+    public static function getOpenid()
+    {
+        $config = self::getConfig('wechat');
+        $openid = '';
+        if (!$openid) {
+            $openid = Session::get("openid");
+            //如果未传openid，则去读取openid
+            if (!$openid) {
+                $wechat = new Wechat($config['app_id'], $config['app_secret']);
+                $openid = $wechat->getOpenid();
+            }
+        }
+        return $openid;
     }
 
 }

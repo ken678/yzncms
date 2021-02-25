@@ -30,14 +30,15 @@ class Api extends HomeBase
      */
     public function wechat()
     {
-        $config   = Service::getConfig('wechat');
-        $isWechat = stripos($this->request->server('HTTP_USER_AGENT'), 'MicroMessenger') !== false;
+        $config    = Service::getConfig('wechat');
+        $isWechat  = stripos($this->request->server('HTTP_USER_AGENT'), 'MicroMessenger') !== false;
+        $orderData = Session::get("wechatorderdata");
         if ($isWechat) {
-
+            $type = 'jsapi';
+            $this->assign("orderData", $orderData);
         } else {
             //发起PC支付(Native支付)
-            $orderData = Session::get("wechatorderdata");
-            $data      = [
+            $data = [
                 'body'         => $orderData['body'],
                 'code_url'     => $orderData['code_url'],
                 'out_trade_no' => $orderData['out_trade_no'],
@@ -54,8 +55,10 @@ class Api extends HomeBase
                     $this->error("查询失败");
                 }
             }
+            $type = 'pc';
             $this->assign("data", $data);
         }
+        $this->assign("type", $type);
         return $this->fetch('/wechat');
     }
 
