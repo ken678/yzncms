@@ -34,14 +34,7 @@ class Wechat
         $redirect_uri = urlencode($redirect_uri);
         $state        = \util\Random::alnum();
         Session::set('state', $state);
-        $params = array(
-            'appid'         => $this->app_id,
-            'redirect_uri'  => $redirect_uri,
-            'response_type' => 'code',
-            'scope'         => $this->scope,
-            'state'         => $state,
-        );
-        return $this->GetRequestCodeURL . '?' . http_build_query($params) . "#wechat_redirect";
+        return $this->GetRequestCodeURL . "?appid={$this->app_id}&redirect_uri={$redirect_uri}&response_type=code&scope={$this->scope}&state={$state}#wechat_redirect";
     }
 
     /**
@@ -55,8 +48,7 @@ class Wechat
         if (!$openid) {
             if (!isset($_GET['code'])) {
                 $url = $this->getAuthorizeUrl();
-
-                Header("Location: $url");
+                Header("Location: {$url}");
                 exit();
             } else {
                 $state = Session::get('state');
