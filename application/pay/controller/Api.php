@@ -30,23 +30,23 @@ class Api extends HomeBase
      */
     public function wechat()
     {
-        $config = Service::getConfig('wechat');
+        $config   = Service::getConfig('wechat');
         $isWechat = stripos($this->request->server('HTTP_USER_AGENT'), 'MicroMessenger') !== false;
         if ($isWechat) {
 
         } else {
             //发起PC支付(Native支付)
             $orderData = Session::get("wechatorderdata");
-            $data = [
-                'body' => $orderData['body'],
-                'code_url' => $orderData['code_url'],
+            $data      = [
+                'body'         => $orderData['body'],
+                'code_url'     => $orderData['code_url'],
                 'out_trade_no' => $orderData['out_trade_no'],
-                'return_url' => $orderData['return_url'],
-                'total_fee' => $orderData['total_fee'],
+                'return_url'   => $orderData['return_url'],
+                'total_fee'    => $orderData['total_fee'],
             ];
             //检测订单状态
             if ($this->request->isPost()) {
-                $pay = Pay::wechat($config);
+                $pay    = Pay::wechat($config);
                 $result = $pay->find($orderData['out_trade_no']);
                 if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
                     $this->success('', url('pay/index/pay_list'), ['trade_state' => $result['trade_state']]);
@@ -60,23 +60,23 @@ class Api extends HomeBase
     }
 
     /**
-     * 微信支付
+     * 支付宝支付
      * @return string
      */
     public function alipay()
     {
-        $config = Service::getConfig('alipay');
+        $config    = Service::getConfig('alipay');
         $orderData = Session::get("alipayorderdata");
-        $data = [
-            'body' => $orderData['body'],
-            'qr_code' => $orderData['qr_code'],
+        $data      = [
+            'body'         => $orderData['body'],
+            'qr_code'      => $orderData['qr_code'],
             'out_trade_no' => $orderData['out_trade_no'],
-            'return_url' => $orderData['return_url'],
-            'total_fee' => $orderData['total_fee'],
+            'return_url'   => $orderData['return_url'],
+            'total_fee'    => $orderData['total_fee'],
         ];
         //检测订单状态
         if ($this->request->isPost()) {
-            $pay = Pay::alipay($config);
+            $pay    = Pay::alipay($config);
             $result = $pay->find($orderData['out_trade_no']);
             if (in_array($result['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
                 $this->success('', url('pay/index/pay_list'), ['trade_status' => $result['trade_status']]);
@@ -94,9 +94,9 @@ class Api extends HomeBase
      */
     public function qrcode()
     {
-        $text = $this->request->get('text', 'hello world');
+        $text   = $this->request->get('text', 'hello world');
         $qrCode = new QrCode($text);
-        $rs = $qrCode
+        $rs     = $qrCode
             ->setWriterByName('png')
             ->setMargin(10)
             ->setEncoding('UTF-8')
