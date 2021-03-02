@@ -117,7 +117,8 @@ class Index extends Cmsbase
         if (empty($cat)) {
             $cat = $this->request->param('catdir/s', '');
         }
-        $page = $page = $this->request->param('page/d', 1);
+        $page = $this->request->param('page/d', 1);
+        $page = max(1, $page);
         //获取栏目数据
         $category = getCategory($cat);
         if (empty($category)) {
@@ -137,6 +138,21 @@ class Index extends Cmsbase
         $info    = $this->Cms_Model->getContent($modelid, "id={$id}", true, '*', '', $ifcache);
         if (!$info || ($info['status'] !== 1 && !\app\admin\service\User::instance()->isLogin())) {
             throw new \think\Exception('内容不存在或未审核!', 404);
+        }
+        $CONTENT_POS = strpos($info['content'], '[page]');
+        if ($CONTENT_POS !== false) {
+            $contents   = array_filter(explode('[page]', $info['content']));
+            $pagenumber = count($contents);
+            $pages      = \app\cms\paginator\Page::make([], 1, $page, $pagenumber, false, ['path' => $this->request->baseUrl()]);
+            //判断[page]出现的位置是否在第一位
+            if ($CONTENT_POS < 7) {
+                $info['content'] = $contents[$page];
+            } else {
+                $info['content'] = $contents[$page - 1];
+            }
+            $this->assign("pages", $pages);
+        } else {
+            $this->assign("pages", '');
         }
         //栏目扩展配置信息
         $setting = $category['setting'];
