@@ -37,6 +37,9 @@ body {
                                 <a href="{:url('cms/index/readpoint',['allow_visitor' => $allow_visitor])}"><font color="red">阅读此信息需要您支付 <B><I>{$readpoint} {if $paytype}元{else}点{/if}</I></B>，点击这里支付</font></a>
                             </div>
                             {/eq}
+                            <!--S 分页-->
+                            {$pages|raw}
+                            <!--E 分页-->
                         </div>
                         <div class="viewpage">
                             <div class="main_r_nav">
