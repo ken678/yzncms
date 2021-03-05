@@ -62,10 +62,10 @@
 
 
 ## [安装教程]
-- 第一步：修改数据库配置 根目录/config/database.php  
-- 第二步：将根目录的yzncms.sql文件导入数据库即可  
+- 第一步：修改数据库配置（[在源代码根目录/config/database.php](https://gitee.com/ken678/YZNCMS/blob/master/config/database.php)） 
+- 第二步：将根目录的[yzncms.sql](https://gitee.com/ken678/YZNCMS/blob/master/yzncms.sql)文件导入数据库即可  
 - 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
-- 如果你还是不会搭建，可以将FTP，服务器信息发送给邮箱530765310@qq.com进行免费搭建（仅限点赞用户）
+- 如果你还是不会搭建，可以将FTP或者服务器等信息发送给邮箱530765310@qq.com进行免费搭建（仅限点赞用户）
 
 
 ## [必看教程]
