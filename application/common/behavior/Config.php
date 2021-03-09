@@ -32,6 +32,10 @@ class Config
      */
     public function run($params)
     {
+        if (systemConfig::get('app_debug')) {
+            // 如果是开发模式那么将异常模板修改成官方的
+            systemConfig::set('exception_tmpl', \think\facade\Env::get('think_path') . 'tpl/think_exception.tpl');
+        }
         // 读取系统配置
         $system_config = cache("Config");
 
