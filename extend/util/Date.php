@@ -179,6 +179,8 @@ class Date
         $minute   = is_null($minute) ? date('i') : $minute;
         $position = in_array($position, array('begin', 'start', 'first', 'front'));
 
+        $baseTime = mktime(0, 0, 0, $month, $day, $year);
+
         switch ($type) {
             case 'minute':
                 $time = $position ? mktime($hour, $minute + $offset, 0, $month, $day, $year) : mktime($hour, $minute + $offset, 59, $month, $day, $year);
@@ -190,9 +192,10 @@ class Date
                 $time = $position ? mktime(0, 0, 0, $month, $day + $offset, $year) : mktime(23, 59, 59, $month, $day + $offset, $year);
                 break;
             case 'week':
-                $time = $position ?
-                mktime(0, 0, 0, $month, $day - date("w", mktime(0, 0, 0, $month, $day, $year)) + 1 - 7 * (-$offset), $year) :
-                mktime(23, 59, 59, $month, $day - date("w", mktime(0, 0, 0, $month, $day, $year)) + 7 - 7 * (-$offset), $year);
+                $weekIndex = date("w", $baseTime);
+                $time      = $position ?
+                strtotime($offset . " weeks", strtotime(date('Y-m-d', strtotime("-" . ($weekIndex ? $weekIndex - 1 : 6) . " days", $baseTime)))) :
+                strtotime($offset . " weeks", strtotime(date('Y-m-d 23:59:59', strtotime("+" . (6 - ($weekIndex ? $weekIndex - 1 : 6)) . " days", $baseTime))));
                 break;
             case 'month':
                 $time = $position ? mktime(0, 0, 0, $month + $offset, 1, $year) : mktime(23, 59, 59, $month + $offset, self::cal_days_in_month($month + $offset, $year), $year);
