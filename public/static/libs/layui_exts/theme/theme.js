@@ -432,7 +432,6 @@ layui.define(["jquery", "layer"], function (exports) {
                     '<a class="more-menu-item" href="https://www.kancloud.cn/ken678/yzncms" target="_blank"><i class="layui-icon layui-icon-read"></i>开发文档</a>\n' +
                     '<a class="more-menu-item" href="https://gitee.com/ken678/YZNCMS" target="_blank"><i class="layui-icon layui-icon-fonts-code"></i>开源地址</a>\n' +
                     '<a class="more-menu-item" href="https://blog.yzncms.com/" target="_blank"><i class="iconfont icon-lianjie"></i>官方博客</a>\n' +
-                    '<a class="more-menu-item" href="https://bbs.yzncms.com/" target="_blank"><i class="layui-icon layui-icon-survey"></i>官方论坛</a>\n' +
                     '</div>' +
                     '</div>';
                 layer.open({
