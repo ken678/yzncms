@@ -51,7 +51,7 @@
 - 手册地址：https://www.kancloud.cn/ken678/yzncms
 - 官方博客：http://blog.yzncms.com/
 - 演示地址：发送到邮箱【530765310@qq.com】获取演示地址
-- 社区地址：http://bbs.yzncms.com
+- ~~社区地址：http://bbs.yzncms.com~~（问题和反馈统一使用码云的[issues](https://gitee.com/ken678/YZNCMS/issues)）
 - 软件著作权编号：2020SR0038539
 
 ## [环境要求]
