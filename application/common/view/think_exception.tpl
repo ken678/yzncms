@@ -57,7 +57,7 @@ $url = function_exists('config') ? config('template.tpl_replace_string.__STATIC_
         <img src="<?php echo $url; ?>/common/img/error.svg" alt="" width="120"/>
     </div>
     <div class="subheader">
-    	<?php echo nl2br(htmlentities($message)); ?>
+        <?php echo nl2br(htmlentities($message)); ?>
     </div>
     <div class="hr"></div>
     <div class="context">
@@ -65,7 +65,7 @@ $url = function_exists('config') ? config('template.tpl_replace_string.__STATIC_
     </div>
     <div class="buttons-container">
         <a href="<?php echo url('/'); ?>">返回主页</a>
-        <a href="http://bbs.yzncms.com/" target="_blank">反馈错误</a>
+        <a href="https://gitee.com/ken678/YZNCMS/issues" target="_blank">反馈错误</a>
     </div>
 </div>
 </body>
