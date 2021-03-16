@@ -14,7 +14,10 @@
                         <div class="layui-form-item">
                             <label  class="layui-form-label">站点开关</label>
                             <div class="layui-input-inline w300">
-                                <input type="checkbox" name="setting[web_site_status]" lay-skin="switch" lay-text="ON|OFF" value="1" {if 1==$setting['web_site_status']}checked{/if}> </div> <div class="layui-form-mid layui-word-aux">站点关闭后前台将不能访问</div>
+                                <input type="radio" name="setting[web_site_status]" value="1" title="开启" {if 1==$setting['web_site_status']}checked{/if}>
+                                <input type="radio" name="setting[web_site_status]" value="0" title="关闭" {if 0==$setting['web_site_status']}checked{/if}>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">站点关闭后前台将不能访问</div>
                         </div>
                         <div class="layui-form-item">
                             <label  class="layui-form-label">URL模式</label>
@@ -59,17 +62,34 @@
                         <div class="layui-form-item">
                             <label  class="layui-form-label">回收站</label>
                             <div class="layui-input-inline w300">
-                                <input type="checkbox" name="setting[web_site_recycle]" lay-skin="switch" lay-text="ON|OFF" value="1" {if 1==$setting['web_site_recycle']}checked='' {/if}> </div> <div class="layui-form-mid layui-word-aux">开启后，误删的文章可以恢复,反之不可还原</div>
+                                <input type="radio" name="setting[web_site_recycle]" value="1" title="开启" {if 1==$setting['web_site_recycle']}checked{/if}>
+                                <input type="radio" name="setting[web_site_recycle]" value="0" title="关闭" {if 0==$setting['web_site_recycle']}checked{/if}>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">开启后，误删的文章可以恢复,反之不可还原</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label  class="layui-form-label">栏目授权</label>
+                            <div class="layui-input-inline w300">
+                                <input type="radio" name="setting[site_category_auth]" value="1" title="开启" {if 1==$setting['site_category_auth']}checked{/if}>
+                                <input type="radio" name="setting[site_category_auth]" value="0" title="关闭" {if 0==$setting['site_category_auth']}checked{/if}>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">开启后，可在【栏目授权】单独给管理员分配可管理的内容栏目</div>
                         </div>
                         <div class="layui-form-item">
                             <label  class="layui-form-label">站长推送</label>
                             <div class="layui-input-inline w300">
-                                <input type="checkbox" name="setting[web_site_baidupush]" lay-skin="switch" lay-text="ON|OFF" value="1" {if 1==$setting['web_site_baidupush']}checked='' {/if}> </div> <div class="layui-form-mid layui-word-aux">如果开启百度熊掌+百度站长推送，将在文章发布时自动进行推送(需要安装推送插件)</div>
+                                <input type="radio" name="setting[web_site_baidupush]" value="1" title="开启" {if 1==$setting['web_site_baidupush']}checked{/if}>
+                                <input type="radio" name="setting[web_site_baidupush]" value="0" title="关闭" {if 0==$setting['web_site_baidupush']}checked{/if}>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">如果开启百度熊掌+百度站长推送，将在文章发布时自动进行推送(需要安装推送插件)</div>
                         </div>
                         <div class="layui-form-item">
                             <label  class="layui-form-label">中文分词</label>
                             <div class="layui-input-inline w300">
-                                <input type="checkbox" name="setting[web_site_getwords]" lay-skin="switch" lay-text="ON|OFF" value="1" {if 1==$setting['web_site_getwords']}checked='' {/if}> </div> <div class="layui-form-mid layui-word-aux">开启后，会将内容分词提取到关键词中(需要安装中文分词插件)</div>
+                                <input type="radio" name="setting[web_site_getwords]" value="1" title="开启" {if 1==$setting['web_site_getwords']}checked{/if}>
+                                <input type="radio" name="setting[web_site_getwords]" value="0" title="关闭" {if 0==$setting['web_site_getwords']}checked{/if}>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">开启后，会将内容分词提取到关键词中(需要安装中文分词插件)</div>
                         </div>
                         <div class="layui-form-item">
                             <label  class="layui-form-label">关键字链接</label>
