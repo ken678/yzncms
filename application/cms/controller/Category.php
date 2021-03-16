@@ -422,6 +422,8 @@ class Category extends Adminbase
             $result = array("code" => 0, "data" => $_list);
             return json($result);
         } else {
+            $cmsConfig = cache("Cms_Config");
+            $this->assign("cmsConfig", $cmsConfig);
             return $this->fetch();
         }
     }
