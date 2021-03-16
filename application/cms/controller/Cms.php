@@ -26,6 +26,8 @@ class Cms extends Adminbase
     {
         parent::initialize();
         $this->Cms_Model = new Cms_Model;
+        $this->cmsConfig = cache("Cms_Config");
+        $this->assign("cmsConfig", $this->cmsConfig);
     }
 
     public function index()
@@ -175,8 +177,6 @@ class Cms extends Adminbase
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
-            $cmsConfig = cache("Cms_Config");
-            $this->assign("cmsConfig", $cmsConfig);
             if ($category['type'] == 2) {
                 $modelid   = $category['modelid'];
                 $fieldList = $this->Cms_Model->getFieldList($modelid);
@@ -219,8 +219,6 @@ class Cms extends Adminbase
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
-            $cmsConfig = cache("Cms_Config");
-            $this->assign("cmsConfig", $cmsConfig);
             if ($category['type'] == 2) {
                 $modelid   = $category['modelid'];
                 $fieldList = $this->Cms_Model->getFieldList($modelid, $id);
@@ -248,11 +246,10 @@ class Cms extends Adminbase
         if (!is_array($ids)) {
             $ids = array(0 => $ids);
         }
-        $modelid   = getCategory($catid, 'modelid');
-        $cmsConfig = cache("Cms_Config");
+        $modelid = getCategory($catid, 'modelid');
         try {
             foreach ($ids as $id) {
-                $this->Cms_Model->deleteModelData($modelid, $id, $cmsConfig['web_site_recycle']);
+                $this->Cms_Model->deleteModelData($modelid, $id, $this->cmsConfig['web_site_recycle']);
             }
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
@@ -272,8 +269,7 @@ class Cms extends Adminbase
         if (!is_array($ids)) {
             $ids = array(0 => $ids);
         }
-        $modelid   = getCategory($catid, 'modelid');
-        $cmsConfig = cache("Cms_Config");
+        $modelid = getCategory($catid, 'modelid');
         try {
             foreach ($ids as $id) {
                 $this->Cms_Model->deleteModelData($modelid, $id);
