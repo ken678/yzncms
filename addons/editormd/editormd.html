@@ -3,7 +3,7 @@
 <div class="layui-form-item layui-form-text">
     <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-form-field-label js-editormd" id="{$vo.name}" >
-        <textarea style="display:none;" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</textarea>
+        <textarea style="display:none;" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
     </div>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
