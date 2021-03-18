@@ -73,7 +73,7 @@
 
 
 ## [必看教程]
-- URL重写： https://www.kancloud.cn/ken678/yzncms/1003231
+- 伪静态(URL重写)： https://www.kancloud.cn/ken678/yzncms/1003231
 - 虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003254
 
 ## [如何授权]
