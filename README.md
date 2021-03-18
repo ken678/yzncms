@@ -60,15 +60,13 @@
 - PHP版本：php >= 7.0
 - 数据库：MySQL >= 5.0
 
-## [空间要求]
-- 服务器需支持将域名绑定public目录
-- 如果您的服务器不支持绑定目录（也就是你需要二级目录安装） 请查看public目录下的index.php入口文件 有详细具体操作
-
 
 ## [安装教程]
-- 第一步：修改数据库配置（[在源代码根目录/config/database.php](https://gitee.com/ken678/YZNCMS/blob/master/config/database.php)） 
-- 第二步：将根目录的[yzncms.sql](https://gitee.com/ken678/YZNCMS/blob/master/yzncms.sql)文件导入数据库即可  
-- 第三步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
+- 第一步：下载源码压缩包解压到你的项目根目录
+- 第二步：绑定到项目中的public目录为运行目录，ps:如果您的服务器不支持绑定目录，请查看public目录下的index.php入口文件代码注释，有详细具体操作
+- 第三步：修改数据库配置（[在源代码根目录/config/database.php](https://gitee.com/ken678/YZNCMS/blob/master/config/database.php)） 
+- 第四步：将根目录的[yzncms.sql](https://gitee.com/ken678/YZNCMS/blob/master/yzncms.sql)文件导入数据库即可  
+- 第五步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 - 如果你还是不会搭建，可以将FTP或者服务器等信息发送给邮箱530765310@qq.com进行免费搭建（仅限点赞用户）
 
 
