@@ -129,9 +129,11 @@ class Cms extends Adminbase
                 $ids       = array_filter(explode('|', $ids), 'intval');
                 $tableName = Db::name('model')->where('id', $modelid)->where('status', 1)->value('tablename');
                 if (!$tableName) {
-                    return $this->error('模型被冻结不可操作~');
+                    $this->error('模型被冻结不可操作~');
                 }
                 if (Db::name(ucwords($tableName))->where('id', 'in', $ids)->update(['catid' => $tocatid])) {
+                    Db::name('Category')->where('id', $catid)->setDec('items', count($ids));
+                    Db::name('Category')->where('id', $tocatid)->setInc('items', count($ids));
                     $this->success('移动成功~');
                 } else {
                     $this->error('移动失败~');
