@@ -156,6 +156,9 @@ class Admin extends Adminaddon
 
     public function step1()
     {
+        if (!isModuleInstall('cms')) {
+            $this->error('系统未安装cms模块，请先安装！');
+        }
         //清空yzncms的表
         $yznprefix  = config('database.prefix');
         $table_list = Db::name('model')->where('module', 'cms')->field('tablename,type,id')->select();
