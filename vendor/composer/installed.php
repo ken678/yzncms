@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'dbf572ad1d9ce45260ae2762c769de53fff1660b',
+    'reference' => 'bcb6e1db8355d231e028e190de957882aefafeb4',
     'name' => 'topthink/think',
   ),
   'versions' => 
@@ -40,21 +40,21 @@
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => '1.4.0',
-      'version' => '1.4.0.0',
+      'pretty_version' => '1.4.1',
+      'version' => '1.4.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '60d379c243457e073cff02bc323a2a86cb355631',
+      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
     ),
     'guzzlehttp/psr7' => 
     array (
-      'pretty_version' => '1.7.0',
-      'version' => '1.7.0.0',
+      'pretty_version' => '1.8.1',
+      'version' => '1.8.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '53330f47520498c0ae1f61f7e2c90f55690c06a3',
+      'reference' => '35ea11d335fd638b5882ff1725228b3d35496ab1',
     ),
     'khanamiryan/qrcode-detector-decoder' => 
     array (
@@ -67,12 +67,12 @@
     ),
     'monolog/monolog' => 
     array (
-      'pretty_version' => '1.25.5',
-      'version' => '1.25.5.0',
+      'pretty_version' => '1.26.0',
+      'version' => '1.26.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '1817faadd1846cd08be9a49e905dc68823bc38c0',
+      'reference' => '2209ddd84e7ef1256b7af205d0717fb62cfc9c33',
     ),
     'myclabs/php-enum' => 
     array (
@@ -94,12 +94,12 @@
     ),
     'overtrue/easy-sms' => 
     array (
-      'pretty_version' => '1.2.0',
-      'version' => '1.2.0.0',
+      'pretty_version' => '1.3.2',
+      'version' => '1.3.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'cbf093dcd89c1615f617ae5733bfee1e85298793',
+      'reference' => 'daa0b4308ec0e3c112888c288d14d473be6aabee',
     ),
     'overtrue/pinyin' => 
     array (
@@ -121,12 +121,12 @@
     ),
     'phpmailer/phpmailer' => 
     array (
-      'pretty_version' => 'v6.2.0',
-      'version' => '6.2.0.0',
+      'pretty_version' => 'v6.3.0',
+      'version' => '6.3.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e38888a75c070304ca5514197d4847a59a5c853f',
+      'reference' => '4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb',
     ),
     'psr/http-message' => 
     array (
@@ -284,7 +284,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'dbf572ad1d9ce45260ae2762c769de53fff1660b',
+      'reference' => 'bcb6e1db8355d231e028e190de957882aefafeb4',
     ),
     'topthink/think-captcha' => 
     array (
@@ -306,12 +306,12 @@
     ),
     'topthink/think-installer' => 
     array (
-      'pretty_version' => 'v2.0.1',
-      'version' => '2.0.1.0',
+      'pretty_version' => 'v2.0.5',
+      'version' => '2.0.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '52f4b717a46fd00bccd47c5a9f10a5c56d29fcf9',
+      'reference' => '38ba647706e35d6704b5d370c06f8a160b635f88',
     ),
     'yansongda/pay' => 
     array (
