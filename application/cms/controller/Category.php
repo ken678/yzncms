@@ -446,16 +446,11 @@ class Category extends Adminbase
     //修复栏目数据
     private function repair()
     {
-        $this->categorys = $categorys = array();
         //取出需要处理的栏目数据
-        $data = Db::name('Category')->order('listorder ASC, id ASC')->select();
-        if (empty($data)) {
+        $categorys = Db::name('Category')->order('listorder ASC, id ASC')->column('*','id');
+        if (empty($categorys)) {
             return true;
         }
-        foreach ($data as $v) {
-            $categorys[$v['id']] = $v;
-        }
-        $this->categorys = $categorys;
         if (is_array($categorys)) {
             foreach ($categorys as $catid => $cat) {
                 //获取父栏目ID列表
@@ -467,15 +462,14 @@ class Category extends Adminbase
                 $child      = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
                 //检查所有父id 子栏目id 等相关数据是否正确，不正确更新
                 if ($categorys[$catid]['arrparentid'] !== $arrparentid || $categorys[$catid]['arrchildid'] !== $arrchildid || $categorys[$catid]['child'] !== $child) {
-                    CategoryModel::update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child], ['id' => $catid], true);
+                    Db::name('Category')->where('id',$catid)->update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child]);
                 }
                 \think\facade\Cache::rm('getCategory_' . $catid, null);
                 //删除在非正常显示的栏目
-                if ($cat['parentid'] != 0 && !isset($this->categorys[$cat['parentid']])) {
+                if ($cat['parentid'] != 0 && !isset($categorys[$cat['parentid']])) {
                     $this->modelClass->deleteCatid($catid);
                 }
             }
-
         }
         return true;
     }
