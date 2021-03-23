@@ -1,4 +1,4 @@
-# YznCMS1.0.0 后台开发框架
+# YznCMS 后台开发框架
 ### 后端基于thinkphp5.1框架,前端基于Layui2.5.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
 
 [![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
@@ -48,7 +48,7 @@
 |百度收录查询|查询文章是否被百度收录|插件|授权|
 
 ## [项目介绍]
-YznCMSV1.0(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
+YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
 - 手册地址：https://www.kancloud.cn/ken678/yzncms
 - 官方博客：http://blog.yzncms.com/
 - 视频教程：https://www.bilibili.com/video/av417106995 (持续更新中)
