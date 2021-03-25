@@ -236,8 +236,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                             }
                                             $file_list.append($li);
                                         } else {
-                                            inputObj.val(item.file_id);
-                                            inputObj2.val(item.file_path);
+                                            inputObj.val(item.file_id).trigger('change');
+                                            inputObj2.val(item.file_path).trigger('change');
                                             $file_list.html($li);
                                         }
                                     });
@@ -285,7 +285,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                     }
                                 }
                             });
-                            //console.log(result);
                             textarea.val(JSON.stringify(result));
                         };
                         //监听文本框改变事件
@@ -340,22 +339,26 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 },
                                 //placeHolderTemplate: '<div style="border:1px #009688 dashed;"></div>'
                             });
+
                             var textarea = $("textarea[name='" + $(this).data("name") + "']");
                             if (textarea.val() == '') {
                                 return true;
                             }
                             var template = $(this).data("template");
-                            var json = {};
-                            try {
-                                json = JSON.parse(textarea.val());
-                            } catch (e) {}
-                            $.each(json, function(i, j) {
-                                $(".btn-append,.append", container).trigger('click', template ? j : {
-                                    key: i,
-                                    value: j
+                            textarea.on("fa.event.refreshfieldlist", function () {
+                                $("[fieldlist-item]", container).remove();
+                                var json = {};
+                                try {
+                                    json = JSON.parse($(this).val());
+                                } catch (e) {
+                                }
+                                $.each(json, function (i, j) {
+                                    $(".btn-append,.append", container).trigger('click', template ? j : {
+                                        key: i, value: j
+                                    });
                                 });
                             });
-                            form.render();
+                            textarea.trigger("fa.event.refreshfieldlist");
                         });
                     })
                 }
