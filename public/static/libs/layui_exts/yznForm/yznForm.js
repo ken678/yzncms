@@ -369,6 +369,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     layui.define('webuploader', function(exports) {
                         var webuploader = layui.webuploader;
                         $('.js-upload-image,.js-upload-images').each(function() {
+                            if ($(this).attr("initialized")) {
+                               return true;
+                            }
+                            $(this).attr("initialized", true);
                             var $input_file = $(this).find('input');
                             var $input_file_name = $input_file.attr('id');
                             // 图片列表
@@ -565,6 +569,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     layui.define('webuploader', function(exports) {
                         var webuploader = layui.webuploader;
                         $('.js-upload-file,.js-upload-files').each(function() {
+                            if ($(this).attr("initialized")) {
+                               return true;
+                            }
+                            $(this).attr("initialized", true);
                             var $input_file = $(this).find('input');
                             var $input_file_name = $input_file.attr('id');
                             // 是否多文件上传
