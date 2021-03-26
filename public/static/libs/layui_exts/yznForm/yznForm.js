@@ -379,16 +379,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             var $input_file_name = $input_file.attr('id');
                             // 图片列表
                             var $file_list = $('#file_list_' + $input_file_name);
-                            // 缩略图参数
-                            var $thumb = $input_file.data('thumb');
-                            // 水印参数
-                            var $watermark = $input_file.data('watermark');
                             // 是否多图片上传
                             var $multiple = $input_file.data('multiple');
                             // 允许上传的后缀
-                            var $ext = $input_file.data('ext');
+                            var $ext = GV.site.upload_image_ext;
                             // 图片限制大小
-                            var $size = $input_file.data('size') * 1024;
+                            var $size = GV.site.upload_image_size*1024;
                             // 优化retina, 在retina下这个值是2
                             var ratio = window.devicePixelRatio || 1;
                             // 缩略图大小
@@ -418,8 +414,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 },
                                 // 自定义参数
                                 formData: {
-                                    thumb: $thumb,
-                                    watermark: $watermark
+                                    thumb: GV.site.upload_thumb_water,
+                                    watermark: GV.site.upload_thumb_water_pic
                                 }
 
                             })
@@ -588,9 +584,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             // 是否多文件上传
                             var $multiple = $input_file.data('multiple');
                             // 允许上传的后缀
-                            var $ext = $input_file.data('ext');
-                            // 文件限制大小
-                            var $size = $input_file.data('size') * 1024;
+                            var $ext = GV.site.upload_image_ext;
+                            // 图片限制大小
+                            var $size = GV.site.upload_image_size*1024;
                             // 文件列表
                             var $file_list = $('#file_list_' + $input_file_name);
                             // 实例化上传
