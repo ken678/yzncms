@@ -62,7 +62,9 @@ layui.define(['table', 'jquery', 'form','yznForm'], function(exports) {
             };
             var tableSelect_table = table.render(opt.table);
 
-            yznForm.events.plupload();
+            yznForm.events.upload_image('.js-upload-image,.js-upload-images', function () {
+                $("[data-table-refresh]").trigger("click");
+            });
 
             //分页选中保存数组
             table.on('radio(' + tableName + ')', function(obj) {

@@ -363,9 +363,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            plupload: function () {
+            upload_image: function (elements, onUploadSuccess, onUploadError) {
+                elements = typeof elements === 'undefined' ? document.body : elements;
                 // 绑定图片上传组件
-                if ($('.js-upload-image,.js-upload-images').length > 0) {
+                if ($(elements).length > 0) {
                     layui.define('webuploader', function(exports) {
                         var webuploader = layui.webuploader;
                         $('.js-upload-image,.js-upload-images').each(function() {
@@ -373,6 +374,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                return true;
                             }
                             $(this).attr("initialized", true);
+                            var that = this;
                             var $input_file = $(this).find('input');
                             var $input_file_name = $input_file.attr('id');
                             // 图片列表
@@ -488,6 +490,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 $li.find('img').attr('data-original', response.path).addClass($input_file_name + '-' + response.id);
                                 $li.find('.file-panel .cropper').attr('data-input-id', response.id).attr('data-id', $input_file_name);
                                 $li.find('.file-panel .remove-picture').attr('data-id', response.id);
+                                if (typeof onUploadSuccess === 'function') {
+                                    var result = onUploadSuccess.call(file, response);
+                                    if (result === false)
+                                        return;
+                                }
                             });
 
                             // 文件上传失败，显示上传出错。
@@ -563,9 +570,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         });
                     })
                 }
-
+            },
+            upload_file: function (elements, onUploadSuccess, onUploadError) {
+                elements = typeof elements === 'undefined' ? document.body : elements;
                 // 绑定文件上传组件
-                if ($('.js-upload-file,.js-upload-files').length > 0) {
+                if ($(elements).length > 0) {
                     layui.define('webuploader', function(exports) {
                         var webuploader = layui.webuploader;
                         $('.js-upload-file,.js-upload-files').each(function() {
@@ -573,6 +582,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                return true;
                             }
                             $(this).attr("initialized", true);
+                            var that = this;
                             var $input_file = $(this).find('input');
                             var $input_file_name = $input_file.attr('id');
                             // 是否多文件上传
@@ -646,6 +656,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 $li.find('.file-state').html('<span class="text-' + response.class + '">' + response.info + '</span>');
                                 // 添加下载链接
                                 $li.find('.download-file').attr('href', response.path);
+                                if (typeof onUploadSuccess === 'function') {
+                                    var result = onUploadSuccess.call(file, response);
+                                    if (result === false)
+                                        return;
+                                }
                             });
 
                             // 文件上传过程中创建进度条实时显示。
@@ -702,7 +717,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             var events = yznForm.events;
             events.faselect();
             events.fieldlist();
-            events.plupload();
+            events.upload_image('.js-upload-image,.js-upload-images');
+            events.upload_file('.js-upload-file,.js-upload-files');
         }
     }
     yznForm.bindevent();
