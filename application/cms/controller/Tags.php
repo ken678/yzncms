@@ -97,19 +97,16 @@ class Tags extends Adminbase
     public function create()
     {
         if ($this->request->isPOST() || $this->request->param('modelid/d')) {
-            $modelid = $this->request->param('modelid/d', 0);
-            $_GET['modelid'] = $modelid;
+            $_GET['modelid']=$modelid = $this->request->param('modelid/d', 0);
             $lun = $this->request->param('lun/d', 0); //第几轮 0=>1
             $_GET['zlun'] = $zlun = $this->request->param('zlun/d', 0); //总轮数
-            $_GET['mo'] = $this->request->param('mo/d'); //模型id
+            $_GET['mo'] = $this->request->param('mo/d',null); //是否全部模型
             if ($lun > (int) $_GET['zlun'] - 1) {
                 $lun = (int) $_GET['zlun'] - 1;
             }
             $lun = $lun < 0 ? 0 : $lun;
             $mlun = 100;
             $firstRow = $mlun * ($lun < 0 ? 0 : $lun);
-            //$db = Db::name('TagsContent');
-            //$tagdb = Db::name('Tags');
             if (0 !== (int) $this->request->param('delete/d')) {
                 //清空
                 Db::name('TagsContent')->delete(true);
@@ -117,19 +114,11 @@ class Tags extends Adminbase
             }
             unset($_GET['delete']);
             $model = cache('Model');
-            if (1 == (int) $_GET['mo']) {
-
-            } else {
-                //模型总数
-                $_GET['mocount'] = 1;
-            }
             //当全部模型重建时处理
             if ($modelid == 0) {
-                $modelCONUT = Db::name("Model")->count();
                 $modelDATA = Db::name("Model")->where('type', 2)->order('id', 'ASC')->find();
                 $modelid = $modelDATA['id'];
                 $_GET['mo'] = 1;
-                $_GET['mocount'] = $modelCONUT;
                 $_GET['modelid'] = $modelid;
             }
             $models_v = $model[$modelid];
@@ -146,7 +135,7 @@ class Tags extends Adminbase
                         ['id', '>', $modelid],
                     ])->order('id', 'ASC')->find();
                     if (!$modelDATA) {
-                        $this->success('Tags重建结束！', url('index'));
+                        $this->success("Tags重建结束！", url('index'));
                     }
                     unset($_GET['zlun']);
                     unset($_GET['lun']);
@@ -169,7 +158,6 @@ class Tags extends Adminbase
                     ])->order('id', 'ASC')->find();
                     if (!$modelDATA) {
                         $this->success("Tags重建结束！", url('index'));
-                        exit;
                     }
                     unset($_GET['zlun']);
                     unset($_GET['lun']);
