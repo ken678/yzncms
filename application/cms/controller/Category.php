@@ -413,8 +413,7 @@ class Category extends Adminbase
             foreach ($category_priv as $k => $v) {
                 $priv_num[$v['roleid']] = $v['num'];
             }
-            $AuthGroupModel = new \app\admin\model\AuthGroup();
-            $_list          = Db::view('Admin', 'username')->view('AuthGroup', 'id,title', 'AuthGroup.id=Admin.roleid')->order('id', 'desc')->select();
+            $_list = Db::name('AuthGroup')->where('status', 1)->order('id', 'desc')->field('id,title')->select();
             foreach ($_list as $k => $v) {
                 $_list[$k]['admin'] = $v['id'] == 1 ? true : false;
                 $_list[$k]['num']   = isset($priv_num[$v['id']]) ? $priv_num[$v['id']] : 0;
@@ -447,7 +446,7 @@ class Category extends Adminbase
     private function repair()
     {
         //取出需要处理的栏目数据
-        $categorys = Db::name('Category')->order('listorder ASC, id ASC')->column('*','id');
+        $categorys = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
         if (empty($categorys)) {
             return true;
         }
@@ -462,7 +461,7 @@ class Category extends Adminbase
                 $child      = is_numeric($arrchildid) ? 0 : 1; //是否有子栏目
                 //检查所有父id 子栏目id 等相关数据是否正确，不正确更新
                 if ($categorys[$catid]['arrparentid'] !== $arrparentid || $categorys[$catid]['arrchildid'] !== $arrchildid || $categorys[$catid]['child'] !== $child) {
-                    Db::name('Category')->where('id',$catid)->update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child]);
+                    Db::name('Category')->where('id', $catid)->update(['arrparentid' => $arrparentid, 'arrchildid' => $arrchildid, 'child' => $child]);
                 }
                 \think\facade\Cache::rm('getCategory_' . $catid, null);
                 //删除在非正常显示的栏目
