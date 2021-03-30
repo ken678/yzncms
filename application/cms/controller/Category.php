@@ -69,8 +69,6 @@ class Category extends Adminbase
                     $v['add_url'] = url("Category/singlepage", array("parentid" => $v['id']));
                 } elseif ($v['type'] == 2) {
                     $v['add_url'] = url("Category/add", array("parentid" => $v['id']));
-                } elseif ($v['type'] == 3) {
-                    $v['add_url'] = url("Category/wadd", array("parentid" => $v['id']));
                 }
                 $v['url']            = buildCatUrl($v['id'], $v['url']);
                 $categorys[$v['id']] = $v;
@@ -90,8 +88,7 @@ class Category extends Adminbase
         if ($this->request->isPost()) {
             $data = $this->request->post();
             if (empty($data)) {
-                $this->error = '添加栏目数据不能为空！';
-                return false;
+                $this->error('添加栏目数据不能为空！');
             }
             switch ($data['type']) {
                 //单页
@@ -142,7 +139,6 @@ class Category extends Adminbase
                 if (true !== $result) {
                     $this->error($result);
                 }
-                //20200518 ethan update: $res should be a string, not arrays.
                 $catid = $this->modelClass->addCategory($data, $fields);
                 if ($catid) {
                     if (isModuleInstall('member')) {
@@ -183,19 +179,19 @@ class Category extends Adminbase
             } else {
                 $categorydata = '';
             }
-
-            $this->assign("tp_category", $this->tp_category);
-            $this->assign("tp_list", $this->tp_list);
-            $this->assign("tp_show", $this->tp_show);
-            $this->assign("tp_page", $this->tp_page);
-
-            $this->assign('parentid_modelid', isset($Ca['modelid']) ? $Ca['modelid'] : 0);
+            $this->assign([
+                'category'         => $categorydata,
+                'models'           => $models,
+                'tp_category'      => $this->tp_category,
+                'tp_list'          => $this->tp_list,
+                'tp_show'          => $this->tp_show,
+                'tp_page'          => $this->tp_page,
+                'parentid_modelid' => isset($Ca['modelid']) ? $Ca['modelid'] : 0,
+            ]);
             if (isModuleInstall('member')) {
                 //会员组
                 $this->assign("Member_Group", cache("Member_Group"));
             }
-            $this->assign("category", $categorydata);
-            $this->assign("models", $models);
             return $this->fetch();
 
         }
@@ -279,22 +275,21 @@ class Category extends Adminbase
             } else {
                 $categorydata = '';
             }
-
-            $this->assign("tp_category", $this->tp_category);
-            $this->assign("tp_list", $this->tp_list);
-            $this->assign("tp_show", $this->tp_show);
-            $this->assign("tp_page", $this->tp_page);
-
-            $this->assign("data", $data);
-            $this->assign("setting", $setting);
-            $this->assign("category", $categorydata);
-            $this->assign("models", $models);
+            $this->assign([
+                'data'        => $data,
+                'setting'     => $setting,
+                'category'    => $categorydata,
+                'models'      => $models,
+                'tp_category' => $this->tp_category,
+                'tp_list'     => $this->tp_list,
+                'tp_show'     => $this->tp_show,
+                'tp_page'     => $this->tp_page,
+                'privs'       => model("cms/CategoryPriv")->where('catid', $catid)->select(),
+            ]);
             if (isModuleInstall('member')) {
                 //会员组
                 $this->assign("Member_Group", cache("Member_Group"));
             }
-            //权限数据
-            $this->assign("privs", model("cms/CategoryPriv")->where(array('catid' => $catid))->select());
             if ($data['type'] == 1) {
                 //单页栏目
                 return $this->fetch("singlepage_edit");
