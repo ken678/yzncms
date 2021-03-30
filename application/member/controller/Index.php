@@ -139,6 +139,7 @@ class Index extends MemberBase
                 if (!$result) {
                     $this->error('手机验证码错误！');
                 }
+                $data['ischeck_mobile']=1;
             }
             if ($this->memberConfig['register_email_verify']) {
                 $Ems_Model = new Ems_Model();
@@ -146,6 +147,7 @@ class Index extends MemberBase
                 if (!$result) {
                     $this->error('邮箱验证码错误！');
                 }
+                $data['ischeck_email']=1;
             }
             $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
             if ($userid) {
