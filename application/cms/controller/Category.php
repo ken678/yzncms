@@ -21,11 +21,11 @@ use think\Db;
 class Category extends Adminbase
 {
 
-    private $filepath;
-    private $tp_category;
-    private $tp_list;
-    private $tp_show;
-    private $tp_page;
+    private $themePath;
+    private $categoryTemplate;
+    private $listTemplate;
+    private $showTemplate;
+    private $pageTemplate;
 
     protected $noNeedRight = [
         'cms/category/count_items',
@@ -37,15 +37,15 @@ class Category extends Adminbase
         parent::initialize();
         $this->modelClass = new CategoryModel;
         //取得当前内容模型模板存放目录
-        $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "cms" . DIRECTORY_SEPARATOR;
+        $this->themePath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DS . "cms" . DS;
         //取得栏目频道模板列表
-        $this->tp_category = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'category*'));
+        $this->categoryTemplate = str_replace($this->themePath . DS, '', glob($this->themePath . DS . 'category*'));
         //取得栏目列表模板列表
-        $this->tp_list = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'list*'));
+        $this->listTemplate = str_replace($this->themePath . DS, '', glob($this->themePath . DS . 'list*'));
         //取得内容页模板列表
-        $this->tp_show = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'show*'));
+        $this->showTemplate = str_replace($this->themePath . DS, '', glob($this->themePath . DS . 'show*'));
         //取得单页模板
-        $this->tp_page = str_replace($this->filepath . DIRECTORY_SEPARATOR, '', glob($this->filepath . DIRECTORY_SEPARATOR . 'page*'));
+        $this->pageTemplate = str_replace($this->themePath . DS, '', glob($this->themePath . DS . 'page*'));
     }
 
     //栏目列表
@@ -150,7 +150,6 @@ class Category extends Adminbase
                     $this->error($error ? $error : '栏目添加失败！');
                 }
             }
-
         } else {
             $parentid = $this->request->param('parentid/d', 0);
             if (!empty($parentid)) {
@@ -182,10 +181,10 @@ class Category extends Adminbase
             $this->assign([
                 'category'         => $categorydata,
                 'models'           => $models,
-                'tp_category'      => $this->tp_category,
-                'tp_list'          => $this->tp_list,
-                'tp_show'          => $this->tp_show,
-                'tp_page'          => $this->tp_page,
+                'tp_category'      => $this->categoryTemplate,
+                'tp_list'          => $this->listTemplate,
+                'tp_show'          => $this->showTemplate,
+                'tp_page'          => $this->pageTemplate,
                 'parentid_modelid' => isset($Ca['modelid']) ? $Ca['modelid'] : 0,
             ]);
             if (isModuleInstall('member')) {
@@ -193,9 +192,7 @@ class Category extends Adminbase
                 $this->assign("Member_Group", cache("Member_Group"));
             }
             return $this->fetch();
-
         }
-
     }
 
     //添加单页
@@ -246,7 +243,6 @@ class Category extends Adminbase
                 $error = $this->modelClass->getError();
                 $this->error($error ? $error : '栏目修改失败！');
             }
-
         } else {
             $catid = $this->request->param('id/d', 0);
             if (empty($catid)) {
@@ -280,10 +276,10 @@ class Category extends Adminbase
                 'setting'     => $setting,
                 'category'    => $categorydata,
                 'models'      => $models,
-                'tp_category' => $this->tp_category,
-                'tp_list'     => $this->tp_list,
-                'tp_show'     => $this->tp_show,
-                'tp_page'     => $this->tp_page,
+                'tp_category' => $this->categoryTemplate,
+                'tp_list'     => $this->listTemplate,
+                'tp_show'     => $this->showTemplate,
+                'tp_page'     => $this->pageTemplate,
                 'privs'       => model("cms/CategoryPriv")->where('catid', $catid)->select(),
             ]);
             if (isModuleInstall('member')) {
@@ -300,7 +296,6 @@ class Category extends Adminbase
                 $this->error('栏目类型错误！');
             }
         }
-
     }
 
     //删除栏目
@@ -320,7 +315,6 @@ class Category extends Adminbase
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
         }
-
         $this->cache();
         $this->success("栏目删除成功！", url('cms/category/public_cache'));
     }
@@ -428,7 +422,6 @@ class Category extends Adminbase
         $this->repair();
         $this->cache();
         $this->success("更新缓存成功！", Url("cms/category/index"));
-
     }
 
     //清除栏目缓存
@@ -519,7 +512,7 @@ class Category extends Adminbase
     public function public_tpl_file_list()
     {
         $id   = $this->request->param('id/d');
-        $data = Db::name('Model')->where(array("id" => $id))->find();
+        $data = Db::name('Model')->where('id', $id)->find();
         if ($data) {
             $json = ['code' => 0, 'data' => unserialize($data['setting'])];
             return json($json);
