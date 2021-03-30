@@ -123,9 +123,29 @@ class Index extends MemberBase
             if ($this->memberConfig['password_confirm']) {
                 $rule['password|密码'] = "require|length:3,20|confirm";
             }
+            if ($this->memberConfig['register_mobile_verify']) {
+                $rule['captcha_mobile|手机验证码'] = "require";
+            }
+            if ($this->memberConfig['register_email_verify']) {
+                $rule['captcha_email|邮箱验证码'] = "require";
+            }
             $result = $this->validate($data, $rule);
             if (true !== $result) {
                 $this->error($result, null, ['token' => $this->request->token()]);
+            }
+            if ($this->memberConfig['register_mobile_verify']) {
+                $Sms_Model = new Sms_Model();
+                $result    = $Sms_Model->check($data['mobile'], $data['captcha_mobile'], 'registermobile');
+                if (!$result) {
+                    $this->error('手机验证码错误！');
+                }
+            }
+            if ($this->memberConfig['register_email_verify']) {
+                $Ems_Model = new Ems_Model();
+                $result    = $Ems_Model->check($data['email'], $data['captcha_email'], 'registeremail');
+                if (!$result) {
+                    $this->error('邮箱验证码错误！');
+                }
             }
             $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
             if ($userid) {

@@ -25,6 +25,13 @@
                         <input type="text" name="mobile" lay-verify="phone|required" autocomplete="off" placeholder="手机号" class="layui-input">
                     </div>
                 </div>
+                {eq name="Member_config.register_mobile_verify" value="1"}
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 60%;">
+                        <input type="text" name="captcha_mobile" required="" lay-verify="required" autocomplete="off" value="" class="layui-input" placeholder="手机验证码"> </div>
+                    <button class="layui-btn btn-captcha" type="button" data-event="registermobile" data-type="mobile" data-url="{:url('api/sms/send')}">获取验证码</button>
+                </div>
+                {/eq}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
                         <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
@@ -35,6 +42,13 @@
                         <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input">
                     </div>
                 </div>
+                {eq name="Member_config.register_email_verify" value="1"}
+                <div class="layui-form-item">
+                    <div class="layui-input-inline" style="width: 60%;">
+                        <input type="text" name="captcha_email" required="" lay-verify="required" autocomplete="off" value="" class="layui-input" placeholder="邮箱验证码"> </div>
+                    <button class="layui-btn btn-captcha" type="button" data-event="registeremail" data-type="email" data-url="{:url('api/ems/send')}">获取验证码</button>
+                </div>
+                {/eq}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
                         <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">

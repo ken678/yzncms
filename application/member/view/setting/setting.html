@@ -18,6 +18,22 @@
                     <input type="radio" name="setting[registerverify]" value="0" title="否" {if 0 == $setting['registerverify']}checked{/if}>
                 </div>
             </div>
+
+            <div class="layui-form-item">
+                <label>新会员注册需要手机认证</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="setting[register_mobile_verify]" value="1" title="是" {if 1 == $setting['register_mobile_verify']}checked{/if}>
+                    <input type="radio" name="setting[register_mobile_verify]" value="0" title="否" {if 0 == $setting['register_mobile_verify']}checked{/if}>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label>新会员注册需要邮箱认证</label>
+                <div class="layui-form-field-label">
+                    <input type="radio" name="setting[register_email_verify]" value="1" title="是" {if 1 == $setting['register_email_verify']}checked{/if}>
+                    <input type="radio" name="setting[register_email_verify]" value="0" title="否" {if 0 == $setting['register_email_verify']}checked{/if}>
+                </div>
+            </div>
+
             <div class="layui-form-item">
                 <label>是否开启登陆验证码</label>
                 <div class="layui-form-field-label">
