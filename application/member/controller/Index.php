@@ -135,14 +135,14 @@ class Index extends MemberBase
             }
             if ($this->memberConfig['register_mobile_verify']) {
                 $Sms_Model = new Sms_Model();
-                $result    = $Sms_Model->check($data['mobile'], $data['captcha_mobile'], 'registermobile');
+                $result    = $Sms_Model->check($data['mobile'], $data['captcha_mobile'], 'register');
                 if (!$result) {
                     $this->error('手机验证码错误！');
                 }
             }
             if ($this->memberConfig['register_email_verify']) {
                 $Ems_Model = new Ems_Model();
-                $result    = $Ems_Model->check($data['email'], $data['captcha_email'], 'registeremail');
+                $result    = $Ems_Model->check($data['email'], $data['captcha_email'], 'register');
                 if (!$result) {
                     $this->error('邮箱验证码错误！');
                 }
