@@ -64,23 +64,13 @@ class Index extends Cmsbase
             //栏目列表页模板
             $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
             //判断使用模板类型，如果有子栏目使用频道页模板
-            $template = $category['child'] ? "{$template}" : "{$template_list}";
-            $tpar     = explode(".", $template, 2);
-            //去除完后缀的模板
-            $template = $tpar[0];
-            unset($tpar);
-            $seo = seo($catid, '', $setting['meta_description'], $setting['meta_keywords']);
+            $template = $category['child'] ? $template : $template_list;
+            $seo      = seo($catid, '', $setting['meta_description'], $setting['meta_keywords']);
             //单页
         } else if ($category['type'] == 1) {
             $template = $setting['page_template'] ? $setting['page_template'] : 'page';
-            //判断使用模板类型，如果有子栏目使用频道页模板，终极栏目使用的是列表模板
-            $template = "{$template}";
-            //去除后缀
-            $tpar     = explode(".", $template, 2);
-            $template = $tpar[0];
-            unset($tpar);
-            $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
-            $info    = model('Page')->getPage($catid, $ifcache);
+            $ifcache  = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+            $info     = model('Page')->getPage($catid, $ifcache);
             if ($info) {
                 $info = $info->toArray();
             }
@@ -90,6 +80,9 @@ class Index extends Cmsbase
             $seo         = seo($catid, $setting['meta_title'], $description, $keywords);
             $this->assign($info);
         }
+        $tpar     = explode(".", $template, 2);
+        $template = $tpar[0];
+        unset($tpar);
         if ($this->request->isAjax()) {
             $this->success('', '', $this->fetch('/' . $template . '_ajax'));
         }
@@ -164,7 +157,6 @@ class Index extends Cmsbase
         $template   = $newstempid[0];
         unset($newstempid);
         //阅读收费
-        //$paytype       = isset($info['paytype']) && $info['paytype'] == '金额' ? 1 : 0; //类型 0积分 1金钱
         $readpoint     = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
         $allow_visitor = 1;
         if ($readpoint > 0) {
