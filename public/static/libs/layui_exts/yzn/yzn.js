@@ -1,6 +1,7 @@
 //封装基本操作 部分参考EasyAdmin和fastadmin
 layui.define(['layer','notice'], function(exports) {
     var layer = layui.layer,
+        $ = layui.$,
         notice = layui.notice;
 
     var MOD_NAME = 'yzn';
