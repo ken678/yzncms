@@ -49,7 +49,7 @@ layui.use('yznTable', function() {
                 { field: 'create_time', width: 180, title: '创建时间', search: 'range' },
                 { field: 'ifrequire', width: 80, align: "center", title: '必填', templet: '<div>{{#  if(d.ifrequire){ }} <button class="layui-btn layui-btn layui-btn-xs">是</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">否</button> {{#  } }} </div>', selectList: { 0: '否', 1: '是' } },
                 { field: 'status', width: 80, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">启用</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>', selectList: { 0: '禁用', 1: '启用' } },
-                { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
+                { fixed: 'right', width: 130, title: '操作', templet: '#barTool' }
             ]
         ],
         page: {}
