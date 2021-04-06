@@ -129,12 +129,8 @@ class AuthManager extends Adminbase
     {
         if (empty($this->auth_group)) {
             //清除编辑权限的值
-            $this->assign('auth_group', array('title' => null, 'id' => null, 'description' => null, 'rules' => null, 'status' => 1));
+            $this->assign('auth_group', array('title' => null, 'id' => null, 'parentid' => null, 'description' => null, 'rules' => null, 'status' => 1));
         }
-        $_list = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
-        Tree::instance()->init($_list);
-        $Groupdata = Tree::instance()->getTree(0);
-        $this->assign("Groupdata", $Groupdata);
         return $this->fetch('edit_group');
 
     }
@@ -147,10 +143,6 @@ class AuthManager extends Adminbase
             $this->error('你没有权限访问!');
         }
         $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN))->find($id);
-        $_list      = Db::name('AuthGroup')->where('module', 'admin')->order(['id' => 'ASC'])->column('*', 'id');
-        Tree::instance()->init($_list);
-        $Groupdata = Tree::instance()->getTree(0, '', $auth_group['parentid']);
-        $this->assign("Groupdata", $Groupdata);
         $this->assign('auth_group', $auth_group);
         return $this->fetch();
 

@@ -82,7 +82,7 @@ class User extends \libs\Auth
             // 取出包含自己的所有子节点
             $childrenList = Tree::instance()->init($groupList)->getChildren($v['id'], true);
             $obj          = Tree::instance()->init($childrenList)->getTreeArray($v['parentid']);
-            $objList      = array_merge($objList, Tree::instance()->getTreeList($obj));
+            $objList      = array_merge($objList, Tree::instance()->getTreeList($obj, 'title'));
         }
         $childrenGroupIds = [];
         foreach ($objList as $k => $v) {
