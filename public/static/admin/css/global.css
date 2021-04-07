@@ -97,7 +97,7 @@
 .popup-tips .layui-nav-tree{width: 150px; border-radius: 10px; }
 
 /*主体*/
-.layui-layout-admin .layui-body {overflow: hidden; bottom: 0px !important; top: 60px !important; transition: all .2s; }
+.layui-layout-admin .layui-body {overflow: hidden; bottom: 44px !important; top: 60px !important; transition: all .2s; }
 .layui-mini .layui-layout-admin .layui-body {left: 60px !important; }
 .layui-tab-content {top: 41px; position: absolute; bottom: 0; width: 100%; padding: 0; }
 .iframe_box{position: relative; height: 100%; overflow: auto; }
