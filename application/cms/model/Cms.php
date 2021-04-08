@@ -325,7 +325,7 @@ class Cms extends Modelbase
      * @param  int|bool  $simple   是否简洁模式或者总记录数
      * @param  array     $config   配置参数
      */
-    public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit, $page = null, $simple = false, $config = [])
+    public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit = 10, $page = null, $simple = false, $config = [])
     {
         $url_mode  = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
         $tableName = $this->getModelTableName($modeId);
