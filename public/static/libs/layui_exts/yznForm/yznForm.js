@@ -357,9 +357,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     });
                 });
                 
-                //单行表格删除
+                //单行表格删除(不刷新)
                 $(document).on('click', '.layui-tr-del', function() {
                     var that = $(this),
+                        index = that.parents('tr').eq(0).data('index'),
+                        tr = $('.layui-table-body').find('tr[data-index="'+ index +'"]'),
                         href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
                     layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
                         if (!href) {
@@ -369,7 +371,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         $.get(href, function(res) {
                             if (res.code == 1) {
                                 notice.success({ message: res.msg });
-                                that.parents('tr').remove();
+                                //that.parents('tr').remove();
+                                tr.remove();
                             } else {
                                 notice.error({ message: res.msg });
                             }

@@ -345,6 +345,94 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 });
             }
         },
+        toolSpliceUrl(url, field, data) {
+            url = url.indexOf("?") !== -1 ? url + '&' + field + '=' + data[field] : url + '?' + field + '=' + data[field];
+            return url;
+        },
+        buildOperatHtml: function (operat) {
+            var html = '';
+            operat.class = operat.class || '';
+            operat.icon = operat.icon || '';
+            //operat.auth = operat.auth || '';
+            operat.url = operat.url || '';
+            operat.extend = operat.extend || '';
+            operat.method = operat.method || 'open';
+            operat.field = operat.field || 'id';
+            operat.title = operat.title || operat.text;
+            operat.text = operat.text || operat.title;
+
+            var formatOperat = operat;
+            formatOperat.icon = formatOperat.icon !== '' ? '<i class="' + formatOperat.icon + '"></i> ' : '';
+            formatOperat.class = formatOperat.class !== '' ? 'class="' + formatOperat.class + '" ' : '';
+            if (operat.method === 'open') {
+                formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
+            } else {
+                formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
+            }
+            html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + '>' + formatOperat.icon + formatOperat.text + '</a>';
+            return html;
+        },
+        tool: function (data, option) {
+            option.operat = option.operat || ['edit', 'delete'];
+            var elem = option.init.table_elem || init.table_elem;
+            var html = '';
+            $.each(option.operat, function (i, item) {
+                if (typeof item === 'string') {
+                    switch (item) {
+                        case 'edit':
+                            var operat = {
+                                class: 'layui-btn layui-btn-success layui-btn-xs',
+                                method: 'open',
+                                field: 'id',
+                                icon: '',
+                                text: '编辑',
+                                title: '编辑信息',
+                                url: option.init.edit_url,
+                                extend: ""
+                            };
+                            operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                            //if (admin.checkAuth(operat.auth, elem)) {
+                                html += yznTable.buildOperatHtml(operat);
+                            //}
+                            break;
+                        case 'delete':
+                            var operat = {
+                                class: 'layui-btn layui-btn-danger layui-btn-xs',
+                                method: 'get',
+                                field: 'id',
+                                icon: '',
+                                text: '删除',
+                                title: '确定删除？',
+                                url: option.init.delete_url,
+                                extend: ""
+                            };
+                            operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                            //if (admin.checkAuth(operat.auth, elem)) {
+                                html += yznTable.buildOperatHtml(operat);
+                            //}
+                            break;
+                    }
+
+                } else if (typeof item === 'object') {
+                    $.each(item, function (i, operat) {
+                        operat.class = operat.class || '';
+                        operat.icon = operat.icon || '';
+                        operat.auth = operat.auth || '';
+                        operat.url = operat.url || '';
+                        operat.method = operat.method || 'open';
+                        operat.field = operat.field || 'id';
+                        operat.title = operat.title || operat.text;
+                        operat.text = operat.text || operat.title;
+                        operat.extend = operat.extend || '';
+                        operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                        //if (admin.checkAuth(operat.auth, elem)) {
+                            html += yznTable.buildOperatHtml(operat);
+                        //}
+                    });
+                }
+            });
+            return html;
+        },
         image: function(data, option) {
             option.imageWidth = option.imageWidth || 80;
             option.imageHeight = option.imageHeight || 30;
