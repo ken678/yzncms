@@ -1151,8 +1151,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             var events = yznForm.events;
             events.init();
             events.selectpage();
-            events.faselect();
             events.fieldlist();
+            events.faselect();
             events.citypicker();
             events.datetimepicker();
             events.tagsinput();
