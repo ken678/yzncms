@@ -59,7 +59,7 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 ## [环境要求]
 - 支持系统：WinXP/Win2003/Vista/Win7/Win8/Linux
 - WEB服务器：iis/apache/nginx
-- PHP版本：php >= 7.0
+- PHP版本：php >= 7.0（支持8.0）
 - 数据库：MySQL >= 5.0
 
 
