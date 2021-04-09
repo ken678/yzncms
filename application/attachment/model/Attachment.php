@@ -15,6 +15,7 @@
 namespace app\attachment\model;
 
 use app\admin\service\User;
+use think\Db;
 use think\Image;
 use think\Model;
 
@@ -22,7 +23,7 @@ class Attachment extends Model
 {
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
-    protected $insert = ['status' => 1];
+    protected $insert             = ['status' => 1];
 
     public function getSizeAttr($value)
     {
@@ -41,7 +42,7 @@ class Attachment extends Model
     public function create_thumb($file = '', $filename = '', $save_name = '', $thumb_size = '', $thumb_type = '')
     {
         // 获取要生成的缩略图最大宽度和高度
-        $thumb_size = $thumb_size == '' ? config('upload_image_thumb') : $thumb_size;
+        $thumb_size                               = $thumb_size == '' ? config('upload_image_thumb') : $thumb_size;
         list($thumb_max_width, $thumb_max_height) = explode(',', $thumb_size);
         // 读取图片
         $image = Image::open($file);
@@ -66,7 +67,7 @@ class Attachment extends Model
             // 读取图片
             $image = Image::open($file);
             // 添加水印
-            $watermark_pos = $watermark_pos == '' ? config('upload_thumb_water_position') : $watermark_pos;
+            $watermark_pos   = $watermark_pos == '' ? config('upload_thumb_water_position') : $watermark_pos;
             $watermark_alpha = $watermark_alpha == '' ? config('upload_thumb_water_alpha') : $watermark_alpha;
             $image->water($thumb_water_pic, $watermark_pos, $watermark_alpha);
             // 保存水印图片，覆盖原图
@@ -84,9 +85,16 @@ class Attachment extends Model
     {
         $isIds = strpos($id, ',') !== false;
         if ($isIds) {
-            $ids = explode(',', $id);
-            $data_list = $this->where('id', 'in', $ids)->field('path,driver,thumb')->orderField('id', $ids)->select();
-            $paths = [];
+            $ids   = explode(',', $id);
+            $dbObj = Db::name('Attachment')->field('path,driver,thumb')->where('id', $ids[0]);
+            unset($ids[0]);
+            foreach ($ids as $k => $v) {
+                $dbObj->unionAll(function ($query) use ($v) {
+                    $query->name('Attachment')->field('path,driver,thumb')->where('id', $v);
+                });
+            }
+            $data_list = $dbObj->select();
+            $paths     = [];
             foreach ($data_list as $key => $value) {
                 $paths[$key] = $value['path'];
             }
@@ -114,9 +122,8 @@ class Attachment extends Model
     public function deleteFile($id)
     {
         $isAdministrator = User::instance()->isAdministrator();
-        $uid = (int) User::instance()->isLogin();
-
-        $file_path = $isAdministrator ? self::where('id', $id)->field('path,thumb')->find() : self::where('id', $id)->where('uid', $uid)->field('path,thumb')->find();
+        $uid             = (int) User::instance()->isLogin();
+        $file_path       = $isAdministrator ? self::where('id', $id)->field('path,thumb')->find() : self::where('id', $id)->where('uid', $uid)->field('path,thumb')->find();
         if (isset($file_path['path'])) {
             $real_path = realpath(ROOT_PATH . 'public/' . $file_path['path']);
             if (is_file($real_path) && !unlink($real_path)) {
