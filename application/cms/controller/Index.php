@@ -87,11 +87,12 @@ class Index extends Cmsbase
             $this->success('', '', $this->fetch('/' . $template . '_ajax'));
         }
         //获取顶级栏目ID
-        $arrparentid  = explode(',', $category['arrparentid']);
-        $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
+        $category['arrparentid'] = explode(',', $category['arrparentid']);
+        $top_parentid            = isset($category['arrparentid'][1]) ? $category['arrparentid'][1] : $catid;
+        unset($category['id']);
+        $this->assign($category);
         $this->assign([
             'top_parentid' => $top_parentid,
-            'arrparentid'  => $arrparentid,
             'SEO'          => $seo,
             'catid'        => $catid,
             'page'         => $page,
