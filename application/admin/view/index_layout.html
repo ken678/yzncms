@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css">
     <link rel="stylesheet" href="__STATIC__/admin/css/admin.css?v={$Think.config.version.yzncms_release}">
     <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css?v={$Think.config.version.yzncms_release}">
+    <script src="__STATIC__/libs/layui/layui.js"></script>
+    <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
     <script type="text/javascript">
     //全局变量
     var GV = {
@@ -26,8 +28,6 @@
 
 <body class="childrenBody {:defined('IS_DIALOG') && IS_DIALOG ? 'is-dialog' : ''}">
     {block name="main"}主内容{/block}
-    <script src="__STATIC__/libs/layui/layui.js"></script>
-    <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
     {block name="layui"}
     {include file='admin@layui' /}
     {/block}
