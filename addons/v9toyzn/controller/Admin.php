@@ -368,7 +368,7 @@ class Admin extends Adminaddon
                 'meta_keywords'     => isset($setting['meta_keywords']) ? $setting['meta_keywords'] : '',
                 'category_template' => isset($setting['meta_description']) ? $setting['meta_description'] : '',
                 'meta_description'  => isset($setting['category_template']) ? $setting['category_template'] . '.html' : 'category.html',
-                'list_template]'    => isset($setting['list_template']) ? $setting['list_template'] . '.html' : 'list.html',
+                'list_template'     => isset($setting['list_template']) ? $setting['list_template'] . '.html' : 'list.html',
                 'show_template'     => isset($setting['show_template']) ? $setting['show_template'] . '.html' : 'show.html',
             );
             $value['catdir'] = $pinyin->permalink($value['catname'], '');
