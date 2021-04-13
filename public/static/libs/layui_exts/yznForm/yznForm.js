@@ -1022,9 +1022,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             // 是否多文件上传
                             var $multiple = $input_file.data('multiple');
                             // 允许上传的后缀
-                            var $ext = GV.site.upload_image_ext;
+                            var $ext = GV.site.upload_file_ext;
                             // 图片限制大小
-                            var $size = GV.site.upload_image_size*1024;
+                            var $size = GV.site.upload_file_size*1024;
                             // 文件列表
                             var $file_list = $('#file_list_' + $input_file_name);
                             // 实例化上传
@@ -1113,10 +1113,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             uploader.on('error', function(type) {
                                 switch (type) {
                                     case 'Q_TYPE_DENIED':
-                                        layer.alert('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
+                                        layer.alert('文件类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
                                         break;
                                     case 'F_EXCEED_SIZE':
-                                        layer.alert('图片不得超过' + ($size / 1024) + 'kb，请重新上传！', { icon: 5 })
+                                        layer.alert('文件不得超过' + ($size / 1024) + 'kb，请重新上传！', { icon: 5 })
                                         break;
                                 }
                             });
