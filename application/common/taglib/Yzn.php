@@ -98,7 +98,7 @@ class Yzn extends Taglib
         //判断分页
         if ($page) {
             $parseStr .= '$pages = $' . $return . '->render();';
-            $parseStr .= '$' . $return . ' = $' . $return . '->items();';
+            //$parseStr .= '$' . $return . ' = $' . $return . '->items();';
         }
         $parseStr .= ' ?>';
         $parseStr .= $content;
@@ -209,7 +209,7 @@ class Yzn extends Taglib
         //判断分页
         if ($page) {
             $parseStr .= '$pages = $' . $return . '->render();';
-            $parseStr .= '$' . $return . ' = $' . $return . '->items();';
+            //$parseStr .= '$' . $return . ' = $' . $return . '->items();';
         }
         $parseStr .= ' ?>';
         $parseStr .= $content;
