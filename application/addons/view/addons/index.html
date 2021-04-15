@@ -16,9 +16,9 @@
     {{#  } else { }}
     <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("state",["action"=>"disable"])}?name={{d.name}}' data-table="currentTable" confirm>禁用</a>
     {{#  } }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger" data-url='{:url("uninstall")}?name={{d.name}}'>卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable" data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
-    <a class="layui-btn layui-btn-xs" data-url='{:url("install")}?name={{d.name}}'>安装</a>
+    <a class="layui-btn layui-btn-xs" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a>
 {{#  } }}
 </script>
 {/block}
@@ -57,7 +57,7 @@ layui.use(['yznTable', 'upload'], function() {
     });
 
     // 监听请求
-    $('body').on('click', '[data-url]', function() {
+    /*$('body').on('click', '[data-url]', function() {
         var url = $(this).data('url');
         yzn.msg.confirm('确定进行该操作？',function() {
             yzn.request.get({
@@ -69,7 +69,7 @@ layui.use(['yznTable', 'upload'], function() {
             });
         })
         return false;
-    });
+    });*/
 
     //执行实例
     var uploadInst = upload.render({
