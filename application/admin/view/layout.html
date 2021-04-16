@@ -413,7 +413,7 @@
         $('#J_refresh').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
-            const J_refresh = $("#J_refresh i");
+            var J_refresh = $("#J_refresh i");
             J_refresh.removeClass("icon-shuaxin1 iconfont");
             J_refresh.addClass("layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading");
             var index = layer.load(0,{time: 4*1000});
