@@ -332,7 +332,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         clienWidth = '100%';
                         clientHeight = '100%';
                     }
-                    yzn.open(title, url, clienWidth, clientHeight, );
+                    yzn.open(title, url, clienWidth, clientHeight);
                 });
 
                 //通用状态设置开关
@@ -502,7 +502,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     layui.define('laytpl', function(exports) {
                         var laytpl = layui.laytpl;
                         //刷新隐藏textarea的值
-                        var refresh = function(name, obj = null) {
+                        var refresh = function(name, obj) {
                             var data = {};
                             var textarea = $("textarea[name='" + name + "']");
                             var container = $(".fieldlist[data-name='" + name + "']");
