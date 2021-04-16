@@ -306,7 +306,7 @@ class Cms extends Modelbase
                     $value['value'] = empty($value['value']) ? '' : date('Y-m-d', $value['value']);
                 }
                 if ($value['type'] == 'Ueditor' || $value['type'] == 'markdown') {
-                    $value['value'] = htmlspecialchars_decode($value['value']);
+                    $value['value'] = isset($value['value']) ? htmlspecialchars_decode($value['value']) : '';
                 }
             }
         }
