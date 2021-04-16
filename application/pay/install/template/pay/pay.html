@@ -26,7 +26,7 @@
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
-                        <img id="verify" src="{:url('api/checkcode/getVerify','font_size=18&imageW=130&imageH=38')}" alt="验证码" class="captcha">
+                        <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
                     </div>
                 </div>
                 <div class="layui-form-item">

@@ -22,7 +22,6 @@ form .verify-box input {
 form .verify-box img {
     display: inline-block;
     margin-left: 2%;
-    width: 36%;
     height: 38px;
 }
 </style>
@@ -46,7 +45,7 @@ form .verify-box img {
                 <div class="layui-form-item verify-box">
                     <div>
                     <input type="text" name="captcha" placeholder="验证码*" value="" class="layui-input">
-                    <img id="verify" src="{:url('api/checkcode/getVerify','font_size=18&imageW=130&imageH=38')}" title="点击刷新" alt="验证码" class="captcha">
+                    <img id="verify" src="{:captcha_src()}" title="点击刷新" alt="验证码" class="captcha">
                     </div>
                 </div>
                 {/if}
