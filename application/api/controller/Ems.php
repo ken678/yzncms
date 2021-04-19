@@ -69,6 +69,9 @@ class Ems extends Api
                 $this->error('未注册');
             }
         }
+        if (!\think\facade\Hook::get('ems_send')) {
+            $this->error('请在后台插件管理安装邮箱验证插件');
+        }
         $ret = $this->Ems_Model->send($email, null, $event);
         if ($ret) {
             $this->success('发送成功');
