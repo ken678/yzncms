@@ -20,7 +20,6 @@
         "topthink/framework": "^5.1",
         "topthink/think-captcha": "^2.0",
         "topthink/think-image": "^1.0",
-        "phpmailer/phpmailer": "^6.0",
         "guzzlehttp/guzzle": "^6.3",
         "overtrue/pinyin": "~4.0",
         "yansongda/pay": "^2.7",
