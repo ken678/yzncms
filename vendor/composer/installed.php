@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'bcb6e1db8355d231e028e190de957882aefafeb4',
+    'reference' => '1c1b4b7d3aef1b81f9cdb9fa8e46bf361a428418',
     'name' => 'topthink/think',
   ),
   'versions' => 
@@ -118,15 +118,6 @@
       array (
       ),
       'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
-    ),
-    'phpmailer/phpmailer' => 
-    array (
-      'pretty_version' => 'v6.3.0',
-      'version' => '6.3.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb',
     ),
     'psr/http-message' => 
     array (
@@ -284,7 +275,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'bcb6e1db8355d231e028e190de957882aefafeb4',
+      'reference' => '1c1b4b7d3aef1b81f9cdb9fa8e46bf361a428418',
     ),
     'topthink/think-captcha' => 
     array (
