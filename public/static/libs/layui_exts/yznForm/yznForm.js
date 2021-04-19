@@ -720,7 +720,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 $.post(GV.ueditor_grabimg_url, { 'content': con, 'type': 'images' },
                                     function(data) {
                                         ueditors[ueditor_name].setContent(data);
-                                        layer.msg("图片本地化完成");
+                                        layer.msg("图片本地化完成", { icon: 1 });
                                     }, 'html');
                             });
                             //分词检测
