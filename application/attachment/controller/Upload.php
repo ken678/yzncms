@@ -134,7 +134,7 @@ class Upload extends Base
 
     }
 
-    public function upload($dir = '', $from = '', $module = '', $thumb = 0, $thumbsize = '', $thumbtype = '', $watermark = 1, $sizelimit = -1, $extlimit = '')
+    public function upload($dir = '', $from = '', $module = '', $sizelimit = -1)
     {
         //验证是否可以上传
         $status = $this->isUpload($module);
@@ -150,7 +150,7 @@ class Upload extends Base
         if ($from == 'ueditor') {
             return $this->ueditor();
         }
-        return $this->saveFile($dir, $from, $module, $thumb, $thumbsize, $thumbtype, $watermark, $sizelimit, $extlimit);
+        return $this->saveFile($dir, $from, $module, $sizelimit);
     }
 
     /**
@@ -181,7 +181,7 @@ class Upload extends Base
      * @param string $module 来自哪个模块
      * @return string|\think\response\Json
      */
-    protected function saveFile($dir = '', $from = '', $module = '', $thumb = 0, $thumbsize = '', $thumbtype = '', $watermark = 1, $sizelimit = -1, $extlimit = '')
+    protected function saveFile($dir = '', $from = '', $module = '', $sizelimit = -1)
     {
         if (!function_exists("finfo_open")) {
             return json([
@@ -203,7 +203,7 @@ class Upload extends Base
         $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
         $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
         // 水印参数
-        $watermark = $this->request->post('watermark', '');
+        $thumb = $this->request->post('thumb/d', 0);
         // 获取附件数据
         switch ($from) {
             case 'editormd':
@@ -290,7 +290,7 @@ class Upload extends Base
         $info = $file->move(ROOT_PATH . 'public/uploads' . DIRECTORY_SEPARATOR . $dir);
         if ($info) {
             // 水印功能
-            if ($watermark == '') {
+            if ($thumb) {
                 if ($dir == 'images' && config('upload_thumb_water') == 1 && config('upload_thumb_water_pic') != "") {
                     model('Attachment')->create_water($info->getRealPath(), config('upload_thumb_water_pic'));
                 }
