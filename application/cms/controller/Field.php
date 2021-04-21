@@ -54,7 +54,10 @@ class Field extends Adminbase
             $result                     = array("code" => 0, "count" => $total, "data" => $data);
             return json($result);
         }
-        $this->assign("modelid", $modelid);
+        $this->assign([
+            "modelid" => $modelid,
+            "name"    => $model['name'],
+        ]);
         return $this->fetch();
     }
 
