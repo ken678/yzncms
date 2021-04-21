@@ -40,8 +40,8 @@ class Content extends MemberBase
             $this->error("今日投稿数量已达上限！");
         }
         if ($this->request->isPost()) {
-            $data  = $this->request->post();
-            $token = $this->request->post('__token__');
+            $data  = $this->request->param();
+            $token = $this->request->param('__token__');
             // 验证数据
             $rule = [
                 'modelField.title|标题' => 'require|length:3,100',
@@ -160,10 +160,21 @@ class Content extends MemberBase
     {
         $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
         if ($this->request->isPost()) {
-            $data = $this->request->post(false);
-
+            $data  = $this->request->param();
+            $token = $this->request->param('__token__');
+            // 验证数据
+            $rule = [
+                'modelField.title|标题' => 'require|length:3,100',
+                'modelField.catid|栏目' => 'require|integer',
+                '__token__'           => 'require|token',
+            ];
+            $result = $this->validate($data, $rule);
+            if (true !== $result) {
+                $this->error($result, null, ['token' => $this->request->token()]);
+            }
+            $id    = intval($data['modelField']['id']);
             $catid = intval($data['modelField']['catid']);
-            if (empty($catid)) {
+            if (empty($id) || empty($catid)) {
                 $this->error("请指定栏目ID！");
             }
             $category = Db::name('Category')->find($catid);
@@ -199,11 +210,12 @@ class Content extends MemberBase
                 }
             }
             if ($_data['modelField']['status'] == 1) {
+                Member_Content_Model::where(['content_id' => $id, 'catid' => $catid])->update(['status' => 1]);
                 $this->success('编辑成功，内容已通过审核！', url('published'));
             } else {
+                Member_Content_Model::where(['content_id' => $id, 'catid' => $catid])->update(['status' => 0]);
                 $this->success('编辑成功，等待管理员审核！', url('published'));
             }
-
         } else {
             $id   = $this->request->param('id/d', 0);
             $info = Member_Content_Model::where(array('uid' => $this->userid, 'id' => $id))->find();

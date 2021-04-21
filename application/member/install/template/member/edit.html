@@ -6,6 +6,7 @@
     <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-tab-item layui-show">
             <form class="layui-form" method="post">
+                {:token()}
                 {include file="inputItem" /}
                 {if count($fieldList)}
                 <div class="layui-form-item">
