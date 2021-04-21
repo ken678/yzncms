@@ -25,6 +25,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             options.cols = options.cols || [];
             options.layFilter = options.id + '_LayFilter';
             options.search = yzn.parame(options.search, true);
+            options.searchFormVisible = yzn.parame(options.searchFormVisible, false);
             options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
                 title: '搜索',
                 layEvent: 'TABLE_SEARCH',
@@ -40,7 +41,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
 
             // 初始化表格搜索
             if (options.search === true) {
-                yznTable.renderSearch(options.cols, options.elem, options.id);
+                yznTable.renderSearch(options.cols, options.elem, options.id, options.searchFormVisible);
             }
 
             // 初始化表格左上方工具栏
@@ -118,7 +119,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>\n';
             return html;
         },
-        renderSearch: function(cols, elem, tableId) {
+        renderSearch: function(cols, elem, tableId,searchFormVisible) {
             // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
             cols = cols[0] || {};
             var newCols = [];
@@ -186,7 +187,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 }
             });
             if (formHtml !== '') {
-                $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="table-search-fieldset layui-hide">\n' +
+                $(elem).before('<fieldset style="border:1px solid #ddd;" id="searchFieldset_' + tableId + '" class="table-search-fieldset '+ (searchFormVisible ? "" : "layui-hide")+'">\n' +
                     '<legend>条件搜索</legend>\n' +
                     '<form class="layui-form layui-form-pane form-search">\n' +
                     formHtml +
