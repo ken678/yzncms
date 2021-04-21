@@ -52,9 +52,7 @@ class Content extends MemberBase
             if (true !== $result) {
                 $this->error($result, null, ['token' => $this->request->token()]);
             }
-            $data['modelField']['uid']      = $this->userid;
-            $data['modelField']['username'] = $this->userinfo['username'];
-            $catid                          = intval($data['modelField']['catid']);
+            $catid = intval($data['modelField']['catid']);
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
             }
@@ -66,16 +64,29 @@ class Content extends MemberBase
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
+            $fields = Db::name('model_field')->where('modelid', $category['modelid'])->where('isadd', 1)->column('name,ifsystem');
+            $_data  = [];
+            foreach ($fields as $k => $v) {
+                if (1 == $v && isset($data['modelField'][$k])) {
+                    $_data['modelField'][$k] = $data['modelField'][$k];
+                } elseif (0 == $v && isset($data['modelFieldExt'][$k])) {
+                    $_data['modelFieldExt'][$k] = $data['modelFieldExt'][$k];
+                }
+            }
+            $_data['modelField']['uid']      = $this->userid;
+            $_data['modelField']['username'] = $this->userinfo['username'];
+
             //判断会员组投稿是否需要审核
             if ($groupinfo['allowpostverify']) {
-                $data['modelField']['status'] = 1;
+                $_data['modelField']['status'] = 1;
             } else {
-                $data['modelField']['status'] = 0;
+                $_data['modelField']['status'] = 0;
             }
+            $id = 0;
             if ($category['type'] == 2) {
-                $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+                $_data['modelFieldExt'] = isset($_data['modelFieldExt']) ? $_data['modelFieldExt'] : [];
                 try {
-                    $id = $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
+                    $id = $this->Cms_Model->addModelData($_data['modelField'], $_data['modelFieldExt']);
                 } catch (\Exception $ex) {
                     $this->error($ex->getMessage());
                 }
@@ -85,13 +96,13 @@ class Content extends MemberBase
                 Member_Content_Model::create([
                     'catid'       => $catid,
                     'content_id'  => $id,
-                    'uid'         => $data['modelField']['uid'],
-                    'username'    => $data['modelField']['username'],
+                    'uid'         => $_data['modelField']['uid'],
+                    'username'    => $_data['modelField']['username'],
                     'create_time' => time(),
-                    'status'      => $data['modelField']['status'],
+                    'status'      => $_data['modelField']['status'],
                 ]);
             }
-            if ($data['modelField']['status'] == 1) {
+            if ($_data['modelField']['status'] == 1) {
                 $this->success('操作成功，内容已通过审核！', url('published'));
             } else {
                 $this->success('操作成功，等待管理员审核！', url('published'));
@@ -163,23 +174,31 @@ class Content extends MemberBase
             if (empty($catidPrv)) {
                 $this->error("您没有该栏目投稿权限！");
             }
-
+            $fields = Db::name('model_field')->where('modelid', $category['modelid'])->where('isadd', 1)->column('name,ifsystem');
+            $_data  = [];
+            foreach ($fields as $k => $v) {
+                if (1 == $v && isset($data['modelField'][$k])) {
+                    $_data['modelField'][$k] = $data['modelField'][$k];
+                } elseif (0 == $v && isset($data['modelFieldExt'][$k])) {
+                    $_data['modelFieldExt'][$k] = $data['modelFieldExt'][$k];
+                }
+            }
             //判断会员组投稿是否需要审核
             if ($groupinfo['allowpostverify']) {
-                $data['status'] = 1;
+                $_data['modelField']['status'] = 1;
             } else {
-                $data['status'] = 0;
+                $_data['modelField']['status'] = 0;
             }
 
             if ($category['type'] == 2) {
-                $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+                $_data['modelFieldExt'] = isset($_data['modelFieldExt']) ? $_data['modelFieldExt'] : [];
                 try {
-                    $this->Cms_Model->editModelData($data['modelField'], $data['modelFieldExt']);
+                    $this->Cms_Model->editModelData($_data['modelField'], $_data['modelFieldExt']);
                 } catch (\Exception $ex) {
                     $this->error($ex->getMessage());
                 }
             }
-            if ($data['status'] == 1) {
+            if ($_data['modelField']['status'] == 1) {
                 $this->success('编辑成功，内容已通过审核！', url('published'));
             } else {
                 $this->success('编辑成功，等待管理员审核！', url('published'));
