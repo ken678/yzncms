@@ -516,7 +516,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 if (typeof data[match[1]] == 'undefined') {
                                     data[match[1]] = {};
                                 }
-                                if (obj !== null && $(obj.elem).attr('name') == j.name) {
+                                if (typeof obj != 'undefined' && $(obj.elem).attr('name') == j.name) {
                                     data[match[1]][match[2]] = obj.value;
                                 } else {
                                     data[match[1]][match[2]] = j.value;
