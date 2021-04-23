@@ -45,7 +45,7 @@
     <input type="checkbox" name="status" data-href='{:url("setstate",["catid"=>$catid])}?id={{d.id}}' value="{{d.id}}" lay-skin="switch" lay-text="通过|待审核" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 <div id="remove" style="display: none;">
-    <div class="box-body" style="padding: 20px;">
+    <div class="box-body" style="margin: 20px">
         <blockquote class="layui-elem-quote">只能将数据移动到相同模型的栏目下，不同模型的数据移动将被忽略</blockquote>
         <div class="layui-form">
             <div class="layui-form-item">
@@ -153,8 +153,10 @@ layui.use(['table', 'yznTable'], function() {
                             layer.msg(data.msg,{icon: 2});
                         }
                     })
+                },
+                end: function(){ 
+                	$('#remove').hide();
                 }
-
             });
         } else {
             layer.msg("请选择需要移动的数据",{icon: 2});
