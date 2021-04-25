@@ -39,7 +39,7 @@ layui.use(['yznTable','clipboard'], function() {
 
     var init = {
         table_elem: '#currentTable',
-        add_url: "{:url('add')}",
+        add_url: "{:url('add',['groupType'=>$group])}",
         modify_url:'{:url("multi")}',
     };
 

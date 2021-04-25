@@ -7,7 +7,7 @@
             <select name="group" lay-verify="required">
                 <option value=""></option>
                 {volist name="groupArray" id="vo"}
-                <option value="{$key}" {eq name="key" value="base"}selected{/eq}>{$vo}[{$key}]</option>
+                <option value="{$key}" {eq name="key" value="$groupType"}selected{/eq}>{$vo}[{$key}]</option>
                 {/volist}
             </select>
         </div>

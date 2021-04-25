@@ -146,10 +146,12 @@ class Config extends Adminbase
                 $this->error('配置添加失败！');
             }
         } else {
+            $groupType = $this->request->param('groupType/s', 'base');
             $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
             $this->assign([
                 'groupArray' => config('config_group'),
                 'fieldType'  => $fieldType,
+                'groupType'  => $groupType,
             ]);
             return $this->fetch();
         }
