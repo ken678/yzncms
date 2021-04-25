@@ -29,7 +29,7 @@
   {{# if(d.flag.indexOf("6")!==-1){ }}
   <span class="text-danger">[幻灯]</span>
   {{#  } }}
-  {{# if(d.thumb!==''){ }}
+  {{# if(d.thumb){ }}
   <span class="text-success">[有图]</span>
   {{#  } }}
   <a  data-open='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' data-title="编辑内容" data-full="true">{{ d.title }}</a>
