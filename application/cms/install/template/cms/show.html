@@ -8,7 +8,7 @@ body {
 <div class="main" style="position: relative;">
     <div class="w1200">
         <div class="container-top">
-            <h2>{:getCategory($catid,'catname')}<span>{:getCategory($catid,'catdir')}</span></h2>
+            <h2>{$category.catname}<span>{$category.catdir}</span></h2>
             <!-- 面包屑 -->
             <div class="bread-nav">
                 <a href="{$siteurl}">首页</a>&gt; {:catpos($catid)}

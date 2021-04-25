@@ -118,7 +118,8 @@ class Index extends Cmsbase
         if (empty($category)) {
             $this->error('栏目不存在！');
         }
-        $catid = $category['id'];
+        $catid = $category['catid'] = $category['id'];
+        unset($category['id']);
         //模型ID
         $modelid   = $category['modelid'];
         $modelInfo = cache('Model')[$modelid];
@@ -181,6 +182,7 @@ class Index extends Cmsbase
         $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
         $this->assign($info);
         $this->assign([
+            'category'      => $category,
             'readpoint'     => $readpoint,
             'allow_visitor' => $allow_visitor,
             'top_parentid'  => $top_parentid,
