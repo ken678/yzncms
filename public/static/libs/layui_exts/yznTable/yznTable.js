@@ -447,8 +447,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             } catch (e) {
                 var value = undefined;
             }
-            if (value === undefined) {
-                return '<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">';
+            if (!value) {
+                return '';
             } else {
                 var values = value.split(option.imageSplit),
                     valuesHtml = [];
