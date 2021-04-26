@@ -12,7 +12,7 @@
             <!--此处可用安装友情链接模块-->
         </div>
         <ul class="botnavlist fl">
-            {yzn module="cms" action="category" catid="0" cache="3600" where="id in(1,6,8)" order="listorder ASC" num="4" return="data"}
+            {yzn module="cms" action="category" cache="3600" where="id in(1,6,8)" order="listorder ASC" num="4" return="data"}
             {volist name="data" id="vo"}
             <li><a href="{$vo.url}" title="{$vo.catname}">{$vo.catname}</a>
                 <div class="drop clearfix">
