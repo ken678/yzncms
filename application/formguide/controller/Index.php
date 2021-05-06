@@ -129,7 +129,7 @@ class Index extends HomeBase
         }
         //是否允许同一IP多次提交
         if ((int) $this->setting['allowmultisubmit'] == 0) {
-            $ip    = $this->request->ip(1);
+            $ip    = $this->request->ip();
             $count = Db::name($this->tableName)->where("ip", $ip)->count();
             if ($count) {
                 $this->error('你已经提交过了！');
