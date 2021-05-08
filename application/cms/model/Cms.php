@@ -376,17 +376,9 @@ class Cms extends Modelbase
         $tableName = $this->getModelTableName($modeId);
         if (2 == getModel($modeId, 'type') && $moreifo) {
             $extTable = $tableName . $this->ext_table;
-            $dataObj  = Db::view($tableName, '*')->where($where);
-            if ($cache) {
-                $dataObj->cache('cms_content_cache', $cache);
-            }
-            $dataInfo = $dataObj->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')->find();
+            $dataInfo = Db::view($tableName, '*')->where($where)->cache($cache)->view($extTable, '*', $tableName . '.id=' . $extTable . '.did', 'LEFT')->find();
         } else {
-            $dataObj = Db::name($tableName)->field($field);
-            if ($cache) {
-                $dataObj->cache('cms_content_cache', $cache);
-            }
-            $dataInfo = $dataObj->where($where)->order($order)->find();
+            $dataInfo = Db::name($tableName)->field($field)->cache($cache)->where($where)->order($order)->find();
         }
         if (!empty($dataInfo)) {
             $ModelField      = cache('ModelField');
