@@ -45,8 +45,7 @@
 .layui-nav.layui-layout-right .layui-nav-more, .layui-nav.layui-layout-left .layui-nav-more{font-size: 14px;content: "";width: 0;height: 0;border-style: solid dashed dashed;border-color: #fff transparent transparent;overflow: hidden;cursor: pointer;transition: all .2s;-webkit-transition: all .2s;position: absolute;top: 50%;right: 3px;margin-top: -4px;border-width: 6px;border-top-color: rgba(255,255,255,.7);}
 
 /**选择配色方案 */
-.layui-color .color-title {padding: 10px 0 10px 20px; border-bottom: 1px solid #d9dada; margin-bottom: 8px; }
-.layui-color .color-content {padding: 10px 5px 0 5px; }
+.layui-color .color-content {padding: 20px 5px 0 5px; }
 .layui-color .color-content ul {list-style: none; text-align: center; }
 .layui-color .color-content ul li {position: relative; display: inline-block; vertical-align: top; width: 80px; height: 50px; margin: 0 15px 15px 0; padding: 2px 2px 4px 2px; background-color: #f2f2f2; cursor: pointer; font-size: 12px; color: #666; }
 .layui-color .color-content li.layui-this:after, .layui-color .color-content li:hover:after {width: 100%; height: 100%; padding: 4px; top: -5px; left: -5px; border-color: #d8d8d8; opacity: 1; }
