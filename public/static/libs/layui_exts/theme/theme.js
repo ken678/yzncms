@@ -422,9 +422,6 @@ layui.define(["jquery", "layer"], function (exports) {
                 var clientHeight = (document.documentElement.clientHeight) - 60;
                 var bgColorHtml = theme.buildBgColorHtml(options);
                 var html = '<div class="layui-color">\n' +
-                    '<div class="color-title">\n' +
-                    '<span>配色方案</span>\n' +
-                    '</div>\n' +
                     '<div class="color-content">\n' +
                     '<ul>\n' + bgColorHtml + '</ul>\n' +
                     '</div>\n' +
@@ -436,8 +433,7 @@ layui.define(["jquery", "layer"], function (exports) {
                     '</div>';
                 layer.open({
                     type: 1,
-                    title: false,
-                    closeBtn: 0,
+                    title: '配色方案',
                     shade: 0.2,
                     anim: 2,
                     shadeClose: true,
