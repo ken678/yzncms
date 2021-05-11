@@ -33,6 +33,8 @@ class Homebase extends Base
             'upload_file_size'       => $config['upload_file_size'],
             'upload_image_ext'       => $config['upload_image_ext'],
             'upload_file_ext'        => $config['upload_file_ext'],
+            'chunking'               => $config['chunking'],
+            'chunksize'              => $config['chunksize'],
         ];
         $this->assign('site', $site);
     }
