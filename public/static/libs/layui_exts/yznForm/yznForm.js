@@ -1011,6 +1011,37 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 if ($(elements).length > 0) {
                     layui.define('webuploader', function(exports) {
                         var webuploader = layui.webuploader;
+                        //分片
+                        /*var chunking = GV.site.chunking, chunkSize = GV.site.chunksize || 5242880;
+                        if(chunking){
+	                        WebUploader.Uploader.register({
+							    "after-send-file": "afterSendFile"
+							}, {
+	                            // 所有分片上传完成后执行【每个文件只执行一次】
+	                            afterSendFile: function(file) {
+	                                //合并
+	                                $.ajax({
+	                                	url:GV.file_upload_url,
+	                                	dataType:"json",
+	                                	type:"POST",
+	                                    data: {
+	                                        action: 'merge',
+	                                        filesize: file.size,
+	                                        filename: file.name,
+	                                        id: file.id,
+	                                        chunks: Math.floor(file.size / chunkSize + (file.size % chunkSize > 1 ? 1 : 0)),
+	                                    },
+	                                    success:function(req){
+
+	                                    },
+	                                    error:function(){
+
+	                                    }
+	                                })
+	                            }
+							});
+                        }*/
+
                         $(elements).each(function() {
                             if ($(this).attr("initialized")) {
                                return true;
@@ -1041,6 +1072,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                     id: '#picker_' + $input_file_name,
                                     multiple: $multiple
                                 },
+                                /*chunked:chunking,
+                                chunkSize:chunkSize,*/
                                 // 文件限制大小
                                 fileSingleSizeLimit: $size,
                                 // 只允许选择文件文件。
