@@ -147,4 +147,8 @@ return [
     'login_unique'           => false,
     //是否开启IP变动检测
     'loginip_check'          => false,
+    //是否支持分片上传(文件按钮)
+    'chunking'               => false,
+    //默认分片大小5M
+    'chunksize'              => 5242880,
 ];
