@@ -134,7 +134,7 @@ class Upload extends Base
 
     }
 
-    public function upload($dir = '', $from = '', $module = '', $sizelimit = -1)
+    public function upload($dir = '', $from = '', $module = '')
     {
         //验证是否可以上传
         $status = $this->isUpload($module);
@@ -150,7 +150,7 @@ class Upload extends Base
         if ($from == 'ueditor') {
             return $this->ueditor();
         }
-        return $this->saveFile($dir, $from, $module, $sizelimit);
+        return $this->saveFile($dir, $from, $module);
     }
 
     /**
@@ -181,7 +181,7 @@ class Upload extends Base
      * @param string $module 来自哪个模块
      * @return string|\think\response\Json
      */
-    protected function saveFile($dir = '', $from = '', $module = '', $sizelimit = -1)
+    protected function saveFile($dir = '', $from = '', $module = '')
     {
         if (!function_exists("finfo_open")) {
             return json([
@@ -192,12 +192,6 @@ class Upload extends Base
         }
         // 附件大小限制
         $size_limit = $dir == 'images' ? config('upload_image_size') : config('upload_file_size');
-        if (-1 != $sizelimit) {
-            $sizelimit = intval($sizelimit);
-            if ($sizelimit >= 0 && (0 == $size_limit || ($size_limit > 0 && $sizelimit > 0 && $size_limit > $sizelimit))) {
-                $size_limit = $sizelimit;
-            }
-        }
         $size_limit = $size_limit * 1024;
         // 附件类型限制
         $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
