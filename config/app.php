@@ -147,6 +147,8 @@ return [
     'login_unique'           => false,
     //是否开启IP变动检测
     'loginip_check'          => false,
+    //文件保存格式
+    'savekey'   => 'uploads/{dir}/{year}{mon}{day}/{filemd5}{.suffix}',
     //是否支持分片上传(文件按钮)
     'chunking'               => false,
     //默认分片大小5M
