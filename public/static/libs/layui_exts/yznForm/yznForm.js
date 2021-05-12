@@ -1012,37 +1012,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     layui.define('webuploader', function(exports) {
                         var webuploader = layui.webuploader;
                         //分片
-                        /*var chunking = GV.site.chunking, chunkSize = GV.site.chunksize || 5242880;
-                        if(chunking){
-	                        WebUploader.Uploader.register({
-							    "after-send-file": "afterSendFile"
-							}, {
-	                            // 所有分片上传完成后执行【每个文件只执行一次】
-	                            afterSendFile: function(file) {
-	                                //合并
-	                                $.ajax({
-	                                	url:GV.file_upload_url,
-	                                	dataType:"json",
-	                                	type:"POST",
-	                                    data: {
-	                                        action: 'merge',
-	                                        filesize: file.size,
-	                                        filename: file.name,
-	                                        id: file.id,
-	                                        chunks: Math.floor(file.size / chunkSize + (file.size % chunkSize > 1 ? 1 : 0)),
-	                                    },
-	                                    success:function(req){
-
-	                                    },
-	                                    error:function(){
-
-	                                    }
-	                                })
-	                            }
-							});
-                        }*/
+                        var chunking = GV.site.chunking, chunkSize = GV.site.chunksize || 5242880;
 
                         $(elements).each(function() {
+                            var GUID = WebUploader.Base.guid();
+                            var formData = chunking ? { chunkid: GUID } : {};
                             if ($(this).attr("initialized")) {
                                return true;
                             }
@@ -1072,15 +1046,16 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                     id: '#picker_' + $input_file_name,
                                     multiple: $multiple
                                 },
-                                /*chunked:chunking,
-                                chunkSize:chunkSize,*/
+                                chunked:chunking,
+                                chunkSize:chunkSize,
                                 // 文件限制大小
                                 fileSingleSizeLimit: $size,
                                 // 只允许选择文件文件。
                                 accept: {
                                     title: 'Files',
                                     extensions: $ext
-                                }
+                                },
+                                formData: formData
                             });
 
                             element.on('tab', function(data){
@@ -1106,27 +1081,50 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
 
                             // 文件上传成功
                             uploader.on('uploadSuccess', function(file, response) {
-                                var $li = $('#' + file.id);
-                                if (response.code == 0) {
-                                    if ($multiple) {
-                                        if ($input_file.val()) {
-                                            $input_file.val($input_file.val() + ',' + response.id);
+                                function ok(file, response) {
+                                    var $li = $('#' + file.id);
+                                    if (response.code == 0) {
+                                        if ($multiple) {
+                                            if ($input_file.val()) {
+                                                $input_file.val($input_file.val() + ',' + response.id);
+                                            } else {
+                                                $input_file.val(response.id);
+                                            }
+                                            $li.find('.remove-file').attr('data-id', response.id);
                                         } else {
                                             $input_file.val(response.id);
                                         }
-                                        $li.find('.remove-file').attr('data-id', response.id);
-                                    } else {
-                                        $input_file.val(response.id);
+                                    }
+                                    // 加入提示信息
+                                    $li.find('.file-state').html('<span class="">' + response.info + '</span>');
+                                    // 添加下载链接
+                                    $li.find('.download-file').attr('href', response.path);
+                                    if (typeof onUploadSuccess === 'function') {
+                                        var result = onUploadSuccess.call(file, response);
+                                        if (result === false)
+                                            return;
                                     }
                                 }
-                                // 加入提示信息
-                                $li.find('.file-state').html('<span class="text-' + response.class + '">' + response.info + '</span>');
-                                // 添加下载链接
-                                $li.find('.download-file').attr('href', response.path);
-                                if (typeof onUploadSuccess === 'function') {
-                                    var result = onUploadSuccess.call(file, response);
-                                    if (result === false)
-                                        return;
+                                if(chunking){
+                                    //合并
+                                    $.ajax({
+                                        url:GV.file_upload_url,
+                                        dataType:"json",
+                                        type:"POST",
+                                        data: {
+                                            chunkid: GUID,
+                                            action: 'merge',
+                                            filesize: file.size,
+                                            filename: file.name,
+                                            id: file.id,
+                                            chunks: Math.floor(file.size / chunkSize + (file.size % chunkSize > 1 ? 1 : 0)),
+                                        },
+                                        success:function(res){
+                                            ok(file, res);
+                                        },
+                                    })
+                                }else{
+                                    ok(file, response);
                                 }
                             });
 
