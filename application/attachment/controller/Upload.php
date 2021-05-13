@@ -182,10 +182,12 @@ class Upload extends Base
                     'info' => '未开启分片上传功能',
                 ]);
             }
+            $id      = $this->request->post("id/s", '', 'strtolower');
+            $chunkid = $chunkid . $id;
             //分片
             $action     = $this->request->post("action");
-            $chunkindex = $this->request->post("chunk/d");
-            $chunkcount = $this->request->post("chunks/d");
+            $chunkindex = $this->request->post("chunk/d", 0);
+            $chunkcount = $this->request->post("chunks/d", 1);
             $filename   = $this->request->post("filename");
             $method     = $this->request->method(true);
             if ($action == 'merge') {
