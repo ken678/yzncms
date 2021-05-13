@@ -221,7 +221,7 @@ class Upload extends Base
     protected function isUpload($module)
     {
         $module_list = cache('Module');
-        if ($module_list[strtolower($module)] || strtolower($module) == 'admin' || strtolower($module) == 'addons' || strtolower($module) == 'attachment') {
+        if (isset($module_list[strtolower($module)]) || strtolower($module) == 'admin' || strtolower($module) == 'addons' || strtolower($module) == 'attachment') {
             $this->module = strtolower($module);
         } else {
             return false;
