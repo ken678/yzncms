@@ -243,14 +243,6 @@ class Upload extends Base
      */
     protected function chunk($chunkid, $chunkindex, $chunkcount, $chunkfilesize = null, $chunkfilename = null, $direct = false)
     {
-        $fileInfo = $this->file->getInfo();
-        /*if ($fileInfo['type'] != 'application/octet-stream') {
-        return json([
-        'code'  => -1,
-        'info'  => '上传文件格式受限制',
-        'state' => '上传文件格式受限制', //兼容百度
-        ]);
-        }*/
         if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
             return json([
                 'code'  => -1,
@@ -258,11 +250,10 @@ class Upload extends Base
                 'state' => '未知参数', //兼容百度
             ]);
         }
-        $destDir  = ROOT_PATH . 'runtime' . DS . 'chunks';
         $fileName = $chunkid . "-" . $chunkindex . '.part';
-        $destFile = $destDir . DS . $fileName;
-        if (!is_dir($destDir)) {
-            @mkdir($destDir, 0755, true);
+        $destFile = $this->chunkDir . DS . $fileName;
+        if (!is_dir($this->chunkDir)) {
+            @mkdir($this->chunkDir, 0755, true);
         }
         if (!move_uploaded_file($this->file->getPathname(), $destFile)) {
             return json([
