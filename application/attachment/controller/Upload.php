@@ -198,9 +198,6 @@ class Upload extends Base
                 return $this->chunk($chunkid, $chunkindex, $chunkcount);
             }
         }
-        if ($from == 'ueditor') {
-            return $this->ueditor();
-        }
         // 获取附件数据
         switch ($from) {
             case 'editormd':
@@ -214,6 +211,9 @@ class Upload extends Base
         }
         $file = $this->request->file($file_input_name);
         $this->setFile($file);
+        if ($from == 'ueditor') {
+            return $this->ueditor();
+        }
         return $this->saveFile($dir, $from, $module);
     }
 
@@ -244,13 +244,13 @@ class Upload extends Base
     protected function chunk($chunkid, $chunkindex, $chunkcount, $chunkfilesize = null, $chunkfilename = null, $direct = false)
     {
         $fileInfo = $this->file->getInfo();
-        if ($fileInfo['type'] != 'application/octet-stream') {
-            return json([
-                'code'  => -1,
-                'info'  => '上传文件格式受限制',
-                'state' => '上传文件格式受限制', //兼容百度
-            ]);
-        }
+        /*if ($fileInfo['type'] != 'application/octet-stream') {
+        return json([
+        'code'  => -1,
+        'info'  => '上传文件格式受限制',
+        'state' => '上传文件格式受限制', //兼容百度
+        ]);
+        }*/
         if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
             return json([
                 'code'  => -1,
