@@ -9,11 +9,11 @@
     </div>
 </div>
 <script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm yzn-btn-primary" data-treetable-refresh="currentTable"><i class="iconfont icon-shuaxin1"></i> </button>
-    <button class="layui-btn layui-btn-sm" data-open="{:url('add')}" title="添加"><i class="iconfont icon-add"></i>&nbsp;新增后台菜单</button>
-    <button class="layui-btn layui-btn-sm layui-btn-normal" id="openAll"><i class="iconfont icon-add"></i>&nbsp;展开或折叠全部</button>
-</div>
+    <div class="layui-table-tool-temp">
+        <button class="layui-btn layui-btn-sm yzn-btn-primary" data-treetable-refresh="currentTable"><i class="iconfont icon-shuaxin1"></i></button>
+        <button class="layui-btn layui-btn-sm" data-open="{:url('add')}" title="添加"><i class="iconfont icon-add"></i>&nbsp;新增后台菜单</button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" id="openAll"><i class="iconfont icon-add"></i>&nbsp;展开或折叠全部</button>
+    </div>
 </script>
 <script type="text/html" id="barTool">
     <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑">编辑</a>
