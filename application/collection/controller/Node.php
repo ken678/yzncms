@@ -71,10 +71,7 @@ class Node extends Adminbase
             if (empty($id)) {
                 $this->error('请指定需要修改的采集点！');
             }
-            $data = $this->Nodes_Model->where(array('id' => $id))->find();
-            if (isset($data['customize_config'])) {
-                $data['customize_config'] = json_encode(unserialize($data['customize_config']));
-            }
+            $data = $this->Nodes_Model->where('id', $id)->find();
             $this->assign('data', $data);
             return $this->fetch();
         }
@@ -87,15 +84,11 @@ class Node extends Adminbase
         set_time_limit(0);
         @session_start();
         \think\facade\Session::pause();
-
-        $nid  = $this->request->param('id/d', 0);
-        $data = $this->Nodes_Model->find($nid);
-
-        $event = \think\facade\App::controller('Collection', 'event');
+        $nid                      = $this->request->param('id/d', 0);
+        $data                     = $this->Nodes_Model->find($nid);
+        $data['customize_config'] = json_decode($data['customize_config'], true);
+        $event                    = \think\facade\App::controller('Collection', 'event');
         $event->init($data);
-
-        $data['customize_config'] = unserialize($data['customize_config']);
-
         $urls       = $event->url_list();
         $total_page = count($urls);
         if ($total_page > 0) {
@@ -226,7 +219,7 @@ class Node extends Adminbase
             if ($catid) {
                 $cat_info   = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
                 $data       = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data  = unserialize($this->Nodes_Model->where('id', $nid)->value('customize_config'));
+                $node_data  = json_decode($this->Nodes_Model->where('id', $nid)->value('customize_config'), true);
                 $node_field = [];
                 if (is_array($node_data)) {
                     foreach ($node_data as $k => $v) {

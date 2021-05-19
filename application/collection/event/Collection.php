@@ -99,7 +99,9 @@ class Collection
                     return $v['value'];
                 }
                 if ("html" == $v['attr']) {
-                    $content = preg_replace_callback('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', array(&$this, 'download_img_callback'), $content);
+                    $content = preg_replace_callback('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', function ($match) {
+                        return $this->download_img_callback($match);
+                    }, $content);
                 }
                 return $content;
             }];

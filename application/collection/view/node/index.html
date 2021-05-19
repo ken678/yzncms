@@ -21,7 +21,7 @@
 </script>
 <script type="text/html" id="barTool">
     <!--<a class="layui-btn layui-btn-xs layui-btn-normal layui-iframe" href="" >测试</a>-->
-    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑">编辑</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑" data-width="950px" data-height="600px">编辑</a>
     <a href='{:url("del")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 {/block}
@@ -29,18 +29,22 @@
 <script>
 layui.use('yznTable', function() {
     var table = layui.yznTable;
-
     var init = {
         table_elem: '#currentTable',
-        add_url: "{:url('add')}",
         delete_url: "{:url('del')}",
     };
-
     table.render({
         init: init,
         id: 'currentTable',
         elem: '#currentTable',
-        toolbar: ['refresh', 'add', 'delete'],
+        toolbar: ['refresh', [{
+            text: '添加',
+            url: "{:url('add')}",
+            method: 'open',
+            class: 'layui-btn layui-btn-sm layui-btn-normal',
+            icon: 'iconfont icon-add',
+            extend: 'data-width="950px" data-height="600px"',
+        }], 'delete'],
         url: '{:url("index")}',
         cols: [
             [
