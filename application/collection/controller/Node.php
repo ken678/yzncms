@@ -27,7 +27,7 @@ class Node extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Nodes_Model = new Nodes_Model;
+        $this->Nodes_Model   = new Nodes_Model;
         $this->Content_Model = new Content_Model;
         $this->Program_Model = new Program_Model;
     }
@@ -88,7 +88,7 @@ class Node extends Adminbase
         @session_start();
         \think\facade\Session::pause();
 
-        $nid = $this->request->param('id/d', 0);
+        $nid  = $this->request->param('id/d', 0);
         $data = $this->Nodes_Model->find($nid);
 
         $event = \think\facade\App::controller('Collection', 'event');
@@ -96,7 +96,7 @@ class Node extends Adminbase
 
         $data['customize_config'] = unserialize($data['customize_config']);
 
-        $urls = $event->url_list();
+        $urls       = $event->url_list();
         $total_page = count($urls);
         if ($total_page > 0) {
             foreach ($urls as $key => $vo) {
@@ -128,16 +128,16 @@ class Node extends Adminbase
     public function publist()
     {
         $this->request->only(['id', 'type', 'limit', 'page']);
-        $param = $this->request->param();
-        $where = [];
+        $param   = $this->request->param();
+        $where   = [];
         $where[] = ['nid', '=', $param['id']];
         if (isset($param['type']) && !empty($param['type'])) {
             $where[] = ['status', '=', $param['type']];
         }
         if ($this->request->isAjax()) {
             $limit = intval($param['limit']) < 10 ? 10 : $param['limit'];
-            $page = intval($param['page']) < 1 ? 1 : $param['page'];
-            $data = $this->Content_Model
+            $page  = intval($param['page']) < 1 ? 1 : $param['page'];
+            $data  = $this->Content_Model
                 ->where($where)
                 ->page($page, $limit)
                 ->order('id', 'desc')
@@ -151,7 +151,7 @@ class Node extends Adminbase
 
     public function show()
     {
-        $id = $this->request->param('id/d', 0);
+        $id   = $this->request->param('id/d', 0);
         $data = $this->Content_Model->where('id', $id)->value('data');
         $this->assign('data', unserialize($data));
         return $this->fetch();
@@ -171,13 +171,13 @@ class Node extends Adminbase
 
     public function add_program()
     {
-        $nid = $this->request->param('id/d', 0);
+        $nid   = $this->request->param('id/d', 0);
         $catid = $this->request->param('catid/d', 0);
         $title = $this->request->param('title/s', '');
         if ($this->request->isPost()) {
             $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
-            $config = [];
-            $data = $this->request->post();
+            $config  = [];
+            $data    = $this->request->post();
             foreach ($data['node_field'] as $k => $v) {
                 if (empty($v)) {
                     continue;
@@ -191,11 +191,11 @@ class Node extends Adminbase
                 $config['funcs'][$data['model_field'][$k]] = $v;
             }
             $result = $this->Program_Model->save([
-                'nid' => $nid,
-                'catid' => $catid,
+                'nid'     => $nid,
+                'catid'   => $catid,
                 'modelid' => $modelid,
-                'title' => $title,
-                'config' => serialize($config),
+                'title'   => $title,
+                'config'  => serialize($config),
             ]);
             if (false !== $result) {
                 $this->success("添加成功！", url('import', ['id' => $nid]));
@@ -206,7 +206,7 @@ class Node extends Adminbase
         } else {
             $tree = new \util\Tree();
             //$str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
-            $str = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
+            $str   = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             foreach ($array as $k => $v) {
                 if ($v['id'] == $catid) {
@@ -224,9 +224,9 @@ class Node extends Adminbase
             $tree->init($array);
             $category = $tree->getTree(0, $str);
             if ($catid) {
-                $cat_info = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
-                $data = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data = unserialize($this->Nodes_Model->where('id', $nid)->value('customize_config'));
+                $cat_info   = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
+                $data       = model('cms/cms')->getFieldList($cat_info['modelid']);
+                $node_data  = unserialize($this->Nodes_Model->where('id', $nid)->value('customize_config'));
                 $node_field = [];
                 if (is_array($node_data)) {
                     foreach ($node_data as $k => $v) {
@@ -255,11 +255,11 @@ class Node extends Adminbase
     //导入文章到模型
     public function import_content()
     {
-        $nid = $this->request->param('id/d', 0);
-        $pid = $this->request->param('pid/d', 0);
-        $program = $this->Program_Model->where('id', $pid)->find();
+        $nid               = $this->request->param('id/d', 0);
+        $pid               = $this->request->param('pid/d', 0);
+        $program           = $this->Program_Model->where('id', $pid)->find();
         $program['config'] = unserialize($program['config']);
-        $data = $this->Content_Model->where([
+        $data              = $this->Content_Model->where([
             ['nid', '=', $nid],
             ['status', '=', 1],
         ])->select();
@@ -267,7 +267,7 @@ class Node extends Adminbase
         $cms_model = new \app\cms\model\Cms;
         foreach ($data as $k => $v) {
             $sql['modelField'] = array('catid' => $program['catid'], 'status' => 1);
-            $v['data'] = unserialize($v['data']);
+            $v['data']         = unserialize($v['data']);
             if (!$v['data']) {
                 continue;
             }
@@ -300,15 +300,15 @@ class Node extends Adminbase
     public function parseFunction($match, $content)
     {
         $varArray = explode('|', $match);
-        $length = count($varArray);
+        $length   = count($varArray);
         for ($i = 0; $i < $length; $i++) {
             $args = explode('=', $varArray[$i], 2);
-            $fun = trim($args[0]);
+            $fun  = trim($args[0]);
             if (isset($args[1])) {
                 $args[1] = explode(',', $args[1]);
                 if (false !== $key = array_search("###", $args[1])) {
                     $args[1][$key] = $content;
-                    $content = call_user_func_array($fun, $args[1]);
+                    $content       = call_user_func_array($fun, $args[1]);
                 } else {
                     $content = call_user_func_array($fun, array_merge([$content], $args[1]));
                 }
@@ -324,8 +324,8 @@ class Node extends Adminbase
     //采集数据删除
     public function content_del()
     {
-        $nid = $this->request->param('id/d', 0);
-        $ids = $this->request->param('ids/a', null);
+        $nid  = $this->request->param('id/d', 0);
+        $ids  = $this->request->param('ids/a', null);
         $type = $this->request->param('type/s', '');
         if ($type == "all") {
             $this->Content_Model->where('nid', $nid)->delete();

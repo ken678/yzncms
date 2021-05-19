@@ -56,15 +56,15 @@ class Collection
         if ($url) {
             // 定义采集规则
             $rules = [
-                'url' => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
-                'title' => [$this->_config['url_rule1'], 'html', $this->_config['url_rule3']],
+                'url'   => ['', $this->_config['url_rule2'], $this->_config['url_rule3']],
+                'title' => ['', 'html', $this->_config['url_rule3']],
             ];
             if ('utf-8' == $this->_config['sourcecharset']) {
-                $list = QueryList::get($url);
+                $obj = QueryList::get($url);
             } else {
-                $list = QueryList::get($url)->removeHead()->encoding('UTF-8');
+                $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
             }
-            $list = $list->rules($rules)->query()->getData();
+            $list = $obj->rules($rules)->range($this->_config['url_rule1'])->query()->getData();
             $data = array();
             foreach ($list as $k => $v) {
                 if ($this->_config['url_contain']) {
@@ -77,7 +77,7 @@ class Collection
                         continue;
                     }
                 }
-                $data[$k]['url'] = $this->url_check($v['url'], $url);
+                $data[$k]['url']   = $this->url_check($v['url'], $url);
                 $data[$k]['title'] = strip_tags($v['title']);
             }
             return $data;
@@ -105,12 +105,12 @@ class Collection
             }];
         }
         if ('utf-8' == $this->_config['sourcecharset']) {
-            $cont = QueryList::get($url);
+            $obj = QueryList::get($url);
         } else {
-            $cont = QueryList::get($url)->removeHead()->encoding('UTF-8');
+            $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
         }
-        $cont = $cont->rules($rules)->query()->getData();
-        return $cont[0];
+        $cont = $obj->rules($rules)->query()->getData();
+        return $cont;
 
     }
 
