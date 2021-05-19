@@ -64,7 +64,7 @@ class Collection
             } else {
                 $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
             }
-            $list = $obj->rules($rules)->range($this->_config['url_rule1'])->query()->getData();
+            $list = $obj->rules($rules)->range($this->_config['url_rule1'])->query()->getData()->all();
             $data = array();
             foreach ($list as $k => $v) {
                 if ($this->_config['url_contain']) {
@@ -99,9 +99,11 @@ class Collection
                     return $v['value'];
                 }
                 if ("html" == $v['attr']) {
-                    $content = preg_replace_callback('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', function ($match) {
-                        return $this->download_img_callback($match);
-                    }, $content);
+                    if (false !== strpos($content, '<img')) {
+                        $content = preg_replace_callback('/<img[^>]*src=[\'"]?([^>\'"\s]*)[\'"]?[^>]*>/i', function ($match) {
+                            return $this->download_img_callback($match);
+                        }, $content);
+                    }
                 }
                 return $content;
             }];
@@ -111,7 +113,7 @@ class Collection
         } else {
             $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
         }
-        $cont = $obj->rules($rules)->query()->getData();
+        $cont = $obj->rules($rules)->query()->getData()->all();
         return $cont;
 
     }
