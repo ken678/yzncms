@@ -4,30 +4,33 @@
     <div class="layui-card-header">发布方案</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
         </div>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-      <a class="layui-btn layui-btn-sm" href='{:url("add_program",["id"=>$id])}'>添加方案</a>
-    </div>
-</script>
 <script type="text/html" id="barTool">
-	<a href='{:url("import_content",["id"=>$id])}?pid={{d.id}}' class="layui-btn layui-btn-xs layui-btn-normal">使用</a>
+	<a data-request='{:url("import_content",["id"=>$id])}?pid={{d.id}}' data-table="currentTable" class="layui-btn layui-btn-xs layui-btn-normal">使用</a>
     <!--<a href='' class="layui-btn layui-btn-xs">编辑</a>-->
     <a href='{:url("import_program_del")}?pid={{d.id}}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
 {/block}
 {block name="script"}
 <script>
-layui.use('table', function() {
-    var table = layui.table,
-        $ = layui.$,
-        form = layui.form;
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        add_url: '{:url("add_program",["id"=>$id])}',
+    };
+
     table.render({
-        elem: '#dataTable',
-        toolbar: '#toolbarDemo',
+        init: init,
+        id: 'currentTable',
+        elem: '#currentTable',
+        toolbar: ['refresh',[{
+                html:'<a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url("add_program",["id"=>$id])}"><i class="iconfont icon-add"></i>添加方案</a>'
+            }]],
         url: '{:url("import",["id"=>$id])}',
         cols: [
             [
