@@ -98,5 +98,12 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/181152_57b5113e_555541.jpeg "mm_facetoface_collect_qrcode_1547113957376_01.jpg")
 
+## [联系我们]
+目前只支持以下条件才能添加QQ或者微信好友，其他理由如“我要拜师”，“我要学习，我有问题”等等一律谢绝添加
+- 有重大BUG及漏洞反馈
+- 有建站等项目合作
+
+满足添加可以添加qq：530765310（御宅男），备注理由
+
 ## [开源协议]  
 YznCMS遵循[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0.html)开源协议发布，并允许商业使用。  
