@@ -87,7 +87,7 @@ class Node extends Adminbase
         $nid                      = $this->request->param('id/d', 0);
         $data                     = $this->Nodes_Model->find($nid);
         $data['customize_config'] = json_decode($data['customize_config'], true);
-        $event                    = \think\facade\App::controller('Collection', 'event');
+        $event                    = new \app\collection\library\Collection;
         $event->init($data);
         $urls       = $event->url_list();
         $total_page = count($urls);

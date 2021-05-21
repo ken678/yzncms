@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 采集管理
 // +----------------------------------------------------------------------
-namespace app\collection\event;
+namespace app\collection\library;
 
 use QL\QueryList;
 
@@ -67,6 +67,9 @@ class Collection
             $list = $obj->rules($rules)->range($this->_config['url_rule1'])->query()->getData()->all();
             $data = array();
             foreach ($list as $k => $v) {
+                if (empty($v['url']) || empty($v['title'])) {
+                    continue;
+                }
                 if ($this->_config['url_contain']) {
                     if (strpos($v['url'], $this->_config['url_contain']) === false) {
                         continue;
