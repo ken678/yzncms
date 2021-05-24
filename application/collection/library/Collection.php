@@ -56,15 +56,15 @@ class Collection
         if ($url) {
             // 定义采集规则
             $rules = [
-                'url'   => ['', $this->_config['url_rule2'], $this->_config['url_rule3']],
-                'title' => ['', 'html', $this->_config['url_rule3']],
+                'url'   => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
+                'title' => [$this->_config['url_rule4'], $this->_config['url_rule5'], $this->_config['url_rule6']],
             ];
             if ('utf-8' == $this->_config['sourcecharset']) {
                 $obj = QueryList::get($url);
             } else {
                 $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
             }
-            $list = $obj->rules($rules)->range($this->_config['url_rule1'])->query()->getData()->all();
+            $list = $obj->rules($rules)->range($this->_config['url_range'])->query()->getData()->all();
             $data = array();
             foreach ($list as $k => $v) {
                 if (empty($v['url']) || empty($v['title'])) {
