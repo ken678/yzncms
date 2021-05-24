@@ -197,8 +197,7 @@ class Node extends Adminbase
             }
 
         } else {
-            $tree = new \util\Tree();
-            //$str = "<option value='\$catidurl' \$selected \$disabled>\$spacer \$catname</option>";
+            $tree  = new \util\Tree();
             $str   = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
             $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
             foreach ($array as $k => $v) {
@@ -242,7 +241,93 @@ class Node extends Adminbase
 
     public function edit_program()
     {
-
+        $nid   = $this->request->param('id/d', 0);
+        $pid   = $this->request->param('pid/d', 0);
+        $catid = $this->request->param('catid/d', 0);
+        $title = $this->request->param('title/s', '');
+        if ($this->request->isPost()) {
+            $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
+            $config  = [];
+            $data    = $this->request->post();
+            foreach ($data['node_field'] as $k => $v) {
+                if (empty($v)) {
+                    continue;
+                }
+                $config[$data['model_type'][$k]][$data['model_field'][$k]] = $v;
+            }
+            foreach ($data['funcs'] as $k => $v) {
+                if (empty($v)) {
+                    continue;
+                }
+                $config['funcs'][$data['model_field'][$k]] = $v;
+            }
+            $proObj          = Program_Model::get($pid);
+            $proObj->nid     = $nid;
+            $proObj->catid   = $catid;
+            $proObj->modelid = $modelid;
+            $proObj->title   = $title;
+            $proObj->config  = serialize($config);
+            if ($proObj->save()) {
+                $this->success("修改成功！", url('import', ['id' => $nid]));
+            } else {
+                $this->error('修改失败！');
+            }
+        } else {
+            $program = unserialize($this->Program_Model->where('id', $pid)->value('config'));
+            $tree    = new \util\Tree();
+            $str     = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
+            $array   = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
+            foreach ($array as $k => $v) {
+                if ($v['id'] == $catid) {
+                    $array[$k]['selected'] = "selected";
+                }
+                //含子栏目和单页不可以发表
+                if ($v['child'] == 1 || $v['type'] == 1) {
+                    $array[$k]['disabled'] = "disabled";
+                    $array[$k]['catidurl'] = '';
+                } else {
+                    $array[$k]['disabled'] = "";
+                    $array[$k]['catidurl'] = url('add_program', ['id' => $nid, 'catid' => $v['id']]);
+                }
+            }
+            $tree->init($array);
+            $category = $tree->getTree(0, $str);
+            if ($catid) {
+                $cat_info  = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
+                $data      = model('cms/cms')->getFieldList($cat_info['modelid']);
+                $node_data = json_decode($this->Nodes_Model->where('id', $nid)->value('customize_config'), true);
+                foreach ($data as $key => $value) {
+                    if ($value['fieldArr'] == 'modelField') {
+                        if (isset($program['modelField'][$key])) {
+                            $data[$key]['value'] = $program['modelField'][$key];
+                        }
+                    }
+                    if ($value['fieldArr'] == 'modelFieldExt') {
+                        if (isset($program['modelFieldExt'][$key])) {
+                            $data[$key]['value'] = $program['modelFieldExt'][$key];
+                        }
+                    }
+                    $data[$key]['funcs'] = isset($program['funcs'][$key]) ? $program['funcs'][$key] : '';
+                }
+                $node_field = [];
+                if (is_array($node_data)) {
+                    foreach ($node_data as $k => $v) {
+                        if (empty($v['name']) || empty($v['title'])) {
+                            continue;
+                        }
+                        $node_field[$v['name']] = $v['title'];
+                    }
+                }
+                $this->assign("node_field", $node_field);
+                $this->assign("data", $data);
+            }
+            $this->assign('program', $program);
+            $this->assign("catname", $cat_info['catname']);
+            $this->assign("category", $category);
+            $this->assign('id', $nid);
+            $this->assign('catid', $catid);
+            return $this->fetch();
+        }
     }
 
     //导入文章到模型

@@ -5,7 +5,7 @@
     <div class="layui-card-body">
         <form class="layui-form" method="post">
             <fieldset class="layui-elem-field">
-                <legend>新建发布方案</legend>
+                <legend>编辑发布方案</legend>
                 <div class="layui-field-box">
                     <div class="layui-form-item">
                         <label>栏目列表</label>
@@ -51,13 +51,13 @@
                                     <select name="node_field[]">
                                         <option value="">请选择</option>
                                         {foreach $node_field as $key=>$name }
-                                        <option value="{$key}" {if $key==$vo.name}selected{/if}>{$name} </option>
+                                        <option value="{$key}" {if $key==$vo.value}selected{/if}>{$name} </option>
                                         {/foreach}
                                     </select>
                                 </td>
                                 <td>
                                     <div class="layui-input-inline" style="min-width: 180px;">
-                                        <input type="text" name="funcs[]" autocomplete="off" placeholder="多个函数使用'|'分割" class="layui-input">
+                                        <input type="text" name="funcs[]" autocomplete="off" placeholder="多个函数使用'|'分割" class="layui-input" value="{$vo.funcs}">
                                     </div>
                                     <div class="layui-input-inline">
                                         <select lay-filter="funcs">
