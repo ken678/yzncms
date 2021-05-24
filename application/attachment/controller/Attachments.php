@@ -17,7 +17,6 @@ namespace app\attachment\controller;
 use app\admin\service\User;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Adminbase;
-use think\Db;
 
 class Attachments extends Adminbase
 {
@@ -27,7 +26,7 @@ class Attachments extends Adminbase
     {
         parent::initialize();
         $this->modelClass = new Attachment_Model;
-        $this->uploadUrl = config('public_url') . 'uploads/';
+        $this->uploadUrl  = config('public_url') . 'uploads/';
     }
 
     //附件列表页
@@ -35,9 +34,9 @@ class Attachments extends Adminbase
     {
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list = Attachment_Model::where($where)->page($page, $limit)->order('id', 'desc')->select();
-            $total = Attachment_Model::where($where)->order('id', 'desc')->count();
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            $_list                      = Attachment_Model::where($where)->page($page, $limit)->order('id', 'desc')->select();
+            $total                      = Attachment_Model::where($where)->order('id', 'desc')->count();
+            $result                     = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
         return $this->fetch();
@@ -85,18 +84,18 @@ class Attachments extends Adminbase
     public function getUrlFile()
     {
         $content = $this->request->post('content');
-        $type = $this->request->post('type');
-        $urls = [];
+        $type    = $this->request->post('type');
+        $urls    = [];
         preg_match_all("/(src|SRC)=[\"|'| ]{0,}((http|https):\/\/(.*)\.(gif|jpg|jpeg|bmp|png|tiff))/isU", $content, $urls);
         $urls = array_unique($urls[2]);
 
         $file_info = [
-            'uid' => User::instance()->isLogin(),
+            'aid'    => User::instance()->isLogin(),
             'module' => 'admin',
-            'thumb' => '',
+            'thumb'  => '',
         ];
         foreach ($urls as $vo) {
-            $vo = trim(urldecode($vo));
+            $vo   = trim(urldecode($vo));
             $host = parse_url($vo, PHP_URL_HOST);
             if ($host != $_SERVER['HTTP_HOST']) {
                 //当前域名下的文件不下载
@@ -115,15 +114,15 @@ class Attachments extends Adminbase
                         $file_info['size'] = filesize($filename);
                         $file_info['mime'] = mime_content_type($filename);
 
-                        $fpath = $type . DS . date('Ymd');
+                        $fpath    = $type . DS . date('Ymd');
                         $savePath = ROOT_PATH . 'public' . DS . 'uploads' . DS . $fpath;
                         if (!is_dir($savePath)) {
                             mkdir($savePath, 0755, true);
                         }
-                        $fname = DS . md5(microtime(true)) . $fileExt;
+                        $fname             = DS . md5(microtime(true)) . $fileExt;
                         $file_info['name'] = $vo;
                         $file_info['path'] = $this->uploadUrl . str_replace(DS, '/', $fpath . $fname);
-                        $file_info['ext'] = ltrim($fileExt, ".");
+                        $file_info['ext']  = ltrim($fileExt, ".");
 
                         if (rename($filename, $savePath . $fname)) {
                             Attachment_Model::create($file_info);
