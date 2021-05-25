@@ -14,15 +14,19 @@
 // +----------------------------------------------------------------------
 namespace app\collection\library;
 
+use app\admin\service\User;
+use app\attachment\model\Attachment;
 use QL\QueryList;
 
 class Collection
 {
     public $_config;
     public $_url;
+    public $_uid;
     public function init($config)
     {
         $this->_config = $config;
+        $this->_uid    = User::instance()->isLogin();
     }
 
     //得到需要采集的网页列表页
@@ -65,6 +69,7 @@ class Collection
                 $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
             }
             $list = $obj->rules($rules)->range($this->_config['url_range'])->query()->getData()->all();
+            QueryList::destructDocuments();
             $data = array();
             foreach ($list as $k => $v) {
                 if (empty($v['url']) || empty($v['title'])) {
@@ -117,6 +122,7 @@ class Collection
             $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
         }
         $cont = $obj->rules($rules)->query()->getData()->all();
+        QueryList::destructDocuments();
         return $cont;
 
     }
@@ -131,11 +137,63 @@ class Collection
     }
     protected function download_img($old, $out)
     {
-        if (!empty($old) && !empty($out) && strpos($out, '://') === false) {
-            return str_replace($out, $this->url_check($out, $this->_url), $old);
+        if (!empty($old) && !empty($out)) {
+            $url = '';
+            if (false === strpos($out, '://')) {
+                $url = $out = $this->url_check($out, $this->_url);
+            }
+            if ($this->_config['down_attachment']) {
+                $url = $this->getUrlFile($out);
+            }
+            return str_replace($out, $url, $old);
         } else {
             return $old;
         }
+    }
+
+    protected function getUrlFile($url)
+    {
+        $file_info = [
+            'aid'    => $this->_uid,
+            'module' => 'admin',
+            'thumb'  => '',
+        ];
+        $host = parse_url($url, PHP_URL_HOST);
+        if ($host != $_SERVER['HTTP_HOST']) {
+            $fileExt = strrchr($url, '.');
+            if (!in_array($fileExt, ['.jpg', '.gif', '.png', '.bmp', '.jpeg', '.tiff'])) {
+                return $url;
+            }
+            $filename = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'temp' . DS . md5($url) . $fileExt;
+            if (http_down($url, $filename) !== false) {
+                $file_info['md5'] = hash_file('md5', $filename);
+                if ($file_exists = Attachment::get(['md5' => $file_info['md5']])) {
+                    unlink($filename);
+                    $url = $file_exists['path'];
+                } else {
+                    $file_info['sha1'] = hash_file('sha1', $filename);
+                    $file_info['size'] = filesize($filename);
+                    $file_info['mime'] = mime_content_type($filename);
+
+                    $fpath    = 'images' . DS . date('Ymd');
+                    $savePath = ROOT_PATH . 'public' . DS . 'uploads' . DS . $fpath;
+                    if (!is_dir($savePath)) {
+                        mkdir($savePath, 0755, true);
+                    }
+                    $fname             = DS . md5(microtime(true)) . $fileExt;
+                    $file_info['name'] = $url;
+                    $file_info['path'] = config('public_url') . 'uploads/' . str_replace(DS, '/', $fpath . $fname);
+                    $file_info['ext']  = ltrim($fileExt, ".");
+
+                    if (rename($filename, $savePath . $fname)) {
+                        Attachment::create($file_info);
+                        $url = $file_info['path'];
+                    }
+                }
+            }
+        }
+
+        return $url;
     }
 
     //URL地址检查

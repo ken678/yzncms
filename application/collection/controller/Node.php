@@ -82,8 +82,8 @@ class Node extends Adminbase
     public function col_url_list()
     {
         set_time_limit(0);
-        @session_start();
-        \think\facade\Session::pause();
+        //@session_start();
+        //\think\facade\Session::pause();
         $nid                      = $this->request->param('id/d', 0);
         $data                     = $this->Nodes_Model->find($nid);
         $data['customize_config'] = json_decode($data['customize_config'], true);
@@ -103,7 +103,7 @@ class Node extends Adminbase
                         //是否采集过
                         if (!Content_Model::where(['url' => $v['url']])->find()) {
                             $html = $event->get_content($v['url']);
-                            $event->echo_msg($echo_str . "采集内容页：<a href='{$v['url']}' target='_blank'>{$v['url']}</a>", 'black');
+                            $event->echo_msg("采集内容页：<a href='{$v['url']}' target='_blank'>{$v['url']}</a>", 'black');
                             Content_Model::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title'], 'data' => serialize($html)]);
                         }
                     }
