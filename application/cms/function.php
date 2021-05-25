@@ -94,9 +94,8 @@ function filters($modelid, $catid)
 {
     $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
     $data     = get_filters_field($modelid);
-    Request::filter('trim');
+    Request::filter('trim,strip_tags');
     $param = paramdecode(Request::param('condition'));
-
     //$catid = Request::param('catid');
     $conditionParam = [];
     foreach ($data as $name => $rs) {
