@@ -66,7 +66,7 @@ class Collection
             if ('utf-8' == $this->_config['sourcecharset']) {
                 $obj = QueryList::get($url);
             } else {
-                $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
+                $obj = QueryList::get($url)->encoding('UTF-8')->removeHead();
             }
             $list = $obj->rules($rules)->range($this->_config['url_range'])->query()->getData()->all();
             QueryList::destructDocuments();
@@ -119,7 +119,7 @@ class Collection
         if ('utf-8' == $this->_config['sourcecharset']) {
             $obj = QueryList::get($url);
         } else {
-            $obj = QueryList::get($url)->removeHead()->encoding('UTF-8');
+            $obj = QueryList::get($url)->encoding('UTF-8')->removeHead();
         }
         $cont = $obj->rules($rules)->query()->getData()->all();
         QueryList::destructDocuments();
