@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '1c1b4b7d3aef1b81f9cdb9fa8e46bf361a428418',
+    'reference' => 'dd596697b83d28e12d5d2811d55ba9a97831ce77',
     'name' => 'topthink/think',
   ),
   'versions' => 
@@ -49,12 +49,12 @@
     ),
     'guzzlehttp/psr7' => 
     array (
-      'pretty_version' => '1.8.1',
-      'version' => '1.8.1.0',
+      'pretty_version' => '1.8.2',
+      'version' => '1.8.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '35ea11d335fd638b5882ff1725228b3d35496ab1',
+      'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
     ),
     'khanamiryan/qrcode-detector-decoder' => 
     array (
@@ -137,12 +137,12 @@
     ),
     'psr/log' => 
     array (
-      'pretty_version' => '1.1.3',
-      'version' => '1.1.3.0',
+      'pretty_version' => '1.1.4',
+      'version' => '1.1.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0f73288fd15629204f9d42b7055f72dacbe811fc',
+      'reference' => 'd49695b909c3b7628b6289db5479a1c204601f11',
     ),
     'psr/log-implementation' => 
     array (
@@ -275,7 +275,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '1c1b4b7d3aef1b81f9cdb9fa8e46bf361a428418',
+      'reference' => 'dd596697b83d28e12d5d2811d55ba9a97831ce77',
     ),
     'topthink/think-captcha' => 
     array (
