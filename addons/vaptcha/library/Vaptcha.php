@@ -94,9 +94,8 @@ class Vaptcha
 
     public function getChannelData()
     {
-        $url = $this->offline_url . $this->vid;
         //前端mode: offline时 请求地址：
-        //$url = $this->offline_url . 'offline';
+        $url = $this->offline_url . 'offline';//正式模式使用替换这行代码$url = $this->offline_url . $this->vid;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
