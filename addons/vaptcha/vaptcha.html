@@ -18,7 +18,7 @@ $(document).ready(function() {
         scene: 1, //场景值 不填默认为0
         offline_server: '{:url("addons/vaptcha/init")}',
         //可选参数
-        //mode: 'offline' // 离线模式时使用
+        mode: 'offline' // 正式模式使用请注释本行
     }).then(function(obj) {
         obj.renderTokenInput('.layui-form');
         obj.render();

@@ -4,13 +4,13 @@ return array(
         'name'  => 'appvid',
         'title' => '应用VID',
         'type'  => 'text',
-        'value' => '',
+        'value' => '123456789',
     ),
     array(
         'name'  => 'appkey',
         'title' => '应用KEY',
         'type'  => 'text',
-        'value' => '',
+        'value' => '123456789',
     ),
     array(
         'name'    => 'type',
