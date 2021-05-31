@@ -76,5 +76,10 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-layer-content {clear: both; }
 .layui-layer-yzn-msg {min-width: 100px; }
 
+.fieldlist dd {display: block;margin: 5px 0;}
+.fieldlist dd input {display: inline-block;width: 300px;}
+.fieldlist dd input:first-child {width: 110px;}
+.fieldlist dd ins {width: 110px;display: inline-block;text-decoration: none;font-weight: bold;}
+
 .thumbnail {overflow: hidden; float: left; width: 100px; height: 100px; margin-right: 10px; text-align: center; display: block; margin-bottom: 20px; line-height: 100px; background-color: #fff; border: 1px solid #ddd; -webkit-transition: border .2s ease-in-out; -o-transition: border .2s ease-in-out; transition: border .2s ease-in-out; display: inline-block; position: relative; padding: 5px; }
 .thumbnail>img {cursor: zoom-in; max-height: 100%; max-width: 100%; display: inline-block; vertical-align: middle; }
