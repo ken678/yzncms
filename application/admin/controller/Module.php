@@ -158,7 +158,7 @@ class Module extends Adminbase
             if ($type == 'module') {
                 $curr_version = Db::name('Module')->where('module', $value[0])->value('version');
             } else {
-                $curr_version = Db::name('Addons')->where('name', $value[0])->value('version');
+                $curr_version = isset((get_addon_info($value[0]))['version']) ? (get_addon_info($value[0]))['version'] : '';
             }
             $result     = version_compare($curr_version, $value[1], $value[2]);
             $need[$key] = [
