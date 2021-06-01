@@ -549,7 +549,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         //追加控制
                         $(".layui-form .fieldlist").on("click", ".btn-append,.append", function(e, row) {
                             var container = $(this).closest(".fieldlist");
-                            var tagName = container.data("tag") || "dd";
+                            var tagName = container.data("tag") || (container.is("table") ? "tr" : "dd");
                             var index = container.data("index");
                             var name = container.data("name");
                             var id = container.data("id");
@@ -562,26 +562,24 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 lists: [{ 'index': index, 'name': name, 'data': data, 'row': row }]
                             };
                             laytpl($("#" + id + "Tpl").html()).render(vars, function(html) {
-                                $(html).insertBefore($(".arrBox", container));
+                                $(html).attr("fieldlist-item", true).insertBefore($(tagName + ":last", container));
                             });
                             form.render();
-                            //var html = template ? Template(template, vars) : Template.render(Form.config.fieldlisttpl, vars);
-                            //$(html).insertBefore($(tagName + ":last", container));
                             $(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
                         });
                         //移除控制
                         $(".layui-form .fieldlist").on("click", ".btn-remove", function() {
                             var container = $(this).closest(".fieldlist");
-                            //var tagName = container.data("tag") || "dd";
-                            $(this).closest($(".rules-item")).remove();
+                            var tagName = container.data("tag") || (container.is("table") ? "tr" : "dd");
+                            $(this).closest(tagName).remove();
                             refresh(container.data("name"));
                         });
                         //渲染数据&拖拽排序
                         $(".layui-form .fieldlist").each(function() {
                             var container = this;
-                            //var tagName = $(this).data("tag") || "dd";
+                            var tagName = $(this).data("tag") || ($(this).is("table") ? "tr" : "dd");
                             $(this).dragsort({
-                                //itemSelector: $(".rules-item"),
+                                itemSelector: tagName,
                                 dragSelector: ".btn-dragsort",
                                 dragEnd: function() {
                                     refresh($(this).closest(".fieldlist").data("name"));
