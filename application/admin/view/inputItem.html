@@ -41,28 +41,31 @@
 {case value="array"}
 <div class="layui-form-item layui-form-text">
     <label>{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
-    <div class="layui-form-field-label fieldlist" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}">
-        <div class="arrBox"></div>
-        <button type="button" class="layui-btn btn-append">追加</button>
+    <dl class="layui-form-field-label fieldlist" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}">
+        <dd>
+            <ins>键名</ins>
+            <ins>键值</ins>
+        </dd>
+        <dd><button type="button" class="layui-btn btn-append">追加</button></dd>
         <textarea name="{$vo.fieldArr}[{$vo.name}]" class="layui-textarea layui-hide">{$vo.value}</textarea>
-    </div>
+    </dl>
     {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 <script type="text/html" id="{$vo.name}Tpl">
-    <div class="layui-form-item rules-item">
-    {{# layui.each(d.lists, function(index, item) { }}
-    <div class="layui-input-inline" style="width:120px;">
-        <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="键" value="{{item.row.key|| ''}}" />
-    </div>
-    <div class="layui-input-inline" style="width:120px;">
-        <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="值" value="{{item.row.value|| ''}}" />
-    </div>
-    <label class="layui-form-mid">
-        <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
-        <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
-    </div>
-    {{# }); }}
-    </div>
+    <dd class="layui-form-item rules-item">
+        {{# layui.each(d.lists, function(index, item) { }}
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="键" value="{{item.row.key|| ''}}" />
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="值" value="{{item.row.value|| ''}}" />
+        </div>
+        <label class="layui-form-mid">
+            <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
+            <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
+        </div>
+        {{# }); }}
+    </dd>
 </script>
 {/case}
 {case value="checkbox"}
