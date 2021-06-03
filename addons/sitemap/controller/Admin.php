@@ -56,14 +56,14 @@ class Admin extends Adminaddon
             }
 
             //单页
-            $List = Db::name('Page')->order('updatetime desc')->field('catid,updatetime')->select();
+            /*$List = Db::name('Page')->order('updatetime desc')->field('catid,updatetime')->select();
             if (!empty($List)) {
-                foreach ($List as $vo) {
-                    $cat  = $this->url_mode == 1 ? $vo['catid'] : (isset($Category[$vo['catid']]) ? $Category[$vo['catid']]['id'] : getCategory($vo['catid'], 'catdir'));
-                    $item = $this->_sitemap_item($rootUrl . buildCatUrl($cat), intval($data['content']['priority']), $data['content']['changefreq'], $vo['updatetime']);
-                    $this->_add_data($item);
-                }
+            foreach ($List as $vo) {
+            $cat  = $this->url_mode == 1 ? $vo['catid'] : (isset($Category[$vo['catid']]) ? $Category[$vo['catid']]['id'] : getCategory($vo['catid'], 'catdir'));
+            $item = $this->_sitemap_item($rootUrl . buildCatUrl($cat), intval($data['content']['priority']), $data['content']['changefreq'], $vo['updatetime']);
+            $this->_add_data($item);
             }
+            }*/
 
             //列表
             $modelList = cache('Model');
