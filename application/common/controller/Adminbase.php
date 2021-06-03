@@ -30,7 +30,7 @@ class Adminbase extends Base
     //当前登录账号信息
     public $_userinfo;
     public $rule;
-    //Multi方法可批量修改的字段.
+    //Multi方法可批量修改的字段
     protected $multiFields = 'status,listorder';
     //模型对象
     protected $modelClass = null;
@@ -38,6 +38,14 @@ class Adminbase extends Base
     protected $selectpageFields = '*';
     //是否是关联查询
     protected $relationSearch = false;
+    //前台提交过来,需要排除的字段数据
+    protected $excludeFields = "";
+    //数据限制字段
+    protected $dataLimitField = 'admin_id';
+    //是否开启Validate验证
+    protected $modelValidate = false;
+    //是否开启模型场景验证
+    protected $modelSceneValidate = false;
 
     /*
      * 引入后台控制器的traits
