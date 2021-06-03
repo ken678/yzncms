@@ -14,10 +14,32 @@
 // +----------------------------------------------------------------------
 namespace app\admin\library\traits;
 
-use think\Db;
+use think\exception\PDOException;
+use think\exception\ValidateException;
 
 trait Curd
 {
+    /**
+     * 排除前台提交过来的字段
+     * @param $params
+     * @return array
+     */
+    protected function preExcludeFields($params)
+    {
+        if (is_array($this->excludeFields)) {
+            foreach ($this->excludeFields as $field) {
+                if (key_exists($field, $params)) {
+                    unset($params[$field]);
+                }
+            }
+        } else {
+            if (key_exists($this->excludeFields, $params)) {
+                unset($params[$this->excludeFields]);
+            }
+        }
+        return $params;
+    }
+
     //查看
     public function index()
     {
@@ -27,8 +49,8 @@ trait Curd
                 return $this->selectpage();
             }
             list($page, $limit, $where) = $this->buildTableParames();
-            $order = $this->request->param("order/s", "DESC");
-            $sort = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
+            $order                      = $this->request->param("order/s", "DESC");
+            $sort                       = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
 
             $count = $this->modelClass
                 ->where($where)
@@ -49,13 +71,87 @@ trait Curd
     //添加
     public function add()
     {
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a");
+            if ($params) {
+                $params = $this->preExcludeFields($params);
 
+                if ($this->dataLimit && $this->dataLimitFieldAutoFill) {
+                    $params[$this->dataLimitField] = $this->$this->_userinfo['id'];
+                }
+                $result = false;
+                try {
+                    //是否采用模型验证
+                    if ($this->modelValidate) {
+                        $name     = str_replace("\\model\\", "\\validate\\", get_class($this->modelClass));
+                        $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.add' : $name) : $this->modelValidate;
+                        $this->modelClass->validateFailException(true)->validate($validate);
+                    }
+                    $result = $this->modelClass->allowField(true)->save($params);
+                } catch (ValidateException $e) {
+                    $this->error($e->getMessage());
+                } catch (PDOException $e) {
+                    $this->error($e->getMessage());
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
+                }
+                if ($result !== false) {
+                    $this->success('新增成功');
+                } else {
+                    $this->error('未插入任何行');
+                }
+            }
+            $this->error('参数不能为空');
+        }
+        return $this->fetch();
     }
 
-    //编辑
+    /**
+     * 编辑
+     */
     public function edit()
     {
-
+        $id  = $this->request->param('id/d', 0);
+        $row = $this->modelClass->get($id);
+        if (!$row) {
+            $this->error('记录未找到');
+        }
+        /*$adminIds = $this->getDataLimitAdminIds();
+        if (is_array($adminIds)) {
+        if (!in_array($row[$this->dataLimitField], $adminIds)) {
+        $this->error('你没有权限访问');
+        }
+        }*/
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a");
+            if ($params) {
+                $params = $this->preExcludeFields($params);
+                $result = false;
+                try {
+                    //是否采用模型验证
+                    if ($this->modelValidate) {
+                        $name     = str_replace("\\model\\", "\\validate\\", get_class($this->modelClass));
+                        $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.edit' : $name) : $this->modelValidate;
+                        $row->validateFailException(true)->validate($validate);
+                    }
+                    $result = $row->allowField(true)->save($params);
+                } catch (ValidateException $e) {
+                    $this->error($e->getMessage());
+                } catch (PDOException $e) {
+                    $this->error($e->getMessage());
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
+                }
+                if ($result !== false) {
+                    $this->success('修改成功');
+                } else {
+                    $this->error('未更新任何行');
+                }
+            }
+            $this->error('参数不能为空');
+        }
+        $this->view->assign("data", $row);
+        return $this->fetch();
     }
 
     //删除
@@ -68,8 +164,8 @@ trait Curd
         if (!is_array($ids)) {
             $ids = array(0 => $ids);
         }
-        $pk = $this->modelClass->getPk();
-        $list = $this->modelClass->where($pk, 'in', $ids)->select();
+        $pk    = $this->modelClass->getPk();
+        $list  = $this->modelClass->where($pk, 'in', $ids)->select();
         $count = 0;
         try {
             foreach ($list as $k => $v) {
@@ -88,7 +184,7 @@ trait Curd
     //批量更新
     public function multi()
     {
-        $id = $this->request->param('id/d', 0);
+        $id    = $this->request->param('id/d', 0);
         $value = $this->request->param('value/d', 0);
         if ($this->request->has('param')) {
             $param = $this->request->param('param/s');
