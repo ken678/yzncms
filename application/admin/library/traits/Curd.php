@@ -85,7 +85,7 @@ trait Curd
                     if ($this->modelValidate) {
                         $name     = str_replace("\\model\\", "\\validate\\", get_class($this->modelClass));
                         $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.add' : $name) : $this->modelValidate;
-                        $this->modelClass->validateFailException(true)->validate($validate);
+                        $this->validateFailException(true)->validate($params, $validate);
                     }
                     $result = $this->modelClass->allowField(true)->save($params);
                 } catch (ValidateException $e) {
@@ -132,7 +132,7 @@ trait Curd
                     if ($this->modelValidate) {
                         $name     = str_replace("\\model\\", "\\validate\\", get_class($this->modelClass));
                         $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.edit' : $name) : $this->modelValidate;
-                        $row->validateFailException(true)->validate($validate);
+                        $this->validateFailException(true)->validate($params, $validate);
                     }
                     $result = $row->allowField(true)->save($params);
                 } catch (ValidateException $e) {
