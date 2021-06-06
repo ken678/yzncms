@@ -15,12 +15,12 @@
 
 namespace app\formguide\controller;
 
-use app\common\controller\Homebase;
 use app\formguide\model\Formguide as Formguide_Model;
+use app\member\controller\MemberBase;
 use think\Db;
 use think\Validate;
 
-class Index extends HomeBase
+class Index extends MemberBase
 {
     //当前表单ID
     public $formid;
@@ -30,7 +30,9 @@ class Index extends HomeBase
     //模型信息
     protected $modelInfo = array();
     //配置
-    protected $setting = array();
+    protected $setting     = array();
+    protected $noNeedLogin = ['*'];
+    protected $noNeedRight = [];
 
     protected function initialize()
     {
@@ -121,9 +123,9 @@ class Index extends HomeBase
     protected function competence()
     {
         //是否允许游客提交
-        if (isModuleInstall('member') && (int) $this->setting['allowunreg'] == 0) {
+        if ((int) $this->setting['allowunreg'] == 0) {
             //判断是否登陆
-            if (!\app\member\service\User::instance()->id) {
+            if (!$this->auth->isLogin()) {
                 $this->error('该表单不允许游客提交，请登陆后操作！', url('member/Index/login'));
             }
         }

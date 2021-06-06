@@ -22,9 +22,20 @@ class Member extends Model
     protected $updateTime         = false;
     protected $createTime         = 'reg_time';
     protected $insert             = ['status' => 1, 'reg_ip'];
+    // 追加属性
+    protected $append = [
+        'groupname',
+    ];
+
     protected function setRegIpAttr()
     {
         return request()->ip();
+    }
+
+    public function getGroupnameAttr($value, $data)
+    {
+        $group = cache("Member_Group");
+        return isset($group[$data['groupid']]['name']) ? $group[$data['groupid']]['name'] : '';
     }
 
     /**

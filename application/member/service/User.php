@@ -14,21 +14,33 @@
 // +----------------------------------------------------------------------
 namespace app\member\service;
 
+use app\member\library\Token;
 use app\member\model\Member as Member_Model;
-use think\facade\Session;
+use think\facade\Hook;
 use think\facade\Validate;
+use util\Random;
 
 class User
 {
     protected static $instance = null;
+    protected $_error          = null;
+    protected $_logined        = false;
     //当前登录会员详细信息
-    protected static $userInfo = array();
-    //错误信息
-    protected $error = null;
+    protected static $_user = null;
+    protected $_token       = '';
+    //Token默认有效时长
+    protected $keeptime = 2592000;
+    //默认配置
+    protected $config      = [];
+    protected $options     = [];
+    protected $allowFields = ['id', 'username', 'nickname', 'mobile', 'avatar', 'point', 'amount'];
 
-    public function __construct()
+    public function __construct($options = [])
     {
-        $this->memberConfig = cache("Member_Config");
+        if ($config = cache("Member_Config")) {
+            $this->config = array_merge($this->config, $config);
+        }
+        $this->options = array_merge($this->config, $options);
     }
 
     /**
@@ -41,26 +53,76 @@ class User
         if (is_null(self::$instance)) {
             self::$instance = new self($options);
         }
-
         return self::$instance;
     }
 
     /**
-     * 魔术方法
-     * @param type $name
-     * @return null
+     * 获取User模型
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->_user;
+    }
+
+    /**
+     * 兼容调用user模型的属性
+     *
+     * @param string $name
+     * @return mixed
      */
     public function __get($name)
     {
-        //从缓存中获取
-        if (isset(self::$userInfo[$name])) {
-            return self::$userInfo[$name];
-        } else {
-            $userInfo = $this->getInfo();
-            if (!empty($userInfo)) {
-                return $userInfo[$name];
+        return $this->_user ? $this->_user->$name : null;
+    }
+
+    /**
+     * 兼容调用user模型的属性
+     */
+    public function __isset($name)
+    {
+        return isset($this->_user) ? isset($this->_user->$name) : false;
+    }
+
+    /**
+     * 根据Token初始化
+     *
+     * @param string $token Token
+     * @return boolean
+     */
+    public function init($token)
+    {
+        if ($this->_logined) {
+            return true;
+        }
+        if ($this->_error) {
+            return false;
+        }
+        $data = Token::get($token);
+        if (!$data) {
+            return false;
+        }
+        $user_id = intval($data['user_id']);
+        if ($user_id > 0) {
+            $user = Member_Model::get($user_id);
+            if (!$user) {
+                $this->setError('账户不存在');
+                return false;
             }
-            return null;
+            if ($user['status'] !== 1) {
+                $this->setError('账户已经被锁定');
+                return false;
+            }
+            $this->_user    = $user;
+            $this->_logined = true;
+            $this->_token   = $token;
+
+            //初始化成功的事件
+            Hook::listen("user_init_successed", $this->_user);
+            return true;
+        } else {
+            $this->setError('你当前还未登录');
+            return false;
         }
     }
 
@@ -93,16 +155,16 @@ class User
             $userid = $user->id;
             unset($newdata['username'], $newdata['password'], $newdata['email'], $newdata['mobile']);
             //新注册用户积分
-            $newdata['point'] = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
+            $newdata['point'] = $this->config['defualtpoint'] ? $this->config['defualtpoint'] : 0;
             //新会员注册默认赠送资金
-            $newdata['amount'] = $this->memberConfig['defualtamount'] ? $this->memberConfig['defualtamount'] : 0;
+            $newdata['amount'] = $this->config['defualtamount'] ? $this->config['defualtamount'] : 0;
             //新会员注册需要邮件验证
-            if ($this->memberConfig['enablemailcheck']) {
+            if ($this->config['enablemailcheck']) {
                 $newdata['groupid'] = 7;
                 $newdata['status']  = 0;
             } else {
                 //新会员注册需要管理员审核
-                if ($this->memberConfig['registerverify']) {
+                if ($this->config['registerverify']) {
                     $newdata['status'] = 0;
                 } else {
                     $newdata['status'] = 1;
@@ -111,9 +173,14 @@ class User
                 $newdata['groupid'] = $this->get_usergroup_bypoint($newdata['point']);
             }
             if (false !== $user->save($newdata, ['id' => $userid])) {
+                //设置Token
+                $this->_token = Random::uuid();
+                Token::set($this->_token, $userid, $this->keeptime);
                 //注册登陆状态
-                $this->loginLocal($username, $password);
+                //$this->loginLocal($username, $password);
                 $_user = $user::get($userid);
+                //设置登录状态
+                $this->_logined = true;
                 //注册成功的事件
                 hook("user_register_successed", $_user);
                 return $userid;
@@ -135,110 +202,144 @@ class User
      */
     public function loginLocal($account, $password = null, $is_remember_me = 604800)
     {
-        $userinfo = $this->getLocalUser($account);
-        if (empty($userinfo)) {
+        $field = Validate::is($account, 'email') ? 'email' : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'username');
+        $user  = Member_Model::get([$field => $account]);
+        if (!$user) {
+            $this->setError('账户不正确');
             return false;
         }
-        //是否需要进行密码验证
-        if (!empty($password)) {
-            $password = encrypt_password($password, $userinfo["encrypt"]);
-            if ($password != $userinfo['password']) {
-                $this->error = '密码错误！';
-                return false;
-            }
+
+        if ($user->status !== 1) {
+            $this->setError('账户已经被锁定');
+            return false;
         }
-        $this->autoLogin($userinfo);
-        return $userinfo;
+        if ($user->password != encrypt_password($password, $user->encrypt)) {
+            $this->setError('密码不正确');
+            return false;
+        }
+
+        //直接登录会员
+        $this->direct($user->id);
+
+        return true;
+    }
+
+    /**
+     * 删除一个指定会员
+     * @param int $user_id 会员ID
+     * @return boolean
+     */
+    public function delete($user_id)
+    {
+        $user = Member_Model::get($user_id);
+        if (!$user) {
+            return false;
+        }
+        try {
+            // 删除会员
+            User::destroy($user_id);
+            // 删除会员指定的所有Token
+            Token::clear($user_id);
+            Hook::listen("user_delete_successed", $user);
+        } catch (Exception $e) {
+            $this->setError($e->getMessage());
+            return false;
+        }
+        return true;
     }
 
     /**
      * 直接登录账号
-     * @param int $uid
+     * @param int $user_id
      * @return boolean
      */
-    public function direct($uid)
+    public function direct($user_id)
     {
-        $userinfo = Member_Model::get($uid);
-        if ($userinfo) {
-            $this->autoLogin($userinfo);
-            return $userinfo;
-        } else {
-            $this->error = '登录失败！';
-            return false;
-        }
-    }
+        $user = Member_Model::get($user_id);
+        if ($user) {
+            try {
+                $ip   = request()->ip();
+                $time = time();
+                //vip过期，更新vip和会员组
+                if ($user->overduedate < $time && intval($user->vip)) {
+                    $user->vip = 0;
+                }
+                //检查用户积分，更新新用户组，除去邮箱认证、禁止访问、游客组用户、vip用户，如果该用户组不允许自助升级则不进行该操作
+                if ($user->point >= 0 && !in_array($user->groupid, array('1', '7', '8')) && empty($user->vip)) {
+                    $grouplist = cache("Member_Group");
+                    if (!empty($grouplist[$user->groupid]['allowupgrade'])) {
+                        $check_groupid = $this->get_usergroup_bypoint($user->point);
+                        if ($check_groupid != $user->groupid) {
+                            $user->groupid = $check_groupid;
+                        }
+                    }
+                }
+                //记录本次登录的IP和时间
+                $user->last_login_ip   = $ip;
+                $user->last_login_time = $time;
+                $user->login           = $user->login + 1;
+                $user->save();
 
-    /**
-     * 获取用户信息
-     * @param $account 账户
-     * @param $password 明文密码，填写表示验证密码
-     */
-    public function getLocalUser($account, $password = null)
-    {
-        if (empty($account)) {
-            $this->error = '参数为空！';
-            return false;
-        }
-        if (Validate::isEmail($account)) {
-            $field = 'email';
-        } elseif (Validate::isMobile($account)) {
-            $field = 'mobile';
-        } else {
-            $field = 'username';
-        }
-        $userinfo = Member_Model::where([$field => $account])->find();
-        if (empty($userinfo)) {
-            $this->error = '该用户不存在！';
-            return false;
-        }
-        //是否需要进行密码验证
-        if (!empty($password)) {
-            //对明文密码进行加密
-            $password = encrypt_password($password, $userinfo["encrypt"]);
-            if ($password != $userinfo['password']) {
-                $this->error = '用户密码错误！';
-                //密码错误
+                $this->_user  = $user;
+                $this->_token = Random::uuid();
+                Token::set($this->_token, $user->id, $this->keeptime);
+                $this->_logined = true;
+
+                //登录成功的事件
+                Hook::listen("user_login_successed", $this->_user);
+            } catch (Exception $e) {
+                $this->setError($e->getMessage());
                 return false;
             }
+            return true;
+        } else {
+            return false;
         }
-        return $userinfo;
     }
 
     /**
-     * 自动登录用户
-     * @param $userInfo
+     * 修改密码
+     * @param string $newpassword       新密码
+     * @param string $oldpassword       旧密码
+     * @param bool   $ignoreoldpassword 忽略旧密码
+     * @return boolean
      */
-    public function autoLogin($userInfo)
+    public function changepwd($newpassword, $oldpassword = '', $ignoreoldpassword = false)
     {
-        $data = [
-            'last_login_time' => time(),
-            'last_login_ip'   => request()->ip(),
-            'login'           => $userInfo['login'] + 1,
-        ];
-        //vip过期，更新vip和会员组
-        if ($userInfo['overduedate'] < time() && intval($userInfo['vip'])) {
-            $data['vip'] = 0;
+        if (!$this->_logined) {
+            $this->setError('你当前还未登录');
+            return false;
         }
-        //检查用户积分，更新新用户组，除去邮箱认证、禁止访问、游客组用户、vip用户，如果该用户组不允许自助升级则不进行该操作
-        if ($userInfo['point'] >= 0 && !in_array($userInfo['groupid'], array('1', '7', '8')) && empty($userInfo['vip'])) {
-            $grouplist = cache("Member_Group");
-            if (!empty($grouplist[$userInfo['groupid']]['allowupgrade'])) {
-                $check_groupid = $this->get_usergroup_bypoint($userInfo['point']);
-                if ($check_groupid != $userInfo['groupid']) {
-                    $data['groupid'] = $check_groupid;
-                }
+        //判断旧密码是否正确
+        if ($this->_user->password == encrypt_password($oldpassword, $this->_user->encrypt) || $ignoreoldpassword) {
+            try {
+                $encrypt     = Random::alnum();
+                $newpassword = encrypt_password($newpassword, $encrypt);
+                $this->_user->save(['password' => $newpassword, 'encrypt' => $encrypt]);
+                Token::delete($this->_token);
+                //修改密码成功的事件
+                Hook::listen("user_changepwd_successed", $this->_user);
+            } catch (Exception $e) {
+                $this->setError($e->getMessage());
+                return false;
             }
+            return true;
+        } else {
+            $this->setError('密码不正确');
+            return false;
         }
-        $user = new Member_Model();
-        $user->save($data, ['id' => $userInfo['id']]);
-        /* 记录登录SESSION和COOKIES */
-        $auth = [
-            'uid'             => $userInfo['id'],
-            'username'        => $userInfo['username'],
-            'last_login_time' => $userInfo['last_login_time'],
-        ];
-        Session('user_auth', $auth);
-        Session('user_auth_sign', data_auth_sign($auth));
+    }
+
+    /**
+     * 获取会员基本信息
+     */
+    public function getUserinfo()
+    {
+        $data        = $this->_user->toArray();
+        $allowFields = $this->getAllowFields();
+        $userinfo    = array_intersect_key($data, array_flip($allowFields));
+        $userinfo    = array_merge($userinfo, Token::get($this->_token));
+        return $userinfo;
     }
 
     /**
@@ -251,7 +352,7 @@ class User
         $groupid = 2;
         if (empty($point)) {
             //新会员默认点数
-            $point = $this->memberConfig['defualtpoint'] ? $this->memberConfig['defualtpoint'] : 0;
+            $point = $this->config['defualtpoint'] ? $this->config['defualtpoint'] : 0;
         }
         //获取会有组缓存
         $grouplist = cache("Member_Group");
@@ -277,29 +378,50 @@ class User
     }
 
     /**
-     * 获取当前登录用户资料
-     * @return array
-     */
-    public function getInfo()
-    {
-        if (empty(self::$userInfo)) {
-            self::$userInfo = Member_Model::where('id', $this->isLogin())->find();
-        }
-        return !empty(self::$userInfo) ? self::$userInfo : false;
-    }
-
-    /**
      * 检验用户是否已经登陆
-     * @return boolean 失败返回false，成功返回当前登陆用户基本信息
      */
     public function isLogin()
     {
-        $user = Session::get('user_auth');
-        if (empty($user)) {
-            return 0;
-        } else {
-            return Session::get('user_auth_sign') == data_auth_sign($user) ? (int) $user['uid'] : 0;
+        if ($this->_logined) {
+            return true;
         }
+        return false;
+    }
+
+    /**
+     * 获取允许输出的字段
+     * @return array
+     */
+    public function getAllowFields()
+    {
+        return $this->allowFields;
+    }
+
+    /**
+     * 设置允许输出的字段
+     * @param array $fields
+     */
+    public function setAllowFields($fields)
+    {
+        $this->allowFields = $fields;
+    }
+
+    /**
+     * 获取当前Token
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->_token;
+    }
+
+    /**
+     * 设置会话有效时间
+     * @param int $keeptime 默认为永久
+     */
+    public function keeptime($keeptime = 0)
+    {
+        $this->keeptime = $keeptime;
     }
 
     /**
@@ -308,9 +430,55 @@ class User
      */
     public function logout()
     {
-        Session::set('user_auth', null);
-        Session::set('user_auth_sign', null);
+        if (!$this->_logined) {
+            $this->setError('你当前还未登录');
+            return false;
+        }
+        //设置登录标识
+        $this->_logined = false;
+        //删除Token
+        Token::delete($this->_token);
+        //退出成功的事件
+        Hook::listen("user_logout_successed", $this->_user);
         return true;
+    }
+
+    /**
+     * 检测当前控制器和方法是否匹配传递的数组
+     *
+     * @param array $arr 需要验证权限的数组
+     * @return boolean
+     */
+    public function match($arr = [])
+    {
+        $arr = is_array($arr) ? $arr : explode(',', $arr);
+        if (!$arr) {
+            return false;
+        }
+        $arr = array_map('strtolower', $arr);
+        // 是否存在
+        if (in_array(strtolower(request()->action()), $arr) || in_array('*', $arr)) {
+            return true;
+        }
+        // 没找到匹配
+        return false;
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * 设置错误信息
+     *
+     * @param $error 错误信息
+     * @return Auth
+     */
+    public function setError($error)
+    {
+        $this->_error = $error;
+        return $this;
     }
 
     /**
@@ -319,7 +487,7 @@ class User
      */
     public function getError()
     {
-        return $this->error;
+        return $this->_error;
     }
 
 }

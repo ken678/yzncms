@@ -51,6 +51,7 @@ return array(
         'member',
         'member_group',
         'member_content',
+        'member_token',
 
     ],
 );

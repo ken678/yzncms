@@ -15,7 +15,7 @@
 namespace app\member\uninstall;
 
 use think\Db;
-use \sys\UninstallBase;
+use sys\UninstallBase;
 
 class Uninstall extends UninstallBase
 {
@@ -24,6 +24,7 @@ class Uninstall extends UninstallBase
         'member',
         'member_group',
         'member_content',
+        'member_token',
     );
 
     //卸载
@@ -41,8 +42,6 @@ class Uninstall extends UninstallBase
                 }
             }
         }
-        //删除路由
-        //unlink(ROOT_PATH . 'route' . DIRECTORY_SEPARATOR . 'route_cms.php');
         //隐藏cms的投稿菜单
         if (isModuleInstall('cms')) {
             Db::name('menu')->where(['app' => 'cms', 'controller' => 'publish', 'action' => 'index'])->setField('status', 0);

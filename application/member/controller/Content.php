@@ -29,13 +29,13 @@ class Content extends MemberBase
 
     public function publish()
     {
-        $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
+        $groupinfo = $this->_check_group_auth($this->auth->groupid);
         //没有认证用户不得投稿
-        if (empty($this->userinfo['ischeck_email']) && empty($this->userinfo['ischeck_mobile'])) {
+        if (empty($this->auth->ischeck_email) && empty($this->auth->ischeck_mobile)) {
             $this->error("投稿必须激活邮箱或手机！");
         }
         //判断每日投稿数
-        $allowpostnum = Member_Content_Model::where('uid', $this->userid)->whereTime('create_time', 'd')->count();
+        $allowpostnum = Member_Content_Model::where('uid', $this->auth->id)->whereTime('create_time', 'd')->count();
         if ($groupinfo['allowpostnum'] > 0 && $allowpostnum >= $groupinfo['allowpostnum']) {
             $this->error("今日投稿数量已达上限！");
         }
@@ -56,7 +56,7 @@ class Content extends MemberBase
             if (empty($catid)) {
                 $this->error("请指定栏目ID！");
             }
-            $catidPrv = Db::name('category_priv')->where(array("catid" => $catid, "roleid" => $this->userinfo['groupid'], "is_admin" => 0, "action" => "add"))->find();
+            $catidPrv = Db::name('category_priv')->where(array("catid" => $catid, "roleid" => $this->auth->groupid, "is_admin" => 0, "action" => "add"))->find();
             if (empty($catidPrv)) {
                 $this->error("您没有该栏目投稿权限！");
             }
@@ -73,8 +73,8 @@ class Content extends MemberBase
                     $_data['modelFieldExt'][$k] = $data['modelFieldExt'][$k];
                 }
             }
-            $_data['modelField']['uid']      = $this->userid;
-            $_data['modelField']['username'] = $this->userinfo['username'];
+            $_data['modelField']['uid']      = $this->auth->id;
+            $_data['modelField']['username'] = $this->auth->username;
 
             //判断会员组投稿是否需要审核
             if ($groupinfo['allowpostverify']) {
@@ -158,7 +158,7 @@ class Content extends MemberBase
      */
     public function edit()
     {
-        $groupinfo = $this->_check_group_auth($this->userinfo['groupid']);
+        $groupinfo = $this->_check_group_auth($this->auth->groupid);
         if ($this->request->isPost()) {
             $data  = $this->request->param();
             $token = $this->request->param('__token__');
@@ -181,7 +181,7 @@ class Content extends MemberBase
             if (empty($category)) {
                 $this->error('该栏目不存在！');
             }
-            $catidPrv = Db::name('category_priv')->where(array("catid" => $catid, "roleid" => $this->userinfo['groupid'], "is_admin" => 0, "action" => "add"))->find();
+            $catidPrv = Db::name('category_priv')->where(array("catid" => $catid, "roleid" => $this->auth->groupid, "is_admin" => 0, "action" => "add"))->find();
             if (empty($catidPrv)) {
                 $this->error("您没有该栏目投稿权限！");
             }
@@ -218,7 +218,7 @@ class Content extends MemberBase
             }
         } else {
             $id   = $this->request->param('id/d', 0);
-            $info = Member_Content_Model::where(array('uid' => $this->userid, 'id' => $id))->find();
+            $info = Member_Content_Model::where(array('uid' => $this->auth->id, 'id' => $id))->find();
             if (empty($info)) {
                 $this->error('稿件不存在！');
             }
@@ -250,7 +250,7 @@ class Content extends MemberBase
             $limit = $this->request->param('limit/d', 10);
             $page  = $this->request->param('page/d', 10);
             $type  = $this->request->param('type/s', "");
-            $where = array('uid' => $this->userid);
+            $where = array('uid' => $this->auth->id);
             if ('check' == $type) {
                 $where['status'] = 1;
             }
@@ -286,7 +286,7 @@ class Content extends MemberBase
         //信息
         $info = Member_Content_Model::where('id', $id)->find();
         //只能删除自己的 且 未通过审核的
-        if ($info && $info['uid'] == $this->userid && $info['status'] != 1) {
+        if ($info && $info['uid'] == $this->auth->id && $info['status'] != 1) {
             //取得栏目信息
             $category = getCategory($info['catid']);
             if (!$category) {

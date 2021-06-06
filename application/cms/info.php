@@ -30,7 +30,9 @@ return array(
     //签名[必填]
     'sign'        => 'b19cc279ed484c13c96c2f7142e2f437',
     //依赖模块
-    'need_module' => [],
+    'need_module' => [
+        ['member', '1.0.0'],
+    ],
     //依赖插件
     'need_plugin' => [],
     //缓存，格式：缓存key=>array('module','model','action')

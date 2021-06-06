@@ -19,6 +19,8 @@ use think\Db;
 
 class Index extends Cmsbase
 {
+    protected $noNeedLogin = ['*'];
+    protected $noNeedRight = [];
     protected function initialize()
     {
         parent::initialize();
@@ -339,7 +341,7 @@ class Index extends Cmsbase
     // 阅读付费
     public function readpoint()
     {
-        if (isModuleInstall('pay') && isModuleInstall('member')) {
+        if (isModuleInstall('pay')) {
             $userinfo = \app\member\service\User::instance()->getInfo();
             if (!$userinfo) {
                 $this->error('请先登录！', url('member/index/login'));

@@ -17,8 +17,8 @@ namespace app\member\controller;
 use app\common\model\Ems as Ems_Model;
 use app\common\model\Sms as Sms_Model;
 use app\member\model\Member as Member_Model;
-use app\member\service\User;
 use think\facade\Cookie;
+use think\facade\Hook;
 use think\facade\Validate;
 
 class Index extends MemberBase
@@ -30,7 +30,27 @@ class Index extends MemberBase
     {
         parent::initialize();
         $this->Member_Model = new Member_Model;
-        $this->UserService  = User::instance();
+
+        $auth = $this->auth;
+
+        //监听注册登录退出的事件
+        Hook::add('user_login_successed', function ($user) use ($auth) {
+            $expire = $this->request->post('keeplogin') ? 30 * 86400 : 0;
+            Cookie::set('uid', $user->id, $expire);
+            Cookie::set('token', $auth->getToken(), $expire);
+        });
+        Hook::add('user_register_successed', function ($user) use ($auth) {
+            Cookie::set('uid', $user->id);
+            Cookie::set('token', $auth->getToken());
+        });
+        Hook::add('user_delete_successed', function ($user) use ($auth) {
+            Cookie::delete('uid');
+            Cookie::delete('token');
+        });
+        Hook::add('user_logout_successed', function ($user) use ($auth) {
+            Cookie::delete('uid');
+            Cookie::delete('token');
+        });
     }
 
     //会员中心首页
@@ -44,7 +64,7 @@ class Index extends MemberBase
     public function login()
     {
         $forward = $this->request->request('forward', '', 'trim');
-        if (!empty($this->userid)) {
+        if (!empty($this->auth->id)) {
             $this->success("您已经是登陆状态！", $forward ? $forward : url("index"));
         }
         if ($this->request->isPost()) {
@@ -76,12 +96,12 @@ class Index extends MemberBase
             if (true !== $result) {
                 $this->error($result, null, ['token' => $this->request->token()]);
             }
-            $userInfo = $this->UserService->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
+            $userInfo = $this->auth->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
             if ($userInfo) {
                 $this->success('登录成功！', $forward ? $forward : url('index'));
             } else {
                 //登陆失败
-                $this->error($this->UserService->getError() ?: '账号或者密码错误！', null, ['token' => $this->request->token()]);
+                $this->error($this->auth->getError() ?: '账号或者密码错误！', null, ['token' => $this->request->token()]);
             }
         } else {
             //判断来源
@@ -102,7 +122,7 @@ class Index extends MemberBase
             $this->error("系统不允许新会员注册！");
         }
         $forward = $this->request->request('url', '', 'trim');
-        if ($this->userid) {
+        if ($this->auth->id) {
             $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("index"));
         }
         if ($this->request->isPost()) {
@@ -139,7 +159,7 @@ class Index extends MemberBase
                 if (!$result) {
                     $this->error('手机验证码错误！');
                 }
-                $data['ischeck_mobile']=1;
+                $data['ischeck_mobile'] = 1;
             }
             if ($this->memberConfig['register_email_verify']) {
                 $Ems_Model = new Ems_Model();
@@ -147,13 +167,13 @@ class Index extends MemberBase
                 if (!$result) {
                     $this->error('邮箱验证码错误！');
                 }
-                $data['ischeck_email']=1;
+                $data['ischeck_email'] = 1;
             }
-            $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
+            $userid = $this->auth->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
             if ($userid) {
                 $this->success('会员注册成功！', $forward ? $forward : url('index'));
             } else {
-                $this->error($this->UserService->getError() ?: '帐号注册失败！', null, ['token' => $this->request->token()]);
+                $this->error($this->auth->getError() ?: '帐号注册失败！', null, ['token' => $this->request->token()]);
             }
         } else {
             //判断来源
@@ -183,13 +203,13 @@ class Index extends MemberBase
             if (true !== $result) {
                 $this->error($result);
             }
-            $userinfo = Member_Model::get($this->userid);
+            $userinfo = Member_Model::get($this->auth->id);
             if (empty($userinfo)) {
                 $this->error('该会员不存在！');
             }
             if (!empty($data)) {
                 //暂时只允许昵称，头像修改
-                $this->Member_Model->allowField(['nickname', 'avatar'])->save($data, ["id" => $this->userid]);
+                $this->Member_Model->allowField(['nickname', 'avatar'])->save($data, ["id" => $this->auth->id]);
             }
             $this->success("基本信息修改成功！");
         } else {
@@ -221,9 +241,9 @@ class Index extends MemberBase
             if (true !== $result) {
                 $this->error($result);
             }
-            $res = $this->Member_Model->userEdit($this->userinfo['username'], $oldPassword, $newPassword);
+            $res = $this->auth->changepwd($newPassword, $oldPassword);
             if (!$res) {
-                $this->error($this->Member_Model->getError());
+                $this->error($this->auth->getError());
             }
             $this->success('修改成功！');
             //注销当前登陆
@@ -245,7 +265,7 @@ class Index extends MemberBase
             if (!Validate::is($email, "email")) {
                 $this->error('邮箱格式不正确！');
             }
-            if ($this->Member_Model->where('email', $email)->where('id', '<>', $this->userid)->find()) {
+            if ($this->Member_Model->where('email', $email)->where('id', '<>', $this->auth->id)->find()) {
                 $this->error('邮箱已占用');
             }
             $Ems_Model = new Ems_Model();
@@ -277,7 +297,7 @@ class Index extends MemberBase
             if (!Validate::isMobile($mobile)) {
                 $this->error('手机号格式不正确！');
             }
-            if ($this->Member_Model->where('mobile', $mobile)->where('id', '<>', $this->userid)->find()) {
+            if ($this->Member_Model->where('mobile', $mobile)->where('id', '<>', $this->auth->id)->find()) {
                 $this->error('手机号已占用');
             }
             $Sms_Model = new Sms_Model();
@@ -305,13 +325,13 @@ class Index extends MemberBase
                 $this->error('参数不得为空！');
             }
             $Ems_Model = new Ems_Model();
-            $result    = $Ems_Model->check($this->userinfo['email'], $captcha, 'actemail');
+            $result    = $Ems_Model->check($this->auth->email, $captcha, 'actemail');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改邮箱
-            $this->Member_Model->save(['ischeck_email' => 1], ['id' => $this->userid]);
-            $Ems_Model->flush($this->userinfo['email'], 'actemail');
+            $this->Member_Model->save(['ischeck_email' => 1], ['id' => $this->auth->id]);
+            $Ems_Model->flush($this->auth->email, 'actemail');
             $this->success('激活成功！');
         } else {
             return $this->fetch('/actemail');
@@ -329,13 +349,13 @@ class Index extends MemberBase
                 $this->error('参数不得为空！');
             }
             $Sms_Model = new Sms_Model();
-            $result    = $Sms_Model->check($this->userinfo['mobile'], $captcha, 'actmobile');
+            $result    = $Sms_Model->check($this->auth->mobile, $captcha, 'actmobile');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改手机号
-            $this->Member_Model->save(['ischeck_mobile' => 1], ['id' => $this->userid]);
-            $Sms_Model->flush($this->userinfo['mobile'], 'actmobile');
+            $this->Member_Model->save(['ischeck_mobile' => 1], ['id' => $this->auth->id]);
+            $Sms_Model->flush($this->auth->mobile, 'actmobile');
             $this->success('激活成功！');
         } else {
             return $this->fetch('/actmobile');
@@ -403,9 +423,9 @@ class Index extends MemberBase
             } else {
                 $this->error('类型错误！', null, ['token' => $this->request->token()]);
             }
-            $res = $this->Member_Model->userEdit($user['username'], '', $newpassword, '', 1);
+            $res = $this->auth->changepwd($newpassword, '', true);
             if (!$res) {
-                $this->error($this->Member_Model->getError());
+                $this->error($this->auth->getError());
             }
             $this->success('重置成功！');
 
@@ -418,7 +438,7 @@ class Index extends MemberBase
     //会员组升级
     public function upgrade()
     {
-        if (empty($this->memberGroup[$this->userinfo['groupid']]['allowupgrade'])) {
+        if (empty($this->memberGroup[$this->auth->groupid]['allowupgrade'])) {
             $this->error('此会员组不允许升级！');
         }
         if ($this->request->isPost()) {
@@ -439,13 +459,13 @@ class Index extends MemberBase
             $cost = $typearr[$upgrade_type] * $upgrade_date;
             //购买时间
             $buydate     = $typedatearr[$upgrade_type] * $upgrade_date * 86400;
-            $overduedate = $this->userinfo['overduedate'] > time() ? ($this->userinfo['overduedate'] + $buydate) : (time() + $buydate);
+            $overduedate = $this->auth->overduedate > time() ? ($this->auth->overduedate + $buydate) : (time() + $buydate);
 
-            if ($this->userinfo['amount'] >= $cost) {
-                $this->Member_Model->where('id', $this->userinfo['id'])->update(['groupid' => $groupid, 'overduedate' => $overduedate, 'vip' => 1]);
+            if ($this->auth->amount >= $cost) {
+                $this->Member_Model->where('id', $this->auth->id)->update(['groupid' => $groupid, 'overduedate' => $overduedate, 'vip' => 1]);
                 //消费记录
                 $Spend_Model = new \app\pay\model\Spend;
-                $Spend_Model->_spend(1, $cost, $this->userinfo['id'], $this->userinfo['username'], '升级用户组');
+                $Spend_Model->_spend(1, $cost, $this->auth->id, $this->auth->username, '升级用户组');
                 $this->success('购买成功！');
             } else {
                 $this->error('余额不足，请先充值！');
@@ -453,8 +473,8 @@ class Index extends MemberBase
 
         } else {
             $groupid    = $this->request->param("groupid/d", 0);
-            $grouppoint = $this->memberGroup[$this->userinfo['groupid']]['point'];
-            unset($this->memberGroup[$this->userinfo['groupid']]);
+            $grouppoint = $this->memberGroup[$this->auth->groupid]['point'];
+            unset($this->memberGroup[$this->auth->groupid]);
             $this->assign([
                 'memberGroup' => $this->memberGroup,
                 'groupid'     => $groupid,
@@ -468,11 +488,8 @@ class Index extends MemberBase
     //手动退出登录
     public function logout()
     {
-        if (User::instance()->logout()) {
-            //手动登出时，清空forward
-            Cookie::set("forward", null);
-            $this->success('注销成功！', url("index/login"));
-        }
+        $this->auth->logout();
+        $this->success('注销成功！', url("index/login"));
     }
 
 }

@@ -21,6 +21,7 @@ CREATE TABLE `yzn_member` (
   `last_login_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
   `ischeck_email` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否验证过邮箱',
   `ischeck_mobile` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否验证过手机',
+  `token` varchar(50) DEFAULT '' COMMENT 'Token',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
@@ -69,6 +70,14 @@ CREATE TABLE `yzn_member_content` (
   KEY `uid` (`catid`,`content_id`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员投稿信息记录表';
 
+DROP TABLE IF EXISTS `yzn_member_token`;
+CREATE TABLE `yzn_member_token` (
+  `token` varchar(50) NOT NULL COMMENT 'Token',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `create_time` int(10) DEFAULT NULL COMMENT '创建时间',
+  `expire_time` int(10) DEFAULT NULL COMMENT '过期时间',
+  PRIMARY KEY (`token`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员Token表';
 
 INSERT INTO `yzn_member_group` VALUES ('1', '禁止访问', '1', '0', '0', '0', '1', '1', '0', '1', '0', '0', '0', '0','0.00','0.00', '0.00', '0', '', '0', '0', '1', '');
 INSERT INTO `yzn_member_group` VALUES ('2', '新手上路', '1', '1', '50', '100', '1', '1', '0', '0', '0', '1', '0', '0','50.00', '10.00', '1.00' ,'0', '', '', '2', '1', '');

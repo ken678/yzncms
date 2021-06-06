@@ -14,9 +14,9 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\common\controller\Homebase;
+use app\member\controller\MemberBase;
 
-class Cmsbase extends Homebase
+class Cmsbase extends MemberBase
 {
     //CMS模型相关配置
     protected $cmsConfig = [];

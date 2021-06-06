@@ -59,20 +59,18 @@
                     </ul>
                 </div>
                 <!--E 导航-->
-                <!--S 会员中心 需要安装会员模块-->
-                {if isModuleInstall('member')}
+                <!--S 会员中心-->
                 <div class="user fr">
                 	<ul>
-                		{if !$Think.session.user_auth.uid}
-                		<li class="log"><a href="{:url('member/index/login')}">登录</a></li>
-                		<li class="reg"><a href="{:url('member/index/register')}">注册</a></li>
+                		{if $userinfo}
+                        <li><a href="{:url('member/index/index')}">会员：{$userinfo.username}</a></li>
+                        <li><a href="{:url('member/index/logout')}">退出</a></li>
                 		{else}
-                		<li><a href="{:url('member/index/index')}">会员：{$Think.session.user_auth.username}</a></li>
-                		<li><a href="{:url('member/index/logout')}">退出</a></li>
+                        <li class="log"><a href="{:url('member/index/login')}">登录</a></li>
+                        <li class="reg"><a href="{:url('member/index/register')}">注册</a></li>
                 		{/if}
                 	</ul>
                 </div>
-                {/if}
                 <!--E 会员中心-->
             </div>
         </div>

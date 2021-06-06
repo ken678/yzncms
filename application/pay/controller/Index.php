@@ -71,8 +71,8 @@ class Index extends MemberBase
             $limit = $this->request->param('limit/d', 10);
             $page  = $this->request->param('page/d', 1);
 
-            $_list  = $this->Account_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
-            $total  = $this->Account_Model->where('uid', $this->userinfo['id'])->count();
+            $_list  = $this->Account_Model->where('uid', $this->auth->id)->page($page, $limit)->order('id DESC')->select();
+            $total  = $this->Account_Model->where('uid', $this->auth->id)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
@@ -88,8 +88,8 @@ class Index extends MemberBase
             $limit = $this->request->param('limit/d', 10);
             $page  = $this->request->param('page/d', 1);
 
-            $_list  = $this->Spend_Model->where('uid', $this->userinfo['id'])->page($page, $limit)->order('id DESC')->select();
-            $total  = $this->Spend_Model->where('uid', $this->userinfo['id'])->count();
+            $_list  = $this->Spend_Model->where('uid', $this->auth->id)->page($page, $limit)->order('id DESC')->select();
+            $total  = $this->Spend_Model->where('uid', $this->auth->id)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
@@ -110,9 +110,9 @@ class Index extends MemberBase
 
             try {
                 //扣除金钱
-                $this->Spend_Model->_spend(1, floatval($money), $this->userinfo['id'], $this->userinfo['username'], '积分兑换');
+                $this->Spend_Model->_spend(1, floatval($money), $this->auth->id, $this->auth->username, '积分兑换');
                 //增加积分
-                \think\Db::name('member')->where(['id' => $this->userinfo['id'], 'username' => $this->userinfo['username']])->setInc('point', $point);
+                \think\Db::name('member')->where(['id' => $this->auth->id, 'username' => $this->auth->username])->setInc('point', $point);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }

@@ -35,19 +35,19 @@ class Index extends MemberBase
     {
         if ($this->request->isPost()) {
             //判断当前会员，是否可发，短消息．
-            $this->messagecheck($this->userid);
+            $this->messagecheck($this->auth->id);
             $data = $this->request->post('info/a');
             //验证码
             if (!captcha_check($this->request->post('verify/s', ''))) {
                 $this->error('验证码输入错误！');
                 return false;
             }
-            $data['send_from'] = $this->userinfo['username'];
+            $data['send_from'] = $this->auth->username;
             $result = $this->validate($data, 'message');
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($data['send_to'] == $this->userinfo['username']) {
+            if ($data['send_to'] == $this->auth->username) {
                 return $this->error('不能发给自己');
             }
             if (!Member_Model::getByUsername($data['send_to'])) {
@@ -70,7 +70,7 @@ class Index extends MemberBase
         empty($messageid) && $this->error('参数不能为空！');
         $info = Message_Model::where([
             'id' => $messageid,
-            'send_to' => $this->userinfo['username'],
+            'send_to' => $this->auth->username,
         ])->findOrEmpty();
 
         empty($info) && $this->error('你查看的信息不存在！');
@@ -90,7 +90,7 @@ class Index extends MemberBase
         empty($messageid) && $this->error('参数不能为空！');
         $info = Message_Model::where([
             'id' => $messageid,
-            'send_from' => $this->userinfo['username'],
+            'send_from' => $this->auth->username,
         ])->find();
         empty($info) && $this->error('你查看的信息不存在！');
         $this->assign("info", $info);
@@ -104,12 +104,12 @@ class Index extends MemberBase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
-            $_list = MessageGroup_Model::where('groupid', $this->userinfo['groupid'])->page($page, $limit)->select();
-            $total = MessageGroup_Model::where('groupid', $this->userinfo['groupid'])->count();
+            $_list = MessageGroup_Model::where('groupid', $this->auth->groupid)->page($page, $limit)->select();
+            $total = MessageGroup_Model::where('groupid', $this->auth->groupid)->count();
 
             //未读已读判断
             foreach ($_list as $key => $val) {
-                $d = MessageData_Model::where(array('userid' => $this->userid, 'group_message_id' => $val['id']))->find();
+                $d = MessageData_Model::where(array('userid' => $this->auth->id, 'group_message_id' => $val['id']))->find();
                 if (!$d) {
                     $_list[$key]['isread'] = 0;
                 } else {
@@ -132,10 +132,10 @@ class Index extends MemberBase
             $this->error('系统消息不存在！');
         }
         //检查查看表是否有记录,无则向message_data 插入浏览记录
-        $check = MessageData_Model::where(['userid' => $this->userid, 'group_message_id' => $groupid])->find();
+        $check = MessageData_Model::where(['userid' => $this->auth->id, 'group_message_id' => $groupid])->find();
         if (!$check) {
             MessageData_Model::create([
-                'userid' => $this->userid,
+                'userid' => $this->auth->id,
                 'group_message_id' => $groupid,
             ]);
         }
@@ -149,8 +149,8 @@ class Index extends MemberBase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
-            $_list = Message_Model::where('send_to', $this->userinfo['username'])->page($page, $limit)->order('id DESC')->select();
-            $total = Message_Model::where('send_to', $this->userinfo['username'])->count();
+            $_list = Message_Model::where('send_to', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
+            $total = Message_Model::where('send_to', $this->auth->username)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -163,8 +163,8 @@ class Index extends MemberBase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page = $this->request->param('page/d', 1);
-            $_list = Message_Model::where('send_from', $this->userinfo['username'])->page($page, $limit)->order('id DESC')->select();
-            $total = Message_Model::where('send_from', $this->userinfo['username'])->count();
+            $_list = Message_Model::where('send_from', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
+            $total = Message_Model::where('send_from', $this->auth->username)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -178,12 +178,12 @@ class Index extends MemberBase
      */
     public function messagecheck($userid)
     {
-        if ($this->groupCache[$this->userinfo['groupid']]['allowsendmessage'] == 0) {
+        if ($this->groupCache[$this->auth->groupid]['allowsendmessage'] == 0) {
             $this->error("对不起你没有权限发短消息！");
         } else {
             //判断是否到限定条数
-            $num = Message_Model::where('send_from', $this->userinfo['username'])->count();
-            if ($num >= $this->groupCache[$this->userinfo['groupid']]['allowmessage']) {
+            $num = Message_Model::where('send_from', $this->auth->username)->count();
+            if ($num >= $this->groupCache[$this->auth->groupid]['allowmessage']) {
                 $this->error('你的短消息条数已达最大值!');
             }
         }

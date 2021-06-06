@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\model;
 
-use \think\Model;
+use think\Model;
 
 class Ems extends Model
 {
