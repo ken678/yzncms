@@ -15,23 +15,44 @@
 namespace addons\synclogin\Controller;
 
 use addons\synclogin\ThinkSDK\Oauth;
-use app\addons\util\AddonsBase;
+use app\member\controller\MemberBase;
 use app\member\model\Member as Member_Model;
-use app\member\service\User;
 use think\Db;
+use think\facade\Cookie;
+use think\facade\Hook;
 
-class Index extends AddonsBase
+class Index extends MemberBase
 {
-    private $access_token = '';
-    private $openid       = '';
-    private $type         = '';
-    private $token        = array();
+    protected $noNeedLogin = ['*'];
+    protected $noNeedRight = [];
+    private $access_token  = '';
+    private $openid        = '';
+    private $type          = '';
+    private $token         = array();
 
     public function initialize()
     {
         parent::initialize();
+        $auth = $this->auth;
+        //监听注册登录退出的事件
+        Hook::add('user_login_successed', function ($user) use ($auth) {
+            $expire = $this->request->post('keeplogin') ? 30 * 86400 : 0;
+            Cookie::set('uid', $user->id, $expire);
+            Cookie::set('token', $auth->getToken(), $expire);
+        });
+        Hook::add('user_register_successed', function ($user) use ($auth) {
+            Cookie::set('uid', $user->id);
+            Cookie::set('token', $auth->getToken());
+        });
+        Hook::add('user_delete_successed', function ($user) use ($auth) {
+            Cookie::delete('uid');
+            Cookie::delete('token');
+        });
+        Hook::add('user_logout_successed', function ($user) use ($auth) {
+            Cookie::delete('uid');
+            Cookie::delete('token');
+        });
         $this->getSession();
-        $this->UserService = User::instance();
     }
 
     private function getSession()
@@ -64,7 +85,7 @@ class Index extends AddonsBase
     {
         $type     = $this->request->param('type/s');
         $code     = $this->request->param('code/s');
-        $is_login = $this->UserService->isLogin();
+        $is_login = $this->auth->isLogin();
         if ($type == null || $code == null) {
             $this->error('参数错误');
         }
@@ -81,12 +102,13 @@ class Index extends AddonsBase
         //获取当前第三方登录用户信息
         if (is_array($token)) {
             $check = $this->checkIsSync(array('type_uid' => $openid, 'type' => $type));
+
             //是否完全登录状态
             /*if ($is_login && $check) {
             $this->loginWithoutpwd($is_login);
             }*/
             if ($is_login) {
-                $this->dealIsLogin($is_login);
+                $this->dealIsLogin($this->auth->id);
             } else {
                 $addon_config = get_addon_config('synclogin');
                 if ($addon_config['bind'] && !$check) {
@@ -119,12 +141,11 @@ class Index extends AddonsBase
         if (empty($aType)) {
             $this->error('参数错误');
         }
-        $uid = $this->UserService->isLogin();
-        if (!$uid) {
+        if (!$this->auth->isLogin()) {
             $this->error('请登录！');
         }
 
-        $res = Db::name('sync_login')->where(array('uid' => $uid, 'type' => $aType))->delete();
+        $res = Db::name('sync_login')->where(array('uid' => $this->auth->id, 'type' => $aType))->delete();
         if ($res) {
             $this->success('取消绑定成功', url('member/index/profile'));
         }
@@ -134,12 +155,12 @@ class Index extends AddonsBase
     //绑定新账号
     public function newAccount()
     {
-        $post   = $data   = $this->request->post();
+        $post   = $data   = $this->request->post('');
         $result = $this->validate($data, 'addons\synclogin\validate\Member');
         if (true !== $result) {
             return $this->error($result);
         }
-        $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email']);
+        $userid = $this->auth->userRegister($data['username'], $data['password'], $data['email']);
         if ($userid > 0) {
             $this->addSyncLoginData($userid);
             $this->success('账号绑定成功！', url('member/index/index'));
@@ -152,12 +173,12 @@ class Index extends AddonsBase
     //绑定已有账号
     public function bindAccount()
     {
-        $username   = $this->request->param('username');
+        $account    = $this->request->param('account');
         $password   = $this->request->param('password');
         $cookieTime = $this->request->param('cookieTime', 0);
-        $userInfo   = $this->UserService->loginLocal($username, $password, $cookieTime ? 86400 * 180 : 86400);
+        $userInfo   = $this->auth->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
         if ($userInfo) {
-            $this->addSyncLoginData($userInfo['id']);
+            $this->addSyncLoginData($this->auth->id);
             $this->success('账号绑定成功！', url('member/index/index'));
         } else {
             $this->error('账号绑定失败，请重试！');
@@ -197,7 +218,7 @@ class Index extends AddonsBase
         $username = genRandomString(10);
         $password = genRandomString(6);
         $domain   = request()->host();
-        $uid      = $this->UserService->userRegister($username, $password, $username . '@' . $domain);
+        $uid      = $this->auth->userRegister($username, $password, $username . '@' . $domain);
         if ($uid > 0) {
             $fields = ['username' => 'u' . $uid, 'email' => 'u' . $uid . '@' . $domain];
             if (isset($$user_info['nickname'])) {
@@ -210,7 +231,7 @@ class Index extends AddonsBase
             $this->addSyncLoginData($uid);
             return $uid;
         } else {
-            $this->error($this->UserService->getError() ?: '新增账号失败，请重试！');
+            $this->error($this->auth->getError() ?: '新增账号失败，请重试！');
         }
     }
 
@@ -220,7 +241,7 @@ class Index extends AddonsBase
     private function loginWithoutpwd($uid)
     {
         if (0 < $uid) {
-            if ($this->UserService->direct($uid)) {
+            if ($this->auth->direct($uid)) {
                 //登陆用户
                 $this->success('登陆成功！', url('member/index/index'));
             } else {

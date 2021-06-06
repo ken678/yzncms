@@ -17,18 +17,28 @@ namespace addons\synclogin;
 use app\member\service\User;
 use sys\Addons;
 use think\Db;
+use util\File;
 
 class Synclogin extends Addons
 {
     //安装
     public function install()
     {
+        //前台模板
+        $installdir = ADDON_PATH . "synclogin" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
+        if (is_dir($installdir . "template" . DIRECTORY_SEPARATOR)) {
+            //拷贝模板到前台模板目录中去
+            File::copy_dir($installdir . "template" . DIRECTORY_SEPARATOR, TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR);
+        }
         return true;
     }
 
     //卸载
     public function uninstall()
     {
+        if (is_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR)) {
+            File::del_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR);
+        }
         return true;
     }
 
@@ -50,9 +60,9 @@ class Synclogin extends Addons
         if (is_array($type)) {
             foreach ($type as &$v) {
                 $arr[$v]['name']    = strtolower($v);
-                $arr[$v]['is_bind'] = $this->check_is_bind_account(User::instance()->isLogin(), strtolower($v));
+                $arr[$v]['is_bind'] = $this->check_is_bind_account(User::instance()->id, strtolower($v));
                 if ($arr[$v]['is_bind']) {
-                    $token = Db::name('sync_login')->where(array('type' => strtolower($v), 'uid' => User::instance()->isLogin()))->find();
+                    $token = Db::name('sync_login')->where(array('type' => strtolower($v), 'uid' => User::instance()->id))->find();
                     //$user_info = \addons\synclogin\ThinkSDK\GetInfo::getInstance($arr[$v]['name'], array('access_token' => $token['oauth_token'], 'openid' => $token['oauth_token_secret']));
                     //$arr[$v]['info'] = $user_info;
                 }

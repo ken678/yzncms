@@ -30,12 +30,12 @@ class Index extends MemberBase
         $date     = $this->request->request('date', date("Y-m-d"), "trim");
         $time     = strtotime($date);
 
-        $lastdata    = SigninModel::where('uid', User::instance()->isLogin())->order('create_time', 'desc')->find();
+        $lastdata    = SigninModel::where('uid', $this->auth->id)->order('create_time', 'desc')->find();
         $successions = $lastdata && $lastdata['create_time'] > Date::unixtime('day', -1) ? $lastdata['successions'] : 0;
-        $signin      = SigninModel::where('uid', User::instance()->isLogin())->whereTime('create_time', 'today')->find();
+        $signin      = SigninModel::where('uid', $this->auth->id)->whereTime('create_time', 'today')->find();
 
         $calendar = new \addons\signin\library\Calendar();
-        $list     = SigninModel::where('uid', User::instance()->isLogin())
+        $list     = SigninModel::where('uid', $this->auth->id)
             ->field('id,create_time')
             ->whereTime('create_time', 'between', [date("Y-m-1", $time), date("Y-m-1", strtotime("+1 month", $time))])
             ->select();
@@ -62,19 +62,19 @@ class Index extends MemberBase
             $config   = get_addon_config('signin');
             $signdata = $config['signinscore'];
 
-            $lastdata    = SigninModel::where('uid', User::instance()->isLogin())->order('create_time', 'desc')->find();
+            $lastdata    = SigninModel::where('uid', $this->auth->id)->order('create_time', 'desc')->find();
             $successions = $lastdata && $lastdata['create_time'] > Date::unixtime('day', -1) ? $lastdata['successions'] : 0;
-            $signin      = SigninModel::where('uid', User::instance()->isLogin())->whereTime('create_time', 'today')->find();
+            $signin      = SigninModel::where('uid', $this->auth->id)->whereTime('create_time', 'today')->find();
             if ($signin) {
                 $this->error('今天已签到,请明天再来!');
             } else {
                 $successions++;
                 $score = isset($signdata['s' . $successions]) ? $signdata['s' . $successions] : $signdata['sn'];
                 try {
-                    SigninModel::create(['uid' => User::instance()->isLogin(), 'successions' => $successions, 'create_time' => time()]);
-                    //\app\common\model\User::score($score, User::instance()->isLogin(), "连续签到{$successions}天");
+                    SigninModel::create(['uid' => $this->auth->id, 'successions' => $successions, 'create_time' => time()]);
+                    //\app\common\model\User::score($score, $this->auth->id, "连续签到{$successions}天");
                     //增加积分
-                    \think\Db::name('member')->where(['id' => User::instance()->isLogin()])->setInc('point', $score);
+                    \think\Db::name('member')->where(['id' => $this->auth->id])->setInc('point', $score);
                 } catch (Exception $e) {
                     $this->error('签到失败,请稍后重试');
                 }
@@ -103,7 +103,7 @@ class Index extends MemberBase
         if ($config['fillupdays'] < $days) {
             $this->error("只允许补签{$config['fillupdays']}天的签到");
         }
-        $count = SigninModel::where('uid', User::instance()->isLogin())
+        $count = SigninModel::where('uid', $this->auth->id)
             ->where('type', 'fillup')
             ->whereTime('create_time', 'between', [Date::unixtime('month'), Date::unixtime('month', 0, 'end')])
             ->count();
@@ -111,7 +111,7 @@ class Index extends MemberBase
             $this->error("每月只允许补签{$config['fillupnumsinmonth']}次");
         }
         Db::name('signin')->whereTime('create_time', 'd')->select();
-        $signin = SigninModel::where('uid', User::instance()->isLogin())
+        $signin = SigninModel::where('uid', $this->auth->id)
             ->where('type', 'fillup')
             ->whereTime('create_time', 'between', [$date, date("Y-m-d 23:59:59", $time)])
             ->count();
@@ -119,16 +119,16 @@ class Index extends MemberBase
             $this->error("该日期无需补签到");
         }
         $successions = 1;
-        $prev        = $signin        = SigninModel::where('uid', User::instance()->isLogin())
+        $prev        = $signin        = SigninModel::where('uid', $this->auth->id)
             ->whereTime('create_time', 'between', [date("Y-m-d", strtotime("-1 day", $time)), date("Y-m-d 23:59:59", strtotime("-1 day", $time))])
             ->find();
         if ($prev) {
             $successions = $prev['successions'] + 1;
         }
         try {
-            //\app\common\model\User::score(-$config['fillupscore'], User::instance()->isLogin(), '签到补签');
+            //\app\common\model\User::score(-$config['fillupscore'], $this->auth->id, '签到补签');
             //寻找日期之后的
-            $nextList = SigninModel::where('uid', User::instance()->isLogin())
+            $nextList = SigninModel::where('uid', $this->auth->id)
                 ->where('create_time', '>=', strtotime("+1 day", $time))
                 ->order('create_time', 'asc')
                 ->select();
@@ -143,7 +143,7 @@ class Index extends MemberBase
                     $item->save();
                 }
             }
-            SigninModel::create(['uid' => User::instance()->isLogin(), 'type' => 'fillup', 'successions' => $successions, 'create_time' => $time + 43200]);
+            SigninModel::create(['uid' => $this->auth->id, 'type' => 'fillup', 'successions' => $successions, 'create_time' => $time + 43200]);
         } catch (Exception $e) {
             $this->error('补签失败,请稍后重试');
         }
