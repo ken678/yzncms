@@ -109,40 +109,48 @@
                     </div>
                     <div class="layui-tab-item">
                         <div class="layui-form-item layui-form-text">
-                            <div class="layui-form-field-label fieldlist" data-name="data[customize_config]" data-id="customize_config" data-template="true">
-                                <div class="arrBox"></div>
-                                <button type="button" class="layui-btn btn-append">追加</button>
-                                <textarea name="data[customize_config]" class="layui-textarea layui-hide"></textarea>
-                            </div>
+                            <table class="layui-form-field-label layui-table fieldlist" data-name="data[customize_config]" data-id="customize_config" data-template="true" data-tag="tr">
+                                <tr>
+                                    <td>标题</td>
+                                    <td>字段名</td>
+                                    <td>选择器</td>
+                                    <td>属性</td>
+                                    <td>固定值</td>
+                                    <td>内容过滤器</td>
+                                    <td width="60"></td>
+                                </tr>
+                                <tr><td colspan="10"><button type="button" class="layui-btn btn-append">追加</button></td></tr>
+                            </table>
+                            <textarea name="data[customize_config]" class="layui-textarea layui-hide"></textarea>
                         </div>
                         <script type="text/html" id="customize_configTpl">
-                            <div class="layui-form-item rules-item">
-                            {{# layui.each(d.lists, function(index, item) { }}
-                            <div class="layui-input-inline" style="width:90px;">
-                                <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][title]" placeholder="标题" value="{{item.row.title|| ''}}" />
-                            </div>
-                            <div class="layui-input-inline" style="width:90px;">
-                                <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][name]" placeholder="字段名" value="{{item.row.name|| ''}}" />
-                            </div>
-                            <div class="layui-input-inline" style="width:200px;">
-                                <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][selector]" placeholder="选择器" value="{{item.row.selector|| ''}}" />
-                            </div>
-                            <div class="layui-input-inline" style="width:60px;">
-                                <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][attr]" placeholder="属性" value="{{item.row.attr|| ''}}" />
-                            </div>
-                            <div class="layui-input-inline" style="width:150px;">
-                                <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="固定值" value="{{item.row.value|| ''}}" />
-                            </div>
+                            <tr class="layui-form-item rules-item">
+                                {{# layui.each(d.lists, function(index, item) { }}
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][title]" placeholder="标题" value="{{item.row.title|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][name]" placeholder="字段名" value="{{item.row.name|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][selector]" placeholder="选择器" value="{{item.row.selector|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][attr]" placeholder="属性" value="{{item.row.attr|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="固定值" value="{{item.row.value|| ''}}" />
+                                </td>
 
-                            <div class="layui-input-inline" style="width:140px;">
-                                <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][filter]" placeholder="内容过滤器" value="{{item.row.filter|| ''}}" />
-                            </div>
-                            <label class="layui-form-mid">
-                                <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
-                                <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
-                            </div>
-                            {{# }); }}
-                            </div>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][filter]" placeholder="内容过滤器" value="{{item.row.filter|| ''}}" />
+                                </td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
+                                    <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
+                                </td>
+                                {{# }); }}
+                            </tr>
                         </script>
                     </div>
                     <div class="layui-tab-item">
