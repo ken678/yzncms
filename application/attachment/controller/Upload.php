@@ -14,25 +14,15 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
 
-use app\admin\service\User as admin_user;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Base;
-//use app\member\service\User as home_user;
 use FilesystemIterator;
 use think\facade\Hook;
 
 class Upload extends Base
 {
-    //上传用户ID
-    public $admin_id = 0;
-    //public $user_id  = 0;
-    //会员组
-    public $groupid = 0;
-    //是否后台
-    public $isadmin = 0;
     //上传模块
-    public $module = 'cms';
-
+    public $module      = 'cms';
     protected $merging  = false;
     protected $file     = null;
     protected $fileInfo = null;
@@ -102,21 +92,7 @@ class Upload extends Base
     protected function initialize()
     {
         parent::initialize();
-        //检查是否后台登录，后台登录下优先级最高，用于权限判断
-        if (admin_user::instance()->isLogin()) {
-            $this->isadmin  = 1;
-            $this->admin_id = admin_user::instance()->id;
-        } else
-        /*if (home_user::instance()->isLogin()) {
-        $this->user_id = home_user::instance()->id;
-        $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
-        } else {
-        $this->user_id = 0;
-        }*/
-        {
-            $this->chunkDir = ROOT_PATH . 'runtime' . DS . 'chunks';
-        }
-
+        $this->chunkDir = ROOT_PATH . 'runtime' . DS . 'chunks';
         //图片上传大小和类型
         $this->editorConfig['imageMaxSize'] = $this->editorConfig['catcherMaxSize'] = 0 == config('upload_image_size') ? 1024 * 1024 * 1024 : config('upload_image_size') * 1024;
         if (!empty(config('upload_image_ext'))) {
@@ -453,7 +429,7 @@ class Upload extends Base
             }
             // 获取附件信息
             $file_info = [
-                'aid'    => $this->admin_id,
+                'aid'    => (int) session('admin.id'),
                 'uid'    => (int) cookie('uid'),
                 'name'   => substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
                 'mime'   => $this->fileInfo['type'],
