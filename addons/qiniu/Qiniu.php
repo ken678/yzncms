@@ -14,9 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\qiniu;
 
-use app\admin\service\User as admin_user;
 use app\attachment\model\Attachment as Attachment_Model;
-use app\member\service\User as home_user;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
 use sys\Addons;
@@ -26,24 +24,13 @@ require ADDON_PATH . 'qiniu/SDK/autoload.php';
 
 class Qiniu extends Addons
 {
-    //上传用户ID
-    public $admin_id = 0;
-    public $user_id  = 0;
-    //会员组
-    public $groupid = 0;
-    //是否后台
-    public $isadmin     = 0;
-    private $uploadUrl  = '';
-    private $uploadPath = '';
-
     /**
      * 上传附件
      */
     public function uploadAfter($params = [])
     {
-        $this->isLogin();
         $file   = $params['file'];
-        $config = get_addon_config('qiniu');
+        $config = $this->getAddonConfig();
 
         $error_msg = '';
         if ($config['accessKey'] == '') {
@@ -96,8 +83,8 @@ class Qiniu extends Addons
         } else {
             // 获取附件信息
             $data = [
-                'aid'    => $this->admin_id,
-                'uid'    => $this->user_id,
+                'aid'    => (int) session('admin.id'),
+                'uid'    => (int) cookie('uid'),
                 'name'   => $info['name'],
                 'mime'   => $info['type'],
                 'path'   => $config['domain'] . $key . '?v=' . rand(111111, 999999),
@@ -186,21 +173,6 @@ class Qiniu extends Addons
             }
         }
         return true;
-    }
-
-    protected function isLogin()
-    {
-        //检查是否后台登录，后台登录下优先级最高，用于权限判断
-        if (admin_user::instance()->isLogin()) {
-            $this->isadmin  = 1;
-            $this->admin_id = admin_user::instance()->id;
-        } elseif (home_user::instance()->isLogin()) {
-            $this->user_id = home_user::instance()->id;
-            $this->groupid = home_user::instance()->groupid ? home_user::instance()->groupid : 8;
-        } else {
-            $this->user_id = 0;
-            //return $this->error('未登录');
-        }
     }
 
     protected function implode_attr($array = [])
