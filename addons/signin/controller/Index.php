@@ -16,7 +16,6 @@ namespace addons\signin\Controller;
 
 use addons\signin\model\Signin as SigninModel;
 use app\member\controller\MemberBase;
-use app\member\service\User;
 use think\Db;
 use util\Date;
 
@@ -96,7 +95,7 @@ class Index extends MemberBase
         if ($time > time()) {
             $this->error('无法补签未来的日期');
         }
-        if ($config['fillupscore'] > User::instance()->point) {
+        if ($config['fillupscore'] > $this->auth->point) {
             $this->error('你当前积分不足');
         }
         $days = Date::span(time(), $time, 'days');
