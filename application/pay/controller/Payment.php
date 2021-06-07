@@ -26,15 +26,15 @@ class Payment extends Adminbase
     {
         parent::initialize();
         $this->PaymentModel = new PaymentModel;
-        $this->modelClass = new AccountModel;
-        $this->SpendModel = new SpendModel;
+        $this->modelClass   = new AccountModel;
+        $this->SpendModel   = new SpendModel;
 
     }
 
     public function modify_deposit()
     {
         if ($this->request->isAjax()) {
-            $data = $this->request->post();
+            $data   = $this->request->post();
             $result = $this->validate($data, 'Account');
             if (true !== $result) {
                 return $this->error($result);
@@ -43,7 +43,7 @@ class Payment extends Adminbase
             if ($userinfo) {
                 if ($data['pay_unit']) {
                     //增加
-                    $this->modelClass->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->_userinfo['username']);
+                    $this->modelClass->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->auth->username);
                 } else {
                     //减少
                     $this->SpendModel->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], '后台充值', $data['usernote']);
@@ -73,9 +73,9 @@ class Payment extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            $data = [];
-            $id = $this->request->param('id/d', 0);
-            $config = $this->request->param('config/a');
+            $data           = [];
+            $id             = $this->request->param('id/d', 0);
+            $config         = $this->request->param('config/a');
             $data['status'] = $this->request->param('status/d', 0);
             $data['config'] = serialize($config);
             if ($this->PaymentModel->allowField(true)->save($data, ['id' => $id])) {
@@ -85,7 +85,7 @@ class Payment extends Adminbase
                 $this->success("更新失败！");
             }
         } else {
-            $id = $this->request->param('id/d', 0);
+            $id   = $this->request->param('id/d', 0);
             $info = $this->PaymentModel->where('id', $id)->find();
             $this->assign('info', $info);
             return $this->fetch($info['name']);
