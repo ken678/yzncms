@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\admin\service\User;
 use app\cms\model\Cms as Cms_Model;
 use app\cms\model\Page as Page_Model;
 use app\common\controller\Adminbase;
@@ -388,13 +387,13 @@ class Cms extends Adminbase
     //显示栏目菜单列表
     public function public_categorys()
     {
-        $isAdministrator = User::instance()->isAdministrator();
+        $isAdministrator = $this->auth->isAdministrator();
         $json            = $priv_catids            = [];
 
         if (0 !== (int) $this->cmsConfig['site_category_auth']) {
             //栏目权限 超级管理员例外
             if ($isAdministrator !== true) {
-                $role_id     = User::instance()->roleid;
+                $role_id     = $this->auth->roleid;
                 $priv_result = Db::name('CategoryPriv')->where(['roleid' => $role_id, 'action' => 'init'])->select();
                 foreach ($priv_result as $_v) {
                     $priv_catids[] = $_v['catid'];
@@ -572,11 +571,11 @@ class Cms extends Adminbase
 
     protected function check_priv($action)
     {
-        if (User::instance()->isAdministrator() !== true) {
+        if ($this->auth->isAdministrator() !== true) {
             if (0 !== (int) $this->cmsConfig['site_category_auth']) {
                 $catid      = $this->request->param('catid/d', 0);
                 $action     = getCategory($catid, 'type') == 1 ? 'init' : $action;
-                $priv_datas = Db::name('CategoryPriv')->where(['catid' => $catid, 'is_admin' => 1, 'roleid' => User::instance()->roleid, 'action' => $action])->find();
+                $priv_datas = Db::name('CategoryPriv')->where(['catid' => $catid, 'is_admin' => 1, 'roleid' => $this->auth->roleid, 'action' => $action])->find();
                 if (empty($priv_datas)) {
                     $this->error('您没有操作该项的权限！');
                 }
