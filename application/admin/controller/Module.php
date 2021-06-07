@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\service\User;
 use app\common\controller\Adminbase;
 use sys\ModuleService;
 use think\Controller;
@@ -29,7 +28,7 @@ class Module extends Adminbase
     {
         parent::initialize();
         $this->ModuleService = new ModuleService();
-        if (!User::instance()->isAdministrator() && in_array($this->request->action(), ['install', 'uninstall', 'local'])) {
+        if (!$this->auth->isAdministrator() && in_array($this->request->action(), ['install', 'uninstall', 'local'])) {
             $this->error('非超级管理员禁止操作！');
         }
     }

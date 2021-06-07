@@ -16,7 +16,6 @@ namespace app\admin\controller;
 
 use app\admin\model\Adminlog as AdminlogModel;
 use app\admin\model\AdminUser;
-use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\facade\Session;
 use think\facade\Validate;
@@ -33,12 +32,12 @@ class Profile extends Adminbase
             $sort                       = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
             $count                      = $this->modelClass
                 ->where($where)
-                ->where('uid', (int) User::instance()->isLogin())
+                ->where('uid', (int) $this->auth->id)
                 ->order($sort, $order)
                 ->count();
             $list = $this->modelClass
                 ->where($where)
-                ->where('uid', (int) User::instance()->isLogin())
+                ->where('uid', (int) $this->auth->id)
                 ->order($sort, $order)
                 ->page($page, $limit)
                 ->select();
@@ -69,12 +68,12 @@ class Profile extends Adminbase
                 $params['encrypt']  = $data['encrypt'];
                 $params['password'] = $data['password'];
             }
-            $exist = AdminUser::where('email', $params['email'])->where('id', '<>', (int) User::instance()->isLogin())->find();
+            $exist = AdminUser::where('email', $params['email'])->where('id', '<>', (int) $this->auth->id)->find();
             if ($exist) {
                 $this->error('邮箱已经存在！');
             }
             if ($params) {
-                $admin = AdminUser::get((int) User::instance()->isLogin());
+                $admin = AdminUser::get($this->auth->id);
                 $admin->save($params);
                 //因为个人资料面板读取的Session显示，修改自己资料后同时更新Session
                 Session::set("admin", $admin->toArray());

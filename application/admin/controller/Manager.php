@@ -12,7 +12,6 @@ namespace app\admin\controller;
 
 use app\admin\model\AdminUser as Admin_User;
 use app\admin\model\AuthGroup as AuthGroupModel;
-use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\facade\Session;
 use util\Tree;
@@ -29,20 +28,20 @@ class Manager extends Adminbase
         parent::initialize();
         $this->modelClass = new Admin_User;
 
-        $this->childrenAdminIds = User::instance()->getChildrenAdminIds(true);
-        $this->childrenGroupIds = User::instance()->getChildrenGroupIds(true);
+        $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
         $groupList = AuthGroupModel::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
         Tree::instance()->init($groupList);
         $groupdata = [];
-        if (User::instance()->isAdministrator()) {
+        if ($this->auth->isAdministrator()) {
             $result = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
             foreach ($result as $k => $v) {
                 $groupdata[$v['id']] = $v['title'];
             }
         } else {
             $result = [];
-            $groups = User::instance()->getGroups();
+            $groups = $this->auth->getGroups();
             foreach ($groups as $m => $n) {
                 $childlist = Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['id']), 'title');
                 //$temp = [];
@@ -136,7 +135,7 @@ class Manager extends Adminbase
             }
             if ($this->modelClass->editManager($data)) {
                 $info = $this->modelClass->where("id", $data['id'])->find();
-                if ($data['id'] == User::instance()->isLogin()) {
+                if ($data['id'] == $this->auth->isLogin()) {
                     Session::set("admin", $info);
                 }
                 $this->success("修改成功！");

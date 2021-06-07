@@ -12,7 +12,6 @@ namespace app\admin\Controller;
 
 use app\admin\model\AuthGroup as AuthGroupModel;
 use app\admin\model\AuthRule;
-use app\admin\service\User;
 use app\common\controller\Adminbase;
 use think\Db;
 use util\Tree;
@@ -31,15 +30,15 @@ class AuthManager extends Adminbase
     {
         parent::initialize();
         $this->AuthGroupModel   = new AuthGroupModel;
-        $this->childrenGroupIds = User::instance()->getChildrenGroupIds(true);
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
         $groupList = AuthGroupModel::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
         Tree::instance()->init($groupList);
         $result = [];
-        if (User::instance()->isAdministrator()) {
+        if ($this->auth->isAdministrator()) {
             $result = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
         } else {
-            $groups = User::instance()->getGroups();
+            $groups = $this->auth->getGroups();
             foreach ($groups as $m => $n) {
                 $result = array_merge($result, Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['parentid']), 'title'));
             }
@@ -179,7 +178,7 @@ class AuthManager extends Adminbase
             }
             if (isset($data['rules'])) {
                 $parentrules   = explode(',', $parentmodel->rules);
-                $currentrules  = User::instance()->getRuleIds();
+                $currentrules  = $this->auth->getRuleIds();
                 $rules         = explode(',', $data['rules']);
                 $rules         = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
                 $rules         = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
