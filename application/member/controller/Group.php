@@ -20,11 +20,12 @@ use app\member\model\MemberGroup as Member_Group;
 
 class Group extends Adminbase
 {
+    protected $modelValidate = true;
     //初始化
     protected function initialize()
     {
         parent::initialize();
-        $this->Member_Group = new Member_Group;
+        $this->modelClass   = new Member_Group;
         $this->Member_Model = new Member_Model;
     }
 
@@ -34,7 +35,7 @@ class Group extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $_list = $this->Member_Group->order(["listorder" => "ASC", "id" => "DESC"])->select();
+            $_list = $this->modelClass->order(["listorder" => "ASC", "id" => "DESC"])->select();
             foreach ($_list as $k => $v) {
                 //统计会员总数
                 $_list[$k]['_count'] = $this->Member_Model->where(["groupid" => $v['id']])->count('id');
@@ -50,23 +51,8 @@ class Group extends Adminbase
      */
     public function add()
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-            $result = $this->validate($data, 'Group');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            if ($this->Member_Group->groupAdd($data)) {
-                //更新缓存
-                $this->Member_Group->Membergroup_cache();
-                $this->success("添加成功！", url("group/index"));
-            } else {
-                $this->error("添加失败！");
-            }
-
-        } else {
-            return $this->fetch();
-        }
+        $this->modelClass->Membergroup_cache();
+        return parent::add();
     }
 
     /**
@@ -74,31 +60,28 @@ class Group extends Adminbase
      */
     public function edit()
     {
+        $id  = $this->request->param('id/d', 0);
+        $row = $this->modelClass->get($id);
+        if (!$row) {
+            $this->error('记录未找到');
+        }
         if ($this->request->isPost()) {
-            $data = $this->request->post();
-            $result = $this->validate($data, 'Group');
+            $data   = $this->request->post('row/a');
+            $result = $this->validate($data, 'MemberGroup');
             if (true !== $result) {
                 return $this->error($result);
             }
-            if ($this->Member_Group->groupEdit($data)) {
+            if ($this->modelClass->groupEdit($data)) {
                 //更新缓存
-                $this->Member_Group->Membergroup_cache();
+                $this->modelClass->Membergroup_cache();
                 $this->success("修改成功！", url("group/index"));
             } else {
                 $this->error("修改失败！");
             }
-
         } else {
-            $groupid = $this->request->param('id/d', 0);
-            $data = $this->Member_Group->where(["id" => $groupid])->find();
-            if (empty($data)) {
-                $this->error("该会员组不存在！", url("Group/index"));
-            }
-            $this->assign("data", $data);
-            //$this->assign('expand', unserialize($data['expand']));
+            $this->assign("data", $row);
             return $this->fetch();
         }
-
     }
 
     /**
@@ -110,12 +93,12 @@ class Group extends Adminbase
         if (empty($groupid)) {
             $this->error("没有指定需要删除的会员组别！");
         }
-        if ($this->Member_Group->groupDelete($groupid)) {
+        if ($this->modelClass->groupDelete($groupid)) {
             //更新缓存
-            $this->Member_Group->Membergroup_cache();
+            $this->modelClass->Membergroup_cache();
             $this->success("删除成功！", url("group/index"));
         } else {
-            $this->error($this->Member_Group->getError());
+            $this->error($this->modelClass->getError());
         }
     }
 

@@ -14,28 +14,12 @@
 // +----------------------------------------------------------------------
 namespace app\member\model;
 
-use \think\Model;
+use think\Model;
 
-/**
- * 模型
- */
 class MemberGroup extends Model
 {
-    protected $auto = ['allowvisit' => 1, 'status' => 1];
+    protected $auto   = ['allowvisit' => 1, 'status' => 1];
     protected $insert = ['issystem' => 0];
-
-    /**
-     * 添加会员组
-     * @param type $data 提交数据
-     * @return boolean
-     */
-    public function groupAdd($data)
-    {
-        if (!is_array($data)) {
-            return false;
-        }
-        return self::create($data, true);
-    }
 
     /**
      * 编辑会员组
@@ -47,12 +31,12 @@ class MemberGroup extends Model
         if (!is_array($data)) {
             return false;
         }
-        $data['allowpost'] = $data['allowpost'] ? $data['allowpost'] : 0;
-        $data['allowpostverify'] = $data['allowpostverify'] ? $data['allowpostverify'] : 0;
-        $data['allowupgrade'] = $data['allowupgrade'] ? $data['allowupgrade'] : 0;
+        $data['allowpost']        = $data['allowpost'] ? $data['allowpost'] : 0;
+        $data['allowpostverify']  = $data['allowpostverify'] ? $data['allowpostverify'] : 0;
+        $data['allowupgrade']     = $data['allowupgrade'] ? $data['allowupgrade'] : 0;
         $data['allowsendmessage'] = $data['allowsendmessage'] ? $data['allowsendmessage'] : 0;
-        $data['allowattachment'] = $data['allowattachment'] ? $data['allowattachment'] : 0;
-        $data['allowsearch'] = $data['allowsearch'] ? $data['allowsearch'] : 0;
+        $data['allowattachment']  = $data['allowattachment'] ? $data['allowattachment'] : 0;
+        $data['allowsearch']      = $data['allowsearch'] ? $data['allowsearch'] : 0;
         return self::update($data);
     }
 
