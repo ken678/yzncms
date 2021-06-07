@@ -30,6 +30,7 @@ class Index extends Cmsbase
     // 首页
     public function index()
     {
+
         $page = $this->request->param('page/d', 1);
         $seo  = seo();
         $this->assign([
@@ -342,8 +343,7 @@ class Index extends Cmsbase
     public function readpoint()
     {
         if (isModuleInstall('pay')) {
-            $userinfo = \app\member\service\User::instance()->getInfo();
-            if (!$userinfo) {
+            if (!$this->auth->isLogin()) {
                 $this->error('请先登录！', url('member/index/login'));
             }
             $Spend_Model   = new \app\pay\model\Spend;
@@ -363,13 +363,13 @@ class Index extends Cmsbase
             $flag_arr = explode('_', $flag);
             $catid    = $flag_arr[0];
             try {
-                $Spend_Model->_spend($paytype, floatval($readpoint), $userinfo['id'], $userinfo['username'], '阅读付费', $flag);
+                $Spend_Model->_spend($paytype, floatval($readpoint), $this->auth->id, $this->auth->username, '阅读付费', $flag);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage(), url('pay/index/pay'));
             }
             $this->success("恭喜你！支付成功!");
         } else {
-            $this->error('请先在后台安装支付和会员模块！');
+            $this->error('请先在后台安装支付模块！');
         }
 
     }
@@ -377,11 +377,10 @@ class Index extends Cmsbase
     // 检查支付状态
     protected function _check_payment($flag, $paytype)
     {
-        $this->userid = \app\member\service\User::instance()->id;
-        if (!$this->userid) {
+        if (!$this->auth->isLogin()) {
             return false;
         }
-        if (\app\pay\model\Spend::spend_time($this->userid, '24', $flag)) {
+        if (\app\pay\model\Spend::spend_time($this->auth->id, '24', $flag)) {
             return true;
         }
         return false;
