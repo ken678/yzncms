@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 御宅男 <530765310@qq.com>
+// | Author: fastadmin: https://www.fastadmin.net/
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
@@ -15,6 +15,7 @@
 namespace app\common\controller;
 
 use app\admin\service\User;
+use think\facade\Hook;
 use think\facade\Session;
 use think\Validate;
 
@@ -28,10 +29,14 @@ class Adminbase extends Base
     //无需鉴权的方法,但需要登录
     protected $noNeedRight = [];
     //当前登录账号信息
-    public $_userinfo;
-    public $rule;
+    //public $_userinfo;
     //Multi方法可批量修改的字段
     protected $multiFields = 'status,listorder';
+    /**
+     * 权限控制类
+     * @var Auth
+     */
+    protected $auth = null;
     //模型对象
     protected $modelClass = null;
     //Selectpage可显示的字段
@@ -56,17 +61,23 @@ class Adminbase extends Base
     protected function initialize()
     {
         parent::initialize();
-        $this->rule = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+        $this->auth = User::instance();
+        $path       = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
         // 定义是否Dialog请求
         !defined('IS_DIALOG') && define('IS_DIALOG', $this->request->param("dialog") ? true : false);
         // 检测是否需要验证登录
-        if (!$this->match($this->noNeedLogin)) {
+        if (!$this->auth->match($this->noNeedLogin, $path)) {
             if (defined('UID')) {
                 return;
             }
-            define('UID', (int) User::instance()->isLogin());
+            if (!$this->auth->isLogin()) {
+                Hook::listen('admin_nologin', $this);
+                $this->error('请先登陆', url('admin/index/login'));
+            }
+            define('UID', (int) $this->auth->id);
+
             // 是否是超级管理员
-            define('IS_ROOT', User::instance()->isAdministrator());
+            define('IS_ROOT', $this->auth->isAdministrator());
 
             if (!IS_ROOT && config('admin_forbid_ip')) {
                 // 检查IP地址访问
@@ -86,17 +97,11 @@ class Adminbase extends Base
                     }
                 }
             }
-
-            // 判断是否需要验证权限
-            if (false == $this->competence()) {
-                //跳转到登录界面
-                $this->error('请先登陆', url('admin/index/login'));
-            } else {
-                if (!$this->match($this->noNeedRight) && !IS_ROOT) {
-                    //检测访问权限
-                    if (!$this->checkRule($this->rule, [1, 2])) {
-                        $this->error('未授权访问!');
-                    }
+            if (!IS_ROOT && !$this->auth->match($this->noNeedRight, $path)) {
+                //检测访问权限
+                if (!$this->checkRule($path, [1, 2])) {
+                    Hook::listen('admin_nopermission', $this);
+                    $this->error('未授权访问!');
                 }
             }
         }
@@ -112,38 +117,8 @@ class Adminbase extends Base
             'chunksize'              => $config['chunksize'],
         ];
         $this->assign('site', $site);
-    }
-
-    public function match($arr = [])
-    {
-        $arr = is_array($arr) ? $arr : explode(',', $arr);
-        if (!$arr) {
-            return false;
-        }
-        $arr = array_map('strtolower', $arr);
-        // 是否存在
-        if (in_array(strtolower($this->rule), $arr) || in_array('*', $arr)) {
-            return true;
-        }
-        // 没找到匹配
-        return false;
-    }
-
-    /**
-     * 验证登录
-     * @return boolean
-     */
-    private function competence()
-    {
-        //获取当前登录用户信息
-        $this->_userinfo = $userInfo = Session::get('admin');
-        if (empty($userInfo)) {
-            User::instance()->logout();
-            return false;
-        }
-        $this->assign('userInfo', $this->_userinfo);
-        return $userInfo;
-
+        $this->assign('auth', $this->auth);
+        $this->assign('userInfo', Session::get('admin'));
     }
 
     /**
@@ -238,7 +213,6 @@ class Adminbase extends Base
     }
 
     /**
-     * fastadmin的Selectpage的实现方法
      *
      * 当前方法只是一个比较通用的搜索匹配,请按需重载此方法来编写自己的搜索逻辑,$where按自己的需求写即可
      * 这里示例了所有的参数，所以比较复杂，实现上自己实现只需简单的几行即可
