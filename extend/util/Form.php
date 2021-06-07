@@ -140,12 +140,12 @@ class Form
         if (!$ext) {
             $ext = 'jpg|jpeg|gif|bmp|png';
         }
-        $string .= "<div id='file_list_{$name}' class='uploader-list'>";
+        $string .= "<div id='file_list_{$id}' class='uploader-list'>";
         if (!empty($value)) {
             $path = get_file_path($value) ? get_file_path($value) : $static_url . "/admin/img/none.png";
-            $string .= "<div class='file-item thumbnail'><img data-image class='{$name}-{$value}' data-original='{$path}' src='{$path}'><div class='file-panel'><i class='iconfont icon-tailor cropper' data-input-id='{$value}' data-id='{$name}'></i> <i class='iconfont icon-trash remove-picture' data-id='{$value}'></i></div></div>";
+            $string .= "<div class='file-item thumbnail'><img data-image class='{$id}-{$value}' data-original='{$path}' src='{$path}'><div class='file-panel'><i class='iconfont icon-tailor cropper' data-input-id='{$value}' data-id='{$id}'></i> <i class='iconfont icon-trash remove-picture' data-id='{$value}'></i></div></div>";
         }
-        $string .= "</div><input type='hidden' name='{$name}' data-multiple='{$multiple}' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$name}'><i class='layui-icon layui-icon-upload'></i> 上传单张图片</div> <button type='button' class='layui-btn fachoose-image' data-input-id='{$name}' id='fachoose-{$name}'><i class='iconfont icon-other'></i> 选择</button>";
+        $string .= "</div><input type='hidden' name='{$name}' data-multiple='{$multiple}' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div class='layui-clear'></div><div id='picker_{$id}'><i class='layui-icon layui-icon-upload'></i> 上传单张图片</div> <button type='button' class='layui-btn fachoose-image' data-input-id='{$id}' id='fachoose-{$id}'><i class='iconfont icon-other'></i> 选择</button>";
         return $string;
     }
 
