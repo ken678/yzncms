@@ -20,10 +20,6 @@ use think\Loader;
 
 class MemberBase extends HomeBase
 {
-    //会员模型相关配置
-    protected $memberConfig = array();
-    //会员组缓存
-    protected $memberGroup = array();
     /**
      * 无需登录的方法,同时也就不需要鉴权了
      * @var array
@@ -44,15 +40,12 @@ class MemberBase extends HomeBase
     protected function initialize()
     {
         parent::initialize();
-        $modulename         = $this->request->module();
-        $controllername     = Loader::parseName($this->request->controller());
-        $actionname         = strtolower($this->request->action());
-        $this->memberConfig = cache("Member_Config");
-        $this->memberGroup  = cache("Member_Group");
-
-        $this->auth = User::instance();
-        $token      = $this->request->server('HTTP_TOKEN', $this->request->request('token', \think\facade\Cookie::get('token')));
-        $path       = str_replace('.', '/', $controllername) . '/' . $actionname;
+        $modulename     = $this->request->module();
+        $controllername = Loader::parseName($this->request->controller());
+        $actionname     = strtolower($this->request->action());
+        $this->auth     = User::instance();
+        $token          = $this->request->server('HTTP_TOKEN', $this->request->request('token', \think\facade\Cookie::get('token')));
+        $path           = str_replace('.', '/', $controllername) . '/' . $actionname;
         if (substr($this->request->module(), 0, 7) == 'public_' || !$this->auth->match($this->noNeedLogin)) {
             //初始化
             $this->auth->init($token);
@@ -71,7 +64,7 @@ class MemberBase extends HomeBase
             }
         }
         $this->assign('userinfo', $this->auth->getUser());
-        $this->assign("Member_group", $this->memberGroup);
-        $this->assign("Member_config", $this->memberConfig);
+        $this->assign("Member_group", cache("Member_Group"));
+        $this->assign("Member_config", cache("Member_Config"));
     }
 }
