@@ -177,7 +177,7 @@ class Manager extends Adminbase
             foreach ($adminList as $k => $v) {
                 $deleteIds[] = $v->id;
             }
-            $deleteIds = array_values(array_diff($deleteIds, [$this->_userinfo['id']]));
+            $deleteIds = array_values(array_diff($deleteIds, [$this->auth->id]));
             if ($deleteIds) {
                 $this->modelClass->destroy($deleteIds);
                 $this->success("删除成功！");

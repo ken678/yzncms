@@ -274,6 +274,29 @@ class User extends \libs\Auth
     }
 
     /**
+     * 检测当前控制器和方法是否匹配传递的数组
+     *
+     * @param array $arr 需要验证权限的数组
+     * @return bool
+     */
+    public function match($arr = [], $path)
+    {
+        $arr = is_array($arr) ? $arr : explode(',', $arr);
+        if (!$arr) {
+            return false;
+        }
+
+        $arr = array_map('strtolower', $arr);
+        // 是否存在
+        if (in_array(strtolower($path), $arr) || in_array('*', $arr)) {
+            return true;
+        }
+
+        // 没找到匹配
+        return false;
+    }
+
+    /**
      * 注销登录
      */
     public function logout()

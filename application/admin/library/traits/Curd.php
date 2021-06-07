@@ -77,7 +77,7 @@ trait Curd
                 $params = $this->preExcludeFields($params);
 
                 if ($this->dataLimit && $this->dataLimitFieldAutoFill) {
-                    $params[$this->dataLimitField] = $this->$this->_userinfo['id'];
+                    $params[$this->dataLimitField] = $this->auth->id;
                 }
                 $result = false;
                 try {
