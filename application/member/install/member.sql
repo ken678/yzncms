@@ -41,7 +41,7 @@ CREATE TABLE `yzn_member_group` (
   `allowpost` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否允许发稿',
   `allowpostverify` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否投稿不需审核',
   `allowsearch` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否允许搜索',
-  `allowupgrade` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否允许自主升级',
+  `allowupgrade` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否允许自主升级',
   `allowsendmessage` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '允许发送短消息',
   `allowpostnum` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '每天允许发文章数',
   `allowattachment` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否允许上传附件',
