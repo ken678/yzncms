@@ -26,8 +26,8 @@ class User
     protected $_error          = null;
     protected $_logined        = false;
     //当前登录会员详细信息
-    protected static $_user = null;
-    protected $_token       = '';
+    protected $_user  = null;
+    protected $_token = '';
     //Token默认有效时长
     protected $keeptime = 2592000;
     //默认配置
