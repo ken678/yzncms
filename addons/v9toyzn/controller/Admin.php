@@ -15,7 +15,6 @@
 namespace addons\v9toyzn\Controller;
 
 use app\addons\util\Adminaddon;
-use app\admin\service\User as admin_user;
 use think\Db;
 use think\facade\Cache;
 
@@ -191,15 +190,14 @@ class Admin extends Adminaddon
     public function step2()
     {
         $db_config = Cache::get('db_config');
-        $admin_id  = admin_user::instance()->id;
         $finfo     = finfo_open(FILEINFO_MIME_TYPE);
-        Db::connect($db_config)->name('attachment')->chunk(100, function ($cursor) use ($admin_id, $finfo) {
+        Db::connect($db_config)->name('attachment')->chunk(100, function ($cursor) use ($finfo) {
             foreach ($cursor as $key => $value) {
                 $path     = ROOT_PATH . 'public' . str_replace("/", DS, '/uploads/images/' . $value['filepath']);
                 $is_exist = file_exists($path) ? true : false;
                 $data[]   = [
                     'id'          => $value['aid'],
-                    'aid'         => $admin_id,
+                    'aid'         => (int) session('admin.id'),
                     'uid'         => 0,
                     'name'        => $value['filename'],
                     'path'        => '/uploads/images/' . $value['filepath'],
