@@ -32,6 +32,11 @@ class Member extends Model
         return request()->ip();
     }
 
+    public function getLastLoginTimeAttr($value, $data)
+    {
+        return time_format($data['last_login_time']);
+    }
+
     public function getGroupnameAttr($value, $data)
     {
         $group = cache("Member_Group");
@@ -98,26 +103,6 @@ class Member extends Model
             $this->error = '用户资料更新失败！';
             return false;
         }
-    }
-
-    /**
-     * 删除用户
-     * @param $uid 用户UID
-     * @return bool
-     */
-    public function userDelete($uid)
-    {
-        $user = self::get($uid);
-        if (!$user) {
-            return false;
-        }
-        //删除本地用户数据开始
-        if (self::destroy($uid) !== false) {
-            hook("user_delete_successed", $user);
-            return true;
-        }
-        $this->error = '删除会员失败！';
-        return false;
     }
 
     //会员配置缓存

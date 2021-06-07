@@ -32,16 +32,30 @@ class Member extends Adminbase
     /**
      * 会员列表
      */
-    public function manage()
+    public function index()
     {
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list                      = $this->modelClass->where($where)->where('status', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
-                return time_format($value);
-            })->select();
-            $total  = $this->modelClass->where($where)->where('status', 1)->count();
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            $_list                      = $this->modelClass->where($where)->where('status', 1)->page($page, $limit)->select();
+            $total                      = $this->modelClass->where($where)->where('status', 1)->count();
+            $result                     = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
+        }
+        return $this->fetch();
+    }
+
+    /**
+     * 审核会员
+     */
+    public function userverify()
+    {
+        if ($this->request->isAjax()) {
+            list($page, $limit, $where) = $this->buildTableParames();
+            $_list                      = $this->modelClass->where($where)->where('status', '<>', 1)->page($page, $limit)->select();
+            $total                      = $this->modelClass->where($where)->where('status', '<>', 1)->count();
+            $result                     = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+
         }
         return $this->fetch();
     }
@@ -62,9 +76,9 @@ class Member extends Adminbase
                 unset($data['username'], $data['password'], $data['email']);
                 $data['overduedate'] = strtotime($data['overduedate']);
                 if (false !== $this->modelClass->save($data, ['id' => $userid])) {
-                    $this->success("添加会员成功！", url("member/manage"));
+                    $this->success("添加会员成功！", url("member/index"));
                 } else {
-                    //service("Passport")->userDelete($memberinfo['userid']);
+                    //$this->UserService->delete($memberinfo['userid']);
                     $this->error("添加会员失败！");
                 }
             } else {
@@ -109,7 +123,7 @@ class Member extends Adminbase
             if (false === $this->modelClass->allowField(true)->save($data, ['id' => $userid])) {
                 $this->error('更新失败！');
             }
-            $this->success("更新成功！", url("member/manage"));
+            $this->success("更新成功！", url("member/index"));
 
         } else {
             $userid = $this->request->param('id/d', 0);
@@ -141,31 +155,10 @@ class Member extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $uid) {
-            $info = $this->modelClass->find($uid);
-            if (!empty($info)) {
-                $this->modelClass->userDelete($uid);
-            }
+            $this->UserService->delete($uid);
         }
         $this->success("删除成功！");
 
-    }
-
-    /**
-     * 审核会员
-     */
-    public function userverify()
-    {
-        if ($this->request->isAjax()) {
-            list($page, $limit, $where) = $this->buildTableParames();
-            $_list                      = $this->modelClass->where($where)->where('status', '<>', 1)->page($page, $limit)->withAttr('last_login_time', function ($value, $data) {
-                return time_format($value);
-            })->select();
-            $total  = $this->modelClass->where($where)->where('status', '<>', 1)->count();
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
-            return json($result);
-
-        }
-        return $this->fetch();
     }
 
     /**

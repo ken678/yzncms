@@ -186,7 +186,7 @@ class User
                 return $userid;
             } else {
                 //删除
-                $this->Member_Model->userDelete($userid);
+                $this->delete($userid);
             }
         }
         $this->error = '注册失败！';
@@ -237,7 +237,7 @@ class User
         }
         try {
             // 删除会员
-            User::destroy($user_id);
+            Member_Model::destroy($user_id);
             // 删除会员指定的所有Token
             Token::clear($user_id);
             Hook::listen("user_delete_successed", $user);
