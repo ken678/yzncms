@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\controller;
 
-use app\admin\service\User;
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Adminbase;
 
@@ -90,7 +89,7 @@ class Attachments extends Adminbase
         $urls = array_unique($urls[2]);
 
         $file_info = [
-            'aid'    => User::instance()->isLogin(),
+            'aid'    => $this->auth->id,
             'module' => 'admin',
             'thumb'  => '',
         ];
