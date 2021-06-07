@@ -25,8 +25,8 @@ class Message extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->groupCache = cache("Member_Group"); //会员模型
-        $this->modelClass = new MessageModel;
+        $this->groupCache        = cache("Member_Group"); //会员模型
+        $this->modelClass        = new MessageModel;
         $this->MessageGroupModel = new MessageGroupModel;
     }
 
@@ -38,11 +38,11 @@ class Message extends Adminbase
         if ($this->request->isAjax()) {
 
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list = $this->MessageGroupModel->where($where)->page($page, $limit)->select();
+            $_list                      = $this->MessageGroupModel->where($where)->page($page, $limit)->select();
             foreach ($_list as $k => $v) {
                 $_list[$k]['groupname'] = $this->groupCache[$v['groupid']]['name'];
             }
-            $total = $this->MessageGroupModel->where($where)->count();
+            $total  = $this->MessageGroupModel->where($where)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -55,7 +55,7 @@ class Message extends Adminbase
     public function message_send()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post('info/a');
+            $data   = $this->request->post('info/a');
             $result = $this->validate($data, 'message_group');
             if (true !== $result) {
                 return $this->error($result);
@@ -82,9 +82,9 @@ class Message extends Adminbase
     public function send_one()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post('info/a');
-            $data['send_from'] = $this->_userinfo['username'];
-            $result = $this->validate($data, 'message');
+            $data              = $this->request->post('info/a');
+            $data['send_from'] = $this->auth->username;
+            $result            = $this->validate($data, 'message');
             if (true !== $result) {
                 return $this->error($result);
             }
