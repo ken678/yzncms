@@ -33,7 +33,8 @@ class Spend extends Model
      */
     public static function spend_time($userid, $time, $flag)
     {
-        return self::where(array('uid' => $userid, 'remarks' => $flag))->whereTime('addtime', '-' . $time . ' hours')->order('id DESC')->find();
+        return self::where(array('uid' => $userid, 'remarks' => $flag))->order('id DESC')->find();
+        //return self::where(array('uid' => $userid, 'remarks' => $flag))->whereTime('addtime', '-' . $time . ' hours')->order('id DESC')->find();
     }
 
     /**
