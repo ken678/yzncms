@@ -41,8 +41,13 @@ class Homebase extends Base
 
     protected function fetch($template = '', $vars = [], $config = [], $renderContent = false)
     {
-        $Theme = empty(Config::get('theme')) ? 'default' : Config::get('theme');
-        $this->view->config('view_path', TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . $this->request->module() . DIRECTORY_SEPARATOR);
+        $Theme        = empty(Config::get('theme')) ? 'default' : Config::get('theme');
+        $viewPath     = TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . $this->request->module() . DIRECTORY_SEPARATOR;
+        $templateFile = $viewPath . trim($template, '/') . '.' . Config::get('template.view_suffix');
+        if ('default' !== $Theme && !is_file($templateFile)) {
+            $viewPath = TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . $this->request->module() . DIRECTORY_SEPARATOR;
+        }
+        $this->view->config('view_path', $viewPath);
         return $this->view->fetch($template, $vars, $config, $renderContent);
     }
 }
