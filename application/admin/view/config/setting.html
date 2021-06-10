@@ -29,9 +29,6 @@
 layui.use('yznForm', function() {
     var yznForm = layui.yznForm;
     yznForm.listen();
-    $(document).on("fa.event.appendfieldlist", ".btn-append", function (e, obj) {
-        yznForm.events.faselect(obj);
-    });
 });
 </script>
 {/block}
