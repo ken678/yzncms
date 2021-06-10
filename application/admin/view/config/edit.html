@@ -4,10 +4,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分组</label>
         <div class="layui-input-inline w300">
-            <select name="group" lay-verify="required">
+            <select name="row[group]" lay-verify="required">
                 <option value=""></option>
                 {volist name="groupArray" id="vo"}
-                <option value="{$key}" {if $info.group==$key}selected{/if}>{$vo}[{$key}]</option>
+                <option value="{$key}" {if $data.group==$key}selected{/if}>{$vo}[{$key}]</option>
                 {/volist}
             </select>
         </div>
@@ -15,10 +15,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label">配置类型</label>
         <div class="layui-input-inline w300">
-            <select name="type" lay-filter="fieldType" lay-verify="required">
+            <select name="row[type]" lay-filter="fieldType" lay-verify="required">
                 <option value=""></option>
                 {volist name="fieldType" id="vo"}
-                <option value="{$vo.name}" {if $info.type==$vo.name}selected{/if}>{$vo.title}[{$vo.name}]</option>
+                <option value="{$vo.name}" {if $data.type==$vo.name}selected{/if}>{$vo.title}[{$vo.name}]</option>
                 {/volist}
             </select>
         </div>
@@ -26,33 +26,33 @@
     <div class="layui-form-item">
         <label class="layui-form-label">配置标题</label>
         <div class="layui-input-inline w300">
-            <input type="text" name="title" lay-verify="required" value="{$info.title}" autocomplete="off" placeholder="字段中文标题" class="layui-input">
+            <input type="text" name="row[title]" lay-verify="required" value="{$data.title}" autocomplete="off" placeholder="字段中文标题" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">一般由中文组成，仅用于显示</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">配置名称</label>
         <div class="layui-input-inline w300">
-            <input type="text" name="name" lay-verify="required" value="{$info.name}" autocomplete="off" placeholder="字段英文名称" class="layui-input">
+            <input type="text" name="row[name]" lay-verify="required" value="{$data.name}" autocomplete="off" placeholder="字段英文名称" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">英文字母和下划线组成，如 <code>web_site_title</code></div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">配置默认值</label>
         <div class="layui-input-inline w300">
-            <textarea name="value" placeholder="未指定值时默认插入字段的值" class="layui-textarea">{$info.value}</textarea>
+            <textarea name="row[value]" placeholder="未指定值时默认插入字段的值" class="layui-textarea">{$data.value}</textarea>
         </div>
         <div class="layui-form-mid layui-word-aux">配置类型为<code>数组</code>时请按如下格式填写：
             <br>{"键值1":"键名1","键值2":"键名2"}</div>
     </div>
-    <div class="layui-form-item layui-form-text" id="options" {if $info.type !== 'custom' && $info.type !== 'checkbox' &&  $info.type !== 'select' &&  $info.type !== 'selects' && $info.type !== 'radio' && $info.type !== 'selectpage' } style="display: none;" {/if}>
-        {if $info.type == 'custom'}
+    <div class="layui-form-item layui-form-text" id="options" {if $data.type !== 'custom' && $data.type !== 'checkbox' &&  $data.type !== 'select' &&  $data.type !== 'selects' && $data.type !== 'radio' && $data.type !== 'selectpage' } style="display: none;" {/if}>
+        {if $data.type == 'custom'}
         <label class="layui-form-label">自定义模板</label>
         <div class="layui-input-inline w300">
-            <select name="options">
+            <select name="row[options]">
                 <option value="custom.html">默认模板:custom.html</option>
                 {volist name="custom" id="vo"}
-                <option value="{$vo}" {if $info.options==$vo}selected{/if}>{$vo}</option>
+                <option value="{$vo}" {if $data.options==$vo}selected{/if}>{$vo}</option>
                 {/volist}
             </select>
         </div>
@@ -60,7 +60,7 @@
         {else}
         <label class="layui-form-label">配置项</label>
         <div class="layui-input-inline w300">
-            <textarea name="options" placeholder="{if $info.type !== 'selectpage'}
+            <textarea name="row[options]" placeholder="{if $data.type !== 'selectpage'}
 键值:键名
 键值:键名
 键值:键名
@@ -75,10 +75,10 @@ multiple:是否支持多选,默认[false]
 max:最多可选择数量
 order:排序字段，默认[id]
 {/if}
-" class="layui-textarea">{$info.options}</textarea>
+" class="layui-textarea">{$data.options}</textarea>
         </div>
         <div class="layui-form-mid layui-word-aux">如：
-            {if $info.type !== 'selectpage'}
+            {if $data.type !== 'selectpage'}
 <br>1:北京
 <br>2:上海
 <br>3:广东
@@ -98,27 +98,27 @@ order:排序字段，默认[id]
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">配置备注</label>
         <div class="layui-input-inline w300">
-            <textarea name="remark" placeholder="填写配置说明" class="layui-textarea">{$info.remark}</textarea>
+            <textarea name="row[remark]" placeholder="填写配置说明" class="layui-textarea">{$data.remark}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">排序</label>
         <div class="layui-input-inline w300">
-            <input type="number" name="listorder" autocomplete="off" placeholder="只能是正整数" class="layui-input" value="{$info.listorder}">
+            <input type="number" name="row[listorder]" autocomplete="off" placeholder="只能是正整数" class="layui-input" value="{$data.listorder}">
         </div>
     </div>
+    <input type="hidden" name="row[id]" value="{$id}">
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
-    <input type="hidden" name="id" value="{$info.id}">
 </form>
 <div id="options1" style="display: none;">
     <label class="layui-form-label">配置项</label>
     <div class="layui-input-inline w300">
-        <textarea name="options" placeholder="键值:键名
+        <textarea name="row[options]" placeholder="键值:键名
 键值:键名
 键值:键名
 ....." class="layui-textarea"></textarea>
@@ -132,7 +132,7 @@ order:排序字段，默认[id]
 <div id="options2" style="display: none;">
     <label class="layui-form-label">配置项</label>
     <div class="layui-input-inline w300">
-        <textarea name="options" placeholder="url:提供数据源的URL地址
+        <textarea name="row[options]" placeholder="url:提供数据源的URL地址
 field:列表显示读取的字段,默认[name]
 key:列表选中后渲染的字段,默认[id]
 pagination:是否开启分页,默认[true]
@@ -155,7 +155,7 @@ order:排序字段，默认[id]" class="layui-textarea"></textarea>
 <div id="options3" style="display: none;">
     <label class="layui-form-label">自定义模板</label>
     <div class="layui-input-inline w300">
-        <select name="options">
+        <select name="row[options]">
             <option value="custom.html" selected>默认模板:custom.html</option>
             {volist name="custom" id="vo"}
             <option value="{$vo}">{$vo}</option>

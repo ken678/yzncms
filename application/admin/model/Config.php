@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model;
 
-use \think\Model;
+use think\Model;
 
 class Config extends Model
 {
@@ -34,7 +34,7 @@ class Config extends Model
 
     public function getConfig($where = "status='1'", $fields = 'name,value,type,options', $order = 'listorder,id desc')
     {
-        $configs = self::where($where)->order($order)->column($fields);
+        $configs    = self::where($where)->order($order)->column($fields);
         $newConfigs = [];
         foreach ($configs as $key => $value) {
             if ($value['options'] != '') {

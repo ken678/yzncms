@@ -21,6 +21,8 @@ use think\Db;
 class Config extends Adminbase
 {
     public $banfie;
+    protected $modelValidate      = true;
+    protected $modelSceneValidate = true;
     protected function initialize()
     {
         parent::initialize();
@@ -29,6 +31,7 @@ class Config extends Adminbase
         //允许使用的字段列表
         $this->banfie = ["text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown', 'city', 'custom'];
         $this->assign('custom', $custom);
+        $this->assign('groupArray', config('config_group'));
         $this->modelClass = new ConfigModel;
     }
 
@@ -44,10 +47,7 @@ class Config extends Adminbase
             $result = array("code" => 0, "data" => $_list);
             return json($result);
         } else {
-            $this->assign([
-                'groupArray' => config('config_group'),
-                'group'      => $group,
-            ]);
+            $this->assign('group', $group);
             return $this->fetch();
         }
     }
@@ -120,72 +120,35 @@ class Config extends Adminbase
                 }
             }
             $this->assign([
-                'groupArray' => config('config_group'),
-                'fieldList'  => $configList,
-                'group'      => $group,
+                'fieldList' => $configList,
+                'group'     => $group,
             ]);
             return $this->fetch();
         }
-
     }
 
     //新增配置
     public function add()
     {
-        if ($this->request->isPost()) {
-            $data           = $this->request->post();
-            $data['status'] = isset($data['status']) ? intval($data['status']) : 1;
-            $result         = $this->validate($data, 'Config');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            if (ConfigModel::create($data)) {
-                cache('Config', null); //清空缓存配置
-                $this->success('配置添加成功~', url('index'));
-            } else {
-                $this->error('配置添加失败！');
-            }
-        } else {
-            $groupType = $this->request->param('groupType/s', 'base');
-            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
-            $this->assign([
-                'groupArray' => config('config_group'),
-                'fieldType'  => $fieldType,
-                'groupType'  => $groupType,
-            ]);
-            return $this->fetch();
-        }
+        cache('Config', null);
+        $groupType = $this->request->param('groupType/s', 'base');
+        $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
+        $this->assign([
+            'fieldType' => $fieldType,
+            'groupType' => $groupType,
+        ]);
+        return parent::add();
     }
 
     //编辑配置
     public function edit()
     {
-        if ($this->request->isPost()) {
-            $data   = $this->request->post();
-            $result = $this->validate($data, 'Config');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            if (ConfigModel::update($data)) {
-                cache('Config', null); //清空缓存配置
-                $this->success('配置编辑成功~', url('index'));
-            } else {
-                $this->error('配置编辑失败！');
-            }
-        } else {
-            $id = $this->request->param('id/d');
-            if (!is_numeric($id) || $id < 0) {
-                return '参数错误';
-            }
-            $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
-            $info      = ConfigModel::get($id);
-            $this->assign([
-                'groupArray' => config('config_group'),
-                'fieldType'  => $fieldType,
-                'info'       => $info,
-            ]);
-            return $this->fetch();
-        }
+        cache('Config', null);
+        $id        = $this->request->param('id/d');
+        $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
+        $this->assign('id', $id);
+        $this->assign('fieldType', $fieldType);
+        return parent::edit();
     }
 
     //删除配置
