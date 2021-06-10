@@ -565,6 +565,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 $(html).attr("fieldlist-item", true).insertBefore($(tagName + ":last", container));
                             });
                             form.render();
+                            yznForm.events.faselect();
                             $(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
                         });
                         //移除控制
