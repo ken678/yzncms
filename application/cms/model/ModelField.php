@@ -139,7 +139,7 @@ EOF;
         try {
             Db::execute($sql);
         } catch (\Exception $e) {
-            $this->addField($data);
+            throw new \Exception($e->getMessage());
         }
         $fieldInfo = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
         //只有主表文本类字段才可支持搜索
