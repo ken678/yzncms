@@ -169,8 +169,7 @@ class Index extends MemberBase
                 }
                 $data['ischeck_email'] = 1;
             }
-            $userid = $this->auth->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
-            if ($userid) {
+            if ($this->auth->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data)) {
                 $this->success('会员注册成功！', $forward ? $forward : url('index'));
             } else {
                 $this->error($this->auth->getError() ?: '帐号注册失败！', null, ['token' => $this->request->token()]);
