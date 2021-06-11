@@ -146,51 +146,32 @@ class User
             "encrypt"  => $passwordinfo['encrypt'],
             "amount"   => 0,
         );
-        $newdata = array_merge($data, $extend);
-        hook("user_register_init", $newdata, true, true);
+        //新注册用户积分
+        $data['point'] = $this->config['defualtpoint'] ? $this->config['defualtpoint'] : 0;
+        //新会员注册默认赠送资金
+        $data['amount'] = $this->config['defualtamount'] ? $this->config['defualtamount'] : 0;
+        //新会员注册需要管理员审核
+        $data['status'] = $this->config['registerverify'] ? 0 : 1;
+        //计算用户组
+        $data['groupid'] = $this->get_usergroup_bypoint($data['point']);
+        $params          = array_merge($data, $extend);
 
-        $user = new Member_Model();
-        $res  = $user->save($data);
-        if ($res) {
-            $userid = $user->id;
-            unset($newdata['username'], $newdata['password'], $newdata['email'], $newdata['mobile']);
-            //新注册用户积分
-            $newdata['point'] = $this->config['defualtpoint'] ? $this->config['defualtpoint'] : 0;
-            //新会员注册默认赠送资金
-            $newdata['amount'] = $this->config['defualtamount'] ? $this->config['defualtamount'] : 0;
-            //新会员注册需要邮件验证
-            if ($this->config['enablemailcheck']) {
-                $newdata['groupid'] = 7;
-                $newdata['status']  = 0;
-            } else {
-                //新会员注册需要管理员审核
-                if ($this->config['registerverify']) {
-                    $newdata['status'] = 0;
-                } else {
-                    $newdata['status'] = 1;
-                }
-                //计算用户组
-                $newdata['groupid'] = $this->get_usergroup_bypoint($newdata['point']);
-            }
-            if (false !== $user->save($newdata, ['id' => $userid])) {
-                //设置Token
-                $this->_token = Random::uuid();
-                Token::set($this->_token, $userid, $this->keeptime);
-                //注册登陆状态
-                //$this->loginLocal($username, $password);
-                $_user = $user::get($userid);
-                //设置登录状态
-                $this->_logined = true;
-                //注册成功的事件
-                hook("user_register_successed", $_user);
-                return $userid;
-            } else {
-                //删除
-                $this->delete($userid);
-            }
+        try {
+            $model       = new Member_Model();
+            $user        = $model->allowField(true)->save($params);
+            $this->_user = $model->get($model->id);
+            //设置Token
+            $this->_token = Random::uuid();
+            Token::set($this->_token, $model->id, $this->keeptime);
+            //设置登录状态
+            $this->_logined = true;
+            //注册成功的事件
+            Hook::listen("user_register_successed", $this->_user, $data);
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+            return false;
         }
-        $this->error = '注册失败！';
-        return false;
+        return true;
     }
 
     /**
