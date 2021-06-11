@@ -141,7 +141,6 @@ class User
         $data         = array(
             "mobile"   => $mobile,
             "username" => $username,
-            "password" => $passwordinfo['password'],
             "email"    => $email,
             "encrypt"  => $passwordinfo['encrypt'],
             "amount"   => 0,
@@ -153,8 +152,9 @@ class User
         //新会员注册需要管理员审核
         $data['status'] = $this->config['registerverify'] ? 0 : 1;
         //计算用户组
-        $data['groupid'] = $this->get_usergroup_bypoint($data['point']);
-        $params          = array_merge($data, $extend);
+        $data['groupid']    = $this->get_usergroup_bypoint($data['point']);
+        $params             = array_merge($data, $extend);
+        $params['password'] = $passwordinfo['password'];
 
         try {
             $model       = new Member_Model();
