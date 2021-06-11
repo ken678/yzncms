@@ -171,7 +171,7 @@ class User
             $this->setError($e->getMessage());
             return false;
         }
-        return true;
+        return $model->id;
     }
 
     /**

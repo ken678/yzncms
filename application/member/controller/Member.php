@@ -71,18 +71,12 @@ class Member extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            $userid = $this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data);
-            if ($userid) {
-                unset($data['username'], $data['password'], $data['email']);
-                $data['overduedate'] = strtotime($data['overduedate']);
-                if (false !== $this->modelClass->save($data, ['id' => $userid])) {
-                    $this->success("添加会员成功！", url("member/index"));
-                } else {
-                    //$this->UserService->delete($memberinfo['userid']);
-                    $this->error("添加会员失败！");
-                }
+            $data['overduedate'] = strtotime($data['overduedate']);
+            if ($this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data)) {
+                $this->success("添加会员成功！", url("member/index"));
             } else {
-                $this->error($this->UserService->getError() ?: '帐号注册失败！');
+                //$this->UserService->delete($memberinfo['userid']);
+                $this->error($this->UserService->getError() ?: '添加会员失败！');
             }
         } else {
             foreach ($this->groupCache as $_key => $_value) {
