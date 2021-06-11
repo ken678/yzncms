@@ -126,7 +126,9 @@ class Index extends MemberBase
             $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("index"));
         }
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $extend             = [];
+            $data               = $this->request->post();
+            $extend['nickname'] = isset($data['nickname']) ? $data['nickname'] : "";
             //验证码
             if (!captcha_check($data['verify'])) {
                 $this->error('验证码输入错误！');
@@ -159,7 +161,7 @@ class Index extends MemberBase
                 if (!$result) {
                     $this->error('手机验证码错误！');
                 }
-                $data['ischeck_mobile'] = 1;
+                $extend['ischeck_mobile'] = 1;
             }
             if ($this->memberConfig['register_email_verify']) {
                 $Ems_Model = new Ems_Model();
@@ -167,9 +169,9 @@ class Index extends MemberBase
                 if (!$result) {
                     $this->error('邮箱验证码错误！');
                 }
-                $data['ischeck_email'] = 1;
+                $extend['ischeck_email'] = 1;
             }
-            if ($this->auth->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data)) {
+            if ($this->auth->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $extend)) {
                 $this->success('会员注册成功！', $forward ? $forward : url('index'));
             } else {
                 $this->error($this->auth->getError() ?: '帐号注册失败！', null, ['token' => $this->request->token()]);
