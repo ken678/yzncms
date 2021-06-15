@@ -46,7 +46,7 @@ class GetImgSrc
                     }
                     return $imgSrc;
                 } else {
-                    if (strpos($imgSrc, $blacklist) === false) {
+                    if (false === $blacklist || strpos($imgSrc, $blacklist) === false) {
                         return $imgSrc;
                     } else {
                         return self::src($data, $num + 1, $order, $blacklist, $model);
@@ -89,7 +89,7 @@ class GetImgSrc
                         $length++;
                     }
                 } else {
-                    if (strpos($imgSrc, $blacklist) === false) {
+                    if (false === $blacklist || strpos($imgSrc, $blacklist) === false) {
                         $imgSrcArr[] = $imgSrc;
                     } else {
                         $length++;
@@ -173,7 +173,7 @@ class GetImgSrc
                         $imgSrcArr[] = $img1[2][0];
                     };
                 } else {
-                    if (strpos($img1[2][0], is_string($blacklist) ? $blacklist : chr($blacklist)) === false) {
+                    if (false === $blacklist || strpos($img1[2][0], $blacklist) === false) {
                         $imgSrcArr[] = $img1[2][0];
                     };
                 }
