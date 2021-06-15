@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'dd596697b83d28e12d5d2811d55ba9a97831ce77',
+    'reference' => '26474cd601e36460c23d7dc457674e50f24214d6',
     'name' => 'topthink/think',
   ),
   'versions' => 
@@ -80,12 +80,12 @@ private static $installed = array (
     ),
     'monolog/monolog' => 
     array (
-      'pretty_version' => '1.26.0',
-      'version' => '1.26.0.0',
+      'pretty_version' => '1.26.1',
+      'version' => '1.26.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2209ddd84e7ef1256b7af205d0717fb62cfc9c33',
+      'reference' => 'c6b00f05152ae2c9b04a448f99c7590beb6042f5',
     ),
     'myclabs/php-enum' => 
     array (
@@ -288,7 +288,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'dd596697b83d28e12d5d2811d55ba9a97831ce77',
+      'reference' => '26474cd601e36460c23d7dc457674e50f24214d6',
     ),
     'topthink/think-captcha' => 
     array (
@@ -298,6 +298,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '54c8a51552f99ff9ea89ea9c272383a8f738ceee',
+    ),
+    'topthink/think-helper' => 
+    array (
+      'pretty_version' => 'v3.1.1',
+      'version' => '3.1.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '92c24d1057118dada3ca18232cd18ef38a831ad6',
     ),
     'topthink/think-image' => 
     array (
