@@ -173,7 +173,7 @@ class GetImgSrc
                         $imgSrcArr[] = $img1[2][0];
                     };
                 } else {
-                    if (strpos($img1[2][0], $blacklist) === false) {
+                    if (strpos($img1[2][0], is_string($blacklist) ? $blacklist : chr($blacklist)) === false) {
                         $imgSrcArr[] = $img1[2][0];
                     };
                 }
