@@ -85,9 +85,9 @@ class Attachments extends Adminbase
         $content = $this->request->post('content');
         $type    = $this->request->post('type');
         $urls    = [];
-        preg_match_all("/(src|SRC)=[\"|'| ]{0,}((http|https):\/\/(.*)\.(gif|jpg|jpeg|bmp|png|tiff))/isU", $content, $urls);
-        $urls = array_unique($urls[2]);
-
+        /*preg_match_all("/(src|SRC)=[\"|'| ]{0,}((http|https):\/\/(.*)\.(gif|jpg|jpeg|bmp|png|tiff))/isU", $content, $urls);
+        $urls = array_unique($urls[2]);*/
+        $urls      = \util\GetImgSrc::srcList($content);
         $file_info = [
             'aid'    => $this->auth->id,
             'module' => 'admin',
@@ -98,7 +98,7 @@ class Attachments extends Adminbase
             $host = parse_url($vo, PHP_URL_HOST);
             if ($host != $_SERVER['HTTP_HOST']) {
                 //当前域名下的文件不下载
-                $fileExt = strrchr($vo, '.');
+                $fileExt = strrchr($vo, '.'); //$fileExt = '.jpg';非正常后缀图片可以强制设置图片后缀进行抓取下载
                 if (!in_array($fileExt, ['.jpg', '.gif', '.png', '.bmp', '.jpeg', '.tiff'])) {
                     exit($content);
                 }
@@ -119,7 +119,7 @@ class Attachments extends Adminbase
                             mkdir($savePath, 0755, true);
                         }
                         $fname             = DS . md5(microtime(true)) . $fileExt;
-                        $file_info['name'] = $vo;
+                        $file_info['name'] = substr(htmlspecialchars(strip_tags($vo)), 0, 100);
                         $file_info['path'] = $this->uploadUrl . str_replace(DS, '/', $fpath . $fname);
                         $file_info['ext']  = ltrim($fileExt, ".");
 
