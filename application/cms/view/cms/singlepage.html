@@ -1,36 +1,43 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
+<style type="text/css">
+.childrenBody {
+    background-color:#fff;
+}
+</style>
 <form class="layui-form" method="post">
     <div class="layui-form-item">
         <div class="layui-form-item">
-            <label class="">标题&nbsp;<font color="red">*</font></label>
-            <div class="layui-form-field-label">
+            <label class="layui-form-label">标题&nbsp;<font color="red">*</font></label>
+            <div class="layui-input-block">
                 <input type="text" name="modelField[title]" placeholder="请输入标题" autocomplete="off" class="layui-input" value="{$info['title']}">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="">SEO关键词</label>
-            <div class="layui-form-field-label">
-                <input type="text" name="modelField[keywords]" placeholder="请输入SEO关键词" autocomplete="off" class="layui-input" value="{$info['keywords']}">
+            <label class="layui-form-label">SEO关键词</label>
+            <div class="layui-input-block">
+                <input type="text" name="modelField[keywords]" placeholder="请输入SEO关键词" autocomplete="off" class="layui-input form-tags" value="{$info['keywords']}" data-remark="关键词用回车确认">
             </div>
-            <div class="layui-form-mid layui-word-aux">多关键词之间用空格或者“,”隔开</div>
+            <div class="layui-form-mid2 layui-word-aux">关键词用回车确认</div>
         </div>
         <div class="layui-form-item layui-form-text">
-            <label class="">SEO摘要</label>
-            <div class="layui-form-field-label">
+            <label class="layui-form-label">SEO摘要</label>
+            <div class="layui-input-block">
                 <textarea placeholder="请输入SEO摘要" class="layui-textarea" name="modelField[description]">{$info['description']}</textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
-            <label class="">内容</label>
-            <div class="layui-form-field-label">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
                 <script type="text/plain" class="js-ueditor" id="content" name="modelField[content]">{$info['content']|raw}</script>
             </div>
         </div>
         <input type="hidden" name="modelField[catid]" value="{$catid}">
         <div class="layui-form-item layer-footer">
-            <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>  
+            </div>
         </div>
     </div>
 </form>
