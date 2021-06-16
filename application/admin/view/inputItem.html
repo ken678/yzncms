@@ -164,7 +164,6 @@
                 {/notempty}
             </div>
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="false" id="{$vo.name}" value="{$vo.value|default=''}">
-            <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传单张图片</div>
             <button type="button" class="layui-btn fachoose-image" data-input-id="{$vo.name}" id="fachoose-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
         </div>
@@ -192,7 +191,6 @@
                 {/notempty}
             </div>
             <input type="hidden" name="{$vo.fieldArr}[{$vo.name}]" data-multiple="true" id="{$vo.name}" value="{$vo.value|default=''}">
-            <div class="layui-clear"></div>
             <div id="picker_{$vo.name}"><i class="layui-icon layui-icon-upload"></i> 上传多张图片</div>
             <button type="button" class="layui-btn fachoose-image" data-multiple="true" data-input-id="{$vo.name}" id="fachoose-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
         </div>
