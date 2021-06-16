@@ -7,15 +7,7 @@
     </div>
 </div>
 <script type="text/html" id="switchTpl">
-    {{#  if(d.iffixed==1){ }}
-    {{#  if(d.status==1){ }}
-    启用
-    {{#  } else { }}
-    禁用
-    {{#  } }}
-    {{#  } else { }}
     <input type="checkbox" name="status" data-href="{:url('setstate')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
-    {{#  } }}
 </script>
 <script type="text/html" id="ifsearchTpl">
     <input type="checkbox" name="ifsearch" data-href="{:url('setSearch')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifsearch==1 ? 'checked' : '' }}>
