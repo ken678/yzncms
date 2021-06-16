@@ -1,51 +1,48 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<style type="text/css">
-.layui-form-label {width: 100px;}
-</style>
 <form class="layui-form" method="post">
     <div class="layui-form-item">
         <label class="layui-form-label">应用ID(APPID)</label>
-        <div class="layui-input-inline w300">
+        <div class="layui-input-block">
             <input type="text" name="config[app_id]" placeholder="请输入应用ID(APPID)" class="layui-input" value="{$info.config.app_id}">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">商户应用私钥</label>
-        <div class="layui-input-inline w300">
+        <div class="layui-input-block">
             <textarea name="config[private_key]" placeholder="请输入商户应用私钥" class="layui-textarea">{$info.config.private_key}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">支付宝公钥</label>
-        <div class="layui-input-inline w300">
+        <div class="layui-input-block">
             <textarea name="config[ali_public_key]" placeholder="请输入支付宝公钥" class="layui-textarea">{$info.config.ali_public_key}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">沙箱模式</label>
-        <div class="layui-input-inline w300">
+        <div class="layui-input-block">
             <input type="radio" name="config[mode]" value="1" title="启用" {if $info.config.mode==1}checked{/if}>
             <input type="radio" name="config[mode]" value="0" title="禁用" {if $info.config.mode==0}checked{/if}>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">个人支付</label>
-        <div class="layui-input-inline w300">
+        <div class="layui-input-block">
             <input type="radio" name="config[isper]" value="1" title="启用" {if $info.config.isper==1}checked{/if}>
             <input type="radio" name="config[isper]" value="0" title="禁用" {if $info.config.isper==0}checked{/if}>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">日志</label>
-        <div class="layui-input-inline w300">
+        <div class="layui-input-block">
             <input type="radio" name="config[log]" value="1" title="启用" {if $info.config.log==1}checked{/if}>
             <input type="radio" name="config[log]" value="0" title="禁用" {if $info.config.log==0}checked{/if}>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状态</label>
-        <div class="layui-input-inline w300">
+        <div class="layui-input-block">
             <input type="radio" name="status" value="1" title="启用" {if $info.status==1}checked{/if}>
             <input type="radio" name="status" value="0" title="禁用" {if $info.status==0}checked{/if}>
         </div>
