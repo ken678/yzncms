@@ -47,7 +47,7 @@ class Field extends Adminbase
         }
         if ($this->request->isAjax()) {
             //根据模型读取字段列表
-            $banFields                  = ['id', 'catid', 'did', 'status', 'uid'];
+            $banFields                  = ['id', 'catid', 'did', 'uid'];
             list($page, $limit, $where) = $this->buildTableParames();
             $total                      = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->count();
             $data                       = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->page($page, $limit)->select();
