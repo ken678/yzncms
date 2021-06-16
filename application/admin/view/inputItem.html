@@ -10,7 +10,7 @@
     <div class="layui-input-block">
         <input type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="tags"}
@@ -19,7 +19,7 @@
     <div class="layui-input-block">
         <input type="text" name="{$vo.fieldArr}[{$vo.name}]" class="layui-input form-tags tags-{$vo.name}" value="{$vo.value}" data-remark="{$vo.remark|default='输入回车键确认'}">
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="number"}
@@ -28,14 +28,14 @@
     <div class="layui-input-block">
         <input type="number" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="switch"}
 <div class="layui-form-item">
     <label class="layui-form-label">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-input-block">
-        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value' ]}checked='' {/if}> </div> {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+        <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}]" lay-skin="switch" lay-text="ON|OFF" value="{$vo['value']}" {if 1==$vo[ 'value' ]}checked='' {/if}> </div> {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="array"}
@@ -49,7 +49,7 @@
         <dd><button type="button" class="layui-btn btn-append">追加</button></dd>
         <textarea name="{$vo.fieldArr}[{$vo.name}]" class="layui-textarea layui-hide">{$vo.value}</textarea>
     </dl>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 <script type="text/html" id="{$vo.name}Tpl">
     <dd class="layui-form-item rules-item">
@@ -70,7 +70,7 @@
         <input type="checkbox" name="{$vo.fieldArr}[{$vo.name}][]" lay-skin="primary" title="{$v}" value="{$key}" {if in_array($key,$vo[ 'value' ])}checked{/if}>
         {/volist}
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="radio"}
@@ -78,7 +78,7 @@
     <label class="layui-form-label">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
     <div class="layui-input-block">
         {volist name="vo.options" id="v"}
-        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value' ]}checked='' {/if}> {/volist} </div> {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+        <input type="radio" name="{$vo.fieldArr}[{$vo.name}]" value="{$key}" title="{$v}" {if $key==$vo [ 'value' ]}checked='' {/if}> {/volist} </div> {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="select"}
@@ -92,7 +92,7 @@
             {/volist}
         </select>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="selects"}
@@ -101,7 +101,7 @@
     <div class="layui-input-block">
         <div class="form-selects" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}" data-value="{$vo.value}" data-list="{$vo.options|json_encode}"></div>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="selectpage"}
@@ -110,7 +110,7 @@
     <div class="layui-input-block">
         <input class="form-control layui-input selectpage" type="text" name="{$vo.fieldArr}[{$vo.name}]" data-source="{$vo.options.url|url}" data-multiple="{$vo.options.multiple|default='false'}" data-field="{$vo.options.field|default='name'}" data-primary-key="{$vo.options.key|default='id'}" data-max-select-limit="{$vo.options.max|default='20'}" data-pagination="{$vo.options.pagination|default='true'}" data-page-size="{$vo.options.limit|default='10'}" data-order-by="{$vo.options.order|default='id'}"  value="{$vo.value}">
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="color"}
@@ -124,7 +124,7 @@
             <div class="layui-color-box"></div>
         </div>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="datetime"}
@@ -134,7 +134,7 @@
         <div class="layui-input-block">
             <input type="text" class="layui-input datetime" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}">
         </div>
-        {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+        {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
     </div>
 </div>
 {/case}
@@ -144,7 +144,7 @@
     <div class="layui-input-block">
         <textarea placeholder="请输入{$vo.title}" class="layui-textarea" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="image"}
@@ -169,7 +169,7 @@
             <button type="button" class="layui-btn fachoose-image" data-input-id="{$vo.name}" id="fachoose-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
         </div>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="images"}
@@ -197,7 +197,7 @@
             <button type="button" class="layui-btn fachoose-image" data-multiple="true" data-input-id="{$vo.name}" id="fachoose-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
         </div>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="file"}
@@ -286,8 +286,8 @@
     <div class="layui-input-block">
         <script type="text/plain" class="js-ueditor" id="{$vo.name}" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value|raw}</script>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
-    <div class="{$vo.name}_attr editor_tool">
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
+    <div class="{$vo.name}_attr editor_tool" style="margin-left: 170px;">
         <a class="layui-btn layui-btn-sm" id="{$vo.name}grabimg" style="margin-top: 4px;">图片本地化</a>
         <a class="layui-btn layui-btn-sm" id="{$vo.name}filterword" style="margin-top: 4px;">检测违禁词</a>
     </div>
@@ -299,7 +299,7 @@
     <div class="layui-input-block">
         <input type="text" autocomplete="on" class="layui-input" name="{$vo.fieldArr}[{$vo.name}]" id="{$vo.name}" value="{$vo.value}" data-toggle="city-picker" placeholder="请选择"/>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 {/case}
 {case value="custom"}
