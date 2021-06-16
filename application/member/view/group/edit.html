@@ -19,10 +19,9 @@
             <input type="text" name="row[starnum]" lay-verify="required" autocomplete="off" placeholder="星星数" class="layui-input" value="{$data.starnum}">
         </div>
     </div>
-
     <div class="layui-form-item">
         <label class="layui-form-label">用户权限</label>
-        <div>
+        <div class="layui-input-block">
             <input type="checkbox" name="row[allowpost]" title="允许投稿" lay-skin="primary" value="1" {eq name="data.allowpost" value="1"}checked{/eq}>
             <input type="checkbox" name="row[allowpostverify]" title="投稿不需审核" lay-skin="primary" value="1" {eq name="data.allowpostverify" value="1"}checked{/eq}>
             <input type="checkbox" name="row[allowupgrade]" title="允许自助升级" lay-skin="primary" value="1" {eq name="data.allowupgrade" value="1"}checked{/eq}>
@@ -33,7 +32,7 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">升级价格</label>
-        <div>
+        <div class="layui-input-block">
             <div class="layui-form-mid">包日</div>
             <div class="layui-input-inline" style="width:80px;">
                 <input type="text" class="layui-input" name="row[price_d]" placeholder="包日" value="{$data.price_d}">
