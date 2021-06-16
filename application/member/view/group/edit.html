@@ -2,26 +2,26 @@
 {block name="main"}
 <form class="layui-form" method="post">
     <div class="layui-form-item">
-        <label>会员组名称</label>
-        <div class="w300">
+        <label class="layui-form-label">会员组名称</label>
+        <div class="layui-input-block">
             <input type="text" name="row[name]" lay-verify="required" autocomplete="off" placeholder="会员组名称" class="layui-input" value="{$data.name}">
         </div>
     </div>
     <div class="layui-form-item">
-        <label>积分小于</label>
-        <div class="w300">
+        <label class="layui-form-label">积分小于</label>
+        <div class="layui-input-block">
             <input type="text" name="row[point]" lay-verify="required" autocomplete="off" placeholder="积分小于" class="layui-input" value="{$data.point}">
         </div>
     </div>
     <div class="layui-form-item">
-        <label>星星数</label>
-        <div class="w300">
+        <label class="layui-form-label">星星数</label>
+        <div class="layui-input-block">
             <input type="text" name="row[starnum]" lay-verify="required" autocomplete="off" placeholder="星星数" class="layui-input" value="{$data.starnum}">
         </div>
     </div>
 
     <div class="layui-form-item">
-        <label>用户权限</label>
+        <label class="layui-form-label">用户权限</label>
         <div>
             <input type="checkbox" name="row[allowpost]" title="允许投稿" lay-skin="primary" value="1" {eq name="data.allowpost" value="1"}checked{/eq}>
             <input type="checkbox" name="row[allowpostverify]" title="投稿不需审核" lay-skin="primary" value="1" {eq name="data.allowpostverify" value="1"}checked{/eq}>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label>升级价格</label>
+        <label class="layui-form-label">升级价格</label>
         <div>
             <div class="layui-form-mid">包日</div>
             <div class="layui-input-inline" style="width:80px;">
@@ -49,27 +49,27 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label>最大短消息数</label>
-        <div class="w300">
+        <label class="layui-form-label">最大短消息数</label>
+        <div class="layui-input-block">
             <input type="text" name="row[allowmessage]" lay-verify="required" autocomplete="off" placeholder="最大短消息数" class="layui-input" value="{$data.allowmessage}">
         </div>
     </div>
     <div class="layui-form-item">
-        <label>日最大投稿数</label>
-        <div class="w300">
+        <label class="layui-form-label">日最大投稿数</label>
+        <div class="layui-input-block">
             <input type="text" name="row[allowpostnum]" lay-verify="required" autocomplete="off" placeholder="日最大投稿数" class="layui-input" value="{$data.allowpostnum}">
         </div>
-        <div class="layui-form-mid layui-word-aux">0为不限制</div>
+        <div class="layui-form-mid2 layui-word-aux">0为不限制</div>
     </div>
     <div class="layui-form-item web_seo">
-        <label>用户组简介</label>
-        <div class="w300">
+        <label class="layui-form-label">用户组简介</label>
+        <div class="layui-input-block">
             <textarea name="row[description]" placeholder="栏目简介" class="layui-textarea">{$data.description}</textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label>用户组图标</label>
-        <div class="layui-form-field-label">
+        <label class="layui-form-label">用户组图标</label>
+        <div class="layui-input-block">
             <div class="js-upload-image">
                 {php}echo \util\Form::images('row[icon]','icon',$data['icon']){/php}
             </div>
@@ -77,7 +77,7 @@
     </div>
     <input type="hidden" name="row[id]" value="{$data.id}">
     <div class="layui-form-item layer-footer">
-        <div>
+        <div class="layui-input-block">
             <button class="layui-btn" lay-submit>立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>

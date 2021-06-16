@@ -5,78 +5,80 @@
     <div class="layui-card-body">
         <form class="layui-form" method="post">
             <div class="layui-form-item">
-                <label>允许新会员注册</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">允许新会员注册</label>
+                <div class="layui-input-block">
                     <input type="radio" name="setting[allowregister]" value="1" title="是" {if 1 == $setting['allowregister']}checked{/if}>
                     <input type="radio" name="setting[allowregister]" value="0" title="否" {if 0 == $setting['allowregister']}checked{/if}>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label>新会员注册需要管理员审核</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">新会员注册需要审核</label>
+                <div class="layui-input-block">
                     <input type="radio" name="setting[registerverify]" value="1" title="是" {if 1 == $setting['registerverify']}checked{/if}>
                     <input type="radio" name="setting[registerverify]" value="0" title="否" {if 0 == $setting['registerverify']}checked{/if}>
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <label>新会员注册需要手机认证</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">新注册需要手机认证</label>
+                <div class="layui-input-block">
                     <input type="radio" name="setting[register_mobile_verify]" value="1" title="是" {if 1 == $setting['register_mobile_verify']}checked{/if}>
                     <input type="radio" name="setting[register_mobile_verify]" value="0" title="否" {if 0 == $setting['register_mobile_verify']}checked{/if}>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label>新会员注册需要邮箱认证</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">新注册需要邮箱认证</label>
+                <div class="layui-input-block">
                     <input type="radio" name="setting[register_email_verify]" value="1" title="是" {if 1 == $setting['register_email_verify']}checked{/if}>
                     <input type="radio" name="setting[register_email_verify]" value="0" title="否" {if 0 == $setting['register_email_verify']}checked{/if}>
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <label>是否开启登陆验证码</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">是否开启登陆验证码</label>
+                <div class="layui-input-block">
                     <input type="radio" name="setting[openverification]" value="1" title="是" {if 1 == $setting['openverification']}checked{/if}>
                     <input type="radio" name="setting[openverification]" value="0" title="否" {if 0 == $setting['openverification']}checked{/if}>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label>显示密码确认</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">显示密码确认</label>
+                <div class="layui-input-block">
                     <input type="radio" name="setting[password_confirm]" value="1" title="是" {if 1 == $setting['password_confirm']}checked{/if}>
                     <input type="radio" name="setting[password_confirm]" value="0" title="否" {if 0 == $setting['password_confirm']}checked{/if}>
                 </div>
-                <div class="layui-form-mid layui-word-aux">显示或隐藏注册时候的密码确认</div>
+                <div class="layui-form-mid2 layui-word-aux">显示或隐藏注册时候的密码确认</div>
             </div>
              <div class="layui-form-item">
-                <label>注册时不显示昵称</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">注册时不显示昵称</label>
+                <div class="layui-input-block">
                     <input type="radio" name="setting[remove_nickname]" value="1" title="是" {if 1 == $setting['remove_nickname']}checked{/if}>
                     <input type="radio" name="setting[remove_nickname]" value="0" title="否" {if 0 == $setting['remove_nickname']}checked{/if}>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label>1元人民币购买积分数量</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">1元购买积分数量</label>
+                <div class="layui-input-block">
                      <input type="number" name="setting[rmb_point_rate]" required="" lay-verify="required" placeholder="1元人民币购买积分数量" autocomplete="off" class="layui-input" value="{$setting.rmb_point_rate}">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label>新会员默认积分</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">新会员默认积分</label>
+                <div class="layui-input-block">
                      <input type="number" name="setting[defualtpoint]" required="" lay-verify="required" placeholder="新会员默认积分" autocomplete="off" class="layui-input" value="{$setting.defualtpoint}">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label>新会员默认资金</label>
-                <div class="layui-form-field-label">
+                <label class="layui-form-label">新会员默认资金</label>
+                <div class="layui-input-block">
                      <input type="number" name="setting[defualtamount]" required="" lay-verify="required" placeholder="新会员默认资金" autocomplete="off" class="layui-input" value="{$setting.defualtamount}">
                 </div>
             </div>
             <div class="layui-form-item layer-footer">
-                <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
             </div>
         </form>
     </div>
