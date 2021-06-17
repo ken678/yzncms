@@ -116,6 +116,12 @@ body .fly-user-main{position: relative; min-height: 600px;}
 .layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px; }
 .layui-form-text label{line-height: 2;}
 
+.layui-form-label {width: 130px;}
+.layui-input-block {margin-left: 170px;max-width:70%;}
+.layui-form-mid2{display: block; padding: 9px 0!important; line-height: 20px; margin-right: 10px; padding-left: 170px !important; }
+.layui-form-item-required:before {display: inline-block; margin-right: 4px; color: #f5222d; font-size: 14px; font-family: SimSun,sans-serif; line-height: 1; content: "*"; }
+.layui-form-item>label.layui-form-label:after {content: ":"; position: relative; top: -.5px;margin-left: 2px;}
+
 @media screen and (max-width: 768px) {
 	.fly-main{width: 100%;}
   /* 顶边距 */
