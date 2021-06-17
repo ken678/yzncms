@@ -69,11 +69,8 @@ class Cms extends Adminbase
             $_list = [];
             foreach ($list as $k => $v) {
                 $v['updatetime'] = date('Y-m-d H:i:s', $v['updatetime']);
-                if (isset($v['thumb'])) {
-                    $v['thumb'] = get_file_path($v['thumb']);
-                }
-                $v['url'] = buildContentUrl($v['catid'], $v['id'], $v['url']);
-                $_list[]  = $v;
+                $v['url']        = buildContentUrl($v['catid'], $v['id'], $v['url']);
+                $_list[]         = $v;
             }
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);

@@ -49,8 +49,6 @@ function getCategory($cat, $fields = '', $newCache = false)
             $field            = 1 == $url_mode ? 'id' : 'catdir';
             $cache['setting'] = unserialize($cache['setting']);
             $cache['url']     = buildCatUrl($cache[$field], $cache['url']);
-            $cache['image']   = empty($cache['image']) ? '' : get_file_path($cache['image']);
-            $cache['icon']    = empty($cache['icon']) ? '' : get_file_path($cache['icon']);
             Cache::set($key, $cache, 3600);
         }
     }

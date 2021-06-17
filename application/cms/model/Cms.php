@@ -234,7 +234,7 @@ class Cms extends Modelbase
                 throw new \Exception("'" . $vo['title'] . "'" . (!empty($vo['errortips']) ? $vo['errortips'] : '正则校验失败') . "");
             }
             //数据格式验证
-            if (!empty(${$arr}[$name]) && in_array($vo['type'], ['image', 'number', 'file']) && !Validate::isNumber(${$arr}[$name])) {
+            if (!empty(${$arr}[$name]) && in_array($vo['type'], ['number']) && !Validate::isNumber(${$arr}[$name])) {
                 throw new \Exception("'" . $vo['title'] . "'格式错误~");
                 //安全过滤
             } else {
@@ -432,24 +432,24 @@ class Cms extends Modelbase
                         }
                     }
                     break;
-                case 'image':
-                    $newdata[$key] = empty($value) ? '' : get_file_path($value);
-                    break;
+                /*case 'image':
+                $newdata[$key] = empty($value) ? '' : get_file_path($value);
+                break;
                 case 'images':
-                    $newdata[$key] = empty($value) ? [] : get_file_path($value);
-                    if (!is_array($newdata[$key])) {
-                        $newdata[$key] = array($newdata[$key]);
-                    }
-                    break;
+                $newdata[$key] = empty($value) ? [] : get_file_path($value);
+                if (!is_array($newdata[$key])) {
+                $newdata[$key] = array($newdata[$key]);
+                }
+                break;
                 case 'file':
-                    $newdata[$key] = empty($value) ? '' : get_file_path($value);
-                    break;
+                $newdata[$key] = empty($value) ? '' : get_file_path($value);
+                break;
                 case 'files':
-                    $newdata[$key] = empty($value) ? [] : get_file_path($value);
-                    if (!is_array($newdata[$key])) {
-                        $newdata[$key] = array($newdata[$key]);
-                    }
-                    break;
+                $newdata[$key] = empty($value) ? [] : get_file_path($value);
+                if (!is_array($newdata[$key])) {
+                $newdata[$key] = array($newdata[$key]);
+                }
+                break;*/
                 /*case 'tags':
                 $newdata[$key] = empty($value) ? [] : explode(',', $value);
                 break;*/
