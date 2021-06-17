@@ -12,18 +12,14 @@ var GV = {
 <link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css">
 <script src="__STATIC__/libs/layui/layui.js"></script>
 <style type="text/css">
-body {
-    background: #f6f6f6;
-}
-form .verify-box input {
-    display: inline-block;
-    width: 60%;
-}
-form .verify-box img {
-    display: inline-block;
-    margin-left: 2%;
-    height: 38px;
-}
+body {background: #f6f6f6; }
+form .verify-box input {display: inline-block; width: 60%; }
+form .verify-box img {display: inline-block; margin-left: 2%; height: 38px; }
+.layui-form-label {width: 130px;}
+.layui-input-block {margin-left: 170px;max-width:70%;}
+.layui-form-mid2{display: block; padding: 9px 0!important; line-height: 20px; margin-right: 10px; padding-left: 170px !important; }
+.layui-form-item-required:before {display: inline-block; margin-right: 4px; color: #f5222d; font-size: 14px; font-family: SimSun,sans-serif; line-height: 1; content: "*"; }
+.layui-form-item>label.layui-form-label:after {content: ":"; position: relative; top: -.5px;margin-left: 2px;}
 </style>
 <div class="headline-bg"></div>
 <div class="main">
@@ -43,14 +39,15 @@ form .verify-box img {
                 {if count($fieldList)}
                 {if $modelInfo.setting.isverify}
                 <div class="layui-form-item verify-box">
-                    <div>
-                    <input type="text" name="captcha" placeholder="验证码*" value="" class="layui-input">
-                    <img id="verify" src="{:captcha_src()}" title="点击刷新" alt="验证码" class="captcha">
+                    <label class="layui-form-label layui-form-item-required">验证码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="captcha" placeholder="验证码*" value="" class="layui-input" style="max-width:200px;">
+                        <img id="verify" src="{:captcha_src()}" title="点击刷新" alt="验证码" class="captcha">
                     </div>
                 </div>
                 {/if}
                 <div class="layui-form-item">
-                    <div>
+                    <div class="layui-input-block">
                         <button class="layui-btn">立即提交</button>
                     </div>
                 </div>
