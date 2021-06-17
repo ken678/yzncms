@@ -82,7 +82,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .fieldlist dd ins {width: 110px;display: inline-block;text-decoration: none;font-weight: bold;margin-right: 10px;line-height: 38px;}
 
 .uploader-list{float: left;width: 100%;}
-.thumbnail {overflow: hidden; float: left; width: 100px; height: 100px; margin-right: 10px; text-align: center; display: block; margin-bottom: 20px; line-height: 100px; background-color: #fff; border: 1px solid #ddd; -webkit-transition: border .2s ease-in-out; -o-transition: border .2s ease-in-out; transition: border .2s ease-in-out; display: inline-block; position: relative; padding: 5px; }
+.thumbnail {overflow: hidden; float: left; width: 100px; height: 100px; margin-right: 10px; text-align: center; display: block; margin-top: 15px; line-height: 100px; background-color: #fff; border: 1px solid #ddd; -webkit-transition: border .2s ease-in-out; -o-transition: border .2s ease-in-out; transition: border .2s ease-in-out; display: inline-block; position: relative; padding: 5px; }
 .thumbnail>img {cursor: zoom-in; max-height: 100%; max-width: 100%; display: inline-block; vertical-align: middle; }
 
 .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {border-color: #e6e6e6;}
