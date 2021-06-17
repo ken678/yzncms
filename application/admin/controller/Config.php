@@ -84,7 +84,7 @@ class Config extends Adminbase
                     }
                 }
                 //数据格式验证
-                if (!empty($data[$name]) && in_array($type, ['image', 'number', 'file']) && !\think\facade\Validate::isNumber($data[$name])) {
+                if (!empty($data[$name]) && in_array($type, ['number']) && !\think\facade\Validate::isNumber($data[$name])) {
                     return $this->error("'" . $name . "'格式错误~");
                 }
                 if (isset($data[$name])) {
