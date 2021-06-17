@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `yzn_links` (
   `linktype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0:文字链接,1:logo链接',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '链接名称',
-  `image` mediumint(8) unsigned NOT NULL COMMENT '链接图片',
+  `image` varchar(255) NOT NULL DEFAULT '' COMMENT '链接图片',
   `target` varchar(25) NOT NULL DEFAULT '' COMMENT '链接打开方式',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '链接描述',
   `inputtime` int(11) NOT NULL COMMENT '添加时间',
