@@ -441,11 +441,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     layui.define('tableSelect', function(exports) {
                         var tableSelect = layui.tableSelect;
                         $.each($('.layui-form .fachoose-image'), function(i, v) {
+                            var that = this;
                             var input_id = $(this).data("input-id") ? $(this).data("input-id") : "",
                                 inputObj = $("#" + input_id),
-                                inputObj2 = $("#" + input_id+'_text'),
+                                //inputObj2 = $("#" + input_id+'_text'),
                                 multiple = $(this).data("multiple") ? 'checkbox' : 'radio';
-                            var $file_list = $('#file_list_' + input_id);
+                            //var $file_list = $('#file_list_' + input_id);
                             tableSelect.render({
                                 elem: "#fachoose-" + input_id,
                                 searchKey: 'name',
@@ -467,27 +468,18 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                     var selectedList = [];
                                     $.each(data.data, function(index, val) {
                                         selectedList[index] = {
-                                            file_id: val.id,
                                             file_path: val.path
                                         };
                                     });
                                     selectedList.forEach(function(item) {
-                                        var $li = '<div class="file-item thumbnail"><img data-image class="' + input_id + "-" + item.file_id + '" data-original="' + item.file_path + '" src="' + item.file_path + '"><div class="file-panel">';
-                                        if (multiple == 'checkbox') {
-                                            $li += '<i class="iconfont icon-yidong move-picture"></i> ';
-                                        }
-                                        $li += '<i class="iconfont icon-tailor cropper" data-input-id="' + item.file_id + '" data-id="' + input_id + '"></i> <i class="iconfont icon-trash remove-picture" data-id="' + item.file_id + '"></i></div></div>';
                                         if (multiple == 'checkbox') {
                                             if (inputObj.val()) {
-                                                inputObj.val(inputObj.val() + ',' + item.file_id);
+                                                inputObj.val(inputObj.val() + ',' + item.file_path).trigger('change');
                                             } else {
-                                                inputObj.val(item.file_id);
+                                                inputObj.val(item.file_path).trigger('change');
                                             }
-                                            $file_list.append($li);
                                         } else {
-                                            inputObj.val(item.file_id).trigger('change');
-                                            inputObj2.val(item.file_path).trigger('change');
-                                            $file_list.html($li);
+                                            inputObj.val(item.file_path).trigger('change');
                                         }
                                     });
                                 }
