@@ -130,22 +130,19 @@ class Form
      * @param int $size 图片大小限制
      * @param int $watermark_setting  水印 0或1
      */
-    public static function images($name, $id = '', $value = '', $multiple = 'false', $ext = '', $size = 0, $watermark = 0)
+    public static function images($name, $id = '', $value = '', $multiple = 'false', $ext = '', $size = 0)
     {
-        $string     = '';
-        $static_url = ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static');
+        $string = '';
         if (!$id) {
             $id = $name;
         }
         if (!$ext) {
             $ext = 'jpg|jpeg|gif|bmp|png';
         }
-        $string .= "<div id='file_list_{$id}' class='uploader-list'>";
-        if (!empty($value)) {
-            $path = get_file_path($value) ? get_file_path($value) : $static_url . "/admin/img/none.png";
-            $string .= "<div class='file-item thumbnail'><img data-image class='{$id}-{$value}' data-original='{$path}' src='{$path}'><div class='file-panel'><i class='iconfont icon-tailor cropper' data-input-id='{$value}' data-id='{$id}'></i> <i class='iconfont icon-trash remove-picture' data-id='{$value}'></i></div></div>";
-        }
-        $string .= "</div><input type='hidden' name='{$name}' data-multiple='{$multiple}' data-watermark='{$watermark}' data-thumb='' data-size='{$size}' data-ext='{$ext}' id='{$id}' value='{$value}'><div id='picker_{$id}'><i class='layui-icon layui-icon-upload'></i> 上传单张图片</div> <button type='button' class='layui-btn fachoose-image' data-input-id='{$id}' id='fachoose-{$id}'><i class='iconfont icon-other'></i> 选择</button>";
+        $string .= "<div class='layui-col-xs4'><input type='text' name='{$name}' id='c-{$id}' value='{$value}' class='layui-input'></div>";
+        $string .= "<div class='webUpload' id='picker_{$id}' data-multiple='{$multiple}' data-input-id='c-{$id}' data-preview-id='p-{$id}' data-type='image'><i class='layui-icon layui-icon-upload'></i> 上传图片</div>";
+        $string .= " <button type='button' class='layui-btn fachoose-image' data-multiple='{$multiple}' data-input-id='{$id}' id='fachoose-{$id}'><i class='iconfont icon-other'></i> 选择</button>";
+        $string .= "<ul class='layui-row list-inline plupload-preview' id='p-{$id}'></ul>";
         return $string;
     }
 
