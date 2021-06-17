@@ -69,9 +69,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">用户组图标</label>
         <div class="layui-input-block">
-            <div class="js-upload-image">
-                {php}echo \util\Form::images('row[icon]','icon',$data['icon']){/php}
-            </div>
+            {php}echo \util\Form::images('row[icon]','icon',$data['icon']){/php}
         </div>
     </div>
     <input type="hidden" name="row[id]" value="{$data.id}">
