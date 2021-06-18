@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\member\model;
 
-use \think\Model;
+use think\Model;
 
 class Member extends Model
 {
@@ -53,11 +53,10 @@ class Member extends Model
     {
         if (!$value) {
             $value = config('public_url') . 'static/modules/member/img/avatar.png';
-            return $value;
             //启用首字母头像，请使用
             //$value = letter_avatar($data['nickname']);
         }
-        return get_file_path($value);
+        return $value;
     }
 
     /**

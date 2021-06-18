@@ -198,7 +198,6 @@ class Index extends MemberBase
             //验证数据合法性
             $rule = [
                 'nickname|昵称' => 'chsDash|length:3,20',
-                'avatar|头像'   => 'number',
             ];
             $result = $this->validate($data, $rule);
             if (true !== $result) {
