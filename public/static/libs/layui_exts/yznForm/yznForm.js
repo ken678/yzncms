@@ -901,7 +901,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
 
                             // 文件上传过程中创建进度条实时显示。
                             uploader.on('uploadProgress', function(file, percentage) {
-                                $(that).find('.webuploader-pick').html("<i class='layui-icon layui-icon-upload'></i> 上传" + percentage * 100 + "%");
+                                $(that).find('.webuploader-pick').html("<i class='layui-icon layui-icon-upload'></i> 上传" + Math.floor(percentage * 100) + "%");
                             });
 
                             // 文件上传成功
