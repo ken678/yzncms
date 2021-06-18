@@ -2,8 +2,10 @@
 <script type="text/javascript" src="__STATIC__/addons/editormd/editormd.min.js"></script>
 <div class="layui-form-item">
     <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
-    <div class="layui-input-block js-editormd" id="{$vo.name}" >
-        <textarea style="display:none;" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
+    <div class="layui-input-block">
+        <div class="js-editormd" id="{$vo.name}">
+            <textarea style="display:none;" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
+        </div>
     </div>
     {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
