@@ -214,11 +214,11 @@ class Admin extends Adminaddon
             };
             Db::name('attachment')->insertAll($data);
         });
-        $res = Db::name('attachment')->withAttr('path', function ($value, $data) {
-            return strrchr($value, '/');
-        })->select();
-        $path_list = array_column($res, 'id', 'path');
-        Cache::set('path_list', $path_list, 600);
+        /*$res = Db::name('attachment')->withAttr('path', function ($value, $data) {
+    return strrchr($value, '/');
+    })->select();
+    $path_list = array_column($res, 'id', 'path');
+    Cache::set('path_list', $path_list, 600);*/
     }
 
     public function step3()
@@ -288,13 +288,13 @@ class Admin extends Adminaddon
                         }
                         break;
                     case 'image':
-                        $define  = "int(5) UNSIGNED NOT NULL";
+                        $define  = "varchar(255) NOT NULL";
                         $type    = 'image';
                         $val     = '';
                         $options = '';
                         break;
                     case 'images':
-                        $define  = "varchar(256) NOT NULL";
+                        $define  = "text NOT NULL";
                         $type    = 'images';
                         $val     = '';
                         $options = '';
@@ -405,6 +405,7 @@ class Admin extends Adminaddon
                     $data['modelField'] = [
                         'id'          => $value['id'],
                         'catid'       => $value['catid'],
+                        'thumb'       => $value['thumb'],
                         'tags'        => '',
                         'url'         => '',
                         'hits'        => 0,
@@ -417,8 +418,7 @@ class Admin extends Adminaddon
                         'inputtime'   => date('Y-m-d h:i:s', $value['inputtime']),
                         'updatetime'  => date('Y-m-d h:i:s', $value['updatetime']),
                     ];
-                    $data['modelField']['thumb'] = $this->getImage($value['thumb']);
-                    $data['modelFieldExt']       = [
+                    $data['modelFieldExt'] = [
                         'did'     => $value['id'],
                         'content' => $value['content'],
                     ];
@@ -426,13 +426,10 @@ class Admin extends Adminaddon
                     if (isset($v9_fields[$value['modelid']])) {
                         foreach ($v9_fields[$value['modelid']] as $k => $v) {
                             switch ($v['type']) {
-                                case 'image':
-                                    $value[$v['name']] = $this->getImage($value[$v['name']]);
-                                    break;
                                 case 'images':
-                                    if (strpos($value[$v['name']], 'alt')) {
+                                    if (!empty($value[$v['name']]) && strpos($value[$v['name']], 'alt')) {
                                         $value[$v['name']] = array_column($this->string2array($value[$v['name']]), 'url');
-                                        $value[$v['name']] = implode(",", array_map([$this, 'getImage'], $value[$v['name']]));
+                                        $value[$v['name']] = implode(",", $value[$v['name']]);
                                     } else {
                                         $value[$v['name']] = "";
                                     }
@@ -532,18 +529,5 @@ class Admin extends Adminaddon
             $array = json_decode($data, true);
         }
         return $array;
-    }
-
-    private function getImage($val)
-    {
-        $path_list = Cache::get('path_list');
-        if (!empty($val)) {
-            $val = strrchr($val, '/');
-            //$image_id = Db::name('attachment')->where('path', 'like', '%' . $val)->value('id');
-            //return $image_id ? $image_id : 0;
-            return isset($path_list[$val]) ? $path_list[$val] : 0;
-        } else {
-            return 0;
-        }
     }
 }
