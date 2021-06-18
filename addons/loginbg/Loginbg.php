@@ -39,7 +39,7 @@ class Loginbg extends Addons
             $data        = json_decode($json_string);
             $background  = "https://www.bing.com" . $data->{"images"}[0]->{"urlbase"} . "_1920x1080.jpg";
         } else {
-            $background = $config['pic'] ? get_file_path($config['pic']) : '';
+            $background = $config['pic'];
         }
         $this->assign('background', $background);
         return $this->fetch('loginbg');
