@@ -155,7 +155,7 @@
         <div class="layui-col-xs4">
             <input type="text" name="{$vo.fieldArr}[{$vo.name}]"  id="c-{$vo.name}" value="{$vo.value|default=''}" class="layui-input">
         </div>
-        <div class="webUpload" id="picker_{$vo.name}" data-multiple="{$vo.type=='image'?'false':'true'}" data-input-id="c-{$vo.name}" data-preview-id="p-{$vo.name}" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传图片</div>
+        <div class="webUpload" id="picker_{$vo.name}" data-multiple="{$vo.type=='image'?'false':'true'}" data-input-id="c-{$vo.name}" data-preview-id="p-{$vo.name}" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传</div>
         <button type="button" class="layui-btn fachoose-image" data-multiple="{$vo.type=='image'?'false':'true'}" data-input-id="c-{$vo.name}" id="fachoose-c-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
         <ul class="layui-row list-inline plupload-preview" id="p-{$vo.name}"></ul>
     </div>
@@ -170,7 +170,7 @@
         <div class="layui-col-xs4">
             <input type="text" name="{$vo.fieldArr}[{$vo.name}]"  id="c-{$vo.name}" value="{$vo.value|default=''}" class="layui-input">
         </div>
-        <div class="webUpload" id="picker_{$vo.name}" data-multiple="{$vo.type=='file'?'false':'true'}" data-input-id="c-{$vo.name}" data-preview-id="p-{$vo.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传文件</div>
+        <div class="webUpload" id="picker_{$vo.name}" data-multiple="{$vo.type=='file'?'false':'true'}" data-input-id="c-{$vo.name}" data-preview-id="p-{$vo.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传</div>
     </div>
     {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
