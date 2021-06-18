@@ -750,8 +750,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 //裁剪图片
                 $(document).on('click', '.cropper', function() {
                     var inputId = $(this).attr("data-input-id");
-                    var image = $(this).closest(".thumbnail").children('img').data('original');
-                    var dataId = $(this).data("id");
+                    var image = $(this).parent('.file-panel').prev('img').data('original');
+                    //var dataId = $(this).data("id");
                     var index = layer.open({
                         type: 2,
                         shadeClose: true,
@@ -760,7 +760,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         title: '图片裁剪',
                         content: GV.jcrop_upload_url + '?url=' + image,
                         success: function(layero, index) {
-                            $(layero).data("arr", [inputId, dataId]);
+                            $(layero).data("arr", [inputId,image]);
                         }
                     });
                 });
@@ -821,7 +821,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             var input_id = $(that).data("input-id") ? $(that).data("input-id") : "";
                             //预览ID
                             var preview_id = $(that).data("preview-id") ? $(that).data("preview-id") : "";
-                            var previewtpl = '<li class="file-item thumbnail"><img data-image data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">'+(multiple ? '<i class="iconfont icon-yidong move-picture"></i>' : '')+'<i class="iconfont icon-tailor cropper"></i> <i class="iconfont icon-trash remove-picture"></i></div></li>';
+                            var previewtpl = '<li class="file-item thumbnail"><img data-image data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">'+(multiple ? '<i class="iconfont icon-yidong move-picture"></i>' : '')+'<i class="iconfont icon-tailor cropper" data-input-id="'+input_id+'"></i> <i class="iconfont icon-trash remove-picture"></i></div></li>';
                             // 允许上传的后缀
                             var $ext = type =='image' ? GV.site.upload_image_ext : GV.site.upload_file_ext;
                             // 图片限制大小
@@ -900,11 +900,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             });*/
 
                             // 文件上传过程中创建进度条实时显示。
-                            /*uploader.on('uploadProgress', function(file, percentage) {
-                                var $percent = $('#' + file.id).find('.progress-bar');
-                                //console.log($percent);
-                                $percent.css('width', percentage * 100 + '%');
-                            });*/
+                            uploader.on('uploadProgress', function(file, percentage) {
+                                $(that).find('.webuploader-pick').html("<i class='layui-icon layui-icon-upload'></i> 上传" + percentage * 100 + "%");
+                            });
 
                             // 文件上传成功
                             uploader.on('uploadSuccess', function(file, response) {
@@ -956,25 +954,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 $li.find('.file-state').html('<div class="layui-bg-red">服务器错误</div>');
                             });*/
                             // 完成上传完了，成功或者失败，先删除进度条。
-                            /*uploader.on('uploadComplete', function(file) {
+                            uploader.on('uploadComplete', function(file) {
                                 setTimeout(function() {
-                                    $('#' + file.id).find('.progress').remove();
+                                    $(that).find('.webuploader-pick').html("<i class='layui-icon layui-icon-upload'></i> 上传");
+                                    uploader.refresh();
                                 }, 500);
-                                if ($multiple) {
-                                    $file_list.dragsort({
-                                        //itemSelector:".move-picture",
-                                        dragSelector: ".move-picture",
-                                        dragEnd: function() {
-                                            var ids = [];
-                                            $file_list.find('.remove-picture').each(function() {
-                                                ids.push($(this).data('id'));
-                                            });
-                                            $input_file.val(ids.join(','));
-                                        },
-                                        placeHolderTemplate: '<div class="file-item thumbnail" style="border:1px #009688 dashed;"></div>'
-                                    })
-                                }
-                            });*/
+                            });
                             // 文件验证不通过
                             uploader.on('error', function(type) {
                                 switch (type) {
