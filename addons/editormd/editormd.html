@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="__STATIC__/addons/editormd/css/editormd.min.css">
 <script type="text/javascript" src="__STATIC__/addons/editormd/editormd.min.js"></script>
-<div class="layui-form-item layui-form-text">
-    <label class="">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
-    <div class="layui-form-field-label js-editormd" id="{$vo.name}" >
+<div class="layui-form-item">
+    <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
+    <div class="layui-input-block js-editormd" id="{$vo.name}" >
         <textarea style="display:none;" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
     </div>
-    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+    {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 <script type="text/javascript">
 GV.editormd_upload_url='{$editormd_upload_url ? $editormd_upload_url : url("attachment/upload/upload", ["dir" => "images", "from" => "editormd", "module" => request()->module()])}';
