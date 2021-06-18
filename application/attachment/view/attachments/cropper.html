@@ -178,12 +178,8 @@
                 success: function(res) {
                     if (res.code == 0) {
                         var arr = parent.$("#layui-layer" + index).data("arr");
-                        parent.$("." + arr[1] + "-" + arr[0]).attr('src', res.path).attr('data-original', res.path).removeClass("thumb-" + arr[0]).addClass(arr[1] + "-" + res.id);
-                        var ids = parent.$('#' + arr[1]).val().split(',');
-                        let i = ids.indexOf(arr[0]);
-                        ~i && (ids[i] = res.id);
-                        parent.$('#' + arr[1]).val(ids.join(','));
-                        parent.$(".cropper[data-input-id=" + arr[0] + "]").attr('data-input-id', res.id);
+                        var input = parent.$("#" + arr[0]);
+                        input.val(input.val().replace(arr[1], res.path)).attr('data-original', res.path).trigger("change");
                     } else {
                         console.log(res);
                     }
@@ -249,12 +245,9 @@
             var type = $this.prop('type');
             var cropBoxData;
             var canvasData;
-
-
             if (!$image.data('cropper')) {
                 return;
             }
-
             options[name] = $this.val();
             $image.cropper('destroy').cropper(options);
         });
@@ -274,10 +267,8 @@
 
             if (cropper && data.method) {
                 data = $.extend({}, data); // Clone a new one
-
                 if (typeof data.target !== 'undefined') {
                     $target = $(data.target);
-
                     if (typeof data.option === 'undefined') {
                         try {
                             data.option = JSON.parse($target.val());
@@ -286,67 +277,51 @@
                         }
                     }
                 }
-
                 cropped = cropper.cropped;
-
                 switch (data.method) {
                     case 'rotate':
                         if (cropped && options.viewMode > 0) {
                             $image.cropper('clear');
                         }
-
                         break;
-
                     case 'getCroppedCanvas':
                         if (uploadedImageType === 'image/jpeg') {
                             if (!data.option) {
                                 data.option = {};
                             }
-
                             data.option.fillColor = '#fff';
                         }
-
                         break;
                 }
-
                 result = $image.cropper(data.method, data.option, data.secondOption);
-
                 switch (data.method) {
                     case 'rotate':
                         if (cropped && options.viewMode > 0) {
                             $image.cropper('crop');
                         }
-
                         break;
-
                     case 'scaleX':
                     case 'scaleY':
                         $(this).data('option', -data.option);
                         break;
-
                     case 'getCroppedCanvas':
                         if (result) {
                             // Bootstrap's Modal
                             $('#getCroppedCanvasModal').find('.modal-body').html(result);
-
                             if (!$download.hasClass('disabled')) {
                                 download.download = uploadedImageName;
                                 $download.attr('href', result.toDataURL(uploadedImageType));
                             }
                         }
-
                         break;
-
                     case 'destroy':
                         if (uploadedImageURL) {
                             URL.revokeObjectURL(uploadedImageURL);
                             uploadedImageURL = '';
                             $image.attr('src', originalImageURL);
                         }
-
                         break;
                 }
-
                 if ($.isPlainObject(result) && $target) {
                     try {
                         $target.val(JSON.stringify(result));
@@ -362,23 +337,19 @@
             if (e.target !== this || !$image.data('cropper') || this.scrollTop > 300) {
                 return;
             }
-
             switch (e.which) {
                 case 37:
                     e.preventDefault();
                     $image.cropper('move', -1, 0);
                     break;
-
                 case 38:
                     e.preventDefault();
                     $image.cropper('move', 0, -1);
                     break;
-
                 case 39:
                     e.preventDefault();
                     $image.cropper('move', 1, 0);
                     break;
-
                 case 40:
                     e.preventDefault();
                     $image.cropper('move', 0, 1);
