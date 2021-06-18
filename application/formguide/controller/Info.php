@@ -37,9 +37,9 @@ class Info extends AdminBase
         $formid = $this->request->param('formid/d', 0);
         if ($this->request->isAjax()) {
             $modelCache = cache("Model");
-            $tableName = $modelCache[$formid]['tablename'];
+            $tableName  = $modelCache[$formid]['tablename'];
 
-            $this->modelClass = Db::name($tableName);
+            $this->modelClass           = Db::name($tableName);
             list($page, $limit, $where) = $this->buildTableParames();
 
             $total = Db::name($tableName)->where($where)->count();
@@ -61,7 +61,7 @@ class Info extends AdminBase
     public function del()
     {
         $formid = $this->request->param('formid/d', 0);
-        $ids = $this->request->param('ids/a', null);
+        $ids    = $this->request->param('ids/a', null);
         if (empty($ids) || !$formid) {
             $this->error('参数错误！');
         }
@@ -81,8 +81,8 @@ class Info extends AdminBase
     //信息查看
     public function public_view()
     {
-        $id = $this->request->param('id', 0);
-        $formid = $this->request->param('formid', 0);
+        $id        = $this->request->param('id', 0);
+        $formid    = $this->request->param('formid', 0);
         $fieldList = $this->Formguide_Model->getFieldInfo($formid, $id);
         $this->assign([
             'fieldList' => $fieldList,
@@ -96,7 +96,9 @@ class Info extends AdminBase
         foreach ($fieldList as $k => $v) {
             if ($v['type'] == "datetime") {
                 $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "',templet: function(d){ return layui.formatDateTime(d." . $v['name'] . ") } },\n";
-            } elseif ($v['type'] != "image" && $v['type'] != "images" && $v['type'] != "file" && $v['type'] != "files") {
+            }if ($v['type'] == "image") {
+                $htmlstr .= "{ field: '" . $v['name'] . "',title: '" . $v['title'] . "',templet: yznTable.image },\n";
+            } elseif ($v['type'] != "images" && $v['type'] != "files") {
                 $htmlstr .= "{ field: '" . $v['name'] . "', align: 'left',title: '" . $v['title'] . "' },\n";
             }
         }

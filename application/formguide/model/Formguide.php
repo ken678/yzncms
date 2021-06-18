@@ -19,7 +19,7 @@ use think\Db;
 
 class Formguide extends Cms_Model
 {
-    protected $name = 'ModelField';
+    protected $name               = 'ModelField';
     protected $autoWriteTimestamp = false;
 
     //添加模型内容
@@ -30,19 +30,19 @@ class Formguide extends Cms_Model
         if (!$this->table_exists($tablename)) {
             throw new \Exception('数据表不存在！');
         }
-        $uid = 0;
+        $uid      = 0;
         $username = "游客";
         if (isModuleInstall('member')) {
-            $uid = \app\admin\service\User::instance()->id ?: 0;
+            $uid      = \app\admin\service\User::instance()->id ?: 0;
             $username = \app\admin\service\User::instance()->username ?: '游客';
         }
-        $data['uid'] = $uid;
+        $data['uid']      = $uid;
         $data['username'] = $username;
         //处理数据
-        $dataAll = $this->dealModelPostData($formid, $data, $dataExt);
+        $dataAll              = $this->dealModelPostData($formid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
-        $data['inputtime'] = request()->time();
-        $data['ip'] = request()->ip();
+        $data['inputtime']    = request()->time();
+        $data['ip']           = request()->ip();
         try {
             //主表
             $id = Db::name($tablename)->insertGetId($data);
@@ -60,7 +60,7 @@ class Formguide extends Cms_Model
         if (!empty($list)) {
             if ($id) {
                 $modelInfo = Db::name('Model')->where('id', $modelId)->field('tablename,type')->find();
-                $dataInfo = Db::name($modelInfo['tablename'])->where('id', $id)->find();
+                $dataInfo  = Db::name($modelInfo['tablename'])->where('id', $id)->find();
             }
             foreach ($list as $key => &$value) {
                 if ($value['iscore']) {
@@ -77,7 +77,7 @@ class Formguide extends Cms_Model
                     $value['options'] = parse_attr($value['options']);
                 }
                 if ($value['type'] == 'image' || $value['type'] == 'file') {
-                    $value['value'] = !empty($value['value']) ? '<a href="' . get_file_path($value['value']) . '" target="_blank">[查看]</a>' : '';
+                    $value['value'] = !empty($value['value']) ? '<a href="' . $value['value'] . '" target="_blank">[查看]</a>' : '';
                 }
                 if ($value['type'] == 'datetime') {
                     $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : date('Y-m-d H:i:s', $value['value']);
