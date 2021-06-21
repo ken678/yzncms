@@ -31,12 +31,12 @@ class MemberGroup extends Model
         if (!is_array($data)) {
             return false;
         }
-        $data['allowpost']        = $data['allowpost'] ? $data['allowpost'] : 0;
-        $data['allowpostverify']  = $data['allowpostverify'] ? $data['allowpostverify'] : 0;
-        $data['allowupgrade']     = $data['allowupgrade'] ? $data['allowupgrade'] : 0;
-        $data['allowsendmessage'] = $data['allowsendmessage'] ? $data['allowsendmessage'] : 0;
-        $data['allowattachment']  = $data['allowattachment'] ? $data['allowattachment'] : 0;
-        $data['allowsearch']      = $data['allowsearch'] ? $data['allowsearch'] : 0;
+        $data['allowpost']        = $data['allowpost'] ?? 0;
+        $data['allowpostverify']  = $data['allowpostverify'] ?? 0;
+        $data['allowupgrade']     = $data['allowupgrade'] ?? 0;
+        $data['allowsendmessage'] = $data['allowsendmessage'] ?? 0;
+        $data['allowattachment']  = $data['allowattachment'] ?? 0;
+        $data['allowsearch']      = $data['allowsearch'] ?? 0;
         return self::update($data);
     }
 
