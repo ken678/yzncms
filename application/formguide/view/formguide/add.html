@@ -72,7 +72,7 @@
     <div class="layui-form-item web_list">
         <label class="layui-form-label">模板选择</label>
         <div class="layui-input-block">
-            {php} echo \util\Form::select($show_template, $data['setting']['show_template'], 'name="setting[show_template]"') {/php}
+            {php} echo \util\Form::select($show_template, 0, 'name="setting[show_template]"') {/php}
         </div>
         <div class="layui-form-mid2 layui-word-aux">新增模板以show_xx.html形式</div>
     </div>

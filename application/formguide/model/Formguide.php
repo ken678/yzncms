@@ -30,14 +30,8 @@ class Formguide extends Cms_Model
         if (!$this->table_exists($tablename)) {
             throw new \Exception('数据表不存在！');
         }
-        $uid      = 0;
-        $username = "游客";
-        if (isModuleInstall('member')) {
-            $uid      = \app\admin\service\User::instance()->id ?: 0;
-            $username = \app\admin\service\User::instance()->username ?: '游客';
-        }
-        $data['uid']      = $uid;
-        $data['username'] = $username;
+        $data['uid']      = \app\member\service\User::instance()->id ?: 0;
+        $data['username'] = \app\member\service\User::instance()->username ?: '游客';
         //处理数据
         $dataAll              = $this->dealModelPostData($formid, $data, $dataExt);
         list($data, $dataExt) = $dataAll;
