@@ -276,8 +276,10 @@ class Admin extends Adminaddon
                         if (isset($setting['boxtype']) && ($setting['boxtype'] == 'radio' || $setting['boxtype'] == 'select')) {
                             $key_arr = explode(PHP_EOL, $setting['options']);
                             foreach ($key_arr as $k => $v) {
-                                $arr         = explode('|', $v);
-                                $key_arr[$k] = $arr[1] . ':' . $arr[0];
+                                if (strpos($v, '|')) {
+                                    $arr         = explode('|', $v);
+                                    $key_arr[$k] = $arr[1] . ':' . $arr[0];
+                                }
                             }
                             $define  = "char(10) NOT NULL";
                             $type    = $setting['boxtype'] == 'radio' ? 'radio' : 'select';
@@ -355,10 +357,10 @@ class Admin extends Adminaddon
         $db_config  = Cache::get('db_config');
         $pinyin     = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
         $modelClass = new \app\cms\model\Category;
-        $cursor     = Db::connect($db_config)->name('category')->where('type', 'in', '0,1')->cursor();
+        $cursor     = Db::connect($db_config)->name('category')->where('type', 'in', '0,1,2')->cursor();
         foreach ($cursor as $key => $value) {
             $value['id']      = $value['catid'];
-            $value['url']     = '';
+            $value['url']     = $value['type'] == 2 ? $value['url'] : '';
             $value['status']  = $value['ismenu'] ? 1 : 0;
             $setting          = $this->string2array($value['setting']);
             $value['setting'] = array(
@@ -368,17 +370,19 @@ class Admin extends Adminaddon
                 'category_template' => isset($setting['category_template']) ? $setting['category_template'] . '.html' : 'category.html',
                 'list_template'     => isset($setting['list_template']) ? $setting['list_template'] . '.html' : 'list.html',
                 'show_template'     => isset($setting['show_template']) ? $setting['show_template'] . '.html' : 'show.html',
+                'page_template'     => isset($setting['page_template']) ? $setting['page_template'] . '.html' : 'page.html',
             );
             $value['catdir'] = $pinyin->permalink($value['catname'], '');
             $value['catdir'] = substr($value['catdir'], 0, 10);
             $value['type']   = $value['type'] == 0 ? 2 : 1;
-            if ($value['image']) {
-                $value['image'] = strrchr($value['image'], '/');
-                $image_id       = Db::name('attachment')->where('path', 'like', '%' . $value['image'])->value('id');
-                $value['image'] = $image_id ? $image_id : 0;
+            $value['image']  = $value['image'];
+            /*if ($value['image']) {
+            $value['image'] = strrchr($value['image'], '/');
+            $image_id       = Db::name('attachment')->where('path', 'like', '%' . $value['image'])->value('id');
+            $value['image'] = $image_id ? $image_id : '';
             } else {
-                $value['image'] = 0;
-            }
+            $value['image'] = '';
+            }*/
             $result = $this->validate($value, 'app\cms\validate\Category.list');
             if (true !== $result) {
                 $this->error($result);
@@ -454,6 +458,7 @@ class Admin extends Adminaddon
 
     public function step7()
     {
+        $data      = [];
         $db_config = Cache::get('db_config');
         $cursor    = Db::connect($db_config)->name('page')->cursor();
         foreach ($cursor as $key => $value) {
