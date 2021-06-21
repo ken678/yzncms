@@ -279,10 +279,10 @@ class Cms extends Modelbase
 
                 //扩展配置
                 $value['setting'] = unserialize($value['setting']);
-                $value['options'] = $value['setting']['options'];
+                $value['options'] = $value['setting']['options'] ?? '';
                 //在新增时候添加默认值
                 if (!$id) {
-                    $value['value'] = $value['setting']['value'];
+                    $value['value'] = $value['setting']['value'] ?? '';
                 }
                 if ($value['type'] == 'custom') {
                     if ($value['options'] != '') {
