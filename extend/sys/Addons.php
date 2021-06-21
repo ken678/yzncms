@@ -116,7 +116,7 @@ abstract class Addons
         if (is_file($config_file)) {
             $temp_arr = include $config_file;
             foreach ($temp_arr as $key => $value) {
-                $config[$value['name']] = $value['value'];
+                $config[$value['name']] = $value['value'] ?? '';
             }
             unset($temp_arr);
         }
