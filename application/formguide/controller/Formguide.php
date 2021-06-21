@@ -16,7 +16,6 @@ namespace app\formguide\controller;
 
 use app\common\controller\Adminbase;
 use app\formguide\model\Models as Models_Model;
-use think\Db;
 
 class Formguide extends Adminbase
 {
@@ -27,7 +26,7 @@ class Formguide extends Adminbase
         parent::initialize();
         //模块安装后，模板安装在Default主题下！
         $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "formguide" . DIRECTORY_SEPARATOR;
-        $this->Models = new Models_Model;
+        $this->Models   = new Models_Model;
     }
 
     //首页
@@ -45,13 +44,14 @@ class Formguide extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data   = $this->request->post();
             $result = $this->validate($data, 'Models');
             if (true !== $result) {
                 return $this->error($result);
             }
             try {
                 $this->Models->addModelFormguide($data);
+                cache('Model_form', null);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -78,18 +78,20 @@ class Formguide extends Adminbase
                 return $this->error($result);
             }
             $data['setting'] = serialize($data['setting']);
-            if ($this->Models->save($data, ['id' => (int) $data['id']]) !== false) {
-                $this->success("更新模型成功！", url("index"));
-            } else {
-                $this->error("更新失败！");
+            try {
+                $this->Models->save($data, ['id' => (int) $data['id']]);
+                cache('Model_form', null);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
+            $this->success("更新模型成功！", url("index"));
         } else {
             $id = $this->request->param('id/d', 0);
-            $r = $this->Models->where(array("id" => $id))->find();
+            $r  = $this->Models->where(array("id" => $id))->find();
             if (!$r) {
                 $this->error("该表单不存在！");
             }
-            $r['setting'] = unserialize($r['setting']);
+            $r['setting']   = unserialize($r['setting']);
             $r['tablename'] = str_replace("form_", "", $r['tablename']);
 
             $this->tpl = str_replace($this->filepath, "", glob($this->filepath . 'show*'));
@@ -115,6 +117,7 @@ class Formguide extends Adminbase
         }
         try {
             $this->Models->deleteModel($id);
+            cache('Model_form', null);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
