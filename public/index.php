@@ -29,8 +29,8 @@ require ROOT_PATH . 'thinkphp' . DIRECTORY_SEPARATOR . 'base.php';
 // 执行应用并响应
 Container::get('app')->run()->send();
 
-/*如果你的服务器不支持域名绑定目录
-1.请将index.php放置根目录
-2.注释上面代码define('IF_PUBLIC', true);
-3.改成define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
+/*PS:如果你的网站空间不支持域名绑定目录
+1.请将index.php放置根目录(不推荐)
+2.注释第23行代码 define('IF_PUBLIC', true);
+3.第24行改成 define('ROOT_PATH', __DIR__ . DIRECTORY_SEPARATOR);
  */
