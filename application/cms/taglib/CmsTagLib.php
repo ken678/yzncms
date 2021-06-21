@@ -109,7 +109,7 @@ class CmsTagLib
         if ($catid) {
             //当前栏目信息
             $catInfo = getCategory($catid);
-            $modelid = $catInfo['modelid'];
+            $modelid = $catInfo ? $catInfo['modelid'] : 0;
         } else {
             if (!isset($data['modelid'])) {
                 return false;

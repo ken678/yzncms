@@ -39,7 +39,7 @@ class Cms extends Modelbase
     {
         $model_cache = cache("Model");
         //表名获取
-        $model_table = ucwords($model_cache[$modelid]['tablename']);
+        $model_table = isset($model_cache[$modelid]['tablename']) ? ucwords($model_cache[$modelid]['tablename']) : '';
         //完整表名获取 判断主表 还是副表
         $tablename = $ifsystem ? $model_table : $model_table . $this->ext_table;
         return $tablename;
