@@ -796,6 +796,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 elements = typeof elements === 'undefined' ? document.body : elements;
                 // 绑定图片上传组件
                 if ($(elements).length > 0) {
+                    layui.link(layui.cache.base + 'webuploader/webuploader.css?v=0.1.8');
                     layui.define('webuploader', function(exports) {
                         var webuploader = layui.webuploader;
                         //分片
