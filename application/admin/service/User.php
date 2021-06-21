@@ -279,7 +279,7 @@ class User extends \libs\Auth
      * @param array $arr 需要验证权限的数组
      * @return bool
      */
-    public function match($arr = [], $path)
+    public function match($arr = [], $path = "")
     {
         $arr = is_array($arr) ? $arr : explode(',', $arr);
         if (!$arr) {
