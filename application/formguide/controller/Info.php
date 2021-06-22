@@ -70,7 +70,7 @@ class Info extends AdminBase
         }
         try {
             foreach ($ids as $id) {
-                $this->Formguide_Model->deleteModelData($formid, $id);
+                $this->Formguide_Model->deleteInfo($formid, $id);
             }
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());

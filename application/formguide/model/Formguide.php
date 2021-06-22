@@ -81,6 +81,18 @@ class Formguide extends Cms_Model
         return $list;
     }
 
+    //删除信息
+    public function deleteInfo($modeId, $id)
+    {
+        $modelInfo = cache('Model');
+        $modelInfo = $modelInfo[$modeId];
+        $data      = Db::name($modelInfo['tablename'])->where('id', $id)->find();
+        if (empty($data)) {
+            throw new \Exception("该信息不存在！");
+        }
+        return Db::name($modelInfo['tablename'])->where('id', $id)->delete();
+    }
+
     //缓存生成
     public function formguide_cache()
     {
