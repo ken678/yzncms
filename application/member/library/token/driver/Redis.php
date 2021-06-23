@@ -72,7 +72,7 @@ class Redis extends Driver
      */
     protected function getEncryptedToken($token)
     {
-        $config = \think\facade\Config::get('token');
+        $config = \think\facade\Config::get('token.');
         return $this->options['tokenprefix'] . hash_hmac($config['hashalgo'], $token, $config['key']);
     }
 
@@ -119,14 +119,14 @@ class Redis extends Driver
      */
     public function get($token)
     {
-        $key = $this->getEncryptedToken($token);
+        $key   = $this->getEncryptedToken($token);
         $value = $this->handler->get($key);
         if (is_null($value) || false === $value) {
             return [];
         }
         //获取有效期
-        $expire = $this->handler->ttl($key);
-        $expire = $expire < 0 ? 365 * 86400 : $expire;
+        $expire     = $this->handler->ttl($key);
+        $expire     = $expire < 0 ? 365 * 86400 : $expire;
         $expiretime = time() + $expire;
         //解决使用redis方式储存token时api接口Token刷新与检测因expires_in拼写错误报错的BUG
         $result = ['token' => $token, 'user_id' => $value, 'expiretime' => $expiretime, 'expires_in' => $expire];
@@ -155,7 +155,7 @@ class Redis extends Driver
     {
         $data = $this->get($token);
         if ($data) {
-            $key = $this->getEncryptedToken($token);
+            $key     = $this->getEncryptedToken($token);
             $user_id = $data['user_id'];
             $this->handler->del($key);
             $this->handler->sRem($this->getUserKey($user_id), $key);
