@@ -20,7 +20,6 @@ use think\Db;
 
 class Config extends Adminbase
 {
-    public $banfie;
     protected $modelValidate      = true;
     protected $modelSceneValidate = true;
     protected function initialize()
@@ -28,8 +27,7 @@ class Config extends Adminbase
         parent::initialize();
         $filepath = APP_PATH . 'admin' . DIRECTORY_SEPARATOR . "view" . DIRECTORY_SEPARATOR . 'custom' . DIRECTORY_SEPARATOR;
         $custom   = str_replace($filepath . DIRECTORY_SEPARATOR, '', glob($filepath . DIRECTORY_SEPARATOR . 'custom*'));
-        //允许使用的字段列表
-        $this->banfie = ["text", "checkbox", "textarea", "radio", "number", "datetime", "image", "images", "array", "switch", "select", "selects", "selectpage", "Ueditor", "file", "files", 'color', 'tags', 'markdown', 'city', 'custom'];
+
         $this->assign('custom', $custom);
         $this->assign('groupArray', config('config_group'));
         $this->modelClass = new ConfigModel;
@@ -132,7 +130,7 @@ class Config extends Adminbase
     {
         cache('Config', null);
         $groupType = $this->request->param('groupType/s', 'base');
-        $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
+        $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifstring');
         $this->assign([
             'fieldType' => $fieldType,
             'groupType' => $groupType,
@@ -145,7 +143,7 @@ class Config extends Adminbase
     {
         cache('Config', null);
         $id        = $this->request->param('id/d');
-        $fieldType = Db::name('field_type')->where('name', 'in', $this->banfie)->order('listorder')->column('name,title,ifstring');
+        $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifstring');
         $this->assign('id', $id);
         $this->assign('fieldType', $fieldType);
         return parent::edit();
