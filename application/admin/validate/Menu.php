@@ -19,11 +19,11 @@ class Menu extends Validate
 {
     //定义验证规则
     protected $rule = [
-        'parentid|上级菜单' => 'require|number',
-        'title|名称' => 'require|chsAlphaNum',
-        'app|模块' => 'require|alpha',
+        'parentid|上级菜单'  => 'require|number',
+        'title|名称'       => 'require|chsAlphaNum',
+        'app|模块'         => 'require|alpha',
         'controller|控制器' => 'require|alpha',
-        'action|方法' => 'require|alpha',
+        'action|方法'      => 'require|alphaNum',
     ];
 
     //定义验证提示
@@ -32,7 +32,7 @@ class Menu extends Validate
 
     //定义验证场景
     protected $scene = [
-        'add' => ['parentid', 'title', 'app', 'controller', 'action'],
+        'add'  => ['parentid', 'title', 'app', 'controller', 'action'],
         'edit' => ['parentid', 'title', 'app', 'controller', 'action'],
     ];
 }

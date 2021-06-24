@@ -4,7 +4,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">上级菜单</label>
         <div class="layui-input-block">
-            <select name="parentid" lay-verify="required">
+            <select name="row[parentid]" lay-verify="required">
                 <option value="0">作为一级菜单</option>
                 {$select_categorys|raw}
             </select>
@@ -13,43 +13,44 @@
     <div class="layui-form-item">
         <label class="layui-form-label">名称 </label>
         <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="名称" class="layui-input">
+            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="名称" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">图标</label>
         <div class="layui-input-block">
-            <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" name="icon">
+            <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" name="row[icon]">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">模块</label>
         <div class="layui-input-block">
-            <input type="text" name="app" lay-verify="required" autocomplete="off" placeholder="模块" class="layui-input">
+            <input type="text" name="row[app]" lay-verify="required" autocomplete="off" placeholder="模块" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">控制器</label>
         <div class="layui-input-block">
-            <input type="text" name="controller" lay-verify="required" autocomplete="off" placeholder="控制器" class="layui-input">
+            <input type="text" name="row[controller]" lay-verify="required" autocomplete="off" placeholder="控制器" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">方法</label>
         <div class="layui-input-block">
-            <input type="text" name="action" lay-verify="required" autocomplete="off" placeholder="方法" class="layui-input">
+            <input type="text" name="row[action]" lay-verify="required" autocomplete="off" placeholder="方法" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">附加参数</label>
         <div class="layui-input-block">
-            <input type="text" name="parameter" autocomplete="off" placeholder="附加参数" class="layui-input">
+            <input type="text" name="row[parameter]" autocomplete="off" placeholder="附加参数" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">是否显示</label>
         <div class="layui-input-block">
-            <input type="checkbox" name="status" lay-skin="switch" lay-text="是|否" value="1" checked="">
+            <input type="radio" name="row[status]" value="1" title="显示" checked>
+            <input type="radio" name="row[status]" value="0" title="隐藏">
         </div>
     </div>
     <div class="layui-form-item layer-footer">

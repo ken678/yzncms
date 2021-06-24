@@ -16,12 +16,13 @@ namespace app\admin\controller;
 
 use app\admin\model\Menu as MenuModel;
 use app\common\controller\Adminbase;
-use think\Db;
 
 class Menu extends Adminbase
 {
 
-    protected $modelClass = null;
+    protected $modelClass         = null;
+    protected $modelValidate      = true;
+    protected $modelSceneValidate = true;
 
     protected function initialize()
     {
@@ -33,14 +34,14 @@ class Menu extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $tree = new \util\Tree();
+            $tree       = new \util\Tree();
             $tree->icon = array('', '', '');
             $tree->nbsp = '';
-            $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
+            $result     = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
 
             $tree->init($result);
-            $_list = $tree->getTreeList($tree->getTreeArray(0), 'title');
-            $total = count($_list);
+            $_list  = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            $total  = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -51,37 +52,12 @@ class Menu extends Adminbase
     //添加后台菜单
     public function add()
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->param();
-            if (!isset($data['status'])) {
-                $data['status'] = 0;
-            } else {
-                $data['status'] = 1;
-            }
-
-            $result = $this->validate($data, 'Menu.add');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            if (MenuModel::create($data)) {
-                $this->success("添加成功！", url("index"));
-            } else {
-                $this->error('添加失败！');
-            }
-        } else {
-            $tree = new \util\Tree();
-            $parentid = $this->request->param('parentid/d', '');
-            $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
-            $array = array();
-            foreach ($result as $r) {
-                $r['selected'] = $r['id'] == $parentid ? 'selected' : '';
-                $array[] = $r;
-            }
-            $tree->init($result);
-            $select_categorys = $tree->getTree(0, '', $parentid);
-            $this->assign("select_categorys", $select_categorys);
-            return $this->fetch();
-        }
+        $tree   = new \util\Tree();
+        $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
+        $tree->init($result);
+        $select_categorys = $tree->getTree(0);
+        $this->assign("select_categorys", $select_categorys);
+        return parent::add();
     }
 
     /**
@@ -89,39 +65,19 @@ class Menu extends Adminbase
      */
     public function edit()
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->param();
-            if (!isset($data['status'])) {
-                $data['status'] = 0;
-            } else {
-                $data['status'] = 1;
-            }
-            $result = $this->validate($data, 'Menu.edit');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            if (MenuModel::update($data)) {
-                $this->success("编辑成功！", url("index"));
-            } else {
-                $this->error('编辑失败！');
-            }
-        } else {
-            $tree = new \util\Tree();
-            $id = $this->request->param('id/d', '');
-            $rs = MenuModel::where(["id" => $id])->find();
-            $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
-            $array = array();
-            foreach ($result as $r) {
-                $r['selected'] = $r['id'] == $rs['parentid'] ? 'selected' : '';
-                $array[] = $r;
-            }
-            $tree->init($array);
-            $select_categorys = $tree->getTree(0, '', $rs['parentid']);
-            $this->assign("data", $rs);
-            $this->assign("select_categorys", $select_categorys);
-            return $this->fetch();
+        $tree   = new \util\Tree();
+        $id     = $this->request->param('id/d', '');
+        $rs     = MenuModel::where(["id" => $id])->find();
+        $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
+        $array  = array();
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $rs['parentid'] ? 'selected' : '';
+            $array[]       = $r;
         }
-
+        $tree->init($array);
+        $select_categorys = $tree->getTree(0, '', $rs['parentid']);
+        $this->assign("select_categorys", $select_categorys);
+        return parent::edit();
     }
 
     /**
