@@ -94,14 +94,15 @@ class Index extends Adminbase
         try {
             $type = $this->request->request("type");
             switch ($type) {
-                case 'data' || 'all':
+                case 'all':
+                case 'data':
                     \util\File::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'cache');
                     Cache::clear();
                     if ($type == 'data') {
                         break;
                     }
 
-                case 'template' || 'all':
+                case 'template':
                     \util\File::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'temp');
                     if ($type == 'template') {
                         break;
