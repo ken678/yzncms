@@ -324,6 +324,8 @@ class Adminbase extends Base
                 $this->modelClass->order($order);
             }
 
+            $this->modelClass->removeOption('where');
+
             $datalist = $this->modelClass->where($where)
                 ->page($page, $pagesize)
                 ->select();
