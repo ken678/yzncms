@@ -78,9 +78,10 @@ class Category extends Model
                 $arr = self::all($idstr);
                 foreach ($arr as $key => $val) {
                     $setting                      = unserialize($val->getAttr('setting'));
-                    $setting['category_template'] = $data['setting']['category_template'];
-                    $setting['list_template']     = $data['setting']['list_template'];
-                    $setting['show_template']     = $data['setting']['show_template'];
+                    $setting['category_template'] = $data['setting']['category_template'] ?? '';
+                    $setting['list_template']     = $data['setting']['list_template'] ?? '';
+                    $setting['show_template']     = $data['setting']['show_template'] ?? '';
+                    $setting['page_template']     = $data['setting']['page_template'] ?? '';
                     $rs                           = self::where('id', $val->getAttr('id'))->update(['setting' => serialize($setting)]);
                 }
             }
