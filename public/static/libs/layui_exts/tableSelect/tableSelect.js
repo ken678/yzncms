@@ -38,7 +38,7 @@ layui.define(['table', 'jquery', 'form','yznForm'], function(exports) {
             tableBox += '<div class="tableSelect layui-anim layui-anim-upbit" style="left:' + l + ';top:' + t + ';border: 1px solid #d2d2d2;background-color: #fff;box-shadow: 0 2px 4px rgba(0,0,0,.12);padding:10px 10px 0 10px;position: absolute;z-index:66666666;margin: 5px 0;border-radius: 2px;min-width:530px;">';
             tableBox += '<div class="tableSelectBar">';
             tableBox += '<button class="layui-btn layui-btn-sm yzn-btn-primary" data-table-refresh="'+tableName+'" style="margin-right:5px;background-color: #2c3e50;"><i class="iconfont icon-shuaxin1"></i> </button>';
-            tableBox += '<div class="js-upload-image" style="display:inline-block;margin-right:5px;"><input type="hidden" data-multiple="false" id="tableSelect_table_image"><div id="picker_tableSelect_table_image">上传</div></div>';
+            tableBox += '<div style="display:inline-block;margin-right:5px;" class="webUpload" id="picker_image" data-multiple="false" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传</div>';
             tableBox += '<form class="layui-form" action="" style="display:inline-block;">';
             tableBox += '<input style="display:inline-block;width:190px;height:30px;vertical-align:middle;margin-right:-1px;border: 1px solid #C9C9C9;" type="text" id="c-' + opt.searchKey + '" name="' + opt.searchKey + '" placeholder="' + opt.searchPlaceholder + '" autocomplete="off" class="layui-input"><button class="layui-btn layui-btn-sm layui-btn-primary tableSelect_btn_search" lay-submit lay-filter="tableSelect_btn_search"><i class="layui-icon layui-icon-search"></i></button>';
             tableBox += '</form>';
@@ -62,7 +62,7 @@ layui.define(['table', 'jquery', 'form','yznForm'], function(exports) {
             };
             var tableSelect_table = table.render(opt.table);
 
-            yznForm.events.upload_image('.js-upload-image,.js-upload-images', function () {
+            yznForm.events.upload_image('.webUpload', function () {
                 $("[data-table-refresh]").trigger("click");
             });
 
