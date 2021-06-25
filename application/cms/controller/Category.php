@@ -125,7 +125,7 @@ class Category extends Adminbase
                         $this->error($result);
                     }
                     $catid = $this->modelClass->addCategory($data, $fields);
-                    if ($catid) {
+                    if ($catid && isset($data['priv_groupid'])) {
                         //更新会员组权限
                         model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                     }
@@ -139,7 +139,7 @@ class Category extends Adminbase
                 }
                 $catid = $this->modelClass->addCategory($data, $fields);
                 if ($catid) {
-                    model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                    isset($data['priv_groupid']) && model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                     $this->success("添加成功！", url("Category/index"));
                 } else {
                     $error = $this->modelClass->getError();
@@ -228,7 +228,7 @@ class Category extends Adminbase
             $status = $this->modelClass->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
                 //更新会员组权限
-                model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                isset($data['priv_groupid']) && model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                 $this->success("修改成功！", url("Category/index"));
             } else {
                 $error = $this->modelClass->getError();
