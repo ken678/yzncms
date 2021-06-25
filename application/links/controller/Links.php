@@ -23,7 +23,9 @@ use think\Db;
  */
 class Links extends Adminbase
 {
-    protected $modelClass = null;
+    protected $modelClass    = null;
+    protected $modelValidate = true;
+
     protected function initialize()
     {
         parent::initialize();
@@ -35,31 +37,9 @@ class Links extends Adminbase
      */
     public function add()
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-            //验证器
-            $rule = [
-                'name|网站名称' => 'require',
-                'url|网站链接'  => 'require|url',
-            ];
-            $result = $this->validate($data, $rule);
-            if (true !== $result) {
-                $this->error($result);
-            }
-            if (!empty($data['terms']['name'])) {
-                $data['termsid'] = $this->addTerms($data['terms']['name']);
-            }
-            $status = $this->modelClass->allowField(true)->save($data);
-            if ($status) {
-                $this->success("添加成功！", url("links/index"));
-            } else {
-                $this->error("添加失败！");
-            }
-        } else {
-            $Terms = Db::name('Terms')->where(["module" => "links"])->select();
-            $this->assign("Terms", $Terms);
-            return $this->fetch();
-        }
+        $Terms = Db::name('Terms')->where("module", "links")->select();
+        $this->assign("Terms", $Terms);
+        return parent::add();
     }
 
     /**
@@ -67,46 +47,16 @@ class Links extends Adminbase
      */
     public function edit()
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->post();
-            //验证器
-            $rule = [
-                'name|网站名称' => 'require',
-                'url|网站链接'  => 'require|url',
-            ];
-            $result = $this->validate($data, $rule);
-            if (true !== $result) {
-                $this->error($result);
-            }
-            if (!empty($data['terms']['name'])) {
-                $data['termsid'] = $this->addTerms($data['terms']['name']);
-            }
-            $status = $this->modelClass->allowField(true)->save($data, ['id' => $data['id']]);
-            if ($status) {
-                $this->success("编辑成功！", url("links/index"));
-            } else {
-                $this->error("编辑失败！");
-            }
-
-        } else {
-            $id   = $this->request->param('id', 0);
-            $data = $this->modelClass->where(array("id" => $id))->find();
-            if (!$data) {
-                $this->error("该信息不存在！");
-            }
-            $Terms = Db::name('Terms')->where(["module" => "links"])->select();
-            $this->assign("Terms", $Terms);
-            $this->assign("data", $data);
-            return $this->fetch();
-        }
-
+        $Terms = Db::name('Terms')->where("module", "links")->select();
+        $this->assign("Terms", $Terms);
+        return parent::edit();
     }
 
     //分类管理
     public function terms()
     {
         if ($this->request->isAjax()) {
-            $_list  = Db::name('Terms')->where(["module" => "links"])->select();
+            $_list  = Db::name('Terms')->where("module", "links")->select();
             $total  = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
