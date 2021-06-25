@@ -312,10 +312,11 @@ class Index extends Cmsbase
     public function tags()
     {
         $page  = $page  = $this->request->param('page/d', 1);
-        $tagid = $this->request->param('tagid/d', 0);
-        $tag   = $this->request->param('tag/s', '');
+        $tag   = $this->request->param('tag', '');
         $where = array();
-        if (!empty($tag)) {
+        if ($tag && is_numeric($tag)) {
+            $where['id'] = $tag;
+        } else {
             $where['tag'] = $tag;
         }
         //如果条件为空，则显示标签首页
@@ -333,7 +334,7 @@ class Index extends Cmsbase
         //访问数+1
         Db::name('Tags')->where($where)->setInc("hits");
         $this->assign($info);
-        $this->assign("SEO", seo('', $tag, $info['seo_description'], $info['seo_keyword']));
+        $this->assign("SEO", seo('', $info['tag'], $info['seo_description'], $info['seo_keyword']));
         $this->assign("page", $page);
         $this->assign($info);
         return $this->fetch('/tags');
