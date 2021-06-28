@@ -948,7 +948,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 } else {
                                     yzn.msg.error(response.info);
                                 }
-
+                                if (typeof onUploadSuccess === 'function') {
+                                    var result = onUploadSuccess.call(file, response);
+                                    if (result === false)
+                                        return;
+                                }
                             });
                             // 文件上传失败，显示上传出错。
                             /*uploader.on('uploadError', function(file) {
