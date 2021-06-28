@@ -367,8 +367,47 @@ class Upload extends Base
      */
     protected function saveFile($dir = '', $from = '', $module = '', $savekey = null)
     {
-        $this->checkSize($dir);
-        $this->checkExecutable($dir);
+        // 附件大小限制
+        $size_limit = $dir == 'images' ? config('upload_image_size') : config('upload_file_size');
+        $size_limit = $size_limit * 1024;
+        // 判断附件大小是否超过限制
+        if ($size_limit > 0 && ($this->fileInfo['size'] > $size_limit)) {
+            return json([
+                'status'  => 0,
+                'info'    => '附件过大',
+                'state'   => '附件过大', //兼容百度
+                'message' => '附件过大', //兼容editormd
+            ]);
+        }
+        // 附件类型限制
+        $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
+        $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
+        // 判断附件格式是否符合
+        $file_ext  = $this->fileInfo['suffix'];
+        $error_msg = '';
+        if ($ext_limit == '') {
+            $error_msg = '获取文件后缀限制信息失败！';
+        }
+        if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html'])) {
+            $error_msg = '禁止上传非法文件！';
+        }
+        if (preg_grep("/php/i", $ext_limit)) {
+            $error_msg = '禁止上传非法文件！';
+        }
+        if (!preg_grep("/$file_ext/i", $ext_limit)) {
+            $error_msg = '附件类型不正确！';
+        }
+        if (!in_array($file_ext, $ext_limit)) {
+            $error_msg = '附件类型不正确！';
+        }
+        if ($error_msg != '') {
+            return json([
+                'code'    => -1,
+                'info'    => $error_msg,
+                'state'   => $error_msg, //兼容百度
+                'message' => $error_msg, //兼容editormd
+            ]);
+        }
 
         // 判断附件是否已存在
         if ($file_exists = Attachment_Model::get(['md5' => $this->file->hash('md5')])) {
@@ -468,57 +507,6 @@ class Upload extends Base
                 'message' => '上传失败', //兼容editormd
             ]);
         }
-    }
-
-    protected function checkSize($dir)
-    {
-        // 附件大小限制
-        $size_limit = $dir == 'images' ? config('upload_image_size') : config('upload_file_size');
-        $size_limit = $size_limit * 1024;
-        // 判断附件大小是否超过限制
-        if ($size_limit > 0 && ($this->fileInfo['size'] > $size_limit)) {
-            return json([
-                'status'  => 0,
-                'info'    => '附件过大',
-                'state'   => '附件过大', //兼容百度
-                'message' => '附件过大', //兼容editormd
-            ]);
-        }
-        return true;
-    }
-
-    protected function checkExecutable($dir)
-    {
-        // 附件类型限制
-        $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
-        $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
-        // 判断附件格式是否符合
-        $file_ext  = $this->fileInfo['suffix'];
-        $error_msg = '';
-        if ($ext_limit == '') {
-            $error_msg = '获取文件后缀限制信息失败！';
-        }
-        if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html'])) {
-            $error_msg = '禁止上传非法文件！';
-        }
-        if (preg_grep("/php/i", $ext_limit)) {
-            $error_msg = '禁止上传非法文件！';
-        }
-        if (!preg_grep("/$file_ext/i", $ext_limit)) {
-            $error_msg = '附件类型不正确！';
-        }
-        if (!in_array($file_ext, $ext_limit)) {
-            $error_msg = '附件类型不正确！';
-        }
-        if ($error_msg != '') {
-            return json([
-                'code'    => -1,
-                'info'    => $error_msg,
-                'state'   => $error_msg, //兼容百度
-                'message' => $error_msg, //兼容editormd
-            ]);
-        }
-        return true;
     }
 
     protected function getSavekey($dir, $savekey = null, $filename = null, $md5 = null)
