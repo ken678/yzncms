@@ -186,7 +186,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             },
         },
         events: {
-            init:function(){
+            init: function() {
                 // 放大图片
                 $('body').on('click', '[data-image]', function() {
                     var title = $(this).attr('data-image'),
@@ -356,12 +356,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         }
                     });
                 });
-                
+
                 //单行表格删除(不刷新)
                 $(document).on('click', '.layui-tr-del', function() {
                     var that = $(this),
                         index = that.parents('tr').eq(0).data('index'),
-                        tr = $('.layui-table-body').find('tr[data-index="'+ index +'"]'),
+                        tr = $('.layui-table-body').find('tr[data-index="' + index + '"]'),
                         href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
                     layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
                         if (!href) {
@@ -435,7 +435,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     return false;
                 });
             },
-            faselect: function () {
+            faselect: function() {
                 // 绑定图片选择组件
                 if ($('.layui-form .fachoose-image').length > 0) {
                     layui.define('tableSelect', function(exports) {
@@ -488,7 +488,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            fieldlist: function () {
+            fieldlist: function() {
                 // 绑定fieldlist组件
                 if ($(".layui-form .fieldlist").size() > 0) {
                     layui.define('laytpl', function(exports) {
@@ -585,16 +585,16 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 return true;
                             }
                             var template = $(this).data("template");
-                            textarea.on("fa.event.refreshfieldlist", function () {
+                            textarea.on("fa.event.refreshfieldlist", function() {
                                 $("[fieldlist-item]", container).remove();
                                 var json = {};
                                 try {
                                     json = JSON.parse($(this).val());
-                                } catch (e) {
-                                }
-                                $.each(json, function (i, j) {
+                                } catch (e) {}
+                                $.each(json, function(i, j) {
                                     $(".btn-append,.append", container).trigger('click', template ? j : {
-                                        key: i, value: j
+                                        key: i,
+                                        value: j
                                     });
                                 });
                             });
@@ -603,7 +603,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            selectpage:function(){
+            selectpage: function() {
                 // 绑定selectpage组件
                 if ($(".layui-form .selectpage").size() > 0) {
                     layui.define('selectPage', function(exports) {
@@ -619,7 +619,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            citypicker:function(){
+            citypicker: function() {
                 // 绑定城市选择组件
                 if ($("[data-toggle='city-picker']").size() > 0) {
                     layui.define('citypicker', function(exports) {
@@ -627,7 +627,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            datetimepicker:function(){
+            datetimepicker: function() {
                 // 绑定时间组件
                 if ($(".layui-form .datetime").size() > 0) {
                     layui.define('laydate', function(exports) {
@@ -658,7 +658,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            tagsinput:function(){
+            tagsinput: function() {
                 // 绑定tags标签组件
                 if ($(".layui-form .form-tags").size() > 0) {
                     layui.define('tagsinput', function(exports) {
@@ -673,7 +673,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            colorpicker:function(){
+            colorpicker: function() {
                 // 绑定颜色组件
                 if ($('.layui-form .layui-color-box').length > 0) {
                     layui.define('colorpicker', function(exports) {
@@ -690,7 +690,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            ueditor:function(){
+            ueditor: function() {
                 // ueditor编辑器集合
                 var ueditors = {};
                 // 绑定ueditor编辑器组件
@@ -746,7 +746,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            cropper:function(){
+            cropper: function() {
                 //裁剪图片
                 $(document).on('click', '.cropper', function() {
                     var inputId = $(this).attr("data-input-id");
@@ -760,12 +760,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         title: '图片裁剪',
                         content: GV.jcrop_upload_url + '?url=' + image,
                         success: function(layero, index) {
-                            $(layero).data("arr", [inputId,image]);
+                            $(layero).data("arr", [inputId, image]);
                         }
                     });
                 });
             },
-            xmSelect:function(){
+            xmSelect: function() {
                 // 绑定下拉框多选组件
                 if ($('.layui-form .form-selects').length > 0) {
                     layui.define('xmSelect', function(exports) {
@@ -792,7 +792,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            upload_image: function (elements, onUploadSuccess, onUploadError) {
+            upload_image: function(elements, onUploadSuccess, onUploadError) {
                 elements = typeof elements === 'undefined' ? document.body : elements;
                 // 绑定图片上传组件
                 if ($(elements).length > 0) {
@@ -805,7 +805,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         $(elements).each(function() {
                             var GUID = WebUploader.Base.guid();
                             if ($(this).attr("initialized")) {
-                               return true;
+                                return true;
                             }
                             $(this).attr("initialized", true);
                             var that = this;
@@ -813,20 +813,20 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             // 是否多图片上传
                             var multiple = $(that).data('multiple');
                             var type = $(that).data('type');
-                            if (type =='image'){
-                                var formData = {thumb: GV.site.upload_thumb_water,watermark: GV.site.upload_thumb_water_pic};
-                            }else{
+                            if (type == 'image') {
+                                var formData = { thumb: GV.site.upload_thumb_water, watermark: GV.site.upload_thumb_water_pic };
+                            } else {
                                 var formData = chunking ? { chunkid: GUID } : {};
                             }
                             //填充ID
                             var input_id = $(that).data("input-id") ? $(that).data("input-id") : "";
                             //预览ID
                             var preview_id = $(that).data("preview-id") ? $(that).data("preview-id") : "";
-                            var previewtpl = '<li class="file-item thumbnail"><img data-image data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">'+(multiple ? '<i class="iconfont icon-yidong move-picture"></i>' : '')+'<i class="iconfont icon-tailor cropper" data-input-id="'+input_id+'"></i> <i class="iconfont icon-trash remove-picture"></i></div></li>';
+                            var previewtpl = '<li class="file-item thumbnail"><img data-image data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">' + (multiple ? '<i class="iconfont icon-yidong move-picture"></i>' : '') + '<i class="iconfont icon-tailor cropper" data-input-id="' + input_id + '"></i> <i class="iconfont icon-trash remove-picture"></i></div></li>';
                             // 允许上传的后缀
-                            var $ext = type =='image' ? GV.site.upload_image_ext : GV.site.upload_file_ext;
+                            var $ext = type == 'image' ? GV.site.upload_image_ext : GV.site.upload_file_ext;
                             // 图片限制大小
-                            var $size = type =='image' ? GV.site.upload_image_size*1024 : GV.site.upload_file_size * 1024;
+                            var $size = type == 'image' ? GV.site.upload_image_size * 1024 : GV.site.upload_file_size * 1024;
                             // 优化retina, 在retina下这个值是2
                             /*var ratio = window.devicePixelRatio || 1;
                             // 缩略图大小
@@ -852,16 +852,16 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 fileSingleSizeLimit: $size,
                                 // 只允许选择图片文件。
                                 accept: {
-                                    title: type =='image' ? 'Images' : 'Files',
+                                    title: type == 'image' ? 'Images' : 'Files',
                                     extensions: $ext,
-                                    mimeTypes: type =='image' ? 'image/jpg,image/jpeg,image/bmp,image/png,image/gif' : '',
+                                    mimeTypes: type == 'image' ? 'image/jpg,image/jpeg,image/bmp,image/png,image/gif' : '',
                                 },
                                 // 自定义参数
                                 formData: formData,
                             })
 
-                            element.on('tab', function(data){
-                                 uploader.refresh();
+                            element.on('tab', function(data) {
+                                uploader.refresh();
                             });
                             //console.log(uploader);
                             // 当有文件添加进来的时候
@@ -907,6 +907,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
 
                             // 文件上传成功
                             uploader.on('uploadSuccess', function(file, response) {
+
                                 var ok = function(file, response) {
                                     var button = $('#' + file.id);
                                     if (button) {
@@ -922,32 +923,32 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                         }
                                     }
                                 }
-                                if (type =='file' && chunking) {
-                                    //合并
-                                    $.ajax({
-                                        url: GV.file_upload_url,
-                                        dataType: "json",
-                                        type: "POST",
-                                        data: {
-                                            chunkid: GUID,
-                                            action: 'merge',
-                                            filesize: file.size,
-                                            filename: file.name,
-                                            id: file.id,
-                                            chunks: Math.floor(file.size / chunkSize + (file.size % chunkSize > 1 ? 1 : 0)),
-                                        },
-                                        success: function(res) {
-                                            ok(file, res);
-                                        },
-                                    })
+                                if (response.code == 0) {
+                                    if (type == 'file' && chunking) {
+                                        //合并
+                                        $.ajax({
+                                            url: GV.file_upload_url,
+                                            dataType: "json",
+                                            type: "POST",
+                                            data: {
+                                                chunkid: GUID,
+                                                action: 'merge',
+                                                filesize: file.size,
+                                                filename: file.name,
+                                                id: file.id,
+                                                chunks: Math.floor(file.size / chunkSize + (file.size % chunkSize > 1 ? 1 : 0)),
+                                            },
+                                            success: function(res) {
+                                                ok(file, res);
+                                            },
+                                        })
+                                    } else {
+                                        ok(file, response);
+                                    }
                                 } else {
-                                    ok(file, response);
+                                    yzn.msg.error(response.info);
                                 }
-                                if (typeof onUploadSuccess === 'function') {
-                                    var result = onUploadSuccess.call(file, response);
-                                    if (result === false)
-                                        return;
-                                }
+
                             });
                             // 文件上传失败，显示上传出错。
                             /*uploader.on('uploadError', function(file) {
@@ -983,13 +984,13 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 })
                             }
                             //刷新隐藏textarea的值
-                            var refresh = function (name) {
+                            var refresh = function(name) {
 
                             }
                             if (preview_id && input_id) {
                                 layui.define('laytpl', function(exports) {
                                     var laytpl = layui.laytpl;
-                                    $(document.body).on("keyup change", "#" + input_id, function (e) {
+                                    $(document.body).on("keyup change", "#" + input_id, function(e) {
                                         var inputStr = $("#" + input_id).val();
                                         var inputArr = inputStr.split(/\,/);
                                         $("#" + preview_id).empty();
@@ -998,16 +999,15 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                         var json = {};
                                         try {
                                             json = JSON.parse(extend);
-                                        } catch (e) {
-                                        }
-                                        $.each(inputArr, function (i, j) {
+                                        } catch (e) {}
+                                        $.each(inputArr, function(i, j) {
                                             if (!j) {
                                                 return true;
                                             }
                                             var suffix = /[\.]?([a-zA-Z0-9]+)$/.exec(j);
                                             suffix = suffix ? suffix[1] : 'file';
                                             var value = (json && typeof json[i] !== 'undefined' ? json[i] : null);
-                                            var data = {url: j, data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix};
+                                            var data = { url: j, data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix };
                                             laytpl(previewtpl).render(data, function(html) {
                                                 $("#" + preview_id).append(html);
                                             });
@@ -1019,13 +1019,13 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             }
                             if (preview_id) {
                                 //监听文本框改变事件
-                                $("#" + preview_id).on('change keyup', "input,textarea,select", function () {
+                                $("#" + preview_id).on('change keyup', "input,textarea,select", function() {
                                     refresh($(this).closest("ul").data("name"));
                                 });
                                 // 监听事件
-                                $(document.body).on("fa.preview.change", "#" + preview_id, function () {
+                                $(document.body).on("fa.preview.change", "#" + preview_id, function() {
                                     var urlArr = [];
-                                    $("#" + preview_id + " [data-original]").each(function (i, j) {
+                                    $("#" + preview_id + " [data-original]").each(function(i, j) {
                                         urlArr.push($(this).data("original"));
                                     });
                                     if (input_id) {
@@ -1034,7 +1034,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                     refresh($("#" + preview_id).data("name"));
                                 });
                                 // 移除按钮事件
-                                $(document.body).on("click", "#" + preview_id + " .remove-picture", function () {
+                                $(document.body).on("click", "#" + preview_id + " .remove-picture", function() {
                                     $(this).closest("li").remove();
                                     $("#" + preview_id).trigger("fa.preview.change");
                                 });
@@ -1218,7 +1218,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 }
             }*/
         },
-        bindevent: function () {
+        bindevent: function() {
             var events = yznForm.events;
             events.init();
             events.selectpage();
