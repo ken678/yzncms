@@ -37,6 +37,7 @@ CREATE TABLE `yzn_page` (
   `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '关键字',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT 'SEO描述',
   `content` text COMMENT '内容',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
   `inputtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`catid`)
