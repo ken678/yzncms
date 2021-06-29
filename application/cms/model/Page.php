@@ -14,14 +14,22 @@
 // +----------------------------------------------------------------------
 namespace app\cms\model;
 
-use \think\Model;
+use think\Model;
 
 /**
  * 模型
  */
 class Page extends Model
 {
-    protected $pk = 'catid';
+    protected $pk                 = 'catid';
+    protected $autoWriteTimestamp = true;
+    protected $createTime         = 'inputtime';
+    protected $updateTime         = 'updatetime';
+
+    protected function setInputTimeAttr($value)
+    {
+        return $value && !is_numeric($value) ? strtotime($value) : $value;
+    }
 
     /**
      * 根据栏目ID获取内容
@@ -50,8 +58,8 @@ class Page extends Model
             return false;
         }
         $catid = $data['catid'];
-        $info = self::get($catid);
-        if ($info) {
+        $row   = self::get($catid);
+        if ($row) {
             //更新
             self::update($data, [], true);
             return true;
