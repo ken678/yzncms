@@ -388,7 +388,7 @@ class Upload extends Base
         if ($ext_limit == '') {
             $error_msg = '获取文件后缀限制信息失败！';
         }
-        if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html'])) {
+        if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html']) || in_array($this->fileInfo['suffix'], ['php', 'asp', 'exe', 'cmd', 'sh', 'bat', 'html', 'htm'])) {
             $error_msg = '禁止上传非法文件！';
         }
         if (preg_grep("/php/i", $ext_limit)) {
@@ -408,7 +408,18 @@ class Upload extends Base
                 'message' => $error_msg, //兼容editormd
             ]);
         }
-
+        //验证是否为图片文件
+        if (in_array($this->fileInfo['type'], ['image/gif', 'image/jpg', 'image/jpeg', 'image/bmp', 'image/png', 'image/webp']) || in_array($this->fileInfo['suffix'], ['gif', 'jpg', 'jpeg', 'bmp', 'png', 'webp', 'wbmp'])) {
+            $imgInfo = getimagesize($this->fileInfo['tmp_name']);
+            if (!$imgInfo || !isset($imgInfo[0]) || !isset($imgInfo[1])) {
+                return json([
+                    'status'  => 0,
+                    'info'    => '上传文件不是有效的图片文件',
+                    'state'   => '上传文件不是有效的图片文件', //兼容百度
+                    'message' => '上传文件不是有效的图片文件', //兼容editormd
+                ]);
+            }
+        }
         // 判断附件是否已存在
         if ($file_exists = Attachment_Model::get(['md5' => $this->file->hash('md5')])) {
             return json([
