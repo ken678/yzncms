@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  mysql:
+    image: percona:5.7.34
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root     # 数据库初始密码为 root ，在 yzncms/config/database.php 中使用
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: yzncms
+    networks:
+      - net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./mysql/my.cnf:/etc/my.cnf
+      - ./mysql/data:/var/lib/mysql
+
+  php-fpm:
+    image: bitnami/php-fpm:7.1
+    restart: unless-stopped
+    networks:
+      - net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./yzncms:/app    # 在 php-fpm 和 nginx 容器中，项目文件的挂载路径必须一致，这里都为 /app
+      # - ./www.conf:/opt/bitnami/php/etc/php-fpm.d/www.conf    # 可选挂载配置文件
+
+  nginx:
+    image: nginx:1.20
+    networks:
+      - net
+    ports:
+      - 80:80
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./yzncms:/app
+
+networks:
+  net:
