@@ -847,7 +847,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 },
                                 chunked: chunking,
                                 chunkSize: chunkSize,
-                                server: GV.image_upload_url,
+                                server: type == 'image' ? GV.image_upload_url : GV.file_upload_url,
                                 // 图片限制大小
                                 fileSingleSizeLimit: $size,
                                 // 只允许选择图片文件。
