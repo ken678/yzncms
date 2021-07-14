@@ -17,7 +17,7 @@ namespace app\cms\model;
 use app\common\model\Modelbase;
 use think\Db;
 use think\facade\Validate;
-use \think\Model;
+use think\Model;
 
 /**
  * 模型
@@ -494,7 +494,8 @@ class Cms extends Modelbase
         }
         //自动提取缩略图
         if (isset($data['auto_thumb']) && empty($data['thumb']) && isset($dataExt['content'])) {
-            $data['thumb'] = \util\GetImgSrc::src($dataExt['content']);
+            $thumb         = \util\GetImgSrc::src($dataExt['content']);
+            $data['thumb'] = $thumb ? $thumb : '';
         }
         //关键词加链接
         $autolinks = cache("Cms_Config")['autolinks'];
