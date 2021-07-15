@@ -679,11 +679,13 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     layui.define('colorpicker', function(exports) {
                         var colorpicker = layui.colorpicker;
                         $('.layui-color-box').each(function() {
+                            var input_id = $(this).data("input-id");
+                            var inputObj = $("#" + input_id);
                             colorpicker.render({
                                 elem: $(this),
-                                color: $('.test-form-input').val(),
+                                color: inputObj.val(),
                                 done: function(color) {
-                                    $('.test-form-input').val(color);
+                                    inputObj.val(color);
                                 }
                             });
                         });
