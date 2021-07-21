@@ -22,7 +22,10 @@
         <div class="layui-card">
             <div class="layui-card-header">栏目列表</div>
             <div class="layui-card-body">
-                <iframe name="left" id="iframe_categorys" src="{:url('cms/cms/public_categorys')}" style="height: 100%; width: 100%;"  frameborder="0" scrolling="auto"></iframe>
+                <ul class="ztree" style="margin-left: 5px;margin-top:5px; padding: 0;">
+                    <li><a title="全部展开、折叠"><span class="button ico_open"></span><span id="ztree_expandAll">全部展开、折叠 </span></a> </li>
+                </ul>
+                <ul id="tree" class="ztree" style="overflow:auto;"></ul>
             </div>
         </div>
     </div>
@@ -38,33 +41,85 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-var B_frame_height = parent.layui.$(".iframe_box").height() - 100;
-//console.log(parent.layui.$(".iframe_box").height());
-$(window).on('resize', function() {
-    setTimeout(function() {
-        B_frame_height = parent.layui.$(".iframe_box").height() - 100;
-        frameheight();
-    }, 100);
-});
+layui.use(['jquery', 'ztree'], function() {
+    var $ = layui.$;
 
-function frameheight() {
-    $("#iframe_categorys").height(B_frame_height);
-    $("#iframe_categorys_list").height(B_frame_height);
-}
-(function() {
-    frameheight();
-})();
-
-$('.collapse').on("click", function() {
-    var t = $(this).find('.layui-icon');
-    $('#left-sider').toggleClass("hidden");
-    if ($('#left-sider').hasClass("hidden")) {
-        t.attr("class", "layui-icon layui-icon-shrink-right");
-        $("#right-box").attr("class", 'layui-col-md12 layui-col-sm12');
-    } else {
-        t.attr("class", "layui-icon layui-icon-spread-left");
-        $("#right-box").attr("class", 'layui-col-md10 layui-col-sm12');
+    var zTree;
+    var demoIframe;
+    var zNodes = {$json|raw};
+    var setting = {
+        data: {
+            key: {
+                name: "catname"
+            },
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "parentid"
+            }
+        },
+        callback: {
+            //捕获单击节点之前的事件回调函数
+            beforeClick: function(treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("tree");
+                if (treeNode.isParent) {
+                    zTree.expandNode(treeNode);
+                    return true;
+                }
+            },
+            onClick: function(event, treeId, treeNode) {
+                //保存当前点击的栏目ID
+                layui.data("tree_catid", {key: 'catid',value: treeNode.id});
+            }
+        }
     };
-})
+    $(document).ready(function() {
+         var B_frame_height = parent.layui.$(".iframe_box").height() - 100;
+        $(window).on('resize', function() {
+            setTimeout(function() {
+                B_frame_height = parent.layui.$(".iframe_box").height() - 100;
+                frameheight();
+            }, 100);
+        });
+
+        $('.collapse').on("click", function() {
+            var t = $(this).find('.layui-icon');
+            $('#left-sider').toggleClass("hidden");
+            if ($('#left-sider').hasClass("hidden")) {
+                t.attr("class", "layui-icon layui-icon-shrink-right");
+                $("#right-box").attr("class", 'layui-col-md12 layui-col-sm12');
+            } else {
+                t.attr("class", "layui-icon layui-icon-spread-left");
+                $("#right-box").attr("class", 'layui-col-md10 layui-col-sm12');
+            };
+        })
+
+        function frameheight() {
+            //$("#iframe_categorys").height(B_frame_height);
+            $("#iframe_categorys_list").height(B_frame_height);
+        }
+        frameheight();
+        //初始化
+        $.fn.zTree.init($("#tree"), setting, zNodes);
+        //获取对象
+        var zTree = $.fn.zTree.getZTreeObj("tree");
+        //全选
+        $("#ztree_expandAll").click(function() {
+            if ($(this).data("open")) {
+                zTree.expandAll(false);
+                $(this).data("open", false);
+            } else {
+                zTree.expandAll(true);
+                $(this).data("open", true);
+            }
+        });
+        //定位到上次打开的栏目，进行展开tree_catid
+        var tree_catid = layui.data('tree_catid').catid;
+        if (tree_catid) {
+            var nodes = zTree.getNodesByParam("id", tree_catid, null);
+            zTree.selectNode(nodes[0]);
+        }
+    });
+});
 </script>
 {/block}

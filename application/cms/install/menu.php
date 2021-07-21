@@ -40,12 +40,6 @@ return [
                                 "name"   => "面板",
                             ],
                             [
-                                "route"  => "cms/cms/public_categorys",
-                                "type"   => 1,
-                                "status" => 0,
-                                "name"   => "栏目列表",
-                            ],
-                            [
                                 "route"  => "cms/cms/classlist",
                                 "type"   => 1,
                                 "status" => 0,

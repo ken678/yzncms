@@ -31,6 +31,55 @@ class Cms extends Adminbase
 
     public function index()
     {
+        $isAdministrator = $this->auth->isAdministrator();
+        $json            = $priv_catids            = [];
+
+        if (0 !== (int) $this->cmsConfig['site_category_auth']) {
+            //栏目权限 超级管理员例外
+            if ($isAdministrator !== true) {
+                $role_id     = $this->auth->roleid;
+                $priv_result = Db::name('CategoryPriv')->where(['roleid' => $role_id, 'action' => 'init'])->select();
+                foreach ($priv_result as $_v) {
+                    $priv_catids[] = $_v['catid'];
+                }
+            }
+        }
+        $categorys = Db::name('Category')->order(array('listorder', 'id' => 'ASC'))->select();
+        foreach ($categorys as $rs) {
+            //剔除无子栏目外部链接
+            if ($rs['type'] == 3 && $rs['child'] == 0) {
+                continue;
+            }
+            if (0 !== (int) $this->cmsConfig['site_category_auth']) {
+                //只显示有init权限的，超级管理员除外
+                if ($isAdministrator !== true && !in_array($rs['id'], $priv_catids)) {
+                    $arrchildid      = explode(',', $rs['arrchildid']);
+                    $array_intersect = array_intersect($priv_catids, $arrchildid);
+                    if (empty($array_intersect)) {
+                        continue;
+                    }
+                }
+            }
+            $data = array(
+                'id'       => $rs['id'],
+                'parentid' => $rs['parentid'],
+                'catname'  => $rs['catname'],
+                'type'     => $rs['type'],
+            );
+            //终极栏目
+            if ($rs['child'] !== 0) {
+                $data['isParent'] = true;
+            }
+            $data['target'] = 'right';
+            $data['url']    = url('cms/cms/classlist', array('catid' => $rs['id']));
+            //单页
+            if ($rs['type'] == 1) {
+                $data['target'] = 'right';
+                $data['url']    = url('cms/cms/add', array('catid' => $rs['id']));
+            }
+            $json[] = $data;
+        }
+        $this->assign('json', json_encode($json));
         return $this->fetch();
     }
 
@@ -379,61 +428,6 @@ class Cms extends Adminbase
             }
         }
         return [array_keys($xAxisData), $seriesData];
-    }
-
-    //显示栏目菜单列表
-    public function public_categorys()
-    {
-        $isAdministrator = $this->auth->isAdministrator();
-        $json            = $priv_catids            = [];
-
-        if (0 !== (int) $this->cmsConfig['site_category_auth']) {
-            //栏目权限 超级管理员例外
-            if ($isAdministrator !== true) {
-                $role_id     = $this->auth->roleid;
-                $priv_result = Db::name('CategoryPriv')->where(['roleid' => $role_id, 'action' => 'init'])->select();
-                foreach ($priv_result as $_v) {
-                    $priv_catids[] = $_v['catid'];
-                }
-            }
-        }
-        $categorys = Db::name('Category')->order(array('listorder', 'id' => 'ASC'))->select();
-        foreach ($categorys as $rs) {
-            //剔除无子栏目外部链接
-            if ($rs['type'] == 3 && $rs['child'] == 0) {
-                continue;
-            }
-            if (0 !== (int) $this->cmsConfig['site_category_auth']) {
-                //只显示有init权限的，超级管理员除外
-                if ($isAdministrator !== true && !in_array($rs['id'], $priv_catids)) {
-                    $arrchildid      = explode(',', $rs['arrchildid']);
-                    $array_intersect = array_intersect($priv_catids, $arrchildid);
-                    if (empty($array_intersect)) {
-                        continue;
-                    }
-                }
-            }
-            $data = array(
-                'id'       => $rs['id'],
-                'parentid' => $rs['parentid'],
-                'catname'  => $rs['catname'],
-                'type'     => $rs['type'],
-            );
-            //终极栏目
-            if ($rs['child'] !== 0) {
-                $data['isParent'] = true;
-            }
-            $data['target'] = 'right';
-            $data['url']    = url('cms/cms/classlist', array('catid' => $rs['id']));
-            //单页
-            if ($rs['type'] == 1) {
-                $data['target'] = 'right';
-                $data['url']    = url('cms/cms/add', array('catid' => $rs['id']));
-            }
-            $json[] = $data;
-        }
-        $this->assign('json', json_encode($json));
-        return $this->fetch();
     }
 
     /**
