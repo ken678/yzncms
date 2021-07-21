@@ -1035,3 +1035,33 @@ function build_suffix_image($suffix, $background = null)
 EOT;
     return $icon;
 }
+
+/**
+ * 跨域检测
+ */
+function check_cors_request()
+{
+    //跨域访问的时候才会存在此字段
+    if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN']) {
+        $info        = parse_url($_SERVER['HTTP_ORIGIN']);
+        $domainArr   = explode(',', config('cors_request_domain'));
+        $domainArr[] = Request::host(true);
+        if (in_array("*", $domainArr) || in_array($_SERVER['HTTP_ORIGIN'], $domainArr) || (isset($info['host']) && in_array($info['host'], $domainArr))) {
+            header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+        } else {
+            header('HTTP/1.1 403 Forbidden');
+            exit;
+        }
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+                header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+            }
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+                header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            }
+            exit;
+        }
+    }
+}
