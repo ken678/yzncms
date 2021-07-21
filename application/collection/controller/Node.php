@@ -375,7 +375,7 @@ class Node extends Adminbase
         $this->success('操作成功！', url('publist', ['type' => 2, 'id' => $nid]));
     }
 
-    public function parseFunction($match, $content)
+    protected function parseFunction($match, $content)
     {
         $varArray = explode('|', $match);
         $length   = count($varArray);
