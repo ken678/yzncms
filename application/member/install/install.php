@@ -30,10 +30,6 @@ class install extends InstallBase
         if (!empty($Setting) && is_array($Setting)) {
             Db::name("Module")->where('module', 'member')->setField('setting', serialize($Setting));
         }
-        //显示cms的投稿菜单
-        if (isModuleInstall('cms')) {
-            Db::name('menu')->where(['app' => 'cms', 'controller' => 'publish', 'action' => 'index'])->setField('status', 1);
-        }
         return true;
     }
 

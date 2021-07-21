@@ -14,8 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\member\uninstall;
 
-use think\Db;
 use sys\UninstallBase;
+use think\Db;
 
 class Uninstall extends UninstallBase
 {
@@ -41,10 +41,6 @@ class Uninstall extends UninstallBase
                     }
                 }
             }
-        }
-        //隐藏cms的投稿菜单
-        if (isModuleInstall('cms')) {
-            Db::name('menu')->where(['app' => 'cms', 'controller' => 'publish', 'action' => 'index'])->setField('status', 0);
         }
         return true;
     }

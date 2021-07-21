@@ -99,7 +99,7 @@ return [
                     [
                         "route"  => "cms/publish/index",
                         "type"   => 1,
-                        "status" => 0,
+                        "status" => 1,
                         "name"   => "稿件管理",
                         "icon"   => "icon-draft-line",
                         "child"  => [
