@@ -163,7 +163,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         }
                         form.on('submit(' + filter + ')', function(data) {
                             //var dataField = data.field;
-                            var dataField = $(data.form).serialize();
+                            var dataField = $(data.form).serializeArray();
 
                             // 富文本数据处理
                             /*var editorList = document.querySelectorAll(".editor");
