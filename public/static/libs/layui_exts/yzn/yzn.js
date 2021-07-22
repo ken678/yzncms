@@ -186,14 +186,14 @@ layui.define(['layer','notice'], function(exports) {
                 if (option.prefix == true) {
                     //option.url = yzn.url(option.url);
                 }
-                if (type==='post') {
+                /*if (type==='post') {
                     var token = $('meta[name="csrf-token"]').attr('content');
                     if (Object.prototype.toString.call(option.data) === '[object Array]') {
                         option.data.push({name:'__token__',value:token});
                     } else if(typeof option.data == "object") {
                         option.data['__token__'] = token;
                     }
-                }
+                }*/
                 var index = yzn.msg.loading('加载中');
                 $.ajax({
                     url: option.url,
