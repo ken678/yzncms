@@ -1048,7 +1048,7 @@ layui.config({}).extend({}).define(['laytpl', 'laypage', 'layer', 'form'], funct
 		},
 		isFilter: false //是否开启行内过滤
 			,
-		method: 'post' //默认以post方式请求后台
+		method: 'get' //默认以post方式请求后台
 			,
 		radDisabledNum: 0 //禁止单选的记录数
 			,
