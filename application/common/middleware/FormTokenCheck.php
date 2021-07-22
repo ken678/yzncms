@@ -29,18 +29,17 @@ class FormTokenCheck
      */
     public function handle($request, \Closure $next, string $token = null)
     {
-        $check = $this->checkToken($request, $token ?: '__token__');
-
+        $check  = $this->checkToken($request, $token ?: '__token__');
+        $_token = $request->token();
         if (false === $check) {
             $result = [
                 'code' => -1,
                 'msg'  => '令牌错误',
-                'data' => ['__token__' => $request->token()],
+                'data' => ['__token__' => $_token],
                 'url'  => '',
             ];
             throw new HttpResponseException(json($result));
         }
-
         return $next($request);
     }
 
@@ -56,30 +55,25 @@ class FormTokenCheck
         if (in_array($request->method(), ['GET', 'HEAD', 'OPTIONS'], true)) {
             return true;
         }
-
         if (!Session::has($token)) {
             // 令牌数据无效
             return false;
         }
-
         // Header验证
         if ($request->header('X-CSRF-TOKEN') && Session::get($token) === $request->header('X-CSRF-TOKEN')) {
             // 防止重复提交
             Session::delete($token); // 验证完成销毁session
             return true;
         }
-
         if (empty($data)) {
             $data = $request->post();
         }
-
         // 令牌验证
         if (isset($data[$token]) && Session::get($token) === $data[$token]) {
             // 防止重复提交
             Session::delete($token); // 验证完成销毁session
             return true;
         }
-
         // 开启TOKEN重置
         Session::delete($token);
         return false;
