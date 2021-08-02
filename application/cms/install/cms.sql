@@ -18,7 +18,8 @@ CREATE TABLE `yzn_category` (
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `catdir` (`catdir`)
+  UNIQUE KEY `catdir` (`catdir`),
+  KEY `parentid` (`parentid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='栏目表';
 
 DROP TABLE IF EXISTS `yzn_category_priv`;

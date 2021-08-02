@@ -17,7 +17,8 @@ CREATE TABLE `yzn_article` (
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `status` (`catid`,`status`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章模型模型表';
 
 DROP TABLE IF EXISTS `yzn_article_data`;
@@ -46,7 +47,8 @@ CREATE TABLE `yzn_picture` (
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `status` (`catid`,`status`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='图片模型模型表';
 
 DROP TABLE IF EXISTS `yzn_picture_data`;
@@ -75,7 +77,8 @@ CREATE TABLE `yzn_download` (
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `url` varchar(100) NOT NULL DEFAULT '' COMMENT '链接地址',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `status` (`catid`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='下载模型模型表';
 
 DROP TABLE IF EXISTS `yzn_download_data`;
@@ -107,7 +110,8 @@ CREATE TABLE `yzn_product` (
   `type` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '类型',
   `trade` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '行业',
   `price` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '价格',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `status` (`catid`,`status`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
 
 DROP TABLE IF EXISTS `yzn_product_data`;
