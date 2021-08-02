@@ -5,16 +5,6 @@ layui.define(['layer','notice'], function(exports) {
         notice = layui.notice;
 
     var MOD_NAME = 'yzn';
-    layer.config({
-        skin: 'layui-layer-yzn'
-    });
-    notice.settings({
-       timeout: 3000,//消失时间
-       theme: 'dark', // 主题 dark light
-       position: 'topRight', // 位置 bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
-       displayMode: 0, //0无限制 1同类型存在不显示 2同类型存在先移除
-       progressBar: true,//进度条
-    });
 
     yzn = {
         config: {
@@ -159,6 +149,16 @@ layui.define(['layer','notice'], function(exports) {
             return param !== undefined ? param : defaultParam;
         },
         request: {
+            //修复URL
+            fixurl: function (url) {
+                if (url.substr(0, 1) !== "/") {
+                    var r = new RegExp('^(?:[a-z]+:)?//', 'i');
+                    if (!r.test(url)) {
+                        url = "/" + url;
+                    }
+                }
+                return url;
+            },
             post: function(option, ok, no, ex) {
                 return yzn.request.ajax('post', option, ok, no, ex);
             },
@@ -298,7 +298,25 @@ layui.define(['layer','notice'], function(exports) {
                 return layer.close(index);
             }
         },
+        init: function () {
+            // 对相对地址进行处理
+            $.ajaxSetup({
+                beforeSend: function (xhr, setting) {
+                    setting.url = yzn.request.fixurl(setting.url);
+                }
+            });
+            layer.config({
+                skin: 'layui-layer-yzn'
+            });
+            notice.settings({
+               timeout: 3000,//消失时间
+               theme: 'dark', // 主题 dark light
+               position: 'topRight', // 位置 bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+               displayMode: 0, //0无限制 1同类型存在不显示 2同类型存在先移除
+               progressBar: true,//进度条
+            });
+        }
     }
-
+    yzn.init();
     exports(MOD_NAME, yzn);
 });

@@ -734,7 +734,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             //过滤敏感字
                             $('#' + ueditor_name + 'filterword').click(function() {
                                 var con = ueditors[ueditor_name].getContent();
-                                $.post(GV.filter_word_url, { 'content': con }).success(function(res) {
+                                yzn.request.post({
+                                    url: 'admin/ajax/filterWord',
+                                    data: { 'content': con },
+                                }, function(res) {
                                     if (res.code == 0) {
                                         if ($.isArray(res.data)) {
                                             layer.msg("违禁词：" + res.data.join(","), { icon: 2 });
@@ -742,7 +745,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                     } else {
                                         layer.msg("内容没有违禁词！", { icon: 1 });
                                     }
-                                })
+                                });
                             })
                         });
                     })
@@ -760,7 +763,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         shade: false,
                         area: ['880px', '620px'],
                         title: '图片裁剪',
-                        content: GV.jcrop_upload_url + '?url=' + image,
+                        content: '/attachment/Attachments/cropper?url=' + image,
                         success: function(layero, index) {
                             $(layero).data("arr", [inputId, image]);
                         }
@@ -865,7 +868,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             element.on('tab', function(data) {
                                 uploader.refresh();
                             });
-                            //console.log(uploader);
                             // 当有文件添加进来的时候
                             /*uploader.on('fileQueued', function(file) {
                                 var $li = $(
@@ -881,7 +883,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                         '</div>'
                                     ),
                                     $img = $li.find('img');
-
                                 if ($multiple) {
                                     $file_list.append($li);
                                 } else {
@@ -1238,7 +1239,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             events.cropper();
             events.xmSelect();
             events.upload_image('.webUpload');
-            //events.upload_file('.js-upload-file,.js-upload-files');
         }
     }
     yznForm.bindevent();
@@ -1303,10 +1303,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             }
         }, function(res) {
             layer.msg(res.msg, { icon: 2 });
-            //that.text(res.msg).removeClass('layui-btn-normal').addClass('layui-btn-danger');
             setTimeout(function() {
                 that.prop('disabled', false);
-                //that.prop('disabled', false).removeClass('layui-btn-danger').text(text);
             }, opt.time);
         });
         return false;
