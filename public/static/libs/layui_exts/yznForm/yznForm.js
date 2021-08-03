@@ -452,7 +452,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 searchKey: 'name',
                                 searchPlaceholder: '请输入图片名称',
                                 table: {
-                                    url: GV.image_select_url,
+                                    url: '/attachment/Attachments/select',
                                     cols: [
                                         [
                                             { type: multiple },
