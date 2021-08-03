@@ -926,7 +926,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                         }
                                     }
                                 }
-                                if (response.code == 0) {
+                                //if (response.code == 0) {
                                     if (type == 'file' && chunking) {
                                         //合并
                                         $.ajax({
@@ -948,9 +948,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                     } else {
                                         ok(file, response);
                                     }
-                                } else {
+                                /*} else {
                                     yzn.msg.error(response.info);
-                                }
+                                }*/
                                 if (typeof onUploadSuccess === 'function') {
                                     var result = onUploadSuccess.call(file, response);
                                     if (result === false)
