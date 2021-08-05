@@ -57,7 +57,7 @@ class Category extends Adminbase
             $tree->icon = array('&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;&nbsp;└─ ');
             $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
             $categorys  = array();
-            $result     = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+            $result     = Db::name('category')->order('listorder DESC, id DESC')->select();
             foreach ($result as $k => $v) {
                 if (isset($models[$v['modelid']]['name'])) {
                     $v['modelname'] = $models[$v['modelid']]['name'];
@@ -163,7 +163,7 @@ class Category extends Adminbase
                 }
             }
             //栏目列表 可以用缓存的方式
-            $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
+            $array = Db::name('Category')->order('listorder DESC, id DESC')->column('*', 'id');
             if (!empty($array) && is_array($array)) {
                 $tree       = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
@@ -251,7 +251,7 @@ class Category extends Adminbase
                 }
             }
             //栏目列表 可以用缓存的方式
-            $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
+            $array = Db::name('Category')->order('listorder DESC, id DESC')->column('*', 'id');
             if (!empty($array) && is_array($array)) {
                 $tree       = new \util\Tree();
                 $tree->icon = array('&nbsp;&nbsp;│ ', '&nbsp;&nbsp;├─ ', '&nbsp;&nbsp;└─ ');
@@ -342,7 +342,7 @@ class Category extends Adminbase
                 foreach ($category_priv as $k => $v) {
                     $priv[$v['catid']][$v['action']] = true;
                 }
-                $categorys = Db::name('category')->order(array('listorder', 'id' => 'ASC'))->select();
+                $categorys = Db::name('category')->order('listorder DESC, id DESC')->select();
                 foreach ($categorys as $k => $v) {
                     if ($v['type'] == 1 || $v['child']) {
                         $v['disabled']        = 'disabled';
@@ -423,7 +423,7 @@ class Category extends Adminbase
     private function repair()
     {
         //取出需要处理的栏目数据
-        $categorys = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
+        $categorys = Db::name('Category')->order('listorder DESC, id DESC')->column('*', 'id');
         if (empty($categorys)) {
             return true;
         }
@@ -453,7 +453,7 @@ class Category extends Adminbase
     //重新统计栏目信息数量
     public function count_items()
     {
-        $result      = Db::name('Category')->order('listorder ASC, id ASC')->select();
+        $result      = Db::name('Category')->order('listorder DESC, id DESC')->select();
         $model_cache = cache("Model");
         foreach ($result as $r) {
             if ($r['type'] == 2) {

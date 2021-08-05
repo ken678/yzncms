@@ -39,7 +39,7 @@ body {
             <div class="case_ny_list">
             	<!--S 文章列表-->
                 <ul class="clearfix">
-                    {yzn module="cms" action="lists" where="$where" catid="$catid" cache="3600" order="listorder ASC" num="8" page="$page" return="data"}
+                    {yzn module="cms" action="lists" where="$where" catid="$catid" cache="3600" order="listorder DESC" num="8" page="$page" return="data"}
                     {volist name="data" id="vo" mod="4"}
                     <li {eq name="mod" value="3" }style="margin-right:0;" {/eq}> <div class="_con">
                         <div class="_img"><img src="{$vo.thumb|default='https://via.placeholder.com/270x210'}" alt="{$vo.title}"></div>

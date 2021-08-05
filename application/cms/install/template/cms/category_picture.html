@@ -24,7 +24,7 @@ body {
                 <div class="honor">
                     <!--S 荣誉资质 -->
                     <ul class="honor-list clearfix" id="honor">
-                    	{yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder ASC" num="10" page="$page" return="data"}
+                    	{yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder DESC" num="10" page="$page" return="data"}
                         {volist name="data" id="vo" mod="3"}
                         <li {eq name="mod" value="2"}class="r"{/eq}>
                             <a href="https://via.placeholder.com/245x345" class="img transition">

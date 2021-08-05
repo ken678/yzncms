@@ -33,12 +33,12 @@ class Tags extends Adminbase
     {
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list = $this->modelClass->where($where)->order(['listorder', 'id' => 'desc'])->page($page, $limit)->select();
+            $_list                      = $this->modelClass->where($where)->order(['listorder' => 'desc', 'id' => 'desc'])->page($page, $limit)->select();
             foreach ($_list as $k => &$v) {
                 $v['url'] = url('cms/index/tags', ['tag' => $v['tag']]);
             }
             unset($v);
-            $total = $this->modelClass->where($where)->count();
+            $total  = $this->modelClass->where($where)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -97,15 +97,15 @@ class Tags extends Adminbase
     public function create()
     {
         if ($this->request->isPOST() || $this->request->param('modelid/d')) {
-            $_GET['modelid']=$modelid = $this->request->param('modelid/d', 0);
-            $lun = $this->request->param('lun/d', 0); //第几轮 0=>1
-            $_GET['zlun'] = $zlun = $this->request->param('zlun/d', 0); //总轮数
-            $_GET['mo'] = $this->request->param('mo/d',null); //是否全部模型
+            $_GET['modelid'] = $modelid = $this->request->param('modelid/d', 0);
+            $lun             = $this->request->param('lun/d', 0); //第几轮 0=>1
+            $_GET['zlun']    = $zlun    = $this->request->param('zlun/d', 0); //总轮数
+            $_GET['mo']      = $this->request->param('mo/d', null); //是否全部模型
             if ($lun > (int) $_GET['zlun'] - 1) {
                 $lun = (int) $_GET['zlun'] - 1;
             }
-            $lun = $lun < 0 ? 0 : $lun;
-            $mlun = 100;
+            $lun      = $lun < 0 ? 0 : $lun;
+            $mlun     = 100;
             $firstRow = $mlun * ($lun < 0 ? 0 : $lun);
             if (0 !== (int) $this->request->param('delete/d')) {
                 //清空
@@ -116,9 +116,9 @@ class Tags extends Adminbase
             $model = cache('Model');
             //当全部模型重建时处理
             if ($modelid == 0) {
-                $modelDATA = Db::name("Model")->where('type', 2)->order('id', 'ASC')->find();
-                $modelid = $modelDATA['id'];
-                $_GET['mo'] = 1;
+                $modelDATA       = Db::name("Model")->where('type', 2)->order('id', 'ASC')->find();
+                $modelid         = $modelDATA['id'];
+                $_GET['mo']      = 1;
                 $_GET['modelid'] = $modelid;
             }
             $models_v = $model[$modelid];
@@ -126,7 +126,7 @@ class Tags extends Adminbase
                 $this->error("该模型不存在！");
             }
             $tableName = $models_v['tablename'];
-            $count = Db::name($tableName)->count();
+            $count     = Db::name($tableName)->count();
             if ($count == 0) {
                 //结束
                 if (isset($_GET['mo'])) {
@@ -139,7 +139,7 @@ class Tags extends Adminbase
                     }
                     unset($_GET['zlun']);
                     unset($_GET['lun']);
-                    $modelid = $modelDATA['id'];
+                    $modelid         = $modelDATA['id'];
                     $_GET['modelid'] = $modelid;
                     $this->success("模型：{$models_v['name']}，第 " . ($lun + 1) . "/{$zlun} 轮更新成功，进入下一轮更新中...", url('create', $_GET), '', 1);
                 } else {
@@ -147,7 +147,7 @@ class Tags extends Adminbase
                 }
             }
             //总轮数
-            $zlun = ceil($count / $mlun);
+            $zlun         = ceil($count / $mlun);
             $_GET['zlun'] = $zlun;
             $this->createUP($models_v, $firstRow, $mlun);
             if ($lun == (int) $_GET['zlun'] - 1) {
@@ -161,7 +161,7 @@ class Tags extends Adminbase
                     }
                     unset($_GET['zlun']);
                     unset($_GET['lun']);
-                    $modelid = $modelDATA['id'];
+                    $modelid         = $modelDATA['id'];
                     $_GET['modelid'] = $modelid;
                 } else {
                     $this->success("Tags重建结束！", url('index'));
@@ -172,7 +172,7 @@ class Tags extends Adminbase
             $this->success("模型：" . $models_v['name'] . "，第 " . ($lun + 1) . "/$zlun 轮更新成功，进入下一轮更新中...", url('create', $_GET), '', 1);
         } else {
             $model = cache('Model');
-            $mo = array();
+            $mo    = array();
             foreach ($model as $k => $v) {
                 if ($v['type'] == 2) {
                     $mo[$k] = $v['name'];
@@ -194,7 +194,7 @@ class Tags extends Adminbase
         foreach ($keywords as $keyword) {
             $data = array();
             $time = time();
-            $key = strpos($keyword['tags'], ',') !== false ? explode(',', $keyword['tags']) : explode(' ', $keyword['tags']);
+            $key  = strpos($keyword['tags'], ',') !== false ? explode(',', $keyword['tags']) : explode(' ', $keyword['tags']);
             foreach ($key as $key_v) {
                 if (empty($key_v) || $key_v == "") {
                     continue;
@@ -204,17 +204,17 @@ class Tags extends Adminbase
                     $this->modelClass->where('tag', $key_v)->setInc('usetimes');
                 } else {
                     $this->modelClass->insert(array(
-                        "tag" => $key_v,
-                        "usetimes" => 1,
+                        "tag"         => $key_v,
+                        "usetimes"    => 1,
                         "create_time" => $time,
                         "update_time" => $time,
                     ));
                 }
                 $data = array(
-                    'tag' => $key_v,
-                    "modelid" => $models_v['id'],
-                    "contentid" => $keyword['id'],
-                    "catid" => $keyword['catid'],
+                    'tag'        => $key_v,
+                    "modelid"    => $models_v['id'],
+                    "contentid"  => $keyword['id'],
+                    "catid"      => $keyword['catid'],
                     "updatetime" => $time,
                 );
                 Db::name('TagsContent')->insert($data);

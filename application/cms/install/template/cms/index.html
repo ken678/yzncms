@@ -24,7 +24,7 @@
         </div>
         <div class="case_list">
             <ul>
-            {yzn module="cms" action="lists" flag="4" catid="5" cache="3600" order="listorder ASC" num="10" return="data"}
+            {yzn module="cms" action="lists" flag="4" catid="5" cache="3600" order="listorder DESC" num="10" return="data"}
             {volist name="data" id="vo"}
             	<li>
             		<a href="{$vo.url}" class="pr">
@@ -122,7 +122,7 @@
             <span>新闻动态</span>
         </div>
         <ul class="news_list">
-            {yzn module="cms" action="lists" catid="6" cache="3600" order="listorder ASC" num="3" return="data"}
+            {yzn module="cms" action="lists" catid="6" cache="3600" order="listorder DESC" num="3" return="data"}
             {volist name="data" id="vo"}
             <li>
                 <div class="_date">

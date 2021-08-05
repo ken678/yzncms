@@ -265,7 +265,7 @@ class Index extends Cmsbase
             }
             $where = '(' . substr($where, 0, -4) . ') ';
             $where .= " AND status='1' $sql_time";
-            $list = $this->Cms_Model->getList($modelid, $where, false, '*', "listorder,id desc", 10, 1, false, ['query' => ['keyword' => $keyword, 'modelid' => $modelid]]);
+            $list = $this->Cms_Model->getList($modelid, $where, false, '*', "listorder DESC,id DESC", 10, 1, false, ['query' => ['keyword' => $keyword, 'modelid' => $modelid]]);
         } else {
             foreach ($modellist as $key => $vo) {
                 $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
@@ -278,7 +278,7 @@ class Index extends Cmsbase
                 }
                 $where = '(' . substr($where, 0, -4) . ') ';
                 $where .= " AND status='1' $sql_time";
-                $list = $this->Cms_Model->getList($key, $where, false, '*', 'listorder,id desc', 10, 1, false, ['query' => ['keyword' => $keyword, 'modelid' => $modelid]]);
+                $list = $this->Cms_Model->getList($key, $where, false, '*', 'listorder DESC,id DESC', 10, 1, false, ['query' => ['keyword' => $keyword, 'modelid' => $modelid]]);
                 if ($list->isEmpty()) {
                     continue;
                 } else {
@@ -321,7 +321,7 @@ class Index extends Cmsbase
         }
         //如果条件为空，则显示标签首页
         if (empty($tag)) {
-            $data = Db::name('Tags')->order(['hits' => 'DESC'])->limit(100)->select();
+            $data = Db::name('Tags')->order(['listorder' => 'DESC', 'hits' => 'DESC'])->limit(100)->select();
             $this->assign("SEO", seo('', '标签'));
             $this->assign('list', $data);
             return $this->fetch('/tags_list');

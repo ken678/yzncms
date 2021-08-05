@@ -176,7 +176,7 @@ class Category extends Model
     //刷新栏目索引缓存
     public function category_cache()
     {
-        $data        = self::order("listorder ASC")->select();
+        $data        = self::order("listorder DESC")->select();
         $CategoryIds = array();
         foreach ($data as $r) {
             $CategoryIds[$r['id']] = array(

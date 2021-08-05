@@ -37,7 +37,7 @@ body {
             </div>
             <div class="case_ny_right">
             	<h3>热门新闻</h3>
-                {yzn module="cms" action="lists" catid="6" cache="3600" order="listorder ASC" num="5" page="$page" return="data"}
+                {yzn module="cms" action="lists" catid="6" cache="3600" order="listorder DESC" num="5" page="$page" return="data"}
                 {volist name="data" id="vo"}
             	<div class="newsBox">
             		<div class="newsBody">

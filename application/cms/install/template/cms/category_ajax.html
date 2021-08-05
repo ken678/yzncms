@@ -8,7 +8,7 @@ $page=request()->param('page/d',1);
 $offset=($page-1)*5;
 $limit="$offset,5";
 {/php}
-{yzn module="cms" action="lists" catid="$catid" order="listorder ASC" limit="$limit" return="data"}
+{yzn module="cms" action="lists" catid="$catid" order="listorder DESC" limit="$limit" return="data"}
 {volist name="data" id="vo"}
 <li class="item clearfix">
     <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="{$vo.thumb|default='https://via.placeholder.com/168x126'}" alt="{$vo.title}">
