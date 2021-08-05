@@ -320,7 +320,7 @@ class Index extends Cmsbase
             $where['tag'] = $tag;
         }
         //如果条件为空，则显示标签首页
-        if (empty($where)) {
+        if (empty($tag)) {
             $data = Db::name('Tags')->order(['hits' => 'DESC'])->limit(100)->select();
             $this->assign("SEO", seo('', '标签'));
             $this->assign('list', $data);
