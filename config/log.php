@@ -15,11 +15,17 @@
 
 return [
     // 日志记录方式，内置 file socket 支持扩展
-    'type'      => 'File',
+    'type'        => 'File',
+    // 日志记录级别 debug, info, notice, warning, error, critical, alert, emergency
+    'level'       => [],
+    // 是否关闭日志 也可以type类型设置为test
+    'close'       => false,
+
+    // 以下为type为文件类型支持的参数File
     // 日志保存目录
-    'path'      => '',
-    // 日志记录级别
-    'level'     => [],
+    'path'        => '',
+    // 独立记录的日志级别 同上
+    'apart_level' => [],
     // 自动删除超过数量的最早日志
-    'max_files' => 30,
+    'max_files'   => 30,
 ];
