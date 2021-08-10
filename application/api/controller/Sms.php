@@ -15,8 +15,9 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
-use app\common\model\Sms as Sms_Model;
+use app\common\library\Sms as Smslib;
 use app\member\model\Member;
+use think\facade\Hook;
 use think\facade\Validate;
 
 /**
@@ -26,14 +27,6 @@ use think\facade\Validate;
  */
 class Sms extends Api
 {
-    /**
-     * 初始化
-     */
-    protected function initialize()
-    {
-        $this->Sms_Model = new Sms_Model();
-        parent::initialize();
-    }
 
     /**
      * @title 发送验证码
@@ -55,11 +48,11 @@ class Sms extends Api
         if (!$mobile || !Validate::isMobile($mobile)) {
             $this->error('手机号不正确');
         }
-        $last = $this->Sms_Model->get($mobile, $event);
+        $last = Smslib::get($mobile, $event);
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
         }
-        $ipSendTotal = $this->Sms_Model->where(['ip' => $this->request->ip()])->whereTime('create_time', '-1 hours')->count();
+        $ipSendTotal = \app\common\model\Sms::where(['ip' => $this->request->ip()])->whereTime('create_time', '-1 hours')->count();
         if ($ipSendTotal >= 5) {
             $this->error('发送频繁');
         }
@@ -73,10 +66,10 @@ class Sms extends Api
                 $this->error('未注册');
             }
         }
-        if (!\think\facade\Hook::get('sms_send')) {
+        if (!Hook::get('sms_send')) {
             $this->error('请在后台插件管理安装短信验证插件');
         }
-        $ret = $this->Sms_Model->send($mobile, null, $event);
+        $ret = Smslib::send($mobile, null, $event);
         if ($ret) {
             $this->success('发送成功');
         } else {

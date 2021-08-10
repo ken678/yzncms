@@ -15,8 +15,9 @@
 namespace app\api\controller;
 
 use app\common\controller\Api;
-use app\common\model\Ems as Ems_Model;
+use app\common\library\Ems as Emslib;
 use app\member\model\Member;
+use think\facade\Hook;
 use think\facade\Validate;
 
 /**
@@ -26,15 +27,6 @@ use think\facade\Validate;
  */
 class Ems extends Api
 {
-    /**
-     * 初始化
-     */
-    protected function initialize()
-    {
-        $this->Ems_Model = new Ems_Model();
-        parent::initialize();
-    }
-
     /**
      * @title 发送验证码
      * @desc 最基础的接口注释写法
@@ -55,7 +47,7 @@ class Ems extends Api
         if (!$email || !Validate::isEmail($email)) {
             $this->error('邮箱格式不正确！');
         }
-        $last = $this->Ems_Model->get($email, $event);
+        $last = Emslib::get($email, $event);
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
         }
@@ -69,10 +61,10 @@ class Ems extends Api
                 $this->error('未注册');
             }
         }
-        if (!\think\facade\Hook::get('ems_send')) {
+        if (!Hook::get('ems_send')) {
             $this->error('请在后台插件管理安装邮箱验证插件');
         }
-        $ret = $this->Ems_Model->send($email, null, $event);
+        $ret = Emslib::send($email, null, $event);
         if ($ret) {
             $this->success('发送成功');
         } else {
