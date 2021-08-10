@@ -14,8 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\member\controller;
 
-use app\common\model\Ems as Ems_Model;
-use app\common\model\Sms as Sms_Model;
+use app\common\library\Ems;
+use app\common\library\Sms;
 use app\member\model\Member as Member_Model;
 use think\facade\Cookie;
 use think\facade\Hook;
@@ -156,16 +156,14 @@ class Index extends MemberBase
                 $this->error($result, null, ['token' => $this->request->token()]);
             }
             if ($this->memberConfig['register_mobile_verify']) {
-                $Sms_Model = new Sms_Model();
-                $result    = $Sms_Model->check($data['mobile'], $data['captcha_mobile'], 'register');
+                $result = Sms::check($data['mobile'], $data['captcha_mobile'], 'register');
                 if (!$result) {
                     $this->error('手机验证码错误！');
                 }
                 $extend['ischeck_mobile'] = 1;
             }
             if ($this->memberConfig['register_email_verify']) {
-                $Ems_Model = new Ems_Model();
-                $result    = $Ems_Model->check($data['email'], $data['captcha_email'], 'register');
+                $result = Ems::check($data['email'], $data['captcha_email'], 'register');
                 if (!$result) {
                     $this->error('邮箱验证码错误！');
                 }
@@ -268,14 +266,13 @@ class Index extends MemberBase
             if ($this->Member_Model->where('email', $email)->where('id', '<>', $this->auth->id)->find()) {
                 $this->error('邮箱已占用');
             }
-            $Ems_Model = new Ems_Model();
-            $result    = $Ems_Model->check($email, $captcha, 'changeemail');
+            $result = Ems::check($email, $captcha, 'changeemail');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改邮箱
             $this->Member_Model->allowField(['ischeck_email', 'email'])->save(['email' => $email, 'ischeck_email' => 1], ['id' => 1]);
-            $Ems_Model->flush($email, 'changeemail');
+            Ems::flush($email, 'changeemail');
             $this->success();
         } else {
             return $this->fetch('/changeemail');
@@ -300,14 +297,13 @@ class Index extends MemberBase
             if ($this->Member_Model->where('mobile', $mobile)->where('id', '<>', $this->auth->id)->find()) {
                 $this->error('手机号已占用');
             }
-            $Sms_Model = new Sms_Model();
-            $result    = $Sms_Model->check($mobile, $captcha, 'changemobile');
+            $result = Sms::check($mobile, $captcha, 'changemobile');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改手机号
             $this->Member_Model->allowField(['ischeck_mobile', 'mobile'])->save(['mobile' => $mobile, 'ischeck_mobile' => 1], ['id' => 1]);
-            $Sms_Model->flush($mobile, 'changemobile');
+            Sms::flush($mobile, 'changemobile');
             $this->success();
         } else {
             return $this->fetch('/changemobile');
@@ -324,14 +320,13 @@ class Index extends MemberBase
             if (!$captcha) {
                 $this->error('参数不得为空！');
             }
-            $Ems_Model = new Ems_Model();
-            $result    = $Ems_Model->check($this->auth->email, $captcha, 'actemail');
+            $result = Ems::check($this->auth->email, $captcha, 'actemail');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改邮箱
             $this->Member_Model->save(['ischeck_email' => 1], ['id' => $this->auth->id]);
-            $Ems_Model->flush($this->auth->email, 'actemail');
+            Ems::flush($this->auth->email, 'actemail');
             $this->success('激活成功！');
         } else {
             return $this->fetch('/actemail');
@@ -348,14 +343,13 @@ class Index extends MemberBase
             if (!$captcha) {
                 $this->error('参数不得为空！');
             }
-            $Sms_Model = new Sms_Model();
-            $result    = $Sms_Model->check($this->auth->mobile, $captcha, 'actmobile');
+            $result = Sms::check($this->auth->mobile, $captcha, 'actmobile');
             if (!$result) {
                 $this->error('验证码错误！');
             }
             //只修改手机号
             $this->Member_Model->save(['ischeck_mobile' => 1], ['id' => $this->auth->id]);
-            $Sms_Model->flush($this->auth->mobile, 'actmobile');
+            Sms::flush($this->auth->mobile, 'actmobile');
             $this->success('激活成功！');
         } else {
             return $this->fetch('/actmobile');
@@ -405,8 +399,7 @@ class Index extends MemberBase
                 if (!$user) {
                     $this->error('用户不存在！', null, ['token' => $this->request->token()]);
                 }
-                $Sms_Model = new Sms_Model();
-                $result    = $Sms_Model->check($mobile, $captcha, 'resetpwd');
+                $result = Sms::check($mobile, $captcha, 'resetpwd');
                 if (!$result) {
                     $this->error('验证码错误！', null, ['token' => $this->request->token()]);
                 }
@@ -415,8 +408,7 @@ class Index extends MemberBase
                 if (!$user) {
                     $this->error('用户不存在！', null, ['token' => $this->request->token()]);
                 }
-                $Ems_Model = new Ems_Model();
-                $result    = $Ems_Model->check($email, $captcha, 'resetpwd');
+                $result = Ems::check($email, $captcha, 'resetpwd');
                 if (!$result) {
                     $this->error('验证码错误！', null, ['token' => $this->request->token()]);
                 }
