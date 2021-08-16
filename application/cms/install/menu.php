@@ -94,6 +94,18 @@ return [
                                 "name"   => "回收站",
                                 "icon"   => "icon-trash",
                             ],
+                            [
+                                "route"  => "cms/cms/destroy",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "清空回收站",
+                            ],
+                            [
+                                "route"  => "cms/cms/restore",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "还原回收站",
+                            ],
                         ],
                     ],
                     [
