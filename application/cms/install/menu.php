@@ -115,6 +115,24 @@ return [
                         "name"   => "稿件管理",
                         "icon"   => "icon-draft-line",
                         "child"  => [
+                            [
+                                "route"  => "cms/publish/del",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "删除",
+                            ],
+                            [
+                                "route"  => "cms/publish/pass",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "通过",
+                            ],
+                            [
+                                "route"  => "cms/publish/reject",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "退稿",
+                            ],
                         ],
                     ],
                     [
@@ -147,6 +165,12 @@ return [
                                 "type"   => 1,
                                 "status" => 0,
                                 "name"   => "删除",
+                            ],
+                            [
+                                "route"  => "cms/tags/create",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "数据重建",
                             ],
                             [
                                 "route"  => "cms/tags/multi",
@@ -192,12 +216,6 @@ return [
                                 "name"   => "添加单页",
                             ],
                             [
-                                "route"  => "cms/category/wadd",
-                                "type"   => 1,
-                                "status" => 0,
-                                "name"   => "添加外部链接",
-                            ],
-                            [
                                 "route"  => "cms/category/cat_priv",
                                 "type"   => 1,
                                 "status" => 0,
@@ -220,6 +238,12 @@ return [
                                 "type"   => 1,
                                 "status" => 0,
                                 "name"   => "批量更新",
+                            ],
+                            [
+                                "route"  => "cms/category/public_tpl_file_list",
+                                "type"   => 1,
+                                "status" => 0,
+                                "name"   => "栏目模板",
                             ],
                         ],
                     ],
@@ -302,18 +326,6 @@ return [
                                 "type"   => 1,
                                 "status" => 0,
                                 "name"   => "删除模型",
-                            ],
-                            [
-                                "route"  => "cms/models/setSub",
-                                "type"   => 1,
-                                "status" => 0,
-                                "name"   => "模型投稿",
-                            ],
-                            [
-                                "route"  => "cms/models/setstate",
-                                "type"   => 1,
-                                "status" => 0,
-                                "name"   => "设置模型状态",
                             ],
                             [
                                 "route"  => "cms/models/multi",
