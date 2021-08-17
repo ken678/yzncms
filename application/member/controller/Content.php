@@ -40,7 +40,12 @@ class Content extends MemberBase
             $this->error("今日投稿数量已达上限！");
         }
         if ($this->request->isPost()) {
-            $data  = $this->request->param();
+            $data = $this->request->param();
+            //默认编辑器不过滤
+            $content = $this->request->param('modelFieldExt.content', '', 'trim');
+            if (isset($data['modelFieldExt']['content']) && $data['modelFieldExt']['content'] && $content) {
+                $data['modelFieldExt']['content'] = $content;
+            }
             $token = $this->request->param('__token__');
             // 验证数据
             $rule = [
@@ -160,7 +165,12 @@ class Content extends MemberBase
     {
         $groupinfo = $this->_check_group_auth($this->auth->groupid);
         if ($this->request->isPost()) {
-            $data  = $this->request->param();
+            $data = $this->request->param();
+            //默认编辑器不过滤
+            $content = $this->request->param('modelFieldExt.content', '', 'trim');
+            if (isset($data['modelFieldExt']['content']) && $data['modelFieldExt']['content'] && $content) {
+                $data['modelFieldExt']['content'] = $content;
+            }
             $token = $this->request->param('__token__');
             // 验证数据
             $rule = [
