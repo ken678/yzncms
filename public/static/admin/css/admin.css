@@ -32,7 +32,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .panel_word span{ font-size:25px; display:block; height:34px; }
 .panel .loginTime{ font-size:15px; color:#1E9FFF; line-height:34px;}
 .panel em{ font-style:normal;}
-.layui-table-view{overflow: auto;}
+/*.layui-table-view{overflow: auto;}*/
 .layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px;position: relative;}
 .layui-tab-content {padding: 10px;}
 .layui-table .layui-btn+.layui-btn {margin-left: 5px;}
