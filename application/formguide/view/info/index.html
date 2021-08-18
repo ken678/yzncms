@@ -8,7 +8,7 @@
 </div>
 <script type="text/html" id="barTool">
     {{#  if(!d.iffixed){ }}
-    <a data-open='{:url("public_view",["formid"=>$formid])}?id={{ d.id }}' data-width="800px" data-height="600px" class="layui-btn layui-btn-xs">查看</a>
+    <a data-open='{:url("public_view",["formid"=>$formid])}?id={{ d.id }}' data-width="800" data-height="600" class="layui-btn layui-btn-xs">查看</a>
     <a href='{:url("del",["formid"=>$formid])}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
     {{#  } }}
 </script>
