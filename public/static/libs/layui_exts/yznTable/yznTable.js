@@ -32,6 +32,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 icon: 'layui-icon-search',
                 extend: 'data-table-id="' + options.id + '"'
             }];
+            var tableDone = options.done || function() {};
+            options.done = function(res, curr, count) {
+                tableDone(res, curr, count);
+            };
 
             // 判断元素对象是否有嵌套的
             options.cols = yznTable.formatCols(options.cols, options.init);
