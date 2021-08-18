@@ -435,57 +435,49 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     return false;
                 });
             },
-            faselect: function() {
-                // 绑定图片选择组件
-                if ($('.layui-form .fachoose-image').length > 0) {
-                    layui.define('tableSelect', function(exports) {
-                        var tableSelect = layui.tableSelect;
-                        $.each($('.layui-form .fachoose-image'), function(i, v) {
-                            var that = this;
-                            var input_id = $(this).data("input-id") ? $(this).data("input-id") : "",
-                                inputObj = $("#" + input_id),
-                                //inputObj2 = $("#" + input_id+'_text'),
-                                multiple = $(this).data("multiple") ? 'checkbox' : 'radio';
-                            //var $file_list = $('#file_list_' + input_id);
-                            tableSelect.render({
-                                elem: "#fachoose-" + input_id,
-                                searchKey: 'name',
-                                searchPlaceholder: '请输入图片名称',
-                                table: {
-                                    url: '/attachment/Attachments/select',
-                                    cols: [
-                                        [
-                                            { type: multiple },
-                                            { field: 'id', title: 'ID' },
-                                            { field: 'url', minWidth: 120, search: false, title: '图片', imageHeight: 40, align: "center", templet: '<div><img src="{{d.path}}" height="100%"></div>' },
-                                            { field: 'name', width: 120, title: '名称' },
-                                            { field: 'mime', width: 120, title: 'Mime类型' },
-                                            { field: 'create_time', width: 180, title: '上传时间', align: "center", search: 'range' },
-                                        ]
-                                    ]
-                                },
-                                done: function(e, data) {
-                                    var selectedList = [];
-                                    $.each(data.data, function(index, val) {
-                                        selectedList[index] = {
-                                            file_path: val.path
-                                        };
-                                    });
-                                    selectedList.forEach(function(item) {
-                                        if (multiple == 'checkbox') {
-                                            if (inputObj.val()) {
-                                                inputObj.val(inputObj.val() + ',' + item.file_path).trigger('change');
-                                            } else {
-                                                inputObj.val(item.file_path).trigger('change');
-                                            }
-                                        } else {
-                                            inputObj.val(item.file_path).trigger('change');
+            faselect: function () {
+                //绑定fachoose选择附件事件
+                if ($(".layui-form .fachoose").size() > 0) {
+                    $(".layui-form .fachoose").on('click', function () {
+                        var that = this;
+                        var multiple = $(this).data("multiple") ? $(this).data("multiple") : false;
+                        var mimetype = $(this).data("mimetype") ? $(this).data("mimetype") : '';
+                        var admin_id = $(this).data("admin-id") ? $(this).data("admin-id") : '';
+                        var user_id = $(this).data("user-id") ? $(this).data("user-id") : '';
+                        var url = $(this).data("url") ? $(this).data("url") : '/attachment/Attachments/select';
+                        yzn.open('选择',url + "?element_id=" + $(this).attr("id") + "&multiple=" + multiple + "&mimetype=" + mimetype + "&admin_id=" + admin_id + "&user_id=" + user_id, 
+                            '800','650',{
+                            callback: function (data) {
+                                var button = $("#" + $(that).attr("id"));
+                                var maxcount = $(button).data("maxcount");
+                                var input_id = $(button).data("input-id") ? $(button).data("input-id") : "";
+                                maxcount = typeof maxcount !== "undefined" ? maxcount : 0;
+                                if (input_id && data.multiple) {
+                                    var urlArr = [];
+                                    var inputObj = $("#" + input_id);
+                                    var value = $.trim(inputObj.val());
+                                    if (value !== "") {
+                                        urlArr.push(inputObj.val());
+                                    }
+                                    urlArr.push(data.url)
+                                    var result = urlArr.join(",");
+                                    if (maxcount > 0) {
+                                        var nums = value === '' ? 0 : value.split(/\,/).length;
+                                        var files = data.url !== "" ? data.url.split(/\,/) : [];
+                                        var remains = maxcount - nums;
+                                        if (files.length > remains) {
+                                            layer.msg('你最多选择'+ remains +'个文件', { icon: 2 });
+                                            return false;
                                         }
-                                    });
+                                    }
+                                    inputObj.val(result).trigger("change");
+                                } else {
+                                    $("#" + input_id).val(data.url).trigger("change");
                                 }
-                            })
+                            }
                         });
-                    })
+                        return false;
+                    });
                 }
             },
             fieldlist: function() {
@@ -557,7 +549,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 $(html).attr("fieldlist-item", true).insertBefore($(tagName + ":last", container));
                             });
                             form.render();
-                            yznForm.events.faselect();
+                            //yznForm.events.faselect();
                             $(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
                         });
                         //移除控制

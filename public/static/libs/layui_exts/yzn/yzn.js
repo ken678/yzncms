@@ -12,11 +12,10 @@ layui.define(['layer','notice'], function(exports) {
         },
         open: function(title, url, width, height,options, isResize) {
             isResize = isResize === undefined ? true : isResize;
-
             options = $.extend({
                 title: title,
                 type: 2,
-                area: [width, height],
+                area: [$(window).width() > width ? width+'px' : '95%', $(window).height() > height ? height+'px' : '95%'],
                 content: url+ (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1",
                 maxmin: true,
                 moveOut: true,
