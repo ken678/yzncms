@@ -1,5 +1,6 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
+<style>.webuploader-pick{height:30px;line-height:30px;padding:0 10px;}</style>
 <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
 <script type="text/html" id="barTool">
     <a href='{{d.path}}' class="layui-btn layui-btn-danger layui-btn-xs btn-chooseone"><i class="iconfont icon-right"></i> 选择</a>
@@ -14,9 +15,10 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','yzn','table'], function() {
+layui.use(['yznTable','yzn','table','yznForm'], function() {
     var yznTable = layui.yznTable,
         yzn = layui.yzn,
+        yznForm = layui.yznForm,
         table =layui.table;
     var multiple = {$Think.get.multiple};
     var urlArr = [];
@@ -27,9 +29,12 @@ layui.use(['yznTable','yzn','table'], function() {
         init: init,
         id: 'dataTable',
         toolbar: ['refresh'
+        , [{
+            html: '<div style="display:inline-block;margin-right:5px;" class="webUpload" id="picker_table_select_image" data-multiple="false" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传</div>'
+        }]
         {if $Think.get.multiple == "true"}
         , [{
-            html: '<a class="layui-btn layui-btn-danger layui-btn-sm btn-choose-multi"><i class="iconfont icon-right"></i> 选择</a> '
+            html: '<a class="layui-btn layui-btn-danger layui-btn-sm btn-choose-multi"><i class="iconfont icon-right"></i> 选择</a>'
         }]
         {/if}
         ],
@@ -40,30 +45,29 @@ layui.use(['yznTable','yzn','table'], function() {
                 {if $Think.get.multiple == "true"}
                 { type: 'checkbox', fixed: 'left' },
                 {/if}
-                { field: 'id', width: 70, title: 'ID', sort: true },
+                { field: 'id', width: 60, title: 'ID', sort: true },
                 { field: 'name', title: '名称' },
                 { field: 'path', width: 100, align: "center", title: '图片', search: false, templet: '#picTpl' },
                 { field: 'size', width: 100, title: '大小', sort: true },
                 { field: 'mime', width: 120, title: 'Mime类型' },
-                { field: 'create_time', width: 170, title: '上传时间', search: 'range' },
-                { fixed: 'right', width: 90, title: '操作', toolbar: '#barTool' }
+                { field: 'create_time', width: 160, title: '上传时间', search: 'range' },
+                { fixed: 'right', width: 85, title: '操作', toolbar: '#barTool' }
             ]
         ],
-        page: {}
+        page: {},
+        done: function(res, curr, count){
+            yznForm.events.upload_image('.webUpload', function () {
+                $("[data-table-refresh]").trigger("click");
+            });
+        }
     });
 
     table.on('checkbox(dataTable_LayFilter)', function(obj){
         urlArr = [];
-        var checkStatus = table.checkStatus('dataTable');
-        $.each(checkStatus['data'], function (i, j) {
-            var index = urlArr.indexOf(j.path);
-            if (index > -1) {
-                urlArr.splice(index, 1);
-            }else if(index == -1){
-                urlArr.push(j.path);
-            }
-        });
-        console.log(urlArr);
+        var checkStatus = table.checkStatus('dataTable').data;
+        for (var i = 0; i < checkStatus.length; i++) {
+            urlArr.push(checkStatus[i]['path']);
+        }
     });
 
     //选择单个
@@ -79,8 +83,6 @@ layui.use(['yznTable','yzn','table'], function() {
     $(document).on("click", ".btn-choose-multi", function () {
         yzn.close({ url: urlArr.join(","), multiple: multiple});
     });
-
-
 });
 </script>
 {/block}
