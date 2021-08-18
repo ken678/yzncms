@@ -98,7 +98,7 @@ class Form
         }
         $string .= "<div class='layui-col-xs4'><input type='text' name='{$name}' id='c-{$id}' value='{$value}' class='layui-input'></div>";
         $string .= "<div class='webUpload' id='picker_{$id}' data-multiple='{$multiple}' data-input-id='c-{$id}' data-preview-id='p-{$id}' data-type='image'><i class='layui-icon layui-icon-upload'></i> 上传</div>";
-        $string .= " <button type='button' class='layui-btn fachoose-image' data-multiple='{$multiple}' data-input-id='c-{$id}' id='fachoose-c-{$id}'><i class='iconfont icon-other'></i> 选择</button>";
+        $string .= " <button type='button' class='layui-btn fachoose' data-multiple='{$multiple}' data-input-id='c-{$id}' id='fachoose-c-{$id}'><i class='iconfont icon-other'></i> 选择</button>";
         $string .= "<ul class='layui-row list-inline plupload-preview' id='p-{$id}'></ul>";
         return $string;
     }
