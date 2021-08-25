@@ -53,9 +53,10 @@ class Menu extends Adminbase
     public function add()
     {
         $tree   = new \util\Tree();
+        $pid    = $this->request->param('parentid/d', 0);
         $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
         $tree->init($result);
-        $select_categorys = $tree->getTree(0);
+        $select_categorys = $tree->getTree(0, '', $pid);
         $this->assign("select_categorys", $select_categorys);
         return parent::add();
     }
@@ -66,7 +67,7 @@ class Menu extends Adminbase
     public function edit()
     {
         $tree   = new \util\Tree();
-        $id     = $this->request->param('id/d', '');
+        $id     = $this->request->param('id/d', 0);
         $rs     = MenuModel::where(["id" => $id])->find();
         $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
         $array  = array();
