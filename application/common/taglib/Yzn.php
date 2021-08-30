@@ -97,7 +97,11 @@ class Yzn extends Taglib
         $parseStr .= 'endif;';
         //判断分页
         if ($page) {
+            $parseStr .= 'if($' . $return . ' instanceof \think\Paginator):';
             $parseStr .= '$pages = $' . $return . '->render();';
+            $parseStr .= 'else: ';
+            $parseStr .= '$pages = "";';
+            $parseStr .= 'endif;';
             //$parseStr .= '$' . $return . ' = $' . $return . '->items();';
         }
         $parseStr .= ' ?>';
