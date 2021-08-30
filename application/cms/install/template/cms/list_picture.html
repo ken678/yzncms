@@ -24,11 +24,11 @@ body {
                 <div class="honor">
                     <!--S 荣誉资质 -->
                     <ul class="honor-list clearfix" id="honor">
-                    	{yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder DESC" num="10" page="$page" return="data"}
+                    	{yzn module="cms" action="lists" catid="$catid" cache="3600" order="listorder DESC" num="6" page="$page" return="data"}
                         {volist name="data" id="vo" mod="3"}
                         <li {eq name="mod" value="2"}class="r"{/eq}>
-                            <a href="https://via.placeholder.com/245x345" class="img transition">
-								<img src="https://via.placeholder.com/245x345" width="245" height="345" alt="" title="{$vo.title}">
+                            <a href="{$vo.thumb|default='https://via.placeholder.com/245x345'}" class="img transition">
+								<img src="{$vo.thumb|default='https://via.placeholder.com/245x345'}" width="245" height="345" alt="{$vo.title}" title="{$vo.title}">
 							</a>
                             <h3>{$vo.title}</h3>
                         </li>
@@ -37,6 +37,9 @@ body {
                     </ul>
                     <!--E 荣誉资质 -->
                 </div>
+                <!--S 分页-->
+                {$pages|raw}
+                <!--E 分页-->
             </div>
             <!--E 右侧内容 -->
         </div>
