@@ -931,10 +931,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             uploader.on('error', function(type) {
                                 switch (type) {
                                     case 'Q_TYPE_DENIED':
-                                        layer.alert('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
+                                        layer.alert('类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', { icon: 5 })
                                         break;
                                     case 'F_EXCEED_SIZE':
-                                        layer.alert('图片不得超过' + ($size / 1024) + 'kb，请重新上传！', { icon: 5 })
+                                        layer.alert('不得超过' + ($size / 1024) + 'kb，请重新上传！', { icon: 5 })
                                         break;
                                 }
                             });
