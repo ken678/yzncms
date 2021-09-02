@@ -22,12 +22,19 @@ class Queue extends Addons
     //安装
     public function install()
     {
+        //复制配置文件
+        $route_file = ADDON_PATH . str_replace("/", DS, "queue/install/queue.php");
+        copy($route_file, ROOT_PATH . 'config' . DS . 'queue.php');
         return true;
     }
 
     //卸载
     public function uninstall()
     {
+        //删除配置文件
+        if (file_exists(ROOT_PATH . 'config' . DS . 'queue.php')) {
+            unlink(ROOT_PATH . 'config' . DS . 'queue.php');
+        }
         return true;
     }
 
