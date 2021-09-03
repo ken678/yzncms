@@ -748,12 +748,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 $(document).on('click', '.cropper', function() {
                     var inputId = $(this).attr("data-input-id");
                     var image = $(this).parent('.file-panel').prev('img').data('original');
-                    //var dataId = $(this).data("id");
                     var index = layer.open({
                         type: 2,
                         shadeClose: true,
                         shade: false,
-                        area: ['880px', '620px'],
+                        area: [$(window).width() > 880 ? '880px' : '95%', $(window).height() > 600 ? '600px' : '95%'],
                         title: '图片裁剪',
                         content: '/attachment/Attachments/cropper?url=' + image,
                         success: function(layero, index) {
