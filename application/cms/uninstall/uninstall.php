@@ -56,6 +56,8 @@ class Uninstall extends UninstallBase
                     }
                 }
             }
+            //会员投稿删除
+            Db::name('member_content')->delete(true);
         }
         //删除路由
         if (file_exists(ROOT_PATH . 'route' . DIRECTORY_SEPARATOR . 'route_cms.php')) {
