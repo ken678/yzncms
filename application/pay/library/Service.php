@@ -100,9 +100,14 @@ class Service
                 'total_fee'    => $amount * 100, //单位分
             ];
             if ($method == 'web') {
-                if ($request->isMobile() && $isWechat) {
-                    $params['openid'] = self::getOpenid();
-                    $method           = 'mp';
+                if ($request->isMobile()) {
+                    //不是微信环境 H5支付
+                    if (!$isWechat) {
+                        $method = 'wap';
+                    } else {
+                        $params['openid'] = self::getOpenid();
+                        $method           = 'mp';
+                    }
                 }
             }
             switch ($method) {
