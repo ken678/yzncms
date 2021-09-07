@@ -297,8 +297,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
 
                 // 监听弹出层的打开
                 $('body').on('click', '[data-open]', function() {
-                    var clienWidth = $(this).attr('data-width'),
-                        clientHeight = $(this).attr('data-height'),
+                    var clienWidth = $(this).attr('data-width') || 800,
+                        clientHeight = $(this).attr('data-height') || 600,
                         dataFull = $(this).attr('data-full'),
                         checkbox = $(this).attr('data-checkbox'),
                         url = $(this).attr('data-open'),
@@ -322,11 +322,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         } else {
                             url += '&id=' + ids.join(',');
                         }
-                    }
-                    if (clienWidth === undefined || clientHeight === undefined) {
-                        clienWidth = $(window).width() >= 800 ? '800px' : '100%';
-                        clientHeight = $(window).height() >= 600 ? '600px' : '100%';
-
                     }
                     if (dataFull === 'true') {
                         clienWidth = '100%';
