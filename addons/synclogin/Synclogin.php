@@ -63,8 +63,6 @@ class Synclogin extends Addons
                 $arr[$v]['is_bind'] = $this->check_is_bind_account(User::instance()->id, strtolower($v));
                 if ($arr[$v]['is_bind']) {
                     $token = Db::name('sync_login')->where(array('type' => strtolower($v), 'uid' => User::instance()->id))->find();
-                    //$user_info = \addons\synclogin\ThinkSDK\GetInfo::getInstance($arr[$v]['name'], array('access_token' => $token['oauth_token'], 'openid' => $token['oauth_token_secret']));
-                    //$arr[$v]['info'] = $user_info;
                 }
             }
             unset($v);
