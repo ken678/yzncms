@@ -101,7 +101,7 @@ class Index extends MemberBase
         $this->getSession(); // 重新获取session
         //获取当前第三方登录用户信息
         if (is_array($token)) {
-            $check = $this->checkIsSync(array('openid' => $openid, 'type' => $type));
+            $check = Service::isBindThird($type, $openid);
             if ($is_login) {
                 $this->dealIsLogin($this->auth->id);
             } else {
@@ -194,7 +194,7 @@ class Index extends MemberBase
         $data['access_token'] = $this->access_token;
         $data['type']         = $this->type;
         $data['create_time']  = time();
-        $data['logint_time']  = time();
+        $data['login_time']   = time();
 
         if (!Db::name('sync_login')->where($data)->count()) {
             Db::name('sync_login')->insert($data);
@@ -207,20 +207,10 @@ class Index extends MemberBase
         $session = session('SYNCLOGIN');
         $openid  = $session['OPENID'];
         $type    = $session['TYPE'];
-        if ($this->checkIsSync(array('openid' => $openid, 'type' => $type))) {
+        if (Service::isBindThird($type, $openid)) {
             $this->error('该帐号已经被绑定！');
         }
         $this->addSyncLoginData($uid);
         $this->success('绑定成功！', url('member/index/profile'));
     }
-
-    private function checkIsSync($map = array())
-    {
-        if (Db::name('sync_login')->where($map)->count()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

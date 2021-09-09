@@ -34,8 +34,9 @@ class Service
         $data  = [
             'openid'       => $token['openid'],
             'access_token' => $token['access_token'],
+            'openname'     => $params['nickname'] ?? '',
             'type'         => $type,
-            'logint_time'  => time(),
+            'login_time'   => time(),
         ];
         $auth = \app\member\service\User::instance();
         //查询是否有第三方登录记录
@@ -48,6 +49,22 @@ class Service
                 $third->allowField(true)->save($values);
                 // 写入登录Cookies和Token
                 return $auth->direct($third->uid);
+            }
+        }
+
+        //存在unionid就需要判断是否需要生成新记录
+        if (isset($params['unionid']) && !empty($params['unionid'])) {
+            $third = SyncLoginModel::get(['platform' => $platform, 'unionid' => $params['unionid']], 'member');
+            if ($third) {
+                if (!$third->member) {
+                    $third->delete();
+                } else {
+                    // 保存第三方信息
+                    $values['uid'] = $third->uid;
+                    $third         = SyncLoginModel::create($values, true);
+                    // 写入登录Cookies和Token
+                    return $auth->direct($third->uid);
+                }
             }
         }
         if ($auth->id) {
@@ -86,8 +103,36 @@ class Service
         return $auth->direct($user->id);
     }
 
-    public static function isBindThird($type, $openid, $apptype = '', $unionid = '')
+    /**
+     * 是否绑定第三方
+     */
+    public static function isBindThird($type, $openid, $unionid = '')
     {
-
+        $conddtions = [
+            'type'   => $type,
+            'openid' => $openid,
+        ];
+        $third = SyncLoginModel::get($conddtions, 'member');
+        //第三方存在
+        if ($third) {
+            //用户失效
+            if (!$third->member) {
+                $third->delete();
+                return false;
+            }
+            return true;
+        }
+        if ($unionid) {
+            $third = SyncLoginModel::get(['type' => $type, 'unionid' => $unionid], 'member');
+            if ($third) {
+                //
+                if (!$third->member) {
+                    $third->delete();
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }
