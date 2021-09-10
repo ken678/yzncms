@@ -225,14 +225,11 @@ class Service
         } else {
             unset($config['log']);
         }
-        /*if (isset($config['cert_client']) && substr($config['cert_client'], 0, 6) == '/epay/') {
-        $config['cert_client'] = ADDON_PATH . $config['cert_client'];
-        }
-        if (isset($config['cert_key']) && substr($config['cert_key'], 0, 6) == '/epay/') {
-        $config['cert_key'] = ADDON_PATH . $config['cert_key'];
-        }
+        //微信API证书 退款，提现等情况时用到
+        $config['cert_client'] = APP_PATH . 'pay' . DS . 'certs' . DS . 'apiclient_cert.pem';
+        $config['cert_key']    = APP_PATH . 'pay' . DS . 'certs' . DS . 'apiclient_key.pem';
 
-        $config['notify_url'] = empty($config['notify_url']) ? addon_url('epay/api/notifyx', [], false) . '/type/' . $type : $config['notify_url'];
+        /*$config['notify_url'] = empty($config['notify_url']) ? addon_url('epay/api/notifyx', [], false) . '/type/' . $type : $config['notify_url'];
         $config['notify_url'] = !preg_match("/^(http:\/\/|https:\/\/)/i", $config['notify_url']) ? request()->root(true) . $config['notify_url'] : $config['notify_url'];
         $config['return_url'] = empty($config['return_url']) ? addon_url('epay/api/returnx', [], false) . '/type/' . $type : $config['return_url'];
         $config['return_url'] = !preg_match("/^(http:\/\/|https:\/\/)/i", $config['return_url']) ? request()->root(true) . $config['return_url'] : $config['return_url'];*/
