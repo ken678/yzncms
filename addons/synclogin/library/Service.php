@@ -30,11 +30,13 @@ class Service
      */
     public static function connect($type, $params = [], $extend = [], $keeptime = 0)
     {
-        $token = $params['token'];
-        $data  = [
+        $token    = $params['token'];
+        $nickname = $params['nickname'] ?? '';
+        $avatar   = $params['avatar'] ?? '';
+        $data     = [
             'openid'       => $token['openid'],
             'access_token' => $token['access_token'],
-            'openname'     => $params['nickname'] ?? '',
+            'openname'     => $nickname,
             'type'         => $type,
             'login_time'   => time(),
         ];
@@ -52,7 +54,7 @@ class Service
             }
         }
 
-        //存在unionid就需要判断是否需要生成新记录
+        //存在unionid就需要判断是否需要生成新记录 QQ和微信、淘宝可以获取unionid
         if (isset($params['unionid']) && !empty($params['unionid'])) {
             $third = SyncLoginModel::get(['platform' => $platform, 'unionid' => $params['unionid']], 'member');
             if ($third) {
@@ -82,11 +84,11 @@ class Service
             if ($uid > 0) {
                 $user   = $auth->getUser();
                 $fields = ['username' => 'u' . $uid, 'email' => 'u' . $uid . '@' . $domain];
-                if (isset($$user_info['nickname'])) {
-                    $fields['nickname'] = $$user_info['nickname'];
+                if ($nickname) {
+                    $fields['nickname'] = $nickname;
                 }
-                if (isset($$user_info['avatar'])) {
-                    $fields['avatar'] = htmlspecialchars(strip_tags($user_info['avatar']));
+                if ($avatar) {
+                    $fields['avatar'] = htmlspecialchars(strip_tags($avatar));
                 }
                 // 更新会员资料
                 $user = MemberModel::get($user->id);
