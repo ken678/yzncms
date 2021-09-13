@@ -4,7 +4,7 @@
  */
 namespace addons\synclogin\library\sdk;
 
-class Sina extends Oauth
+use addons\synclogin\library\Oauth;
 
 class Xiaomi extends Oauth
 {
@@ -63,13 +63,13 @@ class Xiaomi extends Oauth
         $data = $this->call('user/profile');
         $data = $data['data'];
         if (isset($data['unionId'])) {
-            $userInfo['token']            = $this->Token ?? [];
-            $userInfo['type'] = 'xiaomi';
-            $userInfo['name'] = $data['miliaoNick'];
+            $userInfo['token']    = $this->Token ?? [];
+            $userInfo['type']     = 'xiaomi';
+            $userInfo['name']     = $data['miliaoNick'];
             $userInfo['nickname'] = $data['miliaoNick'];
-            $userInfo['avatar'] = $data['miliaoIcon'];
-            $userInfo['openid'] = array_key_exists('userId',$data)?$data['userId']:$data['unionId'];
-            $userInfo['unionid'] = $data['unionId'];
+            $userInfo['avatar']   = $data['miliaoIcon'];
+            $userInfo['openid']   = array_key_exists('userId', $data) ? $data['userId'] : $data['unionId'];
+            $userInfo['unionid']  = $data['unionId'];
             return $userInfo;
         } else {
             throw new \Exception("获取小米用户信息失败");
