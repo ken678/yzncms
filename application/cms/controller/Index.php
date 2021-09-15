@@ -127,7 +127,7 @@ class Index extends Cmsbase
         $modelid   = $category['modelid'];
         $modelInfo = cache('Model')[$modelid];
         if (empty($modelInfo)) {
-            throw new \think\Exception('栏目不存在!', 404);
+            $this->error('模型不存在！');
         }
         //更新点击量
         Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
