@@ -92,8 +92,8 @@ class ComposerStaticInitc101c24647591725e2af1463c4b45c92
         ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/think-image/src',
-            1 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            1 => __DIR__ . '/..' . '/topthink/think-image/src',
         ),
         'app\\' => 
         array (
