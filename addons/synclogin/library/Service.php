@@ -80,7 +80,7 @@ class Service
             $username = genRandomString(10);
             $password = genRandomString(6);
             $domain   = request()->host();
-            $uid      = $auth->userRegister($username, $password, $username . '@' . $domain);
+            $uid      = $auth->userRegister($username, $password, $username . '@' . $domain, '', $extend);
             if ($uid > 0) {
                 $user   = $auth->getUser();
                 $fields = ['username' => 'u' . $uid, 'email' => 'u' . $uid . '@' . $domain];
