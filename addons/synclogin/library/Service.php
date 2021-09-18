@@ -48,7 +48,7 @@ class Service
                 //删除不存在会员记录
                 $third->delete();
             } else {
-                $third->allowField(true)->save($values);
+                $third->allowField(true)->save($data);
                 // 写入登录Cookies和Token
                 return $auth->direct($third->uid);
             }
@@ -62,8 +62,8 @@ class Service
                     $third->delete();
                 } else {
                     // 保存第三方信息
-                    $values['uid'] = $third->uid;
-                    $third         = SyncLoginModel::create($values, true);
+                    $data['uid'] = $third->uid;
+                    $third       = SyncLoginModel::create($data, true);
                     // 写入登录Cookies和Token
                     return $auth->direct($third->uid);
                 }
@@ -72,7 +72,7 @@ class Service
         if ($auth->id) {
             if (!$third) {
                 $data['uid'] = $auth->id;
-                SyncLoginModel::create($values, true);
+                SyncLoginModel::create($data, true);
             }
             $user = $auth->getUser();
         } else {
