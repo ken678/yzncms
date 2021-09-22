@@ -61,9 +61,9 @@ class ApiBase extends Api
                 $this->error('请登录后再操作', null, 401);
             }
             // 判断是否需要验证权限
-            if (!$this->auth->match($this->noNeedRight)) {
+            /*if (!$this->auth->match($this->noNeedRight)) {
 
-            }
+        }*/
         } else {
             // 如果有传递token才验证是否登录状态
             if ($token) {
