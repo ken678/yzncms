@@ -10,7 +10,9 @@
     <input type="checkbox" name="status" data-href="{:url('setstate')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="ifsearchTpl">
+    {{# if(d.ifsystem){ }}
     <input type="checkbox" name="ifsearch" data-href="{:url('setSearch')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifsearch==1 ? 'checked' : '' }}>
+    {{#  } }}
 </script>
 <script type="text/html" id="ifrequireTpl">
     <input type="checkbox" name="ifrequire" data-href="{:url('setRequire')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifrequire==1 ? 'checked' : '' }}>
