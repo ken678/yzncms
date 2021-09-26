@@ -16,18 +16,11 @@ namespace app\attachment\controller;
 
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Base;
-use FilesystemIterator;
-use think\facade\Hook;
+use app\common\exception\UploadException;
+use app\common\library\Upload as UploadLib;
 
 class Upload extends Base
 {
-    //上传模块
-    public $module      = 'cms';
-    protected $merging  = false;
-    protected $file     = null;
-    protected $fileInfo = null;
-    protected $chunkDir = null;
-
     //编辑器初始配置
     private $editorConfig = array(
         /* 上传图片配置项 */
@@ -92,7 +85,6 @@ class Upload extends Base
     protected function initialize()
     {
         parent::initialize();
-        $this->chunkDir = ROOT_PATH . 'runtime' . DS . 'chunks';
         //图片上传大小和类型
         $this->editorConfig['imageMaxSize'] = $this->editorConfig['catcherMaxSize'] = 0 == config('upload_image_size') ? 1024 * 1024 * 1024 : config('upload_image_size') * 1024;
         if (!empty(config('upload_image_ext'))) {
@@ -114,50 +106,29 @@ class Upload extends Base
         }
     }
 
-    public function setFile($file)
-    {
-        if (empty($file)) {
-            return json([
-                'code'  => -1,
-                'info'  => '未上传文件或超出服务器上传限制',
-                'state' => '未上传文件或超出服务器上传限制', //兼容百度
-            ]);
-        }
-        $fileInfo                = $file->getInfo();
-        $suffix                  = strtolower(pathinfo($fileInfo['name'], PATHINFO_EXTENSION));
-        $suffix                  = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
-        $fileInfo['suffix']      = $suffix;
-        $fileInfo['imagewidth']  = 0;
-        $fileInfo['imageheight'] = 0;
-        $this->file              = $file;
-        $this->fileInfo          = $fileInfo;
-    }
-
     public function upload($dir = '', $from = '', $module = '')
     {
         if (!function_exists("finfo_open")) {
             return json([
-                'code'  => -1,
-                'info'  => '检测到环境未开启php_fileinfo拓展',
-                'state' => '检测到环境未开启php_fileinfo拓展', //兼容百度
-            ]);
-        }
-        //验证是否可以上传
-        $status = $this->isUpload($module);
-        if (true !== $status) {
-            return json([
-                'code' => -1,
-                'info' => $status,
+                'code'    => 0,
+                'info'    => '检测到环境未开启php_fileinfo拓展',
+                'state'   => '检测到环境未开启php_fileinfo拓展', //兼容百度
+                'message' => '检测到环境未开启php_fileinfo拓展', //兼容editormd
             ]);
         }
         if ($dir == '') {
-            return $this->error('没有指定上传目录');
+            return json([
+                'code'    => 0,
+                'info'    => '没有指定上传目录',
+                'state'   => '没有指定上传目录', //兼容百度
+                'message' => '没有指定上传目录', //兼容editormd
+            ]);
         }
         $chunkid = $this->request->post("chunkid");
         if ($chunkid) {
             if (!config('chunking')) {
                 return json([
-                    'code' => -1,
+                    'code' => 0,
                     'info' => '未开启分片上传功能',
                 ]);
             }
@@ -170,11 +141,35 @@ class Upload extends Base
             $filename   = $this->request->post("filename");
             $method     = $this->request->method(true);
             if ($action == 'merge') {
-                return $this->merge($chunkid, $chunkcount, $filename, $dir, $from, $module);
+                $attachment = null;
+                //合并分片文件
+                try {
+                    $upload     = new UploadLib();
+                    $attachment = $upload->merge($chunkid, $chunkcount, $filename, $dir, $from, $module);
+                } catch (UploadException $e) {
+                    return json([
+                        'code'    => 0,
+                        'info'    => $e->getMessage(),
+                        'state'   => $e->getMessage(), //兼容百度
+                        'message' => $e->getMessage(), //兼容editormd
+                    ]);
+                }
+                return $attachment;
             } else {
+                //上传分片文件
                 $file = $this->request->file('file');
-                $this->setFile($file);
-                return $this->chunk($chunkid, $chunkindex, $chunkcount);
+                try {
+                    $upload = new UploadLib($file);
+                    $upload->chunk($chunkid, $chunkindex, $chunkcount);
+                } catch (UploadException $e) {
+                    return json([
+                        'code'    => 0,
+                        'info'    => $e->getMessage(),
+                        'state'   => $e->getMessage(), //兼容百度
+                        'message' => $e->getMessage(), //兼容editormd
+                    ]);
+                }
+                return json(['code' => 1]);
             }
         }
         // 获取附件数据
@@ -188,369 +183,27 @@ class Upload extends Base
             default:
                 $file_input_name = 'file';
         }
-        $file = $this->request->file($file_input_name);
-        $this->setFile($file);
-        if ($from == 'ueditor') {
-            return $this->ueditor();
-        }
-        return $this->saveFile($dir, $from, $module);
-    }
-
-    /**
-     * 检查是否可以上传
-     */
-    protected function isUpload($module)
-    {
-        $module_list = cache('Module');
-        if (isset($module_list[strtolower($module)]) || strtolower($module) == 'admin' || strtolower($module) == 'addons' || strtolower($module) == 'attachment') {
-            $this->module = strtolower($module);
-        } else {
-            return false;
-        }
-        //如果是前台上传，判断用户组权限
-        /*if ($this->isadmin == 0 && $this->user_id != 0) {
-        $member_group = cache('Member_Group');
-        if ((int) $member_group[$this->groupid]['allowattachment'] < 1) {
-        return "所在的用户组没有附件上传权限！";
-        }
-        }*/
-        return true;
-    }
-
-    /**
-     * 分片上传
-     */
-    protected function chunk($chunkid, $chunkindex, $chunkcount, $chunkfilesize = null, $chunkfilename = null, $direct = false)
-    {
-        if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
-            return json([
-                'code'  => -1,
-                'info'  => '未知参数',
-                'state' => '未知参数', //兼容百度
-            ]);
-        }
-        $fileName = $chunkid . "-" . $chunkindex . '.part';
-        $destFile = $this->chunkDir . DS . $fileName;
-        if (!is_dir($this->chunkDir)) {
-            @mkdir($this->chunkDir, 0755, true);
-        }
-        if (!move_uploaded_file($this->file->getPathname(), $destFile)) {
-            return json([
-                'code'  => -1,
-                'info'  => '分片写入失败',
-                'state' => '分片写入失败', //兼容百度
-            ]);
-        }
-    }
-
-    /**
-     * 合并分片文件
-     */
-    public function merge($chunkid, $chunkcount, $filename, $dir, $from, $module)
-    {
-        if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
-            return json([
-                'code'  => -1,
-                'info'  => '未知参数',
-                'state' => '未知参数', //兼容百度
-            ]);
-        }
-
-        $filePath = $this->chunkDir . DS . $chunkid;
-
-        $completed = true;
-        //检查所有分片是否都存在
-        for ($i = 0; $i < $chunkcount; $i++) {
-            if (!file_exists("{$filePath}-{$i}.part")) {
-                $completed = false;
-                break;
-            }
-        }
-        if (!$completed) {
-            $this->clean($chunkid);
-            return json([
-                'code'  => -1,
-                'info'  => '分片文件错误',
-                'state' => '分片文件错误', //兼容百度
-            ]);
-        }
-
-        //如果所有文件分片都上传完毕，开始合并
-        $uploadPath = $filePath;
-
-        if (!$destFile = @fopen($uploadPath, "wb")) {
-            $this->clean($chunkid);
-            return json([
-                'code'  => -1,
-                'info'  => '分片合并错误',
-                'state' => '分片合并错误', //兼容百度
-            ]);
-        }
-        if (flock($destFile, LOCK_EX)) {
-            // 进行排他型锁定
-            for ($i = 0; $i < $chunkcount; $i++) {
-                $partFile = "{$filePath}-{$i}.part";
-                if (!$handle = @fopen($partFile, "rb")) {
-                    break;
-                }
-                while ($buff = fread($handle, filesize($partFile))) {
-                    fwrite($destFile, $buff);
-                }
-                @fclose($handle);
-                @unlink($partFile); //删除分片
-            }
-
-            flock($destFile, LOCK_UN);
-        }
-        @fclose($destFile);
-
         $attachment = null;
+        //默认普通上传文件
+        $file = $this->request->file($file_input_name);
+        if ($from == 'ueditor') {
+            return $this->ueditor($file);
+        }
         try {
-            $file = new \think\File($uploadPath);
-            $info = [
-                'name'     => $filename,
-                'type'     => $file->getMime(),
-                'tmp_name' => $uploadPath,
-                'size'     => $file->getSize(),
-            ];
-            $file->setSaveName($filename)->setUploadInfo($info);
-            $file->isTest(true);
-
-            //重新设置文件
-            $this->setFile($file);
-
-            unset($file);
-            $this->merging = true;
-
-            //允许大文件
-            //$this->config['maxsize'] = "1024G";
-            $attachment = $this->saveFile($dir, $from, $module);
-        } catch (\Exception $e) {
-            @unlink($destFile);
+            $upload     = new UploadLib($file);
+            $attachment = $upload->upload($dir);
+        } catch (UploadException $e) {
             return json([
-                'code'  => -1,
-                'info'  => $e->getMessage(),
-                'state' => $e->getMessage(), //兼容百度
+                'code'    => 0,
+                'info'    => $e->getMessage(),
+                'state'   => $e->getMessage(), //兼容百度
+                'message' => $e->getMessage(), //兼容editormd
             ]);
         }
         return $attachment;
     }
 
-    /**
-     * 清理分片文件
-     * @param $chunkid
-     */
-    public function clean($chunkid)
-    {
-        if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
-            return json([
-                'code'  => -1,
-                'info'  => '未知参数',
-                'state' => '未知参数', //兼容百度
-            ]);
-        }
-        $iterator = new \GlobIterator($this->chunkDir . DS . $chunkid . '-*', FilesystemIterator::KEY_AS_FILENAME);
-        $array    = iterator_to_array($iterator);
-        foreach ($array as $index => &$item) {
-            $sourceFile = $item->getRealPath() ?: $item->getPathname();
-            $item       = null;
-            @unlink($sourceFile);
-        }
-    }
-
-    /**
-     * 保存附件
-     * @param string $dir 附件存放的目录
-     * @param string $from 来源
-     * @param string $module 来自哪个模块
-     * @return string|\think\response\Json
-     */
-    protected function saveFile($dir = '', $from = '', $module = '', $savekey = null)
-    {
-        // 附件大小限制
-        $size_limit = $dir == 'images' ? config('upload_image_size') : config('upload_file_size');
-        $size_limit = $size_limit * 1024;
-        // 判断附件大小是否超过限制
-        if ($size_limit > 0 && ($this->fileInfo['size'] > $size_limit)) {
-            return json([
-                'status'  => 0,
-                'info'    => '附件过大',
-                'state'   => '附件过大', //兼容百度
-                'message' => '附件过大', //兼容editormd
-            ]);
-        }
-        // 附件类型限制
-        $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
-        $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
-        // 判断附件格式是否符合
-        $file_ext  = $this->fileInfo['suffix'];
-        $error_msg = '';
-        if ($ext_limit == '') {
-            $error_msg = '获取文件后缀限制信息失败！';
-        }
-        if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html']) || in_array($this->fileInfo['suffix'], ['php', 'asp', 'exe', 'cmd', 'sh', 'bat', 'html', 'htm'])) {
-            $error_msg = '禁止上传非法文件！';
-        }
-        if (preg_grep("/php/i", $ext_limit)) {
-            $error_msg = '禁止上传非法文件！';
-        }
-        if (!preg_grep("/$file_ext/i", $ext_limit)) {
-            $error_msg = '附件类型不正确！';
-        }
-        if (!in_array($file_ext, $ext_limit)) {
-            $error_msg = '附件类型不正确！';
-        }
-        if ($error_msg != '') {
-            return json([
-                'code'    => -1,
-                'info'    => $error_msg,
-                'state'   => $error_msg, //兼容百度
-                'message' => $error_msg, //兼容editormd
-            ]);
-        }
-        //验证是否为图片文件
-        if (in_array($this->fileInfo['type'], ['image/gif', 'image/jpg', 'image/jpeg', 'image/bmp', 'image/png', 'image/webp']) || in_array($this->fileInfo['suffix'], ['gif', 'jpg', 'jpeg', 'bmp', 'png', 'webp', 'wbmp'])) {
-            $imgInfo = getimagesize($this->fileInfo['tmp_name']);
-            if (!$imgInfo || !isset($imgInfo[0]) || !isset($imgInfo[1])) {
-                return json([
-                    'status'  => 0,
-                    'info'    => '上传文件不是有效的图片文件',
-                    'state'   => '上传文件不是有效的图片文件', //兼容百度
-                    'message' => '上传文件不是有效的图片文件', //兼容editormd
-                ]);
-            }
-        }
-        // 判断附件是否已存在
-        if ($file_exists = Attachment_Model::get(['md5' => $this->file->hash('md5')])) {
-            return json([
-                'code'    => 0,
-                'info'    => $file_exists['name'] . '上传成功',
-                'id'      => $file_exists['id'],
-                'path'    => $file_exists['path'],
-                "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
-                "url"     => $file_exists['path'], // 返回的地址 兼容百度
-                "title"   => $file_exists['name'], // 附件名 兼容百度
-                "success" => 1, //兼容editormd
-                "message" => $file_exists['name'], // 附件名 兼容editormd
-            ]);
-        }
-
-        // 附件上传钩子，用于第三方文件上传扩展
-        if (config('upload_driver') != 'local') {
-            $hook_result = Hook::listen('upload_after', ['dir' => $dir, 'file' => $this->file, 'from' => $from, 'module' => $module], true);
-            if (false !== $hook_result) {
-                return $hook_result;
-            }
-        }
-
-        $savekey = $savekey ? $savekey : $this->getSavekey($dir);
-        //$savekey   = '/' . ltrim($savekey, '/');
-        $savekey   = ltrim($savekey, '/');
-        $uploadDir = substr($savekey, 0, strripos($savekey, '/') + 1);
-        $fileName  = substr($savekey, strripos($savekey, '/') + 1);
-        $destDir   = ROOT_PATH . 'public/' . str_replace('/', DS, $uploadDir);
-        $sha1      = $this->file->hash();
-        $md5       = $this->file->md5();
-
-        //如果是合并文件
-        if ($this->merging) {
-            $destFile   = $destDir . $fileName;
-            $sourceFile = $this->file->getRealPath() ?: $this->file->getPathname();
-            $fileinfo   = $this->file->getInfo();
-            $this->file = null;
-            if (!is_dir($destDir)) {
-                @mkdir($destDir, 0755, true);
-            }
-            rename($sourceFile, $destFile);
-            $info = new \think\File($destFile);
-            $info->setSaveName($fileName)->setUploadInfo($fileinfo);
-        } else {
-            // 移动到框架应用根目录指定目录下
-            $info = $this->file->move($destDir, $fileName);
-        }
-        if ($info) {
-            // 水印参数
-            $thumb = $this->request->post('thumb/d', 0);
-            // 水印功能
-            if ($thumb) {
-                if ($dir == 'images' && config('upload_thumb_water') == 1 && config('upload_thumb_water_pic') != "") {
-                    model('Attachment')->create_water($info->getRealPath(), config('upload_thumb_water_pic'));
-                }
-            }
-            // 获取附件信息
-            $file_info = [
-                'aid'    => (int) session('admin.id'),
-                'uid'    => (int) cookie('uid'),
-                'name'   => substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
-                'mime'   => $this->fileInfo['type'],
-                'path'   => config('public_url') . $uploadDir . $info->getSaveName(),
-                'ext'    => $this->fileInfo['suffix'],
-                'size'   => $this->fileInfo['size'],
-                'md5'    => $md5,
-                'sha1'   => $sha1,
-                'module' => $module,
-            ];
-            if ($file_add = Attachment_Model::create($file_info)) {
-                return json([
-                    'code'    => 0,
-                    'info'    => $file_info['name'] . '上传成功',
-                    'id'      => $file_add['id'],
-                    'path'    => $file_info['path'],
-                    "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
-                    "url"     => $file_info['path'], // 返回的地址 兼容百度
-                    "title"   => $file_info['name'], // 附件名 兼容百度
-                    "success" => 1, //兼容editormd
-                    "message" => $file_info['name'], // 附件名 兼容editormd
-                ]);
-            } else {
-                return json([
-                    'code'    => 0,
-                    'info'    => '上传成功,写入数据库失败',
-                    'state'   => '上传成功,写入数据库失败', //兼容百度
-                    'message' => '上传成功,写入数据库失败', //兼容editormd
-                ]);
-            }
-        } else {
-            return json([
-                'code'    => -1,
-                'info'    => $this->file->getError(),
-                'state'   => '上传失败', //兼容百度
-                'message' => '上传失败', //兼容editormd
-            ]);
-        }
-    }
-
-    protected function getSavekey($dir, $savekey = null, $filename = null, $md5 = null)
-    {
-        if ($filename) {
-            $suffix = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-            $suffix = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
-        } else {
-            $suffix = $this->fileInfo['suffix'];
-        }
-        $filename   = $filename ? $filename : ($suffix ? substr($this->fileInfo['name'], 0, strripos($this->fileInfo['name'], '.')) : $this->fileInfo['name']);
-        $md5        = $md5 ? $md5 : md5_file($this->fileInfo['tmp_name']);
-        $replaceArr = [
-            '{dir}'      => $dir,
-            '{year}'     => date("Y"),
-            '{mon}'      => date("m"),
-            '{day}'      => date("d"),
-            '{hour}'     => date("H"),
-            '{min}'      => date("i"),
-            '{sec}'      => date("s"),
-            '{random}'   => \util\Random::alnum(16),
-            '{random32}' => \util\Random::alnum(32),
-            '{filename}' => substr($filename, 0, 100),
-            '{suffix}'   => $suffix,
-            '{.suffix}'  => $suffix ? '.' . $suffix : '',
-            '{filemd5}'  => $md5,
-        ];
-        $savekey = $savekey ? $savekey : config('savekey');
-        $savekey = str_replace(array_keys($replaceArr), array_values($replaceArr), $savekey);
-        return $savekey;
-    }
-
-    private function ueditor()
+    private function ueditor($file)
     {
         $action = $this->request->get('action');
         switch ($action) {
@@ -560,19 +213,23 @@ class Upload extends Base
                 break;
             /* 上传图片 */
             case 'uploadimage':
-                return $this->saveFile('images', 'ueditor');
+                $upload = new UploadLib($file);
+                return $upload->upload('images', 'ueditor');
                 break;
             /* 上传涂鸦 */
             case 'uploadscrawl':
-                return $this->saveFile('images', 'ueditor_scrawl');
+                $upload = new UploadLib($file);
+                return $upload->upload('images', 'ueditor_scrawl');
                 break;
             /* 上传视频 */
             case 'uploadvideo':
-                return $this->saveFile('videos', 'ueditor');
+                $upload = new UploadLib($file);
+                return $upload->upload('videos', 'ueditor');
                 break;
             /* 上传附件 */
             case 'uploadfile':
-                return $this->saveFile('files', 'ueditor');
+                $upload = new UploadLib($file);
+                return $upload->upload('files', 'ueditor');
                 break;
             /* 列出图片 */
             case 'listimage':
