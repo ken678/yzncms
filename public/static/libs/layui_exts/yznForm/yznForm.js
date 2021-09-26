@@ -862,47 +862,46 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
 
                             // 文件上传成功
                             uploader.on('uploadSuccess', function(file, response) {
-
                                 var ok = function(file, response) {
-                                    var button = $('#' + file.id);
-                                    if (button) {
-                                        //如果有文本框则填充
-                                        if (input_id) {
-                                            var urlArr = [];
-                                            var inputObj = $("#" + input_id);
-                                            if (multiple && inputObj.val() !== "") {
-                                                urlArr.push(inputObj.val());
+                                    if (response.code == 1) {
+                                        var button = $('#' + file.id);
+                                        if (button) {
+                                            //如果有文本框则填充
+                                            if (input_id) {
+                                                var urlArr = [];
+                                                var inputObj = $("#" + input_id);
+                                                if (multiple && inputObj.val() !== "") {
+                                                    urlArr.push(inputObj.val());
+                                                }
+                                                urlArr.push(response.url);
+                                                inputObj.val(urlArr.join(",")).trigger("change");
                                             }
-                                            urlArr.push(response.url);
-                                            inputObj.val(urlArr.join(",")).trigger("change");
                                         }
+                                    }else{
+                                        yzn.msg.error(response.info);
                                     }
                                 }
-                                //if (response.code == 0) {
-                                    if (type == 'file' && chunking) {
-                                        //合并
-                                        $.ajax({
-                                            url: GV.file_upload_url,
-                                            dataType: "json",
-                                            type: "POST",
-                                            data: {
-                                                chunkid: GUID,
-                                                action: 'merge',
-                                                filesize: file.size,
-                                                filename: file.name,
-                                                id: file.id,
-                                                chunks: Math.floor(file.size / chunkSize + (file.size % chunkSize > 1 ? 1 : 0)),
-                                            },
-                                            success: function(res) {
-                                                ok(file, res);
-                                            },
-                                        })
-                                    } else {
-                                        ok(file, response);
-                                    }
-                                /*} else {
-                                    yzn.msg.error(response.info);
-                                }*/
+                                if (type == 'file' && chunking) {
+                                    //合并
+                                    $.ajax({
+                                        url: GV.file_upload_url,
+                                        dataType: "json",
+                                        type: "POST",
+                                        data: {
+                                            chunkid: GUID,
+                                            action: 'merge',
+                                            filesize: file.size,
+                                            filename: file.name,
+                                            id: file.id,
+                                            chunks: Math.floor(file.size / chunkSize + (file.size % chunkSize > 1 ? 1 : 0)),
+                                        },
+                                        success: function(res) {
+                                            ok(file, res);
+                                        },
+                                    })
+                                } else {
+                                    ok(file, response);
+                                }
                                 if (typeof onUploadSuccess === 'function') {
                                     var result = onUploadSuccess.call(file, response);
                                     if (result === false)
