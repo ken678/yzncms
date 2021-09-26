@@ -206,24 +206,25 @@ CREATE TABLE `yzn_field_type` (
 INSERT INTO `yzn_field_type` VALUES ('text', '输入框', 1, 'varchar(255) NOT NULL', 0, 1);
 INSERT INTO `yzn_field_type` VALUES ('checkbox', '复选框', 2, 'varchar(32) NOT NULL', 1, 0);
 INSERT INTO `yzn_field_type` VALUES ('textarea', '多行文本', 3, 'varchar(255) NOT NULL', 0, 1);
-INSERT INTO `yzn_field_type` VALUES ('radio', '单选按钮', 4, 'char(10) NOT NULL', 1, 0);
-INSERT INTO `yzn_field_type` VALUES ('switch', '开关', 5, 'tinyint(2) UNSIGNED NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('array', '数组', 6, 'varchar(512) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('select', '下拉框', 7, 'char(10) NOT NULL', 1, 0);
-INSERT INTO `yzn_field_type` VALUES ('selects', '下拉框(多选)', 8, 'varchar(32) NOT NULL', 1, 0);
-INSERT INTO `yzn_field_type` VALUES ('selectpage', '高级下拉框', 9, 'varchar(32) NOT NULL', 1, 0);
-INSERT INTO `yzn_field_type` VALUES ('image', '单张图', 10, 'varchar(255) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('images', '多张图', 11, 'text NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('tags', '标签', 12, 'varchar(255) NOT NULL', 0, 1);
-INSERT INTO `yzn_field_type` VALUES ('number', '数字', 13, 'int(10) UNSIGNED NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('datetime', '日期和时间', 14, 'int(10) UNSIGNED NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', 15, 'mediumtext NOT NULL', 0, 1);
-INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 16, 'mediumtext NOT NULL', 0, 1);
-INSERT INTO `yzn_field_type` VALUES ('files', '多文件', 17, 'text NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 18, 'varchar(255) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 19, 'varchar(7) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 20, 'varchar(255) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 21, 'text NOT NULL', 1, 0);
+INSERT INTO `yzn_field_type` VALUES ('password', '密码', 4, 'varchar(255) NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('radio', '单选按钮', 5, 'char(10) NOT NULL', 1, 0);
+INSERT INTO `yzn_field_type` VALUES ('switch', '开关', 6, 'tinyint(2) UNSIGNED NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('array', '数组', 7, 'varchar(512) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('select', '下拉框', 8, 'char(10) NOT NULL', 1, 0);
+INSERT INTO `yzn_field_type` VALUES ('selects', '下拉框(多选)', 9, 'varchar(32) NOT NULL', 1, 0);
+INSERT INTO `yzn_field_type` VALUES ('selectpage', '高级下拉框', 10, 'varchar(32) NOT NULL', 1, 0);
+INSERT INTO `yzn_field_type` VALUES ('image', '单张图', 11, 'varchar(255) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('images', '多张图', 12, 'text NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('tags', '标签', 13, 'varchar(255) NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('number', '数字', 14, 'int(10) UNSIGNED NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('datetime', '日期和时间', 15, 'int(10) UNSIGNED NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', 16, 'mediumtext NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 17, 'mediumtext NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('files', '多文件', 18, 'text NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 19, 'varchar(255) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 20, 'varchar(7) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 21, 'varchar(255) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 22, 'text NOT NULL', 1, 0);
 
 -- ----------------------------
 -- Table structure for `yzn_menu`
