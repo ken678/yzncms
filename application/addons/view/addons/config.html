@@ -16,6 +16,15 @@
                             <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
                         </div>
                        {/case}
+                       {case value="password"}
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{$form.title}</label>
+                            <div class="layui-input-block">
+                                <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                            </div>
+                            <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                        </div>
+                       {/case}
 						{case value="array"}
 						<div class="layui-form-item">
 						    <label class="layui-form-label">{$form.title}</label>
