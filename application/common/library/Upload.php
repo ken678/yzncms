@@ -187,7 +187,7 @@ class Upload
             $file_info = [
                 'aid'  => (int) session('admin.id'),
                 'uid'  => (int) cookie('uid'),
-                'name' => substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
+                'name' => mb_substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
                 'mime' => $this->fileInfo['type'],
                 'path' => config('public_url') . $uploadDir . $info->getSaveName(),
                 'ext'  => $this->fileInfo['suffix'],
