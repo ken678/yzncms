@@ -106,7 +106,7 @@ class Upload extends Base
         }
     }
 
-    public function upload($dir = '', $from = '', $module = '')
+    public function upload($dir = '', $from = '')
     {
         if (!function_exists("finfo_open")) {
             return json([
@@ -145,7 +145,7 @@ class Upload extends Base
                 //合并分片文件
                 try {
                     $upload     = new UploadLib();
-                    $attachment = $upload->merge($chunkid, $chunkcount, $filename, $dir, $from, $module);
+                    $attachment = $upload->merge($chunkid, $chunkcount, $filename, $dir, $from);
                 } catch (UploadException $e) {
                     return json([
                         'code'    => 0,
