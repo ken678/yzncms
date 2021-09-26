@@ -114,10 +114,9 @@ class Upload
      * 保存附件
      * @param string $dir 附件存放的目录
      * @param string $from 来源
-     * @param string $module 来自哪个模块
      * @return string|\think\response\Json
      */
-    public function upload($dir = '', $from = '', $module = '', $savekey = null)
+    public function upload($dir = '', $from = '', $savekey = null)
     {
         if (empty($this->file)) {
             throw new UploadException('未上传文件或超出服务器上传限制');
@@ -144,7 +143,7 @@ class Upload
 
         // 附件上传钩子，用于第三方文件上传扩展
         if (config('upload_driver') != 'local') {
-            $hook_result = Hook::listen('upload_after', ['dir' => $dir, 'file' => $this->file, 'from' => $from, 'module' => $module], true);
+            $hook_result = Hook::listen('upload_after', ['dir' => $dir, 'file' => $this->file, 'from' => $from], true);
             if (false !== $hook_result) {
                 return $hook_result;
             }
@@ -186,16 +185,15 @@ class Upload
             }
             // 获取附件信息
             $file_info = [
-                'aid'    => (int) session('admin.id'),
-                'uid'    => (int) cookie('uid'),
-                'name'   => substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
-                'mime'   => $this->fileInfo['type'],
-                'path'   => config('public_url') . $uploadDir . $info->getSaveName(),
-                'ext'    => $this->fileInfo['suffix'],
-                'size'   => $this->fileInfo['size'],
-                'md5'    => $md5,
-                'sha1'   => $sha1,
-                'module' => $module,
+                'aid'  => (int) session('admin.id'),
+                'uid'  => (int) cookie('uid'),
+                'name' => substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
+                'mime' => $this->fileInfo['type'],
+                'path' => config('public_url') . $uploadDir . $info->getSaveName(),
+                'ext'  => $this->fileInfo['suffix'],
+                'size' => $this->fileInfo['size'],
+                'md5'  => $md5,
+                'sha1' => $sha1,
             ];
             if ($file_add = Attachment::create($file_info)) {
                 return json([
@@ -225,7 +223,7 @@ class Upload
      * @return attachment|\think\Model
      * @throws UploadException
      */
-    public function merge($chunkid, $chunkcount, $filename, $dir, $from, $module)
+    public function merge($chunkid, $chunkcount, $filename, $dir, $from)
     {
         if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
             throw new UploadException('未知参数');
@@ -291,7 +289,7 @@ class Upload
 
             //允许大文件
             //$this->config['maxsize'] = "1024G";
-            $attachment = $this->upload($dir, $from, $module);
+            $attachment = $this->upload($dir, $from);
         } catch (\Exception $e) {
             @unlink($destFile);
             throw new UploadException($e->getMessage());
