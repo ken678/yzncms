@@ -16,6 +16,9 @@
     //全局变量
     var GV = {
         'site':{$site|raw|json_encode},
+        'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images"])}',
+        'file_upload_url': '{$file_upload_url ? $file_upload_url : url("attachment/upload/upload", ["dir" => "files"])}',
+        'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/upload/upload", ["dir" => "images","from"=>"ueditor"])}',
     };
     </script>
 </head>

@@ -74,7 +74,7 @@ layui.use(['yznForm','upload'], function(upload) {
     yznForm.listen();
     upload.render({
         elem: '.upload-img',
-        url: '/attachment/upload/upload/dir/images',
+        url: GV.image_upload_url,
         size: 50,
         before: function() {
             avatarAdd.find('.loading').show();
