@@ -21,7 +21,7 @@ class Member extends Model
     protected $autoWriteTimestamp = true;
     protected $updateTime         = false;
     protected $createTime         = 'reg_time';
-    protected $insert             = ['status' => 1, 'reg_ip'];
+    protected $insert             = ['status' => 1, 'reg_ip', 'last_login_ip', 'last_login_time'];
     // 追加属性
     protected $append = [
         'groupname',
@@ -30,6 +30,16 @@ class Member extends Model
     protected function setRegIpAttr()
     {
         return request()->ip();
+    }
+
+    protected function setLastLoginIpAttr()
+    {
+        return request()->ip();
+    }
+
+    protected function setLastLoginTimeAttr()
+    {
+        return time();
     }
 
     public function getLastLoginTimeAttr($value, $data)
