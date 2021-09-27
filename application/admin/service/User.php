@@ -169,8 +169,6 @@ class User extends \libs\Auth
             'username'        => $admin->username,
             'last_login_time' => $admin->last_login_time,
         ];
-        Session::set('admin_user_auth', $auth);
-        Session::set('admin_user_auth_sign', data_auth_sign($auth));
         $this->keeplogin($keeptime);
         return true;
     }
@@ -252,12 +250,8 @@ class User extends \libs\Auth
                 return false;
             }
         }
-        $user = Session::get('admin_user_auth');
-        if (empty($user)) {
-            return 0;
-        } else {
-            return Session::get('admin_user_auth_sign') == data_auth_sign($user) ? (int) $user['uid'] : 0;
-        }
+        $this->logined = true;
+        return true;
     }
 
     /**
