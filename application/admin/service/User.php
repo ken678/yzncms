@@ -25,23 +25,14 @@ use util\Tree;
 class User extends \libs\Auth
 {
     //当前登录会员详细信息
-    private static $userInfo   = array();
-    protected $error           = '';
-    protected static $instance = null;
-    const ADMINISTRATORROLEID  = 1;
+    protected $error   = '';
+    protected $logined = false; //登录状态
 
-    /**
-     * 获取示例
-     * @param array $options 实例配置
-     * @return static
-     */
-    public static function instance($options = [])
+    const ADMINISTRATORROLEID = 1;
+
+    public function __construct()
     {
-        if (is_null(self::$instance)) {
-            self::$instance = new self($options);
-        }
-
-        return self::$instance;
+        parent::__construct();
     }
 
     public function __get($name)
@@ -164,11 +155,6 @@ class User extends \libs\Auth
         $admin->token           = Random::uuid();
         $admin->save();
         Session::set("admin", $admin->toArray());
-        $auth = [
-            'uid'             => $admin->id,
-            'username'        => $admin->username,
-            'last_login_time' => $admin->last_login_time,
-        ];
         $this->keeplogin($keeptime);
         return true;
     }
@@ -185,7 +171,7 @@ class User extends \libs\Auth
             $expiretime = time() + $keeptime;
             $key        = md5(md5($this->id) . md5($keeptime) . md5($expiretime) . $this->token);
             $data       = [$this->id, $keeptime, $expiretime, $key];
-            Cookie::set('keeplogin', implode('|', $data), 86400 * 30);
+            Cookie::set('keeplogin', implode('|', $data), 86400 * 7);
             return true;
         }
         return false;
@@ -231,15 +217,20 @@ class User extends \libs\Auth
      */
     public function isLogin()
     {
+        if ($this->logined) {
+            return true;
+        }
         $admin = Session::get('admin');
         if (!$admin) {
-            return 0;
+            return false;
         }
         //判断是否同一时间同一账号只能在一个地方登录
         if (Config::get('login_unique')) {
             $my = AdminUser::get($admin['id']);
             if (!$my || $my['token'] != $admin['token']) {
-                $this->logout();
+                $this->logined = false; //重置登录状态
+                Session::delete("admin");
+                Cookie::delete("keeplogin");
                 return false;
             }
         }
@@ -300,6 +291,7 @@ class User extends \libs\Auth
             $admin->token = '';
             $admin->save();
         }
+        $this->logined = false; //重置登录状态
         Session::delete("admin");
         Cookie::delete("keeplogin");
         return true;
