@@ -69,11 +69,10 @@ class Index extends MemberBase
         }
         if ($this->request->isPost()) {
             //登录验证
-            $account    = $this->request->param('account');
-            $password   = $this->request->param('password');
-            $verify     = $this->request->param('verify');
-            $cookieTime = $this->request->param('cookieTime', 0);
-            $token      = $this->request->param('__token__');
+            $account  = $this->request->param('account');
+            $password = $this->request->param('password');
+            $verify   = $this->request->param('verify');
+            $token    = $this->request->param('__token__');
 
             $rule = [
                 'account|账户'  => 'require|length:3,30',
@@ -96,7 +95,7 @@ class Index extends MemberBase
             if (true !== $result) {
                 $this->error($result, null, ['token' => $this->request->token()]);
             }
-            $userInfo = $this->auth->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
+            $userInfo = $this->auth->loginLocal($account, $password);
             if ($userInfo) {
                 $this->success('登录成功！', $forward ? $forward : url('index'));
             } else {

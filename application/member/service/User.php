@@ -178,10 +178,9 @@ class User
      * 会员登录
      * @param $account 账户
      * @param $password 明文密码，填写表示验证密码
-     * @param $is_remember_me cookie有效期
      * @return boolean
      */
-    public function loginLocal($account, $password = null, $is_remember_me = 604800)
+    public function loginLocal($account, $password = null)
     {
         $field = Validate::is($account, 'email') ? 'email' : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'username');
         $user  = Member_Model::get([$field => $account]);
