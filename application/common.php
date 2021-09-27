@@ -678,31 +678,6 @@ function to_guid_string($mix)
 }
 
 /**
- * 根据附件id获取文件名
- * @param string $id 附件id
- * @return string
- */
-function get_file_name($id = '')
-{
-    $name = model('attachment/Attachment')->getFileName($id);
-    return $name ? $name : '没有找到文件';
-}
-
-/**
- * 获取附件路径
- * @param string $value
- * @return string
- */
-function get_file_path($path)
-{
-    //如果是图片路径就直接返回
-    if (preg_match('/^\d+(,\d+)*$/', $path)) {
-        $path = model('attachment/Attachment')->getFilePath($path);
-    }
-    return $path ? $path : "";
-}
-
-/**
  * 对用户的密码进行加密
  * @param $password
  * @param $encrypt //传入加密串，在修改密码时做认证

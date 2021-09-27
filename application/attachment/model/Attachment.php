@@ -15,7 +15,6 @@
 namespace app\attachment\model;
 
 use app\admin\service\User;
-use think\Db;
 use think\Image;
 use think\Model;
 
@@ -73,50 +72,6 @@ class Attachment extends Model
             // 保存水印图片，覆盖原图
             $image->save($file);
         }
-    }
-
-    /**
-     * 根据附件id获取路径
-     * @param  string|array $id 附件id
-     * @param  int $type 类型：0-补全目录，1-直接返回数据库记录的地址
-     * @return string|array     路径
-     */
-    public function getFilePath($id = '', $type = 0)
-    {
-        $isIds = strpos($id, ',') !== false;
-        if ($isIds) {
-            $ids   = explode(',', $id);
-            $dbObj = Db::name('Attachment')->field('path,driver,thumb')->where('id', $ids[0]);
-            unset($ids[0]);
-            foreach ($ids as $k => $v) {
-                $dbObj->unionAll(function ($query) use ($v) {
-                    $query->name('Attachment')->field('path,driver,thumb')->where('id', $v);
-                });
-            }
-            $data_list = $dbObj->select();
-            $paths     = [];
-            foreach ($data_list as $key => $value) {
-                $paths[$key] = $value['path'];
-            }
-            return $paths;
-        } else {
-            $data = $this->where('id', $id)->field('path,driver,thumb')->find();
-            if ($data) {
-                return $data['path'];
-            } else {
-                return false;
-            }
-        }
-    }
-
-    /**
-     * 根据附件id获取名称
-     * @param  string $id 附件id
-     * @return string     名称
-     */
-    public function getFileName($id = '')
-    {
-        return $this->where('id', $id)->value('name');
     }
 
     public function deleteFile($id)
