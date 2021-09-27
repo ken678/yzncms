@@ -28,7 +28,7 @@ class User extends \libs\Auth
     private static $userInfo   = array();
     protected $error           = '';
     protected static $instance = null;
-    const administratorRoleId  = 1;
+    const ADMINISTRATORROLEID  = 1;
 
     /**
      * 获取示例
@@ -267,7 +267,7 @@ class User extends \libs\Auth
     public function isAdministrator($uid = null)
     {
         $userInfo = Session::get('admin');
-        if (!empty($userInfo) && $userInfo['roleid'] == self::administratorRoleId) {
+        if (!empty($userInfo) && $userInfo['roleid'] == self::ADMINISTRATORROLEID) {
             return true;
         }
         return false;
