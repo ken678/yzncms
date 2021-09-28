@@ -689,6 +689,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         $('.layui-form .js-ueditor').each(function() {
                             var ueditor_name = $(this).attr('id');
                             ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
+                                allowDivTransToP: false, //转换p标签
                                 initialFrameWidth: '100%',
                                 initialFrameHeight: 400, //初始化编辑器高度,默认320
                                 autoHeightEnabled: false, //是否自动长高
