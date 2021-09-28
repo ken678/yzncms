@@ -60,8 +60,9 @@
                 break;
             case 'online':
                 setAlign(editor.getOpt('imageManagerInsertAlign'));
-                onlineImage = onlineImage || new OnlineImage('imageList');
-                onlineImage.reset();
+                new YznOnlineImage();
+                //onlineImage = onlineImage || new OnlineImage('imageList');
+                //onlineImage.reset();
                 break;
             case 'search':
                 setAlign(editor.getOpt('imageManagerInsertAlign'));
@@ -140,6 +141,16 @@
         var align = $G("align").value || 'none';
         return align == 'none' ? '':align;
     }
+
+    /* 在线图片修改 */
+    function YznOnlineImage() { 
+        this.init() 
+    }
+    YznOnlineImage.prototype = {
+        init: function() {
+            editor.fireEvent("upload.online", editor, dialog)
+        }
+    };
 
 
     /* 在线图片 */

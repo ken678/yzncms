@@ -704,6 +704,34 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                         layer.msg("图片本地化完成", { icon: 1 });
                                     }, 'html');
                             });
+                            //打开图片管理
+                            ueditors[ueditor_name].addListener("upload.online", function (e, editor, dialog) {
+                                dialog.close(false);
+                                yzn.open('选择',"/attachment/Attachments/select?element_id=&multiple=true&mimetype=image/*", '800','650',{
+                                    callback: function (data) {
+                                        var urlArr = data.url.split(/\,/);
+                                        urlArr.forEach(function (url, index) {
+                                            editor.execCommand('insertimage', {
+                                                src: url
+                                            });
+                                        });
+                                    }
+                                });
+                            });
+                            //打开附件管理
+                            ueditors[ueditor_name].addListener("file.online", function (e, editor, dialog) {
+                                dialog.close(false);
+                                yzn.open('选择',"/attachment/Attachments/select?element_id=&multiple=true&mimetype=application/*", '800','650',{
+                                    callback: function (data) {
+                                        var urlArr = data.url.split(/\,/);
+                                        urlArr.forEach(function (url, index) {
+                                            editor.execCommand('insertfile', {
+                                                url: url
+                                            });
+                                        });
+                                    }
+                                });
+                            });
                             //分词检测
                             if (ueditor_name == 'content') {
                                 $('#getwords').click(function() {

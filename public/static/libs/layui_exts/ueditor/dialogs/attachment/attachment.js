@@ -47,7 +47,8 @@
                 uploadFile = uploadFile || new UploadFile('queueList');
                 break;
             case 'online':
-                onlineFile = onlineFile || new OnlineFile('fileList');
+                new YznOnlineFile();
+                //onlineFile = onlineFile || new OnlineFile('fileList');
                 break;
         }
     }
@@ -563,6 +564,15 @@
         }
     };
 
+    /* 在线附件修改 */
+    function YznOnlineFile() {
+        this.init()
+    }
+    YznOnlineFile.prototype = {
+        init: function() {
+            editor.fireEvent("file.online", editor, dialog)
+        }
+    };
 
     /* 在线附件 */
     function OnlineFile(target) {
