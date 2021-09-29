@@ -430,10 +430,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     return false;
                 });
             },
-            faselect: function () {
+            faselect: function (layform) {
                 //绑定fachoose选择附件事件
-                if ($(".layui-form .fachoose").size() > 0) {
-                    $(".layui-form .fachoose").on('click', function () {
+                if ($(".fachoose", layform).size() > 0) {
+                    $(".fachoose", layform).on('click', function () {
                         var that = this;
                         var multiple = $(this).data("multiple") ? $(this).data("multiple") : false;
                         var mimetype = $(this).data("mimetype") ? $(this).data("mimetype") : '';
@@ -475,9 +475,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     });
                 }
             },
-            fieldlist: function() {
+            fieldlist: function(layform) {
                 // 绑定fieldlist组件
-                if ($(".layui-form .fieldlist").size() > 0) {
+                if ($(".fieldlist",layform).size() > 0) {
                     layui.define('laytpl', function(exports) {
                         var laytpl = layui.laytpl;
                         //刷新隐藏textarea的值
@@ -590,12 +590,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                     })
                 }
             },
-            selectpage: function() {
+            selectpage: function(layform) {
                 // 绑定selectpage组件
-                if ($(".layui-form .selectpage").size() > 0) {
+                if ($(".selectpage",layform).size() > 0) {
                     layui.define('selectPage', function(exports) {
                         var selectPage = layui.selectPage;
-                        $('.layui-form .selectpage').selectPage({
+                        $('.selectpage',layform).selectPage({
                             eAjaxSuccess: function(data) {
                                 //console.log(data);
                                 data.list = typeof data.data !== 'undefined' ? data.data : [];
@@ -1033,12 +1033,13 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 }
             },
         },
-        bindevent: function() {
+        bindevent: function(form) {
+            form = typeof form === 'object' ? form : $(form);
             var events = yznForm.events;
             events.init();
-            events.selectpage();
-            events.fieldlist();
-            events.faselect();
+            events.selectpage(form);
+            events.fieldlist(form);
+            events.faselect(form);
             events.citypicker();
             events.datetimepicker();
             events.tagsinput();
@@ -1049,7 +1050,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             events.upload_image('.webUpload');
         }
     }
-    yznForm.bindevent();
+    yznForm.bindevent($(".layui-form"));
 
     //修复含有fixed-footer类的body边距
     if ($(".fixed-footer").size() > 0) {
