@@ -292,15 +292,15 @@ class Admin extends Adminaddon
                             'flag'        => $flag,
                             'tags'        => '',
                             'url'         => '',
-                            'hits'        => 0,
+                            'hits'        => $value['click'],
                             'modelid'     => $dede_models[$value['channel']]['id'], //优化
                             'title'       => $value['title'],
                             'keywords'    => $value['keywords'],
                             'description' => $value['description'],
                             'listorder'   => $value['weight'],
                             'status'      => 1,
-                            'inputtime'   => date('Y-m-d h:i:s', $value['pubdate']),
-                            'updatetime'  => date('Y-m-d h:i:s', $value['pubdate']),
+                            'inputtime'   => date('Y-m-d h:i:s', $value['senddate']),
+                            'updatetime'  => date('Y-m-d h:i:s', $value['senddate']),
                         ];
                         $data['modelFieldExt'] = [
                             'did'     => $value['id'],
@@ -315,11 +315,41 @@ class Admin extends Adminaddon
 
             } elseif ($value['type'] == 1) {
                 // 独立表
-            }{
+                $cursor = Db::connect($db_config)->name($value['name'])->select();
+                foreach ($cursor as $key => $value) {
+                    try {
+                        $flag = "";
+                        if ($value['flag']) {
+                            $value['flag'] = explode(',', $value['flag']);
+                            $flag          = array_map(function ($item) {
+                                return isset($this->flag[$item]) ? $this->flag[$item] : '';
+                            }, $value['flag']);
+                            $flag = implode(',', array_filter($flag));
+                        }
+                        $data['modelField'] = [
+                            'id'         => $value['id'],
+                            'catid'      => $value['typeid'],
+                            'thumb'      => $value['litpic'],
+                            'flag'       => $flag,
+                            'title'      => $value['title'],
+                            'tags'       => '',
+                            'url'        => '',
+                            'hits'       => $value['click'],
+                            'modelid'    => $dede_models[$value['channel']]['id'], //优化
+                            'listorder'  => 0,
+                            'status'     => 1,
+                            'inputtime'  => date('Y-m-d h:i:s', $value['senddate']),
+                            'updatetime' => date('Y-m-d h:i:s', $value['senddate']),
+                        ];
+                        $Cms_Model->addModelData($data['modelField']);
+                        unset($data);
+                    } catch (\Exception $e) {
 
-            }
+                    }
+                };
+
+            };
         }
-        //转换独立表
 
     }
 
