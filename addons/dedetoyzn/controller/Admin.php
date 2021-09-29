@@ -33,6 +33,13 @@ class Admin extends Adminaddon
         'page',
         'attachment',
     );
+    private $flag = array(
+        'h' => 2,
+        'c' => 4,
+        'f' => 6,
+        'a' => 3,
+    );
+
     private $ext_table = '_data';
 
     //初始化
@@ -270,10 +277,19 @@ class Admin extends Adminaddon
                     ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid')->field('a.*,w.*')->select();
                 foreach ($cursor as $key => $value) {
                     try {
+                        $flag = "";
+                        if ($value['flag']) {
+                            $value['flag'] = explode(',', $value['flag']);
+                            $flag          = array_map(function ($item) {
+                                return isset($this->flag[$item]) ? $this->flag[$item] : '';
+                            }, $value['flag']);
+                            $flag = implode(',', array_filter($flag));
+                        }
                         $data['modelField'] = [
                             'id'          => $value['id'],
                             'catid'       => $value['typeid'],
                             'thumb'       => $value['litpic'],
+                            'flag'        => $flag,
                             'tags'        => '',
                             'url'         => '',
                             'hits'        => 0,
