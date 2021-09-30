@@ -146,28 +146,32 @@ class Admin extends Adminaddon
     {
         $db_config = Cache::get('db_config');
         $finfo     = finfo_open(FILEINFO_MIME_TYPE);
-        Db::connect($db_config)->name('uploads')->chunk(100, function ($cursor) use ($finfo) {
-            foreach ($cursor as $key => $value) {
-                $path     = ROOT_PATH . 'public' . str_replace("/", DS, $value['url']);
-                $is_exist = file_exists($path) ? true : false;
-                $data[]   = [
-                    'id'          => $value['aid'],
-                    'aid'         => (int) session('admin.id'),
-                    'uid'         => $value['mid'],
-                    'name'        => $value['title'],
-                    'path'        => $value['url'],
-                    'md5'         => $is_exist ? hash_file('md5', $path) : '',
-                    'sha1'        => $is_exist ? hash_file('sha1', $path) : '',
-                    'size'        => $value['filesize'],
-                    'ext'         => 'jpg',
-                    'mime'        => $is_exist ? finfo_file($finfo, $path) : '',
-                    'create_time' => $value['uptime'],
-                    'update_time' => $value['uptime'],
-                    'status'      => 1,
-                ];
-            };
-            Db::name('attachment')->insertAll($data);
-        });
+        try {
+            Db::connect($db_config)->name('uploads')->chunk(100, function ($cursor) use ($finfo) {
+                foreach ($cursor as $key => $value) {
+                    $path     = ROOT_PATH . 'public' . str_replace("/", DS, $value['url']);
+                    $is_exist = file_exists($path) ? true : false;
+                    $data[]   = [
+                        'id'          => $value['aid'],
+                        'aid'         => (int) session('admin.id'),
+                        'uid'         => $value['mid'],
+                        'name'        => $value['title'],
+                        'path'        => $value['url'],
+                        'md5'         => $is_exist ? hash_file('md5', $path) : '',
+                        'sha1'        => $is_exist ? hash_file('sha1', $path) : '',
+                        'size'        => $value['filesize'],
+                        'ext'         => strtolower(pathinfo($value['url'], PATHINFO_EXTENSION)),
+                        'mime'        => $is_exist ? finfo_file($finfo, $path) : '',
+                        'create_time' => $value['uptime'],
+                        'update_time' => $value['uptime'],
+                        'status'      => 1,
+                    ];
+                };
+                Db::name('attachment')->insertAll($data);
+            });
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 
     public function step3()
@@ -176,34 +180,37 @@ class Admin extends Adminaddon
         $res        = Db::connect($db_config)->name('channeltype')->select();
         $modelClass = new \app\cms\model\Models;
         $data       = $dede_models       = [];
-        foreach ($res as $key => $value) {
-            $tablename                         = str_replace($db_config['prefix'], '', $value['addtable']);
-            $dede_models[$value['id']]['id']   = $data['id']   = $key + 1;
-            $data['name']                      = $value['typename'];
-            $dede_models[$value['id']]['name'] = $data['tablename'] = $tablename;
-            $data['listorders']                = $value['sort'];
-            $dede_models[$value['id']]['type'] = $data['type'] = $value['issystem'] == -1 ? 1 : 2;
-            $data['status']                    = 1;
-            $data['listorders']                = 100;
-            $data['setting']                   = array(
-                'category_template' => '',
-                'list_template'     => '',
-                'show_template'     => '',
-            );
-            $result = $this->validate($data,
-                [
-                    'name|模型名称'     => 'require|max:30|unique:model',
-                    'tablename|表键名' => 'require|max:20|unique:model',
-                    'type|模型类型'     => 'in:1,2',
-                ]);
-            if (true !== $result) {
-                $this->error($result);
-            }
-            try {
+        try {
+            foreach ($res as $key => $value) {
+                $tablename                              = str_replace($db_config['prefix'], '', $value['addtable']);
+                $dede_models[$value['id']]['id']        = $data['id']        = $key + 1;
+                $data['name']                           = $value['typename'];
+                $dede_models[$value['id']]['name']      = $data['tablename']      = $tablename;
+                $data['listorders']                     = $value['sort'];
+                $dede_models[$value['id']]['type']      = $data['type']      = 2;
+                $dede_models[$value['id']]['real_type'] = $value['issystem'] == -1 ? 1 : 2;
+                $data['status']                         = 1;
+                $data['listorders']                     = 100;
+                $data['setting']                        = array(
+                    'category_template' => '',
+                    'list_template'     => '',
+                    'show_template'     => '',
+                );
+                $result = $this->validate($data,
+                    [
+                        'name|模型名称'     => 'require|max:30|unique:model',
+                        'tablename|表键名' => 'require|max:20|unique:model',
+                        'type|模型类型'     => 'in:1,2',
+                    ]);
+                if (true !== $result) {
+                    $this->error($result);
+                }
+
                 $modelClass->addModel($data);
-            } catch (\Exception $e) {
-                $this->error($e->getMessage());
+
             }
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
         unset($res);
         Cache::set('dede_models', $dede_models, 600);
@@ -211,7 +218,74 @@ class Admin extends Adminaddon
 
     public function step4()
     {
-        //自定义字段后期支持
+        $db_config = Cache::get('db_config');
+        //$dede_models = Cache::get('dede_models');
+        $res         = Db::connect($db_config)->name('channeltype')->select();
+        $modelClass  = new \app\cms\model\ModelField;
+        $dede_fields = $data = [];
+        foreach ($res as $key => $value) {
+            preg_match_all("/<field:([a-z]+) itemname=\"(.*?)\" autofield=\"(.*?)\"(?:.*?)type=\"(.*?)\"(?:.*?)default=\"(.*?)\"/", $value['fieldset'], $matches, PREG_SET_ORDER);
+            foreach ($matches as $k => $match) {
+                if ($match[3] == "1" && in_array($match[4], ['htmltext', 'text', 'int'])) {
+                    $isadd = true;
+                    switch ($match[4]) {
+                        case 'text':
+                        case 'int':
+                            $define  = "varchar(255) NOT NULL";
+                            $type    = 'text';
+                            $val     = $match[5];
+                            $options = '';
+                            break;
+                        case 'htmltext':
+                            $define  = "text NOT NULL";
+                            $type    = 'Ueditor';
+                            $val     = $match[5];
+                            $options = '';
+                            break;
+                    }
+                    if ($isadd) {
+                        $data = [
+                            'modelid'   => $key + 1,
+                            'name'      => $match[1],
+                            'title'     => $match[2],
+                            'remark'    => "",
+                            'ifsystem'  => 0,
+                            'listorder' => $value['sendrank'],
+                            'isadd'     => 0,
+                            'ifsearch'  => 0,
+                            'ifcore'    => 0,
+                            'type'      => $type,
+                            'setting'   => ['define' => $define, 'value' => $val, 'options' => $options],
+                            'status'    => 1,
+                        ];
+                        $dede_fields[$data['modelid']][] = [
+                            'name'      => $data['name'],
+                            'title'     => $data['title'],
+                            'remark'    => $data['remark'],
+                            'ifsystem'  => $data['ifsystem'],
+                            'listorder' => $data['listorder'],
+                            'isadd'     => $data['isadd'],
+                            'ifsearch'  => $data['ifsearch'],
+                            'ifcore'    => $data['ifcore'],
+                            'type'      => $type,
+                            'setting'   => ['define' => $define, 'value' => $val, 'options' => $options],
+                            'status'    => 1,
+                        ];
+                        $result = $this->validate($data, 'app\cms\validate\ModelField');
+                        if (true !== $result) {
+                            return $this->error($result);
+                        }
+                        try {
+                            $res = $modelClass->addField($data);
+                        } catch (\Exception $e) {
+                            $this->error($e->getMessage());
+                        }
+                    }
+
+                }
+            }
+        }
+        Cache::set('dede_fields', $dede_fields, 600);
     }
 
     public function step5()
@@ -223,40 +297,44 @@ class Admin extends Adminaddon
         $modelClass  = new \app\cms\model\Category;
         $cursor      = Db::connect($db_config)->name('arctype')->cursor();
         $catdir      = $data      = [];
-        foreach ($cursor as $key => $value) {
-            $data['id']          = $value['id'];
-            $data['modelid']     = $dede_models[$value['channeltype']]['id'];
-            $data['catname']     = $value['typename'];
-            $data['parentid']    = $value['reid'];
-            $data['description'] = "";
-            $data['url']         = $value['ispart'] == 2 ? $value['typedir'] : '';
-            $data['status']      = $value['ishidden'] == 0 ? 1 : 0;
-            $data['listorder']   = $value['sortrank'];
-            $data['setting']     = array(
-                'meta_title'        => isset($value['seotitle']) ? $value['seotitle'] : '',
-                'meta_keywords'     => isset($value['keywords']) ? $value['keywords'] : '',
-                'meta_description'  => isset($value['description']) ? $value['description'] : '',
+        try {
+            foreach ($cursor as $key => $value) {
+                $data['id']          = $value['id'];
+                $data['modelid']     = $dede_models[$value['channeltype']]['id'];
+                $data['catname']     = $value['typename'];
+                $data['parentid']    = $value['reid'];
+                $data['description'] = "";
+                $data['url']         = $value['ispart'] == 2 ? $value['typedir'] : '';
+                $data['status']      = $value['ishidden'] == 0 ? 1 : 0;
+                $data['listorder']   = $value['sortrank'];
+                $data['setting']     = array(
+                    'meta_title'        => isset($value['seotitle']) ? $value['seotitle'] : '',
+                    'meta_keywords'     => isset($value['keywords']) ? $value['keywords'] : '',
+                    'meta_description'  => isset($value['description']) ? $value['description'] : '',
 
-                'category_template' => isset($value['tempindex']) ? $this->getTemplate($value['tempindex'], 'category') : 'category.html',
-                'list_template'     => isset($value['templist']) ? $this->getTemplate($value['templist'], 'list') : 'list.html',
-                'show_template'     => isset($value['temparticle']) ? $this->getTemplate($value['temparticle'], 'show') : 'show.html',
-                'page_template'     => isset($value['page_template']) ? $this->getTemplate($value['page_template'], 'page') : 'page.html',
-            );
-            if (is_numeric($value['typename'])) {
-                $data['catdir'] = $value['typename'];
-            } else {
-                $data['catdir'] = $pinyin->permalink($value['typename'], '');
-                $data['catdir'] = substr($data['catdir'], 0, 10);
+                    'category_template' => isset($value['tempindex']) ? $this->getTemplate($value['tempindex'], 'category') : 'category.html',
+                    'list_template'     => isset($value['templist']) ? $this->getTemplate($value['templist'], 'list') : 'list.html',
+                    'show_template'     => isset($value['temparticle']) ? $this->getTemplate($value['temparticle'], 'show') : 'show.html',
+                    'page_template'     => isset($value['page_template']) ? $this->getTemplate($value['page_template'], 'page') : 'page.html',
+                );
+                if (is_numeric($value['typename'])) {
+                    $data['catdir'] = $value['typename'];
+                } else {
+                    $data['catdir'] = $pinyin->permalink($value['typename'], '');
+                    $data['catdir'] = substr($data['catdir'], 0, 10);
+                }
+                $data['catdir'] = in_array($data['catdir'], $catdir) ?: $data['catdir'] . genRandomString(3);
+                $catdir[]       = $data['catdir'];
+                $data['type']   = $value['ispart'] != 2 ? 2 : 1;
+                $result         = $this->validate($data, 'app\cms\validate\Category.list');
+                if (true !== $result) {
+                    $this->error($result);
+                }
+                $modelClass->addCategory($data, ['id', 'parentid', 'catname', 'arrparentid', 'arrchildid', 'child', 'items', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'status']);
+                unset($data);
             }
-            $data['catdir'] = in_array($data['catdir'], $catdir) ?: $data['catdir'] . genRandomString(3);
-            $catdir[]       = $data['catdir'];
-            $data['type']   = $value['ispart'] != 2 ? 2 : 1;
-            $result         = $this->validate($data, 'app\cms\validate\Category.list');
-            if (true !== $result) {
-                $this->error($result);
-            }
-            $modelClass->addCategory($data, ['id', 'parentid', 'catname', 'arrparentid', 'arrchildid', 'child', 'items', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'status']);
-            unset($data);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
         unset($cursor);
     }
@@ -267,33 +345,27 @@ class Admin extends Adminaddon
         ini_set('memory_limit', '500M');
         $db_config   = Cache::get('db_config');
         $dede_models = Cache::get('dede_models');
+        $dede_fields = Cache::get('dede_fields');
         $Cms_Model   = new \app\cms\model\Cms;
         $data        = [];
 
         foreach ($dede_models as $key => $value) {
-            if ($value['type'] == 2) {
+            if ($value['real_type'] == 2) {
                 $cursor = Db::connect($db_config)
                     ->name('archives')->alias('a')
                     ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid')->field('a.*,w.*')->select();
                 foreach ($cursor as $key => $value) {
                     try {
-                        $flag = "";
-                        if ($value['flag']) {
-                            $value['flag'] = explode(',', $value['flag']);
-                            $flag          = array_map(function ($item) {
-                                return isset($this->flag[$item]) ? $this->flag[$item] : '';
-                            }, $value['flag']);
-                            $flag = implode(',', array_filter($flag));
-                        }
+                        $modelid            = $dede_models[$value['channel']]['id'];
                         $data['modelField'] = [
                             'id'          => $value['id'],
                             'catid'       => $value['typeid'],
                             'thumb'       => $value['litpic'],
-                            'flag'        => $flag,
+                            'flag'        => $this->getFlag($value['flag']),
                             'tags'        => '',
                             'url'         => '',
                             'hits'        => $value['click'],
-                            'modelid'     => $dede_models[$value['channel']]['id'], //优化
+                            'modelid'     => $modelid,
                             'title'       => $value['title'],
                             'keywords'    => $value['keywords'],
                             'description' => $value['description'],
@@ -306,45 +378,58 @@ class Admin extends Adminaddon
                             'did'     => $value['id'],
                             'content' => $value['body'] ?: '',
                         ];
+                        //是否有自定义字段
+                        if (isset($dede_fields[$modelid])) {
+                            foreach ($dede_fields[$modelid] as $k => $v) {
+                                if ($v['ifsystem']) {
+                                    $data['modelField'][$v['name']] = $value[$v['name']];
+                                } else {
+                                    $data['modelFieldExt'][$v['name']] = $value[$v['name']];
+                                }
+                            }
+                        }
                         $Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
                         unset($data);
                     } catch (\Exception $e) {
-
+                        $this->error($e->getMessage());
                     }
                 }
 
-            } elseif ($value['type'] == 1) {
+            } elseif ($value['real_type'] == 1) {
                 // 独立表
                 $cursor = Db::connect($db_config)->name($value['name'])->select();
                 foreach ($cursor as $key => $value) {
                     try {
-                        $flag = "";
-                        if ($value['flag']) {
-                            $value['flag'] = explode(',', $value['flag']);
-                            $flag          = array_map(function ($item) {
-                                return isset($this->flag[$item]) ? $this->flag[$item] : '';
-                            }, $value['flag']);
-                            $flag = implode(',', array_filter($flag));
-                        }
+                        $modelid            = $dede_models[$value['channel']]['id'];
                         $data['modelField'] = [
                             'id'         => $value['id'],
                             'catid'      => $value['typeid'],
                             'thumb'      => $value['litpic'],
-                            'flag'       => $flag,
+                            'flag'       => $this->getFlag($value['flag']),
                             'title'      => $value['title'],
                             'tags'       => '',
                             'url'        => '',
                             'hits'       => $value['click'],
-                            'modelid'    => $dede_models[$value['channel']]['id'], //优化
+                            'modelid'    => $modelid, //优化
                             'listorder'  => 0,
                             'status'     => 1,
                             'inputtime'  => date('Y-m-d h:i:s', $value['senddate']),
                             'updatetime' => date('Y-m-d h:i:s', $value['senddate']),
                         ];
-                        $Cms_Model->addModelData($data['modelField']);
+                        //是否有自定义字段
+                        if (isset($dede_fields[$modelid])) {
+                            foreach ($dede_fields[$modelid] as $k => $v) {
+                                if ($v['ifsystem']) {
+                                    $data['modelField'][$v['name']] = $value[$v['name']];
+                                } else {
+                                    $data['modelFieldExt'][$v['name']] = $value[$v['name']];
+                                }
+                            }
+                        }
+                        $Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
                         unset($data);
                     } catch (\Exception $e) {
-
+                        $this->error($e->getMessage());
                     }
                 };
 
@@ -386,6 +471,18 @@ class Admin extends Adminaddon
         if ($links) {
             Db::name('links')->insertAll($links);
         }
+    }
+
+    private function getFlag($flag = "")
+    {
+        if ($flag) {
+            $flag = explode(',', $flag);
+            $flag = array_map(function ($item) {
+                return isset($this->flag[$item]) ? $this->flag[$item] : '';
+            }, $flag);
+            $flag = implode(',', array_filter($flag));
+        }
+        return $flag;
     }
 
     private function getTemplate($tem, $type)
