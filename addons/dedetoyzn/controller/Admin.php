@@ -226,14 +226,26 @@ class Admin extends Adminaddon
         foreach ($res as $key => $value) {
             preg_match_all("/<field:([a-z]+) itemname=\"(.*?)\" autofield=\"(.*?)\"(?:.*?)type=\"(.*?)\"(?:.*?)default=\"(.*?)\"/", $value['fieldset'], $matches, PREG_SET_ORDER);
             foreach ($matches as $k => $match) {
-                if ($match[3] == "1" && in_array($match[4], ['htmltext', 'text', 'int'])) {
+                if ($match[3] == "1" && in_array($match[4], ['htmltext', 'text', 'textdata', 'int', 'img'])) {
                     $isadd = true;
                     switch ($match[4]) {
-                        case 'text':
                         case 'int':
+                            $define  = "int(10) UNSIGNED NOT NULL";
+                            $type    = 'number';
+                            $val     = $match[5];
+                            $options = '';
+                            break;
+                        case 'text':
+                        case 'textdata':
                             $define  = "varchar(255) NOT NULL";
                             $type    = 'text';
                             $val     = $match[5];
+                            $options = '';
+                            break;
+                        case 'img':
+                            $define  = "varchar(255) NOT NULL";
+                            $type    = 'image';
+                            $val     = '';
                             $options = '';
                             break;
                         case 'htmltext':
@@ -381,6 +393,13 @@ class Admin extends Adminaddon
                         //是否有自定义字段
                         if (isset($dede_fields[$modelid])) {
                             foreach ($dede_fields[$modelid] as $k => $v) {
+                                switch ($v['type']) {
+                                    case 'image':
+                                        if (strpos($value[$v['name']], 'dede:img') && preg_match("/'}(.*?){\/dede:img}/", $value[$v['name']], $matches)) {
+                                            $value[$v['name']] = isset($matches[1]) ? trim($matches[1]) : '';
+                                        }
+                                        break;
+                                }
                                 if ($v['ifsystem']) {
                                     $data['modelField'][$v['name']] = $value[$v['name']];
                                 } else {
