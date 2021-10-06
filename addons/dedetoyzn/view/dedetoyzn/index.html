@@ -76,7 +76,7 @@ layui.use(['form', 'yzn', 'layer'], function() {
                     start_change(0);
                 } else {
                     $('.layui-btn').attr('disabled', false).removeClass("layui-btn-disabled").html('开始转换');
-                    layer.msg(res.msg, { icon: 2 });
+                    layer.alert(res.msg, { icon: 2 });
                 }
             },
             error: function(xhr, textstatus, thrown) {
@@ -99,12 +99,12 @@ function start_change(page) {
                     $('#change_html').append('<p>'+res.msg+'</p>');
                 } else if (res.data.code == 2) {
                     $('.layui-btn').attr('disabled', false).removeClass("layui-btn-disabled").html('开始转换');
-                    layer.msg(res.msg, { icon: 1 });
+                    layer.alert(res.msg, { icon: 1 });
                 } else {
 
                 }
             } else {
-                layer.msg(res.msg, { icon: 2 });
+                layer.alert(res.msg, { icon: 2 });
                 $('.layui-btn').attr('disabled', false).removeClass("layui-btn-disabled").html('重新转换');
             }
         },

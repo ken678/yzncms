@@ -283,7 +283,16 @@ class Admin extends Adminaddon
                             'setting'   => ['define' => $define, 'value' => $val, 'options' => $options],
                             'status'    => 1,
                         ];
-                        $result = $this->validate($data, 'app\cms\validate\ModelField');
+                        $result = $this->validate($data, [
+                            'name|字段名称'           => 'require|regex:/^[a-zA-Z][A-Za-z0-9\-\_]+$/',
+                            'title|字段标题'          => 'require',
+                            'type|字段类型'           => 'require|alphaDash',
+                            'setting.define|字段定义' => 'require',
+                            'ifsystem|主表字段'       => 'in:0,1',
+                            'ifrequire|是否必填格'     => 'in:0,1',
+                            'ifsearch|是否显示搜索'     => 'in:0,1',
+                            'status|字段状态'         => 'in:0,1',
+                        ]);
                         if (true !== $result) {
                             return $this->error($result);
                         }
@@ -363,11 +372,11 @@ class Admin extends Adminaddon
 
         foreach ($dede_models as $key => $value) {
             if ($value['real_type'] == 2) {
-                $cursor = Db::connect($db_config)
-                    ->name('archives')->alias('a')
-                    ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid')->field('a.*,w.*')->select();
-                foreach ($cursor as $key => $value) {
-                    try {
+                try {
+                    $cursor = Db::connect($db_config)
+                        ->name('archives')->alias('a')
+                        ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid')->field('a.*,w.*')->select();
+                    foreach ($cursor as $key => $value) {
                         $modelid            = $dede_models[$value['channel']]['id'];
                         $data['modelField'] = [
                             'id'          => $value['id'],
@@ -409,16 +418,15 @@ class Admin extends Adminaddon
                         }
                         $Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
                         unset($data);
-                    } catch (\Exception $e) {
-                        $this->error($e->getMessage());
                     }
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
                 }
-
             } elseif ($value['real_type'] == 1) {
                 // 独立表
-                $cursor = Db::connect($db_config)->name($value['name'])->select();
-                foreach ($cursor as $key => $value) {
-                    try {
+                try {
+                    $cursor = Db::connect($db_config)->name($value['name'])->select();
+                    foreach ($cursor as $key => $value) {
                         $modelid            = $dede_models[$value['channel']]['id'];
                         $data['modelField'] = [
                             'id'         => $value['id'],
@@ -447,10 +455,10 @@ class Admin extends Adminaddon
                         }
                         $Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
                         unset($data);
-                    } catch (\Exception $e) {
-                        $this->error($e->getMessage());
-                    }
-                };
+                    };
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
+                }
 
             };
         }
