@@ -67,7 +67,9 @@ class Admin extends Adminaddon
             ['fun' => 'step5', 'msg' => '栏目转换完毕!'],
             ['fun' => 'step6', 'msg' => '内容页转换完毕!'],
         ];
-
+        if (!function_exists("finfo_open")) {
+            $this->error('检测到环境未开启php_fileinfo拓展');
+        }
         //检查dedecms表是否正常
         try {
             $db2 = Db::connect($db_config);
