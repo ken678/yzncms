@@ -80,7 +80,7 @@ class Index extends Cmsbase
             //SEO
             $keywords    = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
             $description = $info['description'] ? $info['description'] : $setting['meta_description'];
-            $seo         = seo($catid, $setting['meta_title'], $description, $keywords);
+            $seo         = seo($catid, '', $description, $keywords);
             $this->assign($info);
         }
         $tpar     = explode(".", $template, 2);
