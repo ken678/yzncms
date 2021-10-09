@@ -66,6 +66,7 @@ class Admin extends Adminaddon
             ['fun' => 'step4', 'msg' => '模型字段表转换完毕!'],
             ['fun' => 'step5', 'msg' => '栏目转换完毕!'],
             ['fun' => 'step6', 'msg' => '内容页转换完毕!'],
+            ['fun' => 'step7', 'msg' => '单页转换完毕!'],
         ];
         if (!function_exists("finfo_open")) {
             $this->error('检测到环境未开启php_fileinfo拓展');
@@ -85,7 +86,7 @@ class Admin extends Adminaddon
             //检查是否存在友情链接
             $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}flink'");
             if ($res && isModuleInstall('links')) {
-                $db_task[] = ['fun' => 'step7', 'msg' => '友情链接转换完毕!'];
+                $db_task[] = ['fun' => 'step8', 'msg' => '友情链接转换完毕!'];
             }
             Cache::set('db_task', $db_task, 600);
             unset($db2);
@@ -348,7 +349,7 @@ class Admin extends Adminaddon
                 }
                 $data['catdir'] = in_array($data['catdir'], $catdir) ?: $data['catdir'] . genRandomString(3);
                 $catdir[]       = $data['catdir'];
-                $data['type']   = $value['ispart'] != 2 ? 2 : 1;
+                $data['type']   = $value['ispart'] != 0 ? 1 : 2;
                 $result         = $this->validate($data, 'app\cms\validate\Category.list');
                 if (true !== $result) {
                     $this->error($result);
@@ -468,6 +469,32 @@ class Admin extends Adminaddon
     }
 
     public function step7()
+    {
+        $data      = [];
+        $db_config = Cache::get('db_config');
+        try {
+            $cursor = Db::connect($db_config)->name('arctype')->where('ispart', 'in', [1, 2])->cursor();
+            foreach ($cursor as $key => $value) {
+                $data[] = [
+                    'catid'       => $value['id'],
+                    'title'       => $value['typename'],
+                    'content'     => $value['content'],
+                    'keywords'    => $value['keywords'],
+                    'description' => $value['description'],
+                    'inputtime'   => time(),
+                    'updatetime'  => time(),
+                ];
+            }
+            if ($data) {
+                Db::name('page')->insertAll($data);
+            }
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+        unset($cursor);
+    }
+
+    public function step8()
     {
         $db_config = Cache::get('db_config');
         $terms     = $links     = [];
