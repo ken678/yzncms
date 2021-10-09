@@ -176,7 +176,7 @@
                 contentType: false,
                 processData: false,
                 success: function(res) {
-                    if (res.code == 0) {
+                    if (res.code == 1) {
                         var arr = parent.$("#layui-layer" + index).data("arr");
                         var input = parent.$("#" + arr[0]);
                         input.val(input.val().replace(arr[1], res.path)).attr('data-original', res.path).trigger("change");
