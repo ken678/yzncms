@@ -92,13 +92,12 @@ class Qiniu extends Addons
                 'size'   => $file->getSize(),
                 'md5'    => $file->hash('md5'),
                 'sha1'   => $file->hash('sha1'),
-                'module' => $params['module'],
                 'driver' => 'qiniu',
             ];
             if ($file_add = Attachment_Model::create($data)) {
                 // 返回结果
                 return json([
-                    'code'    => 0,
+                    'code'    => 1,
                     'info'    => $data['name'] . '上传成功',
                     'id'      => $file_add['id'],
                     'path'    => $data['path'],
