@@ -390,11 +390,10 @@ class Index extends MemberBase
             }
             $result = $this->validate($data, $rule);
             if (true !== $result) {
-                $this->error($result);
+                $this->error($result, null, ['token' => $this->request->token()]);
             }
-
             if ($type == 'mobile') {
-                $user = $this->Member_Model->where('mobile', $mobile)->find();
+                $user = Member_Model::where('mobile', $mobile)->find();
                 if (!$user) {
                     $this->error('用户不存在！', null, ['token' => $this->request->token()]);
                 }
@@ -403,7 +402,7 @@ class Index extends MemberBase
                     $this->error('验证码错误！', null, ['token' => $this->request->token()]);
                 }
             } elseif ($type == 'email') {
-                $user = $this->Member_Model->where('email', $email)->find();
+                $user = Member_Model::where('email', $email)->find();
                 if (!$user) {
                     $this->error('用户不存在！', null, ['token' => $this->request->token()]);
                 }
@@ -414,16 +413,15 @@ class Index extends MemberBase
             } else {
                 $this->error('类型错误！', null, ['token' => $this->request->token()]);
             }
+            $this->auth->direct($user->id);
             $res = $this->auth->changepwd($newpassword, '', true);
             if (!$res) {
                 $this->error($this->auth->getError());
             }
             $this->success('重置成功！');
-
         } else {
             return $this->fetch('/forget');
         }
-
     }
 
     //会员组升级
@@ -461,7 +459,6 @@ class Index extends MemberBase
             } else {
                 $this->error('余额不足，请先充值！');
             }
-
         } else {
             $groupid    = $this->request->param("groupid/d", 0);
             $grouppoint = $this->memberGroup[$this->auth->groupid]['point'];
@@ -473,7 +470,6 @@ class Index extends MemberBase
             ]);
             return $this->fetch('/upgrade');
         }
-
     }
 
     //手动退出登录
