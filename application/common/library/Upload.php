@@ -16,6 +16,7 @@ namespace app\common\library;
 
 use app\attachment\model\Attachment;
 use app\common\exception\UploadException;
+use think\facade\Hook;
 use think\File;
 
 class Upload
