@@ -16,6 +16,7 @@ namespace app\attachment\controller;
 
 use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Adminbase;
+use think\facade\Hook;
 
 class Attachments extends Adminbase
 {
@@ -65,12 +66,19 @@ class Attachments extends Adminbase
         if (!is_array($ids)) {
             $ids = array(0 => $ids);
         }
-        foreach ($ids as $id) {
-            try {
-                $this->modelClass->deleteFile($id);
-            } catch (\Exception $ex) {
-                $this->error($ex->getMessage());
+        $isAdministrator = $this->auth->isAdministrator();
+        Hook::add('upload_delete', function ($params) {
+            if ($params['driver'] == 'local') {
+                $attachmentFile = ROOT_PATH . '/public' . $params['path'];
+                if (is_file($attachmentFile)) {
+                    @unlink($attachmentFile);
+                }
             }
+        });
+        $attachmentlist = Attachment_Model::where('id', 'in', $ids)->select();
+        foreach ($attachmentlist as $attachment) {
+            Hook::listen("upload_delete", $attachment);
+            $attachment->delete();
         }
         $this->success('文件删除成功~');
     }

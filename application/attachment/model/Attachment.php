@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\attachment\model;
 
-use app\admin\service\User;
 use think\Image;
 use think\Model;
 
@@ -73,22 +72,4 @@ class Attachment extends Model
             $image->save($file);
         }
     }
-
-    public function deleteFile($id)
-    {
-        $isAdministrator = User::instance()->isAdministrator();
-        $uid             = (int) User::instance()->isLogin();
-        $file_path       = $isAdministrator ? self::where('id', $id)->field('path,thumb')->find() : self::where('id', $id)->where('uid', $uid)->field('path,thumb')->find();
-        if (isset($file_path['path'])) {
-            $real_path = realpath(ROOT_PATH . 'public/' . $file_path['path']);
-            if (is_file($real_path) && !unlink($real_path)) {
-                throw new \Exception("删除" . $real_path . "失败");
-            }
-            self::where('id', $id)->delete();
-        } else {
-            throw new \Exception($isAdministrator ? "文件数据库记录已不存在~" : "没有权限删除别人上传的附件~");
-        }
-
-    }
-
 }
