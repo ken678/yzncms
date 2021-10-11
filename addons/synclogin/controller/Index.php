@@ -175,10 +175,9 @@ class Index extends MemberBase
     //绑定已有账号
     public function bindAccount()
     {
-        $account    = $this->request->param('account');
-        $password   = $this->request->param('password');
-        $cookieTime = $this->request->param('cookieTime', 0);
-        $userInfo   = $this->auth->loginLocal($account, $password, $cookieTime ? 86400 * 180 : 86400);
+        $account  = $this->request->param('account');
+        $password = $this->request->param('password');
+        $userInfo = $this->auth->loginLocal($account, $password);
         if ($userInfo) {
             $this->addSyncLoginData($this->auth->id);
             $this->success('账号绑定成功！', url('member/index/index'));
