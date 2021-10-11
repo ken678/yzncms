@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\alioss;
 
-use app\attachment\model\Attachment as Attachment_Model;
+use app\attachment\model\Attachment;
 use OSS\Core\OssException;
 use OSS\OssClient;
 use sys\Addons;
@@ -87,14 +87,14 @@ class Alioss extends Addons
             'uid'    => (int) cookie('uid'),
             'name'   => $info['name'],
             'mime'   => $info['type'],
-            'path'   => $config['domain'] . $object . '?v=' . rand(111111, 999999),
+            'path'   => $config['domain'] . $object,
             'ext'    => $suffix,
             'size'   => $file->getSize(),
             'md5'    => $file->hash('md5'),
             'sha1'   => $file->hash('sha1'),
             'driver' => 'alioss',
         ];
-        if ($file_add = Attachment_Model::create($data)) {
+        if ($file_add = Attachment::create($data)) {
             // 返回结果
             return json([
                 'code'    => 1,
@@ -122,6 +122,19 @@ class Alioss extends Addons
      */
     public function uploadDelete($params = [])
     {
+        $config          = $this->getAddonConfig();
+        $accessKeyId     = $config['accessKey'];
+        $accessKeySecret = $config['secrectKey'];
+        $endpoint        = $config['endpoint'];
+        $bucket          = $config['bucket'];
+        $object          = str_replace($config['domain'], '', $params['path']);
+        try {
+            $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+            $ossClient->deleteObject($bucket, $object);
+        } catch (OssException $e) {
+
+        }
+        return true;
 
     }
 
