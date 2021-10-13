@@ -334,7 +334,7 @@ class Admin extends Adminaddon
                 $data['setting']     = array(
                     'meta_title'        => isset($value['seotitle']) ? $value['seotitle'] : '',
                     'meta_keywords'     => isset($value['keywords']) ? $value['keywords'] : '',
-                    'meta_description'  => isset($value['description']) ? $value['description'] : '',
+                    'meta_description'  => isset($value['description']) ? mb_substr($value['description'], 0, 200) : '',
 
                     'category_template' => isset($value['tempindex']) ? $this->getTemplate($value['tempindex'], 'category') : 'category.html',
                     'list_template'     => isset($value['templist']) ? $this->getTemplate($value['templist'], 'list') : 'list.html',
@@ -392,7 +392,7 @@ class Admin extends Adminaddon
                             'modelid'     => $modelid,
                             'title'       => $value['title'],
                             'keywords'    => $value['keywords'],
-                            'description' => $value['description'],
+                            'description' => mb_substr($value['description'], 0, 200),
                             'listorder'   => $value['weight'],
                             'status'      => 1,
                             'inputtime'   => date('Y-m-d h:i:s', $value['senddate']),
@@ -480,7 +480,7 @@ class Admin extends Adminaddon
                     'title'       => $value['typename'],
                     'content'     => $value['content'],
                     'keywords'    => $value['keywords'],
-                    'description' => $value['description'],
+                    'description' => mb_substr($value['description'], 0, 200),
                     'inputtime'   => time(),
                     'updatetime'  => time(),
                 ];
