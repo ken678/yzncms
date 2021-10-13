@@ -39,6 +39,27 @@ class Admin extends Adminaddon
         'f' => 6,
         'a' => 3,
     );
+    private $dedefieldList = array(
+        'id',
+        'catid',
+        'title',
+        'thumb',
+        'flag',
+        'keywords',
+        'description',
+        'tags',
+        'listorder',
+        'uid',
+        'username',
+        'sysadd',
+        'hits',
+        'inputtime',
+        'updatetime',
+        'url',
+        'status',
+        'did',
+        'content',
+    );
 
     private $ext_table = '_data';
 
@@ -230,6 +251,10 @@ class Admin extends Adminaddon
             preg_match_all("/<field:([a-z]+) itemname=\"(.*?)\" autofield=\"(.*?)\"(?:.*?)type=\"(.*?)\"(?:.*?)default=\"(.*?)\"/", $value['fieldset'], $matches, PREG_SET_ORDER);
             foreach ($matches as $k => $match) {
                 if ($match[3] == "1" && in_array($match[4], ['htmltext', 'text', 'textdata', 'int', 'img'])) {
+                    if (in_array($match[1], $this->dedefieldList)) {
+                        $modelInfo = cache('Model')[$key + 1];
+                        return $this->error('dedecms后台内容管理模型【' . $modelInfo['name'] . '】，其中自定义字段含保留字【' . $match[1] . '】，请重新命名');
+                    }
                     $isadd = true;
                     switch ($match[4]) {
                         case 'int':
