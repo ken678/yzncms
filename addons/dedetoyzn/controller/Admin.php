@@ -349,7 +349,7 @@ class Admin extends Adminaddon
         try {
             foreach ($cursor as $key => $value) {
                 $data['id']          = $value['id'];
-                $data['modelid']     = $dede_models[$value['channeltype']]['id'];
+                $data['modelid']     = $value['ispart'] != 0 ? 0 : $dede_models[$value['channeltype']]['id'];
                 $data['catname']     = $value['typename'];
                 $data['parentid']    = $value['reid'];
                 $data['description'] = "";
@@ -403,7 +403,7 @@ class Admin extends Adminaddon
                 try {
                     $cursor = Db::connect($db_config)
                         ->name('archives')->alias('a')
-                        ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid')->field('a.*,w.*')->select();
+                        ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid and a.typeid=w.typeid')->field('a.*,w.*')->select();
                     foreach ($cursor as $key => $value) {
                         $modelid            = $dede_models[$value['channel']]['id'];
                         $data['modelField'] = [
