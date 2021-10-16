@@ -438,9 +438,9 @@ class Admin extends Adminaddon
                                         break;
                                 }
                                 if ($v['ifsystem']) {
-                                    $data['modelField'][$v['name']] = $value[$v['name']];
+                                    $data['modelField'][$v['name']] = $value[$v['name']] ?? "";
                                 } else {
-                                    $data['modelFieldExt'][$v['name']] = $value[$v['name']];
+                                    $data['modelFieldExt'][$v['name']] = $value[$v['name']] ?? "";
                                 }
                             }
                         }
@@ -475,9 +475,9 @@ class Admin extends Adminaddon
                         if (isset($dede_fields[$modelid])) {
                             foreach ($dede_fields[$modelid] as $k => $v) {
                                 if ($v['ifsystem']) {
-                                    $data['modelField'][$v['name']] = $value[$v['name']];
+                                    $data['modelField'][$v['name']] = $value[$v['name']] ?? "";
                                 } else {
-                                    $data['modelFieldExt'][$v['name']] = $value[$v['name']];
+                                    $data['modelFieldExt'][$v['name']] = $value[$v['name']] ?? "";
                                 }
                             }
                         }
