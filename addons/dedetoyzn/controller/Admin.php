@@ -419,7 +419,7 @@ class Admin extends Adminaddon
                             'keywords'    => $value['keywords'],
                             'description' => mb_substr($value['description'], 0, 200),
                             'listorder'   => $value['weight'],
-                            'status'      => 1,
+                            'status'      => $value['arcrank'] == -2 ? -1 : 1,
                             'inputtime'   => date('Y-m-d h:i:s', $value['senddate']),
                             'updatetime'  => date('Y-m-d h:i:s', $value['senddate']),
                         ];
@@ -465,9 +465,9 @@ class Admin extends Adminaddon
                             'tags'       => '',
                             'url'        => '',
                             'hits'       => $value['click'],
-                            'modelid'    => $modelid, //优化
+                            'modelid'    => $modelid,
                             'listorder'  => 0,
-                            'status'     => 1,
+                            'status'     => $value['arcrank'] == -2 ? -1 : 1,
                             'inputtime'  => date('Y-m-d h:i:s', $value['senddate']),
                             'updatetime' => date('Y-m-d h:i:s', $value['senddate']),
                         ];
