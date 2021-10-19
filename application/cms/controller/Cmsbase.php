@@ -15,6 +15,7 @@
 namespace app\cms\controller;
 
 use app\member\controller\MemberBase;
+use think\facade\Config;
 
 class Cmsbase extends MemberBase
 {
@@ -25,6 +26,7 @@ class Cmsbase extends MemberBase
     protected function initialize()
     {
         parent::initialize();
+        Config::set('url_common_param', true);
         $siteurl         = url('cms/index/index', '', true, false);
         $this->cmsConfig = cache("Cms_Config");
         $this->assign("cms_config", $this->cmsConfig);
