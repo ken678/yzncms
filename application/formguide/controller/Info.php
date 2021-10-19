@@ -90,7 +90,7 @@ class Info extends AdminBase
         return $this->fetch();
     }
 
-    public function getTableList($fieldList = [])
+    private function getTableList($fieldList = [])
     {
         $htmlstr = "";
         foreach ($fieldList as $k => $v) {

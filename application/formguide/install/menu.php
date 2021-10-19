@@ -68,6 +68,12 @@ return [
                 "name"   => "信息列表",
             ],
             [
+                "route"  => "formguide/info/public_view",
+                "type"   => 1,
+                "status" => 0,
+                "name"   => "信息查看",
+            ],
+            [
                 "route"  => "formguide/info/del",
                 "type"   => 1,
                 "status" => 0,
