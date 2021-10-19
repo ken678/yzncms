@@ -231,13 +231,15 @@ class Yzn extends Taglib
     private static function arr_to_html($data)
     {
         if (is_array($data)) {
-            $str = 'array(';
+            $str = '[';
             foreach ($data as $key => $val) {
                 if (is_array($val)) {
                     $str .= "'$key'=>" . self::arr_to_html($val) . ",";
                 } else {
                     //如果是变量的情况
-                    if (strpos($val, '$') === 0) {
+                    if (is_int($val)) {
+                        $str .= "'$key'=>$val,";
+                    } else if (strpos($val, '$') === 0) {
                         $str .= "'$key'=>$val,";
                     } else if (preg_match("/^([a-zA-Z_].*)\(/i", $val, $matches)) {
                         //判断是否使用函数
@@ -251,7 +253,8 @@ class Yzn extends Taglib
                     }
                 }
             }
-            return $str . ')';
+            $str = rtrim($str, ',');
+            return $str . ']';
         }
         return false;
     }
