@@ -483,7 +483,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         //刷新隐藏textarea的值
                         var refresh = function(name, obj) {
                             var data = {};
-                            var textarea = $("textarea[name='" + name + "']");
+                            var textarea = $("textarea[name='" + name + "']",layform);
                             var container = $(".fieldlist[data-name='" + name + "']");
                             var template = container.data("template");
                             $.each($("input,select,textarea", container).serializeArray(), function(i, j) {
@@ -526,7 +526,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             refresh($(this).closest(".fieldlist").data("name"), data);
                         });
                         //追加控制
-                        $(".layui-form .fieldlist").on("click", ".btn-append,.append", function(e, row) {
+                        $(".fieldlist",layform).on("click", ".btn-append,.append", function(e, row) {
                             var container = $(this).closest(".fieldlist");
                             var tagName = container.data("tag") || (container.is("table") ? "tr" : "dd");
                             var index = container.data("index");
@@ -544,18 +544,17 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 $(html).attr("fieldlist-item", true).insertBefore($(tagName + ":last", container));
                             });
                             form.render();
-                            //yznForm.events.faselect();
                             $(this).trigger("fa.event.appendfieldlist", $(this).closest(tagName).prev());
                         });
                         //移除控制
-                        $(".layui-form .fieldlist").on("click", ".btn-remove", function() {
+                        $(".fieldlist",layform).on("click", ".btn-remove", function() {
                             var container = $(this).closest(".fieldlist");
                             var tagName = container.data("tag") || (container.is("table") ? "tr" : "dd");
                             $(this).closest(tagName).remove();
                             refresh(container.data("name"));
                         });
                         //渲染数据&拖拽排序
-                        $(".layui-form .fieldlist").each(function() {
+                        $(".fieldlist",layform).each(function() {
                             var container = this;
                             var tagName = $(this).data("tag") || ($(this).is("table") ? "tr" : "dd");
                             $(this).dragsort({
@@ -566,11 +565,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                 },
                                 //placeHolderTemplate: '<div style="border:1px #009688 dashed;"></div>'
                             });
-
-                            var textarea = $("textarea[name='" + $(this).data("name") + "']");
-                            if (textarea.val() == '') {
-                                return true;
-                            }
+                            var textarea = $("textarea[name='" + $(this).data("name") + "']",layform);
                             var template = $(this).data("template");
                             textarea.on("fa.event.refreshfieldlist", function() {
                                 $("[fieldlist-item]", container).remove();
