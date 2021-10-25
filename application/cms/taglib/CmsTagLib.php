@@ -116,7 +116,8 @@ class CmsTagLib
             }
             $modelid = intval($data['modelid']);
         }
-        $result = model('cms/Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page'], $data['simple']);
+        $pageconfig['path'] = $data['pagepath'];
+        $result             = model('cms/Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page'], $data['simple'], $pageconfig);
         return $result;
     }
 
