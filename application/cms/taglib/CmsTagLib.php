@@ -22,7 +22,9 @@ class CmsTagLib
 
     /**
      * 组合查询条件
-     * @param type $attr
+     *
+     * @param  type  $attr
+     *
      * @return type
      */
     protected function where($attr)
@@ -82,7 +84,6 @@ class CmsTagLib
      */
     public function lists($data)
     {
-
         $catid = isset($data['catid']) ? trim($data['catid']) : '';
 
         $data['where'] = isset($data['where']) ? $data['where'] . " AND `status`=1" : "`status`=1";
@@ -90,7 +91,7 @@ class CmsTagLib
             $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
         }
         if (empty($data['order'])) {
-            $data['order'] = array('updatetime' => 'DESC', 'id' => 'DESC');
+            $data['order'] = ['updatetime' => 'DESC', 'id' => 'DESC'];
         }
         if (isset($data['flag'])) {
             $flag = [];
@@ -116,8 +117,9 @@ class CmsTagLib
             }
             $modelid = intval($data['modelid']);
         }
-        $pageconfig['path'] = $data['pagepath'];
-        $result             = model('cms/Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page'], $data['simple'], $pageconfig);
+        $pageconfig                                     = [];
+        isset($data['pagepath']) && $pageconfig['path'] = $data['pagepath'];
+        $result                                         = model('cms/Cms')->getList($modelid, $this->where($data), $moreifo, $data['field'], $data['order'], $data['limit'], $data['page'], $data['simple'], $pageconfig);
         return $result;
     }
 
@@ -166,7 +168,6 @@ class CmsTagLib
             }
         }
         return $return;
-
     }
 
     /**
@@ -185,7 +186,6 @@ class CmsTagLib
         }
         $result['target'] = $target;
         return $result;
-
     }
 
     /**
