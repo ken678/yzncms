@@ -38,6 +38,8 @@ class install extends InstallBase
                 $sql_statement = Sql::getSqlFromFile($sql_file);
                 if (!empty($sql_statement)) {
                     foreach ($sql_statement as $value) {
+                        $value = str_ireplace('__PREFIX__', config('database.prefix'), $value);
+                        $value = str_ireplace('INSERT INTO ', 'INSERT IGNORE INTO ', $value);
                         try {
                             Db::execute($value);
                         } catch (\Exception $e) {
