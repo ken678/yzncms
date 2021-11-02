@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `yzn_links` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__links` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '链接id',
   `linktype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0:文字链接,1:logo链接',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
