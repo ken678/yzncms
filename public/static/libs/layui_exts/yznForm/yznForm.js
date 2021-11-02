@@ -702,7 +702,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             //打开图片管理
                             ueditors[ueditor_name].addListener("upload.online", function (e, editor, dialog) {
                                 dialog.close(false);
-                                yzn.open('选择',"/attachment/Attachments/select?element_id=&multiple=true&mimetype=image/*", '800','650',{
+                                yzn.open('选择',GV.attachment_select_url + "?element_id=&multiple=true&mimetype=image/*", '800','650',{
                                     callback: function (data) {
                                         var urlArr = data.url.split(/\,/);
                                         urlArr.forEach(function (url, index) {
@@ -716,7 +716,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                             //打开附件管理
                             ueditors[ueditor_name].addListener("file.online", function (e, editor, dialog) {
                                 dialog.close(false);
-                                yzn.open('选择',"/attachment/Attachments/select?element_id=&multiple=true&mimetype=application/*", '800','650',{
+                                yzn.open('选择',GV.attachment_select_url + "?element_id=&multiple=true&mimetype=application/*", '800','650',{
                                     callback: function (data) {
                                         var urlArr = data.url.split(/\,/);
                                         urlArr.forEach(function (url, index) {
