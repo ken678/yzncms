@@ -439,7 +439,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                         var mimetype = $(this).data("mimetype") ? $(this).data("mimetype") : '';
                         var admin_id = $(this).data("admin-id") ? $(this).data("admin-id") : '';
                         var user_id = $(this).data("user-id") ? $(this).data("user-id") : '';
-                        var url = $(this).data("url") ? $(this).data("url") : '/attachment/Attachments/select';
+                        var url = $(this).data("url") ? $(this).data("url") : GV.attachment_select_url;
                         yzn.open('选择',url + "?element_id=" + $(this).attr("id") + "&multiple=" + multiple + "&mimetype=" + mimetype + "&admin_id=" + admin_id + "&user_id=" + user_id, 
                             '800','650',{
                             callback: function (data) {
