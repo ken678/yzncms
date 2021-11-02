@@ -23,11 +23,48 @@ class Attachments extends MemberBase
     public function select()
     {
         if ($this->request->isAjax()) {
-            $page   = $this->request->param('page');
-            $limit  = $this->request->param('limit');
-            $where  = [];
-            $_list  = Attachment::where($where)->page($page, $limit)->order('id', 'desc')->select();
-            $total  = Attachment::where($where)->order('id', 'desc')->count();
+            $page    = $this->request->param('page', 1);
+            $limit   = $this->request->param('limit', 15);
+            $filters = isset($get['filter']) && !empty($get['filter']) ? $get['filter'] : '{}';
+            $ops     = isset($get['op']) && !empty($get['op']) ? $get['op'] : '{}';
+            $where   = [];
+            $filters = json_decode($filters, true);
+            foreach ($filters as $key => $val) {
+                $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
+                switch (strtolower($op)) {
+                    case '=':
+                        $where[] = [$key, '=', $val];
+                        break;
+                    case '%*%':
+                        $where[] = [$key, 'LIKE', "%{$val}%"];
+                        break;
+                    case '*%':
+                        $where[] = [$key, 'LIKE', "{$val}%"];
+                        break;
+                    case '%*':
+                        $where[] = [$key, 'LIKE', "%{$val}"];
+                        break;
+                    case 'range':
+                        list($beginTime, $endTime) = explode(' - ', $val);
+                        $where[]                   = [$key, '>=', strtotime($beginTime)];
+                        $where[]                   = [$key, '<=', strtotime($endTime)];
+                        break;
+                    default:
+                        $where[] = [$key, $op, "%{$val}"];
+                };
+            };
+
+            $total = Attachment::where($where)
+                ->where($where)
+                ->where('uid', $this->auth->id)
+                ->order('id', 'desc')
+                ->count();
+            $_list = Attachment::where($where)
+                ->where($where)
+                ->where('uid', $this->auth->id)
+                ->page($page, $limit)
+                ->order('id', 'desc')
+                ->select();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
