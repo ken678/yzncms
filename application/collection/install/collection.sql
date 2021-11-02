@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS `yzn_collection_node`;
-CREATE TABLE `yzn_collection_node` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__collection_node` (
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL COMMENT '采集节点',
   `lastdate` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后采集时间',
@@ -25,8 +24,7 @@ CREATE TABLE `yzn_collection_node` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='采集任务表';
 
-DROP TABLE IF EXISTS `yzn_collection_content`;
-CREATE TABLE `yzn_collection_content` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__collection_content` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nid` int(10) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0:未采集,1:已采集,2:已导入',
@@ -39,8 +37,7 @@ CREATE TABLE `yzn_collection_content` (
   KEY `url` (`url`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='采集内容表';
 
-DROP TABLE IF EXISTS `yzn_collection_program`;
-CREATE TABLE `yzn_collection_program` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__collection_program` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` char(100) NOT NULL DEFAULT '',
   `nid` int(10) unsigned NOT NULL DEFAULT '0',
