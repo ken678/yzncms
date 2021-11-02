@@ -1,5 +1,4 @@
-DROP TABLE IF EXISTS `yzn_message`;
-CREATE TABLE `yzn_message` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__message` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `send_from` char(30) NOT NULL DEFAULT '0' COMMENT '发件人',
   `send_to` char(30) NOT NULL DEFAULT '0' COMMENT '收件人',
@@ -12,8 +11,7 @@ CREATE TABLE `yzn_message` (
   KEY `replyid` (`replyid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `yzn_message_data`;
-CREATE TABLE `yzn_message_data` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__message_data` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `userid` mediumint(8) NOT NULL,
   `group_message_id` int(5) NOT NULL,
@@ -21,8 +19,7 @@ CREATE TABLE `yzn_message_data` (
   KEY `message` (`userid`,`group_message_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `yzn_message_group`;
-CREATE TABLE `yzn_message_group` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__message_group` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `groupid` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '用户组id',
   `subject` char(80) DEFAULT NULL COMMENT '标题',
