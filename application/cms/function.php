@@ -97,8 +97,7 @@ function filters($modelid, $catid)
     //$catid = Request::param('catid');
     $conditionParam = [];
     foreach ($data as $name => $rs) {
-        $all[0]                 = '不限';
-        $data[$name]['options'] = array_merge($all, $data[$name]['options']);
+        $data[$name]['options'][0] = '不限';
         //判断是否是单选条件
         $ifradio = 'checkbox' == $data[$name]['type'] ? false : true;
         if ($ifradio) {
