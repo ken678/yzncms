@@ -50,7 +50,7 @@ class Field extends Adminbase
             $banFields                  = ['id', 'catid', 'did', 'uid'];
             list($page, $limit, $where) = $this->buildTableParames();
             $total                      = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->count();
-            $data                       = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder,id')->page($page, $limit)->select();
+            $data                       = $this->modelClass->where($where)->where('modelid', $modelid)->whereNotIn('name', $banFields)->order('listorder DESC, id DESC')->page($page, $limit)->select();
             $result                     = array("code" => 0, "count" => $total, "data" => $data);
             return json($result);
         }
