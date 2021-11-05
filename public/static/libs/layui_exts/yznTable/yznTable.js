@@ -34,7 +34,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             }];
 
             options.searchName = yzn.parame(options.searchName || options.init.searchName, 'id');
-            options.searchInput = yzn.parame(options.searchInput || options.init.searchInput, true);
+            options.searchInput = options.search ? yzn.parame(options.searchInput || options.init.searchInput, true):false;
 
             var tableDone = options.done || function() {};
             options.done = function(res, curr, count) {
