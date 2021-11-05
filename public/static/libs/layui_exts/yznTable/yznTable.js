@@ -32,6 +32,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 icon: 'layui-icon-search',
                 extend: 'data-table-id="' + options.id + '"'
             }];
+
+            options.searchName = yzn.parame(options.searchName || options.init.searchName, 'id');
+            options.searchInput = yzn.parame(options.searchInput || options.init.searchInput, true);
+
             var tableDone = options.done || function() {};
             options.done = function(res, curr, count) {
                 tableDone(res, curr, count);
@@ -50,7 +54,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
 
             // 初始化表格左上方工具栏
             options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
-            options.toolbar = yznTable.renderToolbar(options.toolbar, options.elem, options.id, options.init);
+            //options.toolbar = yznTable.renderToolbar(options.toolbar, options.elem, options.id, options.init);
+            options.toolbar = yznTable.renderToolbar(options);
 
             var newTable = table.render(options);
             // 监听表格搜索开关显示
@@ -61,10 +66,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             yznTable.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
             return newTable;
         },
-        renderToolbar: function(data, elem, tableId, init) {
-            data = data || [];
+        renderToolbar: function(options) {
+            var d = options.toolbar, tableId = options.id, searchInput = options.searchInput,init = options.init;
+            d = d || [];
             var toolbarHtml = '';
-            $.each(data, function(i, v) {
+            $.each(d, function (i, v) {
                 if (v === 'refresh') {
                     toolbarHtml += '<button class="layui-btn layui-btn-sm yzn-btn-primary" data-table-refresh="' + tableId + '"><i class="iconfont icon-shuaxin1"></i> </button>\n';
                 } else if (v === 'add') {
@@ -87,6 +93,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                     });
                 }
             });
+            if (searchInput) {
+                toolbarHtml += '<input id="layui-input-search" name="' + options.searchName + '" value="" placeholder="搜索" class="layui-input layui-hide-xs" style="display:inline-block;width:auto;float: right;\n' + 'margin:2px 25px 0 0;height:28px;">\n'
+            }
             return '<div>' + toolbarHtml + '</div>';
         },
         buildToolbarHtml: function(toolbar, tableId) {
@@ -296,9 +305,34 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                         filter: JSON.stringify(formatFilter),
                         op: JSON.stringify(formatOp)
                     }
-                }, 'data');
+                });
                 return false;
             });
+            $(document).on('blur', '#layui-input-search', function (event) {
+                var text = $(this).val();
+                var name = $(this).prop('name').split(',');
+                if(name.length === 1){
+                    var formatFilter = {}, formatOp = {};
+                    formatFilter[name] = text;
+                    formatOp[name] = $(this).data('searchop') || '%*%';
+                    table.reload(tableId, {
+                        page: {
+                            curr: 1
+                        },
+                        where: {
+                            filter: JSON.stringify(formatFilter),
+                            op: JSON.stringify(formatOp)
+                        }
+                    });
+                    $('#layui-input-search').prop("value",$(this).val());
+                    return false
+                }else{
+                    $('#layui-input-search').prop("value",$(this).val());
+                    return false
+                }
+            }).unbind('blur', '#layui-input-search', function (event) {
+                return false
+            })
         },
         listenToolbar: function(layFilter, tableId) {
             table.on('toolbar(' + layFilter + ')', function(obj) {
