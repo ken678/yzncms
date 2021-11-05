@@ -19,8 +19,10 @@ use app\formguide\model\Models as Models_Model;
 
 class Formguide extends Adminbase
 {
+
     //模板存放目录
     protected $filepath, $tpl;
+
     protected function initialize()
     {
         parent::initialize();
@@ -55,7 +57,7 @@ class Formguide extends Adminbase
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success('模型新增成功！', url('index'));
+            $this->success('新增成功！', url('index'));
         } else {
             $this->tpl = str_replace($this->filepath, "", glob($this->filepath . 'show*'));
             $this->tpl = str_replace("." . config("template.view_suffix"), "", $this->tpl);
@@ -84,10 +86,10 @@ class Formguide extends Adminbase
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
-            $this->success("更新模型成功！", url("index"));
+            $this->success("更新成功！", url("index"));
         } else {
             $id = $this->request->param('id/d', 0);
-            $r  = $this->Models->where(array("id" => $id))->find();
+            $r  = $this->Models->where("id", $id)->find();
             if (!$r) {
                 $this->error("该表单不存在！");
             }
@@ -111,7 +113,7 @@ class Formguide extends Adminbase
         $id = $this->request->param('id/d');
         empty($id) && $this->error('参数不能为空！');
         //这里可以根据缓存获取表名
-        $modeldata = $this->Models->where(array("id" => $id))->find();
+        $modeldata = $this->Models->where("id", $id)->find();
         if (!$modeldata) {
             $this->error("要删除的模型不存在！");
         }
