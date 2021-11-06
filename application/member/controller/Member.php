@@ -20,6 +20,7 @@ use app\member\service\User;
 
 class Member extends Adminbase
 {
+    protected $searchFields = 'id,username,nickname';
     //初始化
     protected function initialize()
     {
