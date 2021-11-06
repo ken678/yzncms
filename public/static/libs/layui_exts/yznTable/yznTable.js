@@ -310,27 +310,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
             });
             $(document).on('blur', '#layui-input-search', function (event) {
                 var text = $(this).val();
-                var name = $(this).prop('name').split(',');
-                if(name.length === 1){
-                    var formatFilter = {}, formatOp = {};
-                    formatFilter[name] = text;
-                    formatOp[name] = $(this).data('searchop') || '%*%';
-                    table.reload(tableId, {
-                        page: {
-                            curr: 1
-                        },
-                        where: {
-                            filter: JSON.stringify(formatFilter),
-                            op: JSON.stringify(formatOp)
-                        }
-                    });
-                    $('#layui-input-search').prop("value",$(this).val());
-                    return false
-                }else{
-                    $('#layui-input-search').prop("value",$(this).val());
-                    return false
-                }
-            }).unbind('blur', '#layui-input-search', function (event) {
+                table.reload(tableId, {where:{search: text}});
+                $('#layui-input-search').prop("value",$(this).val());
                 return false
             })
         },
