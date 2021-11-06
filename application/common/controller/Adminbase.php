@@ -212,6 +212,9 @@ class Adminbase extends Base
             $where[] = [implode("|", $searcharr), "LIKE", "%{$search}%"];
         }
         foreach ($filters as $key => $val) {
+            if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $key)) {
+                continue;
+            }
             if (in_array($key, $excludeFields)) {
                 $excludes[$key] = $val;
                 continue;
