@@ -32,8 +32,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 icon: 'layui-icon-search',
                 extend: 'data-table-id="' + options.id + '"'
             }];
-
-            options.searchName = yzn.parame(options.searchName || options.init.searchName, 'id');
             options.searchInput = options.search ? yzn.parame(options.searchInput || options.init.searchInput, true):false;
 
             var tableDone = options.done || function() {};
@@ -94,7 +92,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 }
             });
             if (searchInput) {
-                toolbarHtml += '<input id="layui-input-search" name="' + options.searchName + '" value="" placeholder="搜索" class="layui-input layui-hide-xs" style="display:inline-block;width:auto;float: right;\n' + 'margin:2px 25px 0 0;height:28px;">\n'
+                toolbarHtml += '<input id="layui-input-search" value="" placeholder="搜索" class="layui-input layui-hide-xs" style="display:inline-block;width:auto;float: right;\n' + 'margin:2px 25px 0 0;height:28px;">\n'
             }
             return '<div>' + toolbarHtml + '</div>';
         },
