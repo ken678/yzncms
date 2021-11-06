@@ -39,6 +39,8 @@ class Adminbase extends Base
     protected $auth = null;
     //模型对象
     protected $modelClass = null;
+    //快速搜索时执行查找的字段
+    protected $searchFields = 'id';
     //Selectpage可显示的字段
     protected $selectpageFields = '*';
     //是否是关联查询
@@ -168,25 +170,47 @@ class Adminbase extends Base
 
     /**
      * 构建请求参数
+     * @param mixed   $searchfields   快速查询的字段
      * @param array $excludeFields 忽略构建搜索的字段
+     * @param boolean $relationSearch 是否关联查询
      * @return array
      */
-    protected function buildTableParames($excludeFields = [], $relationSearch = null)
+    protected function buildTableParames($searchfields = null, $excludeFields = [], $relationSearch = null)
     {
+        $searchfields   = is_null($searchfields) ? $this->searchFields : $searchfields;
         $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch;
-        $get            = $this->request->get('', null, null);
-        $page           = isset($get['page']) && !empty($get['page']) ? $get['page'] : 1;
-        $limit          = isset($get['limit']) && !empty($get['limit']) ? $get['limit'] : 15;
-        $filters        = isset($get['filter']) && !empty($get['filter']) ? $get['filter'] : '{}';
-        $ops            = isset($get['op']) && !empty($get['op']) ? $get['op'] : '{}';
+
+        $search  = $this->request->get("search", '');
+        $filters = $this->request->get("filter", '');
+        $ops     = $this->request->get("op", '', 'trim');
+        $page    = $this->request->get("page/d", 1);
+        $limit   = $this->request->get("limit/d", 15);
+        $order   = $this->request->get("order", "DESC");
+        $sort    = $this->request->get("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
+
         // json转数组
-        $filters  = json_decode($filters, true);
-        $ops      = json_decode($ops, true);
-        $where    = [];
-        $excludes = [];
+        $filters   = (array) json_decode($filters, true);
+        $ops       = (array) json_decode($ops, true);
+        $filters   = $filters ? $filters : [];
+        $where     = [];
+        $excludes  = [];
+        $aliasName = '';
 
         $tableName = lcfirst($this->modelClass->getName());
-
+        $sortArr   = explode(',', $sort);
+        foreach ($sortArr as $index => &$item) {
+            $item = stripos($item, ".") === false ? $aliasName . trim($item) : $item;
+        }
+        unset($item);
+        $sort = implode(',', $sortArr);
+        if ($search) {
+            $searcharr = is_array($searchfields) ? $searchfields : explode(',', $searchfields);
+            foreach ($searcharr as $k => &$v) {
+                $v = stripos($v, ".") === false ? $aliasName . $v : $v;
+            }
+            unset($v);
+            $where[] = [implode("|", $searcharr), "LIKE", "%{$search}%"];
+        }
         foreach ($filters as $key => $val) {
             if (in_array($key, $excludeFields)) {
                 $excludes[$key] = $val;
@@ -218,7 +242,7 @@ class Adminbase extends Base
                     $where[] = [$key, $op, "%{$val}"];
             }
         }
-        return [$page, $limit, $where, $excludes];
+        return [$page, $limit, $where, $sort, $order];
     }
 
     /**
