@@ -21,6 +21,7 @@ use util\Tree;
  */
 class Manager extends Adminbase
 {
+    protected $searchFields     = 'id,username,nickname';
     protected $childrenGroupIds = [];
     protected $childrenAdminIds = [];
     protected function initialize()
