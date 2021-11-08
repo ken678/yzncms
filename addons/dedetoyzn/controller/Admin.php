@@ -406,7 +406,11 @@ class Admin extends Adminaddon
                 try {
                     $cursor = Db::connect($db_config)
                         ->name('archives')->alias('a')
-                        ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid and a.typeid=w.typeid')->field('a.*,w.*')->select();
+                        ->join([$db_config['prefix'] . $value['name'] => 'w'], 'a.id=w.aid and a.typeid=w.typeid')
+                        ->leftjoin([$db_config['prefix'] . 'taglist' => 's'], 'a.id=s.aid')
+                        ->field('a.*,w.*,GROUP_CONCAT(s.tag) as tags')
+                        ->group('a.id')
+                        ->select();
                     foreach ($cursor as $key => $value) {
                         $modelid            = $dede_models[$value['channel']]['id'];
                         $data['modelField'] = [
@@ -414,7 +418,7 @@ class Admin extends Adminaddon
                             'catid'       => $value['typeid'],
                             'thumb'       => $value['litpic'] ?? "",
                             'flag'        => $this->getFlag($value['flag']),
-                            'tags'        => '',
+                            'tags'        => isset($value['tags']) ? $value['tags'] : "",
                             'url'         => '',
                             'hits'        => $value['click'],
                             'modelid'     => $modelid,
