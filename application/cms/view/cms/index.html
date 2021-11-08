@@ -21,7 +21,7 @@
     <div class="layui-col-md2 layui-col-sm12" id="left-sider">
         <div class="layui-card">
             <div class="layui-card-header">栏目列表</div>
-            <div class="layui-card-body">
+            <div class="layui-card-body" id="iframe_categorys" style="overflow:auto;">
                 <ul class="ztree" style="margin-left: 5px;margin-top:5px; padding: 0;">
                     <li><a title="全部展开、折叠"><span class="button ico_open"></span><span id="ztree_expandAll">全部展开、折叠 </span></a> </li>
                 </ul>
@@ -95,7 +95,7 @@ layui.use(['jquery', 'ztree'], function() {
         })
 
         function frameheight() {
-            //$("#iframe_categorys").height(B_frame_height);
+            $("#iframe_categorys").height(B_frame_height+7);
             $("#iframe_categorys_list").height(B_frame_height);
         }
         frameheight();
