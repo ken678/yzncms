@@ -88,8 +88,9 @@ class Admin extends Adminaddon
             ['fun' => 'step3', 'msg' => '模型表转换完毕!'],
             ['fun' => 'step4', 'msg' => '模型字段表转换完毕!'],
             ['fun' => 'step5', 'msg' => '栏目转换完毕!'],
-            ['fun' => 'step6', 'msg' => '内容页转换完毕!'],
-            ['fun' => 'step7', 'msg' => '单页转换完毕!'],
+            ['fun' => 'step6', 'msg' => '内容页[主附表]转换完毕!'],
+            ['fun' => 'step7', 'msg' => '内容页[独立表]转换完毕!'],
+            ['fun' => 'step8', 'msg' => '单页转换完毕!'],
         ];
         if (!function_exists("finfo_open")) {
             $this->error('检测到环境未开启php_fileinfo拓展');
@@ -109,7 +110,7 @@ class Admin extends Adminaddon
             //检查是否存在友情链接
             $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}flink'");
             if ($res && isModuleInstall('links')) {
-                $db_task[] = ['fun' => 'step8', 'msg' => '友情链接转换完毕!'];
+                $db_task[] = ['fun' => 'step9', 'msg' => '友情链接转换完毕!'];
             }
             Cache::set('db_task', $db_task, 600);
             unset($db2);
@@ -457,7 +458,24 @@ class Admin extends Adminaddon
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
-            } elseif ($value['real_type'] == 1) {
+                unset($cursor);
+            };
+        }
+        unset($dede_models);
+        unset($dede_fields);
+    }
+
+    public function step7()
+    {
+        set_time_limit(0);
+        ini_set('memory_limit', '500M');
+        $db_config   = Cache::get('db_config');
+        $dede_models = Cache::get('dede_models');
+        $dede_fields = Cache::get('dede_fields');
+        $Cms_Model   = new \app\cms\model\Cms;
+        $data        = [];
+        foreach ($dede_models as $key => $value) {
+            if ($value['real_type'] == 1) {
                 // 独立表
                 try {
                     $cursor = Db::connect($db_config)->name($value['name'])->select();
@@ -494,14 +512,14 @@ class Admin extends Adminaddon
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
-            };
-            unset($cursor);
+                unset($cursor);
+            }
         }
         unset($dede_models);
         unset($dede_fields);
     }
 
-    public function step7()
+    public function step8()
     {
         $data      = [];
         $db_config = Cache::get('db_config');
@@ -527,7 +545,7 @@ class Admin extends Adminaddon
         unset($cursor);
     }
 
-    public function step8()
+    public function step9()
     {
         $db_config = Cache::get('db_config');
         $terms     = $links     = [];
