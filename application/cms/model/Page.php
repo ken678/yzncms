@@ -16,15 +16,16 @@ namespace app\cms\model;
 
 use think\Model;
 
-/**
- * 模型
- */
 class Page extends Model
 {
-    protected $pk                 = 'catid';
+
+    protected $pk = 'catid';
+
     protected $autoWriteTimestamp = true;
-    protected $createTime         = 'inputtime';
-    protected $updateTime         = 'updatetime';
+
+    protected $createTime = 'inputtime';
+
+    protected $updateTime = 'updatetime';
 
     protected function setInputTimeAttr($value)
     {
@@ -33,7 +34,9 @@ class Page extends Model
 
     /**
      * 根据栏目ID获取内容
-     * @param type $catid 栏目ID
+     *
+     * @param  type  $catid  栏目ID
+     *
      * @return boolean
      */
     public function getPage($catid, $cache = false)
@@ -41,14 +44,17 @@ class Page extends Model
         if (empty($catid)) {
             return false;
         }
-        $list = self::get($catid, 10);
-        return $list;
-
+        if (is_numeric($cache)) {
+            $cache = (int) $cache;
+        }
+        return self::get($catid, $cache);
     }
 
     /**
      * 更新单页内容
-     * @param type $post 表单数据
+     *
+     * @param $data
+     *
      * @return boolean
      */
     public function savePage($data)
@@ -62,15 +68,11 @@ class Page extends Model
         if ($row) {
             //更新
             self::update($data, [], true);
-            return true;
         } else {
             //新增
             self::create($data, true);
-            return true;
         }
-        $this->error = '操作失败！';
-        return false;
-
+        return true;
     }
 
 }
