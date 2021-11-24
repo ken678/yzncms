@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__signin` (
 	`create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
 	PRIMARY KEY (`id`),
     KEY `user_id` (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='签到表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='签到表';

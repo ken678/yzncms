@@ -15,4 +15,4 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__sync_login` (
     UNIQUE KEY `type` (`type`,`openid`),
     KEY `uid` (`uid`,`type`),
     KEY `unionid` (`type`,`unionid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='第三方登录表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='第三方登录表';
