@@ -6,19 +6,16 @@
 .vaptcha-init-loading>a img {width: auto !important;vertical-align: middle;height: auto !important;}
 .vaptcha-init-loading .vaptcha-text {font-family: sans-serif; font-size: 12px; color: #bbb; vertical-align: middle }
 </style>
-<script src="https://v.vaptcha.com/v3.js"></script>
+<script src="https://v-cn.vaptcha.com/v3.js"></script>
 <script>
 $(document).ready(function() {
     $(".verify-box").html('<input type="hidden" name="verify" class="form-control" /><div class="layui-input-inline input-item"><div class="vaptcha-container" id="vaptchaContainer"><div class="vaptcha-init-main"><div class="vaptcha-init-loading"><a href="/" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif" /></a><span class="vaptcha-text">Vaptcha启动中...</span></div></div></div></div>');
     vaptcha({
         vid: '{$config.appvid}', //验证单元id
-        type: 'click', //显示类型 点击式
-        https: false, //使用https 默认 true
+        mode: 'click', //显示类型 点击式
         container: '#vaptchaContainer',
         scene: 1, //场景值 不填默认为0
-        offline_server: '{:url("addons/vaptcha/init")}',
-        //可选参数
-        mode: 'offline' // 正式模式使用请注释本行
+        area: 'auto' //验证节点区域,默认 auto,可选值 auto,sea,na,cn
     }).then(function(obj) {
         obj.renderTokenInput('.layui-form');
         obj.render();
