@@ -18,13 +18,13 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__article` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `status` (`catid`,`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章模型模型表';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='文章模型模型表';
 
 CREATE TABLE IF NOT EXISTS `__PREFIX__article_data` (
   `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `content` mediumtext COLLATE utf8_unicode_ci COMMENT '内容',
   PRIMARY KEY (`did`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章模型模型表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='文章模型模型表';
 
 CREATE TABLE IF NOT EXISTS `__PREFIX__picture` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
@@ -46,13 +46,13 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__picture` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `status` (`catid`,`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='图片模型模型表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='图片模型模型表';
 
 CREATE TABLE IF NOT EXISTS `__PREFIX__picture_data` (
   `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `content` mediumtext COLLATE utf8_unicode_ci COMMENT '内容',
   PRIMARY KEY (`did`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='图片模型模型表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='图片模型模型表';
 
 CREATE TABLE IF NOT EXISTS `__PREFIX__download` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
@@ -74,13 +74,13 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__download` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `status` (`catid`,`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='下载模型模型表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='下载模型模型表';
 
 CREATE TABLE IF NOT EXISTS `__PREFIX__download_data` (
   `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `content` mediumtext COLLATE utf8_unicode_ci COMMENT '内容',
   PRIMARY KEY (`did`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='下载模型模型表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='下载模型模型表';
 
 CREATE TABLE IF NOT EXISTS `__PREFIX__product` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
@@ -105,13 +105,13 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__product` (
   `price` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '价格',
   PRIMARY KEY (`id`),
   KEY `status` (`catid`,`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='产品模型模型表';
 
 CREATE TABLE IF NOT EXISTS `__PREFIX__product_data` (
   `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `content` mediumtext COLLATE utf8_unicode_ci COMMENT '内容',
   PRIMARY KEY (`did`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='产品模型模型表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='产品模型模型表';
 
 INSERT INTO `__PREFIX__category` VALUES (2, '公司简介', 'Introduction', 1, 0, 1, '0,1', '2', 0, '', '', '', '', 0, 'a:4:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"page_template\";s:9:\"page.html\";}', 1, 1);
 INSERT INTO `__PREFIX__category` VALUES (3, '企业文化', 'culture', 1, 0, 1, '0,1', '3', 0, '', '', '', '', 0, 'a:4:{s:10:\"meta_title\";s:0:\"\";s:13:\"meta_keywords\";s:0:\"\";s:16:\"meta_description\";s:0:\"\";s:13:\"page_template\";s:9:\"page.html\";}', 2, 1);
