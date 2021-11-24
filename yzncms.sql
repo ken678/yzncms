@@ -33,7 +33,7 @@ CREATE TABLE `yzn_admin` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of yzn_admin
@@ -53,7 +53,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` char(15) NOT NULL DEFAULT '' COMMENT '操作IP',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='操作日志';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='操作日志';
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -79,7 +79,7 @@ CREATE TABLE `yzn_attachment` (
   `listorders` int(5) NOT NULL DEFAULT '100' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='附件表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='附件表';
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -95,7 +95,7 @@ CREATE TABLE `yzn_auth_group` (
   `rules` varchar(500) NOT NULL DEFAULT '' COMMENT '用户组拥有的规则id，多个规则 , 隔开',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='权限组表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='权限组表';
 
 -- ----------------------------
 -- Records of yzn_auth_group
@@ -117,7 +117,7 @@ CREATE TABLE `yzn_auth_rule` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='规则表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='规则表';
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -133,7 +133,7 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='缓存列队表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
@@ -165,7 +165,7 @@ CREATE TABLE `yzn_config` (
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='网站配置';
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='网站配置';
 
 -- ----------------------------
 -- Records of yzn_config
@@ -198,7 +198,7 @@ CREATE TABLE `yzn_field_type` (
   `ifstring` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否自由字符',
   PRIMARY KEY (`name`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='字段类型表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='字段类型表';
 
 -- ----------------------------
 -- Records of yzn_field_type
@@ -245,7 +245,7 @@ CREATE TABLE `yzn_menu` (
   `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of yzn_menu
@@ -310,7 +310,7 @@ DROP TABLE IF EXISTS `yzn_module`;
 CREATE TABLE `yzn_module` (
   `module` varchar(15) NOT NULL COMMENT '模块',
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT '模块名称',
-  `sign` varchar(255) NOT NULL DEFAULT '' COMMENT '签名',
+  `sign` varchar(100) NOT NULL DEFAULT '' COMMENT '签名',
   `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '内置模块',
   `version` varchar(50) NOT NULL DEFAULT '' COMMENT '版本',
   `setting` mediumtext NULL COMMENT '设置信息',
@@ -320,7 +320,7 @@ CREATE TABLE `yzn_module` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`module`),
   KEY `sign` (`sign`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='已安装模块列表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='已安装模块列表';
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -339,7 +339,7 @@ CREATE TABLE `yzn_model` (
   `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型列表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='模型列表';
 
 -- ----------------------------
 -- Table structure for `yzn_model_field`
@@ -367,7 +367,7 @@ CREATE TABLE `yzn_model_field` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模型字段列表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='模型字段列表';
 
 -- ----------------------------
 -- Table structure for `yzn_terms`
@@ -382,7 +382,7 @@ CREATE TABLE `yzn_terms` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `module` (`module`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='分类表';
 
 -- ----------------------------
 -- Table structure for `yzn_sms`
@@ -397,7 +397,7 @@ CREATE TABLE `yzn_sms` (
   `ip` char(15) NOT NULL DEFAULT '' COMMENT '操作IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='短信验证码表';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='短信验证码表';
 
 -- ----------------------------
 -- Table structure for `yzn_ems`
@@ -412,4 +412,4 @@ CREATE TABLE `yzn_ems` (
   `ip` char(15) NOT NULL DEFAULT '' COMMENT '操作IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='邮箱验证码表';
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='邮箱验证码表';
