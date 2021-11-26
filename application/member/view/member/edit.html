@@ -58,6 +58,13 @@
             <input type="text" name="overduedate" class="layui-input datetime" id="overduedate" value="{neq name='data.overduedate' value='0'}{$data.overduedate}{/neq}">
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="status" value="1" title="正常" {if $data.status==1}checked{/if}>
+            <input type="radio" name="status" value="0" title="禁止" {if $data.status==0}checked{/if}>
+        </div>
+    </div>
     <input type="hidden" name="id" value="{$data.id}">
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">

@@ -21,7 +21,7 @@ class Member extends Model
     protected $autoWriteTimestamp = true;
     protected $updateTime         = false;
     protected $createTime         = 'reg_time';
-    protected $insert             = ['status' => 1, 'reg_ip', 'last_login_ip', 'last_login_time'];
+    protected $insert             = ['reg_ip', 'last_login_ip', 'last_login_time'];
     // 追加属性
     protected $append = [
         'groupname',
