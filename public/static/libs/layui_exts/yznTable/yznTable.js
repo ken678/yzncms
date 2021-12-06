@@ -145,13 +145,15 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                 d.searchValue = d.searchValue || '';
                 d.searchOp = d.searchOp || '%*%';
                 d.timeType = d.timeType || 'datetime';
+                var extend = typeof d.extend === 'undefined' ? '' : d.extend;
+                var addClass = typeof d.addClass === 'undefined' ? (typeof d.addclass === 'undefined' ? 'layui-input' : 'layui-input ' + d.addclass) : 'layui-input ' + d.addClass;
                 if (d.field !== false && d.search !== false) {
                     switch (d.search) {
                         case true:
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                '<input class="'+ addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+extend+'>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
@@ -180,7 +182,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                '<input class="'+ addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+extend+'>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
@@ -189,7 +191,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm']
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" class="layui-input">\n' +
+                                '<input class="'+ addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+extend+'>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
