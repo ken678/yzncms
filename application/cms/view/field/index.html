@@ -50,7 +50,7 @@ layui.use('yznTable', function() {
         url: '{:url("index",["id"=>$modelid])}',
         cols: [
             [
-                { field: 'listorder', width: 60, title: '排序', edit: 'text' },
+                { field: 'listorder', width: 60, title: '排序', edit: 'text',search:false },
                 { field: 'id', width: 60, title: 'ID' },
                 { field: 'name',align: "left", title: '字段名称' },
                 { field: 'title',align: "left", title: '标题' },

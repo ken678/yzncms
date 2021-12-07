@@ -69,9 +69,9 @@ layui.use('yznTable', function() {
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
-                { field: 'listorder', width: 70, title: '排序', edit: 'text' },
+                { field: 'listorder', width: 70, title: '排序', edit: 'text',search:false},
                 { field: 'id', width: 70, title: 'ID' },
-                { field: 'name', title: '网站名称' },
+                { field: 'name', title: '网站名称', operate: 'like' },
                 { field: 'url', title: '网站网址' },
                 { field: 'image', width: 150, title: '网站LOGO', templet: '#image', selectList: { 0: '无', 1: '有' } },
                 { field: 'linktype', width: 150, title: '链接类型', templet: '#type', selectList: { 0: '文字链接', 1: '图片链接' } },
