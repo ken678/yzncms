@@ -35,9 +35,9 @@ layui.use('yznTable', function() {
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'id', width: 100, title: '用户ID' },
-                { field: 'username', width: 150, title: '用户名' },
-                { field: 'nickname', width: 150, title: '昵称' },
-                { field: 'email', title: '邮箱' },
+                { field: 'username', width: 150, title: '用户名', operate: 'like' },
+                { field: 'nickname', width: 150, title: '昵称', operate: 'like' },
+                { field: 'email', title: '邮箱', operate: 'like' },
                 { field: 'reg_ip', title: '注册IP' },
                 { field: 'last_login_time', title: '最后登录', search: 'range' },
                 { field: 'amount', width: 120, title: '金钱总数' },
