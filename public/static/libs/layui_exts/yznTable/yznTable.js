@@ -186,7 +186,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.searchOp + '" readonly>\n'+
+                                '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
