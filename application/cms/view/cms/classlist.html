@@ -105,7 +105,7 @@ layui.use(['table', 'yznTable'], function() {
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'listorder', width: 70, title: '排序', edit: 'text',search:false },
                 { field: 'id', width: 60, title: 'ID' },
-                { field: 'title', align: "left", title: '标题', templet: '#title', operate: 'like' },
+                { field: 'title', align: "left", title: '标题', templet: '#title', searchOp: 'like' },
                 { field: 'flag', width: 100, title: '属性',hide: true, selectList: { 1: '置顶', 2: '头条', 3: '特荐', 4: '推荐', 5: '热点', 6: '幻灯' } },
                 { field: 'thumb', width: 100, title: '图片', search: false, templet: yznTable.formatter.image },
                 { field: 'hits', width: 80, title: '点击量',search: 'between',searchTip:'点击量' },

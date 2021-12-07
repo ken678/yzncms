@@ -35,12 +35,12 @@ layui.use('yznTable', function() {
         cols: [
             [
                 { field: 'id', width: 80, title: 'ID'},
-                { field: 'username', width: 80, title: '登录名', operate: 'like' },
-                { field: 'roleid', width: 120, title: '所属角色', operate: 'like' },
-                { field: 'last_login_ip', title: '最后登录IP', operate: 'like'  },
+                { field: 'username', width: 80, title: '登录名', searchOp: 'like' },
+                { field: 'roleid', width: 120, title: '所属角色', searchOp: 'like' },
+                { field: 'last_login_ip', title: '最后登录IP', searchOp: 'like'  },
                 { field: 'last_login_time', width: 200, title: '最后登录时间', search: 'range' },
-                { field: 'email',width: 200, title: 'E-mail', operate: 'like'  },
-                { field: 'nickname', title: '真实姓名', operate: 'like'  },
+                { field: 'email',width: 200, title: 'E-mail', searchOp: 'like'  },
+                { field: 'nickname', title: '真实姓名', searchOp: 'like'  },
                 { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
             ]
         ],
