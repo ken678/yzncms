@@ -34,7 +34,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                 icon: 'layui-icon-search',
                 extend: 'data-table-id="' + options.id + '"'
             }];
-            options.searchInput = options.search ? yzn.parame(options.searchInput || options.init.searchInput, true):false;
+            options.searchInput = options.search ? yzn.parame(options.searchInput || options.init.searchInput, true) : false;
 
             var tableDone = options.done || function() {};
             options.done = function(res, curr, count) {
@@ -54,7 +54,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
 
             // 初始化表格左上方工具栏
             options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
-            //options.toolbar = yznTable.renderToolbar(options.toolbar, options.elem, options.id, options.init);
             options.toolbar = yznTable.renderToolbar(options);
 
             var newTable = table.render(options);
@@ -67,10 +66,13 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
             return newTable;
         },
         renderToolbar: function(options) {
-            var d = options.toolbar, tableId = options.id, searchInput = options.searchInput,init = options.init;
+            var d = options.toolbar,
+                tableId = options.id,
+                searchInput = options.searchInput,
+                init = options.init;
             d = d || [];
             var toolbarHtml = '';
-            $.each(d, function (i, v) {
+            $.each(d, function(i, v) {
                 if (v === 'refresh') {
                     toolbarHtml += '<button class="layui-btn layui-btn-sm yzn-btn-primary" data-table-refresh="' + tableId + '"><i class="iconfont icon-shuaxin1"></i> </button>\n';
                 } else if (v === 'add') {
@@ -112,7 +114,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
             toolbar.checkbox = toolbar.checkbox || false;
             toolbar.html = toolbar.html || '';
 
-            if(toolbar.html !== ''){
+            if (toolbar.html !== '') {
                 return toolbar.html;
             }
 
@@ -122,7 +124,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
 
             if (toolbar.method === 'open') {
                 formatToolbar.method = formatToolbar.method !== '' ? 'data-open="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
-            }else{
+            } else {
                 formatToolbar.method = formatToolbar.method !== '' ? 'data-request="' + formatToolbar.url + '" data-title="' + formatToolbar.title + '" ' : '';
             }
 
@@ -132,7 +134,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
             html = '<button ' + formatToolbar.class + formatToolbar.method + formatToolbar.extend + formatToolbar.checkbox + formatToolbar.tableId + '>' + formatToolbar.icon + formatToolbar.text + '</button>\n';
             return html;
         },
-        renderSearch: function(cols, elem, tableId,searchFormVisible) {
+        renderSearch: function(cols, elem, tableId, searchFormVisible) {
             // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
             cols = cols[0] || {};
             var newCols = [];
@@ -156,8 +158,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
-                                '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n' +
+                                '<input class="' + d.addClass + '" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
@@ -174,7 +176,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n' +
                                 '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '">\n' +
                                 '<option value="">- 全部 -</option> \n' +
                                 selectHtml +
@@ -187,8 +189,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
-                                '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n' +
+                                '<input class="' + d.addClass + '" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
@@ -197,21 +199,21 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.operate + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
+                                '<input class="' + d.addClass + '" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.operate + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
                         case 'between':
                             d.operate = 'BETWEEN';
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
-                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
-                                '<div class="layui-input-inline" style="width: 80px;">\n'+
-                                '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="'+ d.addClass +'" '+d.extend+'>\n'+
+                                '<div class="layui-input-inline" style="width: 80px;">\n' +
+                                '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="' + d.addClass + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
-                                '<div class="layui-form-mid">-</div>\n'+
-                                '<div class="layui-input-inline" style="width: 80px;">\n'+
-                                '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="'+ d.addClass +'" '+d.extend+'>\n'+
+                                '<div class="layui-form-mid">-</div>\n' +
+                                '<div class="layui-input-inline" style="width: 80px;">\n' +
+                                '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="' + d.addClass + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
@@ -220,7 +222,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                 }
             });
             if (formHtml !== '') {
-                $(elem).before('<fieldset style="border:1px solid #ddd;" id="searchFieldset_' + tableId + '" class="table-search-fieldset '+ (searchFormVisible ? "" : "layui-hide")+'">\n' +
+                $(elem).before('<fieldset style="border:1px solid #ddd;" id="searchFieldset_' + tableId + '" class="table-search-fieldset ' + (searchFormVisible ? "" : "layui-hide") + '">\n' +
                     '<legend>条件搜索</legend>\n' +
                     '<form class="layui-form layui-form-pane form-search form-commonsearch">\n' +
                     formHtml +
@@ -257,14 +259,14 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                     }
 
                     // 格式化列操作栏
-                    if (val.templet === yznTable.tool && val.operat === undefined) {
+                    if (val.templet === yznTable.formatter.tool && val.operat === undefined) {
                         cols[i][index]['operat'] = ['edit', 'delete'];
                     }
 
                     // 判断是否包含开关组件
-                    if (val.templet === yznTable.switch && val.filter === undefined) {
+                    /*if (val.templet === yznTable.formatter.switch && val.filter === undefined) {
                         cols[i][index]['filter'] = val.field;
-                    }
+                    }*/
 
                     // 判断是否含有搜索下拉列表
                     if (val.selectList !== undefined && val.search === undefined) {
@@ -283,29 +285,28 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                     }
 
                     // 初始化图片高度
-                    if (val.templet === yznTable.image && val.imageHeight === undefined) {
+                    if (val.templet === yznTable.formatter.image && val.imageHeight === undefined) {
                         cols[i][index]['imageHeight'] = 30;
                     }
 
                     // 判断是否多层对象
                     if (val.field !== undefined && val.field.split(".").length > 1) {
                         if (val.templet === undefined) {
-                            cols[i][index]['templet'] = yznTable.value;
+                            cols[i][index]['templet'] = yznTable.formatter.value;
                         }
                     }
 
                     // 判断是否列表数据转换
-                    if (val.selectList !== undefined && val.templet === undefined) {
-                        cols[i][index]['templet'] = yznTable.list;
-                    }
-
+                    /*if (val.selectList !== undefined && val.templet === undefined) {
+                        cols[i][index]['templet'] = yznTable.formatter.list;
+                    }*/
                 }
             }
             return cols;
         },
         listenTableSearch: function(tableId) {
             form.on('submit(' + tableId + '_filter)', function(data) {
-                var searchQuery = yznTable.getSearchQuery(this,true);
+                var searchQuery = yznTable.getSearchQuery(this, true);
 
 
                 table.reload(tableId, {
@@ -319,45 +320,21 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                 });
                 return false;
             })
-            /*form.on('submit(' + tableId + '_filter)', function(data) {
-                var dataField = data.field;
-                var formatFilter = {},
-                    formatOp = {};
-
-                $.each(dataField, function(key, val) {
-                    if (val !== '') {
-                        formatFilter[key] = val;
-                        var op = $('#c-' + key).attr('data-search-op');
-                        op = op || '%*%';
-                        formatOp[key] = op;
-                    }
-                });
-                table.reload(tableId, {
-                    page: {
-                        curr: 1
-                    },
-                    where: {
-                        filter: JSON.stringify(formatFilter),
-                        op: JSON.stringify(formatOp)
-                    }
-                });
-                return false;
-            });*/
-            $(document).on('blur', '#layui-input-search', function (event) {
+            $(document).on('blur', '#layui-input-search', function(event) {
                 var text = $(this).val();
-                table.reload(tableId, {where:{search: text}});
-                $('#layui-input-search').prop("value",$(this).val());
+                table.reload(tableId, { where: { search: text } });
+                $('#layui-input-search').prop("value", $(this).val());
                 return false
             })
         },
-        getSearchQuery : function (that, removeempty) {
+        getSearchQuery: function(that, removeempty) {
             var op = {};
             var filter = {};
             var value = '';
-            $("form.form-commonsearch .operate").each(function (i) {
+            $("form.form-commonsearch .operate").each(function(i) {
                 var name = $(this).data("name");
                 var sym = $(this).is("select") ? $("option:selected", this).val() : $(this).val().toUpperCase();
-                var obj = $("[name='" + name + "']",'.form-commonsearch');
+                var obj = $("[name='" + name + "']", '.form-commonsearch');
                 if (obj.size() == 0)
                     return true;
                 var vObjCol = ColumnsForSearch[i];
@@ -383,7 +360,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                         value = $("[name='" + name + "']:checked", '.form-commonsearch').val();
                         value = process ? process(value) : value;
                     }
-                }else{
+                } else {
                     value = process ? process(obj.val()) : obj.val();
                 }
                 if (removeempty && (value == '' || value == null || ($.isArray(value) && value.length == 0)) && !sym.match(/null/i)) {
@@ -392,7 +369,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                 op[name] = sym;
                 filter[name] = value;
             });
-            return {op: op, filter: filter};
+            return { op: op, filter: filter };
         },
         listenToolbar: function(layFilter, tableId) {
             table.on('toolbar(' + layFilter + ')', function(obj) {
@@ -448,7 +425,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
             url = url.indexOf("?") !== -1 ? url + '&' + field + '=' + data[field] : url + '?' + field + '=' + data[field];
             return url;
         },
-        buildOperatHtml: function (operat) {
+        buildOperatHtml: function(operat) {
             var html = '';
             operat.class = operat.class || '';
             operat.icon = operat.icon || '';
@@ -471,136 +448,139 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
             html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + '>' + formatOperat.icon + formatOperat.text + '</a>';
             return html;
         },
-        tool: function (data, option) {
-            option.operat = option.operat || ['edit', 'delete'];
-            var elem = option.init.table_elem || init.table_elem;
-            var html = '';
-            $.each(option.operat, function (i, item) {
-                if (typeof item === 'string') {
-                    switch (item) {
-                        case 'edit':
-                            var operat = {
-                                class: 'layui-btn layui-btn-success layui-btn-xs',
-                                method: 'open',
-                                field: 'id',
-                                icon: '',
-                                text: '编辑',
-                                title: '编辑信息',
-                                url: option.init.edit_url,
-                                extend: ""
-                            };
-                            operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                            //if (admin.checkAuth(operat.auth, elem)) {
+        formatter: {
+            tool: function(data, option) {
+                option.operat = option.operat || ['edit', 'delete'];
+                var elem = option.init.table_elem || init.table_elem;
+                var html = '';
+                $.each(option.operat, function(i, item) {
+                    if (typeof item === 'string') {
+                        switch (item) {
+                            case 'edit':
+                                var operat = {
+                                    class: 'layui-btn layui-btn-success layui-btn-xs',
+                                    method: 'open',
+                                    field: 'id',
+                                    icon: '',
+                                    text: '编辑',
+                                    title: '编辑信息',
+                                    url: option.init.edit_url,
+                                    extend: ""
+                                };
+                                operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                                //if (admin.checkAuth(operat.auth, elem)) {
                                 html += yznTable.buildOperatHtml(operat);
-                            //}
-                            break;
-                        case 'delete':
-                            var operat = {
-                                class: 'layui-btn layui-btn-danger layui-btn-xs',
-                                method: 'get',
-                                field: 'id',
-                                icon: '',
-                                text: '删除',
-                                title: '确定删除？',
-                                url: option.init.delete_url,
-                                extend: ""
-                            };
-                            operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                            //if (admin.checkAuth(operat.auth, elem)) {
+                                //}
+                                break;
+                            case 'delete':
+                                var operat = {
+                                    class: 'layui-btn layui-btn-danger layui-btn-xs',
+                                    method: 'get',
+                                    field: 'id',
+                                    icon: '',
+                                    text: '删除',
+                                    title: '确定删除？',
+                                    url: option.init.delete_url,
+                                    extend: ""
+                                };
+                                operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                                //if (admin.checkAuth(operat.auth, elem)) {
                                 html += yznTable.buildOperatHtml(operat);
-                            //}
-                            break;
-                    }
+                                //}
+                                break;
+                        }
 
-                } else if (typeof item === 'object') {
-                    $.each(item, function (i, operat) {
-                        operat.class = operat.class || '';
-                        operat.icon = operat.icon || '';
-                        operat.auth = operat.auth || '';
-                        operat.url = operat.url || '';
-                        operat.method = operat.method || 'open';
-                        operat.field = operat.field || 'id';
-                        operat.title = operat.title || operat.text;
-                        operat.text = operat.text || operat.title;
-                        operat.extend = operat.extend || '';
-                        operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                        //if (admin.checkAuth(operat.auth, elem)) {
+                    } else if (typeof item === 'object') {
+                        $.each(item, function(i, operat) {
+                            operat.class = operat.class || '';
+                            operat.icon = operat.icon || '';
+                            operat.auth = operat.auth || '';
+                            operat.url = operat.url || '';
+                            operat.method = operat.method || 'open';
+                            operat.field = operat.field || 'id';
+                            operat.title = operat.title || operat.text;
+                            operat.text = operat.text || operat.title;
+                            operat.extend = operat.extend || '';
+                            operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                            //if (admin.checkAuth(operat.auth, elem)) {
                             html += yznTable.buildOperatHtml(operat);
-                        //}
-                    });
-                }
-            });
-            return html;
-        },
-        image: function(data, option) {
-            option.imageWidth = option.imageWidth || 80;
-            option.imageHeight = option.imageHeight || 30;
-            option.imageSplit = option.imageSplit || '|';
-            option.imageJoin = option.imageJoin || '<br>';
-            option.title = option.title || option.field;
-            var field = option.field,
-                title = data[option.title];
-            try {
-                var value = eval("data." + field);
-            } catch (e) {
-                var value = undefined;
-            }
-            if (!value) {
-                return '';
-            } else {
-                var values = value.split(option.imageSplit),
-                    valuesHtml = [];
-                values.forEach((value, index) => {
-                    valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                            //}
+                        });
+                    }
                 });
-                return valuesHtml.join(option.imageJoin);
-            }
+                return html;
+            },
+            image: function(data, option) {
+                option.imageWidth = option.imageWidth || 80;
+                option.imageHeight = option.imageHeight || 30;
+                option.imageSplit = option.imageSplit || '|';
+                option.imageJoin = option.imageJoin || '<br>';
+                option.title = option.title || option.field;
+                var field = option.field,
+                    title = data[option.title];
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                if (!value) {
+                    return '';
+                } else {
+                    var values = value.split(option.imageSplit),
+                        valuesHtml = [];
+                    values.forEach((value, index) => {
+                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                    });
+                    return valuesHtml.join(option.imageJoin);
+                }
+            },
+            url: function(data, option) {
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                return '<a class="layui-btn layui-btn-primary layui-btn-xs" href="' + value + '" target="_blank"><i class="iconfont icon-lianjie"></i></a></a>';
+            },
+            price: function(data, option) {
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                return '<span>￥' + value + '</span>';
+            },
+            icon: function(data, option) {
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                return '<i class="' + value + '"></i>';
+            },
+            text: function(data, option) {
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                return '<span class="line-limit-length">' + value + '</span>';
+            },
+            value: function(data, option) {
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                return '<span>' + value + '</span>';
+            },
         },
-        url: function(data, option) {
-            var field = option.field;
-            try {
-                var value = eval("data." + field);
-            } catch (e) {
-                var value = undefined;
-            }
-            return '<a class="layui-btn layui-btn-primary layui-btn-xs" href="' + value + '" target="_blank"><i class="iconfont icon-lianjie"></i></a></a>';
-        },
-        price: function(data, option) {
-            var field = option.field;
-            try {
-                var value = eval("data." + field);
-            } catch (e) {
-                var value = undefined;
-            }
-            return '<span>￥' + value + '</span>';
-        },
-        icon: function(data, option) {
-            var field = option.field;
-            try {
-                var value = eval("data." + field);
-            } catch (e) {
-                var value = undefined;
-            }
-            return '<i class="' + value + '"></i>';
-        },
-        text: function(data, option) {
-            var field = option.field;
-            try {
-                var value = eval("data." + field);
-            } catch (e) {
-                var value = undefined;
-            }
-            return '<span class="line-limit-length">' + value + '</span>';
-        },
-        value: function(data, option) {
-            var field = option.field;
-            try {
-                var value = eval("data." + field);
-            } catch (e) {
-                var value = undefined;
-            }
-            return '<span>' + value + '</span>';
-        },
+
     }
     exports(MOD_NAME, yznTable);
 });
