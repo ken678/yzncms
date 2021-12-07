@@ -174,7 +174,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.operate + '" >\n' +
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
+                                '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '">\n' +
                                 '<option value="">- 全部 -</option> \n' +
                                 selectHtml +
                                 '</select>\n' +
