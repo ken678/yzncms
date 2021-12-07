@@ -1,7 +1,7 @@
 /**
  @ Name：简单封下table
  */
-layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element', 'yznForm'], function(exports) {
+layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(exports) {
     var MOD_NAME = 'yznTable',
         $ = layui.$,
         table = layui.table,
