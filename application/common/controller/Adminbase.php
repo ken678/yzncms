@@ -17,6 +17,7 @@ namespace app\common\controller;
 use app\admin\service\User;
 use think\facade\Hook;
 use think\facade\Session;
+use think\Loader;
 use think\Validate;
 
 //定义是后台
@@ -343,75 +344,6 @@ class Adminbase extends Base
             }
         };
         return [$page, $limit, $where, $sort, $order, $offset, $alias, $bind];
-        /*$searchfields   = is_null($searchfields) ? $this->searchFields : $searchfields;
-    $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch;
-
-    $search  = $this->request->get("search", '');
-    $filters = $this->request->get("filter", '');
-    $ops     = $this->request->get("op", '', 'trim');
-    $page    = $this->request->get("page/d", 1);
-    $limit   = $this->request->get("limit/d", 15);
-    $order   = $this->request->get("order", "DESC");
-    $sort    = $this->request->get("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
-
-    // json转数组
-    $filters   = (array) json_decode($filters, true);
-    $ops       = (array) json_decode($ops, true);
-    $filters   = $filters ? $filters : [];
-    $where     = [];
-    $excludes  = [];
-    $aliasName = '';
-
-    $tableName = lcfirst($this->modelClass->getName());
-    $sortArr   = explode(',', $sort);
-    foreach ($sortArr as $index => &$item) {
-    $item = stripos($item, ".") === false ? $aliasName . trim($item) : $item;
-    }
-    unset($item);
-    $sort = implode(',', $sortArr);
-    if ($search) {
-    $searcharr = is_array($searchfields) ? $searchfields : explode(',', $searchfields);
-    foreach ($searcharr as $k => &$v) {
-    $v = stripos($v, ".") === false ? $aliasName . $v : $v;
-    }
-    unset($v);
-    $where[] = [implode("|", $searcharr), "LIKE", "%{$search}%"];
-    }
-    foreach ($filters as $key => $val) {
-    if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $key)) {
-    continue;
-    }
-    if (in_array($key, $excludeFields)) {
-    $excludes[$key] = $val;
-    continue;
-    }
-    $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
-    if ($relationSearch && count(explode('.', $key)) == 1) {
-    $key = "{$tableName}.{$key}";
-    }
-    switch (strtolower($op)) {
-    case '=':
-    $where[] = [$key, '=', $val];
-    break;
-    case '%*%':
-    $where[] = [$key, 'LIKE', "%{$val}%"];
-    break;
-    case '*%':
-    $where[] = [$key, 'LIKE', "{$val}%"];
-    break;
-    case '%*':
-    $where[] = [$key, 'LIKE', "%{$val}"];
-    break;
-    case 'range':
-    list($beginTime, $endTime) = explode(' - ', $val);
-    $where[]                   = [$key, '>=', strtotime($beginTime)];
-    $where[]                   = [$key, '<=', strtotime($endTime)];
-    break;
-    default:
-    $where[] = [$key, $op, "%{$val}"];
-    }
-    }
-    return [$page, $limit, $where, $sort, $order];*/
     }
 
     /**
