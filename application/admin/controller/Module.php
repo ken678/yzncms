@@ -63,6 +63,7 @@ class Module extends Adminbase
             try {
                 ModuleService::install($name);
             } catch (\Exception $e) {
+                cache('Module', null);
                 $this->error($e->getMessage());
             }
             $this->success('模块安装成功！一键清理缓存后生效！', url('index'));
@@ -129,6 +130,7 @@ class Module extends Adminbase
             try {
                 ModuleService::uninstall($name, true);
             } catch (\Exception $e) {
+                cache('Module', null);
                 $this->error($e->getMessage());
             }
             $this->success("模块卸载成功！一键清理缓存后生效！", url('index'));
