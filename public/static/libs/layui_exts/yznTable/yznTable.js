@@ -145,7 +145,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                 d.search = yzn.parame(d.search, true);
                 d.searchTip = d.searchTip || '请输入' + d.title || '';
                 d.searchValue = d.searchValue || '';
-                d.searchOp = d.searchOp || '=';
+                d.operate = d.operate || '=';
                 d.timeType = d.timeType || 'datetime';
                 d.extend = typeof d.extend === 'undefined' ? '' : d.extend;
                 d.addClass = typeof d.addClass === 'undefined' ? (typeof d.addclass === 'undefined' ? 'layui-input' : 'layui-input ' + d.addclass) : 'layui-input ' + d.addClass;
@@ -156,13 +156,13 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.searchOp + '" readonly>\n'+
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
                                 '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
                         case 'select':
-                            d.searchOp = '=';
+                            d.operate = '=';
                             var selectHtml = '';
                             $.each(d.selectList, function(sI, sV) {
                                 var selected = '';
@@ -174,7 +174,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" >\n' +
+                                '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.operate + '" >\n' +
                                 '<option value="">- 全部 -</option> \n' +
                                 selectHtml +
                                 '</select>\n' +
@@ -182,21 +182,21 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                                 '</div>';
                             break;
                         case 'range':
-                            d.searchOp = 'range';
+                            d.operate = 'range';
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.searchOp + '" readonly>\n'+
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
                                 '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
                         case 'time':
-                            d.searchOp = '=';
+                            d.operate = '=';
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
+                                '<input class="'+ d.addClass +'" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.operate + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" '+d.extend+'>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
