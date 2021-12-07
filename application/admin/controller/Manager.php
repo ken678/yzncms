@@ -13,7 +13,6 @@ namespace app\admin\controller;
 use app\admin\model\AdminUser as Admin_User;
 use app\admin\model\AuthGroup as AuthGroupModel;
 use app\common\controller\Adminbase;
-use think\facade\Session;
 use util\Tree;
 
 /**
@@ -106,7 +105,7 @@ class Manager extends Adminbase
                 $this->error('没有权限操作！');
             }
             if ($this->modelClass->createManager($data)) {
-                $this->success("添加管理员成功！", url('admin/manager/index'));
+                $this->success("添加成功！", url('admin/manager/index'));
             } else {
                 $error = $this->modelClass->getError();
                 $this->error($error ? $error : '添加失败！');
@@ -135,10 +134,6 @@ class Manager extends Adminbase
                 $this->error('没有权限操作！');
             }
             if ($this->modelClass->editManager($data)) {
-                $info = $this->modelClass->where("id", $data['id'])->find();
-                if ($data['id'] == $this->auth->isLogin()) {
-                    Session::set("admin", $info);
-                }
                 $this->success("修改成功！");
             } else {
                 $this->error('修改失败！');
