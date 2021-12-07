@@ -208,7 +208,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
             if (formHtml !== '') {
                 $(elem).before('<fieldset style="border:1px solid #ddd;" id="searchFieldset_' + tableId + '" class="table-search-fieldset '+ (searchFormVisible ? "" : "layui-hide")+'">\n' +
                     '<legend>条件搜索</legend>\n' +
-                    '<form class="layui-form layui-form-pane form-search">\n' +
+                    '<form class="layui-form layui-form-pane form-search form-commonsearch">\n' +
                     formHtml +
                     '<div class="layui-form-item layui-inline" style="margin-left: 115px">\n' +
                     '<button type="submit" class="layui-btn layui-btn-normal" data-type="tableSearch" data-table="' + tableId + '" lay-submit lay-filter="' + tableId + '_filter"> 搜 索</button>\n' +
@@ -340,10 +340,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
             var op = {};
             var filter = {};
             var value = '';
-            $("form.form-search .operate").each(function (i) {
+            $("form.form-commonsearch .operate").each(function (i) {
                 var name = $(this).data("name");
                 var sym = $(this).is("select") ? $("option:selected", this).val() : $(this).val().toUpperCase();
-                var obj = $("[name='" + name + "']");
+                var obj = $("[name='" + name + "']",'.form-commonsearch');
                 if (obj.size() == 0)
                     return true;
                 var vObjCol = ColumnsForSearch[i];
@@ -362,11 +362,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                             value = '';
                         }
                         //如果是时间筛选，将operate置为RANGE
-                        if ($("[name='" + name + "']:first", that.$commonsearch).hasClass("datetimepicker")) {
+                        if ($("[name='" + name + "']:first", '.form-commonsearch').hasClass("datetimepicker")) {
                             sym = 'RANGE';
                         }
                     } else {
-                        value = $("[name='" + name + "']:checked", that.$commonsearch).val();
+                        value = $("[name='" + name + "']:checked", '.form-commonsearch').val();
                         value = process ? process(value) : value;
                     }
                 }else{
