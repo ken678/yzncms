@@ -201,6 +201,20 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
                                 '</div>\n' +
                                 '</div>';
                             break;
+                        case 'between':
+                            d.operate = 'BETWEEN';
+                            formHtml += '\t<div class="layui-form-item layui-inline">\n' +
+                                '<input type="hidden" class="form-control operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.operate + '" readonly>\n'+
+                                '<label class="layui-form-label">' + d.title + '</label>\n' +
+                                '<div class="layui-input-inline" style="width: 80px;">\n'+
+                                '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="'+ d.addClass +'" '+d.extend+'>\n'+
+                                '</div>\n' +
+                                '<div class="layui-form-mid">-</div>\n'+
+                                '<div class="layui-input-inline" style="width: 80px;">\n'+
+                                '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="'+ d.addClass +'" '+d.extend+'>\n'+
+                                '</div>\n' +
+                                '</div>';
+                            break;
                     }
                     newCols.push(d);
                 }
