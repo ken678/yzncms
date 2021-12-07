@@ -179,25 +179,33 @@ class Adminbase extends Base
     {
         $searchfields   = is_null($searchfields) ? $this->searchFields : $searchfields;
         $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch;
-
-        $search  = $this->request->get("search", '');
-        $filters = $this->request->get("filter", '');
-        $ops     = $this->request->get("op", '', 'trim');
-        $page    = $this->request->get("page/d", 1);
-        $limit   = $this->request->get("limit/d", 15);
-        $order   = $this->request->get("order", "DESC");
-        $sort    = $this->request->get("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
-
-        // json转数组
-        $filters   = (array) json_decode($filters, true);
-        $ops       = (array) json_decode($ops, true);
-        $filters   = $filters ? $filters : [];
+        $search         = $this->request->get("search", '');
+        $filter         = $this->request->get("filter", '');
+        $op             = $this->request->get("op", '', 'trim');
+        $sort           = $this->request->get("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
+        $order          = $this->request->get("order", "DESC");
+        $offset         = $this->request->get("offset/d", 0);
+        $limit          = $this->request->get("limit/d", 999999);
+        //新增自动计算页码
+        $page = $limit ? intval($offset / $limit) + 1 : 1;
+        if ($this->request->has("page")) {
+            $page = $this->request->get("page/d", 1);
+        }
+        $this->request->get([config('paginate.var_page') => $page]);
+        $filter    = (array) json_decode($filter, true);
+        $op        = (array) json_decode($op, true);
+        $filter    = $filter ? $filter : [];
         $where     = [];
-        $excludes  = [];
+        $alias     = [];
+        $bind      = [];
+        $name      = '';
         $aliasName = '';
-
-        $tableName = lcfirst($this->modelClass->getName());
-        $sortArr   = explode(',', $sort);
+        if (!empty($this->modelClass) && $this->relationSearch) {
+            $name         = $this->modelClass->getTable();
+            $alias[$name] = Loader::parseName(basename(str_replace('\\', '/', get_class($this->modelClass))));
+            $aliasName    = $alias[$name] . '.';
+        }
+        $sortArr = explode(',', $sort);
         foreach ($sortArr as $index => &$item) {
             $item = stripos($item, ".") === false ? $aliasName . trim($item) : $item;
         }
@@ -211,41 +219,199 @@ class Adminbase extends Base
             unset($v);
             $where[] = [implode("|", $searcharr), "LIKE", "%{$search}%"];
         }
-        foreach ($filters as $key => $val) {
-            if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $key)) {
+        $index = 0;
+        foreach ($filter as $k => $v) {
+            if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $k)) {
                 continue;
             }
-            if (in_array($key, $excludeFields)) {
-                $excludes[$key] = $val;
-                continue;
+            $sym = isset($op[$k]) ? $op[$k] : '=';
+            if (stripos($k, ".") === false) {
+                $k = $aliasName . $k;
             }
-            $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
-            if ($relationSearch && count(explode('.', $key)) == 1) {
-                $key = "{$tableName}.{$key}";
+            $v   = !is_array($v) ? trim($v) : $v;
+            $sym = strtoupper(isset($op[$k]) ? $op[$k] : $sym);
+            //null和空字符串特殊处理
+            if (!is_array($v)) {
+                if (in_array(strtoupper($v), ['NULL', 'NOT NULL'])) {
+                    $sym = strtoupper($v);
+                }
+                if (in_array($v, ['""', "''"])) {
+                    $v   = '';
+                    $sym = '=';
+                }
             }
-            switch (strtolower($op)) {
+
+            switch ($sym) {
                 case '=':
-                    $where[] = [$key, '=', $val];
+                case '<>':
+                    $where[] = [$k, $sym, (string) $v];
                     break;
-                case '%*%':
-                    $where[] = [$key, 'LIKE', "%{$val}%"];
+                case 'LIKE':
+                case 'NOT LIKE':
+                case 'LIKE %...%':
+                case 'NOT LIKE %...%':
+                    $where[] = [$k, trim(str_replace('%...%', '', $sym)), "%{$v}%"];
                     break;
-                case '*%':
-                    $where[] = [$key, 'LIKE', "{$val}%"];
+                case '>':
+                case '>=':
+                case '<':
+                case '<=':
+                    $where[] = [$k, $sym, intval($v)];
                     break;
-                case '%*':
-                    $where[] = [$key, 'LIKE', "%{$val}"];
+                case 'FINDIN':
+                case 'FINDINSET':
+                case 'FIND_IN_SET':
+                    $v       = is_array($v) ? $v : explode(',', str_replace(' ', ',', $v));
+                    $findArr = array_values($v);
+                    foreach ($findArr as $idx => $item) {
+                        $bindName        = "item_" . $index . "_" . $idx;
+                        $bind[$bindName] = $item;
+                        $where[]         = "FIND_IN_SET(:{$bindName}, `" . str_replace('.', '`.`', $k) . "`)";
+                    }
                     break;
-                case 'range':
-                    list($beginTime, $endTime) = explode(' - ', $val);
-                    $where[]                   = [$key, '>=', strtotime($beginTime)];
-                    $where[]                   = [$key, '<=', strtotime($endTime)];
+                case 'IN':
+                case 'IN(...)':
+                case 'NOT IN':
+                case 'NOT IN(...)':
+                    $where[] = [$k, str_replace('(...)', '', $sym), is_array($v) ? $v : explode(',', $v)];
+                    break;
+                case 'BETWEEN':
+                case 'NOT BETWEEN':
+                    $arr = array_slice(explode(',', $v), 0, 2);
+                    if (stripos($v, ',') === false || !array_filter($arr)) {
+                        continue 2;
+                    }
+                    //当出现一边为空时改变操作符
+                    if ($arr[0] === '') {
+                        $sym = $sym == 'BETWEEN' ? '<=' : '>';
+                        $arr = $arr[1];
+                    } elseif ($arr[1] === '') {
+                        $sym = $sym == 'BETWEEN' ? '>=' : '<';
+                        $arr = $arr[0];
+                    }
+                    $where[] = [$k, $sym, $arr];
+                    break;
+                case 'RANGE':
+                case 'NOT RANGE':
+                    $v   = str_replace(' - ', ',', $v);
+                    $arr = array_slice(explode(',', $v), 0, 2);
+                    if (stripos($v, ',') === false || !array_filter($arr)) {
+                        continue 2;
+                    }
+                    //当出现一边为空时改变操作符
+                    if ($arr[0] === '') {
+                        $sym = $sym == 'RANGE' ? '<=' : '>';
+                        $arr = $arr[1];
+                    } elseif ($arr[1] === '') {
+                        $sym = $sym == 'RANGE' ? '>=' : '<';
+                        $arr = $arr[0];
+                    }
+                    $tableArr = explode('.', $k);
+                    if (count($tableArr) > 1 && $tableArr[0] != $name && !in_array($tableArr[0], $alias) && !empty($this->modelClass)) {
+                        //修复关联模型下时间无法搜索的BUG
+                        $relation                                          = Loader::parseName($tableArr[0], 1, false);
+                        $alias[$this->modelClass->$relation()->getTable()] = $tableArr[0];
+                    }
+                    $where[] = [$k, str_replace('RANGE', 'BETWEEN', $sym) . ' TIME', $arr];
+                    break;
+                case 'NULL':
+                case 'IS NULL':
+                case 'NOT NULL':
+                case 'IS NOT NULL':
+                    $where[] = [$k, strtolower(str_replace('IS ', '', $sym))];
                     break;
                 default:
-                    $where[] = [$key, $op, "%{$val}"];
+                    break;
             }
+            $index++;
         }
-        return [$page, $limit, $where, $sort, $order];
+        if (!empty($this->modelClass)) {
+            $this->modelClass->alias($alias);
+        }
+        $model = $this->modelClass;
+        $where = function ($query) use ($where, $alias, $bind, &$model) {
+            if (!empty($model)) {
+                $model->alias($alias);
+                $model->bind($bind);
+            }
+            foreach ($where as $k => $v) {
+                if (is_array($v)) {
+                    call_user_func_array([$query, 'where'], $v);
+                } else {
+                    $query->where($v);
+                }
+            }
+        };
+        return [$page, $limit, $where, $sort, $order, $offset, $alias, $bind];
+        /*$searchfields   = is_null($searchfields) ? $this->searchFields : $searchfields;
+    $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch;
+
+    $search  = $this->request->get("search", '');
+    $filters = $this->request->get("filter", '');
+    $ops     = $this->request->get("op", '', 'trim');
+    $page    = $this->request->get("page/d", 1);
+    $limit   = $this->request->get("limit/d", 15);
+    $order   = $this->request->get("order", "DESC");
+    $sort    = $this->request->get("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
+
+    // json转数组
+    $filters   = (array) json_decode($filters, true);
+    $ops       = (array) json_decode($ops, true);
+    $filters   = $filters ? $filters : [];
+    $where     = [];
+    $excludes  = [];
+    $aliasName = '';
+
+    $tableName = lcfirst($this->modelClass->getName());
+    $sortArr   = explode(',', $sort);
+    foreach ($sortArr as $index => &$item) {
+    $item = stripos($item, ".") === false ? $aliasName . trim($item) : $item;
+    }
+    unset($item);
+    $sort = implode(',', $sortArr);
+    if ($search) {
+    $searcharr = is_array($searchfields) ? $searchfields : explode(',', $searchfields);
+    foreach ($searcharr as $k => &$v) {
+    $v = stripos($v, ".") === false ? $aliasName . $v : $v;
+    }
+    unset($v);
+    $where[] = [implode("|", $searcharr), "LIKE", "%{$search}%"];
+    }
+    foreach ($filters as $key => $val) {
+    if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $key)) {
+    continue;
+    }
+    if (in_array($key, $excludeFields)) {
+    $excludes[$key] = $val;
+    continue;
+    }
+    $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
+    if ($relationSearch && count(explode('.', $key)) == 1) {
+    $key = "{$tableName}.{$key}";
+    }
+    switch (strtolower($op)) {
+    case '=':
+    $where[] = [$key, '=', $val];
+    break;
+    case '%*%':
+    $where[] = [$key, 'LIKE', "%{$val}%"];
+    break;
+    case '*%':
+    $where[] = [$key, 'LIKE', "{$val}%"];
+    break;
+    case '%*':
+    $where[] = [$key, 'LIKE', "%{$val}"];
+    break;
+    case 'range':
+    list($beginTime, $endTime) = explode(' - ', $val);
+    $where[]                   = [$key, '>=', strtotime($beginTime)];
+    $where[]                   = [$key, '<=', strtotime($endTime)];
+    break;
+    default:
+    $where[] = [$key, $op, "%{$val}"];
+    }
+    }
+    return [$page, $limit, $where, $sort, $order];*/
     }
 
     /**
