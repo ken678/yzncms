@@ -31,10 +31,6 @@
   {{#  } }}
 
 </script>
-<script type="text/html" id="barTool">
-    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" data-width="900" data-height="600" title="编辑">编辑</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
-</script>
 <script type="text/html" id="statusTpl">
     <input type="checkbox" name="status" value="{{d.id}}" data-href="{:url('multi')}?id={{d.id}}&param=status" lay-skin="switch" lay-text="已通过|未通过" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
@@ -47,6 +43,7 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         add_url: "{:url('add')}",
+        edit_url: "{:url('edit')}",
         delete_url: "{:url('del')}",
         modify_url: '{:url("multi")}',
     };
@@ -78,7 +75,7 @@ layui.use('yznTable', function() {
                 { field: 'termsid', width: 80, title: '分类ID' },
                 { field: 'inputtime', width: 180, title: '添加时间', search: 'range' },
                 { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true, selectList: { 0: '未通过', 1: '已通过' } },
-                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+                { width:120, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
             ]
         ],
         page: {}
