@@ -496,7 +496,7 @@ class Cms extends Adminbase
         }
         //栏目所属模型
         $modelid   = $catInfo['modelid'];
-        $ids       = $this->request->param('ids');
+        $ids       = $this->request->param('id/a');
         $modelInfo = cache('Model');
         $modelInfo = $modelInfo[$modelid];
         if ($ids) {
