@@ -225,7 +225,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             // 监听表格搜索开关显示
             yznTable.listenToolbar(options.layFilter, options.id);
             // 监听表格开关切换
-            //yznTable.renderSwitch(options.cols, options.init, options.id, options.modifyReload);
+            yznTable.renderSwitch(options.cols, options.init, options.id, options.modifyReload);
             // 监听表格文本框编辑
             yznTable.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
             return newTable;
@@ -429,9 +429,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     }
 
                     // 判断是否包含开关组件
-                    /*if (val.templet === yznTable.formatter.switch && val.filter === undefined) {
+                    if (val.templet === yznTable.formatter.switch && val.filter === undefined) {
                         cols[i][index]['filter'] = val.field;
-                    }*/
+                    }
 
                     // 判断是否含有搜索下拉列表
                     if (val.selectList !== undefined && val.search === undefined) {
@@ -552,8 +552,58 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
             });
         },
+        renderSwitch: function (cols, tableInit, tableId, modifyReload) {
+            tableInit.modify_url = tableInit.modify_url || false;
+            cols = cols[0] || {};
+            tableId = tableId || init.table_render_id;
+            if (cols.length > 0) {
+                $.each(cols, function (i, v) {
+                    v.filter = v.filter || false;
+                    if (v.filter !== false && tableInit.modify_url !== false) {
+                        yznTable.listenSwitch({filter: v.filter, url: tableInit.modify_url, tableId: tableId, modifyReload: modifyReload});
+                    }
+                });
+            }
+        },
+        listenSwitch: function (option, ok) {
+            option.filter = option.filter || '';
+            option.url = option.url || '';
+            option.field = option.field || option.filter || '';
+            option.tableId = option.tableId || init.table_render_id;
+            option.modifyReload = option.modifyReload || false;
+            form.on('switch(' + option.filter + ')', function (obj) {
+                var checked = obj.elem.checked ? 1 : 0;
+                if (typeof ok === 'function') {
+                    return ok({
+                        id: obj.value,
+                        checked: checked,
+                    });
+                } else {
+                    var data = {
+                        id: obj.value,
+                        param: option.field,
+                        value: checked,
+                    };
+                    yzn.request.post({
+                        url: option.url,
+                        prefix: true,
+                        data: data,
+                    }, function (res) {
+                        notice.success({ message: res.msg });
+                        if (option.modifyReload) {
+                            table.reload(option.tableId);
+                        }
+                    }, function (res) {
+                        yzn.msg.error(res.msg, function () {
+                            table.reload(option.tableId);
+                        });
+                    }, function () {
+                        table.reload(option.tableId);
+                    });
+                }
+            });
+        },
         listenEdit: function(tableInit, layFilter, tableId, modifyReload) {
-            //console.log(tableInit.modify_url);
             tableInit.modify_url = tableInit.modify_url || false;
             tableId = tableId || init.table_render_id;
             if (tableInit.modify_url !== false) {
@@ -678,6 +728,19 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     }
                 });
                 return html;
+            },
+            switch: function (data, option) {
+                var field = option.field;
+                option.filter = option.filter || option.field || null;
+                option.checked = option.checked || 1;
+                option.tips = option.tips || '开|关';
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                var checked = value === option.checked ? 'checked' : '';
+                return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
             },
             image: function(data, option) {
                 option.imageWidth = option.imageWidth || 80;
