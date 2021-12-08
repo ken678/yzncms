@@ -15,9 +15,6 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="barTool">
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-danger layui-tr-del">删除</a>
-</script>
 {/block}
 {block name="script"}
 <script>
@@ -26,6 +23,7 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        delete_url: "{:url('del')}",
     };
 
     table.render({
@@ -53,7 +51,7 @@ layui.use('yznTable', function() {
                 { field: 'paytime', width: 180, title: '支付时间', templet: '<div>{{#  if(d.paytime){ }} {{d.paytime}} {{#  } else { }} / {{#  } }}</div>', search: 'range' },
                 { field: 'ip', width: 180, title: 'IP' },
                 { field: 'status', width: 120, align: "center", title: '订单状态', templet: '<div>{{#  if(d.status=="交易成功"){ }} <button type="button" class="layui-btn layui-btn-xs">{{d.status}}</button> {{#  } else { }} <button type="button" class="layui-btn layui-btn-xs layui-btn-danger">{{d.status}}</button> {{#  } }}</div>' },
-                { fixed: 'right', width: 80, title: '操作', toolbar: '#barTool' }
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
             ]
         ],
         page: {}

@@ -16,9 +16,6 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="barTool">
-    <a href='{:url("delete_group")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
-</script>
 {/block}
 {block name="script"}
 <script>
@@ -53,7 +50,7 @@ layui.use('yznTable', function() {
                 { field: 'content', align: "left", title: '内容' },
                 { field: 'groupname', width: 120, title: '会员组别' },
                 { field: 'create_time', width: 200, align: "center", title: '发送时间', search: 'range' },
-                { fixed: 'right', width: 80, title: '操作', toolbar: '#barTool' }
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
             ]
         ],
         page: {}

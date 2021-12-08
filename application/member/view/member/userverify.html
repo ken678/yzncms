@@ -6,10 +6,6 @@
         <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
     </div>
 </div>
-<script type="text/html" id="barTool">
-    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑">编辑</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
-</script>
 {/block}
 {block name="script"}
 <script>
@@ -18,6 +14,7 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        edit_url: "{:url('edit')}",
         delete_url: "{:url('del')}",
     };
 
@@ -43,7 +40,7 @@ layui.use('yznTable', function() {
                 { field: 'amount', width: 120, title: '金钱总数' },
                 { field: 'point', width: 120, title: '积分总数' },
                 { field: 'login', width: 100, title: '登录次数' },
-                { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
+                { width:120, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
             ]
         ]
     });

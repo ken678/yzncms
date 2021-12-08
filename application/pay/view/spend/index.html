@@ -15,9 +15,6 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="barTool">
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-danger layui-tr-del">删除</a>
-</script>
 {/block}
 {block name="script"}
 <script>
@@ -26,6 +23,7 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        delete_url: "{:url('del')}",
     };
 
     table.render({
@@ -42,7 +40,7 @@ layui.use('yznTable', function() {
                 { field: 'addtime', width: 200, title: '创建时间' },
                 { field: 'ip', width: 200, title: 'IP' },
                 { field: 'msg', width: 200, title: '备注说明' },
-                { fixed: 'right', width: 80,title: '操作', toolbar: '#barTool' }
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
             ]
         ],
         page: {}
