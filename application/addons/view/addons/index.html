@@ -56,21 +56,6 @@ layui.use(['yznTable', 'upload'], function() {
         ]
     });
 
-    // 监听请求
-    /*$('body').on('click', '[data-url]', function() {
-        var url = $(this).data('url');
-        yzn.msg.confirm('确定进行该操作？',function() {
-            yzn.request.get({
-                url: url
-            }, function(res) {
-                yzn.msg.success(res.msg, function() {
-                   location.reload();
-                });
-            });
-        })
-        return false;
-    });*/
-
     //执行实例
     var uploadInst = upload.render({
         elem: '#local-install',
