@@ -30,7 +30,7 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
-        delete_url: '{:url("content_del",["id"=>$param.id])}',
+        delete_url: '{:url("content_del",["nid"=>$param.id])}',
     };
 
     table.render({
@@ -40,7 +40,7 @@ layui.use('yznTable', function() {
         toolbar: ['refresh','delete'
             {empty name="Request.param.type"}
             ,[{
-                html:'<a class="layui-btn layui-btn-sm layui-btn-warm" confirm data-request="{:url("content_del",["id"=>$param.id,"type"=>"all"])}" data-table="currentTable">全部清空</a>'
+                html:'<a class="layui-btn layui-btn-sm layui-btn-warm" confirm data-request="{:url("content_del",["nid"=>$param.id,"type"=>"all"])}" data-table="currentTable">全部清空</a>'
             }]
             {/empty}
             {if $Request.param.type==1}

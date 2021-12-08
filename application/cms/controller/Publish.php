@@ -57,7 +57,7 @@ class Publish extends Adminbase
     //删除
     public function del()
     {
-        $ids = $this->request->param('ids/a', null);
+        $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('请指定需要删除的信息！');
         }
@@ -84,7 +84,7 @@ class Publish extends Adminbase
     //通过审核
     public function pass()
     {
-        $ids = $this->request->param('ids/a', null);
+        $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('请指定需要操作的信息！');
         }
@@ -108,7 +108,7 @@ class Publish extends Adminbase
     //退稿
     public function reject()
     {
-        $ids = $this->request->param('ids/a', null);
+        $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('请指定需要操作的信息！');
         }

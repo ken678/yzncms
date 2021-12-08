@@ -110,7 +110,7 @@ class Message extends Adminbase
      */
     public function delete_group()
     {
-        $ids = $this->request->param('ids/a');
+        $ids = $this->request->param('id/a');
         empty($ids) && $this->error('参数错误！');
         if (!is_array($ids)) {
             $ids = array($ids);

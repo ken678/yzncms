@@ -61,7 +61,7 @@ class Info extends AdminBase
     public function del()
     {
         $formid = $this->request->param('formid/d', 0);
-        $ids    = $this->request->param('ids/a', null);
+        $ids    = $this->request->param('id/a', null);
         if (empty($ids) || !$formid) {
             $this->error('参数错误！');
         }

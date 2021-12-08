@@ -142,7 +142,7 @@ class Member extends Adminbase
      */
     public function del()
     {
-        $ids = $this->request->param('ids/a', null);
+        $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('请选择需要删除的会员！');
         }
@@ -161,7 +161,7 @@ class Member extends Adminbase
      */
     public function pass()
     {
-        $ids = $this->request->param('ids/a', null);
+        $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('请选择需要审核的会员！');
         }

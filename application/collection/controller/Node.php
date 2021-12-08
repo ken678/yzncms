@@ -402,8 +402,8 @@ class Node extends Adminbase
     //采集数据删除
     public function content_del()
     {
-        $nid  = $this->request->param('id/d', 0);
-        $ids  = $this->request->param('ids/a', null);
+        $nid  = $this->request->param('nid/d', 0);
+        $ids  = $this->request->param('id/a', null);
         $type = $this->request->param('type/s', '');
         if ($type == "all") {
             $this->Content_Model->where('nid', $nid)->delete();
@@ -440,7 +440,7 @@ class Node extends Adminbase
 
     public function del()
     {
-        $nodeids = $this->request->param('ids/a', null);
+        $nodeids = $this->request->param('id/a', null);
         if (!is_array($nodeids)) {
             $nodeids = array($nodeids);
         }
