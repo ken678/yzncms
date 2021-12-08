@@ -1,7 +1,7 @@
 /**
  @ Name：简单封下table
  */
-layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(exports) {
+layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], function(exports) {
     var MOD_NAME = 'yznTable',
         $ = layui.$,
         table = layui.table,
@@ -9,7 +9,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
         laydate = layui.laydate,
         element = layui.element,
         laytpl = layui.laytpl,
-        form = layui.form;
+        form = layui.form,
+        notice = layui.notice;
 
     var init = {
         table_elem: '#currentTable',
@@ -19,6 +20,170 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
     var ColumnsForSearch = [];
 
     yznTable = {
+        bindevent: function () {
+            // 列表页批量操作按钮组
+            $('body').on('click', '[data-batch-all]', function() {
+                var that = $(this),
+                    tableId = that.attr('data-batch-all'),
+                    url = that.attr('data-href');
+                tableId = tableId || init.table_render_id;
+                url = url !== undefined ? url : window.location.href;
+                var checkStatus = table.checkStatus(tableId),
+                    data = checkStatus.data;
+                if (data.length <= 0) {
+                    yzn.msg.error('请选择要操作的数据');
+                    return false;
+                }
+                var ids = [];
+                $.each(data, function(i, v) {
+                    ids.push(v.id);
+                });
+                yzn.msg.confirm('您确定要执行此操作吗？', function() {
+                    yzn.request.post({
+                        url: url,
+                        data: {
+                            ids: ids
+                        },
+                    }, function(res) {
+                        yzn.msg.success(res.msg, function() {
+                            table.reload(tableId);
+                        });
+                    });
+                });
+                return false;
+            });
+            // 监听动态表格刷新
+            $('body').on('click', '[data-table-refresh]', function() {
+                var tableId = $(this).attr('data-table-refresh');
+                if (tableId === undefined || tableId === '' || tableId == null) {
+                    tableId = init.table_render_id;
+                }
+                table.reload(tableId);
+            });
+            // 监听请求
+            $('body').on('click', '[data-request]', function() {
+                var that = $(this);
+                var title = $(this).data('title'),
+                    url = $(this).data('request'),
+                    tableId = $(this).data('table'),
+                    checkbox = $(this).data('checkbox');
+
+                var postData = {};
+                if (checkbox === 'true') {
+                    tableId = tableId || init.table_render_id;
+                    var checkStatus = table.checkStatus(tableId),
+                        data = checkStatus.data;
+                    if (data.length <= 0) {
+                        yzn.msg.error('请勾选需要操作的数据');
+                        return false;
+                    }
+                    var ids = [];
+                    $.each(data, function(i, v) {
+                        ids.push(v.id);
+                    });
+                    postData.id = ids;
+                }
+
+                title = title || '确定进行该操作？';
+                tableId = tableId || init.table_render_id;
+
+                func = function() {
+                    yzn.request.post({
+                        url: url,
+                        data: postData,
+                    }, function(res) {
+                        yzn.msg.success(res.msg, function() {
+                            tableId && table.reload(tableId);
+                        });
+                    })
+                }
+                if (typeof(that.attr('confirm')) == 'undefined') {
+                    func();
+                } else {
+                    yzn.msg.confirm(title, func);
+                }
+                return false;
+            });
+            // 监听弹出层的打开
+            $('body').on('click', '[data-open]', function() {
+                var clienWidth = $(this).attr('data-width') || 800,
+                    clientHeight = $(this).attr('data-height') || 600,
+                    dataFull = $(this).attr('data-full'),
+                    checkbox = $(this).attr('data-checkbox'),
+                    url = $(this).attr('data-open'),
+                    title = $(this).attr("title") || $(this).data("title"),
+                    tableId = $(this).attr('data-table');
+
+                if (checkbox === 'true') {
+                    tableId = tableId || init.table_render_id;
+                    var checkStatus = table.checkStatus(tableId),
+                        data = checkStatus.data;
+                    if (data.length <= 0) {
+                        yzn.msg.error('请勾选需要操作的数据');
+                        return false;
+                    }
+                    var ids = [];
+                    $.each(data, function(i, v) {
+                        ids.push(v.id);
+                    });
+                    if (url.indexOf("?") === -1) {
+                        url += '?id=' + ids.join(',');
+                    } else {
+                        url += '&id=' + ids.join(',');
+                    }
+                }
+                if (dataFull === 'true') {
+                    clienWidth = '100%';
+                    clientHeight = '100%';
+                }
+                yzn.open(title, url, clienWidth, clientHeight);
+            });
+            //通用状态设置开关
+            form.on('switch(switchStatus)', function(data) {
+                var that = $(this),
+                    status = 0;
+                if (!that.attr('data-href')) {
+                    notice.info({ message: '请设置data-href参数' });
+                    return false;
+                }
+                if (this.checked) {
+                    status = 1;
+                }
+                $.get(that.attr('data-href'), { value: status }, function(res) {
+                    if (res.code === 1) {
+                        notice.success({ message: res.msg });
+                    } else {
+                        notice.error({ message: res.msg });
+                        that.trigger('click');
+                        form.render('checkbox');
+                    }
+                });
+            });
+            //单行表格删除(不刷新)
+            $(document).on('click', '.layui-tr-del', function() {
+                var that = $(this),
+                    index = that.parents('tr').eq(0).data('index'),
+                    tr = $('.layui-table-body').find('tr[data-index="' + index + '"]'),
+                    href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+                layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
+                    if (!href) {
+                        notice.info({ message: '请设置data-href参数' });
+                        return false;
+                    }
+                    $.get(href, function(res) {
+                        if (res.code == 1) {
+                            notice.success({ message: res.msg });
+                            //that.parents('tr').remove();
+                            tr.remove();
+                        } else {
+                            notice.error({ message: res.msg });
+                        }
+                    });
+                    layer.close(index);
+                });
+                return false;
+            });
+        },
         render: function(options) {
             options.init = options.init || init;
             options.modifyReload = yzn.parame(options.modifyReload, false);
@@ -582,5 +747,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element'], function(
         },
 
     }
+
+    yznTable.bindevent();
     exports(MOD_NAME, yznTable);
 });
