@@ -607,6 +607,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             formatOperat.class = formatOperat.class !== '' ? 'class="' + formatOperat.class + '" ' : '';
             if (operat.method === 'open') {
                 formatOperat.method = formatOperat.method !== '' ? 'data-open="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
+            } else if (operat.method === 'href'){
+                formatOperat.method = formatOperat.method !== '' ? 'data-href="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
+            } else if (operat.method === 'none'){ // 常用于与extend配合，自定义监听按钮
+                formatOperat.method = '';
             } else {
                 formatOperat.method = formatOperat.method !== '' ? 'data-request="' + formatOperat.url + '" data-title="' + formatOperat.title + '" ' : '';
             }
@@ -639,12 +643,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 break;
                             case 'delete':
                                 var operat = {
-                                    class: 'layui-btn layui-btn-danger layui-btn-xs',
-                                    method: 'get',
+                                    class: 'layui-btn layui-btn-danger layui-btn-xs layui-tr-del',
+                                    method: 'href',
                                     field: 'id',
                                     icon: '',
                                     text: '删除',
-                                    title: '确定删除？',
+                                    title: '',
                                     url: option.init.delete_url,
                                     extend: ""
                                 };
