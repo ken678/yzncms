@@ -21,6 +21,30 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
 
     yznTable = {
         bindevent: function () {
+            //单行表格删除(不刷新)
+            $(document).on('click', '.layui-tr-del', function() {
+                var that = $(this),
+                    index = that.parents('tr').eq(0).data('index'),
+                    tr = $('.layui-table-body').find('tr[data-index="' + index + '"]'),
+                    href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+                layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
+                    if (!href) {
+                        notice.info({ message: '请设置data-href参数' });
+                        return false;
+                    }
+                    $.get(href, function(res) {
+                        if (res.code == 1) {
+                            notice.success({ message: res.msg });
+                            //that.parents('tr').remove();
+                            tr.remove();
+                        } else {
+                            notice.error({ message: res.msg });
+                        }
+                    });
+                    layer.close(index);
+                });
+                return false;
+            });
             // 列表页批量操作按钮组
             $('body').on('click', '[data-batch-all]', function() {
                 var that = $(this),
@@ -42,7 +66,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     yzn.request.post({
                         url: url,
                         data: {
-                            ids: ids
+                            id: ids
                         },
                     }, function(res) {
                         yzn.msg.success(res.msg, function() {
@@ -158,30 +182,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         form.render('checkbox');
                     }
                 });
-            });
-            //单行表格删除(不刷新)
-            $(document).on('click', '.layui-tr-del', function() {
-                var that = $(this),
-                    index = that.parents('tr').eq(0).data('index'),
-                    tr = $('.layui-table-body').find('tr[data-index="' + index + '"]'),
-                    href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
-                layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息' }, function(index) {
-                    if (!href) {
-                        notice.info({ message: '请设置data-href参数' });
-                        return false;
-                    }
-                    $.get(href, function(res) {
-                        if (res.code == 1) {
-                            notice.success({ message: res.msg });
-                            //that.parents('tr').remove();
-                            tr.remove();
-                        } else {
-                            notice.error({ message: res.msg });
-                        }
-                    });
-                    layer.close(index);
-                });
-                return false;
             });
         },
         render: function(options) {
