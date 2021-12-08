@@ -20,9 +20,6 @@
     <a data-open='{:url("add")}?parentid={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-normal" title="添加">添加</a>
     <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
-<script type="text/html" id="switchTpl">
-    <input type="checkbox" name="status" data-href="{:url('multi')}?id={{d.id}}&param=status" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
-</script>
 {/block}
 {block name="script"}
 <script>
@@ -36,6 +33,8 @@ layui.use(['table', 'treeGrid', 'yznTable'], function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        modify_url:'{:url("multi")}',
     };
 
     var renderTable = function() {
@@ -63,7 +62,7 @@ layui.use(['table', 'treeGrid', 'yznTable'], function() {
                     { field: 'title', align: 'left', title: '菜单名称', },
                     { width: 80, title: '图标', align: 'center', templet: "<div><i class='iconfont {{d.icon}}'></i></div>" },
                     { width: 200, title: '模块/控制器/方法', templet: "<div>{{d.app}}/{{d.controller}}/{{d.action}}</div>" },
-                    { field: 'status', align: 'center', width: 120, title: '状态', templet: '#switchTpl', unresize: true },
+                    { field: 'status', align: 'center', width: 120, title: '状态', unresize: true ,templet: yznTable.formatter.switch,tips:"显示|隐藏"},
                     { fixed: 'right', align: 'center', width: 200, title: '操作', toolbar: '#barTool' }
                 ]
             ], init),
@@ -84,10 +83,14 @@ layui.use(['table', 'treeGrid', 'yznTable'], function() {
         renderTable();
     });
 
-     //监听单元格编辑
-     treeGrid.on('edit(currentTable)', function(obj) {
-         var value = obj.value,
-             data = obj.data;
+    yznTable.listenSwitch({filter: 'status', url: init.modify_url});
+
+    //yznTable.listenEdit(init, 'currentTable', init.table_render_id, true);
+
+    //监听单元格编辑
+    treeGrid.on('edit(currentTable)', function(obj) {
+     var value = obj.value,
+         data = obj.data;
          $.post('{:url("multi")}', {'id': data.id,'value': value,'param':'listorder'}, function(data) {
              if (data.code == 1) {
                  layer.msg(data.msg);
@@ -96,7 +99,7 @@ layui.use(['table', 'treeGrid', 'yznTable'], function() {
              }
 
          })
-     });
+    });
 });
 </script>
 {/block}
