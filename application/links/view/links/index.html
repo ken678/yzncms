@@ -17,22 +17,18 @@
     </div>
 </div>
 <script type="text/html" id="type">
-    {{# if(d.linktype ==0){ }}
+  {{# if(d.linktype ==0){ }}
   文字链接
   {{#  } else { }}
   图片链接
   {{#  } }}
 </script>
 <script type="text/html" id="image">
-    {{# if(d.image ==0){ }}
+  {{# if(d.image ==0){ }}
   无
   {{#  } else { }}
   有
   {{#  } }}
-
-</script>
-<script type="text/html" id="statusTpl">
-    <input type="checkbox" name="status" value="{{d.id}}" data-href="{:url('multi')}?id={{d.id}}&param=status" lay-skin="switch" lay-text="已通过|未通过" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
 </script>
 {/block}
 {block name="script"}
@@ -74,7 +70,7 @@ layui.use('yznTable', function() {
                 { field: 'linktype', width: 150, title: '链接类型', templet: '#type', selectList: { 0: '文字链接', 1: '图片链接' } },
                 { field: 'termsid', width: 80, title: '分类ID' },
                 { field: 'inputtime', width: 180, title: '添加时间', search: 'range' },
-                { field: 'status', width: 120, align: "center", title: '状态', templet: '#statusTpl', unresize: true, selectList: { 0: '未通过', 1: '已通过' } },
+                { field: 'status', width: 120, align: "center", title: '状态', unresize: true, selectList: { 0: '未通过', 1: '已通过' },templet: yznTable.formatter.switch,tips:"已通过|未通过" },
                 { width:120, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
             ]
         ],
