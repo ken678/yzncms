@@ -12,7 +12,7 @@
 {block name="script"}
 <script>
 layui.use(['yznTable'], function() {
-    var table = layui.yznTable;
+    var yznTable = layui.yznTable;
 
     var init = {
         table_elem: '#currentTable',
@@ -21,7 +21,7 @@ layui.use(['yznTable'], function() {
         modify_url: '{:url("multi")}',
     };
 
-    table.render({
+    yznTable.render({
         init: init,
         id: 'currentTable',
         toolbar: ['refresh','delete',
@@ -37,7 +37,7 @@ layui.use(['yznTable'], function() {
                 { field: 'tag', align: "left", title: 'Tags名称', searchOp: 'like'  },
                 { field: 'usetimes', width: 100, title: '信息总数' },
                 { field: 'hits', width: 100, title: '点击量',search: 'between',searchTip:'点击量' },
-                { field: 'url',width: 60,align:"center", title: 'URL',templet:table.url,search:false},
+                { field: 'url',width: 60,align:"center", title: 'URL',templet:yznTable.formatter.url,search:false},
                 { field: 'create_time', width: 180, title: '创建时间', search: 'range' },
                 { field: 'update_time', width: 180, title: '更新时间', search: 'range' },
                 { width:120, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}

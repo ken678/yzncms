@@ -25,9 +25,6 @@
     <a data-open='{:url("edit")}?id={{ d.id }}' title="编辑" class="layui-btn layui-btn-xs">编辑</a>
     <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
 </script>
-<script type="text/html" id="switchTpl">
-    <input type="checkbox" name="status" data-href="{:url('multi')}?id={{d.id}}&param=status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
-</script>
 {/block}
 {block name="script"}
 <script>
@@ -57,7 +54,7 @@ layui.use(['yznTable','clipboard'], function() {
                 { field: 'title',align: "left", title: '标题' },
                 { field: 'ftitle', width: 150, title: '类型' },
                 { field: 'update_time', width: 200, title: '更新时间'},
-                { field: 'status', title: '状态', width: 100, templet: '#switchTpl', unresize: true },
+                { field: 'status', title: '状态', width: 100, unresize: true,templet: yznTable.formatter.switch },
                 { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
             ]
         ],
