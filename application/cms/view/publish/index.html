@@ -60,7 +60,7 @@ layui.use(['yznTable'], function() {
                 { field: 'catname',width: 180, title: '所属栏目',search:false},
                 { field: 'create_time', width: 180, title: '发布时间' },
                 { field: 'username', width: 100, title: '发布人' },
-                { field: 'url',width: 60,align:"center", title: 'URL',templet:'<div><a href="{{ d.url }}" target="_blank"><i class="iconfont icon-lianjie"></i></a></div>',search:false},
+                { field: 'url',width: 60,align:"center", title: 'URL',search:false,templet: yznTable.formatter.url},
                 { field: 'status', width: 90, align: "center", title: '状态', templet: '#status'},
                 { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
             ]
