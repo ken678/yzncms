@@ -31,7 +31,7 @@ class Message extends Adminbase
     }
 
     /**
-     * 群发消息管理  ...
+     * 群发消息管理
      */
     public function group()
     {
@@ -106,26 +106,7 @@ class Message extends Adminbase
     }
 
     /**
-     * 删除短消息
-     */
-    public function delete()
-    {
-        $ids = $this->request->param('ids/a');
-        empty($ids) && $this->error('参数错误！');
-        if (!is_array($ids)) {
-            $ids = array($ids);
-        }
-        $res = $this->modelClass->where('id', 'in', $ids)->delete();
-        if ($res !== false) {
-            $this->success('删除成功！');
-        } else {
-            $this->error('删除失败！');
-        }
-    }
-
-    /**
      * 删除系统 短消息
-     * @param   intval  $sid
      */
     public function delete_group()
     {
