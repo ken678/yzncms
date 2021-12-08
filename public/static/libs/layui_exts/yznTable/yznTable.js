@@ -617,12 +617,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         param: field,
                         value: value,
                     };
-                    //console.log(_data);
                     yzn.request.post({
                         url: tableInit.modify_url,
                         prefix: true,
                         data: _data,
                     }, function(res) {
+                        notice.success({ message: res.msg });
                         if (modifyReload) {
                             table.reload(tableId);
                         }

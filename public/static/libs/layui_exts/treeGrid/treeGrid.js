@@ -2029,7 +2029,7 @@ layui.config({}).extend({}).define(['laytpl', 'laypage', 'layer', 'form'], funct
 
 				return cols.templet ? function() {
 					return typeof cols.templet === 'function' ?
-						cols.templet(tplData) :
+						cols.templet(tplData,cols) :
 						laytpl($(cols.templet).html() || String(content)).render(tplData)
 				}() : content;
             }()
