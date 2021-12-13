@@ -20,8 +20,8 @@ class ModelField extends Validate
 {
     //定义验证规则
     protected $rule = [
-        'name'                => 'require|regex:/^[a-zA-Z][A-Za-z0-9\-\_]+$/',
-        'title|字段标题'          => 'require|chsDash',
+        'name|字段名称'           => 'require|regex:/^[a-zA-Z][A-Za-z0-9\-\_]+$/',
+        'title|字段标题'          => 'require',
         'type|字段类型'           => 'require|alphaDash',
         'setting.define|字段定义' => 'require',
         'ifsystem|主表字段'       => 'in:0,1',
@@ -29,9 +29,9 @@ class ModelField extends Validate
         'ifsearch|是否显示搜索'     => 'in:0,1',
         'status|字段状态'         => 'in:0,1',
     ];
+
     //定义验证提示
     protected $message = [
-        'name.require' => '字段名称不得为空',
-        'name.regex'   => '字段名称只能为字母、数字和下划线_及破折号-，并且仅能字母开头',
+        'name.regex' => '字段名称只能为字母、数字和下划线_及破折号-，并且仅能字母开头',
     ];
 }
