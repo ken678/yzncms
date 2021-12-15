@@ -185,10 +185,10 @@ class Upload extends Base
         $attachment = null;
         //默认普通上传文件
         $file = $this->request->file($file_input_name);
-        if ($from == 'ueditor') {
-            return $this->ueditor($file);
-        }
         try {
+            if ($from == 'ueditor') {
+                return $this->ueditor($file);
+            }
             $upload     = new UploadLib($file);
             $attachment = $upload->upload($dir);
         } catch (UploadException $e) {
