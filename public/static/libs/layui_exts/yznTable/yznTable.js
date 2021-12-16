@@ -729,6 +729,40 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 });
                 return html;
             },
+            flag: function (data, option) {
+                var that = this;
+                var field = option.field;
+                try {
+                    var value = eval("data." + field);
+                    value = value == null || value.length === 0 ? '' : value.toString();
+                } catch (e) {
+                    var value = undefined;
+                }
+                //赤色 墨绿 蓝色 藏青 雅黑 橙色
+                var colorArr = {0:'red',1:'green',2:'blue',3:'cyan',4:'black',5:'orange'};
+                //如果字段列有定义custom
+                if (typeof option.custom !== 'undefined') {
+                    colorArr = $.extend(colorArr, option.custom);
+                }
+
+                //渲染Flag
+                var html = [];
+                var arr = value != '' ? value.split(',') : [];
+                var color, display, label;
+                $.each(arr, function (i, value) {
+                    value = value == null || value.length === 0 ? '' : value.toString();
+                    if (value == '')
+                        return true;
+                    color = value && typeof colorArr[value] !== 'undefined' ? colorArr[value] : 'green';
+                    display = typeof that.selectList !== 'undefined' && typeof that.selectList[value] !== 'undefined' ? that.selectList[value] : value.charAt(0).toUpperCase() + value.slice(1);
+                    label = '<span class="layui-badge layui-bg-' + color + '">' + display + '</span>';
+                    html.push(label);
+                })
+                return html.join(' ');
+            },
+            label: function (data, option) {
+                return yznTable.formatter.flag.call(this, data, option);
+            },
             switch: function (data, option) {
                 var field = option.field;
                 option.filter = option.filter || option.field || null;
