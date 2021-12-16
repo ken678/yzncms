@@ -40,7 +40,7 @@ layui.use('yznTable', function() {
                 { field: 'tablename', align: "left", width: 200, title: '表名' },
                 { field: 'description', width: 200, title: '简介' },
                 { field: 'create_time', width: 180, title: '创建时间' },
-                { field: 'status', width: 80, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">启用</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>'},
+                { field: 'status', width: 80,title: '状态',templet: yznTable.formatter.label,selectList:{0:'禁用',1:'正常'}},
                 { fixed: 'right', width: 350, title: '操作', toolbar: '#barTool' }
             ]
         ],
