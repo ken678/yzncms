@@ -15,9 +15,6 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="barTool">
-    <a data-open='{:url("edit")}?id={{ d.id }}' data-full="false" class="layui-btn layui-btn-xs" title="配置">配置</a>
-</script>
 {/block}
 {block name="script"}
 <script>
@@ -26,6 +23,7 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        edit_url: '{:url("edit")}',
     };
 
     table.render({
@@ -37,12 +35,12 @@ layui.use('yznTable', function() {
         search:false,
         cols: [
             [
-                { field: 'title',  width: 150,title: '支付方式'},
-                { field: 'name',  width: 100,title: '名称'},
-                { field: 'icon',  align: "center",width: 80,title: '图标',templet: '<div><i class="iconfont {{ d.icon }}"></i></div>'},
-                { field: 'pay_desc', title: '简介' },
-                { field: 'status', width: 80, align: "center", title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">启用</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>'},
-                { fixed: 'right', width: 100, title: '操作', toolbar: '#barTool' }
+                { field:'title', width: 150,title: '支付方式'},
+                { field:'name', width: 100,title: '名称'},
+                { field:'icon', align: "center",width: 80,title: '图标',templet: '<div><i class="iconfont {{ d.icon }}"></i></div>'},
+                { field:'pay_desc', title: '简介' },
+                { field: 'status', width: 80,title: '状态',templet: yznTable.formatter.label,selectList:{0:'禁用',1:'启用'}},
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['edit']}
             ]
         ],
     });
