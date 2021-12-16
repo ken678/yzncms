@@ -12,14 +12,6 @@
                 <a class='layui-btn layui-btn-xs' data-open='{:url("access?group_name=")}?title={{d.title}}&group_id={{d.id}}' title="访问授权">访问授权</a>
                 {{#  } }}
             </script>
-            <script type="text/html" id="barTool">
-                {{#  if(d.id == {$userInfo.roleid}){ }}
-                <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
-                {{#  } else { }}
-                <a data-open='{:url("editgroup")}?id={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑">编辑</a>
-                <a href='{:url("deletegroup")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
-                {{#  } }}
-            </script>
         </div>
     </div>
 </div>
@@ -32,6 +24,8 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         add_url: "{:url('createGroup')}",
+        edit_url: "{:url('editgroup')}",
+        delete_url: "{:url('deletegroup')}",
     };
 
     table.render({
@@ -47,7 +41,13 @@ layui.use('yznTable', function() {
                 { field: 'title', width: 200, align: 'left', title: '权限组'},
                 { field: 'description', title: '描述' },
                 { field: 'status', width: 100,title: '状态', templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">正常</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">禁用</button> {{#  } }} </div>' },
-                { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
+                { width:120, title: '操作',templet: function (d){
+                    if(d.id=={$userInfo.roleid}){
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
+                    }else{
+                        return yznTable.formatter.tool.call(this,d,this);
+                    }
+                },operat: ['edit','delete']}
             ]
         ],
     });
