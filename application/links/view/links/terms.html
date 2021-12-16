@@ -16,21 +16,19 @@
         </div>
     </div>
 </div>
-<script type="text/html" id="barTool">
-    <a class="layui-btn layui-btn-xs" data-open='{:url("termsedit")}?id={{ d.id }}' data-full='false' data-width="500" data-height="300" title="编辑">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del" href='{:url("termsdelete")}?id={{ d.id }}'>删除</a>
-</script>
 {/block}
 {block name="script"}
 <script>
 layui.use('yznTable', function() {
-    var table = layui.yznTable;
+    var yznTable = layui.yznTable;
 
     var init = {
         table_elem: '#currentTable',
+        edit_url: '{:url("termsedit")}',
+        delete_url: '{:url("termsdelete")}',
     };
 
-    table.render({
+    yznTable.render({
         init: init,
         id: 'currentTable',
         elem: '#currentTable',
@@ -41,7 +39,7 @@ layui.use('yznTable', function() {
             [
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'name',align: "left", title: '分类名称' },
-                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+                { width:120, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
             ]
         ],
     });

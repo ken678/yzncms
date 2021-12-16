@@ -27,18 +27,9 @@ class Node extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Nodes_Model   = new Nodes_Model;
+        $this->modelClass    = new Nodes_Model;
         $this->Content_Model = new Content_Model;
         $this->Program_Model = new Program_Model;
-    }
-
-    public function index()
-    {
-        if ($this->request->isAjax()) {
-            $data = $this->Nodes_Model->select();
-            return json(["code" => 0, "data" => $data]);
-        }
-        return $this->fetch();
     }
 
     public function add()
@@ -46,7 +37,7 @@ class Node extends Adminbase
         if ($this->request->isPost()) {
             $data = $this->request->post();
             try {
-                $this->Nodes_Model->addNode($data);
+                $this->modelClass->addNode($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -61,7 +52,7 @@ class Node extends Adminbase
         if ($this->request->isPost()) {
             $data = $this->request->post();
             try {
-                $this->Nodes_Model->editNode($data);
+                $this->modelClass->editNode($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -71,7 +62,7 @@ class Node extends Adminbase
             if (empty($id)) {
                 $this->error('请指定需要修改的采集点！');
             }
-            $data = $this->Nodes_Model->where('id', $id)->find();
+            $data = $this->modelClass->where('id', $id)->find();
             $this->assign('data', $data);
             return $this->fetch();
         }
@@ -85,7 +76,7 @@ class Node extends Adminbase
         //@session_start();
         //\think\facade\Session::pause();
         $nid                      = $this->request->param('id/d', 0);
-        $data                     = $this->Nodes_Model->find($nid);
+        $data                     = $this->modelClass->find($nid);
         $data['customize_config'] = json_decode($data['customize_config'], true);
         $event                    = new \app\collection\library\Collection;
         $event->init($data);
@@ -109,7 +100,7 @@ class Node extends Adminbase
                     }
                 }
             }
-            $this->Nodes_Model->update(['lastdate' => time(), 'id' => $nid]);
+            $this->modelClass->update(['lastdate' => time(), 'id' => $nid]);
             $event->echo_msg('网址采集已完成！');
         } else {
             $event->echo_msg('网址采集已完成！');
@@ -218,7 +209,7 @@ class Node extends Adminbase
             if ($catid) {
                 $cat_info   = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
                 $data       = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data  = json_decode($this->Nodes_Model->where('id', $nid)->value('customize_config'), true);
+                $node_data  = json_decode($this->modelClass->where('id', $nid)->value('customize_config'), true);
                 $node_field = [];
                 if (is_array($node_data)) {
                     foreach ($node_data as $k => $v) {
@@ -295,7 +286,7 @@ class Node extends Adminbase
             if ($catid) {
                 $cat_info  = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
                 $data      = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data = json_decode($this->Nodes_Model->where('id', $nid)->value('customize_config'), true);
+                $node_data = json_decode($this->modelClass->where('id', $nid)->value('customize_config'), true);
                 foreach ($data as $key => $value) {
                     if ($value['fieldArr'] == 'modelField') {
                         if (isset($program['modelField'][$key])) {
@@ -437,17 +428,4 @@ class Node extends Adminbase
             $this->error('删除失败！');
         }
     }
-
-    public function del()
-    {
-        $nodeids = $this->request->param('id/a', null);
-        if (!is_array($nodeids)) {
-            $nodeids = array($nodeids);
-        }
-        foreach ($nodeids as $tid) {
-            $this->Nodes_Model->where(array('id' => $tid))->delete();
-        }
-        $this->success("删除成功！");
-    }
-
 }
