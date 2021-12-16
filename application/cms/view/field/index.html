@@ -20,25 +20,21 @@
 <script type="text/html" id="isaddTpl">
     <input type="checkbox" name="isadd" data-href="{:url('setVisible')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.isadd==1 ? 'checked' : '' }}>
 </script>
-<script type="text/html" id="barTool">
-    {{#  if(!d.iffixed){ }}
-    <a data-open='{:url("edit")}?fieldid={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑">编辑</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
-    {{#  } }}
-</script>
 {/block}
 {block name="script"}
 <script>
 layui.use('yznTable', function() {
-    var table = layui.yznTable;
+    var yznTable = layui.yznTable;
 
     var init = {
         table_elem: '#currentTable',
         add_url: "{:url('add',['modelid'=>$modelid])}",
+        edit_url: "{:url('edit')}",
+        delete_url: "{:url('del')}",
         modify_url: '{:url("listorder")}',
     };
 
-    table.render({
+    yznTable.render({
             init: init,
             id: 'currentTable',
             elem: '#currentTable',
@@ -61,7 +57,13 @@ layui.use('yznTable', function() {
                 { field: 'ifrequire', width: 90, align: "center", title: '必填', templet: '#ifrequireTpl', unresize: true, selectList: { 0: '否', 1: '是' } },
                 { field: 'isadd', width: 100, align: "center", title: '投稿显示', templet: '#isaddTpl', unresize: true , selectList: { 0: '隐藏', 1: '显示' }},
                 { field: 'status', width: 100, align: "center", title: '状态', templet: '#switchTpl', unresize: true, selectList: { 0: '禁用', 1: '启用' }},
-                { fixed: 'right', width: 130, title: '操作', templet: '#barTool' }
+                { width:120, title: '操作',templet: function (d){
+                    if(d.iffixed){
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
+                    }else{
+                        return yznTable.formatter.tool.call(this,d,this);
+                    }
+                },operat: ['edit','delete']}
             ]
         ],
         page: {}

@@ -103,7 +103,7 @@ class Field extends Adminbase
     public function edit()
     {
         //字段ID
-        $fieldid = $this->request->param('fieldid/d', 0);
+        $fieldid = $this->request->param('id/d', 0);
         if (empty($fieldid)) {
             $this->error('字段ID不能为空！');
         }
@@ -135,7 +135,7 @@ class Field extends Adminbase
             $fieldType = Db::name('field_type')->order('listorder')->column('name,title,default_define,ifstring');
             $this->assign([
                 'data'      => $fieldData,
-                'fieldid'   => $fieldid,
+                //'fieldid'   => $fieldid,
                 'fieldType' => $fieldType,
             ]);
             return $this->fetch();
