@@ -192,7 +192,7 @@ class Adminbase extends Base
         if ($this->request->has("page")) {
             $page = $this->request->get("page/d", 1);
         }
-        $this->request->get([config('paginate.var_page') => $page]);
+        $this->request->withGet([config('paginate.var_page') => $page]);
         $filter    = (array) json_decode($filter, true);
         $op        = (array) json_decode($op, true);
         $filter    = $filter ? $filter : [];
