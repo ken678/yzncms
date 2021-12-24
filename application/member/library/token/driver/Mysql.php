@@ -29,7 +29,6 @@ class Mysql extends Driver
         'connection' => [],
     ];
 
-
     /**
      * 构造函数
      * @param array $options 参数
@@ -45,7 +44,7 @@ class Mysql extends Driver
         } else {
             $this->handler = \think\Db::name($this->options['table']);
         }
-        $time = time();
+        $time      = time();
         $tokentime = \think\facade\cache::get('tokentime');
         if (!$tokentime || $tokentime < $time - 86400) {
             cache('tokentime', $time);
@@ -63,7 +62,8 @@ class Mysql extends Driver
     public function set($token, $user_id, $expire = null)
     {
         $expiretime = !is_null($expire) && $expire !== 0 ? time() + $expire : 0;
-        $token = $this->getEncryptedToken($token);
+        $token      = $this->getEncryptedToken($token);
+        $this->handler->removeOption('where');
         $this->handler->insert(['token' => $token, 'user_id' => $user_id, 'create_time' => time(), 'expire_time' => $expiretime]);
         return true;
     }
@@ -75,6 +75,7 @@ class Mysql extends Driver
      */
     public function get($token)
     {
+        $this->handler->removeOption('where');
         $data = $this->handler->where('token', $this->getEncryptedToken($token))->find();
         if ($data) {
             if (!$data['expire_time'] || $data['expire_time'] > time()) {
@@ -109,6 +110,7 @@ class Mysql extends Driver
      */
     public function delete($token)
     {
+        $this->handler->removeOption('where');
         $this->handler->where('token', $this->getEncryptedToken($token))->delete();
         return true;
     }
@@ -120,6 +122,7 @@ class Mysql extends Driver
      */
     public function clear($user_id)
     {
+        $this->handler->removeOption('where');
         $this->handler->where('user_id', $user_id)->delete();
         return true;
     }
