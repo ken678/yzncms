@@ -110,10 +110,10 @@ class Mailer
      * @param string $name
      * @return $this
      */
-    public function to($email, $name = '')
+    public function to($email)
     {
-        $this->options['to']      = $email;
-        $this->options['to_name'] = $name;
+        $this->options['to'] = $email;
+        //$this->options['to_name'] = $name;
         return $this;
     }
 
@@ -127,7 +127,11 @@ class Mailer
                 {
                     //使用phpmailer发送
                     $this->mail->setFrom($this->options['from'], $this->options['from_name']);
-                    $this->mail->addAddress($this->options['to'], $this->options['to_name']);
+                    //多个邮箱发送
+                    $this->options['to'] = explode(',', str_replace('，', ',', $this->options['to']));
+                    foreach ($this->options['to'] as $val) {
+                        $this->mail->addAddress($val);
+                    }
                     $this->mail->Subject = $this->options['subject'];
                     if ($this->options['ishtml']) {
                         $this->mail->isHTML(true);
