@@ -1,4 +1,3 @@
-# 🔥🔥🔥插件授权活动倒计时， [点击查看](https://blog.yzncms.com/shows/25/111.html)
 # YznCMS 后台开发框架
 ### 后端基于thinkphp5.1框架,前端基于Layui2.6.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
 
