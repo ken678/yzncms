@@ -15,6 +15,7 @@
 namespace app\common\library;
 
 use app\common\model\Ems as EmsModel;
+use util\Random;
 
 class Ems
 {
@@ -56,7 +57,7 @@ class Ems
      */
     public static function send($email, $code = null, $event = 'default')
     {
-        $code   = is_null($code) ? mt_rand(1000, 9999) : $code;
+        $code   = is_null($code) ? Random::numeric(config('captcha.length')) : $code;
         $time   = time();
         $ems    = EmsModel::create(['event' => $event, 'email' => $email, 'code' => $code, 'create_time' => $time]);
         $result = hook('ems_send', $ems, true, true);

@@ -379,7 +379,7 @@ class Index extends MemberBase
             $rule = [
                 'mobile|手机号'      => 'require|mobile',
                 'email|邮箱'        => 'require|email',
-                'captcha|验证码'     => 'require|number|length:4',
+                'captcha|验证码'     => 'require|number',
                 'newpassword|新密码' => 'require|length:6,30',
                 '__token__'       => 'require|token',
             ];
