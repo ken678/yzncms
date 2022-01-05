@@ -135,17 +135,18 @@ class Collection
     {
         return $this->download_img($matches[0], $matches[1]);
     }
-    protected function download_img($old, $out)
+
+    protected function download_img($html, $oldUrl)
     {
-        if (!empty($old) && !empty($out)) {
-            $url = '';
-            if (false === strpos($out, '://')) {
-                $url = $out = $this->url_check($out, $this->_url);
+        if (!empty($html) && !empty($oldUrl)) {
+            $newUrl = $url = '';
+            if (false === strpos($oldUrl, '://')) {
+                $newUrl = $url = $this->url_check($oldUrl, $this->_url);
             }
             if ($this->_config['down_attachment']) {
-                $url = $this->getUrlFile($out);
+                $newUrl = $this->getUrlFile($url);
             }
-            return str_replace($out, $url, $old);
+            return str_replace($oldUrl, $newUrl, $html);
         } else {
             return $old;
         }
