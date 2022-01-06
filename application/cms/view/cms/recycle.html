@@ -20,12 +20,11 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
     };
 
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         url: "{:url('recycle',['catid'=>$catid])}",
         toolbar: ['refresh',
             [{

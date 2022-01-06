@@ -28,6 +28,7 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         add_url: "{:url('add',['modelid'=>$modelid])}",
         edit_url: "{:url('edit')}",
         delete_url: "{:url('del')}",
@@ -36,8 +37,6 @@ layui.use('yznTable', function() {
 
     yznTable.render({
             init: init,
-            id: 'currentTable',
-            elem: '#currentTable',
             toolbar: ['refresh',
                 [{
                     html: '<a class="layui-btn layui-btn-sm" type="button" href="{:url("models/index")}"><i class="iconfont icon-undo"></i>&nbsp;返回模型</a>'

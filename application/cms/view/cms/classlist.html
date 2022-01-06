@@ -74,6 +74,7 @@ layui.use(['table', 'yznTable'], function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         add_url: "{:url('add',['catid'=>$catid])}",
         delete_url: "{:url('del',['catid'=>$catid])}",
         modify_url: '{:url("listorder",["catid"=>$catid])}',
@@ -81,8 +82,6 @@ layui.use(['table', 'yznTable'], function() {
 
     yznTable.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh',
             [{
                 text: '添加',

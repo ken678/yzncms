@@ -21,13 +21,12 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         add_url: '{:url("add_program",["id"=>$id])}',
     };
 
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh',[{
                 html:'<a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url("add_program",["id"=>$id])}"><i class="iconfont icon-add"></i>添加方案</a>'
             }]],

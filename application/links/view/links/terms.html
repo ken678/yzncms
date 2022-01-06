@@ -24,14 +24,13 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         edit_url: '{:url("termsedit")}',
         delete_url: '{:url("termsdelete")}',
     };
 
     yznTable.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh'],
         url: '{:url("terms")}',
         search:false,

@@ -24,13 +24,12 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         delete_url: "{:url('delete_group')}",
     };
 
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh', 'delete',
             [{
                 text: '群发短消息',

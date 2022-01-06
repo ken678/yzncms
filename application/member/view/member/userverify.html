@@ -14,14 +14,13 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         edit_url: "{:url('edit')}",
         delete_url: "{:url('del')}",
     };
 
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh', 'delete',
             [{
                 html: '<a class="layui-btn layui-btn-sm confirm" data-href="{:url("pass")}" data-batch-all="currentTable"><i class="iconfont icon-right"></i>&nbsp;审核通过</a>',

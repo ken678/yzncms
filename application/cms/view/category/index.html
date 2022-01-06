@@ -22,14 +22,13 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         delete_url: "{:url('del')}",
         modify_url: '{:url("multi")}',
     };
 
     yznTable.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh',
             [{
                     text: '新增栏目',

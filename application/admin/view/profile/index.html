@@ -74,11 +74,11 @@ layui.use(['yznTable','yznForm'], function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
     };
 
     table.render({
-        id: 'currentTable',
-        elem: '#currentTable',
+        init: init,
         toolbar: ['refresh'],
         url: '{:url("index")}',
         cols: [

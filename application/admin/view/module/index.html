@@ -25,12 +25,11 @@ layui.use(['yznTable', 'upload'], function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
     };
 
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh',
             [{
                html:'<a class="layui-btn layui-btn-sm" id="local-install"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'

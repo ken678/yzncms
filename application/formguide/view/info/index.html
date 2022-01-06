@@ -20,13 +20,12 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         delete_url: "{:url('del',['formid'=>$formid])}",
     };
 
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh',
             [{
                 html: '<a class="layui-btn layui-btn-sm" type="button" href="{:url("formguide/index")}"><i class="iconfont icon-undo"></i>&nbsp;返回</a>'

@@ -23,6 +23,7 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         add_url: "{:url('createGroup')}",
         edit_url: "{:url('editgroup')}",
         delete_url: "{:url('deletegroup')}",
@@ -30,8 +31,6 @@ layui.use('yznTable', function() {
 
     table.render({
         init: init,
-        id:'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh','add'],
         url: '{:url("index")}',
         search:false,

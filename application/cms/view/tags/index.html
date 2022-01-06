@@ -16,6 +16,7 @@ layui.use(['yznTable'], function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         edit_url: "{:url('edit')}",
         delete_url: "{:url('del')}",
         modify_url: '{:url("multi")}',
@@ -23,7 +24,6 @@ layui.use(['yznTable'], function() {
 
     yznTable.render({
         init: init,
-        id: 'currentTable',
         toolbar: ['refresh','delete',
             [{
                 html:'<a class="layui-btn layui-btn-sm layui-btn-warm" href="{:url("create")}"><i class="iconfont icon-warning"></i>&nbsp;数据重建</a>'

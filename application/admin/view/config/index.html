@@ -36,14 +36,13 @@ layui.use(['yznTable','clipboard'], function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         add_url: "{:url('add',['groupType'=>$group])}",
         modify_url:'{:url("multi")}',
     };
 
     table.render({
         init: init,
-        id:'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh','add'],
         url: '{:url("index",["group"=>$group])}',
         search:false,

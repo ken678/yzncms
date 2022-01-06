@@ -19,13 +19,12 @@ layui.use('yznTable', function() {
     var table = layui.yznTable;
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         edit_url: "{:url('edit')}",
         delete_url: "{:url('del')}",
     };
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh', [{
             text: '添加',
             url: "{:url('add')}",

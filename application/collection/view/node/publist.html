@@ -30,13 +30,12 @@ layui.use('yznTable', function() {
 
     var init = {
         table_elem: '#currentTable',
+        table_render_id: 'currentTable',
         delete_url: '{:url("content_del",["nid"=>$param.id])}',
     };
 
     table.render({
         init: init,
-        id: 'currentTable',
-        elem: '#currentTable',
         toolbar: ['refresh','delete'
             {empty name="Request.param.type"}
             ,[{
