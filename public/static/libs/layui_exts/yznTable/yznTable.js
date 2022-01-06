@@ -187,7 +187,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
         render: function(options) {
             options.init = options.init || init;
             options.modifyReload = yzn.parame(options.modifyReload, false);
-            options.id = options.id || options.table_render_id;
+            options.id = options.id || options.init.table_render_id;
             options.elem = options.elem || options.init.table_elem;
             options.cols = options.cols || [];
             options.layFilter = options.id + '_LayFilter';
