@@ -191,6 +191,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             options.elem = options.elem || options.init.table_elem;
             options.cols = options.cols || [];
             options.layFilter = options.id + '_LayFilter';
+            options.url = options.url || options.init.index_url;
             options.search = yzn.parame(options.search, true);
             options.searchFormVisible = yzn.parame(options.searchFormVisible, false);
             options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
@@ -199,6 +200,15 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 icon: 'layui-icon-search',
                 extend: 'data-table-id="' + options.id + '"'
             }];
+            // 判断是否为移动端
+            if (yzn.checkMobile()) {
+                options.defaultToolbar = !options.search ? ['filter'] : ['filter', {
+                    title: '搜索',
+                    layEvent: 'TABLE_SEARCH',
+                    icon: 'layui-icon-search',
+                    extend: 'data-table-id="' + options.id + '"'
+                }];
+            }
             options.searchInput = options.search ? yzn.parame(options.searchInput || options.init.searchInput, true) : false;
 
             var tableDone = options.done || function() {};
