@@ -31,11 +31,6 @@ use util\Random;
 class Install extends Command
 {
     /**
-     * @var \think\View 视图类实例
-     */
-    protected $view;
-
-    /**
      * @var \think\Request Request 实例
      */
     protected $request;
@@ -91,7 +86,6 @@ class Install extends Command
      */
     public function index()
     {
-        $this->view    = View::instance();
         $this->request = Request::instance();
 
         define('INSTALL_PATH', APP_PATH . 'admin' . DS . 'command' . DS . 'Install' . DS);
@@ -142,7 +136,7 @@ class Install extends Command
         } catch (\Exception $e) {
             $errInfo = $e->getMessage();
         }
-        return $this->view->fetch(INSTALL_PATH . "install.html", ['errInfo' => $errInfo]);
+        return view::fetch(INSTALL_PATH . "install.html", ['errInfo' => $errInfo]);
     }
 
     /**
@@ -203,7 +197,7 @@ class Install extends Command
         }
 
         // 数据库配置文件
-        $dbConfigFile = ROOT_PATH . 'config' . DIRECTORY_SEPARATOR . 'database.php';
+        $dbConfigFile = ROOT_PATH . 'config' . DS . 'database.php';
         $dbConfigText = @file_get_contents($dbConfigFile);
         $callback     = function ($matches) use ($mysqlHostname, $mysqlHostport, $mysqlUsername, $mysqlPassword, $mysqlDatabase, $mysqlPrefix) {
             $field   = "mysql" . ucfirst($matches[1]);
@@ -224,7 +218,7 @@ class Install extends Command
         // 设置新的Token随机密钥key
         $oldTokenKey    = config('token.key');
         $newTokenKey    = Random::alnum(32);
-        $coreConfigFile = ROOT_PATH . 'config' . DIRECTORY_SEPARATOR . 'token.php';
+        $coreConfigFile = ROOT_PATH . 'config' . DS . 'token.php';
         $coreConfigText = @file_get_contents($coreConfigFile);
         $coreConfigText = preg_replace("/'key'(\s+)=>(\s+)'{$oldTokenKey}'/", "'key'\$1=>\$2'{$newTokenKey}'", $coreConfigText);
 
@@ -257,7 +251,7 @@ class Install extends Command
     protected function checkenv()
     {
         //数据库配置文件
-        $dbConfigFile = ROOT_PATH . 'config' . DIRECTORY_SEPARATOR . 'database.php';
+        $dbConfigFile = ROOT_PATH . 'config' . DS . 'database.php';
 
         if (version_compare(PHP_VERSION, '7.0.0', '<')) {
             throw new Exception("当前版本" . PHP_VERSION . "过低，请使用PHP7.0以上版本");
@@ -266,7 +260,7 @@ class Install extends Command
             throw new Exception("当前未开启PDO，无法进行安装");
         }
         if (!File::is_really_writable($dbConfigFile)) {
-            throw new Exception("当前权限不足，无法写入文件 application/database.php");
+            throw new Exception("当前权限不足，无法写入文件 config/database.php");
         }
         return true;
     }
