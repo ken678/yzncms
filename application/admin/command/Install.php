@@ -30,7 +30,6 @@ use util\Random;
 
 class Install extends Command
 {
-    protected $model = null;
     /**
      * @var \think\View 视图类实例
      */
@@ -44,8 +43,7 @@ class Install extends Command
     protected function configure()
     {
         $config = Config::get('database.');
-        $this
-            ->setName('install')
+        $this->setName('install')
             ->addOption('hostname', 'a', Option::VALUE_OPTIONAL, 'mysql hostname', $config['hostname'])
             ->addOption('hostport', 'o', Option::VALUE_OPTIONAL, 'mysql hostport', $config['hostport'])
             ->addOption('database', 'd', Option::VALUE_OPTIONAL, 'mysql database', $config['database'])
@@ -73,19 +71,19 @@ class Install extends Command
 
         $installLockFile = INSTALL_PATH . "install.lock";
         if (is_file($installLockFile) && !$force) {
-            throw new Exception("\nYznCMS already installed!\nIf you need to reinstall again, use the parameter --force=true ");
+            $output->writeln("<error>\nYznCMS already installed!\nIf you need to reinstall again, use the parameter --force=true </error>");
+            return false;
         }
-
         $adminUsername = 'admin';
         $adminPassword = Random::alnum(10);
         $adminEmail    = 'admin@admin.com';
         $siteName      = '我的网站';
 
         $this->installation($hostname, $hostport, $database, $username, $password, $prefix, $adminUsername, $adminPassword, $adminEmail, $siteName);
-        $output->highlight("Admin url:http://www.yoursite.com/admin");
-        $output->highlight("Admin username:{$adminUsername}");
-        $output->highlight("Admin password:{$adminPassword}");
-        $output->info("Install Successed!");
+        $output->writeln("Admin url: http://www.yoursite.com/admin");
+        $output->writeln("Admin username: {$adminUsername}");
+        $output->writeln("Admin password: {$adminPassword}");
+        $output->writeln("Install Successed!");
     }
 
     /**
