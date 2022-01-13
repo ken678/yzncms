@@ -1,164 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>YznCMS后台管理系统安装</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>安装YznCMS后台程序</title>
     <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css" media="all">
+    <style type="text/css">
+    body {
+        text-align: center;
+    }
+    h2 {
+        margin-top: 20px;
+        font-size: 28px;
+        font-weight: normal;
+        color: #3C5675;
+        margin-bottom: 0
+    }
 
-    <style>
-        body {
-            background: #f1f6fd;
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    .content {
+        margin-top: 20px;
+    }
 
-        body, input, button {
-            font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, 'Microsoft Yahei', Arial, sans-serif;
-            font-size: 14px;
-            color: #7E96B3;
-        }
+    .content p {
+        margin: 20px;
+    }
 
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
+    .content form {
+        margin: 0 auto;
+        width: 500px;
+        margin-bottom: 20px;
+    }
 
-        a {
-            color: #4e73df;
-            text-decoration: none;
-        }
+    .content form .bg {
+        margin-top: 20px;
+        background-color: #fff;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        padding: 14px 14px;
+        box-shadow: 0 0 8px #cccccc;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    .content form .layui-form-item:last-child {
+        margin-bottom: 0 !important;
+    }
 
-        h2 {
-            font-size: 28px;
-            font-weight: normal;
-            color: #3C5675;
-            margin-bottom: 0;
-            margin-top: 30px;
-        }
+    .content form .layui-btn {
+        margin-top: 20px;
+    }
 
-        form {
-            margin-top: 40px;
-        }
+    .content .layui-elem-field legend {
+        font-size: 16px;
+        color: #8a8a8a;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .content .tips {
+        float: left;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 12px;
+        color: #eca6a6
+    }
 
-        .form-group .form-field:first-child input {
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
+    .content .admin-tips {
+        float: left;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 12px;
+        color: #eca6a6
+    }
 
-        .form-group .form-field:last-child input {
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
+    .content .desc {
+        font-size: 16px;
+        color: #4E5465;
+        margin-bottom: 30px;
+    }
 
-        .form-field input {
-            background: #fff;
-            margin: 0 0 2px;
-            border: 2px solid transparent;
-            transition: background 0.2s, border-color 0.2s, color 0.2s;
-            width: 100%;
-            padding: 15px 15px 15px 180px;
-            box-sizing: border-box;
-        }
+    .content .desc a {
+        color: #07adeb;
+        margin-right: 10px;
+    }
 
-        .form-field input:focus {
-            border-color: #4e73df;
-            background: #fff;
-            color: #444;
-            outline: none;
-        }
+    .content .desc a:first-child {
+        margin-left: 10px;
+    }
 
-        .form-field label {
-            float: left;
-            width: 160px;
-            text-align: right;
-            margin-right: -160px;
-            position: relative;
-            margin-top: 15px;
-            font-size: 14px;
-            pointer-events: none;
-            opacity: 0.7;
-        }
+    .error {
+        background: #D83E3E;
+        color: #fff;
+        padding: 15px 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
 
-        button, .btn {
-            background: #3C5675;
-            color: #fff;
-            border: 0;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            padding: 15px 30px;
-            -webkit-appearance: none;
+    @media screen and (max-width:768px) {
+        .content form {
+            width: 95%;
         }
-
-        button[disabled] {
-            opacity: 0.5;
-        }
-
-        .form-buttons {
-            height: 52px;
-            line-height: 52px;
-        }
-
-        .form-buttons .btn {
-            margin-right: 5px;
-        }
-
-        #error, .error, #success, .success, #warmtips, .warmtips {
-            background: #D83E3E;
-            color: #fff;
-            padding: 15px 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        #success {
-            background: #3C5675;
-        }
-
-        #error a, .error a {
-            color: white;
-            text-decoration: underline;
-        }
-
-        #warmtips {
-            background: #ffcdcd;
-            font-size: 14px;
-            color: #e74c3c;
-        }
-
-        #warmtips a {
-            background: #ffffff7a;
-            display: block;
-            height: 30px;
-            line-height: 30px;
-            margin-top: 10px;
-            color: #e21a1a;
-            border-radius: 3px;
-        }
+    }
     </style>
 </head>
 
 <body>
-<div class="container">
-    <h2>安装YznCMS</h2>
-    <div>
-
-        <form method="post">
+    <h2>安装YznCMS后台系统</h2>
+    <div class="content">
+        <p class="desc">
+            使用过程中遇到任何问题可参考
+            <a href="https://www.kancloud.cn/ken678/yzncms" target="_blank">文档教程</a>
+            <a href="https://www.bilibili.com/video/av417106995" target="_blank">视频教程</a>
+        </p>
+        <form class="layui-form layui-form-pane" action="">
             {if $errInfo}
             <div class="error">
                 {$errInfo}
@@ -167,134 +120,124 @@
             <div id="error" style="display:none"></div>
             <div id="success" style="display:none"></div>
             <div id="warmtips" style="display:none"></div>
-
-            <div class="form-group">
-                <div class="form-field">
-                    <label>主机地址</label>
-                    <input type="text" name="mysqlHostname" value="127.0.0.1" required="">
+            <div class="bg">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据库地址</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="text" name="mysqlHostname" value="127.0.0.1" autocomplete="off" lay-verify="required" placeholder="请输入数据库地址">
+                    </div>
                 </div>
-
-                <div class="form-field">
-                    <label>数据库名</label>
-                    <input type="text" name="mysqlDatabase" value="" required="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据库端口</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="number" name="mysqlHostport" value="3306" autocomplete="off" lay-verify="required" placeholder="请输入数据库端口">
+                    </div>
                 </div>
-
-                <div class="form-field">
-                    <label>用户名</label>
-                    <input type="text" name="mysqlUsername" value="root" required="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据库名称</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="text" name="mysqlDatabase" value="" autocomplete="off" lay-verify="required" placeholder="请输入数据库名称">
+                    </div>
                 </div>
-
-                <div class="form-field">
-                    <label>密码</label>
-                    <input type="password" name="mysqlPassword">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据表前缀</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="text" name="mysqlPrefix" autocomplete="off" lay-verify="required" value="yzn_" placeholder="请输入数据表前缀">
+                    </div>
                 </div>
-
-                <div class="form-field">
-                    <label>数据表前缀</label>
-                    <input type="text" name="mysqlPrefix" value="yzn_">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据库账号</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="text" name="mysqlUsername" autocomplete="off" lay-verify="required" value="root" placeholder="请输入数据库账号">
+                    </div>
                 </div>
-
-                <div class="form-field">
-                    <label>端口</label>
-                    <input type="number" name="mysqlHostport" value="3306">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-field">
-                    <label>用户名</label>
-                    <input name="adminUsername" value="admin" required=""/>
-                </div>
-
-                <div class="form-field">
-                    <label>邮箱</label>
-                    <input name="adminEmail" value="admin@admin.com" required="">
-                </div>
-
-                <div class="form-field">
-                    <label>密码</label>
-                    <input type="password" name="adminPassword" required="">
-                </div>
-
-                <div class="form-field">
-                    <label>密码确认</label>
-                    <input type="password" name="adminPasswordConfirmation" required="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据库密码</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="password" autocomplete="off" lay-verify="required" name="mysqlPassword" placeholder="请输入数据库密码">
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <div class="form-field">
-                    <label>网站名称</label>
-                    <input type="text" name="siteName" value="网站名称" required=""/>
+            <div class="bg">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">管理员账号</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" name="adminUsername" autocomplete="off" lay-verify="required" value="admin" placeholder="请输入管理员账号"/>
+                    </div>
                 </div>
-
+                <div class="layui-form-item">
+                    <label class="layui-form-label">管理员邮箱</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" name="adminEmail" autocomplete="off" lay-verify="required" value="admin@admin.com" placeholder="请输入管理员邮箱"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">管理员密码</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="password" autocomplete="off" lay-verify="required" name="adminPassword" placeholder="请输入管理员密码">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码确认</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="password" autocomplete="off" lay-verify="required" name="adminPasswordConfirmation" placeholder="请输入密码确认">
+                    </div>
+                </div>
             </div>
-
-            <div class="form-buttons">
-                <!--@formatter:off-->
-                <button type="submit" {:$errInfo?'disabled':''}>立即安装</button>
-                <!--@formatter:on-->
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-normal {:$errInfo?'layui-btn-disabled':''}" {:$errInfo?'disabled':''} lay-submit lay-filter="install">确定安装</button>
             </div>
         </form>
-
-        <!-- jQuery -->
-        <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
-
-        <script>
-            $(function () {
-                $('form :input:first').select();
-
-                $('form').on('submit', function (e) {
-                    e.preventDefault();
-                    var form = this;
-                    var $error = $("#error");
-                    var $success = $("#success");
-                    var $button = $(this).find('button')
-                        .text("安装中...")
-                        .prop('disabled', true);
-                    $.ajax({
-                        url: "",
-                        type: "POST",
-                        dataType: "json",
-                        data: $(this).serialize(),
-                        success: function (ret) {
-                            if (ret.code == 1) {
-                                var data = ret.data;
-                                $error.hide();
-                                $(".form-group", form).remove();
-                                $button.remove();
-                                $("#success").text(ret.msg).show();
-
-                                $buttons = $(".form-buttons", form);
-                                $("<a class='btn' href='./'>首页</a>").appendTo($buttons);
-
-                                //if (typeof data.adminName !== 'undefined') {
-                                    var url = location.href.replace(/install\.php/, 'admin');
-                                    $("#warmtips").html("安装成功！" + '<a href="' + url + '">' + url + '</a>').show();
-                                    $('<a class="btn" href="' + url + '" id="btn-admin" style="background:#4e73df">' + "进入后台" + '</a>').appendTo($buttons);
-                                //}
-                                localStorage.setItem("fastep", "installed");
-                            } else {
-                                $error.show().text(ret.msg);
-                                $button.prop('disabled', false).text("点击安装");
-                                $("html,body").animate({
-                                    scrollTop: 0
-                                }, 500);
-                            }
-                        },
-                        error: function (xhr) {
-                            $error.show().text(xhr.responseText);
-                            $button.prop('disabled', false).text("点击安装");
-                            $("html,body").animate({
-                                scrollTop: 0
-                            }, 500);
-                        }
-                    });
-                    return false;
-                });
-            });
-        </script>
     </div>
-</div>
+    <script src="__STATIC__/libs/layui/layui.js" charset="utf-8"></script>
+    <script>
+    layui.use(['form', 'layer'], function() {
+        var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer;
+
+        $("#admin_url").bind("input propertychange", function() {
+            var val = $(this).val();
+            $("#admin_name").text(val);
+        });
+
+        form.on('submit(install)', function(data) {
+            if ($(this).hasClass('layui-btn-disabled')) {
+                return false;
+            }
+            var _data = data.field;
+            var loading = layer.msg('正在安装...', {
+                icon: 16,
+                shade: 0.2,
+                time: false
+            });
+            $.ajax({
+                url: window.location.href,
+                type: 'post',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                data: _data,
+                timeout: 60000,
+                success: function(data) {
+                    layer.close(loading);
+                    if (data.code === 1) {
+                        layer.msg(data.msg, { icon: 1 }, function() {
+                            window.location.href = location.protocol + '//' + location.host + '/' + data.url;
+                        });
+                    } else {
+                        layer.msg(data.msg, { icon: 2 });
+                    }
+                },
+                error: function(xhr, textstatus, thrown) {
+                    layer.close(loading);
+                    layer.msg('Status:' + xhr.status + '，' + xhr.statusText + '，请稍后再试！', { icon: 2 });
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+    </script>
 </body>
+
 </html>
