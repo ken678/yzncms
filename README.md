@@ -67,14 +67,23 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 - 数据库：MySQL >= 5.6
 
 
-## [安装教程]
+## [常规安装]
 - 第一步：下载源码压缩包解压到你的项目根目录
-- 第二步：绑定到项目中的public目录为运行目录，ps:如果您的服务器不支持绑定目录，请查看public目录下的index.php入口文件代码注释，有详细具体操作
-- 第三步：修改数据库配置（[在源代码根目录/config/database.php](https://gitee.com/ken678/YZNCMS/blob/master/config/database.php)） 
-- 第四步：将根目录的[yzncms.sql](https://gitee.com/ken678/YZNCMS/blob/master/yzncms.sql)文件导入数据库即可  
-- 第五步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
-- 如果你还是不会搭建，可以将FTP或者服务器等信息发送给邮箱530765310@qq.com进行免费搭建（仅限点赞用户）
+- 第二步：绑定到项目中的public目录为运行目录，ps:如果您的服务器不支持绑定目录，请查看public目录下的index.php和install.php代码注释，有详细具体操作
+- 第三步：访问[http://您的域名/install.php](http://www.yoursite.com/install.php)进行安装
 
+## [命令行安装]
+- 第一步：下载源码压缩包解压到你的项目根目录
+- 第二步：绑定到项目中的public目录为运行目录，ps:如果您的服务器不支持绑定目录，请查看public目录下的index.php代码注释，有详细具体操作
+- 第三步：进入目录  `cd yzncms`
+- 第四步：一键创建数据库并导入数据   `php think install -u 数据库用户名 -p 数据库密码`
+
+## [手动安装]
+- 第一步：下载源码压缩包解压到你的项目根目录
+- 第二步：绑定到项目中的public目录为运行目录，ps:如果您的服务器不支持绑定目录，请查看public目录下的index.php代码注释，有详细具体操作
+- 第三步：修改数据库配置（根目录/config/database.php）或者修改env配置文件(根目录/.env.sample,文件名修改为.env)
+- 第四步：将根目录的/application/admin/command/Install/yzncms.sql文件导入数据库即可
+- 第五步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
 
 ## [必看教程]
 - 伪静态(URL重写)： https://www.kancloud.cn/ken678/yzncms/1003231
@@ -86,7 +95,6 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 - 提交2款免费开源插件（需审核）
 - 提交讲解清晰易懂的教学视频（需审核）
 - 审核前,请先咨询作者,满足条件即可拉进官方授权群（退群视为放弃权益），享受丰富的插件,模块,各种资源及便捷的交流学习
-- 第三期授权活动：[连接地址](https://blog.yzncms.com/shows/25/111.html)
 
 > 更多的常见问题和教程见手册
 
