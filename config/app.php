@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 应用设置
 // +----------------------------------------------------------------------
-
+use think\facade\Env;
 error_reporting(E_ALL ^ E_NOTICE);
 return [
     // 应用名称
@@ -20,9 +20,9 @@ return [
     // 应用地址
     'app_host'               => '',
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug'              => Env::get('app.debug', true),
     // 应用Trace
-    'app_trace'              => true,
+    'app_trace'              => Env::get('app.trace', true),
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
