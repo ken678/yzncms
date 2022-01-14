@@ -66,19 +66,22 @@ class Install extends Command
 
         $installLockFile = INSTALL_PATH . "install.lock";
         if (is_file($installLockFile) && !$force) {
-            $output->writeln("<error>\nYznCMS already installed!\nIf you need to reinstall again, use the parameter --force=true </error>");
+            $output->error("\nYznCMS already installed!\nIf you need to reinstall again, use the parameter --force=true");
             return false;
         }
         $adminUsername = 'admin';
         $adminPassword = Random::alnum(10);
         $adminEmail    = 'admin@admin.com';
-        $siteName      = '我的网站';
-
-        $this->installation($hostname, $hostport, $database, $username, $password, $prefix, $adminUsername, $adminPassword, $adminEmail, $siteName);
-        $output->writeln("Admin url: http://www.yoursite.com/admin");
-        $output->writeln("Admin username: {$adminUsername}");
-        $output->writeln("Admin password: {$adminPassword}");
-        $output->writeln("Install Successed!");
+        try {
+            $this->installation($hostname, $hostport, $database, $username, $password, $prefix, $adminUsername, $adminPassword, $adminEmail);
+        } catch (\Exception $e) {
+            $output->error($e->getMessage());
+            return false;
+        }
+        $output->highlight("Admin url: http://www.yoursite.com/admin");
+        $output->highlight("Admin username: {$adminUsername}");
+        $output->highlight("Admin password: {$adminPassword}");
+        $output->info("Install Successed!");
     }
 
     /**
@@ -116,13 +119,12 @@ class Install extends Command
             $adminPassword             = $this->request->post('adminPassword', '');
             $adminPasswordConfirmation = $this->request->post('adminPasswordConfirmation', '');
             $adminEmail                = $this->request->post('adminEmail', 'admin@admin.com');
-            $siteName                  = $this->request->post('siteName', '我的网站');
 
             if ($adminPassword !== $adminPasswordConfirmation) {
                 return $output(0, '两次输入的密码不一致');
             }
             try {
-                $this->installation($mysqlHostname, $mysqlHostport, $mysqlDatabase, $mysqlUsername, $mysqlPassword, $mysqlPrefix, $adminUsername, $adminPassword, $adminEmail, $siteName);
+                $this->installation($mysqlHostname, $mysqlHostport, $mysqlDatabase, $mysqlUsername, $mysqlPassword, $mysqlPrefix, $adminUsername, $adminPassword, $adminEmail);
             } catch (\PDOException $e) {
                 throw new Exception($e->getMessage());
             } catch (\Exception $e) {
@@ -142,7 +144,7 @@ class Install extends Command
     /**
      * 执行安装
      */
-    protected function installation($mysqlHostname, $mysqlHostport, $mysqlDatabase, $mysqlUsername, $mysqlPassword, $mysqlPrefix, $adminUsername, $adminPassword, $adminEmail = null, $siteName = null)
+    protected function installation($mysqlHostname, $mysqlHostport, $mysqlDatabase, $mysqlUsername, $mysqlPassword, $mysqlPrefix, $adminUsername, $adminPassword, $adminEmail = null)
     {
         $this->checkenv();
 
@@ -159,10 +161,6 @@ class Install extends Command
         if (in_array($adminPassword, $weakPasswordArr)) {
             throw new Exception('密码太简单，请重新输入');
         }
-        if ($siteName == '' || preg_match("/fast" . "admin/i", $siteName)) {
-            throw new Exception('网站名称输入不正确');
-        }
-
         $sql = file_get_contents(INSTALL_PATH . 'yzncms.sql');
 
         $sql = str_replace("`yzn_", "`{$mysqlPrefix}", $sql);
