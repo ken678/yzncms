@@ -8,7 +8,7 @@
 :-ms-input-placeholder {
   color: #999;
 }
-.login-main {width: 400px;position: absolute; left: 50%; top: 50%; margin: -200px 0 0 -200px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; background: #fff; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; box-shadow: 0 0 50px #000;overflow: hidden;}
+.login-main {width: 400px;margin: auto !important;margin-top: 100px !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; background: #fff; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; box-shadow: 0 0 50px #b5b5b5;overflow: hidden;}
 .login-main .layui-elip{height: 117px; background-color: #148be4;font-size: 30px; font-weight: 400; font-stretch: normal; letter-spacing: 0; color: #fff; line-height: 117px; text-align: center; overflow: hidden; -webkit-transform: rotate(0); -moz-transform: rotate(0); -ms-transform: rotate(0); -o-transform: rotate(0); transform: rotate(0); }
 .login-main .layui-elip span.version {font-size: 12px; }
 .login-main .layui-elip .bg1 {display: inline-block; width: 74px; height: 74px; background: #fff; opacity: .1; border-radius: 0 74px 0 0; position: absolute; left: 0; top: 43px; }
