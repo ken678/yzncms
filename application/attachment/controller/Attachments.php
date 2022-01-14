@@ -20,7 +20,8 @@ use think\facade\Hook;
 
 class Attachments extends Adminbase
 {
-    private $uploadUrl = '';
+    private $uploadUrl      = '';
+    protected $searchFields = 'id,name';
 
     protected function initialize()
     {
