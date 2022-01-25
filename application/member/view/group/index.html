@@ -7,9 +7,9 @@
     </div>
 </div>
 <script type="text/html" id="barTool">
-    <a data-open='{:url("edit")}?id={{ d.id }}' data-width="900" data-height="600" class="layui-btn layui-btn-xs" title="编辑">编辑</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' data-width="900" data-height="600" class="layui-btn layui-btn-xs" title="编辑"><i class='iconfont icon-brush_fill'></i></a>
     {{#  if(d.issystem!=1){ }}
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
     {{#  } }}
 </script>
 <script type="text/html" id="issystem">
@@ -103,7 +103,7 @@ layui.use('yznTable', function() {
                 { field: 'allowsearch', width: 120, title: '搜索权限', align: "center", templet: '#allowsearch' },
                 { field: 'allowupgrade', width: 120, title: '自助升级', align: "center", templet: '#allowupgrade' },
                 { field: 'allowsendmessage', width: 120, title: '发短消息', align: "center", templet: '#allowsendmessage' },
-                { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
+                { fixed: 'right', width: 90, title: '操作', templet: '#barTool' }
             ]
         ]
     });
