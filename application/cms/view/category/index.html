@@ -11,8 +11,8 @@
 </div>
 <script type="text/html" id="barTool">
     <a data-open="{{d.add_url}}" data-width="900" data-height="600" class="layui-btn layui-btn-xs layui-btn-normal" title="添加子栏目">添加子栏目</a>
-    <a data-open='{:url("edit")}?id={{ d.id }}' data-width="900" data-height="600" class="layui-btn layui-btn-xs" title="编辑">编辑</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' data-width="900" data-height="600" class="layui-btn layui-btn-xs" title="编辑"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
 </script>
 {/block}
 {block name="script"}
@@ -84,7 +84,7 @@ layui.use('yznTable', function() {
                 { field: 'modelname', width: 120, title: '所属模型' },
                 { field: 'url', width: 60, align: "center", title: 'URL', templet: yznTable.formatter.url },
                 { field: 'status', width: 100, align: "center", title: '状态', unresize: true,templet: yznTable.formatter.switch },
-                { fixed: 'right', width: 210, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 170, title: '操作', toolbar: '#barTool' }
             ]
         ],
     });

@@ -16,8 +16,8 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a data-open='{:url("cms/cms/edit")}?catid={{ d.catid }}&id={{ d.content_id }}' class="layui-btn layui-btn-xs" title="编辑" data-full="true">编辑</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a data-open='{:url("cms/cms/edit")}?catid={{ d.catid }}&id={{ d.content_id }}' class="layui-btn layui-btn-xs" title="编辑" data-full="true"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
 </script>
 <script type="text/html" id="status">
     {{#  if(d.status==-1){ }}
@@ -61,7 +61,7 @@ layui.use(['yznTable'], function() {
                 { field: 'username', width: 100, title: '发布人' },
                 { field: 'url',width: 60,align:"center", title: 'URL',search:false,templet: yznTable.formatter.url},
                 { field: 'status', width: 90, align: "center", title: '状态', templet: '#status'},
-                { fixed: 'right', width: 120, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 90, title: '操作', toolbar: '#barTool' }
             ]
         ],
         page: {}

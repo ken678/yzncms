@@ -36,7 +36,7 @@ layui.use('yznTable', function() {
                 { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type==1){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
                 { field: 'create_time',width:180, title: '创建时间' },
                 { field: 'status', width: 100, title: '状态', unresize: true,templet: yznTable.formatter.switch },
-                { width:200, title: '操作',templet: yznTable.formatter.tool,operat: [
+                { width:150, title: '操作',templet: yznTable.formatter.tool,operat: [
                     [{
                         text: '字段管理',
                         url: init.field_url,
