@@ -40,7 +40,7 @@ layui.use('yznTable', function() {
                 { field: 'title', width: 200, align: 'left', title: '权限组'},
                 { field: 'description', title: '描述' },
                 { field: 'status', width: 80,title: '状态',templet: yznTable.formatter.label,selectList:{0:'禁用',1:'正常'}},
-                { width:120, title: '操作',templet: function (d){
+                { width:100, title: '操作',templet: function (d){
                     if(d.id=={$userInfo.roleid}){
                         return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
                     }else{
