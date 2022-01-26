@@ -35,7 +35,7 @@ layui.use('yznTable', function() {
                 { field: 'last_login_time', width: 200, title: '最后登录时间', search: 'range' },
                 { field: 'email',width: 200, title: 'E-mail', searchOp: 'like'  },
                 { field: 'nickname', title: '真实姓名', searchOp: 'like'  },
-                { width:120, title: '操作',templet: function (d){
+                { width:100, title: '操作',templet: function (d){
                     if(d.id=={$userInfo.id}){
                         return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
                     }else{

@@ -16,9 +16,9 @@
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑">编辑</a>
     <a data-open='{:url("add")}?parentid={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-normal" title="添加">添加</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs" title="编辑"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
 </script>
 {/block}
 {block name="script"}
@@ -63,7 +63,7 @@ layui.use(['table', 'treeGrid', 'yznTable'], function() {
                     { width: 80, title: '图标', align: 'center', templet: "<div><i class='iconfont {{d.icon}}'></i></div>" },
                     { width: 200, title: '模块/控制器/方法', templet: "<div>{{d.app}}/{{d.controller}}/{{d.action}}</div>" },
                     { field: 'status', align: 'center', width: 120, title: '状态', unresize: true ,templet: yznTable.formatter.switch,tips:"显示|隐藏"},
-                    { fixed: 'right', align: 'center', width: 200, title: '操作', toolbar: '#barTool' }
+                    { fixed: 'right', align: 'center', width: 120, title: '操作', toolbar: '#barTool' }
                 ]
             ], init),
         });

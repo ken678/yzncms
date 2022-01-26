@@ -10,8 +10,8 @@
 </div>
 <script type="text/html" id="barTool">
 	<a data-request='{:url("import_content",["id"=>$id])}?pid={{d.id}}' data-table="currentTable" class="layui-btn layui-btn-xs layui-btn-normal">使用</a>
-    <a href='{:url("edit_program")}?id={$id}&pid={{d.id}}&catid={{d.catid}}' class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("import_program_del")}?pid={{d.id}}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("edit_program")}?id={$id}&pid={{d.id}}&catid={{d.catid}}' class="layui-btn layui-btn-xs"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("import_program_del")}?pid={{d.id}}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
 </script>
 {/block}
 {block name="script"}
@@ -35,7 +35,7 @@ layui.use('yznTable', function() {
             [
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'title', title: '方案名称' },
-                { fixed: 'right', width: 170, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
             ]
         ]
     });

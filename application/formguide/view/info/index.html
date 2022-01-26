@@ -9,7 +9,7 @@
 <script type="text/html" id="barTool">
     {{#  if(!d.iffixed){ }}
     <a data-open='{:url("public_view",["formid"=>$formid])}?id={{ d.id }}' data-width="800" data-height="600" class="layui-btn layui-btn-xs">查看</a>
-    <a href='{:url("del",["formid"=>$formid])}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a href='{:url("del",["formid"=>$formid])}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
     {{#  } }}
 </script>
 {/block}
@@ -39,7 +39,7 @@ layui.use('yznTable', function() {
                 {$formStr|raw}
                 {field: 'ip', width: 150, title: 'IP' },
                 { field: 'inputtime', width: 180, title: '创建时间', search: 'range' },
-                { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
+                { fixed: 'right', width: 100, title: '操作', templet: '#barTool' }
             ]
         ],
         page: {}

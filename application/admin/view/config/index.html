@@ -22,8 +22,8 @@
     {{# } else { }}
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('{{d.name}}')}{/literal}">代码调用</a>
     {{# } }}
-    <a data-open='{:url("edit")}?id={{ d.id }}' title="编辑" class="layui-btn layui-btn-xs">编辑</a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' title="编辑" class="layui-btn layui-btn-xs"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
 </script>
 {/block}
 {block name="script"}
@@ -54,7 +54,7 @@ layui.use(['yznTable','clipboard'], function() {
                 { field: 'ftitle', width: 150, title: '类型' },
                 { field: 'update_time', width: 200, title: '更新时间'},
                 { field: 'status', title: '状态', width: 100, unresize: true,templet: yznTable.formatter.switch },
-                { fixed: 'right', width: 200, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 160, title: '操作', toolbar: '#barTool' }
             ]
         ],
     });
