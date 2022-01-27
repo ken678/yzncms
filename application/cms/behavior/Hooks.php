@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\behavior;
 
+use app\cms\library\FulltextSearch;
 use sys\Hooks as _Hooks;
 
 class Hooks extends _Hooks
@@ -23,6 +24,14 @@ class Hooks extends _Hooks
     public function userSidenavAfter($content)
     {
         return $this->fetch('userSidenavAfter');
+    }
+
+    public function xunsearchIndexReset($project)
+    {
+        if ($project['name'] == 'cms') {
+            return FulltextSearch::reset();
+        }
+
     }
 
     public function appInit()

@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
+use app\cms\library\FulltextSearch;
 use app\cms\model\Cms as Cms_Model;
 use think\Db;
 
@@ -201,6 +202,9 @@ class Index extends Cmsbase
     // 搜索
     public function search()
     {
+        if ($this->cmsConfig['web_site_searchtype'] == 'xunsearch') {
+            return $this->xunsearch();
+        }
         $seo = seo('', '搜索结果');
         //模型
         $modelid = $this->request->param('modelid/d', 0);
@@ -305,7 +309,86 @@ class Index extends Cmsbase
         } else {
             return $this->fetch('/search');
         }
+    }
 
+    //迅搜简单搜索示例 复杂搜索重写此方法
+    public function xunsearch()
+    {
+        $seo = seo('', '搜索结果');
+        //模型
+        $modelid = $this->request->param('modelid/d', 0);
+        //关键词
+        $keyword = $this->request->param('keyword/s', '', 'trim,safe_replace,strip_tags,htmlspecialchars');
+        $keyword = str_replace('%', '', $keyword); //过滤'%'，用户全文搜索
+
+        //时间范围
+        $time     = $this->request->param('time/s', '');
+        $page     = $this->request->get('page/d', '1');
+        $pagesize = 5;
+        $order    = $this->request->get('order', '');
+        $fulltext = $this->request->get('fulltext/d', '1');
+        $fuzzy    = $this->request->get('fuzzy/d', '0');
+        $synonyms = $this->request->get('synonyms/d', '0');
+
+        $result = $this->validate([
+            'keyword' => $keyword,
+        ], [
+            'keyword|标题关键词' => 'chsDash|max:25',
+        ]);
+        if (true !== $result) {
+            $this->error($result);
+        }
+        $search = FulltextSearch::setQuery($keyword, $fulltext, $fuzzy, $synonyms);
+        if ($modelid > 0) {
+            $search->addQueryString("modelid:({$modelid})");
+        }
+        //按时间搜索
+        if ($time == 'day') {
+            //一天
+            $search_time = time() - 86400;
+            $search->addRange('inputtime', $search_time, time());
+        } elseif ($time == 'week') {
+            //一周
+            $search_time = time() - 604800;
+            $search->addRange('inputtime', $search_time, time());
+        } elseif ($time == 'month') {
+            //一月
+            $search_time = time() - 2592000;
+            $search->addRange('inputtime', $search_time, time());
+        } elseif ($time == 'year') {
+            //一年
+            $search_time = time() - 31536000;
+            $search->addRange('inputtime', $search_time, time());
+        }
+        $modellist = cache('Model');
+        if (!$modellist) {
+            return $this->error('没有可搜索模型~');
+        }
+        $query  = ['keyword' => $keyword, 'modelid' => $modelid];
+        $result = FulltextSearch::search($page, $pagesize, $order, $query);
+        //获取热门搜索
+        $hot = FulltextSearch::hot();
+        $this->assign([
+            'time'        => $time,
+            'modelid'     => $modelid,
+            'keyword'     => $keyword,
+            'SEO'         => $seo,
+            'list'        => $result['list'],
+            'count'       => $result['count'],
+            'total'       => $result['total'],
+            'search_time' => $result['search_time'], //运行时间
+            'pages'       => $result['list']->render(),
+            'search'      => $result['search'],
+            'corrected'   => $result['corrected'],
+            'related'     => $result['related'],
+            'hot'         => $hot,
+            'modellist'   => $modellist,
+        ]);
+        if (!empty($keyword)) {
+            return $this->fetch('/xunsearch_result');
+        } else {
+            return $this->fetch('/search');
+        }
     }
 
     // tags

@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\model;
 
+use app\cms\library\FulltextSearch;
 use app\common\model\Modelbase;
 use think\Db;
 use think\facade\Validate;
@@ -103,16 +104,18 @@ class Cms extends Modelbase
         if (isset($cmsConfig['web_site_baidupush']) && $cmsConfig['web_site_baidupush']) {
             hook("baidupush", buildContentUrl($catid, $id, $data['url'], true, true));
         }
+        //新增讯搜索引
+        if (isset(cache("Cms_Config")['web_site_searchtype']) && cache("Cms_Config")['web_site_searchtype'] === 'xunsearch') {
+            FulltextSearch::update($modelid, $catid, $id, $data, $dataExt);
+        }
         return $id;
     }
 
     //编辑模型内容
     public function editModelData($data, $dataExt = [])
     {
-        $catid = (int) $data['catid'];
-        $id    = (int) $data['id'];
-        unset($data['catid']);
-        unset($data['id']);
+        $catid   = (int) $data['catid'];
+        $id      = (int) $data['id'];
         $modelid = getCategory($catid, 'modelid');
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
@@ -146,6 +149,10 @@ class Cms extends Modelbase
         }
         //标签
         hook('content_edit_end', $data);
+        //更新讯搜索引
+        if (isset(cache("Cms_Config")['web_site_searchtype']) && cache("Cms_Config")['web_site_searchtype'] === 'xunsearch') {
+            FulltextSearch::update($modelid, $catid, $id, $data, $dataExt);
+        }
     }
 
     //删除模型内容
@@ -175,6 +182,10 @@ class Cms extends Modelbase
         }
         //标签
         hook('content_delete_end', $data);
+        //更新讯搜索引
+        if (isset(cache("Cms_Config")['web_site_searchtype']) && cache("Cms_Config")['web_site_searchtype'] === 'xunsearch') {
+            FulltextSearch::del($data['catid'], $id);
+        }
     }
 
     //处理post提交的模型数据

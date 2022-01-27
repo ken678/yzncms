@@ -68,6 +68,14 @@
                             <div class="layui-form-mid layui-word-aux">开启后，误删的文章可以恢复,反之不可还原</div>
                         </div>
                         <div class="layui-form-item">
+                            <label  class="layui-form-label">搜索方式</label>
+                            <div class="layui-input-inline w300">
+                                <input type="radio" name="setting[web_site_searchtype]" value="local" title="本地搜索" {if 'local'==$setting['web_site_searchtype']}checked{/if}>
+                                <input type="radio" name="setting[web_site_searchtype]" value="xunsearch" title="迅搜全文搜索" {if 'xunsearch'==$setting['web_site_searchtype']}checked{/if}>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">使用迅搜(xunsearch)需要安装搜索插件，支持百万以上数据检索</div>
+                        </div>
+                        <div class="layui-form-item">
                             <label  class="layui-form-label">栏目授权</label>
                             <div class="layui-input-inline w300">
                                 <input type="radio" name="setting[site_category_auth]" value="1" title="开启" {if 1==$setting['site_category_auth']}checked{/if}>
