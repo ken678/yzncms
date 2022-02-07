@@ -44,7 +44,7 @@ layui.use('yznTable', function() {
             {/empty}
             {if $Request.param.type==1}
             ,[{
-                html:'<a class="layui-btn layui-btn-sm" href="{:url("import",["type"=>"all","id"=>$param.id])}">全部导入</a>'
+                html:'<a class="layui-btn layui-btn-sm" href="{:url("program/index",["type"=>"all","id"=>$param.id])}">全部导入</a>'
             }]
             {/if}
         ],

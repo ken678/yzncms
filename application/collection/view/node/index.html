@@ -22,6 +22,7 @@ layui.use('yznTable', function() {
         table_render_id: 'currentTable',
         edit_url: "{:url('edit')}",
         delete_url: "{:url('del')}",
+        export_url:"{:url('export')}",
     };
     table.render({
         init: init,
@@ -40,7 +41,14 @@ layui.use('yznTable', function() {
                 { field: 'name',align: "left", title: '名称' },
                 { field: 'lastdate', width: 180, title: '最后采集时间', templet: '<div>{{#  if(d.lastdate){ }} {{d.lastdate}} {{#  } else { }} / {{#  } }}</div>', search: 'range' },
                 { width: 200, title: '内容操作',  templet: '#caijiTool'},
-                { width:90, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
+                { width:130, title: '操作',templet: yznTable.formatter.tool,operat: [
+                [{
+                    text: '导出',
+                    url: init.export_url,
+                    method: 'href',
+                    class: 'layui-btn layui-btn-xs layui-btn-warm',
+                    extend: 'target="_blank"',
+                }],'edit','delete']}
             ]
         ],
         page: {}
