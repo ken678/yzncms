@@ -10,18 +10,22 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 采集模型
+// | 采集验证
 // +----------------------------------------------------------------------
-namespace app\collection\model;
+namespace app\collection\validate;
 
-use think\Model;
+use think\Validate;
 
-class Nodes extends Model
+class Node extends Validate
 {
-    protected $name = 'collection_node';
 
-    public function getLastdateAttr($value)
-    {
-        return date("Y-m-d h:i:s", $value);
-    }
+    //定义验证规则
+    protected $rule = [
+        'name|采集任务名'         => 'require',
+        'urlpage|采集网址'       => 'require',
+        'pagesize_start|开始页' => 'number|requireIf:sourcetype,1',
+        'pagesize_end|结束页'   => 'number|requireIf:sourcetype,1',
+        'par_num|加 ? 页'      => 'number|requireIf:sourcetype,1',
+    ];
+
 }

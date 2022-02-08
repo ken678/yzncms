@@ -30,9 +30,11 @@ class Node extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data = $this->request->post('data/a');
             try {
-                $this->modelClass->addNode($data);
+                $data['urlpage'] = (int) $data['sourcetype'] == 1 ? $data['urlpage1'] : $data['urlpage2'];
+                unset($data['urlpage1'], $data['urlpage2']);
+                $this->addNode($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -45,9 +47,11 @@ class Node extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data = $this->request->post('data/a');
             try {
-                $this->modelClass->editNode($data);
+                $data['urlpage'] = (int) $data['sourcetype'] == 1 ? $data['urlpage1'] : $data['urlpage2'];
+                unset($data['urlpage1'], $data['urlpage2']);
+                $this->editNode($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -61,7 +65,24 @@ class Node extends Adminbase
             $this->assign('data', $data);
             return $this->fetch();
         }
+    }
 
+    protected function addNode($data)
+    {
+        $result = $this->validate($data, 'Node');
+        if (true !== $result) {
+            throw new \Exception($result);
+        }
+        NodesModel::create($data, true);
+    }
+
+    protected function editNode($data)
+    {
+        $result = $this->validate($data, 'Node');
+        if (true !== $result) {
+            throw new \Exception($result);
+        }
+        NodesModel::update($data);
     }
 
     //网址采集
@@ -100,7 +121,6 @@ class Node extends Adminbase
         } else {
             $event->echo_msg('网址采集已完成！');
         }
-
     }
 
     //文章列表
@@ -148,7 +168,7 @@ class Node extends Adminbase
                 $this->error('参数错误！');
             }
             if (!is_array($ids)) {
-                $ids = array(0 => $ids);
+                $ids = [0 => $ids];
             }
             try {
                 foreach ($ids as $id) {
@@ -169,13 +189,27 @@ class Node extends Adminbase
         if (!$row) {
             $this->error('采集项目不存在');
         }
-        $data = $row->toArray();
-        return download(base64_encode(json_encode($data)), 'task_' . $id . '.txt', true);
+        $data = $row->getData();
+        return download(base64_encode(json_encode($data)), 'task_' . $id . '.txt', true, 0);
     }
 
     //导入
     public function import()
     {
-
+        $file = $this->request->file('file');
+        if (!$file || !$file instanceof \think\File) {
+            throw new Exception('没有文件上传或服务器上传限制');
+        }
+        $file = $file->getInfo('tmp_name');
+        $data = file_get_contents($file);
+        $data = json_decode(base64_decode($data), true);
+        try {
+            unset($data['id']);
+            $this->addNode($data);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+        $this->success('新增成功！', url('index'));
     }
+
 }
