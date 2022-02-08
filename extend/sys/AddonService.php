@@ -292,7 +292,7 @@ class AddonService
                     try {
                         Db::execute($value);
                     } catch (\Exception $e) {
-                        throw new Exception('导入SQL失败，请检查{$name}.sql的语句是否正确');
+                        throw new Exception("导入SQL失败，请检查{$name}.sql的语句是否正确");
                     }
                 }
             }

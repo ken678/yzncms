@@ -10,8 +10,8 @@
 </div>
 <script type="text/html" id="barTool">
 	<a data-request='{:url("import_content",["id"=>$id])}?pid={{d.id}}' data-table="currentTable" class="layui-btn layui-btn-xs layui-btn-normal">使用</a>
-    <a href='{:url("edit_program")}?id={$id}&pid={{d.id}}&catid={{d.catid}}' class="layui-btn layui-btn-xs"><i class='iconfont icon-brush_fill'></i></a>
-    <a href='{:url("import_program_del")}?pid={{d.id}}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
+    <a href='{:url("edit")}?id={$id}&pid={{d.id}}&catid={{d.catid}}' class="layui-btn layui-btn-xs"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("del")}?pid={{d.id}}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
 </script>
 {/block}
 {block name="script"}
@@ -22,15 +22,15 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
-        add_url: '{:url("add_program",["id"=>$id])}',
+        add_url: '{:url("add",["id"=>$id])}',
     };
 
     table.render({
         init: init,
         toolbar: ['refresh',[{
-                html:'<a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url("add_program",["id"=>$id])}"><i class="iconfont icon-add"></i>添加方案</a>'
+                html:'<a class="layui-btn layui-btn-sm layui-btn-normal" href="{:url("add",["id"=>$id])}"><i class="iconfont icon-add"></i>添加方案</a>'
             }]],
-        url: '{:url("import",["id"=>$id])}',
+        url: '{:url("index",["id"=>$id])}',
         cols: [
             [
                 { field: 'id', width: 70, title: 'ID' },

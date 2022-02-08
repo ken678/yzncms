@@ -14,30 +14,27 @@
 // +----------------------------------------------------------------------
 namespace app\collection\controller;
 
-use app\collection\model\Content as Content_Model;
-use app\collection\model\Nodes as Nodes_Model;
-use app\collection\model\Program as Program_Model;
+use app\collection\model\Content as ContentModel;
+use app\collection\model\Nodes as NodesModel;
 use app\common\controller\Adminbase;
-use think\Db;
 
 class Node extends Adminbase
 {
-    protected $Nodes_Model;
 
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass    = new Nodes_Model;
-        $this->Content_Model = new Content_Model;
-        $this->Program_Model = new Program_Model;
+        $this->modelClass = new NodesModel;
     }
 
     public function add()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data = $this->request->post('data/a');
             try {
-                $this->modelClass->addNode($data);
+                $data['urlpage'] = (int) $data['sourcetype'] == 1 ? $data['urlpage1'] : $data['urlpage2'];
+                unset($data['urlpage1'], $data['urlpage2']);
+                $this->addNode($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -50,9 +47,11 @@ class Node extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post();
+            $data = $this->request->post('data/a');
             try {
-                $this->modelClass->editNode($data);
+                $data['urlpage'] = (int) $data['sourcetype'] == 1 ? $data['urlpage1'] : $data['urlpage2'];
+                unset($data['urlpage1'], $data['urlpage2']);
+                $this->editNode($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -66,7 +65,24 @@ class Node extends Adminbase
             $this->assign('data', $data);
             return $this->fetch();
         }
+    }
 
+    protected function addNode($data)
+    {
+        $result = $this->validate($data, 'Node');
+        if (true !== $result) {
+            throw new \Exception($result);
+        }
+        NodesModel::create($data, true);
+    }
+
+    protected function editNode($data)
+    {
+        $result = $this->validate($data, 'Node');
+        if (true !== $result) {
+            throw new \Exception($result);
+        }
+        NodesModel::update($data);
     }
 
     //网址采集
@@ -92,10 +108,10 @@ class Node extends Adminbase
                             continue;
                         }
                         //是否采集过
-                        if (!Content_Model::where(['url' => $v['url']])->find()) {
+                        if (!ContentModel::where(['url' => $v['url']])->find()) {
                             $html = $event->get_content($v['url']);
                             $event->echo_msg("采集内容页：<a href='{$v['url']}' target='_blank'>{$v['url']}</a>", 'black');
-                            Content_Model::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title'], 'data' => serialize($html)]);
+                            ContentModel::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title'], 'data' => serialize($html)]);
                         }
                     }
                 }
@@ -105,7 +121,6 @@ class Node extends Adminbase
         } else {
             $event->echo_msg('网址采集已完成！');
         }
-
     }
 
     //文章列表
@@ -121,12 +136,11 @@ class Node extends Adminbase
         if ($this->request->isAjax()) {
             $limit = intval($param['limit']) < 10 ? 10 : $param['limit'];
             $page  = intval($param['page']) < 1 ? 1 : $param['page'];
-            $data  = $this->Content_Model
-                ->where($where)
+            $data  = ContentModel::where($where)
                 ->page($page, $limit)
                 ->order('id', 'desc')
                 ->select();
-            $total = $this->Content_Model->where($where)->order('id', 'desc')->count();
+            $total = ContentModel::where($where)->order('id', 'desc')->count();
             return json(["code" => 0, "count" => $total, "data" => $data]);
         }
         $this->assign('param', $param);
@@ -136,258 +150,9 @@ class Node extends Adminbase
     public function show()
     {
         $id   = $this->request->param('id/d', 0);
-        $data = $this->Content_Model->where('id', $id)->value('data');
+        $data = ContentModel::where('id', $id)->value('data');
         $this->assign('data', unserialize($data));
         return $this->fetch();
-    }
-
-    //导入文章
-    public function import()
-    {
-        $nid = $this->request->param('id/d', 0);
-        if ($this->request->isAjax()) {
-            $data = $this->Program_Model->where('nid', $nid)->select();
-            return json(["code" => 0, "data" => $data]);
-        }
-        $this->assign('id', $nid);
-        return $this->fetch();
-    }
-
-    public function add_program()
-    {
-        $nid   = $this->request->param('id/d', 0);
-        $catid = $this->request->param('catid/d', 0);
-        $title = $this->request->param('title/s', '');
-        if ($this->request->isPost()) {
-            $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
-            $config  = [];
-            $data    = $this->request->post();
-            foreach ($data['node_field'] as $k => $v) {
-                if (empty($v)) {
-                    continue;
-                }
-                $config[$data['model_type'][$k]][$data['model_field'][$k]] = $v;
-            }
-            foreach ($data['funcs'] as $k => $v) {
-                if (empty($v)) {
-                    continue;
-                }
-                $config['funcs'][$data['model_field'][$k]] = $v;
-            }
-            $result = $this->Program_Model->save([
-                'nid'     => $nid,
-                'catid'   => $catid,
-                'modelid' => $modelid,
-                'title'   => $title,
-                'config'  => serialize($config),
-            ]);
-            if (false !== $result) {
-                $this->success("添加成功！", url('import', ['id' => $nid]));
-            } else {
-                $this->error('添加失败！');
-            }
-
-        } else {
-            $tree  = new \util\Tree();
-            $str   = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
-            $array = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
-            foreach ($array as $k => $v) {
-                if ($v['id'] == $catid) {
-                    $array[$k]['selected'] = "selected";
-                }
-                //含子栏目和单页不可以发表
-                if ($v['child'] == 1 || $v['type'] == 1) {
-                    $array[$k]['disabled'] = "disabled";
-                    $array[$k]['catidurl'] = '';
-                } else {
-                    $array[$k]['disabled'] = "";
-                    $array[$k]['catidurl'] = url('add_program', ['id' => $nid, 'catid' => $v['id']]);
-                }
-            }
-            $tree->init($array);
-            $category = $tree->getTree(0, $str);
-            if ($catid) {
-                $cat_info   = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
-                $data       = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data  = json_decode($this->modelClass->where('id', $nid)->value('customize_config'), true);
-                $node_field = [];
-                if (is_array($node_data)) {
-                    foreach ($node_data as $k => $v) {
-                        if (empty($v['name']) || empty($v['title'])) {
-                            continue;
-                        }
-                        $node_field[$v['name']] = $v['title'];
-                    }
-                }
-                $this->assign("node_field", $node_field);
-                $this->assign("data", $data);
-            }
-            $this->assign("catname", $cat_info['catname']);
-            $this->assign("category", $category);
-            $this->assign('id', $nid);
-            $this->assign('catid', $catid);
-            return $this->fetch();
-        }
-    }
-
-    public function edit_program()
-    {
-        $nid   = $this->request->param('id/d', 0);
-        $pid   = $this->request->param('pid/d', 0);
-        $catid = $this->request->param('catid/d', 0);
-        $title = $this->request->param('title/s', '');
-        if ($this->request->isPost()) {
-            $modelid = Db::name('Category')->where('id', $catid)->value('modelid');
-            $config  = [];
-            $data    = $this->request->post();
-            foreach ($data['node_field'] as $k => $v) {
-                if (empty($v)) {
-                    continue;
-                }
-                $config[$data['model_type'][$k]][$data['model_field'][$k]] = $v;
-            }
-            foreach ($data['funcs'] as $k => $v) {
-                if (empty($v)) {
-                    continue;
-                }
-                $config['funcs'][$data['model_field'][$k]] = $v;
-            }
-            $proObj          = Program_Model::get($pid);
-            $proObj->nid     = $nid;
-            $proObj->catid   = $catid;
-            $proObj->modelid = $modelid;
-            $proObj->title   = $title;
-            $proObj->config  = serialize($config);
-            if ($proObj->save()) {
-                $this->success("修改成功！", url('import', ['id' => $nid]));
-            } else {
-                $this->error('修改失败！');
-            }
-        } else {
-            $program = unserialize($this->Program_Model->where('id', $pid)->value('config'));
-            $tree    = new \util\Tree();
-            $str     = "<option value=@catidurl @selected @disabled>@spacer @catname</option>";
-            $array   = Db::name('Category')->order('listorder ASC, id ASC')->column('*', 'id');
-            foreach ($array as $k => $v) {
-                if ($v['id'] == $catid) {
-                    $array[$k]['selected'] = "selected";
-                }
-                //含子栏目和单页不可以发表
-                if ($v['child'] == 1 || $v['type'] == 1) {
-                    $array[$k]['disabled'] = "disabled";
-                    $array[$k]['catidurl'] = '';
-                } else {
-                    $array[$k]['disabled'] = "";
-                    $array[$k]['catidurl'] = url('add_program', ['id' => $nid, 'catid' => $v['id']]);
-                }
-            }
-            $tree->init($array);
-            $category = $tree->getTree(0, $str);
-            if ($catid) {
-                $cat_info  = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
-                $data      = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data = json_decode($this->modelClass->where('id', $nid)->value('customize_config'), true);
-                foreach ($data as $key => $value) {
-                    if ($value['fieldArr'] == 'modelField') {
-                        if (isset($program['modelField'][$key])) {
-                            $data[$key]['value'] = $program['modelField'][$key];
-                        }
-                    }
-                    if ($value['fieldArr'] == 'modelFieldExt') {
-                        if (isset($program['modelFieldExt'][$key])) {
-                            $data[$key]['value'] = $program['modelFieldExt'][$key];
-                        }
-                    }
-                    $data[$key]['funcs'] = isset($program['funcs'][$key]) ? $program['funcs'][$key] : '';
-                }
-                $node_field = [];
-                if (is_array($node_data)) {
-                    foreach ($node_data as $k => $v) {
-                        if (empty($v['name']) || empty($v['title'])) {
-                            continue;
-                        }
-                        $node_field[$v['name']] = $v['title'];
-                    }
-                }
-                $this->assign("node_field", $node_field);
-                $this->assign("data", $data);
-            }
-            $this->assign('program', $program);
-            $this->assign("catname", $cat_info['catname']);
-            $this->assign("category", $category);
-            $this->assign('id', $nid);
-            $this->assign('catid', $catid);
-            return $this->fetch();
-        }
-    }
-
-    //导入文章到模型
-    public function import_content()
-    {
-        $nid               = $this->request->param('id/d', 0);
-        $pid               = $this->request->param('pid/d', 0);
-        $program           = $this->Program_Model->where('id', $pid)->find();
-        $program['config'] = unserialize($program['config']);
-        $data              = $this->Content_Model->where([
-            ['nid', '=', $nid],
-            ['status', '=', 1],
-        ])->select();
-
-        $cms_model = new \app\cms\model\Cms;
-        foreach ($data as $k => $v) {
-            $sql['modelField'] = array('catid' => $program['catid'], 'status' => 1);
-            $v['data']         = unserialize($v['data']);
-            if (!$v['data']) {
-                continue;
-            }
-            foreach ($program['config']['modelField'] as $a => $b) {
-                if (isset($program['config']['funcs'][$a])) {
-                    $sql['modelField'][$a] = $this->parseFunction($program['config']['funcs'][$a], $v['data'][$b]);
-                } else {
-                    $sql['modelField'][$a] = $v['data'][$b];
-                }
-            }
-            foreach ($program['config']['modelFieldExt'] as $a => $b) {
-                if (isset($program['config']['funcs'][$a])) {
-                    $sql['modelFieldExt'][$a] = $this->parseFunction($program['config']['funcs'][$a], $v['data'][$b]);
-                } else {
-                    $sql['modelFieldExt'][$a] = $v['data'][$b];
-                }
-            }
-            try {
-                $cms_model->addModelData($sql['modelField'], $sql['modelFieldExt']);
-            } catch (\Exception $ex) {
-                $this->error($ex->getMessage());
-            }
-            //更新状态
-            $this->Content_Model->where('id', $v['id'])->update(['status' => 2]);
-
-        }
-        $this->success('操作成功！', url('publist', ['type' => 2, 'id' => $nid]));
-    }
-
-    protected function parseFunction($match, $content)
-    {
-        $varArray = explode('|', $match);
-        $length   = count($varArray);
-        for ($i = 0; $i < $length; $i++) {
-            $args = explode('=', $varArray[$i], 2);
-            $fun  = trim($args[0]);
-            if (isset($args[1])) {
-                $args[1] = explode(',', $args[1]);
-                if (false !== $key = array_search("###", $args[1])) {
-                    $args[1][$key] = $content;
-                    $content       = call_user_func_array($fun, $args[1]);
-                } else {
-                    $content = call_user_func_array($fun, array_merge([$content], $args[1]));
-                }
-            } else {
-                if (!empty($args[0])) {
-                    $content = $fun($content);
-                }
-            }
-        }
-        return $content;
     }
 
     //采集数据删除
@@ -397,35 +162,54 @@ class Node extends Adminbase
         $ids  = $this->request->param('id/a', null);
         $type = $this->request->param('type/s', '');
         if ($type == "all") {
-            $this->Content_Model->where('nid', $nid)->delete();
+            ContentModel::where('nid', $nid)->delete();
         } else {
             if (empty($ids) || !$nid) {
                 $this->error('参数错误！');
             }
             if (!is_array($ids)) {
-                $ids = array(0 => $ids);
+                $ids = [0 => $ids];
             }
             try {
                 foreach ($ids as $id) {
-                    $this->Content_Model->where(['nid' => $nid, 'id' => $id])->delete();
+                    ContentModel::where(['nid' => $nid, 'id' => $id])->delete();
                 }
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
         }
         $this->success('删除成功！');
-
     }
 
-    //方案删除
-    public function import_program_del()
+    //导出
+    public function export()
     {
-        $pid = $this->request->param('pid/d', 0);
-        empty($pid) && $this->error('参数不能为空！');
-        if ($this->Program_Model->where('id', $pid)->delete()) {
-            $this->success("删除成功！");
-        } else {
-            $this->error('删除失败！');
+        $id  = $this->request->param('id/d');
+        $row = $this->modelClass->find($id);
+        if (!$row) {
+            $this->error('采集项目不存在');
         }
+        $data = $row->getData();
+        return download(base64_encode(json_encode($data)), 'task_' . $id . '.txt', true, 0);
     }
+
+    //导入
+    public function import()
+    {
+        $file = $this->request->file('file');
+        if (!$file || !$file instanceof \think\File) {
+            throw new Exception('没有文件上传或服务器上传限制');
+        }
+        $file = $file->getInfo('tmp_name');
+        $data = file_get_contents($file);
+        $data = json_decode(base64_decode($data), true);
+        try {
+            unset($data['id']);
+            $this->addNode($data);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+        $this->success('新增成功！', url('index'));
+    }
+
 }

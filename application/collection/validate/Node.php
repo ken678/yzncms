@@ -10,11 +10,22 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 版本
+// | 采集验证
 // +----------------------------------------------------------------------
+namespace app\collection\validate;
 
-return [
-    "yzncms_name"    => "YznCMS内容管理系统", //产品名称
-    "yzncms_release" => 20220208, //产品更新日期
-    "yzncms_version" => "1.0.0", //产品版本号
-];
+use think\Validate;
+
+class Node extends Validate
+{
+
+    //定义验证规则
+    protected $rule = [
+        'name|采集任务名'         => 'require',
+        'urlpage|采集网址'       => 'require',
+        'pagesize_start|开始页' => 'number|requireIf:sourcetype,1',
+        'pagesize_end|结束页'   => 'number|requireIf:sourcetype,1',
+        'par_num|加 ? 页'      => 'number|requireIf:sourcetype,1',
+    ];
+
+}
