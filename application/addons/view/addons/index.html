@@ -21,6 +21,7 @@
     <a class="layui-btn layui-btn-xs" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a>
 {{#  } }}
 </script>
+<button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
 {/block}
 {block name="script"}
 <script>
@@ -38,7 +39,7 @@ layui.use(['yznTable', 'upload'], function() {
         init: init,
         toolbar: ['refresh',
             [{
-               html:'<a class="layui-btn layui-btn-sm" id="local-install"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
+               html:'<a class="layui-btn layui-btn-sm" onclick="importFile();"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
             }],
         ],
         url: '{:url("index")}',
@@ -54,6 +55,10 @@ layui.use(['yznTable', 'upload'], function() {
             ]
         ]
     });
+
+    importFile=function (){
+        $('#local-install').click();
+    }
 
     //执行实例
     var uploadInst = upload.render({
