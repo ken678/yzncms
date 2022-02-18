@@ -53,7 +53,7 @@ class Upload
     protected function checkExecutable()
     {
         //禁止上传PHP和HTML文件
-        if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html']) || in_array($this->fileInfo['suffix'], ['php', 'asp', 'exe', 'cmd', 'sh', 'bat', 'html', 'htm'])) {
+        if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html']) || in_array($this->fileInfo['suffix'], ['php', 'asp', 'exe', 'cmd', 'sh', 'bat', 'html', 'htm', 'phtml', 'phar']) || preg_match("/^php(.*)/i", $this->fileInfo['suffix'])) {
             throw new UploadException('上传文件格式受限制');
         }
         return true;
@@ -88,6 +88,7 @@ class Upload
 
     protected function checkMimetype($dir)
     {
+        $typeArr = explode('/', $this->fileInfo['type']);
         // 附件类型限制
         $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
         $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : [];
@@ -100,15 +101,24 @@ class Upload
         if (preg_grep("/php/i", $ext_limit)) {
             $error_msg = '禁止上传非法文件！';
         }
-        if (!preg_grep("/$file_ext/i", $ext_limit)) {
-            $error_msg = '附件类型不正确！';
-        }
-        if (!in_array($file_ext, $ext_limit)) {
+        if (!preg_grep("/$file_ext/i", $ext_limit) || !in_array($file_ext, $ext_limit)) {
             $error_msg = '附件类型不正确！';
         }
         if ($error_msg != '') {
             throw new UploadException($error_msg);
         }
+
+        $typeArr = explode('/', $this->fileInfo['type']);
+        //Mimetype值不正确
+        if (stripos($this->fileInfo['type'], '/') === false) {
+            throw new UploadException('上传文件格式受限制');
+        }
+        //验证文件后缀
+        if (in_array($this->fileInfo['suffix'], $ext_limit) || in_array('.' . $this->fileInfo['suffix'], $ext_limit)
+            || in_array($typeArr[0] . "/*", $ext_limit) || in_array($this->fileInfo['type'], $ext_limit)) {
+            return true;
+        }
+        throw new UploadException('上传文件格式受限制');
     }
 
     /**
