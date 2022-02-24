@@ -106,7 +106,7 @@ class Index extends MemberBase
             //判断来源
             $referer = $this->request->server('HTTP_REFERER');
             if (!$forward && (strtolower(parse_url($referer, PHP_URL_HOST)) == strtolower($this->request->host()))
-                && !preg_match("/(index\/login|index\/register|index\/logout)/i", $referer)) {
+                && !preg_match("/(index\/login|index\/register|index\/forget|index\/logout)/i", $referer)) {
                 $forward = $referer;
             }
             $this->assign('forward', $forward);
