@@ -79,13 +79,6 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 - 第三步：进入目录  `cd yzncms`
 - 第四步：一键创建数据库并导入数据   `php think install -u 数据库用户名 -p 数据库密码`
 
-## [手动安装]
-- 第一步：下载源码压缩包解压到你的项目根目录
-- 第二步：绑定到项目中的public目录为运行目录，ps:如果您的服务器不支持绑定目录，请查看public目录下的index.php代码注释，有详细具体操作
-- 第三步：修改数据库配置（根目录/config/database.php）或者修改env配置文件(根目录/.env.sample,文件名修改为.env)
-- 第四步：将根目录的/application/admin/command/Install/yzncms.sql文件导入数据库即可
-- 第五步：后台入口 http://您的域名/admin 默认账号密码 （超级管理员：admin admin)
-
 ## [必看教程]
 - 伪静态(URL重写)： https://www.kancloud.cn/ken678/yzncms/1003231
 - 虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003254
