@@ -9,12 +9,15 @@
 .login-main form .verify-box img {display: inline-block; margin-left: 2%; width: 36%; height: 38px; }
 .lay-user-jump-change {float: right; }
 .lay-link {color: #029789!important; }
-.login-main .layui-form-item label.item {position: absolute; color: #757575; left: 10px; top: 9px; line-height: 20px; background: #fff; padding: 0 5px; font-size: 14px; cursor: text; }
-.login-main .layui-form-item label.item{transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; }
+
 .lay-user-login-other>* {display: inline-block; vertical-align: middle; margin-right: 10px; font-size: 14px }
 .lay-user-login-other {position: relative; font-size: 0; line-height: 38px; }
 .lay-user-login-other .layui-icon {position: relative; top: 2px; font-size: 26px }
 .lay-user-login-other a:hover {opacity: .8 }
+
+.layui-form .layui-form-item {position: relative;}
+.layui-form .layui-form-item label {position: absolute;left: 1px;top: 1px;width: 38px;line-height: 36px;text-align: center;color: #999;}
+.layui-form .layui-form-item input {padding-left: 36px;}
 
 @media screen and (max-width: 450px) {
     .layui-form-item .layui-input-inline {
