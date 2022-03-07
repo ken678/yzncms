@@ -16,7 +16,6 @@ use think\Db;
 use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Request;
-use think\facade\Url;
 use think\Loader;
 
 !defined('DS') && define('DS', DIRECTORY_SEPARATOR);
@@ -233,15 +232,15 @@ function get_addon_list()
  */
 function get_addon_class($name, $type = 'hook', $class = null)
 {
-    $name = \think\Loader::parseName($name);
+    $name = Loader::parseName($name);
     // 处理多级控制器情况
     if (!is_null($class) && strpos($class, '.')) {
         $class = explode('.', $class);
 
-        $class[count($class) - 1] = \think\Loader::parseName(end($class), 1);
+        $class[count($class) - 1] = Loader::parseName(end($class), 1);
         $class                    = implode('\\', $class);
     } else {
-        $class = \think\Loader::parseName(is_null($class) ? $name : $class, 1);
+        $class = Loader::parseName(is_null($class) ? $name : $class, 1);
     }
 
     switch ($type) {
@@ -626,6 +625,17 @@ function time_format($timestamp = null, $type = 0)
     $types     = array('Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d');
     $timestamp = $timestamp === null ? $_SERVER['REQUEST_TIME'] : intval($timestamp);
     return date($types[$type], $timestamp);
+}
+
+/**
+ * 获取语义化时间
+ * @param int $time  时间
+ * @param int $local 本地时间
+ * @return string
+ */
+function human_date($time, $local = null)
+{
+    return \util\Date::human($time, $local);
 }
 
 /**

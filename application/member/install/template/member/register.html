@@ -22,41 +22,48 @@
                 {:hook('register_input')}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-cellphone"></label>
                         <input type="text" name="mobile" lay-verify="phone|required" autocomplete="off" placeholder="手机号" class="layui-input">
                     </div>
                 </div>
                 {eq name="Member_config.register_mobile_verify" value="1"}
                 <div class="layui-form-item">
                     <div class="layui-input-inline" style="width: 60%;">
+                        <label class="layui-icon layui-icon-vercode"></label>
                         <input type="text" name="captcha_mobile" required="" lay-verify="required" autocomplete="off" value="" class="layui-input" placeholder="手机验证码"> </div>
                     <button class="layui-btn btn-captcha layui-btn-primary layui-border-green" type="button" data-event="register" data-type="mobile" data-url="{:url('api/sms/send')}">获取验证码</button>
                 </div>
                 {/eq}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-username"></label>
                         <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-email"></label>
                         <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input">
                     </div>
                 </div>
                 {eq name="Member_config.register_email_verify" value="1"}
                 <div class="layui-form-item">
                     <div class="layui-input-inline" style="width: 60%;">
+                        <label class="layui-icon layui-icon-vercode"></label>
                         <input type="text" name="captcha_email" required="" lay-verify="required" autocomplete="off" value="" class="layui-input" placeholder="邮箱验证码"> </div>
                     <button class="layui-btn btn-captcha layui-btn-primary layui-border-green" type="button" data-event="register" data-type="email" data-url="{:url('api/ems/send')}">获取验证码</button>
                 </div>
                 {/eq}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-password"></label>
                         <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
                     </div>
                 </div>
                 {eq name="Member_config.password_confirm" value="1"}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-password"></label>
                         <input type="password" name="password_confirm" lay-verify="required" autocomplete="off" placeholder="密码确认" class="layui-input">
                     </div>
                 </div>
@@ -64,12 +71,14 @@
                 {eq name="Member_config.remove_nickname" value="0"}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-username"></label>
                         <input type="text" name="nickname" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
                     </div>
                 </div>
                 {/eq}
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item verify-box">
+                        <label class="layui-icon layui-icon-vercode"></label>
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                         <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
                     </div>
@@ -81,8 +90,8 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-trans layui-form-item layadmin-user-login-other">
-                        <a href="{:url('login')}" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
-                        <a href="{:url('login')}" class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">登入</a>
+                        <a href="{:url('login')}" class="layui-hide-xs lay-link">用已有帐号登入</a>
+                        <a href="{:url('login')}" class="layui-hide-sm layui-show-xs-inline-block">登入</a>
                     </div>
                 </div>
             </form>

@@ -29,22 +29,26 @@
                 </div>
                 <div class="layui-form-item" data-type="email">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-email"></label>
                         <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide" data-type="mobile">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-cellphone" for="phone"></label>
                         <input type="text" name="mobile" lay-verify="" autocomplete="off" placeholder="手机号" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item" style="width: 50%">
+                        <label class="layui-icon layui-icon-vercode"></label>
                         <input type="text" name="captcha" lay-verify="required" autocomplete="off" placeholder="验证码" class="layui-input">
                     </div>
                     <button class="layui-btn btn-captcha layui-btn-primary layui-border-green" type="button" data-event="resetpwd" data-type="email" data-url="{:url('api/ems/send')}">获取验证码</button>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline input-item">
+                        <label class="layui-icon layui-icon-password"></label>
                         <input type="password" name="newpassword" lay-verify="required" autocomplete="off" placeholder="新密码" class="layui-input">
                     </div>
                 </div>
@@ -54,7 +58,7 @@
                     </div>
                 </div>
                 <div class="layui-trans layui-form-item layadmin-user-login-other">
-                    <a href="{:url('login')}" class="layadmin-user-jump-change layadmin-link">用已有帐号登入</a>
+                    <a href="{:url('login')}" class="layadmin-user-jump-change lay-link">用已有帐号登入</a>
                 </div>
             </form>
         </div>
