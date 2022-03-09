@@ -116,6 +116,11 @@ class Attachments extends Adminbase
                 if (!in_array($fileExt, ['.jpg', '.gif', '.png', '.bmp', '.jpeg', '.tiff'])) {
                     exit($content);
                 }
+                //图片是否合法
+                $imgInfo = getimagesize($vo);
+                if (!$imgInfo || !isset($imgInfo[0]) || !isset($imgInfo[1])) {
+                    exit($content);
+                }
                 $filename = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'temp' . DS . md5($vo) . $fileExt;
                 if (http_down($vo, $filename) !== false) {
                     $file_info['md5'] = hash_file('md5', $filename);
