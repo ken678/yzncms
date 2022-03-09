@@ -94,9 +94,14 @@ class Attachments extends Adminbase
         $content = $this->request->post('content');
         $type    = $this->request->post('type');
         $urls    = [];
-        /*preg_match_all("/(src|SRC)=[\"|'| ]{0,}((http|https):\/\/(.*)\.(gif|jpg|jpeg|bmp|png|tiff))/isU", $content, $urls);
-        $urls = array_unique($urls[2]);*/
-        $urls      = \util\GetImgSrc::srcList($content);
+        $urls    = \util\GetImgSrc::srcList($content);
+        $urls    = array_filter(array_map(function ($val) {
+            //http开头验证
+            if (strpos($val, "http") === 0) {
+                return $val;
+            }
+        }, $urls));
+
         $file_info = [
             'aid'    => $this->auth->id,
             'module' => 'admin',
