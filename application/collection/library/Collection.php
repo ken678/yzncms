@@ -165,6 +165,11 @@ class Collection
             if (!in_array($fileExt, ['.jpg', '.gif', '.png', '.bmp', '.jpeg', '.tiff'])) {
                 return $url;
             }
+            //图片是否合法
+            $imgInfo = getimagesize($url);
+            if (!$imgInfo || !isset($imgInfo[0]) || !isset($imgInfo[1])) {
+                return $url;
+            }
             $filename = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'temp' . DS . md5($url) . $fileExt;
             if (http_down($url, $filename) !== false) {
                 $file_info['md5'] = hash_file('md5', $filename);

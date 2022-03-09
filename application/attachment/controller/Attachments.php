@@ -94,9 +94,14 @@ class Attachments extends Adminbase
         $content = $this->request->post('content');
         $type    = $this->request->post('type');
         $urls    = [];
-        /*preg_match_all("/(src|SRC)=[\"|'| ]{0,}((http|https):\/\/(.*)\.(gif|jpg|jpeg|bmp|png|tiff))/isU", $content, $urls);
-        $urls = array_unique($urls[2]);*/
-        $urls      = \util\GetImgSrc::srcList($content);
+        $urls    = \util\GetImgSrc::srcList($content);
+        $urls    = array_filter(array_map(function ($val) {
+            //http开头验证
+            if (strpos($val, "http") === 0) {
+                return $val;
+            }
+        }, $urls));
+
         $file_info = [
             'aid'    => $this->auth->id,
             'module' => 'admin',
@@ -109,6 +114,11 @@ class Attachments extends Adminbase
                 //当前域名下的文件不下载
                 $fileExt = strrchr($vo, '.'); //$fileExt = '.jpg';非正常后缀图片可以强制设置图片后缀进行抓取下载
                 if (!in_array($fileExt, ['.jpg', '.gif', '.png', '.bmp', '.jpeg', '.tiff'])) {
+                    exit($content);
+                }
+                //图片是否合法
+                $imgInfo = getimagesize($vo);
+                if (!$imgInfo || !isset($imgInfo[0]) || !isset($imgInfo[1])) {
                     exit($content);
                 }
                 $filename = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'temp' . DS . md5($vo) . $fileExt;
