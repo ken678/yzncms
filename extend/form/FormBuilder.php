@@ -310,6 +310,107 @@ class FormBuilder
     }
 
     /**
+     * 创建一个按钮字段
+     *
+     * @param  string $value
+     * @param  array  $options
+     *
+     * @return string
+     */
+    public function button($value = null, $options = [])
+    {
+        if (!array_key_exists('type', $options)) {
+            $options['type'] = 'button';
+        }
+
+        return '<button' . $this->attributes($options) . '>' . $value . '</button>';
+    }
+
+    /**
+     * 创建一个上传图片组件(单图)字段
+     *
+     * @param string $name
+     * @param string $value
+     * @param array  $inputAttr
+     * @param array  $uploadAttr
+     * @param array  $chooseAttr
+     * @param array  $previewAttr
+     *
+     * @return string
+     */
+    public function image($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
+    {
+        $default = [
+            'data-mimetype' => 'image/gif,image/jpeg,image/png,image/jpg,image/bmp',
+        ];
+        $uploadAttr = is_array($uploadAttr) ? array_merge($default, $uploadAttr) : $uploadAttr;
+        $chooseAttr = is_array($chooseAttr) ? array_merge($default, $chooseAttr) : $chooseAttr;
+        return $this->uploader($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
+    }
+
+    /**
+     * 创建一个上传图片组件(多图)字段
+     *
+     * @param string $name
+     * @param string $value
+     * @param array  $inputAttr
+     * @param array  $uploadAttr
+     * @param array  $chooseAttr
+     * @param array  $previewAttr
+     * @return string
+     */
+    public function images($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
+    {
+        $default = [
+            'data-multiple' => 'true',
+            'data-mimetype' => 'image/gif,image/jpeg,image/png,image/jpg,image/bmp',
+        ];
+        $uploadAttr = is_array($uploadAttr) ? array_merge($default, $uploadAttr) : $uploadAttr;
+        $chooseAttr = is_array($chooseAttr) ? array_merge($default, $chooseAttr) : $chooseAttr;
+        return $this->uploader($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
+    }
+
+    protected function uploader($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
+    {
+        $domname = str_replace(['[', ']', '.'], '', $name);
+        $upload  = $uploadAttr === false ? false : true;
+        $choose  = $chooseAttr === false ? false : true;
+        $preview = $previewAttr === false ? false : true;
+
+        $options = [
+            'id'            => "picker_{$domname}",
+            'class'         => "webUpload",
+            'data-input-id' => "c-{$domname}",
+            'data-type'     => "image",
+        ];
+        if ($preview) {
+            $options['data-preview-id'] = "p-{$domname}";
+        }
+        $uploadBtn = $upload ? $this->button('<i class="layui-icon layui-icon-upload"></i> ' . '上传', array_merge($options, $uploadAttr)) : '';
+
+        $options = [
+            'id'            => "fachoose-{$domname}",
+            'class'         => "layui-btn fachoose",
+            'data-input-id' => "c-{$domname}",
+        ];
+        if ($preview) {
+            $options['data-preview-id'] = "p-{$domname}";
+        }
+        $chooseBtn = $choose ? $this->button('<i class="iconfont icon-other"></i> ' . '选择', array_merge($options, $chooseAttr)) : '';
+
+        $previewAttrHtml = $this->attributes($previewAttr);
+        $previewArea     = $preview ? '<ul class="layui-row list-inline plupload-preview" id="p-' . $domname . '" ' . $previewAttrHtml . '></ul>' : '';
+        $input           = $this->text($name, $value, array_merge(['id' => "c-{$domname}"], $inputAttr));
+        $html            = <<<EOD
+<div class="layui-col-xs4">{$input}</div>
+{$uploadBtn}
+{$chooseBtn}
+{$previewArea}
+EOD;
+        return $html;
+    }
+
+    /**
      * 获取给定值的选择选项
      *
      * @param  string  $display

@@ -32,6 +32,9 @@ use think\Facade;
  * @method string url($name, $value = null, $options = []) static 创建一个url输入字段
  * @method string textarea($name, $value = null, $options = []) static 创建一个textarea输入字段
  * @method string select($name,$list = [],$selected = null,array $selectAttributes = [],array $optionsAttributes = [],array $optgroupsAttributes = []) static 创建一个选择框字段
+ * @method string button($value = null, $options = []) static 创建一个按钮字段
+ * @method string image($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = []) static 创建一个上传图片组件(单图)字段
+ * @method string images($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = []) static 创建一个上传图片组件(多图)字段
  */
 class Form extends Facade
 {
