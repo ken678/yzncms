@@ -25,7 +25,10 @@ define('ADDON_PATH', ROOT_PATH . 'addons' . DS);
 define('ROOT_URL', Request::rootUrl() . '/');
 //模板目录
 define('TEMPLATE_PATH', ROOT_PATH . 'templates' . DS);
-
+// Form别名
+if (!class_exists('Form')) {
+    class_alias('form\\Form', 'Form');
+}
 // 加载用户函数文件
 include_once APP_PATH . 'function.php';
 
