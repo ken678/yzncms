@@ -4,7 +4,7 @@
     <div class="layui-form-item web_list">
         <label class="layui-form-label">选择会员组</label>
         <div class="layui-input-inline w300">
-            {php} echo \util\Form::select($Member_group,0,'name="info[groupid]"','按会员组选择') {/php}
+            {:Form::select("info[groupid]",$Member_group,null,['placeholder' => '按会员组选择',"lay-verify"=>"required"])}
         </div>
     </div>
     <div class="layui-form-item">

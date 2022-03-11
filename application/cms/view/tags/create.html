@@ -8,7 +8,7 @@
             <div class="layui-form-item">
                 <label>请选择需要重建的模型</label>
                 <div class="w300">
-                    {:Form::select("modelid",['重建全部模型']+$Model,0)}
+                    {:Form::select("modelid",$Model,0,['placeholder' => '重建全部模型'])}
                 </div>
             </div>
             <input type="hidden" name="delete" value="1">
