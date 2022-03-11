@@ -8,7 +8,7 @@
             <div class="layui-form-item">
                 <label>请选择需要重建的模型</label>
                 <div class="w300">
-                    {php} echo \util\Form::select($Model, 0, 'name="modelid" id="modelid"', '重建全部模型');{/php}
+                    {:Form::select("modelid",['重建全部模型']+$Model,0)}
                 </div>
             </div>
             <input type="hidden" name="delete" value="1">
