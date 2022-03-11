@@ -4,7 +4,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">父级</label>
         <div class="layui-input-block">
-            {php}echo \util\Form::select($groupdata,$auth_group['parentid'],'name="parentid" lay-verify="required"');{/php}
+            {:Form::select('parentid',$groupdata,$auth_group['parentid'],["lay-verify"=>"required"])}
         </div>
     </div>
     <div class="layui-form-item">
