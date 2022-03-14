@@ -341,6 +341,7 @@ class FormBuilder
     public function image($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
     {
         $default = [
+            'data-type'     => "image",
             'data-mimetype' => 'image/gif,image/jpeg,image/png,image/jpg,image/bmp',
         ];
         $uploadAttr = is_array($uploadAttr) ? array_merge($default, $uploadAttr) : $uploadAttr;
@@ -362,6 +363,7 @@ class FormBuilder
     public function images($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
     {
         $default = [
+            'data-type'     => "image",
             'data-multiple' => 'true',
             'data-mimetype' => 'image/gif,image/jpeg,image/png,image/jpg,image/bmp',
         ];
@@ -381,7 +383,6 @@ class FormBuilder
             'id'            => "picker_{$domname}",
             'class'         => "webUpload",
             'data-input-id' => "c-{$domname}",
-            'data-type'     => "image",
         ];
         if ($preview) {
             $options['data-preview-id'] = "p-{$domname}";
@@ -400,7 +401,7 @@ class FormBuilder
 
         $previewAttrHtml = $this->attributes($previewAttr);
         $previewArea     = $preview ? '<ul class="layui-row list-inline plupload-preview" id="p-' . $domname . '" ' . $previewAttrHtml . '></ul>' : '';
-        $input           = $this->text($name, $value, array_merge(['id' => "c-{$domname}"], $inputAttr));
+        $input           = $this->text($name, $value, array_merge(['id' => "c-{$domname}", 'class' => 'layui-input'], $inputAttr));
         $html            = <<<EOD
 <div class="layui-col-xs4">{$input}</div>
 {$uploadBtn}
@@ -421,7 +422,7 @@ EOD;
      *
      * @return mixed
      */
-    public function getSelectOption($display, $value, $selected, array $attributes = [], array $optgroupAttributes = [])
+    protected function getSelectOption($display, $value, $selected, array $attributes = [], array $optgroupAttributes = [])
     {
         if (is_array($display)) {
             //if (is_iterable($display)) {
