@@ -69,7 +69,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">用户组图标</label>
         <div class="layui-input-block">
-            {php}echo \util\Form::images('row[icon]','icon',$data['icon']){/php}
+            {:Form::image("row[icon]",$data['icon'])}
         </div>
     </div>
     <input type="hidden" name="row[id]" value="{$data.id}">
