@@ -41,6 +41,7 @@ use think\Facade;
  * @method string checkboxs($name, $list, $checked, $title = [], $options = []) static 创建一组复选按钮框字段
  * @method string upload($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = []) static 创建上传文件组件(单文件)字段
  * @method string uploads($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = []) static 创建上传文件组件(多文件)字段
+ * @method string color($name = null, $value = null, $options = []) static 创建颜色选择字段
  */
 class Form extends Facade
 {

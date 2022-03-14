@@ -512,6 +512,30 @@ class FormBuilder
         return $this->uploader($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
     }
 
+    /**
+     * 创建颜色选择字段
+     *
+     * @param string $name
+     * @param string $value
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function color($name = null, $value = null, $options = [])
+    {
+        $domname = str_replace(['[', ']', '.'], '', $name);
+        $input   = $this->text($name, $value, array_merge(['id' => "c-{$domname}", 'class' => 'layui-input', 'placeholder' => '请选择颜色'], $options));
+        $html    = <<<EOD
+<div class="layui-input-inline" style="width: 120px;">
+    {$input}
+</div>
+<div class="layui-inline" style="left: -11px;">
+    <div class="colorpicker" data-input-id="c-{$domname}"></div>
+</div>
+EOD;
+        return $html;
+    }
+
     protected function uploader($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
     {
         $domname = str_replace(['[', ']', '.'], '', $name);
