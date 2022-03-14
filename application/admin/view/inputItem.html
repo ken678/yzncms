@@ -130,7 +130,7 @@
             <input type="text" name="{$vo.fieldArr}[{$vo.name}]" value="{$vo.value}" placeholder="请选择颜色" class="layui-input test-form-input" id="c-{$vo.name}">
         </div>
         <div class="layui-inline" style="left: -11px;">
-            <div class="layui-color-box" data-input-id="c-{$vo.name}"></div>
+            <div class="colorpicker" data-input-id="c-{$vo.name}"></div>
         </div>
     </div>
     {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
