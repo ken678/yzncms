@@ -489,10 +489,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             },
             colorpicker: function(layform) {
                 // 绑定颜色组件
-                if ($('.layui-color-box',layform).length > 0) {
+                if ($('.colorpicker',layform).length > 0) {
                     layui.define('colorpicker', function(exports) {
                         var colorpicker = layui.colorpicker;
-                        $('.layui-color-box',layform).each(function() {
+                        $('.colorpicker',layform).each(function() {
                             var input_id = $(this).data("input-id");
                             var inputObj = $("#" + input_id);
                             colorpicker.render({
