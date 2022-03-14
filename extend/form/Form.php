@@ -43,6 +43,7 @@ use think\Facade;
  * @method string uploads($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = []) static 创建上传文件组件(多文件)字段
  * @method string color($name = null, $value = null, $options = []) static 创建颜色选择字段
  * @method string datetime($name = null, $value = null, $options = []) static 创建日期时间选择器字段
+ * @method string ueditor($name, $value = null, $options = []) static 创建百度富文本编辑器字段
  */
 class Form extends Facade
 {

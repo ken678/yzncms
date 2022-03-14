@@ -254,7 +254,30 @@ class FormBuilder
         //元素。然后我们将为我们创建最终的textarea元素HTML。
         $options = $this->attributes($options);
 
-        return '<textarea' . $options . '>' . e($value, false) . '</textarea>';
+        return '<textarea' . $options . '>' . $value . '</textarea>';
+    }
+
+    /**
+     * 创建百度富文本编辑器字段
+     *
+     * @param string $name
+     * @param string $value
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function ueditor($name, $value = null, $options = [])
+    {
+        $domname = str_replace(['[', ']', '.'], '', $name);
+        if (!isset($options['name'])) {
+            $options['name'] = $name;
+        }
+
+        $options['class'] = isset($options['class']) ? $options['class'] . ' js-ueditor' : 'js-ueditor';
+        $value            = (string) $this->getValueAttribute($name, $value);
+
+        $options = $this->attributes(array_merge(['id' => "c-{$domname}"], $options));
+        return '<script type="text/plain" ' . $options . '>' . $value . '</script>';
     }
 
     /**
