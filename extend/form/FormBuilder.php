@@ -467,6 +467,51 @@ class FormBuilder
         return $this->uploader($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
     }
 
+    /**
+     * 创建上传文件组件(单文件)字段
+     *
+     * @param string $name
+     * @param string $value
+     * @param array  $inputAttr
+     * @param array  $uploadAttr
+     * @param array  $chooseAttr
+     * @param array  $previewAttr
+     *
+     * @return string
+     */
+    public function upload($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
+    {
+        $default = [
+            'data-type' => "file",
+        ];
+        $uploadAttr = is_array($uploadAttr) ? array_merge($default, $uploadAttr) : $uploadAttr;
+        $chooseAttr = is_array($chooseAttr) ? array_merge($default, $chooseAttr) : $chooseAttr;
+        return $this->uploader($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
+    }
+
+    /**
+     * 创建上传文件组件(多文件)字段
+     *
+     * @param string $name
+     * @param string $value
+     * @param array  $inputAttr
+     * @param array  $uploadAttr
+     * @param array  $chooseAttr
+     * @param array  $previewAttr
+     *
+     * @return string
+     */
+    public function uploads($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
+    {
+        $default = [
+            'data-type'     => "file",
+            'data-multiple' => 'true',
+        ];
+        $uploadAttr = is_array($uploadAttr) ? array_merge($default, $uploadAttr) : $uploadAttr;
+        $chooseAttr = is_array($chooseAttr) ? array_merge($default, $chooseAttr) : $chooseAttr;
+        return $this->uploader($name, $value, $inputAttr, $uploadAttr, $chooseAttr, $previewAttr);
+    }
+
     protected function uploader($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
     {
         $domname = str_replace(['[', ']', '.'], '', $name);
