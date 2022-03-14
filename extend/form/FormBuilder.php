@@ -327,6 +327,100 @@ class FormBuilder
     }
 
     /**
+     * 创建单选按钮输入字段
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     * @param  bool   $checked
+     * @param  array  $options
+     *
+     * @return string
+     */
+    public function radio($name, $value = null, $checked = null, $options = [])
+    {
+        if (is_null($value)) {
+            $value = $name;
+        }
+        if ($checked) {
+            $options['checked'] = 'checked';
+        }
+        return $this->input('radio', $name, $value, $options);
+    }
+
+    /**
+     * 创建一组单选框字段
+     *
+     * @param string $name
+     * @param array  $list
+     * @param mixed  $checked
+     * @param array  $title
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function radios($name, $list, $checked = null, $title = [], $options = [])
+    {
+        if (is_array($list)) {
+            $html    = [];
+            $checked = is_null($checked) ? key($list) : $checked;
+            $checked = is_array($checked) ? $checked : explode(',', $checked);
+            foreach ($list as $k => $v) {
+                $options['id']    = "{$name}-{$k}";
+                $options['title'] = $title[$k] ?? $v;
+                $html[]           = Form::radio($name, $k, in_array($k, $checked), $options);
+            }
+            return '<div class="radio-group">' . implode(' ', $html) . '</div>';
+        }
+        return '';
+    }
+
+    /**
+     * 创建复选按钮字段
+     *
+     * @param string $name
+     * @param mixed  $value
+     * @param bool   $checked
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function checkbox($name, $value = 1, $checked = null, $options = [])
+    {
+        if ($checked) {
+            $options['checked'] = 'checked';
+        }
+
+        return $this->input('checkbox', $name, $value, $options);
+    }
+
+    /**
+     * 创建一组复选按钮框字段
+     *
+     * @param string $name
+     * @param array  $list
+     * @param mixed  $checked
+     * @param array  $title
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function checkboxs($name, $list, $checked, $title = [], $options = [])
+    {
+        if (is_array($list)) {
+            $html    = [];
+            $checked = is_null($checked) ? [] : $checked;
+            $checked = is_array($checked) ? $checked : explode(',', $checked);
+            foreach ($list as $k => $v) {
+                $options['id']    = "{$name}-{$k}";
+                $options['title'] = $title[$k] ?? $v;
+                $html[]           = Form::checkbox("{$name}[{$k}]", $k, in_array($k, $checked), $options);
+            }
+            return '<div class="checkbox">' . implode(' ', $html) . '</div>';
+        }
+        return '';
+    }
+
+    /**
      * 创建一个上传图片组件(单图)字段
      *
      * @param string $name
@@ -358,6 +452,7 @@ class FormBuilder
      * @param array  $uploadAttr
      * @param array  $chooseAttr
      * @param array  $previewAttr
+     *
      * @return string
      */
     public function images($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])

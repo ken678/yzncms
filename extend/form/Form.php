@@ -35,6 +35,10 @@ use think\Facade;
  * @method string button($value = null, $options = []) static 创建一个按钮字段
  * @method string image($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = []) static 创建一个上传图片组件(单图)字段
  * @method string images($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = []) static 创建一个上传图片组件(多图)字段
+ * @method string radio($name, $value = null, $checked = null, $options = []) static 创建单选按钮输入字段
+ * @method string radios($name, $list, $checked = null, $title = [], $options = []) static 创建一组单选框字段
+ * @method string checkbox($name, $value = 1, $checked = null, $options = []) static 创建复选按钮字段
+ * @method string checkboxs($name, $list, $checked, $title = [], $options = []) static 创建一组复选按钮框字段
  */
 class Form extends Facade
 {
