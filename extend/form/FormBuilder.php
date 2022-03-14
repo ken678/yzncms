@@ -536,6 +536,22 @@ EOD;
         return $html;
     }
 
+    /**
+     * 创建日期时间选择器字段
+     *
+     * @param string $name
+     * @param string $value
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function datetime($name = null, $value = null, $options = [])
+    {
+        $value            = is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+        $options['class'] = isset($options['class']) ? $options['class'] . ' datetime' : 'datetime';
+        return $this->text($name, $value, $options);
+    }
+
     protected function uploader($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
     {
         $domname = str_replace(['[', ']', '.'], '', $name);
