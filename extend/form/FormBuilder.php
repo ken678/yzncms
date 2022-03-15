@@ -272,9 +272,12 @@ class FormBuilder
         if (!isset($options['name'])) {
             $options['name'] = $name;
         }
-
-        $options['class'] = isset($options['class']) ? $options['class'] . ' js-ueditor' : 'js-ueditor';
-        $value            = (string) $this->getValueAttribute($name, $value);
+        if (isset($options['class'])) {
+            $options['class'][] = 'js-ueditor';
+        } else {
+            $options['class'] = 'js-ueditor';
+        }
+        $value = (string) $this->getValueAttribute($name, $value);
 
         $options = $this->attributes(array_merge(['id' => "c-{$domname}"], $options));
         return '<script type="text/plain" ' . $options . '>' . $value . '</script>';
@@ -547,7 +550,7 @@ class FormBuilder
     public function color($name = null, $value = null, $options = [])
     {
         $domname = str_replace(['[', ']', '.'], '', $name);
-        $input   = $this->text($name, $value, array_merge(['id' => "c-{$domname}", 'class' => 'layui-input', 'placeholder' => '请选择颜色'], $options));
+        $input   = $this->text($name, $value, array_merge(['id' => "c-{$domname}", 'placeholder' => '请选择颜色'], $options));
         $html    = <<<EOD
 <div class="layui-input-inline" style="width: 120px;">
     {$input}
@@ -570,9 +573,54 @@ EOD;
      */
     public function datetime($name = null, $value = null, $options = [])
     {
-        $value            = is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
-        $options['class'] = isset($options['class']) ? $options['class'] . ' datetime' : 'datetime';
+        $value = is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+        if (isset($options['class'])) {
+            $options['class'][] = 'datetime';
+        } else {
+            $options['class'] = 'datetime';
+        }
         return $this->text($name, $value, $options);
+    }
+
+    /**
+     * 创建动态下拉列表字段
+     *
+     * @param string $name       名称
+     * @param mixed  $value
+     * @param string $url        数据源地址
+     * @param string $field      显示的字段名称,默认为name
+     * @param string $primaryKey 主键,数据库中保存的值,默认为id
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function selectpage($name, $value, $url, $field = null, $primaryKey = null, $options = [])
+    {
+        $options = array_merge($options, ['data-source' => $url, 'data-field' => $field ? $field : 'name', 'data-primary-key' => $primaryKey ? $primaryKey : 'id']);
+        if (isset($options['class'])) {
+            $options['class'][] = 'selectpage';
+        } else {
+            $options['class'] = 'selectpage';
+        }
+        return $this->text($name, $value, $options);
+    }
+
+    /**
+     * 创建动态下拉列表(复选)字段
+     *
+     * @param string $name       名称
+     * @param mixed  $value
+     * @param string $url        数据源地址
+     * @param string $field      显示的字段名称,默认为name
+     * @param string $primaryKey 主键,数据库中保存的值,默认为id
+     * @param array  $options
+     *
+     * @return string
+     */
+    public function selectpages($name, $value, $url, $field = null, $primaryKey = null, $options = [])
+    {
+        $options['data-multiple'] = "true";
+        return $this->selectpage($name, $value, $url, $field, $primaryKey, $options);
     }
 
     protected function uploader($name = null, $value = null, $inputAttr = [], $uploadAttr = [], $chooseAttr = [], $previewAttr = [])
@@ -858,34 +906,27 @@ EOD;
      */
     protected function attributeElement($key, $value)
     {
-        //对于数字键，我们将假定该值是布尔属性
-        //其中，属性的存在表示一个真实值
-        //缺席代表错误的价值。
-        //这将把诸如“required”之类的HTML属性转换为正确的
-        //形式，而不是使用错误的数字。
+        //[required]之类的HTML属性转换为正确的形式，而不是使用错误的数字。
         if (is_numeric($key)) {
             return $value;
         }
-
         // 将布尔属性视为HTML属性
         if (is_bool($value) && $key !== 'value') {
             return $value ? $key : '';
         }
-
+        //多个class属性
         if (is_array($value) && $key === 'class') {
             return 'class="' . implode(' ', $value) . '"';
         }
-
         if (!is_null($value)) {
             return $key . '="' . e($value, false) . '"';
         }
     }
-
 }
 
 if (!function_exists('e')) {
     /**
-     * Encode HTML special characters in a string.
+     * 将HTML特殊字符编码为字符串
      *
      * @param  string  $value
      * @param  bool    $doubleEncode
@@ -894,6 +935,9 @@ if (!function_exists('e')) {
      */
     function e($value, $doubleEncode = true)
     {
+        if (is_array($value)) {
+            $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+        }
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', $doubleEncode);
     }
 }

@@ -44,6 +44,8 @@ use think\Facade;
  * @method string color($name = null, $value = null, $options = []) static 创建颜色选择字段
  * @method string datetime($name = null, $value = null, $options = []) static 创建日期时间选择器字段
  * @method string ueditor($name, $value = null, $options = []) static 创建百度富文本编辑器字段
+ * @method string selectpage($name, $value, $url, $field = null, $primaryKey = null, $options = []) static 创建动态下拉列表字段
+ * @method string selectpages($name, $value, $url, $field = null, $primaryKey = null, $options = []) static 创建动态下拉列表(复选)字段
  */
 class Form extends Facade
 {
