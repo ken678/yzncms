@@ -34,7 +34,7 @@
     <div class="layui-form-item web_list">
         <label class="layui-form-label">会员组</label>
         <div class="layui-input-block">
-            {php} echo \util\Form::select($groupCache, input('groupid',0), 'name="groupid"', '请选择') {/php}
+            {:Form::select("groupid",$groupCache,input('groupid',0),['placeholder' => '按会员组选择',"lay-verify"=>"required"])}
         </div>
     </div>
     <div class="layui-form-item">

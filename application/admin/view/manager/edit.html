@@ -36,7 +36,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">权限组</label>
         <div class="layui-input-block">
-            {php}echo \util\Form::select($groupdata,$data['roleid'],'name="roleid" lay-filter="roleid" lay-verify="required"');{/php}
+            {:Form::select('roleid',$groupdata,$data['roleid'],["lay-verify"=>"required"])}
         </div>
     </div>
     <div class="layui-form-item layer-footer">

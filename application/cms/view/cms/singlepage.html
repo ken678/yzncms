@@ -30,7 +30,7 @@
             <label class="layui-form-label">缩略图</label>
             <div class="layui-input-block">
                 <div class="js-upload-image">
-                    {php}echo \util\Form::images('modelField[thumb]','thumb',$info['thumb'] ?? ''){/php}
+                    {:Form::image("modelField[thumb]",$info['thumb'])}
                 </div>
             </div>
         </div>
