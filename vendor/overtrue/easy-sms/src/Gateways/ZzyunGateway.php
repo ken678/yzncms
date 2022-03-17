@@ -18,17 +18,15 @@ use Overtrue\EasySms\Support\Config;
 use Overtrue\EasySms\Traits\HasHttpRequest;
 
 /**
- * Class JuheGateway.
+ * Class RongheyunGateway.
  *
- * @see https://www.juhe.cn/docs/api/id/54
+ * @see https://zzyun.com/
  */
-class JuheGateway extends Gateway
+class ZzyunGateway extends Gateway
 {
     use HasHttpRequest;
 
-    const ENDPOINT_URL = 'http://v.juhe.cn/sms/send';
-
-    const ENDPOINT_FORMAT = 'json';
+    const ENDPOINT_URL = 'https://zzyun.com/api/sms/sendByTplCode';
 
     /**
      * @param \Overtrue\EasySms\Contracts\PhoneNumberInterface $to
@@ -41,36 +39,25 @@ class JuheGateway extends Gateway
      */
     public function send(PhoneNumberInterface $to, MessageInterface $message, Config $config)
     {
+        $time = time();
+        $user_id = $config->get('user_id');
+        $token = md5($time . $user_id . $config->get('secret'));
         $params = [
-            'mobile' => $to->getNumber(),
-            'tpl_id' => $message->getTemplate($this),
-            'tpl_value' => $this->formatTemplateVars($message->getData($this)),
-            'dtype' => self::ENDPOINT_FORMAT,
-            'key' => $config->get('app_key'),
+            'user_id' => $user_id,
+            'time' => $time,
+            'token' => $token,
+            'mobiles' => $to->getNumber(),// 手机号码，多个英文逗号隔开
+            'tpl_code' => $message->getTemplate($this),
+            'tpl_params' => $message->getData($this),
+            'sign_name' => $config->get('sign_name'),
         ];
 
-        $result = $this->get(self::ENDPOINT_URL, $params);
+        $result = $this->post(self::ENDPOINT_URL, $params);
 
-        if ($result['error_code']) {
-            throw new GatewayErrorException($result['reason'], $result['error_code'], $result);
+        if ('Success' != $result['Code']) {
+            throw new GatewayErrorException($result['Message'], $result['Code'], $result);
         }
 
         return $result;
-    }
-
-    /**
-     * @param array $vars
-     *
-     * @return string
-     */
-    protected function formatTemplateVars(array $vars)
-    {
-        $formatted = [];
-
-        foreach ($vars as $key => $value) {
-            $formatted[sprintf('#%s#', trim($key, '#'))] = $value;
-        }
-
-        return urldecode(http_build_query($formatted));
     }
 }
