@@ -24,7 +24,7 @@
         "overtrue/pinyin": "~4.0",
         "yansongda/pay": "^2.7",
         "endroid/qr-code": "^2.5",
-        "overtrue/easy-sms": "^1.1",
+        "overtrue/easy-sms": "^2.0",
         "nelexa/zip": "^3.3",
         "topthink/think-helper": "^3.1"
     },
