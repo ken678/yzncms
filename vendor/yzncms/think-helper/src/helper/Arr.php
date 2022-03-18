@@ -19,7 +19,7 @@ class Arr
 {
 
     /**
-     * Determine whether the given value is array accessible.
+     * 检查给定的值是否可数组式访问
      *
      * @param mixed $value
      * @return bool
@@ -30,7 +30,7 @@ class Arr
     }
 
     /**
-     * Add an element to an array using "dot" notation if it doesn't exist.
+     * 如果给定的键在数组中不存在或给定的键的值被设置为 null ，那么会把给定的键值对添加到数组中
      *
      * @param array  $array
      * @param string $key
@@ -47,7 +47,7 @@ class Arr
     }
 
     /**
-     * Collapse an array of arrays into a single array.
+     * 将多个数组合并为一个数组
      *
      * @param array $array
      * @return array
@@ -70,7 +70,7 @@ class Arr
     }
 
     /**
-     * Cross join the given arrays, returning all possible permutations.
+     * 交叉连接给定的数组，返回具有所有可能排列的笛卡尔乘积
      *
      * @param array ...$arrays
      * @return array
@@ -97,7 +97,7 @@ class Arr
     }
 
     /**
-     * Divide an array into two arrays. One with keys and the other with values.
+     * 返回一个二维数组，一个值包含原数组的键，另一个值包含原数组的值
      *
      * @param array $array
      * @return array
@@ -108,7 +108,7 @@ class Arr
     }
 
     /**
-     * Flatten a multi-dimensional associative array with dots.
+     * 将多维数组中所有的键平铺到一维数组中，新数组使用「.」符号表示层级包含关系
      *
      * @param array  $array
      * @param string $prepend
@@ -130,7 +130,7 @@ class Arr
     }
 
     /**
-     * Get all of the given array except for a specified array of keys.
+     * 从数组中删除指定的键值对
      *
      * @param array        $array
      * @param array|string $keys
@@ -144,7 +144,7 @@ class Arr
     }
 
     /**
-     * Determine if the given key exists in the provided array.
+     * 检查给定的键是否存在提供的数组中
      *
      * @param \ArrayAccess|array $array
      * @param string|int         $key
@@ -160,7 +160,7 @@ class Arr
     }
 
     /**
-     * Return the first element in an array passing a given truth test.
+     * 返回数组中满足指定条件的第一个元素
      *
      * @param array         $array
      * @param callable|null $callback
@@ -189,7 +189,7 @@ class Arr
     }
 
     /**
-     * Return the last element in an array passing a given truth test.
+     * 返回数组中满足指定条件的最后一个元素
      *
      * @param array         $array
      * @param callable|null $callback
@@ -206,7 +206,7 @@ class Arr
     }
 
     /**
-     * Flatten a multi-dimensional array into a single level.
+     * 将多维数组中数组的值取出平铺为一维数组
      *
      * @param array $array
      * @param int   $depth
@@ -232,7 +232,7 @@ class Arr
     }
 
     /**
-     * Remove one or many array items from a given array using "dot" notation.
+     * 使用「.」符号从深度嵌套的数组中删除给定的键值对
      *
      * @param array        $array
      * @param array|string $keys
@@ -276,7 +276,7 @@ class Arr
     }
 
     /**
-     * Get an item from an array using "dot" notation.
+     * 使用「.」符号从深度嵌套的数组根据指定键检索值
      *
      * @param \ArrayAccess|array $array
      * @param string             $key
@@ -313,7 +313,7 @@ class Arr
     }
 
     /**
-     * Check if an item or items exist in an array using "dot" notation.
+     * 使用「.」符号判断数组中是否存在指定的一个或多个键
      *
      * @param \ArrayAccess|array $array
      * @param string|array       $keys
@@ -347,9 +347,7 @@ class Arr
     }
 
     /**
-     * Determines if an array is associative.
-     *
-     * An array is "associative" if it doesn't have sequential numerical keys beginning with zero.
+     * 如果给定数组是关联数组，则函数返回 true，如果数组没有以零开头的连续数字键，则将其视为「关联」
      *
      * @param array $array
      * @return bool
@@ -362,7 +360,7 @@ class Arr
     }
 
     /**
-     * Get a subset of the items from the given array.
+     * 只返回给定数组中指定的键值对
      *
      * @param array        $array
      * @param array|string $keys
@@ -374,7 +372,7 @@ class Arr
     }
 
     /**
-     * Pluck an array of values from an array.
+     * 从数组中检索给定键的所有值
      *
      * @param array             $array
      * @param string|array      $value
@@ -385,7 +383,7 @@ class Arr
     {
         $results = [];
 
-        [$value, $key] = static::explodePluckParameters($value, $key);
+        list($value, $key) = static::explodePluckParameters($value, $key);
 
         foreach ($array as $item) {
             $itemValue = data_get($item, $value);
@@ -410,7 +408,7 @@ class Arr
     }
 
     /**
-     * Explode the "value" and "key" arguments passed to "pluck".
+     * 分解传递给"pluck"的value和key参数。
      *
      * @param string|array      $value
      * @param string|array|null $key
@@ -426,7 +424,7 @@ class Arr
     }
 
     /**
-     * Push an item onto the beginning of an array.
+     * 将一个值插入到数组的开始位置
      *
      * @param array $array
      * @param mixed $value
@@ -445,7 +443,7 @@ class Arr
     }
 
     /**
-     * Get a value from the array, and remove it.
+     * 从数组中返回指定键的值并删除此键值对
      *
      * @param array  $array
      * @param string $key
@@ -462,7 +460,7 @@ class Arr
     }
 
     /**
-     * Get one or a specified number of random values from an array.
+     * 函数从数组中随机返回一个值
      *
      * @param array    $array
      * @param int|null $number
@@ -502,9 +500,7 @@ class Arr
     }
 
     /**
-     * Set an array item to a given value using "dot" notation.
-     *
-     * If no key is given to the method, the entire array will be replaced.
+     * 使用「.」符号在多维数组中设置指定键的值
      *
      * @param array  $array
      * @param string $key
@@ -538,7 +534,7 @@ class Arr
     }
 
     /**
-     * Shuffle the given array and return the result.
+     * 函数将数组中值进行随机排序
      *
      * @param array    $array
      * @param int|null $seed
@@ -560,7 +556,7 @@ class Arr
     }
 
     /**
-     * Sort the array using the given callback or "dot" notation.
+     * 根据数组的值大小进行排序，也可以根据给定回调函数返回的结果对数组进行排序
      *
      * @param array                $array
      * @param callable|string|null $callback
@@ -572,7 +568,7 @@ class Arr
     }
 
     /**
-     * Recursively sort an array by keys and values.
+     * 使用 sort 函数对数值子数组进行递归排序，使用 ksort 函数对关联子数组进行递归排序
      *
      * @param array $array
      * @return array
@@ -595,7 +591,7 @@ class Arr
     }
 
     /**
-     * Convert the array into a query string.
+     * 将数组转换为查询字符串
      *
      * @param array $array
      * @return string
@@ -606,7 +602,7 @@ class Arr
     }
 
     /**
-     * Filter the array using the given callback.
+     * 使用给定的回调函数返回的结果过滤数组
      *
      * @param array    $array
      * @param callable $callback
@@ -618,7 +614,7 @@ class Arr
     }
 
     /**
-     * If the given value is not an array and not null, wrap it in one.
+     * 函数可以将给定值转换为一个数组，如果给定的值已经是一个数组，它将原样返回
      *
      * @param mixed $value
      * @return array
