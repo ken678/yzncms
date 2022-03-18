@@ -6,10 +6,13 @@
 <a href="https://travis-ci.org/overtrue/easy-sms"><img src="https://travis-ci.org/overtrue/easy-sms.svg?branch=master" alt="Build Status"></a>
 <a href="https://packagist.org/packages/overtrue/easy-sms"><img src="https://poser.pugx.org/overtrue/easy-sms/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/overtrue/easy-sms"><img src="https://poser.pugx.org/overtrue/easy-sms/v/unstable.svg" alt="Latest Unstable Version"></a>
-<a href="https://scrutinizer-ci.com/g/overtrue/easy-sms/?branch=master"><img src="https://scrutinizer-ci.com/g/overtrue/easy-sms/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
 <a href="https://scrutinizer-ci.com/g/overtrue/easy-sms/?branch=master"><img src="https://scrutinizer-ci.com/g/overtrue/easy-sms/badges/coverage.png?b=master" alt="Code Coverage"></a>
 <a href="https://packagist.org/packages/overtrue/easy-sms"><img src="https://poser.pugx.org/overtrue/easy-sms/downloads" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/overtrue/easy-sms"><img src="https://poser.pugx.org/overtrue/easy-sms/license" alt="License"></a>
+</p>
+
+<p align="center">
+<a href="https://github.com/sponsors/overtrue"><img src="https://github.com/overtrue/overtrue/blob/master/sponsor-me-button-s.svg?raw=true" alt="Sponsor me" style="max-width: 100%;"></a>
 </p>
 
 
@@ -25,6 +28,10 @@
 
 ## 平台支持
 
+- [腾讯云 SMS](https://cloud.tencent.com/product/sms)
+- [Ucloud](https://www.ucloud.cn)
+- [七牛云](https://www.qiniu.com/)
+- [SendCloud](http://www.sendcloud.net/)
 - [阿里云](https://www.aliyun.com/)
 - [云片](https://www.yunpian.com)
 - [Submail](https://www.mysubmail.com)
@@ -32,24 +39,22 @@
 - [容联云通讯](http://www.yuntongxun.com)
 - [互亿无线](http://www.ihuyi.com)
 - [聚合数据](https://www.juhe.cn)
-- [SendCloud](http://www.sendcloud.net/)
 - [百度云](https://cloud.baidu.com/)
 - [华信短信平台](http://www.ipyy.com/)
 - [253云通讯（创蓝）](https://www.253.com/)
 - [融云](http://www.rongcloud.cn)
 - [天毅无线](http://www.85hu.com/)
-- [腾讯云 SMS](https://cloud.tencent.com/product/sms)
 - [阿凡达数据](http://www.avatardata.cn/)
 - [华为云](https://www.huaweicloud.com/product/msgsms.html)
 - [网易云信](https://yunxin.163.com/sms)
 - [云之讯](https://www.ucpaas.com/index.html)
 - [凯信通](http://www.kingtto.cn/)
-- [七牛云](https://www.qiniu.com/)
 - [UE35.net](http://uesms.ue35.cn/)
-- [Ucloud](https://www.ucloud.cn)
 - [短信宝](http://www.smsbao.com/)
 - [Tiniyo](https://tiniyo.com/)
 - [摩杜云](https://www.moduyun.com/)
+- [融合云（助通）](https://www.ztinfo.cn/products/sms)
+- [蜘蛛云](https://zzyun.com/)
 
 ## 环境需求
 
@@ -354,6 +359,35 @@ $easySms->send(13188888888, $message);
     ],
 ```
 
+### [阿里云国际](https://www.alibabacloud.com/help/zh/doc-detail/160524.html)
+
+短信内容使用 `template` + `data`
+
+```php
+    'aliyunintl' => [
+        'access_key_id' => '',
+        'access_key_secret' => '',
+        'sign_name' => '',
+    ],
+```
+
+发送示例：
+
+```php
+use Overtrue\EasySms\PhoneNumber;
+
+$easySms = new EasySms($config);
+$phone_number = new PhoneNumber(18888888888, 86);
+
+$easySms->send($phone_number, [
+    'content' => '您好：先生/女士！您的验证码为${code}，有效时间是5分钟，请及时验证。',
+    'template' => 'SMS_00000001', // 模板ID
+    'data' => [
+        "code" => 521410,
+    ],
+]);
+```
+
 ### [云片](https://www.yunpian.com)
 
 短信内容使用 `content`
@@ -535,13 +569,14 @@ $easySms->send(13188888888, $message);
 
 ### [腾讯云 SMS](https://cloud.tencent.com/product/sms)
 
-短信内容使用 `content`
+短信内容使用 `template` + `data`
 
 ```php
     'qcloud' => [
-        'sdk_app_id' => '', // SDK APP ID
-        'app_key' => '', // APP KEY
-        'sign_name' => '', // 短信签名，如果使用默认签名，该字段可缺省（对应官方文档中的sign）
+        'sdk_app_id' => '', // 短信应用的 SDK APP ID
+        'secret_id' => '', // SECRET ID
+        'secret_key' => '', // SECRET KEY
+        'sign_name' => '腾讯CoDesign', // 短信签名
     ],
 ```
 
@@ -550,9 +585,8 @@ $easySms->send(13188888888, $message);
 ```php
 $easySms->send(18888888888, [
     'template' => 101234, // 模板ID
-    'content' => "您的动态验证码为：{1}，请于5分钟内完成验证，如非本人操作，请忽略本短信！", // 模板内容
     'data' => [ 
-        $code, // 模板变量
+        "a", 'b', 'c', 'd', //按占位顺序给值
     ],
 ]);
 ```
@@ -699,7 +733,7 @@ $easySms->send(18888888888, [
   'ucloud' => [
         'private_key'  => '',    //私钥
         'public_key'   => '',    //公钥
-        ’sig_content‘  => '',    // 短信签名,
+        'sig_content'  => '',    // 短信签名,
         'project_id'   => '',    //项目ID,子账号才需要该参数
     ],
 ```
@@ -717,7 +751,7 @@ $easySms->send(18888888888, [
 
 
 ### [短信宝](http://www.smsbao.com/)
-短信使用 `template`
+短信使用 `content`
 
 ```php
   'smsbao' => [
@@ -728,7 +762,7 @@ $easySms->send(18888888888, [
 
 ```php
 $easySms->send(18888888888, [
-    'template' => '您的验证码为: 6379',       //短信模板
+    'content' => '您的验证码为: 6379',       //短信模板
 ]);
 
 ```
@@ -756,6 +790,65 @@ $easySms->send(18888888888, [
 ]);
 
 ```
+
+### [融合云（助通）](https://www.ztinfo.cn/products/sms)
+
+短信使用 `template` + `data`
+
+```php
+  'rongheyun' => [
+        'username' => '',  //必填 用户名
+        'password' => '',  //必填 密码
+        'signature'=> '',  //必填 已报备的签名
+    ],
+```
+
+```php
+$easySms->send(18888888888, [
+    'template' => '31874',   //短信模板
+    'data' => [
+        'valid_code' => '888888',   //模板参数，对应模板的{valid_code}
+        //...
+    ],
+]);
+
+```
+
+### [蜘蛛云](https://zzyun.com/)
+
+短信使用 `template` + `data`
+
+```php
+  'zzyun' => [
+        'user_id' => '',    //必填 会员ID
+        'secret' => '',     //必填 接口密钥
+        'sign_name'=> '',   //必填 短信签名
+    ],
+```
+
+```php
+$easySms->send(18888888888, [
+    'template' => 'SMS_210317****',   //短信模板
+    'data' => [
+        'code' => '888888',   //模板参数，对应模板的{code}
+        //...
+    ],
+]);
+
+```
+
+## :heart: 支持我
+
+[![Sponsor me](https://github.com/overtrue/overtrue/blob/master/sponsor-me.svg?raw=true)](https://github.com/sponsors/overtrue)
+
+如果你喜欢我的项目并想支持它，[点击这里 :heart:](https://github.com/sponsors/overtrue)
+
+## Project supported by JetBrains
+
+Many thanks to Jetbrains for kindly providing a license for me to work on this and other open-source projects.
+
+[![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/overtrue)
+
 
 ## PHP 扩展包开发
 

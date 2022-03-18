@@ -18,17 +18,15 @@ use Overtrue\EasySms\Support\Config;
 use Overtrue\EasySms\Traits\HasHttpRequest;
 
 /**
- * Class JuheGateway.
+ * Class RongheyunGateway.
  *
- * @see https://www.juhe.cn/docs/api/id/54
+ * @see https://doc.zthysms.com/web/#/1?page_id=13
  */
-class JuheGateway extends Gateway
+class RongheyunGateway extends Gateway
 {
     use HasHttpRequest;
 
-    const ENDPOINT_URL = 'http://v.juhe.cn/sms/send';
-
-    const ENDPOINT_FORMAT = 'json';
+    const ENDPOINT_URL = 'https://api.mix2.zthysms.com/v2/sendSmsTp';
 
     /**
      * @param \Overtrue\EasySms\Contracts\PhoneNumberInterface $to
@@ -41,36 +39,31 @@ class JuheGateway extends Gateway
      */
     public function send(PhoneNumberInterface $to, MessageInterface $message, Config $config)
     {
+        $tKey = time();
+        $password = md5(md5($config->get('password')) . $tKey);
         $params = [
-            'mobile' => $to->getNumber(),
-            'tpl_id' => $message->getTemplate($this),
-            'tpl_value' => $this->formatTemplateVars($message->getData($this)),
-            'dtype' => self::ENDPOINT_FORMAT,
-            'key' => $config->get('app_key'),
+            'username' => $config->get('username', ''),
+            'password' => $password,
+            'tKey' => $tKey,
+            'signature' => $config->get('signature', ''),
+            'tpId' => $message->getTemplate($this),
+            'ext' => '',
+            'extend' => '',
+            'records' => [
+                'mobile' => $to->getNumber(),
+                'tpContent' => $message->getData($this),
+            ],
         ];
 
-        $result = $this->get(self::ENDPOINT_URL, $params);
-
-        if ($result['error_code']) {
-            throw new GatewayErrorException($result['reason'], $result['error_code'], $result);
+        $result = $this->postJson(
+            self::ENDPOINT_URL,
+            $params,
+            ['Content-Type' => 'application/json; charset="UTF-8"']
+        );
+        if (200 != $result['code']) {
+            throw new GatewayErrorException($result['msg'], $result['code'], $result);
         }
 
         return $result;
-    }
-
-    /**
-     * @param array $vars
-     *
-     * @return string
-     */
-    protected function formatTemplateVars(array $vars)
-    {
-        $formatted = [];
-
-        foreach ($vars as $key => $value) {
-            $formatted[sprintf('#%s#', trim($key, '#'))] = $value;
-        }
-
-        return urldecode(http_build_query($formatted));
     }
 }
