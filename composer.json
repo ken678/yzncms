@@ -18,7 +18,6 @@
     "require": {
         "php": ">=7.0",
         "topthink/framework": "^5.1",
-        "topthink/think-captcha": "^2.0",
         "topthink/think-image": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "overtrue/pinyin": "~4.0",
@@ -26,7 +25,8 @@
         "endroid/qr-code": "^2.5",
         "overtrue/easy-sms": "^2.0",
         "nelexa/zip": "^3.3",
-        "yzncms/think-helper": "^3.1"
+        "yzncms/think-helper": "^3.1",
+        "yzncms/think-captcha": "^2.0"
     },
     "autoload": {
         "psr-4": {
