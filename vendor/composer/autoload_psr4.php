@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
-    'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
+    'think\\captcha\\' => array($vendorDir . '/yzncms/think-captcha/src'),
     'think\\' => array($vendorDir . '/topthink/think-image/src', $vendorDir . '/yzncms/think-helper/src'),
     'app\\' => array($baseDir . '/application'),
     'Yansongda\\Supports\\' => array($vendorDir . '/yansongda/supports/src'),
