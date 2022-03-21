@@ -12,8 +12,7 @@
         "issues": "https://gitee.com/ken678/YZNCMS/issues"
     },
     "require": {
-        "php": ">=7.0.0",
-    	"topthink/framework": "5.1.*"
+        "php": ">=7.0.0"
     },
     "autoload": {
         "psr-4": {
