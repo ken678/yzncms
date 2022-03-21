@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
+    'think\\composer\\' => array($vendorDir . '/yzncms/think-installer/src'),
     'think\\captcha\\' => array($vendorDir . '/yzncms/think-captcha/src'),
     'think\\' => array($vendorDir . '/topthink/think-image/src', $vendorDir . '/yzncms/think-helper/src'),
     'app\\' => array($baseDir . '/application'),
