@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc101c24647591725e2af1463c4b45c92
+class ComposerStaticInit7e4001803221d40018da1f3864421aa3
 {
     public static $files = array (
         '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
@@ -84,7 +84,7 @@ class ComposerStaticInitc101c24647591725e2af1463c4b45c92
     public static $prefixDirsPsr4 = array (
         'think\\composer\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/think-installer/src',
+            0 => __DIR__ . '/..' . '/yzncms/think-installer/src',
         ),
         'think\\captcha\\' => 
         array (
@@ -281,10 +281,10 @@ class ComposerStaticInitc101c24647591725e2af1463c4b45c92
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc101c24647591725e2af1463c4b45c92::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc101c24647591725e2af1463c4b45c92::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc101c24647591725e2af1463c4b45c92::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc101c24647591725e2af1463c4b45c92::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7e4001803221d40018da1f3864421aa3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7e4001803221d40018da1f3864421aa3::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7e4001803221d40018da1f3864421aa3::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit7e4001803221d40018da1f3864421aa3::$classMap;
 
         }, null, ClassLoader::class);
     }
