@@ -501,7 +501,7 @@ class Cms extends Modelbase
         //自动提取摘要，如果有设置自动提取，且description为空，且有内容字段才执行
         if (isset($data['get_introduce']) && $data['description'] == '' && (isset($dataExt['content']) || isset($data['content']))) {
             $content             = isset($dataExt['content']) ? $dataExt['content'] : (isset($data['content']) ? $data['content'] : '');
-            $data['description'] = str_cut(str_replace(array("\r\n", "\t", '&ldquo;', '&rdquo;', '&nbsp;'), '', strip_tags($content)), 200);
+            $data['description'] = mb_substr(str_replace(array("\r\n", "\t", '&ldquo;', '&rdquo;', '&nbsp;'), '', strip_tags($content)), 0, 200);
         }
         //自动提取缩略图
         if (isset($data['auto_thumb']) && empty($data['thumb']) && (isset($dataExt['content']) || isset($data['content']))) {
