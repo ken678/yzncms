@@ -184,7 +184,6 @@ layui.define(['layer', 'locationX'], function (exports) {
                 var localSearch = new BMap.LocalSearch(point, {
                     pageCapacity: 10,
                     onSearchComplete: function (result){
-                        console.log(result)
                         if (localSearch.getStatus() == BMAP_STATUS_SUCCESS){
                             var htmlList = '';
                             $.each(result.Kr,function (i,ad){
@@ -196,7 +195,6 @@ layui.define(['layer', 'locationX'], function (exports) {
                                     htmlList += '</div>';
                                 //});
                             });
-                            console.log(htmlList)
                             $('#ew-map-select-poi').html(htmlList);
                         }
                     }
@@ -677,7 +675,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                         $("#lat").val(o.lat);
                         // 渲染地图
                         if (undefined === window.BMap) {
-                            $.getScript("http://api.map.baidu.com/getscript?v=2.0&ak=tCNPmUfNmy4nTR3VYW71a6IgyWMaOSUb&services=&t=20200824135534", function () {
+                            $.getScript("https://api.map.baidu.com/getscript?v=2.0&ak=tCNPmUfNmy4nTR3VYW71a6IgyWMaOSUb&services=&t=20200824135534", function () {
                                 o.openBaiduMap();
                             });
                         } else {
