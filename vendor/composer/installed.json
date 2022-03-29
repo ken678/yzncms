@@ -852,62 +852,6 @@
             "install-path": "../paragonie/random_compat"
         },
         {
-            "name": "psr/container",
-            "version": "1.0.0",
-            "version_normalized": "1.0.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "time": "2017-02-14T16:28:37+00:00",
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Container\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
-            "keywords": [
-                "PSR-11",
-                "container",
-                "container-interface",
-                "container-interop",
-                "psr"
-            ],
-            "support": {
-                "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/master"
-            },
-            "install-path": "../psr/container"
-        },
-        {
             "name": "psr/http-message",
             "version": "1.0.1",
             "version_normalized": "1.0.1.0",
@@ -2076,22 +2020,21 @@
         },
         {
             "name": "yzncms/framework",
-            "version": "v5.1.43",
-            "version_normalized": "5.1.43.0",
+            "version": "v5.1.44",
+            "version_normalized": "5.1.44.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/framework.git",
-                "reference": "2c96ab98030c51ef23cfeca8bf22d699ea26abbe"
+                "reference": "ac891bca30ae07a510353ea1b3d10c4984607cf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/framework/zipball/2c96ab98030c51ef23cfeca8bf22d699ea26abbe",
-                "reference": "2c96ab98030c51ef23cfeca8bf22d699ea26abbe",
+                "url": "https://api.github.com/repos/ken678/framework/zipball/ac891bca30ae07a510353ea1b3d10c4984607cf3",
+                "reference": "ac891bca30ae07a510353ea1b3d10c4984607cf3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0",
-                "psr/container": "~1.0",
                 "yzncms/think-installer": "2.*"
             },
             "require-dev": {
@@ -2103,7 +2046,7 @@
                 "sebastian/phpcpd": "2.*",
                 "squizlabs/php_codesniffer": "2.*"
             },
-            "time": "2022-03-28T14:26:34+00:00",
+            "time": "2022-03-29T03:01:48+00:00",
             "type": "yzncms-framework",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -2130,7 +2073,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ken678/framework/issues",
-                "source": "https://github.com/ken678/framework/tree/v5.1.43"
+                "source": "https://github.com/ken678/framework/tree/v5.1.44"
             },
             "install-path": "../../thinkphp"
         },
