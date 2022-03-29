@@ -3,6 +3,7 @@
     "description": "the new thinkphp framework",
     "type": "yzncms-framework",
     "keywords": [
+        "yzncms",
         "framework",
         "thinkphp",
         "ORM"
