@@ -130,6 +130,12 @@ return [
 
     // 异常页面的模板文件
     'exception_tmpl'         => APP_PATH . 'common' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'think_exception.tpl',
+    // 配置仅在部署模式下面生效
+    'http_exception_template' => [
+        404 => APP_PATH . 'common' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . '404.tpl',
+        // 还可以定义其它的HTTP status
+        //401 =>  APP_PATH . '401.html',
+    ],
 
     // 错误显示信息,非调试模式有效
     'error_message'          => '页面错误！请稍后再试～',

@@ -59,7 +59,6 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 - 手册地址：https://www.kancloud.cn/ken678/yzncms
 - 官方博客：http://blog.yzncms.com/
 - 视频教程：https://www.bilibili.com/video/av417106995 (持续更新中)
-- 演示地址：发送到邮箱【530765310@qq.com】获取演示地址
 - 软件著作权编号：2020SR0038539
 
 ## [环境要求]
