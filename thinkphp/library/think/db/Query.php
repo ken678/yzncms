@@ -661,6 +661,9 @@ class Query
     {
         if (!empty($this->options['group'])) {
             // 支持GROUP
+            if (!preg_match('/^[\w\.\*]+$/', $field)) {
+                throw new DbException('not support data:' . $field);
+            }
             $options = $this->getOptions();
             $subSql  = $this->options($options)
                 ->field('count(' . $field . ') AS think_count')
@@ -1800,9 +1803,17 @@ class Query
 
             unset($this->options['order'], $this->options['limit'], $this->options['page'], $this->options['field']);
 
-            $bind    = $this->bind;
-            $total   = $this->count();
-            $results = $this->options($options)->bind($bind)->page($page, $listRows)->select();
+            $bind  = $this->bind;
+            $total = $this->count();
+            if ($total > 0) {
+                $results = $this->options($options)->bind($bind)->page($page, $listRows)->select();
+            } else {
+                if (!empty($this->model)) {
+                    $results = new \think\model\Collection([]);
+                } else {
+                    $results = new \think\Collection([]);
+                }
+            }
         } elseif ($simple) {
             $results = $this->limit(($page - 1) * $listRows, $listRows + 1)->select();
             $total   = null;
