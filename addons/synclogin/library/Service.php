@@ -39,6 +39,7 @@ class Service
             'openname'     => $nickname,
             'type'         => $type,
             'login_time'   => time(),
+            'unionid'      => $params['unionid'] ?? '',
         ];
         $auth = \app\member\service\User::instance();
         //查询是否有第三方登录记录
