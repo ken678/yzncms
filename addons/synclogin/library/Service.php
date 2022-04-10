@@ -56,7 +56,7 @@ class Service
 
         //存在unionid就需要判断是否需要生成新记录 QQ和微信、淘宝可以获取unionid
         if (isset($params['unionid']) && !empty($params['unionid'])) {
-            $third = SyncLoginModel::get(['platform' => $platform, 'unionid' => $params['unionid']], 'member');
+            $third = SyncLoginModel::get(['type' => $type, 'unionid' => $params['unionid']], 'member');
             if ($third) {
                 if (!$third->member) {
                     $third->delete();
