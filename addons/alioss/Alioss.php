@@ -58,8 +58,15 @@ class Alioss extends Addons
         // 存储空间名称
         $bucket = $config['bucket'];
         //图片处理的规则名称stylename
-        $stylename = isset($config['stylename']) && $config['stylename'] ? '?x-oss-process=style/' . trim($config['stylename']) : '';
+        $stylename = '';
+        if (isset($config['stylename']) && $config['stylename']) {
+            if (isset($config['separator']) && $config['separator']) {
+                $stylename = trim($config['separator']) . trim($config['stylename']);
+            } else {
+                $stylename = '?x-oss-process=style/' . trim($config['stylename']);
+            }
 
+        }
         // 文件信息
         $info   = $file->getInfo();
         $suffix = strtolower(pathinfo($info['name'], PATHINFO_EXTENSION));
