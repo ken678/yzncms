@@ -39,6 +39,7 @@ class Service
             'openname'     => $nickname,
             'type'         => $type,
             'login_time'   => time(),
+            'unionid'      => $params['unionid'] ?? '',
         ];
         $auth = \app\member\service\User::instance();
         //查询是否有第三方登录记录
@@ -56,7 +57,7 @@ class Service
 
         //存在unionid就需要判断是否需要生成新记录 QQ和微信、淘宝可以获取unionid
         if (isset($params['unionid']) && !empty($params['unionid'])) {
-            $third = SyncLoginModel::get(['platform' => $platform, 'unionid' => $params['unionid']], 'member');
+            $third = SyncLoginModel::get(['type' => $type, 'unionid' => $params['unionid']], 'member');
             if ($third) {
                 if (!$third->member) {
                     $third->delete();

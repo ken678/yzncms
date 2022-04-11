@@ -57,6 +57,8 @@ class Alioss extends Addons
         $endpoint = $config['endpoint'];
         // 存储空间名称
         $bucket = $config['bucket'];
+        //图片处理的规则名称stylename
+        $stylename = isset($config['stylename']) && $config['stylename'] ? '?x-oss-process=style/' . trim($config['stylename']) : '';
 
         // 文件信息
         $info   = $file->getInfo();
@@ -87,7 +89,7 @@ class Alioss extends Addons
             'uid'    => (int) cookie('uid'),
             'name'   => $info['name'],
             'mime'   => $info['type'],
-            'path'   => $config['domain'] . $object,
+            'path'   => $config['domain'] . $object . $stylename,
             'ext'    => $suffix,
             'size'   => $file->getSize(),
             'md5'    => $file->hash('md5'),

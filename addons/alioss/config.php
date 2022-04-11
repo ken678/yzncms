@@ -1,38 +1,45 @@
 <?php
 return [
-    0 => [
+    [
         'name'  => 'accessKey',
-        'title' => '阿里云OSS的ak：',
+        'title' => '阿里云OSS的ak',
         'type'  => 'text',
         'value' => '',
         'tip'   => '阿里云OSS的ak',
     ],
-    1 => [
+    [
         'name'  => 'secrectKey',
-        'title' => '阿里云OSS的sk：',
+        'title' => '阿里云OSS的sk',
         'type'  => 'text',
         'value' => '',
         'tip'   => '阿里云OSS的sk',
     ],
-    2 => [
+    [
         'name'  => 'bucket',
-        'title' => '阿里云OSS空间Bucket名称：',
+        'title' => '阿里云OSS空间Bucket名称',
         'type'  => 'text',
         'value' => '',
         'tip'   => '阿里云OSS空间Bucket名称',
     ],
-    3 => [
+    [
         'name'  => 'endpoint',
-        'title' => '阿里云OSS地域节点Endpoint：',
+        'title' => '阿里云OSS地域节点Endpoint',
         'type'  => 'text',
         'value' => '',
         'tip'   => '阿里云OSS地域节点Endpoint',
     ],
-    4 => [
+    [
         'name'  => 'domain',
-        'title' => '阿里云OSS空间对应绑定的域名：',
+        'title' => '阿里云OSS空间对应绑定的域名',
         'type'  => 'text',
         'value' => '',
         'tip'   => '阿里云OSS空间对应绑定的域名，已http://开头，/结尾',
+    ],
+    [
+        'name'  => 'stylename',
+        'title' => '阿里云图片处理对应规则名称',
+        'type'  => 'text',
+        'value' => '',
+        'tip'   => '设置后，同时在阿里云oss后台【访问设置】开启原图保护',
     ],
 ];
