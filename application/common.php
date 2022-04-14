@@ -16,7 +16,6 @@ use think\Db;
 use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Request;
-use think\Loader;
 
 !defined('DS') && define('DS', DIRECTORY_SEPARATOR);
 // 插件目录
@@ -150,7 +149,7 @@ function get_addon_autoload_config($truncate = false)
         $hooks = array_diff($methods, $base);
         // 循环将钩子方法写入配置中
         foreach ($hooks as $hook) {
-            $hook = Loader::parseName($hook, 0, false);
+            $hook = parse_name($hook, 0, false);
             if (!isset($config['hooks'][$hook])) {
                 $config['hooks'][$hook] = [];
             }
@@ -171,7 +170,7 @@ function get_addon_autoload_config($truncate = false)
             $methods = (array) get_class_methods('\\app\\' . $name . '\\behavior\\Hooks');
             $hooks   = array_diff($methods, $base);
             foreach ($hooks as $hook) {
-                $hook = Loader::parseName($hook, 0, false);
+                $hook = parse_name($hook, 0, false);
                 if (!isset($config['hooks'][$hook])) {
                     $config['hooks'][$hook] = [];
                 }
@@ -235,15 +234,15 @@ function get_addon_list()
  */
 function get_addon_class($name, $type = 'hook', $class = null)
 {
-    $name = Loader::parseName($name);
+    $name = parse_name($name);
     // 处理多级控制器情况
     if (!is_null($class) && strpos($class, '.')) {
         $class = explode('.', $class);
 
-        $class[count($class) - 1] = Loader::parseName(end($class), 1);
+        $class[count($class) - 1] = parse_name(end($class), 1);
         $class                    = implode('\\', $class);
     } else {
-        $class = Loader::parseName(is_null($class) ? $name : $class, 1);
+        $class = parse_name(is_null($class) ? $name : $class, 1);
     }
 
     switch ($type) {
