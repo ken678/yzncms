@@ -17,7 +17,6 @@ namespace app\common\controller;
 use app\admin\service\User;
 use think\facade\Hook;
 use think\facade\Session;
-use think\Loader;
 use think\Validate;
 
 //定义是后台
@@ -203,7 +202,7 @@ class Adminbase extends Base
         $aliasName = '';
         if (!empty($this->modelClass) && $this->relationSearch) {
             $name         = $this->modelClass->getTable();
-            $alias[$name] = Loader::parseName(basename(str_replace('\\', '/', get_class($this->modelClass))));
+            $alias[$name] = parse_name(basename(str_replace('\\', '/', get_class($this->modelClass))));
             $aliasName    = $alias[$name] . '.';
         }
         $sortArr = explode(',', $sort);
@@ -310,7 +309,7 @@ class Adminbase extends Base
                     $tableArr = explode('.', $k);
                     if (count($tableArr) > 1 && $tableArr[0] != $name && !in_array($tableArr[0], $alias) && !empty($this->modelClass)) {
                         //修复关联模型下时间无法搜索的BUG
-                        $relation                                          = Loader::parseName($tableArr[0], 1, false);
+                        $relation                                          = parse_name($tableArr[0], 1, false);
                         $alias[$this->modelClass->$relation()->getTable()] = $tableArr[0];
                     }
                     $where[] = [$k, str_replace('RANGE', 'BETWEEN', $sym) . ' TIME', $arr];
