@@ -19,6 +19,7 @@ class ComposerStaticInit7e4001803221d40018da1f3864421aa3
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '626dcc41390ebdaa619faa02d99943b0' => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib/common/customFunctions.php',
         'dc1275c308c5b416beb314b6317daca2' => __DIR__ . '/..' . '/overtrue/pinyin/src/const.php',
+        '1d5ebe9158fc85f3b73b6a4c04a338fb' => __DIR__ . '/..' . '/yzncms/think-addons/src/common.php',
         '4f7e2324013048e1764201e8475b6f9a' => __DIR__ . '/..' . '/yzncms/think-captcha/src/helper.php',
         'abb352ba2c09de2ce129b87bd35f168b' => __DIR__ . '/..' . '/yzncms/think-helper/src/helper.php',
     );
@@ -94,6 +95,7 @@ class ComposerStaticInit7e4001803221d40018da1f3864421aa3
         array (
             0 => __DIR__ . '/..' . '/topthink/think-image/src',
             1 => __DIR__ . '/..' . '/yzncms/think-helper/src',
+            2 => __DIR__ . '/..' . '/yzncms/think-addons/src',
         ),
         'app\\' => 
         array (

@@ -18,6 +18,7 @@ return array(
     '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
     '626dcc41390ebdaa619faa02d99943b0' => $vendorDir . '/khanamiryan/qrcode-detector-decoder/lib/common/customFunctions.php',
     'dc1275c308c5b416beb314b6317daca2' => $vendorDir . '/overtrue/pinyin/src/const.php',
+    '1d5ebe9158fc85f3b73b6a4c04a338fb' => $vendorDir . '/yzncms/think-addons/src/common.php',
     '4f7e2324013048e1764201e8475b6f9a' => $vendorDir . '/yzncms/think-captcha/src/helper.php',
     'abb352ba2c09de2ce129b87bd35f168b' => $vendorDir . '/yzncms/think-helper/src/helper.php',
 );
