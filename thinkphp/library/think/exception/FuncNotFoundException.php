@@ -14,24 +14,24 @@ namespace think\exception;
 use RuntimeException;
 use Throwable;
 
-class ClassNotFoundException extends RuntimeException
+class FuncNotFoundException extends RuntimeException
 {
-    protected $class;
-    public function __construct(string $message, string $class = '', Throwable $previous = null)
+    protected $func;
+    public function __construct(string $message, string $func = '', Throwable $previous = null)
     {
         $this->message = $message;
-        $this->class   = $class;
+        $this->func    = $func;
 
         parent::__construct($message, 0, $previous);
     }
 
     /**
-     * 获取类名
+     * 获取方法名
      * @access public
      * @return string
      */
-    public function getClass()
+    public function getFunc()
     {
-        return $this->class;
+        return $this->func;
     }
 }

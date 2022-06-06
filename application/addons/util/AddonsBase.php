@@ -28,7 +28,7 @@ class AddonsBase extends Base
     protected function initialize()
     {
         parent::initialize();
-        $this->addonName = \think\Loader::parseName($this->request->controller());
+        $this->addonName = parse_name($this->request->controller());
         $this->addonPath = ADDON_PATH . $this->addonName . DIRECTORY_SEPARATOR;
     }
 

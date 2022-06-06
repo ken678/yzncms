@@ -1,0 +1,27 @@
+{
+    "name": "yzncms/think-addons",
+    "description": "addons package for yzncms",
+    "homepage": "https://github.com/ken678/think-addons",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "yzncms",
+            "email": "530765310@qq.com"
+        }
+    ],
+    "support": {
+        "issues": "https://gitee.com/ken678/YZNCMS/issues"
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "nelexa/zip": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "think\\": "src/"
+        },
+        "files": [
+            "src/common.php"
+        ]
+    }
+}

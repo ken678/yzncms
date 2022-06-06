@@ -2020,21 +2020,22 @@
         },
         {
             "name": "yzncms/framework",
-            "version": "v5.1.41",
-            "version_normalized": "5.1.41.0",
+            "version": "v5.1.45",
+            "version_normalized": "5.1.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/framework.git",
-                "reference": "e759441f28825e44e5d2bb003a7f883d679f939f"
+                "reference": "57016630bb0d22365a664cd6525a4541ae5dc64d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/framework/zipball/e759441f28825e44e5d2bb003a7f883d679f939f",
-                "reference": "e759441f28825e44e5d2bb003a7f883d679f939f",
+                "url": "https://api.github.com/repos/ken678/framework/zipball/57016630bb0d22365a664cd6525a4541ae5dc64d",
+                "reference": "57016630bb0d22365a664cd6525a4541ae5dc64d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0",
+                "php": ">=7.0.0",
+                "psr/http-message": "^1.0",
                 "yzncms/think-installer": "2.*"
             },
             "require-dev": {
@@ -2046,7 +2047,7 @@
                 "sebastian/phpcpd": "2.*",
                 "squizlabs/php_codesniffer": "2.*"
             },
-            "time": "2022-03-21T03:46:43+00:00",
+            "time": "2022-04-07T11:15:23+00:00",
             "type": "yzncms-framework",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -2068,13 +2069,62 @@
             "keywords": [
                 "framework",
                 "orm",
-                "thinkphp"
+                "thinkphp",
+                "yzncms"
             ],
             "support": {
                 "issues": "https://github.com/ken678/framework/issues",
-                "source": "https://github.com/ken678/framework/tree/v5.1.41"
+                "source": "https://github.com/ken678/framework/tree/v5.1.45"
             },
             "install-path": "../../thinkphp"
+        },
+        {
+            "name": "yzncms/think-addons",
+            "version": "v1.0.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ken678/think-addons.git",
+                "reference": "cfd1e375982061464485a28786b3af67da09e7d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ken678/think-addons/zipball/cfd1e375982061464485a28786b3af67da09e7d8",
+                "reference": "cfd1e375982061464485a28786b3af67da09e7d8",
+                "shasum": ""
+            },
+            "require": {
+                "nelexa/zip": "^3.3",
+                "php": ">=7.0.0"
+            },
+            "time": "2022-04-25T05:58:46+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/common.php"
+                ],
+                "psr-4": {
+                    "think\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yzncms",
+                    "email": "530765310@qq.com"
+                }
+            ],
+            "description": "addons package for yzncms",
+            "homepage": "https://github.com/ken678/think-addons",
+            "support": {
+                "issues": "https://gitee.com/ken678/YZNCMS/issues",
+                "source": "https://github.com/ken678/think-addons/tree/v1.0.0"
+            },
+            "install-path": "../yzncms/think-addons"
         },
         {
             "name": "yzncms/think-captcha",

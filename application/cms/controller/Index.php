@@ -52,7 +52,7 @@ class Index extends Cmsbase
         //获取栏目数据
         $category = getCategory($cat);
         if (empty($category)) {
-            $this->error('栏目不存在！');
+            throw new \think\exception\HttpException(404, '栏目不存在！');
         }
         $catid = $category['id'];
         //模型ID
@@ -120,7 +120,7 @@ class Index extends Cmsbase
         //获取栏目数据
         $category = getCategory($cat);
         if (empty($category)) {
-            $this->error('栏目不存在！');
+            throw new \think\exception\HttpException(404, '栏目不存在！');
         }
         $catid = $category['catid'] = $category['id'];
         unset($category['id']);
@@ -128,7 +128,7 @@ class Index extends Cmsbase
         $modelid   = $category['modelid'];
         $modelInfo = cache('Model')[$modelid];
         if (empty($modelInfo)) {
-            $this->error('模型不存在！');
+            throw new \think\exception\HttpException(404, '模型不存在！');
         }
         //更新点击量
         Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
@@ -136,7 +136,7 @@ class Index extends Cmsbase
         $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
         $info    = $this->Cms_Model->getContent($modelid, ['catid' => $catid, 'id' => $id], true, '*', '', $ifcache);
         if (!$info || ($info['status'] !== 1 && !\app\admin\service\User::instance()->isLogin())) {
-            throw new \think\Exception('内容不存在或未审核!', 404);
+            throw new \think\exception\HttpException(404, '内容不存在或未审核!');
         }
         //内容分页
         $paginator = strpos($info['content'], '[page]');

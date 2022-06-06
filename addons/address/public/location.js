@@ -4,8 +4,8 @@ layui.define(['layer', 'locationX'], function (exports) {
         MOD_NAME = "location",
         GPS = layui.locationX;
 
-	
-	var tpl0 = '<div class="cur-load0"></div>\n' +
+    
+    var tpl0 = '<div class="cur-load0"></div>\n' +
             '<div class="cur-load1"></div>\n' +
             '<div class="ew-map-select-tool" style="position: relative;">\n' +
             '    经度：<input id="lng" class="layui-input  inline-block" style="width: 190px;" autocomplete="off"/>\n' +
@@ -15,8 +15,8 @@ layui.define(['layer', 'locationX'], function (exports) {
             '    </button>\n' +
             '</div>\n' +
             '<div id="map" style="width: 100%;height: calc(100% - 48px);"></div>';
-	
-	var tpl1 ='<div class="cur-load0"></div>\n' +
+    
+    var tpl1 ='<div class="cur-load0"></div>\n' +
             '<div class="cur-load1"></div>\n' +
             '<div class="ew-map-select-tool" style="position: relative;">\n' +
             '    搜索：<input id="ew-map-select-input-search" class="layui-input icon-search inline-block" style="width: 190px;" placeholder="输入关键字搜索" autocomplete="off" />\n' +
@@ -52,6 +52,9 @@ layui.define(['layer', 'locationX'], function (exports) {
             },
             success: function () {
 
+            },
+            onClickTip: function (data) {
+                console.log(data);
             }
 
         }
@@ -177,23 +180,26 @@ layui.define(['layer', 'locationX'], function (exports) {
             // 搜索附近方法
             var searchNearBy = function (lng, lat){
                 var point = new BMap.Point(lng, lat);
+
                 var localSearch = new BMap.LocalSearch(point, {
                     pageCapacity: 10,
                     onSearchComplete: function (result){
-                        var htmlList = '';
-                        $.each(result,function (i,val){
-                            $.each(val.Hr,function (i,ad){
-                                htmlList += '<div data-lng="' + ad.point.lng + '" data-lat="' + ad.point.lat + '" class="ew-map-select-search-list-item">';
-                                htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.title + '</div>';
-                                htmlList += '     <div class="ew-map-select-search-list-item-address">' + ad.address + '</div>';
-                                htmlList += '     <div class="ew-map-select-search-list-item-icon-ok layui-hide"><i class="layui-icon layui-icon-ok-circle"></i></div>';
-                                htmlList += '</div>';
+                        if (localSearch.getStatus() == BMAP_STATUS_SUCCESS){
+                            var htmlList = '';
+                            $.each(result.Kr,function (i,ad){
+                                //$.each(val.Kr,function (i,ad){
+                                    htmlList += '<div data-lng="' + ad.point.lng + '" data-lat="' + ad.point.lat + '" data-title="'+ ad.title +'"  data-address="'+ ad.address +'" class="ew-map-select-search-list-item">';
+                                    htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.title + '</div>';
+                                    htmlList += '     <div class="ew-map-select-search-list-item-address">' + ad.address + '</div>';
+                                    htmlList += '     <div class="ew-map-select-search-list-item-icon-ok layui-hide"><i class="layui-icon layui-icon-ok-circle"></i></div>';
+                                    htmlList += '</div>';
+                                //});
                             });
-                        });
-                        $('#ew-map-select-poi').html(htmlList);
+                            $('#ew-map-select-poi').html(htmlList);
+                        }
                     }
                 });
-                localSearch.searchNearby([o.config.searchKey,'镇','街道','店'],point,1000);
+                localSearch.searchNearby('餐馆',point,1000);
             }
 
             // 初始化搜索
@@ -225,6 +231,9 @@ layui.define(['layer', 'locationX'], function (exports) {
                 map.centerAndZoom(point, map.getZoom());
 
                 markCenter(lng, lat);
+                var title =  $(this).data('title');
+                var address =  $(this).data('address');
+                o.config.onClickTip({title:title,address:address,lng:lng,lat:lat});
             });
 
             // 搜索提示
@@ -244,15 +253,15 @@ layui.define(['layer', 'locationX'], function (exports) {
                             return ;
                         }
                         var htmlList = '';
-                        $.each(result.Hr,function (i,ad){
-                            htmlList += '<div data-lng="' + ad.point.lng + '" data-lat="' + ad.point.lat + '" class="ew-map-select-search-list-item">';
+                        $.each(result.Kr,function (i,ad){
+                            htmlList += '<div data-lng="' + ad.point.lng + '" data-lat="' + ad.point.lat + '" data-title="'+ ad.title +'"  data-address="'+ ad.address +'" class="ew-map-select-search-list-item">';
                             htmlList += '     <div class="ew-map-select-search-list-item-icon-search"><i class="layui-icon layui-icon-search"></i></div>';
                             htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.title + '</div>';
                             htmlList += '     <div class="ew-map-select-search-list-item-address">' + ad.address + '</div>';
                             htmlList += '</div>';
                         });
                         $selectTips.html(htmlList);
-                        if (result.Hr.length === 0) $('#ew-map-select-tips').addClass('layui-hide');
+                        if (result.Kr.length === 0) $('#ew-map-select-tips').addClass('layui-hide');
                         else $('#ew-map-select-tips').removeClass('layui-hide');
                     }
                 });
@@ -279,6 +288,9 @@ layui.define(['layer', 'locationX'], function (exports) {
                 var point = new BMap.Point(lng, lat);
                 map.centerAndZoom(point, map.getZoom());
                 markCenter(lng, lat);
+                var title =  $(this).data('title');
+                var address =  $(this).data('address');
+                o.config.onClickTip({title:title,address:address,lng:lng,lat:lat});
             });
         }
 
@@ -365,7 +377,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                         var htmlList = '';
                         $.each(result.getPois(),function (i,ad){
                             var lnglat = ad.lonlat.split(" ");
-                            htmlList += '<div data-lng="' + lnglat[0] + '" data-lat="' + lnglat[1] + '" class="ew-map-select-search-list-item">';
+                            htmlList += '<div data-lng="' + lnglat[0] + '" data-lat="' + lnglat[1] + '" data-title="'+ ad.name +'"  data-address="'+ ad.address +'" class="ew-map-select-search-list-item">';
                             htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.name + '</div>';
                             htmlList += '     <div class="ew-map-select-search-list-item-address">' + ad.address + '</div>';
                             htmlList += '     <div class="ew-map-select-search-list-item-icon-ok layui-hide"><i class="layui-icon layui-icon-ok-circle"></i></div>';
@@ -405,6 +417,9 @@ layui.define(['layer', 'locationX'], function (exports) {
                 map.centerAndZoom(point, map.getZoom());
 
                 markCenter(lng, lat);
+                var title =  $(this).data('title');
+                var address =  $(this).data('address');
+                o.config.onClickTip({title:title,address:address,lng:lng,lat:lat});
             });
 
             // 搜索提示
@@ -426,7 +441,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                         var htmlList = '';
                         $.each(result.getPois(),function (i,ad){
                             var lnglat = ad.lonlat.split(" ");
-                            htmlList += '<div data-lng="' + lnglat[0] + '" data-lat="' + lnglat[1] + '" class="ew-map-select-search-list-item">';
+                            htmlList += '<div data-lng="' + lnglat[0] + '" data-lat="' + lnglat[1] + '" data-title="'+ ad.name +'"  data-address="'+ ad.address +'" class="ew-map-select-search-list-item">';
                             htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.name + '</div>';
                             htmlList += '     <div class="ew-map-select-search-list-item-address">' + ad.address + '</div>';
                             htmlList += '     <div class="ew-map-select-search-list-item-icon-ok layui-hide"><i class="layui-icon layui-icon-ok-circle"></i></div>';
@@ -461,6 +476,9 @@ layui.define(['layer', 'locationX'], function (exports) {
                 var point = new T.LngLat(lng, lat);
                 map.centerAndZoom(point, map.getZoom());
                 markCenter(lng, lat);
+                var title =  $(this).data('title');
+                var address =  $(this).data('address');
+                o.config.onClickTip({title:title,address:address,lng:lng,lat:lat});
             });
         }
 
@@ -536,7 +554,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                             for (var i = 0; i < pois.length; i++) {
                                 var poiItem = pois[i];
                                 if (poiItem.location !== undefined) {
-                                    htmlList += '<div data-lng="' + poiItem.location.lng + '" data-lat="' + poiItem.location.lat + '" class="ew-map-select-search-list-item">';
+                                    htmlList += '<div data-lng="' + poiItem.location.lng + '" data-lat="' + poiItem.location.lat + '" data-title="'+ poiItem.name +'"  data-address="'+ poiItem.address  +'" class="ew-map-select-search-list-item">';
                                     htmlList += '     <div class="ew-map-select-search-list-item-title">' + poiItem.name + '</div>';
                                     htmlList += '     <div class="ew-map-select-search-list-item-address">' + poiItem.address + '</div>';
                                     htmlList += '     <div class="ew-map-select-search-list-item-icon-ok layui-hide"><i class="layui-icon layui-icon-ok-circle"></i></div>';
@@ -575,6 +593,9 @@ layui.define(['layer', 'locationX'], function (exports) {
                 map.setZoomAndCenter(map.getZoom(), [lng, lat]);
 
                 markCenter({lng: lng, lat: lat});
+                var title =  $(this).data('title');
+                var address =  $(this).data('address');
+                o.config.onClickTip({title:title,address:address,lng:lng,lat:lat});
             });
 
             searchNearBy(o.config.longitude ? o.config.longitude : 116.404, o.config.latitude ? o.config.latitude : 39.915);
@@ -597,7 +618,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                             for (var i = 0; i < tips.length; i++) {
                                 var tipItem = tips[i];
                                 if (tipItem.location !== undefined) {
-                                    htmlList += '<div data-lng="' + tipItem.location.lng + '" data-lat="' + tipItem.location.lat + '" class="ew-map-select-search-list-item">';
+                                    htmlList += '<div data-lng="' + tipItem.location.lng + '" data-lat="' + tipItem.location.lat + '" data-title="'+ tipItem.name +'"  data-address="'+ tipItem.address  +'" class="ew-map-select-search-list-item">';
                                     htmlList += '     <div class="ew-map-select-search-list-item-icon-search"><i class="layui-icon layui-icon-search"></i></div>';
                                     htmlList += '     <div class="ew-map-select-search-list-item-title">' + tipItem.name + '</div>';
                                     htmlList += '     <div class="ew-map-select-search-list-item-address">' + tipItem.address + '</div>';
@@ -633,6 +654,9 @@ layui.define(['layer', 'locationX'], function (exports) {
                 var lat = $(this).data('lat');
                 map.setZoomAndCenter(map.getZoom(), [lng, lat]);
                 markCenter({lng: lng, lat: lat});
+                var title =  $(this).data('title');
+                var address =  $(this).data('address');
+                o.config.onClickTip({title:title,address:address,lng:lng,lat:lat});
             });
         }
 
@@ -651,7 +675,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                         $("#lat").val(o.lat);
                         // 渲染地图
                         if (undefined === window.BMap) {
-                            $.getScript("http://api.map.baidu.com/getscript?v=2.0&ak=tCNPmUfNmy4nTR3VYW71a6IgyWMaOSUb&services=&t=20200824135534", function () {
+                            $.getScript("https://api.map.baidu.com/getscript?v=2.0&ak=tCNPmUfNmy4nTR3VYW71a6IgyWMaOSUb&services=&t=20200824135534", function () {
                                 o.openBaiduMap();
                             });
                         } else {

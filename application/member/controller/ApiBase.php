@@ -16,7 +16,6 @@ namespace app\member\controller;
 
 use app\common\controller\Api;
 use app\member\service\User;
-use think\Loader;
 
 class ApiBase extends Api
 {
@@ -45,7 +44,7 @@ class ApiBase extends Api
     {
         parent::initialize();
         $modulename         = $this->request->module();
-        $controllername     = Loader::parseName($this->request->controller());
+        $controllername     = parse_name($this->request->controller());
         $actionname         = strtolower($this->request->action());
         $this->memberConfig = cache("Member_Config");
         $this->memberGroup  = cache("Member_Group");

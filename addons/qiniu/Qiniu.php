@@ -63,6 +63,9 @@ class Qiniu extends Addons
         $file_name = explode('.', $info['name']);
         $ext       = end($file_name);
         $key       = $params['dir'] . '/' . date('Ymd') . '/' . $file->hash('md5') . '.' . $ext;
+        //图片处理的规则名称stylename
+        $stylename = isset($config['stylename']) && isset($config['separator']) && $config['stylename'] && $config['separator'] ? trim($config['separator']) . trim($config['stylename']) : '';
+
         // 构建鉴权对象
         $auth = new Auth($config['accessKey'], $config['secrectKey']);
         // 初始化空间
@@ -87,7 +90,7 @@ class Qiniu extends Addons
                 'uid'    => (int) cookie('uid'),
                 'name'   => $info['name'],
                 'mime'   => $info['type'],
-                'path'   => $config['domain'] . $key . '?v=' . rand(111111, 999999),
+                'path'   => $config['domain'] . $key . $stylename,
                 'ext'    => $suffix,
                 'size'   => $file->getSize(),
                 'md5'    => $file->hash('md5'),
