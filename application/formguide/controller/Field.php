@@ -38,7 +38,7 @@ class Field extends AdminBase
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
             $count                      = $this->modelClass->where($where)->where(['modelid' => $fieldid])->count();
-            $data                       = $this->modelClass->where($where)->where(['modelid' => $fieldid])->page($page, $limit)->order(['listorder', 'id' => 'ASC'])->select();
+            $data                       = $this->modelClass->where($where)->where(['modelid' => $fieldid])->page($page, $limit)->order(['listorder' => 'DESC', 'id' => 'DESC'])->select();
             return json(["code" => 0, 'count' => $count, "data" => $data]);
         } else {
             $this->assign("id", $fieldid);
