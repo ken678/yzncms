@@ -3,3 +3,4 @@
 *.log
 composer.lock
 /runtime/*
+/templates/
