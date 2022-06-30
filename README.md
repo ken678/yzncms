@@ -1,5 +1,5 @@
 # YznCMS 后台开发框架
-### 后端基于thinkphp5.1框架,前端基于Layui2.6.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
+### 后端基于thinkphp5.1框架,前端基于Layui2.7.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
 
 [![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
 [![YznCMS](https://img.shields.io/badge/YznCMS-1.0.0-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
@@ -82,7 +82,8 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 - 伪静态(URL重写)： https://www.kancloud.cn/ken678/yzncms/1003231
 - 虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003254
 
-## [如何授权]
+## [获取授权插件]
+- 注意这里是获取部分授权插件，主框架和自带插件都是永久免费
 - 截止2020/6/17 赞助过任意金额(≥1分)的 可以直接获取资格
 - 提交1款免费开源模块（需审核）
 - 提交2款免费开源插件（需审核）
