@@ -62,7 +62,6 @@ class Cms extends Modelbase
             throw new \Exception('数据表不存在！');
         }
         $this->getAfterText($data, $dataExt);
-
         if (!defined('IN_ADMIN') || (defined('IN_ADMIN') && IN_ADMIN == false)) {
             empty($data['uid']) ? \app\member\service\User::instance()->id : $data['uid'];
             empty($data['username']) ? \app\member\service\User::instance()->username : $data['username'];
@@ -237,7 +236,7 @@ class Cms extends Modelbase
                 }
             }
             //数据必填验证
-            if ($vo['ifrequire'] && ${$arr}[$name] == '') {
+            if ($vo['ifrequire'] && (!isset(${$arr}[$name]) || ${$arr}[$name] == '')) {
                 throw new \Exception("'" . $vo['title'] . "'必须填写~");
             }
             //正则校验
