@@ -209,7 +209,7 @@ function get_filters_field($modelid)
 function paramdecode($str)
 {
     $arr  = [];
-    $arr1 = explode('&', $str);
+    $arr1 = explode('_', $str);
     foreach ($arr1 as $vo) {
         if (!empty($vo)) {
             $arr2 = explode('=', $vo);
@@ -227,7 +227,7 @@ function paramencode($arr)
     if (!empty($arr)) {
         foreach ($arr as $key => $vo) {
             if (!empty($vo)) {
-                $str .= $key . '=' . $vo . '&';
+                $str .= $key . '=' . $vo . '_';
             }
         }
         $str = substr($str, 0, -1);
