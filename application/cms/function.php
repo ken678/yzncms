@@ -93,8 +93,8 @@ function filters($modelid, $catid)
     $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
     $data     = get_filters_field($modelid);
     Request::filter('trim,strip_tags');
-    $param = paramdecode(Request::param('condition'));
-    //$catid = Request::param('catid');
+    $param = Request::param();
+    unset($param['catid'], $param['catdir']);
     $conditionParam = [];
     foreach ($data as $name => $rs) {
         $data[$name]['options'][0] = '不限';
@@ -151,7 +151,8 @@ function filters($modelid, $catid)
                 $field = 'catdir';
                 $catid = getCategory($catid, 'catdir');
             }
-            $conditionParam[$name]['options'][$k]['url'] = url('cms/index/lists', [$field => $catid, 'condition' => $conditionParam[$name]['options'][$k]['param']]);
+            $newParam                                    = $conditionParam[$name]['options'][$k]['param'];
+            $conditionParam[$name]['options'][$k]['url'] = url('cms/index/lists', [$field => $catid]) . ($newParam ? '?' . $newParam : '');
             ksort($conditionParam[$name]['options']);
         }
         if (!isset($param[$rs['name']]) && empty($param[$rs['name']])) {
@@ -166,7 +167,7 @@ function structure_filters_sql($modelid)
     $data       = get_filters_field($modelid);
     $fields_key = array_keys($data);
     $sql        = '`status` = \'1\'';
-    $param      = paramdecode(Request::param('condition'));
+    $param      = Request::param();
     foreach ($param as $k => $r) {
         if (isset($data[$k]['type']) && in_array($k, $fields_key) && intval($r) != 0) {
             if ('radio' == $data[$k]['type']) {
@@ -206,20 +207,20 @@ function get_filters_field($modelid)
 
 }
 
-function paramdecode($str)
+/*function paramdecode($str)
 {
-    $arr  = [];
-    $arr1 = explode('_', $str);
-    foreach ($arr1 as $vo) {
-        if (!empty($vo)) {
-            $arr2 = explode('=', $vo);
-            if (!empty($arr2[1])) {
-                $arr[$arr2[0]] = $arr2[1];
-            }
-        }
-    }
-    return $arr;
+$arr  = [];
+$arr1 = explode('&', $str);
+foreach ($arr1 as $vo) {
+if (!empty($vo)) {
+$arr2 = explode('=', $vo);
+if (!empty($arr2[1])) {
+$arr[$arr2[0]] = $arr2[1];
 }
+}
+}
+return $arr;
+}*/
 
 function paramencode($arr)
 {
@@ -227,10 +228,10 @@ function paramencode($arr)
     if (!empty($arr)) {
         foreach ($arr as $key => $vo) {
             if (!empty($vo)) {
-                $str .= $key . '=' . $vo . '_';
+                $str .= $key . '=' . $vo . '&';
             }
         }
-        $str = substr($str, 0, -1);
+        $str = $str ? substr($str, 0, -1) : '';
     }
     return $str;
 }
