@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <script type="text/javascript" src="../internal.js"></script>
-    <script type="text/javascript" src="https://api.map.baidu.com/api?v=1.3&services=true&s=1"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=E39VpbZvGf7BfXe8TtR7lyWIDQp8tpU1&s=1"></script>
     <style type="text/css">
         .content{width:530px; height: 350px;margin: 10px auto;}
         .content table{width: 100%}
@@ -105,7 +105,7 @@
     };
     dialog.onok = function (){
         var center = map.getCenter();
-        var zoom = map.zoomLevel;
+        var zoom = map.getZoom();
         var size = map.getSize();
         var mapWidth = size.width;
         var mapHeight = size.height;
