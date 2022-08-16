@@ -17,6 +17,7 @@ namespace app\cms\controller;
 use app\cms\model\Models as ModelsModel;
 use app\common\controller\Adminbase;
 use think\Db;
+use think\facade\Cache;
 
 class Models extends Adminbase
 {
@@ -79,6 +80,9 @@ class Models extends Adminbase
             }
             try {
                 $this->modelClass->editModel($data);
+                //更新缓存
+                cache("Model", null);
+                Cache::set('getModel_' . $data['id'], '');
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -112,7 +116,21 @@ class Models extends Adminbase
 
     public function multi()
     {
-        cache("Model", null);
-        return parent::multi();
+        $id    = $this->request->param('id/d', 0);
+        $value = $this->request->param('value/d', 0);
+        try {
+            $row = $this->modelClass->find($id);
+            if (empty($row)) {
+                $this->error('数据不存在！');
+            }
+            $row->status = $value;
+            $row->save();
+            //更新缓存
+            cache("Model", null);
+            Cache::set('getModel_' . $id, '');
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+        $this->success("操作成功！");
     }
 }
