@@ -107,14 +107,6 @@ class Upload extends Base
 
     public function upload($dir = '', $from = '')
     {
-        if (!function_exists("finfo_open")) {
-            return json([
-                'code'    => 0,
-                'info'    => '检测到环境未开启php_fileinfo拓展',
-                'state'   => '检测到环境未开启php_fileinfo拓展', //兼容百度
-                'message' => '检测到环境未开启php_fileinfo拓展', //兼容editormd
-            ]);
-        }
         if ($dir == '') {
             return json([
                 'code'    => 0,

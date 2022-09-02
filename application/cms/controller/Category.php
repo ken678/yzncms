@@ -457,8 +457,13 @@ class Category extends Adminbase
         foreach ($result as $r) {
             if ($r['type'] == 2) {
                 $modelid = $r['modelid'];
-                $number  = Db::name(ucwords($model_cache[$modelid]['tablename']))->where('catid', $r['id'])->count();
-                Db::name('Category')->where('id', $r['id'])->update(['items' => $number]);
+                if (isset($model_cache[$modelid])) {
+                    $number = Db::name(ucwords($model_cache[$modelid]['tablename']))->where('catid', $r['id'])->count();
+                    Db::name('Category')->where('id', $r['id'])->update(['items' => $number]);
+                } else {
+                    Db::name('Category')->where('id', $r['id'])->update(['items' => 0]);
+                }
+
             }
         }
         $this->success("栏目数量校正成功！");

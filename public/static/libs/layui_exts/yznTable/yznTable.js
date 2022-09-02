@@ -723,6 +723,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
 
                     } else if (typeof item === 'object') {
                         $.each(item, function(i, operat) {
+                            hidden = typeof operat.hidden === 'function' ? operat.hidden.call(yznTable, data, operat) : (typeof operat.hidden !== 'undefined' ? operat.hidden : false);
+                            if (hidden) {
+                                return true;
+                            }
                             operat.class = operat.class || '';
                             operat.icon = operat.icon || '';
                             operat.auth = operat.auth || '';

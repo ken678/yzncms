@@ -195,7 +195,7 @@ class Cms extends Modelbase
         if ([] != $ignoreField) {
             $query = $query->where('name', 'not in', $ignoreField);
         }
-        $filedTypeList = $query->order('listorder,id')->column('name,title,type,ifsystem,ifrequire,pattern,errortips');
+        $filedTypeList = $query->order('listorder DESC, id DESC')->column('name,title,type,ifsystem,ifrequire,pattern,errortips');
 
         foreach ($filedTypeList as $name => $vo) {
             $arr = $vo['ifsystem'] ? 'data' : 'dataExt';
