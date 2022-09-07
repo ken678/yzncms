@@ -728,7 +728,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 return true;
                             }
                             url = operat.url || '';
-                            operat.url = typeof url === 'function' ? url.call(yznTable, data, operat) : (url ? yznTable.toolSpliceUrl(url, operat.field, data) : 'javascript:;');
                             operat.class = operat.class || '';
                             operat.icon = operat.icon || '';
                             operat.auth = operat.auth || '';
@@ -737,6 +736,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             operat.title = operat.title || operat.text;
                             operat.text = operat.text || operat.title;
                             operat.extend = operat.extend || '';
+                            operat.url = typeof url === 'function' ? url.call(yznTable, data, operat) : (url ? yznTable.toolSpliceUrl(url, operat.field, data) : 'javascript:;');
                             //operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
                             //if (admin.checkAuth(operat.auth, elem)) {
                             html += yznTable.buildOperatHtml(operat);
