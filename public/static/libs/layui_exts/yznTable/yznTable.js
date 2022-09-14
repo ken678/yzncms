@@ -737,6 +737,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             operat.text = operat.text || operat.title;
                             operat.extend = operat.extend || '';
                             operat.url = typeof url === 'function' ? url.call(yznTable, data, operat) : (url ? yznTable.toolSpliceUrl(url, operat.field, data) : 'javascript:;');
+                            disable = typeof operat.disable === 'function' ? operat.disable.call(yznTable, data, operat) : (typeof operat.disable !== 'undefined' ? operat.disable : false);
+                            if (disable) {
+                                operat.class = operat.class + ' layui-btn-disabled';
+                            }
                             //operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
                             //if (admin.checkAuth(operat.auth, elem)) {
                             html += yznTable.buildOperatHtml(operat);
