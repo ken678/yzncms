@@ -116,12 +116,12 @@ trait Curd
         if (!$row) {
             $this->error('记录未找到');
         }
-        /*$adminIds = $this->getDataLimitAdminIds();
+        $adminIds = $this->getDataLimitAdminIds();
         if (is_array($adminIds)) {
-        if (!in_array($row[$this->dataLimitField], $adminIds)) {
-        $this->error('你没有权限访问');
+            if (!in_array($row[$this->dataLimitField], $adminIds)) {
+                $this->error('你没有权限访问');
+            }
         }
-        }*/
         if ($this->request->isPost()) {
             $params = $this->request->post("row/a");
             if ($params) {
@@ -164,7 +164,11 @@ trait Curd
         if (!is_array($ids)) {
             $ids = array(0 => $ids);
         }
-        $pk    = $this->modelClass->getPk();
+        $pk       = $this->modelClass->getPk();
+        $adminIds = $this->getDataLimitAdminIds();
+        if (is_array($adminIds)) {
+            $this->modelClass = $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+        }
         $list  = $this->modelClass->where($pk, 'in', $ids)->select();
         $count = 0;
         try {
@@ -190,8 +194,12 @@ trait Curd
             $param = $this->request->param('param/s');
             $param = in_array($param, (is_array($this->multiFields) ? $this->multiFields : explode(',', $this->multiFields))) ? $param : '';
             if ($param) {
+                $adminIds = $this->getDataLimitAdminIds();
+                if (is_array($adminIds)) {
+                    $this->modelClass = $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+                }
                 try {
-                    $row = $this->modelClass->find($id);
+                    $row = $this->modelClass->where('id', $id)->find();
                     if (empty($row)) {
                         $this->error('数据不存在！');
                     }
