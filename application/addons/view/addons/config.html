@@ -13,7 +13,7 @@
                             <div class="layui-input-block">
                                 <input type="text" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                             </div>
-                            <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                        {/case}
                        {case value="password"}
@@ -22,7 +22,7 @@
                             <div class="layui-input-block">
                                 <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                             </div>
-                            <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                        {/case}
 						{case value="array"}
@@ -36,7 +36,7 @@
 						        <dd><button type="button" class="layui-btn btn-append">追加</button></dd>
 						        <textarea name="config[{$form.name}]" class="layui-textarea layui-hide">{$form.value|json_encode}</textarea>
 						    </dl>
-						    <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+						    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
 						</div>
 						<script type="text/html" id="{$form.name}Tpl">
 						    <dd class="layui-form-item rules-item">
@@ -60,7 +60,7 @@
 						        <input type="checkbox" name="config[{$form.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value"} checked{/in}>
 						        {/foreach}
 						    </div>
-						    <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+						    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
 						</div>
 						{/case}
                         {case value="textarea"}
@@ -69,7 +69,7 @@
                             <div class="layui-input-block">
                                 <textarea placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$form.name}]">{$form.value}</textarea>
                             </div>
-                            <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                         {/case}
                        {case value="password"}
@@ -78,7 +78,7 @@
                             <div class="layui-input-block">
                                 <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                             </div>
-                            <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                        {/case}
                        {case value="radio"}
@@ -89,7 +89,7 @@
                                 <input type="radio" name="config[{$form.name}]" value="{$opt_k}" title="{$opt}" {eq name="form.value" value="$opt_k"} checked{/eq}>
                                 {/foreach}
                             </div>
-                                <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                        {/case}
                         {case value="select"}
@@ -103,7 +103,7 @@
                                     {/foreach}
                                 </select>
                             </div>
-                            <div class="layui-form-mid2 layui-word-aux">{if $form.tip}{$form.tip|raw}{/if}</div>
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                         {/case}
                         {case value="image"}
@@ -117,7 +117,7 @@
                                 <button type="button" class="layui-btn fachoose" data-multiple="false" data-input-id="c-{$form.name}" id="fachoose-c-{$form.name}"><i class="iconfont icon-other"></i> 选择</button>
                                 <ul class="layui-row list-inline plupload-preview" id="p-{$form.name}"></ul>
                             </div>
-                            {if $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                         {/case}
                  {/switch}
