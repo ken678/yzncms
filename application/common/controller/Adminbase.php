@@ -210,7 +210,11 @@ class Adminbase extends Base
             $item = stripos($item, ".") === false ? $aliasName . trim($item) : $item;
         }
         unset($item);
-        $sort = implode(',', $sortArr);
+        $sort     = implode(',', $sortArr);
+        $adminIds = $this->getDataLimitAdminIds();
+        if (is_array($adminIds)) {
+            $where[] = [$aliasName . $this->dataLimitField, 'in', $adminIds];
+        }
         if ($search) {
             $searcharr = is_array($searchfields) ? $searchfields : explode(',', $searchfields);
             foreach ($searcharr as $k => &$v) {
@@ -346,6 +350,26 @@ class Adminbase extends Base
     }
 
     /**
+     * 获取数据限制的管理员ID
+     * 禁用数据限制时返回的是null
+     * @return mixed
+     */
+    protected function getDataLimitAdminIds()
+    {
+        if (!$this->dataLimit) {
+            return null;
+        }
+        if ($this->auth->isAdministrator()) {
+            return null;
+        }
+        $adminIds = [];
+        if (in_array($this->dataLimit, ['auth', 'personal'])) {
+            $adminIds = $this->dataLimit == 'auth' ? $this->auth->getChildrenAdminIds(true) : [$this->auth->id];
+        }
+        return $adminIds;
+    }
+
+    /**
      *
      * 当前方法只是一个比较通用的搜索匹配,请按需重载此方法来编写自己的搜索逻辑,$where按自己的需求写即可
      * 这里示例了所有的参数，所以比较复杂，实现上自己实现只需简单的几行即可
@@ -422,16 +446,13 @@ class Adminbase extends Base
                 }
             };
         }
-        /*$adminIds = $this->getDataLimitAdminIds();
+        $adminIds = $this->getDataLimitAdminIds();
         if (is_array($adminIds)) {
-        $this->model->where($this->dataLimitField, 'in', $adminIds);
-        }*/
+            $this->modelClass = $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+        }
         $list  = [];
         $total = $this->modelClass->where($where)->count();
         if ($total > 0) {
-            /*if (is_array($adminIds)) {
-            $this->model->where($this->dataLimitField, 'in', $adminIds);
-            }*/
             $fields = is_array($this->selectpageFields) ? $this->selectpageFields : ($this->selectpageFields && $this->selectpageFields != '*' ? explode(',', $this->selectpageFields) : []);
             //如果有primaryvalue,说明当前是初始化传值,按照选择顺序排序
             if ($primaryvalue !== null && preg_match("/^[a-z0-9_\-]+$/i", $primarykey)) {
@@ -449,6 +470,10 @@ class Adminbase extends Base
             }
 
             $this->modelClass->removeOption('where');
+
+            if (is_array($adminIds)) {
+                $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+            }
 
             $datalist = $this->modelClass->where($where)
                 ->page($page, $pagesize)
