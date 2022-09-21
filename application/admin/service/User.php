@@ -28,8 +28,6 @@ class User extends \libs\Auth
     protected $error   = '';
     protected $logined = false; //登录状态
 
-    const ADMINISTRATORROLEID = 1;
-
     public function __construct()
     {
         parent::__construct();
@@ -249,13 +247,9 @@ class User extends \libs\Auth
      * 检查当前用户是否超级管理员
      * @return boolean
      */
-    public function isAdministrator($uid = null)
+    public function isAdministrator()
     {
-        $userInfo = Session::get('admin');
-        if (!empty($userInfo) && $userInfo['roleid'] == self::ADMINISTRATORROLEID) {
-            return true;
-        }
-        return false;
+        return in_array('*', $this->getRuleIds()) ? true : false;
     }
 
     /**

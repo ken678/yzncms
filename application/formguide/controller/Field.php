@@ -27,7 +27,7 @@ class Field extends AdminBase
     {
         parent::initialize();
         //允许使用的字段列表
-        $this->banfie     = array("text", "checkbox", "textarea", "radio", "select", "image", "number", "Ueditor", "color", "file");
+        $this->banfie     = array("text", "checkbox", "textarea", "radio", "select", "image", "number", "Ueditor", "color", "file", "datetime");
         $this->modelClass = new ModelField;
     }
 

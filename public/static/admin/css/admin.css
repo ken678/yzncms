@@ -97,3 +97,6 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
   border-color: #5FB878 !important;
   box-shadow: 0 0 0 3px #f0f9eb !important;
 }
+.layui-btn-disabled, .layui-btn-disabled:active{
+    pointer-events: none;
+}

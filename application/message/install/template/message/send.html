@@ -43,9 +43,29 @@
 </div>
 {template file="member/layui.html"/}
 <script type="text/javascript">
-layui.use('yznForm', function() {
-    var yznForm = layui.yznForm;
-    yznForm.listen();
+layui.use(['form', 'layer','yznForm'], function() {
+    var form = layui.form,
+        layer = layui.layer,
+        yznForm = layui.yznForm;
+
+        yznForm.listen('', function (res) {
+            layer.msg(res.msg, {
+                offset: '15px',
+                icon: 1,
+                time: 1000
+            }, function() {
+                window.location.href = res.url;
+            });
+            return false;
+        }, function (res) {
+            //刷新验证码
+            $("#verify").click();
+        });
+});
+//刷新验证码
+$("#verify").click(function() {
+    var verifyimg = $("#verify").attr("src");
+    $("#verify").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
 });
 </script>
 {template file="member/footer.html"/}
