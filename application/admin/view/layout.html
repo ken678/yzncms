@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="__STATIC__/admin/css/global.css?v={$Think.config.version.yzncms_release}">
     <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css?v={$Think.config.version.yzncms_release}">
     <style id="layui-bg-color"></style>
+    <script type="text/javascript">
+    //全局变量
+    var GV = {
+        'site':{$site|raw|json_encode}
+    };
+    </script>
 </head>
 
 <body class="layui-layout-body layui-all layui-multi-module">
