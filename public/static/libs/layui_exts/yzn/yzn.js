@@ -1,5 +1,5 @@
 //封装基本操作 部分参考EasyAdmin和fastadmin
-layui.define(['layer','notice'], function(exports) {
+layui.define(['layer','notice','addons'], function(exports) {
     var layer = layui.layer,
         $ = layui.$,
         notice = layui.notice;
