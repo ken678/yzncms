@@ -65,7 +65,7 @@ class AddonService
             if (isset($info['has_adminlist']) && $info['has_adminlist']) {
                 $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : '';
                 //添加菜单
-                MenuLib::addAddonMenu($info, $admin_list);
+                MenuLib::addAddonMenu($admin_list, $info);
             }
             self::runSQL($name);
         } catch (Exception $e) {

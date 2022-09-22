@@ -26,38 +26,18 @@ class Menu
      * @param type $adminlist
      * @return boolean
      */
-    public static function addAddonMenu($info, $admin_list = null)
+    public static function addAddonMenu(array $admin_list, array $config, $parentid = 0)
     {
-        if (empty($info)) {
+        if (empty($admin_list) || !is_array($admin_list)) {
             throw new Exception('没有数据！');
         }
+        if (empty($config)) {
+            throw new Exception('模块配置信息为空！');
+        }
         //查询出“插件后台列表”菜单ID
-        $menuId = MenuModel::where(array("app" => "addons", "controller" => "addons", "action" => "addonadmin"))->value('id') ?: 41;
-        $data   = array(
-            //父ID
-            "parentid"   => $menuId,
-            'icon'       => isset($info['icon']) ? $info['icon'] : 'icon-circle-line',
-            //模块目录名称，也是项目名称
-            "app"        => "addons",
-            //插件名称
-            "controller" => $info['name'],
-            //方法名称
-            "action"     => "index",
-            //附加参数 例如：a=12&id=777
-            "parameter"  => "isadmin=1",
-            //状态，1是显示，0是不显示
-            "status"     => 1,
-            //名称
-            "title"      => $info['title'],
-            //备注
-            "tip"        => $info['title'] . "插件管理后台！",
-            //排序
-            "listorder"  => 0,
-        );
-        //添加插件后台
-        $parentid = MenuModel::create($data);
+        $defaultMenuParentid = MenuModel::where(array("app" => "addons", "controller" => "addons", "action" => "addonadmin"))->value('id') ?: 41;
         //显示“插件后台列表”菜单
-        MenuModel::where('id', $menuId)->update(array('status' => 1));
+        MenuModel::where('id', $defaultMenuParentid)->update(['status' => 1]);
         //插件具体菜单
         if (!empty($admin_list)) {
             foreach ($admin_list as $key => $menu) {
@@ -65,17 +45,14 @@ class Menu
                 if (empty($menu['title']) || empty($menu['action'])) {
                     continue;
                 }
-                //如果是index，跳过，因为已经有了。。。
-                if ($menu['action'] == 'index') {
-                    continue;
-                }
                 $data = array(
                     //父ID
-                    "parentid"   => $parentid->getAttr('parentid'),
+                    "parentid"   => $parentid ?: (isset($menu['parentid']) ?: (int) $defaultMenuParentid),
+                    'icon'       => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
                     //模块目录名称，也是项目名称
                     "app"        => "addons",
-                    //文件名称，比如LinksAction.class.php就填写 Links
-                    "controller" => $info['name'],
+                    //控制器名称
+                    "controller" => $config['name'],
                     //方法名称
                     "action"     => $menu['action'],
                     //附加参数 例如：a=12&id=777
@@ -89,9 +66,15 @@ class Menu
                     //排序
                     "listorder"  => (int) $menu['listorder'],
                 );
-                MenuModel::create($data);
+                $result = MenuModel::create($data);
+                //是否有子菜单
+                if (!empty($menu['child'])) {
+                    self::addAddonMenu($menu['child'], $config, $result['id']);
+                }
             }
         }
+        //清除缓存
+        cache('Menu', null);
         return true;
     }
 
