@@ -141,6 +141,15 @@ class ModuleService
         if ($info['iscore']) {
             throw new Exception('内置模块，不能卸载！');
         }
+        $modules = ModuleModel::where('status', 1)->column('name', 'module');
+        foreach ($modules as $key => $val) {
+            $config = self::getInfo($key);
+            foreach ($config['need_module'] as $v) {
+                if ($name == $v[0]) {
+                    throw new Exception($val . '模块依赖此模块，不能卸载！');
+                }
+            }
+        }
         try {
             ModuleModel::where('module', $name)->delete();
             self::runInstallScript($name, 'run', 'uninstall');
