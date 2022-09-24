@@ -28,14 +28,37 @@ class Menu
      */
     public static function addAddonMenu(array $admin_list, array $config, $parentid = 0)
     {
-        if (empty($admin_list) || !is_array($admin_list)) {
-            throw new Exception('没有数据！');
-        }
         if (empty($config)) {
             throw new Exception('模块配置信息为空！');
         }
         //查询出“插件后台列表”菜单ID
-        $defaultMenuParentid = MenuModel::where(array("app" => "addons", "controller" => "addons", "action" => "addonadmin"))->value('id') ?: 41;
+        $defaultMenuParentid = MenuModel::where(["app" => "addons", "controller" => "addons", "action" => "addonadmin"])->value('id') ?: 41;
+        if (empty($admin_list) && $parentid == 0) {
+            //如果没有数据则安装默认
+            $data = array(
+                //父ID
+                "parentid"   => $defaultMenuParentid,
+                'icon'       => $config['icon'] ?? 'icon-circle-line',
+                //模块目录名称，也是项目名称
+                "app"        => "addons",
+                //插件名称
+                "controller" => $config['name'],
+                //方法名称
+                "action"     => "index",
+                //附加参数 例如：a=12&id=777
+                "parameter"  => "isadmin=1",
+                //状态，1是显示，0是不显示
+                "status"     => 1,
+                //名称
+                "title"      => $config['title'],
+                //备注
+                "tip"        => $config['title'] . "插件管理后台！",
+                //排序
+                "listorder"  => 0,
+            );
+            //添加插件后台
+            MenuModel::create($data);
+        }
         //显示“插件后台列表”菜单
         MenuModel::where('id', $defaultMenuParentid)->update(['status' => 1]);
         //插件具体菜单
