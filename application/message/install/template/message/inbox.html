@@ -28,7 +28,6 @@ layui.use('table', function() {
                 { field: 'subject', title: '标题' },
                 { field: 'send_from', width: 120, title: '发件人' },
                 { field: 'status', width: 80,align:'center', title: '状态',templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">已读</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">未读</button> {{#  } }}</div>' },
-                { field: 'replyid', width: 80,align:'center', title: '回复',templet: '<div>{{#  if(d.replyid){ }} <button class="layui-btn layui-btn layui-btn-xs">已回复</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">未回复</button> {{#  } }} </div>' },
                 { field: 'create_time', width: 180,  title: '发送时间' },
                 { fixed: 'right', width: 80, title: '操作', templet: '#barTool' }
             ]
