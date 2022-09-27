@@ -1,7 +1,7 @@
-<li class="layui-nav-item">
+<li class="layui-nav-item {if $Request.module=='member' && $Request.controller=='Content'}layui-nav-itemed{/if}">
     <a href="javascript:;"><i class="iconfont icon-draft-line"></i>&nbsp;内容管理</a>
     <dl class="layui-nav-child">
-    	<dd><a href="{:url('member/content/publish')}"><i class="iconfont icon-circle-line"></i>&nbsp;在线投稿</a></dd>
-        <dd><a href="{:url('member/content/published')}"><i class="iconfont icon-circle-line"></i>&nbsp;我的稿件</a></dd>
+    	<dd class="{if $Request.action=='publish' && $Request.module=='member' }layui-this{/if}"><a href="{:url('member/content/publish')}"><i class="iconfont icon-circle-line"></i>&nbsp;在线投稿</a></dd>
+        <dd class="{if $Request.action=='published' && $Request.module=='member' }layui-this{/if}"><a href="{:url('member/content/published')}"><i class="iconfont icon-circle-line"></i>&nbsp;我的稿件</a></dd>
     </dl>
 </li>
