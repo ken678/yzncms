@@ -1,12 +1,11 @@
 //封装表单操作 部分参考EasyAdmin和fastadmin
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
         yzn = layui.yzn,
         table = layui.table,
         form = layui.form,
-        dragsort = layui.dragsort,
         element = layui.element,
         notice = layui.notice;
 
@@ -310,8 +309,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
             fieldlist: function(layform) {
                 // 绑定fieldlist组件
                 if ($(".fieldlist",layform).size() > 0) {
-                    layui.define('laytpl', function(exports) {
-                        var laytpl = layui.laytpl;
+                    layui.define(['laytpl','dragsort'], function(exports) {
+                        var dragsort = layui.dragsort,
+                            laytpl = layui.laytpl;
                         //刷新隐藏textarea的值
                         var refresh = function(name, obj) {
                             var data = {};
@@ -644,8 +644,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                 // 绑定图片上传组件
                 if ($(elements).length > 0) {
                     layui.link(layui.cache.base + 'webuploader/webuploader.css?v=0.1.8');
-                    layui.define('webuploader', function(exports) {
-                        var webuploader = layui.webuploader;
+                    layui.define(['webuploader','dragsort'], function(exports) {
+                        var dragsort = layui.dragsort,
+                            webuploader = layui.webuploader;
                         //分片
                         var chunking = typeof GV.site.chunking !== "undefined" ? GV.site.chunking : false,
                             chunkSize = typeof GV.site.chunksize !== "undefined" ? GV.site.chunksize : 5242880;
@@ -795,7 +796,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element', 'dragsort'],
                                         $("#" + preview_id).trigger("fa.preview.change");
                                     },
                                     placeHolderTemplate: '<li class="file-item thumbnail" style="border:1px #009688 dashed;"></li>'
-                                })
+                                });
                             }
                             //刷新隐藏textarea的值
                             var refresh = function(name) {
