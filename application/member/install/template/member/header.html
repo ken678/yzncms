@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="layui-container fly-marginTop fly-user-main">
-        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user" lay-shrink="all">
             <li class="layui-nav-item {if $Request.action=='index' && $Request.controller=='Index' }layui-this{/if}">
                 <a href="{:url('member/index/index')}"><i class="iconfont icon-user-line"></i>&nbsp;用户中心</a>
             </li>
