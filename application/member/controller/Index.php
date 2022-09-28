@@ -455,7 +455,7 @@ class Index extends MemberBase
                 //消费记录
                 $Spend_Model = new \app\pay\model\Spend;
                 $Spend_Model->_spend(1, $cost, $this->auth->id, $this->auth->username, '升级用户组');
-                $this->success('购买成功！');
+                $this->success('购买成功！', url('upgrade'));
             } else {
                 $this->error('余额不足，请先充值！');
             }
