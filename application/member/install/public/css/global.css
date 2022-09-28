@@ -71,7 +71,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-footer a:hover{color: #777;}
 
 /* 面板 */
-.fly-panel{margin-bottom: 15px; border-radius: 2px; background-color: #fff; box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);}
+.fly-panel{border-radius: 2px; background-color: #fff; box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);}
 .fly-panel[pad20]{padding: 20px;}
 .fly-panel-title{position: relative; height: 50px; line-height: 50px; padding: 0 15px; border-bottom: 1px dotted #E9E9E9; color: #333; border-radius: 2px 2px 0 0; font-size: 14px;}
 .fly-panel-main{padding: 10px 15px;}
@@ -88,24 +88,21 @@ body .fly-user-main{position: relative; min-height: 600px;}
 /* 个人主页 */
 .fly-home{position: relative; padding: 30px 0 30px; text-align: center;    border: 1px solid #eaeaea;background: #f8f8f8;}
 .fly-home img{width:120px; height:120px; border-radius:100%;}
-.fly-home h1{font-size:26px; line-height:30px; margin-top:10px;}
+.fly-home h1{font-size:26px; line-height:2; margin-top:10px;}
+.fly-home h1 font{color: #666;font-size: 18px;}
 .fly-home h1 span{font-size:14px; color:#999;}
 .fly-home h1 .icon-nan{color:#4EBBF9}
 .fly-home h1 .icon-nv{color:#F581B1}
-.fly-home-sign{padding: 0 10px; color: #999; margin-top: 10px;}
+.fly-home-sign{padding: 0 10px; color: #999; margin-top:8px;line-height: 1.5;}
 .fly-home .icon-vip1{display: inline-block; width: 24px; height: 24px; line-height: 24px; top: 45px; left: -15px; background-color: #FFB800; color: #fff; border-radius: 50%; font-size: 16px;}
 .fly-home-info i{padding-right: 5px; padding-left: 10px; color: #666;}
 .fly-home-info span{color: #999;}
 .fly-sns{margin-top: 10px;}
 .fly-home-jie .jie-row,
 .fly-home-da .home-jieda{min-height: 500px; padding: 5px 20px;}
-.layui-card-body .amount{font-size: 30px;color: #ff5722;}
-.layui-card-body .point{font-size: 30px;}
-.layui-card-body .groupname{font-size: 16px;}
-.layui-card-body .time{font-size: 16px;}
 .layui-card-box .layui-card{background: #f8f8f8;border: 1px solid #eaeaea;}
 .layui-card-box .layui-card-header{border-bottom: 1px solid #eaeaea;}
-.layui-card-box .layui-card-body{background: #fff;}
+.layui-card-box .layui-card-body{background: #fff;font-size: 14px;}
 
 /* 设置 */
 .avatar-add{position:relative; width:373px; height:373px; background-color:#F2F2F5;}
