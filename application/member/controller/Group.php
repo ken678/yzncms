@@ -35,7 +35,7 @@ class Group extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $_list = $this->modelClass->order(["listorder" => "ASC", "id" => "DESC"])->select();
+            $_list = $this->modelClass->order(["listorder" => "DESC", "id" => "DESC"])->select();
             foreach ($_list as $k => $v) {
                 //统计会员总数
                 $_list[$k]['_count'] = $this->Member_Model->where(["groupid" => $v['id']])->count('id');
