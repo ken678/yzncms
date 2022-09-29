@@ -59,6 +59,13 @@ class MemberBase extends HomeBase
             if (!$this->auth->isLogin()) {
                 $this->error('请登录后再操作', 'member/index/login');
             }
+            //判断一下vip是否过期
+            if ($this->auth->vip) {
+                if ($this->auth->overduedate < time()) {
+                    $this->auth->logout();
+                    $this->error('VIP已过期，请重新登录', 'member/index/login');
+                }
+            }
             // 判断是否需要验证权限
             /*if (!$this->auth->match($this->noNeedRight)) {
 
