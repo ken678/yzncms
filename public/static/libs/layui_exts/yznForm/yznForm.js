@@ -412,6 +412,14 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                             append(container, row);
                             refresh(container);
                         });
+                        form.on('radio(fieldlist)', function(data) {
+                            var container = $(this).closest(".fieldlist");
+                            refresh(container, data);
+                        });
+                        form.on('select(fieldlist)', function(data) {
+                            var container = $(this).closest(".fieldlist");
+                            refresh(container, data);
+                        });
                         //根据textarea内容重新渲染
                         fieldlist.on("fa.event.refreshfieldlist", function () {
                             var container = $(this);
