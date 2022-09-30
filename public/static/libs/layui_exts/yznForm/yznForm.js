@@ -361,7 +361,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                             index = index ? parseInt(index) : 0;
                             container.data("index", index + 1);
                             row = row ? row : {};
-                            row = typeof row.key === 'undefined' || typeof row.value === 'undefined' ? {key: '', value: row} : row;
+                            row = typeof row.key === 'undefined' || typeof row.value === 'undefined' ? {key: '', value: ''} : row;
                             var options = container.data("fieldlist-options") || {};
                             var vars = {
                                 lists: [{ 'index': index, 'name': name, 'data': data,'options': options,'key': row.key,'value': row.value,'row': row.value }]
