@@ -49,6 +49,8 @@ class Attachments extends Adminbase
         if ($this->request->isAjax()) {
             return $this->index();
         }
+        $mimetype = $this->request->get('mimetype/s', '');
+        $this->assign('mimetype', $mimetype);
         return $this->fetch();
     }
 
