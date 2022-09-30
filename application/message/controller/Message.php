@@ -17,6 +17,7 @@ namespace app\message\controller;
 use app\common\controller\Adminbase;
 use app\member\model\Member as MemberModel;
 use app\message\model\Message as MessageModel;
+use app\message\model\MessageData as MessageDataModel;
 use app\message\model\MessageGroup as MessageGroupModel;
 
 class Message extends Adminbase
@@ -28,6 +29,7 @@ class Message extends Adminbase
         $this->groupCache        = cache("Member_Group"); //会员模型
         $this->modelClass        = new MessageModel;
         $this->MessageGroupModel = new MessageGroupModel;
+        $this->MessageDataModel  = new MessageDataModel;
     }
 
     /**
@@ -41,6 +43,7 @@ class Message extends Adminbase
             $_list                      = $this->MessageGroupModel->where($where)->page($page, $limit)->select();
             foreach ($_list as $k => $v) {
                 $_list[$k]['groupname'] = $this->groupCache[$v['groupid']]['name'];
+                $_list[$k]['count']     = MessageDataModel::where('group_message_id', $v['id'])->count();
             }
             $total  = $this->MessageGroupModel->where($where)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);

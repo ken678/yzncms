@@ -184,16 +184,15 @@ layui.define(['layer', 'locationX'], function (exports) {
                 var localSearch = new BMap.LocalSearch(point, {
                     pageCapacity: 10,
                     onSearchComplete: function (result){
+                        console.log(result);
                         if (localSearch.getStatus() == BMAP_STATUS_SUCCESS){
                             var htmlList = '';
-                            $.each(result.Kr,function (i,ad){
-                                //$.each(val.Kr,function (i,ad){
-                                    htmlList += '<div data-lng="' + ad.point.lng + '" data-lat="' + ad.point.lat + '" data-title="'+ ad.title +'"  data-address="'+ ad.address +'" class="ew-map-select-search-list-item">';
-                                    htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.title + '</div>';
-                                    htmlList += '     <div class="ew-map-select-search-list-item-address">' + ad.address + '</div>';
-                                    htmlList += '     <div class="ew-map-select-search-list-item-icon-ok layui-hide"><i class="layui-icon layui-icon-ok-circle"></i></div>';
-                                    htmlList += '</div>';
-                                //});
+                            $.each(result.Xr,function (i,ad){
+                                htmlList += '<div data-lng="' + ad.point.lng + '" data-lat="' + ad.point.lat + '" data-title="'+ ad.title +'"  data-address="'+ ad.address +'" class="ew-map-select-search-list-item">';
+                                htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.title + '</div>';
+                                htmlList += '     <div class="ew-map-select-search-list-item-address">' + ad.address + '</div>';
+                                htmlList += '     <div class="ew-map-select-search-list-item-icon-ok layui-hide"><i class="layui-icon layui-icon-ok-circle"></i></div>';
+                                htmlList += '</div>';
                             });
                             $('#ew-map-select-poi').html(htmlList);
                         }
@@ -253,7 +252,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                             return ;
                         }
                         var htmlList = '';
-                        $.each(result.Kr,function (i,ad){
+                        $.each(result.Xr,function (i,ad){
                             htmlList += '<div data-lng="' + ad.point.lng + '" data-lat="' + ad.point.lat + '" data-title="'+ ad.title +'"  data-address="'+ ad.address +'" class="ew-map-select-search-list-item">';
                             htmlList += '     <div class="ew-map-select-search-list-item-icon-search"><i class="layui-icon layui-icon-search"></i></div>';
                             htmlList += '     <div class="ew-map-select-search-list-item-title">' + ad.title + '</div>';
@@ -261,7 +260,7 @@ layui.define(['layer', 'locationX'], function (exports) {
                             htmlList += '</div>';
                         });
                         $selectTips.html(htmlList);
-                        if (result.Kr.length === 0) $('#ew-map-select-tips').addClass('layui-hide');
+                        if (result.Xr.length === 0) $('#ew-map-select-tips').addClass('layui-hide');
                         else $('#ew-map-select-tips').removeClass('layui-hide');
                     }
                 });

@@ -1,5 +1,8 @@
 {include file="header" /}
 <div class="fly-msg" style="margin-bottom: 20px;"> Hi，{$userinfo.username}，你已是我们的正式会员。 </div>
+{if $userinfo.vip && $userinfo.overduedate}
+<div class="fly-msg" style="margin-bottom: 20px;"> 您当前VIP过期时间为：{$userinfo.overduedate|date='Y-m-d H:i:s'} </div>
+{/if}
 <div class="layui-row layui-col-space20">
     <div class="layui-col-md12">
         <div class="fly-home fly-panel">
@@ -7,11 +10,11 @@
             {if $userinfo.vip}
             <i class="iconfont icon-vip1" title="VIP会员"></i>
             {/if}
-            <h1> {$userinfo.username}({$userinfo.email})</h1>
+            <h1>{$userinfo.username}<font>({$userinfo.email})</font></h1>
+            <p class="fly-home-sign">（这个人懒得留下签名）</p>
             <p class="fly-home-info">
                 <i class="iconfont icon-time"></i><span>{$userinfo.reg_time} 加入</span>
             </p>
-            <p class="fly-home-sign">（这个人懒得留下签名）</p>
         </div>
     </div>
     <div class="layui-row layui-col-space20 layui-card-box">

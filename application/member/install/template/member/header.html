@@ -24,16 +24,15 @@
     };
     </script>
 </head>
-
-<body class="body">
-    <div class="fly-header layui-bg-black">
+<body class="body light-theme">
+    <div class="fly-header">
         <div class="layui-container">
             <a class="fly-logo" href="{:url('index')}">
               <img src="__STATIC__/modules/member/img/logo.png" alt="layui">
             </a>
             <ul class="layui-nav fly-nav layui-hide-xs">
                 <li class="layui-nav-item layui-this">
-                    <a href="{:url('/')}"><i class="iconfont icon-homepage"></i>首页</a>
+                    <a href="{:url('/')}">首页</a>
                 </li>
             </ul>
             <ul class="layui-nav fly-nav-user">
@@ -58,7 +57,7 @@
         </div>
     </div>
     <div class="layui-container fly-marginTop fly-user-main">
-        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user" lay-shrink="all">
             <li class="layui-nav-item {if $Request.action=='index' && $Request.controller=='Index' }layui-this{/if}">
                 <a href="{:url('member/index/index')}"><i class="iconfont icon-user-line"></i>&nbsp;用户中心</a>
             </li>

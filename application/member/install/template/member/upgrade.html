@@ -10,17 +10,16 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">会员资费</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="upgrade_type" value="0" title="{$memberGroup[$groupid]['price_y']}年" checked>
-                        <input type="radio" name="upgrade_type" value="1" title="{$memberGroup[$groupid]['price_m']}月">
-                        <input type="radio" name="upgrade_type" value="2" title="{$memberGroup[$groupid]['price_d']}日">
+                        <input type="radio" name="upgrade_type" value="0" title="{$memberGroup[$groupid]['price_y']}元/年" checked>
+                        <input type="radio" name="upgrade_type" value="1" title="{$memberGroup[$groupid]['price_m']}元/月">
+                        <input type="radio" name="upgrade_type" value="2" title="{$memberGroup[$groupid]['price_d']}元/日">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">购买时限</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="upgrade_date" required lay-verify="required" placeholder="请输入时限" autocomplete="off" class="layui-input">
+                        <input type="number" name="upgrade_date" required lay-verify="required" placeholder="请输入时限" autocomplete="off" class="layui-input" value="1">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">年</div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-inline">

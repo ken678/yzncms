@@ -16,15 +16,24 @@ namespace app\common\controller;
 
 use app\common\controller\Base;
 use think\facade\Config;
+use think\facade\Hook;
 
 class Homebase extends Base
 {
+    protected $modulename     = null;
+    protected $controllername = null;
+    protected $actionname     = null;
+
     //初始化
     protected function initialize()
     {
         //移除HTML标签
         $this->request->filter('trim,strip_tags,htmlspecialchars');
         parent::initialize();
+        $this->modulename     = $this->request->module();
+        $this->controllername = parse_name($this->request->controller());
+        $this->actionname     = strtolower($this->request->action());
+
         $config = \think\facade\config::get('app.');
         $site   = [
             'upload_thumb_water'     => $config['upload_thumb_water'],
@@ -35,7 +44,12 @@ class Homebase extends Base
             'upload_file_ext'        => $config['upload_file_ext'],
             'chunking'               => $config['chunking'],
             'chunksize'              => $config['chunksize'],
+            'modulename'             => $this->modulename,
+            'controllername'         => $this->controllername,
+            'actionname'             => $this->actionname,
         ];
+        //监听插件传入的变量
+        $site = array_merge($site, Hook::listen("config_init")[0] ?? []);
         $this->assign('site', $site);
     }
 

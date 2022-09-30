@@ -72,8 +72,12 @@ class Adminbase extends Base
     protected function initialize()
     {
         parent::initialize();
-        $this->auth = User::instance();
-        $path       = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+        $this->auth     = User::instance();
+        $modulename     = $this->request->module();
+        $controllername = parse_name($this->request->controller());
+        $actionname     = strtolower($this->request->action());
+
+        $path = $modulename . '/' . $controllername . '/' . $actionname;
         // 定义是否Dialog请求
         !defined('IS_DIALOG') && define('IS_DIALOG', $this->request->param("dialog") ? true : false);
         // 检测是否需要验证登录
@@ -126,7 +130,12 @@ class Adminbase extends Base
             'upload_file_ext'        => $config['upload_file_ext'],
             'chunking'               => $config['chunking'],
             'chunksize'              => $config['chunksize'],
+            'modulename'             => $modulename,
+            'controllername'         => $controllername,
+            'actionname'             => $actionname,
         ];
+        //监听插件传入的变量
+        $site = array_merge($site, Hook::listen("config_init")[0] ?? []);
         $this->assign('site', $site);
         $this->assign('auth', $this->auth);
         $this->assign('userInfo', Session::get('admin'));

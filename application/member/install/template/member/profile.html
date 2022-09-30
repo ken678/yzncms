@@ -41,7 +41,7 @@
         <div class="layui-form layui-form-pane layui-tab-item">
             <div class="layui-form-item">
                 <div class="avatar-add">
-                    <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p> <button type="button" class="layui-btn upload-img"> <i class="layui-icon"></i>上传头像 </button><input class="layui-upload-file" type="file" accept="undefined" name="file">
+                    <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过500KB</p> <button type="button" class="layui-btn upload-img"> <i class="layui-icon"></i>上传头像 </button><input class="layui-upload-file" type="file" accept="undefined" name="file">
                     <img src="{$userinfo.avatar}" class="avatar-img"> <span class="loading"></span>
                 </div>
             </div>
@@ -75,7 +75,7 @@ layui.use(['yznForm','upload'], function(upload) {
     upload.render({
         elem: '.upload-img',
         url: GV.image_upload_url,
-        size: 50,
+        size: 500,
         before: function() {
             avatarAdd.find('.loading').show();
         },
@@ -86,7 +86,7 @@ layui.use(['yznForm','upload'], function(upload) {
                 }, function(data) {
                     layer.msg('上传成功！', { icon: 1});
                     $('.avatar-img').attr('src', res.path);
-                    //location.reload();
+                    location.reload();
                 });
             } else {
                 layer.msg(res.info, { icon: 5 });

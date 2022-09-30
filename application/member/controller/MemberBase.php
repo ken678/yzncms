@@ -43,21 +43,25 @@ class MemberBase extends HomeBase
     protected function initialize()
     {
         parent::initialize();
-        $modulename         = $this->request->module();
-        $controllername     = parse_name($this->request->controller());
-        $actionname         = strtolower($this->request->action());
         $this->memberConfig = cache("Member_Config");
         $this->memberGroup  = cache("Member_Group");
 
         $this->auth = User::instance();
         $token      = $this->request->server('HTTP_TOKEN', $this->request->request('token', \think\facade\Cookie::get('token')));
-        $path       = str_replace('.', '/', $controllername) . '/' . $actionname;
+        $path       = str_replace('.', '/', $this->controllername) . '/' . $this->actionname;
         if (substr($this->request->module(), 0, 7) == 'public_' || !$this->auth->match($this->noNeedLogin)) {
             //初始化
             $this->auth->init($token);
             //检测是否登录
             if (!$this->auth->isLogin()) {
                 $this->error('请登录后再操作', 'member/index/login');
+            }
+            //判断一下vip是否过期
+            if ($this->auth->vip) {
+                if ($this->auth->overduedate < time()) {
+                    $this->auth->logout();
+                    $this->error('VIP已过期，请重新登录', 'member/index/login');
+                }
             }
             // 判断是否需要验证权限
             /*if (!$this->auth->match($this->noNeedRight)) {

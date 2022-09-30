@@ -63,9 +63,9 @@ class AddonService
                 $addon->install();
             }
             if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : '';
+                $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : [];
                 //添加菜单
-                MenuLib::addAddonMenu($info, $admin_list);
+                MenuLib::addAddonMenu($admin_list, $info);
             }
             self::runSQL($name);
         } catch (Exception $e) {
@@ -254,7 +254,29 @@ class AddonService
      */
     public static function refresh()
     {
-        $file = ROOT_PATH . 'config' . DS . 'addons.php';
+        //刷新addons.js
+        $addons       = get_addon_list();
+        $bootstrapArr = [];
+        foreach ($addons as $name => $addon) {
+            $bootstrapFile = self::getBootstrapFile($name);
+            if ($addon['status'] > 0 && is_file($bootstrapFile)) {
+                $bootstrapArr[] = file_get_contents($bootstrapFile);
+            }
+        }
+        $addonsFile = ROOT_PATH . str_replace("/", DS, "public/static/libs/layui_exts/addons.js");
+        if ($handle = fopen($addonsFile, 'w')) {
+            $tpl = <<<EOD
+layui.define([], function(exports) {
+    {__JS__}
+    exports('addons', '');
+});
+EOD;
+            fwrite($handle, str_replace("{__JS__}", implode("\n", $bootstrapArr), $tpl));
+            fclose($handle);
+        } else {
+            throw new Exception("文件addons.js没有写入权限");
+        }
+        $file = self::getExtraAddonsFile();
 
         $config = get_addon_autoload_config(true);
         if ($config['autoload']) {
@@ -329,6 +351,24 @@ class AddonService
             @mkdir($dir, 0755, true);
         }
         return $dir;
+    }
+
+    /**
+     * 获取插件行为、路由配置文件
+     * @return string
+     */
+    public static function getExtraAddonsFile()
+    {
+        return ROOT_PATH . 'config' . DS . 'addons.php';
+    }
+
+    /**
+     * 获取bootstrap.js路径
+     * @return string
+     */
+    public static function getBootstrapFile($name)
+    {
+        return ADDON_PATH . $name . DS . 'bootstrap.js';
     }
 
     /**

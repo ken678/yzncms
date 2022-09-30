@@ -30,7 +30,7 @@ layui.use(['yznTable','yzn','table','yznForm'], function() {
         id: 'dataTable',
         toolbar: ['refresh'
         , [{
-            html: '<div style="display:inline-block;margin-right:5px;" class="webUpload" id="picker_table_select_image" data-multiple="false" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传</div>'
+            html: '<div style="display:inline-block;margin-right:5px;" class="webUpload" id="picker_table_select_image" data-multiple="false" data-type="{$mimetype}"><i class="layui-icon layui-icon-upload"></i> 上传</div>'
         }]
         {if $Think.get.multiple == "true"}
         , [{
