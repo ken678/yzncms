@@ -67,7 +67,7 @@ layui.use(['form', 'yzn', 'layer'], function() {
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "{:url('addons/dedetoyzn/init', ['isadmin' => 1])}",
+            url: "{:url('admin/dedetoyzn.admin/init')}",
             data: data.field,
             success: function(res) {
                 if (res.code == 1) {
@@ -91,7 +91,7 @@ function start_change(page) {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "{:url('addons/dedetoyzn/start', ['isadmin' => 1])}?page=" + page,
+        url: "{:url('admin/dedetoyzn.admin/start')}?page=" + page,
         success: function(res) {
             if (res.code == 1) {
                 if (res.data.code == 1) {

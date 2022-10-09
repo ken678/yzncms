@@ -12,14 +12,14 @@
 // +----------------------------------------------------------------------
 // | dede数据转换管理
 // +----------------------------------------------------------------------
-namespace addons\dedetoyzn\Controller;
+namespace app\admin\controller\dedetoyzn;
 
-use app\addons\util\Adminaddon;
+use app\common\controller\Adminbase;
 use think\Db;
 use think\facade\Cache;
 use think\facade\Log;
 
-class Admin extends Adminaddon
+class Admin extends Adminbase
 {
     //dedecms固定相关表
     private $dedeModelTabList = array(
@@ -64,6 +64,11 @@ class Admin extends Adminaddon
 
     private $ext_table = '_data';
 
+    public function index()
+    {
+        return $this->fetch();
+    }
+
     //初始化
     public function init()
     {
@@ -92,9 +97,6 @@ class Admin extends Adminaddon
             ['fun' => 'step7', 'msg' => '内容页[独立表]转换完毕!'],
             ['fun' => 'step8', 'msg' => '单页转换完毕!'],
         ];
-        if (!function_exists("finfo_open")) {
-            $this->error('检测到环境未开启php_fileinfo拓展');
-        }
         //检查dedecms表是否正常
         try {
             $db2 = Db::connect($db_config);
