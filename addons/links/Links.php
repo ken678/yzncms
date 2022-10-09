@@ -23,7 +23,7 @@ class Links extends Addons
     public $admin_list = array(
         array(
             //方法名称
-            "action"    => "index",
+            "name"      => "admin/links.admin/index",
             //附加参数 例如：a=12&id=777
             "data"      => "",
             //状态，1是显示，0是不显示
@@ -36,7 +36,7 @@ class Links extends Addons
             "listorder" => 0,
             "child"     => [
                 [
-                    "action"    => "add",
+                    "name"      => "admin/links.admin/add",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "添加友情链接",
@@ -44,7 +44,7 @@ class Links extends Addons
                     "listorder" => 0,
                 ],
                 [
-                    "action"    => "edit",
+                    "name"      => "admin/links.admin/edit",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "链接编辑",
@@ -52,7 +52,7 @@ class Links extends Addons
                     "listorder" => 0,
                 ],
                 [
-                    "action"    => "del",
+                    "name"      => "admin/links.admin/del",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "链接删除",
@@ -60,7 +60,7 @@ class Links extends Addons
                     "listorder" => 0,
                 ],
                 [
-                    "action"    => "multi",
+                    "name"      => "admin/links.admin/multi",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "批量操作",
@@ -68,7 +68,7 @@ class Links extends Addons
                     "listorder" => 0,
                 ],
                 [
-                    "action"    => "terms",
+                    "name"      => "admin/links.admin/terms",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "分类管理",
@@ -76,7 +76,7 @@ class Links extends Addons
                     "listorder" => 0,
                 ],
                 [
-                    "action"    => "addTerms",
+                    "name"      => "admin/links.admin/addTerms",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "分类新增",
@@ -84,7 +84,7 @@ class Links extends Addons
                     "listorder" => 0,
                 ],
                 [
-                    "action"    => "termsedit",
+                    "name"      => "admin/links.admin/termsedit",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "分类修改",
@@ -92,7 +92,7 @@ class Links extends Addons
                     "listorder" => 0,
                 ],
                 [
-                    "action"    => "termsdelete",
+                    "name"      => "admin/links.admin/termsdelete",
                     "data"      => "",
                     "status"    => 0,
                     "title"     => "分类删除",

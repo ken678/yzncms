@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace addons\links\model;
 
-use think\Db;
 use think\Model;
 
 /**
@@ -22,30 +21,6 @@ use think\Model;
  */
 class Links extends Model
 {
-    protected $autoWriteTimestamp = true;
-    protected $createTime         = 'inputtime';
-
-    protected static function init()
-    {
-        self::beforeWrite(function ($row) {
-            if (isset($row['termsname']) && $row['termsname']) {
-                $row['termsid'] = self::addTerms(trim($row['termsname']));
-            }
-        });
-    }
-
-    /**
-     * 添加分类
-     * @param type $name
-     */
-    protected static function addTerms($name)
-    {
-        $count = Db::name('Terms')->where(["name" => $name, "module" => "links"])->count();
-        if ($count > 0) {
-            throw new \Exception("该分类已经存在！");
-        }
-        return Db::name('Terms')->insertGetId(["name" => $name, "module" => "links"]);
-    }
 
     /**
      * 获取友情链接

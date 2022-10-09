@@ -5,8 +5,8 @@
     <div class="layui-card-body">
         <div class="layui-tab">
             <ul class="layui-tab-title">
-                <li><a href="{:url('index',['isadmin'=>1])}">友情链接列表</a></li>
-                <li class="layui-this"><a href="{:url('terms',['isadmin'=>1])}">分类列表</a></li>
+                <li><a href="{:url('admin/links.admin/index')}">友情链接列表</a></li>
+                <li class="layui-this"><a href="{:url('admin/links.admin/terms')}">分类列表</a></li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
@@ -25,14 +25,14 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
-        edit_url: '{:url("termsedit",["isadmin"=>1])}',
-        delete_url: '{:url("termsdelete",["isadmin"=>1])}',
+        edit_url: '{:url("admin/links.admin/termsedit")}',
+        delete_url: '{:url("admin/links.admin/termsdelete")}',
     };
 
     yznTable.render({
         init: init,
         toolbar: ['refresh'],
-        url: '{:url("terms",["isadmin"=>1])}',
+        url: '{:url("admin/links.admin/terms")}',
         search:false,
         cols: [
             [

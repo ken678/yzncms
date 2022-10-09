@@ -12,16 +12,16 @@
 // +----------------------------------------------------------------------
 // | 友情链接管理
 // +----------------------------------------------------------------------
-namespace addons\links\controller;
+namespace app\admin\controller\links;
 
-use addons\links\model\Links as LinksModel;
-use app\addons\util\Adminaddon;
+use app\admin\model\links\Links as LinksModel;
+use app\common\controller\Adminbase;
 use think\Db;
 
 /**
  * 友情链接管理
  */
-class Admin extends Adminaddon
+class Admin extends Adminbase
 {
     protected $modelClass    = null;
     protected $modelValidate = true;
