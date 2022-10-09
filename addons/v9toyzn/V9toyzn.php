@@ -18,6 +18,34 @@ use sys\Addons;
 
 class V9toyzn extends Addons
 {
+    //后台菜单
+    public $admin_list = array(
+        [
+            "name"      => "admin/v9toyzn.admin/index",
+            "status"    => 1,
+            "title"     => "数据转换",
+            "tip"       => "",
+            "listorder" => 0,
+            "child"     => [
+                [
+                    "name"      => "admin/v9toyzn.admin/init",
+                    "status"    => 0,
+                    "title"     => "初始化",
+                    "tip"       => "",
+                    "listorder" => 0,
+                ],
+                [
+                    "name"      => "admin/v9toyzn.admin/start",
+                    "status"    => 0,
+                    "title"     => "任务执行",
+                    "tip"       => "",
+                    "listorder" => 0,
+                ],
+            ],
+        ],
+
+    );
+
     //安装
     public function install()
     {

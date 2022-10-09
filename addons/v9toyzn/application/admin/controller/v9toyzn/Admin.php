@@ -12,13 +12,13 @@
 // +----------------------------------------------------------------------
 // | 数据转换管理
 // +----------------------------------------------------------------------
-namespace addons\v9toyzn\Controller;
+namespace app\admin\controller\v9toyzn;
 
-use app\addons\util\Adminaddon;
+use app\common\controller\Adminbase;
 use think\Db;
 use think\facade\Cache;
 
-class Admin extends Adminaddon
+class Admin extends Adminbase
 {
     //phpcms固定相关表
     private $v9modelTabList = array(
