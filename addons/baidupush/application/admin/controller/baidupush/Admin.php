@@ -12,12 +12,12 @@
 // +----------------------------------------------------------------------
 // | 百度推送管理
 // +----------------------------------------------------------------------
-namespace addons\baidupush\Controller;
+namespace app\admin\controller\baidupush;
 
 use addons\baidupush\library\Push;
-use app\addons\util\Adminaddon;
+use app\common\controller\Adminbase;
 
-class Admin extends Adminaddon
+class Admin extends Adminbase
 {
     public function index()
     {
@@ -32,9 +32,9 @@ class Admin extends Adminaddon
     public function xiongzhang()
     {
         $action = $this->request->post("action");
-        $urls = $this->request->post("urls");
-        $urls = explode("\n", $urls);
-        $urls = array_unique(array_filter($urls));
+        $urls   = $this->request->post("urls");
+        $urls   = explode("\n", $urls);
+        $urls   = array_unique(array_filter($urls));
         if (!$urls) {
             $this->error("URL列表不能为空");
         }
@@ -64,9 +64,9 @@ class Admin extends Adminaddon
     public function zhanzhang()
     {
         $action = $this->request->post("action");
-        $urls = $this->request->post("urls");
-        $urls = explode("\n", $urls);
-        $urls = array_unique(array_filter($urls));
+        $urls   = $this->request->post("urls");
+        $urls   = explode("\n", $urls);
+        $urls   = array_unique(array_filter($urls));
         if (!$urls) {
             $this->error("URL列表不能为空");
         }
