@@ -12,13 +12,13 @@
 // +----------------------------------------------------------------------
 // | 数据库管理
 // +----------------------------------------------------------------------
-namespace addons\database\Controller;
+namespace app\admin\controller\database;
 
 use addons\database\lib\Database;
-use app\addons\util\Adminaddon;
+use app\common\controller\Adminbase;
 use think\Db;
 
-class Admin extends Adminaddon
+class Admin extends Adminbase
 {
     //配置
     protected $databaseConfig = array();

@@ -20,120 +20,64 @@ class Database extends Addons
 {
     //后台菜单
     public $admin_list = array(
-        array(
-            //方法名称
-            "action"    => "index",
-            //附加参数 例如：a=12&id=777
-            "data"      => "",
-            //状态，1是显示，0是不显示
+        [
+            "name"      => "admin/database.admin/index",
             "status"    => 1,
-            //名称
             "title"     => "数据库备份",
-            //备注
             "tip"       => "",
-            //排序
             "listorder" => 0,
             "child"     => [
                 [
-                    //方法名称
-                    "action"    => "restore",
-                    //附加参数 例如：a=12&id=777
-                    "data"      => "",
-                    //状态，1是显示，0是不显示
+                    "name"      => "admin/database.admin/restore",
                     "status"    => 0,
-                    //名称
                     "title"     => "备份还原",
-                    //备注
                     "tip"       => "",
-                    //排序
                     "listorder" => 0,
                 ],
                 [
-                    //方法名称
-                    "action"    => "del",
-                    //附加参数 例如：a=12&id=777
-                    "data"      => "",
-                    //状态，1是显示，0是不显示
+                    "name"      => "admin/database.admin/del",
                     "status"    => 0,
-                    //名称
                     "title"     => "删除备份",
-                    //备注
                     "tip"       => "",
-                    //排序
                     "listorder" => 0,
                 ],
                 [
-                    //方法名称
-                    "action"    => "repair",
-                    //附加参数 例如：a=12&id=777
-                    "data"      => "",
-                    //状态，1是显示，0是不显示
+                    "name"      => "admin/database.admin/repair",
                     "status"    => 0,
-                    //名称
                     "title"     => "修复表",
-                    //备注
                     "tip"       => "",
-                    //排序
                     "listorder" => 0,
                 ],
                 [
-                    //方法名称
-                    "action"    => "optimize",
-                    //附加参数 例如：a=12&id=777
-                    "data"      => "",
-                    //状态，1是显示，0是不显示
+                    "name"      => "admin/database.admin/optimize",
                     "status"    => 0,
-                    //名称
                     "title"     => "优化表",
-                    //备注
                     "tip"       => "",
-                    //排序
                     "listorder" => 0,
                 ],
                 [
-                    //方法名称
-                    "action"    => "import",
-                    //附加参数 例如：a=12&id=777
-                    "data"      => "",
-                    //状态，1是显示，0是不显示
+                    "name"      => "admin/database.admin/import",
                     "status"    => 0,
-                    //名称
                     "title"     => "还原表",
-                    //备注
                     "tip"       => "",
-                    //排序
                     "listorder" => 0,
                 ],
                 [
-                    //方法名称
-                    "action"    => "export",
-                    //附加参数 例如：a=12&id=777
-                    "data"      => "",
-                    //状态，1是显示，0是不显示
+                    "name"      => "admin/database.admin/export",
                     "status"    => 0,
-                    //名称
                     "title"     => "备份数据库",
-                    //备注
                     "tip"       => "",
-                    //排序
                     "listorder" => 0,
                 ],
                 [
-                    //方法名称
-                    "action"    => "download",
-                    //附加参数 例如：a=12&id=777
-                    "data"      => "",
-                    //状态，1是显示，0是不显示
+                    "name"      => "admin/database.admin/download",
                     "status"    => 0,
-                    //名称
                     "title"     => "备份数据库下载",
-                    //备注
                     "tip"       => "",
-                    //排序
                     "listorder" => 0,
                 ],
             ],
-        ),
+        ],
 
     );
 

@@ -6,7 +6,7 @@
         <table class="layui-hide" id="table" lay-filter="table"></table>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('addons/database/index',['isadmin'=>1])}">数据库备份</a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('admin/database.admin/index')}">数据库备份</a>
               </div>
         </script>
         <script type="text/html" id="barTool">
@@ -29,7 +29,7 @@ layui.use(['table', 'form'], function() {
         id: 'database',
         elem: '#table',
         toolbar: '#toolbarDemo',
-        url: '{:url("addons/database/restore",["isadmin"=>1])}',
+        url: '{:url("admin/database.admin/restore")}',
         cols: [
             [
                 { field: 'title', width: 250, title: '备份名称' },
@@ -49,7 +49,7 @@ layui.use(['table', 'form'], function() {
         if (obj.event === 'del') {
             layer.confirm('确定删除这条数据？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
-                $.post('{:url("addons/database/del",["isadmin"=>1])}', { 'time': data.time }, function(data) {
+                $.post('{:url("admin/database.admin/del")}', { 'time': data.time }, function(data) {
                     if (data.code == 1) {
                         if (data.url) {
                             layer.msg(data.msg + ' 页面即将自动跳转~');
@@ -75,10 +75,10 @@ layui.use(['table', 'form'], function() {
                 });
             })
         } else if (obj.event === 'down') {
-            window.open('{:url("addons/database/download",["isadmin"=>1])}' + "?time=" + data.time, '_self')
+            window.open('{:url("admin/database.admin/download")}' + "?time=" + data.time, '_self')
         } else if (obj.event === 'import') {
             var self = this,
-                url = '{:url("addons/database/import",["isadmin"=>1])}' + '?time=' + data.time;
+                url = '{:url("admin/database.admin/import")}' + '?time=' + data.time;
             layer.confirm('确定导入此条数据库吗？', { icon: 3, title: '提示' }, function(index) {
                 layer.close(index);
                 $.get(url, success, "json");
