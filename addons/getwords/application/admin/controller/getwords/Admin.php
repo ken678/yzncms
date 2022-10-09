@@ -12,12 +12,12 @@
 // +----------------------------------------------------------------------
 // | 中文分词管理
 // +----------------------------------------------------------------------
-namespace addons\getwords\Controller;
+namespace app\admin\controller\getwords;
 
 use addons\getwords\library\AipNlp;
-use app\addons\util\Adminaddon;
+use app\common\controller\Adminbase;
 
-class Admin extends Adminaddon
+class Admin extends Adminbase
 {
     //获取内容关键字
     public function getkeywords()
