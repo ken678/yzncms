@@ -116,17 +116,42 @@ class Menu
 
     /**
      * 删除对应插件菜单和权限
-     * @param type $info 插件信息
      * @return boolean
      */
-    public static function delAddonMenu($info)
+    public static function delAddonMenu($name)
     {
-        if (empty($info)) {
-            throw new Exception('没有数据！');
-        }
         //删除对应菜单
-        MenuModel::where('addon', $info['name'])->delete();
+        MenuModel::where('addon', $name)->delete();
+        self::AddonMenuStatus();
+        return true;
+    }
 
+    /**
+     * 启用对应插件菜单和权限
+     * @return boolean
+     */
+    public static function enableAddonMenu($name)
+    {
+        //删除对应菜单
+        MenuModel::where('addon', $name)->update(['status' => 1]);
+        self::AddonMenuStatus();
+        return true;
+    }
+
+    /**
+     * 禁用对应插件菜单和权限
+     * @return boolean
+     */
+    public static function disableAddonMenu($name)
+    {
+        //删除对应菜单
+        MenuModel::where('addon', $name)->update(['status' => 0]);
+        self::AddonMenuStatus();
+        return true;
+    }
+
+    private static function AddonMenuStatus()
+    {
         //查询出“插件后台列表”菜单ID
         $menuId = MenuModel::where(array("app" => "Addons", "controller" => "Addons", "action" => "addonadmin"))->value('id') ?: 41;
         //检查“插件后台列表”菜单下还有没有菜单，没有就隐藏
