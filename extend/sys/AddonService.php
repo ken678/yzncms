@@ -103,7 +103,7 @@ class AddonService
             }
             //删除插件后台菜单
             if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                MenuLib::delAddonMenu($info);
+                MenuLib::delAddonMenu($name);
             }
             $class = get_addon_class($name);
             if (class_exists($class)) {
@@ -160,6 +160,10 @@ class AddonService
         $info           = get_addon_info($name);
         $info['status'] = 1;
         set_addon_info($name, $info);
+
+        if (isset($info['has_adminlist']) && $info['has_adminlist']) {
+            MenuLib::enableAddonMenu($name);
+        }
         // 刷新
         self::refresh();
         return true;
@@ -207,6 +211,9 @@ class AddonService
         $info           = get_addon_info($name);
         $info['status'] = 0;
         set_addon_info($name, $info);
+        if (isset($info['has_adminlist']) && $info['has_adminlist']) {
+            MenuLib::disableAddonMenu($name);
+        }
         // 刷新
         self::refresh();
         return true;
