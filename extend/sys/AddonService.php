@@ -19,8 +19,11 @@ namespace sys;
 use app\common\library\Menu as MenuLib;
 use PhpZip\Exception\ZipException;
 use PhpZip\ZipFile;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use think\Db;
 use think\Exception;
+use util\File;
 use util\Sql;
 
 class AddonService
@@ -43,12 +46,6 @@ class AddonService
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-        // 复制静态资源
-        $sourceAssetsDir = self::getSourceAssetsDir($name);
-        $destAssetsDir   = self::getDestAssetsDir($name);
-        if (is_dir($sourceAssetsDir)) {
-            \util\File::copy_dir($sourceAssetsDir, $destAssetsDir);
-        }
         try {
             // 默认启用该插件
             $info = get_addon_info($name);
@@ -67,12 +64,12 @@ class AddonService
                 //添加菜单
                 MenuLib::addAddonMenu($admin_list, $info);
             }
-            self::runSQL($name);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-        // 刷新
-        self::refresh();
+        self::runSQL($name);
+        // 启用插件
+        self::enable($name, true);
         return true;
     }
 
@@ -88,15 +85,18 @@ class AddonService
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
         }
+        $info = get_addon_info($name);
+        if ($info['status'] == 1) {
+            throw new Exception('请先禁用插件再进行卸载');
+        }
         // 移除插件基础资源目录
         $destAssetsDir = self::getDestAssetsDir($name);
         if (is_dir($destAssetsDir)) {
-            \util\File::del_dir($destAssetsDir);
+            File::del_dir($destAssetsDir);
         }
         // 执行卸载脚本
         try {
             // 默认禁用该插件
-            $info = get_addon_info($name);
             if ($info['status'] != -1) {
                 $info['status'] = -1;
                 set_addon_info($name, $info);
@@ -130,6 +130,20 @@ class AddonService
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
         }
+
+        $addonDir        = self::getAddonDir($name);
+        $sourceAssetsDir = self::getSourceAssetsDir($name);
+        $destAssetsDir   = self::getDestAssetsDir($name);
+        if (is_dir($sourceAssetsDir)) {
+            File::copy_dir($sourceAssetsDir, $destAssetsDir);
+        }
+
+        // 复制application到全局
+        foreach (self::getCheckDirs() as $k => $dir) {
+            if (is_dir($addonDir . $dir)) {
+                File::copy_dir($addonDir . $dir, ROOT_PATH . $dir);
+            }
+        }
         //执行启用脚本
         try {
             $class = get_addon_class($name);
@@ -162,6 +176,20 @@ class AddonService
     {
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
+        }
+        // 移除插件全局文件
+        $list = self::getGlobalFiles($name);
+        $dirs = [];
+        foreach ($list as $k => $v) {
+            $file   = ROOT_PATH . $v;
+            $dirs[] = dirname($file);
+            @unlink($file);
+        }
+
+        // 移除插件空目录
+        $dirs = array_filter(array_unique($dirs));
+        foreach ($dirs as $k => $v) {
+            File::remove_empty_folder($v);
         }
         // 执行禁用脚本
         try {
@@ -283,7 +311,7 @@ EOD;
             return;
         }
 
-        if (!\util\File::is_really_writable($file)) {
+        if (!File::is_really_writable($file)) {
             throw new Exception('addons.php文件没有写入权限');
         }
 
@@ -342,6 +370,58 @@ EOD;
     }
 
     /**
+     * 获取插件在全局的文件
+     *
+     * @param string  $name         插件名称
+     * @param boolean $onlyconflict 是否只返回冲突文件
+     * @return  array
+     */
+    public static function getGlobalFiles($name, $onlyconflict = false)
+    {
+        $list         = [];
+        $addonDir     = self::getAddonDir($name);
+        $checkDirList = self::getCheckDirs();
+        $checkDirList = array_merge($checkDirList, ['assets']);
+
+        $assetDir = self::getDestAssetsDir($name);
+
+        // 扫描插件目录是否有覆盖的文件
+        foreach ($checkDirList as $k => $dirName) {
+            //检测目录是否存在
+            if (!is_dir($addonDir . $dirName)) {
+                continue;
+            }
+            //匹配出所有的文件
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($addonDir . $dirName, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($files as $fileinfo) {
+                if ($fileinfo->isFile()) {
+                    $filePath = $fileinfo->getPathName();
+                    //如果名称为assets需要做特殊处理
+                    if ($dirName === 'assets') {
+                        $path = str_replace(ROOT_PATH, '', $assetDir) . str_replace($addonDir . $dirName . DS, '', $filePath);
+                    } else {
+                        $path = str_replace($addonDir, '', $filePath);
+                    }
+                    if ($onlyconflict) {
+                        $destPath = ROOT_PATH . $path;
+                        if (is_file($destPath)) {
+                            if (filesize($filePath) != filesize($destPath) || md5_file($filePath) != md5_file($destPath)) {
+                                $list[] = $path;
+                            }
+                        }
+                    } else {
+                        $list[] = $path;
+                    }
+                }
+            }
+        }
+        $list = array_filter(array_unique($list));
+        return $list;
+    }
+
+    /**
      * 获取插件备份目录
      */
     public static function getAddonsBackupDir()
@@ -381,13 +461,25 @@ EOD;
     }
 
     /**
+     * 获取检测的全局文件夹目录
+     * @return  array
+     */
+    protected static function getCheckDirs()
+    {
+        return [
+            'application',
+            //'public',
+        ];
+    }
+
+    /**
      * 获取插件源资源文件夹
      * @param   string $name 插件名称
      * @return  string
      */
     protected static function getSourceAssetsDir($name)
     {
-        return ADDON_PATH . $name . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR;
+        return ADDON_PATH . $name . DS . 'assets' . DS;
     }
 
     /**
@@ -397,7 +489,7 @@ EOD;
      */
     protected static function getDestAssetsDir($name)
     {
-        $assetsDir = ROOT_PATH . str_replace("/", DIRECTORY_SEPARATOR, "public/static/addons/{$name}/");
+        $assetsDir = ROOT_PATH . str_replace("/", DS, "public/static/addons/{$name}/");
         if (!is_dir($assetsDir)) {
             mkdir($assetsDir, 0755, true);
         }
