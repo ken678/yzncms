@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\v9toyzn;
 
-use sys\Addons;
+use think\Addons;
 
 class V9toyzn extends Addons
 {

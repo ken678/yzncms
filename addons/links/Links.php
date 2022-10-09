@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\links;
 
-use sys\Addons;
+use think\Addons;
 use think\facade\Config;
 
 class Links extends Addons

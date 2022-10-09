@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\database;
 
-use sys\Addons;
+use think\Addons;
 
 class Database extends Addons
 {

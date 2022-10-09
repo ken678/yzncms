@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\sitemap;
 
-use sys\Addons;
+use think\Addons;
 
 class Sitemap extends Addons
 {

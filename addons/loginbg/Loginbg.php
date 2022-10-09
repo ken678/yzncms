@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\loginbg;
 
-use sys\Addons;
+use think\Addons;
 
 class Loginbg extends Addons
 {

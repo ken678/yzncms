@@ -17,7 +17,7 @@ namespace addons\qiniu;
 use app\attachment\model\Attachment as Attachment_Model;
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
-use sys\Addons;
+use think\Addons;
 use think\Db;
 
 require ADDON_PATH . 'qiniu/SDK/autoload.php';

@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\signin;
 
-use sys\Addons;
+use think\Addons;
 use util\File;
 
 class Signin extends Addons

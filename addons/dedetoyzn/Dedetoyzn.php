@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\dedetoyzn;
 
-use sys\Addons;
+use think\Addons;
 
 class Dedetoyzn extends Addons
 {

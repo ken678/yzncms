@@ -15,7 +15,7 @@
 namespace addons\baidupush;
 
 use addons\baidupush\library\Push;
-use sys\Addons;
+use think\Addons;
 
 class Baidupush extends Addons
 {

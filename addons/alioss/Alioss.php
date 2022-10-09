@@ -17,7 +17,7 @@ namespace addons\alioss;
 use app\attachment\model\Attachment;
 use OSS\Core\OssException;
 use OSS\OssClient;
-use sys\Addons;
+use think\Addons;
 use think\Db;
 use think\Loader;
 

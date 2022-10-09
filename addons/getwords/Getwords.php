@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\getwords;
 
-use sys\Addons;
+use think\Addons;
 
 class Getwords extends Addons
 {
