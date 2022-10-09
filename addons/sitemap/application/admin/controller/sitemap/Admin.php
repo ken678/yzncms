@@ -12,13 +12,13 @@
 // +----------------------------------------------------------------------
 // | sitemap管理
 // +----------------------------------------------------------------------
-namespace addons\sitemap\Controller;
+namespace app\admin\controller\sitemap;
 
 use addons\sitemap\library\Sitemap as Sitemap_Class;
-use app\addons\util\Adminaddon;
+use app\common\controller\Adminbase;
 use think\Db;
 
-class Admin extends Adminaddon
+class Admin extends Adminbase
 {
     protected $filename = 'sitemap.xml';
     protected $data     = [];
