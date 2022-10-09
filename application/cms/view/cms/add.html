@@ -29,7 +29,7 @@ layui.use(['form','layer','yznForm'], function() {
     yznForm = layui.yznForm;
 
     {notempty name='cmsConfig.web_site_getwords'}
-    GV.ueditor_getwords_url="{:url('addons/getwords/getkeywords',['isadmin'=>1])}";
+    GV.ueditor_getwords_url="{:url('admin/getwords.admin/getkeywords')}";
     $(".content_attr").append('<a class="layui-btn layui-btn-sm" id="getwords" style="margin-top: 4px;">提取关键词</a> ');
     {/notempty}
     $(".content_attr").append("<input type='checkbox' name='modelField[get_introduce]' title='是否截取到内容摘要' checked> <input type='checkbox' name='modelField[auto_thumb]' title='是否提取到缩略图' checked>");

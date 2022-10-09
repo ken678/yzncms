@@ -33,68 +33,36 @@ class Menu
         }
         //查询出“插件后台列表”菜单ID
         $defaultMenuParentid = MenuModel::where(["app" => "addons", "controller" => "addons", "action" => "addonadmin"])->value('id') ?: 41;
-        if (empty($admin_list) && $parentid == 0) {
-            //如果没有数据则安装默认
-            $data = array(
-                //父ID
-                "parentid"   => $defaultMenuParentid,
-                'icon'       => $config['icon'] ?? 'icon-circle-line',
-                //模块目录名称，也是项目名称
-                "app"        => "addons",
-                //插件名称
-                "controller" => $config['name'],
-                //方法名称
-                "action"     => "index",
-                //附加参数 例如：a=12&id=777
-                "parameter"  => "isadmin=1",
-                //状态，1是显示，0是不显示
-                "status"     => 1,
-                //名称
-                "title"      => $config['title'],
-                //备注
-                "tip"        => $config['title'] . "插件管理后台！",
-                //排序
-                "listorder"  => 0,
-            );
-            //添加插件后台
-            MenuModel::create($data);
-        }
-        //显示“插件后台列表”菜单
-        MenuModel::where('id', $defaultMenuParentid)->update(['status' => 1]);
         //插件具体菜单
         if (!empty($admin_list)) {
             foreach ($admin_list as $key => $menu) {
                 //检查参数是否存在
-                if (empty($menu['title']) || empty($menu['action'])) {
+                if (empty($menu['title']) || empty($menu['name'])) {
                     continue;
                 }
-                $data = array(
+                $route = self::menuRoute($menu['name'], 'admin');
+                $data  = array_merge(array(
                     //父ID
-                    "parentid"   => $parentid ?: (isset($menu['parentid']) ?: (int) $defaultMenuParentid),
-                    'icon'       => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
-                    //模块目录名称，也是项目名称
-                    "app"        => "addons",
-                    //控制器名称
-                    "controller" => $config['name'],
-                    //方法名称
-                    "action"     => $menu['action'],
-                    //附加参数 例如：a=12&id=777
-                    "parameter"  => 'isadmin=1',
+                    "parentid"  => $parentid ?: (isset($menu['parentid']) ?: (int) $defaultMenuParentid),
+                    'icon'      => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
                     //状态，1是显示，0是不显示
-                    "status"     => (int) $menu['status'],
+                    "status"    => (int) $menu['status'],
                     //名称
-                    "title"      => $menu['title'],
+                    "title"     => $menu['title'],
                     //备注
-                    "tip"        => $menu['tip'] ?: '',
+                    "tip"       => $menu['tip'] ?: '',
+                    'addon'     => $config['name'],
                     //排序
-                    "listorder"  => (int) $menu['listorder'],
-                );
+                    "listorder" => (int) $menu['listorder'],
+                ), $route);
                 $result = MenuModel::create($data);
                 //是否有子菜单
                 if (!empty($menu['child'])) {
                     self::addAddonMenu($menu['child'], $config, $result['id']);
                 }
             }
+            //显示“插件后台列表”菜单
+            MenuModel::where('id', $defaultMenuParentid)->update(['status' => 1]);
         }
         //清除缓存
         cache('Menu', null);
@@ -156,12 +124,11 @@ class Menu
         if (empty($info)) {
             throw new Exception('没有数据！');
         }
+        //删除对应菜单
+        MenuModel::where('addon', $info['name'])->delete();
+
         //查询出“插件后台列表”菜单ID
         $menuId = MenuModel::where(array("app" => "Addons", "controller" => "Addons", "action" => "addonadmin"))->value('id') ?: 41;
-        //删除对应菜单
-        MenuModel::where(array('app' => 'Addons', 'controller' => $info['name']))->delete();
-        //删除权限
-        //M("Access")->where(array("app" => "Addons", 'controller' => $info['name']))->delete();
         //检查“插件后台列表”菜单下还有没有菜单，没有就隐藏
         $count = MenuModel::where('parentid', $menuId)->count();
         if (!$count) {
