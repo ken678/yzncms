@@ -12,11 +12,11 @@
                 <div class="layui-tab-item layui-show">
                     <div class="widget-body no-padding">
                         {if !isset($Config['status'][0])  || !$Config['appid'] || !$Config['token']}
-                        <blockquote class="layui-elem-quote">
+                        <div class="alert alert-success-light">
                             <b>温馨提示</b><br>
                             必须在插件配置中开启熊掌号推送<br>
                             必须在插件配置中配置熊掌号 <code>appid</code> 和 <code>token</code> 才能进行推送
-                        </blockquote>
+                        </div>
                         {/if}
                         <form id="form-xiongzhang" class="layui-form" action="{:url('admin/baidupush.admin/xiongzhang')}" method="post">
                             <div class="layui-form-item">
@@ -53,11 +53,11 @@
                 <div class="layui-tab-item">
                     <div class="widget-body no-padding">
                         {if !isset($Config['status'][1])  || !$Config['site'] || !$Config['sitetoken']}
-                        <blockquote class="layui-elem-quote">
+                        <div class="alert alert-success-light">
                             <b>温馨提示</b><br>
                             必须在插件配置中开启百度站长推送<br>
                             必须在插件配置中配置百度站长 <code>site</code> 和 <code>token</code> 才能进行推送
-                        </blockquote>
+                        </div>
                         {/if}
                         <form id="form-zhanzhang" class="layui-form" action="{:url('admin/baidupush.admin/zhanzhang')}" method="post">
                             <div class="layui-form-item">
