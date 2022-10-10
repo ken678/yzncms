@@ -46,14 +46,14 @@ class Menu
                     "parentid"  => $parentid ?: (isset($menu['parentid']) ?: (int) $defaultMenuParentid),
                     'icon'      => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
                     //状态，1是显示，0是不显示
-                    "status"    => (int) $menu['status'],
+                    "status"    => $menu['status'] ?? 1,
                     //名称
                     "title"     => $menu['title'],
                     //备注
-                    "tip"       => $menu['tip'] ?: '',
+                    "tip"       => $menu['tip'] ?? '',
                     'addon'     => $config['name'],
                     //排序
-                    "listorder" => (int) $menu['listorder'],
+                    "listorder" => $menu['listorder'] ?? 0,
                 ), $route);
                 $result = MenuModel::create($data);
                 //是否有子菜单
