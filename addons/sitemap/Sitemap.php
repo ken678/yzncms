@@ -14,10 +14,28 @@
 // +----------------------------------------------------------------------
 namespace addons\sitemap;
 
-use sys\Addons;
+use think\Addons;
 
 class Sitemap extends Addons
 {
+    //后台菜单
+    public $admin_list = array(
+        array(
+            //方法名称
+            "name"      => "admin/sitemap.admin/index",
+            //状态，1是显示，0是不显示
+            "status"    => 1,
+            //名称
+            "title"     => "网站地图",
+            //备注
+            "tip"       => "",
+            //排序
+            "listorder" => 0,
+            "child"     => [],
+        ),
+
+    );
+
     //安装
     public function install()
     {

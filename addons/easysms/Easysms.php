@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\easysms;
 
-use sys\Addons;
+use think\Addons;
 
 class Easysms extends Addons
 {

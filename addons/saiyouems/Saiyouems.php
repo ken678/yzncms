@@ -15,7 +15,7 @@
 namespace addons\saiyouems;
 
 use addons\saiyouems\lib\Ems;
-use sys\Addons;
+use think\Addons;
 
 class Saiyouems extends Addons
 {

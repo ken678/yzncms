@@ -9,7 +9,7 @@
 <script type="text/html" id="titleTpl">
 {{#  if(d.status >= 0){ }}
     {{#  if(d.config == 1 ){ }}
-    <a class="layui-btn layui-btn-xs" href='{:url("config")}?name={{d.name}}'>设置</a>
+    <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置">设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
     <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("state",["action"=>"enable"])}?name={{d.name}}' data-table="currentTable" confirm>启用</a>

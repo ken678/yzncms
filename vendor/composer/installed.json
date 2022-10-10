@@ -2080,24 +2080,24 @@
         },
         {
             "name": "yzncms/think-addons",
-            "version": "v1.0.0",
-            "version_normalized": "1.0.0.0",
+            "version": "v1.0.1",
+            "version_normalized": "1.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/think-addons.git",
-                "reference": "cfd1e375982061464485a28786b3af67da09e7d8"
+                "reference": "195a3c2ab8f4d3cc4d258f391c5a4502f26c722b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/think-addons/zipball/cfd1e375982061464485a28786b3af67da09e7d8",
-                "reference": "cfd1e375982061464485a28786b3af67da09e7d8",
+                "url": "https://api.github.com/repos/ken678/think-addons/zipball/195a3c2ab8f4d3cc4d258f391c5a4502f26c722b",
+                "reference": "195a3c2ab8f4d3cc4d258f391c5a4502f26c722b",
                 "shasum": ""
             },
             "require": {
                 "nelexa/zip": "^3.3",
                 "php": ">=7.0.0"
             },
-            "time": "2022-04-25T05:58:46+00:00",
+            "time": "2022-10-09T12:25:41+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2122,7 +2122,7 @@
             "homepage": "https://github.com/ken678/think-addons",
             "support": {
                 "issues": "https://gitee.com/ken678/YZNCMS/issues",
-                "source": "https://github.com/ken678/think-addons/tree/v1.0.0"
+                "source": "https://github.com/ken678/think-addons/tree/v1.0.1"
             },
             "install-path": "../yzncms/think-addons"
         },

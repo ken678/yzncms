@@ -253,6 +253,25 @@ class File
     }
 
     /**
+     * 移除空目录
+     * @param string $dir 目录
+     */
+    public static function remove_empty_folder($dir)
+    {
+        try {
+            $isDirEmpty = !(new \FilesystemIterator($dir))->valid();
+            if ($isDirEmpty) {
+                @rmdir($dir);
+                self::remove_empty_folder(dirname($dir));
+            }
+        } catch (\UnexpectedValueException $e) {
+
+        } catch (\Exception $e) {
+
+        }
+    }
+
+    /**
      * 文件缓存与文件读取
      * @param $name  文件名
      * @param $value  文件内容,为空则获取缓存

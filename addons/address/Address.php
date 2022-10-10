@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\address;
 
-use sys\Addons;
+use think\Addons;
 
 class Address extends Addons
 {

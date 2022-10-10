@@ -15,7 +15,7 @@
 namespace addons\vaptcha;
 
 use addons\vaptcha\library\Vaptcha as VaptchaLib;
-use sys\Addons;
+use think\Addons;
 use think\Validate;
 
 class Vaptcha extends Addons

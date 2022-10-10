@@ -73,7 +73,7 @@ function get_addon_autoload_config($truncate = false)
         $config['hooks'] = [];
     }
     // 读取插件目录及钩子列表
-    $base   = get_class_methods('\\sys\\Addons');
+    $base   = get_class_methods('\\think\\Addons');
     $base   = array_merge($base, ['install', 'uninstall', 'enable', 'disable']);
     $addons = get_addon_list();
     foreach ($addons as $name => $addon) {

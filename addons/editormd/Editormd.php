@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\editormd;
 
-use sys\Addons;
+use think\Addons;
 
 class Editormd extends Addons
 {

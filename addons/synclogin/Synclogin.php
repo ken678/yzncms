@@ -15,7 +15,7 @@
 namespace addons\synclogin;
 
 use app\member\service\User;
-use sys\Addons;
+use think\Addons;
 use think\Db;
 use util\File;
 

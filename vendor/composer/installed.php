@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '9bf693da4404cd14f840df68aa533a2b4cf87e20',
+        'reference' => '738b37c2b03d41ae100f16b1213c4440830ac162',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -262,7 +262,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '9bf693da4404cd14f840df68aa533a2b4cf87e20',
+            'reference' => '738b37c2b03d41ae100f16b1213c4440830ac162',
             'dev_requirement' => false,
         ),
         'topthink/think-image' => array(
@@ -302,12 +302,12 @@
             'dev_requirement' => false,
         ),
         'yzncms/think-addons' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../yzncms/think-addons',
             'aliases' => array(),
-            'reference' => 'cfd1e375982061464485a28786b3af67da09e7d8',
+            'reference' => '195a3c2ab8f4d3cc4d258f391c5a4502f26c722b',
             'dev_requirement' => false,
         ),
         'yzncms/think-captcha' => array(

@@ -518,10 +518,10 @@ class Cms extends Modelbase
                 }
             }
             foreach ($kwarray as $i => $row) {
-                $txt = trim($row['0']);
-                if ($txt) {
-                    $link = trim($row['1']);
-                    $set  = isset($row['2']) ? trim($row['2']) : '';
+                $txt  = isset($row[0]) ? trim($row[0]) : '';
+                $link = isset($row[1]) ? trim($row[1]) : '';
+                $set  = isset($row[2]) ? trim($row[2]) : '';
+                if ($txt && $link) {
                     $rel  = '';
                     $open = '_blank';
 

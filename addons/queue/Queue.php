@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\queue;
 
-use sys\Addons;
+use think\Addons;
 use think\Loader;
 
 class Queue extends Addons
