@@ -82,9 +82,15 @@ class Addons extends Adminbase
                     }
                 }
                 try {
-                    //更新配置文件
-                    set_addon_fullconfig($name, $config);
-                    //AddonService::refresh();
+                    $addon = get_addon_instance($name);
+                    //插件自定义配置实现逻辑
+                    if (method_exists($addon, 'config')) {
+                        $addon->config($name, $config);
+                    } else {
+                        //更新配置文件
+                        set_addon_fullconfig($name, $config);
+                        AddonService::refresh();
+                    }
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
