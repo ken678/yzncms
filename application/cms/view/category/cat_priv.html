@@ -3,7 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-body">
         {eq name="cmsConfig.site_category_auth" value="0"}
-        <blockquote class="layui-elem-quote">当前未开启栏目授权功能，以下的设置不会生效，请在CMS配置中开启栏目授权功能。</blockquote>
+        <div class="alert alert-warning-light">当前未开启栏目授权功能，以下的设置不会生效，请在CMS配置中开启栏目授权功能。</div>
         {/eq}
         <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
     </div>
