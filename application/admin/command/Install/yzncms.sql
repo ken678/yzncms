@@ -284,9 +284,9 @@ INSERT INTO `yzn_menu` VALUES (34, '编辑器附件', '', 23, 'attachment', 'ued
 INSERT INTO `yzn_menu` VALUES (35, '图片列表', '', 23, 'attachment', 'attachments', 'showFileLis','', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (36, '图片本地化', '', 23, 'attachment', 'attachments', 'getUrlFile','', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (37, '图片选择', '', 23, 'attachment', 'attachments', 'select','', '', 0, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-equalizer-line', 5, 'addons', 'addons', 'index2','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-apartment', 38, 'addons', 'addons', 'index','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'addons', 'addons', 'addonadmin','', '', 0, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-equalizer-line', 5, 'admin', 'addons', 'index2','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-apartment', 38, 'admin', 'addons', 'index','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'admin', 'addons', 'addonadmin','', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (43, '本地模块', 'icon-apps-line', 4, 'admin', 'module', 'index2','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (44, '模块管理', 'icon-apartment', 43, 'admin', 'module', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (45, '模块后台列表', 'icon-liebiaosousuo', 4, 'admin', 'module', 'index','', '', 1, '', 0, 0);
@@ -297,11 +297,11 @@ INSERT INTO `yzn_menu` VALUES (51, '角色授权', '', 17, 'admin', 'authManager
 INSERT INTO `yzn_menu` VALUES (52, '模块安装', '', 44, 'admin', 'module', 'install','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (53, '模块卸载', '', 44, 'admin', 'module', 'uninstall','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (54, '本地安装', '', 44, 'admin', 'module', 'local','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (55, '插件设置', '', 39, 'addons', 'addons', 'config','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (56, '插件安装', '', 39, 'addons', 'addons', 'install','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (57, '插件卸载', '', 39, 'addons', 'addons', 'uninstall','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (58, '插件状态', '', 39, 'addons', 'addons', 'state','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (59, '本地安装', '', 39, 'addons', 'addons', 'local','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (55, '插件设置', '', 39, 'admin', 'addons', 'config','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (56, '插件安装', '', 39, 'admin', 'addons', 'install','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (57, '插件卸载', '', 39, 'admin', 'addons', 'uninstall','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (58, '插件状态', '', 39, 'admin', 'addons', 'state','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (59, '本地安装', '', 39, 'admin', 'addons', 'local','', '', 1, '', 0, 0);
 
 
 -- ----------------------------
