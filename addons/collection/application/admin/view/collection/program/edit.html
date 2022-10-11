@@ -1,0 +1,111 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">方案管理</div>
+    <div class="layui-card-body">
+        <form class="layui-form" method="post">
+            <fieldset class="layui-elem-field">
+                <legend>编辑发布方案</legend>
+                <div class="layui-field-box">
+                    <div class="layui-form-item">
+                        <label>栏目列表</label>
+                        <div class="w300">
+                            <select lay-filter="filter">
+                                <option>请选择</option>
+                                {$category|raw}
+                            </select>
+                        </div>
+                    </div>
+                    {if $catid}
+                    <div class="layui-form-item">
+                        <label>方案名称</label>
+                        <div class="w300">
+                            <input type="text" name="title" placeholder="请输入" autocomplete="off" class="layui-input" value="{$catname}">
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+            </fieldset>
+            {if $catid}
+            <fieldset class="layui-elem-field">
+                <legend>标签与数据库对应关系</legend>
+                <div class="layui-field-box">
+                    <table class="layui-table" lay-size="sm" style="width:800px;">
+                        <thead>
+                            <tr>
+                                <th width="100">原数据库字段</th>
+                                <th width="120">数据库字段说明</th>
+                                <th width="180">标签字段（采集填充结果）</th>
+                                <th width="450">处理函数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $data as $key=>$vo }
+                            {notin name="vo.name" value="id,catid,flag,status"}
+                            <tr>
+                                <td>{$vo.name}</td>
+                                <td>{$vo.title}</td>
+                                <td>
+                                    <input type="hidden" name="model_field[]" value="{$vo.name}">
+                                    <input type="hidden" name="model_type[]" value="{$vo.fieldArr}">
+                                    <select name="node_field[]">
+                                        <option value="">请选择</option>
+                                        {foreach $node_field as $key=>$name }
+                                        <option value="{$key}" {if $key==$vo.value}selected{/if}>{$name} </option>
+                                        {/foreach}
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="layui-input-inline" style="min-width: 180px;">
+                                        <input type="text" name="funcs[]" autocomplete="off" placeholder="多个函数使用'|'分割" class="layui-input" value="{$vo.funcs}">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select lay-filter="funcs">
+                                            <option data-fun="">快速选择</option>
+                                            <option data-fun="trim">过滤空格(trim)</option>
+                                            <option data-fun="strtotime">转时间戳(strtotime)</option>
+                                            <option data-fun="mb_substr=###,0,5">截取字符(mb_substr)</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            {/notin}
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+            <div class="layui-form-item layer-footer">
+                <div class="">
+                    <button class="layui-btn" lay-submit="">立即提交</button>
+                    <a class="layui-btn layui-btn-normal" type="button" href="{:url('index',['id'=>$id])}">返回方案</a>
+                </div>
+            </div>
+            {/if}
+        </form>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use(['form','yznForm'], function() {
+    var form = layui.form,
+    yznForm = layui.yznForm;
+
+    yznForm.listen();
+    form.on('select(filter)', function(data) {
+        location.href = data.value
+    });
+
+    form.on('select(funcs)', function(data) {
+        var dom = $(data.elem).parent().parent('td').find('.layui-input');
+        if (dom.val() == '') {
+            dom.val($(data.elem).find("option:selected").attr("data-fun"));
+        } else {
+            dom.val(dom.val() + '|' + $(data.elem).find("option:selected").attr("data-fun"));
+        }
+    });
+
+});
+</script>
+{/block}
