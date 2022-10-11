@@ -15,7 +15,7 @@
 namespace app\addons\controller;
 
 use app\common\controller\Adminbase;
-use sys\AddonService;
+use think\addons\Service;
 
 class Addons extends Adminbase
 {
@@ -89,7 +89,7 @@ class Addons extends Adminbase
                     } else {
                         //更新配置文件
                         set_addon_fullconfig($name, $config);
-                        AddonService::refresh();
+                        Service::refresh();
                     }
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
@@ -122,7 +122,7 @@ class Addons extends Adminbase
         try {
             $action = $action == 'enable' ? $action : 'disable';
             //调用启用、禁用的方法
-            AddonService::$action($name, true);
+            Service::$action($name, true);
             //Cache::delete('__menu__');
         } catch (\Exception $e) {
             $this->error($e->getMessage());
@@ -143,7 +143,7 @@ class Addons extends Adminbase
             $this->error('插件标识错误！');
         }
         try {
-            AddonService::install($name);
+            Service::install($name);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -163,7 +163,7 @@ class Addons extends Adminbase
             $this->error('插件标识错误！');
         }
         try {
-            AddonService::uninstall($name, true);
+            Service::uninstall($name, true);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -177,7 +177,7 @@ class Addons extends Adminbase
     {
         $file = $this->request->file('file');
         try {
-            AddonService::local($file);
+            Service::local($file);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
