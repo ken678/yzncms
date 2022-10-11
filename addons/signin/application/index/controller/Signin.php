@@ -12,14 +12,14 @@
 // +----------------------------------------------------------------------
 // | 会员签到管理
 // +----------------------------------------------------------------------
-namespace addons\signin\Controller;
+namespace app\index\controller;
 
 use addons\signin\model\Signin as SigninModel;
 use app\member\controller\MemberBase;
 use think\Db;
 use util\Date;
 
-class Index extends MemberBase
+class Signin extends MemberBase
 {
     // 签到首页
     public function index()

@@ -23,10 +23,10 @@ class Signin extends Addons
     public function install()
     {
         //前台模板
-        $installdir = ADDON_PATH . "signin" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
-        if (is_dir($installdir . "template" . DIRECTORY_SEPARATOR)) {
+        $installdir = ADDON_PATH . "signin" . DS . "install" . DS;
+        if (is_dir($installdir . "template" . DS)) {
             //拷贝模板到前台模板目录中去
-            File::copy_dir($installdir . "template" . DIRECTORY_SEPARATOR, TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR);
+            File::copy_dir($installdir . "template" . DS, TEMPLATE_PATH . 'default' . DS . 'index' . DS);
         }
         return true;
     }
@@ -34,8 +34,8 @@ class Signin extends Addons
     //卸载
     public function uninstall()
     {
-        if (is_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'signin' . DIRECTORY_SEPARATOR)) {
-            File::del_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'signin' . DIRECTORY_SEPARATOR);
+        if (is_dir(TEMPLATE_PATH . 'default' . DS . 'index' . DS . 'signin' . DS)) {
+            File::del_dir(TEMPLATE_PATH . 'default' . DS . 'index' . DS . 'signin' . DS);
         }
         return true;
     }

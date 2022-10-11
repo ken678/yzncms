@@ -135,7 +135,7 @@ layui.define(['layer', 'element'], function(exports) {
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: "{:url('addons/signin/dosign')}",
+            url: "{:url('index/signin/dosign')}",
             success: function(res) {
                 layer.msg(res.msg, {
                     time: 2500
@@ -154,7 +154,7 @@ layui.define(['layer', 'element'], function(exports) {
                 $.ajax({
                     type: 'post',
                     dataType: 'json',
-                    url: "{:url('addons/signin/fillup')}" + "?date=" + $(that).data("date"),
+                    url: "{:url('index/signin/fillup')}" + "?date=" + $(that).data("date"),
                     success: function(res) {
                         layer.msg(res.msg, {
                             time: 1500
