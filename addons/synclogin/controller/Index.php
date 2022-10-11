@@ -110,7 +110,7 @@ class Index extends MemberBase
             } else {
                 $addon_config = get_addon_config('synclogin');
                 if ($addon_config['bind'] && !$check) {
-                    $this->redirect(url('addons/synclogin/bind'));
+                    $this->redirect(addon_url('synclogin/index/bind'));
                 } else {
                     //$this->prepare();
                     $loginret = Service::connect($type, $userinfo);
