@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 第三方登录管理
 // +----------------------------------------------------------------------
-namespace addons\synclogin\Controller;
+namespace app\index\controller;
 
 use addons\synclogin\library\Oauth;
 use addons\synclogin\library\Service;
@@ -21,7 +21,7 @@ use app\member\controller\MemberBase;
 use think\facade\Cookie;
 use think\facade\Hook;
 
-class Index extends MemberBase
+class Synclogin extends MemberBase
 {
     protected $noNeedLogin = ['*'];
     protected $noNeedRight = [];
@@ -110,7 +110,7 @@ class Index extends MemberBase
             } else {
                 $addon_config = get_addon_config('synclogin');
                 if ($addon_config['bind'] && !$check) {
-                    $this->redirect(addon_url('synclogin/index/bind'));
+                    $this->redirect(url('index/synclogin/bind'));
                 } else {
                     //$this->prepare();
                     $loginret = Service::connect($type, $userinfo);

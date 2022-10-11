@@ -28,7 +28,7 @@ class Synclogin extends Addons
         $installdir = ADDON_PATH . "synclogin" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
         if (is_dir($installdir . "template" . DIRECTORY_SEPARATOR)) {
             //拷贝模板到前台模板目录中去
-            File::copy_dir($installdir . "template" . DIRECTORY_SEPARATOR, TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR);
+            File::copy_dir($installdir . "template" . DIRECTORY_SEPARATOR, TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'index' . DIRECTORY_SEPARATOR);
         }
         return true;
     }
@@ -36,8 +36,8 @@ class Synclogin extends Addons
     //卸载
     public function uninstall()
     {
-        if (is_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR)) {
-            File::del_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'addons' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR);
+        if (is_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'index' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR)) {
+            File::del_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'index' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR);
         }
         return true;
     }
