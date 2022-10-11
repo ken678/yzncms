@@ -69,8 +69,11 @@ class Service
         }
         self::runSQL($name);
         // 启用插件
-        self::enable($name, true);
-        return true;
+        //self::enable($name, true);
+
+        $info['config']   = get_addon_config($name) ? 1 : 0;
+        $info['testdata'] = is_file(Service::getTestdataFile($name));
+        return $info;
     }
 
     /**
@@ -456,6 +459,15 @@ EOD;
     public static function getBootstrapFile($name)
     {
         return ADDON_PATH . $name . DS . 'bootstrap.js';
+    }
+
+    /**
+     * 获取testdata.sql路径
+     * @return string
+     */
+    public static function getTestdataFile($name)
+    {
+        return ADDON_PATH . $name . DS . 'testdata.sql';
     }
 
     /**
