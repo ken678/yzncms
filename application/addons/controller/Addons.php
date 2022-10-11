@@ -79,6 +79,9 @@ class Addons extends Adminbase
                                 $params[$v['name']]) : $params[$v['name']];
                         }
                         $v['value'] = $value;
+                    } elseif ($v['type'] == 'checkbox' && !isset($params[$v['name']])) {
+                        //单独处理多选框为空不传参
+                        $v['value'] = '';
                     }
                 }
                 try {

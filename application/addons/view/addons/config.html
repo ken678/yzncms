@@ -54,10 +54,7 @@
 						    <label class="layui-form-label">{$form.title}</label>
 						    <div class="layui-input-block">
 						        {foreach name="form.options" item="opt" key="opt_k"}
-						        {php}
-									is_null($form["value"]) && $form["value"] = array();
-								{/php}
-						        <input type="checkbox" name="config[{$form.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value"} checked{/in}>
+						        <input type="checkbox" name="config[{$form.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value|default=''"} checked{/in}>
 						        {/foreach}
 						    </div>
 						    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
