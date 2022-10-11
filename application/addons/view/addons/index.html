@@ -12,9 +12,9 @@
     <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置">设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-normal" data-request='{:url("state",["action"=>"enable"])}?name={{d.name}}' data-table="currentTable" confirm>启用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal btn-enable" data-name="{{d.name}}">启用</a>
     {{#  } else { }}
-    <a class="layui-btn layui-btn-xs layui-btn-warm" data-request='{:url("state",["action"=>"disable"])}?name={{d.name}}' data-table="currentTable" confirm>禁用</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm btn-disable" data-name="{{d.name}}">禁用</a>
     {{#  } }}
     <a class="layui-btn layui-btn-xs layui-btn-danger" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable" data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
@@ -23,19 +23,45 @@
 {{#  } }}
 </script>
 <button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
+
+<script id="conflicttpl" type="text/html">
+    <div class="alert alert-danger-light">
+        <strong>温馨提示</strong><br>
+        此插件中发现和现有系统中部分文件发现冲突！以下文件将会被影响，请备份好相关文件后再继续操作
+    </div>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>文件</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# for(var i=0;i < d.list.conflictlist.length;i++){ }}
+        <tr>
+            <th scope="row">{{i+1}}</th>
+            <td>{{d.list.conflictlist[i]}}</td>
+        </tr>
+        {{#  }; }}
+        </tbody>
+    </table>
+</script>
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','table','upload'], function() {
+layui.use(['yznTable','table','upload','laytpl'], function() {
     var yznTable = layui.yznTable,
         $ = layui.$,
         table = layui.table,
+        laytpl = layui.laytpl,
         upload = layui.upload;
 
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
     };
+
+    var area = [$(window).width() > 800 ? '800px' : '95%', $(window).height() > 600 ? '600px' : '95%'];
 
     yznTable.render({
         init: init,
@@ -67,7 +93,7 @@ layui.use(['yznTable','table','upload'], function() {
             },
         }, function(res) {
             operate(res.data.addon.name, 'enable', false, function () {
-               layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (res.data.addon.testdata ? '你还可以继续导入测试数据！' : ""), {
+               layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (res.data.addon.testdata ? '<br>你还可以继续导入测试数据！' : ""), {
                     btn: res.data.addon.testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
                     title:'温馨提示',
                     yes: function (index) {
@@ -77,8 +103,9 @@ layui.use(['yznTable','table','upload'], function() {
                                 data: {
                                     name: name,
                                 }
-                            }, function (data, ret) {
+                            }, function (data) {
                                 layer.close(index);
+                                yzn.msg.success(data.msg);
                             });
                         } else {
                             layer.close(index);
@@ -88,7 +115,25 @@ layui.use(['yznTable','table','upload'], function() {
                 });
             })
         },function(res) {
-            
+            if (res && res.code === -3) {
+                //插件目录发现影响全局的文件
+                layer.open({
+                    content: laytpl($("#conflicttpl").html()).render({list:res.data}),
+                    shade: 0.8,
+                    area: area,
+                    title:'温馨提示',
+                    btn: ['继续操作', '取消'],
+                    end: function () {
+
+                    },
+                    yes: function () {
+                        install(name, true);
+                    }
+                });
+            } else {
+                layer.alert(ret.msg, {title: '温馨提示', icon: 0});
+            }
+            return false;
         })
     }
 
@@ -101,8 +146,26 @@ layui.use(['yznTable','table','upload'], function() {
                 success(res);
             }
             table.reload(init.table_render_id);
+            return false;   
         }, function(res) {
+            if (res && res.code === -3) {
+                //插件目录发现影响全局的文件
+                layer.open({
+                    content: laytpl($("#conflicttpl").html()).render({list:res.data}),
+                    shade: 0.8,
+                    area: area,
+                    title:'温馨提示',
+                    btn: ['继续操作', '取消'],
+                    end: function () {
 
+                    },
+                    yes: function () {
+                        operate(name, action, true, success);
+                    }
+                });
+            } else {
+                layer.alert(ret.msg, {title: '温馨提示', icon: 0});
+            }
         })
     };
 
@@ -112,6 +175,17 @@ layui.use(['yznTable','table','upload'], function() {
         install(name, false);
     });
 
+    // 点击启用
+    $(document).on("click", ".btn-enable", function () {
+        var name = $(this).data("name");
+        operate(name, 'enable', false);
+    });
+
+    // 点击禁用
+    $(document).on("click", ".btn-disable", function () {
+        var name = $(this).data("name");
+        operate(name, 'disable', false);
+    });
 
 
     importFile=function (){

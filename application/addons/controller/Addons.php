@@ -15,6 +15,7 @@
 namespace app\addons\controller;
 
 use app\common\controller\Adminbase;
+use think\addons\AddonException;
 use think\addons\Service;
 
 class Addons extends Adminbase
@@ -115,7 +116,7 @@ class Addons extends Adminbase
     {
         $name   = $this->request->param('name');
         $action = $this->request->param('action');
-
+        $force  = $this->request->post("force/d");
         if (!$name) {
             $this->error('参数不得为空！');
         }
@@ -125,8 +126,9 @@ class Addons extends Adminbase
         try {
             $action = $action == 'enable' ? $action : 'disable';
             //调用启用、禁用的方法
-            Service::$action($name, true);
-            //Cache::delete('__menu__');
+            Service::$action($name, $force);
+        } catch (AddonException $e) {
+            $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -148,6 +150,8 @@ class Addons extends Adminbase
         $info = [];
         try {
             $info = Service::install($name);
+        } catch (AddonException $e) {
+            $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -168,6 +172,8 @@ class Addons extends Adminbase
         }
         try {
             Service::uninstall($name, true);
+        } catch (AddonException $e) {
+            $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
@@ -182,9 +188,34 @@ class Addons extends Adminbase
         $file = $this->request->file('file');
         try {
             Service::local($file);
+        } catch (AddonException $e) {
+            $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
         $this->success('插件解压成功，可以进入插件管理进行安装！');
+    }
+
+    /**
+     * 测试数据
+     */
+    public function testdata()
+    {
+        $name = $this->request->post("name");
+        if (empty($name)) {
+            $this->error('请选择需要安装的插件！');
+        }
+        if (!preg_match("/^[a-zA-Z0-9]+$/", $name)) {
+            $this->error('插件标识错误！');
+        }
+
+        try {
+            Service::runSQL($name, 'testdata');
+        } catch (AddonException $e) {
+            $this->result($e->getData(), $e->getCode(), $e->getMessage());
+        } catch (Exception $e) {
+            $this->error($e->getMessage(), $e->getCode());
+        }
+        $this->success('导入成功');
     }
 }
