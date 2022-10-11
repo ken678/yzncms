@@ -17,28 +17,18 @@ namespace addons\synclogin;
 use app\member\service\User;
 use think\Addons;
 use think\Db;
-use util\File;
 
 class Synclogin extends Addons
 {
     //安装
     public function install()
     {
-        //前台模板
-        $installdir = ADDON_PATH . "synclogin" . DIRECTORY_SEPARATOR . "install" . DIRECTORY_SEPARATOR;
-        if (is_dir($installdir . "template" . DIRECTORY_SEPARATOR)) {
-            //拷贝模板到前台模板目录中去
-            File::copy_dir($installdir . "template" . DIRECTORY_SEPARATOR, TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'index' . DIRECTORY_SEPARATOR);
-        }
         return true;
     }
 
     //卸载
     public function uninstall()
     {
-        if (is_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'index' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR)) {
-            File::del_dir(TEMPLATE_PATH . 'default' . DIRECTORY_SEPARATOR . 'index' . DIRECTORY_SEPARATOR . 'synclogin' . DIRECTORY_SEPARATOR);
-        }
         return true;
     }
 
