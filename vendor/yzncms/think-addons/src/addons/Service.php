@@ -40,9 +40,11 @@ class Service
         try {
             // 检查插件是否完整
             self::check($name);
-            /*if (!$force) {
-        self::noconflict($name);
-        }*/
+            if (!$force) {
+                self::noconflict($name);
+            }
+        } catch (AddonException $e) {
+            throw new AddonException($e->getMessage(), $e->getCode(), $e->getData());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -92,6 +94,9 @@ class Service
         if ($info['status'] == 1) {
             throw new Exception('请先禁用插件再进行卸载');
         }
+        if (!$force) {
+            self::noconflict($name);
+        }
         // 移除插件基础资源目录
         $destAssetsDir = self::getDestAssetsDir($name);
         if (is_dir($destAssetsDir)) {
@@ -133,7 +138,9 @@ class Service
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
         }
-
+        if (!$force) {
+            self::noconflict($name);
+        }
         $addonDir        = self::getAddonDir($name);
         $sourceAssetsDir = self::getSourceAssetsDir($name);
         $destAssetsDir   = self::getDestAssetsDir($name);
@@ -183,6 +190,9 @@ class Service
     {
         if (!$name || !is_dir(ADDON_PATH . $name)) {
             throw new Exception('插件不存在！');
+        }
+        if (!$force) {
+            self::noconflict($name);
         }
         // 移除插件全局文件
         $list = self::getGlobalFiles($name);
@@ -276,6 +286,8 @@ class Service
                 @unlink($newAddonDir);
                 throw new Exception('无法解压缩文件');
             }
+        } catch (AddonException $e) {
+            throw new AddonException($e->getMessage(), $e->getCode(), $e->getData());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         } finally {
@@ -356,6 +368,24 @@ EOD;
                     }
                 }
             }
+        }
+        return true;
+    }
+
+    /**
+     * 是否有冲突
+     *
+     * @param string $name 插件名称
+     * @return  boolean
+     * @throws  AddonException
+     */
+    public static function noconflict($name)
+    {
+        // 检测冲突文件
+        $list = self::getGlobalFiles($name, true);
+        if ($list) {
+            //发现冲突文件，抛出异常
+            throw new AddonException("发现冲突文件", -3, ['conflictlist' => $list]);
         }
         return true;
     }
