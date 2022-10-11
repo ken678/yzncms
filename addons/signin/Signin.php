@@ -15,28 +15,18 @@
 namespace addons\signin;
 
 use think\Addons;
-use util\File;
 
 class Signin extends Addons
 {
     //安装
     public function install()
     {
-        //前台模板
-        $installdir = ADDON_PATH . "signin" . DS . "install" . DS;
-        if (is_dir($installdir . "template" . DS)) {
-            //拷贝模板到前台模板目录中去
-            File::copy_dir($installdir . "template" . DS, TEMPLATE_PATH . 'default' . DS . 'index' . DS);
-        }
         return true;
     }
 
     //卸载
     public function uninstall()
     {
-        if (is_dir(TEMPLATE_PATH . 'default' . DS . 'index' . DS . 'signin' . DS)) {
-            File::del_dir(TEMPLATE_PATH . 'default' . DS . 'index' . DS . 'signin' . DS);
-        }
         return true;
     }
 
