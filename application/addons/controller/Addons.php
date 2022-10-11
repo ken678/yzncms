@@ -142,12 +142,13 @@ class Addons extends Adminbase
         if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
             $this->error('插件标识错误！');
         }
+        $info = [];
         try {
-            Service::install($name);
+            $info = Service::install($name);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
-        $this->success('插件安装成功！清除浏览器缓存和框架缓存后生效！');
+        $this->success('插件安装成功！清除浏览器缓存和框架缓存后生效！', '', ['addon' => $info]);
     }
 
     /**

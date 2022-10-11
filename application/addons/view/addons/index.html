@@ -18,16 +18,18 @@
     {{#  } }}
     <a class="layui-btn layui-btn-xs layui-btn-danger" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable" data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
-    <a class="layui-btn layui-btn-xs" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a>
+    <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}">安装</a>
+<!--     <a class="layui-btn layui-btn-xs btn-install" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a> -->
 {{#  } }}
 </script>
 <button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable', 'upload'], function() {
-    var table = layui.yznTable,
+layui.use(['yznTable','table','upload'], function() {
+    var yznTable = layui.yznTable,
         $ = layui.$,
+        table = layui.table,
         upload = layui.upload;
 
     var init = {
@@ -35,7 +37,7 @@ layui.use(['yznTable', 'upload'], function() {
         table_render_id: 'currentTable',
     };
 
-    table.render({
+    yznTable.render({
         init: init,
         toolbar: ['refresh',
             [{
@@ -55,6 +57,62 @@ layui.use(['yznTable', 'upload'], function() {
             ]
         ]
     });
+
+    var install = function (name, force) {
+        yzn.request.post({
+            url: '{:url("install")}',
+            data: {
+                name: name,
+                force: force ? 1 : 0,
+            },
+        }, function(res) {
+            operate(res.data.addon.name, 'enable', false, function () {
+               layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (res.data.addon.testdata ? '你还可以继续导入测试数据！' : ""), {
+                    btn: res.data.addon.testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
+                    title:'温馨提示',
+                    yes: function (index) {
+                        if (res.data.addon.testdata) {
+                            yzn.request.post({
+                                url: '{:url("testdata")}',
+                                data: {
+                                    name: name,
+                                }
+                            }, function (data, ret) {
+                                layer.close(index);
+                            });
+                        } else {
+                            layer.close(index);
+                        }
+                    },
+                    icon: 1
+                });
+            })
+        },function(res) {
+            
+        })
+    }
+
+    var operate = function (name, action, force, success) {
+        yzn.request.post({
+            url: '{:url("state")}',
+            data: {name: name, action: action, force: force ? 1 : 0}
+        }, function(res) {
+            if (typeof success === 'function') {
+                success(res);
+            }
+            table.reload(init.table_render_id);
+        }, function(res) {
+
+        })
+    };
+
+    // 点击安装
+    $(document).on("click", ".btn-install", function () {
+        var name = $(this).data("name");
+        install(name, false);
+    });
+
+
 
     importFile=function (){
         $('#local-install').click();
