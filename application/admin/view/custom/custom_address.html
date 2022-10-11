@@ -1,0 +1,46 @@
+{php}$address = parse_attr($vo['value']);{/php}
+<div class="layui-form-item">
+    <label class="layui-form-label">{$vo.title} {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}&nbsp;<font color="red">*</font>{/if}</label>
+    <div class="layui-form-field-label">
+        <!--默认是天安门的维度116.404|39.915-->
+        <div class="layui-input-inline">
+            <input id="longitude" name="{$vo.fieldArr}[{$vo.name}][longitude]" placeholder="请输入经度" class="layui-input map-location-input" lay-verType="tips"  value="{$address[0]|default='116.404'}" />
+        </div>
+        <div class="layui-input-inline">
+             <input id="latitude" name="{$vo.fieldArr}[{$vo.name}][latitude]" placeholder="请输入纬度" class="layui-input"  lay-verType="tips" value="{$address[1]|default='39.915'}" />
+        </div>
+        <div class="layui-input-inline">
+            <button id="locationBtn" type="button" class="layui-btn"><i class="layui-icon layui-icon-location map-location"></i>定位</button>
+        </div>
+    </div>
+    {if $vo.remark}<div class="layui-form-mid layui-word-aux">{$vo.remark|raw}</div>{/if}
+</div>
+<script>
+layui.config({
+    version: '{$Think.config.version.yzncms_release}',
+    base: '__STATIC__/libs/layui_exts/'
+}).extend({
+    locationX: '../../addons/address/locationX',
+    location: '../../addons/address/location',
+}).use(['layer', 'form', 'jquery', 'location'], function() {
+    $ = layui.jquery;
+    var form = layui.form;
+    var location = layui.location;
+
+    location.render("#locationBtn", {
+        type: 1,
+        apiType: "baiduMap",
+        coordinate: "baiduMap",
+        mapType: 1,
+        zoom: 15,
+        title: '区域定位',
+        init: function() {
+            return { longitude: $("#longitude").val(), latitude: $("#latitude").val() };
+        },
+        success: function(data) {
+            $("#longitude").val(data.lng);
+            $("#latitude").val(data.lat);
+        }
+    });
+});
+</script>

@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 插件管理
 // +----------------------------------------------------------------------
-namespace app\addons\controller;
+namespace app\admin\controller;
 
 use app\common\controller\Adminbase;
 use think\addons\AddonException;
