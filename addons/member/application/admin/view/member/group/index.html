@@ -1,0 +1,112 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">会员组列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+    </div>
+</div>
+<script type="text/html" id="barTool">
+    <a data-open='{:url("edit")}?id={{ d.id }}' data-width="900" data-height="600" class="layui-btn layui-btn-xs" title="编辑"><i class='iconfont icon-brush_fill'></i></a>
+    {{#  if(d.issystem!=1){ }}
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
+    {{#  } }}
+</script>
+<script type="text/html" id="issystem">
+    {{#  if(d.issystem==1){ }}
+    <i class="iconfont text-success icon-success_fill"></i>
+    {{#  } else { }}
+    <i class="iconfont text-danger icon-delete_fill"></i>
+    {{#  } }}
+</script>
+<script type="text/html" id="allowattachment">
+    {{#  if(d.allowattachment==1){ }}
+    <i class="iconfont text-success icon-success_fill"></i>
+    {{#  } else { }}
+    <i class="iconfont text-danger icon-delete_fill"></i>
+    {{#  } }}
+</script>
+<script type="text/html" id="allowpost">
+    {{#  if(d.allowpost==1){ }}
+    <i class="iconfont text-success icon-success_fill"></i>
+    {{#  } else { }}
+    <i class="iconfont text-danger icon-delete_fill"></i>
+    {{#  } }}
+</script>
+<script type="text/html" id="allowpostverify">
+    {{#  if(d.allowpostverify==1){ }}
+    <i class="iconfont text-success icon-success_fill"></i>
+    {{#  } else { }}
+    <i class="iconfont text-danger icon-delete_fill"></i>
+    {{#  } }}
+</script>
+<script type="text/html" id="allowsearch">
+    {{#  if(d.allowsearch==1){ }}
+    <i class="iconfont text-success icon-success_fill"></i>
+    {{#  } else { }}
+    <i class="iconfont text-danger icon-delete_fill"></i>
+    {{#  } }}
+</script>
+<script type="text/html" id="allowupgrade">
+    {{#  if(d.allowupgrade==1){ }}
+    <i class="iconfont text-success icon-success_fill"></i>
+    {{#  } else { }}
+    <i class="iconfont text-danger icon-delete_fill"></i>
+    {{#  } }}
+</script>
+<script type="text/html" id="allowsendmessage">
+    {{#  if(d.allowsendmessage==1){ }}
+    <i class="iconfont text-success icon-success_fill"></i>
+    {{#  } else { }}
+    <i class="iconfont text-danger icon-delete_fill"></i>
+    {{#  } }}
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        add_url: "{:url('add')}",
+        modify_url:'{:url("multi")}',
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh',
+            [{
+                text: '添加',
+                url: init.add_url,
+                method: 'open',
+                class: 'layui-btn layui-btn-normal layui-btn-sm',
+                icon: 'iconfont icon-add',
+                extend: 'data-width="900" data-height="600"',
+            }]
+        ],
+        url: '{:url("index")}',
+        search: false,
+        cols: [
+            [
+                { field: 'id', width: 80, title: 'ID' },
+                { field: 'listorder', width: 100, title: '排序', edit: 'text' },
+                { field: 'name', align: "left", title: '会员组名' },
+                { field: 'issystem', width: 100, title: '系统组', align: "center", templet: '#issystem' },
+                { field: '_count', width: 100, align: "center", title: '会员数' },
+                { field: 'starnum', width: 100, align: "center", title: '星星数' },
+                { field: 'point', width: 100, align: "center", title: '积分小于' },
+                { field: 'allowattachment', width: 120, align: "center", title: '允许上传附件', templet: '#allowattachment' },
+                { field: 'allowpost', width: 120, title: '投稿权限', align: "center", templet: '#allowpost' },
+                { field: 'allowpostverify', width: 120, title: '投稿不需审核', align: "center", templet: '#allowpostverify' },
+                { field: 'allowsearch', width: 120, title: '搜索权限', align: "center", templet: '#allowsearch' },
+                { field: 'allowupgrade', width: 120, title: '自助升级', align: "center", templet: '#allowupgrade' },
+                { field: 'allowsendmessage', width: 120, title: '发短消息', align: "center", templet: '#allowsendmessage' },
+                { fixed: 'right', width: 90, title: '操作', templet: '#barTool' }
+            ]
+        ]
+    });
+});
+</script>
+{/block}

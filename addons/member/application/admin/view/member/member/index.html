@@ -1,0 +1,46 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">会员列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        add_url: "{:url('add')}",
+        edit_url: "{:url('edit')}",
+        delete_url: "{:url('del')}",
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh', 'add', 'delete'],
+        url: '{:url("index")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'id', width: 100, title: '用户ID' },
+                { field: 'username', width: 150, title: '用户名',templet: '<div>{{#  if(d.vip==1){ }} <span class="text-danger">[VIP]</span> {{#  } }}{{ d.username }}</div>', searchOp: 'like'},
+                { field: 'nickname', width: 150, title: '昵称', searchOp: 'like' },
+                { field: 'email',  title: '邮箱', searchOp: 'like' },
+                { field: 'reg_ip', title: '注册IP' },
+                { field: 'last_login_time', title: '最后登录', search: 'range' },
+                { field: 'amount', width: 120, title: '金钱总数' },
+                { field: 'point', width: 120, title: '积分总数' },
+                { field: 'login', width: 100, title: '登录次数' },
+                { width:90, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}

@@ -1,0 +1,82 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="用户名" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">昵称</label>
+        <div class="layui-input-block">
+            <input type="text" name="nickname" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input type="text" name="mobile" lay-verify="required" autocomplete="off" placeholder="手机" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item web_list">
+        <label class="layui-form-label">会员组</label>
+        <div class="layui-input-block">
+            {:Form::select("groupid",$groupCache,input('groupid',0),['placeholder' => '按会员组选择',"lay-verify"=>"required"])}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">积分点数</label>
+        <div class="layui-input-block">
+            <input type="text" name="point" lay-verify="required" autocomplete="off" placeholder="积分点数" class="layui-input" value="0">
+        </div>
+        <div class="layui-form-mid2 layui-word-aux"> 请输入积分点数，积分点数将影响会员用户组</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">vip会员</label>
+        <div class="layui-input-block">
+            <input type="radio" name="vip" value="1" title="是">
+            <input type="radio" name="vip" value="0" title="否" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">过期时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="overduedate" class="layui-input datetime" id="overduedate">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="status" value="1" title="正常" checked>
+            <input type="radio" name="status" value="0" title="禁止">
+        </div>
+    </div>
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
+    yznForm.listen();
+});
+</script>
+{/block}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css">
+    <script src="__STATIC__/libs/layui/layui.js"></script>
+    <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
+    <script type="text/javascript">
+    //全局变量
+    var GV = {
+        'site':{$site|raw|json_encode},
+        'image_upload_url': '{$image_upload_url ? $image_upload_url : url("attachment/upload/upload", ["dir" => "images"])}',
+        'file_upload_url': '{$file_upload_url ? $file_upload_url : url("attachment/upload/upload", ["dir" => "files"])}',
+        'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("attachment/upload/upload", ["dir" => "images","from"=>"ueditor"])}',
+        'profile_upload_url': '{$profile_upload_url ? $profile_upload_url : url("member/index/profile")}',
+        'attachment_select_url': '{$attachment_select_url ? $attachment_select_url : url("member/attachments/select")}',
+    };
+    </script>
+</head>
+
+<body style="padding:15px;">
+<style>.webuploader-pick{height:30px;line-height:30px;padding:0 10px;}</style>
+<table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+<script type="text/html" id="barTool">
+    <a href='{{d.path}}' class="layui-btn layui-btn-danger layui-btn-xs btn-chooseone"><i class="iconfont icon-right"></i> 选择</a>
+</script>
+<script type="text/html" id="picTpl">
+    {{#  if(d.mime.indexOf("image") > -1){ }}
+    <img style="max-width:80px; max-height:30px;" src="{{d.path}}" data-image="{{d.name}}">
+  {{#  } else { }}
+    <img style="max-width:80px; max-height:30px;" src="{:url('admin/ajax/icon')}?suffix={{d.ext}}">
+  {{#  } }}
+</script>
+{include file="layui" /}
+<script>
+layui.use(['yznTable','yzn','table','yznForm'], function() {
+    var yznTable = layui.yznTable,
+        yzn = layui.yzn,
+        yznForm = layui.yznForm,
+        table =layui.table;
+    var multiple = {$Think.get.multiple};
+    var urlArr = [];
+
+    var init = {};
+
+    yznTable.render({
+        init: init,
+        id: 'dataTable',
+        toolbar: ['refresh'
+        , [{
+            html: '<div style="display:inline-block;margin-right:5px;" class="webUpload" id="picker_table_select_image" data-multiple="false" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传</div>'
+        }]
+        {if $Think.get.multiple == "true"}
+        , [{
+            html: '<a class="layui-btn layui-btn-danger layui-btn-sm btn-choose-multi"><i class="iconfont icon-right"></i> 选择</a>'
+        }]
+        {/if}
+        ],
+        elem: '#dataTable',
+        url: '{:url("select")}',
+        cols: [
+            [
+                {if $Think.get.multiple == "true"}
+                { type: 'checkbox', fixed: 'left' },
+                {/if}
+                { field: 'id', width: 60, title: 'ID', sort: true },
+                { field: 'name', title: '名称' },
+                { field: 'path', width: 100, align: "center", title: '图片', search: false, templet: '#picTpl' },
+                { field: 'size', width: 100, title: '大小', sort: true },
+                { field: 'mime', width: 120, title: 'Mime类型' },
+                { field: 'create_time', width: 160, title: '上传时间', search: 'range' },
+                { fixed: 'right', width: 85, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+        page: {},
+        done: function(res, curr, count){
+            yznForm.events.upload_image('.webUpload', function () {
+                $("[data-table-refresh]").trigger("click");
+            });
+        }
+    });
+
+    table.on('checkbox(dataTable_LayFilter)', function(obj){
+        urlArr = [];
+        var checkStatus = table.checkStatus('dataTable').data;
+        for (var i = 0; i < checkStatus.length; i++) {
+            urlArr.push(checkStatus[i]['path']);
+        }
+    });
+
+    //选择单个
+    $(document).on('click', '.btn-chooseone', function() {
+        var that = $(this),
+        index = that.parents('tr').eq(0).data('index'),
+        tr = $('.layui-table-body').find('tr[data-index="' + index + '"]'),
+        href = !that.attr('data-href') ? that.attr('href') : that.attr('data-href');
+        yzn.close({ url: href, multiple: multiple});
+    });
+
+    // 选中多个 todo翻页失效
+    $(document).on("click", ".btn-choose-multi", function () {
+        yzn.close({ url: urlArr.join(","), multiple: multiple});
+    });
+});
+</script>
+</body>
+
+</html>
