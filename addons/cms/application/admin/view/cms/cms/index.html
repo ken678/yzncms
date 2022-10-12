@@ -1,0 +1,125 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<style type="text/css">
+.collapse {position: absolute; left: 0; top: calc(40vh - 68px); width: 15px; height: 68px; z-index: 3; }
+.collapse-bg {width: 0; height: 50px; position: absolute; top: 0; left: 0; border-bottom: 9px solid transparent; border-right: none; border-left: 15px solid #009688; border-top: 9px solid transparent; -o-transition: all 0.1s ease,0.1s ease; -ms-transition: all 0.1s ease,0.1s ease; -moz-transition: all 0.1s ease,0.1s ease; -webkit-transition: all 0.1s ease,0.1s ease; }
+.collapse:hover .navbar-collapse{left: 3px;}
+.collapse:hover .collapse-bg{border-bottom: 9px solid transparent; border-left: 20px solid #009688; border-top: 9px solid transparent; }
+.navbar-collapse {width: 15px; left: 0; height: 68px; position: relative; text-align: center; cursor: pointer; }
+.navbar-collapse>span {color: #fff; font-size: 14px; line-height: 68px; vertical-align: text-top; }
+#left-sider{padding:0 10px;    -webkit-transition: width .2s ease;transition: width .2s ease;}
+#right-box{padding:0 10px;}
+#left-sider.hidden{width: 0;padding: 0;    overflow: hidden;}
+</style>
+<div class="collapse">
+    <div class="collapse-bg"></div>
+    <div class="navbar-collapse" >
+        <span class="layui-icon layui-icon-spread-left"></span>
+    </div>
+</div>
+<div class="layui-row">
+    <div class="layui-col-md2 layui-col-sm12" id="left-sider">
+        <div class="layui-card">
+            <div class="layui-card-header">栏目列表</div>
+            <div class="layui-card-body" id="iframe_categorys" style="overflow:auto;">
+                <ul class="ztree" style="margin-left: 5px;margin-top:5px; padding: 0;">
+                    <li><a title="全部展开、折叠"><span class="button ico_open"></span><span id="ztree_expandAll">全部展开、折叠 </span></a> </li>
+                </ul>
+                <ul id="tree" class="ztree" style="overflow:auto;"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md10 layui-col-sm12" id="right-box">
+        <div class="layui-card">
+            <div class="layui-card-header">内容管理</div>
+            <div class="layui-card-body">
+                <iframe name="right" id="iframe_categorys_list" src="{:url('cms/cms/panl')}"   style="height: 100%; width:100%;border:none;" frameborder="0" scrolling="auto"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use(['jquery', 'ztree'], function() {
+    var $ = layui.$;
+
+    var zTree;
+    var demoIframe;
+    var zNodes = {$json|raw};
+    var setting = {
+        data: {
+            key: {
+                name: "catname"
+            },
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "parentid"
+            }
+        },
+        callback: {
+            //捕获单击节点之前的事件回调函数
+            beforeClick: function(treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("tree");
+                if (treeNode.isParent) {
+                    zTree.expandNode(treeNode);
+                    return true;
+                }
+            },
+            onClick: function(event, treeId, treeNode) {
+                //保存当前点击的栏目ID
+                layui.data("tree_catid", {key: 'catid',value: treeNode.id});
+            }
+        }
+    };
+    $(document).ready(function() {
+         var B_frame_height = parent.layui.$(".iframe_box").height() - 100;
+        $(window).on('resize', function() {
+            setTimeout(function() {
+                B_frame_height = parent.layui.$(".iframe_box").height() - 100;
+                frameheight();
+            }, 100);
+        });
+
+        $('.collapse').on("click", function() {
+            var t = $(this).find('.layui-icon');
+            $('#left-sider').toggleClass("hidden");
+            if ($('#left-sider').hasClass("hidden")) {
+                t.attr("class", "layui-icon layui-icon-shrink-right");
+                $("#right-box").attr("class", 'layui-col-md12 layui-col-sm12');
+            } else {
+                t.attr("class", "layui-icon layui-icon-spread-left");
+                $("#right-box").attr("class", 'layui-col-md10 layui-col-sm12');
+            };
+        })
+
+        function frameheight() {
+            $("#iframe_categorys").height(B_frame_height+7);
+            $("#iframe_categorys_list").height(B_frame_height);
+        }
+        frameheight();
+        //初始化
+        $.fn.zTree.init($("#tree"), setting, zNodes);
+        //获取对象
+        var zTree = $.fn.zTree.getZTreeObj("tree");
+        //全选
+        $("#ztree_expandAll").click(function() {
+            if ($(this).data("open")) {
+                zTree.expandAll(false);
+                $(this).data("open", false);
+            } else {
+                zTree.expandAll(true);
+                $(this).data("open", true);
+            }
+        });
+        //定位到上次打开的栏目，进行展开tree_catid
+        var tree_catid = layui.data('tree_catid').catid;
+        if (tree_catid) {
+            var nodes = zTree.getNodesByParam("id", tree_catid, null);
+            zTree.selectNode(nodes[0]);
+        }
+    });
+});
+</script>
+{/block}

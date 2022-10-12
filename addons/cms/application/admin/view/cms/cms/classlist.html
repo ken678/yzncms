@@ -1,0 +1,167 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<style type="text/css">
+.childrenBody {
+    background: #fff;
+}
+</style>
+<table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs" data-open='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' data-title="编辑内容" data-full="true"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("del",["catid"=>$catid])}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>
+</script>
+<script type="text/html" id="title">
+    {{# if(d.flag.indexOf("1")!==-1){ }}
+  <span class="text-danger">[置顶]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("2")!==-1){ }}
+  <span class="text-danger">[头条]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("3")!==-1){ }}
+  <span class="text-danger">[特荐]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("4")!==-1){ }}
+  <span class="text-danger">[推荐]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("5")!==-1){ }}
+  <span class="text-danger">[热点]</span>
+  {{#  } }}
+  {{# if(d.flag.indexOf("6")!==-1){ }}
+  <span class="text-danger">[幻灯]</span>
+  {{#  } }}
+  {{# if(d.thumb){ }}
+  <span class="text-success">[有图]</span>
+  {{#  } }}
+  <a  data-open='{:url("edit",["catid"=>$catid])}?id={{ d.id }}' data-title="编辑内容" data-full="true">{{ d.title }}</a>
+</script>
+<script type="text/html" id="username">
+    {{# if(d.sysadd==1){ }}
+  {{ d.username }}
+  {{#  } else { }}
+  <span class="text-danger">{{ d.username }}</span>
+  {{#  } }}
+</script>
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" name="status" data-href='{:url("setstate",["catid"=>$catid])}?id={{d.id}}' value="{{d.id}}" lay-skin="switch" lay-text="通过|待审核" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
+</script>
+<div id="remove" style="display: none;">
+    <div class="box-body" style="margin: 20px">
+        <div class="alert alert-warning-light">只能将数据移动到相同模型的栏目下，不同模型的数据移动将被忽略</div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <select name="remove" lay-verify="required">
+                    <option></option>
+                    {$string|raw}
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+.layui-layer-page .layui-layer-content {
+    overflow: inherit;
+}
+</style>
+{/block}
+{block name="script"}
+<script>
+layui.use(['table', 'yznTable'], function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form,
+        table = layui.table,
+        yznTable = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        add_url: "{:url('add',['catid'=>$catid])}",
+        delete_url: "{:url('del',['catid'=>$catid])}",
+        modify_url: '{:url("listorder",["catid"=>$catid])}',
+    };
+
+    yznTable.render({
+        init: init,
+        toolbar: ['refresh',
+            [{
+                text: '添加',
+                url: init.add_url,
+                method: 'open',
+                icon: 'iconfont icon-add',
+                class: 'layui-btn layui-btn-normal layui-btn-sm',
+                extend: 'data-full="true"',
+            }], 'delete',
+            [{
+                html: '<a class="layui-btn layui-btn-sm layui-btn-normal move"><i class="iconfont icon-yidong"></i>&nbsp;批量移动</a> '
+            }],
+            [{
+                html: '<a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url("recycle",["catid"=>$catid])}"><i class="iconfont icon-trash"></i>&nbsp;回收站</a>'
+            }],
+        ],
+        url: '{:url("classlist",["catid"=>$catid])}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'listorder', width: 70, title: '排序', edit: 'text',search:false },
+                { field: 'id', width: 60, title: 'ID' },
+                { field: 'title', align: "left", title: '标题', templet: '#title', searchOp: 'like' },
+                { field: 'flag', width: 100, title: '属性',hide: true, selectList: { 1: '置顶', 2: '头条', 3: '特荐', 4: '推荐', 5: '热点', 6: '幻灯' } },
+                { field: 'thumb', width: 100, title: '图片', search: false, templet: yznTable.formatter.image },
+                { field: 'hits', width: 80, title: '点击量',search: 'between',searchTip:'点击量' },
+                { field: 'updatetime', width: 160, title: '更新时间', search: 'range' },
+                { field: 'username', width: 80, title: '发布人', templet: '#username' },
+                { field: 'url', width: 60, align: "center", title: 'URL', templet: yznTable.formatter.url, search: false },
+                { field: 'status', width: 100, align: "center", title: '状态', templet: '#statusTpl', unresize: true, selectList: { 0: '待审核', 1: '通过' } },
+                { fixed: 'right', width: 90, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+        page: {}
+    });
+
+
+    $('body').on('click', '.move', function() {
+        var checkStatus = table.checkStatus('currentTable'),
+
+            ids = [],
+            id = tag = '';
+        var data = checkStatus.data;
+        if (data.length > 0) {
+            for (let i in data) {
+                id += tag + data[i].id;
+                tag = '|';
+                //ids.push(data[i].id);
+            }
+            layer.open({
+                title: '批量移动',
+                type: 1,
+                content: $('#remove'),
+                area: ['300px', '250px'],
+                btn: ['移动'],
+                yes: function(index, layero) {
+                    var tocatid = $("select[name='remove']").val();
+                    if (tocatid == 0) {
+                        layer.msg("请选择移动的栏目",{icon: 2});
+                        return;
+                    }
+                    $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
+                        if (data.code == 1) {
+                            table.reload('currentTable');
+                            layer.msg(data.msg,{icon: 1});
+                            layer.close(index);
+                        } else {
+                            layer.msg(data.msg,{icon: 2});
+                        }
+                    })
+                },
+                end: function(){ 
+                	$('#remove').hide();
+                }
+            });
+        } else {
+            layer.msg("请选择需要移动的数据",{icon: 2});
+        }
+    });
+
+});
+</script>
+{/block}

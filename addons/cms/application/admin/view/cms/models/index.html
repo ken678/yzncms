@@ -1,0 +1,54 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">模型列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        add_url: "{:url('add')}",
+        edit_url: "{:url('edit')}",
+        delete_url: "{:url('del')}",
+        modify_url:'{:url("multi")}',
+        field_url:'{:url("field/index")}',
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh', 'add'],
+        url: '{:url("index")}',
+        search:false,
+        cols: [
+            [
+                { field: 'id', width: 60, title: 'ID' },
+                { field: 'name', width: 120, title: '模型名称' },
+                { field: 'tablename', width:120,title: '数据表' },
+                { field: 'description', align: "left", title: '描述' },
+                { field: 'type', width:120,title: '类型',templet: '<div>{{#  if(d.type==1){ }} 独立表 {{#  } else { }} 主附表 {{#  } }} </div>' },
+                { field: 'create_time',width:180, title: '创建时间' },
+                { field: 'status', width: 100, title: '状态', unresize: true,templet: yznTable.formatter.switch },
+                { width:150, title: '操作',templet: yznTable.formatter.tool,operat: [
+                    [{
+                        text: '字段管理',
+                        url: init.field_url,
+                        method: 'href',
+                        auth: 'edit',
+                        class: 'layui-btn layui-btn-xs layui-btn-normal',
+                        extend: '',
+                    }],
+                'edit','delete']}
+            ]
+        ]
+    });
+});
+</script>
+{/block}

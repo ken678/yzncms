@@ -1,0 +1,29 @@
+{php}
+$catid=request()->param('catid/d',0);
+if (empty($catid)) {
+    $cat = request()->param('catdir/s', '');
+    $catid = getCategory($cat,'id');
+}
+$page=request()->param('page/d',1);
+$offset=($page-1)*5;
+$limit="$offset,5";
+{/php}
+{yzn module="cms" action="lists" catid="$catid" order="listorder DESC" limit="$limit" return="data"}
+{volist name="data" id="vo"}
+<li class="item clearfix">
+    <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="{$vo.thumb|default='https://via.placeholder.com/168x126'}" alt="{$vo.title}">
+        <div class="time fr"><span class="day">{$vo.updatetime|date="m-d"}</span><span class="year">{$vo.updatetime|date="Y"}</span></div>
+        <h3>{$vo.title}</h3>
+        <div class="txt">{$vo.description|str_cut=###,60}</div>
+    </a>
+</li>
+{/volist}
+{/yzn}
+
+{if !$__LIST__}
+    <div class="loadmore loadmore-line loadmore-nodata"><span class="loadmore-tips">暂无更多数据</span></div>
+{else /}
+    <div class="tc">
+        <a href="?page={:$page+1}" data-page="{$page}" class="btn btn-loadmore">加载更多</a>
+    </div>
+{/if}

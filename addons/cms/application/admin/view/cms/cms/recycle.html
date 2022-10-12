@@ -1,0 +1,54 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<style type="text/css">
+.childrenBody {
+    background: #fff;
+}
+</style>
+<div class="layui-form">
+    <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+</div>
+<script type="text/html" id="barTool">
+    <a class="layui-btn layui-btn-xs" data-request="{:url('restore')}?catid={{d.catid}}&id={{d.id}}">还原</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del" data-href="{:url('destroy')}?catid={{d.catid}}&id={{d.id}}">销毁</a>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+    };
+
+    table.render({
+        init: init,
+        url: "{:url('recycle',['catid'=>$catid])}",
+        toolbar: ['refresh',
+            [{
+                html:'<a class="layui-btn layui-btn-sm" href="javascript:history.back(-1);"><i class="iconfont icon-undo"></i>&nbsp;返回</a>'
+            }],
+            [{
+                html: '<a class="layui-btn layui-btn-sm confirm" data-href="{:url("restore",["catid"=>$catid])}" data-batch-all="currentTable">还原</a>',
+            }],
+            [{
+                html: '<a class="layui-btn layui-btn-sm layui-btn-danger confirm" data-href="{:url("destroy",["catid"=>$catid])}" data-batch-all="currentTable">销毁</a>',
+            }],
+        ],
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'id', width: 70, title: 'ID' },
+                { field: 'title', align: "left", title: '标题', templet: '#title' },
+                { field: 'updatetime', width: 180, title: '更新时间' },
+                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+            ]
+        ],
+    });
+
+
+});
+</script>
+{/block}

@@ -1,0 +1,51 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">Tags管理</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use(['yznTable'], function() {
+    var yznTable = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        edit_url: "{:url('edit')}",
+        delete_url: "{:url('del')}",
+        modify_url: '{:url("multi")}',
+    };
+
+    yznTable.render({
+        init: init,
+        toolbar: ['refresh','delete',
+            [{
+                html:'<a class="layui-btn layui-btn-sm layui-btn-warm" href="{:url("create")}"><i class="iconfont icon-warning"></i>&nbsp;数据重建</a>'
+            }],
+        ],
+        url: '{:url("index")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'listorder', width: 70, title: '排序', edit: 'text', search: false },
+                { field: 'id', width: 80, title: 'ID' },
+                { field: 'tag', align: "left", title: 'Tags名称', searchOp: 'like'  },
+                { field: 'usetimes', width: 100, title: '信息总数' },
+                { field: 'hits', width: 100, title: '点击量',search: 'between',searchTip:'点击量' },
+                { field: 'url',width: 60,align:"center", title: 'URL',templet:yznTable.formatter.url,search:false},
+                { field: 'create_time', width: 180, title: '创建时间', search: 'range' },
+                { field: 'update_time', width: 180, title: '更新时间', search: 'range' },
+                { width:90, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}

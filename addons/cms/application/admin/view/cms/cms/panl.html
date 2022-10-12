@@ -1,0 +1,196 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<style type="text/css">
+.layui-btn-group .layui-btn {
+    margin-right: 5px!important;border-radius: 2px;border-left: none;
+}
+</style>
+<div class="layui-row layui-col-space10 panel_box">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;">
+        <div class="panel_icon yzn-bg-green">
+            <i class="icon iconfont icon-other layui-anim"></i>
+        </div>
+        <div class="panel_word">
+            <span>{$info.category}</span>
+            <cite>栏目数量</cite>
+        </div>
+    </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;">
+        <div class="panel_icon yzn-bg-blue">
+            <i class="icon iconfont icon-apartment layui-anim"></i>
+        </div>
+        <div class="panel_word">
+            <span>{$info.model}</span>
+            <cite>模型数量</cite>
+        </div>
+    </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;">
+        <div class="panel_icon yzn-bg-orange">
+            <i class="icon iconfont icon-draft-line layui-anim"></i>
+        </div>
+        <div class="panel_word">
+            <span>{$info.doc}</span>
+            <cite>文档数量</cite>
+        </div>
+    </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;">
+        <div class="panel_icon yzn-bg-purple">
+            <i class="icon iconfont icon-label layui-anim"></i>
+        </div>
+        <div class="panel_word">
+            <span>{$info.tags}</span>
+            <cite>Tags数量</cite>
+        </div>
+    </a>
+    </div>
+</div>
+
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-lg12 layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header" style="border-bottom: 1px solid #eee;">文章发布统计</div>
+            <div class="layui-card-body">
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-sm btn-refresh yzn-btn-primary"><i class="iconfont icon-shuaxin1"></i> </button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="1">今天</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="2">最近7天</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="3">最近30天</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="4">上月</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="5">本月</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="6">今年</button>
+                    <div class="layui-input-inline">
+                       <input type="text" class="layui-input" id="datatime" placeholder="请选择日期范围" style="width: 300px;height: 30px;line-height: 30px;font-size: 14px;">
+                    </div>
+                </div>
+                <div id="echarts-records" style="height:400px;width:100%;margin-top:15px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name="script"}
+{php}use \util\Date;{/php}
+<script type="text/javascript">
+layui.use(['jquery','echarts','laydate','yzn'], function() {
+    var $ = layui.jquery,
+    echarts = layui.echarts,
+    yzn = layui.yzn,
+    laydate = layui.laydate;
+
+    // 基于准备好的dom，初始化echarts实例
+    var echartsRecords = echarts.init(document.getElementById('echarts-records'),'walden');
+
+    // 指定图表的配置项和数据
+    var optionRecords = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {},
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: {$xAxisData|raw|json_encode}
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: {$seriesData|raw|json_encode}
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    echartsRecords.setOption(optionRecords);
+    // echarts 窗口缩放自适应
+    window.onresize = function(){
+        echartsRecords.resize();
+    }
+
+    laydate.render({
+      elem: '#datatime',type: 'datetime',range: true,max: 'nowTime',done: function(value, date, endDate){
+        refreshEchart(value);
+      }
+    });
+
+    //点击按钮
+    $(document).on("click", ".btn-time", function () {
+        var type=$(this).data('type');
+        switch(type) {
+             case 1:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", 0, "end"))}'; 
+                break;
+             case 2:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("week", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("week", 0, "end"))}'; 
+                break;
+             case 3:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", -30, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("day", 0, "end"))}'; 
+                break;
+             case 4:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", -1, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", -1, "end"))}'; 
+                break;
+             case 5:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("month", 0, "end"))}'; 
+                break;
+             case 6:
+                start_time ='{:date("Y-m-d H:i:s",Date::unixtime("year", 0, "begin"))}'; 
+                end_time ='{:date("Y-m-d H:i:s",Date::unixtime("year", 0, "end"))}'; 
+                break;
+        }
+        refreshEchart(start_time + ' - ' + end_time);
+
+    });
+
+    //点击刷新
+    $(document).on("click", ".btn-refresh", function () {
+        var value = $("#datatime").val();
+        refreshEchart(value);
+
+    });
+
+    var refreshEchart = function (date) {
+        var ok =  function(res) {
+            optionRecords.xAxis.data = res.data.xAxisData;
+            optionRecords.series = res.data.seriesData;
+            echartsRecords.clear();
+            echartsRecords.setOption(optionRecords, true);
+            return false;
+        };
+        yzn.request.post({
+            url: '{:url("cms/cms/panl")}',
+            data: {date: date}
+        }, ok);
+    };
+
+    //icon动画
+    $(".panel a").hover(function() {
+        $(this).find(".layui-anim").addClass("layui-anim-scaleSpring");
+    }, function() {
+        $(this).find(".layui-anim").removeClass("layui-anim-scaleSpring");
+    })
+    $(".panel a").click(function() {
+        parent.addTab($(this));
+    })
+})
+</script>
+{/block}

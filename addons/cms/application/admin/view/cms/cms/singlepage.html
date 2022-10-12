@@ -1,0 +1,70 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<style type="text/css">
+.childrenBody {
+    background-color:#fff;
+}
+</style>
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="modelField[title]" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="{$info['title']|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">SEO关键词</label>
+            <div class="layui-input-block">
+                <input type="text" name="modelField[keywords]" placeholder="请输入SEO关键词" autocomplete="off" class="layui-input form-tags" value="{$info['keywords']|default=''}" data-remark="关键词用回车确认">
+            </div>
+            <div class="layui-form-mid2 layui-word-aux">关键词用回车确认</div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">SEO摘要</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入SEO摘要" class="layui-textarea" name="modelField[description]">{$info['description']|default=''}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">缩略图</label>
+            <div class="layui-input-block">
+                <div class="js-upload-image">
+                    {:Form::image("modelField[thumb]",isset($info['thumb'])?$info['thumb']:'')}
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <script type="text/plain" class="js-ueditor" id="content" name="modelField[content]">{$info['content']|default=''|raw}</script>
+            </div>
+            <div class="content_attr editor_tool" style="margin-left: 140px;">
+                <a class="layui-btn layui-btn-sm" id="contentgrabimg" style="margin-top: 4px;">图片本地化</a>
+                <a class="layui-btn layui-btn-sm" id="contentfilterword" style="margin-top: 4px;">检测违禁词</a>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="modelField[inputtime]" class="layui-input datetime" value="{$info['inputtime']|default=date('Y-m-d H:i:s',time())}">
+            </div>
+        </div>
+        <input type="hidden" name="modelField[catid]" value="{$catid}">
+        <div class="layui-form-item layer-footer">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>  
+            </div>
+        </div>
+    </div>
+</form>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
+    yznForm.listen();
+});
+</script>
+{/block}

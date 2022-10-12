@@ -1,0 +1,80 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" method="post">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="50">
+                    <col>
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                    <col width="60">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th align="center"><input type="checkbox" data-name="0" lay-skin='primary'></th>
+                        <th align="left">栏目名称</th>
+                        <th align="center">查看</th>
+                        <th align="center">添加</th>
+                        <th align="center">修改</th>
+                        <th align="center">删除</th>
+                        <th align="center">排序</th>
+                        <th align="center">状态</th>
+                        <th align="center">移动</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {$categorys|raw}
+                </tbody>
+            </table>
+            <div class="layui-form-item layer-footer">
+                <button class="layui-btn" lay-submit>立即提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use(['yznForm', 'form'], function() {
+    var form = layui.form,
+        yznForm = layui.yznForm;
+    yznForm.listen();
+
+    form.on('checkbox', function(data) {
+        var name = $(data.elem).data('name');
+        if (data.elem.checked == true) {
+            if (name == 0) {
+                $.each($("input[type='checkbox']"), function(i, rs) {
+                    if (rs.disabled != true) {
+                        rs.checked = true;
+                    }
+                })
+            } else {
+                $.each($("input[type='checkbox'][name='priv[" + name + "][]']"), function(i, rs) {
+                    if (rs.disabled != true) {
+                        rs.checked = true;
+                    }
+                });
+            }
+        } else {
+            if (name == 0) {
+                $.each($("input[type='checkbox']"), function(i, rs) {
+                    rs.checked = false;
+                })
+            } else {
+                $.each($("input[type='checkbox'][name='priv[" + name + "][]']"), function(i, rs) {
+                    rs.checked = false;
+                });
+            }
+        }
+        form.render('checkbox');
+    })
+});
+</script>
+{/block}

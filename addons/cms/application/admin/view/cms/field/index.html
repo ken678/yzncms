@@ -1,0 +1,72 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">【{$name}】字段列表</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+    </div>
+</div>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="status" data-href="{:url('setstate')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="switchStatus" {{ d.status==1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="ifsearchTpl">
+    {{# if(d.ifsystem){ }}
+    <input type="checkbox" name="ifsearch" data-href="{:url('setSearch')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifsearch==1 ? 'checked' : '' }}>
+    {{#  } }}
+</script>
+<script type="text/html" id="ifrequireTpl">
+    <input type="checkbox" name="ifrequire" data-href="{:url('setRequire')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="switchStatus" {{ d.ifrequire==1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="isaddTpl">
+    <input type="checkbox" name="isadd" data-href="{:url('setVisible')}?id={{d.id}}" value="{{d.id}}" lay-skin="switch" lay-text="显示|隐藏" lay-filter="switchStatus" {{ d.isadd==1 ? 'checked' : '' }}>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var yznTable = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        add_url: "{:url('add',['modelid'=>$modelid])}",
+        edit_url: "{:url('edit')}",
+        delete_url: "{:url('del')}",
+        modify_url: '{:url("listorder")}',
+    };
+
+    yznTable.render({
+            init: init,
+            toolbar: ['refresh',
+                [{
+                    html: '<a class="layui-btn layui-btn-sm" type="button" href="{:url("models/index")}"><i class="iconfont icon-undo"></i>&nbsp;返回模型</a>'
+                }],'add'
+        ],
+        url: '{:url("index",["id"=>$modelid])}',
+        cols: [
+            [
+                { field: 'listorder', width: 60, title: '排序', edit: 'text',search:false },
+                { field: 'id', width: 60, title: 'ID' },
+                { field: 'name',align: "left", title: '字段名称' },
+                { field: 'title',align: "left", title: '标题' },
+                { field: 'type', width: 120, title: '字段类型' },
+                { field: 'ifsystem', width: 60, align: "center", title: '主表', templet: '<div>{{#  if(d.ifsystem){ }} 是 {{#  } }} </div>' },
+                { field: 'create_time', width: 180, title: '创建时间' , search: 'range'},
+                { field: 'ifsearch', width: 90, align: "center", title: '搜索', templet: '#ifsearchTpl', unresize: true, selectList: { 0: '否', 1: '是' } },
+                { field: 'ifrequire', width: 90, align: "center", title: '必填', templet: '#ifrequireTpl', unresize: true, selectList: { 0: '否', 1: '是' } },
+                { field: 'isadd', width: 100, align: "center", title: '投稿显示', templet: '#isaddTpl', unresize: true , selectList: { 0: '隐藏', 1: '显示' }},
+                { field: 'status', width: 100, align: "center", title: '状态', templet: '#switchTpl', unresize: true, selectList: { 0: '禁用', 1: '启用' }},
+                { width:90, title: '操作',templet: function (d){
+                    if(d.iffixed){
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
+                    }else{
+                        return yznTable.formatter.tool.call(this,d,this);
+                    }
+                },operat: ['edit','delete']}
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}
