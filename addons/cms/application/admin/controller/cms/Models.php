@@ -12,9 +12,9 @@
 // +----------------------------------------------------------------------
 // | 模型管理
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\admin\controller\cms;
 
-use app\cms\model\Models as ModelsModel;
+use app\admin\model\cms\Models as ModelsModel;
 use app\common\controller\Adminbase;
 use think\Db;
 use think\facade\Cache;
@@ -54,7 +54,7 @@ class Models extends Adminbase
     {
         if ($this->request->isPost()) {
             $data   = $this->request->post();
-            $result = $this->validate($data, 'Models');
+            $result = $this->validate($data, 'app\admin\validate\cms\Models');
             if (true !== $result) {
                 return $this->error($result);
             }
@@ -74,7 +74,7 @@ class Models extends Adminbase
     {
         if ($this->request->isPost()) {
             $data   = $this->request->post();
-            $result = $this->validate($data, 'Models');
+            $result = $this->validate($data, 'app\admin\validate\cms\Models');
             if (true !== $result) {
                 return $this->error($result);
             }

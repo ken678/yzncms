@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | CMS模型
 // +----------------------------------------------------------------------
-namespace app\cms\model;
+namespace app\admin\model\cms;
 
 use addons\cms\library\FulltextSearch;
 use app\common\model\Modelbase;
@@ -555,4 +555,11 @@ class Cms extends Modelbase
         }
     }
 
+    //会员配置缓存
+    public function cms_cache()
+    {
+        $data = unserialize(model('admin/Module')->where(array('module' => 'cms'))->value('setting'));
+        cache("Cms_Config", $data);
+        return $data;
+    }
 }

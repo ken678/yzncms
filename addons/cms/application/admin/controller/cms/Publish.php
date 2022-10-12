@@ -12,11 +12,11 @@
 // +----------------------------------------------------------------------
 // | 稿件管理
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\admin\controller\cms;
 
-use app\cms\model\Cms as Cms_Model;
+use app\admin\model\cms\Cms as Cms_Model;
+use app\admin\model\member\MemberContent as Member_Content_Model;
 use app\common\controller\Adminbase;
-use app\member\model\MemberContent as Member_Content_Model;
 use think\Db;
 
 class Publish extends Adminbase

@@ -12,11 +12,11 @@
 // +----------------------------------------------------------------------
 // | 栏目模型
 // +----------------------------------------------------------------------
-namespace app\cms\model;
+namespace app\admin\model\cms;
 
+use think\Db;
 use think\facade\Cache;
-use \think\Db;
-use \think\Model;
+use think\Model;
 
 /**
  * 模型

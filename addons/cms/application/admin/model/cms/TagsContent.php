@@ -10,18 +10,12 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 模型验证
+// | TagContent模型
 // +----------------------------------------------------------------------
-namespace app\cms\validate;
+namespace app\admin\model\cms;
 
-use think\Validate;
+use think\Model;
 
-class Models extends Validate
+class TagsContent extends Model
 {
-    //定义验证规则
-    protected $rule = [
-        'name|模型名称' => 'require|chs|max:30|unique:model',
-        'tablename|表键名' => 'require|lower|max:20|unique:model|alpha',
-        'type|模型类型' => 'in:1,2',
-    ];
 }

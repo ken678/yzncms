@@ -12,9 +12,9 @@
 // +----------------------------------------------------------------------
 // | 字段管理
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\admin\controller\cms;
 
-use app\cms\model\ModelField as ModelField;
+use app\admin\model\cms\ModelField as ModelField;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -25,8 +25,8 @@ class Field extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $filepath = APP_PATH . 'admin' . DIRECTORY_SEPARATOR . "view" . DIRECTORY_SEPARATOR . 'custom' . DIRECTORY_SEPARATOR;
-        $custom   = str_replace($filepath . DIRECTORY_SEPARATOR, '', glob($filepath . DIRECTORY_SEPARATOR . 'custom*'));
+        $filepath = APP_PATH . 'admin' . DS . "view" . DS . 'custom' . DS;
+        $custom   = str_replace($filepath . DS, '', glob($filepath . DS . 'custom*'));
         $this->assign('custom', $custom);
         $this->modelClass = new ModelField;
 
@@ -73,7 +73,7 @@ class Field extends Adminbase
         if ($this->request->isPost()) {
             //增加字段
             $data   = $this->request->param();
-            $result = $this->validate($data, 'ModelField');
+            $result = $this->validate($data, 'app\admin\validate\cms\ModelField');
             if (true !== $result) {
                 return $this->error($result);
             }
@@ -109,7 +109,7 @@ class Field extends Adminbase
         }
         if ($this->request->isPost()) {
             $data   = $this->request->param();
-            $result = $this->validate($data, 'ModelField');
+            $result = $this->validate($data, 'app\admin\validate\cms\ModelField');
             if (true !== $result) {
                 return $this->error($result);
             }

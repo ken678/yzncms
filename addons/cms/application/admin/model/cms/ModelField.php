@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 字段模型
 // +----------------------------------------------------------------------
-namespace app\cms\model;
+namespace app\admin\model\cms;
 
 use app\common\model\Modelbase;
 use think\Db;

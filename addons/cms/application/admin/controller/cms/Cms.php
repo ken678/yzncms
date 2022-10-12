@@ -12,10 +12,10 @@
 // +----------------------------------------------------------------------
 // | cms管理
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\admin\controller\cms;
 
-use app\cms\model\Cms as Cms_Model;
-use app\cms\model\Page as Page_Model;
+use app\admin\model\cms\Cms as CmsModel;
+use app\admin\model\cms\Page as PageModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -27,7 +27,7 @@ class Cms extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->Cms_Model = new Cms_Model;
+        $this->CmsModel  = new CmsModel;
         $this->cmsConfig = cache("Cms_Config");
         $this->assign("cmsConfig", $this->cmsConfig);
     }
@@ -74,11 +74,11 @@ class Cms extends Adminbase
                 $data['isParent'] = true;
             }
             $data['target'] = 'right';
-            $data['url']    = url('cms/cms/classlist', array('catid' => $rs['id']));
+            $data['url']    = url('classlist', array('catid' => $rs['id']));
             //单页
             if ($rs['type'] == 1) {
                 $data['target'] = 'right';
-                $data['url']    = url('cms/cms/add', array('catid' => $rs['id']));
+                $data['url']    = url('add', array('catid' => $rs['id']));
             }
             $json[] = $data;
         }
@@ -209,14 +209,14 @@ class Cms extends Adminbase
             if ($category['type'] == 2) {
                 $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
                 try {
-                    $this->Cms_Model->addModelData($data['modelField'], $data['modelFieldExt']);
+                    $this->CmsModel->addModelData($data['modelField'], $data['modelFieldExt']);
                 } catch (\Exception $ex) {
                     $this->error($ex->getMessage());
                 }
             } else if ($category['type'] == 1) {
-                $Page_Model = new Page_Model;
-                if (!$Page_Model->savePage($data['modelField'])) {
-                    $error = $Page_Model->getError();
+                $PageModel = new PageModel;
+                if (!$PageModel->savePage($data['modelField'])) {
+                    $error = $PageModel->getError();
                     $this->error($error ? $error : '操作失败！');
                 }
             }
@@ -229,15 +229,15 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid   = $category['modelid'];
-                $fieldList = $this->Cms_Model->getFieldList($modelid);
+                $fieldList = $this->CmsModel->getFieldList($modelid);
                 $this->assign([
                     'catid'     => $catid,
                     'fieldList' => $fieldList,
                 ]);
                 return $this->fetch();
             } else if ($category['type'] == 1) {
-                $Page_Model = new Page_Model;
-                $info       = $Page_Model->getPage($catid);
+                $PageModel = new PageModel;
+                $info      = $PageModel->getPage($catid);
                 $this->assign([
                     'info'  => $info,
                     'catid' => $catid,
@@ -256,7 +256,7 @@ class Cms extends Adminbase
             $data                  = $this->request->post();
             $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
             try {
-                $this->Cms_Model->editModelData($data['modelField'], $data['modelFieldExt']);
+                $this->CmsModel->editModelData($data['modelField'], $data['modelFieldExt']);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
@@ -271,7 +271,7 @@ class Cms extends Adminbase
             }
             if ($category['type'] == 2) {
                 $modelid   = $category['modelid'];
-                $fieldList = $this->Cms_Model->getFieldList($modelid, $id);
+                $fieldList = $this->CmsModel->getFieldList($modelid, $id);
                 $this->assign([
                     'catid'     => $catid,
                     'id'        => $id,
@@ -299,7 +299,7 @@ class Cms extends Adminbase
         $modelid = getCategory($catid, 'modelid');
         try {
             foreach ($ids as $id) {
-                $this->Cms_Model->deleteModelData($modelid, $id, $this->cmsConfig['web_site_recycle']);
+                $this->CmsModel->deleteModelData($modelid, $id, $this->cmsConfig['web_site_recycle']);
             }
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
@@ -322,7 +322,7 @@ class Cms extends Adminbase
         $modelid = getCategory($catid, 'modelid');
         try {
             foreach ($ids as $id) {
-                $this->Cms_Model->deleteModelData($modelid, $id);
+                $this->CmsModel->deleteModelData($modelid, $id);
             }
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());

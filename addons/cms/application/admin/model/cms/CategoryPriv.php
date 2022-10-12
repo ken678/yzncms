@@ -12,9 +12,9 @@
 // +----------------------------------------------------------------------
 // | 栏目权限模型
 // +----------------------------------------------------------------------
-namespace app\cms\model;
+namespace app\admin\model\cms;
 
-use \think\Model;
+use think\Model;
 
 class CategoryPriv extends Model
 {

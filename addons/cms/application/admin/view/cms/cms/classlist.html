@@ -143,7 +143,7 @@ layui.use(['table', 'yznTable'], function() {
                         layer.msg("请选择移动的栏目",{icon: 2});
                         return;
                     }
-                    $.post('{:url("cms/cms/remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
+                    $.post('{:url("remove",["catid"=>$catid])}', { 'ids': id, 'tocatid': tocatid }, function(data) {
                         if (data.code == 1) {
                             table.reload('currentTable');
                             layer.msg(data.msg,{icon: 1});

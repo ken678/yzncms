@@ -10,26 +10,18 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 推荐位验证
+// | 模型验证
 // +----------------------------------------------------------------------
-namespace app\cms\validate;
+namespace app\admin\validate\cms;
 
 use think\Validate;
 
-class Position extends Validate
+class Models extends Validate
 {
-
     //定义验证规则
     protected $rule = [
-        'name' => 'require|chsAlphaNum',
-        'modelid' => 'number',
-        'catid' => 'number',
-    ];
-    //定义验证提示
-    protected $message = [
-        'name.require' => '推荐位名称不得为空',
-        'name.chsAlphaNum' => '推荐位名称只能是汉字、字母和数字',
-        'modelid.number' => '所属模型格式错误',
-        'catid.number' => '所属栏目格式错误',
+        'name|模型名称'     => 'require|chs|max:30|unique:model',
+        'tablename|表键名' => 'require|lower|max:20|unique:model|alpha',
+        'type|模型类型'     => 'in:1,2',
     ];
 }

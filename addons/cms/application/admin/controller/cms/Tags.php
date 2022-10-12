@@ -12,9 +12,9 @@
 // +----------------------------------------------------------------------
 // | tags管理
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\admin\controller\cms;
 
-use app\cms\model\Tags as TagsModel;
+use app\admin\model\cms\Tags as TagsModel;
 use app\common\controller\Adminbase;
 use think\Db;
 

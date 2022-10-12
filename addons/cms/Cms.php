@@ -20,6 +20,294 @@ use think\facade\Route;
 
 class Cms extends Addons
 {
+    //后台菜单
+    public $admin_list = array(
+        [
+            //父菜单ID，NULL或者不写系统默认，0为顶级菜单
+            "parentid"  => 0,
+            "name"      => "admin/cms.cms/index",
+            "status"    => 1,
+            "title"     => "内容",
+            "tip"       => "",
+            "listorder" => 0,
+            "child"     => [
+                [
+                    "name"   => "admin/cms.cms/index2",
+                    "status" => 1,
+                    "title"  => "内容管理",
+                    "icon"   => "icon-draft-line",
+                    "child"  => [
+                        [
+                            "name"   => "admin/cms.cms/index",
+                            "status" => 1,
+                            "title"  => "管理内容",
+                            "icon"   => "icon-draft-line",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/cms.cms/panl",
+                                    "status" => 0,
+                                    "title"  => "面板",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/classlist",
+                                    "status" => 0,
+                                    "title"  => "信息列表",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/add",
+                                    "status" => 0,
+                                    "title"  => "添加",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/edit",
+                                    "status" => 0,
+                                    "title"  => "编辑",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/del",
+                                    "status" => 0,
+                                    "title"  => "删除",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/listorder",
+                                    "status" => 0,
+                                    "title"  => "排序",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/remove",
+                                    "status" => 0,
+                                    "title"  => "批量移动",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/setstate",
+                                    "status" => 0,
+                                    "title"  => "状态",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/check_title",
+                                    "status" => 0,
+                                    "title"  => "标题检查",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/recycle",
+                                    "status" => 0,
+                                    "title"  => "回收站",
+                                    "icon"   => "icon-trash",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/destroy",
+                                    "status" => 0,
+                                    "title"  => "清空回收站",
+                                ],
+                                [
+                                    "name"   => "admin/cms.cms/restore",
+                                    "status" => 0,
+                                    "title"  => "还原回收站",
+                                ],
+                            ],
+                        ],
+                        [
+                            "name"   => "admin/cms.publish/index",
+                            "status" => 1,
+                            "title"  => "稿件管理",
+                            "icon"   => "icon-draft-line",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/cms.publish/del",
+                                    "status" => 0,
+                                    "title"  => "删除",
+                                ],
+                                [
+                                    "name"   => "admin/cms.publish/pass",
+                                    "status" => 0,
+                                    "title"  => "通过",
+                                ],
+                                [
+                                    "name"   => "admin/cms.publish/reject",
+                                    "status" => 0,
+                                    "title"  => "退稿",
+                                ],
+                            ],
+                        ],
+                        [
+                            "name"   => "admin/cms.tags/index",
+                            "status" => 1,
+                            "title"  => "Tags管理",
+                            "icon"   => "icon-label",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/cms.tags/index",
+                                    "status" => 0,
+                                    "title"  => "列表",
+                                ],
+                                [
+                                    "name"   => "admin/cms.tags/add",
+                                    "status" => 0,
+                                    "title"  => "添加",
+                                ],
+                                [
+                                    "name"   => "admin/cms.tags/edit",
+                                    "status" => 0,
+                                    "title"  => "编辑",
+                                ],
+                                [
+                                    "name"   => "admin/cms.tags/del",
+                                    "status" => 0,
+                                    "title"  => "删除",
+                                ],
+                                [
+                                    "name"   => "admin/cms.tags/create",
+                                    "status" => 0,
+                                    "title"  => "数据重建",
+                                ],
+                                [
+                                    "name"   => "admin/cms.tags/multi",
+                                    "status" => 0,
+                                    "title"  => "批量更新",
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    "name"   => "admin/cms.category/index1",
+                    "type"   => 1,
+                    "status" => 1,
+                    "title"  => "相关设置",
+                    "icon"   => "icon-file-settings-line",
+                    "child"  => [
+                        [
+                            "name"   => "admin/cms.category/index",
+                            "status" => 1,
+                            "title"  => "栏目列表",
+                            "icon"   => "icon-other",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/cms.category/add",
+                                    "status" => 0,
+                                    "title"  => "添加栏目",
+                                ],
+                                [
+                                    "name"   => "admin/cms.category/singlepage",
+                                    "status" => 0,
+                                    "title"  => "添加单页",
+                                ],
+                                [
+                                    "name"   => "admin/cms.category/cat_priv",
+                                    "status" => 0,
+                                    "title"  => "栏目授权",
+                                ],
+                                [
+                                    "name"   => "admin/cms.category/edit",
+                                    "status" => 0,
+                                    "title"  => "编辑栏目",
+                                ],
+                                [
+                                    "name"   => "admin/cms.category/del",
+                                    "status" => 0,
+                                    "title"  => "删除栏目",
+                                ],
+                                [
+                                    "name"   => "admin/cms.category/multi",
+                                    "status" => 0,
+                                    "title"  => "批量更新",
+                                ],
+                                [
+                                    "name"   => "admin/cms.category/public_tpl_file_list",
+                                    "status" => 0,
+                                    "title"  => "栏目模板",
+                                ],
+                            ],
+                        ],
+                        [
+                            "name"   => "admin/cms.models/index",
+                            "status" => 1,
+                            "title"  => "模型管理",
+                            "icon"   => "icon-apartment",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/cms.field/index",
+                                    "status" => 0,
+                                    "title"  => "字段管理",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/add",
+                                    "status" => 0,
+                                    "title"  => "字段添加",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/edit",
+                                    "status" => 0,
+                                    "title"  => "字段编辑",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/del",
+                                    "status" => 0,
+                                    "title"  => "字段删除",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/listorder",
+                                    "status" => 0,
+                                    "title"  => "字段排序",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/setstate",
+                                    "status" => 0,
+                                    "title"  => "字段状态",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/setsearch",
+                                    "status" => 0,
+                                    "title"  => "字段搜索",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/setvisible",
+                                    "status" => 0,
+                                    "title"  => "字段隐藏",
+                                ],
+                                [
+                                    "name"   => "admin/cms.field/setrequire",
+                                    "status" => 0,
+                                    "title"  => "字段必须",
+                                ],
+
+                                [
+                                    "name"   => "admin/cms.models/add",
+                                    "status" => 0,
+                                    "title"  => "添加模型",
+                                ],
+                                [
+                                    "name"   => "admin/cms.models/edit",
+                                    "status" => 0,
+                                    "title"  => "修改模型",
+                                ],
+                                [
+                                    "name"   => "admin/cms.models/del",
+                                    "status" => 0,
+                                    "title"  => "删除模型",
+                                ],
+                                [
+                                    "name"   => "admin/cms.models/multi",
+                                    "status" => 0,
+                                    "title"  => "批量更新",
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+
+    );
+
+    public $cache_list = array(
+        'Category' => [
+            'name'   => '栏目索引',
+            'model'  => 'Category',
+            'action' => 'category_cache',
+        ],
+    );
+
     //安装
     public function install()
     {

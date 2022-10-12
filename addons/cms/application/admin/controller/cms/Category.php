@@ -12,9 +12,9 @@
 // +----------------------------------------------------------------------
 // | 栏目管理
 // +----------------------------------------------------------------------
-namespace app\cms\controller;
+namespace app\admin\controller\cms;
 
-use app\cms\model\Category as CategoryModel;
+use app\admin\model\cms\Category as CategoryModel;
 use app\common\controller\Adminbase;
 use think\Db;
 
@@ -26,8 +26,8 @@ class Category extends Adminbase
     private $showTemplate;
     private $pageTemplate;
     protected $noNeedRight = [
-        'cms/category/count_items',
-        'cms/category/public_cache',
+        'admin/cms.category/count_items',
+        'admin/cms.category/public_cache',
     ];
 
     protected function initialize()
@@ -118,7 +118,7 @@ class Category extends Adminbase
                     $data['catdir']  = isset($cat[1]) ? $cat[1] : '';
                     $data['catdir']  = $this->get_dirpinyin($data['catname'], $data['catdir']);
 
-                    $result = $this->validate($data, 'Category.' . $scene);
+                    $result = $this->validate($data, 'app\admin\validate\cms\Category.' . $scene);
                     if (true !== $result) {
                         $this->error($result);
                     }
@@ -131,7 +131,7 @@ class Category extends Adminbase
                 $this->success("添加成功！", url("Category/index"));
             } else {
                 $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir']);
-                $result         = $this->validate($data, 'Category.' . $scene);
+                $result         = $this->validate($data, 'app\admin\validate\cms\Category.' . $scene);
                 if (true !== $result) {
                     $this->error($result);
                 }
@@ -219,7 +219,7 @@ class Category extends Adminbase
                     $this->error('栏目类型错误~');
             }
             $data['catdir'] = $this->get_dirpinyin($data['catname'], $data['catdir'], $catid);
-            $result         = $this->validate($data, 'Category.' . $scene);
+            $result         = $this->validate($data, 'app\admin\validate\cms\Category.' . $scene);
             if (true !== $result) {
                 $this->error($result);
             }

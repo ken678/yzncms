@@ -12,12 +12,12 @@
 // +----------------------------------------------------------------------
 // | 模型模型
 // +----------------------------------------------------------------------
-namespace app\cms\model;
+namespace app\admin\model\cms;
 
 use app\common\model\Modelbase;
 use think\Db;
 use think\facade\Config;
-use \think\Model;
+use think\Model;
 
 /**
  * 模型
