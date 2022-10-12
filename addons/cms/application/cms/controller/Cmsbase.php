@@ -26,7 +26,7 @@ class Cmsbase extends MemberBase
     {
         parent::initialize();
         //Config::set('url_common_param', true);
-        $this->cmsConfig = cache("Cms_Config");
+        $this->cmsConfig = get_addon_config("cms");
         $this->assign("cms_config", $this->cmsConfig);
         if (!$this->cmsConfig['web_site_status']) {
             $this->error("站点已经关闭，请稍后访问~");

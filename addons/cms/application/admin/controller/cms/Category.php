@@ -125,7 +125,7 @@ class Category extends Adminbase
                     $catid = $this->modelClass->addCategory($data, $fields);
                     if ($catid && isset($data['priv_groupid'])) {
                         //更新会员组权限
-                        model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                        model("admin/cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
                     }
                 }
                 $this->success("添加成功！", url("Category/index"));
@@ -137,8 +137,8 @@ class Category extends Adminbase
                 }
                 $catid = $this->modelClass->addCategory($data, $fields);
                 if ($catid) {
-                    isset($data['priv_groupid']) && model("cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
-                    $this->success("添加成功！", url("Category/index"));
+                    isset($data['priv_groupid']) && model("admin/cms/CategoryPriv")->update_priv($catid, $data['priv_groupid'], 0);
+                    $this->success("添加成功！", url("index"));
                 } else {
                     $error = $this->modelClass->getError();
                     $this->error($error ? $error : '栏目添加失败！');
@@ -226,7 +226,7 @@ class Category extends Adminbase
             $status = $this->modelClass->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
                 //更新会员组权限
-                model("cms/CategoryPriv")->update_priv($catid, (isset($data['priv_groupid']) ? $data['priv_groupid'] : []), 0);
+                model("admin/cms/CategoryPriv")->update_priv($catid, (isset($data['priv_groupid']) ? $data['priv_groupid'] : []), 0);
                 $this->success("修改成功！", url("Category/index"));
             } else {
                 $error = $this->modelClass->getError();
@@ -269,7 +269,7 @@ class Category extends Adminbase
                 'tp_list'     => $this->listTemplate,
                 'tp_show'     => $this->showTemplate,
                 'tp_page'     => $this->pageTemplate,
-                'privs'       => model("cms/CategoryPriv")->where('catid', $catid)->select(),
+                'privs'       => model("admin/cms/CategoryPriv")->where('catid', $catid)->select(),
             ]);
             //会员组
             $this->assign("Member_Group", cache("Member_Group"));
@@ -398,7 +398,7 @@ class Category extends Adminbase
             $result = ["code" => 0, "data" => $_list];
             return json($result);
         } else {
-            $cmsConfig = cache("Cms_Config");
+            $cmsConfig = get_addon_config("cms");
             $this->assign("cmsConfig", $cmsConfig);
             return $this->fetch();
         }

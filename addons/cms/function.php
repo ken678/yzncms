@@ -23,7 +23,7 @@ use think\facade\Request;
  */
 function getCategory($cat, $fields = '', $newCache = false)
 {
-    $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+    $url_mode = isset(get_addon_config("cms")['site_url_mode']) ? get_addon_config("cms")['site_url_mode'] : 1;
     if (empty($cat)) {
         return false;
     }
@@ -89,7 +89,7 @@ function catpos($catid, $symbol = ' &gt; ')
  */
 function filters($modelid, $catid)
 {
-    $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+    $url_mode = isset(get_addon_config("cms")['site_url_mode']) ? get_addon_config("cms")['site_url_mode'] : 1;
     $data     = get_filters_field($modelid);
     Request::filter('trim,strip_tags');
     $param = Request::param();
@@ -253,7 +253,7 @@ function seo($catid = '', $title = '', $description = '', $keyword = '')
     if (!empty($keyword)) {
         $keyword = str_replace(' ', ',', strip_tags($keyword));
     }
-    $site = cache("Cms_Config");
+    $site = get_addon_config("cms");
     if (!empty($catid)) {
         $cat = getCategory($catid);
     }

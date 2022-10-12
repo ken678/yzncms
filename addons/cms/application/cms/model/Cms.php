@@ -99,12 +99,12 @@ class Cms extends Modelbase
         //更新栏目统计数据
         $this->updateCategoryItems($catid, 'add', 1);
         //推送到熊掌号和百度站长
-        $cmsConfig = cache("Cms_Config");
+        $cmsConfig = get_addon_config("cms");
         if (isset($cmsConfig['web_site_baidupush']) && $cmsConfig['web_site_baidupush']) {
             hook("baidupush", buildContentUrl($catid, $id, $data['url'], true, true));
         }
         //新增讯搜索引
-        if (isset(cache("Cms_Config")['web_site_searchtype']) && cache("Cms_Config")['web_site_searchtype'] === 'xunsearch') {
+        if (isset(get_addon_config("cms")['web_site_searchtype']) && get_addon_config("cms")['web_site_searchtype'] === 'xunsearch') {
             FulltextSearch::update($modelid, $catid, $id, $data, $dataExt);
         }
         return $id;
@@ -149,7 +149,7 @@ class Cms extends Modelbase
         //标签
         hook('content_edit_end', $data);
         //更新讯搜索引
-        if (isset(cache("Cms_Config")['web_site_searchtype']) && cache("Cms_Config")['web_site_searchtype'] === 'xunsearch') {
+        if (isset(get_addon_config("cms")['web_site_searchtype']) && get_addon_config("cms")['web_site_searchtype'] === 'xunsearch') {
             FulltextSearch::update($modelid, $catid, $id, $data, $dataExt);
         }
     }
@@ -182,7 +182,7 @@ class Cms extends Modelbase
         //标签
         hook('content_delete_end', $data);
         //更新讯搜索引
-        if (isset(cache("Cms_Config")['web_site_searchtype']) && cache("Cms_Config")['web_site_searchtype'] === 'xunsearch') {
+        if (isset(get_addon_config("cms")['web_site_searchtype']) && get_addon_config("cms")['web_site_searchtype'] === 'xunsearch') {
             FulltextSearch::del($data['catid'], $id);
         }
     }
@@ -337,7 +337,7 @@ class Cms extends Modelbase
      */
     public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit = 10, $page = null, $simple = false, $config = [])
     {
-        $url_mode  = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+        $url_mode  = isset(get_addon_config("cms")['site_url_mode']) ? get_addon_config("cms")['site_url_mode'] : 1;
         $tableName = $this->getModelTableName($modeId);
         $result    = [];
         if (isset($tableName) && !empty($tableName)) {
@@ -382,7 +382,7 @@ class Cms extends Modelbase
      */
     public function getContent($modeId, $where, $moreifo = false, $field = '*', $order = '', $cache = false)
     {
-        $url_mode  = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+        $url_mode  = isset(get_addon_config("cms")['site_url_mode']) ? get_addon_config("cms")['site_url_mode'] : 1;
         $tableName = $this->getModelTableName($modeId);
         if (2 == getModel($modeId, 'type') && $moreifo) {
             $extTable = $tableName . $this->ext_table;
@@ -508,7 +508,7 @@ class Cms extends Modelbase
             $data['thumb'] = $thumb ? $thumb : '';
         }
         //关键词加链接
-        $autolinks = cache("Cms_Config")['autolinks'];
+        $autolinks = get_addon_config("cms")['autolinks'];
         if (!empty($autolinks) && isset($dataExt['content'])) {
             if (strpos($autolinks, '|')) {
                 //解析关键词数组

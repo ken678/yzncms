@@ -28,7 +28,7 @@ class Cms extends Adminbase
     {
         parent::initialize();
         $this->CmsModel  = new CmsModel;
-        $this->cmsConfig = cache("Cms_Config");
+        $this->cmsConfig = get_addon_config("cms");
         $this->assign("cmsConfig", $this->cmsConfig);
     }
 

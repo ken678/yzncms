@@ -26,7 +26,7 @@ class Category extends Model
     public $categorys;
     public static function init()
     {
-        $cmsConfig = cache("Cms_Config");
+        $cmsConfig = get_addon_config("cms");
         self::event('after_write', function ($row) use ($cmsConfig) {
             if (isset($cmsConfig['web_site_baidupush']) && $cmsConfig['web_site_baidupush']) {
                 hook("baidupush", buildCatUrl($row->id, '', true, true));

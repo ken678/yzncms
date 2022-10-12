@@ -57,7 +57,7 @@ class CmsTagLib
      */
     public function Category($data)
     {
-        $url_mode = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+        $url_mode = isset(get_addon_config("cms")['site_url_mode']) ? get_addon_config("cms")['site_url_mode'] : 1;
         $where    = isset($data['where']) ? $data['where'] : "`status`=1";
         $order    = isset($data['order']) ? $data['order'] : 'listorder DESC,id DESC';
         //每页显示总数

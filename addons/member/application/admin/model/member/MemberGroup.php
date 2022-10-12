@@ -64,27 +64,4 @@ class MemberGroup extends Model
             return false;
         }
     }
-
-    //生成会员组缓存
-    public function membergroup_cache()
-    {
-        $data = $this->select();
-        if ($data) {
-            $data = $data->toArray();
-        } else {
-            return;
-        }
-        $return = array();
-        foreach ($data as $k => $v) {
-            if ($v['expand']) {
-                $v['expand'] = unserialize($v['expand']);
-            } else {
-                $v['expand'] = array();
-            }
-            $return[$v['id']] = $v;
-        }
-        cache("Member_Group", $return);
-        return $return;
-    }
-
 }

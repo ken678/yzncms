@@ -65,7 +65,7 @@
                             <select lay-filter="fasttype">
                                 <option data-url="">常用内部链接</option>
                                 <option data-url="cms/index/index">首页</option>
-                                {if isset(cache("Cms_Config")['site_url_mode']) && 1==cache("Cms_Config")['site_url_mode']}
+                                {if isset(get_addon_config("cms")['site_url_mode']) && 1==get_addon_config("cms")['site_url_mode']}
                                 <option data-url="cms/index/lists?catid=2">列表页/单页</option>
                                 <option data-url="cms/index/shows?catid=2&id=1">详情页</option>
                                 {else}

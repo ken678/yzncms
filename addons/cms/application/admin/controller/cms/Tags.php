@@ -55,7 +55,7 @@ class Tags extends Adminbase
             $data = $this->request->post();
             if ($this->modelClass->save($data, ['id' => $data['tagid']]) !== false) {
                 if ($data['oldtagsname'] != $data['tag']) {
-                    model('TagsContent')->save(['tag' => $data['tag']], ['tag' => $data['oldtagsname']]);
+                    model('admin/cms/TagsContent')->save(['tag' => $data['tag']], ['tag' => $data['oldtagsname']]);
                 }
                 $this->success('修改成功！');
             }
@@ -86,7 +86,7 @@ class Tags extends Adminbase
             $info = $this->modelClass->where(array('id' => $tid))->find();
             if (!empty($info)) {
                 if ($this->modelClass->where(array('tag' => $info['tag']))->delete() !== false) {
-                    model('TagsContent')->where(array('tag' => $info['tag']))->delete();
+                    model('admin/cms/TagsContent')->where(array('tag' => $info['tag']))->delete();
                 }
             }
         }
