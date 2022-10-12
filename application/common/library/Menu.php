@@ -32,7 +32,7 @@ class Menu
             throw new Exception('模块配置信息为空！');
         }
         //查询出“插件后台列表”菜单ID
-        $defaultMenuParentid = MenuModel::where(["app" => "addons", "controller" => "addons", "action" => "addonadmin"])->value('id') ?: 41;
+        $defaultMenuParentid = MenuModel::where(["app" => "admin", "controller" => "addons", "action" => "addonadmin"])->value('id') ?: 41;
         //插件具体菜单
         if (!empty($admin_list)) {
             foreach ($admin_list as $key => $menu) {
@@ -43,10 +43,10 @@ class Menu
                 $route = self::menuRoute($menu['name'], 'admin');
                 $data  = array_merge(array(
                     //父ID
-                    "parentid"  => $parentid ?: (isset($menu['parentid']) ?: (int) $defaultMenuParentid),
+                    "parentid"  => $parentid ?: ($menu['parentid'] ?? (int) $defaultMenuParentid),
                     'icon'      => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
                     //状态，1是显示，0是不显示
-                    "status"    => $menu['status'] ?? 1,
+                    "status"    => $menu['status'] ?? 0,
                     //名称
                     "title"     => $menu['title'],
                     //备注
