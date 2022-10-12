@@ -517,7 +517,8 @@ EOD;
     {
         return [
             'application',
-            //'public',
+            'public',
+            'templates',
         ];
     }
 
