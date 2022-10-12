@@ -37,7 +37,7 @@ class User
 
     public function __construct($options = [])
     {
-        if ($config = cache("Member_Config")) {
+        if ($config = get_addon_config("member")) {
             $this->config = array_merge($this->config, $config);
         }
         $this->options = array_merge($this->config, $options);

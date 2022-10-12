@@ -12,11 +12,11 @@
 // +----------------------------------------------------------------------
 // | 会员组管理
 // +----------------------------------------------------------------------
-namespace app\member\controller;
+namespace app\admin\controller\member;
 
+use app\admin\model\member\Member as MemberModel;
+use app\admin\model\member\MemberGroup as MemberGroup;
 use app\common\controller\Adminbase;
-use app\member\model\Member as Member_Model;
-use app\member\model\MemberGroup as Member_Group;
 
 class Group extends Adminbase
 {
@@ -25,8 +25,8 @@ class Group extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass   = new Member_Group;
-        $this->Member_Model = new Member_Model;
+        $this->modelClass  = new MemberGroup;
+        $this->MemberModel = new MemberModel;
     }
 
     /**
@@ -38,7 +38,7 @@ class Group extends Adminbase
             $_list = $this->modelClass->order(["listorder" => "DESC", "id" => "DESC"])->select();
             foreach ($_list as $k => $v) {
                 //统计会员总数
-                $_list[$k]['_count'] = $this->Member_Model->where(["groupid" => $v['id']])->count('id');
+                $_list[$k]['_count'] = $this->MemberModel->where(["groupid" => $v['id']])->count('id');
             }
             $result = array("code" => 0, "data" => $_list);
             return json($result);
@@ -67,14 +67,14 @@ class Group extends Adminbase
         }
         if ($this->request->isPost()) {
             $data   = $this->request->post('row/a');
-            $result = $this->validate($data, 'MemberGroup');
+            $result = $this->validate($data, 'app\admin\validate\member\MemberGroup');
             if (true !== $result) {
                 return $this->error($result);
             }
             if ($this->modelClass->groupEdit($data)) {
                 //更新缓存
                 $this->modelClass->Membergroup_cache();
-                $this->success("修改成功！", url("group/index"));
+                $this->success("修改成功！", url("index"));
             } else {
                 $this->error("修改失败！");
             }
@@ -96,7 +96,7 @@ class Group extends Adminbase
         if ($this->modelClass->groupDelete($groupid)) {
             //更新缓存
             $this->modelClass->Membergroup_cache();
-            $this->success("删除成功！", url("group/index"));
+            $this->success("删除成功！", url("index"));
         } else {
             $this->error($this->modelClass->getError());
         }

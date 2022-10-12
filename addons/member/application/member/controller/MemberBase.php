@@ -43,7 +43,7 @@ class MemberBase extends HomeBase
     protected function initialize()
     {
         parent::initialize();
-        $this->memberConfig = cache("Member_Config");
+        $this->memberConfig = get_addon_config("member");
         $this->memberGroup  = cache("Member_Group");
 
         $this->auth = User::instance();

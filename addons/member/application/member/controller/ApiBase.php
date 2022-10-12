@@ -46,7 +46,7 @@ class ApiBase extends Api
         $modulename         = $this->request->module();
         $controllername     = parse_name($this->request->controller());
         $actionname         = strtolower($this->request->action());
-        $this->memberConfig = cache("Member_Config");
+        $this->memberConfig = get_addon_config("member");
         $this->memberGroup  = cache("Member_Group");
 
         $this->auth = User::instance();

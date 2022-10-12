@@ -40,32 +40,34 @@ class Member extends Addons
                             "status" => 1,
                             "title"  => "会员管理",
                             "icon"   => "icon-user-shared-2-line",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/member.member/add",
+                                    "status" => 0,
+                                    "title"  => "会员添加",
+                                ],
+                                [
+                                    "name"   => "admin/member.member/edit",
+                                    "status" => 0,
+                                    "title"  => "会员编辑",
+                                ],
+                                [
+                                    "name"   => "admin/member.member/del",
+                                    "status" => 0,
+                                    "title"  => "会员删除",
+                                ],
+                                [
+                                    "name"   => "admin/member.member/pass",
+                                    "status" => 0,
+                                    "title"  => "会员审核",
+                                ],
+                            ],
                         ],
                         [
                             "name"   => "admin/member.member/userverify",
                             "status" => 1,
                             "title"  => "审核会员",
                             "icon"   => "icon-user-star-line",
-                        ],
-                        [
-                            "name"   => "admin/member.member/add",
-                            "status" => 0,
-                            "title"  => "会员添加",
-                        ],
-                        [
-                            "name"   => "admin/member.member/edit",
-                            "status" => 0,
-                            "title"  => "会员编辑",
-                        ],
-                        [
-                            "name"   => "admin/member.member/del",
-                            "status" => 0,
-                            "title"  => "会员删除",
-                        ],
-                        [
-                            "name"   => "admin/member.member/pass",
-                            "status" => 0,
-                            "title"  => "会员审核",
                         ],
                     ],
                 ],
@@ -80,26 +82,36 @@ class Member extends Addons
                             "status" => 1,
                             "title"  => "会员组管理",
                             "icon"   => "icon-user-settings-line",
-                        ],
-                        [
-                            "name"   => "admin/member.group/add",
-                            "status" => 0,
-                            "title"  => "会员组添加",
-                        ],
-                        [
-                            "name"   => "admin/member.group/edit",
-                            "status" => 0,
-                            "title"  => "会员组编辑",
-                        ],
-                        [
-                            "name"   => "admin/member.group/del",
-                            "status" => 0,
-                            "title"  => "会员组删除",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/member.group/add",
+                                    "status" => 0,
+                                    "title"  => "会员组添加",
+                                ],
+                                [
+                                    "name"   => "admin/member.group/edit",
+                                    "status" => 0,
+                                    "title"  => "会员组编辑",
+                                ],
+                                [
+                                    "name"   => "admin/member.group/del",
+                                    "status" => 0,
+                                    "title"  => "会员组删除",
+                                ],
+                            ],
                         ],
                     ],
                 ],
 
             ],
+        ],
+    );
+
+    public $cache_list = array(
+        'Member_Group' => [
+            'name'   => '会员组',
+            'model'  => 'MemberGroup',
+            'action' => 'membergroup_cache',
         ],
     );
 

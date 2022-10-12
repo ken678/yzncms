@@ -10,14 +10,12 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 会员投稿模型
+// | 会员组模型
 // +----------------------------------------------------------------------
-namespace app\admin\model\member;
+namespace app\member\model;
 
 use think\Model;
 
-class MemberContent extends Model
+class MemberGroup extends Model
 {
-    protected $autoWriteTimestamp = true;
-
 }

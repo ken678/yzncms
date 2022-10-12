@@ -12,10 +12,10 @@
 // +----------------------------------------------------------------------
 // | 会员管理
 // +----------------------------------------------------------------------
-namespace app\member\controller;
+namespace app\admin\controller\member;
 
+use app\admin\model\member\Member as MemberModel;
 use app\common\controller\Adminbase;
-use app\member\model\Member as Member_Model;
 use app\member\service\User;
 
 class Member extends Adminbase
@@ -25,7 +25,7 @@ class Member extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass  = new Member_Model;
+        $this->modelClass  = new MemberModel;
         $this->UserService = User::instance();
         $this->groupCache  = cache("Member_Group"); //会员模型
     }
@@ -68,13 +68,13 @@ class Member extends Adminbase
     {
         if ($this->request->isPost()) {
             $data   = $this->request->post();
-            $result = $this->validate($data, 'member');
+            $result = $this->validate($data, 'app\admin\validate\member\Member');
             if (true !== $result) {
                 return $this->error($result);
             }
             $data['overduedate'] = strtotime($data['overduedate']);
             if ($this->UserService->userRegister($data['username'], $data['password'], $data['email'], $data['mobile'], $data)) {
-                $this->success("添加会员成功！", url("member/index"));
+                $this->success("添加会员成功！", url("index"));
             } else {
                 //$this->UserService->delete($memberinfo['userid']);
                 $this->error($this->UserService->getError() ?: '添加会员失败！');
@@ -96,12 +96,12 @@ class Member extends Adminbase
         if ($this->request->isPost()) {
             $userid = $this->request->param('id/d', 0);
             $data   = $this->request->post();
-            $result = $this->validate($data, 'member.edit');
+            $result = $this->validate($data, 'app\admin\validate\member\Member.edit');
             if (true !== $result) {
                 return $this->error($result);
             }
             //获取用户信息
-            $userinfo = Member_Model::get($userid);
+            $userinfo = MemberModel::get($userid);
             if (empty($userinfo)) {
                 $this->error('该会员不存在！');
             }
@@ -118,7 +118,7 @@ class Member extends Adminbase
             if (false === $this->modelClass->allowField(true)->save($data, ['id' => $userid])) {
                 $this->error('更新失败！');
             }
-            $this->success("更新成功！", url("member/index"));
+            $this->success("更新成功！", url("index"));
 
         } else {
             $userid = $this->request->param('id/d', 0);
@@ -169,7 +169,7 @@ class Member extends Adminbase
             $ids = array(0 => $ids);
         }
         foreach ($ids as $uid) {
-            $info = Member_Model::where('id', $uid)->update(['status' => 1]);
+            $info = MemberModel::where('id', $uid)->update(['status' => 1]);
         }
         $this->success("审核成功！");
     }
