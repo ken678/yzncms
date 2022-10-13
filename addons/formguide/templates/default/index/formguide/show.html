@@ -32,10 +32,10 @@ form .verify-box img {display: inline-block; margin-left: 2%; height: 38px; }
             </div>
         </div>
         <div class="content">
-            <form class="layui-form" method="post" action="{:url('formguide/index/post')}">
+            <form class="layui-form" method="post" action="{:url('index/formguide/post')}">
             	{:token()}
                 <input type="hidden" name="id" value="{$id}" />
-                {include file="inputItem" /}
+                {include file="formguide/inputItem" /}
                 {if count($fieldList)}
                 {if $modelInfo.setting.isverify}
                 <div class="layui-form-item verify-box">

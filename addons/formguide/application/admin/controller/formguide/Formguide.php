@@ -27,7 +27,7 @@ class Formguide extends Adminbase
     {
         parent::initialize();
         //模块安装后，模板安装在Default主题下！
-        $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DIRECTORY_SEPARATOR . "formguide" . DIRECTORY_SEPARATOR;
+        $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DS . "index" . DS . "formguide" . DS;
         $this->Models   = new Models;
     }
 
@@ -53,7 +53,6 @@ class Formguide extends Adminbase
             }
             try {
                 $this->Models->addModelFormguide($data);
-                cache('Model_form', null);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -82,7 +81,6 @@ class Formguide extends Adminbase
             $data['setting'] = serialize($data['setting']);
             try {
                 $this->Models->save($data, ['id' => (int) $data['id']]);
-                cache('Model_form', null);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
@@ -119,7 +117,6 @@ class Formguide extends Adminbase
         }
         try {
             $this->Models->deleteModel($id);
-            cache('Model_form', null);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }

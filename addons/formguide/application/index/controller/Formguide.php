@@ -38,7 +38,7 @@ class Formguide extends MemberBase
         parent::initialize();
         $this->formid = $this->request->param('id/d', 0);
         //模型
-        $this->modelInfo = Db::name('model')->where('id', $this->formid)->where('module', 'formguide')->select();
+        $this->modelInfo = Db::name('model')->where('id', $this->formid)->where('module', 'formguide')->find();
         if (empty($this->modelInfo)) {
             $this->error('该表单不存在或者已经关闭！');
         }

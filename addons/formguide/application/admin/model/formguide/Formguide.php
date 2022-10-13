@@ -92,15 +92,4 @@ class Formguide extends CmsModel
         }
         return Db::name($modelInfo['tablename'])->where('id', $id)->delete();
     }
-
-    //缓存生成
-    public function formguide_cache()
-    {
-        $formguide_cache = model('admin/Models')->getModelAll(null, 'formguide');
-        if (!empty($formguide_cache)) {
-            cache('Model_form', $formguide_cache);
-        }
-        return $formguide_cache;
-    }
-
 }
