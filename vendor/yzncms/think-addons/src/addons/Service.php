@@ -16,6 +16,7 @@
 // +----------------------------------------------------------------------
 namespace think\addons;
 
+use app\common\library\Cache as CacheLib;
 use app\common\library\Menu as MenuLib;
 use PhpZip\Exception\ZipException;
 use PhpZip\ZipFile;
@@ -60,11 +61,16 @@ class Service
             if (class_exists($class)) {
                 $addon = new $class();
                 $addon->install();
-            }
-            if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : [];
-                //添加菜单
-                MenuLib::addAddonMenu($admin_list, $info);
+
+                if (isset($info['has_adminlist']) && $info['has_adminlist']) {
+                    $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : [];
+                    //添加菜单
+                    MenuLib::addAddonMenu($admin_list, $info);
+                }
+                $cache_list = property_exists($addon, 'cache_list') ? $addon->cache_list : [];
+                if ($cache_list) {
+                    CacheLib::installAddonCache($cache_list, $info);
+                }
             }
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
@@ -109,14 +115,19 @@ class Service
                 $info['status'] = -1;
                 set_addon_info($name, $info);
             }
-            //删除插件后台菜单
-            if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                MenuLib::delAddonMenu($name);
-            }
             $class = get_addon_class($name);
             if (class_exists($class)) {
                 $addon = new $class();
                 $addon->uninstall();
+
+                //删除插件后台菜单
+                if (isset($info['has_adminlist']) && $info['has_adminlist']) {
+                    MenuLib::delAddonMenu($name);
+                }
+                $cache_list = property_exists($addon, 'cache_list') ? $addon->cache_list : [];
+                if ($cache_list) {
+                    CacheLib::deleteCacheAddon($info['name']);
+                }
             };
             self::runSQL($name, 'uninstall');
         } catch (Exception $e) {

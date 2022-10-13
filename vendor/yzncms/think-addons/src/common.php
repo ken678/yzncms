@@ -1,6 +1,5 @@
 <?php
 
-use think\Db;
 use think\facade\Config;
 use think\facade\Route;
 
@@ -178,28 +177,6 @@ function get_addon_autoload_config($truncate = false)
                 ];
             } else {
                 $route = array_merge($route, $rule);
-            }
-        }
-    }
-    //TODO 模块的钩子
-    $modules = Db::name('Module')->where('status', 1)->select();
-    foreach ($modules as $name => $addon) {
-        $name = $addon['module'];
-        if (is_file(APP_PATH . $name . DIRECTORY_SEPARATOR . 'behavior' . DIRECTORY_SEPARATOR . 'Hooks.php')) {
-            $methods = (array) get_class_methods('\\app\\' . $name . '\\behavior\\Hooks');
-            $hooks   = array_diff($methods, $base);
-            foreach ($hooks as $hook) {
-                $hook = parse_name($hook, 0, false);
-                if (!isset($config['hooks'][$hook])) {
-                    $config['hooks'][$hook] = [];
-                }
-                // 兼容手动配置项
-                if (is_string($config['hooks'][$hook])) {
-                    $config['hooks'][$hook] = explode(',', $config['hooks'][$hook]);
-                }
-                if (!in_array($name, $config['hooks'][$hook])) {
-                    $config['hooks'][$hook][] = '\\app\\' . $name . '\\behavior\\Hooks';
-                }
             }
         }
     }
