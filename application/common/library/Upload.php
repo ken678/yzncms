@@ -14,8 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\common\library;
 
-use app\attachment\model\Attachment;
 use app\common\exception\UploadException;
+use app\common\model\Attachment;
 use think\facade\Hook;
 use think\File;
 
