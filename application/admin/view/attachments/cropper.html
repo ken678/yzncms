@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片剪裁</title>
+    <link rel="stylesheet" href="__STATIC__/libs/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/libs/cropper/cropper.min.css">
+    <link rel="stylesheet" href="__STATIC__/libs/cropper/main.css">
+    <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css">
+    <style type="text/css">
+    .layui-btn-group+.layui-btn-group {
+        margin-left: 0px;
+    }
+
+    .layui-container {
+        width: 100% !important;
+    }
+
+    .modal-body {
+        width: 300px;
+    }
+
+    .modal-body canvas {
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body style="padding: 10px;">
+    <div class="layui-container">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md8 layui-col-sm8">
+                <div class="img-container">
+                    <img id="image" src="{$Think.get.url}" alt="Picture">
+                </div>
+            </div>
+            <div class="layui-col-md4 layui-col-sm4">
+                <div class="docs-preview clearfix">
+                    <div class="img-preview preview-lg"></div>
+                    <div class="img-preview preview-md"></div>
+                    <div class="img-preview preview-sm"></div>
+                    <div class="img-preview preview-xs"></div>
+                </div>
+                <div class="docs-data layui-form layui-form-pane">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 60px;">宽度</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" id="dataWidth" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">PX</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 60px;">高度</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" id="dataHeight" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">PX</div>
+                    </div>
+                </div>
+                <div class="docs-toggles">
+                    <div class="layui-btn-group">
+                        <button type="button" class="layui-btn layui-btn-sm" data-name="aspectRatio" value="1.7777777777777777">16:9</button>
+                        <button type="button" class="layui-btn layui-btn-sm" data-name="aspectRatio" value="1.3333333333333333">4:3</button>
+                        <button type="button" class="layui-btn layui-btn-sm" data-name="aspectRatio" value="1">1:1</button>
+                        <button type="button" class="layui-btn layui-btn-sm" data-name="aspectRatio" value="0.6666666666666666">2:3</button>
+                        <button type="button" class="layui-btn layui-btn-sm" data-name="aspectRatio" value="NaN">自由</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row docs-buttons" style="text-align: center;">
+            <div class="layui-col-md10 layui-col-sm10">
+                <div class="layui-btn-group">
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="setDragMode" data-option="move"><i class="iconfont icon-yidong"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="setDragMode" data-option="crop"><i class="iconfont icon-tailor"></i></button>
+                </div>
+                <div class="layui-btn-group">
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="zoom" data-option="0.1"><i class="iconfont icon-fullscreen"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="zoom" data-option="-0.1"><i class="iconfont icon-narrow"></i></button>
+                </div>
+                <div class="layui-btn-group">
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="move" data-option="-10" data-second-option="0"><i class="iconfont icon-leftarrow"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="move" data-option="10" data-second-option="0"><i class="iconfont icon-Rightarrow"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="move" data-option="0" data-second-option="-10"><i class="iconfont icon-rising"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="move" data-option="0" data-second-option="10"><i class="iconfont icon-falling"></i></button>
+                </div>
+                <div class="layui-btn-group">
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="rotate" data-option="-45"><i class="iconfont icon-undo-alt"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="rotate" data-option="45"><i class="iconfont icon-redo-alt"></i></button>
+                </div>
+                <div class="layui-btn-group">
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="scaleX" data-option="-1"><i class="iconfont icon-arrows-alt-h"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="scaleY" data-option="-1"><i class="iconfont icon-fa-arrows-alt-v"></i></button>
+                </div>
+                <div class="layui-btn-group" style="position: relative;">
+                    <input type="file" class="sr-only" id="inputImage" name="file" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff" style="opacity:0;position: absolute;left: 37px;width: 37px;height: 30px; padding: 0;overflow: hidden;white-space: nowrap;border: 0;">
+                    <button type="button" class="layui-btn layui-btn-sm" data-method="reset"><i class="iconfont icon-shuaxin1"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm"><i class="iconfont icon-cloud-upload"></i></button>
+                    <button type="button" class="layui-btn layui-btn-sm getCroppedCanvas" data-method="getCroppedCanvas"><i class="iconfont icon-cloud-download"></i></button>
+                </div>
+            </div>
+            <div id="getCroppedCanvasModal" style="display: none;">
+                <div class="modal-content" style="padding: 20px;">
+                    <h5 style="font-size: 16px;line-height: 2;">已剪裁</h5>
+                    <div class="modal-body"></div>
+                    <a href="javascript:;" type="button" class="layui-btn layui-btn-sm layui-btn-fluid" id="download" download="cropped.jpg">下载图片</a>
+                </div>
+            </div>
+            <div class="layui-col-md2 layui-col-sm2">
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal btn-submit">确定</button>
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-danger btn-cancel">取消</button>
+            </div>
+        </div>
+    </div>
+    <script src="__STATIC__/libs/jquery/jquery.min.js"></script>
+    <script src="__STATIC__/libs/layui/layui.js"></script>
+    <script src="__STATIC__/libs/cropper/cropper.min.js"></script>
+    <script type="text/javascript">
+    layui.use(['layer', 'jquery'], function() {
+
+        var $ = layui.jquery,
+            layer = layui.layer;
+        var console = window.console || { log: function() {} };
+        var URL = window.URL || window.webkitURL;
+        var $image = $('#image');
+        var $download = $('#download');
+        /*var $dataX = $('#dataX');
+        var $dataY = $('#dataY');*/
+        var $dataHeight = $('#dataHeight');
+        var $dataWidth = $('#dataWidth');
+        /*var $dataRotate = $('#dataRotate');
+        var $dataScaleX = $('#dataScaleX');
+        var $dataScaleY = $('#dataScaleY');*/
+        var options = {
+            aspectRatio: 16 / 9,
+            preview: '.img-preview',
+            crop: function(e) {
+                /*$dataX.val(Math.round(e.detail.x));
+                $dataY.val(Math.round(e.detail.y));*/
+                $dataHeight.val(Math.round(e.detail.height));
+                $dataWidth.val(Math.round(e.detail.width));
+                /*$dataRotate.val(e.detail.rotate);
+                $dataScaleX.val(e.detail.scaleX);
+                $dataScaleY.val(e.detail.scaleY);*/
+            }
+        };
+        var originalImageURL = $image.attr('src');
+        var uploadedImageName = 'cropped.jpg';
+        var uploadedImageType = 'image/jpeg';
+        var uploadedImageURL;
+
+        // Cropper
+        $image.cropper(options);
+
+        $(document).on("click", ".getCroppedCanvas", function() {
+            layer.open({
+                type: 1,
+                title: false,
+                area: '340px',
+                content: $('#getCroppedCanvasModal')
+            });
+        })
+
+        function doUpload(filename, fileobj, index) {
+            var formData = new FormData();
+            formData.append(filename, fileobj);
+            $.ajax({
+                url: '{:url("attachment/upload/upload", ["dir" => "images", "module" => "admin"])}',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                async: false,
+                contentType: false,
+                processData: false,
+                success: function(res) {
+                    if (res.code == 1) {
+                        var arr = parent.$("#layui-layer" + index).data("arr");
+                        var input = parent.$("#" + arr[0]);
+                        input.val(input.val().replace(arr[1], res.path)).attr('data-original', res.path).trigger("change");
+                    } else {
+                        console.log(res);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+        }
+
+        function dataURLtoFile(dataurl) {
+             var arr = dataurl.split(','),
+                 mime = arr[0].match(/:(.*?);/)[1],
+                 bstr = atob(arr[1]),
+                 n = bstr.length,
+                 u8arr = new Uint8Array(n);
+             while (n--) {
+                 u8arr[n] = bstr.charCodeAt(n);
+             }
+             var urlArr = originalImageURL.split('.');
+             var suffix = 'png';
+             originalImageURL = urlArr.join('');
+             var filename = originalImageURL.substr(originalImageURL.lastIndexOf('/') + 1);
+             var exp = new RegExp("\\." + suffix + "$", "i");
+             filename = exp.test(filename) ? filename : filename + "." + suffix;
+             return new File([u8arr], filename, { type: mime });
+         }
+
+
+        $(document).on("click", ".btn-submit", function() {
+            var dataUrl = $image.cropper('getCroppedCanvas').toDataURL('image/png');
+            //console.log(dataUrl);
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            doUpload('file', dataURLtoFile(dataUrl), index);
+            parent.layer.close(index);
+        });
+
+        //取消事件
+        $(document).on("click", ".btn-cancel", function() {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+        });
+
+        // Buttons
+        if (!$.isFunction(document.createElement('canvas').getContext)) {
+            $('button[data-method="getCroppedCanvas"]').prop('disabled', true);
+        }
+
+        if (typeof document.createElement('cropper').style.transition === 'undefined') {
+            $('button[data-method="rotate"]').prop('disabled', true);
+            $('button[data-method="scale"]').prop('disabled', true);
+        }
+
+        // Download
+        /*if (typeof $download[0].download === 'undefined') {
+            $download.addClass('disabled');
+        }*/
+
+        // 选择比例
+        $('.docs-toggles').on('click', 'button', function() {
+            var $this = $(this);
+            var name = $this.data('name');
+            var type = $this.prop('type');
+            var cropBoxData;
+            var canvasData;
+            if (!$image.data('cropper')) {
+                return;
+            }
+            options[name] = $this.val();
+            $image.cropper('destroy').cropper(options);
+        });
+
+        // 按钮组操作
+        $('.docs-buttons').on('click', '[data-method]', function() {
+            var $this = $(this);
+            var data = $this.data();
+            var cropper = $image.data('cropper');
+            var cropped;
+            var $target;
+            var result;
+
+            if ($this.prop('disabled') || $this.hasClass('disabled')) {
+                return;
+            }
+
+            if (cropper && data.method) {
+                data = $.extend({}, data); // Clone a new one
+                if (typeof data.target !== 'undefined') {
+                    $target = $(data.target);
+                    if (typeof data.option === 'undefined') {
+                        try {
+                            data.option = JSON.parse($target.val());
+                        } catch (e) {
+                            console.log(e.message);
+                        }
+                    }
+                }
+                cropped = cropper.cropped;
+                switch (data.method) {
+                    case 'rotate':
+                        if (cropped && options.viewMode > 0) {
+                            $image.cropper('clear');
+                        }
+                        break;
+                    case 'getCroppedCanvas':
+                        if (uploadedImageType === 'image/jpeg') {
+                            if (!data.option) {
+                                data.option = {};
+                            }
+                            data.option.fillColor = '#fff';
+                        }
+                        break;
+                }
+                result = $image.cropper(data.method, data.option, data.secondOption);
+                switch (data.method) {
+                    case 'rotate':
+                        if (cropped && options.viewMode > 0) {
+                            $image.cropper('crop');
+                        }
+                        break;
+                    case 'scaleX':
+                    case 'scaleY':
+                        $(this).data('option', -data.option);
+                        break;
+                    case 'getCroppedCanvas':
+                        if (result) {
+                            // Bootstrap's Modal
+                            $('#getCroppedCanvasModal').find('.modal-body').html(result);
+                            if (!$download.hasClass('disabled')) {
+                                download.download = uploadedImageName;
+                                $download.attr('href', result.toDataURL(uploadedImageType));
+                            }
+                        }
+                        break;
+                    case 'destroy':
+                        if (uploadedImageURL) {
+                            URL.revokeObjectURL(uploadedImageURL);
+                            uploadedImageURL = '';
+                            $image.attr('src', originalImageURL);
+                        }
+                        break;
+                }
+                if ($.isPlainObject(result) && $target) {
+                    try {
+                        $target.val(JSON.stringify(result));
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                }
+            }
+        });
+
+        // 键盘支持
+        $(document.body).on('keydown', function(e) {
+            if (e.target !== this || !$image.data('cropper') || this.scrollTop > 300) {
+                return;
+            }
+            switch (e.which) {
+                case 37:
+                    e.preventDefault();
+                    $image.cropper('move', -1, 0);
+                    break;
+                case 38:
+                    e.preventDefault();
+                    $image.cropper('move', 0, -1);
+                    break;
+                case 39:
+                    e.preventDefault();
+                    $image.cropper('move', 1, 0);
+                    break;
+                case 40:
+                    e.preventDefault();
+                    $image.cropper('move', 0, 1);
+                    break;
+            }
+        });
+
+        // 上传图片
+        var $inputImage = $('#inputImage');
+
+        if (URL) {
+            $inputImage.change(function() {
+                var files = this.files;
+                var file;
+
+                if (!$image.data('cropper')) {
+                    return;
+                }
+
+                if (files && files.length) {
+                    file = files[0];
+
+                    if (/^image\/\w+$/.test(file.type)) {
+                        uploadedImageName = file.name;
+                        uploadedImageType = file.type;
+
+                        if (uploadedImageURL) {
+                            URL.revokeObjectURL(uploadedImageURL);
+                        }
+
+                        uploadedImageURL = URL.createObjectURL(file);
+                        $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
+                        $inputImage.val('');
+                    } else {
+                        window.alert('Please choose an image file.');
+                    }
+                }
+            });
+        } else {
+            $inputImage.prop('disabled', true).parent().addClass('disabled');
+        }
+    })
+    </script>
+</body>
+
+</html>
