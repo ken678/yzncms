@@ -133,16 +133,15 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='缓存列队表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
 -- ----------------------------
 INSERT INTO `yzn_cache` VALUES (1, 'Config', '网站配置', 'admin', 'Config', 'config_cache', 1);
 INSERT INTO `yzn_cache` VALUES (2, 'Menu', '后台菜单', 'admin', 'Menu', 'menu_cache', 1);
-INSERT INTO `yzn_cache` VALUES (3, 'Module', '可用模块列表', 'admin', 'Module', 'module_cache', 1);
-INSERT INTO `yzn_cache` VALUES (4, 'Model', '模型列表', 'admin', 'Models', 'model_cache', 1);
-INSERT INTO `yzn_cache` VALUES (5, 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', 1);
+INSERT INTO `yzn_cache` VALUES (3, 'Model', '模型列表', 'admin', 'Models', 'model_cache', 1);
+INSERT INTO `yzn_cache` VALUES (4, 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', 1);
 
 -- ----------------------------
 -- Table structure for `yzn_config`
