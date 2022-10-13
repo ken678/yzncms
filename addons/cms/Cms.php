@@ -28,7 +28,7 @@ class Cms extends Addons
             "name"      => "admin/cms.cms/index",
             "status"    => 1,
             "title"     => "内容",
-            "tip"       => "",
+            "icon"      => "icon-draft-line",
             "listorder" => 0,
             "child"     => [
                 [

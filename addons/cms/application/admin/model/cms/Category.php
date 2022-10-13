@@ -175,20 +175,4 @@ class Category extends Model
         return $arrchildid;
     }
 
-    //刷新栏目索引缓存
-    public function category_cache()
-    {
-        $data        = self::order("listorder DESC")->select();
-        $CategoryIds = array();
-        foreach ($data as $r) {
-            $CategoryIds[$r['id']] = array(
-                'id'       => $r['id'],
-                'catdir'   => $r['catdir'],
-                'parentid' => $r['parentid'],
-            );
-        }
-        cache("Category", $CategoryIds);
-        return $CategoryIds;
-    }
-
 }
