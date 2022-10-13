@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\alioss;
 
-use app\attachment\model\Attachment;
+use app\common\model\Attachment;
 use OSS\Core\OssException;
 use OSS\OssClient;
 use think\Addons;
