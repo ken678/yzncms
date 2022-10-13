@@ -12,10 +12,10 @@
 // +----------------------------------------------------------------------
 // | 附件上传处理类
 // +----------------------------------------------------------------------
-namespace app\attachment\controller;
+namespace app\admin\controller;
 
-use app\attachment\model\Attachment as Attachment_Model;
 use app\common\controller\Adminbase;
+use app\common\model\Attachment as AttachmentModel;
 use think\facade\Hook;
 
 class Attachments extends Adminbase
@@ -26,7 +26,7 @@ class Attachments extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass = new Attachment_Model;
+        $this->modelClass = new AttachmentModel;
         $this->uploadUrl  = config('public_url') . 'uploads/';
     }
 
@@ -35,8 +35,8 @@ class Attachments extends Adminbase
     {
         if ($this->request->isAjax()) {
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list                      = Attachment_Model::where($where)->page($page, $limit)->order('id', 'desc')->select();
-            $total                      = Attachment_Model::where($where)->order('id', 'desc')->count();
+            $_list                      = AttachmentModel::where($where)->page($page, $limit)->order('id', 'desc')->select();
+            $total                      = AttachmentModel::where($where)->order('id', 'desc')->count();
             $result                     = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -78,7 +78,7 @@ class Attachments extends Adminbase
                 }
             }
         });
-        $attachmentlist = Attachment_Model::where('id', 'in', $ids)->select();
+        $attachmentlist = AttachmentModel::where('id', 'in', $ids)->select();
         foreach ($attachmentlist as $attachment) {
             Hook::listen("upload_delete", $attachment);
             $attachment->delete();
@@ -126,7 +126,7 @@ class Attachments extends Adminbase
                 $filename = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'temp' . DS . md5($vo) . $fileExt;
                 if (http_down($vo, $filename) !== false) {
                     $file_info['md5'] = hash_file('md5', $filename);
-                    if ($file_exists = Attachment_Model::get(['md5' => $file_info['md5']])) {
+                    if ($file_exists = AttachmentModel::get(['md5' => $file_info['md5']])) {
                         unlink($filename);
                         $localpath = $file_exists['path'];
                     } else {
@@ -145,7 +145,7 @@ class Attachments extends Adminbase
                         $file_info['ext']  = ltrim($fileExt, ".");
 
                         if (rename($filename, $savePath . $fname)) {
-                            Attachment_Model::create($file_info);
+                            AttachmentModel::create($file_info);
                             $localpath = $file_info['path'];
                         }
                     }
