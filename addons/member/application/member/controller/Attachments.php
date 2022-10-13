@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\member\controller;
 
-use app\attachment\model\Attachment;
+use app\common\model\Attachment;
 
 class Attachments extends MemberBase
 {
