@@ -24,11 +24,12 @@ return [
     'tpl_replace_string' => [
         '__STATIC__'    => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static'),
         '__UPLOAD__'    => ROOT_URL . (defined('IF_PUBLIC') ? 'uploads' : 'public/uploads'),
+        '__ADDONS__'    => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/addons',
         //cms模块
-        '__IMG_PATH__'  => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/images',
-        '__CSS_PATH__'  => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/css',
-        '__JS_PATH__'   => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms/js',
-        '__HOME_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/modules/cms',
+        '__IMG_PATH__'  => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/addons/cms/images',
+        '__CSS_PATH__'  => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/addons/cms/css',
+        '__JS_PATH__'   => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/addons/cms/js',
+        '__HOME_PATH__' => ROOT_URL . (defined('IF_PUBLIC') ? 'static' : 'public/static') . '/addons/cms',
     ],
     // 模板文件名分隔符
     'view_depr'          => DIRECTORY_SEPARATOR,
@@ -41,4 +42,5 @@ return [
     // 标签库标签结束标记
     'taglib_end'         => '}',
     'taglib_build_in'    => 'cx,app\common\taglib\Yzn',
+    'taglib_pre_load'    => '',
 ];
