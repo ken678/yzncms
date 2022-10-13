@@ -10,7 +10,6 @@
     {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 <script type="text/javascript">
-GV.editormd_upload_url='{$editormd_upload_url ? $editormd_upload_url : url("attachment/upload/upload", ["dir" => "images", "from" => "editormd", "module" => request()->module()])}';
 GV.editormd_mudule_path='__STATIC__/addons/editormd/lib/';
 $(function() {
     var editormds = {};
@@ -26,7 +25,7 @@ $(function() {
                 codeFold: true, // 开启代码折叠
                 dialogLockScreen: false, // 设置弹出层对话框不锁屏
                 imageUpload: true, // 开启图片上传
-                imageUploadURL: GV.editormd_upload_url,
+                imageUploadURL: GV.image_upload_url,
             });
         });
     }
