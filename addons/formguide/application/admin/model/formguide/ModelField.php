@@ -14,9 +14,9 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model\formguide;
 
-use app\admin\model\cms\ModelField as ModelField;
+use app\admin\model\cms\ModelField as ModelFieldModel;
 
-class ModelField extends ModelField
+class ModelField extends ModelFieldModel
 {
 
 }

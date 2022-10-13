@@ -47,7 +47,7 @@ class Formguide extends Adminbase
     {
         if ($this->request->isPost()) {
             $data   = $this->request->post();
-            $result = $this->validate($data, 'admin\validate\formguide\Models');
+            $result = $this->validate($data, 'app\admin\validate\formguide\Models');
             if (true !== $result) {
                 return $this->error($result);
             }
@@ -75,7 +75,7 @@ class Formguide extends Adminbase
         if ($this->request->isPost()) {
             $data = $this->request->post();
             unset($data['type'], $data['tablename']);
-            $result = $this->validate($data, 'admin\validate\formguide\Models.edit');
+            $result = $this->validate($data, 'app\admin\validate\formguide\Models.edit');
             if (true !== $result) {
                 return $this->error($result);
             }

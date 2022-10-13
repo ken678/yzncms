@@ -13,19 +13,18 @@
 // | 表单前台管理
 // +----------------------------------------------------------------------
 
-namespace app\formguide\controller;
+namespace app\index\controller;
 
-use app\formguide\model\Formguide as Formguide_Model;
+use app\index\model\Formguide as FormguideModel;
 use app\member\controller\MemberBase;
 use think\Db;
 use think\Validate;
 
-class Index extends MemberBase
+class Formguide extends MemberBase
 {
     //当前表单ID
     public $formid;
     //表单模型缓存
-    protected $Model_form;
     protected $tableName;
     //模型信息
     protected $modelInfo = array();
@@ -37,10 +36,9 @@ class Index extends MemberBase
     protected function initialize()
     {
         parent::initialize();
-        $this->Model_form = cache("Model_form");
-        $this->formid     = $this->request->param('id/d', 0);
+        $this->formid = $this->request->param('id/d', 0);
         //模型
-        $this->modelInfo = $this->Model_form[$this->formid];
+        $this->modelInfo = Db::name('model')->where('id', $this->formid)->where('module', 'formguide')->select();
         if (empty($this->modelInfo)) {
             $this->error('该表单不存在或者已经关闭！');
         }
@@ -50,7 +48,7 @@ class Index extends MemberBase
         }
         //配置
         $this->modelInfo['setting'] = $this->setting = unserialize($this->modelInfo['setting']);
-        $this->Formguide_Model      = new Formguide_Model;
+        $this->FormguideModel       = new FormguideModel;
         $this->assign('id', $this->formid);
     }
 
@@ -60,7 +58,7 @@ class Index extends MemberBase
         //模板
         $show_template      = $this->setting['show_template'] ? $this->setting['show_template'] : "show";
         $modelid            = $this->request->param('id/d', 0);
-        $fieldList          = $this->Formguide_Model->getFieldList($modelid);
+        $fieldList          = $this->FormguideModel->getFieldList($modelid);
         $seo                = [];
         $seo['site_title']  = $this->modelInfo['name'] . "_自定义表单";
         $seo['keyword']     = "";
@@ -70,7 +68,7 @@ class Index extends MemberBase
             'modelInfo' => $this->modelInfo,
             'fieldList' => $fieldList,
         ]);
-        return $this->fetch("/{$show_template}");
+        return $this->fetch("{$show_template}");
     }
 
     //表单提交
@@ -99,7 +97,7 @@ class Index extends MemberBase
             }
         }
         try {
-            $this->Formguide_Model->addFormguideData($this->formid, $data['modelField']);
+            $this->FormguideModel->addFormguideData($this->formid, $data['modelField']);
         } catch (\Exception $ex) {
             $this->error($ex->getMessage());
         }

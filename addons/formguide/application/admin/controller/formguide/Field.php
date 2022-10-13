@@ -52,7 +52,7 @@ class Field extends AdminBase
         if ($this->request->isPost()) {
             //增加字段
             $data   = $this->request->post();
-            $result = $this->validate($data, 'admin\validate\formguide\ModelField');
+            $result = $this->validate($data, 'app\admin\validate\formguide\ModelField');
             if (true !== $result) {
                 return $this->error($result);
             }
@@ -84,7 +84,7 @@ class Field extends AdminBase
         $fieldid = $this->request->param('id/d', 0);
         if ($this->request->isPost()) {
             $data   = $this->request->post();
-            $result = $this->validate($data, 'admin\validate\formguide\ModelField');
+            $result = $this->validate($data, 'app\admin\validate\formguide\ModelField');
             if (true !== $result) {
                 return $this->error($result);
             }
