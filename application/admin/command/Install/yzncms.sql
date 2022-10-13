@@ -299,26 +299,6 @@ INSERT INTO `yzn_menu` VALUES (57, '插件卸载', '', 39, 'admin', 'addons', 'u
 INSERT INTO `yzn_menu` VALUES (58, '插件状态', '', 39, 'admin', 'addons', 'state','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (59, '本地安装', '', 39, 'admin', 'addons', 'local','', '', 1, '', 0, 0);
 
-
--- ----------------------------
--- Table structure for `yzn_module`
--- ----------------------------
-DROP TABLE IF EXISTS `yzn_module`;
-CREATE TABLE `yzn_module` (
-  `module` varchar(15) NOT NULL COMMENT '模块',
-  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '模块名称',
-  `sign` varchar(100) NOT NULL DEFAULT '' COMMENT '签名',
-  `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '内置模块',
-  `version` varchar(50) NOT NULL DEFAULT '' COMMENT '版本',
-  `setting` mediumtext NULL COMMENT '设置信息',
-  `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '安装时间',
-  `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `listorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`module`),
-  KEY `sign` (`sign`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='已安装模块列表';
-
 -- ----------------------------
 -- Table structure for `yzn_model`
 -- ----------------------------
