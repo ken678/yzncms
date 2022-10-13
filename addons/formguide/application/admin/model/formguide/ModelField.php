@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 字段模型
 // +----------------------------------------------------------------------
-namespace app\formguide\model;
+namespace app\admin\model\formguide;
 
 use app\admin\model\cms\ModelField as ModelField;
 

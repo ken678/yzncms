@@ -12,15 +12,15 @@
 // +----------------------------------------------------------------------
 // | 模型模型
 // +----------------------------------------------------------------------
-namespace app\formguide\model;
+namespace app\admin\model\formguide;
 
-use app\admin\model\cms\Models;
+use app\admin\model\cms\Models as ModelsModel;
 use think\Db;
 use think\facade\Config;
 
-class Models extends Models
+class Models extends ModelsModel
 {
-    protected $name = 'model';
+    protected $name               = 'model';
     protected $autoWriteTimestamp = true;
 
     /**
@@ -34,8 +34,8 @@ class Models extends Models
             throw new \Exception('数据不得为空！');
         }
         $data['tablename'] = $data['tablename'] ? 'form_' . $data['tablename'] : '';
-        $data['module'] = $module;
-        $data['setting'] = serialize($data['setting']);
+        $data['module']    = $module;
+        $data['setting']   = serialize($data['setting']);
         //添加模型记录
         if (self::allowField(true)->save($data)) {
             cache("Model", null);

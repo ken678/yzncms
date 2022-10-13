@@ -12,12 +12,12 @@
 // +----------------------------------------------------------------------
 // | 表单模型
 // +----------------------------------------------------------------------
-namespace app\formguide\model;
+namespace app\admin\model\formguide;
 
-use app\admin\model\cms\Cms as Cms_Model;
+use app\admin\model\cms\Cms as CmsModel;
 use think\Db;
 
-class Formguide extends Cms_Model
+class Formguide extends CmsModel
 {
     protected $name               = 'ModelField';
     protected $autoWriteTimestamp = false;
