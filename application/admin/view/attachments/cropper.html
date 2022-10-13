@@ -168,7 +168,7 @@
             var formData = new FormData();
             formData.append(filename, fileobj);
             $.ajax({
-                url: '{:url("attachment/upload/upload", ["dir" => "images", "module" => "admin"])}',
+                url: '{:url("admin/ajax/upload", ["dir" => "images", "module" => "admin"])}',
                 type: 'POST',
                 data: formData,
                 cache: false,

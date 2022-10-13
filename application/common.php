@@ -514,7 +514,7 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
     if ($width >= $width_t || $height >= $height_t) {
         return $imgurl;
     }
-    model('attachment/Attachment')->create_thumb(ROOT_PATH . 'public' . DS . 'uploads' . DS . $imgurl_replace, ROOT_PATH . 'public' . DS . 'uploads' . DS . dirname($imgurl_replace) . '/', $newimgname, "{$width},{$height}", $thumbType);
+    model('Attachment')->create_thumb(ROOT_PATH . 'public' . DS . 'uploads' . DS . $imgurl_replace, ROOT_PATH . 'public' . DS . 'uploads' . DS . dirname($imgurl_replace) . '/', $newimgname, "{$width},{$height}", $thumbType);
     $_thumb_cache[$key] = $uploadUrl . $newimgurl;
     return $_thumb_cache[$key];
 
