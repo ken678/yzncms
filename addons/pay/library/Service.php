@@ -210,8 +210,8 @@ class Service
      */
     public static function getConfig($type = 'wechat')
     {
-        $config = cache('Pay_Config');
-        $config = isset($config[$type]['config']) ? $config[$type]['config'] : $config['wechat']['config'];
+        $config = get_addon_config('pay');
+        $config = isset($config[$type]) ? $config[$type] : $config['wechat'];
         if ($config['mode']) {
             $config['mode'] = 'dev';
         } else {

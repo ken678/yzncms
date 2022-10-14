@@ -55,8 +55,8 @@ class Account extends Model
      */
     public function submitOrder($money, $pay_type = 'wechat')
     {
-        $epay = cache('Pay_Config');
-        if ($epay[$pay_type] && $epay[$pay_type]['status']) {
+        $epay = get_addon_config('pay');
+        if (isset($epay[$pay_type])) {
             $uid      = home_user::instance()->isLogin() ? home_user::instance()->id : 0;
             $username = home_user::instance()->isLogin() ? home_user::instance()->username : '未知';
             $data     = [
