@@ -19,9 +19,8 @@ use app\member\model\Member as Member_Model;
 use app\message\model\Message as Message_Model;
 use app\message\model\MessageData as MessageData_Model;
 use app\message\model\MessageGroup as MessageGroup_Model;
-use think\facade\Config;
 
-class Index extends MemberBase
+class Message extends MemberBase
 {
     //初始化
     protected function initialize()
@@ -43,7 +42,7 @@ class Index extends MemberBase
                 return false;
             }
             $data['send_from'] = $this->auth->username;
-            $result = $this->validate($data, 'message');
+            $result            = $this->validate($data, 'message');
             if (true !== $result) {
                 return $this->error($result);
             }
@@ -69,7 +68,7 @@ class Index extends MemberBase
         $messageid = $this->request->param('id/d', 0);
         empty($messageid) && $this->error('参数不能为空！');
         $info = Message_Model::where([
-            'id' => $messageid,
+            'id'      => $messageid,
             'send_to' => $this->auth->username,
         ])->findOrEmpty();
 
@@ -89,7 +88,7 @@ class Index extends MemberBase
         $messageid = $this->request->param('id/d', 0);
         empty($messageid) && $this->error('参数不能为空！');
         $info = Message_Model::where([
-            'id' => $messageid,
+            'id'        => $messageid,
             'send_from' => $this->auth->username,
         ])->find();
         empty($info) && $this->error('你查看的信息不存在！');
@@ -103,7 +102,7 @@ class Index extends MemberBase
     {
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
+            $page  = $this->request->param('page/d', 1);
             $_list = MessageGroup_Model::where('groupid', $this->auth->groupid)->page($page, $limit)->select();
             $total = MessageGroup_Model::where('groupid', $this->auth->groupid)->count();
 
@@ -135,7 +134,7 @@ class Index extends MemberBase
         $check = MessageData_Model::where(['userid' => $this->auth->id, 'group_message_id' => $groupid])->find();
         if (!$check) {
             MessageData_Model::create([
-                'userid' => $this->auth->id,
+                'userid'           => $this->auth->id,
                 'group_message_id' => $groupid,
             ]);
         }
@@ -147,10 +146,10 @@ class Index extends MemberBase
     public function inbox()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $_list = Message_Model::where('send_to', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
-            $total = Message_Model::where('send_to', $this->auth->username)->count();
+            $limit  = $this->request->param('limit/d', 10);
+            $page   = $this->request->param('page/d', 1);
+            $_list  = Message_Model::where('send_to', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
+            $total  = Message_Model::where('send_to', $this->auth->username)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
@@ -161,10 +160,10 @@ class Index extends MemberBase
     public function outbox()
     {
         if ($this->request->isAjax()) {
-            $limit = $this->request->param('limit/d', 10);
-            $page = $this->request->param('page/d', 1);
-            $_list = Message_Model::where('send_from', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
-            $total = Message_Model::where('send_from', $this->auth->username)->count();
+            $limit  = $this->request->param('limit/d', 10);
+            $page   = $this->request->param('page/d', 1);
+            $_list  = Message_Model::where('send_from', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
+            $total  = Message_Model::where('send_from', $this->auth->username)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }

@@ -12,9 +12,9 @@
 // +----------------------------------------------------------------------
 // | 消息模型
 // +----------------------------------------------------------------------
-namespace app\message\model;
+namespace app\admin\model\message;
 
-use \think\Model;
+use think\Model;
 
 class MessageData extends Model
 {

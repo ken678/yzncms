@@ -12,12 +12,11 @@
 // +----------------------------------------------------------------------
 // | 消息模型
 // +----------------------------------------------------------------------
-namespace app\admin\model\message;
+namespace app\index\model;
 
 use think\Model;
 
-class Message extends Model
+class MessageData extends Model
 {
-    protected $autoWriteTimestamp = true;
 
 }

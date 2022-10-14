@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 模型验证
 // +----------------------------------------------------------------------
-namespace app\message\validate;
+namespace app\admin\validate\message;
 
 use think\Validate;
 
@@ -21,7 +21,7 @@ class MessageGroup extends Validate
     //定义验证规则
     protected $rule = [
         'groupid|会员组' => 'require',
-        'subject|标题' => 'require',
-        'content|内容' => 'require',
+        'subject|标题'  => 'require',
+        'content|内容'  => 'require',
     ];
 }
