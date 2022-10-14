@@ -28,14 +28,16 @@ class Pay extends Addons
             "listorder" => 3,
             "child"     => [
                 [
-                    "name"  => "admin/pay.payment/pay_list",
-                    "title" => "支付模块",
-                    "child" => [
-                        [
-                            "name"  => "admin/pay.payment/edit",
-                            "title" => "支付配置",
-                        ],
-                    ],
+                    "name"  => "admin/pay.payment/modify_deposit",
+                    "title" => "在线充值",
+                ],
+                [
+                    "name"  => "admin/pay.payment/config",
+                    "title" => "支付配置",
+                ],
+                [
+                    "name"  => "admin/pay.spend/index",
+                    "title" => "消费记录",
                 ],
             ],
         ],

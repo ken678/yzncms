@@ -5,9 +5,8 @@
     <div class="layui-card-body">
         <div class="layui-tab">
             <ul class="layui-tab-title">
-                <li class="layui-this"><a href="{:url('payment/index')}">入账记录</a></li>
-                <li><a href="{:url('spend/index')}">消费记录</a></li>
-                <li><a href="{:url('payment/pay_list')}">支付模块</a></li>
+                <li class="layui-this"><a href="{:url('index')}">入账记录</a></li>
+                <li><a href="{:url('admin/pay.spend/index')}">消费记录</a></li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show"><table class="layui-hide" id="currentTable" lay-filter="currentTable"></table></div>
@@ -24,7 +23,7 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
-        delete_url: "{:url('del')}",
+        delete_url: "{:url('admin/pay.payment/del')}",
     };
 
     table.render({
@@ -32,7 +31,7 @@ layui.use('yznTable', function() {
         toolbar: ['refresh',
             [{
                 text: '在线充值',
-                url: '{:url("payment/modify_deposit")}',
+                url: '{:url("add")}',
                 method: 'open',
                 class: 'layui-btn layui-btn-sm',
                 icon:'iconfont icon-money',
