@@ -34,15 +34,15 @@ class Message extends Addons
                     "title" => "消息列表",
                 ],
                 [
-                    "name"  => "admin/message.message/group",
+                    "name"  => "admin/message.group/index",
                     "title" => "群发消息列表",
                 ],
                 [
-                    "name"  => "admin/message.message/message_send",
+                    "name"  => "admin/message.group/add",
                     "title" => "群发消息",
                 ],
                 [
-                    "name"  => "admin/message.message/send_one",
+                    "name"  => "admin/message.message/add",
                     "title" => "发消息",
                 ],
                 [
@@ -50,7 +50,7 @@ class Message extends Addons
                     "title" => "删除短消息",
                 ],
                 [
-                    "name"  => "admin/message.message/delete_group",
+                    "name"  => "admin/message.group/del",
                     "title" => "删除群发消息",
                 ],
             ],

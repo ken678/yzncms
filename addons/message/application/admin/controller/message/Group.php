@@ -18,7 +18,7 @@ use app\admin\model\message\MessageData as MessageDataModel;
 use app\admin\model\message\MessageGroup as MessageGroupModel;
 use app\common\controller\Adminbase;
 
-class Message extends Adminbase
+class Group extends Adminbase
 {
     //初始化
     protected function initialize()
@@ -26,8 +26,8 @@ class Message extends Adminbase
         parent::initialize();
         $this->groupCache = cache("Member_Group"); //会员模型
 
-        $this->MessageGroupModel = new MessageGroupModel;
-        $this->MessageDataModel  = new MessageDataModel;
+        $this->modelClass       = new MessageGroupModel;
+        $this->MessageDataModel = new MessageDataModel;
     }
     /**
      * 群发消息管理
@@ -37,12 +37,12 @@ class Message extends Adminbase
         if ($this->request->isAjax()) {
 
             list($page, $limit, $where) = $this->buildTableParames();
-            $_list                      = $this->MessageGroupModel->where($where)->page($page, $limit)->select();
+            $_list                      = $this->modelClass->where($where)->page($page, $limit)->select();
             foreach ($_list as $k => $v) {
                 $_list[$k]['groupname'] = $this->groupCache[$v['groupid']]['name'];
                 $_list[$k]['count']     = MessageDataModel::where('group_message_id', $v['id'])->count();
             }
-            $total  = $this->MessageGroupModel->where($where)->count();
+            $total  = $this->modelClass->where($where)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }

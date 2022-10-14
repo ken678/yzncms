@@ -31,12 +31,12 @@ class Message extends Adminbase
     /**
      * 发消息
      */
-    public function send_one()
+    public function add()
     {
         if ($this->request->isPost()) {
             $data              = $this->request->post('info/a');
             $data['send_from'] = $this->auth->username;
-            $result            = $this->validate($data, 'message');
+            $result            = $this->validate($data, 'app\admin\validate\message\Message');
             if (true !== $result) {
                 return $this->error($result);
             }
