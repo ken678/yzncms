@@ -125,9 +125,9 @@ class Admin extends Adminbase
                 }
             }
             //检查是否存在友情链接
-            $res    = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}link'");
-            $config = get_addon_config('links');
-            if ($res && $config && $config['status']) {
+            $res  = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}link'");
+            $info = get_addon_info('links');
+            if ($res && $info && $info['status'] > 0) {
                 $db_task[] = ['fun' => 'step8', 'msg' => '友情链接转换完毕!'];
             }
             Cache::set('db_task', $db_task, 600);
@@ -156,8 +156,8 @@ class Admin extends Adminbase
 
     public function step1()
     {
-        $config = get_addon_config('cms');
-        if (!$config || !$config['status']) {
+        $info = get_addon_info('cms');
+        if (!$info || !$info['status'] > 0) {
             $this->error('系统未安装cms模块，请先安装！');
         }
         //清空yzncms的表
@@ -173,8 +173,8 @@ class Admin extends Adminbase
                 Db::name('model_field')->where(['modelid' => $val['id']])->delete();
             }
         }
-        $config = get_addon_config('links');
-        if ($config && $config['status']) {
+        $info = get_addon_info('links');
+        if ($info && $info['status'] > 0) {
             Db::execute("TRUNCATE `{$yznprefix}terms`;");
             Db::execute("TRUNCATE `{$yznprefix}links`;");
         }
