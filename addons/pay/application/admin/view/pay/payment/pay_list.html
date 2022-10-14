@@ -1,0 +1,48 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">支付模块</div>
+    <div class="layui-card-body">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li><a href="{:url('payment/index')}">入账记录</a></li>
+                <li><a href="{:url('spend/index')}">消费记录</a></li>
+                <li class="layui-this"><a href="{:url('payment/pay_list')}">支付模块</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show"><table class="layui-hide" id="currentTable" lay-filter="currentTable"></table></div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        edit_url: '{:url("edit")}',
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh'],
+        url: '{:url("pay_list")}',
+        search:false,
+        cols: [
+            [
+                { field:'title', width: 150,title: '支付方式'},
+                { field:'name', width: 100,title: '名称'},
+                { field:'icon', align: "center",width: 80,title: '图标',templet: '<div><i class="iconfont {{ d.icon }}"></i></div>'},
+                { field:'pay_desc', title: '简介' },
+                { field: 'status', width: 80,title: '状态',templet: yznTable.formatter.label,selectList:{0:'禁用',1:'启用'}},
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['edit']}
+            ]
+        ],
+    });
+});
+</script>
+{/block}

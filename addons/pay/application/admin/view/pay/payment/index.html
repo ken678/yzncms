@@ -1,0 +1,60 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">入账记录</div>
+    <div class="layui-card-body">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this"><a href="{:url('payment/index')}">入账记录</a></li>
+                <li><a href="{:url('spend/index')}">消费记录</a></li>
+                <li><a href="{:url('payment/pay_list')}">支付模块</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show"><table class="layui-hide" id="currentTable" lay-filter="currentTable"></table></div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        delete_url: "{:url('del')}",
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh',
+            [{
+                text: '在线充值',
+                url: '{:url("payment/modify_deposit")}',
+                method: 'open',
+                class: 'layui-btn layui-btn-sm',
+                icon:'iconfont icon-money',
+            }],
+        ],
+        url: '{:url("index")}',
+        cols: [
+            [
+                { field: 'trade_sn', align: "left", title: '订单号' },
+                { field: 'username', width: 120, title: '用户名' },
+                { field: 'pay_type', width: 120, title: '业务方式' },
+                { field: 'payment', width: 120, title: '支付方式' },
+                { field: 'money', width: 120, title: '支付金额', templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>' },
+                { field: 'addtime', width: 180, title: '创建时间', search: 'range' },
+                { field: 'paytime', width: 180, title: '支付时间', templet: '<div>{{#  if(d.paytime){ }} {{d.paytime}} {{#  } else { }} / {{#  } }}</div>', search: 'range' },
+                { field: 'ip', width: 180, title: 'IP' },
+                { field: 'status', width: 120, align: "center", title: '订单状态', templet: '<div>{{#  if(d.status=="交易成功"){ }} <button type="button" class="layui-btn layui-btn-xs">{{d.status}}</button> {{#  } else { }} <button type="button" class="layui-btn layui-btn-xs layui-btn-danger">{{d.status}}</button> {{#  } }}</div>' },
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}

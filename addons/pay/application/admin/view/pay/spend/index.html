@@ -1,0 +1,50 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">消费记录</div>
+    <div class="layui-card-body">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li><a href="{:url('payment/index')}">入账记录</a></li>
+                <li class="layui-this"><a href="{:url('spend/index')}">消费记录</a></li>
+                <li><a href="{:url('payment/pay_list')}">支付模块</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show"><table class="layui-hide" id="currentTable" lay-filter="currentTable"></table></div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        delete_url: "{:url('del')}",
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh'],
+        url: '{:url("index")}',
+        cols: [
+            [
+                { field: 'creat_at', align: "left", title: '消费流水号' },
+                { field: 'username', width: 120, title: '用户名' },
+                { field: 'money', width: 120, title: '消费金额', templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>' },
+                { field: 'addtime', width: 200, title: '创建时间' },
+                { field: 'ip', width: 200, title: 'IP' },
+                { field: 'msg', width: 200, title: '备注说明' },
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
+            ]
+        ],
+        page: {}
+    });
+
+});
+</script>
+{/block}
