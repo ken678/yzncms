@@ -17,7 +17,7 @@ return array(
         'type'    => 'radio',
         'options' => [
             1 => '数字',
-            0 => '标识',
+            2 => '标识',
         ],
         'value'   => 1,
     ],
