@@ -15,23 +15,21 @@
 namespace app\pay\controller;
 
 use app\member\controller\MemberBase;
-use app\pay\model\Account as Account_Model;
-use app\pay\model\Payment as Payment_Model;
-use app\pay\model\Spend as Spend_Model;
+use app\pay\model\Account as AccountModel;
+use app\pay\model\Spend as SpendModel;
+use think\Db;
 
 class Index extends MemberBase
 {
     protected $noNeedLogin = ['epay'];
-    protected $Payment_Model;
-    protected $Account_Model;
-    protected $Spend_Model;
+    protected $AccountModel;
+    protected $SpendModel;
     //初始化
     protected function initialize()
     {
         parent::initialize();
-        $this->Payment_Model = new Payment_Model;
-        $this->Account_Model = new Account_Model;
-        $this->Spend_Model   = new Spend_Model;
+        $this->AccountModel = new AccountModel;
+        $this->SpendModel   = new SpendModel;
     }
 
     //充值
@@ -52,15 +50,15 @@ class Index extends MemberBase
                 return false;
             }
             try {
-                $this->Account_Model->submitOrder($money, $pay_type ? $pay_type : 'wechat');
+                $this->AccountModel->submitOrder($money, $pay_type ? $pay_type : 'wechat');
             } catch (Exception $e) {
                 $this->error($e->getMessage());
             }
 
         } else {
-            $paytypeList = $this->Payment_Model->where('status', 1)->select();
-            $this->assign('paytypeList', $paytypeList);
-            return $this->fetch('/pay');
+            $config = get_addon_config('pay');
+            $this->assign('config', $config);
+            return $this->fetch('pay');
         }
     }
 
@@ -71,13 +69,13 @@ class Index extends MemberBase
             $limit = $this->request->param('limit/d', 10);
             $page  = $this->request->param('page/d', 1);
 
-            $_list  = $this->Account_Model->where('uid', $this->auth->id)->page($page, $limit)->order('id DESC')->select();
-            $total  = $this->Account_Model->where('uid', $this->auth->id)->count();
+            $_list  = $this->AccountModel->where('uid', $this->auth->id)->page($page, $limit)->order('id DESC')->select();
+            $total  = $this->AccountModel->where('uid', $this->auth->id)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
         } else {
-            return $this->fetch('/pay_list');
+            return $this->fetch('pay_list');
         }
     }
 
@@ -88,13 +86,13 @@ class Index extends MemberBase
             $limit = $this->request->param('limit/d', 10);
             $page  = $this->request->param('page/d', 1);
 
-            $_list  = $this->Spend_Model->where('uid', $this->auth->id)->page($page, $limit)->order('id DESC')->select();
-            $total  = $this->Spend_Model->where('uid', $this->auth->id)->count();
+            $_list  = $this->SpendModel->where('uid', $this->auth->id)->page($page, $limit)->order('id DESC')->select();
+            $total  = $this->SpendModel->where('uid', $this->auth->id)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
 
         } else {
-            return $this->fetch('/spend_list');
+            return $this->fetch('spend_list');
         }
     }
 
@@ -110,15 +108,15 @@ class Index extends MemberBase
 
             try {
                 //扣除金钱
-                $this->Spend_Model->_spend(1, floatval($money), $this->auth->id, $this->auth->username, '积分兑换');
+                $this->SpendModel->_spend(1, floatval($money), $this->auth->id, $this->auth->username, '积分兑换');
                 //增加积分
-                \think\Db::name('member')->where(['id' => $this->auth->id, 'username' => $this->auth->username])->setInc('point', $point);
+                Db::name('member')->where(['id' => $this->auth->id, 'username' => $this->auth->username])->setInc('point', $point);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }
             $this->success("兑换成功！");
         } else {
-            return $this->fetch('/change_credit');
+            return $this->fetch('change_credit');
         }
     }
 
@@ -128,7 +126,7 @@ class Index extends MemberBase
         $type     = $this->request->param('type');
         $pay_type = $this->request->param('pay_type');
         if ($type == 'notify') {
-            $pay = \app\pay\library\Service::checkNotify($pay_type);
+            $pay = \addons\pay\library\Service::checkNotify($pay_type);
             if (!$pay) {
                 echo '签名错误';
                 return;
@@ -136,14 +134,14 @@ class Index extends MemberBase
             try {
                 $data      = $pay->verify();
                 $payamount = $pay_type == 'alipay' ? $data['total_amount'] : $data['total_fee'] / 100;
-                $this->Account_Model->settle($data['out_trade_no'], $payamount);
+                $this->AccountModel->settle($data['out_trade_no'], $payamount);
             } catch (Exception $e) {
                 //写入日志
                 // $e->getMessage();
             }
             return $pay->success()->send();
         } else {
-            $pay = \app\pay\library\Service::checkReturn($pay_type);
+            $pay = \addons\pay\library\Service::checkReturn($pay_type);
             if (!$pay) {
                 $this->error('签名错误');
             }

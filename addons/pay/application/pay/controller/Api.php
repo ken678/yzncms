@@ -14,8 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\pay\controller;
 
+use addons\pay\library\Service;
 use app\common\controller\Homebase;
-use app\pay\library\Service;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use think\facade\Session;
@@ -59,7 +59,7 @@ class Api extends HomeBase
             $this->assign("data", $data);
         }
         $this->assign("type", $type);
-        return $this->fetch('/wechat');
+        return $this->fetch('wechat');
     }
 
     /**
@@ -88,7 +88,7 @@ class Api extends HomeBase
             }
         }
         $this->assign("data", $data);
-        return $this->fetch('/alipay');
+        return $this->fetch('alipay');
     }
 
     /**

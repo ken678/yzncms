@@ -2,6 +2,16 @@
 
 return [
     [
+        'name'    => 'paytypelist',
+        'title'   => '支付方式',
+        'type'    => 'checkbox',
+        'options' => [
+            'wechat' => '微信支付',
+            'alipay' => '支付宝支付',
+        ],
+        'value'   => 'wechat,alipay',
+    ],
+    [
         'name'  => 'wechat',
         'title' => '微信',
         'type'  => 'array',

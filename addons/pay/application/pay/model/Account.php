@@ -12,8 +12,10 @@
 // +----------------------------------------------------------------------
 // | 支付模块模型
 // +----------------------------------------------------------------------
-namespace app\admin\model\pay;
+namespace app\pay\model;
 
+use app\member\model\Member;
+use app\member\service\User as home_user;
 use think\Db;
 use think\Model;
 
@@ -47,6 +49,40 @@ class Account extends Model
     }
 
     /**
+     * 发起订单支付
+     * @param float  $money
+     * @param string $paytype
+     */
+    public function submitOrder($money, $pay_type = 'wechat')
+    {
+        $epay = get_addon_config('pay');
+        if (isset($epay[$pay_type])) {
+            $uid      = home_user::instance()->isLogin() ? home_user::instance()->id : 0;
+            $username = home_user::instance()->isLogin() ? home_user::instance()->username : '未知';
+            $data     = [
+                'trade_sn'  => date("Ymdhis") . sprintf("%08d", $uid) . mt_rand(1000, 9999),
+                'uid'       => $uid,
+                'username'  => $username,
+                'type'      => 1,
+                'money'     => $money,
+                'payamount' => 0,
+                'pay_type'  => $pay_type,
+                'payment'   => $pay_type,
+                'ip'        => request()->ip(),
+                'status'    => 'unpay',
+            ];
+            $order     = self::create($data);
+            $notifyurl = request()->root(true) . '/pay/index/epay/type/notify/pay_type/' . $pay_type;
+            $returnurl = request()->root(true) . '/pay/index/epay/type/return/pay_type/' . $pay_type;
+            \addons\pay\library\Service::submitOrder($money, $order->trade_sn, $pay_type, "充值{$money}元", $notifyurl, $returnurl);
+            exit;
+        } else {
+            throw new Exception("支付方式不存在");
+        }
+
+    }
+
+    /**
      * 添加积分/金钱记录
      */
     public function _add($type, $money, $pay_type, $uid, $username, $usernote = '', $adminnote = '', $status = 'succ')
@@ -75,6 +111,38 @@ class Account extends Model
             return true;
         }
         return false;
+    }
+
+    /**
+     * 订单结算
+     * @param int    $orderid
+     * @param string $payamount
+     * @param string $memo
+     * @return bool
+     */
+    public function settle($orderid, $payamount = null, $memo = '')
+    {
+        $order = self::getByTradeSn($orderid);
+        if (!$order) {
+            return false;
+        }
+        if ($order->getData('status') != 'succ') {
+            $order->money   = $payamount ? $payamount : $order->money;
+            $order->paytime = time();
+            $order->status  = 'succ';
+            $order->save();
+            // 更新会员余额
+            $user = Member::get($order->uid);
+            if ($user) {
+                $before = $user->amount;
+                $after  = $user->amount + $order->money;
+                //更新会员信息
+                $user->save(['amount' => $after]);
+                //写入日志
+                //MoneyLog::create(['user_id' => $order->user_id, 'money' => $order->amount, 'before' => $before, 'after' => $after, 'memo' => '充值']);
+            }
+        }
+        return true;
     }
 
 }

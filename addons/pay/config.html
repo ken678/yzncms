@@ -2,13 +2,29 @@
     <div class="layui-card-body">
         <div class="layui-tab">
           <ul class="layui-tab-title">
-            <li class="layui-this">微信支付</li>
+            <li class="layui-this">基础设置</li>
+            <li>微信支付</li>
             <li>支付宝</li>
           </ul>
           <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                {foreach $data.config as $item}
+                {if $item.name=='paytypelist'}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{$item.title}</label>
+                    <div class="layui-input-block">
+                        {foreach name="item.options" item="opt" key="opt_k"}
+                        <input type="checkbox" name="config[wechat][{$item.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$item.value|default=''"} checked{/in}>
+                        {/foreach}
+                    </div>
+                    {if isset($item.tip) && $item.tip}<div class="layui-form-mid2 layui-word-aux">{$item.tip|raw}</div>{/if}
+                </div>
+                {/if}
+                {/foreach}
+            </div>
             {foreach $data.config as $item}
             {if $item.name=='wechat'}
-            <div class="layui-tab-item layui-show">
+            <div class="layui-tab-item">
                 <div class="layui-form-item">
                     <label class="layui-form-label">公众号APPID</label>
                     <div class="layui-input-block">
