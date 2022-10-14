@@ -107,20 +107,6 @@ function fun($fun)
 }
 
 /**
- * 检查模块是否已经安装
- * @param type $moduleName 模块名称
- * @return boolean
- */
-function isModuleInstall($moduleName)
-{
-    $appCache = cache('Module');
-    if (isset($appCache[$moduleName])) {
-        return true;
-    }
-    return false;
-}
-
-/**
  * select返回的数组进行整数映射转换
  *
  * @param array $map  映射关系二维数组  array(
