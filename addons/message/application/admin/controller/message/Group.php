@@ -58,7 +58,7 @@ class Group extends Adminbase
             $groupCache[$g['id']] = $g['name'];
         }
         $this->assign("Member_group", $groupCache);
-        parent::add();
+        return parent::add();
         /*if ($this->request->isPost()) {
     $data   = $this->request->post('info/a');
     $result = $this->validate($data, 'message_group');

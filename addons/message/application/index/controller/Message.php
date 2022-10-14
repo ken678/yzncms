@@ -12,13 +12,13 @@
 // +----------------------------------------------------------------------
 // | 短信息后台管理
 // +----------------------------------------------------------------------
-namespace app\message\controller;
+namespace app\index\controller;
 
+use app\index\model\Message as MessageModel;
+use app\index\model\MessageData as MessageDataModel;
+use app\index\model\MessageGroup as MessageGroupModel;
 use app\member\controller\MemberBase;
-use app\member\model\Member as Member_Model;
-use app\message\model\Message as Message_Model;
-use app\message\model\MessageData as MessageData_Model;
-use app\message\model\MessageGroup as MessageGroup_Model;
+use app\member\model\Member as MemberModel;
 
 class Message extends MemberBase
 {
@@ -49,16 +49,16 @@ class Message extends MemberBase
             if ($data['send_to'] == $this->auth->username) {
                 return $this->error('不能发给自己');
             }
-            if (!Member_Model::getByUsername($data['send_to'])) {
+            if (!MemberModel::getByUsername($data['send_to'])) {
                 return $this->error('用户不存在');
             }
-            if (Message_Model::create($data)) {
+            if (MessageModel::create($data)) {
                 $this->success('发送成功！', url('outbox'));
             } else {
                 $this->error('发送失败！');
             }
         } else {
-            return $this->fetch('/send');
+            return $this->fetch();
         }
     }
 
@@ -67,7 +67,7 @@ class Message extends MemberBase
     {
         $messageid = $this->request->param('id/d', 0);
         empty($messageid) && $this->error('参数不能为空！');
-        $info = Message_Model::where([
+        $info = MessageModel::where([
             'id'      => $messageid,
             'send_to' => $this->auth->username,
         ])->findOrEmpty();
@@ -78,7 +78,7 @@ class Message extends MemberBase
             $info->save();
         }
         $this->assign("info", $info);
-        return $this->fetch('/read');
+        return $this->fetch();
 
     }
 
@@ -87,13 +87,13 @@ class Message extends MemberBase
     {
         $messageid = $this->request->param('id/d', 0);
         empty($messageid) && $this->error('参数不能为空！');
-        $info = Message_Model::where([
+        $info = MessageModel::where([
             'id'        => $messageid,
             'send_from' => $this->auth->username,
         ])->find();
         empty($info) && $this->error('你查看的信息不存在！');
         $this->assign("info", $info);
-        return $this->fetch('/read');
+        return $this->fetch('read');
 
     }
 
@@ -103,12 +103,12 @@ class Message extends MemberBase
         if ($this->request->isAjax()) {
             $limit = $this->request->param('limit/d', 10);
             $page  = $this->request->param('page/d', 1);
-            $_list = MessageGroup_Model::where('groupid', $this->auth->groupid)->page($page, $limit)->select();
-            $total = MessageGroup_Model::where('groupid', $this->auth->groupid)->count();
+            $_list = MessageGroupModel::where('groupid', $this->auth->groupid)->page($page, $limit)->select();
+            $total = MessageGroupModel::where('groupid', $this->auth->groupid)->count();
 
             //未读已读判断
             foreach ($_list as $key => $val) {
-                $d = MessageData_Model::where(array('userid' => $this->auth->id, 'group_message_id' => $val['id']))->find();
+                $d = MessageDataModel::where(array('userid' => $this->auth->id, 'group_message_id' => $val['id']))->find();
                 if (!$d) {
                     $_list[$key]['isread'] = 0;
                 } else {
@@ -118,7 +118,7 @@ class Message extends MemberBase
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
-        return $this->fetch('/group');
+        return $this->fetch();
     }
 
     //查看系统消息
@@ -126,20 +126,20 @@ class Message extends MemberBase
     {
         $groupid = $this->request->param('id/d', 0);
         empty($groupid) && $this->error('参数不能为空！');
-        $info = MessageGroup_Model::get($groupid);
+        $info = MessageGroupModel::get($groupid);
         if (!$info) {
             $this->error('系统消息不存在！');
         }
         //检查查看表是否有记录,无则向message_data 插入浏览记录
-        $check = MessageData_Model::where(['userid' => $this->auth->id, 'group_message_id' => $groupid])->find();
+        $check = MessageDataModel::where(['userid' => $this->auth->id, 'group_message_id' => $groupid])->find();
         if (!$check) {
-            MessageData_Model::create([
+            MessageDataModel::create([
                 'userid'           => $this->auth->id,
                 'group_message_id' => $groupid,
             ]);
         }
         $this->assign("info", $info);
-        return $this->fetch('/read');
+        return $this->fetch('read');
     }
 
     //收件箱列表
@@ -148,12 +148,12 @@ class Message extends MemberBase
         if ($this->request->isAjax()) {
             $limit  = $this->request->param('limit/d', 10);
             $page   = $this->request->param('page/d', 1);
-            $_list  = Message_Model::where('send_to', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
-            $total  = Message_Model::where('send_to', $this->auth->username)->count();
+            $_list  = MessageModel::where('send_to', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
+            $total  = MessageModel::where('send_to', $this->auth->username)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
-        return $this->fetch('/inbox');
+        return $this->fetch();
     }
 
     //发件箱列表
@@ -162,12 +162,12 @@ class Message extends MemberBase
         if ($this->request->isAjax()) {
             $limit  = $this->request->param('limit/d', 10);
             $page   = $this->request->param('page/d', 1);
-            $_list  = Message_Model::where('send_from', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
-            $total  = Message_Model::where('send_from', $this->auth->username)->count();
+            $_list  = MessageModel::where('send_from', $this->auth->username)->page($page, $limit)->order('id DESC')->select();
+            $total  = MessageModel::where('send_from', $this->auth->username)->count();
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);
         }
-        return $this->fetch('/outbox');
+        return $this->fetch();
     }
 
     /**
@@ -181,7 +181,7 @@ class Message extends MemberBase
             $this->error("对不起你没有权限发短消息！");
         } else {
             //判断是否到限定条数
-            $num = Message_Model::where('send_from', $this->auth->username)->count();
+            $num = MessageModel::where('send_from', $this->auth->username)->count();
             if ($num >= $this->groupCache[$this->auth->groupid]['allowmessage']) {
                 $this->error('你的短消息条数已达最大值!');
             }
