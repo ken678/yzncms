@@ -335,15 +335,16 @@ class Cms extends Addons
 
     public function appInit()
     {
-        Route::group('/', function () {
+        $config = get_addon_config('cms');
+        Route::group('/', function () use ($config) {
             Route::rule('', 'cms/index/index');
             Route::rule('index', 'cms/index/index');
             Route::rule('lists/:catid', 'cms/index/lists')->pattern(['catid' => '\d+']);
             Route::rule('shows/:catid/:id', 'cms/index/shows')->pattern(['catid' => '\d+', 'id' => '\d+']);
             Route::rule('tag/[:tag]', 'cms/index/tags');
             Route::rule('search', 'cms/index/search');
-            if (isset(get_addon_config("cms")['site_url_mode']) && 2 == get_addon_config("cms")['site_url_mode']) {
-                //Route::rule('admin', 'admin/index/login');//如去除c/ d/ 需要解开此注释
+            if ($config['site_url_mode'] == 2) {
+                //Route::rule('admin', 'admin/index/login'); //如去除c/ d/ 需要解开此注释
                 Route::rule('d/:catdir/:id', 'cms/index/shows')->pattern(['catdir' => '[A-Za-z0-9\-\_]+', 'id' => '\d+']);
                 Route::rule('c/:catdir/[:condition]', 'cms/index/lists')->pattern(['catdir' => '[A-Za-z0-9\-\_]+', 'condition' => '[0-9_&=a-zA-Z]+']);
             }
