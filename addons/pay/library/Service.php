@@ -13,7 +13,7 @@
 // | 订单服务类
 // +----------------------------------------------------------------------
 
-namespace app\pay\library;
+namespace addons\pay\library;
 
 use Exception;
 use think\facade\Session;

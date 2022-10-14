@@ -1,6 +1,6 @@
 <?php
 
-namespace app\pay\library;
+namespace addons\pay\library;
 
 use think\facade\Session;
 use util\Http;

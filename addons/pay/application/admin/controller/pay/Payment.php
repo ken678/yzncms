@@ -15,7 +15,6 @@
 namespace app\admin\controller\pay;
 
 use app\admin\model\pay\Account as AccountModel;
-use app\admin\model\pay\Payment as PaymentModel;
 use app\admin\model\pay\Spend as SpendModel;
 use app\common\controller\Adminbase;
 use think\Db;
@@ -25,9 +24,8 @@ class Payment extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->PaymentModel = new PaymentModel;
-        $this->modelClass   = new AccountModel;
-        $this->SpendModel   = new SpendModel;
+        $this->modelClass = new AccountModel;
+        $this->SpendModel = new SpendModel;
 
     }
 
@@ -54,17 +52,6 @@ class Payment extends Adminbase
                 $this->error('用户不存在！');
             }
 
-        } else {
-            return $this->fetch();
-        }
-    }
-
-    //支付模块列表
-    public function pay_list()
-    {
-        if ($this->request->isAjax()) {
-            $data = $this->PaymentModel->select();
-            return json(["code" => 0, "data" => $data]);
         } else {
             return $this->fetch();
         }
