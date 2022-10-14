@@ -48,8 +48,8 @@
                                 <option data-url="cms/index/lists?catdir=Introduction">列表页/单页</option>
                                 <option data-url="cms/index/shows?catdir=Introduction&id=1">详情页</option>
                                 {/if}
-                                {php}$formguide=get_addon_info('formguide');{/php}
-                                {if $formguide && $formguide['status']}
+                                {php}$info=get_addon_info('formguide');{/php}
+                                {if $info && $info['status']>0}
                                 <option data-url="index/formguide/index?id=2">表单页</option>
                                 {/if}
                             </select>
