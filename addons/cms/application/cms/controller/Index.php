@@ -426,7 +426,8 @@ class Index extends Cmsbase
     // 阅读付费
     public function readpoint()
     {
-        if (isModuleInstall('pay')) {
+        $config = get_addon_config('pay');
+        if ($config && $config('status')) {
             if (!$this->auth->isLogin()) {
                 $this->error('请先登录！', url('member/index/login'));
             }
