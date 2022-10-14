@@ -23,7 +23,7 @@ use think\facade\Request;
  */
 function getCategory($cat, $fields = '', $newCache = false)
 {
-    $url_mode = isset(get_addon_config("cms")['site_url_mode']) ? get_addon_config("cms")['site_url_mode'] : 1;
+    $url_mode = get_addon_config("cms")['site_url_mode'];
     if (empty($cat)) {
         return false;
     }
@@ -89,7 +89,7 @@ function catpos($catid, $symbol = ' &gt; ')
  */
 function filters($modelid, $catid)
 {
-    $url_mode = isset(get_addon_config("cms")['site_url_mode']) ? get_addon_config("cms")['site_url_mode'] : 1;
+    $url_mode = get_addon_config("cms")['site_url_mode'];
     $data     = get_filters_field($modelid);
     Request::filter('trim,strip_tags');
     $param = Request::param();

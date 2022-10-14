@@ -180,8 +180,9 @@ class Category extends Adminbase
                 'tp_show'          => $this->showTemplate,
                 'tp_page'          => $this->pageTemplate,
                 'parentid_modelid' => isset($Ca['modelid']) ? $Ca['modelid'] : 0,
+                "Member_Group"     => cache("Member_Group"),
+                "cmsConfig"        => get_addon_config("cms"),
             ]);
-            $this->assign("Member_Group", cache("Member_Group"));
             return $this->fetch();
         }
     }
@@ -261,18 +262,18 @@ class Category extends Adminbase
                 $categorydata = '';
             }
             $this->assign([
-                'data'        => $data,
-                'setting'     => $setting,
-                'category'    => $categorydata,
-                'models'      => $models,
-                'tp_category' => $this->categoryTemplate,
-                'tp_list'     => $this->listTemplate,
-                'tp_show'     => $this->showTemplate,
-                'tp_page'     => $this->pageTemplate,
-                'privs'       => model("admin/cms/CategoryPriv")->where('catid', $catid)->select(),
+                'data'         => $data,
+                'setting'      => $setting,
+                'category'     => $categorydata,
+                'models'       => $models,
+                'tp_category'  => $this->categoryTemplate,
+                'tp_list'      => $this->listTemplate,
+                'tp_show'      => $this->showTemplate,
+                'tp_page'      => $this->pageTemplate,
+                'privs'        => model("admin/cms/CategoryPriv")->where('catid', $catid)->select(),
+                "cmsConfig"    => get_addon_config("cms"),
+                "Member_Group" => cache("Member_Group"),
             ]);
-            //会员组
-            $this->assign("Member_Group", cache("Member_Group"));
             if ($data['type'] == 1) {
                 //单页栏目
                 return $this->fetch("singlepage_edit");
