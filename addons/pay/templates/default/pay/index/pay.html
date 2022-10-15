@@ -15,8 +15,9 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">充值方式</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="pay_type" value="wechat" title="微信支付">
-                        <input type="radio" name="pay_type" value="alipay" title="支付宝支付">
+                        {foreach :explode(',', $config['paytypelist']) as $key=>$vo } 
+                        <input type="radio" name="pay_type" value="{$vo}" {if $key==0}checked{/if} title="{$vo=='wechat' ? '微信支付' : '支付宝支付'}">
+                        {/foreach}
                     </div>
                 </div>
                 <div class="layui-form-item">

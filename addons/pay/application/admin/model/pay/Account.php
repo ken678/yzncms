@@ -33,7 +33,11 @@ class Account extends Model
 
     public function getPayTypeAttr($value)
     {
-        $status = ['offline' => '线下支付', 'recharge' => '后台充值', 'selfincome' => '自助获取', 'online' => '在线支付'];
+        $status = [
+            'recharge' => '后台充值',
+            'wechat'   => '微信支付',
+            'alipay'   => '支付宝支付',
+        ];
         return $status[$value];
     }
 
@@ -60,7 +64,6 @@ class Account extends Model
         $data['paytime']   = time();
         $data['usernote']  = $usernote;
         $data['pay_type']  = isset($pay_type) ? trim($pay_type) : 'selfincome';
-        $data['payment']   = '后台充值';
         $data['ip']        = request()->ip();
         $data['adminnote'] = isset($adminnote) ? trim($adminnote) : '';
         $data['status']    = isset($status) ? trim($status) : 'succ';

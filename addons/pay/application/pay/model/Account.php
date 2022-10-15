@@ -55,8 +55,9 @@ class Account extends Model
      */
     public function submitOrder($money, $pay_type = 'wechat')
     {
-        $epay = get_addon_config('pay');
-        if (isset($epay[$pay_type])) {
+        $epay        = get_addon_config('pay');
+        $paytypelist = explode(',', $epay['paytypelist']);
+        if (isset($paytypelist[$pay_type])) {
             $uid      = home_user::instance()->isLogin() ? home_user::instance()->id : 0;
             $username = home_user::instance()->isLogin() ? home_user::instance()->username : '未知';
             $data     = [
@@ -67,7 +68,6 @@ class Account extends Model
                 'money'     => $money,
                 'payamount' => 0,
                 'pay_type'  => $pay_type,
-                'payment'   => $pay_type,
                 'ip'        => request()->ip(),
                 'status'    => 'unpay',
             ];
@@ -96,7 +96,6 @@ class Account extends Model
         $data['paytime']   = time();
         $data['usernote']  = $usernote;
         $data['pay_type']  = isset($pay_type) ? trim($pay_type) : 'selfincome';
-        $data['payment']   = '后台充值';
         $data['ip']        = request()->ip();
         $data['adminnote'] = isset($adminnote) ? trim($adminnote) : '';
         $data['status']    = isset($status) ? trim($status) : 'succ';
