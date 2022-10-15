@@ -20,6 +20,7 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use think\facade\Session;
 use think\Response;
+use Yansongda\Pay\Exceptions\GatewayException;
 use Yansongda\Pay\Pay;
 
 class Api extends HomeBase
@@ -47,11 +48,15 @@ class Api extends HomeBase
             ];
             //检测订单状态
             if ($this->request->isPost()) {
-                $pay    = Pay::wechat($config);
-                $result = $pay->find($orderData['out_trade_no']);
-                if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
-                    $this->success('', url('pay/index/pay_list'), ['trade_state' => $result['trade_state']]);
-                } else {
+                $pay = Pay::wechat($config);
+                try {
+                    $result = $pay->find($orderData['out_trade_no']);
+                    if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
+                        $this->success('', url('pay/index/pay_list'), ['trade_state' => $result['trade_state']]);
+                    } else {
+                        $this->error("查询失败");
+                    }
+                } catch (GatewayException $e) {
                     $this->error("查询失败");
                 }
             }
@@ -79,11 +84,15 @@ class Api extends HomeBase
         ];
         //检测订单状态
         if ($this->request->isPost()) {
-            $pay    = Pay::alipay($config);
-            $result = $pay->find($orderData['out_trade_no']);
-            if (in_array($result['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
-                $this->success('', url('pay/index/pay_list'), ['trade_status' => $result['trade_status']]);
-            } else {
+            $pay = Pay::alipay($config);
+            try {
+                $result = $pay->find($orderData['out_trade_no']);
+                if (in_array($result['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
+                    $this->success('', url('pay/index/pay_list'), ['trade_status' => $result['trade_status']]);
+                } else {
+                    $this->error("查询失败");
+                }
+            } catch (GatewayException $e) {
                 $this->error("查询失败");
             }
         }

@@ -14,7 +14,7 @@
                     <label class="layui-form-label">{$item.title}</label>
                     <div class="layui-input-block">
                         {foreach name="item.options" item="opt" key="opt_k"}
-                        <input type="checkbox" name="config[wechat][{$item.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$item.value|default=''"} checked{/in}>
+                        <input type="checkbox" name="config[{$item.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$item.value|default=''"} checked{/in}>
                         {/foreach}
                     </div>
                     {if isset($item.tip) && $item.tip}<div class="layui-form-mid2 layui-word-aux">{$item.tip|raw}</div>{/if}

@@ -55,30 +55,24 @@ class Account extends Model
      */
     public function submitOrder($money, $pay_type = 'wechat')
     {
-        $epay        = get_addon_config('pay');
-        $paytypelist = explode(',', $epay['paytypelist']);
-        if (isset($paytypelist[$pay_type])) {
-            $uid      = home_user::instance()->isLogin() ? home_user::instance()->id : 0;
-            $username = home_user::instance()->isLogin() ? home_user::instance()->username : '未知';
-            $data     = [
-                'trade_sn'  => date("Ymdhis") . sprintf("%08d", $uid) . mt_rand(1000, 9999),
-                'uid'       => $uid,
-                'username'  => $username,
-                'type'      => 1,
-                'money'     => $money,
-                'payamount' => 0,
-                'pay_type'  => $pay_type,
-                'ip'        => request()->ip(),
-                'status'    => 'unpay',
-            ];
-            $order     = self::create($data);
-            $notifyurl = request()->root(true) . '/pay/index/epay/type/notify/pay_type/' . $pay_type;
-            $returnurl = request()->root(true) . '/pay/index/epay/type/return/pay_type/' . $pay_type;
-            \addons\pay\library\Service::submitOrder($money, $order->trade_sn, $pay_type, "充值{$money}元", $notifyurl, $returnurl);
-            exit;
-        } else {
-            throw new Exception("支付方式不存在");
-        }
+        $uid      = home_user::instance()->isLogin() ? home_user::instance()->id : 0;
+        $username = home_user::instance()->isLogin() ? home_user::instance()->username : '未知';
+        $data     = [
+            'trade_sn'  => date("Ymdhis") . sprintf("%08d", $uid) . mt_rand(1000, 9999),
+            'uid'       => $uid,
+            'username'  => $username,
+            'type'      => 1,
+            'money'     => $money,
+            'payamount' => 0,
+            'pay_type'  => $pay_type,
+            'ip'        => request()->ip(),
+            'status'    => 'unpay',
+        ];
+        $order     = self::create($data);
+        $notifyurl = request()->root(true) . '/pay/index/epay/type/notify/pay_type/' . $pay_type;
+        $returnurl = request()->root(true) . '/pay/index/epay/type/return/pay_type/' . $pay_type;
+        \addons\pay\library\Service::submitOrder($money, $order->trade_sn, $pay_type, "充值{$money}元", $notifyurl, $returnurl);
+        exit;
 
     }
 
