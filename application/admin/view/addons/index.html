@@ -9,7 +9,7 @@
 <script type="text/html" id="titleTpl">
 {{#  if(d.status >= 0){ }}
     {{#  if(d.config == 1 ){ }}
-    <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置">设置</a>
+    <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置 -【{{d.title}}】">设置</a>
     {{#  } }}
     {{#  if(d.status == 0){ }}
     <a class="layui-btn layui-btn-xs layui-btn-normal btn-enable" data-name="{{d.name}}">启用</a>
@@ -18,7 +18,7 @@
     {{#  } }}
     <a class="layui-btn layui-btn-xs layui-btn-danger" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable" data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
-    <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}">安装</a>
+    <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
 <!--     <a class="layui-btn layui-btn-xs btn-install" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a> -->
 {{#  } }}
 </script>
@@ -172,7 +172,10 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
     // 点击安装
     $(document).on("click", ".btn-install", function () {
         var name = $(this).data("name");
-        install(name, false);
+        var title = $(this).data("title");
+        yzn.msg.confirm(title, function(index){
+            install(name, false);
+        });
     });
 
     // 点击启用
