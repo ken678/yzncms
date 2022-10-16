@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="__STATIC__/addons/editormd/css/editormd.min.css">
-<script type="text/javascript" src="__STATIC__/addons/editormd/editormd.min.js"></script>
+<link rel="stylesheet" href="__ADDONS__/editormd/css/editormd.min.css">
+<script type="text/javascript" src="__ADDONS__/editormd/editormd.min.js"></script>
 <div class="layui-form-item">
     <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
     <div class="layui-input-block">
@@ -10,7 +10,7 @@
     {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
 </div>
 <script type="text/javascript">
-GV.editormd_mudule_path='__STATIC__/addons/editormd/lib/';
+GV.editormd_mudule_path='__ADDONS__/editormd/lib/';
 $(function() {
     var editormds = {};
     if ($(".js-editormd").size() > 0) {
