@@ -101,7 +101,14 @@ class Addons extends Adminbase
             }
             $this->success('插件配置成功！');
         }
-        $this->assign('data', ['info' => $info, 'config' => $config]);
+        $tips = [];
+        foreach ($config as $index => &$item) {
+            if ($item['name'] == '__tips__') {
+                $tips = $item;
+                unset($config[$index]);
+            }
+        }
+        $this->assign('data', ['info' => $info, 'config' => $config, 'tips' => $tips]);
         $configFile = ADDON_PATH . $name . DS . 'config.html';
         if (is_file($configFile)) {
             $this->assign('custom_config', $this->view->fetch($configFile));

@@ -3,7 +3,14 @@
 <form class="layui-form" action="" method="post">
     {empty name="custom_config"}
         <div class="layui-card">
-            <div class="layui-card-header">插件配置-{$data.info.title}</div>
+            {if $data.tips  && $data.tips.value}
+            <div class="alert alert-info-light" style="margin-bottom:10px;">
+                {if $data.tips.title}
+                <b>{$data.tips.title}</b><br>
+                {/if}
+                {$data.tips.value}
+            </div>
+            {/if}
             <div class="layui-card-body">
             {foreach name="data['config']" item="form" key="o_key"}
                  {switch name="form.type"}
