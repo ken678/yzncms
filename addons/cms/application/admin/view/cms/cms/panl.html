@@ -170,14 +170,14 @@ layui.use(['jquery','echarts','laydate','yzn'], function() {
 
     var refreshEchart = function (date) {
         var ok =  function(res) {
-            optionRecords.xAxis.data = res.data.xAxisData;
-            optionRecords.series = res.data.seriesData;
+            optionRecords.xAxis.data = res.xAxisData;
+            optionRecords.series = res.seriesData;
             echartsRecords.clear();
             echartsRecords.setOption(optionRecords, true);
             return false;
         };
         yzn.request.post({
-            url: '{:url("cms/cms/panl")}',
+            url: '{:url("panl")}',
             data: {date: date}
         }, ok);
     };
