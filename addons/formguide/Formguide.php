@@ -15,6 +15,7 @@
 namespace addons\formguide;
 
 use think\Addons;
+use think\Db;
 
 class Formguide extends Addons
 {
@@ -90,18 +91,17 @@ class Formguide extends Addons
     //卸载
     public function uninstall()
     {
-        // 删除模型中建的表
-        // $table_list = Db::name('model')->where(['module' => 'formguide'])->field('tablename,id')->select();
-        // if ($table_list) {
-        //     foreach ($table_list as $val) {
-        //         $tablename = config('database.prefix') . $val['tablename'];
-        //         Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
-
-        //         Db::name('model_field')->where(['modelid' => $val['id']])->delete();
-        //     }
-        // }
-        // //删除模型中的表
-        // Db::name('model')->where(['module' => 'formguide'])->delete();
+        //删除模型中建的表
+        $table_list = Db::name('model')->where('module', 'formguide')->field('tablename,id')->select();
+        if ($table_list) {
+            foreach ($table_list as $val) {
+                $tablename = config('database.prefix') . $val['tablename'];
+                Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
+                Db::name('model_field')->where('modelid', $val['id'])->delete();
+            }
+        }
+        //删除模型中的表
+        Db::name('model')->where('module', 'formguide')->delete();
         return true;
     }
 
