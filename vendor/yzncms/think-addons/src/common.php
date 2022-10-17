@@ -340,6 +340,32 @@ function set_addon_fullconfig($name, $array)
 }
 
 /**
+ * 获取插件创建的表
+ * @param string $name 插件名
+ * @return array
+ */
+function get_addon_tables($name)
+{
+    $addonInfo = get_addon_info($name);
+    if (!$addonInfo) {
+        return [];
+    }
+    $regex   = "/^CREATE\s+TABLE\s+(IF\s+NOT\s+EXISTS\s+)?`?([a-zA-Z_]+)`?/mi";
+    $sqlFile = ADDON_PATH . $name . DS . 'install.sql';
+    $tables  = [];
+    if (is_file($sqlFile)) {
+        preg_match_all($regex, file_get_contents($sqlFile), $matches);
+        if ($matches && isset($matches[2]) && $matches[2]) {
+            $prefix = config('database.prefix');
+            $tables = array_map(function ($item) use ($prefix) {
+                return str_replace("__PREFIX__", $prefix, $item);
+            }, $matches[2]);
+        }
+    }
+    return $tables;
+}
+
+/**
  * 插件显示内容里生成访问插件的url
  * @param string      $url    地址 格式：插件名/控制器/方法
  * @param array       $vars   变量参数
