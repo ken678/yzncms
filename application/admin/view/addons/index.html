@@ -16,7 +16,7 @@
     {{#  } else { }}
     <a class="layui-btn layui-btn-xs layui-btn-warm btn-disable" data-name="{{d.name}}">禁用</a>
     {{#  } }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
     <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
 <!--     <a class="layui-btn layui-btn-xs btn-install" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a> -->
@@ -101,21 +101,21 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
                 name: name,
                 force: force ? 1 : 0,
             },
-        }, function(res) {
-            operate(res.data.addon.name, 'enable', false, function () {
-               layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (res.data.addon.testdata ? '<br>你还可以继续导入测试数据！' : ""), {
-                    btn: res.data.addon.testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
+        }, function(data,res) {
+            operate(data.addon.name, 'enable', false, function () {
+               layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (data.addon.testdata ? '<br>你还可以继续导入测试数据！' : ""), {
+                    btn: data.addon.testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
                     title:'温馨提示',
                     yes: function (index) {
-                        if (res.data.addon.testdata) {
+                        if (data.addon.testdata) {
                             yzn.request.post({
                                 url: '{:url("testdata")}',
                                 data: {
                                     name: name,
                                 }
-                            }, function (data) {
+                            }, function (data,res) {
                                 layer.close(index);
-                                yzn.msg.success(data.msg);
+                                yzn.msg.success(res.msg);
                             });
                         } else {
                             layer.close(index);
@@ -124,7 +124,7 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
                     icon: 1
                 });
             })
-        },function(res) {
+        },function(data,res) {
             if (res && res.code === -3) {
                 //插件目录发现影响全局的文件
                 layer.open({
@@ -141,7 +141,7 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
                     }
                 });
             } else {
-                layer.alert(ret.msg, {title: '温馨提示', icon: 0});
+                layer.alert(res.msg, {title: '温馨提示', icon: 0});
             }
             return false;
         })
@@ -151,10 +151,10 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
         yzn.request.post({
             url: '{:url("uninstall")}',
             data: {name: name, force: force ? 1 : 0, droptables: droptables ? 1 : 0}
-        }, function (res) {
+        }, function (data,res) {
             yzn.msg.success(res.msg);
             table.reload(init.table_render_id);
-        }, function (res) {
+        }, function (data,res) {
             if (res && res.code === -3) {
                 //插件目录发现影响全局的文件
                 Layer.open({
@@ -181,13 +181,13 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
         yzn.request.post({
             url: '{:url("state")}',
             data: {name: name, action: action, force: force ? 1 : 0}
-        }, function(res) {
+        }, function(data,res) {
             if (typeof success === 'function') {
                 success(res);
             }
             table.reload(init.table_render_id);
             return false;   
-        }, function(res) {
+        }, function(data,res) {
             if (res && res.code === -3) {
                 //插件目录发现影响全局的文件
                 layer.open({
@@ -204,10 +204,31 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
                     }
                 });
             } else {
-                layer.alert(ret.msg, {title: '温馨提示', icon: 0});
+                layer.alert(res.msg, {title: '温馨提示', icon: 0});
             }
         })
     };
+
+    var tables = [];
+    $(document).on("click", "#droptables", function () {
+        if ($(this).prop("checked")) {
+            yzn.request.post({
+                url: '{:url("get_table_list")}',
+                async: false,
+                data: {name: $(this).data("name")}
+            }, function (res) {
+                tables = res.tables;
+                return false;
+            });
+            var html;
+            html = tables.length > 0 ? '<div class="alert alert-warning-light droptablestips" style="max-width:480px;max-height:300px;overflow-y: auto;">以下插件数据表将会被删除：<br>' + tables.join("<br>") + '</div>'
+                : '<div class="alert alert-warning-light droptablestips">插件未创建任何数据表</div>';
+            $(html).insertAfter($(this).closest("p"));
+        } else {
+            $(".droptablestips").remove();
+        }
+        $(window).resize();
+    });
 
     // 点击安装
     $(document).on("click", ".btn-install", function () {
@@ -234,6 +255,10 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
     $(document).on("click", ".btn-uninstall", function () {
         var name = $(this).data('name');
         var title = $(this).data('title');
+        if ($(this).data('status') == 1) {
+            layer.alert('请先禁用插件再进行卸载', {icon: 7});
+            return false;
+        }
         yzn.msg.confirm(laytpl($("#uninstalltpl").html()).render({name:name,title:title}), function (index, layero) {
             uninstall(name, false, $("input[name='droptables']", layero).prop("checked"));
         });

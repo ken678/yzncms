@@ -17,6 +17,7 @@ namespace app\admin\controller;
 use app\common\controller\Adminbase;
 use think\addons\AddonException;
 use think\addons\Service;
+use think\facade\Config;
 
 class Addons extends Adminbase
 {
@@ -224,5 +225,20 @@ class Addons extends Adminbase
             $this->error($e->getMessage(), $e->getCode());
         }
         $this->success('导入成功');
+    }
+
+    /**
+     * 获取插件相关表
+     */
+    public function get_table_list()
+    {
+        $name = $this->request->post("name");
+        if (!preg_match("/^[a-zA-Z0-9]+$/", $name)) {
+            $this->error('插件标识错误！');
+        }
+        $tables = get_addon_tables($name);
+        $prefix = Config::get('database.prefix');
+        $tables = array_values($tables);
+        $this->success('', null, ['tables' => $tables]);
     }
 }
