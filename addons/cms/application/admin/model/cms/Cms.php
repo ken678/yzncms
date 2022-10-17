@@ -30,6 +30,12 @@ class Cms extends Modelbase
     protected $ext_table          = '_data';
     protected $name               = 'ModelField';
 
+    protected static $config = [];
+    protected static function init()
+    {
+        self::$config = get_addon_config('cms');
+    }
+
     /**
      * 根据模型ID，返回表名
      * @param type $modelid
@@ -99,12 +105,11 @@ class Cms extends Modelbase
         //更新栏目统计数据
         $this->updateCategoryItems($catid, 'add', 1);
         //推送到熊掌号和百度站长
-        $cmsConfig = get_addon_config("cms");
-        if ($cmsConfig['web_site_baidupush']) {
+        if (self::$config['web_site_baidupush']) {
             hook("baidupush", buildContentUrl($catid, $id, $data['url'], true, true));
         }
         //新增讯搜索引
-        if ($cmsConfig['web_site_searchtype'] === 'xunsearch') {
+        if (self::$config['web_site_searchtype'] === 'xunsearch') {
             FulltextSearch::update($modelid, $catid, $id, $data, $dataExt);
         }
         return $id;
@@ -149,7 +154,7 @@ class Cms extends Modelbase
         //标签
         hook('content_edit_end', $data);
         //更新讯搜索引
-        if (get_addon_config("cms")['web_site_searchtype'] === 'xunsearch') {
+        if (self::$config['web_site_searchtype'] === 'xunsearch') {
             FulltextSearch::update($modelid, $catid, $id, $data, $dataExt);
         }
     }
@@ -182,7 +187,7 @@ class Cms extends Modelbase
         //标签
         hook('content_delete_end', $data);
         //更新讯搜索引
-        if (get_addon_config("cms")['web_site_searchtype'] === 'xunsearch') {
+        if (self::$config['web_site_searchtype'] === 'xunsearch') {
             FulltextSearch::del($data['catid'], $id);
         }
     }
@@ -431,7 +436,7 @@ class Cms extends Modelbase
             $data['thumb'] = $thumb ? $thumb : '';
         }
         //关键词加链接
-        $autolinks = get_addon_config("cms")['autolinks'];
+        $autolinks = self::$config['autolinks'];
         if (!empty($autolinks) && isset($dataExt['content'])) {
             if (strpos($autolinks, '|')) {
                 //解析关键词数组
