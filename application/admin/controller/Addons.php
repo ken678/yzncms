@@ -17,6 +17,7 @@ namespace app\admin\controller;
 use app\common\controller\Adminbase;
 use think\addons\AddonException;
 use think\addons\Service;
+use think\Db;
 use think\facade\Config;
 
 class Addons extends Adminbase
@@ -171,15 +172,28 @@ class Addons extends Adminbase
      */
     public function uninstall()
     {
-        $name = $this->request->param('name');
+        $name       = $this->request->param('name');
+        $droptables = (int) $this->request->post("droptables");
         if (empty($name)) {
             $this->error('请选择需要安装的插件！');
         }
         if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
             $this->error('插件标识错误！');
         }
+        //只有开启调试且为超级管理员才允许删除相关数据库
+        $tables = [];
+        if ($droptables && Config::get("app_debug") && $this->auth->isAdministrator()) {
+            $tables = get_addon_tables($name);
+        }
         try {
             Service::uninstall($name, true);
+            if ($tables) {
+                $prefix = Config::get('database.prefix');
+                //删除插件关联表
+                foreach ($tables as $index => $table) {
+                    Db::execute("DROP TABLE IF EXISTS `{$table}`");
+                }
+            }
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
