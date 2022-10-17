@@ -16,7 +16,7 @@
     {{#  } else { }}
     <a class="layui-btn layui-btn-xs layui-btn-warm btn-disable" data-name="{{d.name}}">禁用</a>
     {{#  } }}
-    <a class="layui-btn layui-btn-xs layui-btn-danger" data-request='{:url("uninstall")}?name={{d.name}}' data-table="currentTable" data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
     <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
 <!--     <a class="layui-btn layui-btn-xs btn-install" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a> -->
@@ -45,6 +45,16 @@
         {{#  }; }}
         </tbody>
     </table>
+</script>
+
+<script id="uninstalltpl" type="text/html">
+    <div class="">
+        <div class="">{{ d.title }}
+            <!-- <p class="text-danger">卸载将会删除所有插件文件且不可找回!!! </p> -->
+            <p class="text-danger"><input type="checkbox" name="droptables" id="droptables" data-name="{{ d.name }}"/> 删除所有插件相关数据表且不可找回!!! </p>
+            <p class="text-danger">如有重要数据请备份后再操作!!!</p>
+        </div>
+    </div>
 </script>
 {/block}
 {block name="script"}
@@ -137,6 +147,36 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
         })
     }
 
+    var uninstall = function (name, force, droptables) {
+        yzn.request.post({
+            url: '{:url("uninstall")}',
+            data: {name: name, force: force ? 1 : 0, droptables: droptables ? 1 : 0}
+        }, function (res) {
+            yzn.msg.success(res.msg);
+            table.reload(init.table_render_id);
+        }, function (res) {
+            if (res && res.code === -3) {
+                //插件目录发现影响全局的文件
+                Layer.open({
+                    content: laytpl($("#conflicttpl").html()).render({list:res.data}),
+                    shade: 0.8,
+                    area: area,
+                    title:'温馨提示',
+                    btn: ['继续操作', '取消'],
+                    end: function () {
+
+                    },
+                    yes: function () {
+                        uninstall(name, true, droptables);
+                    }
+                });
+            } else {
+                layer.alert(res.msg, {title: '温馨提示', icon: 0});
+            }
+            return false;
+        });
+    };
+
     var operate = function (name, action, force, success) {
         yzn.request.post({
             url: '{:url("state")}',
@@ -190,6 +230,14 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
         operate(name, 'disable', false);
     });
 
+    // 点击卸载
+    $(document).on("click", ".btn-uninstall", function () {
+        var name = $(this).data('name');
+        var title = $(this).data('title');
+        yzn.msg.confirm(laytpl($("#uninstalltpl").html()).render({name:name,title:title}), function (index, layero) {
+            uninstall(name, false, $("input[name='droptables']", layero).prop("checked"));
+        });
+    });
 
     importFile=function (){
         $('#local-install').click();
