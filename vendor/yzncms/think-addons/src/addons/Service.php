@@ -52,10 +52,10 @@ class Service
         try {
             // 默认启用该插件
             $info = get_addon_info($name);
-            if (0 >= $info['status']) {
-                $info['status'] = 1;
-                set_addon_info($name, $info);
-            }
+            /*if ($info['status']) {
+            $info['status'] = 0;
+            set_addon_info($name, $info);
+            }*/
             // 执行安装脚本
             $class = get_addon_class($name);
             if (class_exists($class)) {
@@ -129,7 +129,7 @@ class Service
                     CacheLib::deleteCacheAddon($info['name']);
                 }
             };
-            self::runSQL($name, 'uninstall');
+            //self::runSQL($name, 'uninstall');
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
