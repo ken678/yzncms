@@ -60,6 +60,10 @@ class Message extends Addons
     //安装
     public function install()
     {
+        $info = get_addon_info('member');
+        if (!$info || $info['status'] != 1) {
+            throw new \think\Exception("请在后台插件管理中安装《会员插件》并启用后再尝试");
+        }
         return true;
     }
 

@@ -85,6 +85,10 @@ class Formguide extends Addons
     //安装
     public function install()
     {
+        $info = get_addon_info('cms');
+        if (!$info || $info['status'] != 1) {
+            throw new \think\Exception("请在后台插件管理中安装《内容管理系统》并启用后再尝试");
+        }
         return true;
     }
 
