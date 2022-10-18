@@ -34,6 +34,8 @@ class Addons extends Adminbase
     //显示插件列表
     public function index()
     {
+        $limit = $this->request->get("limit/d");
+        $page  = $this->request->get("page/d", 1);
         if ($this->request->isAjax()) {
             $addons = get_addon_list();
             $list   = [];
@@ -41,7 +43,11 @@ class Addons extends Adminbase
                 $config      = get_addon_config($v['name']);
                 $v['config'] = $config ? 1 : 0;
             }
-            $result = array("code" => 0, "data" => $addons);
+            $count = count($addons);
+            if ($limit) {
+                $addons = array_slice($addons, ($page - 1) * $limit, $limit);
+            }
+            $result = array("code" => 0, "data" => $addons, 'count' => $count);
             return json($result);
         }
         return $this->fetch();
