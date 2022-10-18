@@ -221,8 +221,8 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
                 return false;
             });
             var html;
-            html = tables.length > 0 ? '<div class="alert alert-warning-light droptablestips" style="max-width:480px;max-height:300px;overflow-y: auto;">以下插件数据表将会被删除：<br>' + tables.join("<br>") + '<br>部分插件同时会删除演示数据和关联表等</div>'
-                : '<div class="alert alert-warning-light droptablestips">插件未创建任何数据表</div>';
+            html = tables.length > 0 ? '<div class="alert alert-warning-light droptablestips" style="max-width:480px;max-height:300px;overflow-y: auto;">以下插件数据表将会被删除：<br>' + tables.join("<br>") + '<br>注意：部分插件还同时会删除演示数据和关联表等</div>'
+                : '<div class="alert alert-warning-light droptablestips">注意：部分插件还同时会删除演示数据和关联表等</div>';
             $(html).insertAfter($(this).closest("p"));
         } else {
             $(".droptablestips").remove();
