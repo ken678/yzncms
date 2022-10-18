@@ -119,6 +119,9 @@ class Collection extends Addons
     //安装
     public function install()
     {
+        if (!class_exists('\QL\QueryList')) {
+            throw new \think\Exception("未安装【jaeger/querylist】类库，请在命令行使用composer安装");
+        }
         return true;
     }
 
