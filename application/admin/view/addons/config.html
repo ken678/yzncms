@@ -110,16 +110,30 @@
                             {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
                         {/case}
-                        {case value="image"}
+                        {case value="image" break="0"}{/case}
+                        {case value="images"}
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">{$form.title}</label>
                             <div class="layui-input-block">
                                 <div class="layui-col-xs4">
                                     <input type="text" name="config[{$form.name}]"  id="c-{$form.name}" value="{$form.value|default=''}" class="layui-input">
                                 </div>
-                                <div class="webUpload" id="picker_{$form.name}" data-multiple="false" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传图片</div>
-                                <button type="button" class="layui-btn fachoose" data-multiple="false" data-input-id="c-{$form.name}" id="fachoose-c-{$form.name}"><i class="iconfont icon-other"></i> 选择</button>
+                                <div class="webUpload" id="picker_{$form.name}" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传图片</div>
+                                <button type="button" class="layui-btn fachoose" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" id="fachoose-c-{$form.name}"><i class="iconfont icon-other"></i> 选择</button>
                                 <ul class="layui-row list-inline plupload-preview" id="p-{$form.name}"></ul>
+                            </div>
+                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        </div>
+                        {/case}
+                        {case value="file" break="0"}{/case}
+                        {case value="files"}
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">{$form.title}</label>
+                            <div class="layui-input-block">
+                                <div class="layui-col-xs4">
+                                    <input type="text" name="config[{$form.name}]"  id="c-{$form.name}" value="{$form.value|default=''}" class="layui-input">
+                                </div>
+                                <div class="webUpload" id="picker_{$form.name}" data-multiple="{$form.type=='file'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传</div>
                             </div>
                             {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                         </div>
