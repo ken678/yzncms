@@ -289,9 +289,6 @@ INSERT INTO `yzn_menu` VALUES (48, '编辑角色', '', 17, 'admin', 'authManager
 INSERT INTO `yzn_menu` VALUES (49, '删除角色', '', 17, 'admin', 'authManager', 'deleteGroup','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (50, '访问授权', '', 17, 'admin', 'authManager', 'access', '','', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (51, '角色授权', '', 17, 'admin', 'authManager', 'writeGroup','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (52, '模块安装', '', 44, 'admin', 'module', 'install','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (53, '模块卸载', '', 44, 'admin', 'module', 'uninstall','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (54, '本地安装', '', 44, 'admin', 'module', 'local','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (55, '插件设置', '', 39, 'admin', 'addons', 'config','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (56, '插件安装', '', 39, 'admin', 'addons', 'install','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (57, '插件卸载', '', 39, 'admin', 'addons', 'uninstall','', '', 1, '', 0, 0);
