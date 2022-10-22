@@ -103,18 +103,15 @@ class Service
         if (!$force) {
             self::noconflict($name);
         }
-        // 移除插件基础资源目录
-        $destAssetsDir = self::getDestAssetsDir($name);
-        if (is_dir($destAssetsDir)) {
-            File::del_dir($destAssetsDir);
+        // 移除插件全局资源文件
+        if ($force) {
+            $list = self::getGlobalFiles($name);
+            foreach ($list as $k => $v) {
+                @unlink(ROOT_PATH . $v);
+            }
         }
         // 执行卸载脚本
         try {
-            // 默认禁用该插件
-            if ($info['status'] != -1) {
-                $info['status'] = -1;
-                set_addon_info($name, $info);
-            }
             $class = get_addon_class($name);
             if (class_exists($class)) {
                 $addon = new $class();
@@ -129,10 +126,11 @@ class Service
                     CacheLib::deleteCacheAddon($info['name']);
                 }
             };
-            //self::runSQL($name, 'uninstall');
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
+        // 移除插件目录
+        File::del_dir(ADDON_PATH . $name);
         // 刷新
         self::refresh();
         return true;
@@ -551,9 +549,6 @@ EOD;
     protected static function getDestAssetsDir($name)
     {
         $assetsDir = ROOT_PATH . str_replace("/", DS, "public/static/addons/{$name}/");
-        if (!is_dir($assetsDir)) {
-            mkdir($assetsDir, 0755, true);
-        }
         return $assetsDir;
     }
 
