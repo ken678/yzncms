@@ -27,11 +27,13 @@
                         <form class="layui-form" action="{:url('index/synclogin/bindAccount')}" method="post">
                             <div class="layui-form-item">
                                 <div class="layui-input-inline input-item">
+                                    <label class="layui-icon layui-icon-username"></label>
                                     <input type="text" name="account" lay-verify="required" autocomplete="off" placeholder="账号/手机/邮箱" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-inline input-item">
+                                    <label class="layui-icon layui-icon-password"></label>
                                     <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
                                 </div>
                             </div>
@@ -50,26 +52,31 @@
                         <form class="layui-form" action="{:url('index/synclogin/newAccount')}" method="post">
                             <div class="layui-form-item">
                                 <div class="layui-input-inline input-item">
+                                    <label class="layui-icon layui-icon-username"></label>
                                     <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-inline input-item">
+                                    <label class="layui-icon layui-icon-username"></label>
                                     <input type="text" name="nickname" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-inline input-item">
+                                    <label class="layui-icon layui-icon-cellphone"></label>
                                     <input type="text" name="mobile" lay-verify="phone|required" autocomplete="off" placeholder="手机号" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-inline input-item">
+                                    <label class="layui-icon layui-icon-email"></label>
                                     <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-inline input-item">
+                                    <label class="layui-icon layui-icon-password"></label>
                                     <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
                                 </div>
                             </div>
@@ -87,9 +94,9 @@
     <script>
     layui.config({
         version: "3.0.0",
-        base: '__ADDONS__/member/mods/'
+        base: '__STATIC__/libs/layui_exts/'
     }).extend({
-        fly: 'index'
+        fly: '../../addons/member/mods/index',
     }).use('fly');
     </script>
 </body>

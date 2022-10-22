@@ -157,12 +157,14 @@ class Synclogin extends MemberBase
     //绑定新账号
     public function newAccount()
     {
-        $post   = $data   = $this->request->post('');
-        $result = $this->validate($data, 'addons\synclogin\validate\Member');
+        $post   = $this->request->post('');
+        $result = $this->validate($post, 'addons\synclogin\validate\Member');
         if (true !== $result) {
             return $this->error($result);
         }
-        $userid = $this->auth->userRegister($data['username'], $data['password'], $data['email']);
+        $extend             = [];
+        $extend['nickname'] = isset($post['nickname']) ? $post['nickname'] : "";
+        $userid             = $this->auth->userRegister($post['username'], $post['password'], $post['email'], $post['mobile'], $extend);
         if ($userid > 0) {
             $this->addSyncLoginData($userid);
             $this->success('账号绑定成功！', url('member/index/index'));
