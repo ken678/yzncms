@@ -17,6 +17,7 @@ namespace addons\cms;
 use addons\cms\library\FulltextSearch;
 use think\Addons;
 use think\Db;
+use think\facade\Config;
 use think\facade\Route;
 
 class Cms extends Addons
@@ -324,13 +325,14 @@ class Cms extends Addons
     public function uninstall()
     {
         $droptables = request()->param("droptables");
-        //删除模型数据
-        if ($droptables) {
+        $auth       = \app\admin\service\User::instance();
+        //只有开启调试且为超级管理员才允许删除相关数据库
+        if ($droptables && Config::get("app_debug") && $auth->isAdministrator()) {
             // 删除模型中建的表
             $table_list = Db::name('model')->where('module', 'cms')->field('tablename,type,id')->select();
             if ($table_list) {
                 foreach ($table_list as $val) {
-                    $tablename = config('database.prefix') . $val['tablename'];
+                    $tablename = Config::get('database.prefix') . $val['tablename'];
                     Db::execute("DROP TABLE IF EXISTS `{$tablename}`;");
                     if ($val['type'] == 2) {
                         Db::execute("DROP TABLE IF EXISTS `{$tablename}{$this->ext_table}`;");
