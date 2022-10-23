@@ -213,6 +213,9 @@ class Addons extends Adminbase
      */
     public function local()
     {
+        if (!Config::get("app_debug")) {
+            $this->error('本地上传安装需要开启调试模式！');
+        }
         $file = $this->request->file('file');
         try {
             Service::local($file);
