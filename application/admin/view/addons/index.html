@@ -153,12 +153,13 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
             url: '{:url("uninstall")}',
             data: {name: name, force: force ? 1 : 0, droptables: droptables ? 1 : 0}
         }, function (data,res) {
+            layer.closeAll();
             yzn.msg.success(res.msg);
             table.reload(init.table_render_id);
         }, function (data,res) {
             if (res && res.code === -3) {
                 //插件目录发现影响全局的文件
-                Layer.open({
+                layer.open({
                     content: laytpl($("#conflicttpl").html()).render({list:res.data}),
                     shade: 0.8,
                     area: area,

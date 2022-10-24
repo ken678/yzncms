@@ -179,7 +179,8 @@ class Addons extends Adminbase
     public function uninstall()
     {
         $name       = $this->request->param('name');
-        $droptables = (int) $this->request->post("droptables");
+        $force      = $this->request->param("force/d");
+        $droptables = $this->request->param("droptables/d");
         if (empty($name)) {
             $this->error('请选择需要安装的插件！');
         }
@@ -192,7 +193,7 @@ class Addons extends Adminbase
             $tables = get_addon_tables($name);
         }
         try {
-            Service::uninstall($name, true);
+            Service::uninstall($name, $force);
             if ($tables) {
                 $prefix = Config::get('database.prefix');
                 //删除插件关联表
