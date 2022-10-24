@@ -16,7 +16,7 @@ body {
             <div class="tag_list">
                 <!--S 文章列表-->
                 <ul class="list">
-                {yzn module="cms" action="tags" tag="$tag" order="listorder DESC" num="10"  return="data"}
+                {yzn module="cms" action="tags" tag="$tag" order="listorder DESC" num="10" page="$page" return="data"}
                 {volist name="data" id="vo"}
                     <li class="item clearfix">
                         <a href="{$vo.url}" title="{$vo.title}"><img class="fl" src="https://via.placeholder.com/168x126" alt="{$vo.title}">
@@ -30,6 +30,7 @@ body {
                 </ul>
                 <!--E 文章列表-->
             </div>
+            {$pages|raw}
             <!--E 右侧内容 -->
         </div>
     </div>
