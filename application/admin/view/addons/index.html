@@ -183,6 +183,7 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
             url: '{:url("state")}',
             data: {name: name, action: action, force: force ? 1 : 0}
         }, function(data,res) {
+            layer.closeAll();
             if (typeof success === 'function') {
                 success(res);
             }
