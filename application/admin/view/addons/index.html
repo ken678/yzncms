@@ -103,6 +103,7 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
                 force: force ? 1 : 0,
             },
         }, function(data,res) {
+            layer.closeAll();
             operate(data.addon.name, 'enable', false, function () {
                layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (data.addon.testdata ? '<br>你还可以继续导入测试数据！' : ""), {
                     btn: data.addon.testdata ? ['导入测试数据', '暂不导入'] : ['确定'],

@@ -155,7 +155,8 @@ class Addons extends Adminbase
      */
     public function install()
     {
-        $name = $this->request->param('name');
+        $name  = $this->request->param('name');
+        $force = $this->request->param("force/d");
         if (empty($name)) {
             $this->error('请选择需要安装的插件！');
         }
@@ -164,7 +165,7 @@ class Addons extends Adminbase
         }
         $info = [];
         try {
-            $info = Service::install($name);
+            $info = Service::install($name, $force);
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
