@@ -24,6 +24,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use think\Db;
 use think\Exception;
+use think\facade\Cache;
 use util\File;
 use util\Sql;
 
@@ -335,6 +336,10 @@ EOD;
         } else {
             throw new Exception("文件addons.js没有写入权限");
         }
+
+        Cache::rm("addons");
+        Cache::rm("hooks");
+
         $file = self::getExtraAddonsFile();
 
         $config = get_addon_autoload_config(true);
