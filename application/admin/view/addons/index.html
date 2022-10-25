@@ -104,28 +104,27 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
             },
         }, function(data,res) {
             layer.closeAll();
-            operate(data.addon.name, 'enable', false, function () {
-               layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (data.addon.testdata ? '<br>你还可以继续导入测试数据！' : ""), {
-                    btn: data.addon.testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
-                    title:'温馨提示',
-                    yes: function (index) {
-                        if (data.addon.testdata) {
-                            yzn.request.post({
-                                url: '{:url("testdata")}',
-                                data: {
-                                    name: name,
-                                }
-                            }, function (data,res) {
-                                layer.close(index);
-                                yzn.msg.success(res.msg);
-                            });
-                        } else {
+            layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (data.addon.testdata ? '<br>你还可以继续导入测试数据！' : ""), {
+                btn: data.addon.testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
+                title:'温馨提示',
+                yes: function (index) {
+                    if (data.addon.testdata) {
+                        yzn.request.post({
+                            url: '{:url("testdata")}',
+                            data: {
+                                name: name,
+                            }
+                        }, function (data,res) {
                             layer.close(index);
-                        }
-                    },
-                    icon: 1
-                });
-            })
+                            yzn.msg.success(res.msg);
+                        });
+                    } else {
+                        layer.close(index);
+                    }
+                    table.reload(init.table_render_id);
+                },
+                icon: 1
+            });
         },function(data,res) {
             if (res && res.code === -3) {
                 //插件目录发现影响全局的文件
