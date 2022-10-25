@@ -78,7 +78,7 @@ class Service
         }
         self::runSQL($name);
         // 启用插件
-        //self::enable($name, true);
+        self::enable($name, true);
 
         $info['config']   = get_addon_config($name) ? 1 : 0;
         $info['testdata'] = is_file(Service::getTestdataFile($name));
