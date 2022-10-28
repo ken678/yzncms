@@ -12,11 +12,11 @@
 // +----------------------------------------------------------------------
 // | 接口管理
 // +----------------------------------------------------------------------
-namespace app\index\controller;
+namespace addons\apidoc\controller;
 
-use app\common\controller\Homebase;
+use think\addons\Controller;
 
-class Apidoc extends HomeBase
+class Index extends Controller
 {
     protected $config = [
         'title'           => 'APi接口文档',

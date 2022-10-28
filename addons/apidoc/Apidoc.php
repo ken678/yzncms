@@ -15,7 +15,6 @@
 namespace addons\apidoc;
 
 use think\Addons;
-use think\facade\Route;
 
 class Apidoc extends Addons
 {
@@ -43,12 +42,12 @@ class Apidoc extends Addons
      */
     public function appInit()
     {
-        Route::group('apidoc', function () {
-            Route::rule('', 'index/apidoc/Index');
-            Route::rule('config', 'index/apidoc/getConfig');
-            Route::rule('data', 'index/apidoc/getList');
-            Route::rule('auth', 'index/apidoc/verifyAuth');
-        });
+        /*Route::group('apidoc', function () {
+    Route::rule('', 'index/apidoc/Index');
+    Route::rule('config', 'index/apidoc/getConfig');
+    Route::rule('data', 'index/apidoc/getList');
+    Route::rule('auth', 'index/apidoc/verifyAuth');
+    });*/
 
     }
 }
