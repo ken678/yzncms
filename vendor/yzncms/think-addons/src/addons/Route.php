@@ -19,7 +19,8 @@ class Route
      */
     public function execute($addon = null, $controller = null, $action = null)
     {
-        $request = Request::instance();
+        $app     = app();
+        $request = $app->request;
         // 是否自动转换控制器和操作名
         $convert = Config::get('url_convert');
         $filter  = $convert ? 'strtolower' : 'trim';
