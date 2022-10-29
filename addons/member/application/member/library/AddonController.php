@@ -10,14 +10,14 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 前台会员管理
+// |  插件会员基类
 // +----------------------------------------------------------------------
-namespace app\member\controller;
+namespace app\member\library;
 
-use app\common\controller\Homebase;
 use app\member\service\User;
+use think\addons\Controller;
 
-class MemberBase extends HomeBase
+class AddonController extends Controller
 {
     //会员模型相关配置
     protected $memberConfig = array();
