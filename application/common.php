@@ -746,3 +746,68 @@ function check_cors_request()
         }
     }
 }
+
+/**
+ * 使用短标签打印或返回数组结构
+ * @param mixed   $data
+ * @param boolean $return 是否返回数据
+ * @return string
+ */
+function var_export_short($data, $return = true)
+{
+    return var_export($data, $return);
+    $replaced = [];
+    $count    = 0;
+
+    //判断是否是对象
+    if (is_resource($data) || is_object($data)) {
+        return var_export($data, $return);
+    }
+
+    //判断是否有特殊的键名
+    $specialKey = false;
+    array_walk_recursive($data, function (&$value, &$key) use (&$specialKey) {
+        if (is_string($key) && (stripos($key, "\n") !== false || stripos($key, "array (") !== false)) {
+            $specialKey = true;
+        }
+    });
+    if ($specialKey) {
+        return var_export($data, $return);
+    }
+    array_walk_recursive($data, function (&$value, &$key) use (&$replaced, &$count, &$stringcheck) {
+        if (is_object($value) || is_resource($value)) {
+            $replaced[$count] = var_export($value, true);
+            $value            = "##<{$count}>##";
+        } else {
+            if (is_string($value) && (stripos($value, "\n") !== false || stripos($value, "array (") !== false)) {
+                $index = array_search($value, $replaced);
+                if ($index === false) {
+                    $replaced[$count] = var_export($value, true);
+                    $value            = "##<{$count}>##";
+                } else {
+                    $value = "##<{$index}>##";
+                }
+            }
+        }
+        $count++;
+    });
+
+    $dump = var_export($data, true);
+
+    $dump = preg_replace('#(?:\A|\n)([ ]*)array \(#i', '[', $dump); // Starts
+    $dump = preg_replace('#\n([ ]*)\),#', "\n$1],", $dump); // Ends
+    $dump = preg_replace('#=> \[\n\s+\],\n#', "=> [],\n", $dump); // Empties
+    $dump = preg_replace('#\)$#', "]", $dump); //End
+
+    if ($replaced) {
+        $dump = preg_replace_callback("/'##<(\d+)>##'/", function ($matches) use ($replaced) {
+            return isset($replaced[$matches[1]]) ? $replaced[$matches[1]] : "''";
+        }, $dump);
+    }
+
+    if ($return === true) {
+        return $dump;
+    } else {
+        echo $dump;
+    }
+}
