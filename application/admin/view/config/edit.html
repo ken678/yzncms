@@ -43,7 +43,7 @@
             <textarea name="row[value]" placeholder="未指定值时默认插入字段的值" class="layui-textarea">{$data.value}</textarea>
         </div>
         <div class="layui-form-mid2 layui-word-aux">配置类型为<code>数组</code>时请按如下格式填写：
-            <br>{"键值1":"键名1","键值2":"键名2"}</div>
+            <br>{"键名1":"键值1","键名2":"键值2"}</div>
     </div>
     <div class="layui-form-item layui-form-text" id="options" {if $data.type !== 'custom' && $data.type !== 'checkbox' &&  $data.type !== 'select' &&  $data.type !== 'selects' && $data.type !== 'radio' && $data.type !== 'selectpage' } style="display: none;" {/if}>
         {if $data.type == 'custom'}
