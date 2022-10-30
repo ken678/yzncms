@@ -17,7 +17,7 @@ return [
     'app_begin'    => [],
     // 模块初始化
     'module_init'  => [
-        'app\\common\\behavior\\Config', // 注册配置行为
+        'app\\common\\behavior\\Common', // 注册配置行为
     ],
     // 操作开始执行
     'action_begin' => [],
