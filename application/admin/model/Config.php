@@ -22,19 +22,11 @@ class Config extends Model
     protected $autoWriteTimestamp = true;
 
     /**
-     * 获取配置信息
-     * @return mixed
+     * 刷新配置文件
      */
-    public function config_cache()
+    public static function refreshFile()
     {
-        $data = $this->getConfig();
-        cache("Config", $data);
-        return $data;
-    }
-
-    public function getConfig($where = "status='1'", $fields = 'name,value,type,options', $order = 'listorder,id desc')
-    {
-        $configs    = self::where($where)->order($order)->column($fields);
+        $configs    = self::where('status', 1)->column('name,value,type,options');
         $newConfigs = [];
         foreach ($configs as $key => $value) {
             if ($value['options'] != '') {
@@ -81,7 +73,11 @@ class Config extends Model
                     break;
             }
         }
-        return $newConfigs;
+        file_put_contents(
+            ROOT_PATH . 'config' . DS . 'site.php',
+            '<?php' . "\n\nreturn " . var_export_short($newConfigs) . ";\n"
+        );
+        return true;
     }
 
 }
