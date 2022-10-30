@@ -35,7 +35,7 @@ class Category extends Adminbase
         parent::initialize();
         $this->modelClass = new CategoryModel;
         //取得当前内容模型模板存放目录
-        $themePath = TEMPLATE_PATH . (config('theme') ?: "default") . DS . "cms" . DS;
+        $themePath = TEMPLATE_PATH . (config('site.theme') ?: "default") . DS . "cms" . DS;
         //取得栏目频道模板列表
         $this->categoryTemplate = str_replace($themePath . DS, '', glob($themePath . DS . 'category*'));
         //取得栏目列表模板列表

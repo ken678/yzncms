@@ -27,7 +27,7 @@ class Models extends Adminbase
         parent::initialize();
         $this->modelClass = new ModelsModel;
         //取得当前内容模型模板存放目录
-        $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DS . "cms" . DS;
+        $this->filepath = TEMPLATE_PATH . (empty(config('site.theme')) ? "default" : config('site.theme')) . DS . "cms" . DS;
         //取得栏目频道模板列表
         $this->tp_category = str_replace($this->filepath . DS, '', glob($this->filepath . DS . 'category*'));
         //取得栏目列表模板列表
