@@ -36,19 +36,6 @@ class Config
             // 如果是开发模式那么将异常模板修改成官方的
             systemConfig::set('exception_tmpl', \think\facade\Env::get('think_path') . 'tpl/think_exception.tpl');
         }
-        // 读取系统配置
-        $system_config = cache("Config");
-
-        if (empty($system_config)) {
-            exit("配置读取错误！！！！");
-        }
-
-        // 设置配置信息
-        if (!empty($system_config)) {
-            foreach ($system_config as $key => $value) {
-                systemConfig::set($key, $value);
-            }
-        }
     }
 
 }
