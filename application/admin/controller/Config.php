@@ -22,11 +22,12 @@ class Config extends Adminbase
 {
     protected $modelValidate      = true;
     protected $modelSceneValidate = true;
+
     protected function initialize()
     {
         parent::initialize();
-        $filepath = APP_PATH . 'admin' . DIRECTORY_SEPARATOR . "view" . DIRECTORY_SEPARATOR . 'custom' . DIRECTORY_SEPARATOR;
-        $custom   = str_replace($filepath . DIRECTORY_SEPARATOR, '', glob($filepath . DIRECTORY_SEPARATOR . 'custom*'));
+        $filepath = APP_PATH . 'admin' . DS . "view" . DS . 'custom' . DS;
+        $custom   = str_replace($filepath . DS, '', glob($filepath . DS . 'custom*'));
 
         $this->assign('custom', $custom);
         $this->assign('groupArray', config('site.config_group'));
@@ -132,23 +133,90 @@ class Config extends Adminbase
     //新增配置
     public function add()
     {
-        $groupType = $this->request->param('groupType/s', 'base');
+        $groupType = $this->request->param('groupType', 'base');
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a");
+            if ($params) {
+                try {
+                    $result = $this->modelClass->create($params);
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                }
+                if ($result !== false) {
+                    try {
+                        ConfigModel::refreshFile();
+                    } catch (Exception $e) {
+                        $this->error($e->getMessage());
+                    }
+                    $this->success('新增成功');
+                } else {
+                    $this->error($this->modelClass->getError());
+                }
+            }
+            $this->error('参数不能为空');
+        }
         $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifstring');
         $this->assign([
             'fieldType' => $fieldType,
             'groupType' => $groupType,
         ]);
-        return parent::add();
+        return $this->fetch();
+
     }
 
     //编辑配置
     public function edit()
     {
-        $id        = $this->request->param('id/d');
+        $id  = $this->request->param('id/d');
+        $row = $this->modelClass->get($id);
+        if (!$row) {
+            $this->error('记录未找到');
+        }
+        if ($this->request->isPost()) {
+            $params = $this->request->post("row/a");
+            if ($params) {
+                try {
+                    $result = $row->save($params);
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                }
+                if ($result !== false) {
+                    try {
+                        ConfigModel::refreshFile();
+                    } catch (Exception $e) {
+                        $this->error($e->getMessage());
+                    }
+                    $this->success('新增成功');
+                } else {
+                    $this->error($row->getError());
+                }
+            }
+            $this->error('参数不能为空');
+        }
         $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifstring');
-        $this->assign('id', $id);
-        $this->assign('fieldType', $fieldType);
-        return parent::edit();
+        $this->assign([
+            'data'      => $row,
+            'id'        => $id,
+            'fieldType' => $fieldType,
+        ]);
+        return $this->fetch();
     }
 
+    //删除配置
+    public function del()
+    {
+        $id  = $this->request->param('id/d');
+        $row = ConfigModel::find($id);
+        if ($row) {
+            try {
+                $row->delete();
+                ConfigModel::refreshFile();
+            } catch (Exception $e) {
+                $this->error($e->getMessage());
+            }
+            $this->success("操作成功！");
+        } else {
+            $this->error('配置不存在');
+        }
+    }
 }
