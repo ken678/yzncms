@@ -119,6 +119,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         yzn.msg.success(res.msg, function() {
                             tableId && table.reload(tableId);
                         });
+                    }, function(data,res) {
+                        yzn.msg.error(res.msg, function () {
+                            tableId && table.reload(tableId);
+                        });
                     })
                 }
                 if (typeof(that.attr('confirm')) == 'undefined') {
