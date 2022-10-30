@@ -27,7 +27,7 @@ class Formguide extends Adminbase
     {
         parent::initialize();
         //模块安装后，模板安装在Default主题下！
-        $this->filepath = TEMPLATE_PATH . (empty(config('theme')) ? "default" : config('theme')) . DS . "index" . DS . "formguide" . DS;
+        $this->filepath = TEMPLATE_PATH . (empty(config('site.theme')) ? "default" : config('site.theme')) . DS . "index" . DS . "formguide" . DS;
         $this->Models   = new Models;
     }
 
