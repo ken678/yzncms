@@ -78,7 +78,7 @@ class Upload
     protected function checkSize($dir)
     {
         // 附件大小限制
-        $size_limit = $dir == 'images' ? config('upload_image_size') : config('upload_file_size');
+        $size_limit = $dir == 'images' ? config('site.upload_image_size') : config('site.upload_file_size');
         $size_limit = $size_limit * 1024;
         // 判断附件大小是否超过限制
         if ($size_limit > 0 && ($this->fileInfo['size'] > $size_limit)) {
@@ -90,7 +90,7 @@ class Upload
     {
         $typeArr = explode('/', $this->fileInfo['type']);
         // 附件类型限制
-        $ext_limit = $dir == 'images' ? config('upload_image_ext') : config('upload_file_ext');
+        $ext_limit = $dir == 'images' ? config('site.upload_image_ext') : config('site.upload_file_ext');
         $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : [];
         // 判断附件格式是否符合
         $file_ext  = $this->fileInfo['suffix'];
@@ -153,7 +153,7 @@ class Upload
         }
 
         // 附件上传钩子，用于第三方文件上传扩展
-        if (config('upload_driver') != 'local') {
+        if (config('site.upload_driver') != 'local') {
             $hook_result = Hook::listen('upload_after', ['dir' => $dir, 'file' => $this->file, 'from' => $from], true);
             if (false !== $hook_result) {
                 return $hook_result;
@@ -190,8 +190,8 @@ class Upload
             $thumb = request()->post('thumb/d', 0);
             // 水印功能
             if ($thumb) {
-                if ($dir == 'images' && config('upload_thumb_water') == 1 && config('upload_thumb_water_pic') != "") {
-                    model('Attachment')->create_water($info->getRealPath(), config('upload_thumb_water_pic'));
+                if ($dir == 'images' && config('site.upload_thumb_water') == 1 && config('site.upload_thumb_water_pic') != "") {
+                    model('Attachment')->create_water($info->getRealPath(), config('site.upload_thumb_water_pic'));
                 }
             }
             // 获取附件信息
