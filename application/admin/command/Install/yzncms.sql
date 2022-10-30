@@ -138,10 +138,9 @@ CREATE TABLE `yzn_cache` (
 -- ----------------------------
 -- Records of yzn_cache
 -- ----------------------------
-INSERT INTO `yzn_cache` VALUES (1, 'Config', '网站配置', 'admin', 'Config', 'config_cache', 1);
-INSERT INTO `yzn_cache` VALUES (2, 'Menu', '后台菜单', 'admin', 'Menu', 'menu_cache', 1);
-INSERT INTO `yzn_cache` VALUES (3, 'Model', '模型列表', 'admin', 'Models', 'model_cache', 1);
-INSERT INTO `yzn_cache` VALUES (4, 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', 1);
+INSERT INTO `yzn_cache` VALUES (1, 'Menu', '后台菜单', 'admin', 'Menu', 'menu_cache', 1);
+INSERT INTO `yzn_cache` VALUES (2, 'Model', '模型列表', 'admin', 'Models', 'model_cache', 1);
+INSERT INTO `yzn_cache` VALUES (3, 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', 1);
 
 -- ----------------------------
 -- Table structure for `yzn_config`
