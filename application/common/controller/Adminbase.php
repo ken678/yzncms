@@ -94,9 +94,9 @@ class Adminbase extends Base
             // 是否是超级管理员
             define('IS_ROOT', $this->auth->isAdministrator());
 
-            if (!IS_ROOT && config('admin_forbid_ip')) {
+            if (!IS_ROOT && config('site.admin_forbid_ip')) {
                 // 检查IP地址访问
-                $arr = explode(',', config('admin_forbid_ip'));
+                $arr = explode(',', config('site.admin_forbid_ip'));
                 foreach ($arr as $val) {
                     //是否是IP段
                     if (strpos($val, '*')) {
