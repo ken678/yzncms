@@ -29,7 +29,7 @@ class Config extends Adminbase
         $custom   = str_replace($filepath . DIRECTORY_SEPARATOR, '', glob($filepath . DIRECTORY_SEPARATOR . 'custom*'));
 
         $this->assign('custom', $custom);
-        $this->assign('groupArray', config('config_group'));
+        $this->assign('groupArray', config('site.config_group'));
         $this->modelClass = new ConfigModel;
     }
 
@@ -89,7 +89,11 @@ class Config extends Adminbase
                     ConfigModel::where(['name' => $name])->setField('value', $data[$name]);
                 }
             }
-            cache('Config', null);
+            try {
+                ConfigModel::refreshFile();
+            } catch (Exception $e) {
+                $this->error($e->getMessage());
+            }
             return $this->success('设置更新成功');
         } else {
             $configList = ConfigModel::where('group', $group)
@@ -128,7 +132,6 @@ class Config extends Adminbase
     //新增配置
     public function add()
     {
-        cache('Config', null);
         $groupType = $this->request->param('groupType/s', 'base');
         $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifstring');
         $this->assign([
@@ -141,25 +144,11 @@ class Config extends Adminbase
     //编辑配置
     public function edit()
     {
-        cache('Config', null);
         $id        = $this->request->param('id/d');
         $fieldType = Db::name('field_type')->order('listorder')->column('name,title,ifstring');
         $this->assign('id', $id);
         $this->assign('fieldType', $fieldType);
         return parent::edit();
-    }
-
-    //删除配置
-    public function del()
-    {
-        cache('Config', null); //清空缓存配置
-        return parent::del();
-    }
-
-    public function multi()
-    {
-        cache('Config', null); //清空缓存配置
-        return parent::multi();
     }
 
 }
