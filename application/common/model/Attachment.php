@@ -40,12 +40,12 @@ class Attachment extends Model
     public function create_thumb($file = '', $filename = '', $save_name = '', $thumb_size = '', $thumb_type = '')
     {
         // 获取要生成的缩略图最大宽度和高度
-        $thumb_size                               = $thumb_size == '' ? config('upload_image_thumb') : $thumb_size;
+        $thumb_size                               = $thumb_size == '' ? config('site.upload_image_thumb') : $thumb_size;
         list($thumb_max_width, $thumb_max_height) = explode(',', $thumb_size);
         // 读取图片
         $image = Image::open($file);
         // 生成缩略图
-        $thumb_type = $thumb_type == '' ? config('upload_image_thumb_type') : $thumb_type;
+        $thumb_type = $thumb_type == '' ? config('site.upload_image_thumb_type') : $thumb_type;
         $image->thumb($thumb_max_width, $thumb_max_height, $thumb_type);
 
         if (!is_dir($filename)) {
@@ -65,8 +65,8 @@ class Attachment extends Model
             // 读取图片
             $image = Image::open($file);
             // 添加水印
-            $watermark_pos   = $watermark_pos == '' ? config('upload_thumb_water_position') : $watermark_pos;
-            $watermark_alpha = $watermark_alpha == '' ? config('upload_thumb_water_alpha') : $watermark_alpha;
+            $watermark_pos   = $watermark_pos == '' ? config('site.upload_thumb_water_position') : $watermark_pos;
+            $watermark_alpha = $watermark_alpha == '' ? config('site.upload_thumb_water_alpha') : $watermark_alpha;
             $image->water($thumb_water_pic, $watermark_pos, $watermark_alpha);
             // 保存水印图片，覆盖原图
             $image->save($file);
