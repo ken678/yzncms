@@ -87,9 +87,9 @@ class Ajax extends MemberBase
     {
         parent::initialize();
         //图片上传大小和类型
-        $this->editorConfig['imageMaxSize'] = $this->editorConfig['catcherMaxSize'] = 0 == config('upload_image_size') ? 1024 * 1024 * 1024 : config('upload_image_size') * 1024;
-        if (!empty(config('upload_image_ext'))) {
-            $imageallowext = parse_attr(config('upload_image_ext'));
+        $this->editorConfig['imageMaxSize'] = $this->editorConfig['catcherMaxSize'] = 0 == config('site.upload_image_size') ? 1024 * 1024 * 1024 : config('site.upload_image_size') * 1024;
+        if (!empty(config('site.upload_image_ext'))) {
+            $imageallowext = parse_attr(config('site.upload_image_ext'));
             foreach ($imageallowext as $k => $rs) {
                 $imageallowext[$k] = ".{$rs}";
             }
@@ -97,9 +97,9 @@ class Ajax extends MemberBase
         }
 
         //附件上传大小和类型
-        $this->editorConfig['fileMaxSize'] = $this->editorConfig['videoMaxSize'] = 0 == config('upload_file_size') ? 1024 * 1024 * 1024 : config('upload_file_size') * 1024;
-        if (!empty(config('upload_file_ext'))) {
-            $fileallowext = parse_attr(config('upload_file_ext'));
+        $this->editorConfig['fileMaxSize'] = $this->editorConfig['videoMaxSize'] = 0 == config('site.upload_file_size') ? 1024 * 1024 * 1024 : config('site.upload_file_size') * 1024;
+        if (!empty(config('site.upload_file_ext'))) {
+            $fileallowext = parse_attr(config('site.upload_file_ext'));
             foreach ($fileallowext as $k => $rs) {
                 $fileallowext[$k] = ".{$rs}";
             }
