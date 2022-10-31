@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css">
 {volist name="fieldList" id="vo"}
 
+{if isset($vo['isadd']) && $vo['isadd']}
+
 {switch name="vo.type"}
 {case value="hidden"}
 {if $vo.value}<input type="hidden" class="form-control" name="{$vo.fieldArr}[{$vo.name}]"  value="{$vo.value}">{/if}
@@ -155,6 +157,8 @@
 </div>
 {/case}
 {/switch}
+
+{/if}
 
 {/volist}
 
