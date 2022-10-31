@@ -56,12 +56,14 @@ class Controller extends \think\Controller
         parent::__construct($app);
     }
 
-    protected function _initialize()
+    protected function initialize()
     {
         // 检测IP是否允许
         if (function_exists("check_ip_allowed")) {
             check_ip_allowed();
         }
+        $site = Config::get("site.");
+        $this->assign('site', $site);
     }
 
     protected function fetch($template = '', $vars = [], $config = [], $renderContent = false)
