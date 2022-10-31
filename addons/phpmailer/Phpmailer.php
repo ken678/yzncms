@@ -15,7 +15,7 @@
 namespace addons\phpmailer;
 
 use addons\phpmailer\library\Mailer;
-use sys\Addons;
+use think\Addons;
 use think\Loader;
 
 class Phpmailer extends Addons

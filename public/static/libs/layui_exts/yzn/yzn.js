@@ -1,5 +1,5 @@
 //封装基本操作 部分参考EasyAdmin和fastadmin
-layui.define(['layer','notice'], function(exports) {
+layui.define(['layer','notice','addons'], function(exports) {
     var layer = layui.layer,
         $ = layui.$,
         notice = layui.notice;
@@ -147,6 +147,41 @@ layui.define(['layer','notice'], function(exports) {
         parame: function(param, defaultParam) {
             return param !== undefined ? param : defaultParam;
         },
+        events: {
+            //请求成功的回调
+            onAjaxSuccess: function (ret, onAjaxSuccess) {
+                var data = typeof ret.data !== 'undefined' ? ret.data : null;
+                var msg = typeof ret.msg !== 'undefined' && ret.msg ? ret.msg : '操作成功!';
+
+                if (typeof onAjaxSuccess === 'function') {
+                    var result = onAjaxSuccess.call(this, data, ret);
+                    if (result === false)
+                        return;
+                }
+            },
+            //请求错误的回调
+            onAjaxError: function (ret, onAjaxError) {
+                var data = typeof ret.data !== 'undefined' ? ret.data : null;
+                if (typeof onAjaxError === 'function') {
+                    var result = onAjaxError.call(this, data, ret);
+                    if (result === false) {
+                        return;
+                    }
+                }
+            },
+            //服务器响应数据后
+            onAjaxResponse: function (response) {
+                try {
+                    var ret = typeof response === 'object' ? response : JSON.parse(response);
+                    if (!ret.hasOwnProperty('code')) {
+                        $.extend(ret, {code: -2, msg: response, data: null});
+                    }
+                } catch (e) {
+                    var ret = {code: -1, msg: e.message, data: null};
+                }
+                return ret;
+            }
+        },
         request: {
             //修复URL
             fixurl: function (url) {
@@ -158,74 +193,52 @@ layui.define(['layer','notice'], function(exports) {
                 }
                 return url;
             },
-            post: function(option, ok, no, ex) {
-                return yzn.request.ajax('post', option, ok, no, ex);
+            post: function(options, success, error) {
+                return yzn.request.ajax('post', options, success, error);
             },
-            get: function(option, ok, no, ex) {
-                return yzn.request.ajax('get', option, ok, no, ex);
+            get: function(options, success, error) {
+                return yzn.request.ajax('get', options, success, error);
             },
-            ajax: function(type, option, ok, no, ex) {
-                type = type || 'get';
-                option.url = option.url || '';
-                option.data = option.data || {};
-                option.prefix = option.prefix || false;
-                option.statusName = option.statusName || 'code';
-                option.statusCode = option.statusCode || 1;
-                ok = ok || function(res) {};
-                no = no || function(res) {
-                    var msg = res.msg == undefined ? '返回数据格式有误' : res.msg;
-                    yzn.msg.error(msg);
-                    return false;
-                };
-                ex = ex || function(res) {};
-                if (option.url == '') {
-                    yzn.msg.error('请求地址不能为空');
-                    return false;
+            ajax: function(type, options, success, error) {
+                options = typeof options === 'string' ? {url: options} : options;
+                var index;
+                if (typeof options.loading === 'undefined' || options.loading) {
+                    index = layer.load(options.loading || 0);
                 }
-                if (option.prefix == true) {
-                    //option.url = yzn.url(option.url);
-                }
-                /*if (type==='post') {
-                    var token = $('meta[name="csrf-token"]').attr('content');
-                    if (Object.prototype.toString.call(option.data) === '[object Array]') {
-                        option.data.push({name:'__token__',value:token});
-                    } else if(typeof option.data == "object") {
-                        option.data['__token__'] = token;
-                    }
-                }*/
-                var index = yzn.msg.loading('加载中');
-                $.ajax({
-                    url: option.url,
-                    type: type,
-                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                options = $.extend({
+                    type: type || 'get',
                     dataType: "json",
-                    data: option.data,
-                    timeout: 60000,
+                    url : options.url || '',
+                    data : options.data || {},
+                    xhrFields: {
+                        withCredentials: true
+                    },
                     complete: function(xhr, textStatus) {
                         var token = xhr.getResponseHeader('__token__');
                         if (token) {
                             $("input[name='__token__']").val(token);
                         }
                     },
-                    success: function(res) {
+                    success: function (ret) {
+                        index && layer.close(index);
                         //刷新客户端token
-                        if (res && typeof res === 'object' && typeof res.token !== 'undefined') {
+                        if (ret && typeof ret === 'object' && typeof ret.token !== 'undefined') {
                             $("input[name='__token__']").val(data.token);
                         }
-                        yzn.msg.close(index);
-                        if (eval('res.' + option.statusName) == option.statusCode) {
-                            return ok(res);
+                        ret = yzn.events.onAjaxResponse(ret);
+                        if (ret.code === 1) {
+                            yzn.events.onAjaxSuccess(ret, success);
                         } else {
-                            return no(res);
+                            yzn.events.onAjaxError(ret, error);
                         }
                     },
-                    error: function(xhr, textstatus, thrown) {
-                        yzn.msg.error('Status:' + xhr.status + '，' + xhr.statusText + '，请稍后再试！', function() {
-                            ex(this);
-                        });
-                        return false;
+                    error: function (xhr) {
+                        index && layer.close(index);
+                        var ret = {code: xhr.status, msg: xhr.statusText, data: null};
+                        yzn.events.onAjaxError(ret, error);
                     }
-                });
+                }, options);
+                return $.ajax(options);
             }
         },
         notice:{

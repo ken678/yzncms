@@ -14,10 +14,23 @@
 // +----------------------------------------------------------------------
 namespace addons\getwords;
 
-use sys\Addons;
+use think\Addons;
 
 class Getwords extends Addons
 {
+    //后台菜单
+    public $admin_list = array(
+        [
+            "name"      => "admin/getwords.admin/getkeywords",
+            "status"    => 0,
+            "title"     => "中文分词",
+            "tip"       => "",
+            "listorder" => 0,
+            "child"     => [],
+        ],
+
+    );
+
     //安装
     public function install()
     {

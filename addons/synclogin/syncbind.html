@@ -8,9 +8,9 @@
     <div>
         {foreach $list as $key=>$vo }
         {if condition="$vo['is_bind']"}
-        <a href="{:url('addons/synclogin/unbind',array('type'=>$vo['name']))}" class="lay-tips layui-btn layui-btn-normal" title="解除绑定"><i class="layui-icon iconfont icon-{$vo.name}"></i></a>
+        <a href="{:url('index/synclogin/unbind',array('type'=>$vo['name']))}" class="lay-tips layui-btn layui-btn-normal" title="解除绑定"><i class="layui-icon iconfont icon-{$vo.name}"></i></a>
         {else /}
-        <a href="{:url('addons/synclogin/login',array('type'=>$vo['name']))}" class="lay-tips layui-btn" title="立即绑定"><i class="layui-icon iconfont icon-{$vo.name}"></i></a>
+        <a href="{:url('index/synclogin/login',array('type'=>$vo['name']))}" class="lay-tips layui-btn" title="立即绑定"><i class="layui-icon iconfont icon-{$vo.name}"></i></a>
         {/if}
         {/foreach}
     </div>

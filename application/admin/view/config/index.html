@@ -16,11 +16,11 @@
 </div>
 <script type="text/html" id="barTool">
     {{# if(d.type=='radio' || d.type=='select'){ }}
-    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('{{d.name}}')} 值：{:config('{{d.name}}_text')}{/literal}">代码调用</a>
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('site.{{d.name}}')} 值：{:config('site.{{d.name}}_text')}{/literal}">代码调用</a>
     {{# } else if(d.type=='checkbox' || d.type=='array' || d.type=='images' || d.type=='files'){ }}
-    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{volist name=&quot;:config('{{d.name}}')&quot; id='vo'}  键：{$key}  值：{$vo} <br> {/volist}{/literal}">代码调用</a>
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{volist name=&quot;:config('site.{{d.name}}')&quot; id='vo'}  键：{$key}  值：{$vo} <br> {/volist}{/literal}">代码调用</a>
     {{# } else { }}
-    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('{{d.name}}')}{/literal}">代码调用</a>
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('site.{{d.name}}')}{/literal}">代码调用</a>
     {{# } }}
     <a data-open='{:url("edit")}?id={{ d.id }}' title="编辑" class="layui-btn layui-btn-xs"><i class='iconfont icon-brush_fill'></i></a>
     <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del"><i class='iconfont icon-trash_fill'></i></a>

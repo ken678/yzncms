@@ -1,23 +1,23 @@
 {extend name="index_layout"/}
 {block name="main"}
 {notempty name="default_pass"}
-<blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
+<div class="alert alert-danger-light">
     安全提示：超级管理员默认密码未修改，建议马上修改。
-</blockquote>
+</div>
 {/notempty}
 {if $Think.config.app_debug}
-<blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
+<div class="alert alert-danger-light">
     安全提示：当前网站【调试模式】开启中，强烈建议在正式部署后关闭调试模式
-</blockquote>
+</div>
 {/if}
 {if $Think.config.app_trace}
-<blockquote class="layui-elem-quote layui-bg-red" style="border-left: 5px solid #d4491d;">
+<div class="alert alert-danger-light">
     安全提示：当前网站【Trace调试】开启中，强烈建议在正式部署后关闭Trace调试
-</blockquote>
+</div>
 {/if}
-<blockquote class="layui-elem-quote layui-bg-green">
+<div class="alert alert-success-light">
     <div id="nowTime"></div>
-</blockquote>
+</div>
 <div class="layui-row layui-col-space10 panel_box">
     <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="https://www.kancloud.cn/ken678/yzncms/352683" target="_blank">

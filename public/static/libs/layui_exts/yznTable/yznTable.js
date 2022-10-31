@@ -68,7 +68,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         data: {
                             id: ids
                         },
-                    }, function(res) {
+                    }, function(data,res) {
                         yzn.msg.success(res.msg, function() {
                             table.reload(tableId);
                         });
@@ -88,7 +88,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             $('body').on('click', '[data-request]', function() {
                 var that = $(this);
                 var title = $(this).data('title'),
-                    url = $(this).data('request'),
+                    url = $(this).data('request') || $(this).attr("href"),
                     tableId = $(this).data('table'),
                     checkbox = $(this).data('checkbox');
 
@@ -115,8 +115,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     yzn.request.post({
                         url: url,
                         data: postData,
-                    }, function(res) {
+                    }, function(data,res) {
                         yzn.msg.success(res.msg, function() {
+                            tableId && table.reload(tableId);
+                        });
+                    }, function(data,res) {
+                        yzn.msg.error(res.msg, function () {
                             tableId && table.reload(tableId);
                         });
                     })
@@ -200,6 +204,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 icon: 'layui-icon-search',
                 extend: 'data-table-id="' + options.id + '"'
             }];
+            options.even = options.even || true;
             // 判断是否为移动端
             if (yzn.checkMobile()) {
                 options.defaultToolbar = !options.search ? ['filter'] : ['filter', {
@@ -598,12 +603,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         url: option.url,
                         prefix: true,
                         data: data,
-                    }, function (res) {
+                    }, function (data,res) {
                         notice.success({ message: res.msg });
                         if (option.modifyReload) {
                             table.reload(option.tableId);
                         }
-                    }, function (res) {
+                    }, function (data,res) {
                         yzn.msg.error(res.msg, function () {
                             table.reload(option.tableId);
                         });
@@ -631,12 +636,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         url: tableInit.modify_url,
                         prefix: true,
                         data: _data,
-                    }, function(res) {
+                    }, function(data,res) {
                         notice.success({ message: res.msg });
                         if (modifyReload) {
                             table.reload(tableId);
                         }
-                    }, function(res) {
+                    }, function(data,res) {
                         yzn.msg.error(res.msg, function() {
                             table.reload(tableId);
                         });
@@ -678,11 +683,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             return html;
         },
         formatter: {
-            tool: function(data, option) {
-                option.operat = option.operat || ['edit', 'delete'];
-                var elem = option.init.table_elem || init.table_elem;
+            tool: function(data) {
+                var that = this;
+                that.operat = that.operat || ['edit', 'delete'];
+                var elem = that.init.table_elem || init.table_elem;
                 var html = '';
-                $.each(option.operat, function(i, item) {
+                $.each(that.operat, function(i, item) {
                     if (typeof item === 'string') {
                         switch (item) {
                             case 'edit':
@@ -693,7 +699,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                     icon: '',
                                     text: "<i class='iconfont icon-brush_fill'></i>",
                                     title: '编辑信息',
-                                    url: option.init.edit_url,
+                                    url: that.init.edit_url,
                                     extend: ""
                                 };
                                 operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
@@ -709,7 +715,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                     icon: '',
                                     text: "<i class='iconfont icon-trash_fill'></i>",
                                     title: '',
-                                    url: option.init.delete_url,
+                                    url: that.init.delete_url,
                                     extend: ""
                                 };
                                 operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
@@ -721,16 +727,25 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
 
                     } else if (typeof item === 'object') {
                         $.each(item, function(i, operat) {
+                            hidden = typeof operat.hidden === 'function' ? operat.hidden.call(yznTable, data, operat) : (typeof operat.hidden !== 'undefined' ? operat.hidden : false);
+                            if (hidden) {
+                                return true;
+                            }
+                            url = operat.url || '';
                             operat.class = operat.class || '';
                             operat.icon = operat.icon || '';
                             operat.auth = operat.auth || '';
-                            operat.url = operat.url || '';
                             operat.method = operat.method || 'open';
                             operat.field = operat.field || 'id';
                             operat.title = operat.title || operat.text;
                             operat.text = operat.text || operat.title;
                             operat.extend = operat.extend || '';
-                            operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                            operat.url = typeof url === 'function' ? url.call(yznTable, data, operat) : (url ? yznTable.toolSpliceUrl(url, operat.field, data) : 'javascript:;');
+                            disable = typeof operat.disable === 'function' ? operat.disable.call(yznTable, data, operat) : (typeof operat.disable !== 'undefined' ? operat.disable : false);
+                            if (disable) {
+                                operat.class = operat.class + ' layui-btn-disabled';
+                            }
+                            //operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
                             //if (admin.checkAuth(operat.auth, elem)) {
                             html += yznTable.buildOperatHtml(operat);
                             //}
@@ -739,9 +754,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 });
                 return html;
             },
-            flag: function (data, option) {
+            flag: function (data) {
                 var that = this;
-                var field = option.field;
+                var field = that.field;
                 try {
                     var value = eval("data." + field);
                     value = value == null || value.length === 0 ? '' : value.toString();
@@ -751,8 +766,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 //赤色 墨绿 蓝色 藏青 雅黑 橙色
                 var colorArr = {0:'red',1:'green',2:'blue',3:'cyan',4:'black',5:'orange'};
                 //如果字段列有定义custom
-                if (typeof option.custom !== 'undefined') {
-                    colorArr = $.extend(colorArr, option.custom);
+                if (typeof that.custom !== 'undefined') {
+                    colorArr = $.extend(colorArr, that.custom);
                 }
 
                 //渲染Flag
@@ -770,30 +785,32 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 })
                 return html.join(' ');
             },
-            label: function (data, option) {
-                return yznTable.formatter.flag.call(this, data, option);
+            label: function (data) {
+                return yznTable.formatter.flag.call(this, data);
             },
-            switch: function (data, option) {
-                var field = option.field;
-                option.filter = option.filter || option.field || null;
-                option.checked = option.checked || 1;
-                option.tips = option.tips || '开|关';
+            switch: function (data) {
+                var that = this;
+                var field = that.field;
+                that.filter = that.filter || that.field || null;
+                that.checked = that.checked || 1;
+                that.tips = that.tips || '开|关';
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
                     var value = undefined;
                 }
-                var checked = value === option.checked ? 'checked' : '';
-                return laytpl('<input type="checkbox" name="' + option.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + option.tips + '" lay-filter="' + option.filter + '" ' + checked + ' >').render(data);
+                var checked = value === that.checked ? 'checked' : '';
+                return laytpl('<input type="checkbox" name="' + that.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + that.tips + '" lay-filter="' + that.filter + '" ' + checked + ' >').render(data);
             },
-            image: function(data, option) {
-                option.imageWidth = option.imageWidth || 80;
-                option.imageHeight = option.imageHeight || 30;
-                option.imageSplit = option.imageSplit || '|';
-                option.imageJoin = option.imageJoin || '<br>';
-                option.title = option.title || option.field;
-                var field = option.field,
-                    title = data[option.title];
+            image: function(data) {
+                var that = this;
+                that.imageWidth = that.imageWidth || 80;
+                that.imageHeight = that.imageHeight || 30;
+                that.imageSplit = that.imageSplit || '|';
+                that.imageJoin = that.imageJoin || '<br>';
+                that.title = that.title || that.field;
+                var field = that.field,
+                    title = data[that.title];
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
@@ -802,16 +819,17 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 if (!value) {
                     return '';
                 } else {
-                    var values = value.split(option.imageSplit),
+                    var values = value.split(that.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                        valuesHtml.push('<img style="max-width: ' + that.imageWidth + 'px; max-height: ' + that.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
                     });
-                    return valuesHtml.join(option.imageJoin);
+                    return valuesHtml.join(that.imageJoin);
                 }
             },
-            url: function(data, option) {
-                var field = option.field;
+            url: function(data) {
+                var that = this;
+                var field = that.field;
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
@@ -819,8 +837,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 return '<a class="layui-btn layui-btn-primary layui-btn-xs" href="' + value + '" target="_blank"><i class="iconfont icon-lianjie"></i></a></a>';
             },
-            price: function(data, option) {
-                var field = option.field;
+            price: function(data) {
+                var that = this;
+                var field = that.field;
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
@@ -828,8 +847,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 return '<span>￥' + value + '</span>';
             },
-            icon: function(data, option) {
-                var field = option.field;
+            icon: function(data) {
+                var that = this;
+                var field = that.field;
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
@@ -837,8 +857,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 return '<i class="' + value + '"></i>';
             },
-            text: function(data, option) {
-                var field = option.field;
+            text: function(data) {
+                var that = this;
+                var field = that.field;
                 try {
                     var value = eval("data." + field);
                 } catch (e) {
@@ -846,8 +867,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 return '<span class="line-limit-length">' + value + '</span>';
             },
-            value: function(data, option) {
-                var field = option.field;
+            value: function(data) {
+                var that = this;
+                var field = that.field;
                 try {
                     var value = eval("data." + field);
                 } catch (e) {

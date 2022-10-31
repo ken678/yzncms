@@ -1,0 +1,45 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-body">
+        {eq name="cmsConfig.site_category_auth" value="0"}
+        <div class="alert alert-warning-light">当前未开启栏目授权功能，以下的设置不会生效，请在CMS配置中开启栏目授权功能。</div>
+        {/eq}
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+    </div>
+</div>
+<script type="text/html" id="barTool">
+    {{#  if(d.admin === false){ }}
+    <a href='{:url("cat_priv",["act"=>"authorization"])}?id={{d.id}}&dialog=1' class="layui-btn layui-btn-xs">授权</a>
+    {{#  if(d.num > 0){ }}
+    <a confirm data-request='{:url("cat_priv",["act"=>"remove"])}?id={{d.id}}' data-title="确认移除该管理员所有栏目授权？" data-table="currentTable" class="layui-btn layui-btn-xs layui-btn-danger">移除</a>
+    {{#  } }} 
+    {{#  } }} 
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh'],
+        url: '{:url("cat_priv")}',
+        search:false,
+        cols: [
+            [
+                { field: 'title', title: '角色名称' },
+                { field: 'num', title: '授权数量' },
+                { fixed: 'right', title: '操作', width: 120, templet: '#barTool' }
+            ]
+        ]
+    });
+});
+</script>
+{/block}

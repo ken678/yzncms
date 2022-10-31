@@ -1,0 +1,114 @@
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-tab">
+          <ul class="layui-tab-title">
+            <li class="layui-this">基础设置</li>
+            <li>微信支付</li>
+            <li>支付宝</li>
+          </ul>
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                {foreach $data.config as $item}
+                {if $item.name=='paytypelist'}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{$item.title}</label>
+                    <div class="layui-input-block">
+                        {foreach name="item.options" item="opt" key="opt_k"}
+                        <input type="checkbox" name="config[{$item.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$item.value|default=''"} checked{/in}>
+                        {/foreach}
+                    </div>
+                    {if isset($item.tip) && $item.tip}<div class="layui-form-mid2 layui-word-aux">{$item.tip|raw}</div>{/if}
+                </div>
+                {/if}
+                {/foreach}
+            </div>
+            {foreach $data.config as $item}
+            {if $item.name=='wechat'}
+            <div class="layui-tab-item">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">公众号APPID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="config[wechat][app_id]" placeholder="请输入公众号APPID" class="layui-input" value="{$item.value.app_id}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">AppSecret</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="config[wechat][app_secret]" placeholder="请输入AppSecret" class="layui-input" value="{$item.value.app_secret}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商户ID(MCHID)</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="config[wechat][mch_id]" placeholder="请输入商户ID(MCHID)"  class="layui-input" value="{$item.value.mch_id}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商户秘钥(KEY)</label>
+                    <div class="layui-input-block">
+                        <textarea name="config[wechat][key]" placeholder="请输入商户秘钥(KEY)" class="layui-textarea">{$item.value.key}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">沙箱模式</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="config[wechat][mode]" value="1" title="启用" {if $item.value.mode==1}checked{/if}>
+                        <input type="radio" name="config[wechat][mode]" value="0" title="禁用" {if $item.value.mode==0}checked{/if}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日志</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="config[wechat][log]" value="1" title="启用" {if $item.value.log==1}checked{/if}>
+                        <input type="radio" name="config[wechat][log]" value="0" title="禁用" {if $item.value.log==0}checked{/if}>
+                    </div>
+                </div>
+            </div>
+            {elseif $item.name=='alipay'}
+            <div class="layui-tab-item">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">应用ID(APPID)</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="config[alipay][app_id]" placeholder="请输入应用ID(APPID)" class="layui-input" value="{$item.value.app_id}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商户应用私钥</label>
+                    <div class="layui-input-block">
+                        <textarea name="config[alipay][private_key]" placeholder="请输入商户应用私钥" class="layui-textarea">{$item.value.private_key}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">支付宝公钥</label>
+                    <div class="layui-input-block">
+                        <textarea name="config[alipay][ali_public_key]" placeholder="请输入支付宝公钥" class="layui-textarea">{$item.value.ali_public_key}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">沙箱模式</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="config[alipay][mode]" value="1" title="启用" {if $item.value.mode==1}checked{/if}>
+                        <input type="radio" name="config[alipay][mode]" value="0" title="禁用" {if $item.value.mode==0}checked{/if}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">个人支付</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="config[alipay][isper]" value="1" title="启用" {if $item.value.isper==1}checked{/if}>
+                        <input type="radio" name="config[alipay][isper]" value="0" title="禁用" {if $item.value.isper==0}checked{/if}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日志</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="config[alipay][log]" value="1" title="启用" {if $item.value.log==1}checked{/if}>
+                        <input type="radio" name="config[alipay][log]" value="0" title="禁用" {if $item.value.log==0}checked{/if}>
+                    </div>
+                </div>
+            </div>
+            {/if}
+            {/foreach}
+          </div>
+        </div>
+    </div>
+</div>

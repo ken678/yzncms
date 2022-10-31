@@ -81,6 +81,28 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .fieldlist dd input:first-child {width: 110px;}
 .fieldlist dd ins {width: 110px;display: inline-block;text-decoration: none;font-weight: bold;margin-right: 10px;line-height: 38px;}
 
+/*alert*/
+.alert {padding: 15px; margin-bottom: 17px; border: 1px solid transparent; border-radius: 3px;}
+.alert h4 {font-weight: 600; }
+.alert .icon {margin-right: 10px; }
+.alert .close {color: #000; opacity: 0.2; filter: alpha(opacity=20); }
+.alert .close:hover {opacity: 0.5; filter: alpha(opacity=50); }
+.alert a {color: #fff; text-decoration: underline; }
+.alert-success {border-color: #15a589; }
+.alert-danger, .alert-error {border-color: #e43725; }
+.alert-warning {border-color: #e08e0b; }
+.alert-info {border-color: #258cd1; }
+.alert-primary-light {background-color: #E2E5E8; border-color: #D0D4D8; color: #85878A; }
+.alert-primary-light a {color: #787a7d; }
+.alert-success-light {background-color: #dff0d8; border-color: #d1eac8; color: #468847; }
+.alert-success-light a {color: #3d773e; }
+.alert-danger-light, .alert-error-light {background-color: #f2dede; border-color: #ebcdcd; color: #b94a48; }
+.alert-danger-light a, .alert-error-light a {color: #a74240; }
+.alert-warning-light {background-color: #fcf8e3; border-color: #faf3cd; color: #c09853; }
+.alert-warning-light a {color: #b78c43; }
+.alert-info-light {background-color: #d9edf7; border-color: #c6e4f3; color: #3a87ad; }
+.alert-info-light a {color: #34789a; }
+
 .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {border-color: #e6e6e6;}
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {background-color: #f2f2f2;}
 .layui-elem-quote{background-color: #f2f2f2;}
@@ -96,4 +118,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-textarea:focus {
   border-color: #5FB878 !important;
   box-shadow: 0 0 0 3px #f0f9eb !important;
+}
+.layui-btn-disabled, .layui-btn-disabled:active{
+    pointer-events: none;
 }

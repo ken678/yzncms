@@ -1,0 +1,9 @@
+<li class="layui-nav-item {if $Request.controller=='Message'}layui-nav-itemed{/if}">
+    <a href="javascript:;"><i class="iconfont icon-systemprompt"></i>&nbsp;短信息</a>
+    <dl class="layui-nav-child">
+    	<dd class="{if $Request.action=='send' && $Request.controller=='Message' }layui-this{/if}"><a href="{:url('index/message/send')}"><i class="iconfont icon-circle-line"></i>&nbsp;发消息</a></dd>
+        <dd class="{if $Request.action=='outbox' && $Request.controller=='Message' }layui-this{/if}"><a href="{:url('index/message/outbox')}"><i class="iconfont icon-circle-line"></i>&nbsp;发件箱</a></dd>
+        <dd class="{if $Request.action=='inbox' && $Request.controller=='Message' }layui-this{/if}"><a href="{:url('index/message/inbox')}"><i class="iconfont icon-circle-line"></i>&nbsp;收件箱</a></dd>
+        <dd class="{if $Request.action=='group' && $Request.controller=='Message' }layui-this{/if}"><a href="{:url('index/message/group')}"><i class="iconfont icon-circle-line"></i>&nbsp;系统消息</a></dd>
+    </dl>
+</li>

@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace addons\returntop;
 
-use sys\Addons;
+use think\Addons;
 
 class ReturnTop extends Addons
 {

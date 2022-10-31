@@ -15,6 +15,7 @@
 namespace app\common\controller;
 
 use app\admin\service\User;
+use think\facade\Config;
 use think\facade\Hook;
 use think\facade\Session;
 use think\Validate;
@@ -72,8 +73,12 @@ class Adminbase extends Base
     protected function initialize()
     {
         parent::initialize();
-        $this->auth = User::instance();
-        $path       = strtolower($this->request->module() . '/' . $this->request->controller() . '/' . $this->request->action());
+        $this->auth     = User::instance();
+        $modulename     = $this->request->module();
+        $controllername = parse_name($this->request->controller());
+        $actionname     = strtolower($this->request->action());
+
+        $path = $modulename . '/' . $controllername . '/' . $actionname;
         // 定义是否Dialog请求
         !defined('IS_DIALOG') && define('IS_DIALOG', $this->request->param("dialog") ? true : false);
         // 检测是否需要验证登录
@@ -90,9 +95,9 @@ class Adminbase extends Base
             // 是否是超级管理员
             define('IS_ROOT', $this->auth->isAdministrator());
 
-            if (!IS_ROOT && config('admin_forbid_ip')) {
+            if (!IS_ROOT && config::get('site.admin_forbid_ip')) {
                 // 检查IP地址访问
-                $arr = explode(',', config('admin_forbid_ip'));
+                $arr = explode(',', config::get('site.admin_forbid_ip'));
                 foreach ($arr as $val) {
                     //是否是IP段
                     if (strpos($val, '*')) {
@@ -116,17 +121,14 @@ class Adminbase extends Base
                 }
             }
         }
-        $config = \think\facade\config::get('app.');
-        $site   = [
-            'upload_thumb_water'     => $config['upload_thumb_water'],
-            'upload_thumb_water_pic' => $config['upload_thumb_water_pic'],
-            'upload_image_size'      => $config['upload_image_size'],
-            'upload_file_size'       => $config['upload_file_size'],
-            'upload_image_ext'       => $config['upload_image_ext'],
-            'upload_file_ext'        => $config['upload_file_ext'],
-            'chunking'               => $config['chunking'],
-            'chunksize'              => $config['chunksize'],
+        $site   = Config::get("site.");
+        $config = [
+            'modulename'     => $modulename,
+            'controllername' => $controllername,
+            'actionname'     => $actionname,
         ];
+        //监听插件传入的变量
+        $site = array_merge($site, $config, Hook::listen("config_init")[0] ?? []);
         $this->assign('site', $site);
         $this->assign('auth', $this->auth);
         $this->assign('userInfo', Session::get('admin'));
@@ -191,7 +193,7 @@ class Adminbase extends Base
         if ($this->request->has("page")) {
             $page = $this->request->get("page/d", 1);
         }
-        $this->request->withGet([config('paginate.var_page') => $page]);
+        $this->request->withGet([config::get('paginate.var_page') => $page]);
         $filter    = (array) json_decode($filter, true);
         $op        = (array) json_decode($op, true);
         $filter    = $filter ? $filter : [];
@@ -210,7 +212,11 @@ class Adminbase extends Base
             $item = stripos($item, ".") === false ? $aliasName . trim($item) : $item;
         }
         unset($item);
-        $sort = implode(',', $sortArr);
+        $sort     = implode(',', $sortArr);
+        $adminIds = $this->getDataLimitAdminIds();
+        if (is_array($adminIds)) {
+            $where[] = [$aliasName . $this->dataLimitField, 'in', $adminIds];
+        }
         if ($search) {
             $searcharr = is_array($searchfields) ? $searchfields : explode(',', $searchfields);
             foreach ($searcharr as $k => &$v) {
@@ -346,6 +352,26 @@ class Adminbase extends Base
     }
 
     /**
+     * 获取数据限制的管理员ID
+     * 禁用数据限制时返回的是null
+     * @return mixed
+     */
+    protected function getDataLimitAdminIds()
+    {
+        if (!$this->dataLimit) {
+            return null;
+        }
+        if ($this->auth->isAdministrator()) {
+            return null;
+        }
+        $adminIds = [];
+        if (in_array($this->dataLimit, ['auth', 'personal'])) {
+            $adminIds = $this->dataLimit == 'auth' ? $this->auth->getChildrenAdminIds(true) : [$this->auth->id];
+        }
+        return $adminIds;
+    }
+
+    /**
      *
      * 当前方法只是一个比较通用的搜索匹配,请按需重载此方法来编写自己的搜索逻辑,$where按自己的需求写即可
      * 这里示例了所有的参数，所以比较复杂，实现上自己实现只需简单的几行即可
@@ -422,16 +448,13 @@ class Adminbase extends Base
                 }
             };
         }
-        /*$adminIds = $this->getDataLimitAdminIds();
+        $adminIds = $this->getDataLimitAdminIds();
         if (is_array($adminIds)) {
-        $this->model->where($this->dataLimitField, 'in', $adminIds);
-        }*/
+            $this->modelClass = $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+        }
         $list  = [];
         $total = $this->modelClass->where($where)->count();
         if ($total > 0) {
-            /*if (is_array($adminIds)) {
-            $this->model->where($this->dataLimitField, 'in', $adminIds);
-            }*/
             $fields = is_array($this->selectpageFields) ? $this->selectpageFields : ($this->selectpageFields && $this->selectpageFields != '*' ? explode(',', $this->selectpageFields) : []);
             //如果有primaryvalue,说明当前是初始化传值,按照选择顺序排序
             if ($primaryvalue !== null && preg_match("/^[a-z0-9_\-]+$/i", $primarykey)) {
@@ -449,6 +472,10 @@ class Adminbase extends Base
             }
 
             $this->modelClass->removeOption('where');
+
+            if (is_array($adminIds)) {
+                $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+            }
 
             $datalist = $this->modelClass->where($where)
                 ->page($page, $pagesize)

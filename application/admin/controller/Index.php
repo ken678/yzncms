@@ -15,6 +15,7 @@
 namespace app\admin\controller;
 
 use app\common\controller\Adminbase;
+use think\addons\Service;
 use think\facade\Cache;
 
 class Index extends Adminbase
@@ -109,7 +110,7 @@ class Index extends Adminbase
                     }
                 case 'addons':
                     // 插件缓存
-                    \sys\AddonService::refresh();
+                    Service::refresh();
                     if ($type == 'addons') {
                         break;
                     }

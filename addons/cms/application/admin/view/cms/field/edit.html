@@ -1,0 +1,276 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">字段标题</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required" placeholder="字段标题" class="layui-input" value="{$data.title}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字段名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="字段名称" class="layui-input" value="{$data.name}">
+        </div>
+        <div class="layui-form-mid layui-word-aux">字母、数字组成，并且仅能字母开头</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字段描述</label>
+        <div class="layui-input-inline w300">
+            <textarea name="remark" placeholder="字段的相关描述" class="layui-textarea">{$data.remark}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字段类型</label>
+        <div class="layui-input-inline">
+            <select name="type" lay-filter="fieldtype" lay-verify="required">
+                <option></option>
+                {volist name="fieldType" id="vo"}
+                <option value="{$vo.name}" {if $data.type==$vo.name}selected{/if} data-define="{$vo.default_define}" data-ifstring="{$vo.ifstring}">{$vo.title}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字段定义</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="setting[define]" lay-verify="required" autocomplete="off" placeholder="字段定义" class="layui-input" id="define" value="{$data.setting.define}">
+        </div>
+        <div class="layui-input-inline">
+            <select lay-filter="fasttype">
+                <option data-define="">快速选择</option>
+                <option data-define="varchar(255) NOT NULL">255个字符串以内</option>
+                <option data-define="int(7) NOT NULL">10位以内纯数字</option>
+                <option data-define="tinyint(2) NOT NULL">2位以内纯数字</option>
+                <option data-define="text NOT NULL">常用文本文档</option>
+                <option data-define="decimal(10,2) unsigned NOT NULL">价格</option>
+                <option data-define="mediumtext NOT NULL">巨型文本文档</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据校验</label>
+        <div class="layui-input-inline w300">
+            <input type="text" name="pattern" autocomplete="off" placeholder="正则校验数据合法性，留空不校验" class="layui-input" value="{$data.pattern}" id="pattern">
+        </div>
+        <div class="layui-input-inline">
+            <select lay-filter="pattern">
+                <option data-define="">常用正则</option>
+                <option data-define="/^[0-9.-]+$/">数字</option>
+                <option data-define="/^[0-9-]+$/">整数</option>
+                <option data-define="/^[a-z]+$/i">字母</option>
+                <option data-define="/^[0-9a-z]+$/i">数字+字母</option>
+                <option data-define="/^[\x{4e00}-\x{9fa5}]+$/u">中文</option>
+                <option data-define="/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/">E-mail</option>
+                <option data-define="/^[0-9]{5,20}$/">QQ</option>
+                <option data-define="/^http:\/\//">超级链接</option>
+                <option data-define="/^(1)[0-9]{10}$/">手机号码</option>
+                <option data-define="/^[0-9-]{6,13}$/">电话号码</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">提示信息</label>
+        <div class="layui-input-inline">
+            <input type="text" name="errortips" placeholder="数据校验未通过的提示信息" class="layui-input" value="{$data.errortips}">
+        </div>
+    </div>
+    <div id="options" {if $data.type !== 'custom' && $data.type !== 'checkbox' &&  $data.type !== 'select' &&  $data.type !== 'selects' && $data.type !== 'radio' && $data.type !== 'selectpage' } style="display: none;" {/if}>
+        <div class="layui-form-item options">
+            {if $data.type == 'custom'}
+            <label class="layui-form-label">自定义模板</label>
+            <div class="layui-input-inline">
+                <select name="setting[options]">
+                    <option value="custom.html">默认模板:custom.html</option>
+                    {volist name="custom" id="vo"}
+                    {:dump($data);}
+                    <option value="{$vo}" {if $data.setting.options==$vo}selected{/if}>{$vo}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">新增模板以custom_xx.html形式<br>模板位于application/admin/view/custom目录下</div>
+            {else}
+            <label class="layui-form-label">选项</label>
+            <div class="layui-input-inline w300">
+                <textarea name="setting[options]" placeholder="{if $data.type !== 'selectpage'}
+键值:键名
+键值:键名
+键值:键名
+.....
+{else}
+url:提供数据源的URL地址
+field:列表显示读取的字段,默认[name]
+key:列表选中后渲染的字段,默认[id]
+pagination:是否开启分页,默认[true]
+limit:分页大小,默认[10]
+multiple:是否支持多选,默认[false]
+max:最多可选择数量
+order:排序字段，默认[id]
+{/if}
+" class="layui-textarea">{$data.setting.options}</textarea>
+            </div>
+        <div class="layui-form-mid layui-word-aux">如：
+            {if $data.type !== 'selectpage'}
+<br>1:北京
+<br>2:上海
+<br>3:广东
+            {else}
+<br>url:admin/manager/index
+<br>field:username
+<br>key:id
+<br>pagination:true
+<br>limit:10
+<br>multiple:true
+<br>max:20
+<br>order:id
+            {/if}
+        </div>
+        {/if}
+        </div>
+        {if isset($data.setting.filtertype)}
+        <div class="layui-form-item">
+            <label class="layui-form-label">筛选字段</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="setting[filtertype]" value="1" title="是" {if $data.setting.filtertype==1}checked{/if}>
+                <input type="radio" name="setting[filtertype]" value="0" title="否" {if $data.setting.filtertype==0}checked{/if}>
+            </div>
+        </div>
+        {/if}
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字段默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="setting[value]" lay-verify="value" autocomplete="off" placeholder="默认插入字段的值" class="layui-input" value="{$data.setting.value}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否必填</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="ifrequire" value="1" title="是" {if $data.ifrequire==1}checked{/if}>
+            <input type="radio" name="ifrequire" value="0" title="否" {if $data.ifrequire==0}checked{/if}>
+        </div>
+    </div>
+    {if $data['ifsystem']}
+    <div class="layui-form-item" id="ifsearch" {if !in_array($data['type'],['text', 'textarea', 'tags', 'Ueditor'])}style="display:none"{/if}>
+        <label class="layui-form-label">是否可搜索</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="ifsearch" value="1" title="是" {if $data.ifsearch==1}checked{/if}>
+            <input type="radio" name="ifsearch" value="0" title="否" {if $data.ifsearch==0}checked{/if}>
+        </div>
+    </div>
+    {/if}
+    <div class="layui-form-item">
+        <label class="layui-form-label">投稿显示</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="isadd" value="1" title="是" {if $data.isadd==1}checked{/if}>
+            <input type="radio" name="isadd" value="0" title="否" {if $data.isadd==0}checked{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="status" value="1" title="启用" {if $data.status==1}checked{/if}>
+            <input type="radio" name="status" value="0" title="禁用" {if $data.status==0}checked{/if}>
+        </div>
+    </div>
+    <input type="hidden" name="ifsystem"  value="{$data.ifsystem}">
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+        </div>
+    </div>
+</form>
+
+<div id="options1" style="display: none;">
+    <label class="layui-form-label">配置项</label>
+    <div class="layui-input-inline w300">
+        <textarea name="setting[options]" placeholder="键值:键名
+键值:键名
+键值:键名
+....." class="layui-textarea"></textarea>
+    </div>
+    <div class="layui-form-mid layui-word-aux">如：
+        <br>1:北京
+        <br>2:上海
+        <br>3:广东
+    </div>
+</div>
+<div id="options2" style="display: none;">
+    <label class="layui-form-label">配置项</label>
+    <div class="layui-input-inline w300">
+        <textarea name="setting[options]" placeholder="url:提供数据源的URL地址
+field:列表显示读取的字段,默认[name]
+key:列表选中后渲染的字段,默认[id]
+pagination:是否开启分页,默认[true]
+limit:分页大小,默认[10]
+multiple:是否支持多选,默认[false]
+max:最多可选择数量
+order:排序字段，默认[id]" class="layui-textarea"></textarea>
+    </div>
+    <div class="layui-form-mid layui-word-aux">如：
+        <br>1:北京
+        <br>2:上海
+        <br>3:广东
+    </div>
+</div>
+<div id="options3" style="display: none;">
+    <label class="layui-form-label">自定义模板</label>
+    <div class="layui-input-inline">
+        <select name="setting[options]">
+            <option value="custom.html" selected>默认模板:custom.html</option>
+            {volist name="custom" id="vo"}
+            <option value="{$vo}">{$vo}</option>
+            {/volist}
+        </select>
+    </div>
+    <div class="layui-form-mid layui-word-aux">新增模板以custom_xx.html形式<br>模板位于application/admin/view/custom目录下</div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use(['layer', 'form','yznForm'], function() {
+    var layer = layui.layer,
+        form = layui.form,
+        yznForm = layui.yznForm;
+
+        yznForm.listen();
+        form.on('select(fieldtype)', function(data) {
+            $('#define').val($(data.elem).find("option:selected").attr("data-define"));
+            var ifstring = $(data.elem).find("option:selected").attr("data-ifstring");
+            //搜索隐显
+            if (ifstring == '1') {
+                $('#ifsearch').show();
+            } else {
+                $('#ifsearch').hide();
+            }
+            if (data.value == 'checkbox' || data.value == 'select' || data.value == 'selects' || data.value == 'radio' || data.value == 'selectpage' || data.value == 'custom') {
+                if (data.value == 'selectpage') {
+                    $('#options .options').html($('#options2').html());
+                }else if(data.value == 'custom'){
+                    $('#options .options').html($('#options3').html()); 
+                }else{
+                    $('#options .options').html($('#options1').html());   
+                }
+                $('#options').show();
+                form.render();
+            }else{
+                $('#options').hide();
+            }
+            /*if (data.value == 'selectpage') {
+                $('#options textarea').attr('placeholder','url:提供数据源的URL地址\nfield:列表显示读取的字段,默认[name]\nkey:列表选中后渲染的字段,默认[id]\npagination:是否开启分页,默认[true]\nlimit:分页大小,默认[10]\nmultiple:是否支持多选,默认[false]\nmax:最多可选择数量\norder:排序字段，默认[id]');
+                $('#options .layui-word-aux').html("如<br>url:admin/manager/index<br>field:username<br>key:id<br>pagination:true<br>page_size:10<br>multiple:true<br>max:20<br>order:id");
+            }else{
+                $('#options textarea').attr('placeholder','键值:键名\n键值:键名\n键值:键名\n.....');
+                $('#options .layui-word-aux').html("<br>1:北京<br>2:上海<br>3:广东");
+            }*/
+        });
+        form.on('select(fasttype)', function(data) {
+            $('#define').val($(data.elem).find("option:selected").attr("data-define"));
+        });
+        form.on('select(pattern)', function(data) {
+            $('#pattern').val($(data.elem).find("option:selected").attr("data-define"));
+        });
+});
+</script>
+{/block}
