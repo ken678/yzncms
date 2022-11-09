@@ -64,9 +64,9 @@ class Category extends Adminbase
                 }
                 $v['catname'] = '<a data-width="900" data-height="600" data-open="' . url('edit', ['id' => $v['id']]) . '"">' . $v['catname'] . '</a>';
                 if ($v['type'] == 1) {
-                    $v['add_url'] = url("Category/singlepage", ["parentid" => $v['id']]);
+                    $v['add_url'] = url("singlepage", ["parentid" => $v['id']]);
                 } elseif ($v['type'] == 2) {
-                    $v['add_url'] = url("Category/add", ["parentid" => $v['id']]);
+                    $v['add_url'] = url("add", ["parentid" => $v['id']]);
                 }
                 $v['url']            = buildCatUrl($v['id'], $v['url']);
                 $categorys[$v['id']] = $v;
