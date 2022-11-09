@@ -211,7 +211,7 @@ class Admin extends Adminbase
     {
         $db_config  = Cache::get('db_config');
         $res        = Db::connect($db_config)->name('channeltype')->select();
-        $modelClass = new \app\cms\model\Models;
+        $modelClass = new \app\admin\model\cms\Models;
         $data       = $dede_models       = [];
         try {
             foreach ($res as $key => $value) {
@@ -254,7 +254,7 @@ class Admin extends Adminbase
         $db_config = Cache::get('db_config');
         //$dede_models = Cache::get('dede_models');
         $res         = Db::connect($db_config)->name('channeltype')->select();
-        $modelClass  = new \app\cms\model\ModelField;
+        $modelClass  = new \app\admin\model\cms\ModelField;
         $dede_fields = $data = [];
         foreach ($res as $key => $value) {
             preg_match_all("/<field:([a-z]+) itemname=\"(.*?)\" autofield=\"(.*?)\"(?:.*?)type=\"(.*?)\"(?:.*?)default=\"(.*?)\"/", $value['fieldset'], $matches, PREG_SET_ORDER);
@@ -352,7 +352,7 @@ class Admin extends Adminbase
         $db_config   = Cache::get('db_config');
         $dede_models = Cache::get('dede_models');
         $pinyin      = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
-        $modelClass  = new \app\cms\model\Category;
+        $modelClass  = new \app\admin\model\cms\Category;
         $cursor      = Db::connect($db_config)->name('arctype')->cursor();
         $catdir      = $data      = [];
         try {
@@ -384,7 +384,7 @@ class Admin extends Adminbase
                 $data['catdir'] = in_array($data['catdir'], $catdir) ?: $data['catdir'] . genRandomString(3);
                 $catdir[]       = $data['catdir'];
                 $data['type']   = $value['ispart'] != 0 ? 1 : 2;
-                $result         = $this->validate($data, 'app\cms\validate\Category.list');
+                $result         = $this->validate($data, 'app\admin\validate\cms\Category.list');
                 if (true !== $result) {
                     $this->error($result);
                 }
