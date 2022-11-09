@@ -228,7 +228,7 @@ class Admin extends Adminbase
     {
         $db_config  = Cache::get('db_config');
         $res        = Db::connect($db_config)->name('model')->where('type', 0)->select();
-        $modelClass = new \app\cms\model\Models;
+        $modelClass = new \app\admin\model\cms\Models;
         $data       = [];
         foreach ($res as $key => $value) {
             $data['id']          = $value['modelid'];
@@ -261,7 +261,7 @@ class Admin extends Adminbase
         $db_config  = Cache::get('db_config');
         $cursor     = Db::connect($db_config)->name('model_field')->cursor();
         $ids        = Db::connect($db_config)->name('model')->where('type', 0)->column('modelid');
-        $modelClass = new \app\cms\model\ModelField;
+        $modelClass = new \app\admin\model\cms\ModelField;
         $v9fields   = $data   = [];
         foreach ($cursor as $key => $value) {
             if (!in_array($value['field'], $this->v9fieldList) && in_array($value['modelid'], $ids) && in_array($value['formtype'], ['text', 'textarea', 'image', 'images', 'editor', 'box'])) {
@@ -337,7 +337,7 @@ class Admin extends Adminbase
                         'setting'    => ['define' => $define, 'value' => $val, 'options' => $options],
                         'status'     => 1,
                     ];
-                    $result = $this->validate($data, 'app\cms\validate\ModelField');
+                    $result = $this->validate($data, 'app\admin\validate\cms\ModelField');
                     if (true !== $result) {
                         return $this->error($result);
                     }
@@ -359,7 +359,7 @@ class Admin extends Adminbase
         cache('Category', null);
         $db_config  = Cache::get('db_config');
         $pinyin     = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
-        $modelClass = new \app\cms\model\Category;
+        $modelClass = new \app\admin\model\cms\Category;
         $cursor     = Db::connect($db_config)->name('category')->where('type', 'in', '0,1,2')->cursor();
         foreach ($cursor as $key => $value) {
             $value['id']      = $value['catid'];
@@ -386,7 +386,7 @@ class Admin extends Adminbase
             } else {
             $value['image'] = '';
             }*/
-            $result = $this->validate($value, 'app\cms\validate\Category.list');
+            $result = $this->validate($value, 'app\admin\validate\cms\Category.list');
             if (true !== $result) {
                 $this->error($result);
             }
