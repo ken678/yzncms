@@ -94,8 +94,8 @@ class Index extends Cmsbase
         $category['arrparentid'] = explode(',', $category['arrparentid']);
         $top_parentid            = isset($category['arrparentid'][1]) ? $category['arrparentid'][1] : $catid;
         unset($category['id']);
-        $this->assign($category);
         $this->assign([
+            'category'     => $category,
             'top_parentid' => $top_parentid,
             'SEO'          => $seo,
             'catid'        => $catid,
