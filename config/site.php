@@ -12,7 +12,7 @@ return [
     'theme'                            => 'default',
     'admin_forbid_ip'                  => '',
     'upload_image_size'                => '0',
-    'upload_image_ext'                 => 'gif,jpg,jpeg,bmp,png',
+    'upload_image_ext'                 => 'gif,jpg,jpeg,bmp,png,webp',
     'upload_file_size'                 => '0',
     'upload_file_ext'                  => 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z',
     'upload_driver'                    => 'local',
