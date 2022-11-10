@@ -15,6 +15,7 @@
 namespace app\common\controller;
 
 use app\admin\service\User;
+use think\facade\Config;
 use think\facade\Hook;
 use think\facade\Session;
 use think\Validate;
@@ -94,9 +95,9 @@ class Adminbase extends Base
             // 是否是超级管理员
             define('IS_ROOT', $this->auth->isAdministrator());
 
-            if (!IS_ROOT && config('admin_forbid_ip')) {
+            if (!IS_ROOT && config::get('site.admin_forbid_ip')) {
                 // 检查IP地址访问
-                $arr = explode(',', config('admin_forbid_ip'));
+                $arr = explode(',', config::get('site.admin_forbid_ip'));
                 foreach ($arr as $val) {
                     //是否是IP段
                     if (strpos($val, '*')) {
@@ -120,22 +121,14 @@ class Adminbase extends Base
                 }
             }
         }
-        $config = \think\facade\config::get('app.');
-        $site   = [
-            'upload_thumb_water'     => $config['upload_thumb_water'],
-            'upload_thumb_water_pic' => $config['upload_thumb_water_pic'],
-            'upload_image_size'      => $config['upload_image_size'],
-            'upload_file_size'       => $config['upload_file_size'],
-            'upload_image_ext'       => $config['upload_image_ext'],
-            'upload_file_ext'        => $config['upload_file_ext'],
-            'chunking'               => $config['chunking'],
-            'chunksize'              => $config['chunksize'],
-            'modulename'             => $modulename,
-            'controllername'         => $controllername,
-            'actionname'             => $actionname,
+        $site   = Config::get("site.");
+        $config = [
+            'modulename'     => $modulename,
+            'controllername' => $controllername,
+            'actionname'     => $actionname,
         ];
         //监听插件传入的变量
-        $site = array_merge($site, Hook::listen("config_init")[0] ?? []);
+        $site = array_merge($site, $config, Hook::listen("config_init")[0] ?? []);
         $this->assign('site', $site);
         $this->assign('auth', $this->auth);
         $this->assign('userInfo', Session::get('admin'));
@@ -200,7 +193,7 @@ class Adminbase extends Base
         if ($this->request->has("page")) {
             $page = $this->request->get("page/d", 1);
         }
-        $this->request->withGet([config('paginate.var_page') => $page]);
+        $this->request->withGet([config::get('paginate.var_page') => $page]);
         $filter    = (array) json_decode($filter, true);
         $op        = (array) json_decode($op, true);
         $filter    = $filter ? $filter : [];

@@ -34,28 +34,20 @@ class Homebase extends Base
         $this->controllername = parse_name($this->request->controller());
         $this->actionname     = strtolower($this->request->action());
 
-        $config = \think\facade\config::get('app.');
-        $site   = [
-            'upload_thumb_water'     => $config['upload_thumb_water'],
-            'upload_thumb_water_pic' => $config['upload_thumb_water_pic'],
-            'upload_image_size'      => $config['upload_image_size'],
-            'upload_file_size'       => $config['upload_file_size'],
-            'upload_image_ext'       => $config['upload_image_ext'],
-            'upload_file_ext'        => $config['upload_file_ext'],
-            'chunking'               => $config['chunking'],
-            'chunksize'              => $config['chunksize'],
-            'modulename'             => $this->modulename,
-            'controllername'         => $this->controllername,
-            'actionname'             => $this->actionname,
+        $site   = Config::get("site.");
+        $config = [
+            'modulename'     => $this->modulename,
+            'controllername' => $this->controllername,
+            'actionname'     => $this->actionname,
         ];
         //监听插件传入的变量
-        $site = array_merge($site, Hook::listen("config_init")[0] ?? []);
+        $site = array_merge($site, $config, Hook::listen("config_init")[0] ?? []);
         $this->assign('site', $site);
     }
 
     protected function fetch($template = '', $vars = [], $config = [], $renderContent = false)
     {
-        $Theme        = empty(Config::get('theme')) ? 'default' : Config::get('theme');
+        $Theme        = empty(Config::get('site.theme')) ? 'default' : Config::get('site.theme');
         $viewPath     = TEMPLATE_PATH . $Theme . DIRECTORY_SEPARATOR . $this->request->module() . DIRECTORY_SEPARATOR;
         $templateFile = $viewPath . trim($template, '/') . '.' . Config::get('template.view_suffix');
         if ('default' !== $Theme && !is_file($templateFile)) {

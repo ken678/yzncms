@@ -20,12 +20,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
     };
 
     var yznForm = {
-        listen: function(preposeCallback, ok, no, ex) {
+        listen: function(preposeCallback, ok, no) {
             // 监听表单提交事件
-            yznForm.api.formSubmit(preposeCallback, ok, no, ex);
+            yznForm.api.formSubmit(preposeCallback, ok, no);
         },
         api: {
-            form: function(url, data, ok, no, ex, refresh, type, pop) {
+            form: function(url, data, ok, no, refresh, type, pop) {
                 var that = this;
                 var submitBtn = $(".layer-footer button[lay-submit]");
                 submitBtn.addClass("layui-btn-disabled").prop('disabled', true);
@@ -35,7 +35,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                 yzn.request.post({
                     url: url,
                     data: data,
-                }, function(res) {
+                }, function(data,res) {
                     setTimeout(function() {
                         submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
                     }, 3000);
@@ -77,7 +77,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                         });
                         return false;
                     }
-                }, function(res) {
+                }, function(data,res) {
                     submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
                     if (false === $('.layui-form').triggerHandler("error.form")) {
                         return false;
@@ -89,14 +89,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     }
                     var msg = res.msg == undefined ? '返回数据格式有误' : res.msg;
                     yzn.msg.error(msg);
-                    return false;
-                }, function(res) {
-                    submitBtn.removeClass("layui-btn-disabled").prop('disabled', false);
-                    if (typeof ex === 'function') {
-                        if (false === ex.call($(this), res)) {
-                            return false;
-                        }
-                    }
                     return false;
                 });
                 return false;
@@ -126,7 +118,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                 tableName = tableName | 'currentTable';
                 table.reload(tableName);
             },
-            formSubmit: function(preposeCallback, ok, no, ex) {
+            formSubmit: function(preposeCallback, ok, no) {
                 var formList = document.querySelectorAll("[lay-submit]");
 
                 // 表单提交自动处理
@@ -176,7 +168,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
                             }
-                            yznForm.api.form(url, dataField, ok, no, ex, refresh, type, pop);
+                            yznForm.api.form(url, dataField, ok, no, refresh, type, pop);
                             return false;
                         });
                     });
@@ -622,7 +614,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                                 yzn.request.post({
                                     url: 'admin/ajax/filterWord',
                                     data: { 'content': con },
-                                }, function(res) {
+                                }, function(data,res) {
                                     if (res.code == 0) {
                                         if ($.isArray(res.data)) {
                                             layer.msg("违禁词：" + res.data.join(","), { icon: 2 });
@@ -744,7 +736,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                                 accept: {
                                     title: type == 'image' ? 'Images' : 'Files',
                                     extensions: $ext,
-                                    mimeTypes: type == 'image' ? 'image/jpg,image/jpeg,image/bmp,image/png,image/gif' : '',
+                                    mimeTypes: type == 'image' ? 'image/jpg,image/jpeg,image/bmp,image/png,image/gif,image/webp' : '',
                                 },
                                 // 自定义参数
                                 formData: formData,
@@ -956,7 +948,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
         yzn.request.post({
             url: _form.attr('action'),
             data: _form.serialize(),
-        }, function(res) {
+        }, function(data,res) {
             if (opt.callback) {
                 opt.callback(that, res);
             } else {
@@ -980,7 +972,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     }
                 }, opt.time);
             }
-        }, function(res) {
+        }, function(data,res) {
             layer.msg(res.msg, { icon: 2 });
             setTimeout(function() {
                 that.prop('disabled', false);

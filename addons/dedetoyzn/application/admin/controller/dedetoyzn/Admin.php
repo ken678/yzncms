@@ -110,8 +110,9 @@ class Admin extends Adminbase
                 }
             }
             //检查是否存在友情链接
-            $res = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}flink'");
-            if ($res && isModuleInstall('links')) {
+            $res  = $db2->query("SHOW TABLES LIKE '{$db_config['prefix']}flink'");
+            $info = get_addon_info('links');
+            if ($res && $info && $info['status'] > 0) {
                 $db_task[] = ['fun' => 'step9', 'msg' => '友情链接转换完毕!'];
             }
             Cache::set('db_task', $db_task, 600);
@@ -140,7 +141,8 @@ class Admin extends Adminbase
 
     public function step1()
     {
-        if (!isModuleInstall('cms')) {
+        $info = get_addon_info('cms');
+        if (!$info || !$info['status'] > 0) {
             $this->error('系统未安装cms模块，请先安装！');
         }
         //清空yzncms的表
@@ -156,7 +158,8 @@ class Admin extends Adminbase
                 Db::name('model_field')->where(['modelid' => $val['id']])->delete();
             }
         }
-        if (isModuleInstall('links')) {
+        $info = get_addon_info('links');
+        if ($info && $info['status'] > 0) {
             Db::execute("TRUNCATE `{$yznprefix}terms`;");
             Db::execute("TRUNCATE `{$yznprefix}links`;");
         }
@@ -208,7 +211,7 @@ class Admin extends Adminbase
     {
         $db_config  = Cache::get('db_config');
         $res        = Db::connect($db_config)->name('channeltype')->select();
-        $modelClass = new \app\cms\model\Models;
+        $modelClass = new \app\admin\model\cms\Models;
         $data       = $dede_models       = [];
         try {
             foreach ($res as $key => $value) {
@@ -251,7 +254,7 @@ class Admin extends Adminbase
         $db_config = Cache::get('db_config');
         //$dede_models = Cache::get('dede_models');
         $res         = Db::connect($db_config)->name('channeltype')->select();
-        $modelClass  = new \app\cms\model\ModelField;
+        $modelClass  = new \app\admin\model\cms\ModelField;
         $dede_fields = $data = [];
         foreach ($res as $key => $value) {
             preg_match_all("/<field:([a-z]+) itemname=\"(.*?)\" autofield=\"(.*?)\"(?:.*?)type=\"(.*?)\"(?:.*?)default=\"(.*?)\"/", $value['fieldset'], $matches, PREG_SET_ORDER);
@@ -349,7 +352,7 @@ class Admin extends Adminbase
         $db_config   = Cache::get('db_config');
         $dede_models = Cache::get('dede_models');
         $pinyin      = new \Overtrue\Pinyin\Pinyin('Overtrue\Pinyin\MemoryFileDictLoader');
-        $modelClass  = new \app\cms\model\Category;
+        $modelClass  = new \app\admin\model\cms\Category;
         $cursor      = Db::connect($db_config)->name('arctype')->cursor();
         $catdir      = $data      = [];
         try {
@@ -381,7 +384,7 @@ class Admin extends Adminbase
                 $data['catdir'] = in_array($data['catdir'], $catdir) ?: $data['catdir'] . genRandomString(3);
                 $catdir[]       = $data['catdir'];
                 $data['type']   = $value['ispart'] != 0 ? 1 : 2;
-                $result         = $this->validate($data, 'app\cms\validate\Category.list');
+                $result         = $this->validate($data, 'app\admin\validate\cms\Category.list');
                 if (true !== $result) {
                     $this->error($result);
                 }

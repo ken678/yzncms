@@ -68,7 +68,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         data: {
                             id: ids
                         },
-                    }, function(res) {
+                    }, function(data,res) {
                         yzn.msg.success(res.msg, function() {
                             table.reload(tableId);
                         });
@@ -115,8 +115,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     yzn.request.post({
                         url: url,
                         data: postData,
-                    }, function(res) {
+                    }, function(data,res) {
                         yzn.msg.success(res.msg, function() {
+                            tableId && table.reload(tableId);
+                        });
+                    }, function(data,res) {
+                        yzn.msg.error(res.msg, function () {
                             tableId && table.reload(tableId);
                         });
                     })
@@ -599,12 +603,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         url: option.url,
                         prefix: true,
                         data: data,
-                    }, function (res) {
+                    }, function (data,res) {
                         notice.success({ message: res.msg });
                         if (option.modifyReload) {
                             table.reload(option.tableId);
                         }
-                    }, function (res) {
+                    }, function (data,res) {
                         yzn.msg.error(res.msg, function () {
                             table.reload(option.tableId);
                         });
@@ -632,12 +636,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         url: tableInit.modify_url,
                         prefix: true,
                         data: _data,
-                    }, function(res) {
+                    }, function(data,res) {
                         notice.success({ message: res.msg });
                         if (modifyReload) {
                             table.reload(tableId);
                         }
-                    }, function(res) {
+                    }, function(data,res) {
                         yzn.msg.error(res.msg, function() {
                             table.reload(tableId);
                         });

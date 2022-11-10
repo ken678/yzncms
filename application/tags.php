@@ -12,14 +12,12 @@
 // 应用行为扩展定义文件
 return [
     // 应用初始化
-    'app_init'     => [
-        'app\\common\\behavior\\InitHook', //注册钩子
-    ],
+    'app_init'     => [],
     // 应用开始
     'app_begin'    => [],
     // 模块初始化
     'module_init'  => [
-        'app\\common\\behavior\\Config', // 注册配置行为
+        'app\\common\\behavior\\Common', // 注册配置行为
     ],
     // 操作开始执行
     'action_begin' => [],

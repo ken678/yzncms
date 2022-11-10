@@ -152,7 +152,7 @@ abstract class Oauth
      */
     public function config()
     {
-        $addons_url = url('addons/synclogin/callback', array('type' => strtolower($this->Type)));
+        $addons_url = url('index/synclogin/callback', array('type' => strtolower($this->Type)));
         if (strpos($addons_url, 'index.php') === false) {
             $qshurl = $_SERVER['HTTP_HOST'] . "/index.php?s=";
         } else {

@@ -1,10 +1,71 @@
 <?php
 
-use think\Db;
 use think\facade\Config;
+use think\facade\Route;
 
 // 插件目录
 define('ADDON_PATH', ROOT_PATH . 'addons' . DS);
+
+// 定义路由
+Route::rule('addons/:addon/[:controller]/[:action]', "\\think\\addons\\Route@execute");
+
+// 闭包初始化行为
+Hook::add('app_init', function () {
+    //注册路由
+    $routeArr = (array) Config::get('addons.route');
+    $domains  = [];
+    $rules    = [];
+    $execute  = "\\think\\addons\\Route@execute?addon=%s&controller=%s&action=%s";
+    foreach ($routeArr as $k => $v) {
+        if (is_array($v)) {
+            $addon  = $v['addon'];
+            $domain = $v['domain'];
+            $drules = [];
+            foreach ($v['rule'] as $m => $n) {
+                list($addon, $controller, $action) = explode('/', $n);
+                $drules[$m]                        = sprintf($execute . '&indomain=1', $addon, $controller, $action);
+            }
+            $domains[$domain]                          = $drules ? $drules : [];
+            $domains[$domain][':controller/[:action]'] = sprintf($execute . '&indomain=1', $addon, ":controller", ":action");
+        } else {
+            if (!$v) {
+                continue;
+            }
+            list($addon, $controller, $action) = explode('/', $v);
+            $rules[$k]                         = sprintf($execute, $addon, $controller, $action);
+        }
+    }
+    Route::rules($rules);
+    if ($domains) {
+        foreach ($domains as $k => $v) {
+            Route::domain($k, $v);
+        }
+    }
+
+    // 获取系统配置
+    $hooks = Config::get('app_debug') ? [] : Cache::get('hooks', []);
+    if (empty($hooks)) {
+        $hooks = (array) Config::get('addons.hooks', []);
+        // 初始化钩子
+        foreach ($hooks as $key => $values) {
+            if (is_string($values)) {
+                $values = explode(',', $values);
+            } else {
+                $values = (array) $values;
+            }
+            $hooks[$key] = array_filter($values);
+        }
+        Cache::set('hooks', $hooks);
+    }
+    //如果在插件中有定义app_init，则直接执行
+    if (isset($hooks['app_init'])) {
+        foreach ($hooks['app_init'] as $k => $v) {
+            Hook::exec([$v, 'appInit']);
+        }
+    }
+    Hook::import($hooks, true);
+});
+
 /**
  * 处理插件钩子
  * @param string $hook        钩子名称
@@ -72,9 +133,13 @@ function get_addon_autoload_config($truncate = false)
         // 清空手动配置的钩子
         $config['hooks'] = [];
     }
+    $route  = [];
+    $domain = [];
+
     // 读取插件目录及钩子列表
-    $base   = get_class_methods('\\think\\Addons');
-    $base   = array_merge($base, ['install', 'uninstall', 'enable', 'disable']);
+    $base = get_class_methods('\\think\\Addons');
+    $base = array_merge($base, ['install', 'uninstall', 'enable', 'disable']);
+
     $addons = get_addon_list();
     foreach ($addons as $name => $addon) {
         if (0 >= $addon['status']) {
@@ -98,29 +163,25 @@ function get_addon_autoload_config($truncate = false)
                 $config['hooks'][$hook][] = get_addon_class($name);
             }
         }
-    }
-    //TODO 模块的钩子
-    $modules = Db::name('Module')->where('status', 1)->select();
-    foreach ($modules as $name => $addon) {
-        $name = $addon['module'];
-        if (is_file(APP_PATH . $name . DIRECTORY_SEPARATOR . 'behavior' . DIRECTORY_SEPARATOR . 'Hooks.php')) {
-            $methods = (array) get_class_methods('\\app\\' . $name . '\\behavior\\Hooks');
-            $hooks   = array_diff($methods, $base);
-            foreach ($hooks as $hook) {
-                $hook = parse_name($hook, 0, false);
-                if (!isset($config['hooks'][$hook])) {
-                    $config['hooks'][$hook] = [];
-                }
-                // 兼容手动配置项
-                if (is_string($config['hooks'][$hook])) {
-                    $config['hooks'][$hook] = explode(',', $config['hooks'][$hook]);
-                }
-                if (!in_array($name, $config['hooks'][$hook])) {
-                    $config['hooks'][$hook][] = '\\app\\' . $name . '\\behavior\\Hooks';
-                }
+        $conf = get_addon_config($addon['name']);
+        if ($conf) {
+            $conf['rewrite'] = isset($conf['rewrite']) && is_array($conf['rewrite']) ? $conf['rewrite'] : [];
+            $rule            = array_map(function ($value) use ($addon) {
+                return "{$addon['name']}/{$value}";
+            }, array_flip($conf['rewrite']));
+            if (isset($conf['domain']) && $conf['domain']) {
+                $domain[] = [
+                    'addon'  => $addon['name'],
+                    'domain' => $conf['domain'],
+                    'rule'   => $rule,
+                ];
+            } else {
+                $route = array_merge($route, $rule);
             }
         }
     }
+    $config['route'] = $route;
+    $config['route'] = array_merge($config['route'], $domain);
     return $config;
 }
 
@@ -276,4 +337,94 @@ function set_addon_fullconfig($name, $array)
     }
 
     return true;
+}
+
+/**
+ * 获取插件创建的表
+ * @param string $name 插件名
+ * @return array
+ */
+function get_addon_tables($name)
+{
+    $addonInfo = get_addon_info($name);
+    if (!$addonInfo) {
+        return [];
+    }
+    $regex   = "/^CREATE\s+TABLE\s+(IF\s+NOT\s+EXISTS\s+)?`?([a-zA-Z_]+)`?/mi";
+    $sqlFile = ADDON_PATH . $name . DS . 'install.sql';
+    $tables  = [];
+    if (is_file($sqlFile)) {
+        preg_match_all($regex, file_get_contents($sqlFile), $matches);
+        if ($matches && isset($matches[2]) && $matches[2]) {
+            $prefix = config('database.prefix');
+            $tables = array_map(function ($item) use ($prefix) {
+                return str_replace("__PREFIX__", $prefix, $item);
+            }, $matches[2]);
+        }
+    }
+    return $tables;
+}
+
+/**
+ * 插件显示内容里生成访问插件的url
+ * @param string      $url    地址 格式：插件名/控制器/方法
+ * @param array       $vars   变量参数
+ * @param bool|string $suffix 生成的URL后缀
+ * @param bool|string $domain 域名
+ * @return bool|string
+ */
+function addon_url($url, $vars = [], $suffix = true, $domain = false)
+{
+    $url   = ltrim($url, '/');
+    $addon = substr($url, 0, stripos($url, '/'));
+    if (!is_array($vars)) {
+        parse_str($vars, $params);
+        $vars = $params;
+    }
+    $params = [];
+    foreach ($vars as $k => $v) {
+        if (substr($k, 0, 1) === ':') {
+            $params[$k] = $v;
+            unset($vars[$k]);
+        }
+    }
+    $val    = "@addons/{$url}";
+    $config = get_addon_config($addon);
+    //$dispatch     = think\Request::instance()->dispatch();
+    //$indomain     = isset($dispatch['var']['indomain']) && $dispatch['var']['indomain'] ? true : false;
+    $indomain     = false;
+    $domainprefix = $config && isset($config['domain']) && $config['domain'] ? $config['domain'] : '';
+    $domain       = $domainprefix ? $domainprefix : $domain;
+    $rewrite      = $config && isset($config['rewrite']) && $config['rewrite'] ? $config['rewrite'] : [];
+    if ($rewrite) {
+        $path = substr($url, stripos($url, '/') + 1);
+        if (isset($rewrite[$path]) && $rewrite[$path]) {
+            $val = $rewrite[$path];
+            array_walk($params, function ($value, $key) use (&$val) {
+                $val = str_replace("[{$key}]", $value, $val);
+            });
+            $val = str_replace(['^', '$'], '', $val);
+            if (substr($val, -1) === '/') {
+                $suffix = false;
+            }
+        } else {
+            // 如果采用了域名部署,则需要去掉前两段
+            if ($indomain && $domainprefix) {
+                $arr = explode("/", $val);
+                $val = implode("/", array_slice($arr, 2));
+            }
+        }
+    } else {
+        // 如果采用了域名部署,则需要去掉前两段
+        if ($indomain && $domainprefix) {
+            $arr = explode("/", $val);
+            $val = implode("/", array_slice($arr, 2));
+        }
+        foreach ($params as $k => $v) {
+            $vars[substr($k, 1)] = $v;
+        }
+    }
+    $url = url($val, [], $suffix, $domain) . ($vars ? '?' . http_build_query($vars) : '');
+    $url = preg_replace("/\/((?!index)[\w]+)\.php\//i", "/", $url);
+    return $url;
 }

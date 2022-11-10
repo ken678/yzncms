@@ -1,0 +1,175 @@
+{template file="member/header.html"/}
+<style>
+.layui-table[lay-size=lg] td, .layui-table[lay-size=lg] th {
+    padding: 15px 0px;
+}
+.layui-table tbody tr:hover {
+    background: none;
+}
+.calendar {
+    width: 100%;
+    table-layout: fixed;
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    background-color: #fff;
+    color: #666;
+}
+.calendar-title{
+    border-bottom: 1px solid #e2e2e2;
+}
+.calendar-title th {
+    text-align: center;
+    text-transform: uppercase;
+}
+.calendar-header th {
+    padding: 10px;
+    text-align: center;
+}
+.calendar-title th {
+    font-weight: normal;
+}
+.calendar-title th a:hover i{
+    color: #5FB878;
+}
+.calendar-title th span {
+    margin: 0 5px;
+    color: #666;
+}
+.calendar-title th a {
+    margin: 0 5px;
+    color: #666;
+}
+.calendar tbody tr td.pad {
+    background: rgba(255, 255, 255, 0.1);
+}
+.calendar tbody tr td.day {}
+.calendar tbody tr td.day:hover div:first-child{
+    background-color: #eaeaea;
+    color: #333;
+}
+.calendar tbody tr td.day div:first-child {
+    text-align: center;
+    height: 40px;
+    display: block;
+    width: 40px;
+    margin: 0 auto;
+    cursor: pointer;
+    line-height: 40px;
+    border-radius: 50%;
+}
+.calendar tbody tr td.signed div:first-child {
+    background: #f7b82e !important;
+    color: #fff !important;
+}
+.calendar tbody tr td.today > div:first-child {
+    background: #17bc9b !important;
+    color: #fff !important;
+}
+.signin-rank-table>tbody>tr>td {
+    vertical-align: middle;
+}
+.layui-field-box p{
+        margin-bottom: 5px;
+}
+</style>
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class="layui-this">我的签到</li>
+        <!--<li>签到积分规则</li>
+        <li>排行榜</li>-->
+    </ul>
+    <div class="layui-tab-content" style="padding: 20px 0;">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md7">
+                <blockquote class="layui-elem-quote">
+                    {if $signin}
+                    你当前已经连续签到 <b>{$successions}</b> 天，明天继续签到可获得 <b>{$score}</b> 积分
+                    {else /}
+                    今天签到可获得 <b>{$score}</b> 积分，请点击签到领取积分
+                    {/if}
+                </blockquote>
+                {:$calendar->draw($date);}
+            </div>
+            <div class="layui-col-md5">
+                {if $config.isfillup}
+                <fieldset class="layui-elem-field">
+                    <legend>补签说明</legend>
+                    <div class="layui-field-box">
+                         <p>1. 补签消耗 <strong style="color:#FF5722;">{$config.fillupscore}</strong> 积分。</p>
+                         <p>2. 漏签 <strong style="color:#FF5722;">{$config.fillupdays}</strong> 天内，可以补签。</p>
+                         <p>3. 每月可补签 <strong style="color:#FF5722;">{$config.fillupnumsinmonth}</strong> 次。</p>
+                    </div>
+                </fieldset>
+                {/if}
+                <fieldset class="layui-elem-field">
+                    <legend>签到积分规则</legend>
+                    <div class="layui-field-box">
+                        <table class="layui-table">
+                            <thead>
+                                <tr>
+                                    <th>连续签到天数</th>
+                                    <th>获得积分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {volist name="config.signinscore" id="item"}
+                                <tr>
+                                    <th scope="row">第{$key|str_replace='s','',###}天</th>
+                                    <td>+{$item}</td>
+                                </tr>
+                                {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+layui.define(['layer', 'element'], function(exports) {
+     var element = layer = layui.layer,
+        $ = layui.jquery,
+        element = layui.element;
+    $(document).on("click", ".btn-signin,.today", function() {
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: "{:url('index/signin/dosign')}",
+            success: function(res) {
+                layer.msg(res.msg, {
+                    time: 2500
+                }, function() {
+                    location.reload();
+                });
+            },
+            error: function(e) {}
+        })
+        return false;
+    });
+    {if $fillupscore}
+        $(document).on("click", ".expired[data-date]:not(.today):not(.signed)", function() {
+            var that = this;
+            layer.confirm("确认进行补签日期：" + $(this).data("date") + "？<br>补签将消耗" + "{$fillupscore}积分", function() {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: "{:url('index/signin/fillup')}" + "?date=" + $(that).data("date"),
+                    success: function(res) {
+                        layer.msg(res.msg, {
+                            time: 1500
+                        }, function() {
+                            location.reload();
+                        });
+                    },
+                    error: function(e) {
+                        layer.alert(ret.msg);
+                    }
+                })
+            });
+            return false;
+        });
+    {/if}
+});
+</script>
+{template file="member/footer.html"/}
