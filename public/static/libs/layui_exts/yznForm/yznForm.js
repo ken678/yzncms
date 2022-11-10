@@ -736,7 +736,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                                 accept: {
                                     title: type == 'image' ? 'Images' : 'Files',
                                     extensions: $ext,
-                                    mimeTypes: type == 'image' ? 'image/jpg,image/jpeg,image/bmp,image/png,image/gif' : '',
+                                    mimeTypes: type == 'image' ? 'image/jpg,image/jpeg,image/bmp,image/png,image/gif,image/webp' : '',
                                 },
                                 // 自定义参数
                                 formData: formData,
