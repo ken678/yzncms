@@ -340,6 +340,8 @@ class Cms extends Addons
                     Db::name('model_field')->where('modelid', $val['id'])->delete();
                 }
             }
+            //删除模型中的表
+            Db::name('model')->where(['module' => 'cms'])->delete();
         }
         return true;
     }
