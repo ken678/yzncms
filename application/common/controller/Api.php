@@ -14,8 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\common\controller;
 
+use think\App;
 use think\exception\HttpResponseException;
-use think\Request;
 use think\Response;
 
 class Api
@@ -36,9 +36,9 @@ class Api
      * @access public
      * @param Request $request Request 对象
      */
-    public function __construct(Request $request)
+    public function __construct(App $app)
     {
-        $this->request = $request;
+        $this->request = $app->request;
         // 控制器初始化
         $this->initialize();
     }
