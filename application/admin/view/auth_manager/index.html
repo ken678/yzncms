@@ -39,7 +39,7 @@ layui.use('yznTable', function() {
                 { field: 'title',width: 200, title: '授权',templet: '#authTool' },
                 { field: 'title', width: 200, align: 'left', title: '权限组'},
                 { field: 'description', title: '描述' },
-                { field: 'status', width: 80,title: '状态',templet: yznTable.formatter.label,selectList:{0:'禁用',1:'正常'}},
+                { field: 'status', width: 80,title: '状态',templet: yznTable.formatter.status,selectList:{0:'禁用',1:'正常'},custom:{0:'danger',1:'success'}},
                 { width:100, title: '操作',templet: function (d){
                     if(d.id=={$userInfo.roleid}){
                         return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
