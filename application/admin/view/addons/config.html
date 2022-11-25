@@ -8,7 +8,7 @@
                 {if $data.tips.title}
                 <b>{$data.tips.title}</b><br>
                 {/if}
-                {$data.tips.value}
+                {$data.tips.value|raw}
             </div>
             {/if}
             <div class="layui-card-body">
