@@ -754,6 +754,44 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 });
                 return html;
             },
+            status: function (data) {
+                var custom = {normal: 'success', hidden: 'gray', deleted: 'danger', locked: 'info'};
+                if (typeof this.custom !== 'undefined') {
+                    custom = $.extend(custom, this.custom);
+                }
+                this.custom = custom;
+                this.icon = 'iconfont icon-circle-fill';
+                return yznTable.formatter.normal.call(this, data);
+            },
+            normal: function (data) {
+                var that = this;
+                var colorArr = ["primary", "success", "danger", "warning", "info", "gray", "red", "yellow", "aqua", "blue", "navy", "teal", "olive", "lime", "fuchsia", "purple", "maroon"];
+                var custom = {};
+                if (typeof that.custom !== 'undefined') {
+                    custom = $.extend(custom, that.custom);
+                }
+                var field = that.field;
+                try {
+                    var value = eval("data." + field);
+                    value = value == null || value.length === 0 ? '' : value.toString();
+                } catch (e) {
+                    var value = undefined;
+                }
+                value = value == null || value.length === 0 ? '' : value.toString();
+                var keys = typeof that.selectList === 'object' ? Object.keys(that.selectList) : [];
+                var index = keys.indexOf(value);
+                var color = value && typeof custom[value] !== 'undefined' ? custom[value] : null;
+                var display = index > -1 ? that.selectList[value] : null;
+                var icon = typeof that.icon !== 'undefined' ? that.icon : null;
+                if (!color) {
+                    color = index > -1 && typeof colorArr[index] !== 'undefined' ? colorArr[index] : 'primary';
+                }
+                if (!display) {
+                    display = value.charAt(0).toUpperCase() + value.slice(1);
+                }
+                var html = '<span class="text-' + color + '">' + (icon ? '<i class="' + icon + '"></i> ' : '') + display + '</span>';
+                return html;
+            },
             flag: function (data) {
                 var that = this;
                 var field = that.field;
