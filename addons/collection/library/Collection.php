@@ -166,7 +166,7 @@ class Collection
                 return $url;
             }
             //图片是否合法
-            $imgInfo = getimagesize($url);
+            $imgInfo = @getimagesize($url);
             if (!$imgInfo || !isset($imgInfo[0]) || !isset($imgInfo[1])) {
                 return $url;
             }
