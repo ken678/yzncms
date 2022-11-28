@@ -15,7 +15,7 @@
 namespace addons\collection\library;
 
 use app\admin\service\User;
-use app\attachment\model\Attachment;
+use app\common\model\Attachment;
 use QL\QueryList;
 
 class Collection
