@@ -156,3 +156,25 @@ body .fly-user-main{position: relative; min-height: 600px;}
     background-color: rgb(250 250 250)!important;
 }
 .layui-nav dl.layui-nav-child dd{padding-left: 15px;}
+
+/*alert*/
+.alert {padding: 15px; margin-bottom: 17px; border: 1px solid transparent; border-radius: 3px;}
+.alert h4 {font-weight: 600; }
+.alert .icon {margin-right: 10px; }
+.alert .close {color: #000; opacity: 0.2; filter: alpha(opacity=20); }
+.alert .close:hover {opacity: 0.5; filter: alpha(opacity=50); }
+.alert a {color: #fff; text-decoration: underline; }
+.alert-success {border-color: #15a589; }
+.alert-danger, .alert-error {border-color: #e43725; }
+.alert-warning {border-color: #e08e0b; }
+.alert-info {border-color: #258cd1; }
+.alert-primary-light {background-color: #E2E5E8; border-color: #D0D4D8; color: #85878A; }
+.alert-primary-light a {color: #787a7d; }
+.alert-success-light {background-color: #dff0d8; border-color: #d1eac8; color: #468847; }
+.alert-success-light a {color: #3d773e; }
+.alert-danger-light, .alert-error-light {background-color: #f2dede; border-color: #ebcdcd; color: #b94a48; }
+.alert-danger-light a, .alert-error-light a {color: #a74240; }
+.alert-warning-light {background-color: #fcf8e3; border-color: #faf3cd; color: #c09853; }
+.alert-warning-light a {color: #b78c43; }
+.alert-info-light {background-color: #d9edf7; border-color: #c6e4f3; color: #3a87ad; }
+.alert-info-light a {color: #34789a; }
