@@ -18,16 +18,15 @@ class Service
     public static function getRankInfo($uid = null)
     {
         $uid      = is_null($uid) ? User::instance()->id : $uid;
-        $rankList = Signin::with(["user"])
+        $rankList = Signin::with(["user" => function ($query) {
+            $query->field('id, username, nickname, avatar');
+        }])
             ->where("create_time", ">", Date::unixtime('day', -1))
             ->field("uid,MAX(successions) AS days")
             ->group("uid,create_time")
             ->order("days DESC,create_time ASC")
             ->limit(10)
             ->select();
-        foreach ($rankList as $index => $datum) {
-            $datum->getRelation('user')->visible(['id', 'username', 'nickname', 'avatar']);
-        }
 
         $ranking  = 0;
         $lastdata = Signin::where('uid', $uid)->order('create_time', 'desc')->find();
