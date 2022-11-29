@@ -802,7 +802,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 if (!display) {
                     display = value.charAt(0).toUpperCase() + value.slice(1);
                 }
-                var html = '<span class="text-' + color + '">' + (icon ? '<i class="' + icon + '"></i> ' : '') + display + '</span>';
+                var html = '<span class="text-' + color + '">' + (icon ? '<i class="' + icon + '"></i>' : '') + display + '</span>';
                 if (that.search != false) {
                     html = '<a href="javascript:;" class="searchit" lay-tips="点击搜索 ' + display + '" data-field="' + this.field + '" data-value="' + value + '">' + html + '</a>';
                 }
