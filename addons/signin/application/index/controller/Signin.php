@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\index\controller;
 
+use addons\signin\library\Service;
 use addons\signin\model\Signin as SigninModel;
 use app\member\controller\MemberBase;
 use think\Db;
@@ -152,16 +153,7 @@ class Signin extends MemberBase
     // 排行榜
     public function rank()
     {
-        $data = SigninModel::with(["user"])
-            ->where("create_time", ">", Date::unixtime('day', -1))
-            ->field("uid,MAX(successions) AS days")
-            ->group("uid")
-            ->order("days", "desc")
-            ->limit(10)
-            ->select();
-        foreach ($data as $index => $datum) {
-            $datum->getRelation('user')->visible(['id', 'username', 'nickname', 'avatar']);
-        }
-        $this->success("", "", ['ranklist' => collection($data)->toArray()]);
+        list($ranklist, $ranking, $successions) = Service::getRankInfo();
+        $this->success("", "", ['ranklist' => $ranklist->toArray(), 'ranking' => $ranking, 'successions' => $successions]);
     }
 }

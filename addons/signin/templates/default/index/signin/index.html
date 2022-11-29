@@ -65,6 +65,9 @@
     background: #17bc9b !important;
     color: #fff !important;
 }
+.calendar tbody tr td.future > div:first-child {
+    color: #aaa;
+}
 .signin-rank-table>tbody>tr>td {
     vertical-align: middle;
 }
@@ -75,8 +78,8 @@
 <div class="layui-tab layui-tab-brief">
     <ul class="layui-tab-title">
         <li class="layui-this">我的签到</li>
-        <!--<li>签到积分规则</li>
-        <li>排行榜</li>-->
+        <!--<li>签到积分规则</li>-->
+        <li class="btn-rank">排行榜</li>
     </ul>
     <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-row layui-col-space10">
@@ -101,7 +104,7 @@
                     </div>
                 </fieldset>
                 {/if}
-                <fieldset class="layui-elem-field">
+                <fieldset class="layui-elem-field" style="margin-top: 25px;">
                     <legend>签到积分规则</legend>
                     <div class="layui-field-box">
                         <table class="layui-table">
@@ -126,11 +129,41 @@
         </div>
     </div>
 </div>
+
+<script type="text/html" id="ranktpl">
+    <div style="padding:20px;min-height:300px;">
+        <div class="alert alert-warning-light">当前连续签到 {{ d.list.successions }} 天，排名 {{ d.list.ranking}} 名</div>
+        <table class="layui-table signin-rank-table">
+            <thead>
+            <tr>
+                <th class="text-center">排名</th>
+                <th>头像</th>
+                <th width="40%">昵称</th>
+                <th class="text-center">连续签到</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{# for(var i=0;i < d.list.ranklist.length;i++){ }}
+            <tr>
+                <td class="text-center">{{i+1}}</td>
+                <td><a href="{{ d.list.ranklist[i]['user']['url'] }}"><img src="{{ d.list.ranklist[i]['user']['avatar'] }}" height="30" width="30" alt="" class="img-circle"/></a></td>
+                <td><a href="{{ d.list.ranklist[i]['user']['url'] }}">{{ d.list.ranklist[i]['user']['nickname'] }}</a></td>
+                <td class="text-center">{{ d.list.ranklist[i]['days'] }} 天</td>
+            </tr>
+            {{#  }; }}
+            </tbody>
+        </table>
+    </div>
+</script>
+
 <script>
-layui.define(['layer', 'element'], function(exports) {
+layui.define(['layer', 'element','laytpl'], function(exports) {
      var element = layer = layui.layer,
         $ = layui.jquery,
+        laytpl = layui.laytpl,
         element = layui.element;
+    var isMobile = !!("ontouchstart" in window);
+
     $(document).on("click", ".btn-signin,.today", function() {
         $.ajax({
             type: 'post',
@@ -147,6 +180,25 @@ layui.define(['layer', 'element'], function(exports) {
         })
         return false;
     });
+
+    $(document).on("click", ".btn-rank", function () {
+        $.ajax({
+            type: 'get',
+            url: "{:url('index/signin/rank')}",
+            success: function(res) {
+                layer.open({
+                    title: '签到排行榜',
+                    type: 1,
+                    zIndex: 88,
+                    area: isMobile ? 'auto' : ["400px"],
+                    content: laytpl($("#ranktpl").html()).render({list:res.data}),
+                    btn: false
+                });
+            },
+        })
+        return false;
+    });
+
     {if $fillupscore}
         $(document).on("click", ".expired[data-date]:not(.today):not(.signed)", function() {
             var that = this;
