@@ -487,8 +487,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
         listenTableSearch: function(tableId) {
             form.on('submit(' + tableId + '_filter)', function(data) {
                 var searchQuery = yznTable.getSearchQuery(this, true);
-
-
                 table.reload(tableId, {
                     page: {
                         curr: 1
@@ -500,6 +498,21 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 });
                 return false;
             })
+            //表格点击搜索
+            var commonsearch =  $('.table-search-fieldset');
+            $(document).on("click", ".searchit", function () {
+                var obj = $("form [name='" + $(this).data("field") + "']",commonsearch);
+                if (obj.size() > 0) {
+                    var value = $(this).data("value");
+                    if (obj.is("select")) {
+                        $("option[value='" + value + "']", obj).prop("selected", true);
+                        form.render('select');
+                    }
+                    obj.trigger("change");
+                    $("form button[type='submit']",commonsearch).trigger("click");
+                }
+            });
+            //快速搜索
             $(document).on('blur', '#layui-input-search', function(event) {
                 var text = $(this).val();
                 table.reload(tableId, { where: { search: text } });
@@ -790,6 +803,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     display = value.charAt(0).toUpperCase() + value.slice(1);
                 }
                 var html = '<span class="text-' + color + '">' + (icon ? '<i class="' + icon + '"></i> ' : '') + display + '</span>';
+                if (that.search != false) {
+                    html = '<a href="javascript:;" class="searchit" lay-tips="点击搜索 ' + display + '" data-field="' + this.field + '" data-value="' + value + '">' + html + '</a>';
+                }
                 return html;
             },
             flag: function (data) {
