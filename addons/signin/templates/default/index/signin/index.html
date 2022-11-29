@@ -84,13 +84,13 @@
     <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-row layui-col-space10">
             <div class="layui-col-md7">
-                <blockquote class="layui-elem-quote">
+                <div class="alert alert-warning-light">
                     {if $signin}
                     你当前已经连续签到 <b>{$successions}</b> 天，明天继续签到可获得 <b>{$score}</b> 积分
                     {else /}
                     今天签到可获得 <b>{$score}</b> 积分，请点击签到领取积分
                     {/if}
-                </blockquote>
+                </div>
                 {:$calendar->draw($date);}
             </div>
             <div class="layui-col-md5">
