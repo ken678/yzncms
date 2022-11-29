@@ -835,7 +835,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     color = value && typeof colorArr[value] !== 'undefined' ? colorArr[value] : 'green';
                     display = typeof that.selectList !== 'undefined' && typeof that.selectList[value] !== 'undefined' ? that.selectList[value] : value.charAt(0).toUpperCase() + value.slice(1);
                     label = '<span class="layui-badge layui-bg-' + color + '">' + display + '</span>';
-                    html.push(label);
+                    if (that.search != false) {
+                        html.push('<a href="javascript:;" class="searchit" lay-tips="点击搜索 ' + display + '" data-field="' + field + '" data-value="' + value + '">' + label + '</a>');
+                    } else {
+                        html.push(label);
+                    }
                 })
                 return html.join(' ');
             },
