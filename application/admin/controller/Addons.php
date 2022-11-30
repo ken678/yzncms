@@ -118,10 +118,8 @@ class Addons extends Adminbase
         }
         $this->assign('data', ['info' => $info, 'config' => $config, 'tips' => $tips]);
         $configFile = ADDON_PATH . $name . DS . 'config.html';
-        if (is_file($configFile)) {
-            $this->assign('custom_config', $this->view->fetch($configFile));
-        }
-        return $this->fetch();
+        $viewFile   = is_file($configFile) ? $configFile : '';
+        return $this->fetch($viewFile);
     }
 
     /**
