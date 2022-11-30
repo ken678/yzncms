@@ -485,8 +485,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             return cols;
         },
         listenTableSearch: function(tableId) {
+            var that = this;
+            that.$commonsearch = $(".table-search-fieldset");
             form.on('submit(' + tableId + '_filter)', function(data) {
-                var searchQuery = yznTable.getSearchQuery(this, true);
+                var searchQuery = yznTable.getSearchQuery(that, true);
                 table.reload(tableId, {
                     page: {
                         curr: 1
@@ -499,17 +501,21 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 return false;
             })
             //表格点击搜索
-            var commonsearch =  $('.table-search-fieldset');
             $(document).on("click", ".searchit", function () {
-                var obj = $("form [name='" + $(this).data("field") + "']",commonsearch);
-                if (obj.size() > 0) {
-                    var value = $(this).data("value");
+                var value = $(this).data("value");
+                var field = $(this).data("field");
+                var obj = $("form [name='" + field + "']", that.$commonsearch);
+                if (obj.length > 0) {
                     if (obj.is("select")) {
                         $("option[value='" + value + "']", obj).prop("selected", true);
                         form.render('select');
+                    } else if (obj.length > 1) {
+                        $("form [name='" + field + "'][value='" + value + "']", that.$commonsearch).prop("checked", true);
+                    } else {
+                        obj.val(value + "");
                     }
                     obj.trigger("change");
-                    $("form button[type='submit']",commonsearch).trigger("click");
+                    $("form button[type='submit']",that.$commonsearch).trigger("click");
                 }
             });
             //快速搜索
@@ -524,15 +530,15 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             var op = {};
             var filter = {};
             var value = '';
-            $("form.form-commonsearch .operate").each(function(i) {
+            $("form.form-commonsearch .operate", that.$commonsearch).each(function(i) {
                 var name = $(this).data("name");
                 var sym = $(this).is("select") ? $("option:selected", this).val() : $(this).val().toUpperCase();
-                var obj = $("[name='" + name + "']", '.form-commonsearch');
-                if (obj.size() == 0)
+                var obj = $("[name='" + name + "']", that.$commonsearch);
+                if (obj.length == 0)
                     return true;
                 var vObjCol = ColumnsForSearch[i];
                 var process = vObjCol && typeof vObjCol.process == 'function' ? vObjCol.process : null;
-                if (obj.size() > 1) {
+                if (obj.length > 1) {
                     if (/BETWEEN$/.test(sym)) {
                         var value_begin = $.trim($("[name='" + name + "']:first", that.$commonsearch).val()),
                             value_end = $.trim($("[name='" + name + "']:last", that.$commonsearch).val());
@@ -546,11 +552,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             value = '';
                         }
                         //如果是时间筛选，将operate置为RANGE
-                        if ($("[name='" + name + "']:first", '.form-commonsearch').hasClass("datetimepicker")) {
+                        if ($("[name='" + name + "']:first", that.$commonsearch).hasClass("datetimepicker")) {
                             sym = 'RANGE';
                         }
                     } else {
-                        value = $("[name='" + name + "']:checked", '.form-commonsearch').val();
+                        value = $("[name='" + name + "']:checked", that.$commonsearch).val();
                         value = process ? process(value) : value;
                     }
                 } else {
