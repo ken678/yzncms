@@ -784,7 +784,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             },
             normal: function (data) {
                 var that = this;
-                var colorArr = ["primary", "success", "danger", "warning", "info", "gray", "red", "yellow", "aqua", "blue", "navy", "teal", "olive", "lime", "fuchsia", "purple", "maroon"];
+                var colorArr = ["danger", "success", "primary", "warning", "info", "gray", "red", "yellow", "aqua", "blue", "navy", "teal", "olive", "lime", "fuchsia", "purple", "maroon"];
                 var custom = {};
                 if (typeof that.custom !== 'undefined') {
                     custom = $.extend(custom, that.custom);
