@@ -1,3 +1,5 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
 <style type="text/css">
 .themePreview a {
     display: block;
@@ -720,39 +722,51 @@
     border: 2px solid #000;
 }
 </style>
-<div class="layui-card">
-    <div class="layui-card-header">插件配置</div>
-    <div class="layui-card-body">
-        {foreach $data.config as $item}
-        {if $item.name=='random'}
-    	<div class="layui-form-item">
-    		<label class="layui-form-label">是否开启随机</label>
-    		<div class="layui-input-block">
-    		<input type="radio" name="config[random]" value="1" title="开启" {eq name="item.value" value="1" }checked=checked{/eq}>
-            <input type="radio" name="config[random]" value="0" title="关闭" {eq name="item.value" value="0" }checked=checked{/eq}>
+<form class="layui-form" action="" method="post">
+    <div class="layui-card">
+        <div class="layui-card-header">插件配置</div>
+        <div class="layui-card-body">
+            {foreach $data.config as $item}
+            {if $item.name=='random'}
+        	<div class="layui-form-item">
+        		<label class="layui-form-label">是否开启随机</label>
+        		<div class="layui-input-block">
+        		<input type="radio" name="config[random]" value="1" title="开启" {eq name="item.value" value="1" }checked=checked{/eq}>
+                <input type="radio" name="config[random]" value="0" title="关闭" {eq name="item.value" value="0" }checked=checked{/eq}>
+                </div>
+                <div class="layui-form-mid2 layui-word-aux">开启随机用户每次刷新，回到顶部样式将会随机变化，开启时指定样式失效</div>
+    		</div>
+            {elseif $item.name=='current'}
+    		<div class="layui-form-item">
+    			<label class="layui-form-label">指定样式</label>
+    			<div class="layui-input-block opt themePreview">
+    			        {php}for($i=1;$i<=99;$i++){{/php}
+    			        <div class="colorBox {eq name="i" value="$item.value" }current{/eq}" onclick="fChange('{$i}',$(this));">
+    			            <a href="javascript:;" class="top_stick0{$i}">&nbsp;</a>
+    			        </div>
+    			        {php}}{/php}
+    			        <div class="layui-clear"></div>
+    			</div>
+    		</div>
+    		<input type="hidden" value="{$item.value}" name="config[current]" id="default" />
+            {/if}
+            {/foreach}
+            <div class="layui-form-item layer-footer">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
             </div>
-            <div class="layui-form-mid2 layui-word-aux">开启随机用户每次刷新，回到顶部样式将会随机变化，开启时指定样式失效</div>
-		</div>
-        {elseif $item.name=='current'}
-		<div class="layui-form-item">
-			<label class="layui-form-label">指定样式</label>
-			<div class="layui-input-block opt themePreview">
-			        {php}for($i=1;$i<=99;$i++){{/php}
-			        <div class="colorBox {eq name="i" value="$item.value" }current{/eq}" onclick="fChange('{$i}',$(this));">
-			            <a href="javascript:;" class="top_stick0{$i}">&nbsp;</a>
-			        </div>
-			        {php}}{/php}
-			        <div class="layui-clear"></div>
-			</div>
-		</div>
-		<input type="hidden" value="{$item.value}" name="config[current]" id="default" />
-        {/if}
-        {/foreach}
+        </div>
     </div>
-</div>
+</form>
+{/block}
+{block name="script"}
 <script type="text/javascript">
-layui.use('form', function(){
-	var form = layui.form;
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
+
+    yznForm.listen();
 });
 /**
  * 改变选中样式
@@ -761,10 +775,10 @@ layui.use('form', function(){
  * @return void
  */
 var fChange = function(key, obj) {
-	console.log(key);
     $('.themePreview').find('.colorBox').removeClass('current');
     $(obj).addClass('current');
     $('#default').val(key);
     return false;
 }
 </script>
+{/block}
