@@ -22,7 +22,7 @@ class Menu extends Validate
         'parentid|上级菜单'  => 'require|number',
         'title|名称'       => 'require|chsAlphaNum',
         'app|模块'         => 'require|alpha',
-        'controller|控制器' => 'require|alpha',
+        'controller|控制器' => 'require',
         'action|方法'      => 'require|alphaNum',
     ];
 
