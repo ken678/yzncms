@@ -77,32 +77,4 @@ class AdminUser extends Model
         $status = $this->allowField(true)->isUpdate(true)->save($data);
         return $status !== false ? true : false;
     }
-
-    /**
-     * 获取用户信息
-     * @param type $identifier 用户名或者用户ID
-     * @return boolean|array
-     */
-    /*public function getUserInfo($identifier, $password = null)
-{
-if (empty($identifier)) {
-return false;
-}
-$map = array();
-//判断是uid还是用户名
-if (is_int($identifier)) {
-$map['id'] = $identifier;
-} else {
-$map['username'] = $identifier;
-}
-$userInfo = $this->where($map)->find();
-if (empty($userInfo)) {
-return false;
-}
-//密码验证
-if (!empty($password) && encrypt_password($password, $userInfo['encrypt']) != $userInfo['password']) {
-return false;
-}
-return $userInfo;
-}*/
 }
