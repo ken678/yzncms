@@ -870,8 +870,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 that.imageWidth = that.imageWidth || 80;
                 that.imageHeight = that.imageHeight || 30;
-                that.imageSplit = that.imageSplit || '|';
-                that.imageJoin = that.imageJoin || '<br>';
+                that.imageSplit = that.imageSplit || ',';
+                that.imageJoin = that.imageJoin || ' ';
                 that.title = that.title || that.field;
                 var field = that.field,
                     title = data[that.title];
