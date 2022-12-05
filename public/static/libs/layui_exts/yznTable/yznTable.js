@@ -941,10 +941,25 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 return '<span>' + value + '</span>';
             },
+            datetime: function (data) {
+                var that = this;
+                var field = that.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                var datetimeFormat = typeof that.datetimeFormat === 'undefined' ? 'yyyy-MM-dd HH:mm:ss' : that.datetimeFormat;
+                if (value && isNaN(Date.parse(value))) {
+                    return layui.util.toDateString(value * 1000, datetimeFormat)
+                } else if (value && !isNaN(Date.parse(value))) {
+                    return layui.util.toDateString(Date.parse(value), datetimeFormat)
+                } else {
+                    return '-';
+                }
+            }
         },
-
     }
-
     yznTable.bindevent();
     exports(MOD_NAME, yznTable);
 });
