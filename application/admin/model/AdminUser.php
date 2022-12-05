@@ -28,28 +28,6 @@ class AdminUser extends Model
     }
 
     /**
-     * 创建管理员
-     * @param type $data
-     * @return boolean
-     */
-    public function createManager($data)
-    {
-        if (empty($data)) {
-            $this->error = '没有数据！';
-            return false;
-        }
-        $passwordinfo     = encrypt_password($data['password']); //对密码进行处理
-        $data['password'] = $passwordinfo['password'];
-        $data['encrypt']  = $passwordinfo['encrypt'];
-        $id               = $this->allowField(true)->save($data);
-        if ($id) {
-            return $id;
-        }
-        $this->error = '入库失败！';
-        return false;
-    }
-
-    /**
      * 编辑管理员
      * @param [type] $data [修改数据]
      * @return boolean
