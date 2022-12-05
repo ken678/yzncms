@@ -41,15 +41,6 @@ class Account extends Model
         return $status[$value];
     }
 
-    public function getPaytimeAttr($value)
-    {
-        if (!empty($value)) {
-            return date('Y-m-d H:i:s', $value);
-        } else {
-            return '';
-        }
-    }
-
     /**
      * 添加积分/金钱记录
      */
