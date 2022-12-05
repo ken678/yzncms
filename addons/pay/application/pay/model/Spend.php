@@ -26,6 +26,17 @@ class Spend extends Model
     protected $updateTime         = false;
 
     /**
+     * 按用户名、时间、标识查询是否有消费记录
+     * @param integer $userid      用户名
+     * @param integer $time        时间。  从指定时间到现在的时间范围内。
+     * @param string $flag   标识
+     */
+    public static function spend_time($userid, $time, $flag)
+    {
+        return self::where(['uid' => $userid, 'remarks' => $flag])->whereTime('addtime', '-' . $time . ' hours')->order('id DESC')->find();
+    }
+
+    /**
      * 消费积分/金钱记录
      */
     public function _spend($type, $money, $uid = '', $username = '', $msg = '', $remarks = '')
