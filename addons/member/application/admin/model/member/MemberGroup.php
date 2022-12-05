@@ -21,47 +21,18 @@ class MemberGroup extends Model
     protected $auto   = ['allowvisit' => 1, 'status' => 1];
     protected $insert = ['issystem' => 0];
 
-    /**
-     * 编辑会员组
-     * @param type $data 数据
-     * @return boolean
-     */
-    public function groupEdit($data)
+    protected static function init()
     {
-        if (!is_array($data)) {
-            return false;
-        }
-        $data['allowpost']        = $data['allowpost'] ?? 0;
-        $data['allowpostverify']  = $data['allowpostverify'] ?? 0;
-        $data['allowupgrade']     = $data['allowupgrade'] ?? 0;
-        $data['allowsendmessage'] = $data['allowsendmessage'] ?? 0;
-        $data['allowattachment']  = $data['allowattachment'] ?? 0;
-        $data['allowsearch']      = $data['allowsearch'] ?? 0;
-        return self::update($data);
-    }
-
-    /**
-     * 删除用户组
-     * @param type $groupid 用户组ID，可以是数组
-     * @return boolean
-     */
-    public function groupDelete($groupid)
-    {
-        if (empty($groupid)) {
-            $this->error = '没有指定需要删除的会员组别！';
-            return false;
-        }
-
-        $info = self::get($groupid);
-        if ($info['issystem']) {
-            $this->error = '系统用户组[' . $info['name'] . ']不能删除！';
-            return false;
-        }
-        if (false !== $info->delete()) {
-            return true;
-        } else {
-            $this->error = '删除失败！';
-            return false;
-        }
+        self::afterWrite(function ($row) {
+            cache('Member_Group', null);
+        });
+        self::beforeDelete(function ($row) {
+            if ($row['issystem']) {
+                throw new \Exception('系统用户组[' . $row['name'] . ']不能删除！');
+            }
+        });
+        self::afterDelete(function ($row) {
+            cache('Member_Group', null);
+        });
     }
 }
