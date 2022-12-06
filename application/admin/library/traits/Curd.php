@@ -188,7 +188,13 @@ trait Curd
     //批量更新
     public function multi()
     {
-        $id    = $this->request->param('id/d', 0);
+        $ids = $this->request->param('id/a', null);
+        if (empty($ids)) {
+            $this->error('参数错误！');
+        }
+        if (!is_array($ids)) {
+            $ids = array(0 => $ids);
+        }
         $value = $this->request->param('value/d', 0);
         if ($this->request->has('param')) {
             $param = $this->request->param('param/s');
@@ -198,17 +204,20 @@ trait Curd
                 if (is_array($adminIds)) {
                     $this->modelClass = $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
                 }
+                $count = 0;
                 try {
-                    $row = $this->modelClass->where('id', $id)->find();
-                    if (empty($row)) {
-                        $this->error('数据不存在！');
+                    $list = $this->modelClass->where($this->modelClass->getPk(), 'in', $ids)->select();
+                    foreach ($list as $item) {
+                        $item->{$param} = $value;
+                        $count += $item->save();
                     }
-                    $row->{$param} = $value;
-                    $row->save();
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
-                $this->success("操作成功！");
+                if ($count) {
+                    $this->success("操作成功！");
+                }
+                $this->error('未更新任何行');
             } else {
                 $this->error('操作不允许！');
             }
