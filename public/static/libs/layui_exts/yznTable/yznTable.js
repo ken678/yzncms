@@ -261,6 +261,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="iconfont icon-add"></i> 添加</button>\n';
                 } else if (v === 'delete') {
                     toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-href="' + init.delete_url + '" data-batch-all="' + tableId + '"><i class="iconfont icon-trash"></i> 删除</button>\n';
+                } else if (v === 'recyclebin') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-warm layui-btn-sm" data-open="' + init.recyclebin_url + '" data-title="回收站"><i class="iconfont icon-recycle-line"></i> 回收站</button>\n';
+                } else if (v === 'restore') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm confirm" data-href="' + init.restore_url + '" data-batch-all="' + tableId + '"><i class="iconfont icon-undo"></i> 还原</button>\n';
+                } else if (v === 'destroy') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm confirm layui-btn-danger" data-href="' + init.destroy_url + '" data-batch-all="' + tableId + '"><i class="iconfont icon-close"></i> 销毁</button>\n';
                 } else if (typeof v === "object") {
                     $.each(v, function(ii, vv) {
                         vv.class = vv.class || '';
@@ -721,6 +727,38 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                     text: "<i class='iconfont icon-brush_fill'></i>",
                                     title: '编辑信息',
                                     url: that.init.edit_url,
+                                    extend: ""
+                                };
+                                operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                                //if (admin.checkAuth(operat.auth, elem)) {
+                                html += yznTable.buildOperatHtml(operat);
+                                //}
+                                break;
+                            case 'restore':
+                                var operat = {
+                                    class: 'layui-btn layui-btn-xs',
+                                    method: 'request',
+                                    field: 'id',
+                                    icon: '',
+                                    text: "<i class='iconfont icon-undo'></i> 还原",
+                                    title: '还原',
+                                    url: that.init.restore_url,
+                                    extend: ""
+                                };
+                                operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                                //if (admin.checkAuth(operat.auth, elem)) {
+                                html += yznTable.buildOperatHtml(operat);
+                                //}
+                                break;
+                            case 'destroy':
+                                var operat = {
+                                    class: 'layui-btn layui-btn-danger layui-btn-xs',
+                                    method: 'request',
+                                    field: 'id',
+                                    icon: '销毁',
+                                    text: "<i class='iconfont icon-close'></i> 销毁",
+                                    title: '',
+                                    url: that.init.destroy_url,
                                     extend: ""
                                 };
                                 operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
