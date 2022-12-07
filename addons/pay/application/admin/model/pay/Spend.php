@@ -22,7 +22,6 @@ class Spend extends Model
     protected $name = 'pay_spend';
     // 定义时间戳字段名
     protected $autoWriteTimestamp = true;
-    protected $createTime         = 'addtime';
     protected $updateTime         = false;
 
     /**

@@ -24,7 +24,6 @@ class Account extends Model
     protected $name = 'pay_account';
     // 定义时间戳字段名
     protected $autoWriteTimestamp = true;
-    protected $createTime         = 'addtime';
     protected $updateTime         = false;
 
     public function getStatusAttr($value)
@@ -39,7 +38,7 @@ class Account extends Model
         return $status[$value];
     }
 
-    public function getPaytimeAttr($value)
+    public function getPayTimeAttr($value)
     {
         if (!empty($value)) {
             return date('Y-m-d H:i:s', $value);
@@ -87,7 +86,7 @@ class Account extends Model
         $data['uid']       = isset($uid) && intval($uid) ? intval($uid) : 0;
         $data['username']  = isset($username) ? trim($username) : '';
         $data['money']     = isset($money) && floatval($money) ? floatval($money) : 0;
-        $data['paytime']   = time();
+        $data['pay_time']  = time();
         $data['usernote']  = $usernote;
         $data['pay_type']  = isset($pay_type) ? trim($pay_type) : 'selfincome';
         $data['ip']        = request()->ip();
@@ -120,9 +119,9 @@ class Account extends Model
             return false;
         }
         if ($order->getData('status') != 'succ') {
-            $order->money   = $payamount ? $payamount : $order->money;
-            $order->paytime = time();
-            $order->status  = 'succ';
+            $order->money    = $payamount ? $payamount : $order->money;
+            $order->pay_time = time();
+            $order->status   = 'succ';
             $order->save();
             // 更新会员余额
             $user = Member::get($order->uid);

@@ -22,7 +22,7 @@ class Spend extends Model
     protected $name = 'pay_spend';
     // 定义时间戳字段名
     protected $autoWriteTimestamp = true;
-    protected $createTime         = 'addtime';
+    protected $createTime         = 'create_time';
     protected $updateTime         = false;
 
     /**
@@ -33,7 +33,7 @@ class Spend extends Model
      */
     public static function spend_time($userid, $time, $flag)
     {
-        return self::where(['uid' => $userid, 'remarks' => $flag])->whereTime('addtime', '-' . $time . ' hours')->order('id DESC')->find();
+        return self::where(['uid' => $userid, 'remarks' => $flag])->whereTime('create_time', '-' . $time . ' hours')->order('id DESC')->find();
     }
 
     /**

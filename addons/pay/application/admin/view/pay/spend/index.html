@@ -35,7 +35,7 @@ layui.use('yznTable', function() {
                 { field: 'creat_at', align: "left", title: '消费流水号' },
                 { field: 'username', width: 120, title: '用户名' },
                 { field: 'money', width: 120, title: '消费金额', templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>' },
-                { field: 'addtime', width: 200, title: '创建时间' },
+                { field: 'create_time', width: 200, title: '创建时间' },
                 { field: 'ip', width: 200, title: 'IP' },
                 { field: 'msg', width: 200, title: '备注说明' },
                 { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
