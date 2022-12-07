@@ -62,7 +62,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 $.each(data, function(i, v) {
                     ids.push(v.id);
                 });
-                yzn.msg.confirm('您确定要执行此操作吗？', function() {
+                var index = yzn.msg.confirm('您确定要执行此操作吗？', function() {
                     yzn.request.post({
                         url: url,
                         data: {
@@ -74,6 +74,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     }, function(data,res) {
                         notice.error({ message: res.msg });
                     });
+                    layer.close(index);
                 });
                 return false;
             });
