@@ -23,7 +23,8 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
-        delete_url: "{:url('admin/pay.payment/del')}",
+        delete_url: "{:url('del')}",
+        recyclebin_url: "{:url('recyclebin')}",
     };
 
     table.render({
@@ -35,7 +36,7 @@ layui.use('yznTable', function() {
                 method: 'open',
                 class: 'layui-btn layui-btn-sm',
                 icon:'iconfont icon-money',
-            }],
+            }],'recyclebin'
         ],
         url: '{:url("index")}',
         cols: [

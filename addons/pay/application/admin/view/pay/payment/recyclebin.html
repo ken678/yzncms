@@ -1,0 +1,36 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-form">
+    <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        destroy_url: "{:url('destroy')}",
+        restore_url: "{:url('restore')}",
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh','restore','destroy'],
+        url: '{:url("recyclebin")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'trade_sn', align: "left", title: '订单号' },
+                { field: 'username', width: 120, title: '用户名' },
+                { field: 'money', width: 120, title: '支付金额', templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>' },
+                { width:140, title: '操作',templet: yznTable.formatter.tool,operat: ['restore','destroy']}
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}

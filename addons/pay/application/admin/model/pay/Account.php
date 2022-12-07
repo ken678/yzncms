@@ -16,9 +16,14 @@ namespace app\admin\model\pay;
 
 use think\Db;
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class Account extends Model
 {
+    use SoftDelete;
+    protected $deleteTime        = 'delete_time';
+    protected $defaultSoftDelete = 0;
+
     protected $name = 'pay_account';
     // 定义时间戳字段名
     protected $autoWriteTimestamp = true;
