@@ -69,9 +69,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             id: ids
                         },
                     }, function(data,res) {
-                        yzn.msg.success(res.msg, function() {
-                            table.reload(tableId);
-                        });
+                        notice.success({ message: res.msg });
+                        tableId && table.reload(tableId);
+                    }, function(data,res) {
+                        notice.error({ message: res.msg });
                     });
                 });
                 return false;
