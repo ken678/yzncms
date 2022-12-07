@@ -32,9 +32,7 @@ class Terms extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            list($page, $limit, $where) = $this->buildTableParames();
-            $order                      = $this->request->param("order/s", "DESC");
-            $sort                       = $this->request->param("sort", 'id');
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
 
             $count = $this->modelClass
                 ->where($where)
