@@ -206,10 +206,7 @@ trait Curd
     public function destroy()
     {
         $ids = $this->request->param('id/a', null);
-        if (empty($ids)) {
-            $this->error('参数错误！');
-        }
-        if (!is_array($ids)) {
+        if ($ids && !is_array($ids)) {
             $ids = [0 => $ids];
         }
         $pk       = $this->modelClass->getPk();
@@ -218,10 +215,12 @@ trait Curd
         if (is_array($adminIds)) {
             $where[] = [$this->dataLimitField, 'in', $adminIds];
         }
-        $where[] = [$pk, 'in', $ids];
-        $count   = 0;
+        if ($ids) {
+            $where[] = [$pk, 'in', $ids];
+        }
+        $count = 0;
         try {
-            $list = $this->modelClass->where($where)->onlyTrashed()->select();
+            $list = $this->modelClass->onlyTrashed()->where($where)->select();
             foreach ($list as $item) {
                 $count += $item->delete(true);
             }
@@ -238,10 +237,7 @@ trait Curd
     public function restore()
     {
         $ids = $this->request->param('id/a', null);
-        if (empty($ids)) {
-            $this->error('参数错误！');
-        }
-        if (!is_array($ids)) {
+        if ($ids && !is_array($ids)) {
             $ids = [0 => $ids];
         }
         $pk       = $this->modelClass->getPk();
@@ -250,10 +246,12 @@ trait Curd
         if (is_array($adminIds)) {
             $where[] = [$this->dataLimitField, 'in', $adminIds];
         }
-        $where[] = [$pk, 'in', $ids];
-        $count   = 0;
+        if ($ids) {
+            $where[] = [$pk, 'in', $ids];
+        }
+        $count = 0;
         try {
-            $list = $this->modelClass->where($where)->onlyTrashed()->select();
+            $list = $this->modelClass->onlyTrashed()->where($where)->select();
             foreach ($list as $item) {
                 $count += $item->restore();
             }
