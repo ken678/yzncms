@@ -26,11 +26,9 @@ class Profile extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $this->modelClass           = new AdminlogModel;
-            list($page, $limit, $where) = $this->buildTableParames();
-            $order                      = $this->request->param("order/s", "DESC");
-            $sort                       = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
-            $count                      = $this->modelClass
+            $this->modelClass                      = new AdminlogModel;
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
+            $count                                 = $this->modelClass
                 ->where($where)
                 ->where('uid', (int) $this->auth->id)
                 ->order($sort, $order)
