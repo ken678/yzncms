@@ -49,7 +49,7 @@ layui.use('yznTable', function() {
                 { field: 'pay_time', width: 180, title: '支付时间',search: 'range',templet: yznTable.formatter.datetime },
                 { field: 'ip', width: 180, title: 'IP' },
                 { field: 'status', width: 120, align: "center", title: '订单状态', templet: '<div>{{#  if(d.status=="交易成功"){ }} <button type="button" class="layui-btn layui-btn-xs">{{d.status}}</button> {{#  } else { }} <button type="button" class="layui-btn layui-btn-xs layui-btn-danger">{{d.status}}</button> {{#  } }}</div>' },
-                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
+                { width:60, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}
             ]
         ],
         page: {}
