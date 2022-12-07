@@ -49,9 +49,7 @@ trait Curd
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($page, $limit, $where) = $this->buildTableParames();
-            $order                      = $this->request->param("order/s", "DESC");
-            $sort                       = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
 
             $count = $this->modelClass
                 ->where($where)
@@ -67,6 +65,31 @@ trait Curd
             return json($result);
         }
         return $this->fetch();
+    }
+
+    //回收站
+    public function recyclebin()
+    {
+        if ($this->request->isAjax()) {
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
+
+            $count = $this->modelClass
+                ->onlyTrashed()
+                ->where($where)
+                ->order($sort, $order)
+                ->count();
+
+            $data = $this->modelClass
+                ->onlyTrashed()
+                ->where($where)
+                ->order($sort, $order)
+                ->page($page, $limit)
+                ->select();
+            $result = ["code" => 0, 'count' => $count, 'data' => $data];
+            return json($result);
+        }
+        return $this->fetch();
+
     }
 
     //添加
