@@ -28,7 +28,7 @@ class Admin extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->url_mode  = isset(cache("Cms_Config")['site_url_mode']) ? cache("Cms_Config")['site_url_mode'] : 1;
+        $this->url_mode  = (int) get_addon_config('cms')['site_url_mode'];
         $this->directory = (defined('IF_PUBLIC') ? ROOT_PATH . 'public/' : ROOT_PATH);
     }
 
@@ -54,16 +54,6 @@ class Admin extends Adminbase
                     $this->_add_data($item);
                 }
             }
-
-            //单页
-            /*$List = Db::name('Page')->order('updatetime desc')->field('catid,updatetime')->select();
-            if (!empty($List)) {
-            foreach ($List as $vo) {
-            $cat  = $this->url_mode == 1 ? $vo['catid'] : (isset($Category[$vo['catid']]) ? $Category[$vo['catid']]['id'] : getCategory($vo['catid'], 'catdir'));
-            $item = $this->_sitemap_item($rootUrl . buildCatUrl($cat), intval($data['content']['priority']), $data['content']['changefreq'], $vo['updatetime']);
-            $this->_add_data($item);
-            }
-            }*/
 
             //列表
             $modelList = cache('Model');
