@@ -19,9 +19,4 @@ use think\Model;
 class Nodes extends Model
 {
     protected $name = 'collection_node';
-
-    public function getLastdateAttr($value)
-    {
-        return date("Y-m-d h:i:s", $value);
-    }
 }

@@ -45,7 +45,7 @@ layui.use(['yznTable', 'upload'], function() {
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'name',align: "left", title: '名称' },
-                { field: 'lastdate', width: 180, title: '最后采集时间', templet: '<div>{{#  if(d.lastdate){ }} {{d.lastdate}} {{#  } else { }} / {{#  } }}</div>', search: 'range' },
+                { field: 'lastdate', width: 180, title: '最后采集时间',templet: yznTable.formatter.datetime, search: 'range' },
                 { width: 200, title: '内容操作',  templet: '#caijiTool'},
                 { width:130, title: '操作',templet: yznTable.formatter.tool,operat: [
                 [{
