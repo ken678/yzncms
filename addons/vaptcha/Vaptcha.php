@@ -37,29 +37,33 @@ class Vaptcha extends Addons
      */
     public function actionBegin()
     {
-        Validate::extend('captcha', function ($value, $id = "") {
-            //return true;
-            $request = request();
-            $token   = $request->post('vaptcha_token/s');
-            $scene   = $request->post('scene/d', 1);
-            if (!$token) {
-                Validate::setTypeMsg('captcha', '请先完成验证！');
-                return false;
-            }
-            $config = $this->getAddonConfig();
-            if (!$config['appvid'] || !$config['appkey']) {
-                Validate::setTypeMsg('captcha', '请先在后台中配置vaptcha验证的参数信息');
-                return false;
-            }
-            $VaptchaLib = new VaptchaLib($config['appvid'], $config['appkey']);
-            $result     = $VaptchaLib->validate($token, $scene);
-            $result     = json_decode($result, true);
-            if ($result['success'] == 0) {
-                Validate::setTypeMsg('captcha', '请先完成验证！');
-                return false;
-            }
-            return true;
-        });
+        $module = strtolower(request()->module());
+        //暂时只支持后台登录
+        if (in_array($module, ['admin'])) {
+            Validate::extend('captcha', function ($value, $id = "") {
+                //return true;
+                $request = request();
+                $token   = $request->post('vaptcha_token/s');
+                $scene   = $request->post('scene/d', 1);
+                if (!$token) {
+                    Validate::setTypeMsg('captcha', '请先完成验证！');
+                    return false;
+                }
+                $config = $this->getAddonConfig();
+                if (!$config['appvid'] || !$config['appkey']) {
+                    Validate::setTypeMsg('captcha', '请先在后台中配置vaptcha验证的参数信息');
+                    return false;
+                }
+                $VaptchaLib = new VaptchaLib($config['appvid'], $config['appkey']);
+                $result     = $VaptchaLib->validate($token, $scene);
+                $result     = json_decode($result, true);
+                if ($result['success'] == 0) {
+                    Validate::setTypeMsg('captcha', '请先完成验证！');
+                    return false;
+                }
+                return true;
+            });
+        }
     }
 
     public function adminLoginForm()

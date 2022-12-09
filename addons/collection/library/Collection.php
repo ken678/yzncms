@@ -15,7 +15,7 @@
 namespace addons\collection\library;
 
 use app\admin\service\User;
-use app\attachment\model\Attachment;
+use app\common\model\Attachment;
 use QL\QueryList;
 
 class Collection
@@ -112,6 +112,7 @@ class Collection
                             return $this->download_img_callback($match);
                         }, $content);
                     }
+
                 }
                 return $content;
             }];
@@ -139,16 +140,16 @@ class Collection
     protected function download_img($html, $oldUrl)
     {
         if (!empty($html) && !empty($oldUrl)) {
-            $newUrl = $url = '';
+            $url = $oldUrl;
             if (false === strpos($oldUrl, '://')) {
-                $newUrl = $url = $this->url_check($oldUrl, $this->_url);
+                $url = $this->url_check($oldUrl, $this->_url);
             }
             if ($this->_config['down_attachment']) {
-                $newUrl = $this->getUrlFile($url);
+                $url = $this->getUrlFile($url);
             }
-            return str_replace($oldUrl, $newUrl, $html);
+            return str_replace($oldUrl, $url, $html);
         } else {
-            return $old;
+            return $html;
         }
     }
 
@@ -166,7 +167,7 @@ class Collection
                 return $url;
             }
             //图片是否合法
-            $imgInfo = getimagesize($url);
+            $imgInfo = @getimagesize($url);
             if (!$imgInfo || !isset($imgInfo[0]) || !isset($imgInfo[1])) {
                 return $url;
             }

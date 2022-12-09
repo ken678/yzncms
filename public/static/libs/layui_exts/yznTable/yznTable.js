@@ -62,17 +62,19 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 $.each(data, function(i, v) {
                     ids.push(v.id);
                 });
-                yzn.msg.confirm('您确定要执行此操作吗？', function() {
+                var index = yzn.msg.confirm('您确定要执行此操作吗？', function() {
                     yzn.request.post({
                         url: url,
                         data: {
                             id: ids
                         },
                     }, function(data,res) {
-                        yzn.msg.success(res.msg, function() {
-                            table.reload(tableId);
-                        });
+                        notice.success({ message: res.msg });
+                        tableId && table.reload(tableId);
+                    }, function(data,res) {
+                        notice.error({ message: res.msg });
                     });
+                    layer.close(index);
                 });
                 return false;
             });
@@ -259,6 +261,12 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="iconfont icon-add"></i> 添加</button>\n';
                 } else if (v === 'delete') {
                     toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-href="' + init.delete_url + '" data-batch-all="' + tableId + '"><i class="iconfont icon-trash"></i> 删除</button>\n';
+                } else if (v === 'recyclebin') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-warm layui-btn-sm" data-open="' + init.recyclebin_url + '" data-title="回收站"><i class="iconfont icon-recycle-line"></i> 回收站</button>\n';
+                } else if (v === 'restore') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm confirm" data-href="' + init.restore_url + '" data-batch-all="' + tableId + '"><i class="iconfont icon-undo"></i> 还原</button>\n';
+                } else if (v === 'destroy') {
+                    toolbarHtml += '<button class="layui-btn layui-btn-sm confirm layui-btn-danger" data-href="' + init.destroy_url + '" data-batch-all="' + tableId + '"><i class="iconfont icon-close"></i> 销毁</button>\n';
                 } else if (typeof v === "object") {
                     $.each(v, function(ii, vv) {
                         vv.class = vv.class || '';
@@ -485,10 +493,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             return cols;
         },
         listenTableSearch: function(tableId) {
+            var that = this;
+            that.$commonsearch = $(".table-search-fieldset");
             form.on('submit(' + tableId + '_filter)', function(data) {
-                var searchQuery = yznTable.getSearchQuery(this, true);
-
-
+                var searchQuery = yznTable.getSearchQuery(that, true);
                 table.reload(tableId, {
                     page: {
                         curr: 1
@@ -500,6 +508,25 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 });
                 return false;
             })
+            //表格点击搜索
+            $(document).on("click", ".searchit", function () {
+                var value = $(this).data("value");
+                var field = $(this).data("field");
+                var obj = $("form [name='" + field + "']", that.$commonsearch);
+                if (obj.length > 0) {
+                    if (obj.is("select")) {
+                        $("option[value='" + value + "']", obj).prop("selected", true);
+                        form.render('select');
+                    } else if (obj.length > 1) {
+                        $("form [name='" + field + "'][value='" + value + "']", that.$commonsearch).prop("checked", true);
+                    } else {
+                        obj.val(value + "");
+                    }
+                    obj.trigger("change");
+                    $("form button[type='submit']",that.$commonsearch).trigger("click");
+                }
+            });
+            //快速搜索
             $(document).on('blur', '#layui-input-search', function(event) {
                 var text = $(this).val();
                 table.reload(tableId, { where: { search: text } });
@@ -511,15 +538,15 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             var op = {};
             var filter = {};
             var value = '';
-            $("form.form-commonsearch .operate").each(function(i) {
+            $("form.form-commonsearch .operate", that.$commonsearch).each(function(i) {
                 var name = $(this).data("name");
                 var sym = $(this).is("select") ? $("option:selected", this).val() : $(this).val().toUpperCase();
-                var obj = $("[name='" + name + "']", '.form-commonsearch');
-                if (obj.size() == 0)
+                var obj = $("[name='" + name + "']", that.$commonsearch);
+                if (obj.length == 0)
                     return true;
                 var vObjCol = ColumnsForSearch[i];
                 var process = vObjCol && typeof vObjCol.process == 'function' ? vObjCol.process : null;
-                if (obj.size() > 1) {
+                if (obj.length > 1) {
                     if (/BETWEEN$/.test(sym)) {
                         var value_begin = $.trim($("[name='" + name + "']:first", that.$commonsearch).val()),
                             value_end = $.trim($("[name='" + name + "']:last", that.$commonsearch).val());
@@ -533,11 +560,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             value = '';
                         }
                         //如果是时间筛选，将operate置为RANGE
-                        if ($("[name='" + name + "']:first", '.form-commonsearch').hasClass("datetimepicker")) {
+                        if ($("[name='" + name + "']:first", that.$commonsearch).hasClass("datetimepicker")) {
                             sym = 'RANGE';
                         }
                     } else {
-                        value = $("[name='" + name + "']:checked", '.form-commonsearch').val();
+                        value = $("[name='" + name + "']:checked", that.$commonsearch).val();
                         value = process ? process(value) : value;
                     }
                 } else {
@@ -707,6 +734,38 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 html += yznTable.buildOperatHtml(operat);
                                 //}
                                 break;
+                            case 'restore':
+                                var operat = {
+                                    class: 'layui-btn layui-btn-xs',
+                                    method: 'request',
+                                    field: 'id',
+                                    icon: '',
+                                    text: "<i class='iconfont icon-undo'></i> 还原",
+                                    title: '还原',
+                                    url: that.init.restore_url,
+                                    extend: ""
+                                };
+                                operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                                //if (admin.checkAuth(operat.auth, elem)) {
+                                html += yznTable.buildOperatHtml(operat);
+                                //}
+                                break;
+                            case 'destroy':
+                                var operat = {
+                                    class: 'layui-btn layui-btn-danger layui-btn-xs',
+                                    method: 'request',
+                                    field: 'id',
+                                    icon: '销毁',
+                                    text: "<i class='iconfont icon-close'></i> 销毁",
+                                    title: '',
+                                    url: that.init.destroy_url,
+                                    extend: ""
+                                };
+                                operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
+                                //if (admin.checkAuth(operat.auth, elem)) {
+                                html += yznTable.buildOperatHtml(operat);
+                                //}
+                                break;
                             case 'delete':
                                 var operat = {
                                     class: 'layui-btn layui-btn-danger layui-btn-xs layui-tr-del',
@@ -754,6 +813,47 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 });
                 return html;
             },
+            status: function (data) {
+                var custom = {normal: 'success', hidden: 'gray', deleted: 'danger', locked: 'info'};
+                if (typeof this.custom !== 'undefined') {
+                    custom = $.extend(custom, this.custom);
+                }
+                this.custom = custom;
+                this.icon = 'iconfont icon-circle-fill';
+                return yznTable.formatter.normal.call(this, data);
+            },
+            normal: function (data) {
+                var that = this;
+                var colorArr = ["danger", "success", "primary", "warning", "info", "gray", "red", "yellow", "aqua", "blue", "navy", "teal", "olive", "lime", "fuchsia", "purple", "maroon"];
+                var custom = {};
+                if (typeof that.custom !== 'undefined') {
+                    custom = $.extend(custom, that.custom);
+                }
+                var field = that.field;
+                try {
+                    var value = eval("data." + field);
+                    value = value == null || value.length === 0 ? '' : value.toString();
+                } catch (e) {
+                    var value = undefined;
+                }
+                value = value == null || value.length === 0 ? '' : value.toString();
+                var keys = typeof that.selectList === 'object' ? Object.keys(that.selectList) : [];
+                var index = keys.indexOf(value);
+                var color = value && typeof custom[value] !== 'undefined' ? custom[value] : null;
+                var display = index > -1 ? that.selectList[value] : null;
+                var icon = typeof that.icon !== 'undefined' ? that.icon : null;
+                if (!color) {
+                    color = index > -1 && typeof colorArr[index] !== 'undefined' ? colorArr[index] : 'primary';
+                }
+                if (!display) {
+                    display = value.charAt(0).toUpperCase() + value.slice(1);
+                }
+                var html = '<span class="text-' + color + '">' + (icon ? '<i class="' + icon + '"></i>' : '') + display + '</span>';
+                if (that.search != false) {
+                    html = '<a href="javascript:;" class="searchit" lay-tips="点击搜索 ' + display + '" data-field="' + this.field + '" data-value="' + value + '">' + html + '</a>';
+                }
+                return html;
+            },
             flag: function (data) {
                 var that = this;
                 var field = that.field;
@@ -781,7 +881,11 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     color = value && typeof colorArr[value] !== 'undefined' ? colorArr[value] : 'green';
                     display = typeof that.selectList !== 'undefined' && typeof that.selectList[value] !== 'undefined' ? that.selectList[value] : value.charAt(0).toUpperCase() + value.slice(1);
                     label = '<span class="layui-badge layui-bg-' + color + '">' + display + '</span>';
-                    html.push(label);
+                    if (that.search != false) {
+                        html.push('<a href="javascript:;" class="searchit" lay-tips="点击搜索 ' + display + '" data-field="' + field + '" data-value="' + value + '">' + label + '</a>');
+                    } else {
+                        html.push(label);
+                    }
                 })
                 return html.join(' ');
             },
@@ -806,8 +910,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 that.imageWidth = that.imageWidth || 80;
                 that.imageHeight = that.imageHeight || 30;
-                that.imageSplit = that.imageSplit || '|';
-                that.imageJoin = that.imageJoin || '<br>';
+                that.imageSplit = that.imageSplit || ',';
+                that.imageJoin = that.imageJoin || ' ';
                 that.title = that.title || that.field;
                 var field = that.field,
                     title = data[that.title];
@@ -877,10 +981,25 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 return '<span>' + value + '</span>';
             },
+            datetime: function (data) {
+                var that = this;
+                var field = that.field;
+                try {
+                    var value = eval("data." + field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                var datetimeFormat = typeof that.datetimeFormat === 'undefined' ? 'yyyy-MM-dd HH:mm:ss' : that.datetimeFormat;
+                if (value && isNaN(Date.parse(value))) {
+                    return layui.util.toDateString(value * 1000, datetimeFormat)
+                } else if (value && !isNaN(Date.parse(value))) {
+                    return layui.util.toDateString(Date.parse(value), datetimeFormat)
+                } else {
+                    return '-';
+                }
+            }
         },
-
     }
-
     yznTable.bindevent();
     exports(MOD_NAME, yznTable);
 });

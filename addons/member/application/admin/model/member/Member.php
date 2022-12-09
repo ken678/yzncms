@@ -42,11 +42,6 @@ class Member extends Model
         return time();
     }
 
-    public function getLastLoginTimeAttr($value, $data)
-    {
-        return time_format($data['last_login_time']);
-    }
-
     public function getGroupnameAttr($value, $data)
     {
         $group = cache("Member_Group");

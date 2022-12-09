@@ -24,7 +24,7 @@ layui.use('table', function() {
                 { field: 'trade_sn', title: '订单号' },
                 { field: 'pay_type', width: 120, title: '支付方式' },
                 { field: 'money', width: 100, title: '支付金额', templet: '<div>{{ d.money }} {{#  if(d.type==1){ }} 元 {{#  } else { }} 点 {{#  } }}</div>'},
-                { field: 'addtime', width: 180, title: '创建时间' },
+                { field: 'create_time', width: 180, title: '创建时间' },
                 { field: 'ip', width: 120, title: 'IP' },
                 { field: 'status', width: 100, align: "center", title: '订单状态', templet: '<div>{{#  if(d.status=="交易成功"){ }} <button type="button" class="layui-btn layui-btn-xs">{{d.status}}</button> {{#  } else { }} <button type="button" class="layui-btn layui-btn-xs layui-btn-danger">{{d.status}}</button> {{#  } }}</div>' },
             ]

@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\library\traits;
 
+use Exception;
 use think\exception\PDOException;
 use think\exception\ValidateException;
 
@@ -48,9 +49,7 @@ trait Curd
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($page, $limit, $where) = $this->buildTableParames();
-            $order                      = $this->request->param("order/s", "DESC");
-            $sort                       = $this->request->param("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
 
             $count = $this->modelClass
                 ->where($where)
@@ -66,6 +65,31 @@ trait Curd
             return json($result);
         }
         return $this->fetch();
+    }
+
+    //回收站
+    public function recyclebin()
+    {
+        if ($this->request->isAjax()) {
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
+
+            $count = $this->modelClass
+                ->onlyTrashed()
+                ->where($where)
+                ->order($sort, $order)
+                ->count();
+
+            $data = $this->modelClass
+                ->onlyTrashed()
+                ->where($where)
+                ->order($sort, $order)
+                ->page($page, $limit)
+                ->select();
+            $result = ["code" => 0, 'count' => $count, 'data' => $data];
+            return json($result);
+        }
+        return $this->fetch();
+
     }
 
     //添加
@@ -88,11 +112,7 @@ trait Curd
                         $this->validateFailException(true)->validate($params, $validate);
                     }
                     $result = $this->modelClass->allowField(true)->save($params);
-                } catch (ValidateException $e) {
-                    $this->error($e->getMessage());
-                } catch (PDOException $e) {
-                    $this->error($e->getMessage());
-                } catch (\Exception $e) {
+                } catch (ValidateException | PDOException | Exception $e) {
                     $this->error($e->getMessage());
                 }
                 if ($result !== false) {
@@ -135,11 +155,7 @@ trait Curd
                         $this->validateFailException(true)->validate($params, $validate);
                     }
                     $result = $row->allowField(true)->save($params);
-                } catch (ValidateException $e) {
-                    $this->error($e->getMessage());
-                } catch (PDOException $e) {
-                    $this->error($e->getMessage());
-                } catch (\Exception $e) {
+                } catch (ValidateException | PDOException | Exception $e) {
                     $this->error($e->getMessage());
                 }
                 if ($result !== false) {
@@ -162,53 +178,128 @@ trait Curd
             $this->error('参数错误！');
         }
         if (!is_array($ids)) {
-            $ids = array(0 => $ids);
+            $ids = [0 => $ids];
         }
         $pk       = $this->modelClass->getPk();
         $adminIds = $this->getDataLimitAdminIds();
+        $where    = [];
         if (is_array($adminIds)) {
-            $this->modelClass = $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+            $where[] = [$this->dataLimitField, 'in', $adminIds];
         }
-        $list  = $this->modelClass->where($pk, 'in', $ids)->select();
-        $count = 0;
+        $where[] = [$pk, 'in', $ids];
+        $list    = $this->modelClass->where($where)->select();
+        $count   = 0;
         try {
             foreach ($list as $k => $v) {
                 $count += $v->delete();
             }
-        } catch (\Exception $e) {
+        } catch (PDOException | Exception $e) {
             $this->error($e->getMessage());
         }
         if ($count) {
             $this->success("操作成功！");
-        } else {
-            $this->error('没有数据删除！');
         }
+        $this->error('没有数据删除！');
+    }
+
+    //真实删除
+    public function destroy()
+    {
+        $ids = $this->request->param('id/a', null);
+        if ($ids && !is_array($ids)) {
+            $ids = [0 => $ids];
+        }
+        $pk       = $this->modelClass->getPk();
+        $adminIds = $this->getDataLimitAdminIds();
+        $where    = [];
+        if (is_array($adminIds)) {
+            $where[] = [$this->dataLimitField, 'in', $adminIds];
+        }
+        if ($ids) {
+            $where[] = [$pk, 'in', $ids];
+        }
+        $count = 0;
+        try {
+            $list = $this->modelClass->onlyTrashed()->where($where)->select();
+            foreach ($list as $item) {
+                $count += $item->delete(true);
+            }
+        } catch (PDOException | Exception $e) {
+            $this->error($e->getMessage());
+        }
+        if ($count) {
+            $this->success("操作成功！");
+        }
+        $this->error('没有数据删除！');
+    }
+
+    //还原
+    public function restore()
+    {
+        $ids = $this->request->param('id/a', null);
+        if ($ids && !is_array($ids)) {
+            $ids = [0 => $ids];
+        }
+        $pk       = $this->modelClass->getPk();
+        $adminIds = $this->getDataLimitAdminIds();
+        $where    = [];
+        if (is_array($adminIds)) {
+            $where[] = [$this->dataLimitField, 'in', $adminIds];
+        }
+        if ($ids) {
+            $where[] = [$pk, 'in', $ids];
+        }
+        $count = 0;
+        try {
+            $list = $this->modelClass->onlyTrashed()->where($where)->select();
+            foreach ($list as $item) {
+                $count += $item->restore();
+            }
+        } catch (PDOException | Exception $e) {
+            $this->error($e->getMessage());
+        }
+        if ($count) {
+            $this->success("操作成功！");
+        }
+        $this->error('未更新任何行');
     }
 
     //批量更新
     public function multi()
     {
-        $id    = $this->request->param('id/d', 0);
+        $ids = $this->request->param('id/a', null);
+        if (empty($ids)) {
+            $this->error('参数错误！');
+        }
+        if (!is_array($ids)) {
+            $ids = [0 => $ids];
+        }
         $value = $this->request->param('value/d', 0);
         if ($this->request->has('param')) {
             $param = $this->request->param('param/s');
             $param = in_array($param, (is_array($this->multiFields) ? $this->multiFields : explode(',', $this->multiFields))) ? $param : '';
             if ($param) {
+                $pk       = $this->modelClass->getPk();
                 $adminIds = $this->getDataLimitAdminIds();
+                $where    = [];
                 if (is_array($adminIds)) {
-                    $this->modelClass = $this->modelClass->where($this->dataLimitField, 'in', $adminIds);
+                    $where[] = [$this->dataLimitField, 'in', $adminIds];
                 }
+                $where[] = [$pk, 'in', $ids];
+                $count   = 0;
                 try {
-                    $row = $this->modelClass->where('id', $id)->find();
-                    if (empty($row)) {
-                        $this->error('数据不存在！');
+                    $list = $this->modelClass->where($where)->select();
+                    foreach ($list as $item) {
+                        $item->{$param} = $value;
+                        $count += $item->save();
                     }
-                    $row->{$param} = $value;
-                    $row->save();
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->error($e->getMessage());
                 }
-                $this->success("操作成功！");
+                if ($count) {
+                    $this->success("操作成功！");
+                }
+                $this->error('未更新任何行');
             } else {
                 $this->error('操作不允许！');
             }

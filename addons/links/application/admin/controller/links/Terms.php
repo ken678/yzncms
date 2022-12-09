@@ -14,40 +14,42 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller\links;
 
-use app\admin\model\links\Links as LinksModel;
+use app\admin\model\links\Terms as TermsModel;
 use app\common\controller\Adminbase;
-use think\Db;
 
 /**
  * 友情链接管理
  */
-class Admin extends Adminbase
+class Terms extends Adminbase
 {
-    protected $modelValidate = true;
-
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass = new LinksModel;
+        $this->modelClass = new TermsModel;
     }
 
-    /**
-     * 新增友情链接
-     */
-    public function add()
+    //分类管理
+    public function index()
     {
-        $Terms = Db::name('Terms')->where("module", "links")->select();
-        $this->assign("Terms", $Terms);
-        return parent::add();
-    }
+        if ($this->request->isAjax()) {
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
 
-    /**
-     * 编辑友情链接
-     */
-    public function edit()
-    {
-        $Terms = Db::name('Terms')->where("module", "links")->select();
-        $this->assign("Terms", $Terms);
-        return parent::edit();
+            $count = $this->modelClass
+                ->where($where)
+                ->where("module", "links")
+                ->order($sort, $order)
+                ->count();
+
+            $data = $this->modelClass
+                ->where($where)
+                ->where("module", "links")
+                ->order($sort, $order)
+                ->page($page, $limit)
+                ->select();
+
+            $result = ["code" => 0, 'count' => $count, 'data' => $data];
+            return json($result);
+        }
+        return $this->fetch();
     }
 }

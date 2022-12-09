@@ -4,10 +4,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label">分类名称</label>
         <div class="layui-input-inline w300">
-            <input type="text" name="name" autocomplete="off" placeholder="分类名称" class="layui-input" value="{$data.name}">
+            <input type="text" name="row[name]" autocomplete="off" placeholder="分类名称" class="layui-input" value="{$data.name}">
         </div>
     </div>
-    <input name="id" type="hidden" value="{$data.id}">
+    <input name="row[id]" type="hidden" value="{$data.id}">
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>

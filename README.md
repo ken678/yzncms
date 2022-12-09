@@ -2,7 +2,7 @@
 ### 后端基于thinkphp5.1框架,前端基于Layui2.7.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
 
 [![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
-[![YznCMS](https://img.shields.io/badge/YznCMS-1.1.0-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![YznCMS](https://img.shields.io/badge/YznCMS-1.1.1-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -54,6 +54,7 @@
 |内容收藏|用于会员对cms的内容进行收藏|授权|
 |迅搜全文检索|基于迅搜(Xunsearch)，支持百万以上全文数据检索|授权|
 |H5设计|H5端一键DIY拖拽式布局插件(支持各种小程序)|授权|
+|行为验证码|基于AJ-Captcha行为验证码，包含滑动拼图、文字点选两种方式|授权|
 
 ## [项目介绍]
 YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。

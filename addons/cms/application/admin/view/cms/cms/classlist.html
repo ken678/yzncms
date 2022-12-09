@@ -90,10 +90,10 @@ layui.use(['table', 'yznTable'], function() {
                 extend: 'data-full="true"',
             }], 'delete',
             [{
-                html: '<a class="layui-btn layui-btn-sm layui-btn-normal move"><i class="iconfont icon-yidong"></i>&nbsp;批量移动</a> '
+                html: '<button class="layui-btn layui-btn-sm layui-btn-normal move"><i class="iconfont icon-yidong"></i>&nbsp;批量移动</button> '
             }],
             [{
-                html: '<a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url("recycle",["catid"=>$catid])}"><i class="iconfont icon-trash"></i>&nbsp;回收站</a>'
+                html: '<button class="layui-btn layui-btn-warm layui-btn-sm" data-table="currentTable" data-open="{:url("recycle",["catid"=>$catid])}"><i class="iconfont icon-recycle-line"></i>&nbsp;回收站</button>'
             }],
         ],
         url: '{:url("classlist",["catid"=>$catid])}',

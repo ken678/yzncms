@@ -10,13 +10,22 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 采集模型
+// | Links模型
 // +----------------------------------------------------------------------
-namespace app\admin\model\collection;
+namespace app\admin\model\links;
 
 use think\Model;
 
-class Nodes extends Model
+/**
+ * 模型
+ */
+class Terms extends Model
 {
-    protected $name = 'collection_node';
+    protected static function init()
+    {
+        self::afterDelete(function ($row) {
+            //删除分类下的友情链接
+            Links::where('termsid', $row->id)->delete();
+        });
+    }
 }

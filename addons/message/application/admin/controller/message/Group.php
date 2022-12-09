@@ -24,10 +24,8 @@ class Group extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->groupCache = cache("Member_Group"); //会员模型
-
-        $this->modelClass       = new MessageGroupModel;
-        $this->MessageDataModel = new MessageDataModel;
+        $this->groupCache = cache("Member_Group");
+        $this->modelClass = new MessageGroupModel;
     }
     /**
      * 群发消息管理
@@ -43,7 +41,7 @@ class Group extends Adminbase
                 $_list[$k]['count']     = MessageDataModel::where('group_message_id', $v['id'])->count();
             }
             $total  = $this->modelClass->where($where)->count();
-            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            $result = ["code" => 0, "count" => $total, "data" => $_list];
             return json($result);
         }
         return $this->fetch();
@@ -59,25 +57,5 @@ class Group extends Adminbase
         }
         $this->assign("Member_group", $groupCache);
         return parent::add();
-        /*if ($this->request->isPost()) {
-    $data   = $this->request->post('info/a');
-    $result = $this->validate($data, 'message_group');
-    if (true !== $result) {
-    return $this->error($result);
-    }
-    if ($this->MessageGroupModel->allowField(true)->save($data)) {
-    $this->success('发送成功！');
-    } else {
-    $this->error('发送失败！');
-    }
-
-    } else {
-    foreach ($this->groupCache as $g) {
-    $groupCache[$g['id']] = $g['name'];
-    }
-    $this->assign("Member_group", $groupCache);
-    return $this->fetch();
-    }*/
-
     }
 }

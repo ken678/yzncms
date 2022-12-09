@@ -28,13 +28,10 @@ layui.use('yznTable', function() {
         url: "{:url('recycle',['catid'=>$catid])}",
         toolbar: ['refresh',
             [{
-                html:'<a class="layui-btn layui-btn-sm" href="javascript:history.back(-1);"><i class="iconfont icon-undo"></i>&nbsp;返回</a>'
+                html: '<a class="layui-btn layui-btn-sm confirm" data-href="{:url("restore",["catid"=>$catid])}" data-batch-all="currentTable"><i class="iconfont icon-undo"></i>&nbsp;还原</a>',
             }],
             [{
-                html: '<a class="layui-btn layui-btn-sm confirm" data-href="{:url("restore",["catid"=>$catid])}" data-batch-all="currentTable">还原</a>',
-            }],
-            [{
-                html: '<a class="layui-btn layui-btn-sm layui-btn-danger confirm" data-href="{:url("destroy",["catid"=>$catid])}" data-batch-all="currentTable">销毁</a>',
+                html: '<a class="layui-btn layui-btn-sm layui-btn-danger confirm" data-href="{:url("destroy",["catid"=>$catid])}" data-batch-all="currentTable"><i class="iconfont icon-close"></i>&nbsp;销毁</a>',
             }],
         ],
         cols: [
@@ -43,7 +40,7 @@ layui.use('yznTable', function() {
                 { field: 'id', width: 70, title: 'ID' },
                 { field: 'title', align: "left", title: '标题', templet: '#title' },
                 { field: 'updatetime', width: 180, title: '更新时间' },
-                { fixed: 'right', width: 150, title: '操作', toolbar: '#barTool' }
+                { fixed: 'right', width: 110, title: '操作', toolbar: '#barTool' }
             ]
         ],
     });

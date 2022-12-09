@@ -16,13 +16,17 @@ namespace app\admin\model\pay;
 
 use think\Db;
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class Account extends Model
 {
+    use SoftDelete;
+    protected $deleteTime        = 'delete_time';
+    protected $defaultSoftDelete = 0;
+
     protected $name = 'pay_account';
     // 定义时间戳字段名
     protected $autoWriteTimestamp = true;
-    protected $createTime         = 'addtime';
     protected $updateTime         = false;
 
     public function getStatusAttr($value)
@@ -41,15 +45,6 @@ class Account extends Model
         return $status[$value];
     }
 
-    public function getPaytimeAttr($value)
-    {
-        if (!empty($value)) {
-            return date('Y-m-d H:i:s', $value);
-        } else {
-            return '';
-        }
-    }
-
     /**
      * 添加积分/金钱记录
      */
@@ -61,7 +56,7 @@ class Account extends Model
         $data['uid']       = isset($uid) && intval($uid) ? intval($uid) : 0;
         $data['username']  = isset($username) ? trim($username) : '';
         $data['money']     = isset($money) && floatval($money) ? floatval($money) : 0;
-        $data['paytime']   = time();
+        $data['pay_time']  = time();
         $data['usernote']  = $usernote;
         $data['pay_type']  = isset($pay_type) ? trim($pay_type) : 'selfincome';
         $data['ip']        = request()->ip();

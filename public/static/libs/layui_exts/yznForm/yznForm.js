@@ -178,6 +178,15 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
         },
         events: {
             init: function() {
+                var tips_index = 0;
+                $(document).on('mouseenter', '[lay-tips]', function () {
+                    tips_index = layer.tips($(this).attr('lay-tips'), this, {
+                        tips: 1,
+                        time: 0
+                    });
+                }).on('mouseleave', '[lay-tips]', function(){
+                    layer.close(tips_index);
+                });
                 // 放大图片
                 $('body').on('click', '[data-image]', function() {
                     var title = $(this).attr('data-image'),

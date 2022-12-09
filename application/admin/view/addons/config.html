@@ -1,153 +1,146 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <form class="layui-form" action="" method="post">
-    {empty name="custom_config"}
-        <div class="layui-card">
-            {if $data.tips  && $data.tips.value}
-            <div class="alert alert-info-light" style="margin-bottom:10px;">
-                {if $data.tips.title}
-                <b>{$data.tips.title}</b><br>
-                {/if}
-                {$data.tips.value}
-            </div>
+    <div class="layui-card">
+        {if $data.tips  && $data.tips.value}
+        <div class="alert alert-info-light" style="margin-bottom:10px;">
+            {if $data.tips.title}
+            <b>{$data.tips.title}</b><br>
             {/if}
-            <div class="layui-card-body">
-            {foreach name="data['config']" item="form" key="o_key"}
-                 {switch name="form.type"}
-                       {case value="text"}
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                       {/case}
-                       {case value="password"}
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                       {/case}
-						{case value="array"}
-						<div class="layui-form-item">
-						    <label class="layui-form-label">{$form.title}</label>
-						    <dl class="layui-input-block fieldlist" data-name="config[{$form.name}]" data-id="{$form.name}">
-						                <dd>
-                                    <ins>键名</ins>
-                                    <ins>键值</ins>
-                                </dd>
-						        <dd><button type="button" class="layui-btn btn-append">追加</button></dd>
-						        <textarea name="config[{$form.name}]" class="layui-textarea layui-hide">{$form.value|json_encode}</textarea>
-						    </dl>
-						    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-						</div>
-						<script type="text/html" id="{$form.name}Tpl">
-						    <dd class="layui-form-item rules-item">
-						    {{# layui.each(d.lists, function(index, item) { }}
-    						    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="键" value="{{item.key|| ''}}" />
-    						    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="值" value="{{item.value|| ''}}" />
-    						    <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
-    						    <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
-						    {{# }); }}
-						    </dd>
-						</script>
-						{/case}
-						{case value="checkbox"}
-						<div class="layui-form-item">
-						    <label class="layui-form-label">{$form.title}</label>
-						    <div class="layui-input-block">
-						        {foreach name="form.options" item="opt" key="opt_k"}
-						        <input type="checkbox" name="config[{$form.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value|default=''"} checked{/in}>
-						        {/foreach}
-						    </div>
-						    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-						</div>
-						{/case}
-                        {case value="textarea"}
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                <textarea placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$form.name}]">{$form.value}</textarea>
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                        {/case}
-                       {case value="password"}
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                       {/case}
-                       {case value="radio"}
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                {foreach name="form.options" item="opt" key="opt_k"}
-                                <input type="radio" name="config[{$form.name}]" value="{$opt_k}" title="{$opt}" {eq name="form.value" value="$opt_k"} checked{/eq}>
-                                {/foreach}
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                       {/case}
-                        {case value="select"}
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                <select name="config[{$form.name}]">
-                                    <option value=""></option>
-                                    {foreach name="form.options" item="opt" key="opt_k"}
-                                    <option value="{$opt_k}" {eq name="form.value" value="$opt_k"}selected{/eq}>{$opt}</option>
-                                    {/foreach}
-                                </select>
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                        {/case}
-                        {case value="image" break="0"}{/case}
-                        {case value="images"}
-                        <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                <div class="layui-col-xs4">
-                                    <input type="text" name="config[{$form.name}]"  id="c-{$form.name}" value="{$form.value|default=''}" class="layui-input">
-                                </div>
-                                <div class="webUpload" id="picker_{$form.name}" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传图片</div>
-                                <button type="button" class="layui-btn fachoose" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" id="fachoose-c-{$form.name}"><i class="iconfont icon-other"></i> 选择</button>
-                                <ul class="layui-row list-inline plupload-preview" id="p-{$form.name}"></ul>
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                        {/case}
-                        {case value="file" break="0"}{/case}
-                        {case value="files"}
-                        <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">{$form.title}</label>
-                            <div class="layui-input-block">
-                                <div class="layui-col-xs4">
-                                    <input type="text" name="config[{$form.name}]"  id="c-{$form.name}" value="{$form.value|default=''}" class="layui-input">
-                                </div>
-                                <div class="webUpload" id="picker_{$form.name}" data-multiple="{$form.type=='file'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传</div>
-                            </div>
-                            {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
-                        </div>
-                        {/case}
-                 {/switch}
-            {/foreach}
-            </div>
+            {$data.tips.value|raw}
         </div>
-    {else /}
-        {present name="custom_config"}
-        {$custom_config|raw}
-        {/present}
-    {/empty}
-    <input type="hidden" name="id" value="{:input('id')}" readonly>
+        {/if}
+        <div class="layui-card-body">
+        {foreach name="data['config']" item="form" key="o_key"}
+             {switch name="form.type"}
+                   {case value="text"}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                   {/case}
+                   {case value="password"}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                   {/case}
+					{case value="array"}
+					<div class="layui-form-item">
+					    <label class="layui-form-label">{$form.title}</label>
+					    <dl class="layui-input-block fieldlist" data-name="config[{$form.name}]" data-id="{$form.name}">
+					                <dd>
+                                <ins>键名</ins>
+                                <ins>键值</ins>
+                            </dd>
+					        <dd><button type="button" class="layui-btn btn-append">追加</button></dd>
+					        <textarea name="config[{$form.name}]" class="layui-textarea layui-hide">{$form.value|json_encode}</textarea>
+					    </dl>
+					    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+					</div>
+					<script type="text/html" id="{$form.name}Tpl">
+					    <dd class="layui-form-item rules-item">
+					    {{# layui.each(d.lists, function(index, item) { }}
+						    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="键" value="{{item.key|| ''}}" />
+						    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="值" value="{{item.value|| ''}}" />
+						    <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
+						    <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
+					    {{# }); }}
+					    </dd>
+					</script>
+					{/case}
+					{case value="checkbox"}
+					<div class="layui-form-item">
+					    <label class="layui-form-label">{$form.title}</label>
+					    <div class="layui-input-block">
+					        {foreach name="form.options" item="opt" key="opt_k"}
+					        <input type="checkbox" name="config[{$form.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value|default=''"} checked{/in}>
+					        {/foreach}
+					    </div>
+					    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+					</div>
+					{/case}
+                    {case value="textarea"}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$form.name}]">{$form.value}</textarea>
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                    {/case}
+                   {case value="password"}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                   {/case}
+                   {case value="radio"}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            {foreach name="form.options" item="opt" key="opt_k"}
+                            <input type="radio" name="config[{$form.name}]" value="{$opt_k}" title="{$opt}" {eq name="form.value" value="$opt_k"} checked{/eq}>
+                            {/foreach}
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                   {/case}
+                    {case value="select"}
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <select name="config[{$form.name}]">
+                                <option value=""></option>
+                                {foreach name="form.options" item="opt" key="opt_k"}
+                                <option value="{$opt_k}" {eq name="form.value" value="$opt_k"}selected{/eq}>{$opt}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                    {/case}
+                    {case value="image" break="0"}{/case}
+                    {case value="images"}
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <div class="layui-col-xs4">
+                                <input type="text" name="config[{$form.name}]"  id="c-{$form.name}" value="{$form.value|default=''}" class="layui-input">
+                            </div>
+                            <div class="webUpload" id="picker_{$form.name}" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传图片</div>
+                            <button type="button" class="layui-btn fachoose" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" id="fachoose-c-{$form.name}"><i class="iconfont icon-other"></i> 选择</button>
+                            <ul class="layui-row list-inline plupload-preview" id="p-{$form.name}"></ul>
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                    {/case}
+                    {case value="file" break="0"}{/case}
+                    {case value="files"}
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <div class="layui-col-xs4">
+                                <input type="text" name="config[{$form.name}]"  id="c-{$form.name}" value="{$form.value|default=''}" class="layui-input">
+                            </div>
+                            <div class="webUpload" id="picker_{$form.name}" data-multiple="{$form.type=='file'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传</div>
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                    {/case}
+             {/switch}
+        {/foreach}
+        </div>
+    </div>
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit data-refresh="false">立即提交</button>

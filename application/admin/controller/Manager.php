@@ -99,21 +99,23 @@ class Manager extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
-            $data   = $this->request->post('');
-            $result = $this->validate($data, 'AdminUser.insert');
+            $params             = $this->request->post('');
+            $result             = $this->validate($params, 'AdminUser.insert');
+            $passwordinfo       = encrypt_password($params['password']); //对密码进行处理
+            $params['password'] = $passwordinfo['password'];
+            $params['encrypt']  = $passwordinfo['encrypt'];
             if (true !== $result) {
                 return $this->error($result);
             }
-            if (!in_array($data['roleid'], $this->childrenGroupIds)) {
+            if (!in_array($params['roleid'], $this->childrenGroupIds)) {
                 $this->error('没有权限操作！');
             }
-            if ($this->modelClass->createManager($data)) {
-                $this->success("添加成功！", url('admin/manager/index'));
+            if ($this->modelClass->save($params)) {
+                $this->success("添加成功！", url('index'));
             } else {
                 $error = $this->modelClass->getError();
                 $this->error($error ? $error : '添加失败！');
             }
-
         } else {
             return $this->fetch();
         }

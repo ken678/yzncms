@@ -6,7 +6,7 @@
         <div class="layui-tab">
             <ul class="layui-tab-title">
                 <li class="layui-this"><a href="{:url('admin/links.admin/index')}">友情链接列表</a></li>
-                <li><a href="{:url('admin/links.admin/terms')}">分类列表</a></li>
+                <li><a href="{:url('admin/links.terms/index')}">分类列表</a></li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
@@ -39,10 +39,10 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
-        add_url: "{:url('admin/links.admin/add')}",
-        edit_url: "{:url('admin/links.admin/edit')}",
-        delete_url: "{:url('admin/links.admin/del')}",
-        modify_url: "{:url('admin/links.admin/multi')}",
+        add_url: "{:url('add')}",
+        edit_url: "{:url('edit')}",
+        delete_url: "{:url('del')}",
+        modify_url: "{:url('multi')}",
     };
 
     table.render({
@@ -57,7 +57,7 @@ layui.use('yznTable', function() {
                 extend: 'data-width="900" data-height="600"',
             }], 'delete'
         ],
-        url: "{:url('admin/links.admin/index')}",
+        url: "{:url('index')}",
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },

@@ -24,7 +24,6 @@ class Message extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->groupCache = cache("Member_Group"); //会员模型
         $this->modelClass = new MessageModel;
     }
 
@@ -40,9 +39,6 @@ class Message extends Adminbase
             if (true !== $result) {
                 return $this->error($result);
             }
-            /*if ($data['send_from'] == $this->_userinfo['username']) {
-            return $this->error('不能发给自己');
-            }*/
             if (!MemberModel::getByUsername($data['send_to'])) {
                 return $this->error('用户不存在');
             }

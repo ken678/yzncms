@@ -28,16 +28,32 @@ class Pay extends Addons
             "listorder" => 3,
             "child"     => [
                 [
-                    "name"  => "admin/pay.payment/modify_deposit",
+                    "name"  => "admin/pay.payment/add",
                     "title" => "在线充值",
                 ],
                 [
-                    "name"  => "admin/pay.payment/config",
-                    "title" => "支付配置",
+                    "name"  => "admin/pay.payment/del",
+                    "title" => "删除",
+                ],
+                [
+                    "name"  => "admin/pay.payment/recyclebin",
+                    "title" => "回收站",
+                ],
+                [
+                    "name"  => "admin/pay.payment/restore",
+                    "title" => "还原",
+                ],
+                [
+                    "name"  => "admin/pay.payment/destroy",
+                    "title" => "销毁",
                 ],
                 [
                     "name"  => "admin/pay.spend/index",
                     "title" => "消费记录",
+                ],
+                [
+                    "name"  => "admin/pay.spend/del",
+                    "title" => "删除",
                 ],
             ],
         ],

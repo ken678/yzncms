@@ -12,7 +12,7 @@
     <a class="layui-btn layui-btn-xs layui-btn-normal layui-iframe" href="{:url('col_url_list')}?id={{ d.id }}" lay-data="{width:'800px',height:'400px',title:'正在采集'}">①&nbsp;采集内容</a>
     <a class="layui-btn layui-btn-xs layui-btn-normal" href="{:url('publist')}?id={{ d.id }}&type=1">②&nbsp;内容发布</a>
 </script>
-<button type="button" class="layui-btn layui-btn-sm" id="importFile" value="离线安装" style="display: none"/>
+<button type="button" class="layui-btn layui-btn-sm" id="importFile" style="display: none"/>
 {/block}
 {block name="script"}
 <script>
@@ -38,18 +38,18 @@ layui.use(['yznTable', 'upload'], function() {
             icon: 'iconfont icon-add',
             extend: 'data-width="950" data-height="600"',
         }], 'delete',[{
-               html:'<a class="layui-btn layui-btn-sm" onclick="importFile();"><i class="iconfont icon-upload-fill"></i>&nbsp;导入</a>'
+               html:'<a class="layui-btn layui-btn-sm" onclick="importFile();"><i class="iconfont icon-upload-fill"></i>&nbsp;配置导入</a>'
             }]],
         url: '{:url("index")}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'name',align: "left", title: '名称' },
-                { field: 'lastdate', width: 180, title: '最后采集时间', templet: '<div>{{#  if(d.lastdate){ }} {{d.lastdate}} {{#  } else { }} / {{#  } }}</div>', search: 'range' },
+                { field: 'lastdate', width: 180, title: '最后采集时间',templet: yznTable.formatter.datetime, search: 'range' },
                 { width: 200, title: '内容操作',  templet: '#caijiTool'},
-                { width:130, title: '操作',templet: yznTable.formatter.tool,operat: [
+                { width:160, title: '操作',templet: yznTable.formatter.tool,operat: [
                 [{
-                    text: '导出',
+                    text: '配置导出',
                     url: init.export_url,
                     method: 'href',
                     class: 'layui-btn layui-btn-xs layui-btn-warm',
