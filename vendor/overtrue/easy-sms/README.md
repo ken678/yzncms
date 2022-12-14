@@ -56,6 +56,8 @@
 - [融合云（助通）](https://www.ztinfo.cn/products/sms)
 - [蜘蛛云](https://zzyun.com/)
 - [融合云信](https://maap.wo.cn/)
+- [天瑞云](http://cms.tinree.com/)
+- [火山引擎](https://console.volcengine.com/sms/)
 
 ## 环境需求
 
@@ -564,7 +566,7 @@ $easySms->send($phone_number, [
         'account_sid' => '', // auth_id from https://tiniyo.com
         'from' => '', // 发送的号码 可以在控制台购买
         'token' => '', // auth_secret from https://tiniyo.com
-    ],	    
+    ],
 ```
 
 
@@ -586,7 +588,7 @@ $easySms->send($phone_number, [
 ```php
 $easySms->send(18888888888, [
     'template' => 101234, // 模板ID
-    'data' => [ 
+    'data' => [
         "a", 'b', 'c', 'd', //按占位顺序给值
     ],
 ]);
@@ -858,6 +860,67 @@ $easySms->send(18888888888, [
     ],//模板参数
 ]);
 
+```
+
+### [天瑞云](http://cms.tinree.com/)
+
+短信内容使用 `template` + `data`
+
+```php
+    'tinree' => [
+        'accesskey' => '', // 平台分配给用户的accesskey
+        'secret' => '', // 平台分配给用户的secret
+        'sign' => '', // 平台上申请的接口短信签名或者签名ID
+    ],
+```
+
+发送示例：
+
+```php
+$easySms->send(18888888888, [
+    'template' => '123456', // 模板ID
+    'data' => [
+        "a", 'b', 'c', //按模板变量占位顺序
+    ],
+]);
+```
+
+### [火山引擎](https://console.volcengine.com/sms/)
+
+短信内容使用 `template` + `data`
+
+```php
+    'volcengine' => [
+        'access_key_id' => '', // 平台分配给用户的access_key_id
+        'access_key_secret' => '', // 平台分配给用户的access_key_secret
+        'region_id' => 'cn-north-1', // 国内节点 cn-north-1，国外节点 ap-singapore-1，不填或填错，默认使用国内节点
+        'sign_name' => '', // 平台上申请的接口短信签名或者签名ID，可不填，发送短信时data中指定
+        'sms_account' => '', // 消息组帐号,火山短信页面右上角，短信应用括号中的字符串，可不填，发送短信时data中指定
+    ],
+```
+
+发送示例1：
+
+```php
+$easySms->send(18888888888, [
+    'template' => 'SMS_123456', // 模板ID
+    'data' => [
+       "code" => 1234 // 模板变量
+    ],
+]);
+```
+
+发送示例2：
+```php
+$easySms->send(18888888888, [
+    'template' => 'SMS_123456', // 模板ID
+    'data' => [
+        "template_param" => ["code" => 1234], // 模板变量参数
+        "sign_name" => "yoursignname", // 签名，覆盖配置文件中的sign_name
+        "sms_account" => "yoursmsaccount", // 消息组帐号，覆盖配置文件中的sms_account
+        "phone_numbers" => "18888888888,18888888889", // 手机号，批量发送，英文的逗号连接多个手机号，覆盖发送方法中的填入的手机号
+    ],
+]);
 ```
 
 ## :heart: 支持我
