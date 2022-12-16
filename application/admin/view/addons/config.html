@@ -137,6 +137,15 @@
                         {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                     {/case}
+                    {case value="Ueditor"}
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">{$form.title}</label>
+                        <div class="layui-input-block">
+                            <script type="text/plain" class="js-ueditor" id="{$form.name}" name="config[{$form.name}]">{$form.value|raw}</script>
+                        </div>
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                    </div>
+                    {/case}
              {/switch}
         {/foreach}
         </div>
