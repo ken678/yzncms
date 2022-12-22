@@ -10,7 +10,9 @@
                             <ul class="select_option" style="display: none;">
                                 <li class="selected"><a href="javascript:set_option(0);">搜索全部</a></li>
                                 {volist name="modellist" id="vo"}
+                                {eq name="vo.module" value="cms"}
                                 <li class=""><a href="javascript:set_option({$vo.id});">{$vo.name}</a></li>
+                                {/eq}
                                 {/volist}
                             </ul>
                         </div>
