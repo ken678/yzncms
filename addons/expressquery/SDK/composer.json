@@ -1,0 +1,30 @@
+{
+    "name": "finecho/logistics",
+    "description": "A logistics SDK.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "finecho",
+            "email": "liuhao25@foxmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.3|^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Finecho\\Logistics\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Finecho\\Logistics\\ServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5",
+        "mockery/mockery": "^1.2"
+    }
+}
