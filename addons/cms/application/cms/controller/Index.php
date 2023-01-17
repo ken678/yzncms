@@ -204,6 +204,10 @@ class Index extends Cmsbase
     public function search()
     {
         if ($this->cmsConfig['web_site_searchtype'] == 'xunsearch') {
+            $info = get_addon_info('xunsearch');
+            if (!$info || $info['status'] != 1) {
+                return $this->error('请在后台插件管理中安装《迅搜搜索》并启用后再尝试');
+            }
             return $this->xunsearch();
         }
         $seo = seo('', '搜索结果');
