@@ -75,12 +75,13 @@ class Index extends Cmsbase
             $template = $setting['page_template'] ? $setting['page_template'] : 'page';
             $ifcache  = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
             $info     = model('Page')->getPage($catid, $ifcache);
-            if ($info) {
-                $info = $info->toArray();
+            if (empty($info)) {
+                throw new \think\exception\HttpException(404, '单页不存在！');
             }
+            $info = $info->toArray();
             //SEO
-            $keywords    = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
-            $description = $info['description'] ? $info['description'] : $setting['meta_description'];
+            $keywords    = $info['keywords'] ?? $setting['meta_keywords'];
+            $description = $info['description'] ?? $setting['meta_description'];
             $seo         = seo($catid, '', $description, $keywords);
             $this->assign($info);
         }
