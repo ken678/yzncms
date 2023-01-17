@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\library\FulltextSearch;
+use addons\cms\library\FulltextSearch;
 use app\cms\model\Cms as Cms_Model;
 use think\Db;
 
