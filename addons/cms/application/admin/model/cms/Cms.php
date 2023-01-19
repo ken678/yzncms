@@ -337,56 +337,58 @@ class Cms extends Modelbase
     {
         $newdata = [];
         foreach ($data as $key => $value) {
-            switch ($fieldinfo[$key]['type']) {
-                case 'array':
-                    $newdata[$key] = (array) json_decode($value, true);
-                    break;
-                case 'radio':
-                case 'select':
-                    if (!empty($value)) {
-                        if (!empty($fieldinfo[$key]['options'])) {
-                            $optionArr               = parse_attr($fieldinfo[$key]['options']);
-                            $newdata[$key . '_text'] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
-                        }
-                    }
-                    $newdata[$key] = $value;
-                    break;
-                case 'selects':
-                case 'checkbox':
-                    if (!empty($value)) {
-                        if (!empty($fieldinfo[$key]['options'])) {
-                            $optionArr = parse_attr($fieldinfo[$key]['options']);
-                            $valueArr  = explode(',', $value);
-                            foreach ($valueArr as $v) {
-                                if (isset($optionArr[$v])) {
-                                    $newdata[$key][$v] = $optionArr[$v];
-                                } elseif ($v) {
-                                    $newdata[$key][$v] = $v;
-                                }
+            if (isset($fieldinfo[$key])) {
+                switch ($fieldinfo[$key]['type']) {
+                    case 'array':
+                        $newdata[$key] = (array) json_decode($value, true);
+                        break;
+                    case 'radio':
+                    case 'select':
+                        if (!empty($value)) {
+                            if (!empty($fieldinfo[$key]['options'])) {
+                                $optionArr               = parse_attr($fieldinfo[$key]['options']);
+                                $newdata[$key . '_text'] = isset($optionArr[$value]) ? $optionArr[$value] : $value;
                             }
-                            //其他表关联
-                        } else {
-                            $newdata[$key] = [];
                         }
-                    }
-                    break;
-                case 'files':
-                case 'images':
+                        $newdata[$key] = $value;
+                        break;
+                    case 'selects':
+                    case 'checkbox':
+                        if (!empty($value)) {
+                            if (!empty($fieldinfo[$key]['options'])) {
+                                $optionArr = parse_attr($fieldinfo[$key]['options']);
+                                $valueArr  = explode(',', $value);
+                                foreach ($valueArr as $v) {
+                                    if (isset($optionArr[$v])) {
+                                        $newdata[$key][$v] = $optionArr[$v];
+                                    } elseif ($v) {
+                                        $newdata[$key][$v] = $v;
+                                    }
+                                }
+                                //其他表关联
+                            } else {
+                                $newdata[$key] = [];
+                            }
+                        }
+                        break;
+                    case 'files':
+                    case 'images':
+                        $newdata[$key] = empty($value) ? [] : explode(',', $value);
+                        break;
+                    /*case 'tags':
                     $newdata[$key] = empty($value) ? [] : explode(',', $value);
-                    break;
-                /*case 'tags':
-                $newdata[$key] = empty($value) ? [] : explode(',', $value);
-                break;*/
-                case 'markdown':
-                    $parser        = new \util\Parser;
-                    $newdata[$key] = $parser->makeHtml(htmlspecialchars_decode($value));
-                    break;
-                case 'Ueditor':
-                    $newdata[$key] = htmlspecialchars_decode($value);
-                    break;
-                default:
-                    $newdata[$key] = $value;
-                    break;
+                    break;*/
+                    case 'markdown':
+                        $parser        = new \util\Parser;
+                        $newdata[$key] = $parser->makeHtml(htmlspecialchars_decode($value));
+                        break;
+                    case 'Ueditor':
+                        $newdata[$key] = htmlspecialchars_decode($value);
+                        break;
+                    default:
+                        $newdata[$key] = $value;
+                        break;
+                }
             }
             if (!isset($newdata[$key])) {
                 $newdata[$key] = '';

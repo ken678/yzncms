@@ -1270,5 +1270,6 @@ layui.define([], function (exports) {
     };
     
     layui.link(layui.cache.base + 'notice/notice.css');  // 加载css
+    window.notice = $iziToast;
     exports('notice',$iziToast);
 });

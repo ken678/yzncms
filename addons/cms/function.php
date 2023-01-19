@@ -200,7 +200,7 @@ function get_filters_field($modelid)
         } else {
             continue;
         }
-        $filters_data[$_v['name']] = $_v;
+        $filters_data[$_v['name']] = array_intersect_key($_v, array_flip(['name', 'title', 'type', 'options']));
     }
     return $filters_data;
 

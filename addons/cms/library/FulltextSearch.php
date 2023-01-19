@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | cms全文搜索类
 // +----------------------------------------------------------------------
-namespace app\cms\library;
+namespace addons\cms\library;
 
 use addons\xunsearch\library\Xunsearch;
 use think\Db;
@@ -81,7 +81,7 @@ class FulltextSearch
     /**
      * 获取搜索结果
      */
-    public static function search($page = 1, $pagesize = 20, $order = '', $query)
+    public static function search($page = 1, $pagesize = 20, $order = '', $query = [])
     {
         return Xunsearch::instance('cms')->search($page, $pagesize, $order, $query);
     }

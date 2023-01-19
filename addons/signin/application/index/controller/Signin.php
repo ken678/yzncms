@@ -42,8 +42,6 @@ class Signin extends MemberBase
         foreach ($list as $index => $item) {
             $calendar->addEvent(date("Y-m-d", $item->create_time), date("Y-m-d", $item->create_time), "", false, "signed");
         }
-        $this->assign('fillupscore', $config['fillupscore']);
-        //$this->assignconfig('isfillup', $config['isfillup']);
         $this->assign('calendar', $calendar);
         $this->assign('date', $date);
         $this->assign('successions', $successions);
@@ -72,9 +70,8 @@ class Signin extends MemberBase
                 $score = isset($signdata['s' . $successions]) ? $signdata['s' . $successions] : $signdata['sn'];
                 try {
                     SigninModel::create(['uid' => $this->auth->id, 'successions' => $successions, 'create_time' => time()]);
-                    //\app\common\model\User::score($score, $this->auth->id, "连续签到{$successions}天");
                     //增加积分
-                    \think\Db::name('member')->where(['id' => $this->auth->id])->setInc('point', $score);
+                    Db::name('member')->where(['id' => $this->auth->id])->setInc('point', $score);
                 } catch (Exception $e) {
                     $this->error('签到失败,请稍后重试');
                 }
@@ -126,7 +123,8 @@ class Signin extends MemberBase
             $successions = $prev['successions'] + 1;
         }
         try {
-            //\app\common\model\User::score(-$config['fillupscore'], $this->auth->id, '签到补签');
+            //扣除积分
+            Db::name('member')->where(['id' => $this->auth->id])->setDec('point', $config['fillupscore']);
             //寻找日期之后的
             $nextList = SigninModel::where('uid', $this->auth->id)
                 ->where('create_time', '>=', strtotime("+1 day", $time))

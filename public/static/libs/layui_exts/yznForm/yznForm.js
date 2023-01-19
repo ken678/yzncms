@@ -672,9 +672,12 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                                 vote.name = j;
                                 newArr.push(vote);
                             })
+                            if (typeof value != 'object' && value) {
+                                value = typeof value === "number" ? [value] : value.split(',')
+                            }
                             xmSelect.render({
                                 el: document.querySelector('.form-selects'),
-                                initValue: value !== "" ? value.split(',') : [],
+                                initValue: value,
                                 name: name,
                                 data: newArr
                             })

@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\cms\controller;
 
-use app\cms\library\FulltextSearch;
+use addons\cms\library\FulltextSearch;
 use app\cms\model\Cms as Cms_Model;
 use think\Db;
 
@@ -75,12 +75,13 @@ class Index extends Cmsbase
             $template = $setting['page_template'] ? $setting['page_template'] : 'page';
             $ifcache  = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
             $info     = model('Page')->getPage($catid, $ifcache);
-            if ($info) {
-                $info = $info->toArray();
+            if (empty($info)) {
+                throw new \think\exception\HttpException(404, '单页不存在！');
             }
+            $info = $info->toArray();
             //SEO
-            $keywords    = $info['keywords'] ? $info['keywords'] : $setting['meta_keywords'];
-            $description = $info['description'] ? $info['description'] : $setting['meta_description'];
+            $keywords    = $info['keywords'] ?? $setting['meta_keywords'];
+            $description = $info['description'] ?? $setting['meta_description'];
             $seo         = seo($catid, '', $description, $keywords);
             $this->assign($info);
         }
@@ -203,6 +204,10 @@ class Index extends Cmsbase
     public function search()
     {
         if ($this->cmsConfig['web_site_searchtype'] == 'xunsearch') {
+            $info = get_addon_info('xunsearch');
+            if (!$info || $info['status'] != 1) {
+                return $this->error('请在后台插件管理中安装《迅搜搜索》并启用后再尝试');
+            }
             return $this->xunsearch();
         }
         $seo = seo('', '搜索结果');

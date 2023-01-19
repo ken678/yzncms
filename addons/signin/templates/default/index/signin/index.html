@@ -199,10 +199,10 @@ layui.define(['layer', 'element','laytpl'], function(exports) {
         return false;
     });
 
-    {if $fillupscore}
+    {if $config.isfillup}
         $(document).on("click", ".expired[data-date]:not(.today):not(.signed)", function() {
             var that = this;
-            layer.confirm("确认进行补签日期：" + $(this).data("date") + "？<br>补签将消耗" + "{$fillupscore}积分", function() {
+            layer.confirm("确认进行补签日期：" + $(this).data("date") + "？<br>补签将消耗" + "{$config.fillupscore}积分", function() {
                 $.ajax({
                     type: 'post',
                     dataType: 'json',

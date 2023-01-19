@@ -2,7 +2,7 @@
 ### 后端基于thinkphp5.1框架,前端基于Layui2.7.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
 
 [![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
-[![YznCMS](https://img.shields.io/badge/YznCMS-1.1.1-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![YznCMS](https://img.shields.io/badge/YznCMS-1.1.2-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -40,6 +40,7 @@
 |后台登录背景|使用必应壁纸自定义后台登录背景图|免费|
 |邮箱发送|采用phpmailer的方式发送邮件|免费|
 |消息队列|基于think-queue的队列|免费|
+|快递查询插件|支持阿里云,聚合数据,快递100,快递鸟快递查询|免费|
 |cms小程序|传统的cms展示类型小程序|授权|
 |即时通讯|类似百度商桥，快商通之类的客服多坐席即时聊天工具|授权|
 |评论插件|类似多说，一段JS即可调用的强大评论|授权|
@@ -55,6 +56,7 @@
 |迅搜全文检索|基于迅搜(Xunsearch)，支持百万以上全文数据检索|授权|
 |H5设计|H5端一键DIY拖拽式布局插件(支持各种小程序)|授权|
 |行为验证码|基于AJ-Captcha行为验证码，包含滑动拼图、文字点选两种方式|授权|
+|礼品卡提货系统|适用于公司节日福利发放礼品卡,大闸蟹等凭卡提货系统|授权|
 
 ## [项目介绍]
 YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
@@ -89,7 +91,6 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 - 截止2020/6/17 赞助过任意金额(≥1分)的 可以直接获取资格
 - 提交2款免费开源插件（需审核）
 - 提交讲解清晰易懂的教学视频（需审核）
-- 参与2022授权活动https://blog.yzncms.com/shows/25/117.html
 - 审核前,请先咨询作者,满足条件即可拉进官方授权群（退群视为放弃权益），享受丰富的插件,各种资源及便捷的交流学习
 
 > 更多的常见问题和教程见手册
