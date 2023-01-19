@@ -564,7 +564,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                                 initialFrameHeight: 400, //初始化编辑器高度,默认320
                                 autoHeightEnabled: false, //是否自动长高
                                 maximumWords: 50000, //允许的最大字符数
-                                serverUrl: GV.ueditor_upload_url,
+                                serverUrl: GV.image_upload_url+'?from=ueditor',
                             });
                             $('#' + ueditor_name + 'grabimg',layform).click(function() {
                                 var con = ueditors[ueditor_name].getContent();
