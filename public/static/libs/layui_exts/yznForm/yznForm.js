@@ -476,6 +476,17 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     })
                 }
             },
+            cxselect: function (layform) {
+                //绑定cxselect元素事件
+                if ($("[data-toggle='cxselect']", layform).length > 0) {
+                    layui.define('cxselect', function (exports) {
+                        $.cxSelect.defaults.jsonName = 'name';
+                        $.cxSelect.defaults.jsonValue = 'value';
+                        $.cxSelect.defaults.jsonSpace = 'data';
+                        $("[data-toggle='cxselect']", layform).cxSelect();
+                    });
+                }
+            },
             citypicker: function(layform) {
                 // 绑定城市选择组件
                 if ($("[data-toggle='city-picker']", layform).size() > 0) {
@@ -914,6 +925,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
             events.selectpage(form);
             events.faselect(form);
             events.fieldlist(form);
+            events.cxselect(form);
             events.citypicker(form);
             events.datetimepicker(form);
             events.tagsinput(form);
