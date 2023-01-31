@@ -17,6 +17,7 @@ namespace app\admin\controller;
 use app\common\controller\Adminbase;
 use app\common\exception\UploadException;
 use app\common\library\Upload as UploadLib;
+use think\Db;
 
 class Ajax extends Adminbase
 {
@@ -130,6 +131,33 @@ class Ajax extends Adminbase
         $suffix = $suffix ? $suffix : "FILE";
         echo build_suffix_image($suffix);
         exit;
+    }
+
+    /**
+     * 读取省市区数据,联动列表
+     */
+    public function area()
+    {
+        $params = $this->request->get("row/a");
+        if (!empty($params)) {
+            $province = isset($params['province']) ? $params['province'] : null;
+            $city     = isset($params['city']) ? $params['city'] : null;
+        } else {
+            $province = $this->request->get('province');
+            $city     = $this->request->get('city');
+        }
+        $where        = ['pid' => 0, 'level' => 1];
+        $provincelist = null;
+        if ($province !== null) {
+            $where['pid']   = $province;
+            $where['level'] = 2;
+            if ($city !== null) {
+                $where['pid']   = $city;
+                $where['level'] = 3;
+            }
+        }
+        $provincelist = Db::name('area')->where($where)->field('id as value,name')->select();
+        $this->success('', '', $provincelist);
     }
 
     public function upload($dir = '', $from = '')
