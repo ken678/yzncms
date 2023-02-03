@@ -58,8 +58,9 @@ class Formguide extends Adminbase
             }
             $this->success('新增成功！', url('index'));
         } else {
-            $this->tpl = str_replace($this->filepath, "", glob($this->filepath . 'show*'));
-            $this->tpl = str_replace("." . config("template.view_suffix"), "", $this->tpl);
+            $show_template = [];
+            $this->tpl     = str_replace($this->filepath, "", glob($this->filepath . 'show*'));
+            $this->tpl     = str_replace("." . config("template.view_suffix"), "", $this->tpl);
             foreach ($this->tpl as $v) {
                 $show_template[$v] = $v;
             }
@@ -86,8 +87,9 @@ class Formguide extends Adminbase
             }
             $this->success("更新成功！", url("index"));
         } else {
-            $id = $this->request->param('id/d', 0);
-            $r  = $this->Models->where("id", $id)->find();
+            $show_template = [];
+            $id            = $this->request->param('id/d', 0);
+            $r             = $this->Models->where("id", $id)->find();
             if (!$r) {
                 $this->error("该表单不存在！");
             }
