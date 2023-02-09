@@ -24,7 +24,15 @@ layui.use('yznTable', function() {
 
     table.render({
         init: init,
-        toolbar: ['refresh', 'add', 'delete'],
+        toolbar: ['refresh', 'add', 'delete',[{
+            text: '更新地区数据',
+            title: '更新地区数据将导致现有的地区数据表重置，请谨慎操作<br>数据源采用高德地图行政区划数据<br>请在配置管理中配置高德地图”Web服务API”密钥（Key）<br>高德暂不支持台湾省的详细区划查询',
+            url: "{:url('refresh')}",
+            method: 'request',
+            class: 'layui-btn layui-btn-sm layui-btn-warm',
+            icon:'iconfont icon-shuaxin1',
+            extend: 'data-table="currentTable" confirm',
+        }]],
         url: '{:url("index")}?order=asc',
         cols: [
             [
