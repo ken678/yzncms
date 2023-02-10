@@ -139,9 +139,9 @@ class Member extends Addons
     public function contentEditEnd($params)
     {
         //参数是审核文章的数据
-        if (!empty($params) && isset($params['sysadd']) && $params['sysadd'] == 0 && $params['status'] == 1) {
+        if (!empty($params)) {
             //标识审核状态
-            db("member_content")->where(array("content_id" => $params['id'], "catid" => $params['catid']))->setField('status', 1);
+            db("member_content")->where(["content_id" => $params['id'], "catid" => $params['catid']])->setField('status', $params['status']);
         }
     }
 }
