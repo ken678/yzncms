@@ -579,7 +579,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                             });
                             $('#' + ueditor_name + 'grabimg',layform).click(function() {
                                 var con = ueditors[ueditor_name].getContent();
-                                $.post('/attachment/Attachments/geturlfile', { 'content': con, 'type': 'images' },
+                                $.post('/admin/Attachments/geturlfile', { 'content': con, 'type': 'images' },
                                     function(data) {
                                         ueditors[ueditor_name].setContent(data);
                                         layer.msg("图片本地化完成", { icon: 1 });
