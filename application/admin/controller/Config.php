@@ -186,7 +186,7 @@ class Config extends Adminbase
                     } catch (Exception $e) {
                         $this->error($e->getMessage());
                     }
-                    $this->success('新增成功');
+                    $this->success('编辑成功');
                 } else {
                     $this->error($row->getError());
                 }
