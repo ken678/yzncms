@@ -13,16 +13,23 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "monolog/monolog": "^1.23",
-        "guzzlehttp/guzzle": "^6.2"
+        "php": ">=7.1.3",
+        "monolog/monolog": "^1.23 || ^2.0",
+        "guzzlehttp/guzzle": "^6.2 || ^7.0"
     },
     "require-dev": {
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "phpunit/phpunit": "^7.5",
+        "friendsofphp/php-cs-fixer": "^2.15"
     },
     "autoload": {
         "psr-4": {
             "Yansongda\\Supports\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yansongda\\Supports\\Tests\\": "tests/"
         }
     },
     "suggest": {

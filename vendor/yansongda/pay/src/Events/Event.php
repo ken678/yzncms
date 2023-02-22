@@ -2,7 +2,9 @@
 
 namespace Yansongda\Pay\Events;
 
-class Event extends \Symfony\Component\EventDispatcher\Event
+use Symfony\Contracts\EventDispatcher\Event as SymfonyEvent;
+
+class Event extends SymfonyEvent
 {
     /**
      * Driver.
@@ -29,9 +31,6 @@ class Event extends \Symfony\Component\EventDispatcher\Event
      * Bootstrap.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @param string $driver
-     * @param string $gateway
      */
     public function __construct(string $driver, string $gateway)
     {

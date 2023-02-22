@@ -8,16 +8,16 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Trait HasHttpRequest.
  *
- * @property string baseUri        base_uri
- * @property string timeout        timeout
- * @property string connectTimeout connect_timeout
+ * @property string $baseUri
+ * @property float  $timeout
+ * @property float  $connectTimeout
  */
 trait HasHttpRequest
 {
     /**
      * Http client.
      *
-     * @var null|Client
+     * @var Client|null
      */
     protected $httpClient = null;
 
@@ -33,17 +33,13 @@ trait HasHttpRequest
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param string $endpoint
-     * @param array  $query
-     * @param array  $headers
-     *
      * @return array|string
      */
-    public function get($endpoint, $query = [], $headers = [])
+    public function get(string $endpoint, array $query = [], array $headers = [])
     {
         return $this->request('get', $endpoint, [
             'headers' => $headers,
-            'query'   => $query,
+            'query' => $query,
         ]);
     }
 
@@ -52,13 +48,11 @@ trait HasHttpRequest
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param string       $endpoint
      * @param string|array $data
-     * @param array        $options
      *
      * @return array|string
      */
-    public function post($endpoint, $data, $options = [])
+    public function post(string $endpoint, $data, array $options = [])
     {
         if (!is_array($data)) {
             $options['body'] = $data;
@@ -74,13 +68,9 @@ trait HasHttpRequest
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param string $method
-     * @param string $endpoint
-     * @param array  $options
-     *
      * @return array|string
      */
-    public function request($method, $endpoint, $options = [])
+    public function request(string $method, string $endpoint, array $options = [])
     {
         return $this->unwrapResponse($this->getHttpClient()->{$method}($endpoint, $options));
     }
@@ -90,11 +80,9 @@ trait HasHttpRequest
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param Client $client
-     *
      * @return $this
      */
-    public function setHttpClient(Client $client)
+    public function setHttpClient(Client $client): self
     {
         $this->httpClient = $client;
 
@@ -102,27 +90,9 @@ trait HasHttpRequest
     }
 
     /**
-     * Get default options.
-     *
-     * @author yansongda <me@yansongda.cn>
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return array_merge([
-            'base_uri'        => property_exists($this, 'baseUri') ? $this->baseUri : '',
-            'timeout'         => property_exists($this, 'timeout') ? $this->timeout : 5.0,
-            'connect_timeout' => property_exists($this, 'connectTimeout') ? $this->connectTimeout : 5.0,
-        ], $this->httpOptions);
-    }
-
-    /**
      * Return http client.
-     *
-     * @return Client
      */
-    public function getHttpClient()
+    public function getHttpClient(): Client
     {
         if (is_null($this->httpClient)) {
             $this->httpClient = $this->getDefaultHttpClient();
@@ -135,20 +105,111 @@ trait HasHttpRequest
      * Get default http client.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @return Client
      */
-    public function getDefaultHttpClient()
+    public function getDefaultHttpClient(): Client
     {
         return new Client($this->getOptions());
+    }
+
+    /**
+     * setBaseUri.
+     *
+     * @author yansongda <me@yansongda.cn>
+     *
+     * @return $this
+     */
+    public function setBaseUri(string $url): self
+    {
+        if (property_exists($this, 'baseUri')) {
+            $parsedUrl = parse_url($url);
+
+            $this->baseUri = ($parsedUrl['scheme'] ?? 'http').'://'.
+                $parsedUrl['host'].(isset($parsedUrl['port']) ? (':'.$parsedUrl['port']) : '');
+        }
+
+        return $this;
+    }
+
+    /**
+     * getBaseUri.
+     *
+     * @author yansongda <me@yansongda.cn>
+     */
+    public function getBaseUri(): string
+    {
+        return property_exists($this, 'baseUri') ? $this->baseUri : '';
+    }
+
+    public function getTimeout(): float
+    {
+        return property_exists($this, 'timeout') ? $this->timeout : 5.0;
+    }
+
+    public function setTimeout(float $timeout): self
+    {
+        if (property_exists($this, 'timeout')) {
+            $this->timeout = $timeout;
+        }
+
+        return $this;
+    }
+
+    public function getConnectTimeout(): float
+    {
+        return property_exists($this, 'connectTimeout') ? $this->connectTimeout : 3.0;
+    }
+
+    public function setConnectTimeout(float $connectTimeout): self
+    {
+        if (property_exists($this, 'connectTimeout')) {
+            $this->connectTimeout = $connectTimeout;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get default options.
+     *
+     * @author yansongda <me@yansongda.cn>
+     */
+    public function getOptions(): array
+    {
+        return array_merge([
+            'base_uri' => $this->getBaseUri(),
+            'timeout' => $this->getTimeout(),
+            'connect_timeout' => $this->getConnectTimeout(),
+        ], $this->getHttpOptions());
+    }
+
+    /**
+     * setOptions.
+     *
+     * @author yansongda <me@yansongda.cn>
+     *
+     * @return $this
+     */
+    public function setOptions(array $options): self
+    {
+        return $this->setHttpOptions($options);
+    }
+
+    public function getHttpOptions(): array
+    {
+        return $this->httpOptions;
+    }
+
+    public function setHttpOptions(array $httpOptions): self
+    {
+        $this->httpOptions = $httpOptions;
+
+        return $this;
     }
 
     /**
      * Convert response.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @param ResponseInterface $response
      *
      * @return array|string
      */

@@ -16,13 +16,10 @@ class PosGateway extends Gateway
      * @author yansongda <me@yansongda.cn>
      *
      * @param string $endpoint
-     * @param array  $payload
      *
      * @throws GatewayException
      * @throws InvalidArgumentException
      * @throws InvalidSignException
-     *
-     * @return Collection
      */
     public function pay($endpoint, array $payload): Collection
     {
@@ -30,7 +27,7 @@ class PosGateway extends Gateway
 
         $payload['sign'] = Support::generateSign($payload);
 
-        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Wechat', 'Pos', $endpoint, $payload));
+        Events::dispatch(new Events\PayStarted('Wechat', 'Pos', $endpoint, $payload));
 
         return Support::requestApi('pay/micropay', $payload);
     }
@@ -39,8 +36,6 @@ class PosGateway extends Gateway
      * Get trade type config.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
      */
     protected function getTradeType(): string
     {
