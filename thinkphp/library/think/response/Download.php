@@ -19,7 +19,7 @@ class Download extends Response
     protected $expire = 360;
     protected $name;
     protected $mimeType;
-    protected $isContent = false;
+    protected $isContent     = false;
     protected $openinBrowser = false;
     /**
      * 处理数据
@@ -34,7 +34,9 @@ class Download extends Response
             throw new Exception('file not exists:' . $data);
         }
 
-        ob_end_clean();
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
 
         if (!empty($this->name)) {
             $name = $this->name;
@@ -141,7 +143,8 @@ class Download extends Response
      * @param  bool  $openinBrowser 是否在浏览器中显示文件
      * @return $this
      */
-    public function openinBrowser($openinBrowser) {
+    public function openinBrowser($openinBrowser)
+    {
         $this->openinBrowser = $openinBrowser;
         return $this;
     }
