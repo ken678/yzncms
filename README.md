@@ -118,5 +118,5 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 ## [版权信息]  
 YznCMS遵循[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0.html)开源协议发布，并允许商业使用。  
 本项目包含的第三方源码和二进制文件之版权信息另行标注。  
-版权所有Copyright © 2017-2022 by Yzncms (https://www.yzncms.com)  
+版权所有Copyright © 2017-2023 by Yzncms (https://www.yzncms.com)  
 All rights reserved。
