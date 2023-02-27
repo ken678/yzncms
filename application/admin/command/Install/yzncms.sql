@@ -275,7 +275,7 @@ INSERT INTO `yzn_menu` VALUES (28, '新增菜单', '', 14, 'admin', 'menu', 'add
 INSERT INTO `yzn_menu` VALUES (29, '编辑菜单', '', 14, 'admin', 'menu', 'edit','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (30, '删除菜单', '', 14, 'admin', 'menu', 'del','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (31, '批量更新', '', 14, 'admin', 'menu', 'multi','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (32, '附件上传', '', 23, 'admin', 'attachments', 'upload','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (32, '附件上传', '', 23, 'admin', 'ajax', 'upload','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (33, '附件删除', '', 23, 'admin', 'attachments', 'del','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (34, '编辑器附件', '', 23, 'admin', 'ueditor', 'run','', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (35, '图片列表', '', 23, 'admin', 'attachments', 'showFileLis','', '', 0, '', 0, 0);
