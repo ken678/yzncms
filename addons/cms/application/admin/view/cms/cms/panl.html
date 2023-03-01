@@ -1,10 +1,5 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<style type="text/css">
-.layui-btn-group .layui-btn {
-    margin-right: 5px!important;border-radius: 2px;border-left: none;
-}
-</style>
 <div class="layui-row layui-col-space10 panel_box">
     <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="javascript:;">
@@ -59,15 +54,17 @@
             <div class="layui-card-body">
                 <div class="layui-btn-group">
                     <button class="layui-btn layui-btn-sm btn-refresh yzn-btn-primary"><i class="iconfont icon-shuaxin1"></i> </button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="1">今天</button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="2">最近7天</button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="3">最近30天</button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="4">上月</button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="5">本月</button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm btn-time" data-type="6">今年</button>
-                    <div class="layui-input-inline">
-                       <input type="text" class="layui-input" id="datatime" placeholder="请选择日期范围" style="width: 300px;height: 30px;line-height: 30px;font-size: 14px;">
-                    </div>
+                </div>
+                <div class="layui-btn-group">
+                    <button class="layui-btn  layui-btn-sm btn-time" data-type="1">今天</button>
+                    <button class="layui-btn layui-btn-primary layui-border-green layui-btn-sm btn-time" data-type="2">最近7天</button>
+                    <button class="layui-btn layui-btn-primary layui-border-green layui-btn-sm btn-time" data-type="3">最近30天</button>
+                    <button class="layui-btn layui-btn-primary layui-border-green layui-btn-sm btn-time" data-type="4">上月</button>
+                    <button class="layui-btn layui-btn-primary layui-border-green layui-btn-sm btn-time" data-type="5">本月</button>
+                    <button class="layui-btn layui-btn-primary layui-border-green layui-btn-sm btn-time" data-type="6">今年</button>
+                </div>
+                <div class="layui-btn-group">
+                    <input type="text" class="layui-input" id="datatime" placeholder="请选择日期范围" style="width: 300px;height: 30px;line-height: 30px;font-size: 14px;">
                 </div>
                 <div id="echarts-records" style="height:400px;width:100%;margin-top:15px;"></div>
             </div>
@@ -130,6 +127,7 @@ layui.use(['jquery','echarts','laydate','yzn'], function() {
 
     //点击按钮
     $(document).on("click", ".btn-time", function () {
+        $(this).removeClass('layui-btn-primary layui-border-green').siblings().addClass('layui-btn-primary layui-border-green');
         var type=$(this).data('type');
         switch(type) {
              case 1:
