@@ -89,6 +89,8 @@ class CmsTagLib
         $data['where'] = isset($data['where']) ? $data['where'] . " AND `status`=1" : "`status`=1";
         if (!isset($data['limit'])) {
             $data['limit'] = 0 == (int) $data['num'] ? 10 : (int) $data['num'];
+        } else {
+            $data['limit'] = !is_numeric($data['limit']) && $data['page'] ? 10 : $data['limit'];
         }
         if (empty($data['order'])) {
             $data['order'] = ['updatetime' => 'DESC', 'id' => 'DESC'];

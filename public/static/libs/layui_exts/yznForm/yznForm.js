@@ -476,6 +476,17 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     })
                 }
             },
+            cxselect: function (layform) {
+                //绑定cxselect元素事件
+                if ($("[data-toggle='cxselect']", layform).length > 0) {
+                    layui.define('cxselect', function (exports) {
+                        $.cxSelect.defaults.jsonName = 'name';
+                        $.cxSelect.defaults.jsonValue = 'value';
+                        $.cxSelect.defaults.jsonSpace = 'data';
+                        $("[data-toggle='cxselect']", layform).cxSelect();
+                    });
+                }
+            },
             citypicker: function(layform) {
                 // 绑定城市选择组件
                 if ($("[data-toggle='city-picker']", layform).size() > 0) {
@@ -564,11 +575,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                                 initialFrameHeight: 400, //初始化编辑器高度,默认320
                                 autoHeightEnabled: false, //是否自动长高
                                 maximumWords: 50000, //允许的最大字符数
-                                serverUrl: GV.ueditor_upload_url,
+                                serverUrl: GV.image_upload_url+'?from=ueditor',
                             });
                             $('#' + ueditor_name + 'grabimg',layform).click(function() {
                                 var con = ueditors[ueditor_name].getContent();
-                                $.post('/attachment/Attachments/geturlfile', { 'content': con, 'type': 'images' },
+                                $.post('/admin/Attachments/geturlfile', { 'content': con, 'type': 'images' },
                                     function(data) {
                                         ueditors[ueditor_name].setContent(data);
                                         layer.msg("图片本地化完成", { icon: 1 });
@@ -648,7 +659,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                         shade: false,
                         area: [$(window).width() > 880 ? '880px' : '95%', $(window).height() > 600 ? '600px' : '95%'],
                         title: '图片裁剪',
-                        content: '/attachment/Attachments/cropper?url=' + image,
+                        content: '/admin/Attachments/cropper?url=' + image,
                         success: function(layero, index) {
                             $(layero).data("arr", [inputId, image]);
                         }
@@ -914,6 +925,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
             events.selectpage(form);
             events.faselect(form);
             events.fieldlist(form);
+            events.cxselect(form);
             events.citypicker(form);
             events.datetimepicker(form);
             events.tagsinput(form);

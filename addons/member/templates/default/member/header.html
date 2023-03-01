@@ -18,7 +18,6 @@
         'site':{$site|raw|json_encode},
         'image_upload_url': '{$image_upload_url ? $image_upload_url : url("member/ajax/upload", ["dir" => "images"])}',
         'file_upload_url': '{$file_upload_url ? $file_upload_url : url("member/ajax/upload", ["dir" => "files"])}',
-        'ueditor_upload_url': '{$ueditor_upload_url ? $ueditor_upload_url : url("member/ajax/upload", ["dir" => "images","from"=>"ueditor"])}',
         'profile_upload_url': '{$profile_upload_url ? $profile_upload_url : url("member/index/profile")}',
         'attachment_select_url': '{$attachment_select_url ? $attachment_select_url : url("member/attachments/select")}',
     };

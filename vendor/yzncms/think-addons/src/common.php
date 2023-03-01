@@ -317,6 +317,32 @@ function set_addon_info($name, $array)
 }
 
 /**
+ * 写入配置文件
+ * @param string  $name      插件名
+ * @param array   $config    配置数据
+ * @param boolean $writefile 是否写入配置文件
+ * @return bool
+ * @throws Exception
+ */
+function set_addon_config($name, $config, $writefile = true)
+{
+    $addon = get_addon_instance($name);
+    $addon->setAddonConfig($name, $config);
+    $fullconfig = get_addon_fullconfig($name);
+    foreach ($fullconfig as $k => &$v) {
+        if (isset($config[$v['name']])) {
+            $value      = $v['type'] !== 'array' && is_array($config[$v['name']]) ? implode(',', $config[$v['name']]) : $config[$v['name']];
+            $v['value'] = $value;
+        }
+    }
+    if ($writefile) {
+        // 写入配置文件
+        set_addon_fullconfig($name, $fullconfig);
+    }
+    return true;
+}
+
+/**
  * 写入配置文件.
  * @param  string  $name  插件名
  * @param  array  $array  配置数据

@@ -17,20 +17,17 @@ class ScanGateway extends Gateway
      * @author yansongda <me@yansongda.cn>
      *
      * @param string $endpoint
-     * @param array  $payload
      *
      * @throws GatewayException
      * @throws InvalidArgumentException
      * @throws InvalidSignException
-     *
-     * @return Collection
      */
     public function pay($endpoint, array $payload): Collection
     {
         $payload['spbill_create_ip'] = Request::createFromGlobals()->server->get('SERVER_ADDR');
         $payload['trade_type'] = $this->getTradeType();
 
-        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Wechat', 'Scan', $endpoint, $payload));
+        Events::dispatch(new Events\PayStarted('Wechat', 'Scan', $endpoint, $payload));
 
         return $this->preOrder($payload);
     }
@@ -39,8 +36,6 @@ class ScanGateway extends Gateway
      * Get trade type config.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
      */
     protected function getTradeType(): string
     {

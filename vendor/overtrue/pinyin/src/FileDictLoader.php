@@ -13,9 +13,6 @@ namespace Overtrue\Pinyin;
 
 use Closure;
 
-/**
- * Dict File loader.
- */
 class FileDictLoader implements DictLoaderInterface
 {
     /**
@@ -50,7 +47,7 @@ class FileDictLoader implements DictLoaderInterface
     public function map(Closure $callback)
     {
         for ($i = 0; $i < 100; ++$i) {
-            $segment = $this->path.'/'.sprintf($this->segmentName, $i);
+            $segment = $this->path . '/' . sprintf($this->segmentName, $i);
 
             if (file_exists($segment)) {
                 $dictionary = (array) include $segment;
@@ -66,7 +63,7 @@ class FileDictLoader implements DictLoaderInterface
      */
     public function mapSurname(Closure $callback)
     {
-        $surnames = $this->path.'/surnames';
+        $surnames = $this->path . '/surnames';
 
         if (file_exists($surnames)) {
             $dictionary = (array) include $surnames;

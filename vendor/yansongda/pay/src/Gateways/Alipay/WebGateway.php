@@ -4,11 +4,12 @@ namespace Yansongda\Pay\Gateways\Alipay;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Yansongda\Pay\Contracts\GatewayInterface;
 use Yansongda\Pay\Events;
+use Yansongda\Pay\Exceptions\InvalidArgumentException;
 use Yansongda\Pay\Exceptions\InvalidConfigException;
+use Yansongda\Pay\Gateways\Alipay;
 
-class WebGateway implements GatewayInterface
+class WebGateway extends Gateway
 {
     /**
      * Pay an order.
@@ -16,11 +17,9 @@ class WebGateway implements GatewayInterface
      * @author yansongda <me@yansongda.cn>
      *
      * @param string $endpoint
-     * @param array  $payload
      *
      * @throws InvalidConfigException
-     *
-     * @return Response
+     * @throws InvalidArgumentException
      */
     public function pay($endpoint, array $payload): Response
     {
@@ -30,12 +29,14 @@ class WebGateway implements GatewayInterface
         $method = $biz_array['http_method'] ?? 'POST';
 
         unset($biz_array['http_method']);
-
+        if ((Alipay::MODE_SERVICE === $this->mode) && (!empty(Support::getInstance()->pid))) {
+            $biz_array['extend_params'] = is_array($biz_array['extend_params']) ? array_merge(['sys_service_provider_id' => Support::getInstance()->pid], $biz_array['extend_params']) : ['sys_service_provider_id' => Support::getInstance()->pid];
+        }
         $payload['method'] = $this->getMethod();
         $payload['biz_content'] = json_encode($biz_array);
         $payload['sign'] = Support::generateSign($payload);
 
-        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Alipay', 'Web/Wap', $endpoint, $payload));
+        Events::dispatch(new Events\PayStarted('Alipay', 'Web/Wap', $endpoint, $payload));
 
         return $this->buildPayHtml($endpoint, $payload, $method);
     }
@@ -46,13 +47,11 @@ class WebGateway implements GatewayInterface
      * @author yansongda <me@yansongda.cn>
      *
      * @param $order
-     *
-     * @return array
      */
     public function find($order): array
     {
         return [
-            'method'      => 'alipay.trade.query',
+            'method' => 'alipay.trade.query',
             'biz_content' => json_encode(is_array($order) ? $order : ['out_trade_no' => $order]),
         ];
     }
@@ -65,13 +64,11 @@ class WebGateway implements GatewayInterface
      * @param string $endpoint
      * @param array  $payload
      * @param string $method
-     *
-     * @return Response
      */
     protected function buildPayHtml($endpoint, $payload, $method = 'POST'): Response
     {
-        if (strtoupper($method) === 'GET') {
-            return RedirectResponse::create($endpoint.'?'.http_build_query($payload));
+        if ('GET' === strtoupper($method)) {
+            return new RedirectResponse($endpoint.'&'.http_build_query($payload));
         }
 
         $sHtml = "<form id='alipay_submit' name='alipay_submit' action='".$endpoint."' method='".$method."'>";
@@ -82,15 +79,13 @@ class WebGateway implements GatewayInterface
         $sHtml .= "<input type='submit' value='ok' style='display:none;'></form>";
         $sHtml .= "<script>document.forms['alipay_submit'].submit();</script>";
 
-        return Response::create($sHtml);
+        return new Response($sHtml);
     }
 
     /**
      * Get method config.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
      */
     protected function getMethod(): string
     {
@@ -101,8 +96,6 @@ class WebGateway implements GatewayInterface
      * Get productCode config.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
      */
     protected function getProductCode(): string
     {

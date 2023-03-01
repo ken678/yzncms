@@ -525,6 +525,9 @@ class Cms extends Adminbase
             //更新栏目缓存
             cache('Category', null);
             getCategory($id, '', true);
+            $data = Db::name($tableName)->where('id', $id)->find();
+            //标签
+            hook('content_edit_end', $data);
             $this->success('操作成功！');
         } else {
             $this->error('操作失败！');

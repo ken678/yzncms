@@ -18,17 +18,14 @@ class TransferGateway extends Gateway
      * @author yansongda <me@yansongda.cn>
      *
      * @param string $endpoint
-     * @param array  $payload
      *
      * @throws GatewayException
      * @throws InvalidArgumentException
      * @throws InvalidSignException
-     *
-     * @return Collection
      */
     public function pay($endpoint, array $payload): Collection
     {
-        if ($this->mode === Wechat::MODE_SERVICE) {
+        if (Wechat::MODE_SERVICE === $this->mode) {
             unset($payload['sub_mch_id'], $payload['sub_appid']);
         }
 
@@ -37,7 +34,7 @@ class TransferGateway extends Gateway
         $payload['mch_appid'] = Support::getInstance()->getConfig($type, '');
         $payload['mchid'] = $payload['mch_id'];
 
-        if (php_sapi_name() !== 'cli' && !isset($payload['spbill_create_ip'])) {
+        if ('cli' !== php_sapi_name() && !isset($payload['spbill_create_ip'])) {
             $payload['spbill_create_ip'] = Request::createFromGlobals()->server->get('SERVER_ADDR');
         }
 
@@ -46,7 +43,7 @@ class TransferGateway extends Gateway
 
         $payload['sign'] = Support::generateSign($payload);
 
-        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Wechat', 'Transfer', $endpoint, $payload));
+        Events::dispatch(new Events\PayStarted('Wechat', 'Transfer', $endpoint, $payload));
 
         return Support::requestApi(
             'mmpaymkttransfers/promotion/transfers',
@@ -61,15 +58,13 @@ class TransferGateway extends Gateway
      * @author yansongda <me@yansongda.cn>
      *
      * @param $order
-     *
-     * @return array
      */
     public function find($order): array
     {
         return [
             'endpoint' => 'mmpaymkttransfers/gettransferinfo',
-            'order'    => is_array($order) ? $order : ['partner_trade_no' => $order],
-            'cert'     => true,
+            'order' => is_array($order) ? $order : ['partner_trade_no' => $order],
+            'cert' => true,
         ];
     }
 
@@ -77,8 +72,6 @@ class TransferGateway extends Gateway
      * Get trade type config.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
      */
     protected function getTradeType(): string
     {

@@ -1,0 +1,56 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">地区管理</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script>
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+        add_url: '{:url("add")}',
+        edit_url: '{:url("edit")}',
+        delete_url: '{:url("del")}',
+    };
+
+    table.render({
+        init: init,
+        toolbar: ['refresh', 'add', 'delete',[{
+            text: '更新地区数据',
+            title: '更新地区数据将导致现有的地区数据表重置，请谨慎操作<br>数据源采用高德地图行政区划数据<br>请在配置管理中配置高德地图”Web服务API”密钥（Key）<br>高德暂不支持台湾省的详细区划查询',
+            url: "{:url('refresh')}",
+            method: 'request',
+            class: 'layui-btn layui-btn-sm layui-btn-warm',
+            icon:'iconfont icon-shuaxin1',
+            extend: 'data-table="currentTable" confirm',
+        }]],
+        url: '{:url("index")}?order=asc',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'id', width: 80, title: 'ID' },
+                { field: 'pid', width: 80, title: '父ID' },
+                { field: 'level', width: 60, title: '等级' },
+                { field: 'name',width: 200, title: '名称'},
+                { field: 'pinyin', title: '拼音'},
+                { field: 'first',width: 80, title: '首字母'},
+                { field: 'zip',width: 200, title: '邮编'},
+                { field: 'lng', title: '经度'},
+                { field: 'lat', title: '纬度'},
+                { width: 90, title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}
+            ]
+        ],
+        page: {}
+    });
+});
+</script>
+{/block}

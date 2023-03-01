@@ -40,12 +40,12 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * @access public
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->items);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return array_map(function ($value) {
             return ($value instanceof Model || $value instanceof self) ? $value->toArray() : $value;
@@ -146,7 +146,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function intersect($items, $indexKey = null)
     {
         if ($this->isEmpty() || is_scalar($this->items[0])) {
-            return new static(array_diff($this->items, $this->convertToArray($items)));
+            return new static(array_intersect($this->items, $this->convertToArray($items)));
         }
 
         $intersect  = [];
@@ -167,21 +167,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * 返回数组中所有的键名
      *
      * @access public
-     * @return array
+     * @return static
      */
     public function keys()
     {
-        $current = current($this->items);
-
-        if (is_scalar($current)) {
-            $array = $this->items;
-        } elseif (is_array($current)) {
-            $array = $current;
-        } else {
-            $array = $current->toArray();
-        }
-
-        return array_keys($array);
+        return new static(array_keys($this->items));
     }
 
     /**
@@ -234,16 +224,18 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * 在数组结尾插入一个元素
      * @access public
      * @param  mixed  $value
-     * @param  mixed  $key
-     * @return void
+     * @param  string $key   KEY
+     * @return $this
      */
-    public function push($value, $key = null)
+    public function push($value, string $key = null)
     {
         if (is_null($key)) {
             $this->items[] = $value;
         } else {
             $this->items[$key] = $value;
         }
+
+        return $this;
     }
 
     /**
@@ -269,16 +261,18 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * 在数组开头插入一个元素
      * @access public
      * @param mixed  $value
-     * @param mixed  $key
-     * @return void
+     * @param string $key   KEY
+     * @return $this
      */
-    public function unshift($value, $key = null)
+    public function unshift($value, string $key = null)
     {
         if (is_null($key)) {
             array_unshift($this->items, $value);
         } else {
             $this->items = [$key => $value] + $this->items;
         }
+
+        return $this;
     }
 
     /**
@@ -346,11 +340,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
 
         return $this->filter(function ($data) use ($field, $operator, $value) {
             if (strpos($field, '.')) {
-                list($field, $relation) = explode('.', $field);
+                [$field, $relation] = explode('.', $field);
 
-                $result = isset($data[$field][$relation]) ? $data[$field][$relation] : null;
+                $result = $data[$field][$relation] ?? null;
             } else {
-                $result = isset($data[$field]) ? $data[$field] : null;
+                $result = $data[$field] ?? null;
             }
 
             switch (strtolower($operator)) {
@@ -378,10 +372,10 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
                 case 'not in':
                     return is_scalar($result) && !in_array($result, $value, true);
                 case 'between':
-                    list($min, $max) = is_string($value) ? explode(',', $value) : $value;
+                    [$min, $max] = is_string($value) ? explode(',', $value) : $value;
                     return is_scalar($result) && $result >= $min && $result <= $max;
                 case 'not between':
-                    list($min, $max) = is_string($value) ? explode(',', $value) : $value;
+                    [$min, $max] = is_string($value) ? explode(',', $value) : $value;
                     return is_scalar($result) && $result > $max || $result < $min;
                 case '==':
                 case '=':
@@ -435,11 +429,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function order($field, $order = null, $intSort = true)
     {
         return $this->sort(function ($a, $b) use ($field, $order, $intSort) {
-            $fieldA = isset($a[$field]) ? $a[$field] : null;
-            $fieldB = isset($b[$field]) ? $b[$field] : null;
+            $fieldA = $a[$field] ?? null;
+            $fieldB = $b[$field] ?? null;
 
             if ($intSort) {
-                return 'desc' == strtolower($order) ? $fieldB >= $fieldA : $fieldA >= $fieldB;
+                return 'desc' == strtolower($order) ? intval($fieldB > $fieldA) : intval($fieldA > $fieldB);
             } else {
                 return 'desc' == strtolower($order) ? strcmp($fieldB, $fieldA) : strcmp($fieldA, $fieldB);
             }
@@ -476,7 +470,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     // ArrayAccess
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->items);
     }
@@ -501,7 +495,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     //Countable
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
@@ -524,7 +518,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * @param  integer $options json参数
      * @return string
      */
-    public function toJson($options = JSON_UNESCAPED_UNICODE)
+    public function toJson($options = JSON_UNESCAPED_UNICODE): string
     {
         return json_encode($this->toArray(), $options);
     }
@@ -541,7 +535,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * @param  mixed $items
      * @return array
      */
-    protected function convertToArray($items)
+    protected function convertToArray($items): array
     {
         if ($items instanceof self) {
             return $items->all();

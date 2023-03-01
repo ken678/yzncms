@@ -25,22 +25,19 @@ interface GatewayApplicationInterface
      * @author yansongda <me@yansongda.cn>
      *
      * @param string|array $order
-     * @param string       $type
      *
      * @return Collection
      */
-    public function find($order, $type);
+    public function find($order, string $type);
 
     /**
      * Refund an order.
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param array $order
-     *
      * @return Collection
      */
-    public function refund($order);
+    public function refund(array $order);
 
     /**
      * Cancel an order.
@@ -69,12 +66,11 @@ interface GatewayApplicationInterface
      *
      * @author yansongda <me@yansongda.cn>
      *
-     * @param string|null $content
-     * @param bool        $refund
+     * @param string|array|null $content
      *
      * @return Collection
      */
-    public function verify($content, $refund);
+    public function verify($content, bool $refund);
 
     /**
      * Echo success to server.

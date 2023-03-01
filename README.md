@@ -1,8 +1,9 @@
 # YznCMS 后台开发框架
 ### 后端基于thinkphp5.1框架,前端基于Layui2.7.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
 
-[![YznCMS](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
-[![YznCMS](https://img.shields.io/badge/YznCMS-1.1.2-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
+[![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
+[![Version](https://img.shields.io/badge/YznCMS-1.1.3-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -41,6 +42,7 @@
 |邮箱发送|采用phpmailer的方式发送邮件|免费|
 |消息队列|基于think-queue的队列|免费|
 |快递查询插件|支持阿里云,聚合数据,快递100,快递鸟快递查询|免费|
+|地区插件|省市区三级联动|免费|
 |cms小程序|传统的cms展示类型小程序|授权|
 |即时通讯|类似百度商桥，快商通之类的客服多坐席即时聊天工具|授权|
 |评论插件|类似多说，一段JS即可调用的强大评论|授权|
@@ -57,6 +59,8 @@
 |H5设计|H5端一键DIY拖拽式布局插件(支持各种小程序)|授权|
 |行为验证码|基于AJ-Captcha行为验证码，包含滑动拼图、文字点选两种方式|授权|
 |礼品卡提货系统|适用于公司节日福利发放礼品卡,大闸蟹等凭卡提货系统|授权|
+|IP归属地查询|根据IP离线定位库和高德API查询所属地|授权|
+|百度统计插件|免去百度登录，将百度统计接口集成至后台|授权|
 
 ## [项目介绍]
 YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
@@ -67,7 +71,7 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 
 ## [环境要求]
 - WEB服务器：IIS/Apache/Nginx
-- PHP版本：php >= 7.0（支持8.0,推荐7.1）
+- PHP版本：php >= 7.1（支持8.0,推荐7.3）
 - 数据库：MySQL >= 5.6
 
 
@@ -115,5 +119,5 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 ## [版权信息]  
 YznCMS遵循[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0.html)开源协议发布，并允许商业使用。  
 本项目包含的第三方源码和二进制文件之版权信息另行标注。  
-版权所有Copyright © 2017-2022 by Yzncms (https://www.yzncms.com)  
+版权所有Copyright © 2017-2023 by Yzncms (https://www.yzncms.com)  
 All rights reserved。

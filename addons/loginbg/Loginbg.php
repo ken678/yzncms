@@ -35,7 +35,7 @@ class Loginbg extends Addons
         $config = $this->getAddonConfig();
         if ($config['mode'] == 'random' || $config['mode'] == 'daily') {
             $gettime     = $config['mode'] == 'random' ? mt_rand(-1, 7) : 0;
-            $json_string = file_get_contents('https://www.bing.com/HPImageArchive.aspx?format=js&idx=' . $gettime . '&n=1');
+            $json_string = file_get_contents('http://cn.bing.com/HPImageArchive.aspx?format=js&idx=' . $gettime . '&n=1');
             $data        = json_decode($json_string);
             $background  = "https://www.bing.com" . $data->{"images"}[0]->{"urlbase"} . "_1920x1080.jpg";
         } else {

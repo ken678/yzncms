@@ -20,45 +20,40 @@ class AppGateway extends Gateway
      * @author yansongda <me@yansongda.cn>
      *
      * @param string $endpoint
-     * @param array  $payload
      *
      * @throws GatewayException
      * @throws InvalidArgumentException
      * @throws InvalidSignException
      * @throws Exception
-     *
-     * @return Response
      */
     public function pay($endpoint, array $payload): Response
     {
         $payload['appid'] = Support::getInstance()->appid;
         $payload['trade_type'] = $this->getTradeType();
 
-        if ($this->mode === Wechat::MODE_SERVICE) {
+        if (Wechat::MODE_SERVICE === $this->mode) {
             $payload['sub_appid'] = Support::getInstance()->sub_appid;
         }
 
         $pay_request = [
-            'appid'     => $this->mode === Wechat::MODE_SERVICE ? $payload['sub_appid'] : $payload['appid'],
-            'partnerid' => $this->mode === Wechat::MODE_SERVICE ? $payload['sub_mch_id'] : $payload['mch_id'],
-            'prepayid'  => $this->preOrder($payload)->get('prepay_id'),
+            'appid' => Wechat::MODE_SERVICE === $this->mode ? $payload['sub_appid'] : $payload['appid'],
+            'partnerid' => Wechat::MODE_SERVICE === $this->mode ? $payload['sub_mch_id'] : $payload['mch_id'],
+            'prepayid' => $this->preOrder($payload)->get('prepay_id'),
             'timestamp' => strval(time()),
-            'noncestr'  => Str::random(),
-            'package'   => 'Sign=WXPay',
+            'noncestr' => Str::random(),
+            'package' => 'Sign=WXPay',
         ];
         $pay_request['sign'] = Support::generateSign($pay_request);
 
-        Events::dispatch(Events::PAY_STARTED, new Events\PayStarted('Wechat', 'App', $endpoint, $pay_request));
+        Events::dispatch(new Events\PayStarted('Wechat', 'App', $endpoint, $pay_request));
 
-        return JsonResponse::create($pay_request);
+        return new JsonResponse($pay_request);
     }
 
     /**
      * Get trade type config.
      *
      * @author yansongda <me@yansongda.cn>
-     *
-     * @return string
      */
     protected function getTradeType(): string
     {
