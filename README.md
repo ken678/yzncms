@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
 [![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
-[![Version](https://img.shields.io/badge/YznCMS-1.1.2-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-1.1.3-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -60,6 +60,7 @@
 |行为验证码|基于AJ-Captcha行为验证码，包含滑动拼图、文字点选两种方式|授权|
 |礼品卡提货系统|适用于公司节日福利发放礼品卡,大闸蟹等凭卡提货系统|授权|
 |IP归属地查询|根据IP离线定位库和高德API查询所属地|授权|
+|百度统计插件|免去百度登录，将百度统计接口集成至后台|授权|
 
 ## [项目介绍]
 YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
