@@ -60,25 +60,36 @@ class Models extends Modelbase
         });
         //编辑
         self::beforeUpdate(function ($row) {
-            $setting['category_template'] = $row->category_template;
-            $setting['list_template']     = $row->list_template;
-            $setting['show_template']     = $row->show_template;
-            $row['setting']               = serialize($setting);
-
-            $info = null;
-            try {
-                $info = Db::name($row['tablename'])->getPk();
-            } catch (\Exception $e) {
+            $changedData = $row->getChangedData();
+            $setting     = [];
+            if (isset($changedData['category_template'])) {
+                $setting['category_template'] = $row->category_template;
             }
-            if ($info) {
-                throw new Exception("数据表已经存在");
+            if (isset($changedData['list_template'])) {
+                $setting['list_template'] = $row->list_template;
             }
-            try {
-                $info = Db::name($row['tablename'] . self::$ext_table)->getPk();
-            } catch (\Exception $e) {
+            if (isset($changedData['show_template'])) {
+                $setting['show_template'] = $row->show_template;
             }
-            if ($info) {
-                throw new Exception("数据表已经存在");
+            if ($setting) {
+                $row['setting'] = serialize($setting);
+            }
+            if (isset($changedData['tablename'])) {
+                $info = null;
+                try {
+                    $info = Db::name($row['tablename'])->getPk();
+                } catch (\Exception $e) {
+                }
+                if ($info) {
+                    throw new Exception("数据表已经存在");
+                }
+                try {
+                    $info = Db::name($row['tablename'] . self::$ext_table)->getPk();
+                } catch (\Exception $e) {
+                }
+                if ($info) {
+                    throw new Exception("数据表已经存在");
+                }
             }
         });
         self::afterUpdate(function ($row) {
