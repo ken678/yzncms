@@ -27,11 +27,13 @@ class Models extends Modelbase
 {
 
     protected $name               = 'model';
-    protected $ext_table          = '_data';
     protected $autoWriteTimestamp = true;
+
+    protected static $ext_table = '_data';
 
     protected static function init()
     {
+        //添加
         self::beforeInsert(function ($row) {
             $setting['category_template'] = $row->category_template;
             $setting['list_template']     = $row->list_template;
@@ -53,6 +55,27 @@ class Models extends Modelbase
             //创建模型表和模型字段
             if (self::createTable($row)) {
                 self::addFieldRecord($row['id'], $row['type']);
+            }
+        });
+        //删除
+        self::beforeDelete(function ($row) {
+            $exist = Category::where('modelid', $row['id'])->find();
+            if ($exist) {
+                throw new Exception("该模型使用中，删除栏目后再删除！");
+            }
+        });
+        self::afterDelete(function ($row) {
+            cache("Model", null);
+            cache('ModelField', null);
+            //删除所有和这个模型相关的字段
+            Db::name("ModelField")->where("modelid", $row['id'])->delete();
+            //删除主表
+            $table_name = Config::get("database.prefix") . $row['tablename'];
+            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
+            if ((int) $row['type'] == 2) {
+                //删除副表
+                $table_name .= self::$ext_table;
+                Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
             }
         });
     }
@@ -109,34 +132,6 @@ class Models extends Modelbase
     }
 
     /**
-     * 根据模型ID删除模型
-     * @param type $id 模型id
-     * @return boolean
-     */
-    public function deleteModel($id)
-    {
-        $modeldata = self::where("id", $id)->find();
-        if (!$modeldata) {
-            throw new \Exception('要删除的模型不存在！');
-        }
-        //删除模型数据
-        self::destroy($id);
-        //更新缓存
-        cache("Model", null);
-        //删除所有和这个模型相关的字段
-        Db::name("ModelField")->where("modelid", $id)->delete();
-        //删除主表
-        $table_name = Config::get("database.prefix") . $modeldata['tablename'];
-        Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
-        if ((int) $modeldata['type'] == 2) {
-            //删除副表
-            $table_name .= $this->ext_table;
-            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
-        }
-        return true;
-    }
-
-    /**
      * 创建内容模型
      */
     public static function createTable($data)
@@ -169,9 +164,10 @@ EOF;
 
         $res = Db::execute($sql);
         if ($data['type'] == 2) {
+            $table = $table . self::$ext_table;
             // 新建附属表
             $sql = <<<EOF
-                CREATE TABLE `{$table}{$this->ext_table}` (
+                CREATE TABLE `{$table}` (
                 `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
                 `content` mediumtext COLLATE utf8_unicode_ci COMMENT '内容',
                 PRIMARY KEY (`did`)

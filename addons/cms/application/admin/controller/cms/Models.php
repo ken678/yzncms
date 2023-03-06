@@ -16,7 +16,6 @@ namespace app\admin\controller\cms;
 
 use app\admin\model\cms\Models as ModelsModel;
 use app\common\controller\Adminbase;
-use think\Db;
 use think\facade\Cache;
 
 class Models extends Adminbase
@@ -76,24 +75,6 @@ class Models extends Adminbase
             $this->assign("data", $data);
             return $this->fetch();
         }
-    }
-
-    //模型删除
-    public function del()
-    {
-        $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        //检查该模型是否已经被使用
-        $r = Db::name("category")->where("modelid", $id)->find();
-        if ($r) {
-            $this->error("该模型使用中，删除栏目后再删除！");
-        }
-        try {
-            $this->modelClass->deleteModel($id);
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-        }
-        $this->success("删除成功！", url("index"));
     }
 
     public function multi()
