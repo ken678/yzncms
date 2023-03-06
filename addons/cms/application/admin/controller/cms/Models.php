@@ -50,33 +50,6 @@ class Models extends Adminbase
         return $this->fetch();
     }
 
-    //模型修改
-    public function edit()
-    {
-        if ($this->request->isPost()) {
-            $data   = $this->request->post();
-            $result = $this->validate($data, 'app\admin\validate\cms\Models');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            try {
-                $this->modelClass->editModel($data);
-                //更新缓存
-                cache("Model", null);
-                Cache::set('getModel_' . $data['id'], '');
-            } catch (\Exception $e) {
-                $this->error($e->getMessage());
-            }
-            $this->success('模型修改成功！', url('index'));
-        } else {
-            $id              = $this->request->param('id/d', 0);
-            $data            = $this->modelClass->where("id", $id)->find();
-            $data['setting'] = unserialize($data['setting']);
-            $this->assign("data", $data);
-            return $this->fetch();
-        }
-    }
-
     public function multi()
     {
         $id    = $this->request->param('id/d', 0);

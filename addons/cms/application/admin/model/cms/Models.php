@@ -17,6 +17,7 @@ namespace app\admin\model\cms;
 use app\common\model\Modelbase;
 use think\Db;
 use think\Exception;
+use think\facade\Cache;
 use think\facade\Config;
 use think\Model;
 
@@ -50,11 +51,51 @@ class Models extends Modelbase
             }
         });
         self::afterInsert(function ($row) {
-            cache("Model", null);
-            cache('ModelField', null);
+            cache::set("Model", null);
+            cache::set('ModelField', null);
             //创建模型表和模型字段
             if (self::createTable($row)) {
                 self::addFieldRecord($row['id'], $row['type']);
+            }
+        });
+        //编辑
+        self::beforeUpdate(function ($row) {
+            $setting['category_template'] = $row->category_template;
+            $setting['list_template']     = $row->list_template;
+            $setting['show_template']     = $row->show_template;
+            $row['setting']               = serialize($setting);
+
+            $info = null;
+            try {
+                $info = Db::name($row['tablename'])->getPk();
+            } catch (\Exception $e) {
+            }
+            if ($info) {
+                throw new Exception("数据表已经存在");
+            }
+            try {
+                $info = Db::name($row['tablename'] . self::$ext_table)->getPk();
+            } catch (\Exception $e) {
+            }
+            if ($info) {
+                throw new Exception("数据表已经存在");
+            }
+        });
+        self::afterUpdate(function ($row) {
+            //更新缓存
+            cache::set("Model", null);
+            cache::set('ModelField', null);
+            Cache::set('getModel_' . $row['id'], '');
+            $changedData = $row->getChangedData();
+            if (isset($changedData['tablename'])) {
+                //表前缀
+                $dbPrefix = Config::get("database.prefix");
+                //表名更改
+                Db::execute("RENAME TABLE  `{$dbPrefix}{$row->getOrigin('tablename')}` TO  `{$dbPrefix}{$changedData['tablename']}` ;");
+                //修改副表
+                if ($row['type'] == 2) {
+                    Db::execute("RENAME TABLE  `{$dbPrefix}{$row->getOrigin('tablename')}_data` TO  `{$dbPrefix}{$changedData['tablename']}_data` ;");
+                }
             }
         });
         //删除
@@ -65,8 +106,8 @@ class Models extends Modelbase
             }
         });
         self::afterDelete(function ($row) {
-            cache("Model", null);
-            cache('ModelField', null);
+            cache::set("Model", null);
+            cache::set('ModelField', null);
             //删除所有和这个模型相关的字段
             Db::name("ModelField")->where("modelid", $row['id'])->delete();
             //删除主表
@@ -80,55 +121,9 @@ class Models extends Modelbase
         });
     }
 
-    /**
-     * 编辑模型
-     * @param type $data 提交数据
-     * @return boolean
-     */
-    public function editModel($data, $modelid = 0)
+    public function getSettingAttr($value, $data)
     {
-        if (empty($data)) {
-            throw new \Exception('数据不得为空！');
-        }
-        //模型ID
-        $modelid = $modelid ? $modelid : (int) $data['id'];
-        if (!$modelid) {
-            throw new \Exception('模型ID不能为空！');
-        }
-        //查询模型数据
-        $info = self::where(array("id" => $modelid))->find();
-        if (empty($info)) {
-            throw new \Exception('该模型不存在！');
-        }
-        $data['modelid'] = $modelid;
-        $data['setting'] = serialize($data['setting']);
-
-        //是否更改表名
-        if ($info['tablename'] != $data['tablename'] && !empty($data['tablename'])) {
-            //检查新表名是否存在
-            if ($this->table_exists($data['tablename']) || $this->table_exists($data['tablename'] . '_data')) {
-                throw new \Exception('该表名已经存在！');
-            }
-            if (false !== $this->allowField(true)->save($data, array("modelid" => $modelid))) {
-                //表前缀
-                $dbPrefix = Config::get("database.prefix");
-                //表名更改
-                Db::execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}` TO  `{$dbPrefix}{$data['tablename']}` ;");
-                //修改副表
-                if ($info['type'] == 2) {
-                    Db::execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}_data` TO  `{$dbPrefix}{$data['tablename']}_data` ;");
-                }
-                return true;
-            } else {
-                throw new \Exception('模型更新失败！');
-            }
-        } else {
-            if (false !== self::allowField(true)->save($data, array("modelid" => $modelid))) {
-                return true;
-            } else {
-                throw new \Exception('模型更新失败！');
-            }
-        }
+        return unserialize($value);
     }
 
     /**
