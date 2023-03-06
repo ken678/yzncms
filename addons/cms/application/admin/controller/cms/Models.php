@@ -21,7 +21,9 @@ use think\facade\Cache;
 
 class Models extends Adminbase
 {
-    protected $modelClass = null;
+    protected $modelClass    = null;
+    protected $modelValidate = true;
+
     protected function initialize()
     {
         parent::initialize();
@@ -47,26 +49,6 @@ class Models extends Adminbase
             return json(["code" => 0, "data" => $data]);
         }
         return $this->fetch();
-    }
-
-    //添加模型
-    public function add()
-    {
-        if ($this->request->isPost()) {
-            $data   = $this->request->post();
-            $result = $this->validate($data, 'app\admin\validate\cms\Models');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            try {
-                $this->modelClass->addModel($data);
-            } catch (\Exception $e) {
-                $this->error($e->getMessage());
-            }
-            $this->success('模型新增成功！', url('index'));
-        } else {
-            return $this->fetch();
-        }
     }
 
     //模型修改

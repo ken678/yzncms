@@ -16,6 +16,7 @@ namespace app\admin\model\cms;
 
 use app\common\model\Modelbase;
 use think\Db;
+use think\Exception;
 use think\facade\Config;
 use think\Model;
 
@@ -29,26 +30,31 @@ class Models extends Modelbase
     protected $ext_table          = '_data';
     protected $autoWriteTimestamp = true;
 
-    /**
-     * 创建模型
-     * @param type $data 提交数据
-     * @return boolean
-     */
-    public function addModel($data, $module = 'cms')
+    protected static function init()
     {
-        if (empty($data)) {
-            throw new \Exception('数据不得为空！');
-        }
-        $data['module']  = $module;
-        $data['setting'] = serialize($data['setting']);
-        //添加模型记录
-        if ($res = self::create($data)) {
-            cache("Model", null);
-            //创建模型表和模型字段
-            if ($this->createTable($data)) {
-                $this->addFieldRecord($res->id, $data['type']);
+        self::beforeInsert(function ($row) {
+            $setting['category_template'] = $row->category_template;
+            $setting['list_template']     = $row->list_template;
+            $setting['show_template']     = $row->show_template;
+            $row['setting']               = serialize($setting);
+            $row['module']                = 'cms';
+            $info                         = null;
+            try {
+                $info = Db::name($row['tablename'])->getPk();
+            } catch (\Exception $e) {
             }
-        }
+            if ($info) {
+                throw new Exception("数据表已经存在");
+            }
+        });
+        self::afterInsert(function ($row) {
+            cache("Model", null);
+            cache('ModelField', null);
+            //创建模型表和模型字段
+            if (self::createTable($row)) {
+                self::addFieldRecord($row['id'], $row['type']);
+            }
+        });
     }
 
     /**
@@ -133,14 +139,11 @@ class Models extends Modelbase
     /**
      * 创建内容模型
      */
-    protected function createTable($data)
+    public static function createTable($data)
     {
         $data['tablename'] = strtolower($data['tablename']);
         $table             = Config::get("database.prefix") . $data['tablename'];
-        if ($this->table_exists($data['tablename'])) {
-            throw new \Exception('创建失败！' . $table . '表已经存在~');
-        }
-        $sql = <<<EOF
+        $sql               = <<<EOF
                 CREATE TABLE `{$table}` (
                 `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
                 `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
@@ -182,7 +185,7 @@ EOF;
     /**
      * 添加默认字段
      */
-    protected function addFieldRecord($modelid, $type)
+    public static function addFieldRecord($modelid, $type)
     {
         $default = [
             'modelid'     => $modelid,
