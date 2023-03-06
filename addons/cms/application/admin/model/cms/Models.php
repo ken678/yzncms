@@ -189,12 +189,13 @@ EOF;
      */
     public static function addFieldRecord($modelid, $type)
     {
-        $default = [
+        $fieldsArr = [];
+        $default   = [
             'modelid'     => $modelid,
             'pattern'     => '',
             'errortips'   => '',
-            'create_time' => request()->time(),
-            'update_time' => request()->time(),
+            'create_time' => time(),
+            'update_time' => time(),
             'ifsystem'    => 1,
             'status'      => 1,
             'listorder'   => 100,
@@ -204,6 +205,7 @@ EOF;
             'isadd'       => 0,
             'iscore'      => 0,
             'ifrequire'   => 0,
+            'setting'     => null,
         ];
         $data = [
             [
@@ -358,9 +360,10 @@ EOF;
 
         }
         foreach ($data as $item) {
-            $item = array_merge($default, $item);
-            Db::name('model_field')->insert($item);
+            $fieldsArr[] = array_merge($default, $item);
+            //Db::name('model_field')->insert($item);
         }
+        Db::name('model_field')->insertAll($fieldsArr);
         return true;
     }
 
