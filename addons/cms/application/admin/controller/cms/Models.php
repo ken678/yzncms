@@ -16,7 +16,6 @@ namespace app\admin\controller\cms;
 
 use app\admin\model\cms\Models as ModelsModel;
 use app\common\controller\Adminbase;
-use think\facade\Cache;
 
 class Models extends Adminbase
 {
@@ -48,25 +47,5 @@ class Models extends Adminbase
             return json(["code" => 0, "data" => $data]);
         }
         return $this->fetch();
-    }
-
-    public function multi()
-    {
-        $id    = $this->request->param('id/d', 0);
-        $value = $this->request->param('value/d', 0);
-        try {
-            $row = $this->modelClass->find($id);
-            if (empty($row)) {
-                $this->error('数据不存在！');
-            }
-            $row->status = $value;
-            $row->save();
-            //更新缓存
-            cache("Model", null);
-            Cache::set('getModel_' . $id, '');
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-        }
-        $this->success("操作成功！");
     }
 }
