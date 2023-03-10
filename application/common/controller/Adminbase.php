@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\controller;
 
+use app\admin\model\AuthRule;
 use app\admin\service\User;
 use think\facade\Config;
 use think\facade\Hook;
