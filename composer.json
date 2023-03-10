@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "topthink/think-image": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "overtrue/pinyin": "~4.0",
