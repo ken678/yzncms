@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\common\controller;
 
-use app\common\controller\Base;
 use think\facade\Config;
 use think\facade\Hook;
 
