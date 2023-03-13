@@ -377,7 +377,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     });
                     return success === conditionArr.length;
                 };
-                layform.on("keyup change click configchange", "input,select", function() {
+                var formEach = function(){
                     $("[data-favisible][data-favisible!='']", layform).each(function() {
                         var visible = $(this).data("favisible");
                         var groupArr = visible.split(/\|\|/);
@@ -393,8 +393,22 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                             $(this).addClass("layui-hide");
                         }
                     });
+                }
+                layform.on("keyup change click configchange", "input,select", function() {
+                   formEach();
                 });
-
+                form.on('select', function(data){
+                   formEach();
+                });
+                form.on('checkbox', function(data){
+                   formEach();
+                });
+                form.on('switch', function(data){
+                   formEach();
+                });
+                form.on('radio', function(data){
+                   formEach();
+                });
                 //追加上忽略元素
                 setTimeout(function() {
                     layform.find('.layui-hide,[data-favisible]').find('[lay-verify]').removeAttr('lay-verify');
