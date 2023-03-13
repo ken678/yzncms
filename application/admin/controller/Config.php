@@ -100,7 +100,7 @@ class Config extends Adminbase
             $configList = ConfigModel::where('group', $group)
                 ->where('status', 1)
                 ->order('listorder,id desc')
-                ->column('name,title,remark,type,value,options');
+                ->column('name,title,remark,type,value,options,visible');
             foreach ($configList as &$value) {
                 $value['fieldArr'] = 'row';
                 if ($value['type'] == 'custom') {
