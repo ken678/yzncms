@@ -55,7 +55,7 @@ class Config extends Adminbase
     public function setting($group = 'base')
     {
         if ($this->request->isPost()) {
-            $data = $this->request->post('modelField/a');
+            $data = $this->request->post('row/a');
             // 查询该分组下所有的配置项名和类型
             $items = ConfigModel::where('group', $group)->where('status', 1)->column('name,type');
             foreach ($items as $name => $type) {
@@ -102,7 +102,7 @@ class Config extends Adminbase
                 ->order('listorder,id desc')
                 ->column('name,title,remark,type,value,options');
             foreach ($configList as &$value) {
-                $value['fieldArr'] = 'modelField';
+                $value['fieldArr'] = 'row';
                 if ($value['type'] == 'custom') {
                     if ($value['options'] != '') {
                         $tpar             = explode(".", $value['options'], 2);
