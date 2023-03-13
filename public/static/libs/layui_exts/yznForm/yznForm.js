@@ -307,6 +307,101 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     });
                 }
             },
+            favisible: function(layform) {
+                if ($("[data-favisible]", layform).length == 0) {
+                    return;
+                }
+                var checkCondition = function(condition) {
+                    var conditionArr = condition.split(/&&/);
+                    var success = 0;
+                    var baseregex = /^([a-z0-9\_]+)([>|<|=|\!]=?)(.*)$/i,
+                        strregex = /^('|")(.*)('|")$/,
+                        regregex = /^regex:(.*)$/;
+
+                    var operator_result = {
+                        '>': function(a, b) { return a > b; },
+                        '>=': function(a, b) { return a >= b; },
+                        '<': function(a, b) { return a < b; },
+                        '<=': function(a, b) { return a <= b; },
+                        '==': function(a, b) { return a == b; },
+                        '!=': function(a, b) { return a != b; },
+                        'in': function(a, b) { return b.split(/\,/).indexOf(a) > -1; },
+                        'regex': function(a, b) {
+                            var regParts = b.match(/^\/(.*?)\/([gim]*)$/);
+                            var regexp = regParts ? new RegExp(regParts[1], regParts[2]) : new RegExp(b);
+                            return regexp.test(a);
+                        }
+                    };
+
+                    var dataArr = layform.serializeArray(),
+                        dataObj = {},
+                        fieldName, fieldValue;
+                    $(dataArr).each(function(i, field) {
+                        fieldName = field.name;
+                        fieldValue = field.value;
+                        fieldName = fieldName.substr(-2) === '[]' ? fieldName.substr(0, fieldName.length - 2) : fieldName;
+                        dataObj[fieldName] = typeof dataObj[fieldName] !== 'undefined' ? [dataObj[fieldName], fieldValue].join(',') : fieldValue;
+                    });
+
+                    $.each(conditionArr, function(i, item) {
+                        var basematches = baseregex.exec(item);
+                        if (basematches) {
+                            var name = basematches[1],
+                                operator = basematches[2],
+                                value = basematches[3].toString();
+                            if (operator === '=') {
+                                var strmatches = strregex.exec(value);
+                                operator = strmatches ? '==' : 'in';
+                                value = strmatches ? strmatches[2] : value;
+                            }
+                            var regmatches = regregex.exec(value);
+                            if (regmatches) {
+                                operator = 'regex';
+                                value = regmatches[1];
+                            }
+                            var chkname = "row[" + name + "]";
+                            if (typeof dataObj[chkname] === 'undefined') {
+                                return false;
+                            }
+                            var objvalue = dataObj[chkname];
+                            if ($.isArray(objvalue)) {
+                                objvalue = dataObj[chkname].join(",");
+                            }
+                            if (['>', '>=', '<', '<='].indexOf(operator) > -1) {
+                                objvalue = parseFloat(objvalue);
+                                value = parseFloat(value);
+                            }
+                            var result = operator_result[operator](objvalue, value);
+                            success += (result ? 1 : 0);
+                        }
+                    });
+                    return success === conditionArr.length;
+                };
+                layform.on("keyup change click configchange", "input,select", function() {
+                    $("[data-favisible][data-favisible!='']", layform).each(function() {
+                        var visible = $(this).data("favisible");
+                        var groupArr = visible.split(/\|\|/);
+                        var success = 0;
+                        $.each(groupArr, function(i, j) {
+                            if (checkCondition(j)) {
+                                success++;
+                            }
+                        });
+                        if (success > 0) {
+                            $(this).removeClass("layui-hide");
+                        } else {
+                            $(this).addClass("layui-hide");
+                        }
+                    });
+                });
+
+                //追加上忽略元素
+                setTimeout(function() {
+                    layform.find('.layui-hide,[data-favisible]').find('[lay-verify]').removeAttr('lay-verify');
+                }, 0);
+
+                $("input,select", layform).trigger("configchange");
+            },
             fieldlist: function(layform) {
                 // 绑定fieldlist组件
                 if ($(".fieldlist",layform).size() > 0) {
@@ -931,6 +1026,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
             events.tagsinput(form);
             events.colorpicker(form);
             events.ueditor(form);
+            events.favisible(form);
             events.cropper();
             events.xmSelect();
             events.upload_image('.webUpload');
