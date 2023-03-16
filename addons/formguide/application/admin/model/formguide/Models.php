@@ -14,11 +14,11 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model\formguide;
 
-use app\admin\model\cms\Models as ModelsModel;
 use think\Db;
 use think\facade\Config;
+use think\Model;
 
-class Models extends ModelsModel
+class Models extends Model
 {
     protected $name               = 'model';
     protected $autoWriteTimestamp = true;
@@ -54,4 +54,31 @@ class Models extends ModelsModel
         }
     }
 
+    /**
+     * 根据模型ID删除模型
+     * @param type $id 模型id
+     * @return boolean
+     */
+    public function deleteModel($id)
+    {
+        $modeldata = self::where(array("id" => $id))->find();
+        if (!$modeldata) {
+            throw new \Exception('数据不存在！');
+        }
+        //删除模型数据
+        self::destroy($id);
+        //更新缓存
+        cache("Model", null);
+        //删除所有和这个模型相关的字段
+        Db::name("ModelField")->where("modelid", $id)->delete();
+        //删除主表
+        $table_name = Config::get("database.prefix") . $modeldata['tablename'];
+        Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
+        if ((int) $modeldata['type'] == 2) {
+            //删除副表
+            $table_name .= $this->ext_table;
+            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
+        }
+        return true;
+    }
 }
