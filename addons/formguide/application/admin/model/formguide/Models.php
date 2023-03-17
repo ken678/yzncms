@@ -36,12 +36,12 @@ class Models extends Model
             $setting['isverify']         = $row->isverify;
             $setting['show_template']    = $row->show_template;
 
-            $row['setting']   = serialize($setting);
-            $row['module']    = 'formguide';
-            $row['tablename'] = $row['tablename'] ? 'form_' . $row['tablename'] : '';
-            $info             = null;
+            $row['setting'] = serialize($setting);
+            $row['module']  = 'formguide';
+            //$row['tablename'] = $row['tablename'] ? 'form_' . $row['tablename'] : '';
+            $info = null;
             try {
-                $info = Db::name($row['tablename'])->getPk();
+                $info = Db::name('form_' . $row['tablename'])->getPk();
             } catch (\Exception $e) {
             }
             if ($info) {
@@ -54,7 +54,7 @@ class Models extends Model
 
             $prefix = Config::get("database.prefix");
             //创建模型表
-            $sql = "CREATE TABLE `{$prefix}{$row['tablename']}` (
+            $sql = "CREATE TABLE `{$prefix}form_{$row['tablename']}` (
                 `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
                 `uid` mediumint(8) unsigned NOT NULL,
                 `username` varchar(20) NOT NULL,
@@ -106,8 +106,8 @@ class Models extends Model
             //删除所有和这个模型相关的字段
             Db::name("ModelField")->where("modelid", $row['id'])->delete();
             //删除主表
-            $table_name = Config::get("database.prefix") . $row['tablename'];
-            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
+            $prefix = Config::get("database.prefix");
+            Db::execute("DROP TABLE IF EXISTS `{$prefix}form_{$row['tablename']}`");
         });
     }
 
@@ -115,9 +115,4 @@ class Models extends Model
     {
         return unserialize($value);
     }
-
-    /*public function getTableNameAttr($value, $data)
-{
-return str_replace("form_", "", $value);
-}*/
 }

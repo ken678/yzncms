@@ -14,9 +14,171 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model\formguide;
 
-use app\admin\model\cms\ModelField as ModelFieldModel;
+use think\Db;
+use think\Model;
 
-class ModelField extends ModelFieldModel
+class ModelField extends Model
 {
+    protected $autoWriteTimestamp = true;
+    protected $insert             = ['status' => 1];
 
+    //添加字段
+    public function addField($data = null)
+    {
+        $data['name'] = strtolower($data['name']);
+        //模型id
+        $modelid = $data['modelid'];
+        //完整表名获取
+        $tablename = $this->getModelTableName($modelid);
+        $tablename = config('database.prefix') . 'form_' . $tablename;
+        //判断字段名唯一性
+        if ($this->where('name', $data['name'])->where('modelid', $modelid)->value('id')) {
+            throw new \Exception("字段'" . $data['name'] . "`已经存在");
+        }
+
+        $data['isadd']     = isset($data['isadd']) ? intval($data['isadd']) : 0;
+        $data['ifrequire'] = isset($data['ifrequire']) ? intval($data['ifrequire']) : 0;
+        if ($data['ifrequire'] && !$data['isadd']) {
+            throw new \Exception('必填字段不可以隐藏！');
+        }
+
+        if ($data['setting']['value'] === '') {
+            $default = '';
+        } elseif (strstr(strtolower($data['setting']['define']), 'text') || strstr(strtolower($data['setting']['define']), 'blob')) {
+            $default = '';
+        } else {
+            $default = " DEFAULT '{$data['setting']['value']}'";
+        }
+
+        //先将字段存在设置的主表或附表里面 再将数据存入ModelField
+        $sql = <<<EOF
+            ALTER TABLE `{$tablename}`
+            ADD COLUMN `{$data['name']}` {$data['setting']['define']} {$default} COMMENT '{$data['title']}';
+EOF;
+        Db::execute($sql);
+        $fieldInfo = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
+
+        $data['status']             = isset($data['status']) ? intval($data['status']) : 0;
+        $data['iffixed']            = 0;
+        $data['setting']['options'] = $fieldInfo['ifoption'] ? $data['setting']['options'] : '';
+        //附加属性值
+        $data['setting'] = serialize($data['setting']);
+        $fieldid         = self::create($data, true);
+        if ($fieldid) {
+            //清理缓存
+            cache('ModelField', null);
+            return true;
+        } else {
+            //回滚
+            Db::execute("ALTER TABLE  `{$tablename}` DROP  `{$data['name']}`");
+            throw new \Exception('字段信息入库失败！');
+
+        }
+        return true;
+    }
+
+    /**
+     *  编辑字段
+     * @param type $data 编辑字段数据
+     * @param type $fieldid 字段id
+     * @return boolean
+     */
+    public function editField($data, $fieldid = 0)
+    {
+        $data['name'] = strtolower($data['name']);
+        if (!$fieldid && !isset($data['fieldid'])) {
+            throw new \Exception('缺少字段id！');
+        } else {
+            $fieldid = $fieldid ? $fieldid : (int) $data['fieldid'];
+        }
+        //原字段信息
+        $info = self::where("id", $fieldid)->find();
+        if (empty($info)) {
+            throw new \Exception('该字段不存在！');
+        }
+        //模型id
+        $data['modelid'] = $modelid = $info['modelid'];
+        //完整表名获取
+        $tablename = $this->getModelTableName($modelid);
+        $tablename = config('database.prefix') . 'form_' . $tablename;
+        //判断字段名唯一性
+        if ($this->where('name', $data['name'])->where('modelid', $modelid)->where('id', '<>', $fieldid)->value('id')) {
+            throw new \Exception("字段'" . $data['name'] . "`已经存在");
+        }
+        $data['isadd']     = isset($data['isadd']) ? intval($data['isadd']) : 0;
+        $data['ifrequire'] = isset($data['ifrequire']) ? intval($data['ifrequire']) : 0;
+        if ($data['ifrequire'] && !$data['isadd']) {
+            throw new \Exception('必填字段不可以隐藏！');
+        }
+
+        if ($data['setting']['value'] === '') {
+            $default = '';
+        } elseif (strstr(strtolower($data['setting']['define']), 'text') || strstr(strtolower($data['setting']['define']), 'blob')) {
+            $default = '';
+        } else {
+            $default = " DEFAULT '{$data['setting']['value']}'";
+        }
+
+        $sql = <<<EOF
+            ALTER TABLE `{$tablename}`
+            CHANGE COLUMN `{$info['name']}` `{$data['name']}` {$data['setting']['define']} {$default} COMMENT '{$data['title']}';
+EOF;
+        try {
+            Db::execute($sql);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+        $fieldInfo = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
+
+        $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
+        //$data['options'] = $fieldInfo['ifoption'] ? $data['options'] : '';
+        $data['setting']['options'] = $fieldInfo['ifoption'] ? $data['setting']['options'] : '';
+        //附加属性值
+        $data['setting'] = serialize($data['setting']);
+        //清理缓存
+        cache('ModelField', null);
+        self::update($data, ['id' => $fieldid], true);
+        return true;
+    }
+
+    /**
+     * 删除字段
+     * @param type $fieldid 字段id
+     * @return boolean
+     */
+    public function deleteField($fieldid)
+    {
+
+        //原字段信息
+        $info = self::where("id", $fieldid)->find();
+        if (empty($info)) {
+            throw new \Exception('该字段不存在！');
+        }
+        //模型id
+        $modelid = $info['modelid'];
+        //完整表名获取
+        $tablename = $this->getModelTableName($modelid);
+        $tablename = config('database.prefix') . 'form_' . $tablename;
+        //判断是否允许删除
+        $sql = <<<EOF
+            ALTER TABLE `{$tablename}`
+            DROP COLUMN `{$info['name']}`;
+EOF;
+        Db::execute($sql);
+        self::get($fieldid)->delete();
+        return true;
+    }
+
+    /**
+     * 根据模型ID，返回表名
+     * @param type $modelid
+     * @return string
+     */
+    protected function getModelTableName($modelid)
+    {
+        //读取模型配置 以后优化缓存形式
+        $model_cache = cache("Model");
+        //表名获取
+        return $model_cache[$modelid]['tablename'];
+    }
 }
