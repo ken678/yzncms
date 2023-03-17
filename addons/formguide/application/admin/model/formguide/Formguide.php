@@ -14,10 +14,10 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model\formguide;
 
-use app\admin\model\cms\Cms as CmsModel;
 use think\Db;
+use think\Model;
 
-class Formguide extends CmsModel
+class Formguide extends Model
 {
     protected $name               = 'ModelField';
     protected $autoWriteTimestamp = false;
@@ -27,13 +27,10 @@ class Formguide extends CmsModel
     {
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
-        $tablename = 'form_' . $tablename;
-
-        $list = self::where('modelid', $modelid)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,isadd,iscore,ifsystem,ifrequire,setting");
+        $list      = self::where('modelid', $modelid)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,isadd,iscore,ifsystem,ifrequire,setting");
         if (!empty($list)) {
             if ($id) {
-                $modelInfo = Db::name('Model')->where('id', $modelid)->field('tablename,type')->find();
-                $dataInfo  = Db::name($tablename)->where('id', $id)->find();
+                $dataInfo = Db::name($tablename)->where('id', $id)->find();
             }
             foreach ($list as $key => &$value) {
                 if ($value['iscore']) {
@@ -65,9 +62,7 @@ class Formguide extends CmsModel
     {
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
-        $tablename = 'form_' . $tablename;
-
-        $data = Db::name($tablename)->where('id', $id)->find();
+        $data      = Db::name($tablename)->where('id', $id)->find();
         if (empty($data)) {
             throw new \Exception("该信息不存在！");
         }
@@ -79,11 +74,11 @@ class Formguide extends CmsModel
      * @param type $modelid
      * @return string
      */
-    protected function getModelTableName($modelid, $ifsystem = 1)
+    protected function getModelTableName($modelid)
     {
         //读取模型配置 以后优化缓存形式
         $model_cache = cache("Model");
         //表名获取
-        return $model_cache[$modelid]['tablename'];
+        return 'form_' . $model_cache[$modelid]['tablename'];
     }
 }
