@@ -116,8 +116,8 @@ class Models extends Model
         return unserialize($value);
     }
 
-    public function getTableNameAttr($value, $data)
-    {
-        return str_replace("form_", "", $value);
-    }
+    /*public function getTableNameAttr($value, $data)
+{
+return str_replace("form_", "", $value);
+}*/
 }
