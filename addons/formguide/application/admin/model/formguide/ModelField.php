@@ -30,7 +30,6 @@ class ModelField extends Model
         $modelid = $data['modelid'];
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
-        $tablename = config('database.prefix') . 'form_' . $tablename;
         //判断字段名唯一性
         if ($this->where('name', $data['name'])->where('modelid', $modelid)->value('id')) {
             throw new \Exception("字段'" . $data['name'] . "`已经存在");
@@ -72,7 +71,6 @@ EOF;
             //回滚
             Db::execute("ALTER TABLE  `{$tablename}` DROP  `{$data['name']}`");
             throw new \Exception('字段信息入库失败！');
-
         }
         return true;
     }
@@ -100,7 +98,6 @@ EOF;
         $data['modelid'] = $modelid = $info['modelid'];
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
-        $tablename = config('database.prefix') . 'form_' . $tablename;
         //判断字段名唯一性
         if ($this->where('name', $data['name'])->where('modelid', $modelid)->where('id', '<>', $fieldid)->value('id')) {
             throw new \Exception("字段'" . $data['name'] . "`已经存在");
@@ -128,10 +125,8 @@ EOF;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
-        $fieldInfo = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
-
-        $data['status'] = isset($data['status']) ? intval($data['status']) : 0;
-        //$data['options'] = $fieldInfo['ifoption'] ? $data['options'] : '';
+        $fieldInfo                  = Db::name('field_type')->where('name', $data['type'])->field('ifoption,ifstring')->find();
+        $data['status']             = isset($data['status']) ? intval($data['status']) : 0;
         $data['setting']['options'] = $fieldInfo['ifoption'] ? $data['setting']['options'] : '';
         //附加属性值
         $data['setting'] = serialize($data['setting']);
@@ -158,7 +153,6 @@ EOF;
         $modelid = $info['modelid'];
         //完整表名获取
         $tablename = $this->getModelTableName($modelid);
-        $tablename = config('database.prefix') . 'form_' . $tablename;
         //判断是否允许删除
         $sql = <<<EOF
             ALTER TABLE `{$tablename}`
@@ -178,7 +172,7 @@ EOF;
     {
         //读取模型配置 以后优化缓存形式
         $model_cache = cache("Model");
-        //表名获取
-        return $model_cache[$modelid]['tablename'];
+        $tablename   = $model_cache[$modelid]['tablename'];
+        return config('database.prefix') . 'form_' . $tablename;
     }
 }
