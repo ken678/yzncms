@@ -44,7 +44,7 @@ class Formguide extends MemberBase
         }
         if (!empty($this->formid)) {
             $model_cache     = cache("Model");
-            $this->tableName = $model_cache[$this->formid]['tablename'];
+            $this->tableName = 'form_' . $model_cache[$this->formid]['tablename'];
         }
         //配置
         $this->modelInfo['setting'] = $this->setting = unserialize($this->modelInfo['setting']);

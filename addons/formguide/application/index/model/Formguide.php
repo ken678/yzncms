@@ -26,10 +26,7 @@ class Formguide extends CmsModel
     public function addFormguideData($formid, $data, $dataExt = [])
     {
         //完整表名获取
-        $tablename = $this->getModelTableName($formid);
-        if (!$this->table_exists($tablename)) {
-            throw new \Exception('数据表不存在！');
-        }
+        $tablename        = 'form_' . $this->getModelTableName($formid);
         $data['uid']      = \app\member\service\User::instance()->id ?: 0;
         $data['username'] = \app\member\service\User::instance()->username ?: '游客';
         //处理数据
@@ -44,5 +41,18 @@ class Formguide extends CmsModel
             throw new \Exception($e->getMessage());
         }
         return $id;
+    }
+
+    /**
+     * 根据模型ID，返回表名
+     * @param type $modelid
+     * @return string
+     */
+    protected function getModelTableName($modelid, $ifsystem = 1)
+    {
+        //读取模型配置 以后优化缓存形式
+        $model_cache = cache("Model");
+        //表名获取
+        return $model_cache[$modelid]['tablename'];
     }
 }
