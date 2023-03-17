@@ -15,6 +15,7 @@
 namespace app\admin\model\formguide;
 
 use think\Db;
+use think\facade\Cache;
 use think\facade\Config;
 use think\Model;
 
@@ -23,62 +24,100 @@ class Models extends Model
     protected $name               = 'model';
     protected $autoWriteTimestamp = true;
 
-    /**
-     * 创建模型
-     * @param type $data 提交数据
-     * @return boolean
-     */
-    public function addModelFormguide($data, $module = 'formguide')
+    protected static function init()
     {
-        if (empty($data)) {
-            throw new \Exception('数据不得为空！');
-        }
-        $data['tablename'] = $data['tablename'] ? 'form_' . $data['tablename'] : '';
-        $data['module']    = $module;
-        $data['setting']   = serialize($data['setting']);
-        //添加模型记录
-        if (self::allowField(true)->save($data)) {
-            cache("Model", null);
+        //添加
+        self::beforeInsert(function ($row) {
+            $setting['forward']          = $row->forward;
+            $setting['mails']            = $row->mails;
+            $setting['interval']         = $row->interval;
+            $setting['allowmultisubmit'] = $row->allowmultisubmit;
+            $setting['allowunreg']       = $row->allowunreg;
+            $setting['isverify']         = $row->isverify;
+            $setting['show_template']    = $row->show_template;
+
+            $row['setting']   = serialize($setting);
+            $row['module']    = 'formguide';
+            $row['tablename'] = $row['tablename'] ? 'form_' . $row['tablename'] : '';
+            $info             = null;
+            try {
+                $info = Db::name($row['tablename'])->getPk();
+            } catch (\Exception $e) {
+            }
+            if ($info) {
+                throw new Exception("数据表已经存在");
+            }
+        });
+        self::afterInsert(function ($row) {
+            cache::set("Model", null);
+            cache::set('ModelField', null);
+
+            $prefix = Config::get("database.prefix");
             //创建模型表
-            $sql = "CREATE TABLE IF NOT EXISTS `think_form_table` (
-                       `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-                       `uid` mediumint(8) unsigned NOT NULL,
-                       `username` varchar(20) NOT NULL,
-                       `inputtime` int(10) unsigned NOT NULL,
-                       `ip` char(15) NOT NULL DEFAULT '',
-                       PRIMARY KEY (`id`)
-                    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
-            //表名替换
-            $sql = str_replace("think_form_table", Config::get("database.prefix") . $data['tablename'], $sql);
+            $sql = "CREATE TABLE `{$prefix}{$row['tablename']}` (
+                `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+                `uid` mediumint(8) unsigned NOT NULL,
+                `username` varchar(20) NOT NULL,
+                `inputtime` int(10) unsigned NOT NULL,
+                `ip` char(15) NOT NULL DEFAULT '',
+                PRIMARY KEY (`id`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
             Db::execute($sql);
-        }
+        });
+        //编辑
+        self::beforeUpdate(function ($row) {
+            unset($row['type'], $row['tablename']);
+            $changedData = $row->getChangedData();
+            $setting     = [];
+            if (isset($changedData['forward'])) {
+                $setting['forward'] = $row->forward;
+            }
+            if (isset($changedData['mails'])) {
+                $setting['mails'] = $row->mails;
+            }
+            if (isset($changedData['interval'])) {
+                $setting['interval'] = $row->interval;
+            }
+            if (isset($changedData['allowmultisubmit'])) {
+                $setting['allowmultisubmit'] = $row->allowmultisubmit;
+            }
+            if (isset($changedData['allowunreg'])) {
+                $setting['allowunreg'] = $row->allowunreg;
+            }
+            if (isset($changedData['isverify'])) {
+                $setting['isverify'] = $row->isverify;
+            }
+            if (isset($changedData['show_template'])) {
+                $setting['show_template'] = $row->show_template;
+            }
+            if ($setting) {
+                $row['setting'] = serialize($setting);
+            }
+        });
+        self::afterUpdate(function ($row) {
+            //更新缓存
+            cache::set("Model", null);
+            cache::set('ModelField', null);
+        });
+        //删除
+        self::afterDelete(function ($row) {
+            cache::set("Model", null);
+            cache::set('ModelField', null);
+            //删除所有和这个模型相关的字段
+            Db::name("ModelField")->where("modelid", $row['id'])->delete();
+            //删除主表
+            $table_name = Config::get("database.prefix") . $row['tablename'];
+            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
+        });
     }
 
-    /**
-     * 根据模型ID删除模型
-     * @param type $id 模型id
-     * @return boolean
-     */
-    public function deleteModel($id)
+    public function getSettingAttr($value, $data)
     {
-        $modeldata = self::where(array("id" => $id))->find();
-        if (!$modeldata) {
-            throw new \Exception('数据不存在！');
-        }
-        //删除模型数据
-        self::destroy($id);
-        //更新缓存
-        cache("Model", null);
-        //删除所有和这个模型相关的字段
-        Db::name("ModelField")->where("modelid", $id)->delete();
-        //删除主表
-        $table_name = Config::get("database.prefix") . $modeldata['tablename'];
-        Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
-        if ((int) $modeldata['type'] == 2) {
-            //删除副表
-            $table_name .= $this->ext_table;
-            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
-        }
-        return true;
+        return unserialize($value);
+    }
+
+    public function getTableNameAttr($value, $data)
+    {
+        return str_replace("form_", "", $value);
     }
 }
