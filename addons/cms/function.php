@@ -93,7 +93,7 @@ function filters($modelid, $catid)
     $data     = get_filters_field($modelid);
     Request::filter('trim,strip_tags');
     $param = Request::param();
-    unset($param['catid'], $param['catdir']);
+    unset($param['catid'], $param['catdir'], $param['page']);
     $conditionParam = [];
     foreach ($data as $name => $rs) {
         $data[$name]['options'][0] = '不限';

@@ -274,7 +274,7 @@ class Index extends Cmsbase
             }
             $where = '(' . substr($where, 0, -4) . ') ';
             $where .= " AND status='1' $sql_time";
-            $list = $this->Cms_Model->getList($modelid, $where, false, '*', "listorder DESC,id DESC", 10, 1, false, ['query' => ['keyword' => $keyword, 'modelid' => $modelid]]);
+            $list = $this->Cms_Model->getList($modelid, $where, false, '*', "listorder DESC,id DESC", 10, 1, false);
         } else {
             foreach ($modellist as $key => $vo) {
                 $searchField = Db::name('model_field')->where('modelid', $key)->where('ifsystem', 1)->where('ifsearch', 1)->column('name');
@@ -287,7 +287,7 @@ class Index extends Cmsbase
                 }
                 $where = '(' . substr($where, 0, -4) . ') ';
                 $where .= " AND status='1' $sql_time";
-                $list = $this->Cms_Model->getList($key, $where, false, '*', 'listorder DESC,id DESC', 10, 1, false, ['query' => ['keyword' => $keyword, 'modelid' => $modelid]]);
+                $list = $this->Cms_Model->getList($key, $where, false, '*', 'listorder DESC,id DESC', 10, 1, false);
                 if ($list->isEmpty()) {
                     continue;
                 } else {

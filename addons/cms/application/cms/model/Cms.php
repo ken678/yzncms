@@ -342,9 +342,10 @@ class Cms extends Modelbase
      */
     public function getList($modeId, $where, $moreifo, $field = '*', $order = '', $limit = 10, $page = null, $simple = false, $config = [])
     {
-        $url_mode  = self::$config['site_url_mode'];
-        $tableName = $this->getModelTableName($modeId);
-        $result    = [];
+        $url_mode        = self::$config['site_url_mode'];
+        $config['query'] = isset($config['query']) ? array_merge($config['query'], request()->get()) : request()->get();
+        $tableName       = $this->getModelTableName($modeId);
+        $result          = [];
         if (isset($tableName) && !empty($tableName)) {
             if (2 == getModel($modeId, 'type') && $moreifo) {
                 $extTable = $tableName . $this->ext_table;
