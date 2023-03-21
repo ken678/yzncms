@@ -86,14 +86,14 @@ return array(
         'value'   => 0,
     ],
     [
-        'name'    => 'web_site_baidupush',
+        'name'    => 'web_site_weburlpush',
         'title'   => '站长推送',
         'type'    => 'radio',
         'options' => [
             1 => '开启',
             0 => '关闭',
         ],
-        'tip'     => '如果开启百度熊掌+百度站长推送，将在文章发布时自动进行推送(需要安装推送插件)',
+        'tip'     => '如果开启百度站长+神马搜索推送，将在文章发布时自动进行推送(需要安装推送插件)',
         'value'   => 0,
     ],
     [

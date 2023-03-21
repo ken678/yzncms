@@ -1,36 +1,29 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-header">熊掌号+百度站长</div>
+    <div class="layui-card-header">百度站长+神马搜索</div>
     <div class="layui-card-body">
         <div class="layui-tab">
             <ul class="layui-tab-title">
-                <li class="layui-this">熊掌号</li>
-                <li>百度站长</li>
+                <li class="layui-this">百度站长</li>
+                <li>神马搜索</li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                     <div class="widget-body no-padding">
-                        {if !isset($Config['status'][0])  || !$Config['appid'] || !$Config['token']}
+                        {if !isset($Config['status'][0])  || !$Config['baidu']['site'] || !$Config['baidu']['token']}
                         <div class="alert alert-success-light">
                             <b>温馨提示</b><br>
-                            必须在插件配置中开启熊掌号推送<br>
-                            必须在插件配置中配置熊掌号 <code>appid</code> 和 <code>token</code> 才能进行推送
+                            必须在插件配置中开启百度推送<br>
+                            必须在插件配置中配置百度 <code>site</code> 和 <code>token</code> 才能进行推送
                         </div>
                         {/if}
-                        <form id="form-xiongzhang" class="layui-form" action="{:url('admin/baidupush.admin/xiongzhang')}" method="post">
+                        <form id="form-baidu" class="layui-form" action="{:url('admin/weburlpush.admin/baidu')}" method="post">
                             <div class="layui-form-item">
                                 <label>推送事件：</label>
                                 <div class="w300">
-                                    <input type="radio" name="action" id="action-urls" value="urls" checked="checked" title="新增">
-                                    <input type="radio" name="action" id="action-del" value="del" title="删除">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label>推送类型：</label>
-                                <div class="w300">
-                                    <input type="radio" name="type" id="type-realtime" value="realtime" checked="checked" title="实时数据(天级)">
-                                    <input type="radio" name="type" id="type-batch" value="batch" title="历史数据(周级)">
+                                    <input type="radio" name="action" id="action-push" value="push" checked="checked" title="新增">
+                                    <!-- <input type="radio" name="action" id="action-del" value="del" title="删除"> -->
                                 </div>
                             </div>
                             <div class="form-group layui-row layui-col-space10">
@@ -44,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <button type="submit" class="layui-btn" lay-filter="form-xiongzhang" lay-submit>立即推送</button>
+                                <button type="submit" class="layui-btn" lay-filter="form-baidu" lay-submit>立即推送</button>
                                 <button type="reset" class="layui-btn layui-btn-normal">重置</button>
                             </div>
                         </form>
@@ -52,19 +45,19 @@
                 </div>
                 <div class="layui-tab-item">
                     <div class="widget-body no-padding">
-                        {if !isset($Config['status'][1])  || !$Config['site'] || !$Config['sitetoken']}
+                        {if !isset($Config['status'][0])  || !$Config['shenma']['site'] || !$Config['shenma']['user_name'] || !$Config['shenma']['token']}
                         <div class="alert alert-success-light">
                             <b>温馨提示</b><br>
-                            必须在插件配置中开启百度站长推送<br>
-                            必须在插件配置中配置百度站长 <code>site</code> 和 <code>token</code> 才能进行推送
+                            必须在插件配置中开启神马推送<br>
+                            必须在插件配置中配置神马 <code>site</code> 和 <code>user_name</code> 和 <code>token</code> 才能进行推送
                         </div>
                         {/if}
-                        <form id="form-zhanzhang" class="layui-form" action="{:url('admin/baidupush.admin/zhanzhang')}" method="post">
+                        <form id="form-shenma" class="layui-form" action="{:url('admin/weburlpush.admin/shenma')}" method="post">
                             <div class="layui-form-item">
                                 <label>推送事件：</label>
                                 <div class="w300">
-                                    <input type="radio" name="action" id="action-urls" value="urls" checked="checked" title="新增">
-                                    <input type="radio" name="action" id="action-del" value="del" title="删除">
+                                    <input type="radio" name="action" id="action-push" value="push" checked="checked" title="新增">
+                                    <!-- <input type="radio" name="action" id="action-del" value="del" title="删除"> -->
                                 </div>
                             </div>
                             <div class="form-group layui-row layui-col-space10">
@@ -78,7 +71,7 @@
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <button type="submit" class="layui-btn" lay-filter="form-zhanzhang" lay-submit>立即推送</button>
+                                <button type="submit" class="layui-btn" lay-filter="form-shenma" lay-submit>立即推送</button>
                                 <button type="reset" class="layui-btn layui-btn-normal">重置</button>
                             </div>
                         </form>
@@ -95,24 +88,36 @@
 layui.use(['element', 'form'], function() {
     var element = layui.element;
     var form = layui.form;
-    form.on('submit(form-xiongzhang)', function(data) {
+    form.on('submit(form-baidu)', function(data) {
         var _form = '';
         _form = $(this).parents('form');
         $.post(_form.attr('action'), _form.serialize()).success(function(data) {
-            var html = "状态：成功\n";
-            html += JSON.stringify(data);
-            $("#form-xiongzhang textarea[name=result]").val(html);
+            var html = "";
+            if(data.code==1){
+                html+='成功推送的url条数:'+data.data.success+'\n';
+                html+='当天剩余的可推送url条数:'+data.data.remain+'\n';
+                $("#form-baidu textarea[name=result]").val(html);
+            }else{
+                html += data.msg +'\n';
+                $("#form-baidu textarea[name=result]").val(html);
+            }
+
         })
         return false;
 
     });
-    form.on('submit(form-zhanzhang)', function(data) {
+    form.on('submit(form-shenma)', function(data) {
         var _form = '';
         _form = $(this).parents('form');
         $.post(_form.attr('action'), _form.serialize()).success(function(data) {
-            var html = "状态：成功\n";
-            html += JSON.stringify(data);
-            $("#form-zhanzhang textarea[name=result]").val(html);
+            var html = "";
+            if(data.code==1){
+                html += data.msg +'\n';
+                $("#form-shenma textarea[name=result]").val(html);
+            }else{
+                html += data.msg +'\n';
+                $("#form-shenma textarea[name=result]").val(html);
+            }
         })
         return false;
     });

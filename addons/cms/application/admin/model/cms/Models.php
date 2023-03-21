@@ -16,6 +16,8 @@ namespace app\admin\model\cms;
 
 use app\common\model\Modelbase;
 use think\Db;
+use think\Exception;
+use think\facade\Cache;
 use think\facade\Config;
 use think\Model;
 
@@ -26,121 +28,123 @@ class Models extends Modelbase
 {
 
     protected $name               = 'model';
-    protected $ext_table          = '_data';
     protected $autoWriteTimestamp = true;
 
-    /**
-     * 创建模型
-     * @param type $data 提交数据
-     * @return boolean
-     */
-    public function addModel($data, $module = 'cms')
+    protected static $ext_table = '_data';
+
+    protected static function init()
     {
-        if (empty($data)) {
-            throw new \Exception('数据不得为空！');
-        }
-        $data['module']  = $module;
-        $data['setting'] = serialize($data['setting']);
-        //添加模型记录
-        if ($res = self::create($data)) {
-            cache("Model", null);
+        //添加
+        self::beforeInsert(function ($row) {
+            $setting['category_template'] = $row->category_template;
+            $setting['list_template']     = $row->list_template;
+            $setting['show_template']     = $row->show_template;
+            $row['setting']               = serialize($setting);
+            $row['module']                = 'cms';
+            $info                         = null;
+            try {
+                $info = Db::name($row['tablename'])->getPk();
+            } catch (\Exception $e) {
+            }
+            if ($info) {
+                throw new Exception("数据表已经存在");
+            }
+        });
+        self::afterInsert(function ($row) {
+            cache::set("Model", null);
+            cache::set('ModelField', null);
             //创建模型表和模型字段
-            if ($this->createTable($data)) {
-                $this->addFieldRecord($res->id, $data['type']);
+            if (self::createTable($row)) {
+                self::addFieldRecord($row['id'], $row['type']);
             }
-        }
-    }
-
-    /**
-     * 编辑模型
-     * @param type $data 提交数据
-     * @return boolean
-     */
-    public function editModel($data, $modelid = 0)
-    {
-        if (empty($data)) {
-            throw new \Exception('数据不得为空！');
-        }
-        //模型ID
-        $modelid = $modelid ? $modelid : (int) $data['id'];
-        if (!$modelid) {
-            throw new \Exception('模型ID不能为空！');
-        }
-        //查询模型数据
-        $info = self::where(array("id" => $modelid))->find();
-        if (empty($info)) {
-            throw new \Exception('该模型不存在！');
-        }
-        $data['modelid'] = $modelid;
-        $data['setting'] = serialize($data['setting']);
-
-        //是否更改表名
-        if ($info['tablename'] != $data['tablename'] && !empty($data['tablename'])) {
-            //检查新表名是否存在
-            if ($this->table_exists($data['tablename']) || $this->table_exists($data['tablename'] . '_data')) {
-                throw new \Exception('该表名已经存在！');
+        });
+        //编辑
+        self::beforeUpdate(function ($row) {
+            $changedData = $row->getChangedData();
+            $setting     = [];
+            if (isset($changedData['category_template'])) {
+                $setting['category_template'] = $row->category_template;
             }
-            if (false !== $this->allowField(true)->save($data, array("modelid" => $modelid))) {
+            if (isset($changedData['list_template'])) {
+                $setting['list_template'] = $row->list_template;
+            }
+            if (isset($changedData['show_template'])) {
+                $setting['show_template'] = $row->show_template;
+            }
+            if ($setting) {
+                $row['setting'] = serialize($setting);
+            }
+            if (isset($changedData['tablename'])) {
+                $info = null;
+                try {
+                    $info = Db::name($row['tablename'])->getPk();
+                } catch (\Exception $e) {
+                }
+                if ($info) {
+                    throw new Exception("数据表已经存在");
+                }
+                try {
+                    $info = Db::name($row['tablename'] . self::$ext_table)->getPk();
+                } catch (\Exception $e) {
+                }
+                if ($info) {
+                    throw new Exception("数据表已经存在");
+                }
+            }
+        });
+        self::afterUpdate(function ($row) {
+            //更新缓存
+            cache::set("Model", null);
+            cache::set('ModelField', null);
+            Cache::set('getModel_' . $row['id'], '');
+            $changedData = $row->getChangedData();
+            if (isset($changedData['tablename'])) {
                 //表前缀
                 $dbPrefix = Config::get("database.prefix");
                 //表名更改
-                Db::execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}` TO  `{$dbPrefix}{$data['tablename']}` ;");
+                Db::execute("RENAME TABLE  `{$dbPrefix}{$row->getOrigin('tablename')}` TO  `{$dbPrefix}{$changedData['tablename']}` ;");
                 //修改副表
-                if ($info['type'] == 2) {
-                    Db::execute("RENAME TABLE  `{$dbPrefix}{$info['tablename']}_data` TO  `{$dbPrefix}{$data['tablename']}_data` ;");
+                if ($row['type'] == 2) {
+                    Db::execute("RENAME TABLE  `{$dbPrefix}{$row->getOrigin('tablename')}_data` TO  `{$dbPrefix}{$changedData['tablename']}_data` ;");
                 }
-                return true;
-            } else {
-                throw new \Exception('模型更新失败！');
             }
-        } else {
-            if (false !== self::allowField(true)->save($data, array("modelid" => $modelid))) {
-                return true;
-            } else {
-                throw new \Exception('模型更新失败！');
+        });
+        //删除
+        self::beforeDelete(function ($row) {
+            $exist = Category::where('modelid', $row['id'])->find();
+            if ($exist) {
+                throw new Exception("该模型使用中，删除栏目后再删除！");
             }
-        }
+        });
+        self::afterDelete(function ($row) {
+            cache::set("Model", null);
+            cache::set('ModelField', null);
+            //删除所有和这个模型相关的字段
+            Db::name("ModelField")->where("modelid", $row['id'])->delete();
+            //删除主表
+            $table_name = Config::get("database.prefix") . $row['tablename'];
+            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
+            if ((int) $row['type'] == 2) {
+                //删除副表
+                $table_name .= self::$ext_table;
+                Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
+            }
+        });
     }
 
-    /**
-     * 根据模型ID删除模型
-     * @param type $id 模型id
-     * @return boolean
-     */
-    public function deleteModel($id)
+    public function getSettingAttr($value, $data)
     {
-        $modeldata = self::where("id", $id)->find();
-        if (!$modeldata) {
-            throw new \Exception('要删除的模型不存在！');
-        }
-        //删除模型数据
-        self::destroy($id);
-        //更新缓存
-        cache("Model", null);
-        //删除所有和这个模型相关的字段
-        Db::name("ModelField")->where("modelid", $id)->delete();
-        //删除主表
-        $table_name = Config::get("database.prefix") . $modeldata['tablename'];
-        Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
-        if ((int) $modeldata['type'] == 2) {
-            //删除副表
-            $table_name .= $this->ext_table;
-            Db::execute("DROP TABLE IF EXISTS `{$table_name}`");
-        }
-        return true;
+        return unserialize($value);
     }
 
     /**
      * 创建内容模型
      */
-    protected function createTable($data)
+    public static function createTable($data)
     {
         $data['tablename'] = strtolower($data['tablename']);
         $table             = Config::get("database.prefix") . $data['tablename'];
-        if ($this->table_exists($data['tablename'])) {
-            throw new \Exception('创建失败！' . $table . '表已经存在~');
-        }
-        $sql = <<<EOF
+        $sql               = <<<EOF
                 CREATE TABLE `{$table}` (
                 `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
                 `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
@@ -166,9 +170,10 @@ EOF;
 
         $res = Db::execute($sql);
         if ($data['type'] == 2) {
+            $table = $table . self::$ext_table;
             // 新建附属表
             $sql = <<<EOF
-                CREATE TABLE `{$table}{$this->ext_table}` (
+                CREATE TABLE `{$table}` (
                 `did` mediumint(8) unsigned NOT NULL DEFAULT '0',
                 `content` mediumtext COLLATE utf8_unicode_ci COMMENT '内容',
                 PRIMARY KEY (`did`)
@@ -182,14 +187,15 @@ EOF;
     /**
      * 添加默认字段
      */
-    protected function addFieldRecord($modelid, $type)
+    public static function addFieldRecord($modelid, $type)
     {
-        $default = [
+        $fieldsArr = [];
+        $default   = [
             'modelid'     => $modelid,
             'pattern'     => '',
             'errortips'   => '',
-            'create_time' => request()->time(),
-            'update_time' => request()->time(),
+            'create_time' => time(),
+            'update_time' => time(),
             'ifsystem'    => 1,
             'status'      => 1,
             'listorder'   => 100,
@@ -199,6 +205,7 @@ EOF;
             'isadd'       => 0,
             'iscore'      => 0,
             'ifrequire'   => 0,
+            'setting'     => null,
         ];
         $data = [
             [
@@ -353,9 +360,10 @@ EOF;
 
         }
         foreach ($data as $item) {
-            $item = array_merge($default, $item);
-            Db::name('model_field')->insert($item);
+            $fieldsArr[] = array_merge($default, $item);
+            //Db::name('model_field')->insert($item);
         }
+        Db::name('model_field')->insertAll($fieldsArr);
         return true;
     }
 

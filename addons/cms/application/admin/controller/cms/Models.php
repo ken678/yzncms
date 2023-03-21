@@ -16,12 +16,12 @@ namespace app\admin\controller\cms;
 
 use app\admin\model\cms\Models as ModelsModel;
 use app\common\controller\Adminbase;
-use think\Db;
-use think\facade\Cache;
 
 class Models extends Adminbase
 {
-    protected $modelClass = null;
+    protected $modelClass    = null;
+    protected $modelValidate = true;
+
     protected function initialize()
     {
         parent::initialize();
@@ -47,90 +47,5 @@ class Models extends Adminbase
             return json(["code" => 0, "data" => $data]);
         }
         return $this->fetch();
-    }
-
-    //添加模型
-    public function add()
-    {
-        if ($this->request->isPost()) {
-            $data   = $this->request->post();
-            $result = $this->validate($data, 'app\admin\validate\cms\Models');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            try {
-                $this->modelClass->addModel($data);
-            } catch (\Exception $e) {
-                $this->error($e->getMessage());
-            }
-            $this->success('模型新增成功！', url('index'));
-        } else {
-            return $this->fetch();
-        }
-    }
-
-    //模型修改
-    public function edit()
-    {
-        if ($this->request->isPost()) {
-            $data   = $this->request->post();
-            $result = $this->validate($data, 'app\admin\validate\cms\Models');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            try {
-                $this->modelClass->editModel($data);
-                //更新缓存
-                cache("Model", null);
-                Cache::set('getModel_' . $data['id'], '');
-            } catch (\Exception $e) {
-                $this->error($e->getMessage());
-            }
-            $this->success('模型修改成功！', url('index'));
-        } else {
-            $id              = $this->request->param('id/d', 0);
-            $data            = $this->modelClass->where("id", $id)->find();
-            $data['setting'] = unserialize($data['setting']);
-            $this->assign("data", $data);
-            return $this->fetch();
-        }
-    }
-
-    //模型删除
-    public function del()
-    {
-        $id = $this->request->param('id/d');
-        empty($id) && $this->error('参数不能为空！');
-        //检查该模型是否已经被使用
-        $r = Db::name("category")->where("modelid", $id)->find();
-        if ($r) {
-            $this->error("该模型使用中，删除栏目后再删除！");
-        }
-        try {
-            $this->modelClass->deleteModel($id);
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-        }
-        $this->success("删除成功！", url("index"));
-    }
-
-    public function multi()
-    {
-        $id    = $this->request->param('id/d', 0);
-        $value = $this->request->param('value/d', 0);
-        try {
-            $row = $this->modelClass->find($id);
-            if (empty($row)) {
-                $this->error('数据不存在！');
-            }
-            $row->status = $value;
-            $row->save();
-            //更新缓存
-            cache("Model", null);
-            Cache::set('getModel_' . $id, '');
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-        }
-        $this->success("操作成功！");
     }
 }

@@ -14,47 +14,23 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model\formguide;
 
-use app\admin\model\cms\Cms as CmsModel;
 use think\Db;
+use think\Model;
 
-class Formguide extends CmsModel
+class Formguide extends Model
 {
     protected $name               = 'ModelField';
     protected $autoWriteTimestamp = false;
 
-    //添加模型内容
-    public function addFormguideData($formid, $data, $dataExt = [])
+    //
+    public function getFieldInfo($modelid, $id = null)
     {
         //完整表名获取
-        $tablename = $this->getModelTableName($formid);
-        if (!$this->table_exists($tablename)) {
-            throw new \Exception('数据表不存在！');
-        }
-        $data['uid']      = \app\member\service\User::instance()->id ?: 0;
-        $data['username'] = \app\member\service\User::instance()->username ?: '游客';
-        //处理数据
-        $dataAll              = $this->dealModelPostData($formid, $data, $dataExt);
-        list($data, $dataExt) = $dataAll;
-        $data['inputtime']    = request()->time();
-        $data['ip']           = request()->ip();
-        try {
-            //主表
-            $id = Db::name($tablename)->insertGetId($data);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-        return $id;
-    }
-
-    //
-    public function getFieldInfo($modelId, $id = null)
-    {
-
-        $list = self::where('modelid', $modelId)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,isadd,iscore,ifsystem,ifrequire,setting");
+        $tablename = $this->getModelTableName($modelid);
+        $list      = self::where('modelid', $modelid)->where('status', 1)->order('listorder asc,id asc')->column("name,title,remark,type,isadd,iscore,ifsystem,ifrequire,setting");
         if (!empty($list)) {
             if ($id) {
-                $modelInfo = Db::name('Model')->where('id', $modelId)->field('tablename,type')->find();
-                $dataInfo  = Db::name($modelInfo['tablename'])->where('id', $id)->find();
+                $dataInfo = Db::name($tablename)->where('id', $id)->find();
             }
             foreach ($list as $key => &$value) {
                 if ($value['iscore']) {
@@ -82,14 +58,27 @@ class Formguide extends CmsModel
     }
 
     //删除信息
-    public function deleteInfo($modeId, $id)
+    public function deleteInfo($modelid, $id)
     {
-        $modelInfo = cache('Model');
-        $modelInfo = $modelInfo[$modeId];
-        $data      = Db::name($modelInfo['tablename'])->where('id', $id)->find();
+        //完整表名获取
+        $tablename = $this->getModelTableName($modelid);
+        $data      = Db::name($tablename)->where('id', $id)->find();
         if (empty($data)) {
             throw new \Exception("该信息不存在！");
         }
-        return Db::name($modelInfo['tablename'])->where('id', $id)->delete();
+        return Db::name($tablename)->where('id', $id)->delete();
+    }
+
+    /**
+     * 根据模型ID，返回表名
+     * @param type $modelid
+     * @return string
+     */
+    protected function getModelTableName($modelid)
+    {
+        //读取模型配置 以后优化缓存形式
+        $model_cache = cache("Model");
+        //表名获取
+        return 'form_' . $model_cache[$modelid]['tablename'];
     }
 }

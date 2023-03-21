@@ -1,6 +1,6 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<form class="layui-form" action="" method="post">
+<form class="layui-form" action="" method="post" data-field="config">
     <div class="layui-card">
         {if $data.tips  && $data.tips.value}
         <div class="alert alert-info-light" style="margin-bottom:10px;">
@@ -12,6 +12,7 @@
         {/if}
         <div class="layui-card-body">
         {foreach name="data['config']" item="form" key="o_key"}
+             <div data-favisible="{$form.visible|default=''}">
              {switch name="form.type"}
                    {case value="text"}
                     <div class="layui-form-item">
@@ -111,7 +112,7 @@
                     {/case}
                     {case value="image" break="0"}{/case}
                     {case value="images"}
-                    <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-item">
                         <label class="layui-form-label">{$form.title}</label>
                         <div class="layui-input-block">
                             <div class="layui-col-xs4">
@@ -126,7 +127,7 @@
                     {/case}
                     {case value="file" break="0"}{/case}
                     {case value="files"}
-                    <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-item">
                         <label class="layui-form-label">{$form.title}</label>
                         <div class="layui-input-block">
                             <div class="layui-col-xs4">
@@ -138,7 +139,7 @@
                     </div>
                     {/case}
                     {case value="Ueditor"}
-                    <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-item">
                         <label class="layui-form-label">{$form.title}</label>
                         <div class="layui-input-block">
                             <script type="text/plain" class="js-ueditor" id="{$form.name}" name="config[{$form.name}]">{$form.value|raw}</script>
@@ -147,6 +148,7 @@
                     </div>
                     {/case}
              {/switch}
+             </div>
         {/foreach}
         </div>
     </div>

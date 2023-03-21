@@ -4,79 +4,79 @@
     <div class="layui-form-item">
         <label class="layui-form-label">表单名称</label>
         <div class="layui-input-block">
-            <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="表单名称" class="layui-input" value="{$data.name}">
+            <input type="text" name="row[name]" lay-verify="required" autocomplete="off" placeholder="表单名称" class="layui-input" value="{$data.name}">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">表单键名</label>
         <div class="layui-input-block">
-            <input type="text" name="tablename" lay-verify="required" autocomplete="off" placeholder="表单键名" class="layui-input" value="form_{$data.tablename}" disabled style="cursor: not-allowed !important;">
+            <input type="text" name="row[tablename]" lay-verify="required" autocomplete="off" placeholder="表单键名" class="layui-input" value="{$data.tablename}" disabled style="cursor: not-allowed !important;">
         </div>
         <div class="layui-form-mid2 layui-word-aux">由小写字母组成</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">简介</label>
         <div class="layui-input-block">
-            <textarea name="description" placeholder="表单的相关描述" class="layui-textarea">{$data.description}</textarea>
+            <textarea name="row[description]" placeholder="表单的相关描述" class="layui-textarea">{$data.description}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">跳转地址</label>
         <div class="layui-input-block">
-            <input type="text" name="setting[forward]" autocomplete="off" placeholder="提交后跳转地址" class="layui-input" value="{$data.setting.forward}">
+            <input type="text" name="row[forward]" autocomplete="off" placeholder="提交后跳转地址" class="layui-input" value="{$data.setting.forward}">
         </div>
         <div class="layui-form-mid2 layui-word-aux">有值时生效，内部链接格式:模块/控制器/操作?参数=参数值&amp;...，外部链接则必须http://开头</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">邮件地址</label>
         <div class="layui-input-block">
-            <input type="text" name="setting[mails]" autocomplete="off" placeholder="接受邮件的地址" class="layui-input" value="{$data.setting.mails}">
+            <input type="text" name="row[mails]" autocomplete="off" placeholder="接受邮件的地址" class="layui-input" value="{$data.setting.mails}">
         </div>
         <div class="layui-form-mid2 layui-word-aux">需要安装邮箱插件，多个地址请用“,”隔开</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">提交间隔</label>
         <div class="layui-input-block">
-            <input type="text" name="setting[interval]" autocomplete="off" placeholder="提交间隔" class="layui-input" value="{$data.setting.interval}">
+            <input type="text" name="row[interval]" autocomplete="off" placeholder="提交间隔" class="layui-input" value="{$data.setting.interval}">
         </div>
         <div class="layui-form-mid2 layui-word-aux">单位秒，0为不限</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">IP多次提交</label>
         <div class="layui-input-block">
-            <input type="radio" name="setting[allowmultisubmit]" value="1" title="是" {if $data.setting.allowmultisubmit==1}checked{/if}>
-            <input type="radio" name="setting[allowmultisubmit]" value="0" title="否" {if $data.setting.allowmultisubmit==0}checked{/if}>
+            <input type="radio" name="row[allowmultisubmit]" value="1" title="是" {if $data.setting.allowmultisubmit==1}checked{/if}>
+            <input type="radio" name="row[allowmultisubmit]" value="0" title="否" {if $data.setting.allowmultisubmit==0}checked{/if}>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">游客提交</label>
         <div class="layui-input-block">
-            <input type="radio" name="setting[allowunreg]" value="1" title="是" {if $data.setting.allowunreg==1}checked{/if}>
-            <input type="radio" name="setting[allowunreg]" value="0" title="否" {if $data.setting.allowunreg==0}checked{/if}>
+            <input type="radio" name="row[allowunreg]" value="1" title="是" {if $data.setting.allowunreg==1}checked{/if}>
+            <input type="radio" name="row[allowunreg]" value="0" title="否" {if $data.setting.allowunreg==0}checked{/if}>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">开启验证码</label>
         <div class="layui-input-block">
-            <input type="radio" name="setting[isverify]" value="1" title="是" {if $data.setting.isverify==1}checked{/if}>
-            <input type="radio" name="setting[isverify]" value="0" title="否" {if $data.setting.isverify==0}checked{/if}>
+            <input type="radio" name="row[isverify]" value="1" title="是" {if $data.setting.isverify==1}checked{/if}>
+            <input type="radio" name="row[isverify]" value="0" title="否" {if $data.setting.isverify==0}checked{/if}>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状态</label>
         <div class="layui-input-block">
-            <input type="radio" name="status" value="1" title="启用" {if $data.status==1}checked{/if}>
-            <input type="radio" name="status" value="0" title="禁用" {if $data.status==0}checked{/if}>
+            <input type="radio" name="row[status]" value="1" title="启用" {if $data.status==1}checked{/if}>
+            <input type="radio" name="row[status]" value="0" title="禁用" {if $data.status==0}checked{/if}>
         </div>
     </div>
     <div class="layui-form-item web_list">
         <label class="layui-form-label">模板选择</label>
         <div class="layui-input-inline w300">
-            {:Form::select("setting[show_template]",$show_template,$data['setting']['show_template'],["lay-verify"=>"required"])}
+            {:Form::select("row[show_template]",$show_template,$data['setting']['show_template'],["lay-verify"=>"required"])}
         </div>
         <div class="layui-form-mid2 layui-word-aux">新增模板以show_xx.html形式</div>
     </div>
-    <input type="hidden"name="id" value="{$data.id}">
+    <input type="hidden"name="row[id]" value="{$data.id}">
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit>立即提交</button>

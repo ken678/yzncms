@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
 [![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
-[![Version](https://img.shields.io/badge/YznCMS-1.1.3-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-1.1.4-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -23,7 +23,7 @@
 |万能采集|简单的采集工具，可以自定义字段入库，网页数据采集和内容管理的神器！|免费|
 |友情链接|管理第三方网站的友情链接，很常用的必备插件|免费|
 |网站地图|sitemap网站地图让搜索引擎对您网站的更快、更完整地进行索引，为您进行网站推广带来极大的方便|免费|
-|百度推送|百度熊掌号+百度站长推送|免费|
+|网址聚合推送|百度站长+神马搜索推送|免费|
 |数据库备份|简单的数据库备份|免费|
 |多通道短信|发送支持目前市面20+家短信服务商,自动轮询选择可用的服务商|免费|
 |editormd编辑器|	editor.md编辑器|免费|

@@ -37,7 +37,7 @@ class Info extends AdminBase
         $formid = $this->request->param('formid/d', 0);
         if ($this->request->isAjax()) {
             $modelCache = cache("Model");
-            $tableName  = $modelCache[$formid]['tablename'];
+            $tableName  = 'form_' . $modelCache[$formid]['tablename'];
 
             $this->modelClass           = Db::name($tableName);
             list($page, $limit, $where) = $this->buildTableParames();

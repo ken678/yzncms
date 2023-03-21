@@ -28,8 +28,8 @@ class Category extends Model
     {
         $cmsConfig = get_addon_config("cms");
         self::event('after_write', function ($row) use ($cmsConfig) {
-            if (isset($cmsConfig['web_site_baidupush']) && $cmsConfig['web_site_baidupush']) {
-                hook("baidupush", buildCatUrl($row->id, '', true, true));
+            if (isset($cmsConfig['web_site_weburlpush']) && $cmsConfig['web_site_weburlpush']) {
+                hook("weburlpush", buildCatUrl($row->id, '', true, true));
             }
         });
     }

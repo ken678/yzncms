@@ -104,9 +104,9 @@ class Cms extends Modelbase
         }
         //更新栏目统计数据
         $this->updateCategoryItems($catid, 'add', 1);
-        //推送到熊掌号和百度站长
-        if (self::$config['web_site_baidupush']) {
-            hook("baidupush", buildContentUrl($catid, $id, $data['url'], true, true));
+        //推送到站的聚合插件
+        if (self::$config['web_site_weburlpush']) {
+            hook("weburlpush", buildContentUrl($catid, $id, $data['url'], true, true));
         }
         //新增讯搜索引
         if (self::$config['web_site_searchtype'] === 'xunsearch') {
