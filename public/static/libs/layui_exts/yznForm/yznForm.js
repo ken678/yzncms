@@ -1,4 +1,4 @@
-//封装表单操作 部分参考EasyAdmin和fastadmin
+//封装表单操作 部分参考EasyAdmin
 layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
@@ -307,6 +307,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     });
                 }
             },
+            //favisible前端组件来源https://gitee.com/karson/fastadmin
             favisible: function(layform) {
                 if ($("[data-favisible]", layform).length == 0) {
                     return;
@@ -336,6 +337,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                     var dataArr = layform.serializeArray(),
                         dataObj = {},
                         fieldName, fieldValue;
+
+                    var field = layform.attr('data-field') || 'row';
+                    console.log(field);
                     $(dataArr).each(function(i, field) {
                         fieldName = field.name;
                         fieldValue = field.value;
@@ -359,7 +363,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                                 operator = 'regex';
                                 value = regmatches[1];
                             }
-                            var chkname = "row[" + name + "]";
+                            var chkname = field+"[" + name + "]";
                             if (typeof dataObj[chkname] === 'undefined') {
                                 return false;
                             }
@@ -416,6 +420,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
 
                 $("input,select", layform).trigger("configchange");
             },
+            //fieldlist前端组件来源https://gitee.com/karson/fastadmin
             fieldlist: function(layform) {
                 // 绑定fieldlist组件
                 if ($(".fieldlist",layform).size() > 0) {
