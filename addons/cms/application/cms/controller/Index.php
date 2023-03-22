@@ -140,7 +140,7 @@ class Index extends Cmsbase
             throw new \think\exception\HttpException(404, '内容不存在或未审核!');
         }
         //内容分页
-        $paginator = strpos($info['content'], '[page]');
+        $paginator = isset($info['content']) ? strpos($info['content'], '[page]') : false;
         if ($paginator !== false) {
             $contents = array_filter(explode('[page]', $info['content']));
             $total    = count($contents);
@@ -158,21 +158,33 @@ class Index extends Cmsbase
         //栏目扩展配置信息
         $setting = $category['setting'];
         //内容页模板
-        $template = $setting['show_template'] ? $setting['show_template'] : 'show';
+        $template = $setting['show_template'] ?: 'show';
         //去除模板文件后缀
         $newstempid = explode(".", $template);
         $template   = $newstempid[0];
         unset($newstempid);
         //阅读收费
-        $readpoint     = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
-        $allow_visitor = 1;
+        $readpoint           = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
+        $allow_visitor       = 1;
+        $is_part_content_pay = 0;//是否部分内容付费
+        if (isset($info['content'])) {
+            $info['content'] = str_replace(['###paidstart###', '###paidend###'], ['<paid>', '</paid>'], $info['content']);
+        }
         if ($readpoint > 0) {
             $paytype = isset($info['paytype']) && $info['paytype'] ? $info['paytype'] : 0;
             //检查是否支付过
             $allow_visitor = self::_check_payment($catid . '_' . $id, $paytype);
             if (!$allow_visitor) {
-                //$http_referer = urlencode(\think\facade\Request::url(true));
                 $allow_visitor = sys_auth($catid . '_' . $id . '|' . $readpoint . '|' . $paytype);
+                //部分内容阅读付费
+                if (isset($info['content'])) {
+                    $pattern = '/<paid>(.*?)<\/paid>/is';
+                    if (preg_match($pattern, $info['content'])) {
+                        $payurl              = url('cms/index/readpoint', ['allow_visitor' => $allow_visitor]);
+                        $info['content']     = preg_replace($pattern, "<div class='allow_visitor'><a href='{$payurl}'>此处内容需要点击付费后方可阅读</a></div>", $info['content']);
+                        $is_part_content_pay = 1;
+                    }
+                }
             } else {
                 $allow_visitor = 1;
             }
@@ -184,18 +196,19 @@ class Index extends Cmsbase
         $seo         = seo($catid, $title, $description, $keywords);
         //获取顶级栏目ID
         $arrparentid  = explode(',', $category['arrparentid']);
-        $top_parentid = isset($arrparentid[1]) ? $arrparentid[1] : $catid;
+        $top_parentid = $arrparentid[1] ?? $catid;
         $this->assign($info);
         $this->assign([
-            'category'      => $category,
-            'readpoint'     => $readpoint,
-            'allow_visitor' => $allow_visitor,
-            'top_parentid'  => $top_parentid,
-            'arrparentid'   => $arrparentid,
-            'SEO'           => $seo,
-            'catid'         => $catid,
-            'page'          => $page,
-            'modelid'       => $modelid,
+            'category'            => $category,
+            'readpoint'           => $readpoint,
+            'is_part_content_pay' => $is_part_content_pay,
+            'allow_visitor'       => $allow_visitor,
+            'top_parentid'        => $top_parentid,
+            'arrparentid'         => $arrparentid,
+            'SEO'                 => $seo,
+            'catid'               => $catid,
+            'page'                => $page,
+            'modelid'             => $modelid,
         ]);
         return $this->fetch('/' . $template);
     }
