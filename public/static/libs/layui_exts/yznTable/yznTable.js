@@ -831,7 +831,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 var field = that.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                     value = value == null || value.length === 0 ? '' : value.toString();
                 } catch (e) {
                     var value = undefined;
@@ -858,7 +858,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 var field = that.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                     value = value == null || value.length === 0 ? '' : value.toString();
                 } catch (e) {
                     var value = undefined;
@@ -899,7 +899,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 that.checked = that.checked || 1;
                 that.tips = that.tips || '开|关';
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
@@ -916,7 +916,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var field = that.field,
                     title = data[that.title];
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
@@ -932,50 +932,45 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
             },
             url: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<a class="layui-btn layui-btn-primary layui-btn-xs" href="' + value + '" target="_blank"><i class="iconfont icon-lianjie"></i></a></a>';
             },
             price: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<span>￥' + value + '</span>';
             },
             icon: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<i class="' + value + '"></i>';
             },
             text: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<span class="line-limit-length">' + value + '</span>';
             },
             value: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
@@ -985,7 +980,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 var field = that.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
