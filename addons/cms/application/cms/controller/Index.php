@@ -78,6 +78,7 @@ class Index extends Cmsbase
             if (empty($info)) {
                 throw new \think\exception\HttpException(404, '单页不存在！');
             }
+            $info->setInc('hits');
             $info = $info->toArray();
             //SEO
             $keywords    = $info['keywords'] ?? $setting['meta_keywords'];

@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__page` (
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT 'SEO描述',
   `content` text COMMENT '内容',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
+  `hits` mediumint(8) unsigned DEFAULT '0' COMMENT '点击量',
   `inputtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`catid`)
