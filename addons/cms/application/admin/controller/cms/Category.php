@@ -454,7 +454,8 @@ class Category extends Adminbase
                 } else {
                     Db::name('Category')->where('id', $r['id'])->update(['items' => 0]);
                 }
-
+            } else {
+                Db::name('Category')->where('id', $r['id'])->update(['items' => 0]);
             }
         }
         $this->success("栏目数量校正成功！");
