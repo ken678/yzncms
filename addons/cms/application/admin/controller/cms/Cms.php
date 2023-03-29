@@ -342,15 +342,8 @@ class Cms extends Adminbase
             $info['category'] = Db::name('Category')->count();
             $info['model']    = Db::name('Model')->where(['module' => 'cms'])->count();
             $info['tags']     = Db::name('Tags')->count();
-            $info['doc']      = 0;
-            $modellist        = cache('Model');
-            foreach ($modellist as $model) {
-                if ($model['module'] !== 'cms') {
-                    continue;
-                }
-                $tmp = Db::name($model['tablename'])->count();
-                $info['doc'] += $tmp;
-            }
+            $info['doc']      = Db::name('Category')->where('type', 2)->sum('items');
+
             list($xAxisData, $seriesData) = $this->getAdminPostData();
             $this->assign('xAxisData', $xAxisData);
             $this->assign('seriesData', $seriesData);
@@ -382,7 +375,7 @@ class Cms extends Adminbase
             }
         }
         //获取所有表名
-        $models = array_values(cache('Model'));
+        $models = Db::name('model')->where(['module' => 'cms', 'status' => 1])->select();
         $list   = $xAxisData   = $seriesData   = [];
         if (count($models) > 0) {
             $table1 = $models[0]['tablename'];
