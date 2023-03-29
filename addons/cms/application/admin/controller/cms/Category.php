@@ -62,12 +62,8 @@ class Category extends Adminbase
                 } else {
                     $v['modelname'] = '/';
                 }
-                $v['catname'] = '<a data-width="900" data-height="600" data-open="' . url('edit', ['id' => $v['id']]) . '"">' . $v['catname'] . '</a>';
-                if ($v['type'] == 1) {
-                    $v['add_url'] = url("singlepage", ["parentid" => $v['id']]);
-                } elseif ($v['type'] == 2) {
-                    $v['add_url'] = url("add", ["parentid" => $v['id']]);
-                }
+                $v['catname']        = '<a data-width="900" data-height="600" data-open="' . url('edit', ['id' => $v['id']]) . '"">' . $v['catname'] . '</a>';
+                $v['add_url']        = url("add", ["parentid" => $v['id']]);
                 $v['url']            = buildCatUrl($v['id'], $v['url']);
                 $categorys[$v['id']] = $v;
             }
@@ -91,13 +87,18 @@ class Category extends Adminbase
             switch ($data['type']) {
                 //单页
                 case 1:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'image', 'icon', 'description', 'setting', 'listorder', 'letter', 'status'];
                     $scene  = 'page';
                     break;
                 //列表
                 case 2:
-                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'setting', 'listorder', 'letter', 'status'];
                     $scene  = 'list';
+                    break;
+                //外链
+                case 3:
+                    $fields = ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status'];
+                    $scene  = 'link';
                     break;
                 default:
                     $this->error('栏目类型错误~');
@@ -187,12 +188,6 @@ class Category extends Adminbase
         }
     }
 
-    //添加单页
-    public function singlepage()
-    {
-        return $this->add();
-    }
-
     //编辑栏目
     public function edit()
     {
@@ -215,6 +210,11 @@ class Category extends Adminbase
                 //列表
                 case 2:
                     $scene = 'list';
+                    break;
+                //列表
+                case 3:
+                    $data['modelid'] = 0;
+                    $scene           = 'link';
                     break;
                 default:
                     $this->error('栏目类型错误~');
@@ -274,17 +274,7 @@ class Category extends Adminbase
                 "cmsConfig"    => get_addon_config("cms"),
                 "Member_Group" => cache("Member_Group"),
             ]);
-            if ($data['type'] == 1) {
-                //单页栏目
-                return $this->fetch("singlepage_edit");
-            } else {
-                if ($data['type'] == 2) {
-                    //外部栏目
-                    return $this->fetch();
-                } else {
-                    $this->error('栏目类型错误！');
-                }
-            }
+            return $this->fetch();
         }
     }
 
