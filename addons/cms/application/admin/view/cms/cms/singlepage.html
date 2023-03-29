@@ -20,13 +20,13 @@
             </div>
             <div class="layui-form-mid2 layui-word-aux">关键词用回车确认</div>
         </div>
-        <div class="layui-form-item layui-form-text">
+        <div class="layui-form-item">
             <label class="layui-form-label">SEO摘要</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入SEO摘要" class="layui-textarea" name="modelField[description]">{$info['description']|default=''}</textarea>
             </div>
         </div>
-        <div class="layui-form-item layui-form-text">
+        <div class="layui-form-item">
             <label class="layui-form-label">缩略图</label>
             <div class="layui-input-block">
                 <div class="js-upload-image">
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item layui-form-text">
+        <div class="layui-form-item">
             <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
                 <script type="text/plain" class="js-ueditor" id="content" name="modelField[content]">{$info['content']|default=''|raw}</script>
@@ -42,6 +42,12 @@
             <div class="content_attr editor_tool" style="margin-left: 140px;">
                 <a class="layui-btn layui-btn-sm" id="contentgrabimg" style="margin-top: 4px;">图片本地化</a>
                 <a class="layui-btn layui-btn-sm" id="contentfilterword" style="margin-top: 4px;">检测违禁词</a>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">点击量</label>
+            <div class="layui-input-block">
+                <input type="number" name="modelField[hits]" placeholder="请输入点击量" autocomplete="off" class="layui-input" value="{$info['hits']|default='0'}">
             </div>
         </div>
         <div class="layui-form-item">
