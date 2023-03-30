@@ -15,6 +15,7 @@
 namespace app\index\model;
 
 use think\Db;
+use think\facade\Validate;
 use think\Model;
 
 class Formguide extends Model
