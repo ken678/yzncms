@@ -67,7 +67,7 @@ class Yzn extends Taglib
     public function tagYzn($tag, $content)
     {
         //缓存时间
-        $cache = isset($tag['cache']) && intval($tag['cache']) ? intval($tag['cache']) : 0;
+        $cache = isset($tag['cache']) ? $tag['cache'] : 0;
         //数据返回变量
         $return = isset($tag['return']) && trim($tag['return']) ? trim($tag['return']) : 'data';
         //每页显示总数
