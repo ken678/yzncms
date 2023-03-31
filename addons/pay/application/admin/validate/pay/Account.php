@@ -24,5 +24,6 @@ class Account extends Validate
         'username|用户名'  => 'require',
         'pay_unit|充值额度' => 'require',
         'unit|修改数量'     => 'require',
+        'usernote|交易备注' => 'require',
     ];
 }
