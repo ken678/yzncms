@@ -69,7 +69,7 @@ class Spend extends Model
     /**
      * 判断用户的金钱、积分是否足够
      * @param integer $userid    用户ID
-     * @param integer $type      判断（1：金钱，2：积分）
+     * @param integer $type      判断（1：金钱）
      * @param integer $value     数量
      */
     private static function _check_user($uid, $type, $value)
@@ -82,7 +82,7 @@ class Spend extends Model
                 } else {
                     return true;
                 }
-            } elseif ($type == 2) {
+            } else{
                 //积分
                 if ($user['point'] < $value) {
                     throw new \Exception("积分不足，请先充值！");
