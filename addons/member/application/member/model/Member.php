@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\member\model;
 
+use app\member\service\User;
 use think\Model;
 
 class Member extends Model
@@ -51,6 +52,52 @@ class Member extends Model
     {
         $group = cache("Member_Group");
         return isset($group[$data['groupid']]['name']) ? $group[$data['groupid']]['name'] : '';
+    }
+
+    /**
+     * 变更会员余额
+     * @param int    $amount   余额
+     * @param int    $user_id 会员ID
+     * @param string $remark    备注
+     */
+    public static function amount($amount, $user_id, $remark)
+    {
+        try {
+            $user = self::lock(true)->find($user_id);
+            if ($user && $amount != 0) {
+                $before = $user->amount;
+                //$after = $user->amount + $amount;
+                $after = function_exists('bcadd') ? bcadd($user->amount, $amount, 2) : $user->amount + $amount;
+                //更新会员信息
+                $user->save(['amount' => $after]);
+                //写入日志
+                AmountLog::create(['user_id' => $user_id, 'amount' => $amount, 'before' => $before, 'after' => $after, 'remark' => $remark]);
+            }
+        } catch (\Exception $e) {
+        }
+    }
+
+    /**
+     * 变更会员积分
+     * @param int    $point   积分
+     * @param int    $user_id 会员ID
+     * @param string $remark    备注
+     */
+    public static function point($point, $user_id, $remark)
+    {
+        try {
+            $user = self::lock(true)->find($user_id);
+            if ($user && $point != 0) {
+                $before  = $user->point;
+                $after   = $user->point + $point;
+                $groupid = User::instance()->get_usergroup_bypoint($after);
+                //更新会员信息
+                $user->save(['point' => $after, 'groupid' => $groupid]);
+                //写入日志
+                PointLog::create(['user_id' => $user_id, 'point' => $point, 'before' => $before, 'after' => $after, 'remark' => $remark]);
+            }
+        } catch (\Exception $e) {
+        }
     }
 
     /**
