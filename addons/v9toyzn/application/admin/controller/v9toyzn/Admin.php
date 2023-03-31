@@ -403,7 +403,7 @@ class Admin extends Adminbase
         $v9_table  = Cache::get('v9_table');
         $db_config = Cache::get('db_config');
         $v9_fields = Cache::get('v9_fields');
-        $Cms_Model = new \app\cms\model\Cms;
+        $Cms_Model = new \app\admin\model\cms\Cms;
         $data      = [];
         foreach ($v9_table as $key => $value) {
             $cursor = Db::connect($db_config)->name($value)->alias('a')->join([$db_config['prefix'] . $value . '_data' => 'w'], 'w.id=a.id')->join([$db_config['prefix'] . 'category' => 'c'], 'c.catid=a.catid')->field('a.*,w.*,c.modelid')->select();
