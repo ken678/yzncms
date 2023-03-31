@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__member_amount_log` (
   `before` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '变更前余额',
   `after` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '变更后余额',
   `remark` varchar(255) DEFAULT '' COMMENT '备注',
-  `createtime` bigint(16) DEFAULT NULL COMMENT '创建时间',
+  `create_time` bigint(16) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='会员余额变动表';
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__member_point_log` (
   `before` int(10) NOT NULL DEFAULT '0' COMMENT '变更前积分',
   `after` int(10) NOT NULL DEFAULT '0' COMMENT '变更后积分',
   `remark` varchar(255) DEFAULT '' COMMENT '备注',
-  `createtime` bigint(16) DEFAULT NULL COMMENT '创建时间',
+  `create_time` bigint(16) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='会员积分变动表';
 
