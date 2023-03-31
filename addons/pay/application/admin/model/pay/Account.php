@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\model\pay;
 
-use think\Db;
+use app\member\model\Member;
 use think\Model;
 use think\model\concern\SoftDelete;
 
@@ -65,14 +65,14 @@ class Account extends Model
         if (self::create($data)) {
             if ($data['type'] == 1) {
                 //金钱方式充值
-                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('amount', $data['money']);
+                Member::amount($data['money'], $data['uid'], $usernote);
             } else {
                 //积分方式充值
-                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('point', $data['money']);
+                Member::point($data['money'], $data['uid'], $usernote);
             }
             return true;
         }
-        return false;
+        throw new \Exception("充值失败！");
     }
 
 }
