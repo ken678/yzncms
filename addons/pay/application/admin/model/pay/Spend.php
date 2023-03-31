@@ -15,7 +15,6 @@
 namespace app\admin\model\pay;
 
 use app\member\model\Member;
-use think\Db;
 use think\Model;
 
 class Spend extends Model
@@ -60,11 +59,10 @@ class Spend extends Model
      * @param integer $userid    用户ID
      * @param integer $type      判断（1：金钱，2：积分）
      * @param integer $value     数量
-     * @param $db                数据库连接
      */
     private static function _check_user($uid, $type, $value)
     {
-        if ($user = Db::name('member')->where('id', $uid)->find()) {
+        if ($user = Member::where('id', $uid)->find()) {
             if ($type == 1) {
                 //金钱消费
                 if ($user['amount'] < $value) {
