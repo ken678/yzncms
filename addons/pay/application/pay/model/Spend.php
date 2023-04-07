@@ -82,15 +82,13 @@ class Spend extends Model
                 } else {
                     return true;
                 }
-            } else{
+            } else {
                 //积分
                 if ($user['point'] < $value) {
                     throw new \Exception("积分不足，请先充值！");
                 } else {
                     return true;
                 }
-            } else {
-                throw new \Exception("充值异常！");
             }
         } else {
             throw new \Exception("此用户不存在！");
