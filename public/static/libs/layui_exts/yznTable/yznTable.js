@@ -869,7 +869,17 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 if (typeof that.custom !== 'undefined') {
                     colorArr = $.extend(colorArr, that.custom);
                 }
-
+                if (typeof that.selectList === 'object' && typeof that.custom === 'undefined') {
+                    var i = 0;
+                    var searchValues = Object.values(colorArr);
+                    $.each(that.selectList, function (key, val) {
+                        if (typeof colorArr[key] == 'undefined') {
+                            colorArr[key] = searchValues[i];
+                            i = typeof searchValues[i + 1] === 'undefined' ? 0 : i + 1;
+                        }
+                    });
+                }
+                
                 //渲染Flag
                 var html = [];
                 var arr = value != '' ? value.split(',') : [];
