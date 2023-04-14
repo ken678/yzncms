@@ -132,7 +132,7 @@
                                 <select name="setting[category_template]">
                                     <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
                                     {volist name="tp_category" id="vo"}
-                                    <option value="{$vo}" {eq name="setting['category_template']" value="$vo" }selected{/eq}>{$vo} </option>
+                                    <option value="{$vo}" {:isset($setting['category_template']) && $setting['category_template']==$vo?'selected':''}>{$vo} </option>
                                     {/volist}
                                 </select>
                             </div>
@@ -144,7 +144,7 @@
                                 <select name="setting[list_template]">
                                     <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
                                     {volist name="tp_list" id="vo"}
-                                    <option value="{$vo}" {eq name="setting['list_template']" value="$vo" }selected{/eq}>{$vo} </option>
+                                    <option value="{$vo}" {:isset($setting['list_template']) && $setting['list_template']==$vo?'selected':''}>{$vo} </option>
                                     {/volist}
                                 </select>
                             </div>
@@ -156,7 +156,7 @@
                                 <select name="setting[show_template]">
                                     <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
                                     {volist name="tp_show" id="vo"}
-                                    <option value="{$vo}" {eq name="setting['show_template']" value="$vo" }selected{/eq}>{$vo} </option>
+                                    <option value="{$vo}" {:isset($setting['show_template']) && $setting['show_template']==$vo?'selected':''}>{$vo} </option>
                                     {/volist}
                                 </select>
                             </div>
@@ -169,7 +169,7 @@
                             <select name="setting[page_template]">
                                 <option value="page.{:config('template.view_suffix')}" selected>默认内容页:page.{:config('template.view_suffix')}</option>
                                 {volist name="tp_page" id="vo"}
-                                <option value="{$vo}" {eq name="setting['page_template']" value="$vo" }selected{/eq}>{$vo} </option>
+                                <option value="{$vo}" {:isset($setting['page_template']) && $setting['page_template']==$vo?'selected':''}>{$vo} </option>
                                 {/volist}
                             </select>
                         </div>
