@@ -27,7 +27,7 @@ class Synclogin extends MemberBase
     protected $noNeedRight = [];
     private $access_token  = '';
     private $openid        = '';
-    private $type          = '';
+    private $platform      = '';
     private $token         = array();
 
     public function initialize()
@@ -59,7 +59,7 @@ class Synclogin extends MemberBase
     {
         $session            = session('SYNCLOGIN');
         $this->token        = $session['TOKEN'];
-        $this->type         = $session['TYPE'];
+        $this->platform     = $session['PLATFORM'];
         $this->openid       = $session['OPENID'];
         $this->access_token = $session['ACCESS_TOKEN'];
         $this->openname     = $session['OPENNAME'];
@@ -68,10 +68,10 @@ class Synclogin extends MemberBase
     //登陆地址
     public function login()
     {
-        $type = $this->request->param('type');
-        empty($type) && $this->error('参数错误');
+        $platform = $this->request->param('type');
+        empty($platform) && $this->error('参数错误');
         //加载ThinkOauth类并实例化一个对象
-        $sns          = Oauth::getInstance($type);
+        $sns          = Oauth::getInstance($platform);
         $addon_config = get_addon_config('synclogin');
         if (0 == $addon_config['display']) {
             $sns->setDisplay('mobile');
@@ -84,13 +84,13 @@ class Synclogin extends MemberBase
     //授权回调地址
     public function callback()
     {
-        $type     = $this->request->param('type/s');
+        $platform = $this->request->param('type/s');
         $code     = $this->request->param('code/s');
         $is_login = $this->auth->isLogin();
-        if ($type == null || $code == null) {
+        if ($platform == null || $code == null) {
             $this->error('参数错误');
         }
-        $sns = Oauth::getInstance($type);
+        $sns = Oauth::getInstance($platform);
         // 获取TOKEN
         $token = $sns->getAccessToken($code);
         // 获取第三方获取信息
@@ -99,12 +99,12 @@ class Synclogin extends MemberBase
         if (empty($token)) {
             $this->error('参数错误');
         }
-        $session = array('TOKEN' => $token, 'TYPE' => $type, 'OPENID' => $openid, 'ACCESS_TOKEN' => $token['access_token'], 'OPENNAME' => $userinfo['nickname']);
+        $session = array('TOKEN' => $token, 'PLATFORM' => $platform, 'OPENID' => $openid, 'ACCESS_TOKEN' => $token['access_token'], 'OPENNAME' => $userinfo['nickname']);
         session('SYNCLOGIN', $session);
         $this->getSession(); // 重新获取session
         //获取当前第三方登录用户信息
         if (is_array($token)) {
-            $check = Service::isBindThird($type, $openid);
+            $check = Service::isBindThird($platform, $openid);
             if ($is_login) {
                 $this->dealIsLogin($this->auth->id);
             } else {
@@ -113,7 +113,7 @@ class Synclogin extends MemberBase
                     $this->redirect(url('index/synclogin/bind'));
                 } else {
                     //$this->prepare();
-                    $loginret = Service::connect($type, $userinfo);
+                    $loginret = Service::connect($platform, $userinfo);
                     if ($loginret) {
                         $this->success('登陆成功！', url('member/index/index'));
                     }
@@ -139,14 +139,14 @@ class Synclogin extends MemberBase
     //解绑账号
     public function unBind()
     {
-        $aType = $this->request->param('type/s');
-        if (empty($aType)) {
+        $platform = $this->request->param('type/s');
+        if (empty($platform)) {
             $this->error('参数错误');
         }
         if (!$this->auth->isLogin()) {
             $this->error('请登录！');
         }
-        $third = SyncLoginModel::where('uid', $this->auth->id)->where('type', $aType)->find();
+        $third = SyncLoginModel::where('uid', $this->auth->id)->where('platform', $platform)->find();
         if (!$third) {
             $this->error("未找到指定的账号绑定信息");
         }
@@ -196,7 +196,7 @@ class Synclogin extends MemberBase
         $data['uid']          = $uid;
         $data['openid']       = $this->openid;
         $data['access_token'] = $this->access_token;
-        $data['type']         = $this->type;
+        $data['platform']     = $this->platform;
         $data['openname']     = $this->openname;
         $data['login_time']   = time();
         return SyncLoginModel::create($data);
@@ -204,10 +204,10 @@ class Synclogin extends MemberBase
 
     protected function dealIsLogin($uid = 0)
     {
-        $session = session('SYNCLOGIN');
-        $openid  = $session['OPENID'];
-        $type    = $session['TYPE'];
-        if (Service::isBindThird($type, $openid)) {
+        $session  = session('SYNCLOGIN');
+        $openid   = $session['OPENID'];
+        $platform = $session['PLATFORM'];
+        if (Service::isBindThird($platform, $openid)) {
             $this->error('该帐号已经被绑定！');
         }
         $this->addSyncLoginData($uid);
