@@ -352,7 +352,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 '</div>';
                             break;
                         case 'select':
-                            d.searchOp = '=';
+                            //d.searchOp = '=';
                             var selectHtml = '';
                             $.each(d.selectList, function(sI, sV) {
                                 var selected = '';
