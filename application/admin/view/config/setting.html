@@ -10,6 +10,7 @@
             </ul>
             <div class="layui-tab-content">
                 <form class="layui-form" method="post">
+                    {:token()}
                     {include file="inputItem"  /}
                     {if count($fieldList)}
                     <div class="layui-form-item layer-footer">

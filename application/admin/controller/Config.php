@@ -55,6 +55,7 @@ class Config extends Adminbase
     public function setting($group = 'base')
     {
         if ($this->request->isPost()) {
+            $this->token();
             $data = $this->request->post('row/a');
             // 查询该分组下所有的配置项名和类型
             $items = ConfigModel::where('group', $group)->where('status', 1)->column('name,type');
@@ -135,6 +136,7 @@ class Config extends Adminbase
     {
         $groupType = $this->request->param('groupType', 'base');
         if ($this->request->isPost()) {
+            $this->token();
             $params = $this->request->post("row/a");
             if ($params) {
                 try {
@@ -173,6 +175,7 @@ class Config extends Adminbase
             $this->error('记录未找到');
         }
         if ($this->request->isPost()) {
+            $this->token();
             $params = $this->request->post("row/a");
             if ($params) {
                 try {
