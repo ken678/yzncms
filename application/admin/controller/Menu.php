@@ -86,6 +86,9 @@ class Menu extends Adminbase
      */
     public function del()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $id = $this->request->param('id/d');
         if (empty($id)) {
             $this->error('ID错误');

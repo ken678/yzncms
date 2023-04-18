@@ -205,6 +205,9 @@ class Config extends Adminbase
     //删除配置
     public function del()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $id  = $this->request->param('id/d');
         $row = ConfigModel::find($id);
         if ($row) {

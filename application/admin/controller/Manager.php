@@ -162,6 +162,9 @@ class Manager extends Adminbase
      */
     public function del()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $id = $this->request->param('id/d');
         if (empty($id)) {
             $this->error('请指定需要删除的用户ID！');

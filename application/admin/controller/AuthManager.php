@@ -150,6 +150,9 @@ class AuthManager extends Adminbase
     //删除管理员用户组
     public function deleteGroup()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $Groupid = $this->request->param('id/d');
         if ($this->AuthGroupModel->GroupDelete($Groupid)) {
             $this->success("删除成功！");

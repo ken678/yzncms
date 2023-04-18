@@ -62,6 +62,9 @@ class Attachments extends Adminbase
     //附件删除
     public function del()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('请选择需要删除的附件！');
