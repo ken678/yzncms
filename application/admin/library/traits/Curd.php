@@ -173,6 +173,9 @@ trait Curd
     //删除
     public function del()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('参数错误！');
@@ -205,6 +208,9 @@ trait Curd
     //真实删除
     public function destroy()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $ids = $this->request->param('id/a', null);
         if ($ids && !is_array($ids)) {
             $ids = [0 => $ids];
@@ -236,6 +242,9 @@ trait Curd
     //还原
     public function restore()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $ids = $this->request->param('id/a', null);
         if ($ids && !is_array($ids)) {
             $ids = [0 => $ids];
@@ -267,6 +276,9 @@ trait Curd
     //批量更新
     public function multi()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $ids = $this->request->param('id/a', null);
         if (empty($ids)) {
             $this->error('参数错误！');
