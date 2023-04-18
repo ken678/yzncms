@@ -40,11 +40,13 @@ class Menu
                 if (empty($menu['title']) || empty($menu['name'])) {
                     continue;
                 }
-                $route = self::menuRoute($menu['name'], 'admin');
-                $data  = array_merge(array(
+                $hasChild = isset($menu['child']) && $menu['child'] ? true : false;
+                $route    = self::menuRoute($menu['name'], 'admin');
+                $data     = array_merge(array(
                     //父ID
                     "parentid"  => $parentid ?: ($menu['parentid'] ?? (int) $defaultMenuParentid),
-                    'icon'      => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
+                    //'icon'      => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
+                    'icon'      => isset($menu['icon']) ? $menu['icon'] : ($hasChild ? 'icon-other' : 'icon-circle-line'),
                     //状态，1是显示，0是不显示
                     "status"    => $menu['status'] ?? 0,
                     //名称
@@ -57,7 +59,7 @@ class Menu
                 ), $route);
                 $result = MenuModel::create($data);
                 //是否有子菜单
-                if (!empty($menu['child'])) {
+                if ($hasChild) {
                     self::addAddonMenu($menu['child'], $config, $result['id']);
                 }
             }
