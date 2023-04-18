@@ -32,7 +32,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         notice.info({ message: '请设置data-href参数' });
                         return false;
                     }
-                    $.get(href, function(res) {
+                    $.post(href, function(res) {
                         if (res.code == 1) {
                             notice.success({ message: res.msg });
                             //that.parents('tr').remove();
