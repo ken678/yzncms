@@ -178,6 +178,89 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
         },
         events: {
             init: function() {
+                // 监听请求
+                $('body').on('click', '[data-request]', function() {
+                    var that = $(this);
+                    var title = $(this).data('title'),
+                        url = $(this).data('request') || $(this).attr("href"),
+                        tableId = $(this).data('table'),
+                        checkbox = $(this).data('checkbox');
+
+                    var postData = {};
+                    if (checkbox === 'true') {
+                        tableId = tableId || init.table_render_id;
+                        var checkStatus = table.checkStatus(tableId),
+                            data = checkStatus.data;
+                        if (data.length <= 0) {
+                            yzn.msg.error('请勾选需要操作的数据');
+                            return false;
+                        }
+                        var ids = [];
+                        $.each(data, function(i, v) {
+                            ids.push(v.id);
+                        });
+                        postData.id = ids;
+                    }
+
+                    title = title || '确定进行该操作？';
+                    tableId = tableId || init.table_render_id;
+
+                    func = function() {
+                        yzn.request.post({
+                            url: url,
+                            data: postData,
+                        }, function(data,res) {
+                            yzn.msg.success(res.msg, function() {
+                                tableId && table.reload(tableId);
+                            });
+                        }, function(data,res) {
+                            yzn.msg.error(res.msg, function () {
+                                tableId && table.reload(tableId);
+                            });
+                        })
+                    }
+                    if (typeof(that.attr('confirm')) == 'undefined') {
+                        func();
+                    } else {
+                        yzn.msg.confirm(title, func);
+                    }
+                    return false;
+                });
+                // 监听弹出层的打开
+                $('body').on('click', '[data-open]', function() {
+                    var clienWidth = $(this).attr('data-width') || 800,
+                        clientHeight = $(this).attr('data-height') || 600,
+                        dataFull = $(this).attr('data-full'),
+                        checkbox = $(this).attr('data-checkbox'),
+                        url = $(this).attr('data-open'),
+                        title = $(this).attr("title") || $(this).data("title"),
+                        tableId = $(this).attr('data-table');
+
+                    if (checkbox === 'true') {
+                        tableId = tableId || init.table_render_id;
+                        var checkStatus = table.checkStatus(tableId),
+                            data = checkStatus.data;
+                        if (data.length <= 0) {
+                            yzn.msg.error('请勾选需要操作的数据');
+                            return false;
+                        }
+                        var ids = [];
+                        $.each(data, function(i, v) {
+                            ids.push(v.id);
+                        });
+                        if (url.indexOf("?") === -1) {
+                            url += '?id=' + ids.join(',');
+                        } else {
+                            url += '&id=' + ids.join(',');
+                        }
+                    }
+                    if (dataFull === 'true') {
+                        clienWidth = '100%';
+                        clientHeight = '100%';
+                    }
+                    yzn.open(title, url, clienWidth, clientHeight);
+                });
+
                 var tips_index = 0;
                 $(document).on('mouseenter', '[lay-tips]', function () {
                     tips_index = layer.tips($(this).attr('lay-tips'), this, {
@@ -215,7 +298,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
                  * @title 弹窗标题
                  * @lay-data {width: '弹窗宽度', height: '弹窗高度', idSync: '是否同步ID', table: '数据表ID(同步ID时必须)', type: '弹窗类型'}
                  */
-                $(document).on('click', '.layui-iframe', function() {
+                /*$(document).on('click', '.layui-iframe', function() {
                     var that = $(this),
                         query = '';
                     var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: !that.attr('data-href') ? that.attr('href') : that.attr('data-href'), title: that.attr('title') };
@@ -260,7 +343,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element'], function(ex
 
                     layer.open({ type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height] });
                     return false;
-                });
+                });*/
             },
             faselect: function (layform) {
                 //绑定fachoose选择附件事件
