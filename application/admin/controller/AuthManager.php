@@ -165,6 +165,7 @@ class AuthManager extends Adminbase
     //管理员用户组数据写入/更新
     public function writeGroup()
     {
+        $this->token();
         $data           = $this->request->post();
         $data['module'] = 'admin';
         $data['type']   = AuthGroupModel::TYPE_ADMIN;
