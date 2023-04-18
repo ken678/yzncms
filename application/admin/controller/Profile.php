@@ -50,6 +50,7 @@ class Profile extends Adminbase
     public function update()
     {
         if ($this->request->isPost()) {
+            $this->token();
             $params = $this->request->post();
             $params = array_filter(array_intersect_key(
                 $params,
