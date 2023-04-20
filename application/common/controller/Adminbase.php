@@ -273,7 +273,7 @@ class Adminbase extends Base
                     foreach ($findArr as $idx => $item) {
                         $bindName        = "item_" . $index . "_" . $idx;
                         $bind[$bindName] = $item;
-                        $where[]         = "FIND_IN_SET(:{$bindName}, `" . str_replace('.', '`.`', $k) . "`)";
+                        $where[]         = ["FIND_IN_SET(:{$bindName}, `" . str_replace('.', '`.`', $k) . "`)", [$bindName => $item]];
                     }
                     break;
                 case 'IN':
@@ -339,7 +339,7 @@ class Adminbase extends Base
         $where = function ($query) use ($where, $alias, $bind, &$model) {
             if (!empty($model)) {
                 $model->alias($alias);
-                $model->bind($bind);
+                //$model->bind($bind);
             }
             foreach ($where as $k => $v) {
                 if (is_array($v)) {

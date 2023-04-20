@@ -150,6 +150,9 @@ class AuthManager extends Adminbase
     //删除管理员用户组
     public function deleteGroup()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $Groupid = $this->request->param('id/d');
         if ($this->AuthGroupModel->GroupDelete($Groupid)) {
             $this->success("删除成功！");
@@ -162,6 +165,7 @@ class AuthManager extends Adminbase
     //管理员用户组数据写入/更新
     public function writeGroup()
     {
+        $this->token();
         $data           = $this->request->post();
         $data['module'] = 'admin';
         $data['type']   = AuthGroupModel::TYPE_ADMIN;

@@ -235,7 +235,7 @@ class Program extends Adminbase
             ['status', '=', 1],
         ])->select();
 
-        $cms_model = new \app\cms\model\Cms;
+        $cms_model = new \app\admin\model\cms\Cms;
         foreach ($data as $k => $v) {
             $sql['modelField'] = array('catid' => $program['catid'], 'status' => 1);
             $v['data']         = unserialize($v['data']);

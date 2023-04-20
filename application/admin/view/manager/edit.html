@@ -2,6 +2,7 @@
 {block name="main"}
 <form class="layui-form" method="post">
     <input type="hidden" name="id" value="{$data.id}" />
+    {:token()}
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-block">

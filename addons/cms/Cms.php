@@ -191,11 +191,6 @@ class Cms extends Addons
                                     "title"  => "添加栏目",
                                 ],
                                 [
-                                    "name"   => "admin/cms.category/singlepage",
-                                    "status" => 0,
-                                    "title"  => "添加单页",
-                                ],
-                                [
                                     "name"   => "admin/cms.category/cat_priv",
                                     "status" => 0,
                                     "title"  => "栏目授权",

@@ -56,7 +56,7 @@ class Synclogin extends Addons
                 $arr[$v]['name']    = strtolower($v);
                 $arr[$v]['is_bind'] = $this->check_is_bind_account(User::instance()->id, strtolower($v));
                 if ($arr[$v]['is_bind']) {
-                    $token = Db::name('sync_login')->where(array('type' => strtolower($v), 'uid' => User::instance()->id))->find();
+                    $token = Db::name('sync_login')->where(array('platform' => strtolower($v), 'uid' => User::instance()->id))->find();
                 }
             }
             unset($v);
@@ -68,7 +68,7 @@ class Synclogin extends Addons
 
     protected function check_is_bind_account($uid = 0, $type = '')
     {
-        $check = Db::name('sync_login')->where(array('uid' => $uid, 'type' => $type))->count();
+        $check = Db::name('sync_login')->where(array('uid' => $uid, 'platform' => $type))->count();
         if ($check > 0) {
             return true;
         }

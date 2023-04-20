@@ -10,20 +10,18 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 充值验证
+// | 会员积分变动模型
 // +----------------------------------------------------------------------
-namespace app\admin\validate\pay;
+namespace app\member\model;
 
-use think\Validate;
+use think\Model;
 
-class Account extends Validate
+class PointLog extends Model
 {
-    //定义验证规则
-    protected $rule = [
-        'pay_type|充值类型' => 'require',
-        'username|用户名'  => 'require',
-        'pay_unit|充值额度' => 'require',
-        'unit|修改数量'     => 'require',
-        'usernote|交易备注' => 'require',
-    ];
+
+    // 表名
+    protected $name = 'member_point_log';
+    // 开启自动写入时间戳字段
+    protected $autoWriteTimestamp = true;
+    protected $updateTime         = false;
 }

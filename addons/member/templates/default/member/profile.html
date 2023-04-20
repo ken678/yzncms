@@ -21,17 +21,17 @@
                 <div class="layui-form-item"> <label class="layui-form-label">手机</label>
                     <div class="layui-input-inline"> <input type="text" name="mobile" required="" lay-verify="phone" autocomplete="off" value="{$userinfo.mobile}" class="layui-input" disabled style="cursor: not-allowed !important;"></div>
                     {eq name="userinfo.ischeck_mobile" value="1"}
-                    <button class="layui-btn layui-iframe" type="button" href="{:url('changemobile')}" lay-data="{width:'440px',height:'250px',title:'修改手机'}">修改</button>
+                    <button class="layui-btn" type="button" data-open="{:url('changemobile')}" data-width="440" data-height="250" title="修改手机">修改</button>
                     {else/}
-                    <button class="layui-btn layui-iframe layui-btn-danger" type="button" href="{:url('actmobile')}" lay-data="{width:'440px',height:'250px',title:'激活手机'}">激活</button>
+                    <button class="layui-btn layui-btn-danger" type="button" data-open="{:url('actmobile')}" data-width="440" data-height="250" title="激活手机">激活</button>
                     {/eq}
                 </div>
                 <div class="layui-form-item"> <label class="layui-form-label">邮箱</label>
                     <div class="layui-input-inline"> <input type="text" name="email" required="" lay-verify="email" autocomplete="off" value="{$userinfo.email}" class="layui-input" disabled style="cursor: not-allowed !important;"> </div>
                     {eq name="userinfo.ischeck_email" value="1"}
-                    <button class="layui-btn layui-iframe" type="button" href="{:url('changeemail')}" lay-data="{width:'440px',height:'250px',title:'修改邮箱'}">修改</button>
+                    <button class="layui-btn" type="button" data-open="{:url('changeemail')}" data-width="440" data-height="250" title="修改邮箱">修改</button>
                     {else/}
-                    <button class="layui-btn layui-iframe layui-btn-danger" type="button" href="{:url('actemail')}" lay-data="{width:'440px',height:'250px',title:'激活邮箱'}">激活</button>
+                    <button class="layui-btn layui-btn-danger" type="button" data-open="{:url('actemail')}" data-width="440" data-height="250" title="激活邮箱">激活</button>
                     {/eq}
                 </div>
                 {:hook("user_config")}

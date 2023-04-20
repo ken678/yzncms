@@ -30,13 +30,14 @@ body {
                                 <span class="s3">来源：互联网</span></div>
                         </div>
                         <div class="newsview">
-                            {eq name="allow_visitor" value="1"}
+                            {if $allow_visitor==1 || $is_part_content_pay==1}
                             {$content|raw}
-                            {else/}
+                            {/if}
+                            {if $allow_visitor!=1 && $is_part_content_pay!=1}
                             <div class="allow_visitor">
-                                <a href="{:url('cms/index/readpoint',['allow_visitor' => $allow_visitor])}"><font color="red">阅读此信息需要您支付 <B><I>{$readpoint} {if $paytype}元{else}点{/if}</I></B>，点击这里支付</font></a>
+                                <a href="{:url('cms/index/readpoint',['allow_visitor' => $allow_visitor])}">阅读此信息需要您支付 <B><I>{$readpoint} {if $paytype}元{else}点{/if}</I></B>，点击这里支付</a>
                             </div>
-                            {/eq}
+                            {/if}
                             <!--S 分页-->
                             {$pages|raw}
                             <!--E 分页-->

@@ -75,6 +75,28 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__member_token` (
   PRIMARY KEY (`token`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='会员Token表';
 
+CREATE TABLE IF NOT EXISTS `__PREFIX__member_amount_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '变更余额',
+  `before` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '变更前余额',
+  `after` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '变更后余额',
+  `remark` varchar(255) DEFAULT '' COMMENT '备注',
+  `create_time` bigint(16) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='会员余额变动表';
+
+CREATE TABLE IF NOT EXISTS `__PREFIX__member_point_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `point` int(10) NOT NULL DEFAULT '0' COMMENT '变更积分',
+  `before` int(10) NOT NULL DEFAULT '0' COMMENT '变更前积分',
+  `after` int(10) NOT NULL DEFAULT '0' COMMENT '变更后积分',
+  `remark` varchar(255) DEFAULT '' COMMENT '备注',
+  `create_time` bigint(16) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='会员积分变动表';
+
 INSERT INTO `__PREFIX__member_group` VALUES ('1', '禁止访问', '1', '0', '0', '0', '1', '1', '0', '1', '0', '0', '0', '0','0.00','0.00', '0.00', '', '', '0', '10', '1', '');
 INSERT INTO `__PREFIX__member_group` VALUES ('2', '新手上路', '1', '1', '50', '100', '1', '1', '0', '0', '1', '1', '0', '0','50.00', '10.00', '1.00' ,'', '', '', '8', '1', '');
 INSERT INTO `__PREFIX__member_group` VALUES ('6', '注册会员', '1', '2', '100', '150', '0', '1', '0', '0', '1', '1', '0', '0','300.00', '30.00', '1.00', '', '', '', '7', '1', '');

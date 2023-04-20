@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
 [![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
-[![Version](https://img.shields.io/badge/YznCMS-1.1.4-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-1.1.5-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -100,10 +100,8 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 > 更多的常见问题和教程见手册
 
 ## [截图预览]
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1229/133034_265df309_555541.gif "GIF (1).gif")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165618_3f12f7f5_555541.png "YZNCMS后台管理系统")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165632_61e32825_555541.png "YZNCMS后台管理系统")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1104/165745_b4e41e16_555541.png "YZNCMS后台管理系统")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/1229/133034_265df309_555541.gif "YZNCMS后台管理系统")
+![输入图片说明](https://foruda.gitee.com/images/1679995393012272983/aa834c07_555541.png "YZNCMS后台管理系统")
 
 ## [友情捐赠]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")

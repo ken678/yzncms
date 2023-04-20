@@ -99,7 +99,7 @@ class Formguide extends MemberBase
         try {
             $this->FormguideModel->addFormguideData($this->formid, $data['modelField']);
         } catch (\Exception $ex) {
-            $this->error($ex->getMessage());
+            $this->error($ex->getMessage(), null, ['__token__' => $this->request->token()]);
         }
         if ($this->setting['interval']) {
             cookie('formguide_' . $this->formid, 1, $this->setting['interval']);

@@ -52,6 +52,9 @@ class Menu extends Adminbase
     //添加后台菜单
     public function add()
     {
+        if ($this->request->isPost()) {
+            $this->token();
+        }
         $tree   = new \util\Tree();
         $pid    = $this->request->param('parentid/d', 0);
         $result = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
@@ -66,6 +69,9 @@ class Menu extends Adminbase
      */
     public function edit()
     {
+        if ($this->request->isPost()) {
+            $this->token();
+        }
         $tree   = new \util\Tree();
         $id     = $this->request->param('id/d', 0);
         $rs     = MenuModel::where(["id" => $id])->find();
@@ -86,6 +92,9 @@ class Menu extends Adminbase
      */
     public function del()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $id = $this->request->param('id/d');
         if (empty($id)) {
             $this->error('ID错误');

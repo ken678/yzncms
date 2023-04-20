@@ -10,7 +10,7 @@
     </div>
 </div>
 <script type="text/html" id="barTool">
-    <a href='{:url("read_group")}?id={{ d.id }}' lay-data="{width:'400px',height:'350px',title:'查看系统消息'}" class="layui-btn layui-btn-xs layui-iframe">查看</a>
+    <a data-open='{:url("read_group")}?id={{ d.id }}' data-width="400" data-height="350" title="查看系统消息" class="layui-btn layui-btn-xs">查看</a>
 </script>
 {template file="member/layui.html"/}
 <script>

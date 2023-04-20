@@ -32,7 +32,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         notice.info({ message: '请设置data-href参数' });
                         return false;
                     }
-                    $.get(href, function(res) {
+                    $.post(href, function(res) {
                         if (res.code == 1) {
                             notice.success({ message: res.msg });
                             //that.parents('tr').remove();
@@ -85,88 +85,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     tableId = init.table_render_id;
                 }
                 table.reload(tableId);
-            });
-            // 监听请求
-            $('body').on('click', '[data-request]', function() {
-                var that = $(this);
-                var title = $(this).data('title'),
-                    url = $(this).data('request') || $(this).attr("href"),
-                    tableId = $(this).data('table'),
-                    checkbox = $(this).data('checkbox');
-
-                var postData = {};
-                if (checkbox === 'true') {
-                    tableId = tableId || init.table_render_id;
-                    var checkStatus = table.checkStatus(tableId),
-                        data = checkStatus.data;
-                    if (data.length <= 0) {
-                        yzn.msg.error('请勾选需要操作的数据');
-                        return false;
-                    }
-                    var ids = [];
-                    $.each(data, function(i, v) {
-                        ids.push(v.id);
-                    });
-                    postData.id = ids;
-                }
-
-                title = title || '确定进行该操作？';
-                tableId = tableId || init.table_render_id;
-
-                func = function() {
-                    yzn.request.post({
-                        url: url,
-                        data: postData,
-                    }, function(data,res) {
-                        yzn.msg.success(res.msg, function() {
-                            tableId && table.reload(tableId);
-                        });
-                    }, function(data,res) {
-                        yzn.msg.error(res.msg, function () {
-                            tableId && table.reload(tableId);
-                        });
-                    })
-                }
-                if (typeof(that.attr('confirm')) == 'undefined') {
-                    func();
-                } else {
-                    yzn.msg.confirm(title, func);
-                }
-                return false;
-            });
-            // 监听弹出层的打开
-            $('body').on('click', '[data-open]', function() {
-                var clienWidth = $(this).attr('data-width') || 800,
-                    clientHeight = $(this).attr('data-height') || 600,
-                    dataFull = $(this).attr('data-full'),
-                    checkbox = $(this).attr('data-checkbox'),
-                    url = $(this).attr('data-open'),
-                    title = $(this).attr("title") || $(this).data("title"),
-                    tableId = $(this).attr('data-table');
-
-                if (checkbox === 'true') {
-                    tableId = tableId || init.table_render_id;
-                    var checkStatus = table.checkStatus(tableId),
-                        data = checkStatus.data;
-                    if (data.length <= 0) {
-                        yzn.msg.error('请勾选需要操作的数据');
-                        return false;
-                    }
-                    var ids = [];
-                    $.each(data, function(i, v) {
-                        ids.push(v.id);
-                    });
-                    if (url.indexOf("?") === -1) {
-                        url += '?id=' + ids.join(',');
-                    } else {
-                        url += '&id=' + ids.join(',');
-                    }
-                }
-                if (dataFull === 'true') {
-                    clienWidth = '100%';
-                    clientHeight = '100%';
-                }
-                yzn.open(title, url, clienWidth, clientHeight);
             });
             //通用状态设置开关
             form.on('switch(switchStatus)', function(data) {
@@ -352,7 +270,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 '</div>';
                             break;
                         case 'select':
-                            d.searchOp = '=';
+                            //d.searchOp = '=';
                             var selectHtml = '';
                             $.each(d.selectList, function(sI, sV) {
                                 var selected = '';
@@ -831,7 +749,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 var field = that.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                     value = value == null || value.length === 0 ? '' : value.toString();
                 } catch (e) {
                     var value = undefined;
@@ -858,7 +776,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 var field = that.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                     value = value == null || value.length === 0 ? '' : value.toString();
                 } catch (e) {
                     var value = undefined;
@@ -869,7 +787,17 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 if (typeof that.custom !== 'undefined') {
                     colorArr = $.extend(colorArr, that.custom);
                 }
-
+                if (typeof that.selectList === 'object' && typeof that.custom === 'undefined') {
+                    var i = 0;
+                    var searchValues = Object.values(colorArr);
+                    $.each(that.selectList, function (key, val) {
+                        if (typeof colorArr[key] == 'undefined') {
+                            colorArr[key] = searchValues[i];
+                            i = typeof searchValues[i + 1] === 'undefined' ? 0 : i + 1;
+                        }
+                    });
+                }
+                
                 //渲染Flag
                 var html = [];
                 var arr = value != '' ? value.split(',') : [];
@@ -899,7 +827,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 that.checked = that.checked || 1;
                 that.tips = that.tips || '开|关';
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
@@ -916,7 +844,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var field = that.field,
                     title = data[that.title];
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
@@ -932,50 +860,45 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
             },
             url: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<a class="layui-btn layui-btn-primary layui-btn-xs" href="' + value + '" target="_blank"><i class="iconfont icon-lianjie"></i></a></a>';
             },
             price: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<span>￥' + value + '</span>';
             },
             icon: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<i class="' + value + '"></i>';
             },
             text: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
                 return '<span class="line-limit-length">' + value + '</span>';
             },
             value: function(data) {
-                var that = this;
-                var field = that.field;
+                var field = this.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }
@@ -985,7 +908,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 var field = that.field;
                 try {
-                    var value = eval("data." + field);
+                    var value = data[field];
                 } catch (e) {
                     var value = undefined;
                 }

@@ -99,6 +99,7 @@ class Manager extends Adminbase
     public function add()
     {
         if ($this->request->isPost()) {
+            $this->token();
             $params             = $this->request->post('');
             $result             = $this->validate($params, 'AdminUser.insert');
             $passwordinfo       = encrypt_password($params['password']); //对密码进行处理
@@ -127,6 +128,7 @@ class Manager extends Adminbase
     public function edit()
     {
         if ($this->request->isPost()) {
+            $this->token();
             $data = $this->request->post('');
             if (!in_array($data['id'], $this->childrenAdminIds)) {
                 $this->error('没有权限操作！');
@@ -162,6 +164,9 @@ class Manager extends Adminbase
      */
     public function del()
     {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
         $id = $this->request->param('id/d');
         if (empty($id)) {
             $this->error('请指定需要删除的用户ID！');

@@ -37,16 +37,7 @@ layui.use('yznTable', function() {
                     class: 'layui-btn layui-btn-sm layui-btn-normal',
                     icon: 'iconfont icon-add',
                     extend: 'data-width="900" data-height="600"',
-                },
-                {
-                    text: '新增单页',
-                    url: "{:url('singlepage')}",
-                    method: 'open',
-                    class: 'layui-btn layui-btn-sm layui-btn-normal',
-                    icon: 'iconfont icon-add',
-                    extend: 'data-width="900" data-height="600"',
-                }
-            ], 'delete', [{
+                }], 'delete', [{
                     text: '栏目授权',
                     url: "{:url('cat_priv')}",
                     method: 'open',
@@ -81,7 +72,7 @@ layui.use('yznTable', function() {
                 { field: 'catname',align: "left", title: '栏目名称' },
                 { field: 'items', width: 80, title: '数据量' },
                 { field: 'catdir', width: 120, title: '唯一标识' },
-                { field: 'type', width: 90,title: '栏目类型',templet: yznTable.formatter.label,selectList:{1:'单页',2:'列表'},custom:{1:"cyan",2:"blue"}},
+                { field: 'type', width: 90,title: '栏目类型',templet: yznTable.formatter.label,selectList:{1:'单页',2:'列表',3:'外链'},custom:{1:"cyan",2:"blue",3:"green"},search:false},
                 { field: 'modelname', width: 120, title: '所属模型' },
                 { field: 'url', width: 60, align: "center", title: 'URL', templet: yznTable.formatter.url },
                 { field: 'status', width: 100, align: "center", title: '状态', unresize: true,templet: yznTable.formatter.switch },

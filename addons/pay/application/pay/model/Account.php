@@ -16,7 +16,6 @@ namespace app\pay\model;
 
 use app\member\model\Member;
 use app\member\service\User as home_user;
-use think\Db;
 use think\Model;
 
 class Account extends Model
@@ -95,10 +94,10 @@ class Account extends Model
         if (self::create($data)) {
             if ($data['type'] == 1) {
                 //金钱方式充值
-                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('amount', $data['money']);
+                Member::amount($data['money'], $data['uid'], $usernote);
             } else {
                 //积分方式充值
-                Db::name('member')->where(['id' => $data['uid'], 'username' => $data['username']])->setInc('point', $data['money']);
+                Member::point($data['money'], $data['uid'], $usernote);
             }
             return true;
         }
@@ -124,15 +123,7 @@ class Account extends Model
             $order->status   = 'succ';
             $order->save();
             // 更新会员余额
-            $user = Member::get($order->uid);
-            if ($user) {
-                $before = $user->amount;
-                $after  = $user->amount + $order->money;
-                //更新会员信息
-                $user->save(['amount' => $after]);
-                //写入日志
-                //MoneyLog::create(['user_id' => $order->user_id, 'money' => $order->amount, 'before' => $before, 'after' => $after, 'memo' => '充值']);
-            }
+            Member::amount($order->money, $order->uid, '充值');
         }
         return true;
     }

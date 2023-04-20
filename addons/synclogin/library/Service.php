@@ -21,29 +21,35 @@ class Service
 {
     /**
      * 第三方登录
-     * @param string $type 平台
+     * @param string $platform 平台
      * @param array  $params   参数
      * @param array  $extend   会员扩展信息
      * @param int    $keeptime 有效时长
      * @return boolean
      *
      */
-    public static function connect($type, $params = [], $extend = [], $keeptime = 0)
+    public static function connect($platform, $params = [], $extend = [], $keeptime = 0)
     {
+        $time     = time();
         $token    = $params['token'];
         $nickname = $params['nickname'] ?? '';
         $avatar   = $params['avatar'] ?? '';
         $data     = [
-            'openid'       => $token['openid'],
-            'access_token' => $token['access_token'],
-            'openname'     => $nickname,
-            'type'         => $type,
-            'login_time'   => time(),
-            'unionid'      => $params['unionid'] ?? '',
+            'openid'        => $token['openid'],
+            'access_token'  => $token['access_token'],
+            'refresh_token' => $token['refresh_token'] ?? '',
+            'expires_in'    => $token['expires_in'] ?? '',
+            'openname'      => $nickname,
+            'platform'      => $platform,
+            'login_time'    => $time,
+            'expire_time'   => isset($token['expires_in']) ? $time + $token['expires_in'] : '',
+            'unionid'       => $params['unionid'] ?? '',
         ];
+        $data = array_merge($data, $params);
+
         $auth = \app\member\service\User::instance();
         //查询是否有第三方登录记录
-        $third = SyncLoginModel::get(['type' => $type, 'openid' => $token['openid']], 'member');
+        $third = SyncLoginModel::get(['platform' => $platform, 'openid' => $token['openid']], 'member');
         if ($third) {
             if (!$third->member) {
                 //删除不存在会员记录
@@ -57,7 +63,7 @@ class Service
 
         //存在unionid就需要判断是否需要生成新记录 QQ和微信、淘宝可以获取unionid
         if (isset($params['unionid']) && !empty($params['unionid'])) {
-            $third = SyncLoginModel::get(['type' => $type, 'unionid' => $params['unionid']], 'member');
+            $third = SyncLoginModel::get(['platform' => $platform, 'unionid' => $params['unionid']], 'member');
             if ($third) {
                 if (!$third->member) {
                     $third->delete();
@@ -109,12 +115,15 @@ class Service
     /**
      * 是否绑定第三方
      */
-    public static function isBindThird($type, $openid, $unionid = '')
+    public static function isBindThird($platform, $openid, $apptype = '', $unionid = '')
     {
         $conddtions = [
-            'type'   => $type,
-            'openid' => $openid,
+            'platform' => $platform,
+            'openid'   => $openid,
         ];
+        if ($apptype) {
+            $conddtions['apptype'] = $apptype;
+        }
         $third = SyncLoginModel::get($conddtions, 'member');
         //第三方存在
         if ($third) {
@@ -126,7 +135,7 @@ class Service
             return true;
         }
         if ($unionid) {
-            $third = SyncLoginModel::get(['type' => $type, 'unionid' => $unionid], 'member');
+            $third = SyncLoginModel::get(['platform' => $platform, 'unionid' => $unionid], 'member');
             if ($third) {
                 //
                 if (!$third->member) {

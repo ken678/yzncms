@@ -6,10 +6,19 @@
             <li class="layui-this">基本设置</li>
             <li>选项设置</li>
             <li id="modeTab">模板设置</li>
-            <li>权限设置</li>
+            <li id="authTab">权限设置</li>
         </ul>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
+                <div class="alert alert-warning-light">温馨提示<br>列表类型的模型一旦选择后不支持更换其他模型<br>列表改成单页或外链类型后，无法在改回列表类型</div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="type" value="1" title="单页" lay-filter="type" {eq name="data.type" value="1" }checked{/eq}>
+                        {if $data.type==2}<input type="radio" name="type" value="2" title="列表" lay-filter="type" checked>{/if}
+                        <input type="radio" name="type" value="3" title="外链" lay-filter="type" {eq name="data.type" value="3" }checked{/eq}>
+                    </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">上级菜单</label>
                     <div class="layui-input-block">
@@ -32,7 +41,7 @@
                     </div>
                     <div class="layui-form-mid2 layui-word-aux">英文数字组成，留空则自动生成拼音</div>
                 </div>
-                <div class="layui-form-item web_link">
+                <div class="layui-form-item lay lay-url">
                     <label class="layui-form-label">链接地址</label>
                     <div class="layui-input-block">
                         <div class="layui-input-inline w300">
@@ -65,7 +74,7 @@
                         <textarea name="description" placeholder="栏目简介" class="layui-textarea">{$data.description}</textarea>
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text">
+                <div class="layui-form-item">
                     <label class="layui-form-label">栏目图片</label>
                     <div class="layui-input-block">
                         <div class="js-upload-image">
@@ -73,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text">
+                <div class="layui-form-item">
                     <label class="layui-form-label">栏目图标</label>
                     <div class="layui-input-block">
                         <div class="js-upload-image">
@@ -116,41 +125,55 @@
                     </div>
                 </div>
                 <div class="layui-tab-item">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">栏目首页模板</label>
-                        <div class="layui-input-block">
-                            <select name="setting[category_template]">
-                                <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
-                                {volist name="tp_category" id="vo"}
-                                <option value="{$vo}" {eq name="setting['category_template']" value="$vo" }selected{/eq}>{$vo} </option>
-                                {/volist}
-                            </select>
+                    <div class="lay lay-list">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">栏目首页模板</label>
+                            <div class="layui-input-block">
+                                <select name="setting[category_template]">
+                                    <option value="category.{:config('template.view_suffix')}" selected>默认栏目首页:category.{:config('template.view_suffix')}</option>
+                                    {volist name="tp_category" id="vo"}
+                                    <option value="{$vo}" {:isset($setting['category_template']) && $setting['category_template']==$vo?'selected':''}>{$vo} </option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <div class="layui-form-mid2 layui-word-aux">新增模板以category_xx.{:config('template.view_suffix')}形式,【含有子栏目时生效】</div>
                         </div>
-                        <div class="layui-form-mid2 layui-word-aux">新增模板以category_xx.{:config('template.view_suffix')}形式,【含有子栏目时生效】</div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">栏目列表页模板</label>
+                            <div class="layui-input-block">
+                                <select name="setting[list_template]">
+                                    <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
+                                    {volist name="tp_list" id="vo"}
+                                    <option value="{$vo}" {:isset($setting['list_template']) && $setting['list_template']==$vo?'selected':''}>{$vo} </option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <div class="layui-form-mid2 layui-word-aux">新增模板以list_xx.{:config('template.view_suffix')}形式,【没有子栏目时生效】</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">内容页模板</label>
+                            <div class="layui-input-block">
+                                <select name="setting[show_template]">
+                                    <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
+                                    {volist name="tp_show" id="vo"}
+                                    <option value="{$vo}" {:isset($setting['show_template']) && $setting['show_template']==$vo?'selected':''}>{$vo} </option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <div class="layui-form-mid2 layui-word-aux">新增模板以show_xx.{:config('template.view_suffix')}形式</div>
+                        </div>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">栏目列表页模板</label>
+                    <div class="layui-form-item lay lay-page">
+                        <label class="layui-form-label">单页模板</label>
                         <div class="layui-input-block">
-                            <select name="setting[list_template]">
-                                <option value="list.{:config('template.view_suffix')}" selected>默认栏目列表页:list.{:config('template.view_suffix')}</option>
-                                {volist name="tp_list" id="vo"}
-                                <option value="{$vo}" {eq name="setting['list_template']" value="$vo" }selected{/eq}>{$vo} </option>
+                            <select name="setting[page_template]">
+                                <option value="page.{:config('template.view_suffix')}" selected>默认内容页:page.{:config('template.view_suffix')}</option>
+                                {volist name="tp_page" id="vo"}
+                                <option value="{$vo}" {:isset($setting['page_template']) && $setting['page_template']==$vo?'selected':''}>{$vo} </option>
                                 {/volist}
                             </select>
                         </div>
-                        <div class="layui-form-mid2 layui-word-aux">新增模板以list_xx.{:config('template.view_suffix')}形式,【没有子栏目时生效】</div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">内容页模板</label>
-                        <div class="layui-input-block">
-                            <select name="setting[show_template]">
-                                <option value="show.{:config('template.view_suffix')}" selected>默认内容页:show.{:config('template.view_suffix')}</option>
-                                {volist name="tp_show" id="vo"}
-                                <option value="{$vo}" {eq name="setting['show_template']" value="$vo" }selected{/eq}>{$vo} </option>
-                                {/volist}
-                            </select>
-                        </div>
-                        <div class="layui-form-mid2 layui-word-aux">新增模板以show_xx.{:config('template.view_suffix')}形式</div>
+                        <div class="layui-form-mid2 layui-word-aux">新增模板以page_xx.{:config('template.view_suffix')}形式</div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">模板应用到子栏目</label>
@@ -187,7 +210,6 @@
                 </div>
             </div>
             <input type="hidden" name="modelid" value="{$data.modelid}">
-            <input type="hidden" name="type" value="2">
             <input name="id" type="hidden" value="{$data.id}">
             <div class="layui-form-item layer-footer">
                 <div class="layui-input-block">
@@ -205,6 +227,31 @@ layui.use(['form','yznForm'], function() {
     yznForm = layui.yznForm;
 
     yznForm.listen();
+
+    form.on('radio(type)', function(data){
+      $(".lay").addClass("layui-hide");
+      //单页
+      if(data.value==1){
+        $('#modeTab').show();
+        $('#authTab').hide();
+        $('.lay-page').removeClass("layui-hide");
+      }
+      //列表
+      if(data.value==2){
+        $('#modeTab').show();
+        $('#authTab').show();
+        $('.lay-list').removeClass("layui-hide");
+      }
+      //外链
+      if(data.value==3){
+        $('#authTab').hide();
+        $('#modeTab').hide();
+        $('.lay-url').removeClass("layui-hide");
+      }
+    });
+
+    $("input[name='type']:checked").next().trigger("click");
+
     form.on('select(fasttype)', function(data) {
         $('#url').val($(data.elem).find("option:selected").attr("data-url"));
     });

@@ -20,6 +20,7 @@
                     <p class="login-time">上次登录：<?php if($userInfo['last_login_time'] > 0) { echo $userInfo['last_login_time'];} else { echo '--';}?></p>
                 </div>
                 <form class="layui-form" method="post">
+                    {:token()}
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-inline">

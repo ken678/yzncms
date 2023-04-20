@@ -404,7 +404,7 @@ class Admin extends Adminbase
         $db_config   = Cache::get('db_config');
         $dede_models = Cache::get('dede_models');
         $dede_fields = Cache::get('dede_fields');
-        $Cms_Model   = new \app\cms\model\Cms;
+        $Cms_Model   = new \app\admin\model\cms\Cms;
         $data        = [];
 
         foreach ($dede_models as $key => $value) {
@@ -477,7 +477,7 @@ class Admin extends Adminbase
         $db_config   = Cache::get('db_config');
         $dede_models = Cache::get('dede_models');
         $dede_fields = Cache::get('dede_fields');
-        $Cms_Model   = new \app\cms\model\Cms;
+        $Cms_Model   = new \app\admin\model\cms\Cms;
         $data        = [];
         foreach ($dede_models as $key => $value) {
             if ($value['real_type'] == 1) {

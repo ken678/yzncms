@@ -40,12 +40,16 @@ class Payment extends Adminbase
             }
             $userinfo = Db::name('member')->where('username', trim($data['username']))->find();
             if ($userinfo) {
-                if ($data['pay_unit']) {
-                    //增加
-                    $this->modelClass->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->auth->username);
-                } else {
-                    //减少
-                    $this->SpendModel->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], '后台充值', $data['usernote']);
+                try {
+                    if ($data['pay_unit']) {
+                        //增加
+                        $this->modelClass->_add($data['pay_type'], floatval($data['unit']), 'recharge', $userinfo['id'], $userinfo['username'], $data['usernote'], $this->auth->username);
+                    } else {
+                        //减少
+                        $this->SpendModel->_spend($data['pay_type'], floatval($data['unit']), $userinfo['id'], $userinfo['username'], '后台充值', $data['usernote']);
+                    }
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
                 }
                 $this->success("充值成功！");
             } else {
