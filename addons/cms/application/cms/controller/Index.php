@@ -64,16 +64,16 @@ class Index extends Cmsbase
         //类型为列表的栏目
         if ($category['type'] == 2) {
             //栏目首页模板
-            $template = $setting['category_template'] ? $setting['category_template'] : 'category';
+            $template = $setting['category_template'] ?: 'category';
             //栏目列表页模板
-            $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
+            $template_list = $setting['list_template'] ?: 'list';
             //判断使用模板类型，如果有子栏目使用频道页模板
             $template = $category['child'] ? $template : $template_list;
             $seo      = seo($catid, '', $setting['meta_description'], $setting['meta_keywords']);
             //单页
         } else if ($category['type'] == 1) {
-            $template = $setting['page_template'] ? $setting['page_template'] : 'page';
-            $ifcache  = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+            $template = $setting['page_template'] ?: 'page';
+            $ifcache  = $this->cmsConfig['site_cache_time'] ?: false;
             $info     = model('Page')->getPage($catid, $ifcache);
             if (empty($info)) {
                 throw new \think\exception\HttpException(404, '单页不存在！');
@@ -135,7 +135,7 @@ class Index extends Cmsbase
         //更新点击量
         Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
         //内容所有字段
-        $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+        $ifcache = $this->cmsConfig['site_cache_time'] ?: false;
         $info    = $this->Cms_Model->getContent($modelid, ['catid' => $catid, 'id' => $id], true, '*', '', $ifcache);
         if (!$info || ($info['status'] !== 1 && !\app\admin\service\User::instance()->isLogin())) {
             throw new \think\exception\HttpException(404, '内容不存在或未审核!');
