@@ -203,7 +203,7 @@ class Adminbase extends Base
         $bind      = [];
         $name      = '';
         $aliasName = '';
-        if (!empty($this->modelClass) && $this->relationSearch) {
+        if (!empty($this->modelClass) && $relationSearch) {
             $name         = $this->modelClass->getTable();
             $alias[$name] = parse_name(basename(str_replace('\\', '/', get_class($this->modelClass))));
             $aliasName    = $alias[$name] . '.';
