@@ -160,8 +160,7 @@ class Upload
             }
         }
 
-        $savekey = $savekey ? $savekey : $this->getSavekey($dir);
-        //$savekey   = '/' . ltrim($savekey, '/');
+        $savekey   = $savekey ? $savekey : $this->getSavekey($dir);
         $savekey   = ltrim($savekey, '/');
         $uploadDir = substr($savekey, 0, strripos($savekey, '/') + 1);
         $fileName  = substr($savekey, strripos($savekey, '/') + 1);
@@ -363,26 +362,29 @@ class Upload
     {
         if ($filename) {
             $suffix = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-            $suffix = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
         } else {
-            $suffix = $this->fileInfo['suffix'];
+            $suffix = $this->fileInfo['suffix'] ?? '';
         }
-        $filename   = $filename ? $filename : ($suffix ? substr($this->fileInfo['name'], 0, strripos($this->fileInfo['name'], '.')) : $this->fileInfo['name']);
-        $md5        = $md5 ? $md5 : md5_file($this->fileInfo['tmp_name']);
+        $suffix     = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
+        $filename   = $filename ? $filename : ($this->fileInfo['name'] ?? 'unknown');
+        $filename   = strip_tags(htmlspecialchars($filename));
+        $fileprefix = substr($filename, 0, strripos($filename, '.'));
+        $md5        = $md5 ? $md5 : (isset($this->fileInfo['tmp_name']) ? md5_file($this->fileInfo['tmp_name']) : '');
         $replaceArr = [
-            '{dir}'      => $dir,
-            '{year}'     => date("Y"),
-            '{mon}'      => date("m"),
-            '{day}'      => date("d"),
-            '{hour}'     => date("H"),
-            '{min}'      => date("i"),
-            '{sec}'      => date("s"),
-            '{random}'   => \util\Random::alnum(16),
-            '{random32}' => \util\Random::alnum(32),
-            '{filename}' => substr($filename, 0, 100),
-            '{suffix}'   => $suffix,
-            '{.suffix}'  => $suffix ? '.' . $suffix : '',
-            '{filemd5}'  => $md5,
+            '{dir}'        => $dir,
+            '{year}'       => date("Y"),
+            '{mon}'        => date("m"),
+            '{day}'        => date("d"),
+            '{hour}'       => date("H"),
+            '{min}'        => date("i"),
+            '{sec}'        => date("s"),
+            '{random}'     => \util\Random::alnum(16),
+            '{random32}'   => \util\Random::alnum(32),
+            '{filename}'   => substr($filename, 0, 100),
+            '{fileprefix}' => substr($fileprefix, 0, 100),
+            '{suffix}'     => $suffix,
+            '{.suffix}'    => $suffix ? '.' . $suffix : '',
+            '{filemd5}'    => $md5,
         ];
         $savekey = $savekey ? $savekey : config('savekey');
         $savekey = str_replace(array_keys($replaceArr), array_values($replaceArr), $savekey);
