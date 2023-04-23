@@ -116,7 +116,7 @@ class Category extends Adminbase
                     }
                     $cat             = explode('|', $rs, 2);
                     $data['catname'] = $cat[0];
-                    $data['catdir']  = isset($cat[1]) ? $cat[1] : '';
+                    $data['catdir']  = $cat[1] ?? '';
                     $data['catdir']  = $this->get_dirpinyin($data['catname'], $data['catdir']);
 
                     $result = $this->validate($data, 'app\admin\validate\cms\Category.' . $scene);
@@ -180,7 +180,7 @@ class Category extends Adminbase
                 'tp_list'          => $this->listTemplate,
                 'tp_show'          => $this->showTemplate,
                 'tp_page'          => $this->pageTemplate,
-                'parentid_modelid' => isset($Ca['modelid']) ? $Ca['modelid'] : 0,
+                'parentid_modelid' => $Ca['modelid'] ?? 0,
                 "Member_Group"     => cache("Member_Group"),
                 "cmsConfig"        => get_addon_config("cms"),
             ]);
@@ -227,7 +227,7 @@ class Category extends Adminbase
             $status = $this->modelClass->editCategory($data, ['parentid', 'catname', 'catdir', 'type', 'modelid', 'image', 'icon', 'description', 'url', 'setting', 'listorder', 'letter', 'status']);
             if ($status) {
                 //更新会员组权限
-                model("admin/cms/CategoryPriv")->update_priv($catid, (isset($data['priv_groupid']) ? $data['priv_groupid'] : []), 0);
+                model("admin/cms/CategoryPriv")->update_priv($catid, ($data['priv_groupid'] ?? []), 0);
                 $this->success("修改成功！", url("Category/index"));
             } else {
                 $error = $this->modelClass->getError();
@@ -384,7 +384,7 @@ class Category extends Adminbase
             $_list = Db::name('AuthGroup')->where('status', 1)->order('id', 'desc')->field('id,title')->select();
             foreach ($_list as $k => $v) {
                 $_list[$k]['admin'] = $v['id'] == 1;
-                $_list[$k]['num']   = isset($priv_num[$v['id']]) ? $priv_num[$v['id']] : 0;
+                $_list[$k]['num']   = $priv_num[$v['id']] ?? 0;
             }
             $result = ["code" => 0, "data" => $_list];
             return json($result);
