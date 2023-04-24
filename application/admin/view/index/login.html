@@ -34,16 +34,22 @@ body {
                 <div class="layui-form-item">
                     {:token()}
                     <div class="layui-input-inline input-item">
-                        <label class="layui-icon layui-icon-username"></label>
-                        <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
+                        <div class="layui-input-prefix">
+                          <i class="layui-icon layui-icon-username"></i>
+                        </div>
+                        <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input" lay-affix="clear">
                     </div>
                     <div class="layui-input-inline input-item">
-                        <label class="layui-icon layui-icon-password"></label>
-                        <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
+                        <div class="layui-input-prefix">
+                          <i class="layui-icon layui-icon-password"></i>
+                        </div>
+                        <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input" lay-affix="eye">
                         <i></i>
                     </div>
                     <div class="layui-input-inline input-item verify-box">
-                        <label class="layui-icon layui-icon-vercode"></label>
+                        <div class="layui-input-prefix">
+                          <i class="layui-icon layui-icon-vercode"></i>
+                        </div>
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
                         <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
                     </div>
