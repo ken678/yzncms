@@ -1500,7 +1500,7 @@
 
 .allow_visitor{
     font-size: 15px;
-    padding: 5px 10px;
+    padding: 10px 10px;
     text-align: center;
     border: 1px dashed #ff9a9a;
     background: #ffe;
@@ -1893,4 +1893,28 @@
 .loadmore-tips {
     display: inline-block;
     vertical-align: middle;
+}
+.lay-btn {
+    display: inline-block;
+    vertical-align: middle;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid transparent;
+    padding: 0 18px;
+    background-color: #16baaa;
+    color: #fff !important;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.lay-btn-normal {
+    background-color: #1e9fff;
+}
+.lay-btn-warm {
+    background-color: #ffb800;
 }
