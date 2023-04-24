@@ -34,6 +34,7 @@ class Api extends HomeBase
         $config    = Service::getConfig('wechat');
         $isWechat  = stripos($this->request->server('HTTP_USER_AGENT'), 'MicroMessenger') !== false;
         $orderData = Session::get("wechatorderdata");
+        $jumpUrl   = Session::get("jumpUrl") ?: url('pay/index/pay_list');
         if ($isWechat) {
             $type = 'jsapi';
             $this->assign("orderData", $orderData);
@@ -52,7 +53,7 @@ class Api extends HomeBase
                 try {
                     $result = $pay->find($orderData['out_trade_no']);
                     if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
-                        $this->success('', url('pay/index/pay_list'), ['trade_state' => $result['trade_state']]);
+                        $this->success('', $jumpUrl, ['trade_state' => $result['trade_state']]);
                     } else {
                         $this->error("查询失败");
                     }
@@ -75,6 +76,7 @@ class Api extends HomeBase
     {
         $config    = Service::getConfig('alipay');
         $orderData = Session::get("alipayorderdata");
+        $jumpUrl   = Session::get("jumpUrl") ?: url('pay/index/pay_list');
         $data      = [
             'body'         => $orderData['body'],
             'qr_code'      => $orderData['qr_code'],
@@ -88,7 +90,7 @@ class Api extends HomeBase
             try {
                 $result = $pay->find($orderData['out_trade_no']);
                 if (in_array($result['trade_status'], ['TRADE_SUCCESS', 'TRADE_FINISHED'])) {
-                    $this->success('', url('pay/index/pay_list'), ['trade_status' => $result['trade_status']]);
+                    $this->success('', $jumpUrl, ['trade_status' => $result['trade_status']]);
                 } else {
                     $this->error("查询失败");
                 }
