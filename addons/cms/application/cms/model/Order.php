@@ -84,23 +84,12 @@ class Order extends Model
 
         //使用余额支付
         if ($pay_type == 'balance') {
-            if ($paytype == 1) {
-                if ($auth->amount < $readpoint) {
-                    throw new \Exception('余额不足，请先充值!');
-                }
-            } else {
-                if ($auth->point < $readpoint) {
-                    throw new \Exception('积分不足，请先充值!');
-                }
+            $paytype = $paytype == 1 ? "amount" : "point";
+            if ($auth->{$paytype} < $readpoint) {
+                throw new \Exception(($paytype == "amount" ? "余额" : "积分") . '不足，请先充值!');
             }
             try {
-                if ($paytype == 1) {
-                    //金钱方式消费
-                    Member::amount(-$readpoint, $auth->id, '购买付费文档:' . $info['title']);
-                } else {
-                    //积分方式消费
-                    Member::point(-$readpoint, $auth->id, '购买付费文档:' . $info['title']);
-                }
+                Member::{$paytype}(-$readpoint, $auth->id, '购买付费文档:' . $info['title']);
                 self::settle($order->trade_sn, $readpoint);
             } catch (\Exception $e) {
                 throw new \Exception($e->getMessage());
