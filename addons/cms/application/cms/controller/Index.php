@@ -498,7 +498,7 @@ class Index extends Cmsbase
                 $this->error('订单不存在!');
             }
             //你可以在这里定义你的提示信息,但切记不可在此编写逻辑
-            $this->success("恭喜你！支付成功!", buildContentUrl($order['catid'], $order['contentid'], true, true));
+            $this->success("恭喜你！支付成功!", buildContentUrl($order['catid'], $order['contentid'], '', true, true));
         }
         return;
     }
