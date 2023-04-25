@@ -38,12 +38,16 @@ class Order extends Model
             throw new \Exception('模型不存在！');
         }
 
-        $info = (new \app\cms\model\Cms)->getContent($modelid, ['catid' => $catid, 'id' => $id], false, '*');
+        $info = (new Cms)->getContent($modelid, ['catid' => $catid, 'id' => $id], false, '*');
         if (!$info) {
             throw new \Exception('支付内容不存在或未审核!');
         }
         $paytype   = $info['paytype'] ?? 1; // 1钱 2积分
         $readpoint = $info['readpoint'] ?? 0; //金额
+        if ($paytype == 2 && $pay_type != 'balance') {
+            //TODO 暂不支持积分使用微信支付宝
+            throw new \Exception('积分付费只能选择余额支付!');
+        }
 
         $order = self::where(['catid' => $catid, 'contentid' => $id])->order('id', 'desc')->find();
         if ($order && $order['status'] == 'succ') {
