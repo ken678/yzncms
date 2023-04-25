@@ -45,7 +45,7 @@ class Order extends Model
         $paytype   = $info['paytype'] ?? 1; // 1钱 2积分
         $readpoint = $info['readpoint'] ?? 0; //金额
 
-        $order = self::where(['catid' => $catid, 'id' => $id])->order('id', 'desc')->find();
+        $order = self::where(['catid' => $catid, 'contentid' => $id])->order('id', 'desc')->find();
         if ($order && $order['status'] == 'succ') {
             throw new \Exception('订单已支付');
         }
