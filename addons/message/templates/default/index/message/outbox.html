@@ -5,7 +5,7 @@
     </ul>
     <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-tab-item layui-show">
-        	<table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        	<table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
         </div>
     </div>
 </div>
@@ -14,20 +14,27 @@
 </script>
 {template file="member/layui.html"/}
 <script>
-layui.use('table', function() {
-    var table = layui.table,
+layui.use('yznTable', function() {
+    var yznTable = layui.yznTable,
         $ = layui.$,
         form = layui.form;
-    table.render({
-        elem: '#dataTable',
-        toolbar: '#toolbarDemo',
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+    };
+
+    yznTable.render({
+        init: init,
+        toolbar: ['refresh'],
         url: '{:url("outbox")}',
+        search:false,
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
                 { field: 'subject', title: '标题' },
                 { field: 'send_to', width: 120, title: '收件人' },
-                { field: 'status', width: 100,align:'center', title: '收件人状态',templet: '<div>{{#  if(d.status){ }} <button class="layui-btn layui-btn layui-btn-xs">已读</button> {{#  } else { }} <button class="layui-btn layui-btn-danger layui-btn layui-btn-xs">未读</button> {{#  } }} </div>'},
+                { field: 'status', width: 100,align:'center', title: '收件人状态',templet: yznTable.formatter.label,selectList:{0:'未读',1:'已读'},search:false},
                 { field: 'create_time', width: 200,  title: '发送时间' },
                 { fixed: 'right', width: 100, title: '操作', templet: '#barTool' }
             ]
