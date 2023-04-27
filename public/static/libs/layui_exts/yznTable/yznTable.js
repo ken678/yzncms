@@ -134,7 +134,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     extend: 'data-table-id="' + options.id + '"'
                 }];
             }
-            options.searchInput = options.search ? yzn.parame(options.searchInput || options.init.searchInput, true) : false;
+            options.searchInput = options.search ? yzn.parame(options.searchInput, true) : false;
 
             var tableDone = options.done || function() {};
             options.done = function(res, curr, count) {
