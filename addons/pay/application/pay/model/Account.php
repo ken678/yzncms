@@ -25,25 +25,28 @@ class Account extends Model
     protected $autoWriteTimestamp = true;
     protected $updateTime         = false;
 
-    public function getStatusAttr($value)
+    // 追加属性
+    protected $append = [
+        'pay_type_text',
+        'status_text',
+    ];
+
+    public function getStatusTextAttr($value, $data)
     {
+        $value  = $value ? $value : $data['status'];
         $status = ['succ' => '交易成功', 'failed' => '交易失败', 'error' => '交易错误', 'progress' => '交易处理中', 'timeout' => '交易超时', 'cancel' => '交易取消', 'waitting' => '等待付款', 'unpay' => '未付款'];
-        return $status[$value];
+        return $status[$value] ?? '';
     }
 
-    public function getPayTypeAttr($value)
+    public function getPayTypeTextAttr($value, $data)
     {
-        $status = ['offline' => '线下支付', 'recharge' => '后台充值', 'selfincome' => '自助获取', 'online' => '在线支付'];
-        return $status[$value];
-    }
-
-    public function getPayTimeAttr($value)
-    {
-        if (!empty($value)) {
-            return date('Y-m-d H:i:s', $value);
-        } else {
-            return '';
-        }
+        $value  = $value ? $value : $data['pay_type'];
+        $status = [
+            'recharge' => '后台充值',
+            'wechat'   => '微信',
+            'alipay'   => '支付宝',
+        ];
+        return $status[$value] ?? '';
     }
 
     /**

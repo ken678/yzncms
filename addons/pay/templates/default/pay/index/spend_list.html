@@ -5,20 +5,27 @@
     </ul>
     <div class="layui-tab-content" style="padding: 20px 0;">
         <div class="layui-tab-item layui-show">
-        	<table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+        	<table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
         </div>
     </div>
 </div>
 {template file="member/layui.html"/}
 <script>
-layui.use('table', function() {
-    var table = layui.table,
+layui.use(['yznTable','form'], function() {
+    var yznTable = layui.yznTable,
         $ = layui.$,
         form = layui.form;
-    table.render({
-        elem: '#dataTable',
-        toolbar: '#toolbarDemo',
+
+    var init = {
+        table_elem: '#currentTable',
+        table_render_id: 'currentTable',
+    };
+
+    yznTable.render({
+        init: init,
+        toolbar: ['refresh'],
         url: '{:url("spend_list")}',
+        search:false,
         cols: [
             [
                 { field: 'creat_at', title: '消费流水号' },
