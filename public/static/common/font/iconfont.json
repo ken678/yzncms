@@ -6,6 +6,118 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24696062",
+      "name": "baidu-fill",
+      "font_class": "baidu-fill",
+      "unicode": "e77f",
+      "unicode_decimal": 59263
+    },
+    {
+      "icon_id": "24696065",
+      "name": "baidu-line",
+      "font_class": "baidu-line",
+      "unicode": "e780",
+      "unicode_decimal": 59264
+    },
+    {
+      "icon_id": "24696409",
+      "name": "dingding-fill",
+      "font_class": "dingding-fill",
+      "unicode": "e7df",
+      "unicode_decimal": 59359
+    },
+    {
+      "icon_id": "24696410",
+      "name": "dingding-line",
+      "font_class": "dingding-line",
+      "unicode": "e7e0",
+      "unicode_decimal": 59360
+    },
+    {
+      "icon_id": "24696835",
+      "name": "github-fill",
+      "font_class": "github-fill",
+      "unicode": "e88e",
+      "unicode_decimal": 59534
+    },
+    {
+      "icon_id": "24696839",
+      "name": "github-line",
+      "font_class": "github-line",
+      "unicode": "e898",
+      "unicode_decimal": 59544
+    },
+    {
+      "icon_id": "24697778",
+      "name": "taobao-fill",
+      "font_class": "taobao-fill",
+      "unicode": "eaa3",
+      "unicode_decimal": 60067
+    },
+    {
+      "icon_id": "24697779",
+      "name": "taobao-line",
+      "font_class": "taobao-line",
+      "unicode": "eaa4",
+      "unicode_decimal": 60068
+    },
+    {
+      "icon_id": "24697986",
+      "name": "wechat-2-fill",
+      "font_class": "wechat-2-fill",
+      "unicode": "eb1a",
+      "unicode_decimal": 60186
+    },
+    {
+      "icon_id": "24697987",
+      "name": "wechat-2-line",
+      "font_class": "wechat-2-line",
+      "unicode": "eb1b",
+      "unicode_decimal": 60187
+    },
+    {
+      "icon_id": "24697988",
+      "name": "wechat-pay-fill",
+      "font_class": "wechat-pay-fill",
+      "unicode": "eb1c",
+      "unicode_decimal": 60188
+    },
+    {
+      "icon_id": "24697989",
+      "name": "wechat-fill",
+      "font_class": "wechat-fill",
+      "unicode": "eb1d",
+      "unicode_decimal": 60189
+    },
+    {
+      "icon_id": "24697990",
+      "name": "wechat-line",
+      "font_class": "wechat-line",
+      "unicode": "eb1e",
+      "unicode_decimal": 60190
+    },
+    {
+      "icon_id": "24697991",
+      "name": "wechat-pay-line",
+      "font_class": "wechat-pay-line",
+      "unicode": "eb1f",
+      "unicode_decimal": 60191
+    },
+    {
+      "icon_id": "24697992",
+      "name": "weibo-fill",
+      "font_class": "sina-fill",
+      "unicode": "eb20",
+      "unicode_decimal": 60192
+    },
+    {
+      "icon_id": "24697993",
+      "name": "weibo-line",
+      "font_class": "sina-line",
+      "unicode": "eb21",
+      "unicode_decimal": 60193
+    },
+    {
       "icon_id": "24695733",
       "name": "calendar-2-fill",
       "font_class": "calendar-2-fill",
