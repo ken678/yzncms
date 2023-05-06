@@ -401,7 +401,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             cols[i][index]['templet'] = yznTable.formatter.value;
                         }
                     }
-
                     // 判断是否列表数据转换
                     /*if (val.selectList !== undefined && val.templet === undefined) {
                         cols[i][index]['templet'] = yznTable.formatter.list;
@@ -627,6 +626,21 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             html = '<a ' + formatOperat.class + formatOperat.method + formatOperat.extend + '>' + formatOperat.icon + formatOperat.text + '</a>';
             return html;
         },
+        getItemField: function (item, field) {
+            var value = item;
+
+            if (typeof field !== 'string' || item.hasOwnProperty(field)) {
+                return item[field];
+            }
+            var props = field.split('.');
+            for (var p in props) {
+                if (props.hasOwnProperty(p)) {
+                    value = value && value[props[p]];
+                }
+            }
+            return value;
+        },
+
         formatter: {
             tool: function(data) {
                 var that = this;
@@ -749,7 +763,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 }
                 var field = that.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                     value = value == null || value.length === 0 ? '' : value.toString();
                 } catch (e) {
                     var value = undefined;
@@ -776,7 +790,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 var field = that.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                     value = value == null || value.length === 0 ? '' : value.toString();
                 } catch (e) {
                     var value = undefined;
@@ -827,7 +841,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 that.checked = that.checked || 1;
                 that.tips = that.tips || '开|关';
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
@@ -844,7 +858,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var field = that.field,
                     title = data[that.title];
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
@@ -862,7 +876,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             url: function(data) {
                 var field = this.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
@@ -871,7 +885,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             price: function(data) {
                 var field = this.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
@@ -880,7 +894,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             icon: function(data) {
                 var field = this.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
@@ -889,7 +903,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             text: function(data) {
                 var field = this.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
@@ -898,7 +912,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             value: function(data) {
                 var field = this.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
@@ -908,7 +922,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 var that = this;
                 var field = that.field;
                 try {
-                    var value = data[field];
+                    var value = yznTable.getItemField(data,field);
                 } catch (e) {
                     var value = undefined;
                 }
