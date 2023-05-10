@@ -187,12 +187,12 @@ class Adminbase extends Base
         $op             = $this->request->get("op", '', 'trim');
         $sort           = $this->request->get("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
         $order          = $this->request->get("order", "DESC");
-        $offset         = $this->request->get("offset/d", 0);
         $limit          = $this->request->get("limit/d", 999999);
-        //新增自动计算页码
-        $page = $limit ? intval($offset / $limit) + 1 : 1;
-        if ($this->request->has("page")) {
-            $page = $this->request->get("page/d", 1);
+        $page           = $this->request->get("page/d", 1);
+        //新增自动计算分页偏移
+        $offset = $page ? ($page - 1) * $limit : 0;
+        if ($this->request->has("offset")) {
+            $offset = $this->request->get("offset/d", 0);
         }
         $this->request->withGet([config::get('paginate.var_page') => $page]);
         $filter    = (array) json_decode($filter, true);
