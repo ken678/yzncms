@@ -66,8 +66,7 @@ layui.use(['table', 'yznTable','treeTable'], function() {
         ], init),
     });
 
-
-    $('#openAll').click(function(e) {
+    $('body').on('click', '#openAll', function() {
         var that = this;
         var show = $("i", that).hasClass("icon-add");
         treeTable.expandAll(tableId, show);
