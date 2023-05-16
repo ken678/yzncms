@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24695976",
+      "name": "alipay-fill",
+      "font_class": "alipay-fill",
+      "unicode": "e781",
+      "unicode_decimal": 59265
+    },
+    {
+      "icon_id": "24695978",
+      "name": "alipay-line",
+      "font_class": "alipay-line",
+      "unicode": "e782",
+      "unicode_decimal": 59266
+    },
+    {
+      "icon_id": "24697843",
+      "name": "translate-2",
+      "font_class": "translate-2",
+      "unicode": "eacd",
+      "unicode_decimal": 60109
+    },
+    {
+      "icon_id": "24697845",
+      "name": "translate",
+      "font_class": "translate",
+      "unicode": "eace",
+      "unicode_decimal": 60110
+    },
+    {
       "icon_id": "24696062",
       "name": "baidu-fill",
       "font_class": "baidu-fill",
@@ -1012,48 +1040,6 @@
       "font_class": "icon-test1",
       "unicode": "e65a",
       "unicode_decimal": 58970
-    },
-    {
-      "icon_id": "4391313",
-      "name": "淘宝",
-      "font_class": "taobao",
-      "unicode": "e622",
-      "unicode_decimal": 58914
-    },
-    {
-      "icon_id": "602063",
-      "name": "支付宝",
-      "font_class": "zhifubao",
-      "unicode": "e640",
-      "unicode_decimal": 58944
-    },
-    {
-      "icon_id": "981439",
-      "name": "百度",
-      "font_class": "baidu",
-      "unicode": "e67f",
-      "unicode_decimal": 59007
-    },
-    {
-      "icon_id": "6971903",
-      "name": "微博",
-      "font_class": "sina",
-      "unicode": "e60f",
-      "unicode_decimal": 58895
-    },
-    {
-      "icon_id": "1052655",
-      "name": "微信",
-      "font_class": "weixin",
-      "unicode": "e63d",
-      "unicode_decimal": 58941
-    },
-    {
-      "icon_id": "658381",
-      "name": "QQ",
-      "font_class": "qq",
-      "unicode": "e68e",
-      "unicode_decimal": 59022
     },
     {
       "icon_id": "7796809",

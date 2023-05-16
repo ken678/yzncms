@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 349449 */
-  src: url('iconfont.woff2?t=1683184747391') format('woff2'),
-       url('iconfont.woff?t=1683184747391') format('woff'),
-       url('iconfont.ttf?t=1683184747391') format('truetype');
+  src: url('iconfont.woff2?t=1684207977845') format('woff2'),
+       url('iconfont.woff?t=1684207977845') format('woff'),
+       url('iconfont.ttf?t=1684207977845') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,22 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-alipay-fill:before {
+  content: "\e781";
+}
+
+.icon-alipay-line:before {
+  content: "\e782";
+}
+
+.icon-translate-2:before {
+  content: "\eacd";
+}
+
+.icon-translate:before {
+  content: "\eace";
 }
 
 .icon-baidu-fill:before {
@@ -587,30 +603,6 @@
 
 .icon-icon-test1:before {
   content: "\e65a";
-}
-
-.icon-taobao:before {
-  content: "\e622";
-}
-
-.icon-zhifubao:before {
-  content: "\e640";
-}
-
-.icon-baidu:before {
-  content: "\e67f";
-}
-
-.icon-sina:before {
-  content: "\e60f";
-}
-
-.icon-weixin:before {
-  content: "\e63d";
-}
-
-.icon-qq:before {
-  content: "\e68e";
 }
 
 .icon-tongji:before {
