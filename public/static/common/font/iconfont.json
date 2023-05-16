@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24697380",
+      "name": "qq-fill",
+      "font_class": "qq-fill",
+      "unicode": "e991",
+      "unicode_decimal": 59793
+    },
+    {
+      "icon_id": "24697381",
+      "name": "qq-line",
+      "font_class": "qq-line",
+      "unicode": "e992",
+      "unicode_decimal": 59794
+    },
+    {
       "icon_id": "24695976",
       "name": "alipay-fill",
       "font_class": "alipay-fill",
