@@ -20,7 +20,7 @@ use think\Model;
 class Adminlog extends Model
 {
     protected $autoWriteTimestamp = true;
-    protected $updateTime = false;
+    protected $updateTime         = false;
 
     /**
      * 记录日志
@@ -29,12 +29,13 @@ class Adminlog extends Model
      */
     public function record($message, $status = 0)
     {
+        $auth = User::instance();
         $data = array(
-            'uid' => (int) User::instance()->isLogin(),
+            'uid'    => $auth->isLogin() ? $auth->id : 0,
             'status' => $status,
-            'info' => "提示语:{$message}",
-            'get' => request()->url(),
-            'ip' => request()->ip(),
+            'info'   => "提示语:{$message}",
+            'get'    => request()->url(),
+            'ip'     => request()->ip(),
         );
         return $this->save($data) !== false ? true : false;
     }
