@@ -209,10 +209,9 @@ class Admin extends Adminbase
 
     public function step3()
     {
-        $db_config  = Cache::get('db_config');
-        $res        = Db::connect($db_config)->name('channeltype')->select();
-        $modelClass = new \app\admin\model\cms\Models;
-        $data       = $dede_models       = [];
+        $db_config = Cache::get('db_config');
+        $res       = Db::connect($db_config)->name('channeltype')->select();
+        $data      = $dede_models      = [];
         try {
             foreach ($res as $key => $value) {
                 $tablename                              = str_replace($db_config['prefix'], '', $value['addtable']);
@@ -224,11 +223,11 @@ class Admin extends Adminbase
                 $dede_models[$value['id']]['real_type'] = $value['issystem'] == -1 ? 1 : 2;
                 $data['status']                         = 1;
                 $data['listorders']                     = 100;
-                $data['setting']                        = array(
-                    'category_template' => '',
-                    'list_template'     => '',
-                    'show_template'     => '',
-                );
+
+                $data['category_template'] = '';
+                $data['list_template']     = '';
+                $data['show_template']     = '';
+
                 $result = $this->validate($data,
                     [
                         'name|模型名称'     => 'require|max:30|unique:model',
@@ -239,7 +238,7 @@ class Admin extends Adminbase
                     $this->error($result);
                 }
 
-                $modelClass->addModel($data);
+                \app\admin\model\cms\Models::create($data);
 
             }
         } catch (\Exception $e) {
