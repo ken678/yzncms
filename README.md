@@ -3,7 +3,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
 [![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
-[![Version](https://img.shields.io/badge/YznCMS-1.1.5-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-1.1.6-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
