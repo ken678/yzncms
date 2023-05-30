@@ -14,6 +14,7 @@
 .layui-menu-left .layui-nav-itemed > a > .layui-nav-more:before,.layui-menu-left-zoom .layui-nav-itemed > a > .layui-nav-more:before {content: '\e61a'; background-color: transparent; display: inline-block; vertical-align: middle; }
 .layui-menu-left .layui-nav-itemed .layui-nav-child a {padding-left: 40px; }
 .layui-nav-tree .layui-nav-item a:hover {background-color: #4E5465;}
+.layui-nav-tree .layui-nav-item a {cursor: pointer;}
 
 /*顶部工具条*/
 .layui-header .layui-tool {position: absolute !important; top: 0; left: 225px; width: 55px; height: 100%; line-height: 60px; text-align: center; color: #ffffff !important; transition: all .2s; }

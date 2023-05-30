@@ -14,7 +14,8 @@
 // +----------------------------------------------------------------------
 namespace app\member\controller;
 
-use app\cms\model\Cms as Cms_Model;
+use app\cms\model\Cms as CmsModel;
+use app\cms\model\Order as OrderModel;
 use app\member\model\MemberContent as MemberContentModel;
 use think\Db;
 
@@ -23,7 +24,7 @@ class Content extends MemberBase
     protected function initialize()
     {
         parent::initialize();
-        $this->Cms_Model = new Cms_Model;
+        $this->CmsModel = new CmsModel;
     }
 
     public function publish()
@@ -90,7 +91,7 @@ class Content extends MemberBase
             if ($category['type'] == 2) {
                 $_data['modelFieldExt'] = isset($_data['modelFieldExt']) ? $_data['modelFieldExt'] : [];
                 try {
-                    $id = $this->Cms_Model->addModelData($_data['modelField'], $_data['modelFieldExt']);
+                    $id = $this->CmsModel->addModelData($_data['modelField'], $_data['modelFieldExt']);
                 } catch (\Exception $ex) {
                     $this->error($ex->getMessage());
                 }
@@ -143,7 +144,7 @@ class Content extends MemberBase
                 }
                 if ($category['type'] == 2) {
                     $modelid   = $category['modelid'];
-                    $fieldList = $this->Cms_Model->getFieldList($modelid);
+                    $fieldList = $this->CmsModel->getFieldList($modelid);
                     $this->assign([
                         'catid'     => $catid,
                         'fieldList' => $fieldList,
@@ -211,7 +212,7 @@ class Content extends MemberBase
             if ($category['type'] == 2) {
                 $_data['modelFieldExt'] = isset($_data['modelFieldExt']) ? $_data['modelFieldExt'] : [];
                 try {
-                    $this->Cms_Model->editModelData($_data['modelField'], $_data['modelFieldExt']);
+                    $this->CmsModel->editModelData($_data['modelField'], $_data['modelFieldExt']);
                 } catch (\Exception $ex) {
                     $this->error($ex->getMessage());
                 }
@@ -241,7 +242,7 @@ class Content extends MemberBase
             if ($category['child'] || $category['type'] == 0) {
                 $this->error("该栏目不允许投稿！", url('publish', array('step' => 2)));
             }
-            $fieldList = $this->Cms_Model->getFieldList($modelid, $info['content_id']);
+            $fieldList = $this->CmsModel->getFieldList($modelid, $info['content_id']);
             $this->assign([
                 'catid'     => $catid,
                 'fieldList' => $fieldList,
@@ -283,6 +284,24 @@ class Content extends MemberBase
         return $this->fetch('/published');
     }
 
+    //订单列表
+    public function order()
+    {
+        if ($this->request->isAjax()) {
+            $limit = $this->request->param('limit/d', 10);
+            $page  = $this->request->param('page/d', 1);
+
+            $_list  = OrderModel::where('user_id', $this->auth->id)->page($page, $limit)->order('id DESC')->select();
+            $total  = OrderModel::where('user_id', $this->auth->id)->count();
+            $result = array("code" => 0, "count" => $total, "data" => $_list);
+            return json($result);
+
+        } else {
+            return $this->fetch('/order_list');
+        }
+
+    }
+
     //删除
     public function del()
     {
@@ -300,7 +319,7 @@ class Content extends MemberBase
                 $this->success('栏目不存在！');
             }
             try {
-                $this->Cms_Model->deleteModelData($category['modelid'], $info['content_id']);
+                $this->CmsModel->deleteModelData($category['modelid'], $info['content_id']);
             } catch (\Exception $ex) {
                 $this->error($ex->getMessage());
             }

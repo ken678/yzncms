@@ -251,8 +251,8 @@ class Install extends Command
         //数据库配置文件
         $dbConfigFile = ROOT_PATH . 'config' . DS . 'database.php';
 
-        if (version_compare(PHP_VERSION, '7.0.0', '<')) {
-            throw new Exception("当前版本" . PHP_VERSION . "过低，请使用PHP7.0以上版本");
+        if (version_compare(PHP_VERSION, '7.1.0', '<')) {
+            throw new Exception("当前版本" . PHP_VERSION . "过低，请使用PHP7.1以上版本");
         }
         if (!extension_loaded("PDO")) {
             throw new Exception("当前未开启PDO，无法进行安装");

@@ -15,11 +15,10 @@ body{background: #f4f6f8;}
 .lay-link {color: #029789!important; }
 
 .lay-user-login-other>* {display: inline-block; vertical-align: middle; margin-right: 10px; font-size: 14px }
-.lay-user-login-other {position: relative; font-size: 0; line-height: 38px; }
+.lay-user-login-other {font-size: 0; line-height: 38px; }
 .lay-user-login-other .layui-icon {position: relative; top: 2px; font-size: 26px }
 .lay-user-login-other a:hover {opacity: .8 }
 
-.layui-form .layui-form-item {position: relative;}
 .layui-form .layui-form-item label {position: absolute;left: 1px;top: 1px;width: 38px;line-height: 36px;text-align: center;color: #999;}
 .layui-form .layui-form-item input {padding-left: 36px;}
 

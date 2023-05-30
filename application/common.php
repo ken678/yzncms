@@ -107,6 +107,24 @@ function fun($fun)
 }
 
 /**
+ * 获取上传资源的CDN的地址
+ * @param string  $url    资源相对地址
+ * @param boolean $domain 是否显示域名 或者直接传入域名
+ * @return string
+ */
+function cdnurl($url, $domain = false)
+{
+    $regex  = "/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i";
+    $cdnurl = Config::get('cdnurl');
+    $url    = preg_match($regex, $url) || ($cdnurl && stripos($url, $cdnurl) === 0) ? $url : $cdnurl . $url;
+    if ($url && $domain && !preg_match($regex, $url)) {
+        $domain = is_bool($domain) ? Request::domain() : $domain;
+        $url    = $domain . $url;
+    }
+    return $url;
+}
+
+/**
  * select返回的数组进行整数映射转换
  *
  * @param array $map  映射关系二维数组  array(

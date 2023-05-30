@@ -6,6 +6,160 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24697380",
+      "name": "qq-fill",
+      "font_class": "qq-fill",
+      "unicode": "e991",
+      "unicode_decimal": 59793
+    },
+    {
+      "icon_id": "24697381",
+      "name": "qq-line",
+      "font_class": "qq-line",
+      "unicode": "e992",
+      "unicode_decimal": 59794
+    },
+    {
+      "icon_id": "24695976",
+      "name": "alipay-fill",
+      "font_class": "alipay-fill",
+      "unicode": "e781",
+      "unicode_decimal": 59265
+    },
+    {
+      "icon_id": "24695978",
+      "name": "alipay-line",
+      "font_class": "alipay-line",
+      "unicode": "e782",
+      "unicode_decimal": 59266
+    },
+    {
+      "icon_id": "24697843",
+      "name": "translate-2",
+      "font_class": "translate-2",
+      "unicode": "eacd",
+      "unicode_decimal": 60109
+    },
+    {
+      "icon_id": "24697845",
+      "name": "translate",
+      "font_class": "translate",
+      "unicode": "eace",
+      "unicode_decimal": 60110
+    },
+    {
+      "icon_id": "24696062",
+      "name": "baidu-fill",
+      "font_class": "baidu-fill",
+      "unicode": "e77f",
+      "unicode_decimal": 59263
+    },
+    {
+      "icon_id": "24696065",
+      "name": "baidu-line",
+      "font_class": "baidu-line",
+      "unicode": "e780",
+      "unicode_decimal": 59264
+    },
+    {
+      "icon_id": "24696409",
+      "name": "dingding-fill",
+      "font_class": "dingding-fill",
+      "unicode": "e7df",
+      "unicode_decimal": 59359
+    },
+    {
+      "icon_id": "24696410",
+      "name": "dingding-line",
+      "font_class": "dingding-line",
+      "unicode": "e7e0",
+      "unicode_decimal": 59360
+    },
+    {
+      "icon_id": "24696835",
+      "name": "github-fill",
+      "font_class": "github-fill",
+      "unicode": "e88e",
+      "unicode_decimal": 59534
+    },
+    {
+      "icon_id": "24696839",
+      "name": "github-line",
+      "font_class": "github-line",
+      "unicode": "e898",
+      "unicode_decimal": 59544
+    },
+    {
+      "icon_id": "24697778",
+      "name": "taobao-fill",
+      "font_class": "taobao-fill",
+      "unicode": "eaa3",
+      "unicode_decimal": 60067
+    },
+    {
+      "icon_id": "24697779",
+      "name": "taobao-line",
+      "font_class": "taobao-line",
+      "unicode": "eaa4",
+      "unicode_decimal": 60068
+    },
+    {
+      "icon_id": "24697986",
+      "name": "wechat-2-fill",
+      "font_class": "wechat-2-fill",
+      "unicode": "eb1a",
+      "unicode_decimal": 60186
+    },
+    {
+      "icon_id": "24697987",
+      "name": "wechat-2-line",
+      "font_class": "wechat-2-line",
+      "unicode": "eb1b",
+      "unicode_decimal": 60187
+    },
+    {
+      "icon_id": "24697988",
+      "name": "wechat-pay-fill",
+      "font_class": "wechat-pay-fill",
+      "unicode": "eb1c",
+      "unicode_decimal": 60188
+    },
+    {
+      "icon_id": "24697989",
+      "name": "wechat-fill",
+      "font_class": "wechat-fill",
+      "unicode": "eb1d",
+      "unicode_decimal": 60189
+    },
+    {
+      "icon_id": "24697990",
+      "name": "wechat-line",
+      "font_class": "wechat-line",
+      "unicode": "eb1e",
+      "unicode_decimal": 60190
+    },
+    {
+      "icon_id": "24697991",
+      "name": "wechat-pay-line",
+      "font_class": "wechat-pay-line",
+      "unicode": "eb1f",
+      "unicode_decimal": 60191
+    },
+    {
+      "icon_id": "24697992",
+      "name": "weibo-fill",
+      "font_class": "sina-fill",
+      "unicode": "eb20",
+      "unicode_decimal": 60192
+    },
+    {
+      "icon_id": "24697993",
+      "name": "weibo-line",
+      "font_class": "sina-line",
+      "unicode": "eb21",
+      "unicode_decimal": 60193
+    },
+    {
       "icon_id": "24695733",
       "name": "calendar-2-fill",
       "font_class": "calendar-2-fill",
@@ -900,48 +1054,6 @@
       "font_class": "icon-test1",
       "unicode": "e65a",
       "unicode_decimal": 58970
-    },
-    {
-      "icon_id": "4391313",
-      "name": "淘宝",
-      "font_class": "taobao",
-      "unicode": "e622",
-      "unicode_decimal": 58914
-    },
-    {
-      "icon_id": "602063",
-      "name": "支付宝",
-      "font_class": "zhifubao",
-      "unicode": "e640",
-      "unicode_decimal": 58944
-    },
-    {
-      "icon_id": "981439",
-      "name": "百度",
-      "font_class": "baidu",
-      "unicode": "e67f",
-      "unicode_decimal": 59007
-    },
-    {
-      "icon_id": "6971903",
-      "name": "微博",
-      "font_class": "sina",
-      "unicode": "e60f",
-      "unicode_decimal": 58895
-    },
-    {
-      "icon_id": "1052655",
-      "name": "微信",
-      "font_class": "weixin",
-      "unicode": "e63d",
-      "unicode_decimal": 58941
-    },
-    {
-      "icon_id": "658381",
-      "name": "QQ",
-      "font_class": "qq",
-      "unicode": "e68e",
-      "unicode_decimal": 59022
     },
     {
       "icon_id": "7796809",

@@ -49,15 +49,23 @@
         <div class="layui-form-pane layui-tab-item">
             <form class="layui-form" method="post">
                 <div class="layui-form-item"> <label class="layui-form-label">旧密码</label>
-                    <div class="layui-input-inline"> <input type="password" name="oldpassword" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div>
+                    <div class="layui-input-inline">
+                        <input type="password" name="oldpassword" required="" lay-verify="required" autocomplete="off" class="layui-input" lay-affix="eye">
+                    </div>
                 </div>
                 <div class="layui-form-item"> <label class="layui-form-label">新密码</label>
-                    <div class="layui-input-inline"> <input type="password" name="newpassword" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div>
+                    <div class="layui-input-inline">
+                        <input type="password" name="newpassword" required="" lay-verify="required" autocomplete="off" class="layui-input" lay-affix="eye">
+                    </div>
                 </div>
                 <div class="layui-form-item"> <label class="layui-form-label">确认密码</label>
-                    <div class="layui-input-inline"> <input type="password" name="renewpassword" required="" lay-verify="required" autocomplete="off" class="layui-input"> </div>
+                    <div class="layui-input-inline">
+                        <input type="password" name="renewpassword" required="" lay-verify="required" autocomplete="off" class="layui-input" lay-affix="eye">
+                    </div>
                 </div>
-                <div class="layui-form-item"> <button class="layui-btn" lay-submit="{:url('member/index/changepwd')}" data-refresh="false">确认修改</button> </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit="{:url('member/index/changepwd')}" data-refresh="false">确认修改</button>
+                </div>
             </form>
         </div>
     </div>

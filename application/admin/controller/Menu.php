@@ -40,7 +40,8 @@ class Menu extends Adminbase
             $result     = MenuModel::order(array('listorder', 'id' => 'DESC'))->select()->toArray();
 
             $tree->init($result);
-            $_list  = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            //$_list  = $tree->getTreeList($tree->getTreeArray(0), 'title');
+            $_list  = $tree->getTreeArray(0);
             $total  = count($_list);
             $result = array("code" => 0, "count" => $total, "data" => $_list);
             return json($result);

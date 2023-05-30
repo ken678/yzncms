@@ -64,16 +64,16 @@ class Index extends Cmsbase
         //类型为列表的栏目
         if ($category['type'] == 2) {
             //栏目首页模板
-            $template = $setting['category_template'] ? $setting['category_template'] : 'category';
+            $template = $setting['category_template'] ?: 'category';
             //栏目列表页模板
-            $template_list = $setting['list_template'] ? $setting['list_template'] : 'list';
+            $template_list = $setting['list_template'] ?: 'list';
             //判断使用模板类型，如果有子栏目使用频道页模板
             $template = $category['child'] ? $template : $template_list;
             $seo      = seo($catid, '', $setting['meta_description'], $setting['meta_keywords']);
             //单页
         } else if ($category['type'] == 1) {
-            $template = $setting['page_template'] ? $setting['page_template'] : 'page';
-            $ifcache  = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+            $template = $setting['page_template'] ?: 'page';
+            $ifcache  = $this->cmsConfig['site_cache_time'] ?: false;
             $info     = model('Page')->getPage($catid, $ifcache);
             if (empty($info)) {
                 throw new \think\exception\HttpException(404, '单页不存在！');
@@ -135,7 +135,7 @@ class Index extends Cmsbase
         //更新点击量
         Db::name($modelInfo['tablename'])->where('id', $id)->setInc('hits');
         //内容所有字段
-        $ifcache = $this->cmsConfig['site_cache_time'] ? $this->cmsConfig['site_cache_time'] : false;
+        $ifcache = $this->cmsConfig['site_cache_time'] ?: false;
         $info    = $this->Cms_Model->getContent($modelid, ['catid' => $catid, 'id' => $id], true, '*', '', $ifcache);
         if (!$info || ($info['status'] !== 1 && !\app\admin\service\User::instance()->isLogin())) {
             throw new \think\exception\HttpException(404, '内容不存在或未审核!');
@@ -164,30 +164,31 @@ class Index extends Cmsbase
         $newstempid = explode(".", $template);
         $template   = $newstempid[0];
         unset($newstempid);
+
         //阅读收费
-        $readpoint           = isset($info['readpoint']) ? (int) $info['readpoint'] : 0; //金额
-        $allow_visitor       = 1;
-        $is_part_content_pay = 0;//是否部分内容付费
+        $info['readpoint']   = $info['readpoint'] ?? 0; //金额
+        $info['paytype']     = $info['paytype'] ?? 1; //1钱 2积分
+        $is_pay              = 1;
+        $is_part_content_pay = 0; //是否部分内容付费
+
         if (isset($info['content'])) {
             $info['content'] = str_replace(['###paidstart###', '###paidend###'], ['<paid>', '</paid>'], $info['content']);
         }
-        if ($readpoint > 0) {
-            $paytype = isset($info['paytype']) && $info['paytype'] ? $info['paytype'] : 0;
+        if ($info['readpoint'] > 0) {
             //检查是否支付过
-            $allow_visitor = self::_check_payment($catid . '_' . $id, $paytype);
-            if (!$allow_visitor) {
-                $allow_visitor = sys_auth($catid . '_' . $id . '|' . $readpoint . '|' . $paytype);
+            $is_pay = \app\cms\model\Order::check_payment($info);
+            if (!$is_pay) {
                 //部分内容阅读付费
                 if (isset($info['content'])) {
                     $pattern = '/<paid>(.*?)<\/paid>/is';
                     if (preg_match($pattern, $info['content'])) {
-                        $payurl              = url('cms/index/readpoint', ['allow_visitor' => $allow_visitor]);
-                        $info['content']     = preg_replace($pattern, "<div class='allow_visitor'><a href='{$payurl}'>此处内容需要点击付费后方可阅读</a></div>", $info['content']);
+                        //$payurl              = url('cms/index/readpoint', ['allow_visitor' => $allow_visitor]);
+                        $info['content']     = preg_replace($pattern, "<div class='allow_visitor'>此处内容需要付费后方可阅读</div>", $info['content']);
                         $is_part_content_pay = 1;
                     }
                 }
             } else {
-                $allow_visitor = 1;
+                $is_pay = 1;
             }
         }
         //SEO
@@ -201,9 +202,9 @@ class Index extends Cmsbase
         $this->assign($info);
         $this->assign([
             'category'            => $category,
-            'readpoint'           => $readpoint,
+            //'readpoint'           => $readpoint,
             'is_part_content_pay' => $is_part_content_pay,
-            'allow_visitor'       => $allow_visitor,
+            'is_pay'              => $is_pay,
             'top_parentid'        => $top_parentid,
             'arrparentid'         => $arrparentid,
             'SEO'                 => $seo,
@@ -442,53 +443,64 @@ class Index extends Cmsbase
         return $this->fetch('/tags');
     }
 
-    // 阅读付费
-    public function readpoint()
-    {
-        $info = get_addon_info('pay');
-        if ($info && $info['status'] > 0) {
-            if (!$this->auth->isLogin()) {
-                $this->error('请先登录！', url('member/index/login'));
-            }
-            $Spend_Model   = new \app\pay\model\Spend;
-            $allow_visitor = $this->request->param('allow_visitor');
-            $auth          = sys_auth($allow_visitor, 'DECODE');
-            if (strpos($auth, '|') === false) {
-                $this->error('非法操作！');
-            }
-            $auth_str = explode('|', $auth);
-            $flag     = $auth_str[0];
-            if (!preg_match('/^([0-9]+)|([0-9]+)/', $flag)) {
-                $this->error('非法操作！');
-            }
-            $readpoint = intval($auth_str[1]);
-            $paytype   = intval($auth_str[2]);
-
-            $flag_arr = explode('_', $flag);
-            $catid    = $flag_arr[0];
-            $id       = $flag_arr[1];
-            try {
-                $Spend_Model->_spend($paytype, floatval($readpoint), $this->auth->id, $this->auth->username, '阅读付费', $flag);
-            } catch (\Exception $ex) {
-                $this->error($ex->getMessage(), url('pay/index/pay'));
-            }
-            $this->success("恭喜你！支付成功!", buildContentUrl($catid, $id));
-        } else {
-            $this->error('请先在后台安装支付模块！');
-        }
-
-    }
-
-    // 检查支付状态
-    protected function _check_payment($flag, $paytype)
+    //创建订单并发起支付请求
+    public function submit()
     {
         if (!$this->auth->isLogin()) {
-            return false;
+            $this->error('请先登录！', url('member/index/login'));
         }
-        if (\app\pay\model\Spend::spend_time($this->auth->id, '24', $flag)) {
-            return true;
+        $catid    = $this->request->param('catid/d');
+        $id       = $this->request->param('id/d');
+        $pay_type = $this->request->param('pay_type');
+        try {
+            $res = \app\cms\model\Order::submitOrder($catid, $id, $pay_type ? $pay_type : 'wechat');
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
         }
-        return false;
+        if ($res) {
+            $this->success('支付成功');
+        }
+    }
+
+    //企业支付通知和回调
+    public function epay()
+    {
+        $type     = $this->request->param('type');
+        $pay_type = $this->request->param('pay_type');
+        if ($type == 'notify') {
+            $pay = \addons\pay\library\Service::checkNotify($pay_type);
+            if (!$pay) {
+                echo '签名错误';
+                return;
+            }
+            try {
+                $data      = $pay->verify();
+                $payamount = $pay_type == 'alipay' ? $data['total_amount'] : $data['total_fee'] / 100;
+                \app\cms\model\Order::settle($data['out_trade_no'], $payamount);
+            } catch (Exception $e) {
+                //写入日志
+                // $e->getMessage();
+            }
+            return $pay->success()->send();
+        } else {
+            $pay = \addons\pay\library\Service::checkReturn($pay_type);
+            if (!$pay) {
+                $this->error('签名错误');
+            }
+            if ($pay === true) {
+                //微信支付
+                $data = ['out_trade_no' => $this->request->param('trade_sn')];
+            } else {
+                $data = $pay->verify();
+            }
+            $order = \app\cms\model\Order::getByTradeSn($data['out_trade_no']);
+            if (!$order) {
+                $this->error('订单不存在!');
+            }
+            //你可以在这里定义你的提示信息,但切记不可在此编写逻辑
+            $this->success("恭喜你！支付成功!", buildContentUrl($order['catid'], $order['contentid'], '', true, true));
+        }
+        return;
     }
 
 }

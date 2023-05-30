@@ -7,11 +7,23 @@
 <div class="layui-form-item"> <label class="layui-form-label">第三方绑定</label>
     <div>
         {foreach $list as $key=>$vo }
-        {if condition="$vo['is_bind']"}
-        <a href="{:url('index/synclogin/unbind',array('type'=>$vo['name']))}" class="lay-tips layui-btn layui-btn-normal" title="解除绑定"><i class="layui-icon iconfont icon-{$vo.name}"></i></a>
-        {else /}
-        <a href="{:url('index/synclogin/login',array('type'=>$vo['name']))}" class="lay-tips layui-btn" title="立即绑定"><i class="layui-icon iconfont icon-{$vo.name}"></i></a>
-        {/if}
+            {switch name="$vo['name']"}
+            {case value="qq"}
+            {php}$html='<i class="iconfont icon-qq-fill"></i>';{/php}
+            {/case}
+            {case value="weixin"}
+            {php}$html='<i class="iconfont icon-wechat-fill"></i>';{/php}
+            {/case}
+            {case value="sina"}
+            {php}$html='<i class="iconfont icon-sina-fill"></i>';{/php}
+            {/case}
+            {/switch}
+
+            {if condition="$vo['is_bind']"}
+            <a href="{:url('index/synclogin/unbind',array('type'=>$vo['name']))}" class="lay-tips layui-btn layui-btn-normal" title="解除绑定">{$html|raw}</a>
+            {else /}
+            <a href="{:url('index/synclogin/login',array('type'=>$vo['name']))}" class="lay-tips layui-btn" title="立即绑定">{$html|raw}</a>
+            {/if}
         {/foreach}
     </div>
 </div>

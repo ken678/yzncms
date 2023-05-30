@@ -30,12 +30,17 @@ body {
                                 <span class="s3">来源：互联网</span></div>
                         </div>
                         <div class="newsview">
-                            {if $allow_visitor==1 || $is_part_content_pay==1}
+                            {if $is_pay || $is_part_content_pay == 1}
                             {$content|raw}
                             {/if}
-                            {if $allow_visitor!=1 && $is_part_content_pay!=1}
+                            {if !$is_pay && $readpoint > 0}
                             <div class="allow_visitor">
-                                <a href="{:url('cms/index/readpoint',['allow_visitor' => $allow_visitor])}">阅读此信息需要您支付 <B><I>{$readpoint} {if $paytype}元{else}点{/if}</I></B>，点击这里支付</a>
+                                <p>阅读此信息需要您支付 <strong>{$readpoint} {if $paytype}元{else}点{/if}</strong></p>
+                                {if $paytype==1}
+                                <a href="{:url('cms/index/submit',['catid'=>$catid,'id'=>$id,'pay_type'=>'wechat'])}" target="_blank" class="lay-btn">微信支付</a>
+                                <a href="{:url('cms/index/submit',['catid'=>$catid,'id'=>$id,'pay_type'=>'alipay'])}" target="_blank" class="lay-btn lay-btn-normal">支付宝支付</a>
+                                {/if}
+                                <a href="{:url('cms/index/submit',['catid'=>$catid,'id'=>$id,'pay_type'=>'balance'])}" target="_blank" class="lay-btn lay-btn-warm">余额支付</a>
                             </div>
                             {/if}
                             <!--S 分页-->

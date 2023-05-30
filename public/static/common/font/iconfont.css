@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 349449 */
-  src: url('iconfont.woff2?t=1670403995461') format('woff2'),
-       url('iconfont.woff?t=1670403995461') format('woff'),
-       url('iconfont.ttf?t=1670403995461') format('truetype');
+  src: url('iconfont.woff2?t=1684214794111') format('woff2'),
+       url('iconfont.woff?t=1684214794111') format('woff'),
+       url('iconfont.ttf?t=1684214794111') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,94 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qq-fill:before {
+  content: "\e991";
+}
+
+.icon-qq-line:before {
+  content: "\e992";
+}
+
+.icon-alipay-fill:before {
+  content: "\e781";
+}
+
+.icon-alipay-line:before {
+  content: "\e782";
+}
+
+.icon-translate-2:before {
+  content: "\eacd";
+}
+
+.icon-translate:before {
+  content: "\eace";
+}
+
+.icon-baidu-fill:before {
+  content: "\e77f";
+}
+
+.icon-baidu-line:before {
+  content: "\e780";
+}
+
+.icon-dingding-fill:before {
+  content: "\e7df";
+}
+
+.icon-dingding-line:before {
+  content: "\e7e0";
+}
+
+.icon-github-fill:before {
+  content: "\e88e";
+}
+
+.icon-github-line:before {
+  content: "\e898";
+}
+
+.icon-taobao-fill:before {
+  content: "\eaa3";
+}
+
+.icon-taobao-line:before {
+  content: "\eaa4";
+}
+
+.icon-wechat-2-fill:before {
+  content: "\eb1a";
+}
+
+.icon-wechat-2-line:before {
+  content: "\eb1b";
+}
+
+.icon-wechat-pay-fill:before {
+  content: "\eb1c";
+}
+
+.icon-wechat-fill:before {
+  content: "\eb1d";
+}
+
+.icon-wechat-line:before {
+  content: "\eb1e";
+}
+
+.icon-wechat-pay-line:before {
+  content: "\eb1f";
+}
+
+.icon-sina-fill:before {
+  content: "\eb20";
+}
+
+.icon-sina-line:before {
+  content: "\eb21";
 }
 
 .icon-calendar-2-fill:before {
@@ -523,30 +611,6 @@
 
 .icon-icon-test1:before {
   content: "\e65a";
-}
-
-.icon-taobao:before {
-  content: "\e622";
-}
-
-.icon-zhifubao:before {
-  content: "\e640";
-}
-
-.icon-baidu:before {
-  content: "\e67f";
-}
-
-.icon-sina:before {
-  content: "\e60f";
-}
-
-.icon-weixin:before {
-  content: "\e63d";
-}
-
-.icon-qq:before {
-  content: "\e68e";
 }
 
 .icon-tongji:before {

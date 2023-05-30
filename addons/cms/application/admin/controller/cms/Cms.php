@@ -207,7 +207,7 @@ class Cms extends Adminbase
                 $this->error('该栏目不存在！');
             }
             if ($category['type'] == 2) {
-                $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+                $data['modelFieldExt'] = $data['modelFieldExt'] ?? [];
                 try {
                     $this->CmsModel->addModelData($data['modelField'], $data['modelFieldExt']);
                 } catch (\Exception $ex) {
@@ -254,7 +254,7 @@ class Cms extends Adminbase
         $this->check_priv('edit');
         if ($this->request->isPost()) {
             $data                  = $this->request->post();
-            $data['modelFieldExt'] = isset($data['modelFieldExt']) ? $data['modelFieldExt'] : [];
+            $data['modelFieldExt'] = $data['modelFieldExt'] ?? [];
             try {
                 $this->CmsModel->editModelData($data['modelField'], $data['modelFieldExt']);
             } catch (\Exception $ex) {

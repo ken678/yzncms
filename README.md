@@ -1,9 +1,9 @@
 # YznCMS 后台开发框架
-### 后端基于thinkphp5.1框架,前端基于Layui2.7.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
+### 后端基于thinkphp5.1框架,前端基于Layui2.8.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
 [![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
-[![Version](https://img.shields.io/badge/YznCMS-1.1.5-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-1.1.6-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -61,6 +61,8 @@
 |礼品卡提货系统|适用于公司节日福利发放礼品卡,大闸蟹等凭卡提货系统|授权|
 |IP归属地查询|根据IP离线定位库和高德API查询所属地|授权|
 |百度统计插件|免去百度登录，将百度统计接口集成至后台|授权|
+|消息通知|集合小程序,公众号模版消息,手机和邮箱通知|授权|
+|微信管理|管理微信公众号插件|授权|
 
 ## [项目介绍]
 YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。

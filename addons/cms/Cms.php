@@ -133,6 +133,19 @@ class Cms extends Addons
                             ],
                         ],
                         [
+                            "name"   => "admin/cms.order/index",
+                            "status" => 1,
+                            "title"  => "订单管理",
+                            "icon"   => "icon-file-list-3-line",
+                            "child"  => [
+                                [
+                                    "name"   => "admin/cms.order/del",
+                                    "status" => 0,
+                                    "title"  => "删除",
+                                ],
+                            ],
+                        ],
+                        [
                             "name"   => "admin/cms.tags/index",
                             "status" => 1,
                             "title"  => "Tags管理",

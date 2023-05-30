@@ -68,3 +68,26 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__tags_content` (
   KEY `modelid` (`modelid`,`contentid`),
   KEY `tag` (`tag`(10))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='tags数据表';
+
+CREATE TABLE `__PREFIX__cms_order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `trade_sn` varchar(50) DEFAULT '' COMMENT '订单ID',
+  `user_id` int(10) unsigned DEFAULT '0' COMMENT '会员ID',
+  `contentid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '信息ID',
+  `catid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `title` varchar(100) DEFAULT NULL COMMENT '订单标题',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1金钱or2点数',
+  `pay_price` decimal(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '支付金额',
+  `pay_type` varchar(50) DEFAULT NULL COMMENT '支付类型',
+  `method` varchar(100) NULL DEFAULT '' COMMENT '支付方法',
+  `ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
+  `useragent` varchar(255) DEFAULT NULL COMMENT '用户访问端标识',
+  `remark` varchar(255) NOT NULL COMMENT '备注说明',
+  `pay_time` int(10) NOT NULL DEFAULT '0' COMMENT '支付时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `status` enum('succ','failed','error','cancel','unpay') NOT NULL DEFAULT 'unpay' COMMENT '状态',
+  PRIMARY KEY (`id`),
+  KEY `catid` (`catid`,`contentid`),
+  KEY `trade_sn` (`trade_sn`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='订单表';

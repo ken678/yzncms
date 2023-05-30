@@ -226,10 +226,9 @@ class Admin extends Adminbase
 
     public function step3()
     {
-        $db_config  = Cache::get('db_config');
-        $res        = Db::connect($db_config)->name('model')->where('type', 0)->select();
-        $modelClass = new \app\admin\model\cms\Models;
-        $data       = [];
+        $db_config = Cache::get('db_config');
+        $res       = Db::connect($db_config)->name('model')->where('type', 0)->select();
+        $data      = [];
         foreach ($res as $key => $value) {
             $data['id']          = $value['modelid'];
             $data['name']        = $value['name'];
@@ -238,21 +237,22 @@ class Admin extends Adminbase
             $data['listorders']  = $value['sort'];
             $data['type']        = 2;
             $data['status']      = $value['disabled'] ? 0 : 1;
-            $data['setting']     = array(
-                'category_template' => $value['category_template'] . '.html',
-                'list_template'     => $value['list_template'] . '.html',
-                'show_template'     => $value['show_template'] . '.html',
-            );
-            $result = $this->validate($data, 'app\cms\validate\Models');
+
+            $data['category_template'] = $value['category_template'] . '.html';
+            $data['list_template']     = $value['list_template'] . '.html';
+            $data['show_template']     = $value['show_template'] . '.html';
+
+            $result = $this->validate($data, 'app\admin\validate\cms\Models');
             if (true !== $result) {
                 $this->error($result);
             }
             try {
-                $modelClass->addModel($data);
+                \app\admin\model\cms\Models::create($data);
             } catch (\Exception $e) {
                 $this->error($e->getMessage());
             }
         }
+        cache('Model', null);
         unset($res);
     }
 
