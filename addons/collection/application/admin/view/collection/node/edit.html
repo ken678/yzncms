@@ -6,6 +6,7 @@
             <div class="layui-tab layui-tab-card">
                 <ul class="layui-tab-title">
                     <li class="layui-this">网址规则</li>
+                    <li>列表规则</li>
                     <li>内容规则</li>
                     <li>高级配置</li>
                 </ul>
@@ -73,24 +74,16 @@
                                 </div>
                             </div>
                         </fieldset>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="alert alert-warning-light">
+                            注意：内容规则如存在和列表规则相同字段，内容字段将会覆盖列表字段
+                        </div>
                         <fieldset class="layui-elem-field">
-                            <legend>列表页网址和标题</legend>
                             <div class="layui-field-box">
                                 <div class="layui-form-item">
                                     <div class="layui-form-mid">切片</div>
                                     <div class="layui-input-inline" style="width:150px;"><input type="text" class="layui-input" name="data[url_range]" placeholder="切片" value="{$data.url_range}"> </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <div class="layui-form-mid">URL</div>
-                                    <div class="layui-input-inline" style="width:150px;"><input type="text" class="layui-input" name="data[url_rule1]" placeholder="选择器" value="{$data.url_rule1}"> </div>
-                                    <div class="layui-input-inline" style="width:60px;"><input type="text" class="layui-input" name="data[url_rule2]" placeholder="属性" value="{$data.url_rule2}"> </div>
-                                    <div class="layui-input-inline" style="width:140px;"><input type="text" class="layui-input" name="data[url_rule3]" placeholder="内容过滤器" value="{$data.url_rule3}"> </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <div class="layui-form-mid">标题</div>
-                                    <div class="layui-input-inline" style="width:150px;"><input type="text" class="layui-input" name="data[url_rule4]" placeholder="选择器" value="{$data.url_rule4}"> </div>
-                                    <div class="layui-input-inline" style="width:60px;"><input type="text" class="layui-input" name="data[url_rule5]" placeholder="属性" value="{$data.url_rule5}"> </div>
-                                    <div class="layui-input-inline" style="width:140px;"><input type="text" class="layui-input" name="data[url_rule6]" placeholder="内容过滤器" value="{$data.url_rule6}"> </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div>
@@ -106,10 +99,8 @@
                                 </div>
                             </div>
                         </fieldset>
-                    </div>
-                    <div class="layui-tab-item">
                         <div class="layui-form-item layui-form-text">
-                            <table class="layui-form-field-label layui-table fieldlist" data-name="data[customize_config]" data-id="customize_config" data-template="true" data-tag="tr">
+                            <table class="layui-form-field-label layui-table fieldlist" data-name="data[list_config]" data-id="list_config" data-template="true" data-tag="tr">
                                 <tr>
                                     <td>标题</td>
                                     <td>字段名</td>
@@ -121,9 +112,56 @@
                                 </tr>
                                 <tr><td colspan="10"><button type="button" class="layui-btn btn-append">追加</button></td></tr>
                             </table>
-                            <textarea name="data[customize_config]" class="layui-textarea layui-hide">{$data.customize_config|raw}</textarea>
+                            <textarea name="data[list_config]" class="layui-textarea layui-hide">{$data.list_config|raw|json_encode}</textarea>
                         </div>
-                        <script type="text/html" id="customize_configTpl">
+                        <script type="text/html" id="list_configTpl">
+                            <tr class="layui-form-item rules-item">
+                                {{# layui.each(d.lists, function(index, item) { }}
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][title]" placeholder="标题" value="{{item.row.title|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][name]" placeholder="字段名" value="{{item.row.name|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][selector]" placeholder="选择器" value="{{item.row.selector|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][attr]" placeholder="属性" value="{{item.row.attr|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="固定值" value="{{item.row.value|| ''}}" />
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][filter]" placeholder="内容过滤器" value="{{item.row.filter|| ''}}" />
+                                </td>
+                                <td>
+                                    {{# if(item.row.name!='url' && item.row.name!='title'){ }}
+                                    <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
+                                    <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
+                                    {{# }; }}
+                                </td>
+                                {{# }); }}
+                            </tr>
+                        </script>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form-item layui-form-text">
+                            <table class="layui-form-field-label layui-table fieldlist" data-name="data[content_config]" data-id="content_config" data-template="true" data-tag="tr">
+                                <tr>
+                                    <td>标题</td>
+                                    <td>字段名</td>
+                                    <td>选择器</td>
+                                    <td>属性</td>
+                                    <td>固定值</td>
+                                    <td>内容过滤器</td>
+                                    <td width="60"></td>
+                                </tr>
+                                <tr><td colspan="10"><button type="button" class="layui-btn btn-append">追加</button></td></tr>
+                            </table>
+                            <textarea name="data[content_config]" class="layui-textarea layui-hide">{$data.content_config|raw|json_encode}</textarea>
+                        </div>
+                        <script type="text/html" id="content_configTpl">
                             <tr class="layui-form-item rules-item">
                                 {{# layui.each(d.lists, function(index, item) { }}
                                 <td>

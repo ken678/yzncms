@@ -91,27 +91,29 @@ class Node extends Adminbase
         set_time_limit(0);
         //@session_start();
         //\think\facade\Session::pause();
-        $nid                      = $this->request->param('id/d', 0);
-        $data                     = $this->modelClass->find($nid);
-        $data['customize_config'] = json_decode($data['customize_config'], true);
-        $event                    = new \addons\collection\library\Collection;
+        $nid                    = $this->request->param('id/d', 0);
+        $data                   = $this->modelClass->find($nid);
+        $data['content_config'] = $data['content_config'];
+        $data['list_config']    = $data['list_config'];
+        $event                  = new \addons\collection\library\Collection;
         $event->init($data);
         $urls       = $event->url_list();
         $total_page = count($urls);
         if ($total_page > 0) {
             foreach ($urls as $key => $vo) {
-                $url = $event->get_url_lists($vo);
+                $listData = $event->get_url_lists($vo);
                 $event->echo_msg("采集起始页：<a href='{$vo}' target='_blank'>{$vo}</a>", 'green');
-                if (is_array($url) && !empty($url)) {
-                    foreach ($url as $v) {
+                if (is_array($listData) && !empty($listData)) {
+                    foreach ($listData as $v) {
                         if (empty($v['url']) || empty($v['title'])) {
                             continue;
                         }
                         //是否采集过
                         if (!ContentModel::where(['url' => $v['url']])->find()) {
-                            $html = $event->get_content($v['url']);
+                            $contentData = $event->get_content($v['url']);
+                            $allData     = array_merge($v, $contentData);
                             $event->echo_msg("采集内容页：<a href='{$v['url']}' target='_blank'>{$v['url']}</a>", 'black');
-                            ContentModel::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title'], 'data' => serialize($html)]);
+                            ContentModel::create(['nid' => $nid, 'status' => 0, 'url' => $v['url'], 'title' => $v['title'], 'data' => serialize($allData)]);
                         }
                     }
                 }

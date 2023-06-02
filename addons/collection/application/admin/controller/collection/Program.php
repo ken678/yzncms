@@ -98,7 +98,8 @@ class Program extends Adminbase
             if ($catid) {
                 $cat_info   = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
                 $data       = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data  = json_decode(NodesModel::where('id', $nid)->value('customize_config'), true);
+                $_node      = NodesModel::where('id', $nid)->find();
+                $node_data  = array_merge($_node['list_config'], $_node['content_config']);
                 $node_field = [];
                 if (is_array($node_data)) {
                     foreach ($node_data as $k => $v) {
@@ -176,7 +177,8 @@ class Program extends Adminbase
             if ($catid) {
                 $cat_info  = Db::name('Category')->field('catname,modelid')->where('id', $catid)->find();
                 $data      = model('cms/cms')->getFieldList($cat_info['modelid']);
-                $node_data = json_decode(NodesModel::where('id', $nid)->value('customize_config'), true);
+                $_node     = NodesModel::where('id', $nid)->find();
+                $node_data = array_merge($_node['list_config'], $_node['content_config']);
                 foreach ($data as $key => $value) {
                     if ($value['fieldArr'] == 'modelField') {
                         if (isset($program['modelField'][$key])) {

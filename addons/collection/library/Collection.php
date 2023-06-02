@@ -59,10 +59,21 @@ class Collection
     {
         if ($url) {
             // 定义采集规则
-            $rules = [
-                'url'   => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
-                'title' => [$this->_config['url_rule4'], $this->_config['url_rule5'], $this->_config['url_rule6']],
-            ];
+            foreach ($this->_config['list_config'] as $k => $v) {
+                if (empty($v['name'])) {
+                    continue;
+                }
+                $rules[$v['name']] = [$v['selector'], $v['attr'], $v['filter'], function ($content) use ($v) {
+                    if (!empty($v['value'])) {
+                        return $v['value'];
+                    }
+                    return $content;
+                }];
+            }
+            /*$rules = [
+            'url'   => [$this->_config['url_rule1'], $this->_config['url_rule2'], $this->_config['url_rule3']],
+            'title' => [$this->_config['url_rule4'], $this->_config['url_rule5'], $this->_config['url_rule6']],
+            ];*/
             if ('utf-8' == $this->_config['sourcecharset']) {
                 $obj = QueryList::get($url);
             } else {
@@ -85,6 +96,7 @@ class Collection
                         continue;
                     }
                 }
+                $data[$k]          = $v;
                 $data[$k]['url']   = $this->url_check($v['url'], $url);
                 $data[$k]['title'] = strip_tags($v['title']);
             }
@@ -98,7 +110,7 @@ class Collection
     public function get_content($url)
     {
         $this->_url = $url;
-        foreach ($this->_config['customize_config'] as $k => $v) {
+        foreach ($this->_config['content_config'] as $k => $v) {
             if (empty($v['name'])) {
                 continue;
             }

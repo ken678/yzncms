@@ -19,4 +19,10 @@ use think\Model;
 class Nodes extends Model
 {
     protected $name = 'collection_node';
+
+    // 设置json类型字段
+    protected $json = ['list_config', 'content_config'];
+
+    // 设置JSON数据返回数组
+    protected $jsonAssoc = true;
 }
