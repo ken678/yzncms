@@ -12,6 +12,7 @@
 // +----------------------------------------------------------------------
 // | cms函数文件
 // +----------------------------------------------------------------------
+use think\Db;
 use think\facade\Cache;
 use think\facade\Request;
 /**
@@ -39,7 +40,7 @@ function getCategory($cat, $fields = '', $newCache = false)
     }
     if (empty($cache)) {
         //读取数据
-        $cache = db('category')->where($field, $cat)->find();
+        $cache = Db::name('category')->where($field, $cat)->find();
         if (empty($cache)) {
             Cache::set($key, 'false', 60);
             return false;
