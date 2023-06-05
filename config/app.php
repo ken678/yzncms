@@ -163,4 +163,6 @@ return [
     'chunksize'               => 5242880,
     //CDN地址
     'cdnurl'                  => '',
+    //API接口地址
+    'api_url'                 => 'https://api.yzncms.com',
 ];
