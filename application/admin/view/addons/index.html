@@ -7,7 +7,7 @@
     </div>
 </div>
 <script type="text/html" id="titleTpl">
-{{#  if(d.status >= 0){ }}
+{{#  if(d.addon){ }}
     {{#  if(d.config == 1 ){ }}
     <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置 -【{{d.title}}】">设置</a>
     {{#  } }}
@@ -19,7 +19,6 @@
     <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
     <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
-<!--     <a class="layui-btn layui-btn-xs btn-install" data-request='{:url("install")}?name={{d.name}}' data-table="currentTable" data-title="确定安装【{{d.title}}】，进行该操作？" confirm>安装</a> -->
 {{#  } }}
 </script>
 <button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
@@ -56,14 +55,53 @@
         </div>
     </div>
 </script>
+
+<script id="logintpl" type="text/html">
+    <div>
+        <form class="layui-form">
+            <div class="alert alert-danger-light">
+                <strong>温馨提示</strong><br/>此处登录账号为<a href="https://www.yzncms.com" target="_blank">Yzncms官网账号</a>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-wrap">
+                    <div class="layui-input-prefix">
+                      <i class="layui-icon layui-icon-username"></i>
+                    </div>
+                    <input type="text" class="layui-input" id="inputAccount" value="" autocomplete="off" placeholder="你的手机号、用户名或邮箱">
+
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-wrap">
+                    <div class="layui-input-prefix">
+                      <i class="layui-icon layui-icon-password"></i>
+                    </div>
+                    <input type="password" class="layui-input" id="inputPassword" value="" autocomplete="off" lay-affix="eye" placeholder="你的密码">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script id="userinfotpl" type="text/html">
+    <div>
+        <form class="form-horizontal form-userinfo">
+            <div class="alert alert-dismissable alert-info-light">
+                <strong>温馨提示</strong><br/>你好！{{d.username}}<br />当前你已经登录，将同步保存你的购买记录
+            </div>
+        </form>
+    </div>
+</script>
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','table','upload','laytpl'], function() {
+layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
     var yznTable = layui.yznTable,
         $ = layui.$,
         table = layui.table,
         laytpl = layui.laytpl,
+        yzn = layui.yzn,
         upload = layui.upload;
 
     var init = {
@@ -73,14 +111,37 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
 
     var area = [$(window).width() > 800 ? '800px' : '95%', $(window).height() > 600 ? '600px' : '95%'];
 
+    var switch_local = function () {
+        layer.confirm('插件市场暂不可用，是否切换到本地插件？', {
+            title: '温馨提示',
+            btn: ['切换到本地插件', '重新尝试加载']
+        }, function (index) {
+            layer.close(index);
+            //$(".panel .nav-tabs").hide();
+            //$(".toolbar > *:not(:first)").hide();
+            $(".btn-switch[data-type='local']")[0].click();
+        }, function (index) {
+            layer.close(index);
+            table.reload(init.table_render_id);
+        });
+        return false;
+    };
+
     yznTable.render({
         init: init,
         toolbar: ['refresh',
             [{
-               html:'<a class="layui-btn layui-btn-sm" onclick="importFile();"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
-            }],
+                html:'<a class="layui-btn layui-btn-sm" onclick="importFile();"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
+             },{
+                html:'<a class="layui-btn {if $type=='online'}layui-btn-normal{else}layui-btn-primary layui-border-blue{/if} layui-btn-sm btn-switch" data-type="all" href="{:url("index")}" style="margin-left: 10px !important;"><i class="iconfont icon-other"></i>&nbsp;全部</a>'
+             },{
+                html:'<a class="layui-btn {if $type=='local'}layui-btn-normal{else}layui-btn-primary layui-border-blue{/if} layui-btn-sm btn-switch" data-type="local" href="{:url("index",["type"=>"local"])}"><i class="iconfont icon-manage"></i>&nbsp;本地插件</a>'
+             },{
+                html:'<a class="layui-btn layui-bg-black layui-btn-sm btn-userinfo" style="margin-left: 10px !important;" href="javascript:;"><i class="iconfont icon-user-line"></i>&nbsp;会员信息</a>'
+             }
+            ],
         ],
-        url: '{:url("index")}',
+        url: '{:url("index",["type"=>$type])}',
         search:false,
         cols: [
             [
@@ -88,11 +149,127 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
                 { field: 'name', width: 150, title: '标识' },
                 { field: 'description', title: '描述' },
                 { field: 'author', width: 90, title: '作者' },
+                {if $type == 'online'}
+                { field: 'price', width: 90, title: '价格' , templet: function(d){
+                    if (isNaN(d.price)) {
+                        return d.price;
+                    }
+                    return parseFloat(d.price) == 0 ? '<span class="text-success">' + '免费' + '</span>' : '<span class="text-danger">￥' + d.price + '</span>';
+                }},
+                { field: 'downloads', width: 90, title: '下载' },
+                {/if}
                 { field: 'version', width: 90, title: '版本' },
                 { fixed: 'right', width: 160, title: '操作', templet: '#titleTpl' }
             ]
         ],
-        page: {limit:20}
+        page: {limit:20},
+        done: function(res, curr, count){
+            if(count==-1){
+                switch_local();
+            }
+        }
+    });
+
+    var userinfo = {
+        get: function () {
+            var userinfo = localStorage.getItem("yzncms_userinfo");
+            return userinfo ? JSON.parse(userinfo) : null;
+        },
+        set: function (data) {
+            if (data) {
+                localStorage.setItem("yzncms_userinfo", JSON.stringify(data));
+            } else {
+                localStorage.removeItem("yzncms_userinfo");
+            }
+        }
+    };
+
+    // 会员信息
+    $(document).on("click", ".btn-userinfo", function (e, name, version) {
+        var that = this;
+        var area = [$(window).width() > 800 ? '500px' : '95%', $(window).height() > 600 ? '400px' : '95%'];
+        var userinfo = yzn.getStorage('yzncms_userinfo');
+        console.log(userinfo);
+        if (!userinfo) {
+            layer.open({
+                content: laytpl($("#logintpl").html()).render({}),
+                zIndex: 99,
+                area: area,
+                title: '登录',
+                resize: false,
+                btn: ['登录', '注册'],
+                yes: function (index, layero) {
+                    yzn.request.post({
+                        url: '{$api_url}/api/member/login',
+                        type: 'post',
+                        data: {
+                            account: $("#inputAccount", layero).val(),
+                            password: $("#inputPassword", layero).val(),
+                            version: '{$Think.config.version.yzncms_version}',
+                        }
+                    }, function (data, ret) {
+                        yzn.setStorage('yzncms_userinfo',data.userinfo);
+                        layer.closeAll();
+                        layer.alert(ret.msg, {title: '温馨提示', icon: 1});
+                        return false;
+                    }, function (data, ret) {
+                    });
+                },
+                btn2: function () {
+                    return false;
+                },
+                success: function (layero, index) {
+                    this.checkEnterKey = function (event) {
+                        if (event.keyCode === 13) {
+                            $(".layui-layer-btn0").trigger("click");
+                            return false;
+                        }
+                    };
+                    $(document).on('keydown', this.checkEnterKey);
+                    $(".layui-layer-btn1", layero).prop("href", "https://www.yzncms.com/user/register.html").prop("target", "_blank");
+                },
+                end: function () {
+                    $(document).off('keydown', this.checkEnterKey);
+                }
+            });
+        } else {
+            yzn.request.post({
+                url: '{$api_url}/api/member/index',
+                data: {
+                    uid: userinfo.id,
+                    token: userinfo.token,
+                    version: '{$Think.config.version.yzncms_version}',
+                }
+            }, function (data) {
+                layer.open({
+                    content: laytpl($("#userinfotpl").html()).render(userinfo),
+                    area: area,
+                    title: '会员信息',
+                    resize: false,
+                    btn: ['退出登录', '关闭'],
+                    yes: function () {
+                        yzn.request.post({
+                            url: '{$api_url}/api/member/logout',
+                            data: {uid: userinfo.id, token: userinfo.token, version: '{$Think.config.version.yzncms_version}'}
+                        }, function (data, ret) {
+                            yzn.setStorage('yzncms_userinfo','');
+                            layer.closeAll();
+                            layer.alert(ret.msg, {title: '温馨提示', icon: 0});
+                        }, function (data, ret) {
+                            yzn.setStorage('yzncms_userinfo','');
+                            layer.closeAll();
+                            layer.alert(ret.msg, {title: '温馨提示', icon: 0});
+                        });
+                    }
+                });
+                return false;
+            }, function (data) {
+                yzn.setStorage('yzncms_userinfo','');
+                $(that).trigger('click');
+                return false;
+            });
+
+        }
     });
 
     var install = function (name, force) {

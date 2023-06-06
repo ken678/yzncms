@@ -34,24 +34,44 @@ class Addons extends Adminbase
     //显示插件列表
     public function index()
     {
-        $limit = $this->request->get("limit/d");
-        $page  = $this->request->get("page/d", 1);
+        $type  = $this->request->param("type", 'online');
+        $limit = $this->request->param("limit/d");
+        $page  = $this->request->param("page/d", 1);
+
         if ($this->request->isAjax()) {
-            $addons = get_addon_list();
-            $list   = [];
-            foreach ($addons as $k => &$v) {
-                $config      = get_addon_config($v['name']);
-                $v['config'] = $config ? 1 : 0;
+            if ($type == 'local') {
+                $addons = get_addon_list();
+                $list   = [];
+                foreach ($addons as $k => &$v) {
+                    $config      = get_addon_config($v['name']);
+                    $v['config'] = $config ? 1 : 0;
+                    $v['addon']  = $v['name'];
+                }
+                $count = count($addons);
+                if ($limit) {
+                    $addons = array_slice($addons, ($page - 1) * $limit, $limit);
+                }
+                $result = ["code" => 0, "data" => $addons, 'count' => $count];
+            } else {
+                //在线插件
+                $list         = $this->getAddonList();
+                $onlineaddons = $list['list'] ?? [];
+                $count        = $list['count'] ?? -1;
+                //本地插件
+                $addons = get_addon_list();
+                foreach ($onlineaddons as $k => &$v) {
+                    $v['addon'] = $addons[$v['name']] ?? '';
+                }
+                $result = ["code" => 0, "data" => $onlineaddons, 'count' => $count];
             }
-            $count = count($addons);
-            if ($limit) {
-                $addons = array_slice($addons, ($page - 1) * $limit, $limit);
-            }
-            $result = ["code" => 0, "data" => $addons, 'count' => $count];
+
             return json($result);
         }
+        $this->assign([
+            'api_url' => config('api_url'),
+            'type'    => $type,
+        ]);
         return $this->fetch();
-
     }
 
     /**
@@ -263,5 +283,21 @@ class Addons extends Adminbase
         $prefix = Config::get('database.prefix');
         $tables = array_values($tables);
         $this->success('', null, ['tables' => $tables]);
+    }
+
+    protected function getAddonList()
+    {
+        $params = [
+            'uid'     => $this->request->post('uid'),
+            'token'   => $this->request->post('token'),
+            'version' => '1.3.5.20221214',
+        ];
+        $json = [];
+        try {
+            $json = Service::addons($params);
+        } catch (\Exception $e) {
+
+        }
+        return $json;
     }
 }
