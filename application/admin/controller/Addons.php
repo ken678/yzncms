@@ -47,7 +47,7 @@ class Addons extends Adminbase
             if ($limit) {
                 $addons = array_slice($addons, ($page - 1) * $limit, $limit);
             }
-            $result = array("code" => 0, "data" => $addons, 'count' => $count);
+            $result = ["code" => 0, "data" => $addons, 'count' => $count];
             return json($result);
         }
         return $this->fetch();
@@ -84,8 +84,8 @@ class Addons extends Adminbase
                                 true);
                             $value = $params[$v['name']];
                         } else {
-                            $value = is_array($params[$v['name']]) ? implode(',',
-                                $params[$v['name']]) : $params[$v['name']];
+                            $value = is_array($params[$v['name']])?implode(',',
+                                $params[$v['name']]): $params[$v['name']];
                         }
                         $v['value'] = $value;
                     } elseif ($v['type'] == 'checkbox' && !isset($params[$v['name']])) {
@@ -218,13 +218,13 @@ class Addons extends Adminbase
         }
         $file = $this->request->file('file');
         try {
-            Service::local($file);
+            $info = Service::local($file);
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
-        $this->success('插件解压成功，可以进入插件管理进行安装！');
+        $this->success('插件安装成功！清除浏览器缓存和框架缓存后生效！', '', ['addon' => $info]);
     }
 
     /**
