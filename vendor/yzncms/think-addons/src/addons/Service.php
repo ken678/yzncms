@@ -346,7 +346,7 @@ class Service
             }
             self::runSQL($name);
             // 启用插件
-            self::enable($name, true);
+            //self::enable($name, true);
         } catch (AddonException $e) {
             throw new AddonException($e->getMessage(), $e->getCode(), $e->getData());
         } catch (Exception $e) {
