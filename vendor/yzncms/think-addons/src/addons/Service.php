@@ -38,7 +38,7 @@ class Service
     public static function addons($params = [])
     {
         $params['domain'] = request()->host(true);
-        return self::sendRequest('/addon/index', $params, 'GET');
+        return self::sendRequest('/api/addon/index', $params, 'GET');
     }
 
     /**
@@ -51,23 +51,79 @@ class Service
     }
 
     /**
+     * 远程下载插件
+     *
+     * @param string $name   插件名称
+     * @param array  $extend 扩展参数
+     * @return  string
+     */
+    public static function download($name, $extend = [])
+    {
+        $addonsTempDir = self::getAddonsBackupDir();
+        $tmpFile       = $addonsTempDir . $name . ".zip";
+        try {
+            $client   = self::getClient();
+            $response = $client->get('/api/addon/download', ['query' => array_merge(['name' => $name], $extend)]);
+            $body     = $response->getBody();
+            $content  = $body->getContents();
+            if (substr($content, 0, 1) === '{') {
+                $json = (array) json_decode($content, true);
+
+                //如果传回的是一个下载链接,则再次下载
+                if ($json['data'] && isset($json['data']['url'])) {
+                    $response = $client->get($json['data']['url']);
+                    $body     = $response->getBody();
+                    $content  = $body->getContents();
+                } else {
+                    //下载返回错误，抛出异常
+                    throw new AddonException($json['msg'], $json['code'], $json['data']);
+                }
+            }
+        } catch (TransferException $e) {
+            throw new Exception("插件下载失败");
+        }
+
+        if ($write = fopen($tmpFile, 'w')) {
+            fwrite($write, $content);
+            fclose($write);
+            return $tmpFile;
+        }
+        throw new Exception("没有权限写入临时文件");
+    }
+
+    /**
      * 安装插件.
      * @param string $name   插件名称
      * @param boolean $force  是否覆盖
+     * @param array   $extend 扩展参数
      * @throws Exception
      * @return bool
      */
-    public static function install($name, $force = false)
+    public static function install($name, $force = false, $extend = [])
     {
+        if (!$name || (is_dir(ADDON_PATH . $name) && !$force)) {
+            throw new Exception('插件已经存在');
+        }
+        $extend['domain'] = request()->host(true);
+
+        // 远程下载插件
+        $tmpFile = Service::download($name, $extend);
+
+        $addonDir = self::getAddonDir($name);
+
         try {
+            // 解压插件压缩包到插件目录
+            Service::unzip($name);
             // 检查插件是否完整
             self::check($name);
             if (!$force) {
                 self::noconflict($name);
             }
         } catch (AddonException $e) {
+            @File::del_dir($addonDir);
             throw new AddonException($e->getMessage(), $e->getCode(), $e->getData());
         } catch (Exception $e) {
+            @File::del_dir($addonDir);
             throw new Exception($e->getMessage());
         }
         try {
@@ -94,6 +150,7 @@ class Service
                 }
             }
         } catch (Exception $e) {
+            @File::del_dir($addonDir);
             throw new Exception($e->getMessage());
         }
         self::runSQL($name);
@@ -359,6 +416,46 @@ class Service
         $info['config']   = get_addon_config($name) ? 1 : 0;
         $info['testdata'] = is_file(Service::getTestdataFile($name));
         return $info;
+    }
+
+    /**
+     * 解压插件
+     *
+     * @param string $name 插件名称
+     * @return  string
+     * @throws  Exception
+     */
+    public static function unzip($name)
+    {
+        if (!$name) {
+            throw new Exception('参数不正确');
+        }
+        $addonsBackupDir = self::getAddonsBackupDir();
+        $file            = $addonsBackupDir . $name . '.zip';
+
+        // 打开插件压缩包
+        $zip = new ZipFile();
+        try {
+            $zip->openFile($file);
+        } catch (ZipException $e) {
+            $zip->close();
+            throw new Exception('无法打开ZIP文件');
+        }
+
+        $dir = self::getAddonDir($name);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755);
+        }
+
+        // 解压插件压缩包
+        try {
+            $zip->extractTo($dir);
+        } catch (ZipException $e) {
+            throw new Exception('无法解压ZIP文件');
+        } finally {
+            $zip->close();
+        }
+        return $dir;
     }
 
     /**
