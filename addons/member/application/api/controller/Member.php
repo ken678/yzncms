@@ -10,14 +10,14 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 前台会员api管理【后期废除】
+// | 前台会员api管理
 // +----------------------------------------------------------------------
-namespace app\member\controller;
+namespace app\api\controller;
 
 use app\common\controller\Api;
 use app\member\service\User;
 
-class ApiBase extends Api
+class Member extends Api
 {
     //会员模型相关配置
     protected $memberConfig = [];
