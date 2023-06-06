@@ -278,14 +278,36 @@ layui.use(['yznTable','table','upload','laytpl'], function() {
         accept: 'file',
         exts: 'zip',
         done: function(res) {
-            //上传完毕回调
-            layer.alert(res.msg, {}, function(index) {
-                if (res.code != 0) {
-                    location.reload();
-                }else{
-                	layer.close(index);
-                }
-            });
+            if(res.code==1){
+                //上传完毕回调
+                var addon = res.data.addon;
+                var testdata = res.data.addon.testdata;
+                operate(res.data.addon.name, 'enable', false, function (data, ret) {
+                    layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (testdata ? '<br>你还可以继续导入测试数据！' : ""), {
+                        btn: testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
+                        title:'温馨提示',
+                        yes: function (index) {
+                            if (res.data.addon.testdata) {
+                                yzn.request.post({
+                                    url: '{:url("testdata")}',
+                                    data: {
+                                        name: name,
+                                    }
+                                }, function (data,res) {
+                                    layer.close(index);
+                                    yzn.msg.success(res.msg);
+                                });
+                            } else {
+                                layer.close(index);
+                            }
+                        },
+                        icon: 1
+                    });
+                });  
+            }else{
+               layer.alert(res.msg, {icon: 7}); 
+            }
+            return false;
         },
         error: function() {
             //请求异常回调
