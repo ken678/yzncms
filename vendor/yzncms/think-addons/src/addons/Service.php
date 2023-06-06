@@ -18,6 +18,8 @@ namespace think\addons;
 
 use app\common\library\Cache as CacheLib;
 use app\common\library\Menu as MenuLib;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\TransferException;
 use PhpZip\Exception\ZipException;
 use PhpZip\ZipFile;
 use RecursiveDirectoryIterator;
@@ -30,6 +32,24 @@ use util\Sql;
 
 class Service
 {
+    /**
+     * 插件列表
+     */
+    public static function addons($params = [])
+    {
+        $params['domain'] = request()->host(true);
+        return self::sendRequest('/addon/index', $params, 'GET');
+    }
+
+    /**
+     * 检测插件是否购买授权
+     */
+    public static function isBuy($name, $extend = [])
+    {
+        $params = array_merge(['name' => $name, 'domain' => request()->host(true)], $extend);
+        return self::sendRequest('/addon/isbuy', $params, 'POST');
+    }
+
     /**
      * 安装插件.
      * @param string $name   插件名称
@@ -296,6 +316,37 @@ class Service
                 @unlink($newAddonDir);
                 throw new Exception('无法解压缩文件');
             }
+
+            try {
+                // 默认启用该插件
+                $info = get_addon_info($name);
+                /*if ($info['status']) {
+                $info['status'] = 0;
+                set_addon_info($name, $info);
+                }*/
+                // 执行安装脚本
+                $class = get_addon_class($name);
+                if (class_exists($class)) {
+                    $addon = new $class();
+                    $addon->install();
+
+                    if (isset($info['has_adminlist']) && $info['has_adminlist']) {
+                        $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : [];
+                        //添加菜单
+                        MenuLib::addAddonMenu($admin_list, $info);
+                    }
+                    $cache_list = property_exists($addon, 'cache_list') ? $addon->cache_list : [];
+                    if ($cache_list) {
+                        CacheLib::installAddonCache($cache_list, $info);
+                    }
+                }
+            } catch (Exception $e) {
+                @File::del_dir($newAddonDir);
+                throw new Exception($e->getMessage());
+            }
+            self::runSQL($name);
+            // 启用插件
+            self::enable($name, true);
         } catch (AddonException $e) {
             throw new AddonException($e->getMessage(), $e->getCode(), $e->getData());
         } catch (Exception $e) {
@@ -305,6 +356,9 @@ class Service
             unset($uploadFile);
             @unlink($tmpFile);
         }
+        $info['config']   = get_addon_config($name) ? 1 : 0;
+        $info['testdata'] = is_file(Service::getTestdataFile($name));
+        return $info;
     }
 
     /**
@@ -577,6 +631,64 @@ EOD;
             throw new Exception('配置文件不完整');
         }
         return true;
+    }
+
+    /**
+     * 获取远程服务器
+     * @return  string
+     */
+    protected static function getServerUrl()
+    {
+        return config('api_url');
+    }
+
+    /**
+     * 获取请求对象
+     * @return Client
+     */
+    public static function getClient()
+    {
+        $options = [
+            'base_uri'        => self::getServerUrl(),
+            'timeout'         => 30,
+            'connect_timeout' => 30,
+            'verify'          => false,
+            'http_errors'     => false,
+            'headers'         => [
+                'X-REQUESTED-WITH' => 'XMLHttpRequest',
+                'Referer'          => dirname(request()->root(true)),
+                'User-Agent'       => 'YznAddon',
+            ],
+        ];
+        static $client;
+        if (empty($client)) {
+            $client = new Client($options);
+        }
+        return $client;
+    }
+
+    /**
+     * 发送请求
+     * @return array
+     * @throws Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function sendRequest($url, $params = [], $method = 'POST')
+    {
+        $json = [];
+        try {
+            $client   = self::getClient();
+            $options  = strtoupper($method) == 'POST' ? ['form_params' => $params] : ['query' => $params];
+            $response = $client->request($method, $url, $options);
+            $body     = $response->getBody();
+            $content  = $body->getContents();
+            $json     = (array) json_decode($content, true);
+        } catch (TransferException $e) {
+            throw new Exception('网络错误!');
+        } catch (\Exception $e) {
+            throw new Exception('未知的数据格式!');
+        }
+        return $json;
     }
 
 }
