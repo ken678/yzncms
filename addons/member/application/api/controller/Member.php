@@ -27,7 +27,7 @@ class Member extends Api
      * 无需登录的方法,同时也就不需要鉴权了
      * @var array
      */
-    protected $noNeedLogin = [];
+    protected $noNeedLogin = ['login'];
     /**
      * 无需鉴权的方法,但需要登录
      * @var array
@@ -69,5 +69,49 @@ class Member extends Api
                 $this->auth->init($token);
             }
         }
+    }
+
+    /**
+     * 会员中心
+     */
+    public function index()
+    {
+        $this->success('', ['welcome' => $this->auth->nickname]);
+    }
+
+    /**
+     * 会员登录
+     *
+     * @ApiMethod (POST)
+     * @param string $account  账号
+     * @param string $password 密码
+     */
+    public function login()
+    {
+        $account  = $this->request->post('account');
+        $password = $this->request->post('password');
+        if (!$account || !$password) {
+            $this->error('未知参数');
+        }
+        $ret = $this->auth->loginLocal($account, $password);
+        if ($ret) {
+            $data = ['userinfo' => $this->auth->getUserinfo()];
+            $this->success('登录成功', $data);
+        } else {
+            $this->error($this->auth->getError());
+        }
+    }
+
+    /**
+     * 退出登录
+     * @ApiMethod (POST)
+     */
+    public function logout()
+    {
+        if (!$this->request->isPost()) {
+            $this->error('未知参数');
+        }
+        $this->auth->logout();
+        $this->success('注销成功');
     }
 }
