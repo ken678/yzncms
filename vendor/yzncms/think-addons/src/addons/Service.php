@@ -66,6 +66,13 @@ class Service
             $response = $client->get('/addon/download', ['query' => array_merge(['name' => $name], $extend)]);
             $body     = $response->getBody();
             $content  = $body->getContents();
+            if (substr($content, 0, 1) === '{') {
+                $json = (array) json_decode($content, true);
+                if (isset($json['code']) && $json['code'] == 0) {
+                    //下载返回错误，抛出异常
+                    throw new AddonException($json['msg'], $json['code']);
+                }
+            };
         } catch (TransferException $e) {
             throw new Exception("插件下载失败");
         }
