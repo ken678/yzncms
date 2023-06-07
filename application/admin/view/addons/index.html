@@ -344,7 +344,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                         });
                     }
                 });
-            }else if (ret && ret.code === -3) {
+            }else if (res && res.code === -3) {
                 //插件目录发现影响全局的文件
                 layer.open({
                     content: laytpl($("#conflicttpl").html()).render({list:res.data}),
