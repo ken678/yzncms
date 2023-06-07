@@ -68,9 +68,9 @@ class Service
             $content  = $body->getContents();
             if (substr($content, 0, 1) === '{') {
                 $json = (array) json_decode($content, true);
-                if (isset($json['code']) && $json['code'] == 0) {
+                if (isset($json['code'])) {
                     //下载返回错误，抛出异常
-                    throw new AddonException($json['msg'], $json['code']);
+                    throw new AddonException($json['msg'], $json['code'], $json['data']);
                 }
             };
         } catch (TransferException $e) {
