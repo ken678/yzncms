@@ -38,7 +38,7 @@ class Service
     public static function addons($params = [])
     {
         $params['domain'] = request()->host(true);
-        return self::sendRequest('/api/addon/index', $params, 'GET');
+        return self::sendRequest('/addon/index', $params, 'GET');
     }
 
     /**
@@ -63,22 +63,9 @@ class Service
         $tmpFile       = $addonsTempDir . $name . ".zip";
         try {
             $client   = self::getClient();
-            $response = $client->get('/api/addon/download', ['query' => array_merge(['name' => $name], $extend)]);
+            $response = $client->get('/addon/download', ['query' => array_merge(['name' => $name], $extend)]);
             $body     = $response->getBody();
             $content  = $body->getContents();
-            if (substr($content, 0, 1) === '{') {
-                $json = (array) json_decode($content, true);
-
-                //如果传回的是一个下载链接,则再次下载
-                if ($json['data'] && isset($json['data']['url'])) {
-                    $response = $client->get($json['data']['url']);
-                    $body     = $response->getBody();
-                    $content  = $body->getContents();
-                } else {
-                    //下载返回错误，抛出异常
-                    throw new AddonException($json['msg'], $json['code'], $json['data']);
-                }
-            }
         } catch (TransferException $e) {
             throw new Exception("插件下载失败");
         }
