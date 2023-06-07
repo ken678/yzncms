@@ -311,7 +311,40 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 icon: 1
             });
         },function(data,res) {
-            if (res && res.code === -3) {
+            var area = [$(window).width() > 650 ? '650px' : '95%', $(window).height() > 710 ? '710px' : '95%'];
+            if (res && res.code === -2) {
+                layer.closeAll();
+                top.yzn.open('立即支付' , res.data.payurl,'','', {
+                    area: area,
+                    end: function () {
+                        yzn.request.post({
+                            url: 'addon/isbuy',
+                            data: {
+                                name: name,
+                                force: force ? 1 : 0,
+                                uid: uid,
+                                token: token,
+                                version: version,
+                                yzncms_version: '{$Think.config.version.yzncms_version}'
+                            }
+                        }, function () {
+                            top.layer.alert('购买成功！请点击继续安装按钮完成安装！', {
+                                btn: ['继续安装'],
+                                title: '温馨提示',
+                                icon: 1,
+                                yes: function (index) {
+                                    top.layer.close(index);
+                                    install(name, version);
+                                }
+                            });
+                            return false;
+                        }, function () {
+                            console.log('已取消');
+                            return false;
+                        });
+                    }
+                });
+            }else if (ret && ret.code === -3) {
                 //插件目录发现影响全局的文件
                 layer.open({
                     content: laytpl($("#conflicttpl").html()).render({list:res.data}),
