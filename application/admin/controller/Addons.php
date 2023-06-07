@@ -104,8 +104,8 @@ class Addons extends Adminbase
                                 true);
                             $value = $params[$v['name']];
                         } else {
-                            $value = is_array($params[$v['name']])?implode(',',
-                                $params[$v['name']]): $params[$v['name']];
+                            $value = is_array($params[$v['name']]) ? implode(',',
+                                $params[$v['name']]) : $params[$v['name']];
                         }
                         $v['value'] = $value;
                     } elseif ($v['type'] == 'checkbox' && !isset($params[$v['name']])) {
@@ -183,13 +183,15 @@ class Addons extends Adminbase
         }
         $info = [];
         try {
-            $uid     = $this->request->post("uid");
-            $token   = $this->request->post("token");
-            $version = $this->request->post("version");
-            $extend  = [
-                'uid'     => $uid,
-                'token'   => $token,
-                'version' => $version,
+            $uid            = $this->request->post("uid");
+            $token          = $this->request->post("token");
+            $version        = $this->request->post("version");
+            $yzncms_version = $this->request->post("yzncms_version");
+            $extend         = [
+                'uid'            => $uid,
+                'token'          => $token,
+                'version'        => $version,
+                'yzncms_version' => $yzncms_version,
             ];
             $info = Service::install($name, $force, $extend);
         } catch (AddonException $e) {
