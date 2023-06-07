@@ -18,7 +18,7 @@
     {{#  } }}
     <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
-    <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
+    <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
 {{#  } }}
 </script>
 <button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
@@ -96,12 +96,13 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
+layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
     var yznTable = layui.yznTable,
         $ = layui.$,
         table = layui.table,
         laytpl = layui.laytpl,
         yzn = layui.yzn,
+        notice = layui.notice,
         upload = layui.upload;
 
     var init = {
@@ -189,7 +190,6 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
         var that = this;
         var area = [$(window).width() > 800 ? '500px' : '95%', $(window).height() > 600 ? '400px' : '95%'];
         var userinfo = yzn.getStorage('yzncms_userinfo');
-        console.log(userinfo);
         if (!userinfo) {
             layer.open({
                 content: laytpl($("#logintpl").html()).render({}),
@@ -200,7 +200,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
                 btn: ['登录', '注册'],
                 yes: function (index, layero) {
                     yzn.request.post({
-                        url: '{$api_url}/api/member/login',
+                        url: '{$api_url}/member/login',
                         type: 'post',
                         data: {
                             account: $("#inputAccount", layero).val(),
@@ -213,6 +213,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
                         layer.alert(ret.msg, {title: '温馨提示', icon: 1});
                         return false;
                     }, function (data, ret) {
+                        notice.error({ message: ret.msg });
                     });
                 },
                 btn2: function () {
@@ -234,7 +235,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
             });
         } else {
             yzn.request.post({
-                url: '{$api_url}/api/member/index',
+                url: '{$api_url}/member/index',
                 data: {
                     uid: userinfo.id,
                     token: userinfo.token,
@@ -249,7 +250,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
                     btn: ['退出登录', '关闭'],
                     yes: function () {
                         yzn.request.post({
-                            url: '{$api_url}/api/member/logout',
+                            url: '{$api_url}/member/logout',
                             data: {uid: userinfo.id, token: userinfo.token, version: '{$Think.config.version.yzncms_version}'}
                         }, function (data, ret) {
                             yzn.setStorage('yzncms_userinfo','');
@@ -272,12 +273,19 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
         }
     });
 
-    var install = function (name, force) {
+    var install = function (name, version, force) {
+        var userinfo = yzn.getStorage('yzncms_userinfo');
+        var uid = userinfo ? userinfo.id : 0;
+        var token = userinfo ? userinfo.token : '';
         yzn.request.post({
             url: '{:url("install")}',
             data: {
                 name: name,
                 force: force ? 1 : 0,
+                uid: uid,
+                token: token,
+                version: version,
+                yzncms_version: '{$Think.config.version.yzncms_version}'
             },
         }, function(data,res) {
             layer.closeAll();
@@ -315,7 +323,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
 
                     },
                     yes: function () {
-                        install(name, true);
+                        install(name, version, true);
                     }
                 });
             } else {
@@ -414,8 +422,23 @@ layui.use(['yznTable','table','upload','laytpl','yzn'], function() {
     $(document).on("click", ".btn-install", function () {
         var name = $(this).data("name");
         var title = $(this).data("title");
+        var version = $(this).data("version");
+
+        var userinfo = yzn.getStorage('yzncms_userinfo');
+        var uid = userinfo ? userinfo.id : 0;
+
+        if (parseInt(uid) === 0) {
+            return layer.alert('你当前未登录Yzncms，请登录后操作！', {
+                title: '温馨提示',
+                btn: ['立即登录'],
+                yes: function (index, layero) {
+                    $(".btn-userinfo").trigger("click");
+                },
+            });
+        }
+
         yzn.msg.confirm(title, function(index){
-            install(name, false);
+            install(name, version, false);
         });
     });
 

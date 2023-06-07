@@ -183,7 +183,15 @@ class Addons extends Adminbase
         }
         $info = [];
         try {
-            $info = Service::install($name, $force);
+            $uid     = $this->request->post("uid");
+            $token   = $this->request->post("token");
+            $version = $this->request->post("version");
+            $extend  = [
+                'uid'     => $uid,
+                'token'   => $token,
+                'version' => $version,
+            ];
+            $info = Service::install($name, $force, $extend);
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
