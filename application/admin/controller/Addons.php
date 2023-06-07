@@ -281,6 +281,30 @@ class Addons extends Adminbase
     }
 
     /**
+     * 检测
+     */
+    public function isbuy()
+    {
+        $name           = $this->request->post("name");
+        $uid            = $this->request->post("uid");
+        $token          = $this->request->post("token");
+        $version        = $this->request->post("version");
+        $yzncms_version = $this->request->post("yzncms_version");
+        $extend         = [
+            'uid'            => $uid,
+            'token'          => $token,
+            'version'        => $version,
+            'yzncms_version' => $yzncms_version,
+        ];
+        try {
+            $result = Service::isBuy($name, $extend);
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
+        return json($result);
+    }
+
+    /**
      * 获取插件相关表
      */
     public function get_table_list()

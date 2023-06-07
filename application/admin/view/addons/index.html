@@ -318,7 +318,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                     area: area,
                     end: function () {
                         yzn.request.post({
-                            url: 'addon/isbuy',
+                            url: '{:url("isbuy")}',
                             data: {
                                 name: name,
                                 force: force ? 1 : 0,
