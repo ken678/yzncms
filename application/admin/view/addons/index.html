@@ -189,7 +189,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
     $(document).on("click", ".btn-userinfo", function (e, name, version) {
         var that = this;
         var area = [$(window).width() > 800 ? '500px' : '95%', $(window).height() > 600 ? '400px' : '95%'];
-        var userinfo = yzn.getStorage('yzncms_userinfo');
+        var userinfo = yzn.cache.getStorage('yzncms_userinfo');
         if (!userinfo) {
             layer.open({
                 content: laytpl($("#logintpl").html()).render({}),
@@ -208,7 +208,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                             version: '{$Think.config.version.yzncms_version}',
                         }
                     }, function (data, ret) {
-                        yzn.setStorage('yzncms_userinfo',data.userinfo);
+                        yzn.cache.setStorage('yzncms_userinfo',data.userinfo);
                         layer.closeAll();
                         layer.alert(ret.msg, {title: '温馨提示', icon: 1});
                         return false;
@@ -253,11 +253,11 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                             url: '{$api_url}/member/logout',
                             data: {uid: userinfo.id, token: userinfo.token, version: '{$Think.config.version.yzncms_version}'}
                         }, function (data, ret) {
-                            yzn.setStorage('yzncms_userinfo','');
+                            yzn.cache.setStorage('yzncms_userinfo','');
                             layer.closeAll();
                             layer.alert(ret.msg, {title: '温馨提示', icon: 0});
                         }, function (data, ret) {
-                            yzn.setStorage('yzncms_userinfo','');
+                            yzn.cache.setStorage('yzncms_userinfo','');
                             layer.closeAll();
                             layer.alert(ret.msg, {title: '温馨提示', icon: 0});
                         });
@@ -265,7 +265,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 });
                 return false;
             }, function (data) {
-                yzn.setStorage('yzncms_userinfo','');
+                yzn.cache.setStorage('yzncms_userinfo','');
                 $(that).trigger('click');
                 return false;
             });
@@ -274,7 +274,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
     });
 
     var install = function (name, version, force) {
-        var userinfo = yzn.getStorage('yzncms_userinfo');
+        var userinfo = yzn.cache.getStorage('yzncms_userinfo');
         var uid = userinfo ? userinfo.id : 0;
         var token = userinfo ? userinfo.token : '';
         yzn.request.post({
@@ -457,7 +457,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
         var title = $(this).data("title");
         var version = $(this).data("version");
 
-        var userinfo = yzn.getStorage('yzncms_userinfo');
+        var userinfo = yzn.cache.getStorage('yzncms_userinfo');
         var uid = userinfo ? userinfo.id : 0;
 
         if (parseInt(uid) === 0) {
