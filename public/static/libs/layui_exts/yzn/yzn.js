@@ -1,5 +1,5 @@
 //封装基本操作 部分参考EasyAdmin和fastadmin
-layui.define(['layer','notice','addons'], function(exports) {
+layui.define(['layer', 'notice', 'addons'], function(exports) {
     var layer = layui.layer,
         $ = layui.$,
         notice = layui.notice;
@@ -10,13 +10,13 @@ layui.define(['layer','notice','addons'], function(exports) {
         config: {
             shade: [0.02, '#000'],
         },
-        open: function(title, url, width, height,options, isResize) {
+        open: function(title, url, width, height, options, isResize) {
             isResize = isResize === undefined ? true : isResize;
             options = $.extend({
                 title: title,
                 type: 2,
-                area: [$(window).width() > width ? width+'px' : '95%', $(window).height() > height ? height+'px' : '95%'],
-                content: url+ (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1",
+                area: [$(window).width() > width ? width + 'px' : '95%', $(window).height() > height ? height + 'px' : '95%'],
+                content: url + (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1",
                 maxmin: true,
                 moveOut: true,
                 success: function(layero, index) {
@@ -36,13 +36,12 @@ layui.define(['layer','notice','addons'], function(exports) {
                             // 选择目标节点
                             var target = layerfooter[0];
                             // 创建观察者对象
-                            var observer = new MutationObserver(function (mutations) {
+                            var observer = new MutationObserver(function(mutations) {
                                 yzn.layerfooter(layero, index, that);
-                                mutations.forEach(function (mutation) {
-                                });
+                                mutations.forEach(function(mutation) {});
                             });
                             // 配置观察选项:
-                            var config = {attributes: true, childList: true, characterData: true, subtree: true}
+                            var config = { attributes: true, childList: true, characterData: true, subtree: true }
                             // 传入目标节点和观察选项
                             observer.observe(target, config);
                             // 随后,你还可以停止观察
@@ -76,7 +75,7 @@ layui.define(['layer','notice','addons'], function(exports) {
             return layer.open(options);
         },
         //关闭窗口并回传数据
-        close: function (data) {
+        close: function(data) {
             var index = parent.layer.getFrameIndex(window.name);
             var callback = parent.$("#layui-layer" + index).data("callback");
             //再执行关闭
@@ -86,7 +85,7 @@ layui.define(['layer','notice','addons'], function(exports) {
                 callback.call(undefined, data);
             }
         },
-        layerfooter: function (layero, index, that) {
+        layerfooter: function(layero, index, that) {
             var frame = layer.getChildFrame('html', index);
             var layerfooter = frame.find(".layer-footer");
             //表单按钮
@@ -96,7 +95,7 @@ layui.define(['layer','notice','addons'], function(exports) {
                 footer.html(layerfooter.html());
                 footer.insertAfter(layero.find('.layui-layer-content'));
                 //绑定事件
-                footer.on("click", ".layui-btn", function () {
+                footer.on("click", ".layui-btn", function() {
                     if ($(this).hasClass("disabled") || $(this).parent().hasClass("disabled")) {
                         return;
                     }
@@ -149,7 +148,7 @@ layui.define(['layer','notice','addons'], function(exports) {
         },
         events: {
             //请求成功的回调
-            onAjaxSuccess: function (ret, onAjaxSuccess) {
+            onAjaxSuccess: function(ret, onAjaxSuccess) {
                 var data = typeof ret.data !== 'undefined' ? ret.data : null;
                 var msg = typeof ret.msg !== 'undefined' && ret.msg ? ret.msg : '操作成功!';
 
@@ -160,7 +159,7 @@ layui.define(['layer','notice','addons'], function(exports) {
                 }
             },
             //请求错误的回调
-            onAjaxError: function (ret, onAjaxError) {
+            onAjaxError: function(ret, onAjaxError) {
                 var data = typeof ret.data !== 'undefined' ? ret.data : null;
                 if (typeof onAjaxError === 'function') {
                     var result = onAjaxError.call(this, data, ret);
@@ -170,21 +169,21 @@ layui.define(['layer','notice','addons'], function(exports) {
                 }
             },
             //服务器响应数据后
-            onAjaxResponse: function (response) {
+            onAjaxResponse: function(response) {
                 try {
                     var ret = typeof response === 'object' ? response : JSON.parse(response);
                     if (!ret.hasOwnProperty('code')) {
-                        $.extend(ret, {code: -2, msg: response, data: null});
+                        $.extend(ret, { code: -2, msg: response, data: null });
                     }
                 } catch (e) {
-                    var ret = {code: -1, msg: e.message, data: null};
+                    var ret = { code: -1, msg: e.message, data: null };
                 }
                 return ret;
             }
         },
         request: {
             //修复URL
-            fixurl: function (url) {
+            fixurl: function(url) {
                 if (url.substr(0, 1) !== "/") {
                     var r = new RegExp('^(?:[a-z]+:)?//', 'i');
                     if (!r.test(url)) {
@@ -200,7 +199,7 @@ layui.define(['layer','notice','addons'], function(exports) {
                 return yzn.request.ajax('get', options, success, error);
             },
             ajax: function(type, options, success, error) {
-                options = typeof options === 'string' ? {url: options} : options;
+                options = typeof options === 'string' ? { url: options } : options;
                 var index;
                 if (typeof options.loading === 'undefined' || options.loading) {
                     index = layer.load(options.loading || 0);
@@ -208,8 +207,8 @@ layui.define(['layer','notice','addons'], function(exports) {
                 options = $.extend({
                     type: type || 'get',
                     dataType: "json",
-                    url : options.url || '',
-                    data : options.data || {},
+                    url: options.url || '',
+                    data: options.data || {},
                     xhrFields: {
                         withCredentials: true
                     },
@@ -219,7 +218,7 @@ layui.define(['layer','notice','addons'], function(exports) {
                             $("input[name='__token__']").val(token);
                         }
                     },
-                    success: function (ret) {
+                    success: function(ret) {
                         index && layer.close(index);
                         //刷新客户端token
                         if (ret && typeof ret === 'object' && typeof ret.token !== 'undefined') {
@@ -232,34 +231,34 @@ layui.define(['layer','notice','addons'], function(exports) {
                             yzn.events.onAjaxError(ret, error);
                         }
                     },
-                    error: function (xhr) {
+                    error: function(xhr) {
                         index && layer.close(index);
-                        var ret = {code: xhr.status, msg: xhr.statusText, data: null};
+                        var ret = { code: xhr.status, msg: xhr.statusText, data: null };
                         yzn.events.onAjaxError(ret, error);
                     }
                 }, options);
                 return $.ajax(options);
             }
         },
-        notice:{
+        notice: {
             // 成功消息
             success: function(msg) {
-                var index = notice.success({message:msg});
+                var index = notice.success({ message: msg });
                 return index;
             },
             // 失败消息
             error: function(msg) {
-                var index = notice.error({message:msg});
+                var index = notice.error({ message: msg });
                 return index;
             },
             // 警告消息框
             warning: function(msg) {
-                var index = notice.warning({message:msg});
+                var index = notice.warning({ message: msg });
                 return index;
             },
             // 消息提示
             info: function(msg) {
-                var index = notice.info({message:msg});
+                var index = notice.info({ message: msg });
                 return index;
             },
         },
@@ -310,10 +309,33 @@ layui.define(['layer','notice','addons'], function(exports) {
                 return layer.close(index);
             }
         },
-        init: function () {
+        cache: {
+            setStorage: function(key, value) {
+                if (value != null && value !== "undefined") {
+                    layui.data(key, {
+                        key: key,
+                        value: value
+                    })
+                } else {
+                    layui.data(key, {
+                        key: key,
+                        remove: true
+                    })
+                }
+            },
+            getStorage: function(key) {
+                var array = layui.data(key);
+                if (array) {
+                    return array[key]
+                } else {
+                    return false
+                }
+            }
+        },
+        init: function() {
             // 对相对地址进行处理
             $.ajaxSetup({
-                beforeSend: function (xhr, setting) {
+                beforeSend: function(xhr, setting) {
                     setting.url = yzn.request.fixurl(setting.url);
                 }
             });
@@ -321,11 +343,11 @@ layui.define(['layer','notice','addons'], function(exports) {
                 skin: 'layui-layer-yzn'
             });
             notice.settings({
-               timeout: 3000,//消失时间
-               theme: 'dark', // 主题 dark light
-               position: 'topRight', // 位置 bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
-               displayMode: 0, //0无限制 1同类型存在不显示 2同类型存在先移除
-               progressBar: true,//进度条
+                timeout: 3000, //消失时间
+                theme: 'dark', // 主题 dark light
+                position: 'topRight', // 位置 bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+                displayMode: 0, //0无限制 1同类型存在不显示 2同类型存在先移除
+                progressBar: true, //进度条
             });
         }
     }
