@@ -151,7 +151,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 { field: 'description', title: '描述' },
                 { field: 'author', width: 90, title: '作者' },
                 {if $type == 'online'}
-                { field: 'price', width: 90, title: '价格' , templet: function(d){
+                { field: 'price', width: 95, title: '价格' , templet: function(d){
                     if (isNaN(d.price)) {
                         return d.price;
                     }
@@ -314,7 +314,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
             var area = [$(window).width() > 650 ? '650px' : '95%', $(window).height() > 710 ? '710px' : '95%'];
             if (res && res.code === -2) {
                 layer.closeAll();
-                top.yzn.open('立即支付' , res.data.payurl,'','', {
+                yzn.open('立即支付' , res.data.payurl,'','', {
                     area: area,
                     end: function () {
                         yzn.request.post({
