@@ -3,7 +3,7 @@
 <style>.webuploader-pick{height:30px;line-height:30px;padding:0 10px;}</style>
 <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
 <script type="text/html" id="barTool">
-    <a href='{{d.path}}' class="layui-btn layui-btn-danger layui-btn-xs btn-chooseone"><i class="iconfont icon-right"></i> 选择</a>
+    <a data-href='{{d.path}}' class="layui-btn layui-btn-danger layui-btn-xs btn-chooseone"><i class="iconfont icon-right"></i> 选择</a>
 </script>
 <script type="text/html" id="picTpl">
     {{#  if(d.mime.indexOf("image") > -1){ }}
