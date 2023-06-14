@@ -42,7 +42,7 @@ class Addons extends Adminbase
             if ($type == 'local') {
                 $addons = get_addon_list();
                 $list   = [];
-                foreach ($addons as $k => &$v) {
+                foreach ($addons as $k =>  &$v) {
                     $config      = get_addon_config($v['name']);
                     $v['config'] = $config ? 1 : 0;
                     $v['addon']  = $v['name'];
@@ -54,12 +54,12 @@ class Addons extends Adminbase
                 $result = ["code" => 0, "data" => $addons, 'count' => $count];
             } else {
                 //在线插件
-                $list         = $this->getAddonList();
+                $list         = $this->getAddonList($page, $limit);
                 $onlineaddons = $list['list'] ?? [];
                 $count        = $list['count'] ?? -1;
                 //本地插件
                 $addons = get_addon_list();
-                foreach ($onlineaddons as $k => &$v) {
+                foreach ($onlineaddons as $k =>  &$v) {
                     $v['addon'] = $addons[$v['name']] ?? '';
                 }
                 $result = ["code" => 0, "data" => $onlineaddons, 'count' => $count];
@@ -97,7 +97,7 @@ class Addons extends Adminbase
         if ($this->request->isPost()) {
             $params = $this->request->post("config/a", [], 'trim');
             if ($params) {
-                foreach ($config as $k => &$v) {
+                foreach ($config as $k =>  &$v) {
                     if (isset($params[$v['name']])) {
                         if ($v['type'] == 'array') {
                             $params[$v['name']] = is_array($params[$v['name']]) ? $params[$v['name']] : (array) json_decode($params[$v['name']],
@@ -130,7 +130,7 @@ class Addons extends Adminbase
             $this->success('插件配置成功！');
         }
         $tips = [];
-        foreach ($config as $index => &$item) {
+        foreach ($config as $index =>  &$item) {
             if ($item['name'] == '__tips__') {
                 $tips = $item;
                 unset($config[$index]);
@@ -319,12 +319,14 @@ class Addons extends Adminbase
         $this->success('', null, ['tables' => $tables]);
     }
 
-    protected function getAddonList()
+    protected function getAddonList($page, $limit)
     {
         $params = [
             'uid'     => $this->request->post('uid'),
             'token'   => $this->request->post('token'),
-            'version' => '1.3.5.20221214',
+            'version' => Config::get('version.yzncms_version'),
+            'page'    => $page,
+            'limit'   => $limit,
         ];
         $json = [];
         try {
