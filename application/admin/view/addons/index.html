@@ -128,6 +128,8 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
         return false;
     };
 
+    var userinfo = yzn.cache.getStorage('yzncms_userinfo');
+
     yznTable.render({
         init: init,
         toolbar: ['refresh',
@@ -163,6 +165,12 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 { fixed: 'right', width: 160, title: '操作', templet: '#titleTpl' }
             ]
         ],
+        where: {
+            uid: userinfo ? userinfo.id : '',
+            token: userinfo ? userinfo.token : '',
+            domain: '{:request()->domain()}',
+            version: '{$Think.config.version.yzncms_version}'
+        },
         page: {limit:20},
         done: function(res, curr, count){
             if(count==-1){
@@ -170,20 +178,6 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
             }
         }
     });
-
-    var userinfo = {
-        get: function () {
-            var userinfo = localStorage.getItem("yzncms_userinfo");
-            return userinfo ? JSON.parse(userinfo) : null;
-        },
-        set: function (data) {
-            if (data) {
-                localStorage.setItem("yzncms_userinfo", JSON.stringify(data));
-            } else {
-                localStorage.removeItem("yzncms_userinfo");
-            }
-        }
-    };
 
     // 会员信息
     $(document).on("click", ".btn-userinfo", function (e, name, version) {
@@ -456,7 +450,6 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
         var name = $(this).data("name");
         var title = $(this).data("title");
         var version = $(this).data("version");
-
         var userinfo = yzn.cache.getStorage('yzncms_userinfo');
         var uid = userinfo ? userinfo.id : 0;
 
