@@ -123,17 +123,17 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
             $(".btn-switch[data-type='local']")[0].click();
         }, function (index) {
             layer.close(index);
-            table.reload(init.table_render_id);
+            table.reload(init.table_render_id,{where:getWhereCondition()});
         });
         return false;
     };
 
-    var userinfo = yzn.cache.getStorage('yzncms_userinfo');
-
     yznTable.render({
         init: init,
-        toolbar: ['refresh',
+        toolbar: [
             [{
+                html:'<button class="layui-btn layui-btn-sm yzn-btn-primary table-refresh"><i class="iconfont icon-shuaxin1"></i> </button>'
+             },{
                 html:'<a class="layui-btn layui-btn-sm" onclick="importFile();"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
              },{
                 html:'<a class="layui-btn {if $type=='online'}layui-btn-normal{else}layui-btn-primary layui-border-blue{/if} layui-btn-sm btn-switch" data-type="all" href="{:url("index")}" style="margin-left: 10px !important;"><i class="iconfont icon-other"></i>&nbsp;全部</a>'
@@ -165,18 +165,29 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 { fixed: 'right', width: 160, title: '操作', templet: '#titleTpl' }
             ]
         ],
-        where: {
-            uid: userinfo ? userinfo.id : '',
-            token: userinfo ? userinfo.token : '',
-            domain: '{:request()->domain()}',
-            version: '{$Think.config.version.yzncms_version}'
-        },
+        where: getWhereCondition(),
         page: {limit:20},
         done: function(res, curr, count){
             if(count==-1){
                 switch_local();
             }
         }
+    });
+
+    function getWhereCondition() {
+        var userinfo = yzn.cache.getStorage('yzncms_userinfo');
+        console.log(userinfo);
+        return {
+            uid: userinfo ? userinfo.id : '',
+            token: userinfo ? userinfo.token : '',
+            domain: '{:request()->domain()}',
+            version: '{$Think.config.version.yzncms_version}'
+        };
+    }
+
+    // 监听动态表格刷新
+    $('body').on('click', '.table-refresh', function() {
+        table.reload(init.table_render_id,{where:getWhereCondition()},true);
     });
 
     // 会员信息
@@ -300,7 +311,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                     } else {
                         layer.close(index);
                     }
-                    table.reload(init.table_render_id);
+                    table.reload(init.table_render_id,{where:getWhereCondition()});
                 },
                 icon: 1
             });
@@ -367,7 +378,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
         }, function (data,res) {
             layer.closeAll();
             yzn.msg.success(res.msg);
-            table.reload(init.table_render_id);
+            table.reload(init.table_render_id,{where:getWhereCondition()});
         }, function (data,res) {
             if (res && res.code === -3) {
                 //插件目录发现影响全局的文件
@@ -400,7 +411,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
             if (typeof success === 'function') {
                 success(res);
             }
-            table.reload(init.table_render_id);
+            table.reload(init.table_render_id,{where:getWhereCondition()});
             return false;   
         }, function(data,res) {
             if (res && res.code === -3) {
