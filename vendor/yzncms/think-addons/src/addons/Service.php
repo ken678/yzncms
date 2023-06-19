@@ -66,6 +66,9 @@ class Service
             $response = $client->get('/addon/download', ['query' => array_merge(['name' => $name], $extend)]);
             $body     = $response->getBody();
             $content  = $body->getContents();
+            if ($content == '' || stripos($content, '<title>系统发生错误</title>') !== false) {
+                throw new Exception("插件下载失败");
+            }
             if (substr($content, 0, 1) === '{') {
                 $json = (array) json_decode($content, true);
                 if (isset($json['code'])) {
