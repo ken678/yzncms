@@ -1,5 +1,21 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
+<style type="text/css">
+.releasetips {
+    position: relative;
+}
+.releasetips i {
+    display: block;
+    background: #f00;
+    border-radius: 50%;
+    width: 0.3em;
+    height: 0.3em;
+    top: 0px;
+    right: -8px;
+    position: absolute;
+    box-shadow: 0px 0px 2px #f11414;
+}
+</style>
 <div class="layui-card">
     <div class="layui-card-header">插件管理</div>
     <div class="layui-card-body">
@@ -159,7 +175,9 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 }},
                 { field: 'downloads', width: 90, title: '下载' },
                 {/if}
-                { field: 'version', width: 80, title: '版本' },
+                { field: 'version', width: 80, title: '版本',templet: function(d){
+                    return d.addon && d.addon.version != d.version ? '<a href="javascript:;"><span class="releasetips text-primary" lay-tips="发现新版本:'+d.version+'">' + d.addon.version + '<i></i></span></a>' : d.version;
+                }},
                 { fixed: 'right', width: 160, title: '操作', templet: '#titleTpl' }
             ]
         ],
