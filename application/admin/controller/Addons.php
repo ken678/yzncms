@@ -18,6 +18,7 @@ use app\common\controller\Adminbase;
 use think\addons\AddonException;
 use think\addons\Service;
 use think\Db;
+use think\Exception;
 use think\facade\Config;
 
 class Addons extends Adminbase
@@ -255,6 +256,46 @@ class Addons extends Adminbase
             $this->error($e->getMessage());
         }
         $this->success('插件安装成功！清除浏览器缓存和框架缓存后生效！', '', ['addon' => $info]);
+    }
+
+    /**
+     * 更新插件
+     */
+    public function upgrade()
+    {
+        $name        = $this->request->param('name');
+        $addonTmpDir = ROOT_PATH . 'runtime' . DS . 'addons' . DS;
+        if (empty($name)) {
+            $this->error('请选择需要安装的插件！');
+        }
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
+            $this->error('插件标识错误！');
+        }
+        if (!is_dir($addonTmpDir)) {
+            @mkdir($addonTmpDir, 0755, true);
+        }
+        $info = [];
+        try {
+            $info           = get_addon_info($name);
+            $uid            = $this->request->post("uid");
+            $token          = $this->request->post("token");
+            $version        = $this->request->post("version");
+            $yzncms_version = $this->request->post("yzncms_version");
+            $extend         = [
+                'uid'            => $uid,
+                'token'          => $token,
+                'version'        => $version,
+                'oldversion'     => $info['version'] ?? '',
+                'yzncms_version' => $yzncms_version,
+            ];
+            //调用更新的方法
+            $info = Service::upgrade($name, $extend);
+        } catch (AddonException $e) {
+            $this->result($e->getData(), $e->getCode(), $e->getMessage());
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
+        $this->success('升级成功', '', ['addon' => $info]);
     }
 
     /**
