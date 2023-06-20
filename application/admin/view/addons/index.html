@@ -24,6 +24,9 @@
 </div>
 <script type="text/html" id="titleTpl">
 {{#  if(d.addon){ }}
+    {{# if(d.addon.version!=d.version){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-normal btn-upgrade" data-name="{{d.name}}" data-version="{{d.version}}" data-title="{{d.title}}">升级</a>
+    {{#  } }}
     {{#  if(d.addon.config == 1 ){ }}
     <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置 -【{{d.title}}】">设置</a>
     {{#  } }}
@@ -126,6 +129,8 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
         table_render_id: 'currentTable',
     };
 
+    var yzncms_version = '{$Think.config.version.yzncms_version}';
+
     var area = [$(window).width() > 800 ? '800px' : '95%', $(window).height() > 600 ? '600px' : '95%'];
 
     var switch_local = function () {
@@ -188,7 +193,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
             uid: userinfo ? userinfo.id : '',
             token: userinfo ? userinfo.token : '',
             domain: '{:request()->domain()}',
-            version: '{$Think.config.version.yzncms_version}'
+            version: yzncms_version
           };
         },
         done: function(res, curr, count){
@@ -218,7 +223,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                         data: {
                             account: $("#inputAccount", layero).val(),
                             password: $("#inputPassword", layero).val(),
-                            version: '{$Think.config.version.yzncms_version}',
+                            version: yzncms_version,
                         }
                     }, function (data, ret) {
                         yzn.cache.setStorage('yzncms_userinfo',data.userinfo);
@@ -252,7 +257,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 data: {
                     uid: userinfo.id,
                     token: userinfo.token,
-                    version: '{$Think.config.version.yzncms_version}',
+                    version: yzncms_version,
                 }
             }, function (data) {
                 layer.open({
@@ -264,7 +269,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                     yes: function () {
                         yzn.request.post({
                             url: '{$api_url}/member/logout',
-                            data: {uid: userinfo.id, token: userinfo.token, version: '{$Think.config.version.yzncms_version}'}
+                            data: {uid: userinfo.id, token: userinfo.token, version: yzncms_version}
                         }, function (data, ret) {
                             yzn.cache.setStorage('yzncms_userinfo','');
                             layer.closeAll();
@@ -298,7 +303,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 uid: uid,
                 token: token,
                 version: version,
-                yzncms_version: '{$Think.config.version.yzncms_version}'
+                yzncms_version: yzncms_version
             },
         }, function(data,res) {
             layer.closeAll();
@@ -338,7 +343,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                                 uid: uid,
                                 token: token,
                                 version: version,
-                                yzncms_version: '{$Think.config.version.yzncms_version}'
+                                yzncms_version: yzncms_version
                             }
                         }, function () {
                             top.layer.alert('购买成功！请点击继续安装按钮完成安装！', {
@@ -406,6 +411,39 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
             } else {
                 layer.alert(res.msg, {title: '温馨提示', icon: 0});
             }
+            return false;
+        });
+    };
+
+    // 点击升级
+    $(document).on("click", ".btn-upgrade", function () {
+        var name = $(this).data('name');
+        var version = $(this).data("version");
+        var title = $(this).data("title");
+
+        layer.confirm('确认升级<b>《'+title+'》</b>？<p class="text-danger">1、请务必做好代码和数据库备份！备份！备份！<br>2、升级后如出现冗余数据，请根据需要移除即可!<br>3、不建议在生产环境升级，请在本地完成升级测试</p>如有重要数据请备份后再操作！', function (index, layero) {
+            upgrade(name, version);
+        });
+    });
+
+    var upgrade = function (name, version) {
+        var userinfo = yzn.cache.getStorage('yzncms_userinfo');
+        var uid = userinfo ? userinfo.id : 0;
+        var token = userinfo ? userinfo.token : '';
+
+        yzn.request.post({
+            url: '{:url("upgrade")}',
+            data: {
+                name: name,
+                uid: uid,
+                token: token,
+                version: version,
+                yzncms_version: yzncms_version
+            }
+        }, function (data, ret) {
+            layer.closeAll();
+        }, function (data, ret) {
+            layer.alert(ret.msg, {title: '温馨提示'});
             return false;
         });
     };
