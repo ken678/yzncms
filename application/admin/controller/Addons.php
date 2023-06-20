@@ -46,7 +46,7 @@ class Addons extends Adminbase
                 foreach ($addons as $k => &$v) {
                     $config      = get_addon_config($v['name']);
                     $v['config'] = $config ? 1 : 0;
-                    $v['addon']  = $v['name'];
+                    $v['addon']  = $v;
                 }
                 $count = count($addons);
                 if ($limit) {
@@ -60,8 +60,12 @@ class Addons extends Adminbase
                 $count        = $list['count'] ?? -1;
                 //本地插件
                 $addons = get_addon_list();
-                foreach ($onlineaddons as $k => &$v) {
-                    $v['addon'] = $addons[$v['name']] ?? '';
+                foreach ($addons as $k => &$v) {
+                    $config      = get_addon_config($v['name']);
+                    $v['config'] = $config ? 1 : 0;
+                }
+                foreach ($onlineaddons as $index => &$item) {
+                    $item['addon'] = $addons[$item['name']] ?? '';
                 }
                 $result = ["code" => 0, "data" => $onlineaddons, 'count' => $count];
             }
