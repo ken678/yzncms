@@ -37,7 +37,14 @@
     {{#  } }}
     <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.addon.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
+    {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>0){ }}
     <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
+    {{#  } }}
+    {{# if(d.button){ }}
+        <a href="{{d.url}}" class="layui-btn layui-btn-xs layui-btn-normal" target="_blank">
+            {{d.button}}
+        </a>
+    {{#  } }}
 {{#  } }}
 </script>
 <button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
