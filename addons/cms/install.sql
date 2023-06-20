@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__tags_content` (
   KEY `tag` (`tag`(10))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='tags数据表';
 
-CREATE TABLE `__PREFIX__cms_order` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__cms_order` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `trade_sn` varchar(50) DEFAULT '' COMMENT '订单ID',
   `user_id` int(10) unsigned DEFAULT '0' COMMENT '会员ID',
