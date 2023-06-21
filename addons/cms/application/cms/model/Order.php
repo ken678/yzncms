@@ -76,10 +76,10 @@ class Order extends Model
             $order = self::create($data);
         } else {
             //已存在未支付订单更新
-            $order->trade_sn  = $trade_sn;
-            $order->pay_price = $readpoint;
-            $order->pay_type  = $pay_type;
-            $order->method    = $method;
+            $order->trade_sn    = $trade_sn;
+            $order->total_price = $readpoint;
+            $order->pay_type    = $pay_type;
+            $order->method      = $method;
             $order->save();
         }
 
@@ -103,12 +103,12 @@ class Order extends Model
             $notifyurl = $notifyurl ? $notifyurl : request()->root(true) . '/cms/index/epay/type/notify/pay_type/' . $pay_type;
             $returnurl = $returnurl ? $returnurl : request()->root(true) . '/cms/index/epay/type/return/pay_type/' . $pay_type . '/trade_sn/' . $order->trade_sn;
 
-            $pay_price = sprintf("%.2f", $order->pay_price);
+            $total_price = sprintf("%.2f", $order->total_price);
             try {
                 //扫码支付后跳转链接
                 \think\facade\Session::set('jumpUrl', buildContentUrl($catid, $id, '', true, true));
                 //调用支付插件支付接口
-                \addons\pay\library\Service::submitOrder($pay_price, $order->trade_sn, $pay_type, "支付{$pay_price}元", $notifyurl, $returnurl, $method);
+                \addons\pay\library\Service::submitOrder($total_price, $order->trade_sn, $pay_type, "支付{$total_price}元", $notifyurl, $returnurl, $method);
             } catch (\Exception $e) {
                 throw new \Exception($e->getMessage());
             }
