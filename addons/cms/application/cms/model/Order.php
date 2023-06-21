@@ -59,18 +59,19 @@ class Order extends Model
         if (!$order) {
             //无订单创建
             $data = [
-                'trade_sn'  => $trade_sn,
-                'catid'     => $catid,
-                'contentid' => $id,
-                'user_id'   => $auth->id,
-                'title'     => "付费阅读:" . substr($info['title'], 0, 60),
-                'pay_price' => $readpoint,
-                'pay_type'  => $pay_type,
-                'method'    => $method,
-                'ip'        => request()->ip(),
-                'useragent' => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
-                'status'    => 'unpay',
-                'remark'    => '',
+                'trade_sn'    => $trade_sn,
+                'catid'       => $catid,
+                'contentid'   => $id,
+                'user_id'     => $auth->id,
+                'title'       => "付费阅读:" . substr($info['title'], 0, 60),
+                'total_price' => $readpoint,
+                'pay_price'   => 0,
+                'pay_type'    => $pay_type,
+                'method'      => $method,
+                'ip'          => request()->ip(),
+                'useragent'   => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
+                'status'      => 'unpay',
+                'remark'      => '',
             ];
             $order = self::create($data);
         } else {
@@ -143,8 +144,9 @@ class Order extends Model
                 return false;
             }
             try {
-                $order->pay_time = time();
-                $order->status   = 'succ';
+                $order->pay_time  = time();
+                $order->pay_price = $pay_price;
+                $order->status    = 'succ';
                 $order->save();
             } catch (\Exception $e) {
                 return false;
