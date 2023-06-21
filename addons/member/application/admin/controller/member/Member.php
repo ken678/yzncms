@@ -36,10 +36,14 @@ class Member extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
+            //如果发送的来源是Selectpage，则转发到Selectpage
+            if ($this->request->request('keyField')) {
+                return $this->selectpage();
+            }
             list($page, $limit, $where) = $this->buildTableParames();
             $_list                      = $this->modelClass->where($where)->where('status', 1)->page($page, $limit)->select();
             $total                      = $this->modelClass->where($where)->where('status', 1)->count();
-            $result                     = array("code" => 0, "count" => $total, "data" => $_list);
+            $result                     = ["code" => 0, "count" => $total, "data" => $_list];
             return json($result);
         }
         return $this->fetch();
@@ -54,7 +58,7 @@ class Member extends Adminbase
             list($page, $limit, $where) = $this->buildTableParames();
             $_list                      = $this->modelClass->where($where)->where('status', '<>', 1)->page($page, $limit)->select();
             $total                      = $this->modelClass->where($where)->where('status', '<>', 1)->count();
-            $result                     = array("code" => 0, "count" => $total, "data" => $_list);
+            $result                     = ["code" => 0, "count" => $total, "data" => $_list];
             return json($result);
 
         }
@@ -147,7 +151,7 @@ class Member extends Adminbase
             $this->error('请选择需要删除的会员！');
         }
         if (!is_array($ids)) {
-            $ids = array(0 => $ids);
+            $ids = [0 => $ids];
         }
         foreach ($ids as $uid) {
             $this->UserService->delete($uid);
@@ -166,7 +170,7 @@ class Member extends Adminbase
             $this->error('请选择需要审核的会员！');
         }
         if (!is_array($ids)) {
-            $ids = array(0 => $ids);
+            $ids = [0 => $ids];
         }
         foreach ($ids as $uid) {
             $info = MemberModel::where('id', $uid)->update(['status' => 1]);
