@@ -139,7 +139,7 @@ class Order extends Model
             return false;
         }
         if ($order['status'] != 'paid') {
-            if ($pay_price != $order->pay_price) {
+            if ($pay_price != $order->total_price) {
                 throw new \Exception("订单金额异常");
                 return false;
             }
