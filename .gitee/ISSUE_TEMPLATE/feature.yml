@@ -1,7 +1,7 @@
-name: 功能建议
-description: 对 Yzncms 提出您的宝贵建议。😄
+name: 😄 功能建议
+description: 对 Yzncms 提出您的宝贵建议。
 title: ""
-labels: ["enhancement"]
+labels: ["建议"]
 body:
   - type: textarea
     id: related-problem
