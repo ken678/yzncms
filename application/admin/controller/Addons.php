@@ -57,6 +57,7 @@ class Addons extends Adminbase
                 //在线插件
                 $list         = $this->getAddonList($page, $limit);
                 $onlineaddons = $list['list'] ?? [];
+                $category     = $list['category'] ?? [];
                 $count        = $list['count'] ?? -1;
                 //本地插件
                 $addons = get_addon_list();
@@ -67,7 +68,7 @@ class Addons extends Adminbase
                 foreach ($onlineaddons as $index => &$item) {
                     $item['addon'] = $addons[$item['name']] ?? '';
                 }
-                $result = ["code" => 0, "data" => $onlineaddons, 'count' => $count];
+                $result = ["code" => 0, "data" => $onlineaddons, "category" => $category, 'count' => $count];
             }
 
             return json($result);

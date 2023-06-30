@@ -16,6 +16,14 @@
     box-shadow: 0px 0px 2px #f11414;
 }
 </style>
+{if $type=='online'}
+<div class="layui-tab layui-tab-card" lay-filter="tabswitch">
+    <ul class="layui-tab-title nav-category">
+        <li class="layui-this" data-id="">全部</li>
+    </ul>
+</div>
+{/if}
+<input type="hidden" name="category_id" value="0">
 <div class="layui-card">
     <div class="layui-card-header">插件管理</div>
     <div class="layui-card-body">
@@ -122,13 +130,14 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
+layui.use(['yznTable','table','upload','laytpl','yzn','notice','element'], function() {
     var yznTable = layui.yznTable,
         $ = layui.$,
         table = layui.table,
         laytpl = layui.laytpl,
         yzn = layui.yzn,
         notice = layui.notice,
+        element = layui.element,
         upload = layui.upload;
 
     var init = {
@@ -146,8 +155,6 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
             btn: ['切换到本地插件', '重新尝试加载']
         }, function (index) {
             layer.close(index);
-            //$(".panel .nav-tabs").hide();
-            //$(".toolbar > *:not(:first)").hide();
             $(".btn-switch[data-type='local']")[0].click();
         }, function (index) {
             layer.close(index);
@@ -196,18 +203,31 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
         page: {limit:20},
         before(){
           let userinfo = yzn.cache.getStorage('yzncms_userinfo');
+
           this.where = {
             uid: userinfo ? userinfo.id : '',
             token: userinfo ? userinfo.token : '',
             domain: '{:request()->domain()}',
-            version: yzncms_version
+            version: yzncms_version,
+            category_id:$('input[name="category_id"]').val(),
           };
         },
         done: function(res, curr, count){
+            if (res && typeof res.category != 'undefined' && $(".nav-category li").length == 1) {
+                $.each(res.category, function (i, j) {
+                    $("<li data-id='" + j.id + "'>" + j.title + "</li>").insertAfter($(".nav-category li:first"));
+                });
+            }
             if(count==-1){
                 switch_local();
             }
         }
+    });
+
+    element.on('tab(tabswitch)', function(data){
+      var value = $(this).data("id");
+      $('input[name="category_id"]').val(value);
+      table.reload(init.table_render_id);
     });
 
     // 会员信息
