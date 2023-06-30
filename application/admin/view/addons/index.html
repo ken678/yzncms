@@ -572,16 +572,16 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice'], function() {
                 //上传完毕回调
                 var addon = res.data.addon;
                 var testdata = res.data.addon.testdata;
-                operate(res.data.addon.name, 'enable', false, function (data, ret) {
+                operate(addon.name, 'enable', false, function (data, ret) {
                     layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (testdata ? '<br>你还可以继续导入测试数据！' : ""), {
                         btn: testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
                         title:'温馨提示',
                         yes: function (index) {
-                            if (res.data.addon.testdata) {
+                            if (testdata) {
                                 yzn.request.post({
                                     url: '{:url("testdata")}',
                                     data: {
-                                        name: name,
+                                        name: addon.name,
                                     }
                                 }, function (data,res) {
                                     layer.close(index);
