@@ -23,32 +23,34 @@ layui.define(['layer', 'notice', 'addons'], function(exports) {
                     var that = this;
                     $(layero).data("callback", that.callback);
                     layer.setTop(layero);
-
-                    var frame = layer.getChildFrame('body', index);
-                    var layerfooter = frame.find(".layer-footer");
-                    yzn.layerfooter(layero, index, that);
-                    //绑定事件
-                    if (layerfooter.size() > 0) {
-                        // 监听窗口内的元素及属性变化
-                        // Firefox和Chrome早期版本中带有前缀
-                        var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-                        if (MutationObserver) {
-                            // 选择目标节点
-                            var target = layerfooter[0];
-                            // 创建观察者对象
-                            var observer = new MutationObserver(function(mutations) {
-                                yzn.layerfooter(layero, index, that);
-                                mutations.forEach(function(mutation) {});
-                            });
-                            // 配置观察选项:
-                            var config = { attributes: true, childList: true, characterData: true, subtree: true }
-                            // 传入目标节点和观察选项
-                            observer.observe(target, config);
-                            // 随后,你还可以停止观察
-                            // observer.disconnect();
+                    try {
+                        var frame = layer.getChildFrame('body', index);
+                        var layerfooter = frame.find(".layer-footer");
+                        yzn.layerfooter(layero, index, that);
+                        //绑定事件
+                        if (layerfooter.size() > 0) {
+                            // 监听窗口内的元素及属性变化
+                            // Firefox和Chrome早期版本中带有前缀
+                            var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+                            if (MutationObserver) {
+                                // 选择目标节点
+                                var target = layerfooter[0];
+                                // 创建观察者对象
+                                var observer = new MutationObserver(function(mutations) {
+                                    yzn.layerfooter(layero, index, that);
+                                    mutations.forEach(function(mutation) {});
+                                });
+                                // 配置观察选项:
+                                var config = { attributes: true, childList: true, characterData: true, subtree: true }
+                                // 传入目标节点和观察选项
+                                observer.observe(target, config);
+                                // 随后,你还可以停止观察
+                                // observer.disconnect();
+                            }
                         }
+                    } catch (e) {
                     }
-                    if (frame.length > 0) {
+                    if (frame && frame.length > 0) {
                         $.each(frame, function(i, v) {
                             // todo 优化弹出层背景色修改
                             $(v).before('<style>\n' +
