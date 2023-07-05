@@ -17,6 +17,7 @@ namespace libs;
 use think\Db;
 use think\facade\Config;
 use think\facade\Request;
+use think\facade\Session;
 
 /**
  * 权限认证类
@@ -163,8 +164,8 @@ class Auth
         if (isset($_authList[$uid . $t])) {
             return $_authList[$uid . $t];
         }
-        if ($this->_config['AUTH_TYPE'] == 2 && isset($_SESSION['_AUTH_LIST_' . $uid . $t])) {
-            return $_SESSION['_AUTH_LIST_' . $uid . $t];
+        if ($this->_config['AUTH_TYPE'] == 2 && Session::has('_AUTH_LIST_' . $uid . $t)) {
+            return Session::get('_AUTH_LIST_' . $uid . $t);
         }
         //读取用户所属用户组
         $groups = $this->getGroups($uid);
@@ -206,7 +207,7 @@ class Auth
         $_authList[$uid . $t] = $authList;
         if ($this->_config['AUTH_TYPE'] == 2) {
             //规则列表结果保存到session
-            $_SESSION['_AUTH_LIST_' . $uid . $t] = $authList;
+            Session::set('_AUTH_LIST_' . $uid . $t, $authList);
         }
         return array_unique($authList);
     }
