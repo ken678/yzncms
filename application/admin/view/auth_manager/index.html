@@ -4,12 +4,15 @@
     <div class="layui-card-header">角色管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"
+            data-auth-add="{:$auth->check('admin/auth_manager/createGroup')}"
+            data-auth-edit="{:$auth->check('admin/auth_manager/editgroup')}"
+            data-auth-delete="{:$auth->check('admin/auth_manager/deletegroup')}" ></table>
             <script type="text/html" id="authTool">
                 {{#  if(d.id == {$userInfo.roleid}){ }}
                 <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
                 {{#  } else { }}
-                <a class='layui-btn layui-btn-xs' data-open='{:url("access?group_name=")}?title={{d.title}}&group_id={{d.id}}' title="访问授权">访问授权</a>
+                <a class="layui-btn layui-btn-xs {:$auth->check('admin/auth_manager/access')?'':'layui-hide'}" data-open='{:url("access?group_name=")}?title={{d.title}}&group_id={{d.id}}' title="访问授权">访问授权</a>
                 {{#  } }}
             </script>
         </div>
