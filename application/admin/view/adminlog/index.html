@@ -3,7 +3,7 @@
 <div class="layui-card">
     <div class="layui-card-header">管理日志</div>
     <div class="layui-card-body">
-        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable" data-auth-delete="{:$auth->check('admin/adminlog/deletelog')}"></table>
     </div>
 </div>
 {/block}
@@ -15,7 +15,7 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
-        del_url: "{:url('deletelog')}",
+        delete_url: "{:url('deletelog')}",
     };
 
     table.render({
@@ -23,9 +23,9 @@ layui.use('yznTable', function() {
         toolbar: ['refresh',
             [{
                 text: '删除一个月前日志',
-                url: init.del_url,
+                url: init.delete_url,
                 method: 'request',
-                auth: 'refresh',
+                auth: 'delete',
                 icon: 'iconfont icon-trash',
                 class: 'layui-btn layui-btn-sm layui-btn-danger',
                 extend: 'data-table="currentTable"',
