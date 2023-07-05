@@ -40,13 +40,13 @@ class Auth
      */
     protected $request;
     //默认配置
-    protected $_config = array(
+    protected $_config = [
         'AUTH_ON'    => true, // 认证开关
         'AUTH_TYPE'  => 1, // 认证方式，1为实时认证；2为登录认证。
         'AUTH_GROUP' => 'auth_group', // 用户组数据表名
         'AUTH_RULE'  => 'auth_rule', // 权限规则表
         'AUTH_USER'  => 'admin', // 用户信息表
-    );
+    ];
 
     /**
      * 类架构函数
@@ -96,10 +96,10 @@ class Auth
             if (strpos($name, ',') !== false) {
                 $name = explode(',', $name);
             } else {
-                $name = array($name);
+                $name = [$name];
             }
         }
-        $list = array(); //保存验证通过的规则名
+        $list = []; //保存验证通过的规则名
         if ('url' == $mode) {
             $REQUEST = unserialize(strtolower(serialize($this->request->param())));
         }
@@ -113,7 +113,7 @@ class Auth
                     //如果节点相符且url参数满足
                     $list[] = $auth;
                 }
-            } else if (in_array($auth, $name)) {
+            } elseif (in_array($auth, $name)) {
                 $list[] = $auth;
             }
         }
@@ -136,7 +136,7 @@ class Auth
      */
     public function getGroups($uid)
     {
-        static $groups = array();
+        static $groups = [];
         if (isset($groups[$uid])) {
             return $groups[$uid];
         }
@@ -147,7 +147,7 @@ class Auth
             ->join($this->_config['AUTH_GROUP'] . ' g', "g.id = a.roleid")
             ->field('a.id as uid,g.id,g.parentid,roleid,title,rules')
             ->select();
-        $groups[$uid] = $user_groups ?: array();
+        $groups[$uid] = $user_groups ?: [];
         return $groups[$uid];
     }
 
@@ -158,7 +158,7 @@ class Auth
      */
     protected function getAuthList($uid, $type)
     {
-        static $_authList = array(); //保存用户验证通过的权限列表
+        static $_authList = []; //保存用户验证通过的权限列表
         $t                = implode(',', (array) $type);
         if (isset($_authList[$uid . $t])) {
             return $_authList[$uid . $t];
@@ -168,24 +168,26 @@ class Auth
         }
         //读取用户所属用户组
         $groups = $this->getGroups($uid);
-        $ids    = array(); //保存用户所属用户组设置的所有权限规则id
+        $ids    = []; //保存用户所属用户组设置的所有权限规则id
         foreach ($groups as $g) {
             $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
         }
         $ids = array_unique($ids);
         if (empty($ids)) {
-            $_authList[$uid . $t] = array();
-            return array();
+            $_authList[$uid . $t] = [];
+            return [];
         }
         $map = [
-            ['id', 'in', $ids],
             ['type', 'in', $type],
             ['status', '=', 1],
         ];
+        if (!in_array('*', $ids)) {
+            $map[] = ['id', 'in', $ids];
+        }
         //读取用户组所有权限规则
         $rules = Db::name($this->_config['AUTH_RULE'])->where($map)->field('condition,name')->select();
         //循环规则，判断结果。
-        $authList = array();
+        $authList = [];
         foreach ($rules as $rule) {
             if (!empty($rule['condition'])) {
                 //根据condition进行验证
@@ -226,9 +228,9 @@ class Auth
      */
     protected function getUserInfo($uid)
     {
-        static $userinfo = array();
+        static $userinfo = [];
         if (!isset($userinfo[$uid])) {
-            $userinfo[$uid] = Db::name($this->_config['auth_user'])->where(array('id' => $uid))->find();
+            $userinfo[$uid] = Db::name($this->_config['auth_user'])->where(['id' => $uid])->find();
         }
         return $userinfo[$uid];
     }
