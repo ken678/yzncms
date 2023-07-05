@@ -208,7 +208,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                         vv.extend = vv.extend || '';
                         vv.checkbox = vv.checkbox || false;
                         vv.html = vv.html || '';
-                        toolbarHtml += yznTable.buildToolbarHtml(vv, tableId);
+                        if (yzn.checkAuth(vv.auth, elem)) {
+                            toolbarHtml += yznTable.buildToolbarHtml(vv, tableId);
+                        }
                     });
                 }
             });
