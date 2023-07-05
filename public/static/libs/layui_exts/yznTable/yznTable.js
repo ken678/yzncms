@@ -667,15 +667,16 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                     method: 'open',
                                     field: 'id',
                                     icon: '',
+                                    auth: 'edit',
                                     text: "<i class='iconfont icon-brush_fill'></i>",
                                     title: '编辑信息',
                                     url: that.init.edit_url,
                                     extend: ""
                                 };
                                 operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                                //if (admin.checkAuth(operat.auth, elem)) {
-                                html += yznTable.buildOperatHtml(operat);
-                                //}
+                                if (yzn.checkAuth(operat.auth, elem)) {
+                                    html += yznTable.buildOperatHtml(operat);
+                                }
                                 break;
                             case 'restore':
                                 var operat = {
@@ -683,15 +684,16 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                     method: 'request',
                                     field: 'id',
                                     icon: '',
+                                    auth: 'restore',
                                     text: "<i class='iconfont icon-undo'></i> 还原",
                                     title: '还原',
                                     url: that.init.restore_url,
                                     extend: ""
                                 };
                                 operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                                //if (admin.checkAuth(operat.auth, elem)) {
-                                html += yznTable.buildOperatHtml(operat);
-                                //}
+                                if (yzn.checkAuth(operat.auth, elem)) {
+                                    html += yznTable.buildOperatHtml(operat);
+                                }
                                 break;
                             case 'destroy':
                                 var operat = {
@@ -699,15 +701,16 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                     method: 'request',
                                     field: 'id',
                                     icon: '销毁',
+                                    auth: 'destroy',
                                     text: "<i class='iconfont icon-close'></i> 销毁",
                                     title: '',
                                     url: that.init.destroy_url,
                                     extend: ""
                                 };
                                 operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                                //if (admin.checkAuth(operat.auth, elem)) {
-                                html += yznTable.buildOperatHtml(operat);
-                                //}
+                                if (yzn.checkAuth(operat.auth, elem)) {
+                                   html += yznTable.buildOperatHtml(operat);
+                                }
                                 break;
                             case 'delete':
                                 var operat = {
@@ -715,15 +718,16 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                     method: 'href',
                                     field: 'id',
                                     icon: '',
+                                    auth: 'delete',
                                     text: "<i class='iconfont icon-trash_fill'></i>",
                                     title: '',
                                     url: that.init.delete_url,
                                     extend: ""
                                 };
                                 operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                                //if (admin.checkAuth(operat.auth, elem)) {
-                                html += yznTable.buildOperatHtml(operat);
-                                //}
+                                if (yzn.checkAuth(operat.auth, elem)) {
+                                   html += yznTable.buildOperatHtml(operat);
+                                }
                                 break;
                         }
 
@@ -748,9 +752,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 operat.class = operat.class + ' layui-btn-disabled';
                             }
                             //operat.url = yznTable.toolSpliceUrl(operat.url, operat.field, data);
-                            //if (admin.checkAuth(operat.auth, elem)) {
-                            html += yznTable.buildOperatHtml(operat);
-                            //}
+                            if (yzn.checkAuth(operat.auth, elem)) {
+                                html += yznTable.buildOperatHtml(operat);
+                            }
                         });
                     }
                 });
