@@ -10,6 +10,21 @@ layui.define(['layer', 'notice', 'addons'], function(exports) {
         config: {
             shade: [0.02, '#000'],
         },
+        checkAuth: function (node,ele) {
+            /*if (CONFIG.IS_SUPER_ADMIN) {
+                return true;
+            }*/
+            var attr = $(ele).data("auth-" + node);
+            if (typeof attr === 'undefined' || attr) {
+                return true;
+            }
+            if(node.indexOf('?')>=0) node = node.replace(/([?#])[^'"]*/, '');           //去除参数
+            if ($(ele).attr('data-auth-' + node.toLowerCase()) === '1') {
+                return true;
+            } else {
+                return false;
+            }  
+        },
         open: function(title, url, width, height, options, isResize) {
             isResize = isResize === undefined ? true : isResize;
             options = $.extend({
