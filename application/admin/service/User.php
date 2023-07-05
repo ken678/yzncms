@@ -83,6 +83,12 @@ class User extends \libs\Auth
         return $childrenGroupIds;
     }
 
+    public function check($name, $uid = '', $type = 1, $mode = 'url', $relation = 'or')
+    {
+        $uid = $uid ? $uid : $this->id;
+        return parent::check($name, $uid, $type, $mode, $relation);
+    }
+
     /**
      * 取出当前管理员所拥有权限的管理员.
      *
