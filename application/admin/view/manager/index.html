@@ -4,7 +4,10 @@
     <div class="layui-card-header">管理员管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"
+                data-auth-add="{:$auth->check('admin/manager/add')}" 
+                data-auth-edit="{:$auth->check('admin/manager/edit')}"
+                data-auth-delete="{:$auth->check('admin/manager/del')}"></table>
         </div>
     </div>
 </div>
