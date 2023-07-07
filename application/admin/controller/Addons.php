@@ -368,11 +368,12 @@ class Addons extends Adminbase
     protected function getAddonList($page, $limit)
     {
         $params = [
-            'uid'     => $this->request->param('uid/d'),
-            'token'   => $this->request->param('token'),
-            'version' => Config::get('version.yzncms_version'),
-            'page'    => $page,
-            'limit'   => $limit,
+            'uid'         => $this->request->param('uid/d'),
+            'token'       => $this->request->param('token'),
+            'category_id' => $this->request->param('category_id/d'),
+            'version'     => Config::get('version.yzncms_version'),
+            'page'        => $page,
+            'limit'       => $limit,
         ];
         $json = [];
         try {
