@@ -17,7 +17,7 @@
 <script type="text/html" id="barTool">
     {{# if(d.type=='radio' || d.type=='select'){ }}
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('site.{{d.name}}')} 值：{:config('site.{{d.name}}_text')}{/literal}">代码调用</a>
-    {{# } else if(d.type=='checkbox' || d.type=='array' || d.type=='images' || d.type=='files'){ }}
+    {{# } else if(d.type=='checkbox' || d.type=='array' || d.type=='images' || d.type=='files' || d.type == 'selects'){ }}
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{volist name=&quot;:config('site.{{d.name}}')&quot; id='vo'}  键：{$key}  值：{$vo} <br> {/volist}{/literal}">代码调用</a>
     {{# } else { }}
     <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('site.{{d.name}}')}{/literal}">代码调用</a>
