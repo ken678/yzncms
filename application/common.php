@@ -116,8 +116,10 @@ function cdnurl($url, $domain = false)
 {
     $regex  = "/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i";
     $cdnurl = Config::get('cdnurl');
-    $url    = preg_match($regex, $url) || ($cdnurl && stripos($url, $cdnurl) === 0) ? $url : $cdnurl . $url;
-    if ($url && $domain && !preg_match($regex, $url)) {
+    if (is_bool($domain) || stripos($cdnurl, '/') === 0) {
+        $url = preg_match($regex, $url) || ($cdnurl && stripos($url, $cdnurl) === 0) ? $url : $cdnurl . $url;
+    }
+    if ($domain && !preg_match($regex, $url)) {
         $domain = is_bool($domain) ? Request::domain() : $domain;
         $url    = $domain . $url;
     }
@@ -141,7 +143,7 @@ function cdnurl($url, $domain = false)
  *  )
  *
  */
-function int_to_string(&$data, $map = array('status' => array(1 => '正常', -1 => '删除', 0 => '禁用', 2 => '未审核', 3 => '草稿')))
+function int_to_string(&$data, $map = ['status' => [1 => '正常', -1 => '删除', 0 => '禁用', 2 => '未审核', 3 => '草稿']])
 {
     if ($data === false || $data === null) {
         return $data;
@@ -224,35 +226,6 @@ function str_cut($sourcestr, $length, $dot = '...')
 }
 
 /**
- * 时间转换
- * @param array $arr        传入数组
- * @param string $field     字段名
- * @param string $format    格式
- * @return mixed
- */
-function to_time(&$arr, $field = 'time', $format = 'Y-m-d H:i:s')
-{
-    if (isset($arr[$field])) {
-        $arr[$field] = date($format, $arr[$field]);
-    }
-    return $arr;
-}
-
-/**
- * ip转换
- * @param array $arr        传入数组
- * @param string $field     字段名
- * @return mixed
- */
-function to_ip(&$arr, $field = 'ip')
-{
-    if (isset($arr[$field])) {
-        $arr[$field] = long2ip($arr[$field]);
-    }
-    return $arr;
-}
-
-/**
  * 对查询结果集进行排序
  * @access public
  * @param array $list   查询结果
@@ -264,9 +237,9 @@ function to_ip(&$arr, $field = 'ip')
 function list_sort_by($list, $field, $sortby = 'asc')
 {
     if (is_array($list)) {
-        $refer = $resultSet = array();
+        $refer = $resultSet = [];
         foreach ($list as $i => $data) {
-            $refer[$i] = &$data[$field];
+            $refer[$i] =  &$data[$field];
         }
 
         switch ($sortby) {
@@ -281,7 +254,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
                 break;
         }
         foreach ($refer as $key => $val) {
-            $resultSet[] = &$list[$key];
+            $resultSet[] =  &$list[$key];
         }
 
         return $resultSet;
@@ -300,22 +273,22 @@ function list_sort_by($list, $field, $sortby = 'asc')
 function list_to_tree($list, $pk = 'id', $pid = 'parentid', $child = '_child', $root = 0)
 {
     // 创建Tree
-    $tree = array();
+    $tree = [];
     if (is_array($list)) {
         // 创建基于主键的数组引用
-        $refer = array();
+        $refer = [];
         foreach ($list as $key => $data) {
-            $refer[$data[$pk]] = &$list[$key];
+            $refer[$data[$pk]] =  &$list[$key];
         }
         foreach ($list as $key => $data) {
             // 判断是否存在parent
             $parentId = $data[$pid];
             if ($root == $parentId) {
-                $tree[] = &$list[$key];
+                $tree[] =  &$list[$key];
             } else {
                 if (isset($refer[$parentId])) {
-                    $parent           = &$refer[$parentId];
-                    $parent[$child][] = &$list[$key];
+                    $parent           =  &$refer[$parentId];
+                    $parent[$child][] =  &$list[$key];
                 }
             }
         }
@@ -332,7 +305,7 @@ function parse_attr($value = '')
 {
     $array = preg_split('/[,;\r\n]+/', trim($value, ",;\r\n"));
     if (strpos($value, ':')) {
-        $value = array();
+        $value = [];
         foreach ($array as $val) {
             list($k, $v) = explode(':', $val);
             $value[$k]   = $v;
@@ -353,7 +326,7 @@ function time_format($timestamp = null, $type = 0)
     if ($timestamp == 0) {
         return '';
     }
-    $types     = array('Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d');
+    $types     = ['Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d'];
     $timestamp = $timestamp === null ? $_SERVER['REQUEST_TIME'] : intval($timestamp);
     return date($types[$type], $timestamp);
 }
@@ -377,7 +350,7 @@ function human_date($time, $local = null)
  */
 function format_bytes($size, $delimiter = '')
 {
-    $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+    $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
     for ($i = 0; $size >= 1024 && $i < 5; $i++) {
         $size /= 1024;
     }
@@ -409,7 +382,7 @@ function to_guid_string($mix)
  */
 function encrypt_password($password, $encrypt = '')
 {
-    $pwd             = array();
+    $pwd             = [];
     $pwd['encrypt']  = $encrypt ? $encrypt : genRandomString();
     $pwd['password'] = md5(trim($password) . $pwd['encrypt']);
     return $encrypt ? $pwd['password'] : $pwd;
@@ -422,14 +395,14 @@ function encrypt_password($password, $encrypt = '')
  */
 function genRandomString($len = 6)
 {
-    $chars = array(
+    $chars = [
         "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
         "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
         "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G",
         "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
         "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2",
         "3", "4", "5", "6", "7", "8", "9",
-    );
+    ];
     $charsLen = count($chars) - 1;
     // 将数组打乱
     shuffle($chars);
@@ -459,7 +432,7 @@ function getModel($modelid, $name = '')
     }
     if (empty($cache)) {
         //读取数据
-        $cache = Db::name('Model')->where(array('id' => $modelid))->find();
+        $cache = Db::name('Model')->where(['id' => $modelid])->find();
         if (empty($cache)) {
             Cache::set($key, 'false', 60);
             return false;
@@ -481,7 +454,7 @@ function getModel($modelid, $name = '')
  */
 function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'none.png')
 {
-    static $_thumb_cache = array();
+    static $_thumb_cache = [];
     $smallpic            = config('public_url') . 'static/admin/img/' . $smallpic;
     if (empty($imgurl)) {
         return $smallpic;
@@ -625,7 +598,7 @@ function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
     $result = '';
     $box    = range(0, 255);
 
-    $rndkey = array();
+    $rndkey = [];
     for ($i = 0; $i <= 255; $i++) {
         $rndkey[$i] = ord($cryptkey[$i % $key_length]);
     }
