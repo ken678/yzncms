@@ -87,7 +87,7 @@ class Manager extends Adminbase
                 ->page($page, $limit)
                 ->select();
             $total  = count($_list);
-            $result = array("code" => 0, 'count' => $count, "data" => $_list);
+            $result = ["code" => 0, 'count' => $count, "data" => $_list];
             return json($result);
         }
         return $this->fetch();
@@ -111,15 +111,14 @@ class Manager extends Adminbase
             if (!in_array($params['roleid'], $this->childrenGroupIds)) {
                 $this->error('没有权限操作！');
             }
-            if ($this->modelClass->save($params)) {
-                $this->success("添加成功！", url('index'));
-            } else {
-                $error = $this->modelClass->getError();
-                $this->error($error ? $error : '添加失败！');
+            try {
+                $this->modelClass->save($params);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
-        } else {
-            return $this->fetch();
+            $this->success("添加成功！", url('index'));
         }
+        return $this->fetch();
     }
 
     /**
@@ -127,36 +126,42 @@ class Manager extends Adminbase
      */
     public function edit()
     {
+        $id  = $this->request->param('id/d', 0);
+        $row = $this->modelClass->get($id);
+        if (!$row) {
+            $this->error('记录未找到');
+        }
+        if (!in_array($row->id, $this->childrenAdminIds)) {
+            $this->error('没有权限操作！');
+        }
         if ($this->request->isPost()) {
             $this->token();
-            $data = $this->request->post('');
-            if (!in_array($data['id'], $this->childrenAdminIds)) {
-                $this->error('没有权限操作！');
-            }
-            $result = $this->validate($data, 'AdminUser.update');
+            $params = $this->request->post('');
+            $result = $this->validate($params, 'AdminUser.update');
             if (true !== $result) {
                 return $this->error($result);
             }
-            if (!in_array($data['roleid'], $this->childrenGroupIds)) {
+            if (!in_array($params['roleid'], $this->childrenGroupIds)) {
                 $this->error('没有权限操作！');
             }
-            if ($this->modelClass->editManager($data)) {
-                $this->success("修改成功！");
+            //密码为空，表示不修改密码
+            if (isset($params['password']) && $params['password']) {
+                $passwordinfo       = encrypt_password($params['password']); //对密码进行处理
+                $params['encrypt']  = $passwordinfo['encrypt'];
+                $params['password'] = $passwordinfo['password'];
+
             } else {
-                $this->error('修改失败！');
+                unset($params['password'], $params['encrypt']);
             }
-        } else {
-            $id = $this->request->param('id/d');
-            if (!in_array($id, $this->childrenAdminIds)) {
-                $this->error('没有权限操作！');
+            try {
+                $row->allowField(true)->save($params);
+            } catch (\Exception $e) {
+                $this->error($e->getMessage());
             }
-            $data = $this->modelClass->where("id", $id)->find();
-            if (empty($data)) {
-                $this->error('该信息不存在！');
-            }
-            $this->assign("data", $data);
-            return $this->fetch();
+            $this->success("修改成功！");
         }
+        $this->assign("data", $row);
+        return $this->fetch();
     }
 
     /**
@@ -184,7 +189,11 @@ class Manager extends Adminbase
             }
             $deleteIds = array_values(array_diff($deleteIds, [$this->auth->id]));
             if ($deleteIds) {
-                $this->modelClass->destroy($deleteIds);
+                try {
+                    $this->modelClass->destroy($deleteIds);
+                } catch (\Exception $e) {
+                    $this->error($e->getMessage());
+                }
                 $this->success("删除成功！");
             }
         }

@@ -27,32 +27,14 @@ class AdminUser extends Model
         return date('Y-m-d H:i:s', $value);
     }
 
-    /**
-     * 编辑管理员
-     * @param [type] $data [修改数据]
-     * @return boolean
-     */
-    public function editManager($data)
+    public static function init()
     {
-        if (empty($data) || !isset($data['id']) || !is_array($data)) {
-            $this->error = '没有修改的数据！';
-            return false;
-        }
-        $info = $this->where('id', $data['id'])->find();
-        if (empty($info)) {
-            $this->error = '该管理员不存在！';
-            return false;
-        }
-        //密码为空，表示不修改密码
-        if (isset($data['password']) && empty($data['password'])) {
-            unset($data['password']);
-            unset($data['encrypt']);
-        } else {
-            $passwordinfo     = encrypt_password($data['password']); //对密码进行处理
-            $data['encrypt']  = $passwordinfo['encrypt'];
-            $data['password'] = $passwordinfo['password'];
-        }
-        $status = $this->allowField(true)->isUpdate(true)->save($data);
-        return $status !== false ? true : false;
+        self::beforeWrite(function ($row) {
+            $changed = $row->getChangedData();
+            //如果修改了用户或或密码则需要重新登录
+            if (isset($changed['username']) || isset($changed['password']) || isset($changed['salt'])) {
+                $row->token = '';
+            }
+        });
     }
 }
