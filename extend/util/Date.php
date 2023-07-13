@@ -181,7 +181,7 @@ class Date
         $day      = is_null($day) ? date('d') : $day;
         $hour     = is_null($hour) ? date('H') : $hour;
         $minute   = is_null($minute) ? date('i') : $minute;
-        $position = in_array($position, array('begin', 'start', 'first', 'front'));
+        $position = in_array($position, ['begin', 'start', 'first', 'front']);
 
         $baseTime = mktime(0, 0, 0, $month, $day, $year);
 
@@ -202,12 +202,18 @@ class Date
                 strtotime($offset . " weeks", strtotime(date('Y-m-d 23:59:59', strtotime("+" . (6 - ($weekIndex ? $weekIndex - 1 : 6)) . " days", $baseTime))));
                 break;
             case 'month':
-                $time = $position ? mktime(0, 0, 0, $month + $offset, 1, $year) : mktime(23, 59, 59, $month + $offset, self::cal_days_in_month($month + $offset, $year), $year);
+                $_timestamp = mktime(0, 0, 0, $month + $offset, 1, $year);
+                $time       = $position ? $_timestamp : mktime(23, 59, 59, $month + $offset, self::days_in_month(date("m", $_timestamp), date("Y", $_timestamp)), $year);
                 break;
             case 'quarter':
-                $time = $position ?
-                mktime(0, 0, 0, 1 + ((ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) - 1) * 3, 1, $year) :
-                mktime(23, 59, 59, (ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) * 3, self::cal_days_in_month((ceil(date('n', mktime(0, 0, 0, $month, $day, $year)) / 3) + $offset) * 3, $year), $year);
+                $quarter     = ceil(date('n', $baseTime) / 3) + $offset;
+                $month       = $quarter * 3;
+                $offset_year = ceil($month / 12) - 1;
+                $year        = $year + $offset_year;
+                $month       = $month - ($offset_year * 12);
+                $time        = $position ?
+                mktime(0, 0, 0, $month - 2, 1, $year) :
+                mktime(23, 59, 59, $month, self::days_in_month($month, $year), $year);
                 break;
             case 'year':
                 $time = $position ? mktime(0, 0, 0, 1, 1, $year + $offset) : mktime(23, 59, 59, 12, 31, $year + $offset);
@@ -219,8 +225,18 @@ class Date
         return $time;
     }
 
-    public static function cal_days_in_month($month, $year)
+    /**
+     * 获取指定年月拥有的天数
+     * @param int $month
+     * @param int $year
+     * @return false|int|string
+     */
+    public static function days_in_month($month, $year)
     {
-        return date('t', mktime(0, 0, 0, $month, 1, $year));
+        if (function_exists("cal_days_in_month")) {
+            return cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        } else {
+            return date('t', mktime(0, 0, 0, $month, 1, $year));
+        }
     }
 }
