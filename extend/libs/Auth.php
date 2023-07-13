@@ -92,6 +92,9 @@ class Auth
             return true;
         }
         $authList = $this->getAuthList($uid, $type); //获取用户需要验证的所有有效规则列表
+        if (in_array('*', $authList)) {
+            return true;
+        }
         if (is_string($name)) {
             $name = strtolower($name);
             if (strpos($name, ',') !== false) {
@@ -189,6 +192,9 @@ class Auth
         $rules = Db::name($this->_config['AUTH_RULE'])->where($map)->field('condition,name')->select();
         //循环规则，判断结果。
         $authList = [];
+        if (in_array('*', $ids)) {
+            $authList[] = "*";
+        }
         foreach ($rules as $rule) {
             if (!empty($rule['condition'])) {
                 //根据condition进行验证
