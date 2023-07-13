@@ -286,7 +286,7 @@ INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-equalizer-line', 5, 'ad
 INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-apartment', 38, 'admin', 'addons', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'admin', 'addons', 'addonadmin','', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (48, '编辑角色', '', 17, 'admin', 'auth_manager', 'edit','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (49, '删除角色', '', 17, 'admin', 'auth_manager', 'delete','', '', 1, '', 0, 0);
+INSERT INTO `yzn_menu` VALUES (49, '删除角色', '', 17, 'admin', 'auth_manager', 'del','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (50, '访问授权', '', 17, 'admin', 'auth_manager', 'access', '','', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (51, '角色授权', '', 17, 'admin', 'auth_manager', 'writeGroup','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (55, '插件设置', '', 39, 'admin', 'addons', 'config','', '', 1, '', 0, 0);
