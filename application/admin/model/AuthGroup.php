@@ -12,6 +12,7 @@
 namespace app\admin\model;
 
 use think\Db;
+use think\Exception;
 use think\Model;
 
 /**
@@ -27,7 +28,8 @@ class AuthGroup extends Model
     const AUTH_EXTEND_CATEGORY_TYPE = 1; // 分类权限标识
     const AUTH_EXTEND_MODEL_TYPE    = 2; //分类权限标识
 
-    protected $resultSetType = 'collection';
+    protected $resultSetType   = 'collection';
+    protected static $roleList = [];
 
     /**
      * 根据角色Id获取角色名
@@ -36,7 +38,25 @@ class AuthGroup extends Model
      */
     public function getRoleIdName($Groupid)
     {
-        return $this->where(array('id' => $Groupid))->value('title');
+        return $this->where(['id' => $Groupid])->value('title');
+    }
+
+    public static function init()
+    {
+        self::beforeDelete(function ($row) {
+            if ($row->id == 1) {
+                throw new Exception("超级管理员角色不能被删除！");
+            }
+            $admin = Db::name('Admin')->where('roleid', $row->id)->find();
+            if ($admin) {
+                throw new Exception("该角色下有管理员！");
+            }
+            //子角色列表
+            $child = explode(',', self::getArrchildid($row->id));
+            if (count($child) > 1) {
+                throw new Exception("该角色下有子角色，请删除子角色才可以删除！");
+            }
+        });
     }
 
     /**
@@ -44,51 +64,19 @@ class AuthGroup extends Model
      * @param type $id
      * @return string
      */
-    public function getArrchildid($id)
+    public static function getArrchildid($id)
     {
-        if (empty($this->roleList)) {
-            $this->roleList = $this->order(array("id" => "desc"))->column('*', 'id');
+        if (empty(self::$roleList)) {
+            self::$roleList = self::order(["id" => "desc"])->column('*', 'id');
         }
         $arrchildid = $id;
-        if (is_array($this->roleList)) {
-            foreach ($this->roleList as $k => $cat) {
+        if (is_array(self::$roleList)) {
+            foreach (self::$roleList as $k => $cat) {
                 if ($cat['parentid'] && $k != $id && $cat['parentid'] == $id) {
-                    $arrchildid .= ',' . $this->getArrchildid($k);
+                    $arrchildid .= ',' . self::getArrchildid($k);
                 }
             }
         }
         return $arrchildid;
     }
-
-    /**
-     * 删除角色
-     * @param int $Groupid 角色ID
-     * @return boolean
-     */
-    public function GroupDelete($Groupid)
-    {
-        if (empty($Groupid) || $Groupid == 1) {
-            $this->error = '超级管理员角色不能被删除！';
-            return false;
-        }
-        $admin = Db::name('Admin')->where('roleid', $Groupid)->find();
-        if ($admin) {
-            $this->error = '该角色下有管理员！';
-            return false;
-        }
-        //角色信息
-        $info = $this->where(array('id' => $Groupid))->find();
-        if (empty($info)) {
-            $this->error = '该角色不存在！';
-            return false;
-        }
-        //子角色列表
-        $child = explode(',', $this->getArrchildid($Groupid));
-        if (count($child) > 1) {
-            $this->error = '该角色下有子角色，请删除子角色才可以删除！';
-            return false;
-        }
-        return $this->where(array('id' => $Groupid))->delete() !== false ? true : false;
-    }
-
 }

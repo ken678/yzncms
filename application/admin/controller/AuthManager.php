@@ -29,7 +29,7 @@ class AuthManager extends Adminbase
     protected function initialize()
     {
         parent::initialize();
-        $this->AuthGroupModel   = new AuthGroupModel;
+        $this->modelClass       = new AuthGroupModel;
         $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
         $groupList = AuthGroupModel::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
@@ -68,7 +68,7 @@ class AuthManager extends Adminbase
                     $result[]               = $groupList[$k];
                 }
             }
-            $result = array("code" => 0, "data" => $result);
+            $result = ["code" => 0, "data" => $result];
             return json($result);
         } else {
             return $this->fetch();
@@ -93,18 +93,18 @@ class AuthManager extends Adminbase
             ->where(['type' => AuthGroupModel::TYPE_ADMIN])
             ->find();
 
-        $map        = array('status' => 1);
+        $map        = ['status' => 1];
         $main_rules = Db::name('AuthRule')->where($map)->column('name,id');
-        $json       = array();
+        $json       = [];
         foreach ($result as $rs) {
-            $data = array(
+            $data = [
                 'nid'      => $rs['id'],
                 'checked'  => $rs['id'],
                 'parentid' => $rs['parentid'],
                 'name'     => $rs['title'],
                 'id'       => $main_rules[$rs['url']],
                 'checked'  => $this->isCompetence($main_rules[$rs['url']], $rules['rules']) ? true : false,
-            );
+            ];
             $json[] = $data;
         }
         $this->assign('rules', $rules);
@@ -124,42 +124,27 @@ class AuthManager extends Adminbase
     }
 
     //创建管理员用户组
-    public function createGroup()
+    public function add()
     {
         if (empty($this->auth_group)) {
             //清除编辑权限的值
-            $this->assign('auth_group', array('title' => null, 'id' => null, 'parentid' => null, 'description' => null, 'rules' => null, 'status' => 1));
+            $this->assign('auth_group', ['title' => null, 'id' => null, 'parentid' => null, 'description' => null, 'rules' => null, 'status' => 1]);
         }
         return $this->fetch('edit_group');
 
     }
 
     //编辑管理员用户组
-    public function editGroup()
+    public function edit()
     {
         $id = $this->request->param('id/d');
         if (!in_array($id, $this->childrenGroupIds)) {
             $this->error('你没有权限访问!');
         }
-        $auth_group = Db::name('AuthGroup')->where(array('module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN))->find($id);
+        $auth_group = Db::name('AuthGroup')->where(['module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN])->find($id);
         $this->assign('auth_group', $auth_group);
         return $this->fetch();
 
-    }
-
-    //删除管理员用户组
-    public function deleteGroup()
-    {
-        if (false === $this->request->isPost()) {
-            $this->error('未知参数');
-        }
-        $Groupid = $this->request->param('id/d');
-        if ($this->AuthGroupModel->GroupDelete($Groupid)) {
-            $this->success("删除成功！");
-        } else {
-            $error = $this->AuthGroupModel->getError();
-            $this->error($error ? $error : '删除失败！');
-        }
     }
 
     //管理员用户组数据写入/更新
@@ -189,7 +174,7 @@ class AuthManager extends Adminbase
                 $data['rules'] = implode(',', $rules);
             }
             //更新
-            $r = $this->AuthGroupModel->allowField(true)->save($data, ['id' => $data['id']]);
+            $r = $this->modelClass->allowField(true)->save($data, ['id' => $data['id']]);
         } else {
             $result = $this->validate($data, 'AuthGroup');
             if (true !== $result) {
@@ -198,10 +183,10 @@ class AuthManager extends Adminbase
             if (!in_array($data['parentid'], $this->childrenGroupIds)) {
                 $this->error('父角色超出权限范围!');
             }
-            $r = $this->AuthGroupModel->allowField(true)->save($data);
+            $r = $this->modelClass->allowField(true)->save($data);
         }
         if ($r === false) {
-            $this->error('操作失败' . $this->AuthGroupModel->getError());
+            $this->error('操作失败' . $this->modelClass->getError());
         } else {
             $this->success('操作成功!');
         }
@@ -219,7 +204,7 @@ class AuthManager extends Adminbase
         //需要更新和删除的节点必然位于$rules
         $rules = $AuthRule->where('type', 'in', '1,2')->order('name')->select()->toArray();
         //构建insert数据
-        $data = array(); //保存需要插入和更新的新节点
+        $data = []; //保存需要插入和更新的新节点
         foreach ($nodes as $value) {
             $temp['name']   = $value['url'];
             $temp['title']  = $value['title'];
@@ -232,8 +217,8 @@ class AuthManager extends Adminbase
             $temp['status']                                                    = 1;
             $data[strtolower($temp['name'] . $temp['module'] . $temp['type'])] = $temp; //去除重复项
         }
-        $update = array(); //保存需要更新的节点
-        $ids    = array(); //保存需要删除的节点的id
+        $update = []; //保存需要更新的节点
+        $ids    = []; //保存需要删除的节点的id
         foreach ($rules as $index => $rule) {
             $key = strtolower($rule['name'] . $rule['module'] . $rule['type']);
             if (isset($data[$key])) {
@@ -251,12 +236,12 @@ class AuthManager extends Adminbase
         if (count($update)) {
             foreach ($update as $k => $row) {
                 if ($row != $diff[$row['id']]) {
-                    $AuthRule->where(array('id' => $row['id']))->update($row);
+                    $AuthRule->where(['id' => $row['id']])->update($row);
                 }
             }
         }
         if (count($ids)) {
-            $AuthRule->where(['id' => $ids])->update(array('status' => -1));
+            $AuthRule->where(['id' => $ids])->update(['status' => -1]);
             //删除规则是否需要从每个用户组的访问授权表中移除该规则?
         }
         if (count($data)) {
@@ -268,18 +253,6 @@ class AuthManager extends Adminbase
         } else {
             return true;
         }
-    }
-
-    //添加
-    public function add()
-    {
-        $this->error();
-    }
-
-    //编辑
-    public function edit()
-    {
-        $this->error();
     }
 
     //批量更新
