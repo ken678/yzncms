@@ -101,7 +101,8 @@ class FormBuilder
         //在模型实例中（如果已设置）。否则我们只会使用空的
         $id = $this->getIdAttribute($name, $options);
         if (!in_array($type, $this->skipValueTypes)) {
-            $value = $this->getValueAttribute($name, $value);
+            $value            = $this->getValueAttribute($name, $value);
+            $options['class'] = isset($options['class']) ? $options['class'] . (stripos($options['class'], 'layui-input') !== false ? '' : ' layui-input') : 'layui-input';
         }
         //一旦我们有了类型、值和ID，我们就可以将它们合并到
         //属性数组，以便将它们转换为HTML属性格式
@@ -252,7 +253,8 @@ class FormBuilder
         //接下来，我们将把属性转换成字符串形式。我们还移除了
         //“大小”属性，因为它只是一条通往行和列的捷径
         //元素。然后我们将为我们创建最终的textarea元素HTML。
-        $options = $this->attributes($options);
+        $options['class'] = isset($options['class']) ? $options['class'] . (stripos($options['class'], 'layui-textarea') !== false ? '' : ' layui-textarea') : 'layui-textarea';
+        $options          = $this->attributes($options);
 
         return '<textarea' . $options . '>' . $value . '</textarea>';
     }
@@ -574,11 +576,21 @@ EOD;
     public function datetime($name = null, $value = null, $options = [])
     {
         $value = is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
-        if (isset($options['class'])) {
-            $options['class'][] = 'datetime';
-        } else {
-            $options['class'] = 'datetime';
-        }
+        return $this->datetimepicker($name, $value, $options);
+    }
+
+    /**
+     * 日期时间选择器
+     *
+     * @param string $name
+     * @param mixed  $value
+     * @param array  $options
+     * @return string
+     */
+    public function datetimepicker($name, $value, $options = [])
+    {
+        $value            = is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+        $options['class'] = isset($options['class']) ? $options['class'] . ' datetime' : 'datetime';
         return $this->text($name, $value, $options);
     }
 
