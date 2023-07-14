@@ -33,8 +33,13 @@
 <script type="text/html" id="operateTpl">
 {{#  if(d.addon){ }}
     {{# if(d.addon.version!=d.version){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-normal btn-upgrade" data-name="{{d.name}}" data-version="{{d.version}}" data-title="{{d.title}}">升级</a>
+        {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>1){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" data-name="{{d.name}}" data-version="{{d.version}}" data-title="{{d.title}}"  data-value="{{= JSON.stringify(d.releaselist)}}" lay-event="upgrade">升级 <i class="layui-icon layui-icon-down"></i></a>
+        {{# }else if(typeof d.releaselist !="undefined" && d.releaselist.length>0){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal btn-upgrade" data-name="{{d.name}}" data-version="{{d.version}}" data-title="{{d.title}}">升级</a>
+        {{#  } }}
     {{#  } }}
+
     {{#  if(d.addon.config == 1 ){ }}
     <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置 -【{{d.title}}】">设置</a>
     {{#  } }}
@@ -42,10 +47,11 @@
     <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.addon.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
     {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>1){ }}
-    <a class="layui-btn layui-btn-xs" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？"  data-value="{{= JSON.stringify(d.releaselist)}}" lay-event="more">安装 <i class="layui-icon layui-icon-down"></i></a>
+    <a class="layui-btn layui-btn-xs" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？"  data-value="{{= JSON.stringify(d.releaselist)}}" lay-event="install">安装 <i class="layui-icon layui-icon-down"></i></a>
     {{# }else if(typeof d.releaselist !="undefined" && d.releaselist.length>0){ }}
     <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
     {{#  } }}
+
     {{# if(d.button){ }}
         <a href="{{d.url}}" class="layui-btn layui-btn-xs layui-btn-normal" target="_blank">
             {{d.button}}
@@ -205,7 +211,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
                     return d.addon && d.addon.version != d.version ? '<a href="javascript:;"><span class="releasetips text-primary" lay-tips="发现新版本:'+d.version+'">' + d.addon.version + '<i></i></span></a>' : d.version;
                 }},
                 { field: 'status', width: 90, title: '状态', templet: '#statusTpl' },
-                { fixed: 'right', width: 160, title: '操作', templet: '#operateTpl' }
+                { fixed: 'right', width: 180, title: '操作', templet: '#operateTpl' }
             ]
         ],
         page: {limit:20},
@@ -235,37 +241,31 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
 
     table.on('tool('+init.layFilter+')', function(obj){
         var that = this;
-        if(obj.event === 'more'){
-            jsondata = $(this).data('value');
-            var name = $(this).data("name");
-            var title = $(this).data("title");
-            const arr = jsondata.map(({id, version}) => ({ id, title: version }))
+        jsondata = $(this).data('value');
+        var name = $(this).data("name");
+        var title = $(this).data("title");
+        const arr = jsondata.map(({id, version}) => ({ id, title: version }))
 
-            dropdown.render({
-                elem: that,
-                show: true, // 外部事件触发即显示
-                data: arr,
-                click: function(data, othis){
-                    var userinfo = yzn.cache.getStorage('yzncms_userinfo');
-                    var uid = userinfo ? userinfo.id : 0;
+        dropdown.render({
+            elem: that,
+            show: true, // 外部事件触发即显示
+            data: arr,
+            click: function(data, othis){
 
-                    if (parseInt(uid) === 0) {
-                        return layer.alert('你当前未登录Yzncms，请登录后操作！', {
-                            title: '温馨提示',
-                            btn: ['立即登录'],
-                            yes: function (index, layero) {
-                                $(".btn-userinfo").trigger("click");
-                            },
-                        });
-                    }
+                if(!isLogin()) return
 
+                if(obj.event === 'install'){
                     yzn.msg.confirm(title, function(index){
                         install(name, data.title, false);
                     });
                 }
-
-            })
-        }
+                if(obj.event === 'upgrade'){
+                    layer.confirm('确认升级<b>《'+title+'》</b>？<p class="text-danger">1、请务必做好代码和数据库备份！备份！备份！<br>2、升级后如出现冗余数据，请根据需要移除即可!<br>3、不建议在生产环境升级，请在本地完成升级测试</p>如有重要数据请备份后再操作！', function (index, layero) {
+                        upgrade(name, data.title);
+                    });
+                }
+            }
+        })
     })
 
 
@@ -493,6 +493,8 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         var version = $(this).data("version");
         var title = $(this).data("title");
 
+        if(!isLogin()) return
+
         layer.confirm('确认升级<b>《'+title+'》</b>？<p class="text-danger">1、请务必做好代码和数据库备份！备份！备份！<br>2、升级后如出现冗余数据，请根据需要移除即可!<br>3、不建议在生产环境升级，请在本地完成升级测试</p>如有重要数据请备份后再操作！', function (index, layero) {
             upgrade(name, version);
         });
@@ -554,6 +556,23 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         })
     };
 
+    var isLogin = function (){
+        var userinfo = yzn.cache.getStorage('yzncms_userinfo');
+        var uid = userinfo ? userinfo.id : 0;
+
+        if (parseInt(uid) === 0) {
+            layer.alert('你当前未登录Yzncms，请登录后操作！', {
+                title: '温馨提示',
+                btn: ['立即登录'],
+                yes: function (index, layero) {
+                    $(".btn-userinfo").trigger("click");
+                },
+            });
+            return false;
+        }
+        return true;
+    }
+
     var tables = [];
     $(document).on("click", "#droptables", function () {
         if ($(this).prop("checked")) {
@@ -580,18 +599,8 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         var name = $(this).data("name");
         var title = $(this).data("title");
         var version = $(this).data("version");
-        var userinfo = yzn.cache.getStorage('yzncms_userinfo');
-        var uid = userinfo ? userinfo.id : 0;
-
-        if (parseInt(uid) === 0) {
-            return layer.alert('你当前未登录Yzncms，请登录后操作！', {
-                title: '温馨提示',
-                btn: ['立即登录'],
-                yes: function (index, layero) {
-                    $(".btn-userinfo").trigger("click");
-                },
-            });
-        }
+        
+        if(!isLogin()) return
 
         yzn.msg.confirm(title, function(index){
             install(name, version, false);
