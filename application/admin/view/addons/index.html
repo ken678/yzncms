@@ -513,6 +513,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
                 yzncms_version: yzncms_version
             }
         }, function (data, ret) {
+            notice.success({ message: ret.msg });
             layer.closeAll();
         }, function (data, ret) {
             layer.alert(ret.msg, {title: '温馨提示'});
