@@ -30,7 +30,7 @@
         <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
     </div>
 </div>
-<script type="text/html" id="titleTpl">
+<script type="text/html" id="operateTpl">
 {{#  if(d.addon){ }}
     {{# if(d.addon.version!=d.version){ }}
     <a class="layui-btn layui-btn-xs layui-btn-normal btn-upgrade" data-name="{{d.name}}" data-version="{{d.version}}" data-title="{{d.title}}">升级</a>
@@ -38,11 +38,7 @@
     {{#  if(d.addon.config == 1 ){ }}
     <a class="layui-btn layui-btn-xs" data-open='{:url("config")}?name={{d.name}}' title="插件设置 -【{{d.title}}】">设置</a>
     {{#  } }}
-    {{#  if(d.addon.status == 0){ }}
-    <a class="layui-btn layui-btn-xs layui-btn-normal btn-enable" data-name="{{d.name}}">启用</a>
-    {{#  } else { }}
-    <a class="layui-btn layui-btn-xs layui-btn-warm btn-disable" data-name="{{d.name}}">禁用</a>
-    {{#  } }}
+
     <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.addon.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
     {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>1){ }}
@@ -58,6 +54,12 @@
 {{#  } }}
 </script>
 <button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
+
+<script id="statusTpl" type="text/html">
+{{#  if(d.addon){ }}
+    <input type="checkbox" value="{{= d.id }}" title="启用|禁用" lay-skin="switch" lay-filter="templet-status" data-name="{{d.name}}" data-action="{{= d.addon.status == 1 ? "disable" : "enable"}}" {{= d.addon.status == 1 ? "checked" : "" }}>
+{{#  } }} 
+</script>
 
 <script id="conflicttpl" type="text/html">
     <div class="alert alert-danger-light">
@@ -132,7 +134,7 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdown'], function() {
+layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdown','form'], function() {
     var yznTable = layui.yznTable,
         $ = layui.$,
         table = layui.table,
@@ -141,6 +143,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         notice = layui.notice,
         element = layui.element,
         dropdown = layui.dropdown,
+        form = layui.form,
         upload = layui.upload;
 
     var init = {
@@ -201,7 +204,8 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
                 { field: 'version', width: 80, title: '版本',templet: function(d){
                     return d.addon && d.addon.version != d.version ? '<a href="javascript:;"><span class="releasetips text-primary" lay-tips="发现新版本:'+d.version+'">' + d.addon.version + '<i></i></span></a>' : d.version;
                 }},
-                { fixed: 'right', width: 160, title: '操作', templet: '#titleTpl' }
+                { field: 'status', width: 90, title: '状态', templet: '#statusTpl' },
+                { fixed: 'right', width: 160, title: '操作', templet: '#operateTpl' }
             ]
         ],
         page: {limit:20},
@@ -592,18 +596,13 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
             install(name, version, false);
         });
     });
-
-    // 点击启用
-    $(document).on("click", ".btn-enable", function () {
+    
+    // 点击启用/禁用
+    form.on('switch(templet-status)', function (obj) {
         var name = $(this).data("name");
-        operate(name, 'enable', false);
-    });
-
-    // 点击禁用
-    $(document).on("click", ".btn-disable", function () {
-        var name = $(this).data("name");
-        operate(name, 'disable', false);
-    });
+        var action = $(this).data("action");
+        operate(name, action, false);
+    })
 
     // 点击卸载
     $(document).on("click", ".btn-uninstall", function () {
