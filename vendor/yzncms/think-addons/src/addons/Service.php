@@ -443,7 +443,7 @@ class Service
         // 删除插件目录下的application和public
         $files = self::getCheckDirs();
         foreach ($files as $index => $file) {
-            @rmdirs($addonDir . $file);
+            @File::del_dir($addonDir . $file);
         }
 
         try {
@@ -617,6 +617,31 @@ EOD;
                 }
             }
         }
+        return true;
+    }
+
+    /**
+     * 备份插件
+     * @param string $name 插件名称
+     * @return bool
+     * @throws Exception
+     */
+    public static function backup($name)
+    {
+        $addonsBackupDir = self::getAddonsBackupDir();
+        $file            = $addonsBackupDir . $name . '-backup-' . date("YmdHis") . '.zip';
+        $zipFile         = new ZipFile();
+        try {
+            $zipFile
+                ->addDirRecursive(self::getAddonDir($name))
+                ->saveAsFile($file)
+                ->close();
+        } catch (ZipException $e) {
+
+        } finally {
+            $zipFile->close();
+        }
+
         return true;
     }
 
