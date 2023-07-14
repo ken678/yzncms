@@ -45,7 +45,9 @@
     {{#  } }}
     <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.addon.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
 {{#  } else { }}
-    {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>0){ }}
+    {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>1){ }}
+    <a class="layui-btn layui-btn-xs" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？"  data-value="{{= JSON.stringify(d.releaselist)}}" lay-event="more">安装 <i class="layui-icon layui-icon-down"></i></a>
+    {{# }else if(typeof d.releaselist !="undefined" && d.releaselist.length>0){ }}
     <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
     {{#  } }}
     {{# if(d.button){ }}
@@ -130,7 +132,7 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','table','upload','laytpl','yzn','notice','element'], function() {
+layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdown'], function() {
     var yznTable = layui.yznTable,
         $ = layui.$,
         table = layui.table,
@@ -138,11 +140,13 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element'], funct
         yzn = layui.yzn,
         notice = layui.notice,
         element = layui.element,
+        dropdown = layui.dropdown,
         upload = layui.upload;
 
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
+        layFilter: 'currentTable_LayFilter',
     };
 
     var yzncms_version = '{$Think.config.version.yzncms_version}';
@@ -223,6 +227,43 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element'], funct
             }
         }
     });
+
+
+    table.on('tool('+init.layFilter+')', function(obj){
+        var that = this;
+        if(obj.event === 'more'){
+            jsondata = $(this).data('value');
+            var name = $(this).data("name");
+            var title = $(this).data("title");
+            const arr = jsondata.map(({id, version}) => ({ id, title: version }))
+
+            dropdown.render({
+                elem: that,
+                show: true, // 外部事件触发即显示
+                data: arr,
+                click: function(data, othis){
+                    var userinfo = yzn.cache.getStorage('yzncms_userinfo');
+                    var uid = userinfo ? userinfo.id : 0;
+
+                    if (parseInt(uid) === 0) {
+                        return layer.alert('你当前未登录Yzncms，请登录后操作！', {
+                            title: '温馨提示',
+                            btn: ['立即登录'],
+                            yes: function (index, layero) {
+                                $(".btn-userinfo").trigger("click");
+                            },
+                        });
+                    }
+
+                    yzn.msg.confirm(title, function(index){
+                        install(name, data.title, false);
+                    });
+                }
+
+            })
+        }
+    })
+
 
     element.on('tab(tabswitch)', function(data){
       var value = $(this).data("id");
