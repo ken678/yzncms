@@ -172,7 +172,7 @@
             e.preventDefault();
             //终止事件 不再派发事件
             e.stopPropagation();
-            $(this).parent().addClass('current').siblings().removeClass('current');
+            //$(this).parent().addClass('current').siblings().removeClass('current');
             var data_id = $(this).attr('lay-id'),
                 data_list = SUBMENU_CONFIG[data_id],
                 html = [],
