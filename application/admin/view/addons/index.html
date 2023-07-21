@@ -611,6 +611,8 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
     form.on('switch(templet-status)', function (obj) {
         var name = $(this).data("name");
         var action = $(this).data("action");
+        $(this).trigger('click');
+        form.render('checkbox');
         operate(name, action, false);
     })
 
