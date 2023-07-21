@@ -515,6 +515,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
                 yzncms_version: yzncms_version
             }
         }, function (data, ret) {
+            table.reload(init.table_render_id);
             notice.success({ message: ret.msg });
             layer.closeAll();
         }, function (data, ret) {
