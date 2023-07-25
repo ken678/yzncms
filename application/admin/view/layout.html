@@ -354,7 +354,7 @@
                 var current_li = $('#B_history li.layui-this');
                 //找到关闭后当前应该显示的选项卡
                 current_li = current_li.length ? current_li : prev_li;
-                current_li.addClass('layui-this');
+                current_li.click();
                 cur_data_id = current_li.attr('lay-id');
                 $('#iframe_' + cur_data_id).show();
             });
