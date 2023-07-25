@@ -135,4 +135,5 @@ iframe {position: absolute; height: 100%; width: 100%; border: none; }
   .layui-all .layui-layout-admin .layui-body {left: 0px !important; }
   .layui-mini .layui-make {display: block; }
   .layui-make {cursor: pointer; }
+  .layui-layout-admin .layui-footer{left: 0}
 }
