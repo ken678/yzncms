@@ -276,7 +276,7 @@
             if (li.length > 0) {
                 var iframe = $('#iframe_' + id);
                 li.addClass('current');
-                if (iframe[0].contentWindow && iframe[0].contentWindow.location.href !== href) {
+                if (iframe[0].contentWindow && iframe[0].contentWindow.location.pathname !== href) {
                     iframe[0].contentWindow.location.href = href;
                 }
                 $('#B_frame iframe').hide();
