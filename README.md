@@ -103,7 +103,7 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 
 ## [截图预览]
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1229/133034_265df309_555541.gif "YZNCMS后台管理系统")
-![输入图片说明](https://foruda.gitee.com/images/1679995393012272983/aa834c07_555541.png "YZNCMS后台管理系统")
+![输入图片说明](https://foruda.gitee.com/images/1690275158553558117/b7758d3a_555541.png "YZNCMS后台管理系统")
 
 ## [友情捐赠]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")
