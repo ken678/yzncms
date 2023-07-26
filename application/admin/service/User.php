@@ -159,7 +159,8 @@ class User extends \libs\Auth
         $admin->token           = Random::uuid();
         $admin->save();
         Session::set("admin", $admin->toArray());
-        $this->keeplogin($keeptime);
+        Session::set("admin.safecode", $this->getEncryptSafecode($admin));
+        $this->keeplogin($admin, $keeptime);
         return true;
     }
 
@@ -169,13 +170,12 @@ class User extends \libs\Auth
      * @param int $keeptime
      * @return  boolean
      */
-    protected function keeplogin($keeptime = 0)
+    protected function keeplogin($admin, $keeptime = 0)
     {
         if ($keeptime) {
             $expiretime = time() + $keeptime;
-            $key        = md5(md5($this->id) . md5($keeptime) . md5($expiretime) . $this->token);
-            $data       = [$this->id, $keeptime, $expiretime, $key];
-            Cookie::set('keeplogin', implode('|', $data), 86400 * 7);
+            $key        = $this->getKeeploginKey($admin, $keeptime, $expiretime);
+            Cookie::set('keeplogin', implode('|', [$admin['id'], $keeptime, $expiretime, $key]), $keeptime);
             return true;
         }
         return false;
@@ -198,7 +198,7 @@ class User extends \libs\Auth
                 return false;
             }
             //token有变更
-            if ($key != md5(md5($id) . md5($keeptime) . md5($expiretime) . $admin->token)) {
+            if ($key != $this->getKeeploginKey($admin, $keeptime, $expiretime)) {
                 return false;
             }
             $ip = request()->ip();
@@ -207,8 +207,9 @@ class User extends \libs\Auth
                 return false;
             }
             Session::set("admin", $admin->toArray());
+            Session::set("admin.safecode", $this->getEncryptSafecode($admin));
             //刷新自动登录的时效
-            $this->keeplogin($keeptime);
+            $this->keeplogin($admin, $keeptime);
             return true;
         } else {
             return false;
@@ -228,13 +229,19 @@ class User extends \libs\Auth
         if (!$admin) {
             return false;
         }
+        $my = AdminUser::get($admin['id']);
+        if (!$my) {
+            return false;
+        }
+        //校验安全码，可用于判断关键信息发生了变更需要重新登录
+        if (!isset($admin['safecode']) || $this->getEncryptSafecode($my) !== $admin['safecode']) {
+            $this->logout();
+            return false;
+        }
         //判断是否同一时间同一账号只能在一个地方登录
         if (Config::get('login_unique')) {
-            $my = AdminUser::get($admin['id']);
-            if (!$my || $my['token'] != $admin['token']) {
-                $this->logined = false; //重置登录状态
-                Session::delete("admin");
-                Cookie::delete("keeplogin");
+            if ($my['token'] != $admin['token']) {
+                $this->logout();
                 return false;
             }
         }
@@ -256,6 +263,29 @@ class User extends \libs\Auth
     public function isAdministrator()
     {
         return in_array('*', $this->getRuleIds()) ? true : false;
+    }
+
+    /**
+     * 获取自动登录Key
+     * @param $params
+     * @param $keeptime
+     * @param $expiretime
+     * @return string
+     */
+    public function getKeeploginKey($params, $keeptime, $expiretime)
+    {
+        $key = md5(md5($params['id']) . md5($keeptime) . md5($expiretime) . $params['token'] . Config::get('token.key'));
+        return $key;
+    }
+
+    /**
+     * 获取加密后的安全码
+     * @param $params
+     * @return string
+     */
+    public function getEncryptSafecode($params)
+    {
+        return md5(md5($params['username']) . md5(substr($params['password'], 0, 6)) . Config::get('token.key'));
     }
 
     /**
