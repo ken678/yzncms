@@ -643,8 +643,8 @@ EOD;
         $preview = $previewAttr === false ? false : true;
 
         $options = [
-            'id'            => "picker_{$domname}",
-            'class'         => "webUpload",
+            'id'            => "faupload_{$domname}",
+            'class'         => "layui-btn faupload",
             'data-input-id' => "c-{$domname}",
         ];
         if ($preview) {
@@ -667,8 +667,7 @@ EOD;
         $input           = $this->text($name, $value, array_merge(['id' => "c-{$domname}", 'class' => 'layui-input'], $inputAttr));
         $html            = <<<EOD
 <div class="layui-col-xs4">{$input}</div>
-{$uploadBtn}
-{$chooseBtn}
+{$uploadBtn}{$chooseBtn}
 {$previewArea}
 EOD;
         return $html;
