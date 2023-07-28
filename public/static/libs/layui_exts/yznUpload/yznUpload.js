@@ -86,7 +86,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                             return;
                         }
                     }
-                    notice.error({ message: ret.msg.toString().replace(/(<([^>]+)>)/gi, "") + "(code:" + ret.code + ")" });
+                    notice.error({ message: ret.message.toString().replace(/(<([^>]+)>)/gi, "") + "(code:" + ret.code + ")" });
                 },
                 //服务器响应数据后
                 onUploadResponse: function (response, up, file) {
@@ -275,8 +275,8 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                             error: function (file, response, xhr) {
                                 var responseObj = $("<div>" + (xhr && typeof xhr.responseText !== 'undefined' ? xhr.responseText : response) + "</div>");
                                 responseObj.find("style, title, script").remove();
-                                var msg = responseObj.text() || __('Network error');
-                                var ret = {code: 0, data: null, msg: msg};
+                                var msg = responseObj.text() || '网络错误!';
+                                var ret = {code: 0, data: null, message: msg};
                                 Upload.events.onUploadError(this, ret, file);
                             },
                             uploadprogress: function (file, progress, bytesSent) {
@@ -298,7 +298,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                             },
                             chunksUploaded: function (file, done) {
                                 var that = this;
-                                Fast.api.ajax({
+                                yzn.request.post({
                                     url: this.options.url,
                                     data: $.extend({}, multipart, {
                                         action: 'merge',
