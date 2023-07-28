@@ -281,12 +281,12 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                             },
                             uploadprogress: function (file, progress, bytesSent) {
                                 if (file.upload.chunked) {
-                                    $(this.element).prop("disabled", true).html("<i class='fa fa-upload'></i> " + '上传' + Math.floor((file.upload.bytesSent / file.size) * 100) + "%");
+                                    $(this.element).prop("disabled", true).html("<i class='layui-icon layui-icon-upload'></i> " + '上传' + Math.floor((file.upload.bytesSent / file.size) * 100) + "%");
                                 }
                             },
                             totaluploadprogress: function (progress, bytesSent) {
                                 if (this.getActiveFiles().length > 0 && !this.options.chunking) {
-                                    $(this.element).prop("disabled", true).html("<i class='fa fa-upload'></i> " + '上传' + Math.floor(progress) + "%");
+                                    $(this.element).prop("disabled", true).html("<i class='layui-icon layui-icon-upload'></i> " + '上传' + Math.floor(progress) + "%");
                                 }
                             },
                             queuecomplete: function () {
