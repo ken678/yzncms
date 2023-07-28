@@ -22,7 +22,7 @@ use think\Db;
 class Ajax extends Adminbase
 {
     //编辑器初始配置
-    private $editorConfig = array(
+    private $editorConfig = [
         /* 上传图片配置项 */
         "imageActionName"         => "uploadimage", /* 执行上传图片的action名称 */
         "imageFieldName"       => "upfile", /* 提交的图片表单名称 */
@@ -46,41 +46,41 @@ class Ajax extends Adminbase
         'snapscreenUrlPrefix'     => '',
         'snapscreenInsertAlign'   => 'none',
         /* 抓取远程图片配置 */
-        'catcherLocalDomain'      => array('127.0.0.1', 'localhost', 'img.baidu.com'),
+        'catcherLocalDomain'      => ['127.0.0.1', 'localhost', 'img.baidu.com'],
         "catcherActionName"       => "catchimage", /* 执行抓取远程图片的action名称 */
         'catcherFieldName'     => 'source',
         'catcherPathFormat'       => '',
         'catcherUrlPrefix'        => '',
         'catcherMaxSize'          => 0,
-        'catcherAllowFiles'       => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
+        'catcherAllowFiles'       => ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
         /* 上传视频配置 */
         "videoActionName"         => "uploadvideo", /* 执行上传视频的action名称 */
         "videoFieldName"       => "upfile", /* 提交的视频表单名称 */
         'videoPathFormat'  => '',
         'videoUrlPrefix'          => '',
         'videoMaxSize'            => 0,
-        'videoAllowFiles'         => array(".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg", ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid"),
+        'videoAllowFiles'         => [".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg", ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid"],
         /* 上传文件配置 */
         "fileActionName"          => "uploadfile", /* controller里,执行上传视频的action名称 */
         'fileFieldName'        => 'upfile',
         'filePathFormat'          => '',
         'fileUrlPrefix'           => '',
         'fileMaxSize'             => 0,
-        'fileAllowFiles'          => array(".flv", ".swf"),
+        'fileAllowFiles'          => [".flv", ".swf"],
         /* 列出指定目录下的图片 */
         "imageManagerActionName"  => "listimage", /* 执行图片管理的action名称 */
         'imageManagerListPath' => '',
         'imageManagerListSize'    => 20,
         'imageManagerUrlPrefix'   => '',
         'imageManagerInsertAlign' => 'none',
-        'imageManagerAllowFiles'  => array('.png', '.jpg', '.jpeg', '.gif', '.bmp'),
+        'imageManagerAllowFiles'  => ['.png', '.jpg', '.jpeg', '.gif', '.bmp'],
         /* 列出指定目录下的文件 */
         "fileManagerActionName"   => "listfile", /* 执行文件管理的action名称 */
         'fileManagerListPath'  => '',
         'fileManagerUrlPrefix'    => '',
         'fileManagerListSize'     => '',
-        'fileManagerAllowFiles'   => array(".flv", ".swf"),
-    );
+        'fileManagerAllowFiles'   => [".flv", ".swf"],
+    ];
 
     protected function initialize()
     {
@@ -178,12 +178,10 @@ class Ajax extends Adminbase
                     'info' => '未开启分片上传功能',
                 ]);
             }
-            $id      = $this->request->post("id/s", '', 'strtolower');
-            $chunkid = $chunkid . $id;
             //分片
             $action     = $this->request->post("action");
-            $chunkindex = $this->request->post("chunk/d", 0);
-            $chunkcount = $this->request->post("chunks/d", 1);
+            $chunkindex = $this->request->post("chunkindex/d", 0);
+            $chunkcount = $this->request->post("chunkcount/d", 1);
             $filename   = $this->request->post("filename");
             $method     = $this->request->method(true);
             if ($action == 'merge') {
@@ -201,6 +199,20 @@ class Ajax extends Adminbase
                     ]);
                 }
                 return $attachment;
+            } elseif ($method == 'clean') {
+                //删除冗余的分片文件
+                try {
+                    $upload = new UploadLib();
+                    $upload->clean($chunkid);
+                } catch (UploadException $e) {
+                    return json([
+                        'code'    => 0,
+                        'info'    => $e->getMessage(),
+                        'state'   => $e->getMessage(), //兼容百度
+                        'message' => $e->getMessage(), //兼容editormd
+                    ]);
+                }
+                return json(['code' => 1]);
             } else {
                 //上传分片文件
                 $file = $this->request->file('file');
@@ -286,9 +298,9 @@ class Ajax extends Adminbase
             return $this->showFileList('listfile');
             break;*/
             default:
-                $result = array(
+                $result = [
                     'state' => '请求地址出错',
-                );
+                ];
                 break;
         }
         /* 输出结果 */

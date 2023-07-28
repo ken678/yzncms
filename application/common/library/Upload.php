@@ -235,7 +235,7 @@ class Upload
      */
     public function merge($chunkid, $chunkcount, $filename, $dir, $from)
     {
-        if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
+        if (!preg_match('/^[a-z0-9\-]{36}$/', $chunkid)) {
             throw new UploadException('未知参数');
         }
 
@@ -298,7 +298,8 @@ class Upload
             $this->merging = true;
 
             //允许大文件
-            //$this->config['maxsize'] = "1024G";
+            $this->config['maxsize'] = "1024G";
+
             $attachment = $this->upload($dir, $from);
         } catch (\Exception $e) {
             @unlink($destFile);
@@ -330,10 +331,10 @@ class Upload
      */
     public function chunk($chunkid, $chunkindex, $chunkcount, $chunkfilesize = null, $chunkfilename = null, $direct = false)
     {
-        /*if ($this->fileInfo['type'] != 'application/octet-stream') {
-        throw new UploadException(__('Uploaded file format is limited'));
-        }*/
-        if (!preg_match('/^[a-z0-9\_]+$/', $chunkid)) {
+        if ($this->fileInfo['type'] != 'application/octet-stream') {
+            throw new UploadException('上传文件格式受限制');
+        }
+        if (!preg_match('/^[a-z0-9\-]{36}$/', $chunkid)) {
             throw new UploadException('未知参数');
 
         }
