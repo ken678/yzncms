@@ -16,10 +16,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
     };
 
     var yznForm = {
-        listen: function(preposeCallback, ok, no) {
-            // 监听表单提交事件
-            yznForm.api.formSubmit(preposeCallback, ok, no);
-        },
         api: {
             form: function(url, data, ok, no, refresh, type, pop) {
                 var that = this;
@@ -114,63 +110,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                 tableName = tableName | 'currentTable';
                 table.reload(tableName);
             },
-            formSubmit: function(preposeCallback, ok, no) {
-                var formList = document.querySelectorAll("[lay-submit]");
-
-                // 表单提交自动处理
-                if (formList.length > 0) {
-                    $.each(formList, function(i, v) {
-                        var filter = $(this).attr('lay-filter'),
-                            type = $(this).attr('data-type'),
-                            refresh = $(this).attr('data-refresh'),
-                            pop = $(this).attr('data-pop'),
-                            url = $(this).attr('lay-submit');
-                        // 表格搜索不做自动提交
-                        if (type === 'tableSearch') {
-                            return false;
-                        }
-                        // 判断是否需要刷新表格
-                        if (refresh === 'false') {
-                            refresh = false;
-                        } else {
-                            refresh = true;
-                        }
-                        if (pop === 'true') {
-                            pop = true;
-                        } else {
-                            pop = false;
-                        }
-                        // 自动添加layui事件过滤器
-                        if (filter === undefined || filter === '') {
-                            filter = 'save_form_' + (i + 1);
-                            $(this).attr('lay-filter', filter)
-                        }
-                        if (url === undefined || url === '' || url === null) {
-                            url = window.location.href;
-                        }
-                        form.on('submit(' + filter + ')', function(data) {
-                            //var dataField = data.field;
-                            var dataField = $(data.form).serializeArray();
-
-                            // 富文本数据处理
-                            /*var editorList = document.querySelectorAll(".editor");
-                            if (editorList.length > 0) {
-                                $.each(editorList, function(i, v) {
-                                    var name = $(this).attr("name");
-                                    dataField[name] = CKEDITOR.instances[name].getData();
-                                });
-                            }*/
-
-                            if (typeof preposeCallback === 'function') {
-                                dataField = preposeCallback(dataField);
-                            }
-                            yznForm.api.form(url, dataField, ok, no, refresh, type, pop);
-                            return false;
-                        });
-                    });
-                }
-
-            },
         },
         events: {
             init: function() {
@@ -257,15 +196,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                     yzn.open(title, url, clienWidth, clientHeight);
                 });
 
-                var tips_index = 0;
-                $(document).on('mouseenter', '[lay-tips]', function () {
-                    tips_index = layer.tips($(this).attr('lay-tips'), this, {
-                        tips: 1,
-                        time: 0
-                    });
-                }).on('mouseleave', '[lay-tips]', function(){
-                    layer.close(tips_index);
-                });
                 // 放大图片
                 $('body').on('click', '[data-image]', function() {
                     var title = $(this).attr('data-image'),
@@ -340,6 +270,63 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                     layer.open({ type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height] });
                     return false;
                 });*/
+            },
+            formSubmit: function(layform,preposeCallback, ok, no) {
+                var formList = document.querySelectorAll("[lay-submit]");
+
+                // 表单提交自动处理
+                if (formList.length > 0) {
+                    $.each(formList, function(i, v) {
+                        var filter = $(this).attr('lay-filter'),
+                            type = $(this).attr('data-type'),
+                            refresh = $(this).attr('data-refresh'),
+                            pop = $(this).attr('data-pop'),
+                            url = $(this).attr('lay-submit');
+                        // 表格搜索不做自动提交
+                        if (type === 'tableSearch') {
+                            return false;
+                        }
+                        // 判断是否需要刷新表格
+                        if (refresh === 'false') {
+                            refresh = false;
+                        } else {
+                            refresh = true;
+                        }
+                        if (pop === 'true') {
+                            pop = true;
+                        } else {
+                            pop = false;
+                        }
+                        // 自动添加layui事件过滤器
+                        if (filter === undefined || filter === '') {
+                            filter = 'save_form_' + (i + 1);
+                            $(this).attr('lay-filter', filter)
+                        }
+                        if (url === undefined || url === '' || url === null) {
+                            url = window.location.href;
+                        }
+                        form.on('submit(' + filter + ')', function(data) {
+                            //var dataField = data.field;
+                            var dataField = $(data.form).serializeArray();
+
+                            // 富文本数据处理
+                            /*var editorList = document.querySelectorAll(".editor");
+                            if (editorList.length > 0) {
+                                $.each(editorList, function(i, v) {
+                                    var name = $(this).attr("name");
+                                    dataField[name] = CKEDITOR.instances[name].getData();
+                                });
+                            }*/
+
+                            if (typeof preposeCallback === 'function') {
+                                dataField = preposeCallback(dataField);
+                            }
+                            yznForm.api.form(url, dataField, ok, no, refresh, type, pop);
+                            return false;
+                        });
+                    });
+                }
+
             },
             faselect: function (layform) {
                 //绑定fachoose选择附件事件
@@ -908,10 +895,11 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                 }
             },
         },
-        bindevent: function(form) {
+        bindevent: function(form,preposeCallback, ok, no) {
             form = typeof form === 'object' ? form : $(form);
             var events = yznForm.events;
             events.init();
+            events.formSubmit(form,preposeCallback, ok, no);
             events.selectpage(form);
             events.faselect(form);
             events.fieldlist(form);
@@ -927,7 +915,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             events.faupload(form);
         }
     }
-    yznForm.bindevent($(".layui-form"));
+    //yznForm.bindevent($(".layui-form"));
 
     //修复含有fixed-footer类的body边距
     if ($(".fixed-footer").size() > 0) {

@@ -350,6 +350,15 @@ layui.define(['layer', 'notice', 'addons'], function(exports) {
             }
         },
         init: function() {
+            var tips_index = 0;
+            $(document).on('mouseenter', '[lay-tips]', function () {
+                tips_index = layer.tips($(this).attr('lay-tips'), this, {
+                    tips: 1,
+                    time: 0
+                });
+            }).on('mouseleave', '[lay-tips]', function(){
+                layer.close(tips_index);
+            });
             // 对相对地址进行处理
             $.ajaxSetup({
                 beforeSend: function(xhr, setting) {
