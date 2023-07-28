@@ -1,6 +1,5 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
-<style>.webuploader-pick{height:30px;line-height:30px;padding:0 10px;}</style>
 <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
 <script type="text/html" id="barTool">
     <a data-href='{{d.path}}' class="layui-btn layui-btn-danger layui-btn-xs btn-chooseone"><i class="iconfont icon-right"></i> 选择</a>
@@ -15,10 +14,10 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','yzn','table','yznForm'], function() {
+layui.use(['yznTable','yzn','table','yznUpload'], function() {
     var yznTable = layui.yznTable,
         yzn = layui.yzn,
-        yznForm = layui.yznForm,
+        yznUpload = layui.yznUpload,
         table =layui.table;
     var multiple = {$Think.get.multiple};
     var urlArr = [];
@@ -30,7 +29,7 @@ layui.use(['yznTable','yzn','table','yznForm'], function() {
         id: 'dataTable',
         toolbar: ['refresh'
         , [{
-            html: '<div style="display:inline-block;margin-right:5px;" class="webUpload" id="picker_table_select_image" data-multiple="false" data-type="{$mimetype}"><i class="layui-icon layui-icon-upload"></i> 上传</div>'
+            html: '<button type="button" class="layui-btn layui-btn-sm faupload" data-multiple="false" data-type="{$mimetype}"><i class="layui-icon layui-icon-upload"></i> 上传</button>'
         }]
         {if $Think.get.multiple == "true"}
         , [{
@@ -56,7 +55,7 @@ layui.use(['yznTable','yzn','table','yznForm'], function() {
         ],
         page: {},
         done: function(res, curr, count){
-            yznForm.events.upload_image('.webUpload', function () {
+            yznUpload.api.upload('.faupload', function () {
                 $("[data-table-refresh]").trigger("click");
             });
         }
