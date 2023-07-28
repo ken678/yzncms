@@ -14,9 +14,10 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','yzn','table','yznUpload'], function() {
+layui.use(['yznTable','yzn','table','yznForm','yznUpload'], function() {
     var yznTable = layui.yznTable,
         yzn = layui.yzn,
+        yznForm = layui.yznForm,
         yznUpload = layui.yznUpload,
         table =layui.table;
     var multiple = {$Think.get.multiple};
