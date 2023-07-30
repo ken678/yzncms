@@ -195,85 +195,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                     }
                     yzn.open(title, url, clienWidth, clientHeight);
                 });
-
-                // 放大图片
-                $('body').on('click', '[data-image]', function() {
-                    var title = $(this).attr('data-image'),
-                        src = $(this).attr('src'),
-                        alt = $(this).attr('alt');
-                    var photos = {
-                        "title": title,
-                        "id": Math.random(),
-                        "data": [{
-                            "alt": alt,
-                            "pid": Math.random(),
-                            "src": src,
-                            "thumb": src
-                        }]
-                    };
-                    layer.photos({
-                        photos: photos,
-                        anim: 5
-                    });
-                    return false;
-                });
-                
-                /**
-                 * 普通按钮点击iframe弹窗
-                 * @href 弹窗地址
-                 * @title 弹窗标题
-                 * @lay-data {width: '弹窗宽度', height: '弹窗高度', idSync: '是否同步ID', table: '数据表ID(同步ID时必须)', type: '弹窗类型'}
-                 */
-                /*$(document).on('click', '.layui-iframe', function() {
-                    var that = $(this),
-                        query = '';
-                    var def = { width: '750px', height: '500px', idSync: false, table: 'dataTable', type: 2, url: !that.attr('data-href') ? that.attr('href') : that.attr('data-href'), title: that.attr('title') };
-                    var opt = new Function('return ' + that.attr('lay-data'))() || {};
-
-                    opt.url = opt.url || def.url;
-                    opt.title = opt.title || def.title;
-                    opt.width = opt.width || def.width;
-                    opt.height = opt.height || def.height;
-                    opt.type = opt.type || def.type;
-                    opt.table = opt.table || def.table;
-                    opt.idSync = opt.idSync || def.idSync;
-
-                    if (!opt.url) {
-                        notice.info({ message: '请设置data-href参数' });
-                        return false;
-                    }
-
-                    if (opt.idSync) { // ID 同步
-                        if ($('.checkbox-ids:checked').length <= 0) {
-                            var checkStatus = table.checkStatus(opt.table);
-                            if (checkStatus.data.length <= 0) {
-                                notice.info({ message: '请选择要操作的数据' });
-                                return false;
-                            }
-
-                            for (var i in checkStatus.data) {
-                                query += '&id[]=' + checkStatus.data[i].id;
-                            }
-                        } else {
-                            $('.checkbox-ids:checked').each(function() {
-                                query += '&id[]=' + $(this).val();
-                            })
-                        }
-                    }
-
-                    if (opt.url.indexOf('?') >= 0) {
-                        opt.url += '&iframe=yes' + query;
-                    } else {
-                        opt.url += '?iframe=yes' + query;
-                    }
-
-                    layer.open({ type: opt.type, title: opt.title, content: opt.url, area: [opt.width, opt.height] });
-                    return false;
-                });*/
             },
             formSubmit: function(layform,preposeCallback, ok, no) {
-                var formList = document.querySelectorAll("[lay-submit]");
-
+                var formList = $("[lay-submit]", layform);
+                
                 // 表单提交自动处理
                 if (formList.length > 0) {
                     $.each(formList, function(i, v) {
@@ -876,22 +801,13 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                     })
                 }
             },
-            /**
-             * 绑定上传事件
-             * @param form
-             * @deprecated Use faupload instead.
-             */
-            plupload: function (form) {
-                yznForm.events.faupload(form);
+            plupload: function (layform) {
+                yznForm.events.faupload(layform);
             },
-            /**
-             * 绑定上传事件
-             * @param form
-             */
-            faupload: function (form) {
+            faupload: function (layform) {
                 //绑定上传元素事件
-                if ($(".plupload,.faupload", form).length > 0) {
-                    yznUpload.api.upload($(".plupload,.faupload", form));
+                if ($(".plupload,.faupload", layform).length > 0) {
+                    yznUpload.api.upload($(".plupload,.faupload", layform));
                 }
             },
         },
