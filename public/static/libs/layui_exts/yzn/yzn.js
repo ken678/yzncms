@@ -375,6 +375,27 @@ layui.define(['layer', 'notice', 'addons'], function(exports) {
                 displayMode: 0, //0无限制 1同类型存在不显示 2同类型存在先移除
                 progressBar: true, //进度条
             });
+            // 放大图片
+            $('body').on('click', '[data-image]', function() {
+                var title = $(this).attr('data-image'),
+                    src = $(this).attr('src'),
+                    alt = $(this).attr('alt');
+                var photos = {
+                    "title": title,
+                    "id": Math.random(),
+                    "data": [{
+                        "alt": alt,
+                        "pid": Math.random(),
+                        "src": src,
+                        "thumb": src
+                    }]
+                };
+                layer.photos({
+                    photos: photos,
+                    anim: 5
+                });
+                return false;
+            });
         }
     }
     yzn.init();
