@@ -163,7 +163,8 @@
 <script type="text/javascript">
 layui.use('yznForm', function() {
     var yznForm = layui.yznForm;
-    yznForm.listen();
+
+    yznForm.bindevent($("form.layui-form"));
 });
 </script>
 {/block}
