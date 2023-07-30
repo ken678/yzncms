@@ -112,9 +112,9 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
         },
         events: {
-            init: function() {
+            init: function(layform) {
                 // 监听请求
-                $('body').on('click', '[data-request]', function() {
+                layform.on('click', '[data-request]', function() {
                     var that = $(this);
                     var title = $(this).data('title'),
                         url = $(this).data('request') || $(this).attr("href"),
@@ -162,7 +162,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                     return false;
                 });
                 // 监听弹出层的打开
-                $('body').on('click', '[data-open]', function() {
+                layform.on('click', '[data-open]', function() {
                     var clienWidth = $(this).attr('data-width') || 800,
                         clientHeight = $(this).attr('data-height') || 600,
                         dataFull = $(this).attr('data-full'),
@@ -814,7 +814,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
         bindevent: function(form,preposeCallback, ok, no) {
             form = typeof form === 'object' ? form : $(form);
             var events = yznForm.events;
-            events.init();
+            events.init(form);
             events.formSubmit(form,preposeCallback, ok, no);
             events.selectpage(form);
             events.faselect(form);
