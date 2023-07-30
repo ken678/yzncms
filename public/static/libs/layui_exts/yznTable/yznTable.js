@@ -20,9 +20,9 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
     var ColumnsForSearch = [];
 
     yznTable = {
-        bindevent: function () {
+        bindevent: function (laytable) {
             // 监听请求
-            $('body').on('click', '[data-request]', function() {
+            laytable.on('click', '[data-request]', function() {
                 var that = $(this);
                 var title = $(this).data('title'),
                     url = $(this).data('request') || $(this).attr("href"),
@@ -70,7 +70,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 return false;
             });
             // 监听弹出层的打开
-            $('body').on('click', '[data-open]', function() {
+            laytable.on('click', '[data-open]', function() {
                 var clienWidth = $(this).attr('data-width') || 800,
                     clientHeight = $(this).attr('data-height') || 600,
                     dataFull = $(this).attr('data-full'),
@@ -104,7 +104,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 yzn.open(title, url, clienWidth, clientHeight);
             });
             //单行表格删除(不刷新)
-            $(document).on('click', '.layui-tr-del', function() {
+            laytable.on('click', '.layui-tr-del', function() {
                 var that = $(this),
                     index = that.parents('tr').eq(0).data('index'),
                     tr = $('.layui-table-body').find('tr[data-index="' + index + '"]'),
@@ -128,7 +128,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 return false;
             });
             // 列表页批量操作按钮组
-            $('body').on('click', '[data-batch-all]', function() {
+            laytable.on('click', '[data-batch-all]', function() {
                 var that = $(this),
                     tableId = that.attr('data-batch-all'),
                     url = that.attr('data-href');
@@ -161,7 +161,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 return false;
             });
             // 监听动态表格刷新
-            $('body').on('click', '[data-table-refresh]', function() {
+            laytable.on('click', '[data-table-refresh]', function() {
                 var tableId = $(this).attr('data-table-refresh');
                 if (tableId === undefined || tableId === '' || tableId == null) {
                     tableId = init.table_render_id;
