@@ -27,12 +27,6 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-$(document).on("fa.event.appendfieldlist", ".btn-append", function (e, obj) {
-    layui.use('yznForm', function() {
-        var yznForm = layui.yznForm;
-        yznForm.events.faselect(obj);
-    });
-});
 layui.use('yznForm', function() {
     var yznForm = layui.yznForm;
     yznForm.bindevent($("form.layui-form"));
