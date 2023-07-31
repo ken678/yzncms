@@ -59,6 +59,8 @@ layui.use(['yznTable','clipboard'], function() {
         ],
     });
 
+    yznTable.bindevent();
+
     var clipboard = new clipboard('.copy');
     clipboard.on('success', function(e) {
         layer.msg("复制成功",{ icon: 1});

@@ -135,7 +135,7 @@ order:排序字段，默认[id]" class="layui-textarea"></textarea>
 layui.use(['form','yznForm'], function() {
     var form = layui.form,
     yznForm = layui.yznForm;
-    yznForm.listen();
+
     form.on('select(fieldType)', function(data) {
         if (data.value == 'checkbox' || data.value == 'select' || data.value == 'selects' || data.value == 'radio' || data.value == 'selectpage' || data.value == 'custom') {
             if (data.value == 'selectpage') {
@@ -151,6 +151,8 @@ layui.use(['form','yznForm'], function() {
             $('#options').hide();
         }
     });
+
+    yznForm.bindevent($("form.layui-form"));
 });
 </script>
 {/block}
