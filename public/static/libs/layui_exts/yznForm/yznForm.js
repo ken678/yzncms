@@ -35,7 +35,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                         return false;
                     }
                     if (typeof ok === 'function') {
-                        if (false === ok.call($(this), res)) {
+                        if (false === ok.call($(this), data,res)) {
                             return false;
                         }
                     }
@@ -75,7 +75,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                         return false;
                     }
                     if (typeof no === 'function') {
-                        if (false === no.call($(this), res)) {
+                        if (false === no.call($(this), data,res)) {
                             return false;
                         }
                     }
