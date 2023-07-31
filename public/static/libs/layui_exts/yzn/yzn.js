@@ -1,7 +1,8 @@
 //封装基本操作 部分参考EasyAdmin和fastadmin
-layui.define(['layer', 'notice', 'addons'], function(exports) {
+layui.define(['layer','table', 'notice', 'addons'], function(exports) {
     var layer = layui.layer,
         $ = layui.$,
+        table = layui.table,
         notice = layui.notice;
 
     var MOD_NAME = 'yzn';
