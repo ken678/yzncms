@@ -37,7 +37,7 @@ class Attachments extends Adminbase
             list($page, $limit, $where) = $this->buildTableParames();
             $_list                      = AttachmentModel::where($where)->page($page, $limit)->order('id', 'desc')->select();
             $total                      = AttachmentModel::where($where)->order('id', 'desc')->count();
-            $result                     = array("code" => 0, "count" => $total, "data" => $_list);
+            $result                     = ["code" => 0, "count" => $total, "data" => $_list];
             return json($result);
         }
         return $this->fetch();
@@ -50,6 +50,7 @@ class Attachments extends Adminbase
             return $this->index();
         }
         $mimetype = $this->request->get('mimetype/s', '');
+        $mimetype = substr($mimetype, -1) === '/' ? $mimetype . '*' : $mimetype;
         $this->assign('mimetype', $mimetype);
         return $this->fetch();
     }
@@ -70,7 +71,7 @@ class Attachments extends Adminbase
             $this->error('请选择需要删除的附件！');
         }
         if (!is_array($ids)) {
-            $ids = array(0 => $ids);
+            $ids = [0 => $ids];
         }
         $isAdministrator = $this->auth->isAdministrator();
         Hook::add('upload_delete', function ($params) {
