@@ -112,90 +112,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
         },
         events: {
-            init: function(layform) {
-                // 监听请求
-                layform.on('click', '[data-request]', function() {
-                    var that = $(this);
-                    var title = $(this).data('title'),
-                        url = $(this).data('request') || $(this).attr("href"),
-                        tableId = $(this).data('table'),
-                        checkbox = $(this).data('checkbox');
-
-                    var postData = {};
-                    if (checkbox === 'true') {
-                        tableId = tableId || init.table_render_id;
-                        var checkStatus = table.checkStatus(tableId),
-                            data = checkStatus.data;
-                        if (data.length <= 0) {
-                            yzn.msg.error('请勾选需要操作的数据');
-                            return false;
-                        }
-                        var ids = [];
-                        $.each(data, function(i, v) {
-                            ids.push(v.id);
-                        });
-                        postData.id = ids;
-                    }
-
-                    title = title || '确定进行该操作？';
-                    tableId = tableId || init.table_render_id;
-
-                    func = function() {
-                        yzn.request.post({
-                            url: url,
-                            data: postData,
-                        }, function(data,res) {
-                            yzn.msg.success(res.msg, function() {
-                                tableId && table.reload(tableId);
-                            });
-                        }, function(data,res) {
-                            yzn.msg.error(res.msg, function () {
-                                tableId && table.reload(tableId);
-                            });
-                        })
-                    }
-                    if (typeof(that.attr('confirm')) == 'undefined') {
-                        func();
-                    } else {
-                        yzn.msg.confirm(title, func);
-                    }
-                    return false;
-                });
-                // 监听弹出层的打开
-                layform.on('click', '[data-open]', function() {
-                    var clienWidth = $(this).attr('data-width') || 800,
-                        clientHeight = $(this).attr('data-height') || 600,
-                        dataFull = $(this).attr('data-full'),
-                        checkbox = $(this).attr('data-checkbox'),
-                        url = $(this).attr('data-open'),
-                        title = $(this).attr("title") || $(this).data("title"),
-                        tableId = $(this).attr('data-table');
-
-                    if (checkbox === 'true') {
-                        tableId = tableId || init.table_render_id;
-                        var checkStatus = table.checkStatus(tableId),
-                            data = checkStatus.data;
-                        if (data.length <= 0) {
-                            yzn.msg.error('请勾选需要操作的数据');
-                            return false;
-                        }
-                        var ids = [];
-                        $.each(data, function(i, v) {
-                            ids.push(v.id);
-                        });
-                        if (url.indexOf("?") === -1) {
-                            url += '?id=' + ids.join(',');
-                        } else {
-                            url += '&id=' + ids.join(',');
-                        }
-                    }
-                    if (dataFull === 'true') {
-                        clienWidth = '100%';
-                        clientHeight = '100%';
-                    }
-                    yzn.open(title, url, clienWidth, clientHeight);
-                });
-            },
             formSubmit: function(layform,preposeCallback, ok, no) {
                 var formList = $("[lay-submit]", layform);
                 
@@ -231,17 +147,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                             url = window.location.href;
                         }
                         form.on('submit(' + filter + ')', function(data) {
-                            //var dataField = data.field;
                             var dataField = $(data.form).serializeArray();
-
-                            // 富文本数据处理
-                            /*var editorList = document.querySelectorAll(".editor");
-                            if (editorList.length > 0) {
-                                $.each(editorList, function(i, v) {
-                                    var name = $(this).attr("name");
-                                    dataField[name] = CKEDITOR.instances[name].getData();
-                                });
-                            }*/
 
                             if (typeof preposeCallback === 'function') {
                                 dataField = preposeCallback(dataField);
@@ -814,7 +720,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
         bindevent: function(form,preposeCallback, ok, no) {
             form = typeof form === 'object' ? form : $(form);
             var events = yznForm.events;
-            events.init(form);
             events.formSubmit(form,preposeCallback, ok, no);
             events.selectpage(form);
             events.faselect(form);
@@ -831,7 +736,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             events.faupload(form);
         }
     }
-    //yznForm.bindevent($(".layui-form"));
 
     //修复含有fixed-footer类的body边距
     if ($(".fixed-footer").size() > 0) {
