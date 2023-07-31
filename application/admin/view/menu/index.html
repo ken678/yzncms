@@ -76,6 +76,7 @@ layui.use(['table', 'yznTable','treeTable'], function() {
 
     yznTable.listenSwitch({filter: 'status', url: init.modify_url});
     yznTable.listenEdit(init, 'currentTable', init.table_render_id, false);
+    yznTable.bindevent();
 
 });
 </script>

@@ -56,7 +56,7 @@
     </div>
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" data-refresh="false">立即提交</button>
+            <button class="layui-btn" lay-submit>立即提交</button>
             <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
         </div>
     </div>
@@ -70,7 +70,7 @@ layui.use(['iconPicker', 'form', 'layer','yznForm'], function() {
         layer = layui.layer,
         $ = layui.$,
         yznForm = layui.yznForm;
-        yznForm.listen();
+        yznForm.bindevent($("form.layui-form"));
         iconPicker.render({
             elem: '#iconPicker4',
             type: 'fontClass'
