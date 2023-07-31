@@ -143,7 +143,7 @@ class AuthManager extends Adminbase
         }
         $auth_group = Db::name('AuthGroup')->where(['module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN])->find($id);
         $this->assign('auth_group', $auth_group);
-        return $this->fetch();
+        return $this->fetch('edit_group');
 
     }
 
