@@ -62,6 +62,8 @@ layui.use(['yznTable','yzn','table','yznForm','yznUpload'], function() {
         }
     });
 
+    yznTable.bindevent();
+
     table.on('checkbox(dataTable_LayFilter)', function(obj){
         urlArr = [];
         var checkStatus = table.checkStatus('dataTable').data;
