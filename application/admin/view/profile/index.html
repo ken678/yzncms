@@ -71,7 +71,7 @@ layui.use(['yznTable','yznForm'], function() {
     var table = layui.yznTable,
     yznForm=layui.yznForm;
 
-    yznForm.listen();
+    yznForm.bindevent($("form.layui-form"));
 
     var init = {
         table_elem: '#currentTable',
@@ -94,6 +94,8 @@ layui.use(['yznTable','yznForm'], function() {
         ],
         page: {}
     });
+
+    yznTable.bindevent();
 });
 </script>
 {/block}
