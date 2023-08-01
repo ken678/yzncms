@@ -351,6 +351,14 @@ layui.define(['layer','table', 'notice', 'addons'], function(exports) {
             }
         },
         init: function() {
+            //修复含有fixed-footer类的body边距
+            if ($(".fixed-footer").size() > 0) {
+                $(document.body).css("padding-bottom", $(".fixed-footer").outerHeight());
+            }
+            //修复不在iframe时layer-footer隐藏的问题
+            if ($(".layer-footer").size() > 0 && self === top) {
+                $(".layer-footer").show();
+            }
             var tips_index = 0;
             $(document).on('mouseenter', '[lay-tips]', function () {
                 tips_index = layer.tips($(this).attr('lay-tips'), this, {
