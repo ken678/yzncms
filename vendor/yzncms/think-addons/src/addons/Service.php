@@ -225,6 +225,26 @@ class Service
         if (!$force) {
             self::noconflict($name);
         }
+
+        //备份冲突文件
+        if (config('backup_global_files')) {
+            $conflictFiles = self::getGlobalFiles($name, true);
+            if ($conflictFiles) {
+                $zip = new ZipFile();
+                try {
+                    foreach ($conflictFiles as $k => $v) {
+                        $zip->addFile(ROOT_PATH . $v, $v);
+                    }
+                    $addonsBackupDir = self::getAddonsBackupDir();
+                    $zip->saveAsFile($addonsBackupDir . $name . "-conflict-enable-" . date("YmdHis") . ".zip");
+                } catch (Exception $e) {
+
+                } finally {
+                    $zip->close();
+                }
+            }
+        }
+
         $addonDir        = self::getAddonDir($name);
         $sourceAssetsDir = self::getSourceAssetsDir($name);
         $destAssetsDir   = self::getDestAssetsDir($name);
@@ -278,6 +298,26 @@ class Service
         if (!$force) {
             self::noconflict($name);
         }
+
+        if (config('backup_global_files')) {
+            //仅备份修改过的文件
+            $conflictFiles = Service::getGlobalFiles($name, true);
+            if ($conflictFiles) {
+                $zip = new ZipFile();
+                try {
+                    foreach ($conflictFiles as $k => $v) {
+                        $zip->addFile(ROOT_PATH . $v, $v);
+                    }
+                    $addonsBackupDir = self::getAddonsBackupDir();
+                    $zip->saveAsFile($addonsBackupDir . $name . "-conflict-disable-" . date("YmdHis") . ".zip");
+                } catch (Exception $e) {
+
+                } finally {
+                    $zip->close();
+                }
+            }
+        }
+
         // 移除插件全局文件
         $list = self::getGlobalFiles($name);
         $dirs = [];
