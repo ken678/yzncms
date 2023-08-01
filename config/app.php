@@ -153,6 +153,8 @@ return [
     'login_unique'            => false,
     //是否开启IP变动检测
     'loginip_check'           => false,
+    //插件纯净模式，插件启用后是否删除插件目录的application、public和assets文件夹
+    'addon_pure_mode'         => true,
     //允许跨域的域名,多个以,分隔
     'cors_request_domain'     => 'localhost,127.0.0.1',
     //文件保存格式
