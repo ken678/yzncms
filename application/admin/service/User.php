@@ -18,6 +18,7 @@ use app\admin\model\AdminUser;
 use think\Db;
 use think\facade\Config;
 use think\facade\Cookie;
+use think\facade\Request;
 use think\facade\Session;
 use util\Random;
 use util\Tree;
