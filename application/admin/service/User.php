@@ -294,16 +294,17 @@ class User extends \libs\Auth
      * @param array $arr 需要验证权限的数组
      * @return bool
      */
-    public function match($arr = [], $path = "")
+    public function match($arr = [])
     {
-        $arr = is_array($arr) ? $arr : explode(',', $arr);
+        $request = Request::instance();
+        $arr     = is_array($arr) ? $arr : explode(',', $arr);
         if (!$arr) {
             return false;
         }
 
         $arr = array_map('strtolower', $arr);
         // 是否存在
-        if (in_array(strtolower($path), $arr) || in_array('*', $arr)) {
+        if (in_array(strtolower($request->action()), $arr) || in_array('*', $arr)) {
             return true;
         }
 

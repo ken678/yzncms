@@ -83,7 +83,7 @@ class Adminbase extends Base
         // 定义是否Dialog请求
         !defined('IS_DIALOG') && define('IS_DIALOG', $this->request->param("dialog") ? true : false);
         // 检测是否需要验证登录
-        if (!$this->auth->match($this->noNeedLogin, $path)) {
+        if (!$this->auth->match($this->noNeedLogin)) {
             if (defined('UID')) {
                 return;
             }
@@ -114,7 +114,7 @@ class Adminbase extends Base
                     }
                 }
             }
-            if (!IS_ROOT && !$this->auth->match($this->noNeedRight, $path)) {
+            if (!IS_ROOT && !$this->auth->match($this->noNeedRight)) {
                 //检测访问权限
                 if (!$this->checkRule($path, [1, 2])) {
                     Hook::listen('admin_nopermission', $this);
