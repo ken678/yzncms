@@ -104,20 +104,30 @@ INSERT INTO `yzn_auth_group` VALUES (1, 0, 'admin', 1, '超级管理员', '拥�
 INSERT INTO `yzn_auth_group` VALUES (2, 1, 'admin', 1, '编辑', '编辑', '', 1);
 
 -- ----------------------------
--- Table structure for `yzn_auth_rule`
+-- Table structure for yzn_auth_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_auth_rule`;
 CREATE TABLE `yzn_auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
-  `module` varchar(20) NOT NULL COMMENT '规则所属module',
-  `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1-url;2-主菜单',
-  `name` varchar(80) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识',
-  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
-  `condition` varchar(300) NOT NULL DEFAULT '' COMMENT '规则附加条件',
+  `pid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
+  `name` varchar(100) DEFAULT '' COMMENT '规则名称',
+  `title` varchar(50) DEFAULT '' COMMENT '规则名称',
+  `icon` varchar(50) DEFAULT '' COMMENT '图标',
+  `url` varchar(255) DEFAULT '' COMMENT '规则URL',
+  `condition` varchar(255) DEFAULT '' COMMENT '条件',
+  `remark` varchar(255) DEFAULT '' COMMENT '备注',
+  `ismenu` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0顶级目录 1子菜单 2页面按钮',
+  `menutype` enum('iframe','blank') DEFAULT NULL COMMENT '菜单类型',
+  `extend` varchar(255) DEFAULT '' COMMENT '扩展属性',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `listorder` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
-  KEY `module` (`module`,`status`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='规则表';
+  UNIQUE KEY `name` (`name`) USING BTREE,
+  KEY `pid` (`pid`),
+  KEY `listorder` (`listorder`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='节点表';
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
