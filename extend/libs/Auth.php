@@ -160,62 +160,65 @@ class Auth
      * @param integer $uid  用户id
      * @param integer $type
      */
-    protected function getAuthList($uid, $type)
+    protected function getAuthList($uid)
     {
-        static $_authList = []; //保存用户验证通过的权限列表
-        $t                = implode(',', (array) $type);
-        if (isset($_authList[$uid . $t])) {
-            return $_authList[$uid . $t];
+        static $_rulelist = []; //保存用户验证通过的权限列表
+        if (isset($_rulelist[$uid])) {
+            return $_rulelist[$uid];
         }
-        if ($this->_config['AUTH_TYPE'] == 2 && Session::has('_AUTH_LIST_' . $uid . $t)) {
-            return Session::get('_AUTH_LIST_' . $uid . $t);
+        if (2 == $this->_config['AUTH_TYPE'] && Session::has('_AUTH_LIST_' . $uid)) {
+            return Session::get('_AUTH_LIST_' . $uid);
         }
-        //读取用户所属用户组
-        $groups = $this->getGroups($uid);
-        $ids    = []; //保存用户所属用户组设置的所有权限规则id
-        foreach ($groups as $g) {
-            $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
-        }
-        $ids = array_unique($ids);
+        // 读取用户规则节点
+        $ids = $this->getRuleIds($uid);
         if (empty($ids)) {
-            $_authList[$uid . $t] = [];
+            $_rulelist[$uid] = [];
             return [];
         }
-        $map = [
-            ['type', 'in', $type],
+        $where = [
             ['status', '=', 1],
         ];
         if (!in_array('*', $ids)) {
-            $map[] = ['id', 'in', $ids];
+            $where[] = ['id', 'in', $ids];
         }
         //读取用户组所有权限规则
-        $rules = Db::name($this->_config['AUTH_RULE'])->where($map)->field('condition,name')->select();
+        $rules = Db::name($this->_config['AUTH_RULE'])->where($where)->field('id,pid,condition,icon,name,title,ismenu')->select();
         //循环规则，判断结果。
-        $authList = [];
+        $rulelist = [];
         if (in_array('*', $ids)) {
-            $authList[] = "*";
+            $rulelist[] = "*";
         }
         foreach ($rules as $rule) {
-            if (!empty($rule['condition'])) {
+            //超级管理员无需验证condition
+            if (!empty($rule['condition']) && !in_array('*', $ids)) {
                 //根据condition进行验证
                 $user    = $this->getUserInfo($uid); //获取用户信息,一维数组
-                $command = preg_replace('/\{(\w*?)\}/', '$user[\'\\1\']', $rule['condition']);
-                //dump($command);//debug
-                @(eval('$condition=(' . $command . ');'));
-                if ($condition) {
-                    $authList[] = strtolower($rule['name']);
+                $nums = 0;
+                $condition = str_replace(['&&', '||'], "\r\n", $rule['condition']);
+                $condition = preg_replace('/\{(\w*?)\}/', '\\1', $condition);
+                $conditionArr = explode("\r\n", $condition);
+                foreach ($conditionArr as $index => $item) {
+                    preg_match("/^(\w+)\s?([\>\<\=]+)\s?(.*)$/", trim($item), $matches);
+                    if ($matches && isset($user[$matches[1]]) && version_compare($user[$matches[1]], $matches[3], $matches[2])) {
+                        $nums++;
+                    }
                 }
+                if ($conditionArr && ((stripos($rule['condition'], "||") !== false && $nums > 0) || count($conditionArr) == $nums)) {
+                    $rulelist[$rule['id']] = strtolower($rule['name']);
+                }
+
             } else {
                 //只要存在就记录
-                $authList[] = strtolower($rule['name']);
+                $rulelist[$rule['id']] = strtolower($rule['name']);
             }
         }
-        $_authList[$uid . $t] = $authList;
-        if ($this->_config['AUTH_TYPE'] == 2) {
+        $_rulelist[$uid] = $rulelist;
+        //登录验证则需要保存规则列表
+        if (2 == $this->_config['AUTH_TYPE']) {
             //规则列表结果保存到session
-            Session::set('_AUTH_LIST_' . $uid . $t, $authList);
+            Session::set('_AUTH_LIST_' . $uid, $rulelist);
         }
-        return array_unique($authList);
+        return array_unique($rulelist);
     }
 
     public function getRuleIds($uid)
