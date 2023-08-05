@@ -123,6 +123,12 @@ class User extends \libs\Auth
         return parent::getGroups($uid);
     }
 
+    public function getAuthList($uid = null)
+    {
+        $uid = is_null($uid) ? $this->id : $uid;
+        return parent::getAuthList($uid);
+    }
+
     public function getRuleIds($uid = null)
     {
         $uid = is_null($uid) ? $this->id : $uid;
@@ -327,6 +333,48 @@ class User extends \libs\Auth
         Session::delete("admin");
         Cookie::delete("keeplogin");
         return true;
+    }
+
+    public function getSidebar(){
+        $module = request()->module();
+        // 读取管理员当前拥有的权限节点
+        $userRule = $this->getAuthList();
+         // 必须将结果集转换为数组
+        $ruleList = \app\admin\model\AuthRule::where('status', 1)
+            ->where('ismenu', 'in','0,1')
+            ->order('listorder', 'desc')
+            ->cache("__menu__")
+            ->select()->toArray();
+        $indexRuleList = \app\admin\model\AuthRule::where('status', 1)
+            ->where('ismenu', 'in','0,1')
+            ->where('name', 'like', '%/index')
+            ->column('name,pid');
+        $pidArr = array_unique(array_filter(array_column($ruleList, 'pid')));
+        foreach ($ruleList as $k => &$v) {
+            if (!in_array($v['name'], $userRule)) {
+                unset($ruleList[$k]);
+                continue;
+            }
+            $indexRuleName = $v['name'] . '/index';
+            if (isset($indexRuleList[$indexRuleName]) && !in_array($indexRuleName, $userRule)) {
+                unset($ruleList[$k]);
+                continue;
+            }
+            $v['type'] = $v['ismenu'];//兼容前端
+            $v['icon'] = $v['icon'] . ' fa-fw';
+            $v['href'] = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $module . '/' . $v['name'];
+            $v['href'] = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : url($v['href']);
+        }
+        $lastArr = array_unique(array_filter(array_column($ruleList, 'pid')));
+        $pidDiffArr = array_diff($pidArr, $lastArr);
+        foreach ($ruleList as $index => $item) {
+            if (in_array($item['id'], $pidDiffArr)) {
+                unset($ruleList[$index]);
+            }
+        }
+        // 构造菜单数据
+        Tree::instance()->init($ruleList,'pid');
+        return Tree::instance()->getTreeArray(0);
     }
 
     /**

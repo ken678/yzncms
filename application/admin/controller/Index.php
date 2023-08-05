@@ -35,7 +35,7 @@ class Index extends Adminbase
     public function index()
     {
         if ($this->request->isPost()) {
-            return json(model("admin/Menu")->getMenuList());
+            return json($this->auth->getSidebar());
         }
         return $this->fetch();
     }

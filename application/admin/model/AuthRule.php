@@ -20,4 +20,7 @@ class AuthRule extends Model
 {
     const RULE_URL = 1;
     const RULE_MAIN = 2; //主菜单
+
+    // 自动写入时间戳
+    protected $autoWriteTimestamp = true;
 }
