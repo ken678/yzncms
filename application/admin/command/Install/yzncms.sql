@@ -235,31 +235,9 @@ INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 21, 'varchar(255) N
 INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 22, 'text NOT NULL', 1, 0);
 
 -- ----------------------------
--- Table structure for `yzn_menu`
--- ----------------------------
-DROP TABLE IF EXISTS `yzn_menu`;
-CREATE TABLE `yzn_menu` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
-  `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '图标',
-  `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID',
-  `app` varchar(20) NOT NULL DEFAULT '' COMMENT '应用标识',
-  `controller` varchar(20) NOT NULL DEFAULT '' COMMENT '控制器标识',
-  `action` varchar(20) NOT NULL DEFAULT '' COMMENT '方法标识',
-  `addon` varchar(20) NOT NULL DEFAULT '' COMMENT '插件名称',
-  `parameter` varchar(255) NOT NULL DEFAULT '' COMMENT '附加参数',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  `tip` varchar(255) NOT NULL DEFAULT '' COMMENT '提示',
-  `is_dev` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否开发者可见',
-  `listorder` smallint(6) unsigned NOT NULL DEFAULT '0' COMMENT '排序ID',
-  PRIMARY KEY (`id`),
-  KEY `pid` (`parentid`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='后台菜单表';
-
--- ----------------------------
 -- Records of yzn_menu
 -- ----------------------------
-INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index','', '', 1, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-equalizer-line', 0, 'addons', 'addons', 'index1','', '', 1, '', 0, 10);
 INSERT INTO `yzn_menu` VALUES (8, '个人资料', '', 10, 'admin', 'profile', 'index','', '', 0, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (9, '资料更新', '', 10, 'admin', 'profile', 'update','', '', 0, '', 0, 0);
