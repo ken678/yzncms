@@ -355,7 +355,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 
 			}
 			index++;
-			$.each(item.children, function (i, note) {
+			$.each(item.childlist, function (i, note) {
 				// 创 建 每 一 个 菜 单 项
 				var content = '<li class="layui-nav-item" >';
 				var href = "javascript:;";
@@ -413,9 +413,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		// 创 建 子 菜 单 结 构
 		var content = '<dl class="layui-nav-child">';
 		// 如 果 嵌 套 不 等 于 空 
-		if (obj.children != null && obj.children.length > 0) {
+		if (obj.childlist != null && obj.childlist.length > 0) {
 			// 遍 历 子 项 目
-			$.each(obj.children, function (i, note) {
+			$.each(obj.childlist, function (i, note) {
 				// 创 建 子 项 结 构
 				content += '<dd>';
 				var href = "javascript:;";
