@@ -341,12 +341,12 @@ class User extends \libs\Auth
         $userRule = $this->getAuthList();
          // 必须将结果集转换为数组
         $ruleList = \app\admin\model\AuthRule::where('status', 1)
-            ->where('ismenu', 'in','0,1')
+            ->where('ismenu',1)
             ->order('listorder', 'desc')
             ->cache("__menu__")
             ->select()->toArray();
         $indexRuleList = \app\admin\model\AuthRule::where('status', 1)
-            ->where('ismenu',2)
+            ->where('ismenu',0)
             ->where('name', 'like', '%/index')
             ->column('name,pid');
         $pidArr = array_unique(array_filter(array_column($ruleList, 'pid')));
