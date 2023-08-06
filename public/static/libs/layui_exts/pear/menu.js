@@ -293,6 +293,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			var href = "javascript:;";
 			var target = "";
 			var className = "site-demo-active"
+			item.type = item.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 			if (item.openType == "_blank" && item.type == 1) {
 				href = item.href;
 				target = "target='_blank'";
@@ -361,6 +362,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				var href = "javascript:;";
 				var target = "";
 				var className = "site-demo-active";
+				note.type = note.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 				if (note.openType == "_blank" && note.type == 1) {
 					href = note.href;
 					target = "target='_blank'";
