@@ -346,7 +346,7 @@ class User extends \libs\Auth
             ->cache("__menu__")
             ->select()->toArray();
         $indexRuleList = \app\admin\model\AuthRule::where('status', 1)
-            ->where('ismenu', 'in','0,1')
+            ->where('ismenu',2)
             ->where('name', 'like', '%/index')
             ->column('name,pid');
         $pidArr = array_unique(array_filter(array_column($ruleList, 'pid')));
@@ -361,7 +361,6 @@ class User extends \libs\Auth
                 continue;
             }
             $v['type'] = $v['ismenu'];//兼容前端
-            $v['icon'] = $v['icon'] . ' fa-fw';
             $v['href'] = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $module . '/' . $v['name'];
             $v['href'] = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : url($v['href']);
         }

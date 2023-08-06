@@ -10,7 +10,8 @@
     <!-- 加 载 样 式 -->
     <link rel="stylesheet" href="__STATIC__/admin/css/loader.css" />
     <!-- 布 局 样 式 -->
-    <link rel="stylesheet" href="__STATIC__/admin/css/global.css" />
+    <link rel="stylesheet" href="__STATIC__/admin/css/global.css?v={$Think.config.version.yzncms_release}" />
+    <link rel="stylesheet" href="__STATIC__/common/font/iconfont.css?v={$Think.config.version.yzncms_release}">
     <script type="text/javascript">
     //全局变量
     var GV = {
@@ -19,7 +20,6 @@
     </script>
 </head>
 <!-- 结 构 代 码 -->
-
 <body class="layui-layout-body pear-admin">
     <!-- 布 局 框 架 -->
     <div class="layui-layout layui-layout-admin">
@@ -30,7 +30,7 @@
                 <!-- 图 标 -->
                 <div class="logo"><i class="layui-icon layui-icon-component"></i></div>
                 <!-- 标 题 -->
-                <span class="title">YZNCMS后台</span>
+                <span class="title">YznCMS后台</span>
             </div>
             <!-- 顶 部 左 侧 功 能 -->
             <ul class="layui-nav layui-layout-left">
@@ -41,16 +41,22 @@
             <div id="control" class="layui-layout-control"></div>
             <!-- 顶 部 右 侧 菜 单 -->
             <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item layui-hide-xs"><a href="{$Think.ROOT_URL}" class="layui-icon layui-icon-website"></a></li>
                 <li class="layui-nav-item layui-hide-xs"><a href="#" class="menuSearch layui-icon layui-icon-search"></a></li>
                 <li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
-                <li class="layui-nav-item layui-hide-xs"><a href="{$Think.ROOT_URL}" class="layui-icon layui-icon-website"></a></li>
-                <li class="layui-nav-item layui-hide-xs message"></li>
+                <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-trash" title="清空缓存"></i></a>
+                        <dl class="layui-nav-child" id="deletecache">
+                            <dd><a href="javascript:;" data-type="all">一键清理缓存<span class="layui-badge-dot"></span></a></dd>
+                            <dd><a href="javascript:;" data-type="data">清理数据缓存</a></dd>
+                            <dd><a href="javascript:;" data-type="template">清理模板缓存</a></dd>
+                        </dl>
+                </li>
                 <li class="layui-nav-item user">
                     <!-- 头 像 -->
-                    <a class="layui-icon layui-icon-username" href="javascript:;"></a>
+                    <a href="javascript:;"><img src="__STATIC__/admin/img/avatar.png" class="layui-nav-img userAvatar" width="35" height="35">{$userInfo.username}</a>
                     <!-- 功 能 菜 单 -->
                     <dl class="layui-nav-child">
-                        <dd><a user-menu-url="{:url('admin/profile/index')}" user-menu-id="5555" user-menu-title="基本资料">基本资料</a></dd>
+                        <dd><a user-menu-url="{:url('admin/profile/index')}" user-menu-id="3" user-menu-title="个人资料">个人资料</a></dd>
                         <dd><a href="{:url('admin/index/logout')}" class="logout">注销登录</a></dd>
                     </dl>
                 </li>
@@ -65,7 +71,7 @@
                 <!-- 图 标 -->
                 <div class="logo"><i class="layui-icon layui-icon-component"></i></div>
                 <!-- 标 题 -->
-                <span class="title">YZNCMS后台</span>
+                <span class="title">YznCMS后台</span>
             </div>
             <!-- 菜 单 内 容 -->
             <div class="layui-side-scroll">
@@ -80,11 +86,10 @@
         <!-- 页脚 -->
         <div class="layui-footer layui-text">
             <span class="left">
-                Released under the MIT license.
             </span>
             <span class="center"></span>
             <span class="right">
-                Copyright © 2017-2023 YznCMS v{$Think.config.version.yzncms_version}
+                Copyright © 2017-{:date("Y")} YznCMS v{$Think.config.version.yzncms_version}
             </span>
         </div>
         <!-- 遮 盖 层 -->
@@ -115,7 +120,19 @@
 
     layui.use(['admin'], function() {
         var admin = layui.admin;
-        var initConfig = {"menu": {"data": "{:url('index')}", "method": "POST", "accordion": true, "collapse": false, "control": false, "controlWidth": 500, "select": "10", "async": true }, "tab": {"enable": true, "keepState": true, "session": true, "preload": false, "max": "30", "index": {"id": "10", "href": "{:url('main/index')}", "title": "首页"} }, "theme": {"defaultColor": "2", "defaultMenu": "dark-theme", "defaultHeader": "light-theme", "allowCustom": true, "banner": false }, "colors": [{"id": "1", "color": "#2d8cf0", "second": "#ecf5ff"}, {"id": "2", "color": "#36b368", "second": "#f0f9eb"}, {"id": "3", "color": "#f6ad55", "second": "#fdf6ec"}, {"id": "4", "color": "#f56c6c", "second": "#fef0f0"}, {"id": "5", "color": "#3963bc", "second": "#ecf5ff"} ], "other": {"keepLoad": "1200", "autoHead": false, "footer": false }, "header": {"message": "admin/data/message.json"} };
+        var initConfig = {
+        "menu": {"data": "{:url('index')}", "method": "POST", "accordion": true, "collapse": false, "control": false, "controlWidth": 500, "select": "0", "async": true }, 
+        "tab": {"enable": true, "keepState": true, "session": true, "preload": false, "max": "30", 
+           "index": {"id": "0", "href": "{:url('main/index')}", "title": "首页"}
+        }, 
+        "theme": {"defaultColor": "2", "defaultMenu": "dark-theme", "defaultHeader": "light-theme", "allowCustom": true, "banner": false },
+        "colors": [{"id": "1", "color": "#2d8cf0", "second": "#ecf5ff"}, 
+                    {"id": "2", "color": "#36b368", "second": "#f0f9eb"}, 
+                    {"id": "3", "color": "#f6ad55", "second": "#fdf6ec"}, 
+                    {"id": "4", "color": "#f56c6c", "second": "#fef0f0"}, 
+                    {"id": "5", "color": "#3963bc", "second": "#ecf5ff"} ], 
+        "other": {"keepLoad": "1200", "autoHead": false, "footer": false }
+        };
         admin.render(initConfig);
 
     })

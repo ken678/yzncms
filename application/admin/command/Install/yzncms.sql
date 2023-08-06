@@ -240,12 +240,12 @@ INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 22, 'text NOT NULL',
 #INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index','', '', 1, '', 0, 0);
 #INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-equalizer-line', 0, 'addons', 'addons', 'index1','', '', 1, '', 0, 10);
 #INSERT INTO `yzn_menu` VALUES (8, '个人资料', '', 10, 'admin', 'profile', 'index','', '', 0, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (9, '资料更新', '', 10, 'admin', 'profile', 'update','', '', 0, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (10, '系统配置', 'icon-zidongxiufu', 3, 'admin', 'config', 'index1','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (11, '配置管理', 'icon-apartment', 10, 'admin', 'config', 'index','', '', 1, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (9, '资料更新', '', 10, 'admin', 'profile', 'update','', '', 0, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (10, '系统配置', 'icon-zidongxiufu', 3, 'admin', 'config', 'index1','', '', 1, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (11, '配置管理', 'icon-apartment', 10, 'admin', 'config', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (12, '删除日志', '', 20, 'admin', 'adminlog', 'deletelog','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (13, '网站设置', 'icon-setup', 10, 'admin', 'config', 'setting','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (14, '菜单管理', 'icon-other', 10, 'admin', 'menu', 'index','', '', 1, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (13, '网站设置', 'icon-setup', 10, 'admin', 'config', 'setting','', '', 1, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (14, '菜单管理', 'icon-other', 10, 'admin', 'menu', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (15, '权限管理', 'icon-user-settings-line', 3, 'admin', 'manager', 'index1','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-user-settings-line', 15, 'admin', 'manager', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (17, '角色管理', 'icon-user-shared-2-line', 15, 'admin', 'auth_manager', 'index','', '', 1, '', 0, 0);
@@ -259,10 +259,12 @@ INSERT INTO `yzn_menu` VALUES (24, '新增配置', '', 11, 'admin', 'config', 'a
 INSERT INTO `yzn_menu` VALUES (25, '编辑配置', '', 11, 'admin', 'config', 'edit','', '', 1, '', 0, 2);
 INSERT INTO `yzn_menu` VALUES (26, '删除配置', '', 11, 'admin', 'config', 'del', '','', 1, '', 0, 3);
 INSERT INTO `yzn_menu` VALUES (27, '批量更新', '', 11, 'admin', 'config', 'multi','', '', 1, '', 0, 0);
+
 INSERT INTO `yzn_menu` VALUES (28, '新增菜单', '', 14, 'admin', 'menu', 'add','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (29, '编辑菜单', '', 14, 'admin', 'menu', 'edit','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (30, '删除菜单', '', 14, 'admin', 'menu', 'del','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (31, '批量更新', '', 14, 'admin', 'menu', 'multi','', '', 1, '', 0, 0);
+
 INSERT INTO `yzn_menu` VALUES (32, '附件上传', '', 23, 'admin', 'ajax', 'upload','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (33, '附件删除', '', 23, 'admin', 'attachments', 'del','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (34, '编辑器附件', '', 23, 'admin', 'ueditor', 'run','', '', 0, '', 0, 0);
