@@ -5,40 +5,28 @@
     <div class="layui-form-item">
         <label class="layui-form-label">上级菜单</label>
         <div class="layui-input-block">
-            <select name="row[parentid]" lay-verify="required">
+            <select name="row[pid]" lay-verify="required">
                 <option value="0">作为一级菜单</option>
                 {$select_categorys|raw}
             </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">名称 </label>
+        <label class="layui-form-label">规则</label>
         <div class="layui-input-block">
-            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="名称" class="layui-input">
+            <input type="text" name="row[name]" lay-verify="required" autocomplete="off"  data-placeholder-node="控制器/方法名,如果有目录请使用 目录名.控制器名/方法名" data-placeholder-menu="父级菜单无需匹配控制器和方法,子级菜单请使用控制器名" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="标题" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">图标</label>
         <div class="layui-input-block">
             <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" name="row[icon]">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">模块</label>
-        <div class="layui-input-block">
-            <input type="text" name="row[app]" lay-verify="required" autocomplete="off" placeholder="模块" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">控制器</label>
-        <div class="layui-input-block">
-            <input type="text" name="row[controller]" lay-verify="required" autocomplete="off" placeholder="控制器" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">方法</label>
-        <div class="layui-input-block">
-            <input type="text" name="row[action]" lay-verify="required" autocomplete="off" placeholder="方法" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">

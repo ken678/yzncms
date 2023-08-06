@@ -59,7 +59,7 @@ layui.use(['table', 'yznTable','treeTable'], function() {
                 { field: 'id', width: 60, title: 'ID' },
                 { field: 'title', align: 'left', title: '菜单名称', },
                 { width: 80, title: '图标', align: 'center', templet: "<div><i class='iconfont {{d.icon}}'></i></div>" },
-                { width: 200, title: '模块/控制器/方法', templet: "<div>{{d.app}}/{{d.controller}}/{{d.action}}</div>" },
+                { field: 'name', width: 200, title: '规则' },
                 { field: 'status', align: 'center', width: 120, title: '状态', unresize: true ,templet: yznTable.formatter.switch,tips:"显示|隐藏"},
                 { fixed: 'right', align: 'center', width: 140, title: '操作', toolbar: '#barTool' }
             ]
