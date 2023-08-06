@@ -409,6 +409,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	/** 加载子菜单 (递归)*/
 	function loadchild(obj) {
 		// 判 单 是 否 是 菜 单， 如 果 是 菜 单 直 接 返 回
+		obj.type = obj.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 		if (obj.type == 1) {
 			return "";
 		}
