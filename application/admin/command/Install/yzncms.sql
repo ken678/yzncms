@@ -284,6 +284,18 @@ INSERT INTO `yzn_menu` VALUES (57, '插件卸载', '', 39, 'admin', 'addons', 'u
 INSERT INTO `yzn_menu` VALUES (58, '插件状态', '', 39, 'admin', 'addons', 'state','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (59, '本地安装', '', 39, 'admin', 'addons', 'local','', '', 1, '', 0, 0);
 
+
+
+INSERT INTO `yzn_auth_rule` VALUES (10, 3, 'config/index', '配置管理', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1491635035, 1491635035, 999, 1);
+INSERT INTO `yzn_auth_rule` VALUES (4, 3, 'profile', '个人资料', 'iconfont icon-user-line', '', '', '', 1, NULL, '', 1491635035, 1491635035, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (6, 4, 'profile/update', '资料更新', '', '', '', '', 2, NULL, '', 1491635035, 1491635035, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (5, 4, 'profile/index', '查看', '', '', '', '', 2, NULL, '', 1491635035, 1491635035, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (3, 1, 'config', '系统配置', 'iconfont icon-zidongxiufu', '', '', '', 0, NULL, '', 1491635035, 1491635035, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (1, 0, 'setting', '设置', 'iconfont icon-setup', '', '', '', 0, NULL, '', 1491635035, 1491635035, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (2, 0, 'addons', '扩展', 'iconfont icon-equalizer-line', '', '', '', 0, NULL, '', 1491635035, 1491635035, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (11, 3, 'config/setting', '网站设置', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1491635035, 1491635035, 888, 1);
+INSERT INTO `yzn_auth_rule` VALUES (12, 3, 'rule', '菜单管理', 'iconfont icon-other', '', '', '', 1, NULL, '', 1491635035, 1491635035, 777, 1);
+
 -- ----------------------------
 -- Table structure for `yzn_model`
 -- ----------------------------
