@@ -67,7 +67,7 @@ class Rule extends Adminbase
         }
         $tree   = new \util\Tree();
         $pid    = $this->request->param('parentid/d', 0);
-        $ruleList     = AuthRuleModel::where('ismenu','in','0,1')->order('listorder DESC,id ASC')->select()->toArray();
+        $ruleList     = AuthRuleModel::where('ismenu',1)->order('listorder DESC,id ASC')->select()->toArray();
         $tree->init($ruleList,'pid');
         $select_categorys = $tree->getTree(0, '', $pid);
         $this->assign("select_categorys", $select_categorys);
