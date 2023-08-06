@@ -116,7 +116,9 @@
        frame: "pear/frame",           // 内容页面组件
        theme: "pear/theme",               // 主题转换
        fullscreen:"pear/fullscreen",     //全屏组件
-    });
+    }).use(['layer', 'theme'], function () {
+        layui.theme.changeTheme(window, false);
+    })
 
     layui.use(['admin'], function() {
         var admin = layui.admin;
