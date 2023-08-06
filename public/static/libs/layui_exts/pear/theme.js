@@ -10,7 +10,8 @@ layui.define(["jquery","layer"], function (exports) {
 		var color = localStorage.getItem("theme-color-color");
 		var second = localStorage.getItem("theme-color-second");
 		this.colorSet(color, second);
-		if (target.frames.length == 0) return;
+		//todo iframe暂时不支持
+		/*if (target.frames.length == 0) return;
 		for (var i = 0; i < target.frames.length; i++) {
 			try {
 				if(target.frames[i].layui == undefined) continue;
@@ -19,11 +20,10 @@ layui.define(["jquery","layer"], function (exports) {
 			catch (error) {
 				console.log(error);
 			}
-		}
+		}*/
 	}
 
 	theme.colorSet = function(color, second) {
-		
 		var style = '';
 		style += '.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +color + '!important;}';
 		style += '.pear-admin .layui-logo .title{color:' + color + '!important;}';
@@ -97,6 +97,5 @@ layui.define(["jquery","layer"], function (exports) {
 			$("head").append("<style id='pear-admin-color'>"+style+"</style>")
 		}
 	}
-
 	exports(MOD_NAME, theme);
 });
