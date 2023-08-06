@@ -1,17 +1,13 @@
 layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'theme','fullscreen'],
 	function(exports) {
 		"use strict";
-
 		var $ = layui.jquery,
 			form = layui.form,
 			element = layui.element,
-			//yaml = layui.yaml,
 			pearTab = layui.tab,
-			//convert = layui.convert,
 			pearMenu = layui.menu,
 			pearFrame = layui.frame,
 			pearTheme = layui.theme,
-			//message = layui.message,
 			fullscreen=layui.fullscreen;
 
 		var bodyFrame;
@@ -23,57 +19,9 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 		var body = $('body');
 
 		var pearAdmin = new function() {
-
-			var configType = 'yml';
-			var configPath = 'pear.config.yml';
-
-			this.setConfigPath = function(path) {
-				configPath = path;
-			}
-
-			this.setConfigType = function(type) {
-				configType = type;
-			}
-
 			this.render = function(initConfig) {
-				//if (initConfig !== undefined) {
-					applyConfig(initConfig);
-				//} else {
-					//applyConfig(pearAdmin.readConfig());
-				//}
+				applyConfig(initConfig);
 			}
-
-			/*this.readConfig = function() {
-				if (configType === "yml") {
-					return yaml.load(configPath);
-				} else {
-					var data;
-					$.ajax({
-						url: configPath,
-						type: 'get',
-						dataType: 'json',
-						async: false,
-						success: function(result) {
-							data = result;
-						}
-					})
-					return data;
-				}
-			}*/
-
-			/*this.messageRender = function(option) {
-				var option = {
-					elem: '.message',
-					url: option.header.message,
-					height: '250px'
-				};
-				msgInstance = message.render(option);
-			}*/
-
-			/*this.logoRender = function(param) {
-				$(".layui-logo .logo").attr("src", param.logo.image);
-				$(".layui-logo .title").html(param.logo.title);
-			}*/
 
 			this.menuRender = function(param) {
 				sideMenu = pearMenu.render({
@@ -101,7 +49,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 			}
 
 			this.bodyRender = function(param) {
-
 				body.on("click", ".refresh", function() {
 					refresh();
 				})
@@ -196,7 +143,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 						menu = option.theme.defaultMenu;
 					}
 				}
-
 				var header = localStorage.getItem("theme-header");
 				if (header === null) {
 					header = option.theme.defaultHeader;
@@ -205,7 +151,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 						header = option.theme.defaultHeader;
 					}
 				}
-
 				var banner = localStorage.getItem("theme-banner");
 				if (banner === null) {
 					banner = option.theme.banner;
@@ -214,7 +159,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 						banner = option.theme.banner;
 					}
 				}
-
 				var autoHead = localStorage.getItem("auto-head");
 				if (autoHead === null) {
 					autoHead = option.other.autoHead;
@@ -223,7 +167,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 						autoHead = option.other.autoHead;
 					}
 				}
-
 				var muiltTab = localStorage.getItem("muilt-tab");
 				if (muiltTab === null) {
 					muiltTab = option.tab.enable;
@@ -232,7 +175,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 						muiltTab = option.tab.enable;
 					}
 				}
-
 				var control = localStorage.getItem("control");
 				if (control === null) {
 					control = option.menu.control;
@@ -250,7 +192,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 						footer = option.other.footer;
 					}
 				}
-
 				localStorage.setItem("muilt-tab", muiltTab);
 				localStorage.setItem("theme-banner", banner);
 				localStorage.setItem("theme-menu", menu);
@@ -655,7 +596,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 			})
 		});
 
-
 		body.on("click", ".fullScreen", function() {
 			if ($(this).hasClass("layui-icon-screen-restore")) {
 				fullscreen.fullClose().then(function() {
@@ -683,7 +623,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 		});
 
 		body.on("click", ".setting", function() {
-
 			var menuItem =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -691,7 +630,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
 				'</a>' +
 				'</li>';
-
 			menuItem +=
 				'<li  data-select-bgcolor="light-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -699,7 +637,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: white;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
 				'</a>' +
 				'</li>';
-
 			var menuHtml =
 				'<div class="pearone-color">\n' +
 				'<div class="color-title">菜单风格</div>\n' +
@@ -707,7 +644,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				'<ul>\n' + menuItem + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
-
 			var headItem =
 				'<li class="layui-this" data-select-header="light-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -715,7 +651,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
 				'</a>' +
 				'</li>';
-
 			headItem +=
 				'<li  data-select-header="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -723,7 +658,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
 				'</a>' +
 				'</li>';
-
 			var headHtml =
 				'<div class="pearone-color">\n' +
 				'<div class="color-title">顶部风格</div>\n' +
@@ -731,29 +665,22 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				'<ul>\n' + headItem + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
-
 			var moreItem =
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="control" lay-filter="control" lay-skin="switch" lay-text="开|关"></div><span class="set-text">菜单</span></div>';
-
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="muilt-tab" lay-filter="muilt-tab" lay-skin="switch" lay-text="开|关"></div><span class="set-text">视图</span></div>';
-
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="banner" lay-filter="banner" lay-skin="switch" lay-text="开|关"></div><span class="set-text">通栏</span></div>';
-
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="auto-head" lay-filter="auto-head" lay-skin="switch" lay-text="开|关"></div><span class="set-text">通色</span></div>';
-
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="footer" lay-filter="footer" lay-skin="switch" lay-text="开|关"></div><span class="set-text">页脚</span></div>';
-
 			var moreHtml = '<br><div class="pearone-color">\n' +
 				'<div class="color-title">更多设置</div>\n' +
 				'<div class="color-content">\n' +
 				'<form class="layui-form">\n' + moreItem + '</form>\n' +
 				'</div>\n' +
 				'</div>';
-
 			layer.open({
 				type: 1,
 				offset: 'r',
@@ -767,28 +694,22 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				move: false,
 				content: menuHtml + headHtml + buildColorHtml() + moreHtml,
 				success: function(layero, index) {
-
 					form.render();
-
 					var color = localStorage.getItem("theme-color");
 					var menu = localStorage.getItem("theme-menu");
 					var header = localStorage.getItem("theme-header");
-
 					if (color !== "null") {
 						$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 						$("*[color-id='" + color + "']").addClass("layui-icon").addClass("layui-icon-ok");
 					}
-
 					if (menu !== "null") {
 						$("*[data-select-bgcolor]").removeClass("layui-this");
 						$("[data-select-bgcolor='" + menu + "']").addClass("layui-this");
 					}
-
 					if (header !== "null") {
 						$("*[data-select-header]").removeClass("layui-this");
 						$("[data-select-header='" + header + "']").addClass("layui-this");
 					}
-
 					$('#layui-layer-shade' + index).click(function() {
 						var $layero = $('#layui-layer' + index);
 						$layero.animate({
@@ -797,62 +718,51 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 							layer.close(index);
 						});
 					})
-
 					form.on('switch(control)', function(data) {
 						localStorage.setItem("control", this.checked);
 						window.location.reload();
 					})
-
 					form.on('switch(muilt-tab)', function(data) {
 						localStorage.setItem("muilt-tab", this.checked);
 						window.location.reload();
 					})
-
 					form.on('switch(auto-head)', function(data) {
 						localStorage.setItem("auto-head", this.checked);
 						pearTheme.changeTheme(window, this.checked);
 					})
-
 					form.on('switch(banner)', function(data) {
 						localStorage.setItem("theme-banner", this.checked);
 						pearAdmin.bannerSkin(this.checked);
 					})
-
 					form.on('switch(footer)', function (data) {
 						localStorage.setItem("footer", this.checked);
 						pearAdmin.footer(this.checked);
 					})
-
 					if (localStorage.getItem('theme-banner') === 'true') {
 						$('input[name="banner"]').attr('checked', 'checked')
 					} else {
 						$('input[name="banner"]').removeAttr('checked')
 					}
-
 					if (localStorage.getItem('control') === 'true') {
 						$('input[name="control"]').attr('checked', 'checked')
 					} else {
 						$('input[name="control"]').removeAttr('checked')
 					}
-
 					if (localStorage.getItem('muilt-tab') === 'true') {
 						$('input[name="muilt-tab"]').attr('checked', 'checked')
 					} else {
 						$('input[name="muilt-tab"]').removeAttr('checked')
 					}
-
 					if (localStorage.getItem('auto-head') === 'true') {
 						$('input[name="auto-head"]').attr('checked', 'checked')
 					} else {
 						$('input[name="auto-head"]').removeAttr('checked')
 					}
-
 					if (localStorage.getItem('footer') === 'true') {
 						$('input[name="footer"]').attr('checked', 'checked')
 					} else {
 						$('input[name="footer"]').removeAttr('checked')
 					}
-
 					form.render('checkbox');
 				}
 			});
@@ -887,14 +797,10 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 
 		function applyConfig(param) {
 			config = param;
-			//pearAdmin.logoRender(param);
 			pearAdmin.menuRender(param);
 			pearAdmin.bodyRender(param);
 			pearAdmin.themeRender(param);
 			pearAdmin.keepLoad(param);
-			/*if (param.header.message != false) {
-				pearAdmin.messageRender(param);
-			}*/
 		}
 
 		function getColorById(id) {
