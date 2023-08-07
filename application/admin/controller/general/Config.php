@@ -139,12 +139,16 @@ class Config extends Adminbase
             $this->token();
             $params = $this->request->post("row/a");
             if ($params) {
+                $result             = $this->validate($params, 'app\admin\validate\Config');
+                if (true !== $result) {
+                    return $this->error($result);
+                }
                 try {
-                    $result = $this->modelClass->create($params);
+                    $res = $this->modelClass->create($params);
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
                 }
-                if ($result !== false) {
+                if ($res !== false) {
                     try {
                         ConfigModel::refreshFile();
                     } catch (Exception $e) {
@@ -178,12 +182,16 @@ class Config extends Adminbase
             $this->token();
             $params = $this->request->post("row/a");
             if ($params) {
+                $result             = $this->validate($params, 'app\admin\validate\Config');
+                if (true !== $result) {
+                    return $this->error($result);
+                }
                 try {
-                    $result = $row->save($params);
+                    $res = $row->save($params);
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
                 }
-                if ($result !== false) {
+                if ($res !== false) {
                     try {
                         ConfigModel::refreshFile();
                     } catch (Exception $e) {
