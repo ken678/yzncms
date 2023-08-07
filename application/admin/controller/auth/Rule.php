@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 后台菜单管理
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\admin\controller\auth;
 
 use app\admin\model\AuthRule as AuthRuleModel;
 use app\common\controller\Adminbase;

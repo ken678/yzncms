@@ -246,8 +246,8 @@ INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 22, 'text NOT NULL',
 INSERT INTO `yzn_menu` VALUES (12, '删除日志', '', 20, 'admin', 'adminlog', 'deletelog','', '', 1, '', 0, 0);
 #INSERT INTO `yzn_menu` VALUES (13, '网站设置', 'icon-setup', 10, 'admin', 'config', 'setting','', '', 1, '', 0, 0);
 #INSERT INTO `yzn_menu` VALUES (14, '菜单管理', 'icon-other', 10, 'admin', 'menu', 'index','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (15, '权限管理', 'icon-user-settings-line', 3, 'admin', 'manager', 'index1','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-user-settings-line', 15, 'admin', 'manager', 'index','', '', 1, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (15, '权限管理', 'icon-user-settings-line', 3, 'admin', 'manager', 'index1','', '', 1, '', 0, 0);
+#INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-user-settings-line', 15, 'admin', 'manager', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (17, '角色管理', 'icon-user-shared-2-line', 15, 'admin', 'auth_manager', 'index','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (18, '添加管理员', '', 16, 'admin', 'manager', 'add','', '', 1, '', 0, 0);
 INSERT INTO `yzn_menu` VALUES (19, '编辑管理员', '', 16, 'admin', 'manager', 'edit','', '', 1, '', 0, 0);

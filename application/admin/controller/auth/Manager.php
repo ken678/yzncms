@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\admin\controller\auth;
 
 use app\admin\model\AdminUser as Admin_User;
 use app\admin\model\AuthGroup as AuthGroupModel;
