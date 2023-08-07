@@ -21,6 +21,8 @@ use think\Db;
 
 class Ajax extends Adminbase
 {
+    protected $noNeedRight = ['*'];
+    
     //编辑器初始配置
     private $editorConfig = [
         /* 上传图片配置项 */
