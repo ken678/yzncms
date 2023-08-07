@@ -5,34 +5,31 @@
     <div class="layui-form-item">
         <label class="layui-form-label">父级</label>
         <div class="layui-input-block">
-            {:Form::select('parentid',$groupdata,$auth_group['parentid'],["lay-verify"=>"required"])}
+            {:Form::select('row[parentid]',$groupdata,$data['parentid'],["lay-verify"=>"required"])}
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">权限组</label>
         <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="权限组" class="layui-input" value="{$auth_group.title}">
+            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="权限组" class="layui-input" value="{$data.title}">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">描述</label>
         <div class="layui-input-block">
-            <textarea name="description" placeholder="权限的相关描述" class="layui-textarea">{$auth_group.description}</textarea>
+            <textarea name="row[description]" placeholder="权限的相关描述" class="layui-textarea">{$data.description}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状态</label>
         <div class="layui-input-block">
-            <input type="radio" name="status" value="1" title="正常" {eq name="auth_group.status" value="1" }checked{/eq}>
-            <input type="radio" name="status" value="0" title="禁用" {eq name="auth_group.status" value="0" }checked{/eq}>
+            <input type="radio" name="row[status]" value="1" title="正常" {eq name="data.status" value="1" }checked{/eq}>
+            <input type="radio" name="row[status]" value="0" title="禁用" {eq name="data.status" value="0" }checked{/eq}>
         </div>
     </div>
-    {present name="auth_group.id"}
-    <input type="hidden" name="id" value="{$auth_group.id}" />
-    {/present}
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="{:url('writeGroup')}">立即提交</button>
+            <button class="layui-btn" lay-submit>立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>

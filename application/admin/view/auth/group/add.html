@@ -1,0 +1,70 @@
+{extend name="index_layout"/}
+{block name="main"}
+<form class="layui-form" method="post">
+    {:token()}
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级</label>
+        <div class="layui-input-block">
+            {:Form::select('row[parentid]',$groupdata,1,["lay-verify"=>"required"])}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限组</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="权限组" class="layui-input" value="">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea name="row[description]" placeholder="权限的相关描述" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[status]" value="1" title="正常" checked>
+            <input type="radio" name="row[status]" value="0" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">分配节点</label>
+        <div class="layui-input-block">
+            <div id="node_ids" class="demo-tree-more"></div>
+        </div>
+    </div>
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+layui.use(['yznForm','tree','yzn'], function() {
+    var yznForm = layui.yznForm,
+    yzn = layui.yzn,
+    tree = layui.tree;
+    
+
+    yzn.request.post({
+            url: "{:url('roletree')}",
+            data: {'pid': 1}
+        }, function (res) {
+            res.data = res.data || [];
+            tree.render({
+                elem: '#node_ids',
+                data: res.data,
+                showCheckbox: true,
+                id: 'nodeDataId',
+            });
+        }
+    );
+    
+
+    yznForm.bindevent($("form.layui-form"));
+});
+</script>
+{/block}
