@@ -130,6 +130,53 @@ CREATE TABLE `yzn_auth_rule` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='节点表';
 
 -- ----------------------------
+-- Records of yzn_auth_rule
+-- ----------------------------
+INSERT INTO `yzn_auth_rule` VALUES (10, 1, 'general.config', '配置管理', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1691377129, 1691377129, 999, 1);
+INSERT INTO `yzn_auth_rule` VALUES (4, 1, 'general.profile', '个人资料', 'iconfont icon-user-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (6, 4, 'general.profile/update', '资料更新', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (5, 4, 'general.profile/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (1, 0, 'general', '常规管理', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1691377129, 1691377129, 999, 1);
+INSERT INTO `yzn_auth_rule` VALUES (2, 0, 'addons', '插件管理', 'iconfont icon-equalizer-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 777, 1);
+INSERT INTO `yzn_auth_rule` VALUES (11, 1, 'general.config/setting', '网站设置', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1691377129, 1691377129, 888, 1);
+INSERT INTO `yzn_auth_rule` VALUES (12, 28, 'auth.rule', '菜单管理', 'iconfont icon-other', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
+INSERT INTO `yzn_auth_rule` VALUES (13, 1, 'general.attachments', '附件管理', 'iconfont icon-accessory', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
+INSERT INTO `yzn_auth_rule` VALUES (14, 13, 'general.attachments/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (15, 13, 'general.attachments/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (16, 13, 'general.attachments/getUrlFile', '图片本地化', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (17, 13, 'general.attachments/select', '图片选择', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (18, 12, 'auth.rule/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (19, 12, 'auth.rule/add', '新增', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (20, 12, 'auth.rule/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (21, 12, 'auth.rule/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (22, 12, 'auth.rule/multi', '批量更新', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (23, 10, 'general.config/add', '新增', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (24, 10, 'general.config/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (25, 10, 'general.config/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (26, 10, 'general.config/multi', '批量更新', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (27, 10, 'general.config/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (28, 0, 'auth', '权限管理', 'iconfont icon-user-settings-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 888, 1);
+INSERT INTO `yzn_auth_rule` VALUES (29, 28, 'auth.manager', '管理员管理', 'iconfont icon-user-settings-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 999, 1);
+INSERT INTO `yzn_auth_rule` VALUES (30, 29, 'auth.manager/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (31, 29, 'auth.manager/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (32, 29, 'auth.manager/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (33, 29, 'auth.manager/add', '新增', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (34, 28, 'auth.adminlog', '管理日志', 'iconfont icon-history', '', '', '', 1, NULL, '', 1691377129, 1691377129, 888, 1);
+INSERT INTO `yzn_auth_rule` VALUES (35, 34, 'auth.adminlog/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (36, 34, 'auth.adminlog/deletelog', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (37, 28, 'auth.group', '角色管理', 'iconfont icon-user-shared-2-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 777, 1);
+INSERT INTO `yzn_auth_rule` VALUES (38, 37, 'auth.group/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (39, 37, 'auth.group/add', '新增', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (40, 37, 'auth.group/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (41, 37, 'auth.group/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (42, 37, 'auth.group/access', '访问授权', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (43, 37, 'auth.group/writeGroup', '角色授权', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (44, 2, 'addons.addons', '插件列表', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (45, 44, 'addons.addons/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (46, 44, 'addons.addons/config', '配置', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (49, 44, 'addons.addons/state', '禁用启用', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+
+-- ----------------------------
 -- Table structure for `yzn_cache`
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_cache`;
@@ -233,68 +280,6 @@ INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 19, 'varchar(255) NOT 
 INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 20, 'varchar(7) NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 21, 'varchar(255) NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 22, 'text NOT NULL', 1, 0);
-
--- ----------------------------
--- Records of yzn_menu
--- ----------------------------
-#INSERT INTO `yzn_menu` VALUES (3, '设置', 'icon-setup', 0, 'admin', 'setting', 'index','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (5, '扩展', 'icon-equalizer-line', 0, 'addons', 'addons', 'index1','', '', 1, '', 0, 10);
-#INSERT INTO `yzn_menu` VALUES (8, '个人资料', '', 10, 'admin', 'profile', 'index','', '', 0, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (9, '资料更新', '', 10, 'admin', 'profile', 'update','', '', 0, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (10, '系统配置', 'icon-zidongxiufu', 3, 'admin', 'config', 'index1','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (11, '配置管理', 'icon-apartment', 10, 'admin', 'config', 'index','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (12, '删除日志', '', 20, 'admin', 'adminlog', 'deletelog','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (13, '网站设置', 'icon-setup', 10, 'admin', 'config', 'setting','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (14, '菜单管理', 'icon-other', 10, 'admin', 'menu', 'index','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (15, '权限管理', 'icon-user-settings-line', 3, 'admin', 'manager', 'index1','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (16, '管理员管理', 'icon-user-settings-line', 15, 'admin', 'manager', 'index','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (17, '角色管理', 'icon-user-shared-2-line', 15, 'admin', 'auth_manager', 'index','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (18, '添加管理员', '', 16, 'admin', 'manager', 'add','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (19, '编辑管理员', '', 16, 'admin', 'manager', 'edit','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (20, '管理日志', 'icon-history', 15, 'admin', 'adminlog', 'index','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (21, '删除管理员', '', 16, 'admin', 'manager', 'del','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (22, '添加角色', '', 17, 'admin', 'auth_manager', 'add', '','', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (48, '编辑角色', '', 17, 'admin', 'auth_manager', 'edit','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (49, '删除角色', '', 17, 'admin', 'auth_manager', 'del','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (50, '访问授权', '', 17, 'admin', 'auth_manager', 'access', '','', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (51, '角色授权', '', 17, 'admin', 'auth_manager', 'writeGroup','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (23, '附件管理', 'icon-accessory', 10, 'admin', 'attachments', 'index','', '', 1, '', 0, 1);
-#INSERT INTO `yzn_menu` VALUES (24, '新增配置', '', 11, 'admin', 'config', 'add','', '', 1, '', 0, 1);
-#INSERT INTO `yzn_menu` VALUES (25, '编辑配置', '', 11, 'admin', 'config', 'edit','', '', 1, '', 0, 2);
-#INSERT INTO `yzn_menu` VALUES (26, '删除配置', '', 11, 'admin', 'config', 'del', '','', 1, '', 0, 3);
-#INSERT INTO `yzn_menu` VALUES (27, '批量更新', '', 11, 'admin', 'config', 'multi','', '', 1, '', 0, 0);
-
-#INSERT INTO `yzn_menu` VALUES (28, '新增菜单', '', 14, 'admin', 'menu', 'add','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (29, '编辑菜单', '', 14, 'admin', 'menu', 'edit','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (30, '删除菜单', '', 14, 'admin', 'menu', 'del','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (31, '批量更新', '', 14, 'admin', 'menu', 'multi','', '', 1, '', 0, 0);
-
-#INSERT INTO `yzn_menu` VALUES (32, '附件上传', '', 23, 'admin', 'ajax', 'upload','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (33, '附件删除', '', 23, 'admin', 'attachments', 'del','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (34, '编辑器附件', '', 23, 'admin', 'ueditor', 'run','', '', 0, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (35, '图片列表', '', 23, 'admin', 'attachments', 'showFileLis','', '', 0, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (36, '图片本地化', '', 23, 'admin', 'attachments', 'getUrlFile','', '', 0, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (37, '图片选择', '', 23, 'admin', 'attachments', 'select','', '', 0, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (38, '插件扩展', 'icon-equalizer-line', 5, 'admin', 'addons', 'index2','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (39, '插件管理', 'icon-apartment', 38, 'admin', 'addons', 'index','', '', 1, '', 0, 0);
-#INSERT INTO `yzn_menu` VALUES (41, '插件后台列表', 'icon-liebiaosousuo', 5, 'admin', 'addons', 'addonadmin','', '', 0, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (55, '插件设置', '', 39, 'admin', 'addons', 'config','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (56, '插件安装', '', 39, 'admin', 'addons', 'install','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (57, '插件卸载', '', 39, 'admin', 'addons', 'uninstall','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (58, '插件状态', '', 39, 'admin', 'addons', 'state','', '', 1, '', 0, 0);
-INSERT INTO `yzn_menu` VALUES (59, '本地安装', '', 39, 'admin', 'addons', 'local','', '', 1, '', 0, 0);
-
-
-
-INSERT INTO `yzn_auth_rule` VALUES (10, 3, 'config/index', '配置管理', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1491635035, 1491635035, 999, 1);
-INSERT INTO `yzn_auth_rule` VALUES (4, 3, 'profile', '个人资料', 'iconfont icon-user-line', '', '', '', 1, NULL, '', 1491635035, 1491635035, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (6, 4, 'profile/update', '资料更新', '', '', '', '', 0, NULL, '', 1491635035, 1491635035, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (5, 4, 'profile/index', '查看', '', '', '', '', 0, NULL, '', 1491635035, 1491635035, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (3, 1, 'config', '系统配置', 'iconfont icon-zidongxiufu', '', '', '', 1, NULL, '', 1491635035, 1491635035, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (1, 0, 'setting', '设置', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1491635035, 1491635035, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (2, 0, 'addons', '扩展', 'iconfont icon-equalizer-line', '', '', '', 1, NULL, '', 1491635035, 1491635035, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (11, 3, 'config/setting', '网站设置', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1491635035, 1491635035, 888, 1);
-INSERT INTO `yzn_auth_rule` VALUES (12, 3, 'rule', '菜单管理', 'iconfont icon-other', '', '', '', 1, NULL, '', 1491635035, 1491635035, 777, 1);
 
 -- ----------------------------
 -- Table structure for `yzn_model`
