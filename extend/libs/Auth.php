@@ -181,7 +181,7 @@ class Auth
             $where[] = ['id', 'in', $ids];
         }
         //读取用户组所有权限规则
-        $rules = Db::name($this->_config['AUTH_RULE'])->where($where)->field('id,pid,condition,icon,name,title,ismenu')->select();
+        $rules = Db::name($this->_config['AUTH_RULE'])->where($where)->field('id,parentid,condition,icon,name,title,ismenu')->select();
         //循环规则，判断结果。
         $rulelist = [];
         if (in_array('*', $ids)) {
