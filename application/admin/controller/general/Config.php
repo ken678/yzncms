@@ -20,9 +20,6 @@ use think\Db;
 
 class Config extends Adminbase
 {
-    protected $modelValidate      = true;
-    protected $modelSceneValidate = true;
-
     protected function initialize()
     {
         parent::initialize();
