@@ -27,6 +27,7 @@ layui.define(["jquery","layer"], function (exports) {
 		var style = '';
 		style += '.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +color + '!important;}';
 		style += '.pear-admin .layui-logo .title{color:' + color + '!important;}';
+		style += '.pear-admin .layui-logo i{color:' + color + '!important;}';
 		style += '.pear-frame-title .dot,.pear-tab .layui-this .pear-tab-active{background-color: ' + color +'!important;}';
 		style += '.bottom-nav li a:hover{background-color:' + color + '!important;}';
 		style += '.pear-btn-primary {border: 1px solid ' + color + '!important;}';
