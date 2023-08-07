@@ -168,7 +168,6 @@ INSERT INTO `yzn_auth_rule` VALUES (39, 37, 'auth.group/add', '新增', '', '', 
 INSERT INTO `yzn_auth_rule` VALUES (40, 37, 'auth.group/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (41, 37, 'auth.group/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (42, 37, 'auth.group/access', '访问授权', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (43, 37, 'auth.group/writeGroup', '角色授权', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (44, 2, 'addons.addons', '插件列表', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (45, 44, 'addons.addons/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (46, 44, 'addons.addons/config', '配置', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
