@@ -84,10 +84,10 @@ class User extends \libs\Auth
         return $childrenGroupIds;
     }
 
-    public function check($name, $uid = '', $type = 1, $mode = 'url', $relation = 'or')
+    public function check($name, $uid = '', $mode = 'url', $relation = 'or')
     {
         $uid = $uid ? $uid : $this->id;
-        return parent::check($name, $uid, $type, $mode, $relation);
+        return parent::check($name, $uid, $mode, $relation);
     }
 
     /**

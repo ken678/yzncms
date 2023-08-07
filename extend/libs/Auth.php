@@ -86,7 +86,7 @@ class Auth
      * @param relation string    如果为 'or' 表示满足任一条规则即通过验证;如果为 'and'则表示需满足所有规则才能通过验证
      * @return boolean           通过验证返回true;失败返回false
      */
-    public function check($name, $uid, $type = 1, $mode = 'url', $relation = 'or')
+    public function check($name, $uid, $mode = 'url', $relation = 'or')
     {
         if (!$this->_config['AUTH_ON']) {
             return true;
