@@ -5,7 +5,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">父级</label>
         <div class="layui-input-block">
-            {:Form::select('row[parentid]',$groupdata,1,["lay-verify"=>"required"])}
+            {:Form::select('row[parentid]',$groupdata,0,["lay-verify"=>"required"])}
         </div>
     </div>
     <div class="layui-form-item">
@@ -27,12 +27,6 @@
             <input type="radio" name="row[status]" value="0" title="禁用">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">分配节点</label>
-        <div class="layui-input-block">
-            <div id="node_ids" class="demo-tree-more"></div>
-        </div>
-    </div>
     <div class="layui-form-item layer-footer">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit>立即提交</button>
@@ -43,27 +37,8 @@
 {/block}
 {block name="script"}
 <script type="text/javascript">
-layui.use(['yznForm','tree','yzn'], function() {
-    var yznForm = layui.yznForm,
-    yzn = layui.yzn,
-    tree = layui.tree;
-    
-
-    yzn.request.post({
-            url: "{:url('roletree')}",
-            data: {'pid': 1}
-        }, function (res) {
-            res.data = res.data || [];
-            tree.render({
-                elem: '#node_ids',
-                data: res.data,
-                showCheckbox: true,
-                id: 'nodeDataId',
-            });
-        }
-    );
-    
-
+layui.use('yznForm', function() {
+    var yznForm = layui.yznForm;
     yznForm.bindevent($("form.layui-form"));
 });
 </script>

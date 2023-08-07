@@ -94,16 +94,6 @@ class Group extends Adminbase
             if (!$parentmodel) {
                 $this->error('父组别未找到');
             }
-            // 父级别的规则节点
-            $parentrules = explode(',', $parentmodel->rules);
-            // 当前组别的规则节点
-            $currentrules = $this->auth->getRuleIds();
-            $rules        = $params['rules'];
-            // 如果父组不是超级管理员则需要过滤规则节点,不能超过父组别的权限
-            $rules = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
-            // 如果当前组别不是超级管理员则需要过滤规则节点,不能超当前组别的权限
-            $rules           = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
-            $params['rules'] = implode(',', $rules);
             if ($params) {
                 $this->modelClass->create($params);
                 $this->success('新增成功');
@@ -156,18 +146,10 @@ class Group extends Adminbase
             if ($params) {
                 try {
                     $row->save($params);
-                    //更新下级权限
-                    $children_auth_groups = model("AuthGroup")->all(['id' => ['in', implode(',', (Tree::instance()->getChildrenIds($row->id)))]]);
-                    $childparams          = [];
-                    foreach ($children_auth_groups as $key => $children_auth_group) {
-                        $childparams[$key]['id']    = $children_auth_group->id;
-                        $childparams[$key]['rules'] = implode(',', array_intersect(explode(',', $children_auth_group->rules), $rules));
-                    }
-                    model("AuthGroup")->saveAll($childparams);
-                    $this->success('编辑成功');
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
                 }
+                $this->success('编辑成功');
             }
             $this->error('参数不能为空');
         }
@@ -175,81 +157,98 @@ class Group extends Adminbase
         return $this->fetch();
     }
 
-    /**
-     * 读取角色权限树
-     *
-     * @internal
-     */
-    public function roletree()
+    //访问授权页面
+    public function access()
     {
-        $model             = model('AuthGroup');
-        $id                = $this->request->post("id");
-        $pid               = $this->request->post("pid");
-        $parentGroupModel  = $model->get($pid);
-        $currentGroupModel = null;
-        if ($id) {
-            $currentGroupModel = $model->get($id);
+        $id = $this->request->param('id/d');
+        $pid = $this->request->param('pid/d');
+        if (!in_array($id, $this->childrenGroupIds)) {
+            $this->error('你没有权限访问!');
         }
-        if (($pid || $parentGroupModel) && (!$id || $currentGroupModel)) {
-            $id       = $id ? $id : null;
-            $ruleList = model('AuthRule')->order('listorder', 'desc')->order('id', 'asc')->select()->toArray();
-            //读取父类角色所有节点列表
-            $parentRuleList = [];
-            if (in_array('*', explode(',', $parentGroupModel->rules))) {
-                $parentRuleList = $ruleList;
-            } else {
-                $parentRuleIds = explode(',', $parentGroupModel->rules);
-                foreach ($ruleList as $k => $v) {
-                    if (in_array($v['id'], $parentRuleIds)) {
-                        $parentRuleList[] = $v;
-                    }
-                }
+        $row = $this->modelClass->get($id);
+        if (!$row) {
+            $this->error('记录未找到');
+        }
+        if ($this->request->isPost()) {
+            $this->token();
+            $params = $this->request->post("row/a", [], 'strip_tags');
+            $params['rules'] = explode(',', $params['rules']);
+
+            $parentmodel = $this->modelClass->get($params['parentid']);
+            if (!$parentmodel) {
+                $this->error('父组别未找到');
             }
-
-            $ruleTree  = new Tree();
-            $groupTree = new Tree();
-            //当前所有正常规则列表
-            $ruleTree->init($parentRuleList,'pid');
-            //角色组列表
-            $groupTree->init(model('AuthGroup')->where('id', 'in', $this->childrenGroupIds)->select()->toArray());
-
-            //读取当前角色下规则ID集合
-            $adminRuleIds = $this->auth->getRuleIds();
-            //是否是超级管理员
-            $superadmin = $this->auth->isAdministrator();
-            //当前拥有的规则ID集合
-            $currentRuleIds = $id ? explode(',', $currentGroupModel->rules) : [];
-
-            if (!$id || !in_array($pid, $this->childrenGroupIds) || !in_array($pid, $groupTree->getChildrenIds($id, true))) {
-
-                $parentRuleList = $ruleTree->getTreeList($ruleTree->getTreeArray(0), 'name');
-                $hasChildrens   = [];
-                foreach ($parentRuleList as $k => $v) {
-                    if ($v['haschild']) {
-                        $hasChildrens[] = $v['id'];
-                    }
-                }
-                $parentRuleIds = array_map(function ($item) {
-                    return $item['id'];
-                }, $parentRuleList);
-                $nodeList = [];
-                foreach ($parentRuleList as $k => $v) {
-                    if (!$superadmin && !in_array($v['id'], $adminRuleIds)) {
-                        continue;
-                    }
-                    if ($v['pid'] && !in_array($v['pid'], $parentRuleIds)) {
-                        continue;
-                    }
-                    $state      = ['selected' => in_array($v['id'], $currentRuleIds) && !in_array($v['id'], $hasChildrens)];
-                    $nodeList[] = ['id' => $v['id'], 'parent' => $v['pid'] ? $v['pid'] : '#', 'title' => $v['title'], 'type' => 'menu', 'status' => $state];
-                }
-                $this->success('', null, $nodeList);
-            } else {
-                $this->error('父组别不能是它的子组别');
+            // 父级别的规则节点
+            $parentrules = explode(',', $parentmodel->rules);
+            // 当前组别的规则节点
+            $currentrules = $this->auth->getRuleIds();
+            $rules = $params['rules'];
+            // 如果父组不是超级管理员则需要过滤规则节点,不能超过父组别的权限
+            $rules = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
+            // 如果当前组别不是超级管理员则需要过滤规则节点,不能超当前组别的权限
+            $rules = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
+            try {
+                $row->rules = implode(',', $rules);
+                $row->save();
+            } catch (Exception $e) {
+                $this->error($e->getMessage());
             }
+            $this->success('编辑成功');
+        }
+        $parentGroupModel = $this->modelClass->get($pid);
+
+        $ruleList = model('AuthRule')->order('listorder', 'desc')->order('id', 'asc')->select()->toArray();
+        //读取父类角色所有节点列表
+        $parentRuleList = [];
+        if (in_array('*', explode(',', $parentGroupModel->rules))) {
+            $parentRuleList = $ruleList;
         } else {
-            $this->error('组别未找到');
+            $parentRuleIds = explode(',', $parentGroupModel->rules);
+            foreach ($ruleList as $k => $v) {
+                if (in_array($v['id'], $parentRuleIds)) {
+                    $parentRuleList[] = $v;
+                }
+            }
         }
+
+        $ruleTree = new Tree();
+        $groupTree = new Tree();
+        //当前所有正常规则列表
+        $ruleTree->init($parentRuleList);
+        //角色组列表
+        $groupTree->init(model('AuthGroup')->where('id', 'in', $this->childrenGroupIds)->select()->toArray());
+
+        //读取当前角色下规则ID集合
+        $adminRuleIds = $this->auth->getRuleIds();
+        //是否是超级管理员
+        $superadmin = $this->auth->isAdministrator();
+        //当前拥有的规则ID集合
+        $currentRuleIds = explode(',', $row->rules);
+        $parentRuleList = $ruleTree->getTreeList($ruleTree->getTreeArray(0), 'name');
+        $hasChildrens = [];
+        foreach ($parentRuleList as $k => $v) {
+            if ($v['haschild']) {
+                $hasChildrens[] = $v['id'];
+            }
+        }
+        $parentRuleIds = array_map(function ($item) {
+            return $item['id'];
+        }, $parentRuleList);
+        $nodeList = [];
+        foreach ($parentRuleList as $k => $v) {
+            if (!$superadmin && !in_array($v['id'], $adminRuleIds)) {
+                continue;
+            }
+            if ($v['parentid'] && !in_array($v['parentid'], $parentRuleIds)) {
+                continue;
+            }
+            $ischeck = in_array($v['id'], $currentRuleIds) && !in_array($v['id'], $hasChildrens);
+            $nodeList[] = ['id' => $v['id'], 'parentid' => $v['parentid'], 'name' => $v['title'],'checked' => $ischeck];
+        }
+        //dump($nodeList);
+        $this->assign('nodeList', json_encode($nodeList));
+        $this->assign("data", $row);
+        return $this->fetch();
     }
 
     //批量更新
