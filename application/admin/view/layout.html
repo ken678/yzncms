@@ -54,8 +54,8 @@
                     <a href="javascript:;"><img src="__STATIC__/admin/img/avatar.png" class="layui-nav-img userAvatar" width="35" height="35">{$userInfo.username}</a>
                     <!-- 功 能 菜 单 -->
                     <dl class="layui-nav-child">
-                        <dd><a user-menu-url="{:url('admin/profile/index')}" user-menu-id="3" user-menu-title="个人资料">个人资料</a></dd>
-                        <dd><a href="{:url('admin/index/logout')}" class="logout">注销登录</a></dd>
+                        <dd><a user-menu-url="{:url('admin/profile/index')}" user-menu-id="3" user-menu-title="个人资料"><i class="iconfont icon-user-line"></i>&nbsp;个人资料</a></dd>
+                        <dd><a href="{:url('admin/index/logout')}" class="logout"><i class="iconfont icon-logout-box-r-line"></i>&nbsp;注销登录</a></dd>
                     </dl>
                 </li>
                 <!-- 主 题 配 置 -->
@@ -109,32 +109,63 @@
        base: '__STATIC__/libs/layui_exts/'
     }).extend({
        admin: "pear/admin",           // 框架布局组件
-       tab: "pear/tab",                   // 多选项卡组件
-       menu: "pear/menu",                 // 数据菜单组件
+       tab: "pear/tab",               // 多选项卡组件
+       menu: "pear/menu",             // 数据菜单组件
        frame: "pear/frame",           // 内容页面组件
-       theme: "pear/theme",               // 主题转换
-       fullscreen:"pear/fullscreen",     //全屏组件
+       theme: "pear/theme",           // 主题转换
+       fullscreen:"pear/fullscreen",  // 全屏组件
     }).use(['layer', 'theme'], function () {
         layui.theme.changeTheme(window, false);
     })
 
     layui.use(['admin'], function() {
         var admin = layui.admin;
-        var initConfig = {
-        "menu": {"data": "{:url('index')}", "method": "POST", "accordion": true, "collapse": false, "control": false, "controlWidth": 500, "select": "0", "async": true }, 
-        "tab": {"enable": true, "keepState": true, "session": true, "preload": false, "max": "30", 
-           "index": {"id": "0", "href": "{:url('main/index')}", "title": "首页"}
-        }, 
-        "theme": {"defaultColor": "2", "defaultMenu": "dark-theme", "defaultHeader": "light-theme", "allowCustom": true, "banner": false },
-        "colors": [{"id": "1", "color": "#2d8cf0", "second": "#ecf5ff"}, 
+        var initConfig = 
+        {
+            "menu": {
+                "data": "{:url('index')}",
+                "method": "POST",
+                "accordion": true,
+                "collapse": false,
+                "control": false,
+                "controlWidth": 500,
+                "select": "0",
+                "async": true
+            }, 
+            "tab": {
+                "enable": true,
+                "keepState": true,
+                "session": true,
+                "preload": false,
+                "max": "30", 
+                "index": {
+                    "id": "0",
+                    "href":
+                    "{:url('main/index')}",
+                    "title": "首页"
+                }
+            }, 
+            "theme": {
+                "defaultColor": "2",
+                "defaultMenu": "dark-theme",
+                "defaultHeader": "light-theme",
+                "allowCustom": true,
+                "banner": false
+            },
+            "colors": [
+                    {"id": "1", "color": "#2d8cf0", "second": "#ecf5ff"}, 
                     {"id": "2", "color": "#36b368", "second": "#f0f9eb"}, 
                     {"id": "3", "color": "#f6ad55", "second": "#fdf6ec"}, 
                     {"id": "4", "color": "#f56c6c", "second": "#fef0f0"}, 
-                    {"id": "5", "color": "#3963bc", "second": "#ecf5ff"} ], 
-        "other": {"keepLoad": "1200", "autoHead": false, "footer": false }
+                    {"id": "5", "color": "#3963bc", "second": "#ecf5ff"}
+                ], 
+            "other": {
+                "keepLoad": "1200",
+                "autoHead": false,
+                "footer": false
+            }
         };
         admin.render(initConfig);
-
     })
     </script>
 </body>
