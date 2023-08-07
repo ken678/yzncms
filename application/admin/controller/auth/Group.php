@@ -19,7 +19,7 @@ use util\Tree;
 /**
  * 权限管理控制器
  */
-class AuthManager extends Adminbase
+class Group extends Adminbase
 {
     //当前登录管理员所有子组别
     protected $childrenGroupIds = [];
@@ -73,7 +73,74 @@ class AuthManager extends Adminbase
         } else {
             return $this->fetch();
         }
+    }
 
+    //创建管理员用户组
+    public function add()
+    {
+        if (empty($this->auth_group)) {
+            //清除编辑权限的值
+            $this->assign('auth_group', ['title' => null, 'id' => null, 'parentid' => null, 'description' => null, 'rules' => null, 'status' => 1]);
+        }
+        return $this->fetch('edit_group');
+
+    }
+
+    //编辑管理员用户组
+    public function edit()
+    {
+        $id = $this->request->param('id/d');
+        if (!in_array($id, $this->childrenGroupIds)) {
+            $this->error('你没有权限访问!');
+        }
+        $auth_group = Db::name('AuthGroup')->where(['module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN])->find($id);
+        $this->assign('auth_group', $auth_group);
+        return $this->fetch('edit_group');
+    }
+
+    //管理员用户组数据写入/更新
+    public function writeGroup()
+    {
+        $this->token();
+        $data           = $this->request->post();
+        $data['module'] = 'admin';
+        $data['type']   = AuthGroupModel::TYPE_ADMIN;
+        $parentmodel    = AuthGroupModel::get($data['parentid']);
+        if (!$parentmodel) {
+            $this->error('父角色不存在!');
+        }
+        if (isset($data['id']) && !empty($data['id'])) {
+            if (!in_array($data['parentid'], $this->childrenGroupIds)) {
+                $this->error('父角色超出权限范围!');
+            }
+            if (in_array($data['parentid'], Tree::instance()->getChildrenIds($data['id'], true))) {
+                $this->error('父角色不能是自身！');
+            }
+            if (isset($data['rules'])) {
+                $parentrules   = explode(',', $parentmodel->rules);
+                $currentrules  = $this->auth->getRuleIds();
+                $rules         = explode(',', $data['rules']);
+                $rules         = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
+                $rules         = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
+                $data['rules'] = implode(',', $rules);
+            }
+            //更新
+            $r = $this->modelClass->allowField(true)->save($data, ['id' => $data['id']]);
+        } else {
+            $result = $this->validate($data, 'AuthGroup');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            if (!in_array($data['parentid'], $this->childrenGroupIds)) {
+                $this->error('父角色超出权限范围!');
+            }
+            $r = $this->modelClass->allowField(true)->save($data);
+        }
+        if ($r === false) {
+            $this->error('操作失败' . $this->modelClass->getError());
+        } else {
+            $this->success('操作成功!');
+        }
     }
 
     //访问授权页面
@@ -119,75 +186,6 @@ class AuthManager extends Adminbase
             return true;
         } else {
             return false;
-        }
-    }
-
-    //创建管理员用户组
-    public function add()
-    {
-        if (empty($this->auth_group)) {
-            //清除编辑权限的值
-            $this->assign('auth_group', ['title' => null, 'id' => null, 'parentid' => null, 'description' => null, 'rules' => null, 'status' => 1]);
-        }
-        return $this->fetch('edit_group');
-
-    }
-
-    //编辑管理员用户组
-    public function edit()
-    {
-        $id = $this->request->param('id/d');
-        if (!in_array($id, $this->childrenGroupIds)) {
-            $this->error('你没有权限访问!');
-        }
-        $auth_group = Db::name('AuthGroup')->where(['module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN])->find($id);
-        $this->assign('auth_group', $auth_group);
-        return $this->fetch('edit_group');
-
-    }
-
-    //管理员用户组数据写入/更新
-    public function writeGroup()
-    {
-        $this->token();
-        $data           = $this->request->post();
-        $data['module'] = 'admin';
-        $data['type']   = AuthGroupModel::TYPE_ADMIN;
-        $parentmodel    = AuthGroupModel::get($data['parentid']);
-        if (!$parentmodel) {
-            $this->error('父角色不存在!');
-        }
-        if (isset($data['id']) && !empty($data['id'])) {
-            if (!in_array($data['parentid'], $this->childrenGroupIds)) {
-                $this->error('父角色超出权限范围!');
-            }
-            if (in_array($data['parentid'], Tree::instance()->getChildrenIds($data['id'], true))) {
-                $this->error('父角色不能是自身！');
-            }
-            if (isset($data['rules'])) {
-                $parentrules   = explode(',', $parentmodel->rules);
-                $currentrules  = $this->auth->getRuleIds();
-                $rules         = explode(',', $data['rules']);
-                $rules         = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
-                $rules         = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
-                $data['rules'] = implode(',', $rules);
-            }
-            //更新
-            $r = $this->modelClass->allowField(true)->save($data, ['id' => $data['id']]);
-        } else {
-            $result = $this->validate($data, 'AuthGroup');
-            if (true !== $result) {
-                return $this->error($result);
-            }
-            if (!in_array($data['parentid'], $this->childrenGroupIds)) {
-                $this->error('父角色超出权限范围!');
-            }
-            $r = $this->modelClass->allowField(true)->save($data);
-        }
-        if ($r === false) {
-            $this->error('操作失败' . $this->modelClass->getError());
-        } else {
-            $this->success('操作成功!');
         }
     }
 
