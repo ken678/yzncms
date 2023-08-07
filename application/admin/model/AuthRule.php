@@ -12,6 +12,7 @@
 namespace app\admin\Model;
 
 use think\Model;
+use think\facade\Cache;
 
 /**
  * 权限规则模型
@@ -23,4 +24,11 @@ class AuthRule extends Model
 
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
+
+    protected static function init()
+    {
+        self::afterWrite(function ($row) {
+            Cache::rm('__menu__');
+        });
+    }
 }
