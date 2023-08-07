@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 御宅男 <530765310@qq.com>
 // +----------------------------------------------------------------------
-namespace app\admin\Controller;
+namespace app\admin\Controller\auth;
 
 use app\admin\model\AuthGroup as AuthGroupModel;
 use app\admin\model\AuthRule;
@@ -83,7 +83,6 @@ class AuthManager extends Adminbase
         if (!in_array($group_id, $this->childrenGroupIds)) {
             $this->error('你没有权限访问!');
         }
-        $this->updateRules(); //更新节点
 
         $result = model('admin/Menu')->returnNodes(false);
 
@@ -192,68 +191,6 @@ class AuthManager extends Adminbase
         }
     }
 
-    /**
-     * 后台节点配置的url作为规则存入auth_rule
-     * 执行新节点的插入,已有节点的更新,无效规则的删除三项任务
-     */
-    public function updateRules()
-    {
-        //需要新增的节点必然位于$nodes
-        $nodes    = model("admin/Menu")->returnNodes(false);
-        $AuthRule = model('AuthRule');
-        //需要更新和删除的节点必然位于$rules
-        $rules = $AuthRule->where('type', 'in', '1,2')->order('name')->select()->toArray();
-        //构建insert数据
-        $data = []; //保存需要插入和更新的新节点
-        foreach ($nodes as $value) {
-            $temp['name']   = $value['url'];
-            $temp['title']  = $value['title'];
-            $temp['module'] = $value['app'];
-            if ($value['parentid'] > 0) {
-                $temp['type'] = AuthRule::RULE_URL;
-            } else {
-                $temp['type'] = AuthRule::RULE_MAIN;
-            }
-            $temp['status']                                                    = 1;
-            $data[strtolower($temp['name'] . $temp['module'] . $temp['type'])] = $temp; //去除重复项
-        }
-        $update = []; //保存需要更新的节点
-        $ids    = []; //保存需要删除的节点的id
-        foreach ($rules as $index => $rule) {
-            $key = strtolower($rule['name'] . $rule['module'] . $rule['type']);
-            if (isset($data[$key])) {
-                //如果数据库中的规则与配置的节点匹配,说明是需要更新的节点
-                $data[$key]['id'] = $rule['id']; //为需要更新的节点补充id值
-                $update[]         = $data[$key];
-                unset($data[$key]); //排除已存在的
-                unset($rules[$index]);
-                unset($rule['condition']);
-                $diff[$rule['id']] = $rule;
-            } elseif ($rule['status'] == 1) {
-                $ids[] = $rule['id'];
-            }
-        }
-        if (count($update)) {
-            foreach ($update as $k => $row) {
-                if ($row != $diff[$row['id']]) {
-                    $AuthRule->where(['id' => $row['id']])->update($row);
-                }
-            }
-        }
-        if (count($ids)) {
-            $AuthRule->where(['id' => $ids])->update(['status' => -1]);
-            //删除规则是否需要从每个用户组的访问授权表中移除该规则?
-        }
-        if (count($data)) {
-            $AuthRule->insertAll(array_values($data));
-        }
-        if ($AuthRule->getError()) {
-            trace('[' . __METHOD__ . ']:' . $AuthRule->getError());
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     //批量更新
     public function multi()
