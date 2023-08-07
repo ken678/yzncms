@@ -54,7 +54,7 @@ class Rule extends Adminbase
             $this->token();
             $params = $this->request->post("row/a", [], 'strip_tags');
             if ($params) {
-                if (!$params['ismenu'] && !$params['pid']) {
+                if (!$params['ismenu'] && !$params['parentid']) {
                     $this->error('非菜单规则节点必须有父级');
                 }
                 $result = $this->validate($params,'app\admin\validate\AuthRule');
@@ -71,10 +71,10 @@ class Rule extends Adminbase
             $this->error('参数不能为空');
         }
         $tree   = new Tree();
-        $pid    = $this->request->param('parentid/d', 0);
+        $parentid    = $this->request->param('parentid/d', 0);
         $ruleList     = AuthRuleModel::where('ismenu',1)->order('listorder DESC,id ASC')->select()->toArray();
-        $tree->init($ruleList,'pid');
-        $select_categorys = $tree->getTree(0, '', $pid);
+        $tree->init($ruleList);
+        $select_categorys = $tree->getTree(0, '', $parentid);
         $this->assign("select_categorys", $select_categorys);
         return $this->fetch();
     }
@@ -91,15 +91,15 @@ class Rule extends Adminbase
             $this->token();
             $params = $this->request->post("row/a", [], 'strip_tags');
             if ($params) {
-                if (!$params['ismenu'] && !$params['pid']) {
+                if (!$params['ismenu'] && !$params['parentid']) {
                     $this->error('非菜单规则节点必须有父级');
                 }
-                if ($params['pid'] == $row['id']) {
+                if ($params['parentid'] == $row['id']) {
                     $this->error('父级不能是它自己');
                 }
-                if ($params['pid'] != $row['pid']) {
-                    $childrenIds = Tree::instance()->init(AuthRuleModel::select()->toArray(),'pid')->getChildrenIds($row['id']);
-                    if (in_array($params['pid'], $childrenIds)) {
+                if ($params['parentid'] != $row['parentid']) {
+                    $childrenIds = Tree::instance()->init(AuthRuleModel::select()->toArray())->getChildrenIds($row['id']);
+                    if (in_array($params['parentid'], $childrenIds)) {
                         $this->error('父级不能是它的子级');
                     }
                 }
@@ -120,12 +120,12 @@ class Rule extends Adminbase
         $result     = AuthRuleModel::where('ismenu',1)->order('listorder DESC,id ASC')->select()->toArray();
         $ruleList = [];
         foreach ($result as $r) {
-            $r['selected'] = $r['id'] == $row->pid ? 'selected' : '';
+            $r['selected'] = $r['id'] == $row->parentid ? 'selected' : '';
             $ruleList[]       = $r;
         }
 
-        $tree->init($ruleList,'pid');
-        $select_categorys = $tree->getTree(0, '', $row->pid);
+        $tree->init($ruleList);
+        $select_categorys = $tree->getTree(0, '', $row->parentid);
         $this->assign("select_categorys", $select_categorys);
         $this->view->assign("data", $row);
         return $this->fetch();
@@ -146,8 +146,8 @@ class Rule extends Adminbase
         }
         if ($ids) {
             // 必须将结果集转换为数组
-            $ruleList = \think\Db::name("auth_rule")->field('id,pid')->order('listorder DESC,id ASC')->select();
-            Tree::instance()->init($ruleList,'pid');
+            $ruleList = \think\Db::name("auth_rule")->field('id,parentid')->order('listorder DESC,id ASC')->select();
+            Tree::instance()->init($ruleList);
             $delIds = [];
             foreach ($ids as $k => $v) {
                 $delIds = array_merge($delIds, Tree::instance()->getChildrenIds($v, true));
