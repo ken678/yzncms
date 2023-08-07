@@ -429,6 +429,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 					target = "target='_blank'";
 					className = "";
 				}
+				note.type = note.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 				// 判 断 子 项 类 型
 				if (note.type == 0) {
 					// 创 建 目 录 结 构

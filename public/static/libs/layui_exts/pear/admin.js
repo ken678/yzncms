@@ -434,13 +434,13 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				var filteredMenus = [];
 				filterData = $.extend(true, {}, filterData);
 				$.each(filterData, function (index, item) {
-					if (item.children && item.children.length) {
-						var children = filterHandle(item.children, val)
-						var obj = $.extend({}, item, { children: children });
-						if (children && children.length) {
+					if (item.childlist && item.childlist.length) {
+						var childlist = filterHandle(item.childlist, val)
+						var obj = $.extend({}, item, { childlist: childlist });
+						if (childlist && childlist.length) {
 							filteredMenus.push(obj);
 						} else if (item.title.indexOf(val) >= 0) {
-							item.children = []; // 父级匹配但子级不匹配,就去除子级
+							item.childlist = []; // 父级匹配但子级不匹配,就去除子级
 							filteredMenus.push($.extend({}, item));
 						}
 					} else if (item.title.indexOf(val) >= 0) {
@@ -459,9 +459,9 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 					// 上级路径
 					if (!content) content = "";
 					$.each(data, function (index, item) {
-						if (item.children && item.children.length) {
+						if (item.childlist && item.childlist.length) {
 							path += content + item.title + separator;
-							var childPath = treeTiled(item.children, path);
+							var childPath = treeTiled(item.childlist, path);
 							path += childPath;
 							if (!childPath) path = ""; // 重置路径
 						} else {
