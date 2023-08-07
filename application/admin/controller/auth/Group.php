@@ -146,6 +146,13 @@ class Group extends Adminbase
             if ($params) {
                 try {
                     $row->save($params);
+                    $children_auth_groups = model("AuthGroup")->all(['id' => ['in', implode(',', (Tree::instance()->getChildrenIds($row->id)))]]);
+                    $childparams = [];
+                    foreach ($children_auth_groups as $key => $children_auth_group) {
+                        $childparams[$key]['id'] = $children_auth_group->id;
+                        $childparams[$key]['rules'] = implode(',', array_intersect(explode(',', $children_auth_group->rules), $rules));
+                    }
+                    model("AuthGroup")->saveAll($childparams);
                 } catch (Exception $e) {
                     $this->error($e->getMessage());
                 }
