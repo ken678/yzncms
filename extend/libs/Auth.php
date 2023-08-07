@@ -91,7 +91,7 @@ class Auth
         if (!$this->_config['AUTH_ON']) {
             return true;
         }
-        $authList = $this->getAuthList($uid, $type); //获取用户需要验证的所有有效规则列表
+        $authList = $this->getAuthList($uid); //获取用户需要验证的所有有效规则列表
         if (in_array('*', $authList)) {
             return true;
         }
@@ -158,7 +158,6 @@ class Auth
     /**
      * 获得权限列表
      * @param integer $uid  用户id
-     * @param integer $type
      */
     protected function getAuthList($uid)
     {
