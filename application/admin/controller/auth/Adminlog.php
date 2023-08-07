@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 日志首页
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\admin\controller\auth;
 
 use app\admin\model\Adminlog as AdminlogModel;
 use app\common\controller\Adminbase;
