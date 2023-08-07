@@ -3,11 +3,18 @@
 <form class="layui-form" method="post">
     {:token()}
     <div class="layui-form-item">
+        <label class="layui-form-label">菜单</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[ismenu]" value="1" title="是" {if $data.ismenu==1}checked{/if}>
+            <input type="radio" name="row[ismenu]" value="0" title="否" {if $data.ismenu==0}checked{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">上级菜单</label>
         <div class="layui-input-block">
             <select name="row[parentid]" lay-verify="required">
                 <option value="0">作为一级菜单</option>
-                {$ruledata|raw}
+                {$select_categorys|raw}
             </select>
         </div>
     </div>
@@ -23,6 +30,12 @@
             <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="标题" class="layui-input" value="{$data.title}">
         </div>
     </div>
+    <div class="layui-form-item" data-type="menu">
+        <label class="layui-form-label">URL</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[url]" autocomplete="off" placeholder="url" class="layui-input" value="{$data.url}">
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">图标</label>
         <div class="layui-input-block">
@@ -30,9 +43,34 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">附加参数</label>
+        <label class="layui-form-label">规则条件</label>
         <div class="layui-input-block">
-            <input type="text" name="row[parameter]" autocomplete="off" placeholder="附加参数" class="layui-input" value="{$data.parameter}">
+            <textarea name="row[condition]" placeholder="规则条件" class="layui-textarea">{$data.condition}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单类型</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[menutype]" value="iframe" title="选项卡(默认)" {if $data.menutype=="iframe"}checked{/if}>
+            <input type="radio" name="row[menutype]" value="blank" title="链接" {if $data.menutype=="blank"}checked{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">扩展属性</label>
+        <div class="layui-input-block">
+            <textarea name="row[extend]" placeholder="扩展属性" class="layui-textarea">{$data.extend}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="row[remark]" placeholder="备注" class="layui-textarea">{$data.remark}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">显示排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[listorder]" autocomplete="off" placeholder="显示排序" class="layui-input" value="{$data.listorder}">
         </div>
     </div>
     <div class="layui-form-item">
@@ -85,6 +123,14 @@ layui.use(['iconPicker', 'form', 'layer','yznForm'], function() {
                 //console.log(d);
             }
         });
+
+        form.on('radio(ismenu)', function(data){
+            var name = $("input[name='row[name]']");
+            var ismenu = data.value == 1;
+            name.prop("placeholder", ismenu ? name.data("placeholder-menu") : name.data("placeholder-node"));
+            $('div[data-type="menu"]').toggleClass("layui-hide", !ismenu);
+        })
+        $("input[name='row[ismenu]']:checked").next().trigger("click");
 });
 </script>
 {/block}
