@@ -38,7 +38,7 @@ class Rule extends Adminbase
 	        $tree       = new Tree();
 	        $tree->icon = array('', '', '');
 	        $tree->nbsp = '';
-	        $tree->init($ruleList,'pid');
+	        $tree->init($ruleList);
 	        $list = $tree->getTreeArray(0);
             $total = count($list);
             $result = array("code" => 0, "count" => $total, "data" => $list);
