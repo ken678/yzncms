@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 附件上传处理类
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\admin\controller\general;
 
 use app\common\controller\Adminbase;
 use app\common\model\Attachment as AttachmentModel;

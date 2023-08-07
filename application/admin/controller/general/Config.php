@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 系统配置
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\admin\controller\general;
 
 use app\admin\model\Config as ConfigModel;
 use app\common\controller\Adminbase;

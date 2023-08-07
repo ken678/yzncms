@@ -12,7 +12,7 @@
 // +----------------------------------------------------------------------
 // | 个人资料
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace app\admin\controller\general;
 
 use app\admin\model\Adminlog as AdminlogModel;
 use app\admin\model\AdminUser;
