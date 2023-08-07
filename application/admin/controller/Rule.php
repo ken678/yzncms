@@ -18,6 +18,7 @@ use app\admin\model\AuthRule as AuthRuleModel;
 use app\common\controller\Adminbase;
 use think\facade\Cache;
 use util\Tree;
+use think\Db;
 
 class Rule extends Adminbase
 {
@@ -46,12 +47,16 @@ class Rule extends Adminbase
         return $this->fetch();
     }
 
+    //新增
     public function add()
     {
         if ($this->request->isPost()) {
             $this->token();
             $params = $this->request->post("row/a", [], 'strip_tags');
             if ($params) {
+                if (!$params['ismenu'] && !$params['pid']) {
+                    $this->error('非菜单规则节点必须有父级');
+                }
                 $result = $this->validate($params,'app\admin\validate\AuthRule');
                 if (true !== $result) {
                     $this->error($result);
@@ -74,6 +79,7 @@ class Rule extends Adminbase
         return $this->fetch();
     }
 
+    //编辑
     public function edit()
     {
         $id  = $this->request->param('id/d', 0);
@@ -85,6 +91,9 @@ class Rule extends Adminbase
             $this->token();
             $params = $this->request->post("row/a", [], 'strip_tags');
             if ($params) {
+                if (!$params['ismenu'] && !$params['pid']) {
+                    $this->error('非菜单规则节点必须有父级');
+                }
                 if ($params['pid'] == $row['id']) {
                     $this->error('父级不能是它自己');
                 }
@@ -120,5 +129,36 @@ class Rule extends Adminbase
         $this->assign("select_categorys", $select_categorys);
         $this->view->assign("data", $row);
         return $this->fetch();
+    }
+
+    //删除
+    public function del()
+    {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
+        $ids = $this->request->param('id/a', null);
+        if (empty($ids)) {
+            $this->error('参数错误！');
+        }
+        if (!is_array($ids)) {
+            $ids = [0 => $ids];
+        }
+        if ($ids) {
+            // 必须将结果集转换为数组
+            $ruleList = \think\Db::name("auth_rule")->field('id,pid')->order('listorder DESC,id ASC')->select();
+            Tree::instance()->init($ruleList,'pid');
+            $delIds = [];
+            foreach ($ids as $k => $v) {
+                $delIds = array_merge($delIds, Tree::instance()->getChildrenIds($v, true));
+            }
+            $delIds = array_unique($delIds);
+            $count = $this->modelClass->where('id', 'in', $delIds)->delete();
+            if ($count) {
+                Cache::rm('__menu__');
+                $this->success("操作成功！");
+            }
+        }
+        $this->error('没有数据删除！');
     }
 }
