@@ -30,24 +30,34 @@ class Group extends Adminbase
     {
         parent::initialize();
         $this->modelClass       = new AuthGroupModel;
+
         $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
         $groupList = AuthGroupModel::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
+
         Tree::instance()->init($groupList);
-        $result = [];
+        $groupList = [];
         if ($this->auth->isAdministrator()) {
-            $result = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
+            $groupList = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
         } else {
             $groups = $this->auth->getGroups();
+            $groupIds = [];
             foreach ($groups as $m => $n) {
-                $result = array_merge($result, Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['parentid']), 'title'));
+                if (in_array($n['id'], $groupIds) || in_array($n['parentid'], $groupIds)) {
+                    continue;
+                }
+                $groupList = array_merge($groupList, Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['parentid']), 'title'));
+                foreach ($groupList as $index => $item) {
+                    $groupIds[] = $item['id'];
+                }
             }
         }
 
         $groupName = [];
-        foreach ($result as $k => $v) {
+        foreach ($groupList as $k => $v) {
             $groupName[$v['id']] = $v['title'];
         }
+        $this->grouplist = $groupList;
         $this->groupdata = $groupName;
         $this->assign('groupdata', $this->groupdata);
     }
@@ -56,19 +66,9 @@ class Group extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-            $result    = AuthGroupModel::all(array_keys($this->groupdata))->toArray();
-            $groupList = [];
-            foreach ($result as $k => $v) {
-                $groupList[$v['id']] = $v;
-            }
-            $result = [];
-            foreach ($this->groupdata as $k => $v) {
-                if (isset($groupList[$k])) {
-                    $groupList[$k]['title'] = $v;
-                    $result[]               = $groupList[$k];
-                }
-            }
-            $result = ["code" => 0, "data" => $result];
+            $list   = $this->grouplist;
+            $total  = count($list);
+            $result = ["code" => 0, "count" => $total,"data" => $list];
             return json($result);
         } else {
             return $this->fetch();
@@ -78,11 +78,27 @@ class Group extends Adminbase
     //创建管理员用户组
     public function add()
     {
-        if (empty($this->auth_group)) {
-            //清除编辑权限的值
-            $this->assign('auth_group', ['title' => null, 'id' => null, 'parentid' => null, 'description' => null, 'rules' => null, 'status' => 1]);
+        if ($this->request->isPost()) {
+            $this->token();
+            $params          = $this->request->post("row/a", [], 'strip_tags');
+            $result = $this->validate($params, 'app\admin\validate\AuthGroup');
+            if (true !== $result) {
+                return $this->error($result);
+            }
+            if (!in_array($params['parentid'], $this->childrenGroupIds)) {
+                $this->error('父组别超出权限范围');
+            }
+            $parentmodel = AuthGroupModel::get($params['parentid']);
+            if (!$parentmodel) {
+                $this->error('父组别未找到');
+            }
+            if ($params) {
+                $this->modelClass->create($params);
+                $this->success('新增成功');
+            }
+            $this->error('参数不能为空');
         }
-        return $this->fetch('edit_group');
+        return $this->fetch();
 
     }
 
@@ -95,7 +111,7 @@ class Group extends Adminbase
         }
         $auth_group = Db::name('AuthGroup')->where(['module' => 'admin', 'type' => AuthGroupModel::TYPE_ADMIN])->find($id);
         $this->assign('auth_group', $auth_group);
-        return $this->fetch('edit_group');
+        return $this->fetch();
     }
 
     //管理员用户组数据写入/更新
