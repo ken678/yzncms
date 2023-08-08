@@ -55,7 +55,7 @@
                     <!-- 功 能 菜 单 -->
                     <dl class="layui-nav-child">
                         <dd><a user-menu-url="{:url('admin/profile/index')}" user-menu-id="3" user-menu-title="个人资料"><i class="iconfont icon-user-line"></i>&nbsp;个人资料</a></dd>
-                        <dd><a href="{:url('admin/index/logout')}" class="logout"><i class="iconfont icon-logout-box-r-line"></i>&nbsp;注销登录</a></dd>
+                        <dd><a href="javascript:void(0);" class="logout"><i class="iconfont icon-logout-box-r-line"></i>&nbsp;注销登录</a></dd>
                     </dl>
                 </li>
                 <!-- 主 题 配 置 -->
@@ -166,6 +166,13 @@
             }
         };
         admin.render(initConfig);
+
+        // 登出逻辑 
+        admin.logout(function(){
+            location.href = "{:url('admin/index/logout')}";
+            // 注销逻辑 返回 true / false
+            return true;
+        })
     })
     </script>
 </body>
