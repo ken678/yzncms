@@ -26,7 +26,7 @@ class Group extends Adminbase
     //当前组别列表数据
     protected $grouplist = [];
     protected $groupdata = [];
-    protected $noNeedRight = ['roletree'];
+    protected $noNeedRight = [];
 
     protected function initialize()
     {
