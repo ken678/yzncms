@@ -31,6 +31,11 @@ html, body, .layui-layout {height: 100%; }
 .pear-admin .layui-footer {position: absolute; display: flex; justify-content: space-between; left: 230px; background: #fff; border-top: 1px solid #F2F2F2; box-shadow: none; -webkit-transition: left .3s; transition: left .3s; overflow: hidden; color: #3c3c3cb3; font-weight: 300; font-size: 13.6px; }
 .pear-admin .layui-footer.close {display: none; }
 
+@media screen and (max-width: 768px) {
+  .pear-admin.banner-layout .layui-header .layui-logo {display: none; }
+  .pear-admin.banner-layout .layui-header .layui-layout-left {left: 0px; }
+}
+
 /** 收缩布局 */
 .pear-mini .layui-side .layui-logo .title {display: none; }
 .pear-mini .layui-side .layui-logo .logo {display: inline-block; }
