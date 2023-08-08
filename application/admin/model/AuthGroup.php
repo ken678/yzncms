@@ -21,14 +21,6 @@ use think\Model;
  */
 class AuthGroup extends Model
 {
-    const TYPE_ADMIN                = 1; // 管理员用户组类型标识
-    const MEMBER                    = 'admin';
-    const AUTH_EXTEND               = 'auth_extend'; // 动态权限扩展信息表
-    const AUTH_GROUP                = 'auth_group'; // 用户组表名
-    const AUTH_EXTEND_CATEGORY_TYPE = 1; // 分类权限标识
-    const AUTH_EXTEND_MODEL_TYPE    = 2; //分类权限标识
-
-    protected $resultSetType   = 'collection';
     protected static $roleList = [];
 
     /**
