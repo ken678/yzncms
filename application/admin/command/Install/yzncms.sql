@@ -130,12 +130,12 @@ CREATE TABLE `yzn_auth_rule` (
 -- ----------------------------
 -- Records of yzn_auth_rule
 -- ----------------------------
-INSERT INTO `yzn_auth_rule` VALUES (10, 1, 'general.config', '配置管理', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1691377129, 1691377129, 999, 1);
-INSERT INTO `yzn_auth_rule` VALUES (4, 1, 'general.profile', '个人资料', 'iconfont icon-user-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (6, 4, 'general.profile/update', '资料更新', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (5, 4, 'general.profile/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (1, 0, 'general', '常规管理', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1691377129, 1691377129, 999, 1);
 INSERT INTO `yzn_auth_rule` VALUES (2, 0, 'addons', '插件管理', 'iconfont icon-equalizer-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 777, 1);
+INSERT INTO `yzn_auth_rule` VALUES (4, 1, 'general.profile', '个人资料', 'iconfont icon-user-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (5, 4, 'general.profile/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (6, 4, 'general.profile/update', '资料更新', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (10, 1, 'general.config', '配置管理', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1691377129, 1691377129, 999, 1);
 INSERT INTO `yzn_auth_rule` VALUES (11, 1, 'general.config/setting', '网站设置', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1691377129, 1691377129, 888, 1);
 INSERT INTO `yzn_auth_rule` VALUES (12, 28, 'auth.rule', '菜单管理', 'iconfont icon-other', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
 INSERT INTO `yzn_auth_rule` VALUES (13, 1, 'general.attachments', '附件管理', 'iconfont icon-accessory', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
