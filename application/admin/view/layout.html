@@ -120,8 +120,8 @@
 
     layui.use(['admin'], function() {
         var admin = layui.admin;
-        var initConfig = 
-        {
+
+        admin.render({
             "menu": {
                 "data": "{:url('index')}",
                 "method": "POST",
@@ -163,8 +163,7 @@
                 "autoHead": false,
                 "footer": false
             }
-        };
-        admin.render(initConfig);
+        });
 
         // 登出逻辑 
         admin.logout(function(){
