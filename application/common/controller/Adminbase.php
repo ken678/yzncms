@@ -75,6 +75,8 @@ class Adminbase extends Base
     {
         parent::initialize();
         $this->auth     = User::instance();
+
+        $modulename     = $this->request->module();
         $controllername = parse_name($this->request->controller());
         $actionname     = strtolower($this->request->action());
 
