@@ -107,7 +107,7 @@ INSERT INTO `yzn_auth_group` VALUES (2, 1, '编辑', '编辑', '', 1);
 DROP TABLE IF EXISTS `yzn_auth_rule`;
 CREATE TABLE `yzn_auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
-  `pid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
+  `parentid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父ID',
   `name` varchar(100) DEFAULT '' COMMENT '规则名称',
   `title` varchar(50) DEFAULT '' COMMENT '规则名称',
   `icon` varchar(50) DEFAULT '' COMMENT '图标',
@@ -123,7 +123,7 @@ CREATE TABLE `yzn_auth_rule` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) USING BTREE,
-  KEY `pid` (`pid`),
+  KEY `parentid` (`parentid`),
   KEY `listorder` (`listorder`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='节点表';
 
@@ -168,7 +168,6 @@ INSERT INTO `yzn_auth_rule` VALUES (39, 37, 'auth.group/add', '新增', '', '', 
 INSERT INTO `yzn_auth_rule` VALUES (40, 37, 'auth.group/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (41, 37, 'auth.group/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (42, 37, 'auth.group/access', '访问授权', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (43, 37, 'auth.group/writeGroup', '角色授权', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (44, 2, 'addons.addons', '插件列表', 'iconfont icon-apartment', '', '', '', 1, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (45, 44, 'addons.addons/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (46, 44, 'addons.addons/config', '配置', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);

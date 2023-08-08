@@ -84,10 +84,10 @@ class User extends \libs\Auth
         return $childrenGroupIds;
     }
 
-    public function check($name, $uid = '', $type = 1, $mode = 'url', $relation = 'or')
+    public function check($name, $uid = '', $mode = 'url', $relation = 'or')
     {
         $uid = $uid ? $uid : $this->id;
-        return parent::check($name, $uid, $type, $mode, $relation);
+        return parent::check($name, $uid, $mode, $relation);
     }
 
     /**
@@ -348,8 +348,8 @@ class User extends \libs\Auth
         $indexRuleList = \app\admin\model\AuthRule::where('status', 1)
             ->where('ismenu',0)
             ->where('name', 'like', '%/index')
-            ->column('name,pid');
-        $pidArr = array_unique(array_filter(array_column($ruleList, 'pid')));
+            ->column('name,parentid');
+        $pidArr = array_unique(array_filter(array_column($ruleList, 'parentid')));
         foreach ($ruleList as $k => &$v) {
             if (!in_array($v['name'], $userRule)) {
                 unset($ruleList[$k]);
@@ -364,7 +364,7 @@ class User extends \libs\Auth
             $v['href'] = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $module . '/' . $v['name'];
             $v['href'] = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : url($v['href']);
         }
-        $lastArr = array_unique(array_filter(array_column($ruleList, 'pid')));
+        $lastArr = array_unique(array_filter(array_column($ruleList, 'parentid')));
         $pidDiffArr = array_diff($pidArr, $lastArr);
         foreach ($ruleList as $index => $item) {
             if (in_array($item['id'], $pidDiffArr)) {
@@ -372,7 +372,7 @@ class User extends \libs\Auth
             }
         }
         // 构造菜单数据
-        Tree::instance()->init($ruleList,'pid');
+        Tree::instance()->init($ruleList);
         return Tree::instance()->getTreeArray(0);
     }
 

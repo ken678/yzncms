@@ -19,7 +19,7 @@ class AuthRule extends Validate
 {
     //定义验证规则
     protected $rule = [
-        'pid|上级菜单'  => 'require|number',
+        'parentid|上级菜单'  => 'require|number',
         'name|规则'       => 'require|unique:AuthRule',
         'title|标题'       => 'require',
     ];

@@ -17,7 +17,7 @@
         'site':{$site|raw|json_encode},
         'image_upload_url': '{$image_upload_url ? $image_upload_url : url("admin/ajax/upload", ["dir" => "images"])}',
         'file_upload_url': '{$file_upload_url ? $file_upload_url : url("admin/ajax/upload", ["dir" => "files"])}',
-        'attachment_select_url': '{$attachment_select_url ? $attachment_select_url : url("admin/attachments/select")}',
+        'attachment_select_url': '{$attachment_select_url ? $attachment_select_url : url("general.attachments/select")}',
     };
     </script>
 </head>

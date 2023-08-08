@@ -11,14 +11,14 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-table-tool-temp">
         <button class="layui-btn layui-btn-sm yzn-btn-primary" data-table-refresh="currentTable"><i class="iconfont icon-shuaxin1"></i></button>
-        <button class="layui-btn layui-btn-sm {:$auth->check('admin/menu/add')?'':'layui-hide'}" data-open="{:url('add')}" title="添加"><i class="iconfont icon-add"></i>&nbsp;新增后台菜单</button>
+        <button class="layui-btn layui-btn-sm {:$auth->check('auth.rule/add')?'':'layui-hide'}" data-open="{:url('add')}" title="添加"><i class="iconfont icon-add"></i>&nbsp;新增后台菜单</button>
         <button class="layui-btn layui-btn-sm layui-btn-normal" id="openAll"><i class="iconfont icon-add"></i>&nbsp;展开或折叠全部</button>
     </div>
 </script>
 <script type="text/html" id="barTool">
-    <a data-open='{:url("add")}?parentid={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-normal {:$auth->check('admin/menu/add')?'':'layui-hide'}" title="添加">添加</a>
-    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs {:$auth->check('admin/menu/edit')?'':'layui-hide'}" title="编辑"><i class='iconfont icon-brush_fill'></i></a>
-    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del {:$auth->check('admin/menu/del')?'':'layui-hide'}"><i class='iconfont icon-trash_fill'></i></a>
+    <a data-open='{:url("add")}?parentid={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-normal {:$auth->check('auth.rule/add')?'':'layui-hide'}" title="添加">添加</a>
+    <a data-open='{:url("edit")}?id={{ d.id }}' class="layui-btn layui-btn-xs {:$auth->check('auth.rule/edit')?'':'layui-hide'}" title="编辑"><i class='iconfont icon-brush_fill'></i></a>
+    <a href='{:url("del")}?id={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del {:$auth->check('auth.rule/del')?'':'layui-hide'}"><i class='iconfont icon-trash_fill'></i></a>
 </script>
 {/block}
 {block name="script"}

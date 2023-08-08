@@ -75,11 +75,10 @@ class Adminbase extends Base
     {
         parent::initialize();
         $this->auth     = User::instance();
-        $modulename     = $this->request->module();
         $controllername = parse_name($this->request->controller());
         $actionname     = strtolower($this->request->action());
 
-        $path = $modulename . '/' . $controllername . '/' . $actionname;
+        $path = $controllername . '/' . $actionname;
         // 定义是否Dialog请求
         !defined('IS_DIALOG') && define('IS_DIALOG', $this->request->param("dialog") ? true : false);
         // 检测是否需要验证登录
@@ -116,7 +115,7 @@ class Adminbase extends Base
             }
             if (!IS_ROOT && !$this->auth->match($this->noNeedRight)) {
                 //检测访问权限
-                if (!$this->checkRule($path, [1, 2])) {
+                if (!$this->auth->check($path)) {
                     Hook::listen('admin_nopermission', $this);
                     $this->error('未授权访问!');
                 }
@@ -151,24 +150,6 @@ class Adminbase extends Base
     {
         model('admin/Adminlog')->record($msg, 1);
         parent::success($msg, $url, $data, $wait, $header);
-    }
-
-    /**
-     * 权限检测
-     * @param string  $rule    检测的规则
-     * @param string  $mode    check模式
-     * @return boolean
-     */
-    final protected function checkRule($rule, $type = AuthRule::RULE_URL, $mode = 'url')
-    {
-        static $Auth = null;
-        if (!$Auth) {
-            $Auth = new \libs\Auth();
-        }
-        if (!$Auth->check($rule, UID, $type, $mode)) {
-            return false;
-        }
-        return true;
     }
 
     /**

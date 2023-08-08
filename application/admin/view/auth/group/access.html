@@ -8,12 +8,12 @@
         <ul id="treeDemo" class="ztree"></ul>
     </div>
     {:token()}
-    <input type="hidden" name="rules" value="" />
-    <input type="hidden" name="id" value="{$rules.id}" />
-    <input type="hidden" name="parentid" value="{$rules.parentid}">
+    <input type="hidden" name="row[rules]" value="" />
+    <input type="hidden" name="row[id]" value="{$data.id}" />
+    <input type="hidden" name="row[parentid]" value="{$data.parentid}">
     <div class="layui-form-item layer-footer">
         <div class="">
-            <button class="layui-btn" lay-submit="{:url('writeGroup')}">立即提交</button>
+            <button class="layui-btn" lay-submit>立即提交</button>
         </div>
     </div>
 </form>
@@ -33,7 +33,7 @@ layui.use(['jquery', 'ztree','yznForm'], function() {
         data: {
             simpleData: {
                 enable: true,
-                idKey: "nid",
+                idKey: "id",
                 pIdKey: "parentid",
             }
         },
@@ -55,7 +55,7 @@ layui.use(['jquery', 'ztree','yznForm'], function() {
         }
     };
     //节点数据
-    var zNodes = {$json|raw};
+    var zNodes = {$nodeList|raw};
     //zTree对象
     var zTree = null;
     $(document).ready(function() {
@@ -85,7 +85,7 @@ layui.use(['jquery', 'ztree','yznForm'], function() {
             }
             str += value.id;
         });
-        _form.find('input[name="rules"]').val(str);
+        _form.find('input[name="row[rules]"]').val(str);
         yznForm.bindevent($("form.layui-form"));
     })
 });

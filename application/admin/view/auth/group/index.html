@@ -5,14 +5,14 @@
     <div class="layui-card-body">
         <div class="layui-form">
             <table class="layui-hide" id="currentTable" lay-filter="currentTable"
-            data-auth-add="{:$auth->check('admin/auth_manager/add')}"
-            data-auth-edit="{:$auth->check('admin/auth_manager/edit')}"
-            data-auth-delete="{:$auth->check('admin/auth_manager/del')}" ></table>
+            data-auth-add="{:$auth->check('auth.group/add')}"
+            data-auth-edit="{:$auth->check('auth.group/edit')}"
+            data-auth-delete="{:$auth->check('auth.group/del')}" ></table>
             <script type="text/html" id="authTool">
                 {{#  if(d.id == {$userInfo.roleid}){ }}
                 <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>
                 {{#  } else { }}
-                <a class="layui-btn layui-btn-xs {:$auth->check('admin/auth_manager/access')?'':'layui-hide'}" data-open='{:url("access?group_name=")}?title={{d.title}}&group_id={{d.id}}' title="访问授权">访问授权</a>
+                <a class="layui-btn layui-btn-xs {:$auth->check('auth.group/access')?'':'layui-hide'}" data-open='{:url("access")}?id={{d.id}}&pid={{d.parentid}}' title="访问授权">访问授权</a>
                 {{#  } }}
             </script>
         </div>
