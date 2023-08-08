@@ -239,12 +239,12 @@ class Group extends Adminbase
         //当前拥有的规则ID集合
         $currentRuleIds = explode(',', $row->rules);
         $parentRuleList = $ruleTree->getTreeList($ruleTree->getTreeArray(0), 'name');
-        $hasChildrens = [];
+        /*$hasChildrens = [];
         foreach ($parentRuleList as $k => $v) {
             if ($v['haschild']) {
                 $hasChildrens[] = $v['id'];
             }
-        }
+        }*/
         $parentRuleIds = array_map(function ($item) {
             return $item['id'];
         }, $parentRuleList);
@@ -256,7 +256,8 @@ class Group extends Adminbase
             if ($v['parentid'] && !in_array($v['parentid'], $parentRuleIds)) {
                 continue;
             }
-            $ischeck = in_array($v['id'], $currentRuleIds) && !in_array($v['id'], $hasChildrens);
+            //$ischeck = in_array($v['id'], $currentRuleIds) && !in_array($v['id'], $hasChildrens);
+            $ischeck = in_array($v['id'], $currentRuleIds);
             $nodeList[] = ['id' => $v['id'], 'parentid' => $v['parentid'], 'name' => $v['title'],'checked' => $ischeck];
         }
         //dump($nodeList);
