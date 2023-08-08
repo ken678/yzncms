@@ -293,7 +293,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			var href = "javascript:;";
 			var target = "";
 			var className = "site-demo-active"
-			item.type = item.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
+			item.type = item.childlist != null && item.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 			if (item.openType == "_blank" && item.type == 1) {
 				href = item.href;
 				target = "target='_blank'";
@@ -356,13 +356,22 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 
 			}
 			index++;
+			if( item.childlist != null && item.childlist.length == 0 ){
+				item.childlist = [{
+					"id":item.id,
+					"href":item.href,
+					"title":item.title,
+					"icon":item.icon,
+					"childlist":[]
+				}];
+			}
 			$.each(item.childlist, function (i, note) {
 				// 创 建 每 一 个 菜 单 项
 				var content = '<li class="layui-nav-item" >';
 				var href = "javascript:;";
 				var target = "";
 				var className = "site-demo-active";
-				note.type = note.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
+				note.type = note.childlist != null && note.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 				if (note.openType == "_blank" && note.type == 1) {
 					href = note.href;
 					target = "target='_blank'";
@@ -409,7 +418,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	/** 加载子菜单 (递归)*/
 	function loadchild(obj) {
 		// 判 单 是 否 是 菜 单， 如 果 是 菜 单 直 接 返 回
-		obj.type = obj.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
+		obj.type = obj.childlist != null && obj.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 		if (obj.type == 1) {
 			return "";
 		}
@@ -429,7 +438,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 					target = "target='_blank'";
 					className = "";
 				}
-				note.type = note.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
+				note.type = note.childlist != null && note.childlist.length > 0 ? 0 : 1;//此处修改为是否子栏目判断
 				// 判 断 子 项 类 型
 				if (note.type == 0) {
 					// 创 建 目 录 结 构
