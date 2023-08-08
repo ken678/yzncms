@@ -65,29 +65,24 @@ class Manager extends Adminbase
             if ($this->request->request('keyField')) {
                 return $this->selectpage();
             }
-            list($page, $limit, $where) = $this->buildTableParames();
-            $this->AuthGroupModel       = new AuthGroupModel();
+            list($page, $limit, $where, $sort, $order) = $this->buildTableParames();
 
-            $count = $this->modelClass
+            $childrenGroupIds = $this->childrenGroupIds;
+            $groupName        = AuthGroupModel::where('id', 'in', $childrenGroupIds)
+                ->column('id,title');
+
+            $list = $this->modelClass
                 ->where($where)
                 ->where('id', 'in', $this->childrenAdminIds)
-                ->order('id DESC')
-                ->withAttr('roleid', function ($value, $data) {
-                    return $this->AuthGroupModel->getRoleIdName($value);
-                })
-                ->count();
+                ->field(['password', 'salt', 'token'], true)
+                ->order($sort, $order)
+                ->paginate($limit);
 
-            $_list = $this->modelClass
-                ->where($where)
-                ->where('id', 'in', $this->childrenAdminIds)
-                ->order('id DESC')
-                ->withAttr('roleid', function ($value, $data) {
-                    return $this->AuthGroupModel->getRoleIdName($value);
-                })
-                ->page($page, $limit)
-                ->select();
-            $total  = count($_list);
-            $result = ["code" => 0, 'count' => $count, "data" => $_list];
+            foreach ($list as $k => &$v) {
+                $v['groups']      = $groupName[$v['roleid']] ?? '未知';
+            }
+            unset($v);
+            $result = ["code" => 0, 'count' => $list->total(), "data" => $list->items()];
             return json($result);
         }
         return $this->fetch();

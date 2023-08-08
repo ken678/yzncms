@@ -23,16 +23,6 @@ class AuthGroup extends Model
 {
     protected static $roleList = [];
 
-    /**
-     * 根据角色Id获取角色名
-     * @param int $Groupid 角色id
-     * @return string 返回角色名
-     */
-    public function getRoleIdName($Groupid)
-    {
-        return $this->where(['id' => $Groupid])->value('title');
-    }
-
     public static function init()
     {
         self::beforeDelete(function ($row) {
