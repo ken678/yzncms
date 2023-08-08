@@ -134,7 +134,9 @@ html, body, .layui-layout {height: 100%; }
 .select-color .select-color-content {padding: 20px 0 0px 0px; margin-bottom: 4px; }
 .select-color .select-color-content .select-color-item {background-color: gray; width: 30px; height: 30px; border-radius: 3px; float: left; margin-left: 20px; color: white; font-size: 18px; text-align: center; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15); line-height: 30px; }
 .message .layui-tab-title li:not(:last-child) {border-right: 1px solid #eee; }
-
+@media screen and (max-width: 450px) {
+  .pearone-color .layui-form-item .layui-input-inline {float: left !important; width: 190px !important; margin: 0 10px 0 0!important; }
+}
 /* 搜索面板 */
 .menu-search-content .layui-input {padding-left: 30px; }
 .menu-search-content {display: flex; flex-wrap: wrap; justify-content: center; }
@@ -365,4 +367,3 @@ html, body, .layui-layout {height: 100%; }
     transform: scale(1.2, 1);
   }
 }
-
