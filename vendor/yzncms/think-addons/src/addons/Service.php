@@ -17,7 +17,6 @@
 namespace think\addons;
 
 use app\common\library\Cache as CacheLib;
-use app\common\library\Menu as MenuLib;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use PhpZip\Exception\ZipException;
@@ -123,9 +122,10 @@ class Service
             @File::del_dir($addonDir);
             throw new Exception($e->getMessage());
         }
+
+        // 默认启用该插件
+        $info = get_addon_info($name);
         try {
-            // 默认启用该插件
-            $info = get_addon_info($name);
             /*if ($info['status']) {
             $info['status'] = 0;
             set_addon_info($name, $info);
@@ -136,11 +136,6 @@ class Service
                 $addon = new $class();
                 $addon->install();
 
-                if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                    $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : [];
-                    //添加菜单
-                    MenuLib::addAddonMenu($admin_list, $info);
-                }
                 $cache_list = property_exists($addon, 'cache_list') ? $addon->cache_list : [];
                 if ($cache_list) {
                     CacheLib::installAddonCache($cache_list, $info);
@@ -192,10 +187,6 @@ class Service
                 $addon = new $class();
                 $addon->uninstall();
 
-                //删除插件后台菜单
-                if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                    MenuLib::delAddonMenu($name);
-                }
                 $cache_list = property_exists($addon, 'cache_list') ? $addon->cache_list : [];
                 if ($cache_list) {
                     CacheLib::deleteCacheAddon($info['name']);
@@ -275,9 +266,6 @@ class Service
         $info['status'] = 1;
         set_addon_info($name, $info);
 
-        if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-            MenuLib::enableAddonMenu($name);
-        }
         // 刷新
         self::refresh();
         return true;
@@ -348,9 +336,7 @@ class Service
         $info           = get_addon_info($name);
         $info['status'] = 0;
         set_addon_info($name, $info);
-        if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-            MenuLib::disableAddonMenu($name);
-        }
+
         // 刷新
         self::refresh();
         return true;
@@ -424,11 +410,6 @@ class Service
                     $addon = new $class();
                     $addon->install();
 
-                    if (isset($info['has_adminlist']) && $info['has_adminlist']) {
-                        $admin_list = property_exists($addon, 'admin_list') ? $addon->admin_list : [];
-                        //添加菜单
-                        MenuLib::addAddonMenu($admin_list, $info);
-                    }
                     $cache_list = property_exists($addon, 'cache_list') ? $addon->cache_list : [];
                     if ($cache_list) {
                         CacheLib::installAddonCache($cache_list, $info);
