@@ -185,13 +185,9 @@ class Upload
             $info = $this->file->move($destDir, $fileName);
         }
         if ($info) {
-            // 水印参数
-            $thumb = request()->post('thumb/d', 0);
             // 水印功能
-            if ($thumb) {
-                if ($dir == 'images' && config('site.upload_thumb_water') == 1 && config('site.upload_thumb_water_pic') != "") {
-                    model('Attachment')->create_water($info->getRealPath(), config('site.upload_thumb_water_pic'));
-                }
+            if ($dir == 'images' && config('site.upload_thumb_water') == 1 && config('site.upload_thumb_water_pic') != "") {
+                model('Attachment')->create_water($info->getRealPath(), config('site.upload_thumb_water_pic'));
             }
             // 获取附件信息
             $file_info = [
