@@ -14,129 +14,119 @@
 // +----------------------------------------------------------------------
 namespace app\common\library;
 
-use app\admin\model\Menu as MenuModel;
-use think\Exception;
+use app\admin\model\AuthRule as AuthRuleModel;
+use util\Tree;
 
 class Menu
 {
+    /**
+     * 创建菜单
+     * @param array $menu
+     * @param mixed $parent 父类的name或pid
+     */
+    public static function create($menu = [], $parent = 0)
+    {
+        $old = [];
+        self::menuUpdate($menu, $old, $parent);
+    }
 
     /**
-     * 添加插件后台管理菜单
-     * @param type $info
-     * @param type $adminlist
+     * 删除菜单
+     * @param string $name 规则name
      * @return boolean
      */
-    public static function addAddonMenu(array $admin_list, array $config, $parentid = 0)
+    public static function delete($name)
     {
-        if (empty($config)) {
-            throw new Exception('模块配置信息为空！');
+        $ids = self::getAuthRuleIdsByName($name);
+        if (!$ids) {
+            return false;
         }
-        //查询出“插件后台列表”菜单ID
-        $defaultMenuParentid = MenuModel::where(["app" => "admin", "controller" => "addons", "action" => "addonadmin"])->value('id') ?: 41;
-        //插件具体菜单
-        if (!empty($admin_list)) {
-            foreach ($admin_list as $key => $menu) {
-                //检查参数是否存在
-                if (empty($menu['title']) || empty($menu['name'])) {
-                    continue;
-                }
-                $hasChild = isset($menu['child']) && $menu['child'] ? true : false;
-                $route    = self::menuRoute($menu['name'], 'admin');
-                $data     = array_merge(array(
-                    //父ID
-                    "parentid"  => $parentid ?: ($menu['parentid'] ?? (int) $defaultMenuParentid),
-                    //'icon'      => isset($menu['icon']) ? $menu['icon'] : ($parentid == 0 ? 'icon-circle-line' : ''),
-                    'icon'      => isset($menu['icon']) ? $menu['icon'] : ($hasChild ? 'icon-other' : 'icon-circle-line'),
-                    //状态，1是显示，0是不显示
-                    "status"    => $menu['status'] ?? 0,
-                    //名称
-                    "title"     => $menu['title'],
-                    //备注
-                    "tip"       => $menu['tip'] ?? '',
-                    'addon'     => $config['name'],
-                    //排序
-                    "listorder" => $menu['listorder'] ?? 0,
-                ), $route);
-                $result = MenuModel::create($data);
-                //是否有子菜单
-                if ($hasChild) {
-                    self::addAddonMenu($menu['child'], $config, $result['id']);
-                }
+        AuthRuleModel::destroy($ids);
+        return true;
+    }
+
+    /**
+     * 启用菜单
+     * @param string $name
+     * @return boolean
+     */
+    public static function enable($name)
+    {
+        $ids = self::getAuthRuleIdsByName($name);
+        if (!$ids) {
+            return false;
+        }
+        AuthRuleModel::where('id', 'in', $ids)->update(['status' => 1]);
+        return true;
+    }
+
+    /**
+     * 禁用菜单
+     * @param string $name
+     * @return boolean
+     */
+    public static function disable($name)
+    {
+        $ids = self::getAuthRuleIdsByName($name);
+        if (!$ids) {
+            return false;
+        }
+        AuthRuleModel::where('id', 'in', $ids)->update(['status' => 0]);
+        return true;
+    }
+
+    /**
+     * 菜单升级
+     * @param array $newMenu
+     * @param array $oldMenu
+     * @param int   $parent
+     * @throws Exception
+     */
+    private static function menuUpdate($newMenu, &$oldMenu, $parent = 0)
+    {
+        if (!is_numeric($parent)) {
+            $parentRule = AuthRuleModel::getByName($parent);
+            $pid        = $parentRule ? $parentRule['id'] : 0;
+        } else {
+            $pid = $parent;
+        }
+        $allow = array_flip(['name', 'title', 'url', 'icon', 'condition', 'remark', 'ismenu', 'menutype', 'extend', 'listorder', 'status']);
+        foreach ($newMenu as $k => $v) {
+            $hasChild         = isset($v['sublist']) && $v['sublist'];
+            $data             = array_intersect_key($v, $allow);
+            $data['ismenu']   = $data['ismenu'] ?? ($hasChild ? 1 : 0);
+            $data['icon']     = $data['icon'] ?? ($hasChild ? 'iconfont icon-other' : 'iconfont icon-circle-line');
+            $data['parentid'] = $pid;
+            $data['status']   = $data['status'] ?? 'normal';
+            if (!isset($oldMenu[$data['name']])) {
+                $menu = AuthRuleModel::create($data);
+            } else {
+                $menu = $oldMenu[$data['name']];
+                //更新旧菜单
+                AuthRuleModel::update($data, ['id' => $menu['id']]);
+                //$oldMenu[$data['name']]['keep'] = true;
             }
-            //显示“插件后台列表”菜单
-            MenuModel::where('id', $defaultMenuParentid)->update(['status' => 1]);
+            if ($hasChild) {
+                self::menuUpdate($v['sublist'], $oldMenu, $menu['id']);
+            }
         }
-        //清除缓存
-        cache('Menu', null);
-        return true;
     }
 
     /**
-     * 删除对应插件菜单和权限
-     * @return boolean
-     */
-    public static function delAddonMenu($name)
-    {
-        //删除对应菜单
-        MenuModel::where('addon', $name)->delete();
-        self::AddonMenuStatus();
-        return true;
-    }
-
-    /**
-     * 启用对应插件菜单和权限
-     * @return boolean
-     */
-    public static function enableAddonMenu($name)
-    {
-        //删除对应菜单
-        MenuModel::where('addon', $name)->update(['status' => 1]);
-        self::AddonMenuStatus();
-        return true;
-    }
-
-    /**
-     * 禁用对应插件菜单和权限
-     * @return boolean
-     */
-    public static function disableAddonMenu($name)
-    {
-        //删除对应菜单
-        MenuModel::where('addon', $name)->update(['status' => 0]);
-        self::AddonMenuStatus();
-        return true;
-    }
-
-    private static function AddonMenuStatus()
-    {
-        //查询出“插件后台列表”菜单ID
-        $menuId = MenuModel::where(array("app" => "Addons", "controller" => "Addons", "action" => "addonadmin"))->value('id') ?: 41;
-        //检查“插件后台列表”菜单下还有没有菜单，没有就隐藏
-        $count = MenuModel::where('parentid', $menuId)->count();
-        if (!$count) {
-            MenuModel::where('id', $menuId)->update(array('status' => 0));
-        }
-        return true;
-    }
-
-    /**
-     * 把模块安装时，Menu.php中配置的route进行转换
-     * @param type $route route内容
-     * @param type $moduleNama 安装模块名称
+     * 根据名称获取规则IDS
+     * @param string $name
      * @return array
      */
-    private static function menuRoute($route, $moduleNama)
+    public static function getAuthRuleIdsByName($name)
     {
-        $route = explode('/', $route, 3);
-        if (count($route) < 3) {
-            array_unshift($route, $moduleNama);
+        $ids  = [];
+        $menu = AuthRuleModel::getByName($name);
+        if ($menu) {
+            // 必须将结果集转换为数组
+            $ruleList = AuthRuleModel::order('listorder', 'desc')->field('id,parentid,name')->select()->toArray();
+            // 构造菜单数据
+            $ids = Tree::instance()->init($ruleList)->getChildrenIds($menu['id'], true);
         }
-        $data = array(
-            'app'        => $route[0],
-            'controller' => $route[1],
-            'action'     => $route[2],
-        );
-        return $data;
+        return $ids;
     }
-
 }
