@@ -97,7 +97,7 @@ class Menu
             $data['ismenu']   = $data['ismenu'] ?? ($hasChild ? 1 : 0);
             $data['icon']     = $data['icon'] ?? ($hasChild ? 'iconfont icon-other' : 'iconfont icon-circle-line');
             $data['parentid'] = $pid;
-            $data['status']   = $data['status'] ?? 'normal';
+            $data['status']   = $data['status'] ?? 1;
             if (!isset($oldMenu[$data['name']])) {
                 $menu = AuthRuleModel::create($data);
             } else {
