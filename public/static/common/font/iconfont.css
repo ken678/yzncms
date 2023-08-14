@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 349449 */
-  src: url('iconfont.woff2?t=1684214794111') format('woff2'),
-       url('iconfont.woff?t=1684214794111') format('woff'),
-       url('iconfont.ttf?t=1684214794111') format('truetype');
+  src: url('iconfont.woff2?t=1692000570879') format('woff2'),
+       url('iconfont.woff?t=1692000570879') format('woff'),
+       url('iconfont.ttf?t=1692000570879') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,406 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-donut-chart-fill:before {
+  content: "\e797";
+}
+
+.icon-donut-chart-line:before {
+  content: "\e798";
+}
+
+.icon-line-chart-fill:before {
+  content: "\e799";
+}
+
+.icon-line-chart-line:before {
+  content: "\e79a";
+}
+
+.icon-pie-chart-2-fill:before {
+  content: "\e79b";
+}
+
+.icon-pie-chart-2-line:before {
+  content: "\e79c";
+}
+
+.icon-printer-fill:before {
+  content: "\e79d";
+}
+
+.icon-printer-line:before {
+  content: "\e79e";
+}
+
+.icon-stack-fill:before {
+  content: "\e79f";
+}
+
+.icon-stack-line:before {
+  content: "\e7a0";
+}
+
+.icon-window-fill:before {
+  content: "\e7a1";
+}
+
+.icon-window-line:before {
+  content: "\e7a2";
+}
+
+.icon-barcode-line:before {
+  content: "\e7a3";
+}
+
+.icon-barcode-fill:before {
+  content: "\e7a4";
+}
+
+.icon-code-s-slash-fill:before {
+  content: "\e7b6";
+}
+
+.icon-code-s-slash-line:before {
+  content: "\e7b7";
+}
+
+.icon-coupon-line:before {
+  content: "\e7ca";
+}
+
+.icon-coupon-fill:before {
+  content: "\e7cb";
+}
+
+.icon-download-2-line:before {
+  content: "\e7e8";
+}
+
+.icon-download-2-fill:before {
+  content: "\e7e9";
+}
+
+.icon-drag-move-2-fill:before {
+  content: "\e7ed";
+}
+
+.icon-drag-move-2-line:before {
+  content: "\e7ee";
+}
+
+.icon-eye-close-fill:before {
+  content: "\e810";
+}
+
+.icon-eye-fill:before {
+  content: "\e811";
+}
+
+.icon-eye-close-line:before {
+  content: "\e812";
+}
+
+.icon-eye-line:before {
+  content: "\e813";
+}
+
+.icon-eye-off-fill:before {
+  content: "\e814";
+}
+
+.icon-eye-off-line:before {
+  content: "\e815";
+}
+
+.icon-fingerprint-line:before {
+  content: "\e84a";
+}
+
+.icon-fingerprint-fill:before {
+  content: "\e849";
+}
+
+.icon-map-fill:before {
+  content: "\e8f1";
+}
+
+.icon-map-2-line:before {
+  content: "\e8f2";
+}
+
+.icon-mini-program-line:before {
+  content: "\e91c";
+}
+
+.icon-mini-program-fill:before {
+  content: "\e91d";
+}
+
+.icon-movie-2-fill:before {
+  content: "\e92a";
+}
+
+.icon-movie-2-line:before {
+  content: "\e92b";
+}
+
+.icon-music-2-fill:before {
+  content: "\e92d";
+}
+
+.icon-music-2-line:before {
+  content: "\e92e";
+}
+
+.icon-notification-3-line:before {
+  content: "\e938";
+}
+
+.icon-notification-3-fill:before {
+  content: "\e939";
+}
+
+.icon-notification-4-fill:before {
+  content: "\e93a";
+}
+
+.icon-notification-4-line:before {
+  content: "\e93b";
+}
+
+.icon-qr-code-fill:before {
+  content: "\e993";
+}
+
+.icon-qr-code-line:before {
+  content: "\e994";
+}
+
+.icon-qr-scan-2-fill:before {
+  content: "\e995";
+}
+
+.icon-qr-scan-2-line:before {
+  content: "\e996";
+}
+
+.icon-red-packet-fill:before {
+  content: "\e9a9";
+}
+
+.icon-red-packet-line:before {
+  content: "\e9aa";
+}
+
+.icon-riding-fill:before {
+  content: "\e9c7";
+}
+
+.icon-riding-line:before {
+  content: "\e9c8";
+}
+
+.icon-rocket-2-fill:before {
+  content: "\e9cd";
+}
+
+.icon-rocket-2-line:before {
+  content: "\e9ce";
+}
+
+.icon-shape-2-fill:before {
+  content: "\ea03";
+}
+
+.icon-shape-2-line:before {
+  content: "\ea04";
+}
+
+.icon-shape-fill:before {
+  content: "\ea05";
+}
+
+.icon-shape-line:before {
+  content: "\ea06";
+}
+
+.icon-shield-keyhole-line:before {
+  content: "\ea13";
+}
+
+.icon-shield-keyhole-fill:before {
+  content: "\ea14";
+}
+
+.icon-shopping-bag-fill:before {
+  content: "\ea1e";
+}
+
+.icon-shopping-bag-line:before {
+  content: "\ea1f";
+}
+
+.icon-sound-module-fill:before {
+  content: "\ea4e";
+}
+
+.icon-sound-module-line:before {
+  content: "\ea4f";
+}
+
+.icon-stock-fill:before {
+  content: "\ea72";
+}
+
+.icon-stock-line:before {
+  content: "\ea73";
+}
+
+.icon-t-shirt-2-fill:before {
+  content: "\ea96";
+}
+
+.icon-t-shirt-2-line:before {
+  content: "\ea97";
+}
+
+.icon-t-shirt-fill:before {
+  content: "\ea98";
+}
+
+.icon-t-shirt-line:before {
+  content: "\ea99";
+}
+
+.icon-table-alt-fill:before {
+  content: "\ea9b";
+}
+
+.icon-table-alt-line:before {
+  content: "\ea9c";
+}
+
+.icon-table-fill:before {
+  content: "\ea9d";
+}
+
+.icon-table-line:before {
+  content: "\ea9e";
+}
+
+.icon-takeaway-fill:before {
+  content: "\eaa1";
+}
+
+.icon-takeaway-line:before {
+  content: "\eaa2";
+}
+
+.icon-taxi-fill:before {
+  content: "\eaa8";
+}
+
+.icon-taxi-line:before {
+  content: "\eaa9";
+}
+
+.icon-truck-fill:before {
+  content: "\ead3";
+}
+
+.icon-truck-line:before {
+  content: "\ead4";
+}
+
+.icon-zoom-in-line:before {
+  content: "\eb2e";
+}
+
+.icon-zoom-out-fill:before {
+  content: "\eb2f";
+}
+
+.icon-zoom-out-line:before {
+  content: "\eb30";
+}
+
+.icon-zoom-in-fill:before {
+  content: "\eb32";
+}
+
+.icon-hospital-fill:before {
+  content: "\e783";
+}
+
+.icon-hospital-line:before {
+  content: "\e784";
+}
+
+.icon-store-2-fill:before {
+  content: "\e785";
+}
+
+.icon-store-line:before {
+  content: "\e786";
+}
+
+.icon-store-2-line:before {
+  content: "\e787";
+}
+
+.icon-store-fill:before {
+  content: "\e789";
+}
+
+.icon-advertisement-line:before {
+  content: "\e78b";
+}
+
+.icon-advertisement-fill:before {
+  content: "\e78c";
+}
+
+.icon-archive-line:before {
+  content: "\e78d";
+}
+
+.icon-archive-fill:before {
+  content: "\e78e";
+}
+
+.icon-bar-chart-fill:before {
+  content: "\e78f";
+}
+
+.icon-bar-chart-grouped-line:before {
+  content: "\e790";
+}
+
+.icon-bar-chart-2-line:before {
+  content: "\e791";
+}
+
+.icon-bar-chart-grouped-fill:before {
+  content: "\e792";
+}
+
+.icon-bar-chart-horizontal-fill:before {
+  content: "\e793";
+}
+
+.icon-bar-chart-horizontal-line:before {
+  content: "\e794";
+}
+
+.icon-bubble-chart-fill:before {
+  content: "\e795";
+}
+
+.icon-bubble-chart-line:before {
+  content: "\e796";
 }
 
 .icon-qq-fill:before {
