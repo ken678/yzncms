@@ -21,6 +21,54 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
 
     yznTable = {
         bindevent: function () {
+            // 监听请求
+            $(document).on('click', '[data-request]', function() {
+                var that = $(this);
+                var title = $(this).data('title'),
+                    url = $(this).data('request') || $(this).attr("href"),
+                    tableId = $(this).data('table'),
+                    checkbox = $(this).data('checkbox');
+
+                var postData = {};
+                if (checkbox === 'true') {
+                    tableId = tableId || init.table_render_id;
+                    var checkStatus = table.checkStatus(tableId),
+                        data = checkStatus.data;
+                    if (data.length <= 0) {
+                        yzn.msg.error('请勾选需要操作的数据');
+                        return false;
+                    }
+                    var ids = [];
+                    $.each(data, function(i, v) {
+                        ids.push(v.id);
+                    });
+                    postData.id = ids;
+                }
+
+                title = title || '确定进行该操作？';
+                tableId = tableId || init.table_render_id;
+
+                func = function() {
+                    yzn.request.post({
+                        url: url,
+                        data: postData,
+                    }, function(data,res) {
+                        yzn.msg.success(res.msg, function() {
+                            tableId && table.reload(tableId);
+                        });
+                    }, function(data,res) {
+                        yzn.msg.error(res.msg, function () {
+                            tableId && table.reload(tableId);
+                        });
+                    })
+                }
+                if (typeof(that.attr('confirm')) == 'undefined') {
+                    func();
+                } else {
+                    yzn.msg.confirm(title, func);
+                }
+                return false;
+            });
             //单行表格删除(不刷新)
             $(document).on('click', '.layui-tr-del', function() {
                 var that = $(this),
