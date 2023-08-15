@@ -335,18 +335,19 @@ class User extends \libs\Auth
         return true;
     }
 
-    public function getSidebar(){
+    public function getSidebar()
+    {
         $module = request()->module();
         // 读取管理员当前拥有的权限节点
         $userRule = $this->getAuthList();
-         // 必须将结果集转换为数组
+        // 必须将结果集转换为数组
         $ruleList = \app\admin\model\AuthRule::where('status', 1)
-            ->where('ismenu',1)
+            ->where('ismenu', 1)
             ->order('listorder', 'desc')
             ->cache("__menu__")
             ->select()->toArray();
         $indexRuleList = \app\admin\model\AuthRule::where('status', 1)
-            ->where('ismenu',0)
+            ->where('ismenu', 0)
             ->where('name', 'like', '%/index')
             ->column('name,parentid');
         $pidArr = array_unique(array_filter(array_column($ruleList, 'parentid')));
@@ -360,11 +361,11 @@ class User extends \libs\Auth
                 unset($ruleList[$k]);
                 continue;
             }
-            $v['type'] = $v['ismenu'];//兼容前端
+            $v['type'] = $v['ismenu']; //兼容前端
             $v['href'] = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $module . '/' . $v['name'];
             $v['href'] = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : url($v['href']);
         }
-        $lastArr = array_unique(array_filter(array_column($ruleList, 'parentid')));
+        $lastArr    = array_unique(array_filter(array_column($ruleList, 'parentid')));
         $pidDiffArr = array_diff($pidArr, $lastArr);
         foreach ($ruleList as $index => $item) {
             if (in_array($item['id'], $pidDiffArr)) {
