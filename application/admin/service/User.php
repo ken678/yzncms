@@ -361,9 +361,10 @@ class User extends \libs\Auth
                 unset($ruleList[$k]);
                 continue;
             }
-            $v['type'] = $v['ismenu']; //兼容前端
-            $v['href'] = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $module . '/' . $v['name'];
-            $v['href'] = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : url($v['href']);
+            $v['openType'] = $v['menutype']; //兼容前端
+            $v['type']     = $v['ismenu']; //兼容前端
+            $v['href']     = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $module . '/' . $v['name'];
+            $v['href']     = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : url($v['href']);
         }
         $lastArr    = array_unique(array_filter(array_column($ruleList, 'parentid')));
         $pidDiffArr = array_diff($pidArr, $lastArr);
