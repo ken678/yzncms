@@ -115,7 +115,7 @@ CREATE TABLE `yzn_auth_rule` (
   `condition` varchar(255) DEFAULT '' COMMENT '条件',
   `remark` varchar(255) DEFAULT '' COMMENT '备注',
   `ismenu` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为菜单',
-  `menutype` enum('iframe','blank') DEFAULT NULL COMMENT '菜单类型',
+  `menutype` enum('_iframe','_blank','_layer') DEFAULT NULL COMMENT '菜单类型',
   `extend` varchar(255) DEFAULT '' COMMENT '扩展属性',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
