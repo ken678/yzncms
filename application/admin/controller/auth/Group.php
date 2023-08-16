@@ -6,14 +6,12 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 御宅男 <530765310@qq.com>
+// | Author: fastadmin: https://www.fastadmin.net/
 // +----------------------------------------------------------------------
 namespace app\admin\Controller\auth;
 
 use app\admin\model\AuthGroup as AuthGroupModel;
-use app\admin\model\AuthRule;
 use app\common\controller\Adminbase;
-use think\Db;
 use util\Tree;
 
 /**
@@ -24,14 +22,14 @@ class Group extends Adminbase
     //当前登录管理员所有子组别
     protected $childrenGroupIds = [];
     //当前组别列表数据
-    protected $grouplist = [];
-    protected $groupdata = [];
+    protected $grouplist   = [];
+    protected $groupdata   = [];
     protected $noNeedRight = [];
 
     protected function initialize()
     {
         parent::initialize();
-        $this->modelClass       = new AuthGroupModel;
+        $this->modelClass = new AuthGroupModel;
 
         $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
@@ -42,7 +40,7 @@ class Group extends Adminbase
         if ($this->auth->isAdministrator()) {
             $groupList = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
         } else {
-            $groups = $this->auth->getGroups();
+            $groups   = $this->auth->getGroups();
             $groupIds = [];
             foreach ($groups as $m => $n) {
                 if (in_array($n['id'], $groupIds) || in_array($n['parentid'], $groupIds)) {
@@ -70,7 +68,7 @@ class Group extends Adminbase
         if ($this->request->isAjax()) {
             $list   = $this->grouplist;
             $total  = count($list);
-            $result = ["code" => 0, "count" => $total,"data" => $list];
+            $result = ["code" => 0, "count" => $total, "data" => $list];
             return json($result);
         } else {
             return $this->fetch();
@@ -82,7 +80,7 @@ class Group extends Adminbase
     {
         if ($this->request->isPost()) {
             $this->token();
-            $params          = $this->request->post("row/a", [], 'strip_tags');
+            $params = $this->request->post("row/a", [], 'strip_tags');
             $result = $this->validate($params, 'app\admin\validate\AuthGroup');
             if (true !== $result) {
                 return $this->error($result);
@@ -147,9 +145,9 @@ class Group extends Adminbase
                 try {
                     $row->save($params);
                     $children_auth_groups = model("AuthGroup")->all(['id' => ['in', implode(',', (Tree::instance()->getChildrenIds($row->id)))]]);
-                    $childparams = [];
+                    $childparams          = [];
                     foreach ($children_auth_groups as $key => $children_auth_group) {
-                        $childparams[$key]['id'] = $children_auth_group->id;
+                        $childparams[$key]['id']    = $children_auth_group->id;
                         $childparams[$key]['rules'] = implode(',', array_intersect(explode(',', $children_auth_group->rules), $rules));
                     }
                     model("AuthGroup")->saveAll($childparams);
@@ -167,7 +165,7 @@ class Group extends Adminbase
     //访问授权页面
     public function access()
     {
-        $id = $this->request->param('id/d');
+        $id  = $this->request->param('id/d');
         $pid = $this->request->param('pid/d');
         if (!in_array($id, $this->childrenGroupIds)) {
             $this->error('你没有权限访问!');
@@ -178,7 +176,7 @@ class Group extends Adminbase
         }
         if ($this->request->isPost()) {
             $this->token();
-            $params = $this->request->post("row/a", [], 'strip_tags');
+            $params          = $this->request->post("row/a", [], 'strip_tags');
             $params['rules'] = explode(',', $params['rules']);
 
             $parentmodel = $this->modelClass->get($params['parentid']);
@@ -189,7 +187,7 @@ class Group extends Adminbase
             $parentrules = explode(',', $parentmodel->rules);
             // 当前组别的规则节点
             $currentrules = $this->auth->getRuleIds();
-            $rules = $params['rules'];
+            $rules        = $params['rules'];
             // 如果父组不是超级管理员则需要过滤规则节点,不能超过父组别的权限
             $rules = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
             // 如果当前组别不是超级管理员则需要过滤规则节点,不能超当前组别的权限
@@ -198,9 +196,9 @@ class Group extends Adminbase
                 $row->rules = implode(',', $rules);
                 $row->save();
                 $children_auth_groups = model("AuthGroup")->all(['id' => ['in', implode(',', (Tree::instance()->getChildrenIds($row->id)))]]);
-                $childparams = [];
+                $childparams          = [];
                 foreach ($children_auth_groups as $key => $children_auth_group) {
-                    $childparams[$key]['id'] = $children_auth_group->id;
+                    $childparams[$key]['id']    = $children_auth_group->id;
                     $childparams[$key]['rules'] = implode(',', array_intersect(explode(',', $children_auth_group->rules), $rules));
                 }
                 model("AuthGroup")->saveAll($childparams);
@@ -225,7 +223,7 @@ class Group extends Adminbase
             }
         }
 
-        $ruleTree = new Tree();
+        $ruleTree  = new Tree();
         $groupTree = new Tree();
         //当前所有正常规则列表
         $ruleTree->init($parentRuleList);
@@ -241,9 +239,9 @@ class Group extends Adminbase
         $parentRuleList = $ruleTree->getTreeList($ruleTree->getTreeArray(0), 'name');
         /*$hasChildrens = [];
         foreach ($parentRuleList as $k => $v) {
-            if ($v['haschild']) {
-                $hasChildrens[] = $v['id'];
-            }
+        if ($v['haschild']) {
+        $hasChildrens[] = $v['id'];
+        }
         }*/
         $parentRuleIds = array_map(function ($item) {
             return $item['id'];
@@ -257,8 +255,8 @@ class Group extends Adminbase
                 continue;
             }
             //$ischeck = in_array($v['id'], $currentRuleIds) && !in_array($v['id'], $hasChildrens);
-            $ischeck = in_array($v['id'], $currentRuleIds);
-            $nodeList[] = ['id' => $v['id'], 'parentid' => $v['parentid'], 'name' => $v['title'],'checked' => $ischeck];
+            $ischeck    = in_array($v['id'], $currentRuleIds);
+            $nodeList[] = ['id' => $v['id'], 'parentid' => $v['parentid'], 'name' => $v['title'], 'checked' => $ischeck];
         }
         //dump($nodeList);
         $this->assign('nodeList', json_encode($nodeList));
