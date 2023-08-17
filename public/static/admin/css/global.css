@@ -34,6 +34,7 @@ html, body, .layui-layout {height: 100%; }
 @media screen and (max-width: 768px) {
   .pear-admin.banner-layout .layui-header .layui-logo {display: none; }
   .pear-admin.banner-layout .layui-header .layui-layout-left {left: 0px; }
+  .layui-header .layui-nav .layui-nav-item a {padding: 0 13px;}
 }
 
 /** 收缩布局 */
