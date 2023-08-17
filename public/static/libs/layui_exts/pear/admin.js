@@ -399,30 +399,6 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 			}
 		})
 
-		//清除缓存
-		body.on('click', "dl#deletecache dd a", function() {
-		    $.ajax({
-		        url: '/admin/index/cache',
-		        dataType: 'json',
-		        data: { type: $(this).data("type") },
-		        cache: false,
-		        success: function(res) {
-		            if (res.code == 1) {
-		                var index = layer.msg('清除缓存中，请稍候', { icon: 16, time: false, shade: 0.8 });
-		                setTimeout(function() {
-		                    layer.close(index);
-		                    layer.msg("缓存清除成功！");
-		                }, 1000);
-		            }else{
-		                layer.msg('清除缓存失败');
-		            }
-		        },
-		        error: function() {
-		            layer.msg('清除缓存失败');
-		        }
-		    });
-		});
-
 		body.on("click", ".collapse,.pear-cover", function() {
 			collapse();
 		});
