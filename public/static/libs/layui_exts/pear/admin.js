@@ -91,7 +91,7 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 						sideMenu.selectItem(id);
 					})
 
-					sideMenu.click(function(dom, data) {
+					sideMenu.click(function(dom, data, change) {
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -99,7 +99,7 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 							icon: data.menuIcon,
 							close: true
 						}, 300);
-						compatible();
+						change !== false && compatible();
 					})
 				} else {
 					bodyFrame = pearFrame.render({

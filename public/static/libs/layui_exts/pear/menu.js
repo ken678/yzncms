@@ -152,7 +152,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 					menuUrl: dom.attr("pear-href"),
 					openType: dom.attr("pear-type")
 				};
-				clickEvent(dom, data);
+				clickEvent(dom, data, false);
 
 			}
 		})
