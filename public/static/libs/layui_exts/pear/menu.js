@@ -148,7 +148,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				var data = {
 					menuId: dom.attr("pear-id"),
 					menuTitle: dom.attr("pear-title"),
-					menuPath: dom.attr("pear-title"),
 					menuIcon: dom.attr("pear-icon"),
 					menuUrl: dom.attr("pear-href"),
 					openType: dom.attr("pear-type")
