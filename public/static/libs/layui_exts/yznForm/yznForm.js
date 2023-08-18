@@ -17,7 +17,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
 
     var yznForm = {
         api: {
-            form: function(url, data, ok, no, refresh, type, pop) {
+            form: function(url, data, success, error, refresh, type, pop) {
                 var that = this;
                 var submitBtn = $(".layer-footer button[lay-submit]");
                 submitBtn.addClass("layui-btn-disabled").prop('disabled', true);
@@ -34,8 +34,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                     if (false === $('.layui-form').triggerHandler("success.form")) {
                         return false;
                     }
-                    if (typeof ok === 'function') {
-                        if (false === ok.call($(this), data,res)) {
+                    if (typeof success === 'function') {
+                        if (false === success.call($(this), data,res)) {
                             return false;
                         }
                     }
@@ -74,8 +74,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                     if (false === $('.layui-form').triggerHandler("error.form")) {
                         return false;
                     }
-                    if (typeof no === 'function') {
-                        if (false === no.call($(this), data,res)) {
+                    if (typeof error === 'function') {
+                        if (false === error.call($(this), data,res)) {
                             return false;
                         }
                     }
@@ -112,7 +112,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
         },
         events: {
-            formSubmit: function(layform,preposeCallback, ok, no) {
+            formSubmit: function(layform,submit, success, error) {
                 var formList = $("[lay-submit]", layform);
                 
                 // 表单提交自动处理
@@ -147,12 +147,13 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                             url = window.location.href;
                         }
                         form.on('submit(' + filter + ')', function(data) {
-                            var dataField = $(data.form).serializeArray();
-
-                            if (typeof preposeCallback === 'function') {
-                                dataField = preposeCallback(dataField);
+                            if (typeof submit === 'function') {
+                                if (false === submit.call(layform, success, error)) {
+                                    return false;
+                                }
                             }
-                            yznForm.api.form(url, dataField, ok, no, refresh, type, pop);
+                            var dataField = $(data.form).serializeArray();
+                            yznForm.api.form(url, dataField, success, error, refresh, type, pop);
                             return false;
                         });
                     });
@@ -717,10 +718,10 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                 }
             },
         },
-        bindevent: function(form,preposeCallback, ok, no) {
+        bindevent: function(form,submit, success, error) {
             form = typeof form === 'object' ? form : $(form);
             var events = yznForm.events;
-            events.formSubmit(form,preposeCallback, ok, no);
+            events.formSubmit(form,submit, success, error);
             events.selectpage(form);
             events.faselect(form);
             events.fieldlist(form);
