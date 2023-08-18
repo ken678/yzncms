@@ -99,7 +99,7 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 							icon: data.menuIcon,
 							close: true
 						}, 300);
-						//compatible();
+						compatible();
 					})
 				} else {
 					bodyFrame = pearFrame.render({
