@@ -599,10 +599,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			rationalizeWidth = $headerControl.parent().innerWidth() - $headerControl.position().left;
 		}
 
-		/*if (option.controlWidth && rationalizeWidth >= option.controlWidth) {
-			rationalizeWidth = option.controlWidth;
-		}*/
-		$("#" + option.control + " .control").css({ "width": rationalizeWidth, "transition": "width .15s" });
+		$("#" + option.control + " .control").css({"width": rationalizeWidth});
 
 		var navobj = $("#" + option.control+' ul.pear-nav-control.pc');
 		var dropdown = $(".tabdrop", navobj);
@@ -627,7 +624,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
             totalwidth += $(this).outerWidth(true);
         });
 
-        if (rationalizeWidth <= totalwidth) {
+        if (rationalizeWidth < totalwidth) {
             litabs.each(function () {
                 liwidth += $(this).outerWidth(true);
                 if (liwidth > maxwidth) {
