@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 349449 */
-  src: url('iconfont.woff2?t=1692000570879') format('woff2'),
-       url('iconfont.woff?t=1692000570879') format('woff'),
-       url('iconfont.ttf?t=1692000570879') format('truetype');
+  src: url('iconfont.woff2?t=1692601434460') format('woff2'),
+       url('iconfont.woff?t=1692601434460') format('woff'),
+       url('iconfont.ttf?t=1692601434460') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-at-line:before {
+  content: "\e7a5";
+}
+
+.icon-at-fill:before {
+  content: "\e7a6";
+}
+
+.icon-medal-fill:before {
+  content: "\e7a7";
+}
+
+.icon-medal-line:before {
+  content: "\e7a8";
+}
+
+.icon-vidicon-fill:before {
+  content: "\eb05";
+}
+
+.icon-vidicon-line:before {
+  content: "\eb06";
 }
 
 .icon-donut-chart-fill:before {
