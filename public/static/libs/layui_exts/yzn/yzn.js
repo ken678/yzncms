@@ -405,6 +405,21 @@ layui.define(['layer','table', 'notice', 'addons'], function(exports) {
                 });
                 return false;
             });
+            //点击包含.btn-addtabs的元素时新增选项卡
+            $(document).on('click', '.btn-addtabs,.addtabsit', function (e) {
+                var that = this;
+                var options = $.extend({}, $(that).data() || {});
+                var id = $(that).data("menu-id") || Math.round(Math.random() * (99999-10000) + 10000);
+                var url = $(that).data("url") || $(that).attr('href');
+                var title = $(that).attr("title") || $(that).data("title") || $(that).data('original-title');
+
+                if (!$(this).attr('data-menu-id')) {
+                    $(this).attr('data-menu-id', id);
+                }
+                if(parent.layui.admin){
+                   parent.layui.admin.addTab(id, title,url);
+                }
+            })
             // 监听弹出层的打开
             $(document).on('click', '[data-open]', function() {
                 var clienWidth = $(this).attr('data-width') || 800,
