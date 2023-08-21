@@ -16,13 +16,13 @@ namespace app\admin\controller\auth;
 
 use app\admin\model\AuthRule as AuthRuleModel;
 use app\common\controller\Adminbase;
+use think\Db;
 use think\facade\Cache;
 use util\Tree;
-use think\Db;
 
 class Rule extends Adminbase
 {
-    protected $modelClass         = null;
+    protected $modelClass = null;
 
     protected function initialize()
     {
@@ -34,14 +34,14 @@ class Rule extends Adminbase
     public function index()
     {
         if ($this->request->isAjax()) {
-	        $ruleList     = AuthRuleModel::order('listorder DESC,id ASC')->select()->toArray();
-	        $tree       = new Tree();
-	        $tree->icon = array('', '', '');
-	        $tree->nbsp = '';
-	        $tree->init($ruleList);
-	        $list = $tree->getTreeArray(0);
-            $total = count($list);
-            $result = array("code" => 0, "count" => $total, "data" => $list);
+            $ruleList   = AuthRuleModel::order('listorder DESC,id ASC')->select()->toArray();
+            $tree       = new Tree();
+            $tree->icon = ['', '', ''];
+            $tree->nbsp = '';
+            $tree->init($ruleList);
+            $list   = $tree->getTreeArray(0);
+            $total  = count($list);
+            $result = ["code" => 0, "count" => $total, "data" => $list];
             return json($result);
         }
         return $this->fetch();
@@ -57,7 +57,8 @@ class Rule extends Adminbase
                 if (!$params['ismenu'] && !$params['parentid']) {
                     $this->error('非菜单规则节点必须有父级');
                 }
-                $result = $this->validate($params,'app\admin\validate\AuthRule');
+                $params['icon'] = $params['icon'] ? 'iconfont ' . $params['icon'] : '';
+                $result         = $this->validate($params, 'app\admin\validate\AuthRule');
                 if (true !== $result) {
                     $this->error($result);
                 }
@@ -70,9 +71,9 @@ class Rule extends Adminbase
             }
             $this->error('参数不能为空');
         }
-        $tree   = new Tree();
-        $parentid    = $this->request->param('parentid/d', 0);
-        $ruleList     = AuthRuleModel::where('ismenu',1)->order('listorder DESC,id ASC')->select()->toArray();
+        $tree     = new Tree();
+        $parentid = $this->request->param('parentid/d', 0);
+        $ruleList = AuthRuleModel::where('ismenu', 1)->order('listorder DESC,id ASC')->select()->toArray();
         $tree->init($ruleList);
         $select_categorys = $tree->getTree(0, '', $parentid);
         $this->assign("select_categorys", $select_categorys);
@@ -103,7 +104,8 @@ class Rule extends Adminbase
                         $this->error('父级不能是它的子级');
                     }
                 }
-                $result = $this->validate($params,'app\admin\validate\AuthRule');
+                $params['icon'] = $params['icon'] ? 'iconfont ' . $params['icon'] : '';
+                $result         = $this->validate($params, 'app\admin\validate\AuthRule');
                 if (true !== $result) {
                     $this->error($result);
                 }
@@ -116,12 +118,12 @@ class Rule extends Adminbase
             }
             $this->error('参数不能为空');
         }
-        $tree   = new Tree();
-        $result     = AuthRuleModel::where('ismenu',1)->order('listorder DESC,id ASC')->select()->toArray();
+        $tree     = new Tree();
+        $result   = AuthRuleModel::where('ismenu', 1)->order('listorder DESC,id ASC')->select()->toArray();
         $ruleList = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $row->parentid ? 'selected' : '';
-            $ruleList[]       = $r;
+            $ruleList[]    = $r;
         }
 
         $tree->init($ruleList);
@@ -153,7 +155,7 @@ class Rule extends Adminbase
                 $delIds = array_merge($delIds, Tree::instance()->getChildrenIds($v, true));
             }
             $delIds = array_unique($delIds);
-            $count = $this->modelClass->where('id', 'in', $delIds)->delete();
+            $count  = $this->modelClass->where('id', 'in', $delIds)->delete();
             if ($count) {
                 Cache::rm('__menu__');
                 $this->success("操作成功！");
