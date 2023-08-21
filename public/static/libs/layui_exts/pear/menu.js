@@ -31,9 +31,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		}
 		var tempDone = option.done;
 		option.done = function(){
-			/*if (option.control) {
+			if (option.control) {
 				rationalizeHeaderControlWidthAuto(option);
-			}*/
+			}
 			tempDone();
 		}
 
@@ -255,9 +255,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			$("#" + this.option.elem)
 			.promise()
 			.done(function () {
-				/*if (that.option.control) {
+				if (that.option.control) {
 					rationalizeHeaderControlWidth(that.option);
-				}*/
+				}
 			})
 		} else {
 			activeMenus = $("#" + this.option.elem).find(".layui-nav-itemed>a");
@@ -271,9 +271,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			.promise()
 			.done(function () {
 				isHoverMenu(true, config);
-				/*if (that.option.control) {
+				if (that.option.control) {
 					rationalizeHeaderControlWidth(that.option);
-				}*/
+				}
 			})		
 		}
 	}
@@ -355,6 +355,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	function createMenuAndControl(option) {
 		//var control = '<div style="width: ' + option.controlWidth + 'px;white-space: nowrap;overflow-x: scroll;overflow: hidden;" class="control"><ul class="layui-nav pear-nav-control pc layui-hide-xs" style="width: fit-content;">';
 		var control = '<div class="control"><ul class="layui-nav pear-nav-control pc layui-hide-xs">';
+		control+= '<li class="layui-nav-item tabdrop layui-hide" style="float:right !important;"><a href="javascript:;"><i class="layui-icon layui-icon-more" style="font-size:20px;"></i></a><dl class="layui-nav-child"></dl></li>';
 		var controlPe = '<ul class="layui-nav pear-nav-control layui-hide-sm">';
 		// 声 明 头 部
 		var menu = '<div class="layui-side-scroll ' + option.theme + '">'
@@ -588,7 +589,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		}
 	}
 
-	/*function rationalizeHeaderControlWidth(option) {
+	function rationalizeHeaderControlWidth(option) {
 		var $headerControl = $("#" + option.control);
 		var $nextEl = $headerControl.next();
 		var rationalizeWidth;
@@ -598,14 +599,61 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			rationalizeWidth = $headerControl.parent().innerWidth() - $headerControl.position().left;
 		}
 
-		if (option.controlWidth && rationalizeWidth >= option.controlWidth) {
+		/*if (option.controlWidth && rationalizeWidth >= option.controlWidth) {
 			rationalizeWidth = option.controlWidth;
-		}
-		console.log(rationalizeWidth);
+		}*/
 		$("#" + option.control + " .control").css({ "width": rationalizeWidth, "transition": "width .15s" });
-	}*/
 
-	/*function rationalizeHeaderControlWidthAuto(option){
+		var navobj = $("#" + option.control+' ul.pear-nav-control.pc');
+		var dropdown = $(".tabdrop", navobj);
+
+        var collection = 0;
+        var maxwidth = rationalizeWidth - 60;
+
+        var liwidth = 0;
+        //检查超过一行的标签页
+        $('.tabdrop').find('dd').each(function(){
+        	var newLI = $('<li></li>').html($(this).html());
+        	newLI.addClass('layui-nav-item');
+        	navobj.append(newLI);
+        	$(this).remove();
+
+        })
+        //var litabs = navobj.append(dropdown.find('dd')).find('>li').not('.tabdrop');
+        var litabs = navobj.find('>li').not('.tabdrop');
+
+        var totalwidth = 0;
+        litabs.each(function () {
+            totalwidth += $(this).outerWidth(true);
+        });
+
+        if (rationalizeWidth <= totalwidth) {
+            litabs.each(function () {
+                liwidth += $(this).outerWidth(true);
+                if (liwidth > maxwidth) {
+                    var newDD = $('<dd></dd>').html($(this).html());
+                    newDD.attr('pear-href', $(this).attr('pear-href'));
+                    newDD.attr('pear-title', $(this).attr('pear-title'));
+                    newDD.attr('pear-id', $(this).attr('pear-id'));
+                    dropdown.find('dl').append(newDD);
+                    collection++;
+                    $(this).remove();
+                }
+            });
+            if (collection > 0) {
+                dropdown.removeClass('layui-hide');
+                if (dropdown.find('.active').length === 1) {
+                    dropdown.addClass('active');
+                } else {
+                    dropdown.removeClass('active');
+                }
+            }
+        }else {
+            dropdown.addClass('layui-hide');
+        }
+	}
+
+	function rationalizeHeaderControlWidthAuto(option){
 		$(window).on('resize', function () {
 			rationalizeHeaderControlWidth(option);
 		})
@@ -613,7 +661,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		$(document).ready(function () {
 			rationalizeHeaderControlWidth(option);
 		});
-	}*/
+	}
 
 	exports(MOD_NAME, new pearMenu());
 })
