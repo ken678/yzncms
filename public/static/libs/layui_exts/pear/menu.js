@@ -19,7 +19,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			defaultOpen: opt.defaultOpen,
 			defaultSelect: opt.defaultSelect,
 			control: opt.control,
-			controlWidth: opt.controlWidth ? opt.controlWidth : "auto",
 			defaultMenu: opt.defaultMenu,
 			accordion: opt.accordion,
 			height: opt.height,
