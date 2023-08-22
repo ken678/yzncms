@@ -355,7 +355,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	function createMenuAndControl(option) {
 		//var control = '<div style="width: ' + option.controlWidth + 'px;white-space: nowrap;overflow-x: scroll;overflow: hidden;" class="control"><ul class="layui-nav pear-nav-control pc layui-hide-xs" style="width: fit-content;">';
 		var control = '<div class="control"><ul class="layui-nav pear-nav-control pc layui-hide-xs">';
-		control+= '<li class="layui-nav-item tabdrop layui-hide" style="float:right !important;"><a href="javascript:;"><i class="layui-icon layui-icon-more" style="font-size:20px;"></i></a><dl class="layui-nav-child"></dl></li>';
+		control+= '<li class="layui-nav-item tabdrop layui-hide" style="float:right !important;"><a href="javascript:;"><i class="layui-icon layui-icon-more layui-font-20"></i></a><dl class="layui-nav-child"></dl></li>';
 		var controlPe = '<ul class="layui-nav pear-nav-control layui-hide-sm">';
 		// 声 明 头 部
 		var menu = '<div class="layui-side-scroll ' + option.theme + '">'
