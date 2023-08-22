@@ -16,6 +16,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
+use Traversable;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
 {
@@ -470,16 +471,19 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     // ArrayAccess
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->items);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->items[$offset];
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
@@ -489,6 +493,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         }
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->items[$offset]);
@@ -501,12 +506,14 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     //IteratorAggregate
-    public function getIterator()
+    #[\ReturnTypeWillChange]
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
 
     //JsonSerializable
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();

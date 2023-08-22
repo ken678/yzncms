@@ -150,7 +150,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
 
         $url = $path;
         if (!empty($parameters)) {
-            $url .= '?' . http_build_query($parameters, null, '&');
+            $url .= '?' . http_build_query($parameters, '', '&');
         }
 
         return $url . $this->buildFragment();
@@ -341,7 +341,8 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
      * @return Traversable An instance of an object implementing <b>Iterator</b> or
      * <b>Traversable</b>
      */
-    public function getIterator()
+    #[\ReturnTypeWillChange]
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items->all());
     }
@@ -352,7 +353,8 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
      * @param  mixed $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    #[\ReturnTypeWillChange]
+    public function offsetExists($offset): bool
     {
         return $this->items->offsetExists($offset);
     }
@@ -363,6 +365,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
      * @param  mixed $offset
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->items->offsetGet($offset);
@@ -374,6 +377,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
      * @param  mixed $offset
      * @param  mixed $value
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->items->offsetSet($offset, $value);
@@ -386,6 +390,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
      * @return void
      * @since  5.0.0
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $this->items->offsetUnset($offset);
@@ -394,7 +399,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
     /**
      * Count elements of an object
      */
-    public function count()
+    public function count(): int
     {
         return $this->items->count();
     }
@@ -404,7 +409,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
         return (string) $this->render();
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         try {
             $total = $this->total();
@@ -424,6 +429,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
     /**
      * Specify data which should be serialized to JSON
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();
