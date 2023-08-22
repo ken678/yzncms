@@ -10,7 +10,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	};
 
 	pearMenu.prototype.render = function (opt) {
-
 		var option = {
 			elem: opt.elem,
 			async: opt.async,
@@ -57,33 +56,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		// 处理高度
 		$("#" + opt.elem).height(option.height)
 
-		/*setTimeout(function () {
-			$("#" + opt.control + " .control").on("mousewheel DOMMouseScroll", function (event) {
-
-				var delta = (event.originalEvent.wheelDelta && (event.originalEvent.wheelDelta > 0 ? 1 : -1)) || // chrome & ie
-					(event.originalEvent.detail && (event.originalEvent.detail > 0 ? -1 : 1)); // firefox
-
-				if (delta > 0) {
-					for (var num = 1; num < 20; num++) {
-						setTimeout(function () {
-							if ($("#" + opt.control + " .control ul").css('left').replace("px", "") < 0) {
-								$("#" + opt.control + " .control ul").css("left", "+=2px");
-							}
-						}, 10)
-					}
-				} else if (delta < 0) {
-					if (((Number)($("#" + opt.control + " .control ul").css("left").replace("px", "")) + ($("#" + opt.control + " .control ul").width() - $("#" + opt.control + " .control").width())) > 0) {
-						for (var num = 1; num < 20; num++) {
-							setTimeout(function () {
-								$("#" + opt.control + " .control ul").css("left", "-=2px");
-							}, 10)
-						}
-					}
-				}
-			});
-		}, 1000)*/
-
-    return new pearMenu(option);
+        return new pearMenu(option);
 	}
 
 	pearMenu.prototype.click = function (clickEvent) {
@@ -353,7 +326,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	}
 
 	function createMenuAndControl(option) {
-		//var control = '<div style="width: ' + option.controlWidth + 'px;white-space: nowrap;overflow-x: scroll;overflow: hidden;" class="control"><ul class="layui-nav pear-nav-control pc layui-hide-xs" style="width: fit-content;">';
 		var control = '<div class="control"><ul class="layui-nav pear-nav-control pc layui-hide-xs">';
 		control+= '<li class="layui-nav-item tabdrop layui-hide" style="float:right !important;"><a href="javascript:;"><i class="layui-icon layui-icon-more layui-font-20"></i></a><dl class="layui-nav-child"></dl></li>';
 		var controlPe = '<ul class="layui-nav pear-nav-control layui-hide-sm">';
