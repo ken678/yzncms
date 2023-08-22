@@ -612,6 +612,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
         $('.tabdrop').find('dd').each(function(){
         	var newLI = $('<li></li>').html($(this).html());
         	newLI.addClass('layui-nav-item');
+            newLI.attr('pear-href', $(this).attr('pear-href'));
+            newLI.attr('pear-title', $(this).attr('pear-title'));
+            newLI.attr('pear-id', $(this).attr('pear-id'));
         	navobj.append(newLI);
         	$(this).remove();
 
