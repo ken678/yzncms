@@ -15,6 +15,6 @@
 
 return [
     "yzncms_name"    => "YznCMS内容管理系统", //产品名称
-    "yzncms_release" => 2023080301, //产品更新日期
-    "yzncms_version" => "1.2.2", //产品版本号
+    "yzncms_release" => 2023082901, //产品更新日期
+    "yzncms_version" => "1.3.0", //产品版本号
 ];
