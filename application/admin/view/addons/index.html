@@ -1,21 +1,14 @@
 {extend name="admin@index_layout"/}
 {block name="main"}
 <style type="text/css">
-.releasetips {
-    position: relative;
-}
-.releasetips i {
-    display: block;
-    background: #f00;
-    border-radius: 50%;
-    width: 0.3em;
-    height: 0.3em;
-    top: 0px;
-    right: -8px;
-    position: absolute;
-    box-shadow: 0px 0px 2px #f11414;
-}
+.releasetips {position: relative;}
+.releasetips i {display: block;background: #f00;border-radius: 50%;width: 0.3em;height: 0.3em;top: 0px;right: -8px;position: absolute;box-shadow: 0px 0px 2px #f11414;}
 </style>
+<div class="alert alert-info-light">
+    <b>温馨提示</b><br>
+    1、插件在线安装，升级和购买需要注册YznCMS官网账号,请点击下方【会员信息】，点击【注册】按钮<br>
+    2、点击插件名称可查看详情，截图和日志等信息
+</div>
 {if $type=='online'}
 <div class="layui-tab layui-tab-card" lay-filter="tabswitch">
     <ul class="layui-tab-title nav-category">
@@ -194,7 +187,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         search:false,
         cols: [
             [
-                { field: 'title', width: 200, title: '名称' },
+                { field: 'title', width: 200, title: '名称',templet: '<div><a href="javascript:;" lay-tips="点我了解更多">{{= d.title }}</a></div>' },
                 { field: 'name', width: 150, title: '标识' },
                 { field: 'description', title: '描述' },
                 { field: 'author', width: 90, title: '作者' },
