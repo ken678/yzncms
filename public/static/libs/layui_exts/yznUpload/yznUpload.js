@@ -25,7 +25,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                 onUploadSuccess: function (up, ret, file) {
                     var button = up.element;
                     var onUploadSuccess = up.options.onUploadSuccess;
-                    var data = typeof ret.data !== 'undefined' ? ret.data : null;
+                    var data = typeof ret.data !== 'undefined' ? ret.data : ret;
                     //上传成功后回调
                     if (button) {
                         //如果有文本框则填充
@@ -65,7 +65,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                 onUploadError: function (up, ret, file) {
                     var button = up.element;
                     var onUploadError = up.options.onUploadError;
-                    var data = typeof ret.data !== 'undefined' ? ret.data : null;
+                    var data = typeof ret.data !== 'undefined' ? ret.data : ret;
                     if (button) {
                         var onDomUploadError = $(button).data("upload-error");
                         if (onDomUploadError) {
