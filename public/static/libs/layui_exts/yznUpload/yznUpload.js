@@ -25,7 +25,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                 onUploadSuccess: function (up, ret, file) {
                     var button = up.element;
                     var onUploadSuccess = up.options.onUploadSuccess;
-                    var data = typeof ret !== 'undefined' ? ret : null;
+                    var data = typeof ret.data !== 'undefined' ? ret.data : null;
                     //上传成功后回调
                     if (button) {
                         //如果有文本框则填充
