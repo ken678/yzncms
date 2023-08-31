@@ -133,7 +133,7 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdown','form'], function() {
+layui.use(['yznTable','table','laytpl','yzn','notice','element','dropdown','form','yznUpload'], function() {
     var yznTable = layui.yznTable,
         $ = layui.$,
         table = layui.table,
@@ -143,7 +143,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         element = layui.element,
         dropdown = layui.dropdown,
         form = layui.form,
-        upload = layui.upload;
+        yznUpload = layui.yznUpload;
 
     var init = {
         table_elem: '#currentTable',
@@ -173,7 +173,7 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         init: init,
         toolbar: ['refresh',
             [{
-                html:'<a class="layui-btn layui-btn-sm" onclick="importFile();"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
+                html:'<a id="faupload-addon" class="layui-btn layui-btn-sm faupload" data-url="{:url("local")}" data-chunking="false" data-mimetype="zip,fastaddon" data-multiple="false"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
              },{
                 html:'<a class="layui-btn {if $type=='online'}layui-btn-normal{else}layui-btn-primary layui-border-blue{/if} layui-btn-sm btn-switch" data-type="all" href="{:url("index")}" style="margin-left: 10px !important;"><i class="iconfont icon-other"></i>&nbsp;全部</a>'
              },{
@@ -228,10 +228,53 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
             if(count==-1){
                 switch_local();
             }
+            yznUpload.api.upload("#faupload-addon", function (data, ret) {
+                //上传完毕回调
+                var addon = data.addon;
+                var testdata = data.addon.testdata;
+                operate(addon.name, 'enable', false, function (data, ret) {
+                    layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (testdata ? '<br>你还可以继续导入测试数据！' : ""), {
+                        btn: testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
+                        title:'温馨提示',
+                        yes: function (index) {
+                            if (testdata) {
+                                yzn.request.post({
+                                    url: '{:url("testdata")}',
+                                    data: {
+                                        name: addon.name,
+                                    }
+                                }, function (data,res) {
+                                    layer.close(index);
+                                    yzn.msg.success(res.msg);
+                                });
+                            } else {
+                                layer.close(index);
+                            }
+                        },
+                        icon: 1
+                    });
+                });  
+                return false;
+            }, function (data, ret) {
+                if (ret.msg && ret.msg.match(/(login|登录)/g)) {
+                    return layer.alert(ret.msg, {
+                        title: '温馨提示',
+                        btn: ['立即登录'],
+                        yes: function (index, layero) {
+                            $(".btn-userinfo").trigger("click");
+                        }
+                    });
+                }
+            })
         }
     });
 
     yznTable.bindevent();
+
+    // 检测是否登录
+    $(document).on("mousedown", "#faupload-addon", function (e) {
+        if(!isLogin()) return
+    });
 
 
     table.on('tool('+init.layFilter+')', function(obj){
@@ -625,52 +668,6 @@ layui.use(['yznTable','table','upload','laytpl','yzn','notice','element','dropdo
         });
     });
 
-    importFile=function (){
-        $('#local-install').click();
-    }
-
-    //执行实例
-    var uploadInst = upload.render({
-        elem: '#local-install',
-        url: '{:url("local")}',
-        accept: 'file',
-        exts: 'zip',
-        done: function(res) {
-            if(res.code==1){
-                //上传完毕回调
-                var addon = res.data.addon;
-                var testdata = res.data.addon.testdata;
-                operate(addon.name, 'enable', false, function (data, ret) {
-                    layer.alert('安装成功！清除浏览器缓存和框架缓存后生效！' + (testdata ? '<br>你还可以继续导入测试数据！' : ""), {
-                        btn: testdata ? ['导入测试数据', '暂不导入'] : ['确定'],
-                        title:'温馨提示',
-                        yes: function (index) {
-                            if (testdata) {
-                                yzn.request.post({
-                                    url: '{:url("testdata")}',
-                                    data: {
-                                        name: addon.name,
-                                    }
-                                }, function (data,res) {
-                                    layer.close(index);
-                                    yzn.msg.success(res.msg);
-                                });
-                            } else {
-                                layer.close(index);
-                            }
-                        },
-                        icon: 1
-                    });
-                });  
-            }else{
-               layer.alert(res.msg, {icon: 7}); 
-            }
-            return false;
-        },
-        error: function() {
-            //请求异常回调
-        }
-    });
 });
 </script>
 {/block}
