@@ -86,7 +86,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                             return;
                         }
                     }
-                    notice.error({ message: ret.message.toString().replace(/(<([^>]+)>)/gi, "") + "(code:" + ret.code + ")" });
+                    notice.error({ message: ret.msg.toString().replace(/(<([^>]+)>)/gi, "") + "(code:" + ret.code + ")" });
                 },
                 //服务器响应数据后
                 onUploadResponse: function (response, up, file) {
