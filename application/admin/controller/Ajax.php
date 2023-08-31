@@ -22,7 +22,7 @@ use think\Db;
 class Ajax extends Adminbase
 {
     protected $noNeedRight = ['*'];
-    
+
     //编辑器初始配置
     private $editorConfig = [
         /* 上传图片配置项 */
@@ -167,7 +167,7 @@ class Ajax extends Adminbase
         if ($dir == '') {
             return json([
                 'code'    => 0,
-                'info'    => '没有指定上传目录',
+                'msg'     => '没有指定上传目录',
                 'state'   => '没有指定上传目录', //兼容百度
                 'message' => '没有指定上传目录', //兼容editormd
             ]);
@@ -177,7 +177,7 @@ class Ajax extends Adminbase
             if (!config('chunking')) {
                 return json([
                     'code' => 0,
-                    'info' => '未开启分片上传功能',
+                    'msg'  => '未开启分片上传功能',
                 ]);
             }
             //分片
@@ -195,7 +195,7 @@ class Ajax extends Adminbase
                 } catch (UploadException $e) {
                     return json([
                         'code'    => 0,
-                        'info'    => $e->getMessage(),
+                        'msg'     => $e->getMessage(),
                         'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
@@ -209,7 +209,7 @@ class Ajax extends Adminbase
                 } catch (UploadException $e) {
                     return json([
                         'code'    => 0,
-                        'info'    => $e->getMessage(),
+                        'msg'     => $e->getMessage(),
                         'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
@@ -224,7 +224,7 @@ class Ajax extends Adminbase
                 } catch (UploadException $e) {
                     return json([
                         'code'    => 0,
-                        'info'    => $e->getMessage(),
+                        'msg'     => $e->getMessage(),
                         'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
@@ -255,7 +255,7 @@ class Ajax extends Adminbase
         } catch (UploadException $e) {
             return json([
                 'code'    => 0,
-                'info'    => $e->getMessage(),
+                'msg'     => $e->getMessage(),
                 'state'   => $e->getMessage(), //兼容百度
                 'message' => $e->getMessage(), //兼容editormd
             ]);

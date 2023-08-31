@@ -141,7 +141,7 @@ class Upload
         if ($file_exists = Attachment::get(['md5' => $this->file->hash('md5')])) {
             return json([
                 'code'    => 1,
-                'info'    => $file_exists['name'] . '上传成功',
+                'msg'     => $file_exists['name'] . '上传成功',
                 'id'      => $file_exists['id'],
                 'path'    => $file_exists['path'],
                 "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
@@ -204,7 +204,7 @@ class Upload
             if ($file_add = Attachment::create($file_info)) {
                 return json([
                     'code'    => 1,
-                    'info'    => $file_info['name'] . '上传成功',
+                    'msg'     => $file_info['name'] . '上传成功',
                     'id'      => $file_add['id'],
                     'path'    => $file_info['path'],
                     "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
