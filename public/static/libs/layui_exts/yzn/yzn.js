@@ -418,6 +418,8 @@ layui.define(['layer','table', 'notice', 'addons'], function(exports) {
                 }
                 if(parent.layui.admin){
                    parent.layui.admin.addTab(id, title,url);
+                }else if(window.top.layui.admin){
+                    window.top.layui.admin.addTab(id, title,url);
                 }
             })
             // 监听弹出层的打开
