@@ -44,6 +44,16 @@ class Homebase extends Base
         $this->assign('site', $site);
     }
 
+    /**
+     * 渲染配置信息
+     * @param mixed $name  键名或数组
+     * @param mixed $value 值
+     */
+    protected function assignconfig($name, $value = '')
+    {
+        $this->view->site = array_merge($this->view->site ? $this->view->site : [], is_array($name) ? $name : [$name => $value]);
+    }
+
     protected function fetch($template = '', $vars = [], $config = [], $renderContent = false)
     {
         $Theme    = empty(Config::get('site.theme')) ? 'default' : Config::get('site.theme');
