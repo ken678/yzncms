@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\common\controller;
 
-use app\admin\model\AuthRule;
 use app\admin\service\User;
 use think\facade\Config;
 use think\facade\Hook;
@@ -74,7 +73,7 @@ class Adminbase extends Base
     protected function initialize()
     {
         parent::initialize();
-        $this->auth     = User::instance();
+        $this->auth = User::instance();
 
         $modulename     = $this->request->module();
         $controllername = parse_name($this->request->controller());
@@ -134,6 +133,16 @@ class Adminbase extends Base
         $this->assign('site', $site);
         $this->assign('auth', $this->auth);
         $this->assign('userInfo', Session::get('admin'));
+    }
+
+    /**
+     * 渲染配置信息
+     * @param mixed $name  键名或数组
+     * @param mixed $value 值
+     */
+    protected function assignconfig($name, $value = '')
+    {
+        $this->view->site = array_merge($this->view->site ? $this->view->site : [], is_array($name) ? $name : [$name => $value]);
     }
 
     /**
