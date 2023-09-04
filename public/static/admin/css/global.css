@@ -122,6 +122,7 @@ html, body, .layui-layout {height: 100%; }
 .light-theme.layui-side .layui-side-scroll {background-color: white !important; color: black !important; }
 .dark-theme.layui-header {border-bottom: none; background-color: #28333E; color: whitesmoke; }
 .dark-theme.layui-header li>a{color: whitesmoke!important; }
+.dark-theme.layui-header li>a i{color: whitesmoke!important; }
 .dark-theme.layui-header .layui-logo {box-shadow: none; border: none; }
 
 /** 顶部主题 (白) */
