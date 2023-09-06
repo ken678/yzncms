@@ -28,6 +28,16 @@ class Api
     protected $request;
 
     /**
+     * @var bool 验证失败是否抛出异常
+     */
+    protected $failException = false;
+
+    /**
+     * @var bool 是否批量验证
+     */
+    protected $batchValidate = false;
+
+    /**
      * 默认响应输出类型,支持json/xml
      * @var string
      */
@@ -114,6 +124,19 @@ class Api
         }
         $response = Response::create($result, $type, $code)->header($header);
         throw new HttpResponseException($response);
+    }
+
+    /**
+     * 设置验证失败后是否抛出异常
+     * @access protected
+     * @param bool $fail 是否抛出异常
+     * @return $this
+     */
+    protected function validateFailException($fail = true)
+    {
+        $this->failException = $fail;
+
+        return $this;
     }
 
     /**
