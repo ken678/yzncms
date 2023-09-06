@@ -153,7 +153,12 @@ html, body, .layui-layout {height: 100%; }
 .menu-search-list li {position: relative; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; height: 50px; margin-bottom: 8px; padding: 0px 10px; color: currentColor; font-size: 14px; border-radius: 4px; box-shadow: 0 1px 3px #d4d9e1; cursor: pointer; background-color: #fff; }
 .menu-search-list li:hover {background-color: #5FB878; color: white; }
 .menu-search-list li.this {background-color: #5FB878; color: white; }
-
+.menu-search-tips{margin-bottom: 15px;padding: 0 15px;width: 100%}
+.menu-search-tips>div{display: flex;align-items: center;justify-content: flex-end;font-size: 12px;}
+.menu-search-tips .mr-1 {margin-right: 4px;}
+.menu-search-tips .mr-5 {margin-right: 20px;}
+.menu-search-tips .w-5 {width: 14px;}
+.menu-search-tips kbd{border: 1px solid #e5e7eb;font-size: 10px;text-align: center;padding:2px;font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;border-radius:5px;}
 /*menu.css*/
 .pear-nav-tree {width: 230px !important; border-radius: 0px; background-color: #28333E; }
 .pear-nav-tree .layui-nav-item>a {height: 56px; line-height: 56px; padding-top: 0px; padding-bottom: 0px; }

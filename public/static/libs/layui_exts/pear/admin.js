@@ -477,6 +477,8 @@ layui.define(['table', 'jquery', 'element','form', 'tab', 'menu', 'frame', 'them
 				'  <div class="menu-search-no-data">暂无搜索结果</div>',
 				'  <ul class="menu-search-list">',
 				'  </ul>',
+				'  <div class="menu-search-tips"><div><span class="mr-1">选择</span><kbd class="mr-1 w-5"> ↑ </kbd><kbd class="mr-5 w-5"> ↓ </kbd>',
+				'<span class="mr-1">确定</span><kbd class="mr-5"> Enter </kbd><span class="mr-1">关闭</span><kbd class="mr-1"> Esc </kbd></div></div>',
 				'</div>'
 			].join('');
 
