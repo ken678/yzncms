@@ -158,7 +158,7 @@ html, body, .layui-layout {height: 100%; }
 .menu-search-tips .mr-1 {margin-right: 4px;}
 .menu-search-tips .mr-5 {margin-right: 20px;}
 .menu-search-tips .w-5 {width: 14px;}
-.menu-search-tips kbd{border: 1px solid #e5e7eb;font-size: 10px;text-align: center;padding:2px;font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;border-radius:5px;}
+.menu-search-tips kbd{line-height: 1.5;border: 1px solid #e5e7eb;font-size: 10px;text-align: center;padding:2px;font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;border-radius:5px;}
 /*menu.css*/
 .pear-nav-tree {width: 230px !important; border-radius: 0px; background-color: #28333E; }
 .pear-nav-tree .layui-nav-item>a {height: 56px; line-height: 56px; padding-top: 0px; padding-bottom: 0px; }
