@@ -40,7 +40,7 @@
             <!-- 顶 部 右 侧 菜 单 -->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item layui-hide-xs"><a href="{$Think.ROOT_URL}" target="_blank" class="layui-icon layui-icon-website"></a></li>
-                <li class="layui-nav-item layui-hide-xs"><a href="#" class="menuSearch layui-icon layui-icon-search"></a></li>
+                <!-- <li class="layui-nav-item layui-hide-xs"><a href="#" class="menuSearch layui-icon layui-icon-search"></a></li> -->
                 <li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
                 <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-trash" title="清空缓存"></i></a>
                         <dl class="layui-nav-child" id="deletecache">
@@ -75,6 +75,12 @@
             </div>
             <!-- 菜 单 内 容 -->
             <div class="layui-side-scroll">
+                <div class="sider-search menuSearch">
+                    <div class="search-input">
+                        <div class="search-icon"><i class="layui-icon layui-icon-search"></i></div>
+                        <span class="search-text">搜索菜单</span>
+                    </div>
+                </div>
                 <div id="sideMenu"></div>
             </div>
         </div>
