@@ -23,6 +23,21 @@
         <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
     </div>
 </div>
+
+<script type="text/html" id="titleTpl">
+    <div>
+    {{#  if(d.url){ }}
+        {{#  if(d.name != 'recommend' ){ }}
+        <a href="javascript:;" data-open="{{d.url}}" lay-tips="查看插件介绍和帮助" title="插件详情">{{= d.title }}</a>
+        {{#  } else { }}
+        <a href="{{= d.url}}" target="_blank" lay-tips="查看插件介绍和帮助">{{= d.title }}</a>
+        {{#  } }}
+    {{#  } else { }}
+        <a href="javascript:;">{{= d.title }}</a>
+    {{#  } }}
+    </div>
+</script>
+
 <script type="text/html" id="operateTpl">
 {{#  if(d.addon){ }}
     {{# if(d.addon.version!=d.version){ }}
@@ -52,7 +67,6 @@
     {{#  } }}
 {{#  } }}
 </script>
-<button type="button" class="layui-btn layui-btn-sm" id="local-install" value="离线安装" style="display: none"/>
 
 <script id="statusTpl" type="text/html">
 {{#  if(d.addon){ }}
@@ -187,7 +201,7 @@ layui.use(['yznTable','table','laytpl','yzn','notice','element','dropdown','form
         search:false,
         cols: [
             [
-                { field: 'title', width: 200, title: '名称',templet: '<div><a href="javascript:;" lay-tips="点我了解更多">{{= d.title }}</a></div>' },
+                { field: 'title', width: 200, title: '名称',templet: '#titleTpl'},
                 { field: 'name', width: 150, title: '标识' },
                 { field: 'description', title: '描述' },
                 { field: 'author', width: 90, title: '作者' },
