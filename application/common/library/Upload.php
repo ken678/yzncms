@@ -195,7 +195,7 @@ class Upload
                 'uid'  => (int) cookie('uid'),
                 'name' => mb_substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
                 'mime' => $this->fileInfo['type'],
-                'path' => config('public_url') . $uploadDir . $info->getSaveName(),
+                'path' => cdnurl(config('public_url') . $uploadDir . $info->getSaveName()),
                 'ext'  => $this->fileInfo['suffix'],
                 'size' => $this->fileInfo['size'],
                 'md5'  => $md5,
