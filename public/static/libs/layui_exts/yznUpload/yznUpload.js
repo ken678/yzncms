@@ -14,7 +14,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
             config: {
                 container: document.body,
                 classname: '.plupload:not([initialized]),.faupload:not([initialized])',
-                previewtpl: '<li class="file-item thumbnail"><img data-image  data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">{{- d.data.multiple==true ? "<i class=\'iconfont icon-yidong move-picture\'></i>" : "" }} <i class="iconfont icon-tailor cropper" data-input-id="{{d.data.inputId}}"></i> <i class="iconfont icon-trash remove-picture"></i></div></li>',             
+                previewtpl: '<li class="file-item thumbnail"><a href="javascript:;"><img data-image  data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">{{- d.data.multiple==true ? "<i class=\'iconfont icon-yidong move-picture\'></i>" : "" }} <i class="iconfont icon-tailor cropper" data-input-id="{{d.data.inputId}}"></i> <i class="iconfont icon-trash remove-picture"></i></div></a></li>',             
             },
             events: {
                 //初始化
@@ -381,8 +381,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                                     var value = (json && typeof json[i] !== 'undefined' ? json[i] : null);
                                     //var data = {url: j, fullurl: Fast.api.cdnurl(j), data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix};
                                     var data = {url: j, data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix};
-                                    console.log(data);
-                                    laytpl(Upload.config.previewtpl).render(data, function(html) {
+                                    laytpl(tpl ? $("#" + tpl).html() : Upload.config.previewtpl).render(data, function(html) {
                                         $("#" + preview_id).append(html);
                                     });
                                 });
