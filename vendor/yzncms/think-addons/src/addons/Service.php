@@ -239,6 +239,13 @@ class Service
         $addonDir        = self::getAddonDir($name);
         $sourceAssetsDir = self::getSourceAssetsDir($name);
         $destAssetsDir   = self::getDestAssetsDir($name);
+
+        $files = self::getGlobalFiles($name);
+        if ($files) {
+            //刷新插件配置缓存
+            self::config($name, ['files' => $files]);
+        }
+
         if (is_dir($sourceAssetsDir)) {
             File::copy_dir($sourceAssetsDir, $destAssetsDir);
         }
@@ -699,6 +706,27 @@ EOD;
             $config = parse_ini_string($info);
         } catch (ZipException $e) {
             throw new Exception('插件info.ini文件不存在！');
+        }
+        return $config;
+    }
+
+    /**
+     * 读取或修改插件配置
+     * @param string $name
+     * @param array  $changed
+     * @return array
+     */
+    public static function config($name, $changed = [])
+    {
+        $addonDir        = self::getAddonDir($name);
+        $addonConfigFile = $addonDir . '.addonrc';
+        $config          = [];
+        if (is_file($addonConfigFile)) {
+            $config = (array) json_decode(file_get_contents($addonConfigFile), true);
+        }
+        $config = array_merge($config, $changed);
+        if ($changed) {
+            file_put_contents($addonConfigFile, json_encode($config, JSON_UNESCAPED_UNICODE));
         }
         return $config;
     }

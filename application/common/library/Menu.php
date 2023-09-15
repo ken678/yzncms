@@ -15,6 +15,8 @@
 namespace app\common\library;
 
 use app\admin\model\AuthRule as AuthRuleModel;
+use think\addons\Service;
+use think\exception\PDOException;
 use util\Tree;
 
 class Menu
@@ -28,6 +30,13 @@ class Menu
     {
         $old = [];
         self::menuUpdate($menu, $old, $parent);
+
+        //菜单刷新处理
+        $info = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
+        preg_match('/addons\\\\([a-z0-9]+)\\\\/i', $info['class'], $matches);
+        if ($matches && isset($matches[1])) {
+            Menu::refresh($matches[1], $menu);
+        }
     }
 
     /**
@@ -76,6 +85,73 @@ class Menu
     }
 
     /**
+     * 升级菜单
+     * @param string $name 插件名称
+     * @param array  $menu 新菜单
+     * @return bool
+     */
+    public static function upgrade($name, $menu)
+    {
+        $ids = self::getAuthRuleIdsByName($name);
+        $old = AuthRuleModel::where('id', 'in', $ids)->select()->toArray();
+        $old = array_column($old, null, 'name');
+
+        try {
+            self::menuUpdate($menu, $old);
+            $ids = [];
+            foreach ($old as $index => $item) {
+                if (!isset($item['keep'])) {
+                    $ids[] = $item['id'];
+                }
+            }
+            if ($ids) {
+                //旧版本的菜单需要做删除处理
+                $config = Service::config($name);
+                $menus  = $config['menus'] ?? [];
+                $where  = ['id' => ['in', $ids]];
+                if ($menus) {
+                    //必须是旧版本中的菜单,可排除用户自主创建的菜单
+                    $where['name'] = ['in', $menus];
+                }
+                AuthRuleModel::where($where)->delete();
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+
+        Menu::refresh($name, $menu);
+        return true;
+    }
+
+    /**
+     * 刷新插件菜单配置缓存
+     * @param string $name
+     * @param array  $menu
+     */
+    public static function refresh($name, $menu = [])
+    {
+        if (!$menu) {
+            // $menu为空时表示首次安装，首次安装需刷新插件菜单标识缓存
+            $menuIds = self::getAuthRuleIdsByName($name);
+            $menus   = Db::name("auth_rule")->where('id', 'in', $menuIds)->column('name');
+        } else {
+            // 刷新新的菜单缓存
+            $getMenus = function ($menu) use (&$getMenus) {
+                $result = [];
+                foreach ($menu as $index => $item) {
+                    $result[] = $item['name'];
+                    $result   = array_merge($result, isset($item['sublist']) && is_array($item['sublist']) ? $getMenus($item['sublist']) : []);
+                }
+                return $result;
+            };
+            $menus = $getMenus($menu);
+        }
+
+        //刷新新的插件核心菜单缓存
+        Service::config($name, ['menus' => $menus]);
+    }
+
+    /**
      * 菜单升级
      * @param array $newMenu
      * @param array $oldMenu
@@ -104,7 +180,7 @@ class Menu
                 $menu = $oldMenu[$data['name']];
                 //更新旧菜单
                 AuthRuleModel::update($data, ['id' => $menu['id']]);
-                //$oldMenu[$data['name']]['keep'] = true;
+                $oldMenu[$data['name']]['keep'] = true;
             }
             if ($hasChild) {
                 self::menuUpdate($v['sublist'], $oldMenu, $menu['id']);
