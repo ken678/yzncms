@@ -256,6 +256,16 @@ class Service
                 File::copy_dir($addonDir . $dir, ROOT_PATH . $dir);
             }
         }
+
+        //插件纯净模式时将插件目录下的application、public和assets删除
+        if (config('addon_pure_mode')) {
+            // 删除插件目录已复制到全局的文件
+            @File::del_dir($sourceAssetsDir);
+            foreach (self::getCheckDirs() as $k => $dir) {
+                @File::del_dir($addonDir . $dir);
+            }
+        }
+
         //执行启用脚本
         try {
             $class = get_addon_class($name);
@@ -296,7 +306,7 @@ class Service
 
         if (config('backup_global_files')) {
             //仅备份修改过的文件
-            $conflictFiles = Service::getGlobalFiles($name, true);
+            $conflictFiles = self::getGlobalFiles($name, true);
             if ($conflictFiles) {
                 $zip = new ZipFile();
                 try {
@@ -313,8 +323,43 @@ class Service
             }
         }
 
+        $config = self::config($name);
+
+        $addonDir = self::getAddonDir($name);
+        //插件资源目录
+        $destAssetsDir = self::getDestAssetsDir($name);
+
         // 移除插件全局文件
         $list = self::getGlobalFiles($name);
+
+        //插件纯净模式时将原有的文件复制回插件目录
+        //当无法获取全局文件列表时也将列表复制回插件目录
+        if (config('addon_pure_mode') || !$list) {
+            if ($config && isset($config['files']) && is_array($config['files'])) {
+                foreach ($config['files'] as $index => $item) {
+                    //避免切换不同服务器后导致路径不一致
+                    $item = str_replace(['/', '\\'], DS, $item);
+                    //插件资源目录，无需重复复制
+                    if (stripos($item, str_replace(ROOT_PATH, '', $destAssetsDir)) === 0) {
+                        continue;
+                    }
+                    //检查目录是否存在，不存在则创建
+                    $itemBaseDir = dirname($addonDir . $item);
+                    if (!is_dir($itemBaseDir)) {
+                        @mkdir($itemBaseDir, 0755, true);
+                    }
+                    if (is_file(ROOT_PATH . $item)) {
+                        @copy(ROOT_PATH . $item, $addonDir . $item);
+                    }
+                }
+                $list = $config['files'];
+            }
+            //复制插件目录资源
+            if (is_dir($destAssetsDir)) {
+                @File::copy_dir($destAssetsDir, $addonDir . 'assets' . DS);
+            }
+        }
+
         $dirs = [];
         foreach ($list as $k => $v) {
             $file   = ROOT_PATH . $v;

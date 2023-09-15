@@ -155,6 +155,8 @@ return [
     'loginip_check'           => false,
     //插件启用禁用时是否备份对应的全局文件
     'backup_global_files'     => true,
+    //插件纯净模式，插件启用后是否删除插件目录的application、public和assets文件夹
+    'addon_pure_mode'         => true,
     //允许跨域的域名,多个以,分隔
     'cors_request_domain'     => 'localhost,127.0.0.1',
     //文件保存格式
