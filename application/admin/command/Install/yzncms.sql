@@ -90,7 +90,7 @@ CREATE TABLE `yzn_auth_group` (
   `parentid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '父组别',
   `title` varchar(20) NOT NULL DEFAULT '' COMMENT '用户组中文名称',
   `description` varchar(80) NOT NULL DEFAULT '' COMMENT '描述信息',
-  `rules` varchar(500) NOT NULL DEFAULT '' COMMENT '用户组拥有的规则id，多个规则 , 隔开',
+  `rules` text NOT NULL COMMENT '用户组拥有的规则id，多个规则 , 隔开',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='权限组表';
