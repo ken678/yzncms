@@ -25,8 +25,6 @@ return [
     'app_trace'               => Env::get('app.trace', true),
     // 应用模式状态
     'app_status'              => '',
-    // 是否支持多模块
-    'app_multi_module'        => true,
     // 入口自动绑定模块
     'auto_bind_module'        => false,
     // 注册的根命名空间
@@ -43,14 +41,10 @@ return [
     'default_timezone'        => 'PRC',
     // 是否开启多语言
     'lang_switch_on'          => false,
-    // 默认全局过滤方法 用逗号分隔多个
-    'default_filter'          => '',
     // 默认语言
     'default_lang'            => 'zh-cn',
-    // 应用类库后缀
-    'class_suffix'            => false,
-    // 控制器类后缀
-    'controller_suffix'       => false,
+    // 默认验证器
+    'default_validate'        => '',
 
     // +----------------------------------------------------------------------
     // | 模块设置
@@ -64,8 +58,6 @@ return [
     'default_controller'      => 'Index',
     // 默认操作名
     'default_action'          => 'index',
-    // 默认验证器
-    'default_validate'        => '',
     // 默认的空模块名
     'empty_module'            => 'error',
     // 默认的空控制器名
@@ -76,33 +68,27 @@ return [
     'action_suffix'           => '',
     // 自动搜索控制器
     'controller_auto_search'  => false,
+    // 是否支持多模块
+    'app_multi_module'        => true,
+    // 应用类库后缀
+    'class_suffix'            => false,
+    // 控制器类后缀
+    'controller_suffix'       => false,
 
     // +----------------------------------------------------------------------
     // | URL设置
     // +----------------------------------------------------------------------
 
+    // 默认全局过滤方法 用逗号分隔多个
+    'default_filter'          => '',
     // PATHINFO变量名 用于兼容模式
     'var_pathinfo'            => 's',
     // 兼容PATH_INFO获取
     'pathinfo_fetch'          => ['ORIG_PATH_INFO', 'REDIRECT_PATH_INFO', 'REDIRECT_URL'],
-    // pathinfo分隔符
-    'pathinfo_depr'           => '/',
     // HTTPS代理标识
     'https_agent_name'        => '',
     // URL伪静态后缀
     'url_html_suffix'         => 'html',
-    // URL普通方式参数 用于自动生成
-    'url_common_param'        => false,
-    // URL参数方式 0 按名称成对解析 1 按顺序解析
-    'url_param_type'          => 0,
-    // 是否开启路由延迟解析
-    'url_lazy_route'          => true,
-    // 是否强制使用路由
-    'url_route_must'          => false,
-    // 路由是否完全匹配
-    'route_complete_match'    => true,
-    // 使用注解路由
-    'route_annotation'        => false,
     // 域名根，如thinkphp.cn
     'url_domain_root'         => '',
     // IP代理获取标识 如果获取客户端IP异常，请设置false
@@ -124,10 +110,34 @@ return [
     // 全局请求缓存排除规则
     'request_cache_except'    => [],
 
+    // +----------------------------------------------------------------------
+    // | 路由设置
+    // +----------------------------------------------------------------------
+
+    // pathinfo分隔符
+    'pathinfo_depr'           => '/',
+    // URL普通方式参数 用于自动生成
+    'url_common_param'        => false,
+    // URL参数方式 0 按名称成对解析 1 按顺序解析
+    'url_param_type'          => 0,
+    // 是否开启路由延迟解析
+    'url_lazy_route'          => true,
+    // 是否强制使用路由
+    'url_route_must'          => false,
+    // 路由是否完全匹配
+    'route_complete_match'    => true,
+    // 使用注解路由
+    'route_annotation'        => false,
+    // 默认的路由变量规则
+    'default_route_pattern'   => '[\w\.]+',
+
+    // +----------------------------------------------------------------------
+    // | 异常及错误设置
+    // +----------------------------------------------------------------------
+
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'   => APP_PATH . 'common' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'dispatch_jump.tpl',
     'dispatch_error_tmpl'     => APP_PATH . 'common' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'dispatch_jump.tpl',
-
     // 异常页面的模板文件
     'exception_tmpl'          => APP_PATH . 'common' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'think_exception.tpl',
     // 配置仅在部署模式下面生效
@@ -136,7 +146,6 @@ return [
         // 还可以定义其它的HTTP status
         //401 =>  APP_PATH . '401.html',
     ],
-
     // 错误显示信息,非调试模式有效
     'error_message'           => '页面错误！请稍后再试～',
     // 显示错误信息
@@ -144,9 +153,12 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'        => '',
 
+    // +----------------------------------------------------------------------
+    // | YznCMS配置项
+    // +----------------------------------------------------------------------
+
     //公开路径
     'public_url'              => ROOT_URL . (defined('IF_PUBLIC') ? '' : 'public/'),
-
     /* 系统数据加密设置 */
     'data_auth_key'           => 'Mhc(jk`[t.7?P_Ty=A%41o+S{J390DKpFmvW@E}8', //默认数据加密KEY
     //是否同一账号同一时间只能在一个地方登录
