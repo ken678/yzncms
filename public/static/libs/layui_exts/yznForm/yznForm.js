@@ -585,7 +585,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                                 allowDivTransToP: false, //转换p标签
                                 initialFrameWidth: '100%',
                                 initialFrameHeight: 400, //初始化编辑器高度,默认320
-                                autoHeightEnabled: false, //是否自动长高
                                 maximumWords: 50000, //允许的最大字符数
                                 serverUrl: GV.image_upload_url+'?from=ueditor',
                             });
