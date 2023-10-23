@@ -590,7 +590,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                             });
                             $('#' + ueditor_name + 'grabimg',layform).click(function() {
                                 var con = ueditors[ueditor_name].getContent();
-                                $.post('/admin/Attachments/geturlfile', { 'content': con, 'type': 'images' },
+                                $.post('/admin/general.attachments/getUrlFile', { 'content': con, 'type': 'images' },
                                     function(data) {
                                         ueditors[ueditor_name].setContent(data);
                                         layer.msg("图片本地化完成", { icon: 1 });
@@ -670,7 +670,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                         shade: false,
                         area: [$(window).width() > 880 ? '880px' : '95%', $(window).height() > 600 ? '600px' : '95%'],
                         title: '图片裁剪',
-                        content: '/admin/Attachments/cropper?url=' + image,
+                        content: '/admin/general.attachments/cropper?url=' + image,
                         success: function(layero, index) {
                             $(layero).data("arr", [inputId, image]);
                         }
