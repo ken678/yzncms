@@ -96,8 +96,8 @@ class ComposerStaticInit7e4001803221d40018da1f3864421aa3
         'think\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-image/src',
-            1 => __DIR__ . '/..' . '/yzncms/think-helper/src',
-            2 => __DIR__ . '/..' . '/yzncms/think-addons/src',
+            1 => __DIR__ . '/..' . '/yzncms/think-addons/src',
+            2 => __DIR__ . '/..' . '/yzncms/think-helper/src',
         ),
         'app\\' => 
         array (
