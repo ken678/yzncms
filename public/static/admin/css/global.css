@@ -390,3 +390,11 @@ html, body, .layui-layout {height: 100%; }
     transform: scale(1.2, 1);
   }
 }
+
+.pear-frame {width: 100%; height: 100%; position: relative; overflow: hidden; }
+.pear-frame .dot {width: 5px; height: 24px; background-color: #5FB878; margin-top: 8px; margin-left: 15px; border-radius: 2px; display: inline-block; }
+.pear-frame .title {position: absolute; margin-top: 0px; margin-left: 12px; color: dimgray; display: inline-block; letter-spacing: 2px; }
+.pear-frame .pear-frame-title {height: 40px; line-height: 40px; background-color: white; border: whitesmoke 1px solid; }
+.pear-frame .pear-frame-content {width: 100%; height: calc(100% - 0px) !important; }
+.pear-frame-loading {position: absolute; display: none; width: 100%; height: calc(100% - 0px) !important; top: 0px; z-index: 19; background-color: #fff }
+.pear-frame-loading.close {animation: close 1s; -webkit-animation: close 1s; animation-fill-mode: forwards; }
