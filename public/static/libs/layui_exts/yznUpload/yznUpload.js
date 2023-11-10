@@ -143,7 +143,8 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                         var mimetype = $(this).data("mimetype");
                         var multipart = $(this).data("multipart");
                         var multiple = $(this).data("multiple");
-                        var type = $(this).data("type").indexOf('image') > -1 ? 'image':'file';
+                        var type = $(this).data("type");
+                        type = typeof type !== "undefined" ? (type.indexOf('image') > -1 ? 'image':'file'): 'image';
 
                         //填充ID
                         var input_id = $(that).data("input-id") ? $(that).data("input-id") : "";
