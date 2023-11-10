@@ -280,13 +280,12 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			}
 		}
 		element.init();
-		downShow(option);
 		option.done();
 	}
 
 	function createMenu(option) {
 		var menuHtml = '<div style="height:100%!important;" class="pear-side-scroll layui-side-scroll ' + option.theme + '"><ul lay-filter="' + option.elem +
-			'" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree">'
+			'" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree" '+ (option.accordion ? "lay-accordion" : "") +'>'
 		$.each(option.data, function (i, item) {
 			var content = '<li class="layui-nav-item" >';
 			if (i == option.defaultOpen) {
@@ -407,17 +406,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		$("#" + option.control).html(control + "</div>");
 		$("#" + option.control).append(controlPe);
 		$("#" + option.elem).html(menu);
-		/*$("#" + option.control + " .pear-nav-control").on("click", "[pear-id]", function () {
-			$("#" + option.elem).find(".pear-nav-tree").css({
-				display: 'none'
-			});
-			$("#" + option.elem).find(".pear-nav-tree[pear-id='" + $(this).attr("pear-id") + "']").css({
-				display: 'block'
-			});
-			//$("#" + option.control).find(".pe-title").html($(this).attr("pear-title"));
-			$("#" + option.control).find("")
-			option.change($(this).attr("pear-id"), $(this).attr("pear-title"), $(this).attr("pear-href"))
-		})*/
+
 	}
 
 	/** 加载子菜单 (递归)*/
@@ -466,50 +455,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		}
 		content += '</dl>';
 		return content;
-	}
-
-    /*左 侧 顶 级 菜 单 点 击*/
-	function downShow(option) {
-		$("body #" + option.elem).on("click", "a[menu-type='0']", function () {
-			if (!$("#" + option.elem).is(".pear-nav-mini")) {
-				var superEle = $(this).parent();
-				var ele = $(this).next('.layui-nav-child');
-				var heights = ele.children("dd").length * 48;
-
-				if ($(this).parent().is(".layui-nav-itemed")) {
-					if (option.accordion) {
-						var currentDom = $(this).parent().siblings('.layui-nav-itemed').children('.layui-nav-child');
-						currentDom.animate({
-							height: '0px'
-						}, 240, function () {
-							currentDom.css({
-								height: "auto",
-							});
-							$(this).parent().removeClass("layui-nav-itemed");
-							$(this).find('.layui-nav-itemed').removeClass("layui-nav-itemed");
-						});
-					}
-					ele.height(0);
-					ele.animate({
-						height: heights + "px"
-					}, 240, function () {
-						ele.css({
-							height: "auto"
-						});
-					});
-				} else {
-					$(this).parent().addClass("layui-nav-itemed");
-					ele.animate({
-						height: "0px"
-					}, 240, function () {
-						ele.css({
-							height: "auto"
-						});
-						$(this).parent().removeClass("layui-nav-itemed");
-					});
-				}
-			}
-		})
 	}
 
 	/** 二 级 悬 浮 菜 单*/
