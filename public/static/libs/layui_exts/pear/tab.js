@@ -444,7 +444,6 @@ layui.define(['jquery', 'element'], function(exports) {
 	function createTab(option) {
 
 		var type = "";
-		var types = option.type + " ";
 		if (option.roll == true) {
 			type = "layui-tab-roll";
 		}
@@ -454,7 +453,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		if (option.roll == true && option.tool != false) {
 			type = "layui-tab-rollTool";
 		}
-		var tab = '<div class="pear-tab ' + types + type + ' layui-tab" lay-filter="' + option.elem +
+		var tab = '<div class="pear-tab ' + type + ' layui-tab" lay-filter="' + option.elem +
 			'" lay-allowClose="true">';
 		var title = '<ul class="layui-tab-title">';
 		var content = '<div class="layui-tab-content">';
