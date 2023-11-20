@@ -239,7 +239,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
     if (is_array($list)) {
         $refer = $resultSet = [];
         foreach ($list as $i => $data) {
-            $refer[$i] =  &$data[$field];
+            $refer[$i] = &$data[$field];
         }
 
         switch ($sortby) {
@@ -254,7 +254,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
                 break;
         }
         foreach ($refer as $key => $val) {
-            $resultSet[] =  &$list[$key];
+            $resultSet[] = &$list[$key];
         }
 
         return $resultSet;
@@ -278,17 +278,17 @@ function list_to_tree($list, $pk = 'id', $pid = 'parentid', $child = '_child', $
         // 创建基于主键的数组引用
         $refer = [];
         foreach ($list as $key => $data) {
-            $refer[$data[$pk]] =  &$list[$key];
+            $refer[$data[$pk]] = &$list[$key];
         }
         foreach ($list as $key => $data) {
             // 判断是否存在parent
             $parentId = $data[$pid];
             if ($root == $parentId) {
-                $tree[] =  &$list[$key];
+                $tree[] = &$list[$key];
             } else {
                 if (isset($refer[$parentId])) {
-                    $parent           =  &$refer[$parentId];
-                    $parent[$child][] =  &$list[$key];
+                    $parent           = &$refer[$parentId];
+                    $parent[$child][] = &$list[$key];
                 }
             }
         }
@@ -755,6 +755,14 @@ function check_cors_request()
             exit;
         }
     }
+}
+
+/**
+ * 清理XSS
+ */
+function xss_clean($content, $is_image = false)
+{
+    return \app\common\library\Security::instance()->xss_clean($content, $is_image);
 }
 
 /**
