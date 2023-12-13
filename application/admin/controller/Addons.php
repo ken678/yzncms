@@ -189,15 +189,14 @@ class Addons extends Adminbase
         }
         $info = [];
         try {
-            $uid            = $this->request->post("uid");
-            $token          = $this->request->post("token");
-            $version        = $this->request->post("version");
-            $yzncms_version = $this->request->post("yzncms_version");
-            $extend         = [
+            $uid     = $this->request->post("uid");
+            $token   = $this->request->post("token");
+            $version = $this->request->post("version");
+            $extend  = [
                 'uid'            => $uid,
                 'token'          => $token,
                 'version'        => $version,
-                'yzncms_version' => $yzncms_version,
+                'yzncms_version' => Config::get('version.yzncms_version'),
             ];
             $info = Service::install($name, $force, $extend);
         } catch (AddonException $e) {
@@ -281,17 +280,16 @@ class Addons extends Adminbase
         }
         $info = [];
         try {
-            $info           = get_addon_info($name);
-            $uid            = $this->request->post("uid");
-            $token          = $this->request->post("token");
-            $version        = $this->request->post("version");
-            $yzncms_version = $this->request->post("yzncms_version");
-            $extend         = [
+            $info    = get_addon_info($name);
+            $uid     = $this->request->post("uid");
+            $token   = $this->request->post("token");
+            $version = $this->request->post("version");
+            $extend  = [
                 'uid'            => $uid,
                 'token'          => $token,
                 'version'        => $version,
                 'oldversion'     => $info['version'] ?? '',
-                'yzncms_version' => $yzncms_version,
+                'yzncms_version' => Config::get('version.yzncms_version'),
             ];
             //调用更新的方法
             $info = Service::upgrade($name, $extend);
@@ -331,16 +329,15 @@ class Addons extends Adminbase
      */
     public function isbuy()
     {
-        $name           = $this->request->post("name");
-        $uid            = $this->request->post("uid");
-        $token          = $this->request->post("token");
-        $version        = $this->request->post("version");
-        $yzncms_version = $this->request->post("yzncms_version");
-        $extend         = [
+        $name    = $this->request->post("name");
+        $uid     = $this->request->post("uid");
+        $token   = $this->request->post("token");
+        $version = $this->request->post("version");
+        $extend  = [
             'uid'            => $uid,
             'token'          => $token,
             'version'        => $version,
-            'yzncms_version' => $yzncms_version,
+            'yzncms_version' => Config::get('version.yzncms_version'),
         ];
         try {
             $result = Service::isBuy($name, $extend);
