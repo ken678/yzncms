@@ -43,10 +43,10 @@ class Addons extends Adminbase
             if ($type == 'local') {
                 $addons = get_addon_list();
                 $list   = [];
-                foreach ($addons as $k => &$v) {
-                    $config      = get_addon_config($v['name']);
-                    $v['config'] = $config ? 1 : 0;
-                    $v['addon']  = $v;
+                foreach ($addons as $k => $v) {
+                    $config              = get_addon_config($v['name']);
+                    $v['config']         = $config ? 1 : 0;
+                    $addons[$k]['addon'] = $v;
                 }
                 $count = count($addons);
                 if ($limit) {
