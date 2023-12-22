@@ -269,13 +269,14 @@ INSERT INTO `yzn_field_type` VALUES ('images', '多张图', 12, 'text NOT NULL',
 INSERT INTO `yzn_field_type` VALUES ('tags', '标签', 13, 'varchar(255) NOT NULL', 0, 1);
 INSERT INTO `yzn_field_type` VALUES ('number', '数字', 14, 'int(10) UNSIGNED NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('datetime', '日期和时间', 15, 'int(10) UNSIGNED NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', 16, 'mediumtext NOT NULL', 0, 1);
-INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 17, 'mediumtext NOT NULL', 0, 1);
-INSERT INTO `yzn_field_type` VALUES ('files', '多文件', 18, 'text NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 19, 'varchar(255) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 20, 'varchar(7) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 21, 'varchar(255) NOT NULL', 0, 0);
-INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 22, 'text NOT NULL', 1, 0);
+INSERT INTO `yzn_field_type` VALUES ('datetimerange', '日期和时间区间', 16, 'varchar(100) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('Ueditor', '百度编辑器', 17, 'mediumtext NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('markdown', 'markdown编辑器', 18, 'mediumtext NOT NULL', 0, 1);
+INSERT INTO `yzn_field_type` VALUES ('files', '多文件', 19, 'text NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 20, 'varchar(255) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 21, 'varchar(7) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 22, 'varchar(255) NOT NULL', 0, 0);
+INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 23, 'text NOT NULL', 1, 0);
 
 -- ----------------------------
 -- Table structure for `yzn_model`

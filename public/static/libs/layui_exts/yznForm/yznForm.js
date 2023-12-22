@@ -532,6 +532,65 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                                     range = '-';
                                 }
                                 options['range'] = range;
+                                options['shortcuts']=[
+                                    {
+                                        text: "今天",
+                                        value: function() {
+                                            var today = new Date();
+                                            return [
+                                                new Date(today.getFullYear(), today.getMonth(), today.getDate()),
+                                                new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59)
+                                            ];
+                                        }
+                                    },
+                                    {
+                                        text: "昨天",
+                                        value: function() {
+                                            var yesterday = new Date();
+                                            yesterday.setDate(yesterday.getDate() - 1);
+                                            return [
+                                                new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()),
+                                                new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate(), 23, 59, 59)
+                                            ];
+                                        }
+                                    },
+                                    {
+                                        text: "7天前",
+                                        value: function() {
+                                            var today = new Date();
+                                            var sevenDaysAgo = new Date();
+                                            sevenDaysAgo.setDate(today.getDate() - 7);
+                                            return [
+                                                new Date(sevenDaysAgo.getFullYear(), sevenDaysAgo.getMonth(), sevenDaysAgo.getDate()),
+                                                new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59)
+                                            ];
+                                        }
+                                    },
+                                    {
+                                        text: "本月",
+                                        value: function() {
+                                            var date = new Date();
+                                            var year = date.getFullYear();
+                                            var month = date.getMonth();
+                                            return [
+                                                new Date(year, month, 1),
+                                                new Date(year, month + 1, 0, 23, 59, 59)
+                                            ];
+                                        }
+                                    },
+                                    {
+                                        text: "上个月",
+                                        value: function() {
+                                            var date = new Date();
+                                            var year = date.getFullYear();
+                                            var month = date.getMonth();
+                                            return [
+                                                new Date(year, month - 1, 1),
+                                                new Date(year, month, 0, 23, 59, 59)
+                                            ];
+                                        }
+                                    }
+                                ]
                             }
                             laydate.render(options);
                         });
