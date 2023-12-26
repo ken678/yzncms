@@ -164,13 +164,17 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             options.layFilter = options.id + '_LayFilter';
             options.url = options.url || options.init.index_url;
             options.search = yzn.parame(options.search, true);
+            options.showSearch = yzn.parame(options.showSearch, true);
             options.searchFormVisible = yzn.parame(options.searchFormVisible, false);
-            options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
-                title: '搜索',
-                layEvent: 'TABLE_SEARCH',
-                icon: 'layui-icon-search',
-                extend: 'data-table-id="' + options.id + '"'
-            }];
+            options.defaultToolbar = options.defaultToolbar || ['filter', 'print', 'exports'];
+            if (options.search && options.showSearch) {
+                options.defaultToolbar.push({
+                    title: '搜索',
+                    layEvent: 'TABLE_SEARCH',
+                    icon: 'layui-icon-search',
+                    extend: 'data-table-id="' + options.id + '"'
+                })
+            }
             options.even = options.even || true;
             // 判断是否为移动端
             if (yzn.checkMobile()) {
