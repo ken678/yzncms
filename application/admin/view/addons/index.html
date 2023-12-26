@@ -196,7 +196,8 @@ layui.use(['yznTable','table','laytpl','yzn','notice','element','dropdown','form
             ],
         ],
         url: '{:url("index",["type"=>$type])}',
-        search:false,
+        css :'.layui-table-tool-temp{padding-right: 85px;}',
+        showSearch:false,
         cols: [
             [
                 { field: 'title', width: 200, title: '名称',templet: '#titleTpl'},
