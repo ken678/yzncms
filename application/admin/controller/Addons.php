@@ -63,7 +63,7 @@ class Addons extends Adminbase
                 $result = ["code" => 0, "data" => $addons, 'count' => $count];
             } else {
                 //在线插件
-                $list         = $this->getAddonList($page, $limit);
+                $list         = $this->getAddonList($search, $page, $limit);
                 $onlineaddons = $list['list'] ?? [];
                 $category     = $list['category'] ?? [];
                 $count        = $list['count'] ?? -1;
@@ -370,7 +370,7 @@ class Addons extends Adminbase
         $this->success('', null, ['tables' => $tables]);
     }
 
-    protected function getAddonList($page, $limit)
+    protected function getAddonList($search, $page, $limit)
     {
         $params = [
             'uid'         => $this->request->param('uid/d'),
@@ -379,6 +379,7 @@ class Addons extends Adminbase
             'version'     => Config::get('version.yzncms_version'),
             'page'        => $page,
             'limit'       => $limit,
+            'search'      => $search,
         ];
         $json = [];
         try {
