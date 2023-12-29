@@ -43,7 +43,7 @@ class Index extends Adminbase
     //登录判断
     public function login()
     {
-        $url = $this->request->get('url', 'index/index');
+        $url = $this->request->get('url', 'index/index', 'xss_clean');
         if ($this->auth->isLogin()) {
             $this->redirect('admin/index/index');
         }
