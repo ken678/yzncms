@@ -37,10 +37,12 @@ class Date
      * [!!] A list of time zones that PHP supports can be found at
      * <http://php.net/timezones>.
      *
-     * @param   string $remote timezone that to find the offset of
-     * @param   string $local  timezone used as the baseline
-     * @param   mixed  $now    UNIX timestamp or date string
+     * @param  string  $remote  timezone that to find the offset of
+     * @param  null  $local  timezone used as the baseline
+     * @param  mixed  $now  UNIX timestamp or date string
+     *
      * @return  integer
+     * @throws \Exception
      */
     public static function offset($remote, $local = null, $now = null)
     {
@@ -129,7 +131,7 @@ class Date
     /**
      * 格式化 UNIX 时间戳为人易读的字符串
      *
-     * @param    int    Unix 时间戳
+     * @param    int  $remote  Unix 时间戳
      * @param    mixed $local 本地时间
      *
      * @return    string    格式化的日期字符串

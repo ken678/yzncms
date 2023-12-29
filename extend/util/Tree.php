@@ -54,7 +54,7 @@ class Tree
 
     /**
      * 构造函数，初始化类
-     * @param array 2维数组，例如：
+     * @param array  $arr  2维数组，例如：
      * array(
      *      1 => array('id'=>'1','parentid'=>0,'name'=>'一级栏目一'),
      *      2 => array('id'=>'2','parentid'=>0,'name'=>'一级栏目二'),
@@ -326,9 +326,10 @@ class Tree
     /**
      *
      * 获取树状数组
-     * @param string $myid 要查询的ID
-     * @param string $nametpl 名称条目模板
-     * @param string $itemprefix 前缀
+     *
+     * @param  string  $myid  要查询的ID
+     * @param  string  $itemprefix  前缀
+     *
      * @return string
      */
     public function getTreeArray($myid, $itemprefix = '')
@@ -369,7 +370,7 @@ class Tree
     {
         $arr = [];
         foreach ($data as $k => $v) {
-            $childlist = isset($v['childlist']) ? $v['childlist'] : [];
+            $childlist = $v['childlist'] ?? [];
             unset($v['childlist']);
             $v[$field]     = $v['spacer'] . ' ' . $v[$field];
             $v['haschild'] = $childlist ? 1 : 0;

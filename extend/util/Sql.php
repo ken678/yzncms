@@ -21,11 +21,13 @@ class Sql
 {
     /**
      * 从sql文件获取纯sql语句
+     *
      * @param  string $sql_file sql文件路径
      * @param  bool $string 如果为真，则只返回一条sql语句，默认以数组形式返回
      * @param  array $replace 替换前缀，如：['my_' => 'me_']，表示将表前缀"my_"替换成"me_"
      *         这种前缀替换方法不一定准确，比如正常内容内有跟前缀相同的字符，也会被替换
-     * @return mixed
+     *
+     * @return array|false|string
      */
     public static function getSqlFromFile($sql_file = '', $string = false, $replace = [])
     {
