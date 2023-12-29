@@ -35,14 +35,22 @@ class Addons extends Adminbase
     //显示插件列表
     public function index()
     {
-        $type  = $this->request->param("type", 'online');
-        $limit = $this->request->param("limit/d");
-        $page  = $this->request->param("page/d", 1);
+        $type   = $this->request->param("type", 'online');
+        $limit  = $this->request->param("limit/d");
+        $page   = $this->request->param("page/d", 1);
+        $search = $this->request->param("search", '', 'strip_tags,htmlspecialchars');
 
         if ($this->request->isAjax()) {
             if ($type == 'local') {
                 $addons = get_addon_list();
-                $list   = [];
+                if ($search) {
+                    $addons = array_filter($addons, function ($v) use ($search) {
+                        return stripos($v['name'], $search) !== false ||
+                        stripos($v['title'], $search) !== false ||
+                        stripos($v['description'], $search) !== false;
+                    });
+                }
+                $list = [];
                 foreach ($addons as $k => $v) {
                     $config              = get_addon_config($v['name']);
                     $v['config']         = $config ? 1 : 0;
