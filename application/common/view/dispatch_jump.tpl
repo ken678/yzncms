@@ -38,7 +38,7 @@
         </p>
     {/if}
     <p class="clearfix">
-        <a href="{:url('/')}" class="btn btn-grey">返回首页</a>
+        <a href="{$Think.ROOT_URL}" class="btn btn-grey">返回首页</a>
         {if $url}
             <a href="{$url}" class="btn btn-primary">立即跳转</a>
         {/if}
