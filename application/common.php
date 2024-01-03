@@ -22,6 +22,9 @@ use think\facade\Request;
 define('ROOT_URL', Request::rootUrl() . '/');
 //模板目录
 define('TEMPLATE_PATH', ROOT_PATH . 'templates' . DS);
+//强制隐藏index.php
+Url::root('/');
+
 // Form别名
 if (!class_exists('Form')) {
     class_alias('form\\Form', 'Form');
