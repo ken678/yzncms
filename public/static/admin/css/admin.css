@@ -96,6 +96,9 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-badge {height: 22px;line-height: 22px;}
 
 .layui-btn-disabled, .layui-btn-disabled:active{pointer-events: none; }
+.layui-badge-rim, .layui-border, .layui-colla-content, .layui-colla-item, .layui-collapse, .layui-elem-field, .layui-form-pane .layui-form-item[pane], .layui-form-pane .layui-form-label, .layui-input, .layui-input-split, .layui-panel, .layui-quote-nm, .layui-select, .layui-tab-bar, .layui-tab-card, .layui-tab-title, .layui-tab-title .layui-this:after, .layui-textarea {
+    border-color: #dcdfe6;
+}
 
 .file-item.thumbnail .file-panel {position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
 .file-item.thumbnail:hover .file-panel {top: 0; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
