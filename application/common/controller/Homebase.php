@@ -40,7 +40,7 @@ class Homebase extends Base
             'actionname'     => $this->actionname,
         ];
         //监听插件传入的变量
-        $site = array_merge($site, $config, Hook::listen("config_init")[0] ?? []);
+        $site = array_merge($site, $config, ...Hook::listen("config_init"));
         $this->assign('site', $site);
     }
 
