@@ -25,7 +25,7 @@ html, body, .layui-layout {height: 100%; }
 .pear-admin .layui-side {top: 0px; width: 230px; box-shadow: 2px 0 6px rgba(0, 21, 41, .20); z-index: 9999; }
 .pear-admin .layui-side-scroll::-webkit-scrollbar {width: 0px; height: 0px; }
 .pear-admin .layui-side-scroll {height: calc(100% - 60px) !important; background-color: #28333E; width: 247px; }
-.pear-admin .layui-header .layui-nav .layui-nav-item>a {color: black; font-size: 15px; }
+.pear-admin .layui-header .layui-nav .layui-nav-item>a {color: black; font-size: 15px;padding: 0 16px}
 .pear-admin .layui-body {left: 230px; bottom: 0px; padding-bottom: 0px; }
 .pear-admin .layui-layout-left {left: 0px; }
 .pear-admin .layui-footer {position: absolute; display: flex; justify-content: space-between; left: 230px; background: #fff; border-top: 1px solid #F2F2F2; box-shadow: none; -webkit-transition: left .3s; transition: left .3s; overflow: hidden; color: #3c3c3cb3; font-weight: 300; font-size: 13.6px; }
