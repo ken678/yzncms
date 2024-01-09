@@ -10,5 +10,6 @@
 // +----------------------------------------------------------------------
 
 return [
-    'app\admin\command\Install',
+    'install' => 'app\admin\command\Install',
+    'crud'    => 'app\admin\command\Crud',
 ];
