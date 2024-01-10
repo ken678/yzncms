@@ -371,6 +371,7 @@ class Crud extends Command
             $setAttrArr           = [];
             $getAttrArr           = [];
             $appendAttrList       = [];
+            $getEnumArr           = [];
             $controllerAssignList = [];
 
             foreach ($columnList as $k => $v) {
@@ -400,7 +401,11 @@ class Crud extends Command
                         $attrArr['class'] = implode(' ', $cssClassArr);
 
                         $attrArr['name'] = $fieldName;
+                        $this->getEnum($getEnumArr, $controllerAssignList, $field, $itemArr, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
+                        //添加一个获取器
+                        $this->getAttr($getAttrArr, $field, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
 
+                        $this->appendAttr($appendAttrList, $field);
                         $formAddElement  = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
                         $formEditElement = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$row.{$field}"]);
 
@@ -485,7 +490,10 @@ class Crud extends Command
                 'createTime'              => in_array($this->createTimeField, $fieldArr) ? "'{$this->createTimeField}'" : 'false',
                 'updateTime'              => in_array($this->updateTimeField, $fieldArr) ? "'{$this->updateTimeField}'" : 'false',
                 'deleteTime'              => in_array($this->deleteTimeField, $fieldArr) ? "'{$this->deleteTimeField}'" : 'false',
+                'getEnumList'             => implode("\n\n", $getEnumArr),
                 'appendAttrList'          => implode(",\n", $appendAttrList),
+                'getAttrList'             => implode("\n\n", $getAttrArr),
+                'setAttrList'             => implode("\n\n", $setAttrArr),
             ];
             // 生成控制器文件
             $this->writeToFile('controller', $data, $controllerFile);
@@ -724,6 +732,45 @@ EOD;
         return mb_strtoupper(mb_substr($string, 0, 1)) . mb_strtolower(mb_substr($string, 1));
     }
 
+    protected function getEnum(&$getEnum, &$controllerAssignList, $field, $itemArr = '', $inputType = '')
+    {
+        if (!in_array($inputType, ['datetime', 'select', 'multiple', 'checkbox', 'radio'])) {
+            return;
+        }
+        $fieldList  = $this->getFieldListName($field);
+        $methodName = 'get' . ucfirst($fieldList);
+        foreach ($itemArr as $k => &$v) {
+            $v = "__('" . $this->mb_ucfirst($v) . "')";
+        }
+        unset($v);
+        $itemString = $this->getArrayString($itemArr);
+        $getEnum[]  = <<<EOD
+    public function {$methodName}()
+    {
+        return [{$itemString}];
+    }
+EOD;
+        $controllerAssignList[] = <<<EOD
+        \$this->view->assign("{$fieldList}", \$this->model->{$methodName}());
+EOD;
+    }
+
+    protected function getAttr(&$getAttr, $field, $inputType = '')
+    {
+        if (!in_array($inputType, ['datetime', 'select', 'multiple', 'checkbox', 'radio'])) {
+            return;
+        }
+        $attrField = ucfirst($this->getCamelizeName($field));
+        $getAttr[] = $this->getReplacedStub("mixins" . DS . $inputType, ['field' => $field, 'methodName' => "get{$attrField}TextAttr", 'listMethodName' => "get{$attrField}List"]);
+    }
+
+    protected function appendAttr(&$appendAttrList, $field)
+    {
+        $appendAttrList[] = <<<EOD
+        '{$field}_text'
+EOD;
+    }
+
     /**
      * 获取控制器URL
      * @param string $moduleName
@@ -860,6 +907,28 @@ EOD;
         }
         $content = str_replace($search, $replace, $stub);
         return $content;
+    }
+
+    /**
+     * 将数据转换成带字符串
+     * @param array $arr
+     * @return string
+     */
+    protected function getArrayString($arr)
+    {
+        if (!is_array($arr)) {
+            return $arr;
+        }
+        $stringArr = [];
+        foreach ($arr as $k => $v) {
+            $is_var = in_array(substr($v, 0, 1), ['$', '_']);
+            if (!$is_var) {
+                $v = str_replace("'", "\'", $v);
+                $k = str_replace("'", "\'", $k);
+            }
+            $stringArr[] = "'" . $k . "' => " . ($is_var ? $v : "'{$v}'");
+        }
+        return implode(", ", $stringArr);
     }
 
     /**
