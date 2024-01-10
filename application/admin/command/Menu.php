@@ -128,7 +128,7 @@ class Menu extends Command
         } else {
             $authRuleList = AuthRule::select();
             //生成权限规则备份文件
-            file_put_contents(RUNTIME_PATH . 'authrule.json', json_encode(collection($authRuleList)->toArray()));
+            file_put_contents(RUNTIME_PATH . 'authrule.json', json_encode($authRuleList->toArray()));
 
             $this->model->where('id', '>', 0)->delete();
             $controllerDir = $adminPath . 'controller' . DS;
@@ -240,7 +240,7 @@ class Menu extends Command
 
         preg_match_all($modelRegex, $classContent, $matches);
         if (isset($matches[1]) && isset($matches[1][0]) && $matches[1][0]) {
-            \think\Request::instance()->module('admin');
+            \think\facade\Request::instance()->module('admin');
             $model = model($matches[1][0]);
             if (in_array('trashed', get_class_methods($model))) {
                 $withSofeDelete = true;
