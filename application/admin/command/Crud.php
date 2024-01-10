@@ -182,6 +182,25 @@ class Crud extends Command
     protected $ignoreFields = [];
 
     /**
+     * 以指定字符结尾的字段格式化函数
+     */
+    protected $fieldFormatterSuffix = [
+        'status' => ['type' => ['varchar', 'enum'], 'name' => 'status'],
+        'icon'   => 'icon',
+        'flag'   => 'flag',
+        'url'    => 'url',
+        'image'  => 'image',
+        'images' => 'images',
+        'file'   => 'file',
+        'files'  => 'files',
+        'avatar' => 'image',
+        'switch' => 'toggle',
+        'tag'    => 'flag',
+        'tags'   => 'flag',
+        'time'   => ['type' => ['int', 'bigint', 'timestamp'], 'name' => 'datetime'],
+    ];
+
+    /**
      * 识别为图片字段
      */
     protected $imageField = ['image', 'images', 'avatar', 'avatars'];
@@ -209,12 +228,18 @@ class Crud extends Command
      */
     protected $deleteTimeField = 'delete_time';
 
+    /**
+     * 语言包
+     */
+    protected $langList = [];
+
     protected function configure()
     {
         $this->setName('crud')
             ->addOption('table', 't', Option::VALUE_REQUIRED, 'table name without prefix', null)
             ->addOption('controller', 'c', Option::VALUE_OPTIONAL, 'controller name', null)
             ->addOption('model', 'm', Option::VALUE_OPTIONAL, 'model name', null)
+            ->addOption('fields', 'i', Option::VALUE_OPTIONAL, 'model visible fields', null)
             ->addOption('force', 'f', Option::VALUE_OPTIONAL, 'force override or force delete,without tips', null)
             ->addOption('local', 'l', Option::VALUE_OPTIONAL, 'local model', 1)
             ->addOption('ignorefields', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'ignore fields', null)
@@ -242,6 +267,8 @@ class Crud extends Command
         $model = $model ?: $controller;
         //验证器类
         $validate = $model;
+        //自定义显示字段
+        $fields = $input->getOption('fields');
         //是否为本地model,为0时表示为全局model将会把model放在app/common/model中
         $local = $input->getOption('local');
         //排除字段
@@ -331,14 +358,19 @@ class Crud extends Command
             $fieldArr[] = $v['COLUMN_NAME'];
         }
 
-        $addList  = [];
-        $editList = [];
+        $addList        = [];
+        $editList       = [];
+        $javascriptList = [];
         try {
             $appendAttrList       = [];
             $controllerAssignList = [];
 
             foreach ($columnList as $k => $v) {
-                $field        = $v['COLUMN_NAME'];
+                $field = $v['COLUMN_NAME'];
+                // 语言列表
+                if ($v['COLUMN_COMMENT'] != '') {
+                    $this->getLangItem($field, $v['COLUMN_COMMENT']);
+                }
                 $fieldComment = $v['COLUMN_COMMENT'] ?: $field;
 
                 $itemArr = [];
@@ -389,14 +421,22 @@ class Crud extends Command
                         $formEditElement = \Form::input($inputType, $fieldName, $editValue, $attrArr);
                     }
                     //构造添加和编辑HTML信息
-                    $addList[]  = $this->getFormGroup($fieldComment, $formAddElement);
-                    $editList[] = $this->getFormGroup($fieldComment, $formEditElement);
+                    $addList[]  = $this->getFormGroup($field, $formAddElement);
+                    $editList[] = $this->getFormGroup($field, $formEditElement);
+                }
+                //过滤text类型字段
+                if ($v['DATA_TYPE'] != 'text' && $inputType != 'fieldlist') {
+                    if (!$fields || in_array($field, explode(',', $fields))) {
+                        //构造JS列信息
+                        $javascriptList[] = $this->getJsColumn($field, $v['DATA_TYPE'], $inputType && in_array($inputType, ['select', 'checkbox', 'radio']) ? '_text' : '', $itemArr);
+                    }
                 }
 
             }
 
-            $addList  = implode("\n", array_filter($addList));
-            $editList = implode("\n", array_filter($editList));
+            $addList        = implode("\n", array_filter($addList));
+            $editList       = implode("\n", array_filter($editList));
+            $javascriptList = implode(",\n", array_filter($javascriptList));
 
             //表注释
             $tableComment = $modelTableInfo['Comment'];
@@ -416,6 +456,7 @@ class Crud extends Command
                 'validateNamespace'       => $validateNamespace,
                 'addList'                 => $addList,
                 'editList'                => $editList,
+                'javascriptList'          => $javascriptList,
                 'softDeleteClassPath'     => in_array($this->deleteTimeField, $fieldArr) ? "use think\model\concern\SoftDelete;" : '',
                 'softDelete'              => in_array($this->deleteTimeField, $fieldArr) ? "use SoftDelete;" : '',
                 'tableComment'            => $tableComment,
@@ -516,6 +557,81 @@ class Crud extends Command
     }
 
     /**
+     * 获取JS列数据
+     * @param string $field
+     * @param string $datatype
+     * @param string $extend
+     * @param array  $itemArr
+     * @return string
+     */
+    protected function getJsColumn($field, $datatype = '', $extend = '', $itemArr = [])
+    {
+        $langField = $this->langList[$this->mb_ucfirst($field)] ?? $field;
+        $formatter = '';
+        foreach ($this->fieldFormatterSuffix as $k => $v) {
+            if (preg_match("/{$k}$/i", $field)) {
+                if (is_array($v)) {
+                    if (in_array($datatype, $v['type'])) {
+                        $formatter = $v['name'];
+                        break;
+                    }
+                } else {
+                    $formatter = $v;
+                    break;
+                }
+            }
+        }
+        $html = str_repeat(" ", 24) . "{field: '{$field}', title: '{$langField}'";
+
+        if ($datatype == 'set') {
+            $formatter = 'label';
+        }
+        foreach ($itemArr as $k => &$v) {
+            if (substr($v, 0, 3) !== '__(') {
+                $v = "__('" . $v . "')";
+            }
+        }
+        unset($v);
+        $searchList = json_encode($itemArr, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+        $searchList = str_replace(['":"', '"}', ')","'], ['":', '}', '),"'], $searchList);
+        if ($itemArr) {
+            $html .= ", searchList: " . $searchList;
+        }
+
+        // 文件、图片、权重等字段默认不加入搜索栏，字符串类型默认LIKE
+        $noSearchFiles = ['file$', 'files$', 'image$', 'images$', '^weigh$'];
+        if (preg_match("/" . implode('|', $noSearchFiles) . "/i", $field)) {
+            $html .= ", search: false";
+        } elseif (in_array($datatype, ['varchar'])) {
+            $html .= ", searchOp: 'LIKE'";
+        }
+
+        if (in_array($datatype, ['date', 'datetime']) || $formatter === 'datetime') {
+            $html .= ", searchOp:'RANGE', addclass:'datetimerange'";
+        } elseif (in_array($datatype, ['float', 'double', 'decimal'])) {
+            $html .= ", searchOp:'BETWEEN'";
+        }
+        if (in_array($datatype, ['set'])) {
+            $html .= ", searchOp:'FIND_IN_SET'";
+        }
+        /*if (in_array($formatter, ['image', 'images'])) {
+        $html .= ", events: Table.api.events.image";
+        }*/
+        /*if (in_array($formatter, ['toggle'])) {
+        $html .= ", table: table";
+        }*/
+        if ($itemArr && !$formatter) {
+            $formatter = 'normal';
+        }
+        if ($formatter) {
+            $html .= ", templet: yznTable.formatter." . $formatter . "}";
+        } else {
+            $html .= "}";
+        }
+        return $html;
+    }
+
+    /**
      * 判断是否符合指定后缀
      * @param string $field     字段名称
      * @param mixed  $suffixArr 后缀
@@ -540,14 +656,46 @@ class Crud extends Command
      */
     protected function getFormGroup($field, $content)
     {
+        $langField = $this->langList[$this->mb_ucfirst($field)] ?? $field;
         return <<<EOD
     <div class="layui-form-item">
-        <label class="layui-form-label">{$field}</label>
+        <label class="layui-form-label">{$langField}</label>
         <div class="layui-input-block">
             {$content}
         </div>
     </div>
 EOD;
+    }
+
+    protected function getLangItem($field, $content)
+    {
+        if ($content) {
+            $this->fieldMaxLen = strlen($field) > $this->fieldMaxLen ? strlen($field) : $this->fieldMaxLen;
+            $content           = str_replace('，', ',', $content);
+            if (stripos($content, ':') !== false && stripos($content, ',') && stripos($content, '=') !== false) {
+                list($fieldLang, $item) = explode(':', $content);
+                $itemArr                = [$field => $fieldLang];
+                foreach (explode(',', $item) as $k => $v) {
+                    $valArr = explode('=', $v);
+                    if (count($valArr) == 2) {
+                        list($key, $value)            = $valArr;
+                        $itemArr[$field . ' ' . $key] = $value;
+                        $this->fieldMaxLen            = strlen($field . ' ' . $key) > $this->fieldMaxLen ? strlen($field . ' ' . $key) : $this->fieldMaxLen;
+                    }
+                }
+            } else {
+                $itemArr = [$field => $content];
+            }
+            $resultArr = [];
+            foreach ($itemArr as $k => $v) {
+                $this->langList[$this->mb_ucfirst($k)] = $v;
+            }
+        }
+    }
+
+    protected function mb_ucfirst($string)
+    {
+        return mb_strtoupper(mb_substr($string, 0, 1)) . mb_strtolower(mb_substr($string, 1));
     }
 
     /**

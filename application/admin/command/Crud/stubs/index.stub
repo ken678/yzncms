@@ -31,7 +31,9 @@ layui.use('yznTable', function() {
         toolbar: ['refresh', 'add', 'delete'],
         url: '{:url("index")}',
         cols: [
-            []
+            [
+               {%javascriptList%}
+            ]
         ],
         page: {}
     });
