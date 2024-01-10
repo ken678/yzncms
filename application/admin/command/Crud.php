@@ -117,6 +117,81 @@ class Crud extends Command
     ];
 
     /**
+     * Enum类型识别为单选框的结尾字符,默认会识别为单选下拉列表
+     */
+    protected $enumRadioSuffix = ['data', 'state', 'status'];
+
+    /**
+     * Set类型识别为复选框的结尾字符,默认会识别为多选下拉列表
+     */
+    protected $setCheckboxSuffix = ['data', 'state', 'status'];
+
+    /**
+     * Int类型识别为日期时间的结尾字符,默认会识别为日期文本框
+     */
+    protected $intDateSuffix = ['time'];
+
+    /**
+     * 开关后缀
+     */
+    protected $switchSuffix = ['switch'];
+
+    /**
+     * 富文本后缀
+     */
+    protected $editorSuffix = ['content'];
+
+    /**
+     * 城市后缀
+     */
+    protected $citySuffix = ['city'];
+
+    /**
+     * 时间区间后缀
+     */
+    protected $rangeSuffix = ['range'];
+
+    /**
+     * JSON后缀
+     */
+    protected $jsonSuffix = ['json'];
+
+    /**
+     * 标签后缀
+     */
+    protected $tagSuffix = ['tag', 'tags'];
+
+    /**
+     * Selectpage对应的后缀
+     */
+    protected $selectpageSuffix = ['_id', '_ids'];
+
+    /**
+     * Selectpage多选对应的后缀
+     */
+    protected $selectpagesSuffix = ['_ids'];
+
+    /**
+     * 保留字段
+     */
+    protected $reservedField = ['admin_id'];
+
+    /**
+     * 排除字段
+     */
+    protected $ignoreFields = [];
+
+    /**
+     * 识别为图片字段
+     */
+    protected $imageField = ['image', 'images', 'avatar', 'avatars'];
+
+    /**
+     * 识别为文件字段
+     */
+    protected $fileField = ['file', 'files'];
+
+    /**
      * 添加时间字段
      * @var string
      */
@@ -142,6 +217,7 @@ class Crud extends Command
             ->addOption('model', 'm', Option::VALUE_OPTIONAL, 'model name', null)
             ->addOption('force', 'f', Option::VALUE_OPTIONAL, 'force override or force delete,without tips', null)
             ->addOption('local', 'l', Option::VALUE_OPTIONAL, 'local model', 1)
+            ->addOption('ignorefields', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'ignore fields', null)
             ->addOption('db', null, Option::VALUE_OPTIONAL, 'database config name', 'database')
             ->setDescription('Build CRUD controller and model from table');
 
@@ -149,6 +225,7 @@ class Crud extends Command
 
     protected function execute(Input $input, Output $output)
     {
+        $adminPath = dirname(__DIR__) . DS;
         //数据库
         $db = $input->getOption('db');
         //表名
@@ -167,6 +244,12 @@ class Crud extends Command
         $validate = $model;
         //是否为本地model,为0时表示为全局model将会把model放在app/common/model中
         $local = $input->getOption('local');
+        //排除字段
+        $ignoreFields = $input->getOption('ignorefields');
+        if ($ignoreFields) {
+            $this->ignoreFields = $ignoreFields;
+        }
+        $this->reservedField = array_merge($this->reservedField, [$this->createTimeField, $this->updateTimeField, $this->deleteTimeField]);
 
         $dbconnect = Db::connect('mysql');
         $dbname    = Config::get($db . '.database');
@@ -203,6 +286,25 @@ class Crud extends Command
         //验证器
         list($validateNamespace, $validateName, $validateFile, $validateArr) = $this->getValidateData($validateModuleName, $validate, $table);
 
+        //处理基础文件名，取消所有下划线并转换为小写
+        $baseNameArr  = $controllerArr;
+        $baseFileName = Loader::parseName(array_pop($baseNameArr), 0);
+        array_push($baseNameArr, $baseFileName);
+        $controllerUrl = $this->getControllerUrl($moduleName, $baseNameArr);
+
+        //视图文件
+        $viewArr   = $controllerArr;
+        $lastValue = array_pop($viewArr);
+        $viewArr[] = Loader::parseName($lastValue, 0);
+        array_unshift($viewArr, 'view');
+        $viewDir = $adminPath . strtolower(implode(DS, $viewArr)) . DS;
+
+        //最终将生成的文件路径
+        $addFile        = $viewDir . 'add.html';
+        $editFile       = $viewDir . 'edit.html';
+        $indexFile      = $viewDir . 'index.html';
+        $recyclebinFile = $viewDir . 'recyclebin.html';
+
         //非覆盖模式时如果存在控制器文件则报错
         if (is_file($controllerFile) && !$force) {
             throw new Exception("controller already exists!\nIf you need to rebuild again, use the parameter --force=true ");
@@ -228,9 +330,74 @@ class Crud extends Command
         foreach ($columnList as $k => $v) {
             $fieldArr[] = $v['COLUMN_NAME'];
         }
+
+        $addList  = [];
+        $editList = [];
         try {
             $appendAttrList       = [];
             $controllerAssignList = [];
+
+            foreach ($columnList as $k => $v) {
+                $field        = $v['COLUMN_NAME'];
+                $fieldComment = $v['COLUMN_COMMENT'] ?: $field;
+
+                $itemArr = [];
+
+                $inputType = '';
+                //保留字段不能修改和添加
+                if ($v['COLUMN_KEY'] != 'PRI' && !in_array($field, $this->reservedField) && !in_array($field, $this->ignoreFields)) {
+                    $inputType = $this->getFieldType($v);
+
+                    // 如果是number类型时增加一个步长
+                    $step = $inputType == 'number' && $v['NUMERIC_SCALE'] > 0 ? "0." . str_repeat(0, $v['NUMERIC_SCALE'] - 1) . "1" : 0;
+
+                    $attrArr      = ['id' => "c-{$field}"];
+                    $cssClassArr  = ['form-control'];
+                    $fieldName    = "row[{$field}]";
+                    $defaultValue = $v['COLUMN_DEFAULT'];
+                    $editValue    = "{\$row.{$field}|row}";
+                    if ($inputType == 'select') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+
+                    } elseif ($inputType == 'datetime') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } elseif ($inputType == 'datetimerange') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } elseif ($inputType == 'checkbox' || $inputType == 'radio') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } elseif ($inputType == 'textarea' && !$this->isMatchSuffix($field, $this->selectpagesSuffix) && !$this->isMatchSuffix($field, $this->imageField)) {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } elseif ($inputType == 'switch') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } elseif ($inputType == 'citypicker') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } elseif ($inputType == 'tagsinput') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } elseif ($inputType == 'fieldlist') {
+                        $formAddElement  = '';
+                        $formEditElement = '';
+                    } else {
+                        $formAddElement  = \Form::input($inputType, $fieldName, $defaultValue, $attrArr);
+                        $formEditElement = \Form::input($inputType, $fieldName, $editValue, $attrArr);
+                    }
+                    //构造添加和编辑HTML信息
+                    $addList[]  = $this->getFormGroup($fieldComment, $formAddElement);
+                    $editList[] = $this->getFormGroup($fieldComment, $formEditElement);
+                }
+
+            }
+
+            $addList  = implode("\n", array_filter($addList));
+            $editList = implode("\n", array_filter($editList));
+
             //表注释
             $tableComment = $modelTableInfo['Comment'];
             $tableComment = mb_substr($tableComment, -1) == '表' ? mb_substr($tableComment, 0, -1) . '管理' : $tableComment;
@@ -239,6 +406,7 @@ class Crud extends Command
                 'controllerNamespace'     => $controllerNamespace,
                 'controllerName'          => $controllerName,
                 'controllerIndex'         => '',
+                'controllerUrl'           => $controllerUrl,
                 'modelConnection'         => $db == 'database' ? '' : "protected \$connection = '{$db}';",
                 'modelNamespace'          => $modelNamespace,
                 'modelName'               => $modelName,
@@ -246,6 +414,8 @@ class Crud extends Command
                 'modelTableTypeName'      => $modelTableTypeName,
                 'validateName'            => $validateName,
                 'validateNamespace'       => $validateNamespace,
+                'addList'                 => $addList,
+                'editList'                => $editList,
                 'softDeleteClassPath'     => in_array($this->deleteTimeField, $fieldArr) ? "use think\model\concern\SoftDelete;" : '',
                 'softDelete'              => in_array($this->deleteTimeField, $fieldArr) ? "use SoftDelete;" : '',
                 'tableComment'            => $tableComment,
@@ -261,11 +431,145 @@ class Crud extends Command
             $this->writeToFile('model', $data, $modelFile);
             // 生成验证文件
             $this->writeToFile('validate', $data, $validateFile);
+            // 生成视图文件
+            $this->writeToFile('add', $data, $addFile);
+            $this->writeToFile('edit', $data, $editFile);
+            $this->writeToFile('index', $data, $indexFile);
 
         } catch (ErrorException $e) {
             throw new Exception("Code: " . $e->getCode() . "\nLine: " . $e->getLine() . "\nMessage: " . $e->getMessage() . "\nFile: " . $e->getFile());
         }
         $output->info("Build Successed");
+    }
+
+    protected function getFieldType(&$v)
+    {
+        $inputType = 'text';
+        switch ($v['DATA_TYPE']) {
+            case 'bigint':
+            case 'int':
+            case 'mediumint':
+            case 'smallint':
+            case 'tinyint':
+                $inputType = 'number';
+                break;
+            case 'enum':
+            case 'set':
+                $inputType = 'select';
+                break;
+            case 'decimal':
+            case 'double':
+            case 'float':
+                $inputType = 'number';
+                break;
+            case 'longtext':
+            case 'text':
+            case 'mediumtext':
+            case 'smalltext':
+            case 'tinytext':
+                $inputType = 'textarea';
+                break;
+            case 'year':
+            case 'date':
+            case 'time':
+            case 'datetime':
+            case 'timestamp':
+                $inputType = 'datetime';
+                break;
+            default:
+                break;
+        }
+        $fieldsName = $v['COLUMN_NAME'];
+        // 指定后缀说明也是个时间字段
+        if ($this->isMatchSuffix($fieldsName, $this->intDateSuffix)) {
+            $inputType = 'datetime';
+        }
+        // 指定后缀结尾且类型为enum,说明是个单选框
+        if ($this->isMatchSuffix($fieldsName, $this->enumRadioSuffix) && $v['DATA_TYPE'] == 'enum') {
+            $inputType = "radio";
+        }
+        // 指定后缀结尾且类型为set,说明是个复选框
+        if ($this->isMatchSuffix($fieldsName, $this->setCheckboxSuffix) && $v['DATA_TYPE'] == 'set') {
+            $inputType = "checkbox";
+        }
+        // 指定后缀结尾且类型为char或tinyint且长度为1,说明是个Switch复选框
+        if ($this->isMatchSuffix($fieldsName, $this->switchSuffix) && ($v['COLUMN_TYPE'] == 'tinyint(1)' || $v['COLUMN_TYPE'] == 'char(1)') && $v['COLUMN_DEFAULT'] !== '' && $v['COLUMN_DEFAULT'] !== null) {
+            $inputType = "switch";
+        }
+        // 指定后缀结尾城市选择框
+        if ($this->isMatchSuffix($fieldsName, $this->citySuffix) && ($v['DATA_TYPE'] == 'varchar' || $v['DATA_TYPE'] == 'char')) {
+            $inputType = "citypicker";
+        }
+        // 指定后缀结尾城市选择框
+        if ($this->isMatchSuffix($fieldsName, $this->rangeSuffix) && ($v['DATA_TYPE'] == 'varchar' || $v['DATA_TYPE'] == 'char')) {
+            $inputType = "datetimerange";
+        }
+        // 指定后缀结尾JSON配置
+        if ($this->isMatchSuffix($fieldsName, $this->jsonSuffix) && ($v['DATA_TYPE'] == 'varchar' || $v['DATA_TYPE'] == 'text')) {
+            $inputType = "fieldlist";
+        }
+        // 指定后缀结尾标签配置
+        if ($this->isMatchSuffix($fieldsName, $this->tagSuffix) && ($v['DATA_TYPE'] == 'varchar' || $v['DATA_TYPE'] == 'text')) {
+            $inputType = "tagsinput";
+        }
+        return $inputType;
+    }
+
+    /**
+     * 判断是否符合指定后缀
+     * @param string $field     字段名称
+     * @param mixed  $suffixArr 后缀
+     * @return boolean
+     */
+    protected function isMatchSuffix($field, $suffixArr)
+    {
+        $suffixArr = is_array($suffixArr) ? $suffixArr : explode(',', $suffixArr);
+        foreach ($suffixArr as $k => $v) {
+            if (preg_match("/{$v}$/i", $field)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 获取表单分组数据
+     * @param string $field
+     * @param string $content
+     * @return string
+     */
+    protected function getFormGroup($field, $content)
+    {
+        return <<<EOD
+    <div class="layui-form-item">
+        <label class="layui-form-label">{$field}</label>
+        <div class="layui-input-block">
+            {$content}
+        </div>
+    </div>
+EOD;
+    }
+
+    /**
+     * 获取控制器URL
+     * @param string $moduleName
+     * @param array  $baseNameArr
+     * @return string
+     */
+    protected function getControllerUrl($moduleName, $baseNameArr)
+    {
+        for ($i = 0; $i < count($baseNameArr) - 1; $i++) {
+            $temp           = array_slice($baseNameArr, 0, $i + 1);
+            $temp[$i]       = ucfirst($temp[$i]);
+            $controllerFile = APP_PATH . $moduleName . DS . 'controller' . DS . implode(DS, $temp) . '.php';
+            //检测父级目录同名控制器是否存在，存在则变更URL格式
+            if (is_file($controllerFile)) {
+                $baseNameArr = [implode('.', $baseNameArr)];
+                break;
+            }
+        }
+        $controllerUrl = strtolower(implode('/', $baseNameArr));
+        return $controllerUrl;
     }
 
     /**
