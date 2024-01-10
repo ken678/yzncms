@@ -41,7 +41,9 @@ trait Curd
         return $params;
     }
 
-    //查看
+    /**
+     * 查看
+     */
     public function index()
     {
         if ($this->request->isAjax()) {
@@ -67,7 +69,9 @@ trait Curd
         return $this->fetch();
     }
 
-    //回收站
+    /**
+     * 回收站
+     */
     public function recyclebin()
     {
         if ($this->request->isAjax()) {
@@ -92,7 +96,9 @@ trait Curd
 
     }
 
-    //添加
+    /**
+     * 添加
+     */
     public function add()
     {
         if ($this->request->isPost()) {
@@ -170,7 +176,9 @@ trait Curd
         return $this->fetch();
     }
 
-    //删除
+    /**
+     * 删除
+     */
     public function del()
     {
         if (false === $this->request->isPost()) {
@@ -205,7 +213,9 @@ trait Curd
         $this->error('没有数据删除！');
     }
 
-    //真实删除
+    /**
+     * 真实删除
+     */
     public function destroy()
     {
         if (false === $this->request->isPost()) {
@@ -239,7 +249,9 @@ trait Curd
         $this->error('没有数据删除！');
     }
 
-    //还原
+    /**
+     * 还原
+     */
     public function restore()
     {
         if (false === $this->request->isPost()) {
@@ -273,7 +285,9 @@ trait Curd
         $this->error('未更新任何行');
     }
 
-    //批量更新
+    /**
+     * 批量更新
+     */
     public function multi()
     {
         if (false === $this->request->isPost()) {
