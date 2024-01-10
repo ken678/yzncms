@@ -12,4 +12,5 @@
 return [
     'install' => 'app\admin\command\Install',
     'crud'    => 'app\admin\command\Crud',
+    'menu'    => 'app\admin\command\Menu',
 ];
