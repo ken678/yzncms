@@ -605,7 +605,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                         $('.form-tags',layform).each(function() {
                             $(this).tagsInput({
                                 width: 'auto',
-                                defaultText: $(this).data('remark'),
+                                defaultText: $(this).data('remark') || '关键词回车确认',
                                 height: '26px',
                             })
                         })
