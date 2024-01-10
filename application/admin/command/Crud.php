@@ -368,6 +368,8 @@ class Crud extends Command
         $priDefined     = false;
 
         try {
+            $setAttrArr           = [];
+            $getAttrArr           = [];
             $appendAttrList       = [];
             $controllerAssignList = [];
 
@@ -395,8 +397,12 @@ class Crud extends Command
                     $defaultValue = $v['COLUMN_DEFAULT'];
                     $editValue    = "{\$row.{$field}|row}";
                     if ($inputType == 'select') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $attrArr['class'] = implode(' ', $cssClassArr);
+
+                        $attrArr['name'] = $fieldName;
+
+                        $formAddElement  = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$row.{$field}"]);
 
                     } elseif ($inputType == 'datetime') {
                         $formAddElement  = '';
@@ -436,7 +442,7 @@ class Crud extends Command
                 if ($v['DATA_TYPE'] != 'text' && $inputType != 'fieldlist') {
                     if ($v['COLUMN_KEY'] == 'PRI' && !$priDefined) {
                         $priDefined       = true;
-                        $javascriptList[] = "{ type: 'checkbox', fixed: 'left' }";
+                        $javascriptList[] = "{type: 'checkbox', fixed: 'left' }";
                     }
                     if (!$fields || in_array($field, explode(',', $fields))) {
                         //构造JS列信息
@@ -445,6 +451,9 @@ class Crud extends Command
                 }
 
             }
+
+            //JS最后一列加上操作列
+            $javascriptList[] = str_repeat(" ", 15) . "{fixed: 'right',width:90,field: 'operate', title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}";
 
             $addList        = implode("\n", array_filter($addList));
             $editList       = implode("\n", array_filter($editList));
@@ -598,7 +607,7 @@ class Crud extends Command
                 }
             }
         }
-        $html = str_repeat(" ", 24) . "{field: '{$field}', title: '{$langField}'";
+        $html = str_repeat(" ", 15) . "{field: '{$field}', title: '{$langField}',minWidth:80";
 
         if ($datatype == 'set') {
             $formatter = 'label';
@@ -616,7 +625,7 @@ class Crud extends Command
         }
 
         // 文件、图片、权重等字段默认不加入搜索栏，字符串类型默认LIKE
-        $noSearchFiles = ['file$', 'files$', 'image$', 'images$', '^weigh$'];
+        $noSearchFiles = ['file$', 'files$', 'image$', 'images$', '^weigh$', '^listorder$'];
         if (preg_match("/" . implode('|', $noSearchFiles) . "/i", $field)) {
             $html .= ", search: false";
         } elseif (in_array($datatype, ['varchar'])) {
@@ -624,7 +633,7 @@ class Crud extends Command
         }
 
         if (in_array($datatype, ['date', 'datetime']) || $formatter === 'datetime') {
-            $html .= ", searchOp:'RANGE', addclass:'datetimerange'";
+            $html .= ",width:180, searchOp:'RANGE', addclass:'datetimerange'";
         } elseif (in_array($datatype, ['float', 'double', 'decimal'])) {
             $html .= ", searchOp:'BETWEEN'";
         }
@@ -861,5 +870,16 @@ EOD;
     protected function getStub($name)
     {
         return __DIR__ . DS . 'Crud' . DS . 'stubs' . DS . $name . '.stub';
+    }
+
+    protected function getCamelizeName($uncamelized_words, $separator = '_')
+    {
+        $uncamelized_words = $separator . str_replace($separator, " ", strtolower($uncamelized_words));
+        return ltrim(str_replace(" ", "", ucwords($uncamelized_words)), $separator);
+    }
+
+    protected function getFieldListName($field)
+    {
+        return $this->getCamelizeName($field) . 'List';
     }
 }
