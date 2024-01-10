@@ -251,7 +251,7 @@ class Menu extends Command
             return;
         }
         preg_match_all('#(@.*?)\n#s', $classComment, $annotations);
-        $controllerIcon   = 'fa fa-circle-o';
+        $controllerIcon   = 'iconfont icon-other';
         $controllerRemark = '';
         //判断注释中是否设置了icon值
         if (isset($annotations[1])) {
@@ -296,7 +296,7 @@ class Menu extends Command
         $ruleArr = [];
         foreach ($methods as $m => $n) {
             //过滤特殊的类
-            if (substr($n->name, 0, 2) == '__' || $n->name == 'initialize' || $n->name == '_empty' || $n->name == 'registerMiddleware') {
+            if (in_array($n->name, ['initialize', '_empty', 'registerMiddleware']) || substr($n->name, 0, 2) == '__') {
                 continue;
             }
             //未启用软删除时过滤相关方法
@@ -321,9 +321,8 @@ class Menu extends Command
             //获取主键，作为AuthRule更新依据
             $id = $this->getAuthRulePK($name . "/" . strtolower($n->name));
 
-            $ruleArr[] = ['id' => $id, 'parentid' => $pid, 'name' => $name . "/" . strtolower($n->name), 'icon' => 'fa fa-circle-o', 'title' => $title, 'ismenu' => 0, 'status' => 1];
+            $ruleArr[] = ['id' => $id, 'parentid' => $pid, 'name' => $name . "/" . strtolower($n->name), 'icon' => 'iconfont icon-circle-line', 'title' => $title, 'ismenu' => 0, 'status' => 1];
         }
-        var_dump($ruleArr);
         $this->model->isUpdate(false)->saveAll($ruleArr);
     }
 
