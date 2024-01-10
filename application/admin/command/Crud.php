@@ -242,6 +242,7 @@ class Crud extends Command
             ->addOption('fields', 'i', Option::VALUE_OPTIONAL, 'model visible fields', null)
             ->addOption('force', 'f', Option::VALUE_OPTIONAL, 'force override or force delete,without tips', null)
             ->addOption('local', 'l', Option::VALUE_OPTIONAL, 'local model', 1)
+            ->addOption('menu', 'u', Option::VALUE_OPTIONAL, 'create menu when CRUD completed', null)
             ->addOption('ignorefields', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'ignore fields', null)
             ->addOption('db', null, Option::VALUE_OPTIONAL, 'database config name', 'database')
             ->setDescription('Build CRUD controller and model from table');
@@ -258,6 +259,9 @@ class Crud extends Command
         if (!$table) {
             throw new Exception('table name can\'t empty');
         }
+
+        //是否生成菜单
+        $menu = $input->getOption("menu");
         //强制覆盖
         $force = $input->getOption('force');
         //自定义控制器
@@ -361,6 +365,8 @@ class Crud extends Command
         $addList        = [];
         $editList       = [];
         $javascriptList = [];
+        $priDefined     = false;
+
         try {
             $appendAttrList       = [];
             $controllerAssignList = [];
@@ -411,8 +417,10 @@ class Crud extends Command
                         $formAddElement  = '';
                         $formEditElement = '';
                     } elseif ($inputType == 'tagsinput') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $cssClassArr[]    = 'form-tags';
+                        $attrArr['class'] = implode(' ', $cssClassArr);
+                        $formAddElement   = \Form::input('text', $fieldName, $defaultValue, $attrArr);
+                        $formEditElement  = \Form::input('text', $fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'fieldlist') {
                         $formAddElement  = '';
                         $formEditElement = '';
@@ -426,6 +434,10 @@ class Crud extends Command
                 }
                 //过滤text类型字段
                 if ($v['DATA_TYPE'] != 'text' && $inputType != 'fieldlist') {
+                    if ($v['COLUMN_KEY'] == 'PRI' && !$priDefined) {
+                        $priDefined       = true;
+                        $javascriptList[] = "{ type: 'checkbox', fixed: 'left' }";
+                    }
                     if (!$fields || in_array($field, explode(',', $fields))) {
                         //构造JS列信息
                         $javascriptList[] = $this->getJsColumn($field, $v['DATA_TYPE'], $inputType && in_array($inputType, ['select', 'checkbox', 'radio']) ? '_text' : '', $itemArr);
@@ -480,6 +492,11 @@ class Crud extends Command
         } catch (ErrorException $e) {
             throw new Exception("Code: " . $e->getCode() . "\nLine: " . $e->getLine() . "\nMessage: " . $e->getMessage() . "\nFile: " . $e->getFile());
         }
+        //继续生成菜单
+        if ($menu) {
+            exec("php think menu -c {$controllerUrl}");
+        }
+
         $output->info("Build Successed");
     }
 

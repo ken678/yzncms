@@ -16,9 +16,9 @@ class {%controllerName%} extends Adminbase
      */
     protected $modelClass = null;
 
-    public function _initialize()
+    protected function initialize()
     {
-        parent::_initialize();
+        parent::initialize();
         $this->modelClass = new \{%modelNamespace%}\{%modelName%};
     }
 
