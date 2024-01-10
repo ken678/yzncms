@@ -862,7 +862,7 @@ EOD;
      *
      * @return string
      */
-    protected function getIdAttribute($name, $attributes)
+    public function getIdAttribute($name, $attributes)
     {
         if (array_key_exists('id', $attributes)) {
             return $attributes['id'];
@@ -893,7 +893,7 @@ EOD;
      *
      * @return string
      */
-    protected function attributes($attributes)
+    public function attributes($attributes)
     {
         $html = [];
         foreach ((array) $attributes as $key => $value) {
