@@ -408,7 +408,7 @@ class Crud extends Command
                     $step = $inputType == 'number' && $v['NUMERIC_SCALE'] > 0 ? "0." . str_repeat(0, $v['NUMERIC_SCALE'] - 1) . "1" : 0;
 
                     $attrArr      = ['id' => "c-{$field}"];
-                    $cssClassArr  = ['form-control'];
+                    $cssClassArr  = [];
                     $fieldName    = "row[{$field}]";
                     $defaultValue = $v['COLUMN_DEFAULT'];
                     $editValue    = "{\$data.{$field}}";
@@ -424,7 +424,9 @@ class Crud extends Command
 
                         //添加一个获取器
                         $this->getAttr($getAttrArr, $field, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
-
+                        if ($v['DATA_TYPE'] == 'set') {
+                            $this->setAttr($setAttrArr, $field, $inputType);
+                        }
                         $this->appendAttr($appendAttrList, $field);
                         $formAddElement  = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
                         $formEditElement = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
@@ -435,8 +437,21 @@ class Crud extends Command
                         $formAddElement  = '';
                         $formEditElement = '';
                     } elseif ($inputType == 'checkbox' || $inputType == 'radio') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $fieldName       = $inputType == 'checkbox' ? $fieldName .= "[]" : $fieldName;
+                        $attrArr['name'] = "row[{$fieldName}]";
+
+                        $this->getEnum($getEnumArr, $controllerAssignList, $field, $itemArr, $inputType);
+
+                        //添加一个获取器
+                        $this->getAttr($getAttrArr, $field, $inputType);
+                        if ($inputType == 'checkbox') {
+                            $this->setAttr($setAttrArr, $field, $inputType);
+                        }
+                        $this->appendAttr($appendAttrList, $field);
+                        $defaultValue = $inputType == 'radio' && !$defaultValue ? key($itemArr) : $defaultValue;
+
+                        $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
                     } elseif ($inputType == 'textarea' && !$this->isMatchSuffix($field, $this->selectpagesSuffix) && !$this->isMatchSuffix($field, $this->imageField)) {
                         $formAddElement  = '';
                         $formEditElement = '';
@@ -780,6 +795,29 @@ EOD;
         }
         $attrField = ucfirst($this->getCamelizeName($field));
         $getAttr[] = $this->getReplacedStub("mixins" . DS . $inputType, ['field' => $field, 'methodName' => "get{$attrField}TextAttr", 'listMethodName' => "get{$attrField}List"]);
+    }
+
+    protected function setAttr(&$setAttr, $field, $inputType = '')
+    {
+        if (!in_array($inputType, ['datetime', 'checkbox', 'select'])) {
+            return;
+        }
+        $attrField = ucfirst($this->getCamelizeName($field));
+        if ($inputType == 'datetime') {
+            $return = <<<EOD
+return \$value === '' ? null : (\$value && !is_numeric(\$value) ? strtotime(\$value) : \$value);
+EOD;
+        } elseif (in_array($inputType, ['checkbox', 'select'])) {
+            $return = <<<EOD
+return is_array(\$value) ? implode(',', \$value) : \$value;
+EOD;
+        }
+        $setAttr[] = <<<EOD
+    protected function set{$attrField}Attr(\$value)
+    {
+        $return
+    }
+EOD;
     }
 
     protected function appendAttr(&$appendAttrList, $field)
