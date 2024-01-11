@@ -1,0 +1,18 @@
+<dl class="fieldlist" data-name="{%fieldName%}" data-id="{%field%}">
+                <dd>
+                    <ins>键名</ins>
+                    <ins>键值</ins>
+                </dd>
+                <dd><button type="button" class="layui-btn btn-append">追加</button></dd>
+                <textarea name="{%fieldName%}" class="layui-textarea layui-hide" cols="30" rows="5">{%fieldValue%}</textarea>
+            </dl>
+            <script type="text/html" id="{%field%}Tpl">
+                <dd class="layui-form-item rules-item">
+                    {{# layui.each(d.lists, function(index, item) { }}
+                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="键" value="{{item.key|| ''}}" />
+                    <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="值" value="{{item.value|| ''}}" />
+                    <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
+                    <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
+                    {{# }); }}
+                </dd>
+            </script>

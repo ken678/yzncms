@@ -1,0 +1,21 @@
+            <table class="layui-form-field-label layui-table fieldlist" data-name="{%fieldName%}" data-id="{%field%}" data-template="true" data-tag="tr">
+                <tr>
+                    {%theadList%}
+                    <td width="90">操作</td>
+                </tr>
+                <tr><td colspan="{%colspan%}">
+                <button type="button" class="layui-btn btn-append">追加</button></td></tr>
+                <textarea name="{%fieldName%}" class="layui-textarea layui-hide" cols="30" rows="5">{%fieldValue%}</textarea>
+                </td></tr>
+            </table>
+            <script type="text/html" id="{%field%}Tpl">
+                <tr class="layui-form-item rules-item">
+                    {{# layui.each(d.lists, function(index, item) { }}
+                    {%tbodyList%}
+                    <td>
+                       <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close"></i></button>
+                       <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-yidong"></i></button>
+                   </td>
+                   {{# }); }}
+                </tr>
+            </script>

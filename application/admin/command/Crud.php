@@ -592,16 +592,30 @@ class Crud extends Command
                         $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => \Form::attributes($attrArr), 'fieldValue' => $defaultValue]);
                         $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => \Form::attributes($attrArr), 'fieldValue' => "data.{$field}"]);
                     } elseif ($inputType == 'citypicker') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $attrArr['class']       = implode(' ', $cssClassArr);
+                        $attrArr['data-toggle'] = "city-picker";
+                        $formAddElement         = sprintf("<div class='control-relative'>%s</div>", \Form::input('text', $fieldName, $defaultValue, $attrArr));
+                        $formEditElement        = sprintf("<div class='control-relative'>%s</div>", \Form::input('text', $fieldName, $editValue, $attrArr));
                     } elseif ($inputType == 'tagsinput') {
                         $cssClassArr[]    = 'form-tags';
                         $attrArr['class'] = implode(' ', $cssClassArr);
                         $formAddElement   = \Form::input('text', $fieldName, $defaultValue, $attrArr);
                         $formEditElement  = \Form::input('text', $fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'fieldlist') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $itemArr      = $this->getItemArray($itemArr, $field, $v['COLUMN_COMMENT']);
+                        $templateName = !isset($itemArr['key']) && !isset($itemArr['value']) && count($itemArr) > 0 ? 'fieldlist-template' : 'fieldlist';
+                        $itemKey      = isset($itemArr['key']) ? ucfirst($itemArr['key']) : 'Key';
+                        $itemValue    = isset($itemArr['value']) ? ucfirst($itemArr['value']) : 'Value';
+                        $theadListArr = $tbodyListArr = [];
+                        foreach ($itemArr as $index => $item) {
+                            $item           = $this->langList[$this->mb_ucfirst($item)] ?? $item;
+                            $theadListArr[] = "<td>" . $item . "</td>";
+                            $tbodyListArr[] = '<td><input type="text" name="{{item.name}}[{{item.index}}][' . $index . ']" class="layui-input" value="{{item.row.' . $index . '}}"/></td>';
+                        }
+                        $colspan         = count($theadListArr) + 1;
+                        $commonFields    = ['field' => $field, 'fieldName' => $fieldName, 'itemKey' => $itemKey, 'itemValue' => $itemValue, 'theadList' => implode("\n", $theadListArr), 'tbodyList' => implode("\n", $tbodyListArr), 'colspan' => $colspan];
+                        $formAddElement  = $this->getReplacedStub('html/' . $templateName, array_merge($commonFields, ['fieldValue' => $defaultValue]));
+                        $formEditElement = $this->getReplacedStub('html/' . $templateName, array_merge($commonFields, ['fieldValue' => $editValue]));
                     } else {
                         $isUpload = false;
                         if ($this->isMatchSuffix($field, array_merge($this->imageField, $this->fileField))) {
@@ -834,6 +848,7 @@ class Crud extends Command
         } elseif (in_array($datatype, ['float', 'double', 'decimal'])) {
             $html .= ", searchOp:'BETWEEN'";
         }
+
         if (in_array($datatype, ['set'])) {
             $html .= ", searchOp:'FIND_IN_SET'";
         }
