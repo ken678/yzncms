@@ -1,0 +1,1 @@
+<input {%attrStr%} name="{%fieldName%}" type="checkbox" lay-skin="switch" lay-text="ON|OFF" {eq name="{%fieldValue%}" value="1" }checked{/eq}>

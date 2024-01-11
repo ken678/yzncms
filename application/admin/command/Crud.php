@@ -194,7 +194,7 @@ class Crud extends Command
         'file'   => 'file',
         'files'  => 'files',
         'avatar' => 'image',
-        'switch' => 'toggle',
+        'switch' => 'switch',
         'tag'    => 'flag',
         'tags'   => 'flag',
         'time'   => ['type' => ['int', 'bigint', 'timestamp'], 'name' => 'datetime'],
@@ -583,11 +583,14 @@ class Crud extends Command
                         $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
                         $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
                     } elseif ($inputType == 'textarea' && !$this->isMatchSuffix($field, $this->selectpagesSuffix) && !$this->isMatchSuffix($field, $this->imageField)) {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $cssClassArr[]    = $this->isMatchSuffix($field, $this->editorSuffix) ? $this->editorClass : '';
+                        $attrArr['class'] = implode(' ', $cssClassArr);
+                        $attrArr['rows']  = 5;
+                        $formAddElement   = \Form::textarea($fieldName, $defaultValue, $attrArr);
+                        $formEditElement  = \Form::textarea($fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'switch') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => \Form::attributes($attrArr), 'fieldValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => \Form::attributes($attrArr), 'fieldValue' => "data.{$field}"]);
                     } elseif ($inputType == 'citypicker') {
                         $formAddElement  = '';
                         $formEditElement = '';
@@ -814,9 +817,9 @@ class Crud extends Command
         /*if (in_array($formatter, ['image', 'images'])) {
         $html .= ", events: Table.api.events.image";
         }*/
-        /*if (in_array($formatter, ['toggle'])) {
-        $html .= ", table: table";
-        }*/
+        if (in_array($formatter, ['switch'])) {
+            $html .= ", unresize: true";
+        }
         if ($itemArr && !$formatter) {
             $formatter = 'normal';
         }
