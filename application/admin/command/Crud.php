@@ -603,12 +603,35 @@ class Crud extends Command
                         $formAddElement  = '';
                         $formEditElement = '';
                     } else {
+                        $isUpload = false;
+                        if ($this->isMatchSuffix($field, array_merge($this->imageField, $this->fileField))) {
+                            $isUpload = true;
+                        }
+                        //如果是步长则加上步长
+                        if ($step) {
+                            $attrArr['step'] = $step;
+                        }
+                        //如果是图片加上个size
+                        if ($isUpload) {
+                            $attrArr['size'] = 50;
+                        }
+                        //字段默认值判断
+                        if ('NULL' == $defaultValue || "''" == $defaultValue) {
+                            $defaultValue = '';
+                        }
                         $formAddElement  = \Form::input($inputType, $fieldName, $defaultValue, $attrArr);
                         $formEditElement = \Form::input($inputType, $fieldName, $editValue, $attrArr);
+                        //如果是图片或文件
+                        if ($isUpload) {
+                            $formAddElement  = $this->getImageUpload($field, $formAddElement);
+                            $formEditElement = $this->getImageUpload($field, $formEditElement);
+                        }
                     }
+
                     //构造添加和编辑HTML信息
                     $addList[]  = $this->getFormGroup($field, $formAddElement);
                     $editList[] = $this->getFormGroup($field, $formEditElement);
+
                 }
                 //过滤text类型字段
                 if ($v['DATA_TYPE'] != 'text' && $inputType != 'fieldlist') {
@@ -896,6 +919,32 @@ EOD;
     protected function mb_ucfirst($string)
     {
         return mb_strtoupper(mb_substr($string, 0, 1)) . mb_strtolower(mb_substr($string, 1));
+    }
+
+    /**
+     * 获取图片模板数据
+     * @param string $field
+     * @param string $content
+     * @return string
+     */
+    protected function getImageUpload($field, $content)
+    {
+        $uploadfilter = $selectfilter = '';
+        if ($this->isMatchSuffix($field, $this->imageField)) {
+            $uploadfilter = ' data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp,image/webp"';
+            $selectfilter = ' data-mimetype="image/*"';
+        }
+        $multiple         = substr($field, -1) == 's' ? ' data-multiple="true"' : ' data-multiple="false"';
+        $preview          = ' data-preview-id="p-' . $field . '"';
+        $previewcontainer = $preview ? '<ul class="layui-row list-inline plupload-preview" id="p-' . $field . '"></ul>' : '';
+        return <<<EOD
+<div class="layui-col-xs4">
+                {$content}
+            </div>
+            <button type="button" id="faupload-{$field}" class="layui-btn faupload" data-input-id="c-{$field}"{$uploadfilter}{$multiple}{$preview}><i class="layui-icon layui-icon-upload"></i> 上传</button>
+            <button type="button" id="fachoose-{$field}" class="layui-btn fachoose" data-input-id="c-{$field}"{$selectfilter}{$multiple}><i class="iconfont icon-other"></i> 选择</button>
+            {$previewcontainer}
+EOD;
     }
 
     protected function getEnum(&$getEnum, &$controllerAssignList, $field, $itemArr = '', $inputType = '')
