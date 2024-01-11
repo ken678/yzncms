@@ -211,6 +211,12 @@ class Crud extends Command
     protected $fileField = ['file', 'files'];
 
     /**
+     * 筛选字段
+     * @var string
+     */
+    protected $headingFilterField = 'status';
+
+    /**
      * 添加时间字段
      * @var string
      */
@@ -375,15 +381,24 @@ class Crud extends Command
             $controllerAssignList = [];
 
             foreach ($columnList as $k => $v) {
-                $field = $v['COLUMN_NAME'];
+                $field   = $v['COLUMN_NAME'];
+                $itemArr = [];
+                // 这里构建Enum和Set类型的列表数据
+                if (in_array($v['DATA_TYPE'], ['enum', 'set', 'tinyint']) || $this->headingFilterField == $field) {
+                    if ($v['DATA_TYPE'] !== 'tinyint') {
+                        $itemArr = substr($v['COLUMN_TYPE'], strlen($v['DATA_TYPE']) + 1, -1);
+                        $itemArr = explode(',', str_replace("'", '', $itemArr));
+                    }
+                    $itemArr = $this->getItemArray($itemArr, $field, $v['COLUMN_COMMENT']);
+                    //如果类型为tinyint且有使用备注数据
+                    if ($itemArr && !in_array($v['DATA_TYPE'], ['enum', 'set'])) {
+                        $v['DATA_TYPE'] = 'enum';
+                    }
+                }
                 // 语言列表
                 if ($v['COLUMN_COMMENT'] != '') {
                     $this->getLangItem($field, $v['COLUMN_COMMENT']);
                 }
-                $fieldComment = $v['COLUMN_COMMENT'] ?: $field;
-
-                $itemArr = [];
-
                 $inputType = '';
                 //保留字段不能修改和添加
                 if ($v['COLUMN_KEY'] != 'PRI' && !in_array($field, $this->reservedField) && !in_array($field, $this->ignoreFields)) {
@@ -396,19 +411,23 @@ class Crud extends Command
                     $cssClassArr  = ['form-control'];
                     $fieldName    = "row[{$field}]";
                     $defaultValue = $v['COLUMN_DEFAULT'];
-                    $editValue    = "{\$row.{$field}|row}";
+                    $editValue    = "{\$data.{$field}}";
                     if ($inputType == 'select') {
                         $attrArr['class'] = implode(' ', $cssClassArr);
-
+                        if ($v['DATA_TYPE'] == 'set') {
+                            $attrArr['multiple'] = '';
+                            $fieldName .= "[]";
+                        }
                         $attrArr['name'] = $fieldName;
+
                         $this->getEnum($getEnumArr, $controllerAssignList, $field, $itemArr, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
+
                         //添加一个获取器
                         $this->getAttr($getAttrArr, $field, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
 
                         $this->appendAttr($appendAttrList, $field);
                         $formAddElement  = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
-                        $formEditElement = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$row.{$field}"]);
-
+                        $formEditElement = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
                     } elseif ($inputType == 'datetime') {
                         $formAddElement  = '';
                         $formEditElement = '';
@@ -473,6 +492,7 @@ class Crud extends Command
                 'controllerName'          => $controllerName,
                 'controllerIndex'         => '',
                 'controllerUrl'           => $controllerUrl,
+                'controllerAssignList'    => implode("\n", $controllerAssignList),
                 'modelConnection'         => $db == 'database' ? '' : "protected \$connection = '{$db}';",
                 'modelNamespace'          => $modelNamespace,
                 'modelName'               => $modelName,
@@ -621,15 +641,13 @@ class Crud extends Command
             $formatter = 'label';
         }
         foreach ($itemArr as $k => &$v) {
-            if (substr($v, 0, 3) !== '__(') {
-                $v = "__('" . $v . "')";
-            }
+            $v = $this->langList[$this->mb_ucfirst($v)] ?? $v;
         }
         unset($v);
         $searchList = json_encode($itemArr, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
-        $searchList = str_replace(['":"', '"}', ')","'], ['":', '}', '),"'], $searchList);
+        //$searchList = str_replace(['":"', '"}', ')","'], ['":', '}', '),"'], $searchList);
         if ($itemArr) {
-            $html .= ", searchList: " . $searchList;
+            $html .= ", selectList: " . $searchList;
         }
 
         // 文件、图片、权重等字段默认不加入搜索栏，字符串类型默认LIKE
@@ -740,7 +758,7 @@ EOD;
         $fieldList  = $this->getFieldListName($field);
         $methodName = 'get' . ucfirst($fieldList);
         foreach ($itemArr as $k => &$v) {
-            $v = "__('" . $this->mb_ucfirst($v) . "')";
+            $v = $this->langList[$this->mb_ucfirst($v)] ?? $v;
         }
         unset($v);
         $itemString = $this->getArrayString($itemArr);
@@ -751,7 +769,7 @@ EOD;
     }
 EOD;
         $controllerAssignList[] = <<<EOD
-        \$this->view->assign("{$fieldList}", \$this->model->{$methodName}());
+        \$this->view->assign("{$fieldList}", \$this->modelClass->{$methodName}());
 EOD;
     }
 
@@ -929,6 +947,28 @@ EOD;
             $stringArr[] = "'" . $k . "' => " . ($is_var ? $v : "'{$v}'");
         }
         return implode(", ", $stringArr);
+    }
+
+    protected function getItemArray($item, $field, $comment)
+    {
+        $itemArr = [];
+        $comment = str_replace('，', ',', $comment);
+        if (stripos($comment, ':') !== false && stripos($comment, ',') && stripos($comment, '=') !== false) {
+            list($fieldLang, $item) = explode(':', $comment);
+            $itemArr                = [];
+            foreach (explode(',', $item) as $k => $v) {
+                $valArr = explode('=', $v);
+                if (count($valArr) == 2) {
+                    list($key, $value) = $valArr;
+                    $itemArr[$key]     = $field . ' ' . $key;
+                }
+            }
+        } else {
+            foreach ($item as $k => $v) {
+                $itemArr[$v] = is_numeric($v) ? $field . ' ' . $v : $v;
+            }
+        }
+        return $itemArr;
     }
 
     /**
