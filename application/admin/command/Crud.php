@@ -412,6 +412,12 @@ class Crud extends Command
                     $fieldName    = "row[{$field}]";
                     $defaultValue = $v['COLUMN_DEFAULT'];
                     $editValue    = "{\$data.{$field}}";
+
+                    //如果字段类型为无符号型，则设置<input min=0>
+                    if (stripos($v['COLUMN_TYPE'], 'unsigned') !== false) {
+                        $attrArr['min'] = 0;
+                    }
+
                     if ($inputType == 'select') {
                         $attrArr['class'] = implode(' ', $cssClassArr);
                         if ($v['DATA_TYPE'] == 'set') {
@@ -431,8 +437,42 @@ class Crud extends Command
                         $formAddElement  = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
                         $formEditElement = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
                     } elseif ($inputType == 'datetime') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $format    = "YYYY-MM-DD HH:mm:ss";
+                        $phpFormat = "Y-m-d H:i:s";
+                        $fieldFunc = '';
+                        switch ($v['DATA_TYPE']) {
+                            case 'year':
+                                $format                    = "YYYY";
+                                $phpFormat                 = 'Y';
+                                $attrArr['data-date-type'] = 'year';
+                                break;
+                            case 'date':
+                                $format                    = "YYYY-MM-DD";
+                                $phpFormat                 = 'Y-m-d';
+                                $attrArr['data-date-type'] = 'date';
+                                break;
+                            case 'time':
+                                $format                    = "HH:mm:ss";
+                                $phpFormat                 = 'H:i:s';
+                                $attrArr['data-date-type'] = 'time';
+                                break;
+                            case 'timestamp':
+                                $fieldFunc = 'datetime';
+                            // no break
+                            case 'datetime':
+                                $format    = "YYYY-MM-DD HH:mm:ss";
+                                $phpFormat = 'Y-m-d H:i:s';
+                                break;
+                            default:
+                                $fieldFunc = 'datetime';
+                                $this->getAttr($getAttrArr, $field, $inputType);
+                                $this->setAttr($setAttrArr, $field, $inputType);
+                                $this->appendAttr($appendAttrList, $field);
+                                break;
+                        }
+                        $defaultDateTime = "{:date('{$phpFormat}')}";
+                        $formAddElement  = \Form::datetime($fieldName, $defaultDateTime, $attrArr);
+                        $formEditElement = \Form::datetime($fieldName, "{\$data.{$field}}", $attrArr);
                     } elseif ($inputType == 'datetimerange') {
                         $formAddElement  = '';
                         $formEditElement = '';
