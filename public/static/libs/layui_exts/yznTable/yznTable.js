@@ -941,6 +941,40 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     return valuesHtml.join(that.imageJoin);
                 }
             },
+            images: function (data) {
+                return yznTable.formatter.image.call(this, data);
+            },
+            file: function(data) {
+                var that = this;
+                that.imageWidth = that.imageWidth || 80;
+                that.imageHeight = that.imageHeight || 30;
+                that.imageSplit = that.imageSplit || ',';
+                that.imageJoin = that.imageJoin || ' ';
+                that.title = that.title || that.field;
+                var field = that.field,
+                    title = data[that.title];
+                try {
+                    var value = yznTable.getItemField(data,field);
+                } catch (e) {
+                    var value = undefined;
+                }
+                if (!value) {
+                    return '';
+                } else {
+                    var values = value.split(that.imageSplit),
+                        valuesHtml = [];
+                    values.forEach((value, index) => {
+                        suffix = /[\.]?([a-zA-Z0-9]+)$/.exec(value);
+                        suffix = suffix ? suffix[1] : 'file';
+                        url = yzn.request.fixurl("admin/ajax/icon?suffix=" + suffix);
+                        valuesHtml.push('<img style="max-width: ' + that.imageWidth + 'px; max-height: ' + that.imageHeight + 'px;" src="' + url + '" data-image="' + title + '">');
+                    });
+                    return valuesHtml.join(that.imageJoin);
+                }
+            },
+            files: function (data) {
+                return yznTable.formatter.image.file(this, data);
+            },
             url: function(data) {
                 var field = this.field;
                 try {
