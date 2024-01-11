@@ -283,9 +283,53 @@ class Crud extends Command
         $local = $input->getOption('local');
         //排除字段
         $ignoreFields = $input->getOption('ignorefields');
+
+        if ($setcheckboxsuffix) {
+            $this->setCheckboxSuffix = $setcheckboxsuffix;
+        }
+        if ($enumradiosuffix) {
+            $this->enumRadioSuffix = $enumradiosuffix;
+        }
+        if ($imagefield) {
+            $this->imageField = $imagefield;
+        }
+        if ($filefield) {
+            $this->fileField = $filefield;
+        }
+        if ($tagsuffix) {
+            $this->tagSuffix = $tagsuffix;
+        }
+        if ($intdatesuffix) {
+            $this->intDateSuffix = $intdatesuffix;
+        }
+        if ($switchsuffix) {
+            $this->switchSuffix = $switchsuffix;
+        }
+        if ($editorsuffix) {
+            $this->editorSuffix = $editorsuffix;
+        }
+        if ($citysuffix) {
+            $this->citySuffix = $citysuffix;
+        }
+        if ($jsonsuffix) {
+            $this->jsonSuffix = $jsonsuffix;
+        }
+        if ($selectpagesuffix) {
+            $this->selectpageSuffix = $selectpagesuffix;
+        }
+        if ($selectpagessuffix) {
+            $this->selectpagesSuffix = $selectpagessuffix;
+        }
         if ($ignoreFields) {
             $this->ignoreFields = $ignoreFields;
         }
+        if ($editorclass) {
+            $this->editorClass = $editorclass;
+        }
+        if ($sortfield) {
+            $this->sortField = $sortfield;
+        }
+
         $this->reservedField = array_merge($this->reservedField, [$this->createTimeField, $this->updateTimeField, $this->deleteTimeField]);
 
         $dbconnect = Db::connect('mysql');
@@ -457,14 +501,15 @@ class Crud extends Command
                                 $attrArr['data-date-type'] = 'time';
                                 break;
                             case 'timestamp':
-                                $fieldFunc = 'datetime';
+                                $fieldFunc                 = 'time_format';
+                                $attrArr['data-date-type'] = 'datetime';
                             // no break
                             case 'datetime':
                                 $format    = "YYYY-MM-DD HH:mm:ss";
                                 $phpFormat = 'Y-m-d H:i:s';
                                 break;
                             default:
-                                $fieldFunc = 'datetime';
+                                $fieldFunc = 'time_format';
                                 $this->getAttr($getAttrArr, $field, $inputType);
                                 $this->setAttr($setAttrArr, $field, $inputType);
                                 $this->appendAttr($appendAttrList, $field);
@@ -472,7 +517,7 @@ class Crud extends Command
                         }
                         $defaultDateTime = "{:date('{$phpFormat}')}";
                         $formAddElement  = \Form::datetime($fieldName, $defaultDateTime, $attrArr);
-                        $formEditElement = \Form::datetime($fieldName, "{\$data.{$field}}", $attrArr);
+                        $formEditElement = \Form::datetime($fieldName, ($fieldFunc ? "{:\$data.{$field}?{$fieldFunc}(\$data.{$field}):''}" : "{\$data.{$field}{$fieldFunc}}"), $attrArr);
                     } elseif ($inputType == 'datetimerange') {
                         $formAddElement  = '';
                         $formEditElement = '';
