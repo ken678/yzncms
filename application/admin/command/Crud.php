@@ -602,6 +602,7 @@ class Crud extends Command
                         $formAddElement   = \Form::input('text', $fieldName, $defaultValue, $attrArr);
                         $formEditElement  = \Form::input('text', $fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'fieldlist') {
+                        $editValue    = "{\$data.{$field}|raw}";
                         $itemArr      = $this->getItemArray($itemArr, $field, $v['COLUMN_COMMENT']);
                         $templateName = !isset($itemArr['key']) && !isset($itemArr['value']) && count($itemArr) > 0 ? 'fieldlist-template' : 'fieldlist';
                         $itemKey      = isset($itemArr['key']) ? ucfirst($itemArr['key']) : 'Key';
