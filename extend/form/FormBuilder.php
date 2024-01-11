@@ -930,7 +930,12 @@ EOD;
             return 'class="' . implode(' ', $value) . '"';
         }
         if (!is_null($value)) {
-            return $key . '="' . e($value, false) . '"';
+            if (is_array($value) || stripos($value, '"') !== false) {
+                $value = is_array($value) ? json_encode($value, JSON_UNESCAPED_UNICODE) : $value;
+                return $key . "='" . $value . "'";
+            } else {
+                return $key . '="' . $value . '"';
+            }
         }
     }
 }
