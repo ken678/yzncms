@@ -249,6 +249,20 @@ class Crud extends Command
             ->addOption('force', 'f', Option::VALUE_OPTIONAL, 'force override or force delete,without tips', null)
             ->addOption('local', 'l', Option::VALUE_OPTIONAL, 'local model', 1)
             ->addOption('menu', 'u', Option::VALUE_OPTIONAL, 'create menu when CRUD completed', null)
+            ->addOption('setcheckboxsuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate checkbox component with suffix', null)
+            ->addOption('enumradiosuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate radio component with suffix', null)
+            ->addOption('imagefield', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate image component with suffix', null)
+            ->addOption('filefield', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate file component with suffix', null)
+            ->addOption('tagsuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate tag component with suffix', null)
+            ->addOption('intdatesuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate date component with suffix', null)
+            ->addOption('switchsuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate switch component with suffix', null)
+            ->addOption('editorsuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate editor component with suffix', null)
+            ->addOption('citysuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate citypicker component with suffix', null)
+            ->addOption('jsonsuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate fieldlist component with suffix', null)
+            ->addOption('selectpagesuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate selectpage component with suffix', null)
+            ->addOption('selectpagessuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate multiple selectpage component with suffix', null)
+            ->addOption('editorclass', null, Option::VALUE_OPTIONAL, 'automatically generate editor class', null)
+            ->addOption('sortfield', null, Option::VALUE_OPTIONAL, 'sort field', null)
             ->addOption('ignorefields', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'ignore fields', null)
             ->addOption('db', null, Option::VALUE_OPTIONAL, 'database config name', 'database')
             ->setDescription('Build CRUD controller and model from table');
@@ -281,8 +295,35 @@ class Crud extends Command
         $fields = $input->getOption('fields');
         //是否为本地model,为0时表示为全局model将会把model放在app/common/model中
         $local = $input->getOption('local');
+
+        //复选框后缀
+        $setcheckboxsuffix = $input->getOption('setcheckboxsuffix');
+        //单选框后缀
+        $enumradiosuffix = $input->getOption('enumradiosuffix');
+        //图片后缀
+        $imagefield = $input->getOption('imagefield');
+        //文件后缀
+        $filefield = $input->getOption('filefield');
+        //标签后缀
+        $tagsuffix = $input->getOption('tagsuffix');
+        //日期后缀
+        $intdatesuffix = $input->getOption('intdatesuffix');
+        //开关后缀
+        $switchsuffix = $input->getOption('switchsuffix');
+        //富文本编辑器
+        $editorsuffix = $input->getOption('editorsuffix');
+        //城市后缀
+        $citysuffix = $input->getOption('citysuffix');
+        //JSON配置后缀
+        $jsonsuffix = $input->getOption('jsonsuffix');
+        //selectpage后缀
+        $selectpagesuffix = $input->getOption('selectpagesuffix');
+        //selectpage多选后缀
+        $selectpagessuffix = $input->getOption('selectpagessuffix');
         //排除字段
         $ignoreFields = $input->getOption('ignorefields');
+        //编辑器Class
+        $editorclass = $input->getOption('editorclass');
 
         if ($setcheckboxsuffix) {
             $this->setCheckboxSuffix = $setcheckboxsuffix;
@@ -329,6 +370,8 @@ class Crud extends Command
         if ($sortfield) {
             $this->sortField = $sortfield;
         }
+        //排序字段
+        $sortfield = $input->getOption('sortfield');
 
         $this->reservedField = array_merge($this->reservedField, [$this->createTimeField, $this->updateTimeField, $this->deleteTimeField]);
 
@@ -519,8 +562,10 @@ class Crud extends Command
                         $formAddElement  = \Form::datetime($fieldName, $defaultDateTime, $attrArr);
                         $formEditElement = \Form::datetime($fieldName, ($fieldFunc ? "{:\$data.{$field}?{$fieldFunc}(\$data.{$field}):''}" : "{\$data.{$field}{$fieldFunc}}"), $attrArr);
                     } elseif ($inputType == 'datetimerange') {
-                        $formAddElement  = '';
-                        $formEditElement = '';
+                        $attrArr['data-date-range'] = '-';
+                        $defaultDateTime            = "";
+                        $formAddElement             = \Form::datetime($fieldName, $defaultDateTime, $attrArr);
+                        $formEditElement            = \Form::datetime($fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'checkbox' || $inputType == 'radio') {
                         $fieldName       = $inputType == 'checkbox' ? $fieldName .= "[]" : $fieldName;
                         $attrArr['name'] = "row[{$fieldName}]";
