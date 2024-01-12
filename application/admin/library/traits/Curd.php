@@ -303,7 +303,7 @@ trait Curd
         $value = $this->request->param('value/d', 0);
         if ($this->request->has('param')) {
             $param = $this->request->param('param/s');
-            $param = $this->auth->isAdministrator() ? $param : in_array($param, (is_array($this->multiFields) ? $this->multiFields : explode(',', $this->multiFields))) ? $param : '';
+            $param = $this->auth->isAdministrator() ? $param : (in_array($param, (is_array($this->multiFields) ? $this->multiFields : explode(',', $this->multiFields))) ? $param : '');
             if ($param) {
                 $pk       = $this->modelClass->getPk();
                 $adminIds = $this->getDataLimitAdminIds();
