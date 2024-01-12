@@ -59,9 +59,6 @@ class Menu extends Command
         $equal = $input->getOption('equal');
 
         if ($delete) {
-            if (in_array('all-controller', $controller)) {
-                throw new Exception("could not delete all menu");
-            }
             $ids  = [];
             $list = $this->model->where(function ($query) use ($controller, $equal) {
                 foreach ($controller as $index => $item) {
@@ -104,87 +101,28 @@ class Menu extends Command
             return;
         }
 
-        if (!in_array('all-controller', $controller)) {
-            foreach ($controller as $index => $item) {
-                if (stripos($item, '_') !== false) {
-                    $item = Loader::parseName($item, 1);
-                }
-                if (stripos($item, '/') !== false) {
-                    $controllerArr = explode('/', $item);
-                    end($controllerArr);
-                    $key                 = key($controllerArr);
-                    $controllerArr[$key] = ucfirst($controllerArr[$key]);
-                } else {
-                    $controllerArr = [ucfirst($item)];
-                }
-                $adminPath = dirname(__DIR__) . DS . 'controller' . DS . implode(DS, $controllerArr) . '.php';
-                if (!is_file($adminPath)) {
-                    $output->error("controller not found");
-                    return;
-                }
-                $this->importRule($item);
+        foreach ($controller as $index => $item) {
+            if (stripos($item, '_') !== false) {
+                $item = Loader::parseName($item, 1);
             }
-        } else {
-            $authRuleList = AuthRule::select();
-            //生成权限规则备份文件
-            file_put_contents(RUNTIME_PATH . 'authrule.json', json_encode($authRuleList->toArray()));
-
-            $this->model->where('id', '>', 0)->delete();
-            $controllerDir = $adminPath . 'controller' . DS;
-            // 扫描新的节点信息并导入
-            $treelist = $this->import($this->scandir($controllerDir));
+            if (stripos($item, '/') !== false) {
+                $controllerArr = explode('/', $item);
+                end($controllerArr);
+                $key                 = key($controllerArr);
+                $controllerArr[$key] = ucfirst($controllerArr[$key]);
+            } else {
+                $controllerArr = [ucfirst($item)];
+            }
+            $adminPath = dirname(__DIR__) . DS . 'controller' . DS . implode(DS, $controllerArr) . '.php';
+            if (!is_file($adminPath)) {
+                $output->error("controller not found");
+                return;
+            }
+            $this->importRule($item);
         }
+
         Cache::rm("__menu__");
         $output->info("Build Successed!");
-    }
-
-    /**
-     * 递归扫描文件夹
-     * @param string $dir
-     * @return array
-     */
-    public function scandir($dir)
-    {
-        $result = [];
-        $cdir   = scandir($dir);
-        foreach ($cdir as $value) {
-            if (!in_array($value, [".", ".."])) {
-                if (is_dir($dir . DS . $value)) {
-                    $result[$value] = $this->scandir($dir . DS . $value);
-                } else {
-                    $result[] = $value;
-                }
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * 导入规则节点
-     * @param array $dirarr
-     * @param array $parentdir
-     * @return array
-     */
-    public function import($dirarr, $parentdir = [])
-    {
-        $menuarr = [];
-        foreach ($dirarr as $k => $v) {
-            if (is_array($v)) {
-                //当前是文件夹
-                $nowparentdir = array_merge($parentdir, [$k]);
-                $this->import($v, $nowparentdir);
-            } else {
-                //只匹配PHP文件
-                if (!preg_match('/^(\w+)\.php$/', $v, $matchone)) {
-                    continue;
-                }
-                //导入文件
-                $controller = ($parentdir ? implode('/', $parentdir) . '/' : '') . $matchone[1];
-                $this->importRule($controller);
-            }
-        }
-
-        return $menuarr;
     }
 
     protected function importRule($controller)
