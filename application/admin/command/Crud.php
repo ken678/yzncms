@@ -162,6 +162,13 @@ class Crud extends Command
     protected $tagSuffix = ['tag', 'tags'];
 
     /**
+     * Selectpage搜索字段关联
+     */
+    protected $fieldSelectpageMap = [
+        'nickname' => ['user_id', 'user_ids', 'admin_id', 'admin_ids'],
+    ];
+
+    /**
      * Selectpage对应的后缀
      */
     protected $selectpageSuffix = ['_id', '_ids'];
@@ -561,7 +568,6 @@ class Crud extends Command
                     if (stripos($v['COLUMN_TYPE'], 'unsigned') !== false) {
                         $attrArr['min'] = 0;
                     }
-
                     if ($inputType == 'select') {
                         $attrArr['class'] = implode(' ', $cssClassArr);
                         $html             = 'html/select';
@@ -676,7 +682,53 @@ class Crud extends Command
                         $formAddElement  = $this->getReplacedStub('html/' . $templateName, array_merge($commonFields, ['fieldValue' => $defaultValue]));
                         $formEditElement = $this->getReplacedStub('html/' . $templateName, array_merge($commonFields, ['fieldValue' => $editValue]));
                     } else {
-                        $isUpload = false;
+                        if ($this->isMatchSuffix($field, $this->selectpageSuffix)) {
+                            $inputType    = 'text';
+                            $defaultValue = '';
+                            //$attrArr['data-rule']   = 'required';
+                            $cssClassArr[]          = 'selectpage';
+                            $selectpageTable        = substr($field, 0, strripos($field, '_'));
+                            $selectpageField        = '';
+                            $selectpageController   = str_replace('_', '/', $selectpageTable);
+                            $attrArr['data-source'] = $selectpageController . "/index";
+                            //如果是类型表需要特殊处理下
+                            if ($selectpageController == 'admin') {
+                                $attrArr['data-source'] = 'admin/auth.manager/index';
+                            } elseif ($selectpageController == 'user') {
+                                $attrArr['data-source'] = 'admin/member.member/index';
+                                $attrArr['data-field']  = 'nickname';
+                            }
+                            if ($this->isMatchSuffix($field, $this->selectpagesSuffix)) {
+                                $attrArr['data-multiple'] = 'true';
+                            }
+
+                            $tableInfo = null;
+                            try {
+                                $tableInfo = \think\Db::name($selectpageTable)->getTableInfo();
+                                if (isset($tableInfo['fields'])) {
+                                    foreach ($tableInfo['fields'] as $m => $n) {
+                                        if (in_array($n, ['nickname', 'title', 'name'])) {
+                                            $selectpageField = $n;
+                                            break;
+                                        }
+                                    }
+                                }
+                            } catch (\Exception $e) {
+
+                            }
+                            if (!$selectpageField) {
+                                foreach ($this->fieldSelectpageMap as $m => $n) {
+                                    if (in_array($field, $n)) {
+                                        $attrArr['data-field'] = $m;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        //因为有自动完成可输入其它内容
+                        $step             = array_intersect($cssClassArr, ['selectpage']) ? 0 : $step;
+                        $attrArr['class'] = implode(' ', $cssClassArr);
+                        $isUpload         = false;
                         if ($this->isMatchSuffix($field, array_merge($this->imageField, $this->fileField))) {
                             $isUpload = true;
                         }
