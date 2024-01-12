@@ -239,6 +239,16 @@ class Crud extends Command
      */
     protected $langList = [];
 
+    /**
+     * 编辑器的Class
+     */
+    protected $editorClass = 'editor';
+
+    /**
+     * langList的key最长字节数
+     */
+    protected $fieldMaxLen = 0;
+
     protected function configure()
     {
         $this->setName('crud')
@@ -293,6 +303,7 @@ class Crud extends Command
         $validate = $model;
         //自定义显示字段
         $fields = $input->getOption('fields');
+
         //是否为本地model,为0时表示为全局model将会把model放在app/common/model中
         $local = $input->getOption('local');
 
@@ -322,6 +333,8 @@ class Crud extends Command
         $selectpagessuffix = $input->getOption('selectpagessuffix');
         //排除字段
         $ignoreFields = $input->getOption('ignorefields');
+        //排序字段
+        $sortfield = $input->getOption('sortfield');
         //编辑器Class
         $editorclass = $input->getOption('editorclass');
 
@@ -507,22 +520,23 @@ class Crud extends Command
 
                     if ($inputType == 'select') {
                         $attrArr['class'] = implode(' ', $cssClassArr);
-                        if ($v['DATA_TYPE'] == 'set') {
-                            $attrArr['multiple'] = '';
-                            $fieldName .= "[]";
-                        }
-                        $attrArr['name'] = $fieldName;
+                        $html             = 'html/select';
+                        $fieldList        = $this->getFieldListName($field);
+                        $attrArr['name']  = $fieldName;
 
                         $this->getEnum($getEnumArr, $controllerAssignList, $field, $itemArr, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
 
                         //添加一个获取器
                         $this->getAttr($getAttrArr, $field, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
                         if ($v['DATA_TYPE'] == 'set') {
+                            $html      = 'html/selects';
+                            $fieldList = '{$' . $fieldList . '|json_encode}';
                             $this->setAttr($setAttrArr, $field, $inputType);
                         }
                         $this->appendAttr($appendAttrList, $field);
-                        $formAddElement  = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
-                        $formEditElement = $this->getReplacedStub('html/select', ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
+
+                        $formAddElement  = $this->getReplacedStub($html, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub($html, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $editValue]);
                     } elseif ($inputType == 'datetime') {
                         $format    = "YYYY-MM-DD HH:mm:ss";
                         $phpFormat = "Y-m-d H:i:s";
@@ -661,7 +675,6 @@ class Crud extends Command
                 }
 
             }
-
             //JS最后一列加上操作列
             $javascriptList[] = str_repeat(" ", 15) . "{fixed: 'right',width:90,field: 'operate', title: '操作',templet: yznTable.formatter.tool,operat: ['edit','delete']}";
 
@@ -701,6 +714,7 @@ class Crud extends Command
                 'getAttrList'             => implode("\n\n", $getAttrArr),
                 'setAttrList'             => implode("\n\n", $setAttrArr),
             ];
+
             // 生成控制器文件
             $this->writeToFile('controller', $data, $controllerFile);
             // 生成模型文件
@@ -711,7 +725,6 @@ class Crud extends Command
             $this->writeToFile('add', $data, $addFile);
             $this->writeToFile('edit', $data, $editFile);
             $this->writeToFile('index', $data, $indexFile);
-
         } catch (ErrorException $e) {
             throw new Exception("Code: " . $e->getCode() . "\nLine: " . $e->getLine() . "\nMessage: " . $e->getMessage() . "\nFile: " . $e->getFile());
         }
