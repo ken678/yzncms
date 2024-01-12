@@ -961,14 +961,15 @@ class Crud extends Command
             $html .= ",width:180, searchOp:'RANGE', addclass:'datetimerange'";
         } elseif (in_array($datatype, ['float', 'double', 'decimal'])) {
             $html .= ", searchOp:'BETWEEN'";
+        } elseif (in_array($datatype, ['int', 'bigint'])) {
+
+        } else {
+            $html .= ",minWidth:110";
         }
 
         if (in_array($datatype, ['set'])) {
             $html .= ", searchOp:'FIND_IN_SET'";
         }
-        /*if (in_array($formatter, ['image', 'images'])) {
-        $html .= ", events: Table.api.events.image";
-        }*/
         if (in_array($formatter, ['switch'])) {
             $html .= ", unresize: true";
         }
