@@ -564,29 +564,32 @@ class Crud extends Command
                     $defaultValue = $v['COLUMN_DEFAULT'];
                     $editValue    = "{\$data.{$field}}";
 
+                    // 如果默认值非null,则是一个必选项
+                    if ($v['IS_NULLABLE'] == 'NO') {
+                        $attrArr['lay-verify'] = 'required';
+                    }
+
                     //如果字段类型为无符号型，则设置<input min=0>
                     if (stripos($v['COLUMN_TYPE'], 'unsigned') !== false) {
                         $attrArr['min'] = 0;
                     }
                     if ($inputType == 'select') {
-                        $attrArr['class'] = implode(' ', $cssClassArr);
-                        $html             = 'html/select';
-                        $fieldList        = $this->getFieldListName($field);
-                        $attrArr['name']  = $fieldName;
+                        $templateName    = $v['DATA_TYPE'] == 'set' ? 'selects' : 'select';
+                        $fieldList       = $this->getFieldListName($field);
+                        $attrArr['name'] = $fieldName;
 
                         $this->getEnum($getEnumArr, $controllerAssignList, $field, $itemArr, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
 
                         //添加一个获取器
                         $this->getAttr($getAttrArr, $field, $v['DATA_TYPE'] == 'set' ? 'multiple' : 'select');
                         if ($v['DATA_TYPE'] == 'set') {
-                            $html      = 'html/selects';
                             $fieldList = '{$' . $fieldList . '|json_encode}';
                             $this->setAttr($setAttrArr, $field, $inputType);
                         }
                         $this->appendAttr($appendAttrList, $field);
 
-                        $formAddElement  = $this->getReplacedStub($html, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
-                        $formEditElement = $this->getReplacedStub($html, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $editValue]);
+                        $formAddElement  = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $editValue]);
                     } elseif ($inputType == 'datetime') {
                         $format    = "YYYY-MM-DD HH:mm:ss";
                         $phpFormat = "Y-m-d H:i:s";
@@ -631,6 +634,7 @@ class Crud extends Command
                         $formAddElement             = \Form::datetime($fieldName, $defaultDateTime, $attrArr);
                         $formEditElement            = \Form::datetime($fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'checkbox' || $inputType == 'radio') {
+                        unset($attrArr['lay-verify']);
                         $fieldName       = $inputType == 'checkbox' ? $fieldName .= "[]" : $fieldName;
                         $attrArr['name'] = "row[{$fieldName}]";
 
@@ -685,7 +689,7 @@ class Crud extends Command
                         if ($this->isMatchSuffix($field, $this->selectpageSuffix)) {
                             $inputType    = 'text';
                             $defaultValue = '';
-                            //$attrArr['data-rule']   = 'required';
+                            //$attrArr['lay-verify']  = 'required';
                             $cssClassArr[]          = 'selectpage';
                             $selectpageTable        = substr($field, 0, strripos($field, '_'));
                             $selectpageField        = '';
