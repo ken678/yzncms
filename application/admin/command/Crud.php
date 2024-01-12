@@ -1054,7 +1054,7 @@ class Crud extends Command
                     }
                 }
 
-                $data['relationWithList']         = "->with(['" . implode("','", $relationWithList) . "'])";
+                $data['relationWithList']         = "->withJoin(['" . implode("','", $relationWithList) . "'])";
                 $data['relationMethodList']       = implode("\n\n", $relationMethodList);
                 $data['relationVisibleFieldList'] = implode("\n\t\t\t\t", $relationVisibleFieldList);
 
