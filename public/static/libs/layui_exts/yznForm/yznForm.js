@@ -1,5 +1,5 @@
 //封装表单操作 部分参考EasyAdmin
-layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload','multiSelect'], function(exports) {
+layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'], function(exports) {
     var MOD_NAME = 'yznForm',
         $ = layui.$,
         layer = layui.layer,
@@ -9,7 +9,6 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload','
         element = layui.element,
         yznUpload = layui.yznUpload,
         notice = layui.notice;
-        multiSelect = layui.multiSelect;
 
     var init = {
         table_elem: '#currentTable',
