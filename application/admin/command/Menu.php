@@ -276,9 +276,9 @@ class Menu extends Command
                 $val = strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $val), "_"));
             }
             unset($val);
-            $name      = implode('/', $controllerNameArr);
+            $name      = implode('.', $controllerNameArr);
             $title     = (!isset($controllerArr[$key]) ? $controllerTitle : '');
-            $icon      = (!isset($controllerArr[$key]) ? $controllerIcon : 'fa fa-list');
+            $icon      = (!isset($controllerArr[$key]) ? $controllerIcon : 'iconfont icon-other');
             $remark    = (!isset($controllerArr[$key]) ? $controllerRemark : '');
             $title     = $title ? $title : $v;
             $rulemodel = $this->model->get(['name' => $name]);
