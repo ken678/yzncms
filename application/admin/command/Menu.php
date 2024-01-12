@@ -92,9 +92,8 @@ class Menu extends Command
                 throw new Exception("There is no menu to delete");
             }
             if (!$force) {
-                $output->info("Are you sure you want to delete all those menu?  Type 'yes' to continue: ");
-                $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
-                if (trim($line) != 'yes') {
+                $question = $output->confirm($input, "Are you sure you want to delete all those menu?  Type 'yes' to continue: ", false);
+                if (!$question) {
                     throw new Exception("Operation is aborted!");
                 }
             }

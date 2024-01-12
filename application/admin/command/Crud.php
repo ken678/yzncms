@@ -449,9 +449,8 @@ class Crud extends Command
                 $output->warning($v);
             }
             if (!$force) {
-                $output->info("Are you sure you want to delete all those files?  Type 'yes' to continue: ");
-                $line = fgets(defined('STDIN') ? STDIN : fopen('php://stdin', 'r'));
-                if (trim($line) != 'yes') {
+                $question = $output->confirm($input, "Are you sure you want to delete all those files?  Type 'yes' to continue: ", false);
+                if (!$question) {
                     throw new Exception("Operation is aborted!");
                 }
             }
