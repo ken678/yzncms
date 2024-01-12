@@ -1013,6 +1013,8 @@ class Crud extends Command
                 'getAttrList'             => implode("\n\n", $getAttrArr),
                 'setAttrList'             => implode("\n\n", $setAttrArr),
                 'relationSearch'          => $relations ? 'true' : 'false',
+                'relationWithList'        => '',
+                'relationMethodList'      => '',
                 'visibleFieldList'        => $fields ? "\$row->visible(['" . implode("','", array_filter(in_array($priKey, explode(',', $fields)) ? explode(',', $fields) : explode(',', $priKey . ',' . $fields))) . "']);" : '',
             ];
 
