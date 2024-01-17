@@ -690,7 +690,7 @@ class Crud extends Command
             $appendAttrList       = [];
             $getEnumArr           = [];
             $controllerAssignList = [];
-            $toolbarHtml          = "'refresh', 'add', 'delete'";
+            $recyclebinHtml       = "";
 
             foreach ($columnList as $k => $v) {
                 $field   = $v['COLUMN_NAME'];
@@ -930,7 +930,7 @@ class Crud extends Command
                         $javascriptList[] = "{type: 'checkbox', fixed: 'left' }";
                     }
                     if ($this->deleteTimeField == $field) {
-                        $toolbarHtml = "'refresh','add','delete','recyclebin'";
+                        $recyclebinHtml = ",'recyclebin'";
                         continue;
                     }
                     if (!$fields || in_array($field, explode(',', $fields))) {
@@ -1023,7 +1023,7 @@ class Crud extends Command
                 'relationWithList'        => '',
                 'relationMethodList'      => '',
                 'visibleFieldList'        => $fields ? "\$row->visible(['" . implode("','", array_filter(in_array($priKey, explode(',', $fields)) ? explode(',', $fields) : explode(',', $priKey . ',' . $fields))) . "']);" : '',
-                'toolbarHtml'             => $toolbarHtml,
+                'recyclebinHtml'          => $recyclebinHtml,
             ];
 
             //如果使用关联模型
@@ -1088,6 +1088,9 @@ class Crud extends Command
             $this->writeToFile('add', $data, $addFile);
             $this->writeToFile('edit', $data, $editFile);
             $this->writeToFile('index', $data, $indexFile);
+            if ($recyclebinHtml) {
+                $this->writeToFile('recyclebin', $data, $recyclebinFile);
+            }
         } catch (ErrorException $e) {
             throw new Exception("Code: " . $e->getCode() . "\nLine: " . $e->getLine() . "\nMessage: " . $e->getMessage() . "\nFile: " . $e->getFile());
         }
