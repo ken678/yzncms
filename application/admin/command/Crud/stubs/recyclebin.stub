@@ -20,15 +20,15 @@ layui.use('yznTable', function() {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
-        restore_url: '{:url("restore")}',
-        destroy_url: '{:url("destroy")}',
-        modify_url: "{:url('multi')}",
+        restore_url: '{:url("{%controllerUrl%}/restore")}',
+        destroy_url: '{:url("{%controllerUrl%}/destroy")}',
+        modify_url: "{:url('{%controllerUrl%}/multi')}",
     };
 
     table.render({
         init: init,
         toolbar: ['refresh', 'restore', 'destroy'],
-        url: '{:url("index")}',
+        url: '{:url("{%controllerUrl%}/recyclebin")}',
         cols: [
             [
                 { type: 'checkbox', fixed: 'left' },
