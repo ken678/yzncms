@@ -1024,6 +1024,7 @@ class Crud extends Command
                 'relationMethodList'      => '',
                 'visibleFieldList'        => $fields ? "\$row->visible(['" . implode("','", array_filter(in_array($priKey, explode(',', $fields)) ? explode(',', $fields) : explode(',', $priKey . ',' . $fields))) . "']);" : '',
                 'recyclebinHtml'          => $recyclebinHtml,
+                'deleteTimeField'         => $this->deleteTimeField,
             ];
 
             //如果使用关联模型
