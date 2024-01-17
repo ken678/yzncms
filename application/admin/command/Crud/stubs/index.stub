@@ -7,7 +7,9 @@
             <table class="layui-hide" id="currentTable" lay-filter="currentTable"
                 data-auth-add="{:$auth->check('{%controllerUrl%}/add')}" 
                 data-auth-edit="{:$auth->check('{%controllerUrl%}/edit')}"
-                data-auth-delete="{:$auth->check('{%controllerUrl%}/del')}"></table>
+                data-auth-delete="{:$auth->check('{%controllerUrl%}/del')}"
+                data-auth-recyclebin="{:$auth->check('{%controllerUrl%}/recyclebin')}"
+                ></table>
         </div>
     </div>
 </div>
@@ -24,11 +26,12 @@ layui.use('yznTable', function() {
         edit_url: '{:url("edit")}',
         delete_url: '{:url("del")}',
         modify_url: "{:url('multi')}",
+        recyclebin_url: "{:url('recyclebin')}",
     };
 
     table.render({
         init: init,
-        toolbar: ['refresh', 'add', 'delete'],
+        toolbar: [{%toolbarHtml%}],
         url: '{:url("index")}',
         cols: [
             [

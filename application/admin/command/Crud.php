@@ -690,6 +690,7 @@ class Crud extends Command
             $appendAttrList       = [];
             $getEnumArr           = [];
             $controllerAssignList = [];
+            $toolbarHtml          = "'refresh', 'add', 'delete'";
 
             foreach ($columnList as $k => $v) {
                 $field   = $v['COLUMN_NAME'];
@@ -928,10 +929,16 @@ class Crud extends Command
                         $priDefined       = true;
                         $javascriptList[] = "{type: 'checkbox', fixed: 'left' }";
                     }
+                    if ($this->deleteTimeField == $field) {
+                        $toolbarHtml = "'refresh','add','delete','recyclebin'";
+                        continue;
+                    }
                     if (!$fields || in_array($field, explode(',', $fields))) {
                         //构造JS列信息
                         $javascriptList[] = $this->getJsColumn($field, $v['DATA_TYPE'], $inputType && in_array($inputType, ['select', 'checkbox', 'radio']) ? '_text' : '', $itemArr);
                     }
+                    //排序方式,如果有指定排序字段,否则按主键排序
+                    $order = $field == $this->sortField ? $this->sortField : $order;
                 }
             }
 
@@ -1016,6 +1023,7 @@ class Crud extends Command
                 'relationWithList'        => '',
                 'relationMethodList'      => '',
                 'visibleFieldList'        => $fields ? "\$row->visible(['" . implode("','", array_filter(in_array($priKey, explode(',', $fields)) ? explode(',', $fields) : explode(',', $priKey . ',' . $fields))) . "']);" : '',
+                'toolbarHtml'             => $toolbarHtml,
             ];
 
             //如果使用关联模型
