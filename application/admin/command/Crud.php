@@ -1090,6 +1090,8 @@ class Crud extends Command
             $this->writeToFile('edit', $data, $editFile);
             $this->writeToFile('index', $data, $indexFile);
             if ($recyclebinHtml) {
+                $recyclebinTitle           = in_array('title', $fieldArr) ? '标题' : (in_array('name', $fieldArr) ? '名称' : '');
+                $data['recyclebinTitleJs'] = $recyclebinTitle ? "\n                { field: '{$recyclebinTitle}', title: '" . (ucfirst($recyclebinTitle)) . "', align: 'left'}," : '';
                 $this->writeToFile('recyclebin', $data, $recyclebinFile);
             }
         } catch (ErrorException $e) {
