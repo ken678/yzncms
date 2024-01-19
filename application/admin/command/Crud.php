@@ -210,7 +210,7 @@ class Crud extends Command
     /**
      * 识别为图片字段
      */
-    protected $imageField = ['image', 'images', 'avatar', 'avatars'];
+    protected $imageField = ['image', 'images', 'avatar', 'avatars', 'thumb'];
 
     /**
      * 识别为文件字段
@@ -1368,8 +1368,7 @@ EOD;
 <div class="layui-col-xs4">
                 {$content}
             </div>
-            <button type="button" id="faupload-{$field}" class="layui-btn faupload" data-input-id="c-{$field}"{$uploadfilter}{$multiple}{$preview}><i class="layui-icon layui-icon-upload"></i> 上传</button>
-            <button type="button" id="fachoose-{$field}" class="layui-btn fachoose" data-input-id="c-{$field}"{$selectfilter}{$multiple}><i class="iconfont icon-other"></i> 选择</button>
+            <button type="button" id="faupload-{$field}" class="layui-btn faupload" data-input-id="c-{$field}"{$uploadfilter}{$multiple}{$preview}><i class="layui-icon layui-icon-upload"></i> 上传</button><button type="button" id="fachoose-{$field}" class="layui-btn fachoose" data-input-id="c-{$field}"{$selectfilter}{$multiple}><i class="iconfont icon-other"></i> 选择</button>
             {$previewcontainer}
 EOD;
     }
