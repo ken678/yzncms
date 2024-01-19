@@ -100,7 +100,7 @@ class Menu extends Command
             AuthRule::destroy($ids);
 
             Cache::rm("__menu__");
-            $output->info("Delete Successed");
+            $output->info("Menu Delete Successed");
             return;
         }
 

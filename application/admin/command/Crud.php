@@ -570,10 +570,10 @@ class Crud extends Command
             if ($menu) {
                 //exec("php think menu -c {$controllerUrl} -d 1 -f 1");
                 $result=\think\Console::call('menu',["--controller={$controllerUrl}","--delete=1","--force=1"]);
-                $output->error($result->fetch());
+                $output->writeln($result->fetch());
             }
 
-            $output->info("Delete Successed");
+            $output->info("Crud Delete Successed");
             return;
         }
 
