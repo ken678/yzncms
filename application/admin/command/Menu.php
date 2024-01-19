@@ -50,7 +50,8 @@ class Menu extends Command
         //控制器名
         $controller = $input->getOption('controller') ?: '';
         if (!$controller) {
-            throw new Exception("please input controller name");
+            $output->error("please input controller name");
+            return;
         }
         $force = $input->getOption('force');
         //是否为删除模式
@@ -86,12 +87,14 @@ class Menu extends Command
                 $ids[] = $v->id;
             }
             if (!$ids) {
-                throw new Exception("There is no menu to delete");
+                $output->error("There is no menu to delete");
+                return;
             }
             if (!$force) {
                 $question = $output->confirm($input, "Are you sure you want to delete all those menu?  Type 'yes' to continue: ", false);
                 if (!$question) {
-                    throw new Exception("Operation is aborted!");
+                    $output->error("Operation is aborted!");
+                    return;
                 }
             }
             AuthRule::destroy($ids);

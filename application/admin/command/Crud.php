@@ -301,7 +301,8 @@ class Crud extends Command
         //表名
         $table = $input->getOption('table') ?: '';
         if (!$table) {
-            throw new Exception('table name can\'t empty');
+            $output->error('table name can\'t empty');
+            return;
         }
         //自定义控制器
         $controller = $input->getOption('controller');
@@ -421,7 +422,8 @@ class Crud extends Command
         $prefix    = Config::get($db . '.prefix');
         //系统表无法生成，防止后台错乱
         if (in_array(str_replace($prefix, "", $table), $this->systemTables)) {
-            throw new Exception('system table can\'t be crud');
+            $output->error('system table can\'t be crud');
+            return;
         }
 
         //模块
@@ -439,7 +441,8 @@ class Crud extends Command
             $modelTableName = $prefix . $modelName;
             $modelTableInfo = $dbconnect->query("SHOW TABLE STATUS LIKE '{$modelTableName}'", [], true);
             if (!$modelTableInfo) {
-                throw new Exception("table not found");
+                $output->error("table not found");
+                return;
             }
         }
         $modelTableInfo = $modelTableInfo[0];
@@ -460,7 +463,8 @@ class Crud extends Command
                     $relationTableName = $prefix . $relationName;
                     $relationTableInfo = $dbconnect->query("SHOW TABLE STATUS LIKE '{$relationTableName}'", [], true);
                     if (!$relationTableInfo) {
-                        throw new Exception("relation table not found");
+                        $output->error("relation table not found");
+                        return;
                     }
                 }
                 $relationTableInfo = $relationTableInfo[0];
@@ -535,7 +539,8 @@ class Crud extends Command
             if (!$force) {
                 $question = $output->confirm($input, "Are you sure you want to delete all those files?  Type 'yes' to continue: ", false);
                 if (!$question) {
-                    throw new Exception("Operation is aborted!");
+                    $output->error("Operation is aborted!");
+                    return;
                 }
             }
             foreach ($readyFiles as $k => $v) {
@@ -563,7 +568,9 @@ class Crud extends Command
 
             //继续删除菜单
             if ($menu) {
-                exec("php think menu -c {$controllerUrl} -d 1 -f 1");
+                //exec("php think menu -c {$controllerUrl} -d 1 -f 1");
+                $result=\think\Console::call('menu',["--controller={$controllerUrl}","--delete=1","--force=1"]);
+                $output->error($result->fetch());
             }
 
             $output->info("Delete Successed");
@@ -572,17 +579,20 @@ class Crud extends Command
 
         //非覆盖模式时如果存在控制器文件则报错
         if (is_file($controllerFile) && !$force) {
-            throw new Exception("controller already exists!\nIf you need to rebuild again, use the parameter --force=true ");
+            $output->error("controller already exists!\nIf you need to rebuild again, use the parameter --force=true ");
+            return;
         }
 
         //非覆盖模式时如果存在模型文件则报错
         if (is_file($modelFile) && !$force) {
-            throw new Exception("model already exists!\nIf you need to rebuild again, use the parameter --force=true ");
+            $output->error("model already exists!\nIf you need to rebuild again, use the parameter --force=true ");
+            return;
         }
 
         //非覆盖模式时如果存在验证文件则报错
         if (is_file($validateFile) && !$force) {
-            throw new Exception("validate already exists!\nIf you need to rebuild again, use the parameter --force=true ");
+            $output->error("validate already exists!\nIf you need to rebuild again, use the parameter --force=true ");
+            return;
         }
 
         //从数据库中获取表字段信息
@@ -614,11 +624,13 @@ class Crud extends Command
             }
             // 如果主键为空
             if (!$relation['relationPrimaryKey']) {
-                throw new Exception('Relation Primary key not found!');
+                $output->error('Relation Primary key not found!');
+                return;
             }
             // 如果主键不在表字段中
             if (!in_array($relation['relationPrimaryKey'], $relationFieldList)) {
-                throw new Exception('Relation Primary key not found in table!');
+                $output->error('Relation Primary key not found in table!');
+                return;
             }
             $relation['relationColumnList'] = $relationColumnList;
             $relation['relationFieldList']  = $relationFieldList;
@@ -636,10 +648,12 @@ class Crud extends Command
             }
         }
         if (!$priKeyArr) {
-            throw new Exception('Primary key not found!');
+            $output->error('Primary key not found!');
+            return;
         }
         if (count($priKeyArr) > 1) {
-            throw new Exception('Multiple primary key not support!');
+            $output->error('Multiple primary key not support!');
+            return;
         }
         $priKey = reset($priKeyArr);
         $order  = $priKey;
@@ -651,28 +665,34 @@ class Crud extends Command
                 $relationPrimaryKey = $relation['relationPrimaryKey'] ? $relation['relationPrimaryKey'] : $priKey;
 
                 if (!in_array($relationForeignKey, $relation['relationFieldList'])) {
-                    throw new Exception('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationForeignKey . ']');
+                    $output->error('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationForeignKey . ']');
+                    return;
                 }
                 if (!in_array($relationPrimaryKey, $fieldArr)) {
-                    throw new Exception('table [' . $modelTableName . '] must be contain field [' . $relationPrimaryKey . ']');
+                    $output->error('table [' . $modelTableName . '] must be contain field [' . $relationPrimaryKey . ']');
+                    return;
                 }
             } elseif ($relation['relationMode'] == 'belongsto') {
                 $relationForeignKey = $relation['relationForeignKey'] ? $relation['relationForeignKey'] : Loader::parseName($relation['relationName']) . "_id";
                 $relationPrimaryKey = $relation['relationPrimaryKey'] ? $relation['relationPrimaryKey'] : $relation['relationPriKey'];
                 if (!in_array($relationForeignKey, $fieldArr)) {
-                    throw new Exception('table [' . $modelTableName . '] must be contain field [' . $relationForeignKey . ']');
+                    $output->error('table [' . $modelTableName . '] must be contain field [' . $relationForeignKey . ']');
+                    return;
                 }
                 if (!in_array($relationPrimaryKey, $relation['relationFieldList'])) {
-                    throw new Exception('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationPrimaryKey . ']');
+                    $output->error('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationPrimaryKey . ']');
+                    return;
                 }
             } elseif ($relation['relationMode'] == 'hasmany') {
                 $relationForeignKey = $relation['relationForeignKey'] ? $relation['relationForeignKey'] : $table . "_id";
                 $relationPrimaryKey = $relation['relationPrimaryKey'] ? $relation['relationPrimaryKey'] : $priKey;
                 if (!in_array($relationForeignKey, $relation['relationFieldList'])) {
-                    throw new Exception('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationForeignKey . ']');
+                    $output->error('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationForeignKey . ']');
+                    return;
                 }
                 if (!in_array($relationPrimaryKey, $fieldArr)) {
-                    throw new Exception('table [' . $modelTableName . '] must be contain field [' . $relationPrimaryKey . ']');
+                    $output->error('table [' . $modelTableName . '] must be contain field [' . $relationPrimaryKey . ']');
+                    return;
                 }
                 $relation['relationColumnList'] = [];
                 $relation['relationFieldList']  = [];
@@ -1095,11 +1115,13 @@ class Crud extends Command
                 $this->writeToFile('recyclebin', $data, $recyclebinFile);
             }
         } catch (ErrorException $e) {
-            throw new Exception("Code: " . $e->getCode() . "\nLine: " . $e->getLine() . "\nMessage: " . $e->getMessage() . "\nFile: " . $e->getFile());
+            $output->error("Code: " . $e->getCode() . "\nLine: " . $e->getLine() . "\nMessage: " . $e->getMessage() . "\nFile: " . $e->getFile());
+            return;
         }
         //继续生成菜单
         if ($menu) {
-            exec("php think menu -c {$controllerUrl}");
+            //exec("php think menu -c {$controllerUrl}");
+            \think\Console::call('menu',["--controller={$controllerUrl}"]);
         }
 
         $output->info("Build Successed");
@@ -1516,7 +1538,8 @@ EOD;
         array_push($parseArr, $parseName);
         //类名不能为内部关键字
         if (in_array(strtolower($parseName), $this->internalKeywords)) {
-            throw new Exception('Unable to use internal variable:' . $parseName);
+            $output->error('Unable to use internal variable:' . $parseName);
+            return;
         }
         $appNamespace   = 'app';
         $parseNamespace = "{$appNamespace}\\{$module}\\{$type}" . ($arr ? "\\" . implode("\\", $arr) : "");
