@@ -14,6 +14,7 @@
 
 |  名称 | 简介  |价格　　|
 |---|---|---|
+|在线命令|可在线执行一键生成CRUD、一键生成菜单等相关命令|免费|
 |内容管理系统|这是一个功能强大的内容管理！自定义模型，字段不在话下，支持近二十种类型字段|免费|
 |会员插件|系统必备的会员基础功能！含会员组，会员投稿等强大功能|免费|
 |自定义表单|这是一个cms必备的表单提交插件！字段都可以任意定义，同样支持近二十种类型字段|免费|
@@ -113,5 +114,5 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 ## [版权信息]  
 YznCMS遵循[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0.html)开源协议发布，并允许商业使用。  
 本项目包含的第三方源码和二进制文件之版权信息另行标注。  
-版权所有Copyright © 2017-2023 by Yzncms (https://www.yzncms.com)  
+版权所有Copyright © 2017-2024 by Yzncms (https://www.yzncms.com)  
 All rights reserved。
