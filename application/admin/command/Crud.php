@@ -563,7 +563,12 @@ class Crud extends Command
 
             //继续删除菜单
             if ($menu) {
-                exec("php think menu -c {$controllerUrl} -d 1 -f 1");
+                try{
+                  //exec("php think menu -c {$controllerUrl} -d 1 -f 1");
+                  \think\Console::call('menu',["--controller={$controllerUrl}","--delete=1","--force=1"]);
+                } catch (Exception $e) {
+                  $output->error($e->getMessage());
+                }
             }
 
             $output->info("Delete Successed");
@@ -1099,7 +1104,8 @@ class Crud extends Command
         }
         //继续生成菜单
         if ($menu) {
-            exec("php think menu -c {$controllerUrl}");
+            //exec("php think menu -c {$controllerUrl}");
+            \think\Console::call('menu',["--controller={$controllerUrl}"]);
         }
 
         $output->info("Build Successed");
