@@ -565,9 +565,9 @@ class Crud extends Command
             if ($menu) {
                 try{
                   //exec("php think menu -c {$controllerUrl} -d 1 -f 1");
-                  \think\Console::call('menu',["--controller={$controllerUrl}","--delete=1","--force=1"]);
+                   \think\Console::call('menu',["--controller={$controllerUrl}","--delete=1","--force=1"]);
                 } catch (Exception $e) {
-                  $output->error($e->getMessage());
+                   throw new Exception($e->getMessage());
                 }
             }
 
