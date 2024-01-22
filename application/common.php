@@ -471,7 +471,8 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
         return $smallpic;
     }
 
-    $uploadUrl      = config('public_url') . 'uploads/';
+    $uploadUrl = cdnurl(config('public_url')) . 'uploads/';
+
     $imgurl_replace = str_replace($uploadUrl, '', $imgurl);
 
     $newimgname = 'thumb_' . $width . '_' . $height . '_' . basename($imgurl_replace);
