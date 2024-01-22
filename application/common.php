@@ -71,45 +71,6 @@ function cache($name, $value = '', $options = null)
 }
 
 /**
- * 加载其他模块函数
- */
-function fun($fun)
-{
-    list($module_name, $fun) = explode('@', $fun);
-    $path                    = APP_PATH . $module_name . DS;
-    if (is_file($path . 'common.php')) {
-        include_once $path . 'common.php';
-    }
-    $params = func_get_args();
-    unset($params[0]);
-    $params = array_values($params);
-
-    /*if (!is_array($param)) {
-    $param = [$param];
-    }
-    $ReflectionFunc = new \ReflectionFunction($fun);
-    $depend = array();
-    foreach ($ReflectionFunc->getParameters() as $value) {
-    if (isset($param[$value->name])) {
-    $depend[] = $param[$value->name];
-    } elseif ($value->isDefaultValueAvailable()) {
-    $depend[] = $value->getDefaultValue();
-    } else {
-    $tmp = $value->getClass();
-    if (is_null($tmp)) {
-    throw new \Exception("Function parameters can not be getClass {$class}");
-    }
-    $depend[] = $this->get($tmp->getName());
-    }
-    }*/
-
-    if (function_exists($fun)) {
-        return call_user_func_array($fun, $params);
-    }
-    return null;
-}
-
-/**
  * 获取上传资源的CDN的地址
  * @param string  $url    资源相对地址
  * @param boolean $domain 是否显示域名 或者直接传入域名
