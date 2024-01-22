@@ -464,7 +464,7 @@ class Crud extends Command
                     }
                 }
                 $relationTableInfo = $relationTableInfo[0];
-                $relationModel     = isset($relationModels[$index]) ? $relationModels[$index] : '';
+                $relationModel     = $relationModels[$index] ?? '';
 
                 list($relationNamespace, $relationName, $relationFile) = $this->getModelData($modelModuleName, $relationModel, $relationName);
 
@@ -488,13 +488,13 @@ class Crud extends Command
                     //关联模式
                     'relationFields'        => isset($relationFields[$index]) ? explode(',', $relationFields[$index]) : [],
                     //关联模式
-                    'relationMode'          => isset($relationMode[$index]) ? $relationMode[$index] : 'belongsto',
+                    'relationMode'          => $relationMode[$index] ?? 'belongsto',
                     //关联模型控制器
-                    'relationController'    => isset($relationController[$index]) ? $relationController[$index] : '',
+                    'relationController'    => $relationController[$index] ?? '',
                     //关联表外键
-                    'relationForeignKey'    => isset($relationForeignKey[$index]) ? $relationForeignKey[$index] : '',
+                    'relationForeignKey'    => $relationForeignKey[$index] ?? '',
                     //关联表主键
-                    'relationPrimaryKey'    => isset($relationPrimaryKey[$index]) ? $relationPrimaryKey[$index] : '',
+                    'relationPrimaryKey'    => $relationPrimaryKey[$index] ?? '',
                 ];
             }
         }
@@ -593,20 +593,20 @@ class Crud extends Command
         //加载主表的列
         $columnList = $dbconnect->query($sql, [$dbname, $modelTableName]);
         $fieldArr   = [];
-        foreach ($columnList as $k => $v) {
+        foreach ($columnList as $v) {
             $fieldArr[] = $v['COLUMN_NAME'];
         }
 
         // 加载关联表的列
-        foreach ($relations as $index => &$relation) {
+        foreach ($relations as &$relation) {
             $relationColumnList = $dbconnect->query($sql, [$dbname, $relation['relationTableName']]);
 
             $relationFieldList = [];
-            foreach ($relationColumnList as $k => $v) {
+            foreach ($relationColumnList as $v) {
                 $relationFieldList[] = $v['COLUMN_NAME'];
             }
             if (!$relation['relationPrimaryKey']) {
-                foreach ($relationColumnList as $k => $v) {
+                foreach ($relationColumnList as $v) {
                     if ($v['COLUMN_KEY'] == 'PRI') {
                         $relation['relationPrimaryKey'] = $v['COLUMN_NAME'];
                         break;
@@ -631,7 +631,7 @@ class Crud extends Command
         $javascriptList = [];
         $priDefined     = false;
         $priKeyArr      = [];
-        foreach ($columnList as $k => $v) {
+        foreach ($columnList as $v) {
             if ($v['COLUMN_KEY'] == 'PRI') {
                 $priKeyArr[] = $v['COLUMN_NAME'];
             }
@@ -646,10 +646,10 @@ class Crud extends Command
         $order  = $priKey;
 
         //如果是关联模型
-        foreach ($relations as $index => &$relation) {
+        foreach ($relations as &$relation) {
             if ($relation['relationMode'] == 'hasone') {
-                $relationForeignKey = $relation['relationForeignKey'] ? $relation['relationForeignKey'] : $table . "_id";
-                $relationPrimaryKey = $relation['relationPrimaryKey'] ? $relation['relationPrimaryKey'] : $priKey;
+                $relationForeignKey = $relation['relationForeignKey'] ?: $table . "_id";
+                $relationPrimaryKey = $relation['relationPrimaryKey'] ?: $priKey;
 
                 if (!in_array($relationForeignKey, $relation['relationFieldList'])) {
                     throw new Exception('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationForeignKey . ']');
@@ -658,8 +658,8 @@ class Crud extends Command
                     throw new Exception('table [' . $modelTableName . '] must be contain field [' . $relationPrimaryKey . ']');
                 }
             } elseif ($relation['relationMode'] == 'belongsto') {
-                $relationForeignKey = $relation['relationForeignKey'] ? $relation['relationForeignKey'] : Loader::parseName($relation['relationName']) . "_id";
-                $relationPrimaryKey = $relation['relationPrimaryKey'] ? $relation['relationPrimaryKey'] : $relation['relationPriKey'];
+                $relationForeignKey = $relation['relationForeignKey'] ?: Loader::parseName($relation['relationName']) . "_id";
+                $relationPrimaryKey = $relation['relationPrimaryKey'] ?: $relation['relationPriKey'];
                 if (!in_array($relationForeignKey, $fieldArr)) {
                     throw new Exception('table [' . $modelTableName . '] must be contain field [' . $relationForeignKey . ']');
                 }
@@ -667,8 +667,8 @@ class Crud extends Command
                     throw new Exception('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationPrimaryKey . ']');
                 }
             } elseif ($relation['relationMode'] == 'hasmany') {
-                $relationForeignKey = $relation['relationForeignKey'] ? $relation['relationForeignKey'] : $table . "_id";
-                $relationPrimaryKey = $relation['relationPrimaryKey'] ? $relation['relationPrimaryKey'] : $priKey;
+                $relationForeignKey = $relation['relationForeignKey'] ?: $table . "_id";
+                $relationPrimaryKey = $relation['relationPrimaryKey'] ?: $priKey;
                 if (!in_array($relationForeignKey, $relation['relationFieldList'])) {
                     throw new Exception('relation table [' . $relation['relationTableName'] . '] must be contain field [' . $relationForeignKey . ']');
                 }
@@ -693,7 +693,7 @@ class Crud extends Command
             $controllerAssignList = [];
             $recyclebinHtml       = "";
 
-            foreach ($columnList as $k => $v) {
+            foreach ($columnList as $v) {
                 $field   = $v['COLUMN_NAME'];
                 $itemArr = [];
                 // 这里构建Enum和Set类型的列表数据
@@ -944,7 +944,7 @@ class Crud extends Command
             }
 
             //循环关联表,追加语言包和JS列
-            foreach ($relations as $index => $relation) {
+            foreach ($relations as $relation) {
                 if ($relation['relationMode'] == 'hasmany') {
                     $relationFieldText = ucfirst(strtolower($relation['relationName'])) . ' List';
                     // 语言列表
@@ -962,7 +962,7 @@ class Crud extends Command
                         exec("php think crud -t {$relation['relationTableName']} -c {$relation['relationController']} -m {$relation['relationModel']} -i " . implode(',', $relation['relationFields']));
                     }
                 }
-                foreach ($relation['relationColumnList'] as $k => $v) {
+                foreach ($relation['relationColumnList'] as $v) {
                     // 不显示的字段直接过滤掉
                     if ($relation['relationFields'] && !in_array($v['COLUMN_NAME'], $relation['relationFields'])) {
                         continue;
@@ -1041,7 +1041,7 @@ class Crud extends Command
                     $relation['relationMode'] = array_key_exists($relation['relationMode'], $relationKeyArr) ? $relationKeyArr[$relation['relationMode']] : '';
 
                     //关联字段
-                    $relation['relationPrimaryKey'] = $relation['relationPrimaryKey'] ? $relation['relationPrimaryKey'] : $priKey;
+                    $relation['relationPrimaryKey'] = $relation['relationPrimaryKey'] ?: $priKey;
 
                     //构造关联模型的方法
                     $relationMethodList[] = $this->getReplacedStub('mixins' . DS . 'modelrelationmethod' . ($relation['relationMode'] == 'hasMany' ? '-hasmany' : ''), $relation);
@@ -1210,7 +1210,7 @@ class Crud extends Command
         if ($datatype == 'set') {
             $formatter = 'label';
         }
-        foreach ($itemArr as $k => &$v) {
+        foreach ($itemArr as &$v) {
             $v = $this->langList[$this->mb_ucfirst($v)] ?? $v;
         }
         unset($v);
@@ -1264,7 +1264,7 @@ class Crud extends Command
     protected function isMatchSuffix($field, $suffixArr)
     {
         $suffixArr = is_array($suffixArr) ? $suffixArr : explode(',', $suffixArr);
-        foreach ($suffixArr as $k => $v) {
+        foreach ($suffixArr as $v) {
             if (preg_match("/{$v}$/i", $field)) {
                 return true;
             }
@@ -1327,7 +1327,7 @@ EOD;
             if (stripos($content, ':') !== false && stripos($content, ',') && stripos($content, '=') !== false) {
                 list($fieldLang, $item) = explode(':', $content);
                 $itemArr                = [$field => $fieldLang];
-                foreach (explode(',', $item) as $k => $v) {
+                foreach (explode(',', $item) as $v) {
                     $valArr = explode('=', $v);
                     if (count($valArr) == 2) {
                         list($key, $value)            = $valArr;
@@ -1338,7 +1338,6 @@ EOD;
             } else {
                 $itemArr = [$field => $content];
             }
-            $resultArr = [];
             foreach ($itemArr as $k => $v) {
                 $this->langList[$this->mb_ucfirst($k)] = $v;
             }
@@ -1382,7 +1381,7 @@ EOD;
         }
         $fieldList  = $this->getFieldListName($field);
         $methodName = 'get' . ucfirst($fieldList);
-        foreach ($itemArr as $k => &$v) {
+        foreach ($itemArr as &$v) {
             $v = $this->langList[$this->mb_ucfirst($v)] ?? $v;
         }
         unset($v);
@@ -1536,7 +1535,7 @@ EOD;
      */
     protected function writeToFile($name, $data, $pathname)
     {
-        foreach ($data as $index => &$datum) {
+        foreach ($data as &$datum) {
             $datum = is_array($datum) ? '' : $datum;
         }
         unset($datum);
