@@ -455,10 +455,10 @@ function getModel($modelid, $name = '')
  * @param type $smallpic  图片不存在时显示默认图片
  * @return type
  */
-function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'none.png')
+function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'noimage.jpg')
 {
     static $_thumb_cache = [];
-    $smallpic            = config('public_url') . 'static/admin/img/' . $smallpic;
+    $smallpic            = config('public_url') . 'static/common/img/' . $smallpic;
     if (empty($imgurl)) {
         return $smallpic;
     }
