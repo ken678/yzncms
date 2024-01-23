@@ -1229,9 +1229,9 @@ class Crud extends Command
         }
 
         if (in_array($datatype, ['date', 'datetime']) || $formatter === 'datetime') {
-            $html .= ",width:180, searchOp:'RANGE', addclass:'datetimerange'";
+            $html .= ",width:180, search: 'range'";
         } elseif (in_array($datatype, ['float', 'double', 'decimal'])) {
-            $html .= ", searchOp:'BETWEEN'";
+            $html .= ", search: 'between'";
         } elseif (in_array($datatype, ['int', 'bigint'])) {
 
         } else {
