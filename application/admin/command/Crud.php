@@ -1231,7 +1231,7 @@ class Crud extends Command
         if (in_array($datatype, ['date', 'datetime']) || $formatter === 'datetime') {
             $html .= ",width:180, search: 'range'";
         } elseif (in_array($datatype, ['float', 'double', 'decimal'])) {
-            $html .= ", search: 'between'";
+            $html .= ", search: 'between',searchTip:'{$langField}'";
         } elseif (in_array($datatype, ['int', 'bigint'])) {
 
         } else {
