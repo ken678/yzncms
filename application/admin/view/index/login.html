@@ -45,6 +45,7 @@
         <div class="login-main">
             <div class="layui-elip">YZNCMS管理系统&nbsp;<span class="version">v{$Think.config.version.yzncms_version}</span><span class="bg1"></span><span class="bg2"></span></div>
             <form class="layui-form" action="{:url('login')}">
+                <!--@AdminLoginFormBegin-->
                 {:token()}
                 <div class="login-container">
                     <div class="layui-form-item">
@@ -63,6 +64,7 @@
                             <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input" lay-affix="eye">
                         </div>
                     </div>
+                    <!--@CaptchaBegin-->
                     <div class="layui-form-item">
                         <div class="layui-input-wrap verify-box">
                             <div class="layui-input-prefix">
@@ -72,6 +74,7 @@
                             <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
                         </div>
                     </div>
+                    <!--@CaptchaEnd-->
                     <div class="layui-form-item">
                         <input type="checkbox" name="keeplogin" title="保持会话" lay-skin="primary">
                     </div>
@@ -79,6 +82,7 @@
                         <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit>登录</button>
                     </div>
                 </div>
+                <!--@AdminLoginFormEnd-->
             </form>
         </div>
     </div>
