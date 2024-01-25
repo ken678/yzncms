@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>登录</title>
     <link rel="stylesheet" type="text/css" href="__STATIC__/libs/layui/css/layui.css" />
-    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/style.css?t=1590725734" />
     <script language="JavaScript">
         <!--
     if(top!=self)
@@ -16,11 +15,26 @@
 //-->
 </script>
     <style type="text/css">
-    body {
-        background-repeat: no-repeat;
-        background-color: #f1f4fd;
-        background-size: cover;
-        background-image: url(__STATIC__/admin/img/bg.png);
+    body {background-repeat: no-repeat; background-color: #f1f4fd; background-size: cover; background-image: url(__STATIC__/admin/img/bg.png); }
+    ::-webkit-input-placeholder {color: #999;}
+    ::-moz-placeholder {color: #999;}
+    :-ms-input-placeholder {color: #999;}
+    .login-main {width: 400px;margin: auto !important;margin-top: 140px !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; background: #fff; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; box-shadow:0 0 30px rgb(0 0 0 / 10%);overflow: hidden;}
+    .login-main .layui-elip{margin-bottom: 15px;height: 117px; background-color: #148be4;font-size: 30px; font-weight: 400; font-stretch: normal; letter-spacing: 0; color: #fff; line-height: 117px; text-align: center; overflow: hidden; -webkit-transform: rotate(0); -moz-transform: rotate(0); -ms-transform: rotate(0); -o-transform: rotate(0); transform: rotate(0); }
+    .login-main .layui-elip span.version {font-size: 12px; }
+    .login-main .layui-elip .bg1 {display: inline-block; width: 74px; height: 74px; background: #fff; opacity: .1; border-radius: 0 74px 0 0; position: absolute; left: 0; top: 43px; }
+    .login-main .layui-elip .bg2 {display: inline-block; width: 94px; height: 94px; background: #fff; opacity: .1; border-radius: 50%; position: absolute; right: -16px; top: -16px; }
+    .login-main .login-container{padding: 0 20px 20px;}
+    .login-main form .verify-box input {display: inline-block; width: 60%; }
+    .login-main form .verify-box img {display: inline-block; margin-left: 2%; width: 36%; height: 38px; }
+    .login-main .layui-form-checkbox[lay-skin=primary] i {border-color: #1e9fff!important; color: #fff !important;background: #fff}
+    .login-main .layui-form-checked[lay-skin=primary] i {border-color: #1e9fff!important;background-color: #1e9fff;color: #fff;}
+    .login-main .layui-form-checkbox[lay-skin=primary]:hover i {border-color: #1e9fff; color: #fff; }
+    @media screen and (max-width: 450px) {
+        body{height: 100vh;}
+        .login-main {width: 300px; margin: -150px 0 0 -150px; }
+        .login-main .layui-elip {height: 90px; line-height: 90px; }
+        .login-main .layui-elip {font-size: 20px; }
     }
     </style>
     {:hook('admin_login_style')}
