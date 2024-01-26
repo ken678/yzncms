@@ -1361,6 +1361,8 @@ EOD;
         if ($this->isMatchSuffix($field, $this->imageField)) {
             $uploadfilter = ' data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp,image/webp"';
             $selectfilter = ' data-mimetype="image/*"';
+        } else {
+            $uploadfilter = ' data-type="file"';
         }
         $multiple         = substr($field, -1) == 's' ? ' data-multiple="true"' : ' data-multiple="false"';
         $preview          = ' data-preview-id="p-' . $field . '"';
