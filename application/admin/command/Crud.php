@@ -629,11 +629,14 @@ class Crud extends Command
         }
         unset($relation);
 
-        $addList        = [];
-        $editList       = [];
-        $javascriptList = [];
-        $priDefined     = false;
-        $priKeyArr      = [];
+        $addList            = [];
+        $editList           = [];
+        $javascriptList     = [];
+        $field              = 'id';
+        $order              = 'id';
+        $priDefined         = false;
+        $priKeyArr          = [];
+        $relationPrimaryKey = '';
         foreach ($columnList as $v) {
             if ($v['COLUMN_KEY'] == 'PRI') {
                 $priKeyArr[] = $v['COLUMN_NAME'];
