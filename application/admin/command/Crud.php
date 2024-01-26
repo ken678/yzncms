@@ -189,6 +189,11 @@ class Crud extends Command
     protected $ignoreFields = [];
 
     /**
+     * 排序字段
+     */
+    protected $sortField = 'listorder';
+
+    /**
      * 以指定字符结尾的字段格式化函数
      */
     protected $fieldFormatterSuffix = [
@@ -411,8 +416,6 @@ class Crud extends Command
         if ($sortfield) {
             $this->sortField = $sortfield;
         }
-        //排序字段
-        $sortfield = $input->getOption('sortfield');
 
         $this->reservedField = array_merge($this->reservedField, [$this->createTimeField, $this->updateTimeField, $this->deleteTimeField]);
 
