@@ -14,7 +14,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
             config: {
                 container: document.body,
                 classname: '.plupload:not([initialized]),.faupload:not([initialized])',
-                previewtpl: '<li class="file-item thumbnail"><a href="javascript:;"><img data-image  data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">{{- d.data.multiple==true ? "<i class=\'iconfont icon-yidong move-picture\'></i>" : "" }} <i class="iconfont icon-tailor cropper" data-input-id="{{d.data.inputId}}"></i> <i class="iconfont icon-trash remove-picture"></i></div></a></li>',             
+                previewtpl: '<li class="file-item thumbnail"><a href="javascript:;"><img data-image onerror="this.src=\'' + yzn.request.fixurl("admin/ajax/icon") + '?suffix={{d.suffix}}\';this.onerror=null;"  data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">{{- d.data.multiple==true ? "<i class=\'iconfont icon-yidong move-picture\'></i>" : "" }} <i class="iconfont icon-tailor cropper" data-input-id="{{d.data.inputId}}"></i> <i class="iconfont icon-trash remove-picture"></i></div></a></li>',             
             },
             events: {
                 //初始化
@@ -159,7 +159,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                         //最大可上传文件大小
                         maxsize = typeof maxsize !== "undefined" ? maxsize : (type == 'image' ? GV.site.upload_image_size : GV.site.upload_file_size)+'kb';
                         //文件类型
-                        mimetype = typeof mimetype !== "undefined" ? mimetype : (type == 'image' ? 'image/jpg,image/jpeg,image/bmp,image/png,image/gif,image/webp' : '');
+                        mimetype = typeof mimetype !== "undefined" ? mimetype : (type == 'image' ? GV.site.upload_image_ext : GV.site.upload_file_ext);
                         //请求的表单参数
                         multipart = typeof multipart !== "undefined" ? multipart : '';
                         //是否支持批量上传
@@ -277,7 +277,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                                 var responseObj = $("<div>" + (xhr && typeof xhr.responseText !== 'undefined' ? xhr.responseText : response) + "</div>");
                                 responseObj.find("style, title, script").remove();
                                 var msg = responseObj.text() || '网络错误!';
-                                var ret = {code: 0, data: null, message: msg};
+                                var ret = {code: 0, data: null, msg: msg};
                                 Upload.events.onUploadError(this, ret, file);
                             },
                             uploadprogress: function (file, progress, bytesSent) {
