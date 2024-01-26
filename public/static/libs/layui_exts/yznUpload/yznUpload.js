@@ -153,7 +153,7 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
 
                         //上传URL
                         url = url ? url : (type == 'image' ? GV.image_upload_url : GV.file_upload_url);
-                        //url = Fast.api.fixurl(url);
+                        url = yzn.request.fixurl(url);
                         var chunking = false, chunkSize = typeof GV.site.chunksize !== "undefined" ? GV.site.chunksize :2097152, timeout = 600000;
 
                         //最大可上传文件大小
