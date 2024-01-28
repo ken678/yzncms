@@ -130,7 +130,7 @@ class File extends Driver
             return $default;
         }
 
-        $content      = file_get_contents($filename);
+        $content      = @file_get_contents($filename);
         $this->expire = null;
 
         if (false !== $content) {
