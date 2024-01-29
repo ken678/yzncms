@@ -70,7 +70,7 @@
 YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理系统。创立于2017年初，是一款完全免费开源的项目，他将是您轻松建站的首选利器。框架易于功能扩展，代码维护，方便二次开发，帮助开发者简单高效降低二次开发成本，满足专注业务深度开发的需求。
 - 手册地址：https://www.kancloud.cn/ken678/yzncms
 - 官方博客：http://blog.yzncms.com/
-- 视频教程：https://www.bilibili.com/video/av417106995 (持续更新中)
+- 视频教程：https://www.bilibili.com/video/av417106995 (即将重新录制)
 - 软件著作权编号：2020SR0038539
 
 ## [环境要求]
