@@ -162,8 +162,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
             faselect: function (layform) {
                 //绑定fachoose选择附件事件
-                if ($(".fachoose", layform).size() > 0) {
-                    $(".fachoose", layform).on('click', function () {
+                if ($(".faselect,.fachoose", layform).length > 0) {
+                    $(".faselect,.fachoose", layform).off('click').on('click', function () {
                         var that = this;
                         var multiple = $(this).data("multiple") ? $(this).data("multiple") : false;
                         var mimetype = $(this).data("mimetype") ? $(this).data("mimetype") : '';
@@ -321,7 +321,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             //fieldlist前端组件来源https://gitee.com/karson/fastadmin
             fieldlist: function(layform) {
                 // 绑定fieldlist组件
-                if ($(".fieldlist",layform).size() > 0) {
+                if ($(".fieldlist",layform).length > 0) {
                     layui.define(['laytpl','dragsort'], function(exports) {
                         var dragsort = layui.dragsort,
                             laytpl = layui.laytpl;
@@ -474,7 +474,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
             selectpage: function(layform) {
                 // 绑定selectpage组件
-                if ($(".selectpage",layform).size() > 0) {
+                if ($(".selectpage",layform).length > 0) {
                     layui.define('selectPage', function(exports) {
                         var selectPage = layui.selectPage;
                         $('.selectpage',layform).selectPage({
@@ -501,7 +501,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
             citypicker: function(layform) {
                 // 绑定城市选择组件
-                if ($("[data-toggle='city-picker']", layform).size() > 0) {
+                if ($("[data-toggle='city-picker']", layform).length > 0) {
                     layui.define('citypicker', function(exports) {
                         var citypicker = layui.citypicker;
                     })
@@ -509,7 +509,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
             datetimepicker: function(layform) {
                 // 绑定时间组件
-                if ($(".datetime",layform).size() > 0) {
+                if ($(".datetime",layform).length > 0) {
                     layui.define('laydate', function(exports) {
                         var laydate = layui.laydate;
                         $(".datetime",layform).each(function() {
@@ -599,7 +599,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
             },
             tagsinput: function(layform) {
                 // 绑定tags标签组件
-                if ($(".form-tags",layform).size() > 0) {
+                if ($(".form-tags",layform).length > 0) {
                     layui.define('tagsinput', function(exports) {
                         var tagsinput = layui.tagsinput;
                         $('.form-tags',layform).each(function() {
@@ -635,7 +635,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                 // ueditor编辑器集合
                 var ueditors = {};
                 // 绑定ueditor编辑器组件
-                if ($(".js-ueditor",layform).size() > 0) {
+                if ($(".js-ueditor",layform).length > 0) {
                     layui.define('ueditor', function(exports) {
                         var ueditor = layui.ueditor;
                         $('.js-ueditor',layform).each(function() {
