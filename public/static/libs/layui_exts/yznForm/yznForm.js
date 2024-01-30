@@ -743,7 +743,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                         var xmselect = layui.xmSelect;
                         $('.layui-form .form-selects').each(function() {
                             var name = $(this).data("name");
-                            var list = $(this).data("list");
+                            var list = Array.isArray($(this).data("list")) || typeof $(this).data("list") === "object" ? $(this).data("list") : [];
                             var value = $(this).data("value");
 
                             var newArr = [];
