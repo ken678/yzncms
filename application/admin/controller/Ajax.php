@@ -17,6 +17,7 @@ namespace app\admin\controller;
 use app\common\controller\Adminbase;
 use app\common\exception\UploadException;
 use app\common\library\Upload as UploadLib;
+use Exception;
 use think\Db;
 
 class Ajax extends Adminbase
@@ -244,15 +245,16 @@ class Ajax extends Adminbase
                 $file_input_name = 'file';
         }
         $attachment = null;
-        //默认普通上传文件
-        $file = $this->request->file($file_input_name);
+
         try {
+            //默认普通上传文件
+            $file = $this->request->file($file_input_name);
             if ($from == 'ueditor') {
                 return $this->ueditor($file);
             }
             $upload     = new UploadLib($file);
             $attachment = $upload->upload($dir);
-        } catch (UploadException $e) {
+        } catch (UploadException | Exception $e) {
             return json([
                 'code'    => 0,
                 'msg'     => $e->getMessage(),
