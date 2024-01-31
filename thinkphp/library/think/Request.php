@@ -12,6 +12,7 @@
 namespace think;
 
 use think\facade\Cookie;
+use think\facade\Lang;
 use think\facade\Session;
 
 class Request
@@ -1261,7 +1262,7 @@ class Request
             7 => 'file write error',
         ];
 
-        $msg = $fileUploadErrors[$error];
+        $msg = Lang::get($fileUploadErrors[$error]);
 
         throw new Exception($msg);
     }
