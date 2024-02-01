@@ -405,6 +405,20 @@ layui.define(['layer','table', 'notice', 'addons'], function(exports) {
                 });
                 return false;
             });
+            // 绑定ESC关闭窗口事件
+            $(window).keyup(function (e) {
+                if (e.keyCode == 27) {
+                    if ($(".layui-layer").length > 0) {
+                        var index = 0;
+                        $(".layui-layer").each(function () {
+                            index = Math.max(index, parseInt($(this).attr("times")));
+                        });
+                        if (index) {
+                            layer.close(index);
+                        }
+                    }
+                }
+            });
             //点击包含.btn-addtabs的元素时新增选项卡
             $(document).on('click', '.btn-addtabs,.addtabsit', function (e) {
                 var that = this;
