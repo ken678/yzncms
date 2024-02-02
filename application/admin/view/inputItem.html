@@ -191,7 +191,7 @@
                 <div class="layui-col-xs4">
                     <input type="text" name="{$vo.fieldArr}[{$vo.name}]"  id="c-{$vo.name}" value="{$vo.value|default=''}" class="layui-input">
                 </div>
-                <button type="button"class="layui-btn faupload" id="faupload-{$vo.name}" data-multiple="{$vo.type=='file'?'false':'true'}" data-input-id="c-{$vo.name}" data-preview-id="p-{$vo.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传</button><button type="button" class="layui-btn fachoose" data-multiple="{$vo.type=='file'?'false':'true'}" data-mimetype="file" data-input-id="c-{$vo.name}" id="fachoose-c-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
+                <button type="button" class="layui-btn faupload" id="faupload-{$vo.name}" data-multiple="{$vo.type=='file'?'false':'true'}" data-input-id="c-{$vo.name}" data-preview-id="p-{$vo.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传</button><button type="button" class="layui-btn fachoose" data-multiple="{$vo.type=='file'?'false':'true'}" data-mimetype="file" data-input-id="c-{$vo.name}" id="fachoose-c-{$vo.name}"><i class="iconfont icon-other"></i> 选择</button>
             </div>
             {if $vo.remark}<div class="layui-form-mid2 layui-word-aux">{$vo.remark|raw}</div>{/if}
         </div>
