@@ -15,6 +15,7 @@
 namespace app\admin\library\traits;
 
 use Exception;
+use think\Db;
 use think\exception\PDOException;
 use think\exception\ValidateException;
 
@@ -110,6 +111,7 @@ trait Curd
                     $params[$this->dataLimitField] = $this->auth->id;
                 }
                 $result = false;
+                Db::startTrans();
                 try {
                     //是否采用模型验证
                     if ($this->modelValidate) {
@@ -118,7 +120,9 @@ trait Curd
                         $this->validateFailException(true)->validate($params, $validate);
                     }
                     $result = $this->modelClass->allowField(true)->save($params);
+                    Db::commit();
                 } catch (ValidateException | PDOException | Exception $e) {
+                    Db::rollback();
                     $this->error($e->getMessage());
                 }
                 if ($result !== false) {
@@ -153,6 +157,7 @@ trait Curd
             if ($params) {
                 $params = $this->preExcludeFields($params);
                 $result = false;
+                Db::startTrans();
                 try {
                     //是否采用模型验证
                     if ($this->modelValidate) {
@@ -161,7 +166,9 @@ trait Curd
                         $this->validateFailException(true)->validate($params, $validate);
                     }
                     $result = $row->allowField(true)->save($params);
+                    Db::commit();
                 } catch (ValidateException | PDOException | Exception $e) {
+                    Db::rollback();
                     $this->error($e->getMessage());
                 }
                 if ($result !== false) {
@@ -200,11 +207,14 @@ trait Curd
         $where[] = [$pk, 'in', $ids];
         $list    = $this->modelClass->where($where)->select();
         $count   = 0;
+        Db::startTrans();
         try {
             foreach ($list as $k => $v) {
                 $count += $v->delete();
             }
+            Db::commit();
         } catch (PDOException | Exception $e) {
+            Db::rollback();
             $this->error($e->getMessage());
         }
         if ($count) {
@@ -235,12 +245,15 @@ trait Curd
             $where[] = [$pk, 'in', $ids];
         }
         $count = 0;
+        Db::startTrans();
         try {
             $list = $this->modelClass->onlyTrashed()->where($where)->select();
             foreach ($list as $item) {
                 $count += $item->delete(true);
             }
+            Db::commit();
         } catch (PDOException | Exception $e) {
+            Db::rollback();
             $this->error($e->getMessage());
         }
         if ($count) {
@@ -271,12 +284,15 @@ trait Curd
             $where[] = [$pk, 'in', $ids];
         }
         $count = 0;
+        Db::startTrans();
         try {
             $list = $this->modelClass->onlyTrashed()->where($where)->select();
             foreach ($list as $item) {
                 $count += $item->restore();
             }
+            Db::commit();
         } catch (PDOException | Exception $e) {
+            Db::rollback();
             $this->error($e->getMessage());
         }
         if ($count) {
@@ -313,13 +329,16 @@ trait Curd
                 }
                 $where[] = [$pk, 'in', $ids];
                 $count   = 0;
+                Db::startTrans();
                 try {
                     $list = $this->modelClass->where($where)->select();
                     foreach ($list as $item) {
                         $item->{$param} = $value;
                         $count += $item->save();
                     }
+                    Db::commit();
                 } catch (Exception $e) {
+                    Db::rollback();
                     $this->error($e->getMessage());
                 }
                 if ($count) {
