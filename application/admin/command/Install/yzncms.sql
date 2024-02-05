@@ -1,19 +1,9 @@
 /*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost_3306
-Source Server Version : 50553
-Source Host           : localhost:3306
-Source Database       : yzncms
-
-Target Server Type    : MYSQL
-Target Server Version : 50553
-File Encoding         : 65001
-
-Date: 2019-02-27 13:23:24
+ YznCMS Install SQL
+ Date: 2024-02-05 09:17:57
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for `yzn_admin`
@@ -33,12 +23,14 @@ CREATE TABLE `yzn_admin` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='管理员表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
+BEGIN;
 INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765, '127.0.0.1', '530765310@qq.com', '',1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`
@@ -53,7 +45,7 @@ CREATE TABLE `yzn_adminlog` (
   `ip` varchar(50) NOT NULL DEFAULT '' COMMENT '操作IP',
   `get` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='操作日志';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='操作日志';
 
 -- ----------------------------
 -- Table structure for `yzn_attachment`
@@ -79,7 +71,7 @@ CREATE TABLE `yzn_attachment` (
   `listorders` int(5) NOT NULL DEFAULT '100' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='附件表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='附件表';
 
 -- ----------------------------
 -- Table structure for `yzn_auth_group`
@@ -93,13 +85,15 @@ CREATE TABLE `yzn_auth_group` (
   `rules` text NOT NULL COMMENT '用户组拥有的规则id，多个规则 , 隔开',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='权限组表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='权限组表';
 
 -- ----------------------------
 -- Records of yzn_auth_group
 -- ----------------------------
+BEGIN;
 INSERT INTO `yzn_auth_group` VALUES (1, 0, '超级管理员', '拥有所有权限', '*', 1);
 INSERT INTO `yzn_auth_group` VALUES (2, 1, '编辑', '编辑', '', 1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for yzn_auth_rule
@@ -125,11 +119,12 @@ CREATE TABLE `yzn_auth_rule` (
   UNIQUE KEY `name` (`name`) USING BTREE,
   KEY `parentid` (`parentid`),
   KEY `listorder` (`listorder`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='节点表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='节点表';
 
 -- ----------------------------
 -- Records of yzn_auth_rule
 -- ----------------------------
+BEGIN;
 INSERT INTO `yzn_auth_rule` VALUES (1, 0, 'general', '常规管理', 'iconfont icon-setup', '', '', '', 1, NULL, '', 1691377129, 1691377129, 999, 1);
 INSERT INTO `yzn_auth_rule` VALUES (2, 0, 'addons', '插件管理', 'iconfont icon-equalizer-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 777, 1);
 INSERT INTO `yzn_auth_rule` VALUES (4, 1, 'general.profile', '个人资料', 'iconfont icon-user-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 0, 1);
@@ -171,6 +166,7 @@ INSERT INTO `yzn_auth_rule` VALUES (42, 37, 'auth.group/access', '访问授权',
 INSERT INTO `yzn_auth_rule` VALUES (45, 2, 'addons/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (46, 2, 'addons/config', '配置', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (49, 2, 'addons/state', '禁用启用', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for `yzn_cache`
@@ -186,13 +182,15 @@ CREATE TABLE `yzn_cache` (
   `system` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否系统',
   PRIMARY KEY (`id`),
   KEY `ckey` (`key`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='缓存列队表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='缓存列队表';
 
 -- ----------------------------
 -- Records of yzn_cache
 -- ----------------------------
+BEGIN;
 INSERT INTO `yzn_cache` VALUES (1, 'Model', '模型列表', 'admin', 'Models', 'model_cache', 1);
 INSERT INTO `yzn_cache` VALUES (2, 'ModelField', '模型字段', 'admin', 'ModelField', 'model_field_cache', 1);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for `yzn_config`
@@ -216,11 +214,12 @@ CREATE TABLE `yzn_config` (
   UNIQUE KEY `uk_name` (`name`),
   KEY `type` (`type`),
   KEY `group` (`group`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='网站配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='网站配置';
 
 -- ----------------------------
 -- Records of yzn_config
 -- ----------------------------
+BEGIN;
 INSERT INTO `yzn_config` VALUES (1, 'web_site_icp', 'text', '备案信息', 'base', '', '', 1551244923, 1551244971, 1, '', '',1);
 INSERT INTO `yzn_config` VALUES (2, 'web_site_statistics', 'textarea', '站点代码', 'base', '', '', 1551244957, 1551244957, 1, '','', 100);
 INSERT INTO `yzn_config` VALUES (3, 'config_group', 'array', '配置分组', 'system', '', '', 1494408414, 1494408414, 1, '{\"base\":\"基础\",\"system\":\"系统\",\"upload\":\"上传\",\"develop\":\"开发\"}','', 0);
@@ -235,6 +234,7 @@ INSERT INTO `yzn_config` VALUES (11, 'upload_thumb_water', 'switch', '添加水�
 INSERT INTO `yzn_config` VALUES (12, 'upload_thumb_water_pic', 'image', '水印图片', 'upload', '', '只有开启水印功能才生效', 1552435183, 1552436081, 1, '', '',6);
 INSERT INTO `yzn_config` VALUES (13, 'upload_thumb_water_position', 'radio', '水印位置', 'upload', '1:左上角\r\n2:上居中\r\n3:右上角\r\n4:左居中\r\n5:居中\r\n6:右居中\r\n7:左下角\r\n8:下居中\r\n9:右下角', '只有开启水印功能才生效', 1552435257, 1552436082, 1, '9', '',7);
 INSERT INTO `yzn_config` VALUES (14, 'upload_thumb_water_alpha', 'text', '水印透明度', 'upload', '', '请输入0~100之间的数字，数字越小，透明度越高', 1552435299, 1552436083, 1, '50', '',8);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for `yzn_field_type`
@@ -249,11 +249,12 @@ CREATE TABLE `yzn_field_type` (
   `ifstring` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否自由字符',
   PRIMARY KEY (`name`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='字段类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='字段类型表';
 
 -- ----------------------------
 -- Records of yzn_field_type
 -- ----------------------------
+BEGIN;
 INSERT INTO `yzn_field_type` VALUES ('text', '输入框', 1, 'varchar(255) NOT NULL', 0, 1);
 INSERT INTO `yzn_field_type` VALUES ('checkbox', '复选框', 2, 'varchar(32) NOT NULL', 1, 0);
 INSERT INTO `yzn_field_type` VALUES ('textarea', '多行文本', 3, 'varchar(255) NOT NULL', 0, 1);
@@ -277,6 +278,7 @@ INSERT INTO `yzn_field_type` VALUES ('file', '单文件', 20, 'varchar(255) NOT 
 INSERT INTO `yzn_field_type` VALUES ('color', '颜色值', 21, 'varchar(7) NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('city', '城市地区', 22, 'varchar(255) NOT NULL', 0, 0);
 INSERT INTO `yzn_field_type` VALUES ('custom', '自定义', 23, 'text NOT NULL', 1, 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for `yzn_model`
@@ -295,7 +297,7 @@ CREATE TABLE `yzn_model` (
   `listorders` tinyint(3) NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='模型列表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='模型列表';
 
 -- ----------------------------
 -- Table structure for `yzn_model_field`
@@ -323,7 +325,7 @@ CREATE TABLE `yzn_model_field` (
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`modelid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='模型字段列表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='模型字段列表';
 
 -- ----------------------------
 -- Table structure for `yzn_terms`
@@ -338,7 +340,7 @@ CREATE TABLE `yzn_terms` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `module` (`module`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='分类表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='分类表';
 
 -- ----------------------------
 -- Table structure for `yzn_sms`
@@ -353,7 +355,7 @@ CREATE TABLE `yzn_sms` (
   `ip` varchar(50) NOT NULL DEFAULT '' COMMENT '操作IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='短信验证码表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='短信验证码表';
 
 -- ----------------------------
 -- Table structure for `yzn_ems`
@@ -368,4 +370,6 @@ CREATE TABLE `yzn_ems` (
   `ip` varchar(50) NOT NULL DEFAULT '' COMMENT '操作IP',
   `create_time` int(10) unsigned DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='邮箱验证码表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='邮箱验证码表';
+
+SET FOREIGN_KEY_CHECKS = 1;
