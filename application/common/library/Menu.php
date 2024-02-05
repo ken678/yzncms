@@ -16,6 +16,7 @@ namespace app\common\library;
 
 use app\admin\model\AuthRule as AuthRuleModel;
 use think\addons\Service;
+use think\Db;
 use think\exception\PDOException;
 use util\Tree;
 
@@ -96,6 +97,7 @@ class Menu
         $old = AuthRuleModel::where('id', 'in', $ids)->select()->toArray();
         $old = array_column($old, null, 'name');
 
+        Db::startTrans();
         try {
             self::menuUpdate($menu, $old);
             $ids = [];
@@ -115,7 +117,9 @@ class Menu
                 }
                 AuthRuleModel::where($where)->delete();
             }
+            Db::commit();
         } catch (PDOException $e) {
+            Db::rollback();
             return false;
         }
 
