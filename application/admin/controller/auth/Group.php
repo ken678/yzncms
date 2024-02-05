@@ -12,6 +12,7 @@ namespace app\admin\Controller\auth;
 
 use app\admin\model\AuthGroup as AuthGroupModel;
 use app\common\controller\Adminbase;
+use think\Db;
 use util\Tree;
 
 /**
@@ -142,6 +143,7 @@ class Group extends Adminbase
             $rules           = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
             $params['rules'] = implode(',', $rules);
             if ($params) {
+                Db::startTrans();
                 try {
                     $row->save($params);
                     $children_auth_groups = model("AuthGroup")->all(['id' => ['in', implode(',', (Tree::instance()->getChildrenIds($row->id)))]]);
@@ -151,7 +153,9 @@ class Group extends Adminbase
                         $childparams[$key]['rules'] = implode(',', array_intersect(explode(',', $children_auth_group->rules), $rules));
                     }
                     model("AuthGroup")->saveAll($childparams);
+                    Db::commit();
                 } catch (Exception $e) {
+                    Db::rollback();
                     $this->error($e->getMessage());
                 }
                 $this->success('编辑成功');
@@ -192,6 +196,7 @@ class Group extends Adminbase
             $rules = in_array('*', $parentrules) ? $rules : array_intersect($parentrules, $rules);
             // 如果当前组别不是超级管理员则需要过滤规则节点,不能超当前组别的权限
             $rules = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
+            Db::startTrans();
             try {
                 $row->rules = implode(',', $rules);
                 $row->save();
@@ -202,7 +207,9 @@ class Group extends Adminbase
                     $childparams[$key]['rules'] = implode(',', array_intersect(explode(',', $children_auth_group->rules), $rules));
                 }
                 model("AuthGroup")->saveAll($childparams);
+                Db::commit();
             } catch (Exception $e) {
+                Db::rollback();
                 $this->error($e->getMessage());
             }
             $this->success('编辑成功');
