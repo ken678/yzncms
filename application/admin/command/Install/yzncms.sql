@@ -17,6 +17,8 @@ CREATE TABLE `yzn_admin` (
   `encrypt` varchar(6) DEFAULT NULL COMMENT '加密因子',
   `nickname` varchar(16) NOT NULL COMMENT '昵称',
   `last_login_time` int(10) unsigned DEFAULT NULL COMMENT '最后登录时间',
+  `create_time` int(10) unsigned DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(10) unsigned DEFAULT NULL COMMENT '更新时间',
   `last_login_ip` varchar(50) NOT NULL DEFAULT '' COMMENT '最后登录IP',
   `email` varchar(40) DEFAULT NULL COMMENT '电子邮箱',
   `token` varchar(60) NOT NULL DEFAULT '' COMMENT 'Session标识',
@@ -29,7 +31,7 @@ CREATE TABLE `yzn_admin` (
 -- Records of yzn_admin
 -- ----------------------------
 BEGIN;
-INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765, '127.0.0.1', '530765310@qq.com', '',1);
+INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765,1546940765,1546940765, '127.0.0.1', '530765310@qq.com', '',1);
 COMMIT;
 
 -- ----------------------------
