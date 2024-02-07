@@ -419,7 +419,7 @@ function getModel($modelid, $name = '')
 function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic = 'noimage.jpg')
 {
     static $_thumb_cache = [];
-    $smallpic            = config('public_url') . 'static/common/img/' . $smallpic;
+    $smallpic            = Config::get('public_url') . 'static/common/img/' . $smallpic;
     if (empty($imgurl)) {
         return $smallpic;
     }
@@ -432,7 +432,7 @@ function thumb($imgurl, $width = 100, $height = 100, $thumbType = 1, $smallpic =
         return $smallpic;
     }
 
-    $uploadUrl = cdnurl(config('public_url')) . 'uploads/';
+    $uploadUrl = cdnurl(Config::get('public_url')) . 'uploads/';
 
     $imgurl_replace = str_replace($uploadUrl, '', $imgurl);
 
@@ -549,7 +549,7 @@ function safe_replace($string)
 function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
 {
     $ckey_length = 4;
-    $key         = md5($key != '' ? $key : config('data_auth_key'));
+    $key         = md5($key != '' ? $key : Config::get('data_auth_key'));
     $keya        = md5(substr($key, 0, 16));
     $keyb        = md5(substr($key, 16, 16));
     $keyc        = $ckey_length ? ($operation == 'DECODE' ? substr($string, 0, $ckey_length) : substr(md5(microtime()), -$ckey_length)) : '';
@@ -700,7 +700,7 @@ function check_cors_request()
     //跨域访问的时候才会存在此字段
     if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN']) {
         $info        = parse_url($_SERVER['HTTP_ORIGIN']);
-        $domainArr   = explode(',', config('cors_request_domain'));
+        $domainArr   = explode(',', Config::get('cors_request_domain'));
         $domainArr[] = Request::host(true);
         if (in_array("*", $domainArr) || in_array($_SERVER['HTTP_ORIGIN'], $domainArr) || (isset($info['host']) && in_array($info['host'], $domainArr))) {
             header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
