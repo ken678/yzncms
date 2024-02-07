@@ -43,9 +43,9 @@ class Index extends Adminbase
     //登录判断
     public function login()
     {
-        $url = $this->request->get('url', 'index/index');
+        $url = $this->request->get('url', 'admin/index/index','url_clean');
         if ($this->auth->isLogin()) {
-            $this->redirect('admin/index/index');
+            $this->success("你已经登录，无需重复登录", $url);
         }
         if ($this->request->isPost()) {
             $data      = $this->request->post();
@@ -61,7 +61,7 @@ class Index extends Adminbase
                 $this->error($result, $url, ['token' => $this->request->token()]);
             }
             if ($this->auth->login($data['username'], $data['password'], $keeplogin ? 86400 : 0)) {
-                $this->success('恭喜您，登陆成功', url('admin/Index/index'));
+                $this->success('恭喜您，登陆成功', $url);
             } else {
                 $msg = $this->auth->getError();
                 $msg = $msg ? $msg : '用户名或者密码错误!';
@@ -69,7 +69,7 @@ class Index extends Adminbase
             }
         } else {
             if ($this->auth->autologin()) {
-                $this->redirect('admin/index/index');
+                $this->redirect($url);
             }
             return $this->fetch();
         }
