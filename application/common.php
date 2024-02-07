@@ -742,7 +742,7 @@ function url_clean($url)
 }
 
 /**
- * 检测URL是否允许
+ * 检测URL是否允许范围内
  * @param string $url URL
  * @return bool
  */
