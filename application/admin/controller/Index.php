@@ -20,8 +20,8 @@ use think\facade\Cache;
 
 class Index extends Adminbase
 {
-    protected $noNeedLogin = ['login', 'logout'];
-    protected $noNeedRight = ['index', 'cache'];
+    protected $noNeedLogin = ['login'];
+    protected $noNeedRight = ['index', 'cache', 'logout'];
 
     //初始化
     protected function initialize()
