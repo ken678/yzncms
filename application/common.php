@@ -731,6 +731,49 @@ function xss_clean($content, $is_image = false)
 }
 
 /**
+ * 清理URL
+ */
+function url_clean($url)
+{
+    if (!check_url_allowed($url)) {
+        return '';
+    }
+    return xss_clean($url);
+}
+
+/**
+ * 检测URL是否允许
+ * @param string $url URL
+ * @return bool
+ */
+function check_url_allowed($url = '')
+{
+    //允许的主机列表
+    $allowedHostArr = [
+        strtolower(request()->host())
+    ];
+
+    if (empty($url)) {
+        return true;
+    }
+
+    //如果是站内相对链接则允许
+    if (preg_match("/^[\/a-z][a-z0-9][a-z0-9\.\/]+((\?|#).*)?\$/i", $url) && substr($url, 0, 2) !== '//') {
+        return true;
+    }
+
+    //如果是站外链接则需要判断HOST是否允许
+    if (preg_match("/((http[s]?:\/\/)+(?>[a-z\-0-9]{2,}\.){1,}[a-z]{2,8})(?:\s|\/)/i", $url)) {
+        $chkHost = parse_url(strtolower($url), PHP_URL_HOST);
+        if ($chkHost && in_array($chkHost, $allowedHostArr)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
  * 使用短标签打印或返回数组结构
  * @param mixed   $data
  * @param boolean $return 是否返回数据
