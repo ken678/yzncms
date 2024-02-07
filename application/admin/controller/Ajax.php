@@ -19,6 +19,7 @@ use app\common\exception\UploadException;
 use app\common\library\Upload as UploadLib;
 use Exception;
 use think\Db;
+use think\Response;
 
 class Ajax extends Adminbase
 {
@@ -129,11 +130,15 @@ class Ajax extends Adminbase
      */
     public function icon()
     {
-        $suffix = $this->request->request("suffix");
-        header('Content-type: image/svg+xml');
-        $suffix = $suffix ? $suffix : "FILE";
-        echo build_suffix_image($suffix);
-        exit;
+        $suffix = $this->request->request("suffix", 'file');
+        $data = build_suffix_image($suffix);
+        $header = ['Content-Type' => 'image/svg+xml'];
+        $offset = 30 * 60 * 60 * 24; // 缓存一个月
+        $header['Cache-Control'] = 'public';
+        $header['Pragma'] = 'cache';
+        $header['Expires'] = gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
+        $response = Response::create($data, '', 200, $header);
+        return $response;
     }
 
     /**
