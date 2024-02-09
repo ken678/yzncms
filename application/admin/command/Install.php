@@ -239,7 +239,12 @@ class Install extends Command
         if (!$result) {
             throw new Exception('当前权限不足，无法写入文件 application/admin/command/Install/install.lock');
         }
+        try {
+            //删除安装脚本
+            @unlink(ROOT_PATH . 'public' . DS . 'install.php');
+        } catch (\Exception $e) {
 
+        }
         return true;
     }
 
