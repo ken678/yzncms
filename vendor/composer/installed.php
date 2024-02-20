@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'dbc5e8d8c5e19afd9e7d88e83da3abfc3a48dc26',
+        'reference' => '49d659c9f54461de221686349257882a42a14487',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -89,15 +89,6 @@
             'install_path' => __DIR__ . '/../nelexa/zip',
             'aliases' => array(),
             'reference' => '501b52f6fc393a599b44ff348a42740e1eaac7c6',
-            'dev_requirement' => false,
-        ),
-        'overtrue/easy-sms' => array(
-            'pretty_version' => '2.5.1',
-            'version' => '2.5.1.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../overtrue/easy-sms',
-            'aliases' => array(),
-            'reference' => 'c61a6dcc261e67f5b7f25d7a1b233351482325da',
             'dev_requirement' => false,
         ),
         'overtrue/pinyin' => array(
@@ -292,7 +283,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'dbc5e8d8c5e19afd9e7d88e83da3abfc3a48dc26',
+            'reference' => '49d659c9f54461de221686349257882a42a14487',
             'dev_requirement' => false,
         ),
         'topthink/think-image' => array(
