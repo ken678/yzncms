@@ -27,7 +27,7 @@ define('APP_PATH', ROOT_PATH . 'application' . DIRECTORY_SEPARATOR);
 // 加载基础文件
 require ROOT_PATH . 'thinkphp' . DIRECTORY_SEPARATOR . 'base.php';
 // 执行应用并响应
-Container::get('app')->bind('\app\admin\command\Install')->run()->send();
+Container::pull('app')->bind('\app\admin\command\Install')->run()->send();
 
 /*PS:如果你的网站空间不支持域名绑定目录
 1.请将index.php放置根目录(不推荐)
