@@ -60,6 +60,7 @@ class ComposerStaticInit7e4001803221d40018da1f3864421aa3
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
+            'Psr\\Container\\' => 14,
             'PhpZip\\' => 7,
         ),
         'O' => 
@@ -169,6 +170,10 @@ class ComposerStaticInit7e4001803221d40018da1f3864421aa3
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
         ),
         'PhpZip\\' => 
         array (
