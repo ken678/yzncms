@@ -101,7 +101,9 @@
     <div class="">
         <div class="">{{ d.title }}
             <p class="text-danger">卸载将会删除所有插件文件且不可找回!!! </p>
+            {if config('app_debug')}
             <p class="text-danger"><input type="checkbox" name="droptables" id="droptables" data-name="{{ d.name }}"/> 删除所有插件相关数据表且不可找回!!! </p>
+            {/if}
             <p class="text-danger">如有重要数据请备份后再操作!!!</p>
         </div>
     </div>
