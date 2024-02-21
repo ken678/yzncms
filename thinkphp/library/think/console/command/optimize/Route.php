@@ -25,7 +25,7 @@ class Route extends Command
 
     protected function execute(Input $input, Output $output)
     {
-        $filename = Container::get('app')->getRuntimePath() . 'route.php';
+        $filename = Container::pull('app')->getRuntimePath() . 'route.php';
         if (is_file($filename)) {
             unlink($filename);
         }
@@ -35,10 +35,10 @@ class Route extends Command
 
     protected function buildRouteCache()
     {
-        Container::get('route')->setName([]);
-        Container::get('route')->setTestMode(true);
+        Container::pull('route')->setName([]);
+        Container::pull('route')->setTestMode(true);
         // 路由检测
-        $path = Container::get('app')->getRoutePath();
+        $path = Container::pull('app')->getRoutePath();
 
         $files = is_dir($path) ? scandir($path) : [];
 
@@ -48,18 +48,18 @@ class Route extends Command
                 // 导入路由配置
                 $rules = include $filename;
                 if (is_array($rules)) {
-                    Container::get('route')->import($rules);
+                    Container::pull('route')->import($rules);
                 }
             }
         }
 
-        if (Container::get('config')->get('route_annotation')) {
-            $suffix = Container::get('config')->get('controller_suffix') || Container::get('config')->get('class_suffix');
-            include Container::get('build')->buildRoute($suffix);
+        if (Container::pull('config')->get('route_annotation')) {
+            $suffix = Container::pull('config')->get('controller_suffix') || Container::pull('config')->get('class_suffix');
+            include Container::pull('build')->buildRoute($suffix);
         }
 
         $content = '<?php ' . PHP_EOL . 'return ';
-        $content .= var_export(Container::get('route')->getName(), true) . ';';
+        $content .= var_export(Container::pull('route')->getName(), true) . ';';
         return $content;
     }
 

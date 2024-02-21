@@ -146,7 +146,7 @@ class Sqlsrv extends Connection
 
             $guid = is_string($cache['key']) ? $cache['key'] : $this->getCacheKey($query, $field);
 
-            $result = Container::get('cache')->get($guid);
+            $result = Container::pull('cache')->get($guid);
 
             if (false !== $result) {
                 return $result;

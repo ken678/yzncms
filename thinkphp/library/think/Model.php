@@ -197,7 +197,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
             // 当前模型名
             $name       = str_replace('\\', '/', static::class);
             $this->name = basename($name);
-            if (Container::get('config')->get('class_suffix')) {
+            if (Container::pull('config')->get('class_suffix')) {
                 $suffix     = basename(dirname($name));
                 $this->name = substr($this->name, 0, -strlen($suffix));
             }
@@ -249,7 +249,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
      */
     public function readMaster($all = false)
     {
-        $model = $all ? '*' : static::class;
+        $model = $all ? '*': static::class;
 
         static::$readMaster[$model] = true;
 

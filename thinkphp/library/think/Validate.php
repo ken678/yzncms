@@ -962,7 +962,7 @@ class Validate
      */
     public function method($value, $rule)
     {
-        $method = Container::get('request')->method();
+        $method = Container::pull('request')->method();
         return strtoupper($rule) == $method;
     }
 
@@ -999,7 +999,7 @@ class Validate
             $db = new $rule[0];
         } else {
             try {
-                $db = Container::get('app')->model($rule[0]);
+                $db = Container::pull('app')->model($rule[0]);
             } catch (ClassNotFoundException $e) {
                 $db = Db::name($rule[0]);
             }
@@ -1050,7 +1050,7 @@ class Validate
      */
     public function behavior($value, $rule, $data)
     {
-        return Container::get('hook')->exec($rule, $data);
+        return Container::pull('hook')->exec($rule, $data);
     }
 
     /**
@@ -1394,7 +1394,7 @@ class Validate
     public function token($value, $rule, $data)
     {
         $rule    = !empty($rule) ? $rule : '__token__';
-        $session = Container::get('session');
+        $session = Container::pull('session');
 
         if (!isset($data[$rule]) || !$session->has($rule)) {
             // 令牌数据无效
@@ -1458,7 +1458,7 @@ class Validate
      */
     protected function getRuleMsg($attribute, $title, $type, $rule)
     {
-        $lang = Container::get('lang');
+        $lang = Container::pull('lang');
 
         if (isset($this->message[$attribute . '.' . $type])) {
             $msg = $this->message[$attribute . '.' . $type];

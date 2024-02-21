@@ -11,10 +11,11 @@
 
 namespace think\exception;
 
+use Psr\Container\NotFoundExceptionInterface;
 use RuntimeException;
 use Throwable;
 
-class FuncNotFoundException extends RuntimeException
+class FuncNotFoundException extends RuntimeException implements NotFoundExceptionInterface
 {
     protected $func;
     public function __construct(string $message, string $func = '', Throwable $previous = null)

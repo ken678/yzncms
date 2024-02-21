@@ -39,7 +39,7 @@ class Handle
     {
         if (!$this->isIgnoreReport($exception)) {
             // 收集异常数据
-            if (Container::get('app')->isDebug()) {
+            if (Container::pull('app')->isDebug()) {
                 $data = [
                     'file'    => $exception->getFile(),
                     'line'    => $exception->getLine(),
@@ -55,11 +55,11 @@ class Handle
                 $log = "[{$data['code']}]{$data['message']}";
             }
 
-            if (Container::get('app')->config('log.record_trace')) {
+            if (Container::pull('app')->config('log.record_trace')) {
                 $log .= "\r\n" . $exception->getTraceAsString();
             }
 
-            Container::get('log')->record($log, 'error');
+            Container::pull('log')->record($log, 'error');
         }
     }
 
@@ -105,7 +105,7 @@ class Handle
      */
     public function renderForConsole(Output $output, Exception $e)
     {
-        if (Container::get('app')->isDebug()) {
+        if (Container::pull('app')->isDebug()) {
             $output->setVerbosity(Output::VERBOSITY_DEBUG);
         }
 
@@ -120,9 +120,9 @@ class Handle
     protected function renderHttpException(HttpException $e)
     {
         $status   = $e->getStatusCode();
-        $template = Container::get('app')->config('http_exception_template');
+        $template = Container::pull('app')->config('http_exception_template');
 
-        if (!Container::get('app')->isDebug() && !empty($template[$status])) {
+        if (!Container::pull('app')->isDebug() && !empty($template[$status])) {
             return Response::create($template[$status], 'view', $status)->assign(['e' => $e]);
         } else {
             return $this->convertExceptionToResponse($e);
@@ -137,7 +137,7 @@ class Handle
     protected function convertExceptionToResponse(Exception $exception)
     {
         // 收集异常数据
-        if (Container::get('app')->isDebug()) {
+        if (Container::pull('app')->isDebug()) {
             // 调试模式，获取详细的错误信息
             $data = [
                 'name'    => get_class($exception),
@@ -166,9 +166,9 @@ class Handle
                 'message' => $this->getMessage($exception),
             ];
 
-            if (!Container::get('app')->config('show_error_msg')) {
+            if (!Container::pull('app')->config('show_error_msg')) {
                 // 不显示详细错误信息
-                $data['message'] = Container::get('app')->config('error_message');
+                $data['message'] = Container::pull('app')->config('error_message');
             }
         }
 
@@ -181,7 +181,7 @@ class Handle
 
         ob_start();
         extract($data);
-        include Container::get('app')->config('exception_tmpl');
+        include Container::pull('app')->config('exception_tmpl');
 
         // 获取并清空缓存
         $content  = ob_get_clean();
@@ -233,7 +233,7 @@ class Handle
             return $message;
         }
 
-        $lang = Container::get('lang');
+        $lang = Container::pull('lang');
 
         if (strpos($message, ':')) {
             $name    = strstr($message, ':', true);

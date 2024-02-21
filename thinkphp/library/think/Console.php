@@ -101,7 +101,7 @@ class Console
         static $console;
 
         if (!$console) {
-            $config  = Container::get('config')->pull('console');
+            $config  = Container::pull('config')->pull('console');
             $console = new self($config['name'], $config['version'], $config['user']);
 
             $commands = $console->getDefinedCommands($config);
@@ -145,7 +145,7 @@ class Console
             }
         }
 
-        $file = Container::get('env')->get('app_path') . 'command.php';
+        $file = Container::pull('env')->get('app_path') . 'command.php';
 
         if (is_file($file)) {
             $appCommands = include $file;

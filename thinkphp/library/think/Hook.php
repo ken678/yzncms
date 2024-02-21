@@ -195,7 +195,7 @@ class Hook
         } elseif (is_array($class) || strpos($class, '::')) {
             $call = $class;
         } else {
-            $obj = Container::get($class);
+            $obj = Container::pull($class);
 
             if (!is_callable([$obj, $method])) {
                 $method = self::$portal;

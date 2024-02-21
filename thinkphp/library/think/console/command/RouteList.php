@@ -39,7 +39,7 @@ class RouteList extends Command
 
     protected function execute(Input $input, Output $output)
     {
-        $filename = Container::get('app')->getRuntimePath() . 'route_list.php';
+        $filename = Container::pull('app')->getRuntimePath() . 'route_list.php';
 
         if (is_file($filename)) {
             unlink($filename);
@@ -51,9 +51,9 @@ class RouteList extends Command
 
     protected function getRouteList()
     {
-        Container::get('route')->setTestMode(true);
+        Container::pull('route')->setTestMode(true);
         // 路由检测
-        $path = Container::get('app')->getRoutePath();
+        $path = Container::pull('app')->getRoutePath();
 
         $files = is_dir($path) ? scandir($path) : [];
 
@@ -64,15 +64,15 @@ class RouteList extends Command
                 $rules = include $filename;
 
                 if (is_array($rules)) {
-                    Container::get('route')->import($rules);
+                    Container::pull('route')->import($rules);
                 }
             }
         }
 
-        if (Container::get('config')->get('route_annotation')) {
-            $suffix = Container::get('config')->get('controller_suffix') || Container::get('config')->get('class_suffix');
+        if (Container::pull('config')->get('route_annotation')) {
+            $suffix = Container::pull('config')->get('controller_suffix') || Container::pull('config')->get('class_suffix');
 
-            include Container::get('build')->buildRoute($suffix);
+            include Container::pull('build')->buildRoute($suffix);
         }
 
         $table = new Table();
@@ -85,7 +85,7 @@ class RouteList extends Command
 
         $table->setHeader($header);
 
-        $routeList = Container::get('route')->getRuleList();
+        $routeList = Container::pull('route')->getRuleList();
         $rows      = [];
 
         foreach ($routeList as $domain => $items) {

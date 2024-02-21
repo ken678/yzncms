@@ -1,6 +1,4 @@
-![](https://box.kancloud.cn/5a0aaa69a5ff42657b5c4715f3d49221) 
-
-ThinkPHP 5.1（LTS） —— 12载初心，你值得信赖的PHP框架
+ThinkPHP 5.1（YznCMS 团队长期维护）
 ===============
 
 [![Total Downloads](http://poser.pugx.org/yzncms/framework/downloads)](https://packagist.org/packages/yzncms/framework)
@@ -25,42 +23,15 @@ ThinkPHP5.1对底层架构做了进一步的改进，减少依赖，其主要特
  + 中间件支持（`V5.1.6+`）
  + 支持`Swoole`/`Workerman`运行（`V5.1.18+`）
 
-官方已经正式宣布`5.1.27`版本为LTS版本。
-
-### 废除的功能：
-
- + 聚合模型
- + 内置控制器扩展类
- + 模型自动验证
-
-> ThinkPHP5.1的运行环境要求PHP5.6+ 兼容PHP8.0。
-
+> ThinkPHP5.1的运行环境要求PHP7.0+ 兼容PHP8.2。
 
 ## 安装
 
 使用composer安装
 
-~~~
-composer create-project topthink/think tp
-~~~
-
-启动服务
-
-~~~
-cd tp
-php think run
-~~~
-
-然后就可以在浏览器中访问
-
-~~~
-http://localhost:8000
-~~~
-
-更新框架
-~~~
-composer update topthink/framework
-~~~
+```shell
+$ composer require "yzncms/framework"
+```
 
 
 ## 在线手册
@@ -68,19 +39,9 @@ composer update topthink/framework
 + [完全开发手册](https://www.kancloud.cn/manual/thinkphp5_1/content)
 + [升级指导](https://www.kancloud.cn/manual/thinkphp5_1/354155) 
 
-
-## 官方服务
-
-+ [应用服务市场](https://market.topthink.com/)
-+ [ThinkAPI——统一API服务](https://docs.topthink.com/think-api) 
-
 ## 命名规范
 
 `ThinkPHP5.1`遵循PSR-2命名规范和PSR-4自动加载规范。
-
-## 参与开发
-
-请参阅 [ThinkPHP5 核心框架包](https://github.com/top-think/framework)。
 
 ## 版权信息
 
@@ -88,7 +49,7 @@ ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
 
 本项目包含的第三方源码和二进制文件之版权信息另行标注。
 
-版权所有Copyright © 2006-2018 by ThinkPHP (http://thinkphp.cn)
+版权所有Copyright © 2006-2024 by ThinkPHP (http://thinkphp.cn)
 
 All rights reserved。
 

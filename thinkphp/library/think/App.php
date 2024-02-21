@@ -668,24 +668,24 @@ class App extends Container
     {
         $guid = $name . $layer;
 
-        if ($this->__isset($guid)) {
-            return $this->__get($guid);
+        if ($this->bound($guid)) {
+            return $this->make($guid);
         }
 
-        list($module, $class) = $this->parseModuleAndClass($name, $layer, $appendSuffix);
+        [$module, $class] = $this->parseModuleAndClass($name, $layer, $appendSuffix);
 
         if (class_exists($class)) {
-            $object = $this->__get($class);
+            $object = $this->make($class);
         } else {
             $class = str_replace('\\' . $module . '\\', '\\' . $common . '\\', $class);
             if (class_exists($class)) {
-                $object = $this->__get($class);
+                $object = $this->make($class);
             } else {
                 throw new ClassNotFoundException('class not exists:' . $class, $class);
             }
         }
 
-        $this->__set($guid, $class);
+        $this->bindTo($guid, $class);
 
         return $object;
     }

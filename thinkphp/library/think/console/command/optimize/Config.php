@@ -55,7 +55,7 @@ class Config extends Command
             $configPath = App::getConfigPath();
         }
         $ext    = App::getConfigExt();
-        $config = Container::get('config');
+        $config = Container::pull('config');
 
         $files = is_dir($configPath) ? scandir($configPath) : [];
 
@@ -88,7 +88,7 @@ class Config extends Command
             if (is_file($path . 'middleware.php')) {
                 $middleware = include $path . 'middleware.php';
                 if (is_array($middleware)) {
-                    $content .= PHP_EOL . '\think\Container::get("middleware")->import(' . var_export($middleware, true) . ');' . PHP_EOL;
+                    $content .= PHP_EOL . '\think\Container::pull("middleware")->import(' . var_export($middleware, true) . ');' . PHP_EOL;
                 }
             }
         }

@@ -765,7 +765,7 @@ abstract class Rule
      */
     protected function checkBefore($before)
     {
-        $hook = Container::get('hook');
+        $hook = Container::pull('hook');
 
         foreach ((array) $before as $behavior) {
             $result = $hook->exec($behavior);
@@ -1117,7 +1117,7 @@ abstract class Rule
 
     public function __wakeup()
     {
-        $this->router = Container::get('route');
+        $this->router = Container::pull('route');
     }
 
     public function __debugInfo()

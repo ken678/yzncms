@@ -41,7 +41,7 @@ trait Jump
         if (is_null($url) && isset($_SERVER["HTTP_REFERER"])) {
             $url = $_SERVER["HTTP_REFERER"];
         } elseif ('' !== $url) {
-            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : Container::get('url')->build($url);
+            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : Container::pull('url')->build($url);
         }
 
         $result = [
@@ -155,7 +155,7 @@ trait Jump
     protected function getResponseType()
     {
         if (!$this->app) {
-            $this->app = Container::get('app');
+            $this->app = Container::pull('app');
         }
 
         $isAjax = $this->app['request']->isAjax();

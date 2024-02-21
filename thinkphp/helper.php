@@ -74,7 +74,7 @@ if (!function_exists('app')) {
      */
     function app($name = 'think\App', $args = [], $newInstance = false)
     {
-        return Container::get($name, $args, $newInstance);
+        return Container::getInstance()->make($name, $args, $newInstance);
     }
 }
 
@@ -149,14 +149,18 @@ if (!function_exists('cache')) {
 
 if (!function_exists('call')) {
     /**
-     * 调用反射执行callable 支持依赖注入
-     * @param mixed $callable   支持闭包等callable写法
-     * @param array $args       参数
+     * 调用反射实例化对象或者执行方法 支持依赖注入
+     * @param mixed $callable 类名或者callable
+     * @param array $args 参数
      * @return mixed
      */
-    function call($callable, $args = [])
+    function call($callable, array $args = [])
     {
-        return Container::getInstance()->invoke($callable, $args);
+        if (is_callable($callable)) {
+            return Container::getInstance()->invoke($callable, $args);
+        }
+
+        return Container::getInstance()->invokeClass($callable, $args);
     }
 }
 
