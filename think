@@ -19,8 +19,8 @@ define('APP_PATH', ROOT_PATH . 'application' . DIRECTORY_SEPARATOR);
 require __DIR__ . '/thinkphp/base.php';
 
 // 应用初始化
-Container::get('app')->path(__DIR__ . '/application/')->initialize();
+Container::pull('app')->path(__DIR__ . '/application/')->initialize();
 // 钩子
-Container::get('hook')->listen('app_init');
+Container::pull('hook')->listen('app_init');
 // 控制台初始化
 Console::init();
