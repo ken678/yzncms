@@ -86,7 +86,7 @@ class Yzn extends Taglib
         $parseStr .= 'if($cache && $_return = Cache::get($cacheID)):';
         $parseStr .= '$' . $return . ' = $_return;';
         $parseStr .= 'else: ';
-        $parseStr .= '$' . $module . 'TagLib =  \think\Container::get("\\\\app\\\\' . $module . '\\\\taglib\\\\' . ucwords($module) . 'TagLib");';
+        $parseStr .= '$' . $module . 'TagLib =  \think\Container::pull("\\\\app\\\\' . $module . '\\\\taglib\\\\' . ucwords($module) . 'TagLib");';
         $parseStr .= 'if(method_exists($' . $module . 'TagLib, "' . $action . '")):';
         $parseStr .= '$' . $return . ' = $' . $module . 'TagLib->' . $action . '(' . self::arr_to_html($tag) . ');';
         $parseStr .= 'if($cache):';
@@ -129,7 +129,7 @@ class Yzn extends Taglib
         //SQL语句
         $sql = "";
         if (isset($tag['sql'])) {
-            $tag['sql'] = $sql = str_replace(array("think_", "yzn_"), config('database.prefix'), strtolower($tag['sql']));
+            $tag['sql'] = $sql = str_replace(["think_", "yzn_"], config('database.prefix'), strtolower($tag['sql']));
         }
         //表名
         $table = "";
@@ -147,7 +147,7 @@ class Yzn extends Taglib
         if ($table) {
             $table = strtolower($table);
             //条件
-            $tableWhere = array();
+            $tableWhere = [];
             foreach ($tag as $key => $val) {
                 if (!in_array($key, explode(',', $this->tags['get']['attr']))) {
                     $tableWhere[$key] = $val;
@@ -238,9 +238,9 @@ class Yzn extends Taglib
                     //如果是变量的情况
                     if (is_int($val)) {
                         $str .= "'$key'=>$val,";
-                    } else if (strpos($val, '$') === 0) {
+                    } elseif (strpos($val, '$') === 0) {
                         $str .= "'$key'=>$val,";
-                    } else if (preg_match("/^([a-zA-Z_].*)\(/i", $val, $matches)) {
+                    } elseif (preg_match("/^([a-zA-Z_].*)\(/i", $val, $matches)) {
                         //判断是否使用函数
                         if (function_exists($matches[1])) {
                             $str .= "'$key'=>$val,";
