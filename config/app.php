@@ -171,6 +171,8 @@ return [
     'addon_pure_mode'         => true,
     //允许跨域的域名,多个以,分隔
     'cors_request_domain'     => 'localhost,127.0.0.1',
+    //是否开启后台自动日志记录
+    'auto_record_admin_log'   => true,
     //文件保存格式
     'savekey'                 => 'uploads/{dir}/{year}{mon}{day}/{filemd5}{.suffix}',
     //是否支持分片上传(文件按钮)
