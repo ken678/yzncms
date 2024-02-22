@@ -248,8 +248,7 @@ class Controller
                 // 支持场景
                 [$validate, $scene] = explode('.', $validate);
             }
-            $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-            $v     = new $class();
+            $v = $this->app->validate($validate);
             if (!empty($scene)) {
                 $v->scene($scene);
             }
