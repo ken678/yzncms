@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'bb2fb83e7f068fc661f600211031afbd02c62db1',
+        'reference' => 'a3b2b3520fb3aacfd9cf66079d047d22529fcf6f',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -292,7 +292,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'bb2fb83e7f068fc661f600211031afbd02c62db1',
+            'reference' => 'a3b2b3520fb3aacfd9cf66079d047d22529fcf6f',
             'dev_requirement' => false,
         ),
         'topthink/think-image' => array(
@@ -328,7 +328,7 @@
             'type' => 'yzncms-framework',
             'install_path' => __DIR__ . '/../../thinkphp',
             'aliases' => array(),
-            'reference' => '8079f842c374fd79c9b545ab317b73f35129b9a8',
+            'reference' => 'fcbe0389bc1490d16f2a7cb70cb634fb21043784',
             'dev_requirement' => false,
         ),
         'yzncms/think-addons' => array(

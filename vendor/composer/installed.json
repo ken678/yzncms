@@ -2243,12 +2243,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/framework.git",
-                "reference": "8079f842c374fd79c9b545ab317b73f35129b9a8"
+                "reference": "fcbe0389bc1490d16f2a7cb70cb634fb21043784"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/framework/zipball/8079f842c374fd79c9b545ab317b73f35129b9a8",
-                "reference": "8079f842c374fd79c9b545ab317b73f35129b9a8",
+                "url": "https://api.github.com/repos/ken678/framework/zipball/fcbe0389bc1490d16f2a7cb70cb634fb21043784",
+                "reference": "fcbe0389bc1490d16f2a7cb70cb634fb21043784",
                 "shasum": ""
             },
             "require": {
@@ -2266,7 +2266,7 @@
                 "sebastian/phpcpd": "2.*",
                 "squizlabs/php_codesniffer": "2.*"
             },
-            "time": "2024-02-21T02:23:11+00:00",
+            "time": "2024-02-22T03:18:11+00:00",
             "type": "yzncms-framework",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
