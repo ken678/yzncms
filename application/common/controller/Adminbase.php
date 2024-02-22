@@ -146,24 +146,6 @@ class Adminbase extends Base
     }
 
     /**
-     * 操作错误跳转的快捷方法
-     */
-    protected function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
-    {
-        model('admin/Adminlog')->record($msg, 0);
-        parent::error($msg, $url, $data, $wait, $header);
-    }
-
-    /**
-     * 操作成功跳转的快捷方法
-     */
-    protected function success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
-    {
-        model('admin/Adminlog')->record($msg, 1);
-        parent::success($msg, $url, $data, $wait, $header);
-    }
-
-    /**
      * 构建请求参数
      * @param mixed   $searchfields   快速查询的字段
      * @param array $excludeFields 忽略构建搜索的字段
