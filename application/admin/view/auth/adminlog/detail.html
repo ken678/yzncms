@@ -1,0 +1,27 @@
+{extend name="index_layout"/}
+{block name="main"}
+<table class="layui-table">
+    <colgroup>
+        <col width="150">
+        <col width="150">
+        <col>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>标题</th>
+            <th>内容</th>
+        </tr>
+    </thead>
+    <tbody>
+    {volist name="row" id="vo"}
+    <tr>
+        <td>{$key}</td>
+        <td>{$vo}</td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<div class="layui-hide layer-footer">
+    <button type="reset" class="layui-btn btn-close" onclick="layer.closeAll();">关闭</button>
+</div>
+{/block}
