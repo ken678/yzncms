@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\model\Adminlog;
 use app\common\controller\Adminbase;
 use think\addons\Service;
 use think\facade\Cache;
@@ -43,7 +44,7 @@ class Index extends Adminbase
     //登录判断
     public function login()
     {
-        $url = $this->request->get('url', 'admin/index/index','url_clean');
+        $url = $this->request->get('url', 'admin/index/index', 'url_clean');
         if ($this->auth->isLogin()) {
             $this->success("你已经登录，无需重复登录", $url);
         }
@@ -57,6 +58,7 @@ class Index extends Adminbase
                 '__token__'    => 'require|token',
             ];
             $result = $this->validate($data, $rule);
+            Adminlog::setTitle('登录');
             if (true !== $result) {
                 $this->error($result, $url, ['token' => $this->request->token()]);
             }
