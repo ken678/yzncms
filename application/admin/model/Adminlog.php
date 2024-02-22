@@ -15,6 +15,7 @@
 namespace app\admin\model;
 
 use app\admin\service\User;
+use think\Loader;
 use think\Model;
 
 class Adminlog extends Model
@@ -22,22 +23,95 @@ class Adminlog extends Model
     protected $autoWriteTimestamp = true;
     protected $updateTime         = false;
 
+    //自定义日志标题
+    protected static $title = '';
+    //自定义日志内容
+    protected static $content = '';
+    //忽略的链接正则列表
+    protected static $ignoreRegex = [
+        '/^(.*)\/(selectpage|index|logout)$/i',
+    ];
+
+    public static function setTitle($title)
+    {
+        self::$title = $title;
+    }
+
+    public static function setContent($content)
+    {
+        self::$content = $content;
+    }
+
+    public static function setIgnoreRegex($regex = [])
+    {
+        $regex             = is_array($regex) ? $regex : [$regex];
+        self::$ignoreRegex = array_merge(self::$ignoreRegex, $regex);
+    }
+
     /**
      * 记录日志
-     * @param type $message 说明
-     * @param  integer $status  状态
+     * @param string $title
+     * @param string $content
      */
-    public function record($message, $status = 0)
+    public static function record($title = '', $content = '')
     {
-        $auth = User::instance();
-        $data = array(
-            'uid'    => $auth->isLogin() ? $auth->id : 0,
-            'status' => $status,
-            'info'   => "提示语:{$message}",
-            'get'    => request()->url(),
-            'ip'     => request()->ip(),
-        );
-        return $this->save($data) !== false ? true : false;
+        $auth     = User::instance();
+        $admin_id = $auth->isLogin() ? $auth->id : 0;
+        $username = $auth->isLogin() ? $auth->username : '未知';
+
+        $controllername = Loader::parseName(request()->controller());
+        $actionname     = strtolower(request()->action());
+        $path           = $controllername . '/' . $actionname;
+        if (self::$ignoreRegex) {
+            foreach (self::$ignoreRegex as $index => $item) {
+                if (preg_match($item, $path)) {
+                    return;
+                }
+            }
+        }
+        $content = $content ? $content : self::$content;
+        if (!$content) {
+            $content = request()->param('', null, 'trim,strip_tags,htmlspecialchars');
+            $content = self::getPureContent($content);
+        }
+        $title = $title ? $title : self::$title;
+        if (!$title) {
+            $controllerTitle = AuthRule::where('name', $controllername)->value('title');
+            $title           = AuthRule::where('name', $path)->value('title');
+            $title           = $title ?: '未知' . '(' . $actionname . ')';
+            $title           = $controllerTitle ? ($controllerTitle . '-' . $title) : $title;
+        }
+        self::create([
+            'title'     => $title,
+            'content'   => !is_scalar($content) ? json_encode($content, JSON_UNESCAPED_UNICODE) : $content,
+            'url'       => substr(request()->url(), 0, 1500),
+            'admin_id'  => $admin_id,
+            'username'  => $username,
+            'useragent' => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
+            'ip'        => request()->ip(),
+        ]);
+    }
+
+    /**
+     * 获取已屏蔽关键信息的数据
+     * @param $content
+     * @return false|string
+     */
+    protected static function getPureContent($content)
+    {
+        if (!is_array($content)) {
+            return $content;
+        }
+        foreach ($content as $index => &$item) {
+            if (preg_match("/(password|salt|token)/i", $index)) {
+                $item = "***";
+            } else {
+                if (is_array($item)) {
+                    $item = self::getPureContent($item);
+                }
+            }
+        }
+        return $content;
     }
 
 }
