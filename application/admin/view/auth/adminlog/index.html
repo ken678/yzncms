@@ -16,6 +16,7 @@ layui.use('yznTable', function() {
         table_elem: '#currentTable',
         table_render_id: 'currentTable',
         delete_url: "{:url('deletelog')}",
+        detail_url: "{:url('detail')}",
     };
 
     table.render({
@@ -35,12 +36,23 @@ layui.use('yznTable', function() {
         cols: [
             [
                 { field: 'id', width: 80, title: 'ID', sort: true },
-                { field: 'uid', width: 80, title: '用户ID' },
-                { field: 'info', title: '提示', searchOp: 'like'  },
-                { field: 'get', title: '操作URL' },
-                { field: 'create_time', width: 180, title: '时间', search: 'range' },
+                { field: 'username', width: 120, title: '用户名' },
+                { field: 'title', title: '标题', searchOp: 'like'  },
+                { field: 'url', title: '操作URL' },
                 { field: 'ip', width: 120, title: 'IP' },
-                { field: 'status', width: 70,title: '状态',templet: yznTable.formatter.label,selectList:{0:'失败',1:'成功'}},
+                { field: 'useragent', width: 120, title: 'Browser',templet:function(d){
+                        return '<span>' + d.useragent.split(" ")[0] + '</span>';
+                    }
+                },
+                { field: 'create_time', width: 180, title: '时间', search: 'range' },
+                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: [
+                    [{
+                        text: '详情',
+                        url: init.detail_url,
+                        method: 'open',
+                        class: 'layui-btn layui-btn-xs layui-btn-normal',
+                    }],
+                ]}
             ]
         ],
         page: {}
