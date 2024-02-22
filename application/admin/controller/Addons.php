@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\model\Adminlog;
 use app\common\controller\Adminbase;
 use think\addons\AddonException;
 use think\addons\Service;
@@ -187,6 +188,7 @@ class Addons extends Adminbase
      */
     public function install()
     {
+        Adminlog::setTitle('插件安装');
         $name  = $this->request->param('name');
         $force = $this->request->param("force/d");
         if (empty($name)) {
@@ -220,6 +222,7 @@ class Addons extends Adminbase
      */
     public function uninstall()
     {
+        Adminlog::setTitle('插件卸载');
         $name       = $this->request->param('name');
         $force      = $this->request->param("force/d");
         $droptables = $this->request->param("droptables/d");
@@ -256,6 +259,7 @@ class Addons extends Adminbase
      */
     public function local()
     {
+        Adminlog::setTitle('插件上传安装');
         if (!Config::get("app_debug")) {
             $this->error('本地上传安装需要开启调试模式！');
         }
