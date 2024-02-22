@@ -45,11 +45,12 @@ layui.use('yznTable', function() {
                     }
                 },
                 { field: 'create_time', width: 180, title: '时间', search: 'range' },
-                { width:80, title: '操作',templet: yznTable.formatter.tool,operat: [
+                { width:90, title: '操作',templet: yznTable.formatter.tool,operat: [
                     [{
                         text: '详情',
                         url: init.detail_url,
                         method: 'open',
+                        icon: 'iconfont icon-zoom-in-line',
                         class: 'layui-btn layui-btn-xs layui-btn-normal',
                     }],
                 ]}
