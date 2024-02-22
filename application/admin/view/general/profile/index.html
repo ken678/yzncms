@@ -85,11 +85,10 @@ layui.use(['yznTable','yznForm'], function() {
         cols: [
             [
                 { field: 'id', width: 80, title: 'ID', sort: true },
-                { field: 'info', title: '提示' },
-                { field: 'get', title: '操作URL' },
+                { field: 'title', title: '标题' },
+                { field: 'url', title: '操作URL' },
                 { field: 'create_time', width: 180, title: '时间', search: 'range' },
                 { field: 'ip', width: 120, title: 'IP' },
-                { field: 'status', width: 80,title: '状态',templet: yznTable.formatter.label,selectList:{0:'失败',1:'成功'}},
             ]
         ],
         page: {}

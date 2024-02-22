@@ -30,12 +30,12 @@ class Profile extends Adminbase
             [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
             $count                                 = $this->modelClass
                 ->where($where)
-                ->where('uid', (int) $this->auth->id)
+                ->where('admin_id', (int) $this->auth->id)
                 ->order($sort, $order)
                 ->count();
             $list = $this->modelClass
                 ->where($where)
-                ->where('uid', (int) $this->auth->id)
+                ->where('admin_id', (int) $this->auth->id)
                 ->order($sort, $order)
                 ->page($page, $limit)
                 ->select();
@@ -54,7 +54,7 @@ class Profile extends Adminbase
             $params = $this->request->post();
             $params = array_filter(array_intersect_key(
                 $params,
-                array_flip(array('email', 'nickname', 'password', 'avatar'))
+                array_flip(['email', 'nickname', 'password', 'avatar'])
             ));
             if (!Validate::isEmail($params['email'])) {
                 $this->error('请输入正确的Email地址');
