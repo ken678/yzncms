@@ -37,14 +37,17 @@ INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 
 -- ----------------------------
 DROP TABLE IF EXISTS `yzn_adminlog`;
 CREATE TABLE `yzn_adminlog` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志ID',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
-  `uid` smallint(3) NOT NULL DEFAULT '0' COMMENT '操作者ID',
-  `info` text NOT NULL COMMENT '说明',
-  `create_time` int(10) unsigned DEFAULT NULL COMMENT '创建时间',
-  `ip` varchar(50) NOT NULL DEFAULT '' COMMENT '操作IP',
-  `get` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `admin_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员ID',
+  `username` varchar(30) DEFAULT '' COMMENT '管理员名字',
+  `url` varchar(1500) DEFAULT '' COMMENT '操作页面',
+  `title` varchar(100) DEFAULT '' COMMENT '日志标题',
+  `content` longtext NOT NULL COMMENT '内容',
+  `ip` varchar(50) DEFAULT '' COMMENT 'IP',
+  `useragent` varchar(255) DEFAULT '' COMMENT 'User-Agent',
+  `create_time` int(10) unsigned DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`id`),
+  KEY `name` (`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='操作日志';
 
 -- ----------------------------
