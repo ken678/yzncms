@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
+use app\admin\model\Adminlog;
 use app\common\controller\Adminbase;
 use app\common\exception\UploadException;
 use app\common\library\Upload as UploadLib;
@@ -130,14 +131,14 @@ class Ajax extends Adminbase
      */
     public function icon()
     {
-        $suffix = $this->request->request("suffix", 'file');
-        $data = build_suffix_image($suffix);
-        $header = ['Content-Type' => 'image/svg+xml'];
-        $offset = 30 * 60 * 60 * 24; // 缓存一个月
+        $suffix                  = $this->request->request("suffix", 'file');
+        $data                    = build_suffix_image($suffix);
+        $header                  = ['Content-Type' => 'image/svg+xml'];
+        $offset                  = 30 * 60 * 60 * 24; // 缓存一个月
         $header['Cache-Control'] = 'public';
-        $header['Pragma'] = 'cache';
-        $header['Expires'] = gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
-        $response = Response::create($data, '', 200, $header);
+        $header['Pragma']        = 'cache';
+        $header['Expires']       = gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
+        $response                = Response::create($data, '', 200, $header);
         return $response;
     }
 
@@ -170,6 +171,7 @@ class Ajax extends Adminbase
 
     public function upload($dir = '', $from = '')
     {
+        Adminlog::setTitle('附件上传');
         if ($dir == '') {
             return json([
                 'code'    => 0,
