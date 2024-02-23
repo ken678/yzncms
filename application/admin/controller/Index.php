@@ -18,6 +18,7 @@ use app\admin\model\Adminlog;
 use app\common\controller\Adminbase;
 use think\addons\Service;
 use think\facade\Cache;
+use think\facade\Hook;
 
 class Index extends Adminbase
 {
@@ -63,18 +64,19 @@ class Index extends Adminbase
                 $this->error($result, $url, ['token' => $this->request->token()]);
             }
             if ($this->auth->login($data['username'], $data['password'], $keeplogin ? 86400 : 0)) {
+                Hook::listen("admin_login_after", $this->request);
                 $this->success('恭喜您，登陆成功', $url);
             } else {
                 $msg = $this->auth->getError();
                 $msg = $msg ? $msg : '用户名或者密码错误!';
                 $this->error($msg, $url, ['token' => $this->request->token()]);
             }
-        } else {
-            if ($this->auth->autologin()) {
-                $this->redirect($url);
-            }
-            return $this->fetch();
         }
+        if ($this->auth->autologin()) {
+            $this->redirect($url);
+        }
+        Hook::listen("admin_login_init", $this->request);
+        return $this->fetch();
     }
 
     //手动退出登录
