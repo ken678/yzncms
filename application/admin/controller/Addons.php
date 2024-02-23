@@ -318,6 +318,7 @@ class Addons extends Adminbase
      */
     public function testdata()
     {
+        Adminlog::setTitle('插件导入测试数据');
         $name = $this->request->post("name");
         if (empty($name)) {
             $this->error('请选择需要安装的插件！');
