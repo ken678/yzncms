@@ -109,9 +109,8 @@ class Attachments extends Adminbase
         }, $urls));
 
         $file_info = [
-            'aid'    => $this->auth->id,
-            'module' => 'admin',
-            'thumb'  => '',
+            'admin_id' => $this->auth->id,
+            'thumb'    => '',
         ];
         foreach ($urls as $vo) {
             $vo   = trim(urldecode($vo));

@@ -57,8 +57,8 @@ DROP TABLE IF EXISTS `yzn_attachment`;
 CREATE TABLE `yzn_attachment` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `category` varchar(50) DEFAULT '' COMMENT '类别',
-  `aid` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
-  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+  `admin_id` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '管理员id',
+  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '文件名',
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
   `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',

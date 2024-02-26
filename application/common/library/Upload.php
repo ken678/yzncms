@@ -191,15 +191,15 @@ class Upload
             }
             // 获取附件信息
             $file_info = [
-                'aid'  => (int) session('admin.id'),
-                'uid'  => (int) cookie('uid'),
-                'name' => mb_substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
-                'mime' => $this->fileInfo['type'],
-                'path' => cdnurl(config('public_url') . $uploadDir . $info->getSaveName()),
-                'ext'  => $this->fileInfo['suffix'],
-                'size' => $this->fileInfo['size'],
-                'md5'  => $md5,
-                'sha1' => $sha1,
+                'admin_id' => (int) session('admin.id'),
+                'user_id'  => (int) cookie('uid'),
+                'name'     => mb_substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
+                'mime'     => $this->fileInfo['type'],
+                'path'     => cdnurl(config('public_url') . $uploadDir . $info->getSaveName()),
+                'ext'      => $this->fileInfo['suffix'],
+                'size'     => $this->fileInfo['size'],
+                'md5'      => $md5,
+                'sha1'     => $sha1,
             ];
             if ($file_add = Attachment::create($file_info)) {
                 return json([
