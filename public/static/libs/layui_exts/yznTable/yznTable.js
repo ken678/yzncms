@@ -796,8 +796,8 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             operat.auth = operat.auth || '';
                             operat.method = operat.method || 'open';
                             operat.field = operat.field || 'id';
-                            operat.title = operat.title || operat.text;
-                            operat.text = operat.text || operat.title;
+                            operat.text = typeof operat.text === 'function' ? operat.text.call(yznTable, data, operat) : operat.text ? operat.text : '';
+                            operat.title = typeof operat.title === 'function' ? operat.title.call(yznTable, data, operat) : operat.title ? operat.title : operat.text;
                             operat.extend = operat.extend || '';
                             operat.url = typeof url === 'function' ? url.call(yznTable, data, operat) : (url ? yznTable.toolSpliceUrl(url, operat.field, data) : 'javascript:;');
                             disable = typeof operat.disable === 'function' ? operat.disable.call(yznTable, data, operat) : (typeof operat.disable !== 'undefined' ? operat.disable : false);
