@@ -86,8 +86,7 @@ class Index extends Adminbase
     public function logout()
     {
         if ($this->auth->logout()) {
-            //手动登出时，清空forward
-            //cookie("forward", NULL);
+            Hook::listen("admin_logout_after", $this->request);
             $this->success('注销成功！', url("admin/index/login"));
         }
     }
