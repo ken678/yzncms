@@ -100,14 +100,14 @@ class Index extends Adminbase
             switch ($type) {
                 case 'all':
                 case 'data':
-                    \util\File::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'cache');
+                    \util\File::del_dir(ROOT_PATH . 'runtime' . DS . 'cache');
                     Cache::clear();
                     if ($type == 'data') {
                         break;
                     }
 
                 case 'template':
-                    \util\File::del_dir(ROOT_PATH . 'runtime' . DIRECTORY_SEPARATOR . 'temp');
+                    \util\File::del_dir(ROOT_PATH . 'runtime' . DS . 'temp');
                     if ($type == 'template') {
                         break;
                     }
@@ -121,6 +121,7 @@ class Index extends Adminbase
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
+        Hook::listen("wipecache_after");
         $this->success('清理缓存');
     }
 }
