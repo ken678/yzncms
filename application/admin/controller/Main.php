@@ -31,7 +31,7 @@ class Main extends Adminbase
     }
 
     //phpinfo信息 按需显示在前台
-    public function get_sys_info()
+    protected function get_sys_info()
     {
         //$sys_info['os'] = PHP_OS; //操作系统
         $sys_info['ip']           = GetHostByName($_SERVER['SERVER_NAME']); //服务器IP
