@@ -49,6 +49,8 @@ class Index extends Adminbase
         if ($this->auth->isLogin()) {
             $this->success("你已经登录，无需重复登录", $url);
         }
+        //保持会话有效时长，单位:小时
+        $keeyloginhours = 24;
         if ($this->request->isPost()) {
             $data      = $this->request->post();
             $keeplogin = $this->request->post('keeplogin');
@@ -63,7 +65,7 @@ class Index extends Adminbase
             if (true !== $result) {
                 $this->error($result, $url, ['token' => $this->request->token()]);
             }
-            if ($this->auth->login($data['username'], $data['password'], $keeplogin ? 86400 : 0)) {
+            if ($this->auth->login($data['username'], $data['password'], $keeplogin ? $keeyloginhours * 3600 : 0)) {
                 Hook::listen("admin_login_after", $this->request);
                 $this->success('恭喜您，登陆成功', $url);
             } else {
@@ -76,6 +78,7 @@ class Index extends Adminbase
             $this->redirect($url);
         }
         Hook::listen("admin_login_init", $this->request);
+        $this->assign('keeyloginhours', $keeyloginhours);
         return $this->fetch();
     }
 

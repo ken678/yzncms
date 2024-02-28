@@ -75,9 +75,11 @@
                         </div>
                     </div>
                     <!--@CaptchaEnd-->
-                    <div class="layui-form-item">
+                    {if $keeyloginhours>0}
+                    <div class="layui-form-item" lay-tips="设定会话有效时长为{$keeyloginhours}小时">
                         <input type="checkbox" name="keeplogin" title="保持会话" lay-skin="primary">
                     </div>
+                    {/if}
                     <div class="layui-form-item login-btn">
                         <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit>登录</button>
                     </div>
