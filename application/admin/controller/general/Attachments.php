@@ -30,20 +30,7 @@ class Attachments extends Adminbase
         $this->uploadUrl  = config('public_url') . 'uploads/';
     }
 
-    //附件列表页
-    public function index()
-    {
-        if ($this->request->isAjax()) {
-            list($page, $limit, $where) = $this->buildTableParames();
-            $_list                      = AttachmentModel::where($where)->page($page, $limit)->order('id', 'desc')->select();
-            $total                      = AttachmentModel::where($where)->order('id', 'desc')->count();
-            $result                     = ["code" => 0, "count" => $total, "data" => $_list];
-            return json($result);
-        }
-        return $this->fetch();
-    }
-
-    //附件选
+    //附件选择
     public function select()
     {
         if ($this->request->isAjax()) {
