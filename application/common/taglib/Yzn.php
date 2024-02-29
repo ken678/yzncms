@@ -68,11 +68,11 @@ class Yzn extends Taglib
     public function tagYzn($tag, $content)
     {
         //缓存时间
-        $cache = isset($tag['cache']) ? $tag['cache'] : 0;
+        $cache = $tag['cache'] ?? 0;
         //数据返回变量
-        $return = isset($tag['return']) && trim($tag['return']) ? trim($tag['return']) : 'data';
+        $return = $tag['return'] ?? 'data';
         //每页显示总数
-        $num = isset($tag['num']) && intval($tag['num']) > 0 ? intval($tag['num']) : 20;
+        $num = isset($tag['num']) && $tag['num'] > 0 ? intval($tag['num']) : 20;
         //模块
         $module = $tag['module'] = strtolower($tag['module']);
         //方法
@@ -120,11 +120,11 @@ class Yzn extends Taglib
     public function tagGet($tag, $content)
     {
         //缓存时间
-        $cache = isset($tag['cache']) && intval($tag['cache']) ? intval($tag['cache']) : 0;
+        $cache = $tag['cache'] ?? 0;
         //数据返回变量
-        $return = isset($tag['return']) && trim($tag['return']) ? trim($tag['return']) : 'data';
+        $return = $tag['return'] ?? 'data';
         //每页显示总数
-        $num = isset($tag['num']) && intval($tag['num']) > 0 ? intval($tag['num']) : 20;
+        $num = isset($tag['num']) && $tag['num'] > 0 ? intval($tag['num']) : 20;
         //当前分页参数
         $page = $tag['page'] = (isset($tag['page'])) ? ((substr($tag['page'], 0, 1) == '$') ? $tag['page'] : (int) $tag['page']) : 0;
         //SQL语句
