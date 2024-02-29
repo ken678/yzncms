@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\taglib;
 
+use think\facade\Config;
 use think\template\TagLib;
 
 class Yzn extends Taglib
@@ -36,11 +37,11 @@ class Yzn extends Taglib
      */
     public function tagTemplate($tag, $content)
     {
-        $theme        = isset($tag['theme']) ?: config('site.theme');
+        $theme        = isset($tag['theme']) ?: Config::get('site.theme');
         $templateFile = $tag['file'];
         //不是直接指定模板路径的
-        if (false === strpos($templateFile, config('template.view_suffix'))) {
-            $templateFile = TEMPLATE_PATH . $theme . '/' . $templateFile . config('template.view_suffix');
+        if (false === strpos($templateFile, Config::get('template.view_suffix'))) {
+            $templateFile = TEMPLATE_PATH . $theme . '/' . $templateFile . Config::get('template.view_suffix');
         } else {
             $templateFile = TEMPLATE_PATH . $theme . '/' . $templateFile;
         }
@@ -129,12 +130,12 @@ class Yzn extends Taglib
         //SQL语句
         $sql = "";
         if (isset($tag['sql'])) {
-            $tag['sql'] = $sql = str_replace(["think_", "yzn_"], config('database.prefix'), strtolower($tag['sql']));
+            $tag['sql'] = $sql = str_replace(["think_", "yzn_"], Config::get('database.prefix'), strtolower($tag['sql']));
         }
         //表名
         $table = "";
         if (isset($tag['table'])) {
-            $table = str_replace(config('database.prefix'), '', $tag['table']);
+            $table = str_replace(Config::get('database.prefix'), '', $tag['table']);
         }
         if (!isset($sql) && !isset($table)) {
             return false;
