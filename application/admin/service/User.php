@@ -154,13 +154,17 @@ class User extends \libs\Auth
             $this->setError('管理员已经被禁止登录');
             return false;
         }
+        if (Config::get('login_failure_retry') && $admin->login_failure >= 10 && time() - $admin->getData('update_time') < 86400) {
+            $this->setError('请于1天后再尝试登录');
+            return false;
+        }
         if ($admin->password != encrypt_password($password, $admin->encrypt)) {
-            //$admin->loginfailure++;
+            $admin->login_failure++;
             $admin->save();
             $this->setError('密码不正确');
             return false;
         }
-        //$admin->loginfailure = 0;
+        $admin->login_failure   = 0;
         $admin->last_login_time = time();
         $admin->last_login_ip   = request()->ip();
         $admin->token           = Random::uuid();
