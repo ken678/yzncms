@@ -41,7 +41,7 @@ layui.use(['yznTable','yznForm'], function() {
                 { field: 'path', width: 450, align: "center", title: '物理路径', templet: '<div><a class="layui-btn layui-btn layui-btn-xs" href="{{d.path}}" target="_blank">{{d.path}}</a></div>', searchOp: 'like' },
                 { field: 'size', width: 100, title: '大小', sort: true },
                 { field: 'ext', width: 100, title: '类型', searchOp: 'like' },
-                { field: 'mime', width: 120, title: 'Mime类型' , searchOp: 'like'},
+                { field: 'mime', width: 120, title: 'Mime类型' ,selectList:{'image/*':'图片','audio/*':'音频','video/*':'视频','text/*':'文档','application/*':'应用','zip,rar,7z,tar':'压缩包'},extend:"lay-search lay-creatable"},
                 { field: 'driver', width: 100, title: '存储引擎', searchOp: 'like' },
                 { field: 'create_time', width: 180, title: '上传时间', search: 'range' },
                 { width:60, title: '操作',templet: yznTable.formatter.tool,operat: ['delete']}

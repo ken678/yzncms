@@ -30,6 +30,48 @@ class Attachments extends Adminbase
         $this->uploadUrl  = config('public_url') . 'uploads/';
     }
 
+    /**
+     * 查看
+     */
+    public function index()
+    {
+        if ($this->request->isAjax()) {
+            $mimetypeQuery = [];
+            $allGet        = $this->request->request();
+            $filterArr     = (array) json_decode($allGet['filter'], true);
+            if (isset($filterArr['mime']) && preg_match("/(\/|\,|\*)/", $filterArr['mime'])) {
+                $mimetype      = $filterArr['mime'];
+                $filterArr     = array_diff_key($filterArr, ['mime' => '']);
+                $mimetypeQuery = function ($query) use ($mimetype) {
+                    $mimetypeArr = array_filter(explode(',', $mimetype));
+                    foreach ($mimetypeArr as $index => $item) {
+                        $query->whereOr('mime', 'like', '%' . str_replace("/*", "/", $item) . '%');
+                    }
+                };
+            }
+            $allGet['filter'] = json_encode($filterArr);
+            $this->request->withGet($allGet);
+
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
+
+            $count = $this->modelClass
+                ->where($where)
+                ->where($mimetypeQuery)
+                ->order($sort, $order)
+                ->count();
+
+            $data = $this->modelClass
+                ->where($where)
+                ->where($mimetypeQuery)
+                ->order($sort, $order)
+                ->page($page, $limit)
+                ->select();
+            $result = ["code" => 0, 'count' => $count, 'data' => $data];
+            return json($result);
+        }
+        return $this->fetch();
+    }
+
     //附件选择
     public function select()
     {
