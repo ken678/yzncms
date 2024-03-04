@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * (c) Jeroen van den Enden <info@endroid.nl>
  *
@@ -9,26 +11,31 @@
 
 namespace Endroid\QrCode\Factory;
 
+use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
+use Endroid\QrCode\QrCodeInterface;
 use Endroid\QrCode\WriterRegistryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class QrCodeFactory
+class QrCodeFactory implements QrCodeFactoryInterface
 {
-    /**
-     * @var array
-     */
-    protected $definedOptions = [
+    private $writerRegistry;
+    private $optionsResolver;
+    private $defaultOptions;
+    private $definedOptions = [
         'writer',
+        'writer_options',
         'size',
         'margin',
         'foreground_color',
         'background_color',
         'encoding',
+        'round_block_size',
         'error_correction_level',
         'logo_path',
         'logo_width',
+        'logo_height',
         'label',
         'label_font_size',
         'label_font_path',
@@ -37,38 +44,13 @@ class QrCodeFactory
         'validate_result',
     ];
 
-    /**
-     * @var array
-     */
-    protected $defaultOptions;
-
-    /**
-     * @var WriterRegistryInterface
-     */
-    protected $writerRegistry;
-
-    /**
-     * @var OptionsResolver
-     */
-    protected $optionsResolver;
-
-    /**
-     * @param array                   $defaultOptions
-     * @param WriterRegistryInterface $writerRegistry
-     */
     public function __construct(array $defaultOptions = [], WriterRegistryInterface $writerRegistry = null)
     {
         $this->defaultOptions = $defaultOptions;
         $this->writerRegistry = $writerRegistry;
     }
 
-    /**
-     * @param string $text
-     * @param array  $options
-     *
-     * @return QrCode
-     */
-    public function create($text = '', array $options = [])
+    public function create(string $text = '', array $options = []): QrCodeInterface
     {
         $options = $this->getOptionsResolver()->resolve($options);
         $accessor = PropertyAccess::createPropertyAccessor();
@@ -85,6 +67,9 @@ class QrCodeFactory
                     $options['writer_by_name'] = $options[$option];
                     $option = 'writer_by_name';
                 }
+                if ('error_correction_level' === $option) {
+                    $options[$option] = new ErrorCorrectionLevel($options[$option]);
+                }
                 $accessor->setValue($qrCode, $option, $options[$option]);
             }
         }
@@ -92,10 +77,7 @@ class QrCodeFactory
         return $qrCode;
     }
 
-    /**
-     * @return OptionsResolver
-     */
-    protected function getOptionsResolver()
+    private function getOptionsResolver(): OptionsResolver
     {
         if (!$this->optionsResolver instanceof OptionsResolver) {
             $this->optionsResolver = $this->createOptionsResolver();
@@ -104,10 +86,7 @@ class QrCodeFactory
         return $this->optionsResolver;
     }
 
-    /**
-     * @return OptionsResolver
-     */
-    protected function createOptionsResolver()
+    private function createOptionsResolver(): OptionsResolver
     {
         $optionsResolver = new OptionsResolver();
         $optionsResolver

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * (c) Jeroen van den Enden <info@endroid.nl>
  *
@@ -15,17 +17,15 @@ use Exception;
 
 class DebugWriter extends AbstractWriter
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function writeString(QrCodeInterface $qrCode)
+    public function writeString(QrCodeInterface $qrCode): string
     {
         $data = [];
+        $skip = ['getData'];
 
         $reflectionClass = new ReflectionClass($qrCode);
         foreach ($reflectionClass->getMethods() as $method) {
             $methodName = $method->getShortName();
-            if (0 === strpos($methodName, 'get') && 0 == $method->getNumberOfParameters()) {
+            if (0 === strpos($methodName, 'get') && 0 == $method->getNumberOfParameters() && !in_array($methodName, $skip)) {
                 $value = $qrCode->{$methodName}();
                 if (is_array($value) && !is_object(current($value))) {
                     $value = '['.implode(', ', $value).']';
@@ -48,11 +48,13 @@ class DebugWriter extends AbstractWriter
         return $string;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getContentType()
+    public static function getContentType(): string
     {
         return 'text/plain';
+    }
+
+    public function getName(): string
+    {
+        return 'debug';
     }
 }

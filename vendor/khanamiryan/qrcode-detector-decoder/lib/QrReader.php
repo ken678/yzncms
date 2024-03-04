@@ -1,84 +1,101 @@
 <?php
 
+namespace Zxing;
+
+use Zxing\Common\HybridBinarizer;
+use Zxing\Qrcode\QRCodeReader;
+
 final class QrReader
 {
-    const SOURCE_TYPE_FILE = 'file';
-    const SOURCE_TYPE_BLOB = 'blob';
-    const SOURCE_TYPE_RESOURCE = 'resource';
-    public $result;
+	public const SOURCE_TYPE_FILE = 'file';
+	public const SOURCE_TYPE_BLOB = 'blob';
+	public const SOURCE_TYPE_RESOURCE = 'resource';
 
-    function __construct($imgsource, $sourcetype = QrReader::SOURCE_TYPE_FILE, $isUseImagickIfAvailable = true)
-    {
+	private readonly \Zxing\BinaryBitmap $bitmap;
+	private readonly \Zxing\Qrcode\QRCodeReader $reader;
+	private \Zxing\Result|bool|null $result = null;
 
-        try {
-            switch($sourcetype) {
-                case QrReader::SOURCE_TYPE_FILE:
-                    if($isUseImagickIfAvailable && extension_loaded('imagick')) {
-                        $im = new Imagick();
-                        $im->readImage($imgsource);
-                    }else {
-                        $image = file_get_contents($imgsource);
-                        $im = imagecreatefromstring($image);
-                    }
+	public function __construct($imgSource, $sourceType = QrReader::SOURCE_TYPE_FILE, $useImagickIfAvailable = true)
+	{
+		if (!in_array($sourceType, [
+			self::SOURCE_TYPE_FILE,
+			self::SOURCE_TYPE_BLOB,
+			self::SOURCE_TYPE_RESOURCE,
+		], true)) {
+			throw new \InvalidArgumentException('Invalid image source.');
+		}
+		$im = null;
+		switch ($sourceType) {
+			case QrReader::SOURCE_TYPE_FILE:
+				if ($useImagickIfAvailable && extension_loaded('imagick')) {
+					$im = new \Imagick();
+					$im->readImage($imgSource);
+				} else {
+					$image = file_get_contents($imgSource);
+					$im = imagecreatefromstring($image);
+				}
+				break;
 
-                    break;
+			case QrReader::SOURCE_TYPE_BLOB:
+				if ($useImagickIfAvailable && extension_loaded('imagick')) {
+					$im = new \Imagick();
+					$im->readImageBlob($imgSource);
+				} else {
+					$im = imagecreatefromstring($imgSource);
+				}
+				break;
 
-                case QrReader::SOURCE_TYPE_BLOB:
-                    if($isUseImagickIfAvailable && extension_loaded('imagick')) {
-                        $im = new Imagick();
-                        $im->readimageblob($imgsource);
-                    }else {
-                        $im = imagecreatefromstring($imgsource);
-                    }
+			case QrReader::SOURCE_TYPE_RESOURCE:
+				$im = $imgSource;
+				if ($useImagickIfAvailable && extension_loaded('imagick')) {
+					$useImagickIfAvailable = true;
+				} else {
+					$useImagickIfAvailable = false;
+				}
+				break;
+		}
+		if ($useImagickIfAvailable && extension_loaded('imagick')) {
+			if (!$im instanceof \Imagick) {
+				throw new \InvalidArgumentException('Invalid image source.');
+			}
+			$width = $im->getImageWidth();
+			$height = $im->getImageHeight();
+			$source = new IMagickLuminanceSource($im, $width, $height);
+		} else {
+			if (!$im instanceof \GdImage && !is_object($im)) {
+				throw new \InvalidArgumentException('Invalid image source.');
+			}
+			$width = imagesx($im);
+			$height = imagesy($im);
+			$source = new GDLuminanceSource($im, $width, $height);
+		}
+		$histo = new HybridBinarizer($source);
+		$this->bitmap = new BinaryBitmap($histo);
+		$this->reader = new QRCodeReader();
+	}
 
-                    break;
+	public function decode($hints = null): void
+	{
+		try {
+			$this->result = $this->reader->decode($this->bitmap, $hints);
+		} catch (NotFoundException|FormatException|ChecksumException) {
+			$this->result = false;
+		}
+	}
 
-                case QrReader::SOURCE_TYPE_RESOURCE:
-                    $im = $imgsource;
-                    if($isUseImagickIfAvailable && extension_loaded('imagick')) {
-                        $isUseImagickIfAvailable = true;
-                    }else {
-                        $isUseImagickIfAvailable = false;
-                    }
+	public function text($hints = null)
+	{
+		$this->decode($hints);
 
-                    break;
-            }
+		if ($this->result !== false && method_exists($this->result, 'toString')) {
+			return $this->result->toString();
+		}
 
-            if($isUseImagickIfAvailable && extension_loaded('imagick')) {
-                $width = $im->getImageWidth();
-                $height = $im->getImageHeight();
-                $source = new \Zxing\IMagickLuminanceSource($im, $width, $height);
-            }else {
-                $width = imagesx($im);
-                $height = imagesy($im);
-                $source = new \Zxing\GDLuminanceSource($im, $width, $height);
-            }
-            $histo = new \Zxing\Common\HybridBinarizer($source);
-            $bitmap = new \Zxing\BinaryBitmap($histo);
-            $reader = new \Zxing\Qrcode\QRCodeReader();
+		return $this->result;
+	}
 
-            $this->result = $reader->decode($bitmap);
-        }catch (\Zxing\NotFoundException $er){
-            $this->result = false;
-        }catch( \Zxing\FormatException $er){
-            $this->result = false;
-        }catch( \Zxing\ChecksumException $er){
-            $this->result = false;
-        }
-    }
-
-    public function text()
-    {
-        if(method_exists($this->result,'toString')) {
-            return  ($this->result->toString());
-        }else{
-            return $this->result;
-        }
-    }
-
-    public function decode()
-    {
-        return $this->text();
-    }
+	public function getResult()
+	{
+		return $this->result;
+	}
 }
-

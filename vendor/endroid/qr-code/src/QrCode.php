@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * (c) Jeroen van den Enden <info@endroid.nl>
  *
@@ -9,274 +11,165 @@
 
 namespace Endroid\QrCode;
 
+use BaconQrCode\Encoder\Encoder;
 use Endroid\QrCode\Exception\InvalidPathException;
-use Endroid\QrCode\Exception\InvalidWriterException;
 use Endroid\QrCode\Exception\UnsupportedExtensionException;
 use Endroid\QrCode\Writer\WriterInterface;
 
 class QrCode implements QrCodeInterface
 {
-    const LABEL_FONT_PATH_DEFAULT = __DIR__.'/../assets/noto_sans.otf';
+    const LABEL_FONT_PATH_DEFAULT = __DIR__.'/../assets/fonts/noto_sans.otf';
 
-    /**
-     * @var string
-     */
-    protected $text;
+    private $text;
 
-    /**
-     * @var int
-     */
-    protected $size = 300;
+    private $size = 300;
+    private $margin = 10;
 
-    /**
-     * @var int
-     */
-    protected $margin = 10;
-
-    /**
-     * @var array
-     */
-    protected $foregroundColor = [
+    private $foregroundColor = [
         'r' => 0,
         'g' => 0,
         'b' => 0,
+        'a' => 0,
     ];
 
-    /**
-     * @var array
-     */
-    protected $backgroundColor = [
+    private $backgroundColor = [
         'r' => 255,
         'g' => 255,
         'b' => 255,
+        'a' => 0,
     ];
 
-    /**
-     * @var string
-     */
-    protected $encoding = 'UTF-8';
+    private $encoding = 'UTF-8';
+    private $roundBlockSize = true;
+    private $errorCorrectionLevel;
 
-    /**
-     * @var ErrorCorrectionLevel
-     */
-    protected $errorCorrectionLevel;
+    private $logoPath;
+    private $logoWidth;
+    private $logoHeight;
 
-    /**
-     * @var string
-     */
-    protected $logoPath;
-
-    /**
-     * @var int
-     */
-    protected $logoWidth;
-
-    /**
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * @var int
-     */
-    protected $labelFontSize = 16;
-
-    /**
-     * @var string
-     */
-    protected $labelFontPath = self::LABEL_FONT_PATH_DEFAULT;
-
-    /**
-     * @var LabelAlignment
-     */
-    protected $labelAlignment;
-
-    /**
-     * @var array
-     */
-    protected $labelMargin = [
+    private $label;
+    private $labelFontSize = 16;
+    private $labelFontPath = self::LABEL_FONT_PATH_DEFAULT;
+    private $labelAlignment;
+    private $labelMargin = [
         't' => 0,
         'r' => 10,
         'b' => 10,
         'l' => 10,
     ];
 
-    /**
-     * @var WriterRegistryInterface
-     */
-    protected $writerRegistry;
+    private $writerRegistry;
+    private $writer;
+    private $writerOptions = [];
+    private $validateResult = false;
 
-    /**
-     * @var WriterInterface
-     */
-    protected $writer;
-
-    /**
-     * @var bool
-     */
-    protected $validateResult = false;
-
-    /**
-     * @param string $text
-     */
-    public function __construct($text = '')
+    public function __construct(string $text = '')
     {
         $this->text = $text;
 
         $this->errorCorrectionLevel = new ErrorCorrectionLevel(ErrorCorrectionLevel::LOW);
         $this->labelAlignment = new LabelAlignment(LabelAlignment::CENTER);
 
-        $this->writerRegistry = new StaticWriterRegistry();
+        $this->createWriterRegistry();
     }
 
-    /**
-     * @param string $text
-     *
-     * @return $this
-     */
-    public function setText($text)
+    public function setText(string $text): void
     {
         $this->text = $text;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @param int $size
-     *
-     * @return $this
-     */
-    public function setSize($size)
+    public function setSize(int $size): void
     {
         $this->size = $size;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }
 
-    /**
-     * @param int $margin
-     *
-     * @return $this
-     */
-    public function setMargin($margin)
+    public function setMargin(int $margin): void
     {
         $this->margin = $margin;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getMargin()
+    public function getMargin(): int
     {
         return $this->margin;
     }
 
-    /**
-     * @param array $foregroundColor
-     *
-     * @return $this
-     */
-    public function setForegroundColor($foregroundColor)
+    public function setForegroundColor(array $foregroundColor): void
     {
-        $this->foregroundColor = $foregroundColor;
+        if (!isset($foregroundColor['a'])) {
+            $foregroundColor['a'] = 0;
+        }
 
-        return $this;
+        foreach ($foregroundColor as &$color) {
+            $color = intval($color);
+        }
+
+        $this->foregroundColor = $foregroundColor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getForegroundColor()
+    public function getForegroundColor(): array
     {
         return $this->foregroundColor;
     }
 
-    /**
-     * @param array $backgroundColor
-     *
-     * @return $this
-     */
-    public function setBackgroundColor($backgroundColor)
+    public function setBackgroundColor(array $backgroundColor): void
     {
-        $this->backgroundColor = $backgroundColor;
+        if (!isset($backgroundColor['a'])) {
+            $backgroundColor['a'] = 0;
+        }
 
-        return $this;
+        foreach ($backgroundColor as &$color) {
+            $color = intval($color);
+        }
+
+        $this->backgroundColor = $backgroundColor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBackgroundColor()
+    public function getBackgroundColor(): array
     {
         return $this->backgroundColor;
     }
 
-    /**
-     * @param string $encoding
-     *
-     * @return $this
-     */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): void
     {
         $this->encoding = $encoding;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
 
-    /**
-     * @param string $errorCorrectionLevel
-     *
-     * @return $this
-     */
-    public function setErrorCorrectionLevel($errorCorrectionLevel)
+    public function setRoundBlockSize(bool $roundBlockSize): void
     {
-        $this->errorCorrectionLevel = new ErrorCorrectionLevel($errorCorrectionLevel);
-
-        return $this;
+        $this->roundBlockSize = $roundBlockSize;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getErrorCorrectionLevel()
+    public function getRoundBlockSize(): bool
     {
-        return $this->errorCorrectionLevel->getValue();
+        return $this->roundBlockSize;
     }
 
-    /**
-     * @param string $logoPath
-     *
-     * @return $this
-     *
-     * @throws InvalidPathException
-     */
-    public function setLogoPath($logoPath)
+    public function setErrorCorrectionLevel(ErrorCorrectionLevel $errorCorrectionLevel): void
+    {
+        $this->errorCorrectionLevel = $errorCorrectionLevel;
+    }
+
+    public function getErrorCorrectionLevel(): ErrorCorrectionLevel
+    {
+        return $this->errorCorrectionLevel;
+    }
+
+    public function setLogoPath(string $logoPath): void
     {
         $logoPath = realpath($logoPath);
 
@@ -285,48 +178,40 @@ class QrCode implements QrCodeInterface
         }
 
         $this->logoPath = $logoPath;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLogoPath()
+    public function getLogoPath(): ?string
     {
         return $this->logoPath;
     }
 
-    /**
-     * @param int $logoWidth
-     *
-     * @return $this
-     */
-    public function setLogoWidth($logoWidth)
+    public function setLogoSize(int $logoWidth, int $logoHeight = null): void
     {
         $this->logoWidth = $logoWidth;
-
-        return $this;
+        $this->logoHeight = $logoHeight;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLogoWidth()
+    public function setLogoWidth(int $logoWidth): void
+    {
+        $this->logoWidth = $logoWidth;
+    }
+
+    public function getLogoWidth(): ?int
     {
         return $this->logoWidth;
     }
 
-    /**
-     * @param string $label
-     * @param int    $labelFontSize
-     * @param string $labelFontPath
-     * @param string $labelAlignment
-     * @param array  $labelMargin
-     *
-     * @return $this
-     */
-    public function setLabel($label, $labelFontSize = null, $labelFontPath = null, $labelAlignment = null, $labelMargin = null)
+    public function setLogoHeight(int $logoHeight): void
+    {
+        $this->logoHeight = $logoHeight;
+    }
+
+    public function getLogoHeight(): ?int
+    {
+        return $this->logoHeight;
+    }
+
+    public function setLabel(string $label, int $labelFontSize = null, string $labelFontPath = null, string $labelAlignment = null, array $labelMargin = null): void
     {
         $this->label = $label;
 
@@ -345,136 +230,70 @@ class QrCode implements QrCodeInterface
         if (null !== $labelMargin) {
             $this->setLabelMargin($labelMargin);
         }
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    /**
-     * @param int $labelFontSize
-     *
-     * @return $this
-     */
-    public function setLabelFontSize($labelFontSize)
+    public function setLabelFontSize(int $labelFontSize): void
     {
         $this->labelFontSize = $labelFontSize;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLabelFontSize()
+    public function getLabelFontSize(): ?int
     {
         return $this->labelFontSize;
     }
 
-    /**
-     * @param string $labelFontPath
-     *
-     * @return $this
-     *
-     * @throws InvalidPathException
-     */
-    public function setLabelFontPath($labelFontPath)
+    public function setLabelFontPath(string $labelFontPath): void
     {
-        $labelFontPath = realpath($labelFontPath);
+        $resolvedLabelFontPath = realpath($labelFontPath);
 
-        if (!is_file($labelFontPath)) {
+        if (!is_string($resolvedLabelFontPath) || !is_file($resolvedLabelFontPath)) {
             throw new InvalidPathException('Invalid label font path: '.$labelFontPath);
         }
 
-        $this->labelFontPath = $labelFontPath;
-
-        return $this;
+        $this->labelFontPath = $resolvedLabelFontPath;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLabelFontPath()
+    public function getLabelFontPath(): ?string
     {
         return $this->labelFontPath;
     }
 
-    /**
-     * @param string $labelAlignment
-     *
-     * @return $this
-     */
-    public function setLabelAlignment($labelAlignment)
+    public function setLabelAlignment(string $labelAlignment): void
     {
         $this->labelAlignment = new LabelAlignment($labelAlignment);
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLabelAlignment()
+    public function getLabelAlignment(): ?string
     {
         return $this->labelAlignment->getValue();
     }
 
-    /**
-     * @param int[] $labelMargin
-     *
-     * @return $this
-     */
-    public function setLabelMargin(array $labelMargin)
+    public function setLabelMargin(array $labelMargin): void
     {
         $this->labelMargin = array_merge($this->labelMargin, $labelMargin);
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLabelMargin()
+    public function getLabelMargin(): ?array
     {
         return $this->labelMargin;
     }
 
-    /**
-     * @param WriterRegistryInterface $writerRegistry
-     *
-     * @return $this
-     */
-    public function setWriterRegistry(WriterRegistryInterface $writerRegistry)
+    public function setWriterRegistry(WriterRegistryInterface $writerRegistry): void
     {
         $this->writerRegistry = $writerRegistry;
-
-        return $this;
     }
 
-    /**
-     * @param WriterInterface $writer
-     *
-     * @return $this
-     */
-    public function setWriter(WriterInterface $writer)
+    public function setWriter(WriterInterface $writer): void
     {
         $this->writer = $writer;
-
-        return $this;
     }
 
-    /**
-     * @param WriterInterface $name
-     *
-     * @return WriterInterface
-     */
-    public function getWriter($name = null)
+    public function getWriter(string $name = null): WriterInterface
     {
         if (!is_null($name)) {
             return $this->writerRegistry->getWriter($name);
@@ -487,105 +306,105 @@ class QrCode implements QrCodeInterface
         return $this->writerRegistry->getDefaultWriter();
     }
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     *
-     * @throws InvalidWriterException
-     */
-    public function setWriterByName($name)
+    public function setWriterOptions(array $writerOptions): void
     {
-        $this->writer = $this->writerRegistry->getWriter($name);
-
-        return $this;
+        $this->writerOptions = $writerOptions;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return $this
-     */
-    public function setWriterByPath($path)
+    public function getWriterOptions(): array
+    {
+        return $this->writerOptions;
+    }
+
+    private function createWriterRegistry()
+    {
+        $this->writerRegistry = new WriterRegistry();
+        $this->writerRegistry->loadDefaultWriters();
+    }
+
+    public function setWriterByName(string $name)
+    {
+        $this->writer = $this->getWriter($name);
+    }
+
+    public function setWriterByPath(string $path): void
     {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         $this->setWriterByExtension($extension);
-
-        return $this;
     }
 
-    /**
-     * @param string $extension
-     *
-     * @return $this
-     *
-     * @throws UnsupportedExtensionException
-     */
-    public function setWriterByExtension($extension)
+    public function setWriterByExtension(string $extension): void
     {
         foreach ($this->writerRegistry->getWriters() as $writer) {
             if ($writer->supportsExtension($extension)) {
                 $this->writer = $writer;
 
-                return $this;
+                return;
             }
         }
 
         throw new UnsupportedExtensionException('Missing writer for extension "'.$extension.'"');
     }
 
-    /**
-     * @param bool $validateResult
-     *
-     * @return $this
-     */
-    public function setValidateResult($validateResult)
-    {
-        $this->validateResult = $validateResult;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getValidateResult()
-    {
-        return $this->validateResult;
-    }
-
-    /**
-     * @return string
-     */
-    public function writeString()
+    public function writeString(): string
     {
         return $this->getWriter()->writeString($this);
     }
 
-    /**
-     * @return string
-     */
-    public function writeDataUri()
+    public function writeDataUri(): string
     {
         return $this->getWriter()->writeDataUri($this);
     }
 
-    /**
-     * @param string $path
-     */
-    public function writeFile($path)
+    public function writeFile(string $path): void
     {
-        return $this->getWriter()->writeFile($this, $path);
+        $this->getWriter()->writeFile($this, $path);
     }
 
-    /**
-     * @return string
-     *
-     * @throws InvalidWriterException
-     */
-    public function getContentType()
+    public function getContentType(): string
     {
         return $this->getWriter()->getContentType();
+    }
+
+    public function setValidateResult(bool $validateResult): void
+    {
+        $this->validateResult = $validateResult;
+    }
+
+    public function getValidateResult(): bool
+    {
+        return $this->validateResult;
+    }
+
+    public function getData(): array
+    {
+        $baconErrorCorrectionLevel = $this->errorCorrectionLevel->toBaconErrorCorrectionLevel();
+
+        $baconQrCode = Encoder::encode($this->text, $baconErrorCorrectionLevel, $this->encoding);
+
+        $matrix = $baconQrCode->getMatrix()->getArray()->toArray();
+
+        foreach ($matrix as &$row) {
+            $row = $row->toArray();
+        }
+
+        $data = ['matrix' => $matrix];
+        $data['block_count'] = count($matrix[0]);
+        $data['block_size'] = $this->size / $data['block_count'];
+        if ($this->roundBlockSize) {
+            $data['block_size'] = intval(floor($data['block_size']));
+        }
+        $data['inner_width'] = $data['block_size'] * $data['block_count'];
+        $data['inner_height'] = $data['block_size'] * $data['block_count'];
+        $data['outer_width'] = $this->size + 2 * $this->margin;
+        $data['outer_height'] = $this->size + 2 * $this->margin;
+        $data['margin_left'] = ($data['outer_width'] - $data['inner_width']) / 2;
+        if ($this->roundBlockSize) {
+            $data['margin_left'] = intval(floor($data['margin_left']));
+        }
+        $data['margin_right'] = $data['outer_width'] - $data['inner_width'] - $data['margin_left'];
+
+        return $data;
     }
 }

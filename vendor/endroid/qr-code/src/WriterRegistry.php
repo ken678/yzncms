@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * (c) Jeroen van den Enden <info@endroid.nl>
  *
@@ -10,54 +12,54 @@
 namespace Endroid\QrCode;
 
 use Endroid\QrCode\Exception\InvalidWriterException;
+use Endroid\QrCode\Writer\BinaryWriter;
+use Endroid\QrCode\Writer\DebugWriter;
+use Endroid\QrCode\Writer\EpsWriter;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
 use Endroid\QrCode\Writer\WriterInterface;
 
 class WriterRegistry implements WriterRegistryInterface
 {
-    /**
-     * @var WriterInterface[]
-     */
-    protected $writers;
+    private $writers = [];
+    private $defaultWriter;
 
-    /**
-     * @var WriterInterface
-     */
-    protected $defaultWriter;
-
-    public function __construct()
+    public function loadDefaultWriters(): void
     {
-        $this->writers = [];
+        if (count($this->writers) > 0) {
+            return;
+        }
+
+        $this->addWriters([
+            new BinaryWriter(),
+            new DebugWriter(),
+            new EpsWriter(),
+            new PngWriter(),
+            new SvgWriter(),
+        ]);
+
+        $this->setDefaultWriter('png');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addWriter(WriterInterface $writer, $setAsDefault = false)
+    public function addWriters(iterable $writers): void
     {
-        $this->writers[$writer->getName()] = $writer;
-
-        if ($setAsDefault || 1 === count($this->writers)) {
-            $this->defaultWriter = $writer;
+        foreach ($writers as $writer) {
+            $this->addWriter($writer);
         }
     }
 
-    /**
-     * @param $name
-     *
-     * @return WriterInterface
-     */
-    public function getWriter($name)
+    public function addWriter(WriterInterface $writer): void
+    {
+        $this->writers[$writer->getName()] = $writer;
+    }
+
+    public function getWriter(string $name): WriterInterface
     {
         $this->assertValidWriter($name);
 
         return $this->writers[$name];
     }
 
-    /**
-     * @return WriterInterface
-     *
-     * @throws InvalidWriterException
-     */
     public function getDefaultWriter()
     {
         if ($this->defaultWriter instanceof WriterInterface) {
@@ -67,23 +69,20 @@ class WriterRegistry implements WriterRegistryInterface
         throw new InvalidWriterException('Please set the default writer via the second argument of addWriter');
     }
 
-    /**
-     * @return WriterInterface[]
-     */
-    public function getWriters()
+    public function setDefaultWriter(string $name)
+    {
+        $this->defaultWriter = $this->writers[$name];
+    }
+
+    public function getWriters(): array
     {
         return $this->writers;
     }
 
-    /**
-     * @param string $writer
-     *
-     * @throws InvalidWriterException
-     */
-    protected function assertValidWriter($writer)
+    private function assertValidWriter(string $name)
     {
-        if (!isset($this->writers[$writer])) {
-            throw new InvalidWriterException('Invalid writer "'.$writer.'"');
+        if (!isset($this->writers[$name])) {
+            throw new InvalidWriterException('Invalid writer "'.$name.'"');
         }
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * (c) Jeroen van den Enden <info@endroid.nl>
  *
@@ -13,45 +15,17 @@ use Endroid\QrCode\QrCodeInterface;
 
 interface WriterInterface
 {
-    /**
-     * @param QrCodeInterface $qrCode
-     *
-     * @return string
-     */
-    public function writeString(QrCodeInterface $qrCode);
+    public function writeString(QrCodeInterface $qrCode): string;
 
-    /**
-     * @param QrCodeInterface $qrCode
-     *
-     * @return string
-     */
-    public function writeDataUri(QrCodeInterface $qrCode);
+    public function writeDataUri(QrCodeInterface $qrCode): string;
 
-    /**
-     * @param QrCodeInterface $qrCode
-     * @param string          $path
-     */
-    public function writeFile(QrCodeInterface $qrCode, $path);
+    public function writeFile(QrCodeInterface $qrCode, string $path): void;
 
-    /**
-     * @return string
-     */
-    public static function getContentType();
+    public static function getContentType(): string;
 
-    /**
-     * @param string $extension
-     *
-     * @return bool
-     */
-    public static function supportsExtension($extension);
+    public static function supportsExtension(string $extension): bool;
 
-    /**
-     * @return string[]
-     */
-    public static function getSupportedExtensions();
+    public static function getSupportedExtensions(): array;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 }
