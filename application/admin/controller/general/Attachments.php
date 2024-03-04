@@ -38,7 +38,7 @@ class Attachments extends Adminbase
         if ($this->request->isAjax()) {
             $mimetypeQuery = [];
             $allGet        = $this->request->request();
-            $filterArr     = (array) json_decode($allGet['filter'], true);
+            $filterArr     = isset($allGet['filter']) ? (array) json_decode($allGet['filter'], true) : [];
             if (isset($filterArr['mime']) && preg_match("/(\/|\,|\*)/", $filterArr['mime'])) {
                 $mimetype      = $filterArr['mime'];
                 $filterArr     = array_diff_key($filterArr, ['mime' => '']);
