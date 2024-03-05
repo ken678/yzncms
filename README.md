@@ -93,7 +93,7 @@ YznCMS(又名御宅男CMS)是基于最新TP5.1x框架和layui2.5x的后台管理
 
 ## [必看教程]
 - 伪静态(URL重写)： https://www.kancloud.cn/ken678/yzncms/1003231
-- 虚拟主机不支持绑定public的方法： https://www.kancloud.cn/ken678/yzncms/1003254
+- 开发遇到错误怎么办？： https://www.kancloud.cn/ken678/yzncms/3090278
 
 > 更多的常见问题和教程见手册
 
