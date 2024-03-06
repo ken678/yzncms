@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * (c) Jeroen van den Enden <info@endroid.nl>
  *
@@ -9,90 +11,47 @@
 
 namespace Endroid\QrCode\Writer;
 
-use BaconQrCode\Renderer\Image\Eps;
-use BaconQrCode\Writer;
 use Endroid\QrCode\QrCodeInterface;
 
-class EpsWriter extends AbstractBaconWriter
+class EpsWriter extends AbstractWriter
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function writeString(QrCodeInterface $qrCode)
+    public function writeString(QrCodeInterface $qrCode): string
     {
-        $renderer = new Eps();
-        $renderer->setWidth($qrCode->getSize());
-        $renderer->setHeight($qrCode->getSize());
-        $renderer->setMargin(0);
-        $renderer->setForegroundColor($this->convertColor($qrCode->getForegroundColor()));
-        $renderer->setBackgroundColor($this->convertColor($qrCode->getBackgroundColor()));
+        $data = $qrCode->getData();
 
-        $writer = new Writer($renderer);
-        $string = $writer->writeString($qrCode->getText(), $qrCode->getEncoding(), $this->convertErrorCorrectionLevel($qrCode->getErrorCorrectionLevel()));
+        $epsData = [];
+        $epsData[] = '%!PS-Adobe-3.0 EPSF-3.0';
+        $epsData[] = '%%BoundingBox: 0 0 '.$data['outer_width'].' '.$data['outer_height'];
+        $epsData[] = '/F { rectfill } def';
+        $epsData[] = number_format($qrCode->getBackgroundColor()['r'] / 100, 2, '.', ',').' '.number_format($qrCode->getBackgroundColor()['g'] / 100, 2, '.', ',').' '.number_format($qrCode->getBackgroundColor()['b'] / 100, 2, '.', ',').' setrgbcolor';
+        $epsData[] = '0 0 '.$data['outer_width'].' '.$data['outer_height'].' F';
+        $epsData[] = number_format($qrCode->getForegroundColor()['r'] / 100, 2, '.', ',').' '.number_format($qrCode->getForegroundColor()['g'] / 100, 2, '.', ',').' '.number_format($qrCode->getForegroundColor()['b'] / 100, 2, '.', ',').' setrgbcolor';
 
-        $string = $this->addMargin($string, $qrCode);
-
-        return $string;
-    }
-
-    /**
-     * @param string          $string
-     * @param QrCodeInterface $qrCode
-     *
-     * @return string
-     */
-    protected function addMargin($string, QrCodeInterface $qrCode)
-    {
-        $targetSize = $qrCode->getSize() + $qrCode->getMargin() * 2;
-
-        $lines = explode("\n", $string);
-
-        $sourceBlockSize = 0;
-        $additionalWhitespace = $qrCode->getSize();
-        foreach ($lines as $line) {
-            if (preg_match('#[0-9]+ [0-9]+ [0-9]+ [0-9]+ F#i', $line) && false === strpos($line, $qrCode->getSize().' '.$qrCode->getSize().' F')) {
-                $parts = explode(' ', $line);
-                $sourceBlockSize = $parts[2];
-                $additionalWhitespace = min($additionalWhitespace, $parts[0]);
+        foreach ($data['matrix'] as $row => $values) {
+            foreach ($values as $column => $value) {
+                if (1 === $value) {
+                    $x = $data['margin_left'] + $data['block_size'] * $column;
+                    $y = $data['margin_left'] + $data['block_size'] * $row;
+                    $epsData[] = $x.' '.$y.' '.$data['block_size'].' '.$data['block_size'].' F';
+                }
             }
         }
 
-        $blockCount = ($qrCode->getSize() - 2 * $additionalWhitespace) / $sourceBlockSize;
-        $targetBlockSize = $qrCode->getSize() / $blockCount;
-
-        foreach ($lines as &$line) {
-            if (false !== strpos($line, 'BoundingBox')) {
-                $line = '%%BoundingBox: 0 0 '.$targetSize.' '.$targetSize;
-            } elseif (false !== strpos($line, $qrCode->getSize().' '.$qrCode->getSize().' F')) {
-                $line = '0 0 '.$targetSize.' '.$targetSize.' F';
-            } elseif (preg_match('#[0-9]+ [0-9]+ [0-9]+ [0-9]+ F#i', $line)) {
-                $parts = explode(' ', $line);
-                $parts[0] = $qrCode->getMargin() + $targetBlockSize * ($parts[0] - $additionalWhitespace) / $sourceBlockSize;
-                $parts[1] = $qrCode->getMargin() + $targetBlockSize * ($parts[1] - $sourceBlockSize - $additionalWhitespace) / $sourceBlockSize;
-                $parts[2] = $targetBlockSize;
-                $parts[3] = $targetBlockSize;
-                $line = implode(' ', $parts);
-            }
-        }
-
-        $string = implode("\n", $lines);
-
-        return $string;
+        return implode("\n", $epsData);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getContentType()
+    public static function getContentType(): string
     {
         return 'image/eps';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSupportedExtensions()
+    public static function getSupportedExtensions(): array
     {
         return ['eps'];
+    }
+
+    public function getName(): string
+    {
+        return 'eps';
     }
 }

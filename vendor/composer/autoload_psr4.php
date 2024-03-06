@@ -8,8 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'think\\composer\\' => array($vendorDir . '/yzncms/think-installer/src'),
     'think\\captcha\\' => array($vendorDir . '/yzncms/think-captcha/src'),
-    'think\\' => array($vendorDir . '/topthink/think-image/src', $vendorDir . '/yzncms/think-helper/src', $vendorDir . '/yzncms/think-addons/src'),
+    'think\\' => array($vendorDir . '/topthink/think-image/src', $vendorDir . '/yzncms/think-addons/src', $vendorDir . '/yzncms/think-helper/src'),
     'app\\' => array($baseDir . '/application'),
+    'Zxing\\' => array($vendorDir . '/khanamiryan/qrcode-detector-decoder/lib'),
     'Yansongda\\Supports\\' => array($vendorDir . '/yansongda/supports/src'),
     'Yansongda\\Pay\\' => array($vendorDir . '/yansongda/pay/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
@@ -22,6 +23,7 @@ return array(
     'Symfony\\Component\\PropertyAccess\\' => array($vendorDir . '/symfony/property-access'),
     'Symfony\\Component\\OptionsResolver\\' => array($vendorDir . '/symfony/options-resolver'),
     'Symfony\\Component\\Mime\\' => array($vendorDir . '/symfony/mime'),
+    'Symfony\\Component\\Inflector\\' => array($vendorDir . '/symfony/inflector'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
     'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
@@ -36,4 +38,6 @@ return array(
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Endroid\\QrCode\\' => array($vendorDir . '/endroid/qr-code/src'),
+    'DASPRiD\\Enum\\' => array($vendorDir . '/dasprid/enum/src'),
+    'BaconQrCode\\' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

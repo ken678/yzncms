@@ -17,112 +17,113 @@
 
 namespace Zxing;
 
-
 /**
  * <p>Encapsulates the result of decoding a barcode within an image.</p>
  *
  * @author Sean Owen
  */
-final class Result {
+final class Result
+{
+	/**
+  * @var mixed[]|mixed
+  */
+ private $resultMetadata = null;
+	private $timestamp;
 
-private $text;
-private $rawBytes;
-private $resultPoints;
-private $format;
-private $resultMetadata;
-private $timestamp;
+	public function __construct(
+		private $text,
+		private $rawBytes,
+		private $resultPoints,
+		private $format,
+		$timestamp = ''
+	) {
+		$this->timestamp = $timestamp ?: time();
+	}
 
+	/**
+	 * @return raw text encoded by the barcode
+	 */
+	public function getText()
+	{
+		return $this->text;
+	}
 
+	/**
+	 * @return raw bytes encoded by the barcode, if applicable, otherwise {@code null}
+	 */
+	public function getRawBytes()
+	{
+		return $this->rawBytes;
+	}
 
-public function __construct($text,
-                $rawBytes,
-                $resultPoints,
-                $format,
-                $timestamp = '') {
+	/**
+	 * @return points related to the barcode in the image. These are typically points
+	 *         identifying finder patterns or the corners of the barcode. The exact meaning is
+	 *         specific to the type of barcode that was decoded.
+	 */
+	public function getResultPoints()
+	{
+		return $this->resultPoints;
+	}
 
-    $this->text = $text;
-    $this->rawBytes = $rawBytes;
-    $this->resultPoints = $resultPoints;
-    $this->format = $format;
-    $this->resultMetadata = null;
-    $this->timestamp = $timestamp?$timestamp:time();
-}
+	/**
+	 * @return {@link BarcodeFormat} representing the format of the barcode that was decoded
+	 */
+	public function getBarcodeFormat()
+	{
+		return $this->format;
+	}
 
-  /**
-   * @return raw text encoded by the barcode
-   */
-  public function getText() {
-    return $this->text;
-  }
+	/**
+	 * @return {@link Map} mapping {@link ResultMetadataType} keys to values. May be
+	 *   {@code null}. This contains optional metadata about what was detected about the barcode,
+	 *   like orientation.
+	 */
+	public function getResultMetadata()
+	{
+		return $this->resultMetadata;
+	}
 
-  /**
-   * @return raw bytes encoded by the barcode, if applicable, otherwise {@code null}
-   */
-  public function getRawBytes() {
-    return $this->rawBytes;
-  }
+	public function putMetadata($type, $value): void
+	{
+		$resultMetadata = [];
+  if ($this->resultMetadata === null) {
+			$this->resultMetadata = [];
+		}
+		$resultMetadata[$type] = $value;
+	}
 
-  /**
-   * @return points related to the barcode in the image. These are typically points
-   *         identifying finder patterns or the corners of the barcode. The exact meaning is
-   *         specific to the type of barcode that was decoded.
-   */
-  public function getResultPoints() {
-    return $this->resultPoints;
-  }
+	public function putAllMetadata($metadata): void
+	{
+		if ($metadata !== null) {
+			if ($this->resultMetadata === null) {
+				$this->resultMetadata = $metadata;
+			} else {
+				$this->resultMetadata = array_merge($this->resultMetadata, $metadata);
+			}
+		}
+	}
 
-  /**
-   * @return {@link BarcodeFormat} representing the format of the barcode that was decoded
-   */
-  public function getBarcodeFormat() {
-    return $this->format;
-  }
+	public function addResultPoints($newPoints): void
+	{
+		$oldPoints = $this->resultPoints;
+		if ($oldPoints === null) {
+			$this->resultPoints = $newPoints;
+		} elseif ($newPoints !== null && (is_countable($newPoints) ? count($newPoints) : 0) > 0) {
+			$allPoints = fill_array(0, (is_countable($oldPoints) ? count($oldPoints) : 0) + (is_countable($newPoints) ? count($newPoints) : 0), 0);
+			$allPoints = arraycopy($oldPoints, 0, $allPoints, 0, is_countable($oldPoints) ? count($oldPoints) : 0);
+			$allPoints = arraycopy($newPoints, 0, $allPoints, is_countable($oldPoints) ? count($oldPoints) : 0, is_countable($newPoints) ? count($newPoints) : 0);
+			$this->resultPoints = $allPoints;
+		}
+	}
 
-  /**
-   * @return {@link Map} mapping {@link ResultMetadataType} keys to values. May be
-   *   {@code null}. This contains optional metadata about what was detected about the barcode,
-   *   like orientation.
-   */
-  public function getResultMetadata() {
-    return $this->resultMetadata;
-  }
+	public function getTimestamp()
+	{
+		return $this->timestamp;
+	}
 
-  public function putMetadata($type, $value) {
-    if ($this->resultMetadata == null) {
-        $this->resultMetadata = array();
-    }
-    $resultMetadata[$type] =  $value;
-}
-
-  public function  putAllMetadata($metadata) {
-    if ($metadata != null) {
-        if ($this->resultMetadata == null) {
-            $this->resultMetadata = $metadata;
-        } else {
-            $this->resultMetadata = array_merge($this->resultMetadata, $metadata);
-        }
-    }
-  }
-
-  public function addResultPoints($newPoints) {
-    $oldPoints = $this->resultPoints;
-    if ($oldPoints == null) {
-        $this->resultPoints = $newPoints;
-    } else if ($newPoints != null && count($newPoints) > 0) {
-        $allPoints = fill_array(0,count($oldPoints)+count($newPoints),0);
-        $allPoints = arraycopy($oldPoints, 0, $allPoints, 0, count($oldPoints));
-        $allPoints = arraycopy($newPoints, 0, $allPoints, count($oldPoints), count($newPoints));
-      $this->resultPoints = $allPoints;
-    }
-  }
-
-  public function getTimestamp() {
-    return $this->timestamp;
-  }
-
-  //@Override
-  public function toString() {
-    return $this->text;
-  }
-
+	public function toString()
+	{
+		return $this->text;
+	}
 }
