@@ -1,0 +1,25 @@
+{
+    "name": "yzncms/think-helper",
+    "description": "The ThinkPHP5 Helper Package",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "yunwuxin",
+            "email": "448901948@qq.com"
+        }
+    ],
+    "support": {
+        "issues": "https://gitee.com/ken678/YZNCMS/issues"
+    },
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "think\\": "src"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    }
+}
