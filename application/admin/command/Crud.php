@@ -855,14 +855,14 @@ class Crud extends Command
                         $formEditElement = $this->getReplacedStub('html/' . $templateName, array_merge($commonFields, ['fieldValue' => $editValue]));
                     } else {
                         if ($this->isMatchSuffix($field, $this->selectpageSuffix)) {
-                            $inputType    = 'text';
-                            $defaultValue = '';
-                            //$attrArr['lay-verify']  = 'required';
+                            $inputType              = 'text';
+                            $defaultValue           = '';
+                            $attrArr['lay-verify']  = '';
                             $cssClassArr[]          = 'selectpage';
                             $selectpageTable        = substr($field, 0, strripos($field, '_'));
                             $selectpageField        = '';
-                            $selectpageController   = str_replace('_', '/', $selectpageTable);
-                            $attrArr['data-source'] = $selectpageController . "/index";
+                            $selectpageController   = str_replace('_', '.', $selectpageTable);
+                            $attrArr['data-source'] = "admin/" . $selectpageController . "/index";
                             //如果是类型表需要特殊处理下
                             if ($selectpageController == 'admin') {
                                 $attrArr['data-source'] = 'admin/auth.manager/index';
