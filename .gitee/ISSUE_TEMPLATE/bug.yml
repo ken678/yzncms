@@ -9,6 +9,15 @@ body:
         在反馈问题之前，请确保：
         - 您已查看官方使用文档：**https://www.kancloud.cn/ken678/yzncms** ，但没有找到相关解决方案。 
         - 您已在 Issues 中搜索过类似的问题，但没有找到相关解决方案。
+ - type: checkboxes
+    attributes:
+      label: 议题条件
+      description: 在你开始之前，请花几分钟时间确保你已如实完成以下工作，以便让我们更高效地沟通。
+      options:
+        - label: 我确认已查看官方使用文档：https://www.kancloud.cn/ken678/yzncms ，但没有找到相关解决方案。
+          required: true
+        - label: 我确认已在 [Issues](https://gitee.com/ken678/YZNCMS/issues ) 中搜索过类似的问题，但没有找到相关解决方案。
+          required: true
   - type: input
     attributes:
         label: 版本号
