@@ -3,12 +3,6 @@ description: 使用 Yzncms 过程中遇到的 Bug、异常或其他困惑。
 title: ""
 labels: ["bug"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        在反馈问题之前，请确保：
-        - 您已查看官方使用文档：**https://www.kancloud.cn/ken678/yzncms** ，但没有找到相关解决方案。 
-        - 您已在 Issues 中搜索过类似的问题，但没有找到相关解决方案。
  - type: checkboxes
     attributes:
       label: 议题条件
