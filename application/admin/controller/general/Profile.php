@@ -76,6 +76,7 @@ class Profile extends Adminbase
                 $admin->save($params);
                 //因为个人资料面板读取的Session显示，修改自己资料后同时更新Session
                 Session::set("admin", $admin->toArray());
+                Session::set("admin.safecode", $this->auth->getEncryptSafecode($admin));
                 $this->success('修改成功！');
             }
             $this->error();
