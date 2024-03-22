@@ -1,5 +1,5 @@
 # YznCMS 后台开发框架
-### 后端基于thinkphp5.1框架,前端基于Layui2.9.x,是一款【真正意义的永久免费,可商用,可去前台版权】的后台系统
+### 系统基于ThinkPHP5.1的强大后端框架与Layui2.9.x轻量级的前端UI框架，承诺永久免费且商业授权无限制，更可轻松移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/)
 [![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
