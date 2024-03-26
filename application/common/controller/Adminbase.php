@@ -133,6 +133,9 @@ class Adminbase extends Base
         $this->assign('site', $site);
         $this->assign('auth', $this->auth);
         $this->assign('userInfo', Session::get('admin'));
+        $this->view->filter(function ($content) {
+            return Hook::listen("view_filter", $content, true);
+        });
     }
 
     /**
