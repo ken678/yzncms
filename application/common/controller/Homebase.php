@@ -42,6 +42,9 @@ class Homebase extends Base
         //监听插件传入的变量
         $site = array_merge($site, $config, ...Hook::listen("config_init"));
         $this->assign('site', $site);
+        $this->view->filter(function ($content) {
+            return Hook::listen("index_view_filter", $content, true) ?: $content;
+        });
     }
 
     /**
