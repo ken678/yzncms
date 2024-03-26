@@ -31,6 +31,9 @@ class Index extends Adminbase
         parent::initialize();
         //移除HTML标签
         $this->request->filter('trim,strip_tags,htmlspecialchars');
+        $this->view->filter(function ($content) {
+            return Hook::listen("view_filter", $content, true);
+        });
     }
 
     //后台首页
