@@ -202,6 +202,9 @@ class View
         // 获取并清空缓存
         $content = ob_get_clean();
 
+        // 内容过滤标签
+        Container::get('hook')->listen('view_filter', $content);
+
         if ($this->filter) {
             $content = call_user_func_array($this->filter, [$content]);
         }

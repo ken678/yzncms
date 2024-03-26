@@ -1685,7 +1685,7 @@ abstract class Connection
         try {
             if (1 == $this->transTimes) {
                 $this->linkID->beginTransaction();
-            } elseif ($this->transTimes > 1 && $this->supportSavepoint()) {
+            } elseif ($this->transTimes > 1 && $this->supportSavepoint() && $this->linkID->inTransaction()) {
                 $this->linkID->exec(
                     $this->parseSavepoint('trans' . $this->transTimes)
                 );
@@ -1709,7 +1709,7 @@ abstract class Connection
     {
         $this->initConnect(true);
 
-        if (1 == $this->transTimes) {
+        if (1 == $this->transTimes && $this->linkID->inTransaction()) {
             $this->linkID->commit();
         }
 
@@ -1726,12 +1726,14 @@ abstract class Connection
     {
         $this->initConnect(true);
 
-        if (1 == $this->transTimes) {
-            $this->linkID->rollBack();
-        } elseif ($this->transTimes > 1 && $this->supportSavepoint()) {
-            $this->linkID->exec(
-                $this->parseSavepointRollBack('trans' . $this->transTimes)
-            );
+        if ($this->linkID->inTransaction()) {
+            if (1 == $this->transTimes) {
+                $this->linkID->rollBack();
+            } elseif ($this->transTimes > 1 && $this->supportSavepoint()) {
+                $this->linkID->exec(
+                    $this->parseSavepointRollBack('trans' . $this->transTimes)
+                );
+            }
         }
 
         $this->transTimes = max(0, $this->transTimes - 1);

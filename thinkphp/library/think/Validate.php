@@ -11,7 +11,7 @@
 
 namespace think;
 
-use think\exception\ClassNotFoundException;
+use think\Db;
 use think\validate\ValidateRule;
 
 class Validate
@@ -998,11 +998,7 @@ class Validate
             // 指定模型类
             $db = new $rule[0];
         } else {
-            try {
-                $db = Container::pull('app')->model($rule[0]);
-            } catch (ClassNotFoundException $e) {
-                $db = Db::name($rule[0]);
-            }
+            $db = Db::name($rule[0]);
         }
 
         $key = isset($rule[1]) ? $rule[1] : $field;
