@@ -149,8 +149,8 @@ class Ajax extends Adminbase
     {
         $params = $this->request->get("row/a");
         if (!empty($params)) {
-            $province = isset($params['province']) ? $params['province'] : null;
-            $city     = isset($params['city']) ? $params['city'] : null;
+            $province = $params['province'] ?? null;
+            $city     = $params['city'] ?? null;
         } else {
             $province = $this->request->get('province');
             $city     = $this->request->get('city');
