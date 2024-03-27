@@ -30,18 +30,20 @@ class Attachment extends Model
 
     /**
      * 创建缩略图
-     * @param string $file 目标文件，可以是文件对象或文件路径
-     * @param string $dir 保存目录，即目标文件所在的目录名
-     * @param string $save_name 缩略图名
-     * @param string $thumb_size 尺寸
-     * @param string $thumb_type 裁剪类型
+     *
+     * @param  string  $file  目标文件，可以是文件对象或文件路径
+     * @param  string  $filename
+     * @param  string  $save_name  缩略图名
+     * @param  string  $thumb_size  尺寸
+     * @param  string  $thumb_type  裁剪类型
+     *
      * @return string 缩略图路径
      */
     public function create_thumb($file = '', $filename = '', $save_name = '', $thumb_size = '', $thumb_type = '')
     {
         // 获取要生成的缩略图最大宽度和高度
         $thumb_size                               = $thumb_size == '' ? config('site.upload_image_thumb') : $thumb_size;
-        list($thumb_max_width, $thumb_max_height) = explode(',', $thumb_size);
+        [$thumb_max_width, $thumb_max_height] = explode(',', $thumb_size);
         // 读取图片
         $image = Image::open($file);
         // 生成缩略图
