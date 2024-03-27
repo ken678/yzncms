@@ -364,9 +364,11 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                             $(document.body).on("keyup change", "#" + input_id, function (e) {
                                 var inputStr = $("#" + input_id).val();
                                 var inputArr = inputStr.split(/\,/);
-                                $("#" + preview_id).empty();
-                                var tpl = $("#" + preview_id).data("template") ? $("#" + preview_id).data("template") : "";
-                                var extend = $("#" + preview_id).next().is("textarea") ? $("#" + preview_id).next("textarea").val() : "{}";
+
+                                var previewObj = $("#" + preview_id);
+                                previewObj.empty();
+                                var tpl = previewObj.data("template") ? previewObj.data("template") : "";
+                                var extend = previewObj.next().is("textarea") ? previewObj.next("textarea").val() : "{}";
                                 var json = {};
                                 try {
                                     json = JSON.parse(extend);
@@ -383,10 +385,10 @@ layui.define(['dropzone', 'yzn','laytpl','notice'], function(exports) {
                                     //var data = {url: j, fullurl: Fast.api.cdnurl(j), data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix};
                                     var data = {url: j, data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix};
                                     laytpl(tpl ? $("#" + tpl).html() : Upload.config.previewtpl).render(data, function(html) {
-                                        $("#" + preview_id).append(html);
+                                        previewObj.append(html);
                                     });
                                 });
-                                refresh($("#" + preview_id).data("name"));
+                                refresh(previewObj.data("name"));
                             });
                             $("#" + input_id).trigger("change");
                         }
