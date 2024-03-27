@@ -160,7 +160,7 @@ class Upload
             }
         }
 
-        $savekey   = $savekey ? $savekey : $this->getSavekey($dir);
+        $savekey   = $savekey ?: $this->getSavekey($dir);
         $savekey   = ltrim($savekey, '/');
         $uploadDir = substr($savekey, 0, strripos($savekey, '/') + 1);
         $fileName  = substr($savekey, strripos($savekey, '/') + 1);
@@ -315,7 +315,7 @@ class Upload
         }
         $iterator = new \GlobIterator($this->chunkDir . DS . $chunkid . '-*', FilesystemIterator::KEY_AS_FILENAME);
         $array    = iterator_to_array($iterator);
-        foreach ($array as $index => &$item) {
+        foreach ($array as &$item) {
             $sourceFile = $item->getRealPath() ?: $item->getPathname();
             $item       = null;
             @unlink($sourceFile);
@@ -363,7 +363,7 @@ class Upload
             $suffix = $this->fileInfo['suffix'] ?? '';
         }
         $suffix     = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
-        $filename   = $filename ? $filename : ($this->fileInfo['name'] ?? 'unknown');
+        $filename   = $filename ?: ($this->fileInfo['name'] ?? 'unknown');
         $filename   = strip_tags(htmlspecialchars($filename));
         $fileprefix = substr($filename, 0, strripos($filename, '.'));
         $md5        = $md5 ? $md5 : (isset($this->fileInfo['tmp_name']) ? md5_file($this->fileInfo['tmp_name']) : '');
@@ -383,7 +383,7 @@ class Upload
             '{.suffix}'    => $suffix ? '.' . $suffix : '',
             '{filemd5}'    => $md5,
         ];
-        $savekey = $savekey ? $savekey : config('savekey');
+        $savekey = $savekey ?: config('savekey');
         $savekey = str_replace(array_keys($replaceArr), array_values($replaceArr), $savekey);
         return $savekey;
     }
