@@ -15,6 +15,7 @@
 namespace app\common\behavior;
 
 use think\facade\Config;
+use think\facade\Env;
 
 /**
  * 初始化配置信息行为
@@ -34,7 +35,7 @@ class Common
     {
         if (Config::get('app_debug')) {
             // 如果是开发模式那么将异常模板修改成官方的
-            Config::set('exception_tmpl', \think\facade\Env::get('think_path') . 'tpl/think_exception.tpl');
+            Config::set('exception_tmpl', Env::get('think_path') . 'tpl/think_exception.tpl');
         }
     }
 
