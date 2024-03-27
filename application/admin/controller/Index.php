@@ -19,6 +19,7 @@ use app\common\controller\Adminbase;
 use think\addons\Service;
 use think\facade\Cache;
 use think\facade\Hook;
+use util\File;
 
 class Index extends Adminbase
 {
@@ -70,7 +71,7 @@ class Index extends Adminbase
                 $this->success('恭喜您，登陆成功', $url);
             } else {
                 $msg = $this->auth->getError();
-                $msg = $msg ? $msg : '用户名或者密码错误!';
+                $msg = $msg ?: '用户名或者密码错误!';
                 $this->error($msg, $url, ['token' => $this->request->token()]);
             }
         }
@@ -99,14 +100,14 @@ class Index extends Adminbase
             switch ($type) {
                 case 'all':
                 case 'data':
-                    \util\File::del_dir(ROOT_PATH . 'runtime' . DS . 'cache');
+                    File::del_dir(ROOT_PATH . 'runtime' . DS . 'cache');
                     Cache::clear();
                     if ($type == 'data') {
                         break;
                     }
 
                 case 'template':
-                    \util\File::del_dir(ROOT_PATH . 'runtime' . DS . 'temp');
+                    File::del_dir(ROOT_PATH . 'runtime' . DS . 'temp');
                     if ($type == 'template') {
                         break;
                     }
