@@ -84,7 +84,7 @@ class Sms
             'template' => $template,
         ];
         $result = hook('sms_notice', $params, true, true);
-        return $result ? true : false;
+        return (bool) $result;
     }
 
     /**

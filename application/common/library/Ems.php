@@ -84,7 +84,7 @@ class Ems
             'template' => $template,
         ];
         $result = hook('ems_notice', $params, true, true);
-        return $result ? true : false;
+        return (bool) $result;
     }
 
     /**
