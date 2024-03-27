@@ -70,11 +70,11 @@ class Addons extends Adminbase
                 $count        = $list['count'] ?? -1;
                 //本地插件
                 $addons = get_addon_list();
-                foreach ($addons as $k => &$v) {
+                foreach ($addons as &$v) {
                     $config      = get_addon_config($v['name']);
                     $v['config'] = $config ? 1 : 0;
                 }
-                foreach ($onlineaddons as $index => &$item) {
+                foreach ($onlineaddons as &$item) {
                     $item['addon'] = $addons[$item['name']] ?? '';
                 }
                 $result = ["code" => 0, "data" => $onlineaddons, "category" => $category, 'count' => $count];
@@ -94,7 +94,7 @@ class Addons extends Adminbase
      */
     public function config($name = null)
     {
-        $name = $name ? $name : $this->request->get("name");
+        $name = $name ?: $this->request->get("name");
         if (!$name) {
             $this->error('参数不得为空！');
         }
@@ -240,9 +240,9 @@ class Addons extends Adminbase
         try {
             Service::uninstall($name, $force);
             if ($tables) {
-                $prefix = Config::get('database.prefix');
+                //$prefix = Config::get('database.prefix');
                 //删除插件关联表
-                foreach ($tables as $index => $table) {
+                foreach ($tables as $table) {
                     Db::execute("DROP TABLE IF EXISTS `{$table}`");
                 }
             }
@@ -370,7 +370,7 @@ class Addons extends Adminbase
             $this->error('插件标识错误！');
         }
         $tables = get_addon_tables($name);
-        $prefix = Config::get('database.prefix');
+        //$prefix = Config::get('database.prefix');
         $tables = array_values($tables);
         $this->success('', null, ['tables' => $tables]);
     }
