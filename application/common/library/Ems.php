@@ -44,7 +44,7 @@ class Ems
             ->order('id', 'DESC')
             ->find();
         hook('ems_get', $ems);
-        return $ems ? $ems : null;
+        return $ems ?: null;
     }
 
     /**

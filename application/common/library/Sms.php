@@ -44,7 +44,7 @@ class Sms
             ->order('id', 'DESC')
             ->find();
         hook('sms_get', $sms);
-        return $sms ? $sms : null;
+        return $sms ?: null;
     }
 
     /**
