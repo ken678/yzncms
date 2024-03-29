@@ -107,6 +107,11 @@ var jQuery=layui.$;
          */
         andOr: 'OR',
         /**
+         * Used to separate search content
+         * @see SelectPage.prototype.suggest()
+         */
+        separator: ',',
+        /**
          * Result sort type
          * @type array|boolean - if not set, will default used showField field
          * @example
@@ -532,7 +537,7 @@ var jQuery=layui.$;
         var elem = {}, p = this.option, css = this.css_class, msg = this.message, input = $(combo_input);
         var cssWidth = input.css("width");
         var orgWidth = input.outerWidth();
-        if (cssWidth.indexOf("%") > -1 || input.parent().size() > 0 && input.parent().width() == orgWidth) {
+        if (cssWidth.indexOf("%") > -1 || input.parent().length > 0 && input.parent().width() == orgWidth) {
             orgWidth = "100%";
         } else {
             // fix input width in hidden situation
@@ -1172,10 +1177,10 @@ var jQuery=layui.$;
         var q_word, val = $.trim(self.elem.combo_input.val());
         if (self.option.multiple) q_word = val;
         else {
-            if (val && val === self.prop.selected_text) q_word = '';
+            if (val && val == self.prop.selected_text) q_word = '';
             else q_word = val;
         }
-        q_word = q_word.split(/[\s　]+/);
+        q_word = q_word.split(self.option.separator);
 
         //Before show up result list callback
         if (self.option.eOpen && $.isFunction(self.option.eOpen))
@@ -1211,7 +1216,7 @@ var jQuery=layui.$;
         if (!p.eAjaxSuccess || !$.isFunction(p.eAjaxSuccess)) self.hideResults(self);
         var _paramsFunc = p.params, _params = {}, searchKey = p.searchField;
         //when have new query keyword, then reset page number to 1.
-        if (q_word.length && q_word[0] && q_word[0] !== self.prop.prev_value) which_page_num = 1;
+        if (q_word.length && q_word[0] && q_word.join(self.option.separator) !== self.prop.prev_value) which_page_num = 1;
         var _orgParams = {
             q_word: q_word,
             pageNumber: which_page_num,
