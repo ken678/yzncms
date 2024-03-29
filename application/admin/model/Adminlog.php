@@ -59,6 +59,9 @@ class Adminlog extends Model
         $admin_id = $auth->isLogin() ? $auth->id : 0;
         $username = $auth->isLogin() ? $auth->username : '未知';
 
+        // 设置过滤函数
+        request()->filter('trim,strip_tags,htmlspecialchars');
+
         $controllername = Loader::parseName(request()->controller());
         $actionname     = strtolower(request()->action());
         $path           = $controllername . '/' . $actionname;
@@ -69,12 +72,12 @@ class Adminlog extends Model
                 }
             }
         }
-        $content = $content ? $content : self::$content;
+        $content = $content ?: self::$content;
         if (!$content) {
-            $content = request()->param('', null, 'trim,strip_tags,htmlspecialchars');
+            $content = request()->param('', null);
             $content = self::getPureContent($content);
         }
-        $title = $title ? $title : self::$title;
+        $title = $title ?: self::$title;
         if (!$title) {
             $controllerTitle = AuthRule::where('name', $controllername)->value('title');
             $title           = AuthRule::where('name', $path)->value('title');
@@ -84,11 +87,11 @@ class Adminlog extends Model
         self::create([
             'title'     => $title,
             'content'   => !is_scalar($content) ? json_encode($content, JSON_UNESCAPED_UNICODE) : $content,
-            'url'       => substr(request()->url(), 0, 1500),
+            'url'       => substr(xss_clean(strip_tags(request()->url())), 0, 1500),
             'admin_id'  => $admin_id,
             'username'  => $username,
             'useragent' => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
-            'ip'        => request()->ip(),
+            'ip'        => xss_clean(strip_tags(request()->ip())),
         ]);
     }
 
