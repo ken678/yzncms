@@ -364,7 +364,7 @@ class Upload
         }
         $suffix     = $suffix && preg_match("/^[a-zA-Z0-9]+$/", $suffix) ? $suffix : 'file';
         $filename   = $filename ?: ($this->fileInfo['name'] ?? 'unknown');
-        $filename   = strip_tags(htmlspecialchars($filename));
+        $filename   = xss_clean(strip_tags(htmlspecialchars($filename)));
         $fileprefix = substr($filename, 0, strripos($filename, '.'));
         $md5        = $md5 ? $md5 : (isset($this->fileInfo['tmp_name']) ? md5_file($this->fileInfo['tmp_name']) : '');
         $replaceArr = [
