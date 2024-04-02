@@ -9,8 +9,9 @@
 {/block}
 {block name="script"}
 <script>
-layui.use('yznTable', function() {
-    var table = layui.yznTable;
+layui.use(['yznTable','util'], function() {
+    var table = layui.yznTable,
+        util = layui.util;
 
     var init = {
         table_elem: '#currentTable',
@@ -41,7 +42,7 @@ layui.use('yznTable', function() {
                 { field: 'url', title: '操作URL' },
                 { field: 'ip', width: 120, title: 'IP' },
                 { field: 'useragent', width: 120, title: 'Browser',templet:function(d){
-                        return '<span>' + d.useragent.split(" ")[0] + '</span>';
+                        return '<span>' + util.escape(d.useragent.split(" ")[0]) + '</span>';
                     }
                 },
                 { field: 'create_time', width: 180, title: '时间', search: 'range' },
