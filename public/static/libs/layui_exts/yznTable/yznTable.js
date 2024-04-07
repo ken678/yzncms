@@ -660,7 +660,25 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             }
         },
         toolSpliceUrl(url, field, data) {
-            url = url.indexOf("?") !== -1 ? url + '&' + field + '=' + data[field] : url + '?' + field + '=' + data[field];
+            data.id = typeof data.id !== 'undefined' ? data.id : 0;
+            url = url == null || url.length === 0 ? '' : url.toString();
+            //自动添加id参数
+            url = !url.match(/(?=([?&]id=)|(\/id\/)|(\{id}))/i) ?
+                    url + (url.match(/(\?|&)+/) ? "&id=" : "?id=") + '{id}' : url;
+            url = url.replace(/\{(.*?)\}/gi, function (matched) {
+                matched = matched.substring(1, matched.length - 1);
+                if (matched.indexOf(".") !== -1) {
+                    var temp = data;
+                    var arr = matched.split(/\./);
+                    for (var i = 0; i < arr.length; i++) {
+                        if (typeof temp[arr[i]] !== 'undefined') {
+                            temp = temp[arr[i]];
+                        }
+                    }
+                    return typeof temp === 'object' ? '' : temp;
+                }
+                return data[matched];
+            });
             return url;
         },
         buildOperatHtml: function(operat) {
