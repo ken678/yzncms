@@ -15,9 +15,9 @@
 // 建议安装完成后移除此文件
 namespace think;
 
-if (version_compare(PHP_VERSION, '7.1.0', '<')) {
+if (version_compare(PHP_VERSION, '7.2.5', '<')) {
     header("Content-type: text/html; charset=utf-8");
-    die('PHP 7.1.0 及以上版本系统才可运行~ ');
+    die('PHP 7.2.5 及以上版本系统才可运行~ ');
 }
 
 define('IF_PUBLIC', true);
