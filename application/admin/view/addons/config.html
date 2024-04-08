@@ -20,7 +20,7 @@
                         <div class="layui-input-block">
                             <input type="text" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                    {/case}
                    {case value="password"}
@@ -29,7 +29,7 @@
                         <div class="layui-input-block">
                             <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                    {/case}
 					{case value="array"}
@@ -43,7 +43,7 @@
 					        <dd><button type="button" class="layui-btn btn-append">追加</button></dd>
 					        <textarea name="config[{$form.name}]" class="layui-textarea layui-hide">{$form.value|json_encode}</textarea>
 					    </dl>
-					    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+					    {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
 					</div>
 					<script type="text/html" id="{$form.name}Tpl">
 					    <dd class="layui-form-item rules-item">
@@ -64,7 +64,7 @@
 					        <input type="checkbox" name="config[{$form.name}][]" lay-skin="primary" title="{$opt}" value="{$opt_k}" {in name="opt_k" value="$form.value|default=''"} checked{/in}>
 					        {/foreach}
 					    </div>
-					    {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+					    {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
 					</div>
 					{/case}
                     {case value="textarea"}
@@ -73,7 +73,7 @@
                         <div class="layui-input-block">
                             <textarea placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$form.name}]">{$form.value}</textarea>
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                     {/case}
                    {case value="password"}
@@ -82,7 +82,7 @@
                         <div class="layui-input-block">
                             <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                    {/case}
                    {case value="radio"}
@@ -93,7 +93,7 @@
                             <input type="radio" name="config[{$form.name}]" value="{$opt_k}" title="{$opt}" {eq name="form.value" value="$opt_k"} checked{/eq}>
                             {/foreach}
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                    {/case}
                     {case value="select"}
@@ -107,7 +107,7 @@
                                 {/foreach}
                             </select>
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                     {/case}
                     {case value="image" break="0"}{/case}
@@ -121,7 +121,7 @@
                             <button type="button" class="layui-btn faupload" id="faupload-{$form.name}" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="image"><i class="layui-icon layui-icon-upload"></i> 上传</button><button type="button" class="layui-btn fachoose" data-multiple="{$form.type=='image'?'false':'true'}" data-input-id="c-{$form.name}" id="fachoose-c-{$form.name}"><i class="iconfont icon-other"></i> 选择</button>
                             <ul class="layui-row list-inline plupload-preview" id="p-{$form.name}"></ul>
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                     {/case}
                     {case value="file" break="0"}{/case}
@@ -134,7 +134,7 @@
                             </div>
                             <button type="button" class="layui-btn faupload" id="faupload-{$form.name}" data-multiple="{$form.type=='file'?'false':'true'}" data-input-id="c-{$form.name}" data-preview-id="p-{$form.name}" data-type="file"><i class="layui-icon layui-icon-upload"></i> 上传</button>
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                     {/case}
                     {case value="Ueditor"}
@@ -143,7 +143,7 @@
                         <div class="layui-input-block">
                             <script type="text/plain" class="js-ueditor" id="{$form.name}" name="config[{$form.name}]">{$form.value|raw}</script>
                         </div>
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid2 layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
                     </div>
                     {/case}
              {/switch}
