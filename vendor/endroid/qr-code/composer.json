@@ -12,19 +12,22 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
-        "ext-gd": "*",
+        "php": ">=7.2",
         "bacon/bacon-qr-code": "^2.0",
         "khanamiryan/qrcode-detector-decoder": "^1.0.2",
-        "myclabs/php-enum": "^1.5",
-        "symfony/options-resolver": "^2.7|^3.0|^4.0",
-        "symfony/property-access": "^2.7|^3.0|^4.0"
+        "symfony/options-resolver": "^3.4||^4.4||^5.0",
+        "symfony/property-access": "^3.4||^4.4||^5.0",
+        "myclabs/php-enum": "^1.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7|^6.0"
+        "endroid/quality": "^1.3.7",
+        "setasign/fpdf": "^1.8"
     },
     "suggest": {
-        "symfony/http-foundation": "Install if you want to use QrCodeResponse"
+        "ext-gd": "Required for generating PNG images",
+        "roave/security-advisories": "Avoids installation of package versions with vulnerabilities",
+        "setasign/fpdf": "Required to use the FPDF writer.",
+        "symfony/security-checker": "Checks your composer.lock for vulnerabilities"
     },
     "autoload": {
         "psr-4": {
@@ -35,6 +38,9 @@
         "psr-4": {
             "Endroid\\QrCode\\Tests\\": "tests/"
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {

@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Endroid\QrCode\Factory;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Exception\ValidationException;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\QrCodeInterface;
 use Endroid\QrCode\WriterRegistryInterface;
@@ -21,8 +22,13 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 class QrCodeFactory implements QrCodeFactoryInterface
 {
     private $writerRegistry;
+
+    /** @var OptionsResolver */
     private $optionsResolver;
+
     private $defaultOptions;
+
+    /** @var array */
     private $definedOptions = [
         'writer',
         'writer_options',
@@ -32,6 +38,7 @@ class QrCodeFactory implements QrCodeFactoryInterface
         'background_color',
         'encoding',
         'round_block_size',
+        'round_block_size_mode',
         'error_correction_level',
         'logo_path',
         'logo_width',
@@ -72,6 +79,10 @@ class QrCodeFactory implements QrCodeFactoryInterface
                 }
                 $accessor->setValue($qrCode, $option, $options[$option]);
             }
+        }
+
+        if (!$qrCode instanceof QrCodeInterface) {
+            throw new ValidationException('QR Code was messed up by property accessor');
         }
 
         return $qrCode;

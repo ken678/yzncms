@@ -43,7 +43,7 @@ class PropertyPathBuilder
      * @param int                          $length The length of the appended piece
      *                                             If 0, the full path is appended
      */
-    public function append($path, $offset = 0, $length = 0)
+    public function append($path, int $offset = 0, int $length = 0)
     {
         if (\is_string($path)) {
             $path = new PropertyPath($path);
@@ -63,10 +63,8 @@ class PropertyPathBuilder
 
     /**
      * Appends an index element to the current path.
-     *
-     * @param string $name The name of the appended index
      */
-    public function appendIndex($name)
+    public function appendIndex(string $name)
     {
         $this->elements[] = $name;
         $this->isIndex[] = true;
@@ -74,10 +72,8 @@ class PropertyPathBuilder
 
     /**
      * Appends a property element to the current path.
-     *
-     * @param string $name The name of the appended property
      */
-    public function appendProperty($name)
+    public function appendProperty(string $name)
     {
         $this->elements[] = $name;
         $this->isIndex[] = false;
@@ -86,12 +82,9 @@ class PropertyPathBuilder
     /**
      * Removes elements from the current path.
      *
-     * @param int $offset The offset at which to remove
-     * @param int $length The length of the removed piece
-     *
      * @throws OutOfBoundsException if offset is invalid
      */
-    public function remove($offset, $length = 1)
+    public function remove(int $offset, int $length = 1)
     {
         if (!isset($this->elements[$offset])) {
             throw new OutOfBoundsException(sprintf('The offset "%s" is not within the property path.', $offset));
@@ -113,7 +106,7 @@ class PropertyPathBuilder
      *
      * @throws OutOfBoundsException If the offset is invalid
      */
-    public function replace($offset, $length, $path, $pathOffset = 0, $pathLength = 0)
+    public function replace(int $offset, int $length, $path, int $pathOffset = 0, int $pathLength = 0)
     {
         if (\is_string($path)) {
             $path = new PropertyPath($path);
@@ -141,12 +134,9 @@ class PropertyPathBuilder
     /**
      * Replaces a property element by an index element.
      *
-     * @param int    $offset The offset at which to replace
-     * @param string $name   The new name of the element. Optional
-     *
      * @throws OutOfBoundsException If the offset is invalid
      */
-    public function replaceByIndex($offset, $name = null)
+    public function replaceByIndex(int $offset, ?string $name = null)
     {
         if (!isset($this->elements[$offset])) {
             throw new OutOfBoundsException(sprintf('The offset "%s" is not within the property path.', $offset));
@@ -162,12 +152,9 @@ class PropertyPathBuilder
     /**
      * Replaces an index element by a property element.
      *
-     * @param int    $offset The offset at which to replace
-     * @param string $name   The new name of the element. Optional
-     *
      * @throws OutOfBoundsException If the offset is invalid
      */
-    public function replaceByProperty($offset, $name = null)
+    public function replaceByProperty(int $offset, ?string $name = null)
     {
         if (!isset($this->elements[$offset])) {
             throw new OutOfBoundsException(sprintf('The offset "%s" is not within the property path.', $offset));
@@ -183,7 +170,7 @@ class PropertyPathBuilder
     /**
      * Returns the length of the current path.
      *
-     * @return int The path length
+     * @return int
      */
     public function getLength()
     {
@@ -193,7 +180,7 @@ class PropertyPathBuilder
     /**
      * Returns the current property path.
      *
-     * @return PropertyPathInterface|null The constructed property path
+     * @return PropertyPathInterface|null
      */
     public function getPropertyPath()
     {
@@ -205,7 +192,7 @@ class PropertyPathBuilder
     /**
      * Returns the current property path as string.
      *
-     * @return string The property path as string
+     * @return string
      */
     public function __toString()
     {

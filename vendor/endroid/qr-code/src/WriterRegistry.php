@@ -15,13 +15,17 @@ use Endroid\QrCode\Exception\InvalidWriterException;
 use Endroid\QrCode\Writer\BinaryWriter;
 use Endroid\QrCode\Writer\DebugWriter;
 use Endroid\QrCode\Writer\EpsWriter;
+use Endroid\QrCode\Writer\FpdfWriter;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Writer\SvgWriter;
 use Endroid\QrCode\Writer\WriterInterface;
 
 class WriterRegistry implements WriterRegistryInterface
 {
+    /** @var WriterInterface[] */
     private $writers = [];
+
+    /** @var WriterInterface|null */
     private $defaultWriter;
 
     public function loadDefaultWriters(): void
@@ -36,6 +40,7 @@ class WriterRegistry implements WriterRegistryInterface
             new EpsWriter(),
             new PngWriter(),
             new SvgWriter(),
+            new FpdfWriter(),
         ]);
 
         $this->setDefaultWriter('png');
@@ -60,7 +65,7 @@ class WriterRegistry implements WriterRegistryInterface
         return $this->writers[$name];
     }
 
-    public function getDefaultWriter()
+    public function getDefaultWriter(): WriterInterface
     {
         if ($this->defaultWriter instanceof WriterInterface) {
             return $this->defaultWriter;
@@ -69,7 +74,7 @@ class WriterRegistry implements WriterRegistryInterface
         throw new InvalidWriterException('Please set the default writer via the second argument of addWriter');
     }
 
-    public function setDefaultWriter(string $name)
+    public function setDefaultWriter(string $name): void
     {
         $this->defaultWriter = $this->writers[$name];
     }
@@ -79,7 +84,7 @@ class WriterRegistry implements WriterRegistryInterface
         return $this->writers;
     }
 
-    private function assertValidWriter(string $name)
+    private function assertValidWriter(string $name): void
     {
         if (!isset($this->writers[$name])) {
             throw new InvalidWriterException('Invalid writer "'.$name.'"');

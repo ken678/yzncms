@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Endroid\QrCode\Writer;
 
-use Endroid\QrCode\Exception\MissingExtensionException;
+use Endroid\QrCode\Exception\GenerateImageException;
 use Endroid\QrCode\Exception\MissingLogoHeightException;
 use Endroid\QrCode\Exception\ValidationException;
 use Endroid\QrCode\QrCodeInterface;
@@ -21,6 +21,8 @@ class SvgWriter extends AbstractWriter
 {
     public function writeString(QrCodeInterface $qrCode): string
     {
+        $options = $qrCode->getWriterOptions();
+
         if ($qrCode->getValidateResult()) {
             throw new ValidationException('Built-in validation reader can not check SVG images: please disable via setValidateResult(false)');
         }
@@ -35,8 +37,9 @@ class SvgWriter extends AbstractWriter
         $svg->addChild('defs');
 
         // Block definition
+        $block_id = isset($options['rect_id']) && $options['rect_id'] ? $options['rect_id'] : 'block';
         $blockDefinition = $svg->defs->addChild('rect');
-        $blockDefinition->addAttribute('id', 'block');
+        $blockDefinition->addAttribute('id', $block_id);
         $blockDefinition->addAttribute('width', strval($data['block_size']));
         $blockDefinition->addAttribute('height', strval($data['block_size']));
         $blockDefinition->addAttribute('fill', '#'.sprintf('%02x%02x%02x', $qrCode->getForegroundColor()['r'], $qrCode->getForegroundColor()['g'], $qrCode->getForegroundColor()['b']));
@@ -57,18 +60,27 @@ class SvgWriter extends AbstractWriter
                     $block = $svg->addChild('use');
                     $block->addAttribute('x', strval($data['margin_left'] + $data['block_size'] * $column));
                     $block->addAttribute('y', strval($data['margin_left'] + $data['block_size'] * $row));
-                    $block->addAttribute('xlink:href', '#block', 'http://www.w3.org/1999/xlink');
+                    $block->addAttribute('xlink:href', '#'.$block_id, 'http://www.w3.org/1999/xlink');
                 }
             }
         }
 
-        if ($qrCode->getLogoPath()) {
-            $this->addLogo($svg, $data['outer_width'], $data['outer_height'], $qrCode->getLogoPath(), $qrCode->getLogoWidth(), $qrCode->getLogoHeight());
+        $logoPath = $qrCode->getLogoPath();
+        if (is_string($logoPath)) {
+            $forceXlinkHref = false;
+            if (isset($options['force_xlink_href']) && $options['force_xlink_href']) {
+                $forceXlinkHref = true;
+            }
+
+            $this->addLogo($svg, $data['outer_width'], $data['outer_height'], $logoPath, $qrCode->getLogoWidth(), $qrCode->getLogoHeight(), $forceXlinkHref);
         }
 
         $xml = $svg->asXML();
 
-        $options = $qrCode->getWriterOptions();
+        if (!is_string($xml)) {
+            throw new GenerateImageException('Unable to save SVG XML');
+        }
+
         if (isset($options['exclude_xml_declaration']) && $options['exclude_xml_declaration']) {
             $xml = str_replace("<?xml version=\"1.0\"?>\n", '', $xml);
         }
@@ -76,44 +88,58 @@ class SvgWriter extends AbstractWriter
         return $xml;
     }
 
-    private function addLogo(SimpleXMLElement $svg, int $imageWidth, int $imageHeight, string $logoPath, int $logoWidth, int $logoHeight = null): void
+    private function addLogo(SimpleXMLElement $svg, int $imageWidth, int $imageHeight, string $logoPath, int $logoWidth = null, int $logoHeight = null, bool $forceXlinkHref = false): void
     {
         $mimeType = $this->getMimeType($logoPath);
         $imageData = file_get_contents($logoPath);
 
-        if (null === $logoHeight) {
-            if ('image/svg+xml' === $mimeType) {
-                throw new MissingLogoHeightException('SVG Logos require an explicit height set via setLogoSize($width, $height)');
-            } else {
-                $logoImage = imagecreatefromstring($imageData);
-                $aspectRatio = $logoWidth / imagesx($logoImage);
-                $logoHeight = intval(imagesy($logoImage) * $aspectRatio);
+        if (!is_string($imageData)) {
+            throw new GenerateImageException('Unable to read image data: check your logo path');
+        }
+
+        if ('image/svg+xml' === $mimeType && (null === $logoHeight || null === $logoWidth)) {
+            throw new MissingLogoHeightException('SVG Logos require an explicit height set via setLogoSize($width, $height)');
+        }
+
+        if (null === $logoHeight || null === $logoWidth) {
+            $logoImage = imagecreatefromstring(strval($imageData));
+
+            if (!is_resource($logoImage)) {
+                throw new GenerateImageException('Unable to generate image: check your GD installation or logo path');
+            }
+
+            $logoSourceWidth = imagesx($logoImage);
+            $logoSourceHeight = imagesy($logoImage);
+
+            imagedestroy($logoImage);
+
+            if (null === $logoWidth) {
+                $logoWidth = $logoSourceWidth;
+            }
+
+            if (null === $logoHeight) {
+                $aspectRatio = $logoWidth / $logoSourceWidth;
+                $logoHeight = intval($logoSourceHeight * $aspectRatio);
             }
         }
 
+        $logoX = $imageWidth / 2 - $logoWidth / 2;
+        $logoY = $imageHeight / 2 - $logoHeight / 2;
+
         $imageDefinition = $svg->addChild('image');
-        $imageDefinition->addAttribute('x', strval($imageWidth / 2 - $logoWidth / 2));
-        $imageDefinition->addAttribute('y', strval($imageHeight / 2 - $logoHeight / 2));
+        $imageDefinition->addAttribute('x', strval($logoX));
+        $imageDefinition->addAttribute('y', strval($logoY));
         $imageDefinition->addAttribute('width', strval($logoWidth));
         $imageDefinition->addAttribute('height', strval($logoHeight));
         $imageDefinition->addAttribute('preserveAspectRatio', 'none');
-        $imageDefinition->addAttribute('xlink:href', 'data:'.$mimeType.';base64,'.base64_encode($imageData));
-    }
 
-    private function getMimeType(string $path): string
-    {
-        if (!function_exists('mime_content_type')) {
-            throw new MissingExtensionException('You need the ext-fileinfo extension to determine the mime type');
+        // xlink:href is actually deprecated, but still required when placing the qr code in a pdf.
+        // SimpleXML strips out the xlink part by using addAttribute(), so it must be set directly.
+        if ($forceXlinkHref) {
+            $imageDefinition['xlink:href'] = 'data:'.$mimeType.';base64,'.base64_encode($imageData);
+        } else {
+            $imageDefinition->addAttribute('href', 'data:'.$mimeType.';base64,'.base64_encode($imageData));
         }
-
-        $mimeType = mime_content_type($path);
-
-        // Passing mime type image/svg results in invisible images
-        if ('image/svg' === $mimeType) {
-            return 'image/svg+xml';
-        }
-
-        return $mimeType;
     }
 
     private function getOpacity(int $alpha): float
