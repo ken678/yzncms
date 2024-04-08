@@ -187,7 +187,7 @@ layui.use(['yznTable','table','laytpl','yzn','notice','element','dropdown','form
         init: init,
         toolbar: ['refresh',
             [{
-                html:'<a id="faupload-addon" class="layui-btn layui-btn-sm faupload" data-url="{:url("local")}" data-chunking="false" data-mimetype="zip,fastaddon" data-multiple="false"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
+                html:'<a id="faupload-addon" class="layui-btn layui-btn-sm faupload" data-url="{:url("local")}" data-chunking="false" data-mimetype="zip" data-multiple="false"><i class="iconfont icon-upload-fill"></i>&nbsp;本地安装</a>'
              },{
                 html:'<a class="layui-btn {if $type=='online'}layui-btn-normal{else}layui-btn-primary layui-border-blue{/if} layui-btn-sm btn-switch" data-type="all" href="{:url("index")}" style="margin-left: 10px !important;"><i class="iconfont icon-other"></i>&nbsp;全部</a>'
              },{
