@@ -2,7 +2,7 @@
 ### 系统基于ThinkPHP5.1的强大后端框架与Layui2.9.x轻量级的前端UI框架，承诺后台框架永久免费且商业授权无限制，更可移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/blob/master/LICENSE.txt)
-[![PHP Version Require](http://poser.pugx.org/yzncms/framework/require/php)](https://packagist.org/packages/yzncms/framework)
+[![PHP Version Require](https://img.shields.io/badge/PHP-%3E%3D7.2-blue)](https://packagist.org/packages/yzncms/framework)
 [![Version](https://img.shields.io/badge/YznCMS-1.4.1-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
