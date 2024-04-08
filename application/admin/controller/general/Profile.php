@@ -51,28 +51,26 @@ class Profile extends Adminbase
     {
         if ($this->request->isPost()) {
             $this->token();
-            $params = $this->request->post();
-            $params = array_filter(array_intersect_key(
-                $params,
-                array_flip(['email', 'nickname', 'password', 'avatar', 'mobile'])
-            ));
+            $params       = $this->request->post();
             $params['id'] = $this->auth->id;
             $rule         = [
                 'email|邮箱'  => 'require|email|unique:admin',
-                'mobile|手机' => 'require|mobile|unique:admin',
+                'mobile|手机' => 'mobile|unique:admin',
             ];
 
             $result = $this->validate($params, $rule);
             if (true !== $result) {
                 $this->error($result);
             }
-            if (isset($params['password'])) {
+            if (isset($params['password']) && $params['password']) {
                 if (!Validate::regex($params['password'], "/^[\S]{6,16}$/")) {
                     $this->error('密码长度必须在6-16位之间，不能包含空格');
                 }
                 $data               = encrypt_password($params['password']);
                 $params['encrypt']  = $data['encrypt'];
                 $params['password'] = $data['password'];
+            } else {
+                unset($params['password'], $params['encrypt']);
             }
             if ($params) {
                 $admin = AdminUser::get($this->auth->id);
