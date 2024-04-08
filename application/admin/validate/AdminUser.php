@@ -24,19 +24,20 @@ class AdminUser extends Validate
         'username|用户名' => 'unique:admin|require|alphaDash|length:3,20',
         'password|密码'  => 'require|length:3,20|confirm',
         'email|邮箱'     => 'email|unique:admin',
+        'mobile|手机'    => 'mobile|unique:admin',
         'roleid|权限组'   => 'require',
     ];
 
     // 登录验证场景定义
     public function sceneUpdate()
     {
-        return $this->only(['username', 'password', 'email', 'roleid'])
+        return $this->only(['username', 'password', 'email', 'mobile', 'roleid'])
             ->remove('password', 'require');
     }
 
     //定义验证场景
     protected $scene = [
-        'insert' => ['username', 'password', 'email', 'roleid'],
+        'insert' => ['username', 'password', 'email', 'roleid', 'mobile'],
 
     ];
 
