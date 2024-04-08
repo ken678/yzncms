@@ -54,10 +54,17 @@ class Profile extends Adminbase
             $params = $this->request->post();
             $params = array_filter(array_intersect_key(
                 $params,
-                array_flip(['email', 'nickname', 'password', 'avatar'])
+                array_flip(['email', 'nickname', 'password', 'avatar', 'mobile'])
             ));
-            if (!Validate::isEmail($params['email'])) {
-                $this->error('请输入正确的Email地址');
+            $params['id'] = $this->auth->id;
+            $rule         = [
+                'email|邮箱'  => 'require|email|unique:admin',
+                'mobile|手机' => 'require|mobile|unique:admin',
+            ];
+
+            $result = $this->validate($params, $rule);
+            if (true !== $result) {
+                $this->error($result);
             }
             if (isset($params['password'])) {
                 if (!Validate::regex($params['password'], "/^[\S]{6,16}$/")) {
@@ -66,10 +73,6 @@ class Profile extends Adminbase
                 $data               = encrypt_password($params['password']);
                 $params['encrypt']  = $data['encrypt'];
                 $params['password'] = $data['password'];
-            }
-            $exist = AdminUser::where('email', $params['email'])->where('id', '<>', (int) $this->auth->id)->find();
-            if ($exist) {
-                $this->error('邮箱已经存在！');
             }
             if ($params) {
                 $admin = AdminUser::get($this->auth->id);
