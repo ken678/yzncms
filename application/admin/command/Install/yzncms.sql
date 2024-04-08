@@ -22,6 +22,7 @@ CREATE TABLE `yzn_admin` (
   `update_time` int(10) unsigned DEFAULT NULL COMMENT '更新时间',
   `last_login_ip` varchar(50) NOT NULL DEFAULT '' COMMENT '最后登录IP',
   `email` varchar(40) DEFAULT NULL COMMENT '电子邮箱',
+  `mobile` varchar(11) DEFAULT '' COMMENT '手机号码',
   `token` varchar(60) NOT NULL DEFAULT '' COMMENT 'Session标识',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
@@ -31,7 +32,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765,0,1546940765,1546940765, '127.0.0.1', '530765310@qq.com', '',1);
+INSERT INTO `yzn_admin` VALUES (1, 'admin', '9724b5e6c56b95f5723009ef81961bfe', 1, 'Wo0bAa', '御宅男', 1546940765,0,1546940765,1546940765, '127.0.0.1', '530765310@qq.com', '', '',1);
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`

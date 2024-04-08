@@ -36,7 +36,8 @@ layui.use('yznTable', function() {
                 { field: 'groups', width: 120, title: '所属角色', search:false},
                 { field: 'last_login_ip', title: '最后登录IP', searchOp: 'like'  },
                 { field: 'last_login_time', width: 200, title: '最后登录时间', search: 'range' },
-                { field: 'email',width: 200, title: 'E-mail', searchOp: 'like'  },
+                { field: 'email',width: 200, title: '邮箱', searchOp: 'like'  },
+                { field: 'mobile',width: 200, title: '手机', searchOp: 'like'  },
                 { field: 'nickname', title: '真实姓名', searchOp: 'like'  },
                 { width:100, title: '操作',templet: function (d){
                     if(d.id=={$userInfo.id}){
