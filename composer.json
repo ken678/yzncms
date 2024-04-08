@@ -16,12 +16,12 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "topthink/think-image": "^1.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.8",
         "overtrue/pinyin": "~4.0",
         "yansongda/pay": "^2.7",
-        "endroid/qr-code": "^3.5",
+        "endroid/qr-code": "^3.9.6",
         "nelexa/zip": "^3.3",
         "yzncms/think-helper": "^3.1",
         "yzncms/think-captcha": "^2.0",
