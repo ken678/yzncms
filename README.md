@@ -7,11 +7,13 @@
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
-## [插件清单]
+## [插件版权]
 
 - 插件可用于个人或企业自营网站或应用或为客户定制开发
 - 插件(包含免费和付费插件)禁止二次转售，复制和传播等形式分发插件源码
 - 插件不限制域名，不限授权期限，不限建站数量！
+
+## [插件清单]
 
 |  名称 | 简介  |价格　　|
 |---|---|---|
