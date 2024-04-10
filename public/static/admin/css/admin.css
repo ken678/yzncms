@@ -24,10 +24,8 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .panel_word span{ font-size:25px; display:block; height:34px; }
 .panel .loginTime{ font-size:15px; color:#1E9FFF; line-height:34px;}
 .panel em{ font-style:normal;}
-/*.layui-table-view{overflow: auto;}*/
-.layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px;position: relative;}
-.layui-table .layui-btn+.layui-btn {margin-left: 5px;}
 
+.layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px;position: relative;}
 .layui-table-tool .yzn-btn-primary{color: #fff; background-color: #2c3e50; }
 .layui-table-tool .layui-btn-sm i {font-size: 14px !important;}
 .layui-table-tool .layui-btn + .layui-btn {margin-left: 2px !important;}
@@ -83,26 +81,26 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .alert-info-light {background-color: #d9edf7; border-color: #c6e4f3; color: #3a87ad; }
 .alert-info-light a {color: #34789a; }
 
-.layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {border-color: #e6e6e6;}
-.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {background-color: #f2f2f2;}
-.layui-elem-quote{background-color: #f2f2f2;}
-
-.layui-form-label {width: 110px;}
-.layui-input-block {margin-left: 140px;max-width:70%;}
 /*即将废弃*/.layui-form-mid2{display: block; padding: 9px 0!important; line-height: 20px; margin-right: 10px; padding-left: 140px !important; }
 .layui-form-mid.no-float{float: none !important;margin-left: 140px !important;padding-bottom: 0 !important;}
 .layui-form-item-required:before {display: inline-block; margin-right: 4px; color: #f5222d; font-size: 14px; font-family: SimSun,sans-serif; line-height: 1; content: "*"; }
 .layui-form-item label.layui-form-label:after {content: ":"; position: relative; top: -.5px;margin-left: 2px;}
 .layui-badge {height: 22px;line-height: 22px;}
 
+/*重置layui样式*/
 .layui-btn-disabled, .layui-btn-disabled:active{pointer-events: none; }
 .layui-badge-rim, .layui-border, .layui-colla-content, .layui-colla-item, .layui-collapse, .layui-elem-field, .layui-form-pane .layui-form-item[pane], .layui-form-pane .layui-form-label, .layui-input, .layui-input-split, .layui-panel, .layui-quote-nm, .layui-select, .layui-tab-bar, .layui-tab-card, .layui-tab-title, .layui-tab-title .layui-this:after, .layui-textarea {
     border-color: #dcdfe6;
 }
-.layui-input[disabled], .layui-textarea[disabled] {
-    background-color: #eee;
-}
+.layui-input[disabled], .layui-textarea[disabled] {background-color: #eee;}
+.layui-table .layui-btn+.layui-btn {margin-left: 5px;}
+.layui-form-label {width: 110px;}
+.layui-input-block {margin-left: 140px;max-width:70%;}
+.layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {border-color: #e6e6e6;}
+.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {background-color: #f2f2f2;}
+.layui-elem-quote{background-color: #f2f2f2;}
 
+/*图片上传缩略图*/
 .file-item.thumbnail .file-panel {position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
 .file-item.thumbnail:hover .file-panel {top: 0; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
 .file-item.thumbnail { width: 100px; margin-right: 10px; text-align: center; display: block; margin-top: 15px; line-height: 100px; background-color: #fff;  display: inline-block;  }
