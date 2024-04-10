@@ -109,3 +109,9 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .file-item.thumbnail .info {display: none; }
 .file-item.thumbnail .file-panel i {font-size: 18px; color: #fff; width: 16px; height: 16px; line-height: 16px; z-index: 5; cursor: pointer; }
 .file-item.thumbnail .file-panel i.move-picture {cursor: move; }
+
+@media screen and (max-width: 768px) {
+    .layui-form-label {width: auto;float: none;text-align: left;padding: 9px 0px;}
+    .layui-input-block {margin-left: 0;max-width:100%;}
+    .layui-form-mid.no-float {margin-left: 0 !important;}
+}
