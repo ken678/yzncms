@@ -111,6 +111,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .file-item.thumbnail .file-panel i.move-picture {cursor: move; }
 
 @media screen and (max-width: 768px) {
+    /*即将废弃*/.layui-form-mid2{padding-left: 0px !important; }
     .layui-form-item .layui-form-label {width: auto;float: none;text-align: left;padding: 9px 0px;}
     .layui-form-item .layui-input-block {margin-left: 0;max-width:100%;}
     .layui-form-item .layui-input-inline {margin: 0 0 10px 0 !important;}
