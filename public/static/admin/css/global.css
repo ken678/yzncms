@@ -10,13 +10,13 @@ html, body, .layui-layout {height: 100%; }
 .pear-admin.banner-layout .layui-header {z-index: 99999; width: 100%; left: 0px; }
 .pear-admin.banner-layout .layui-header .layui-layout-left {left: 230px; }
 .pear-admin.banner-layout .layui-header .layui-logo .title {top: 2px; }
-.pear-admin.banner-layout .layui-header .layui-layout-control {display: inline-block; left: 370px; }
+.pear-admin.banner-layout .layui-header .layui-layout-control {display: inline-block; left: 355px; }
 .pear-admin.banner-layout .layui-header.dark-theme {box-shadow: 2px 0 6px rgb(0 21 41 / 35%); }
 .pear-admin .layui-header .layui-logo {display: none; }
 .pear-admin .layui-logo .title {font-size: 20px; }
 .pear-admin .layui-layout-right .layui-nav-child {border: 1px solid whitesmoke; border-radius: 4px; width: auto; left: auto; right: -23px; }
 .pear-admin .layui-header {left: 230px; width: calc(100% - 230px); background-color: white; border-bottom: 1px solid whitesmoke; }
-.pear-admin .layui-layout-control {left: 140px; position: absolute; }
+.pear-admin .layui-layout-control {left: 125px; position: absolute; }
 .pear-admin .layui-layout-control .layui-nav {padding: 0px; }
 .pear-admin .layui-logo {width: 230px; height: 59px; line-height: 59px; position: relative; background-color: #28333E; border-bottom: 1px solid rgba(0, 0, 0, .12); }
 .pear-admin .layui-logo img {width: 34px; height: 34px; }
@@ -195,8 +195,8 @@ html, body, .layui-layout {height: 100%; }
 .pear-nav-control.pc a {font-weight: 500; font-size: 14px; }
 .pear-nav-control.pc li{display: inline-block; }
 .pear-nav-control.pc .layui-nav-bar {top: 0px !important; }
-.pear-nav-control.pc .layui-this * {background-color: whitesmoke; }
-.pear-nav-control.pc *{color: darkslategray!important; }
+.pear-nav-control.pc .layui-this * {    background-color: #e4e4e4 !important;}
+.pear-nav-control.pc *{color: #565656 !important;}
 .pear-nav-control.pc .layui-nav-bar{display: none!important; }
 .pear-nav-control .layui-nav-child{border: 1px solid whitesmoke; border-radius: 6px; width: 150px; }
 
