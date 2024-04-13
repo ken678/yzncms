@@ -409,10 +409,10 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                 form.render();
                 $.each(newCols, function(ncI, ncV) {
                     if (ncV.search === 'range') {
-                        laydate.render({ range: true, type: ncV.timeType, elem: '[name="' + ncV.field + '"]' });
+                        laydate.render({ range: true, type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]' });
                     }
                     if (ncV.search === 'time') {
-                        laydate.render({ type: ncV.timeType, elem: '[name="' + ncV.field + '"]' });
+                        laydate.render({ type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]' });
                     }
                 });
             }
