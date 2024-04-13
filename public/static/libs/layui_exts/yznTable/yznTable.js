@@ -175,7 +175,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     extend: 'data-table-id="' + options.id + '"'
                 })
             }
-            options.even = options.even || true;
+            options.even = yzn.parame(options.even, true);
             // 判断是否为移动端
             if (yzn.checkMobile()) {
                 options.defaultToolbar = !options.search ? ['filter'] : ['filter', {
