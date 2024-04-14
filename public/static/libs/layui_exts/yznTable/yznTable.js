@@ -166,6 +166,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             options.search = yzn.parame(options.search, true);
             options.showSearch = yzn.parame(options.showSearch, true);
             options.searchFormVisible = yzn.parame(options.searchFormVisible, false);
+            options.searchFormTpl = yzn.parame(options.searchFormTpl || options.init.searchFormTpl, false);
             options.defaultToolbar = options.defaultToolbar || ['filter', 'print', 'exports'];
             if (options.search && options.showSearch) {
                 options.defaultToolbar.push({
@@ -197,9 +198,20 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
 
             // 初始化表格lay-filter
             $(options.elem).attr('lay-filter', options.layFilter);
+            
+            //自定义搜索
+            if (options.search === true && options.searchFormTpl !== false) {
+                data = options.tpldata || {}
+                laytpl($('#' + options.searchFormTpl).html()).render(data, function (html) {
+                     $(options.elem).before(html);
+                     yznTable.listenTableSearch(options.id);
+                })
+                // 初始化form表单
+                form.render();
+            }
 
             // 初始化表格搜索
-            if (options.search === true) {
+            if (options.search === true && options.searchFormTpl === false) {
                 yznTable.renderSearch(options.cols, options.elem, options.id, options.searchFormVisible);
             }
 
