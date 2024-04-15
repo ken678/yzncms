@@ -372,7 +372,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
                                 '<input type="hidden" class="operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.searchOp + '" readonly>\n' +
-                                '<input class="' + d.addClass + '" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
+                                '<input class="datetime ' + d.addClass + '" data-date-range="-" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '" value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
@@ -381,7 +381,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
-                                '<input class="' + d.addClass + '" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
+                                '<input class="datetime ' + d.addClass + '" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '</div>';
                             break;
@@ -400,7 +400,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                                 '</div>';
                             break;
                     }
-                    newCols.push(d);
+                    //newCols.push(d);
                 }
             });
             if (formHtml !== '') {
@@ -419,14 +419,6 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
 
                 // 初始化form表单
                 form.render();
-                $.each(newCols, function(ncI, ncV) {
-                    if (ncV.search === 'range') {
-                        laydate.render({ range: true, type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]' });
-                    }
-                    if (ncV.search === 'time') {
-                        laydate.render({ type: ncV.timeType, elem: '[name="' + ncV.fieldAlias + '"]' });
-                    }
-                });
             }
         },
         formatCols: function(cols, init) {
@@ -488,6 +480,13 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
         listenTableSearch: function(tableId) {
             var that = this;
             that.$commonsearch = $(".table-search-fieldset");
+
+            layui.define(['yznForm'], function(exports) {
+                var yznForm = layui.yznForm;
+                yznForm.bindevent(that.$commonsearch);
+
+            })
+
             form.on('submit(' + tableId + '_filter)', function(data) {
                 var searchQuery = yznTable.getSearchQuery(that, true);
                 table.reload(tableId, {
