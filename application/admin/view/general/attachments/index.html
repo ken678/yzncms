@@ -16,9 +16,8 @@
 {/block}
 {block name="script"}
 <script>
-layui.use(['yznTable','yznForm'], function() {
-    var table = layui.yznTable,
-        yznForm = layui.yznForm;
+layui.use('yznTable', function() {
+    var table = layui.yznTable;
 
     var init = {
         table_elem: '#currentTable',
@@ -51,7 +50,6 @@ layui.use(['yznTable','yznForm'], function() {
     });
 
     yznTable.bindevent();
-    yznForm.bindevent($("form.layui-form"));
 });
 </script>
 {/block}
