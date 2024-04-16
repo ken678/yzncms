@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1fea3b74a4395b1665b85607f0fc57ba648e0522',
+        'reference' => 'f88d46e6655c45f47ebdba8109cfc24ba5d5ac87',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -74,12 +74,12 @@
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(
-            'pretty_version' => '2.9.2',
-            'version' => '2.9.2.0',
+            'pretty_version' => '2.9.3',
+            'version' => '2.9.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
-            'reference' => '437cb3628f4cf6042cc10ae97fc2b8472e48ca1f',
+            'reference' => 'a30bfe2e142720dfa990d0a7e573997f5d884215',
             'dev_requirement' => false,
         ),
         'myclabs/php-enum' => array(
@@ -358,7 +358,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1fea3b74a4395b1665b85607f0fc57ba648e0522',
+            'reference' => 'f88d46e6655c45f47ebdba8109cfc24ba5d5ac87',
             'dev_requirement' => false,
         ),
         'topthink/think-image' => array(
@@ -394,7 +394,7 @@
             'type' => 'yzncms-framework',
             'install_path' => __DIR__ . '/../../thinkphp',
             'aliases' => array(),
-            'reference' => 'a90f81a9ca0dbd117291a8e233fc55e3a9a22e69',
+            'reference' => 'fd488de8b8a6b9bf109c97b7ef845f126e004c03',
             'dev_requirement' => false,
         ),
         'yzncms/think-addons' => array(

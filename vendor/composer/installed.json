@@ -584,17 +584,17 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.9.2",
-            "version_normalized": "2.9.2.0",
+            "version": "2.9.3",
+            "version_normalized": "2.9.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "437cb3628f4cf6042cc10ae97fc2b8472e48ca1f"
+                "reference": "a30bfe2e142720dfa990d0a7e573997f5d884215"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/437cb3628f4cf6042cc10ae97fc2b8472e48ca1f",
-                "reference": "437cb3628f4cf6042cc10ae97fc2b8472e48ca1f",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a30bfe2e142720dfa990d0a7e573997f5d884215",
+                "reference": "a30bfe2e142720dfa990d0a7e573997f5d884215",
                 "shasum": ""
             },
             "require": {
@@ -615,8 +615,8 @@
                 "mongodb/mongodb": "^1.8",
                 "php-amqplib/php-amqplib": "~2.4 || ^3",
                 "phpspec/prophecy": "^1.15",
-                "phpstan/phpstan": "^0.12.91",
-                "phpunit/phpunit": "^8.5.14",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^8.5.38 || ^9.6.19",
                 "predis/predis": "^1.1 || ^2.0",
                 "rollbar/rollbar": "^1.3 || ^2 || ^3",
                 "ruflin/elastica": "^7",
@@ -640,7 +640,7 @@
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
-            "time": "2023-10-27T15:25:26+00:00",
+            "time": "2024-04-12T20:52:51+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -673,7 +673,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.9.2"
+                "source": "https://github.com/Seldaek/monolog/tree/2.9.3"
             },
             "funding": [
                 {
@@ -2718,12 +2718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/framework.git",
-                "reference": "a90f81a9ca0dbd117291a8e233fc55e3a9a22e69"
+                "reference": "fd488de8b8a6b9bf109c97b7ef845f126e004c03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/framework/zipball/a90f81a9ca0dbd117291a8e233fc55e3a9a22e69",
-                "reference": "a90f81a9ca0dbd117291a8e233fc55e3a9a22e69",
+                "url": "https://api.github.com/repos/ken678/framework/zipball/fd488de8b8a6b9bf109c97b7ef845f126e004c03",
+                "reference": "fd488de8b8a6b9bf109c97b7ef845f126e004c03",
                 "shasum": ""
             },
             "require": {
@@ -2741,7 +2741,7 @@
                 "sebastian/phpcpd": "2.*",
                 "squizlabs/php_codesniffer": "2.*"
             },
-            "time": "2024-03-26T03:13:41+00:00",
+            "time": "2024-04-16T06:51:05+00:00",
             "type": "yzncms-framework",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
