@@ -1380,10 +1380,6 @@ class Request
 
         if (is_array($data)) {
             array_walk_recursive($data, [$this, 'filterValue'], $filter);
-            if (version_compare(PHP_VERSION, '7.1.0', '<')) {
-                // 恢复PHP版本低于 7.1 时 array_walk_recursive 中消耗的内部指针
-                $this->arrayReset($data);
-            }
         } else {
             $this->filterValue($data, $name, $filter);
         }
