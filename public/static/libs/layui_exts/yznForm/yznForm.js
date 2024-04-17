@@ -640,13 +640,26 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                         var ueditor = layui.ueditor;
                         $('.js-ueditor',layform).each(function() {
                             var ueditor_name = $(this).attr('id');
-                            ueditors[ueditor_name] = UE.getEditor(ueditor_name, {
+                            var simple_mode = yzn.parame($(this).data('simple-mode'), false);
+
+                            var config = {
                                 allowDivTransToP: false, //转换p标签
                                 initialFrameWidth: '100%',
                                 initialFrameHeight: 400, //初始化编辑器高度,默认320
                                 maximumWords: 50000, //允许的最大字符数
                                 serverUrl: GV.image_upload_url+'?from=ueditor',
-                            });
+                            }
+
+                            if (simple_mode) {
+                                // 如果是精简模式，设置精简的工具栏按钮
+                                config.toolbars = [
+                                    ['fullscreen', 'source', '|', 'undo', 'redo', '|','bold', 'italic', 'underline', 'pasteplain', '|', 
+                                     'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','paragraph', 'fontfamily', 'fontsize', '|', 
+                                     'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|','link','|','simpleupload', 'insertimage', 'insertvideo',
+                                     'attachment', 'insertframe', 'pagebreak', '|','horizontal','inserttable', '|', 'preview']
+                                ];
+                            }
+                            ueditors[ueditor_name] = UE.getEditor(ueditor_name, config);
                             $('#' + ueditor_name + 'grabimg',layform).click(function() {
                                 var con = ueditors[ueditor_name].getContent();
                                 $.post('/admin/general.attachments/getUrlFile', { 'content': con, 'type': 'images' },
