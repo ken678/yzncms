@@ -654,8 +654,8 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                                 // 如果是精简模式，设置精简的工具栏按钮
                                 config.toolbars = [
                                     ['fullscreen', 'source', '|', 'undo', 'redo', '|','bold', 'italic', 'underline', 'pasteplain', '|', 
-                                     'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|','paragraph', 'fontfamily', 'fontsize', '|', 
-                                     'indent', '|','justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|','link','|','simpleupload', 'insertimage', 'insertvideo',
+                                     'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|','paragraph', 'fontfamily', 'fontsize', '|', 
+                                     'indent', '|','justifyleft', 'justifycenter', 'justifyright','|','link','|','simpleupload', 'insertimage', 'insertvideo',
                                      'attachment', 'insertframe', 'pagebreak', '|','horizontal','inserttable', '|', 'preview']
                                 ];
                             }
