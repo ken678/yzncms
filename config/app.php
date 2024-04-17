@@ -20,9 +20,9 @@ return [
     // 应用地址
     'app_host'                => '',
     // 应用调试模式
-    'app_debug'               => Env::get('app.debug', true),
+    'app_debug'               => Env::get('app.debug', false),
     // 应用Trace
-    'app_trace'               => Env::get('app.trace', true),
+    'app_trace'               => Env::get('app.trace', false),
     // 应用模式状态
     'app_status'              => '',
     // 入口自动绑定模块
