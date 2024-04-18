@@ -13,12 +13,13 @@
                     {:token()}
 
                     {volist name="fieldList" id="vo"}
-                        <div data-favisible="{$vo.visible|default=''}">
-                            <div class="layui-form-item">
-                                {switch name="vo.type"}
+                    <div data-favisible="{$vo.visible|default=''}">
+                        <div class="layui-form-item">
+                            {switch name="vo.type"}
                                 {case value="hidden"}
                                 {if $vo.value}<input {$vo.extend_html|raw} type="hidden" class="form-control" name="{$vo.fieldArr}[{$vo.name}]"  value="{$vo.value}">{/if}
                                 {/case}
+
                                 {case value="text"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -26,6 +27,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="password"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -33,6 +35,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="tags"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -40,6 +43,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="number"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -47,6 +51,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="switch"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -54,6 +59,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="array"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <dl {$vo.extend_html|raw} class="layui-input-block fieldlist" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}">
@@ -65,7 +71,6 @@
                                     <textarea name="{$vo.fieldArr}[{$vo.name}]" class="layui-textarea layui-hide">{$vo.value}</textarea>
                                 </dl>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
-
                                 <script type="text/html" id="{$vo.name}Tpl">
                                     <dd class="layui-form-item rules-item">
                                         {{# layui.each(d.lists, function(index, item) { }}
@@ -77,6 +82,7 @@
                                     </dd>
                                 </script>
                                 {/case}
+
                                 {case value="checkbox"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -86,6 +92,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="radio"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -94,6 +101,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="select"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -106,6 +114,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="selects"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -113,6 +122,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="selectpage"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -120,6 +130,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="color"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -132,6 +143,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="datetime"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -139,6 +151,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="datetimerange"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -146,6 +159,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="textarea"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -153,6 +167,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="image" break="0"}{/case}
                                 {case value="images"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
@@ -165,6 +180,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="file" break="0"}{/case}
                                 {case value="files"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
@@ -176,6 +192,7 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="Ueditor"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -187,6 +204,7 @@
                                     <a class="layui-btn layui-btn-sm" id="{$vo.name}filterword" style="margin-top: 4px;">检测违禁词</a>
                                 </div>
                                 {/case}
+
                                 {case value="city"}
                                 <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                                 <div class="layui-input-block">
@@ -194,15 +212,17 @@
                                 </div>
                                 {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
                                 {/case}
+
                                 {case value="custom"}
                                    {$vo.options|raw}
                                 {/case}
+
                                 {case value="markdown"}
                                     {:hook('markdown',$vo)}
                                 {/case}
-                                {/switch}
-                            </div>
+                            {/switch}
                         </div>
+                    </div>
                     {/volist}
 
                     {if count($fieldList)}
