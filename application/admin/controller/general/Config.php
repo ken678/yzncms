@@ -35,13 +35,13 @@ class Config extends Adminbase
     public function index($group = 'base')
     {
         if ($this->request->isAjax()) {
-            $_list = $this->modelClass->view('config', 'id,name,title,type,listorder,status,update_time')
+            $list = $this->modelClass->view('config')
                 ->where('group', $group)
                 ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
                 ->order('listorder,id desc')
                 ->select();
-            $result = ["code" => 0, "data" => $_list];
-            return json($result);
+
+            return json(["code" => 0, "data" => $list]);
         } else {
             $this->assign('group', $group);
             return $this->fetch();
