@@ -40,7 +40,7 @@ class Config extends Adminbase
                 ->view('field_type', 'title as ftitle', 'field_type.name=config.type', 'LEFT')
                 ->order('listorder,id desc')
                 ->select();
-            $result = array("code" => 0, "data" => $_list);
+            $result = ["code" => 0, "data" => $_list];
             return json($result);
         } else {
             $this->assign('group', $group);
@@ -98,7 +98,7 @@ class Config extends Adminbase
             $configList = ConfigModel::where('group', $group)
                 ->where('status', 1)
                 ->order('listorder,id desc')
-                ->column('name,title,remark,type,value,options,visible');
+                ->select();
             foreach ($configList as &$value) {
                 $value['fieldArr'] = 'row';
                 if ($value['type'] == 'custom') {
@@ -136,7 +136,7 @@ class Config extends Adminbase
             $this->token();
             $params = $this->request->post("row/a");
             if ($params) {
-                $result             = $this->validate($params, 'app\admin\validate\Config');
+                $result = $this->validate($params, 'app\admin\validate\Config');
                 if (true !== $result) {
                     return $this->error($result);
                 }
@@ -179,7 +179,7 @@ class Config extends Adminbase
             $this->token();
             $params = $this->request->post("row/a");
             if ($params) {
-                $result             = $this->validate($params, 'app\admin\validate\Config');
+                $result = $this->validate($params, 'app\admin\validate\Config');
                 if (true !== $result) {
                     return $this->error($result);
                 }

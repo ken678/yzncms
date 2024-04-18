@@ -18,8 +18,23 @@ use think\Model;
 
 class Config extends Model
 {
+    // 追加属性
+    protected $append = [
+        'extend_html',
+    ];
+
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
+
+    public function getExtendHtmlAttr($value, $data)
+    {
+        $result = preg_replace_callback("/\{([a-zA-Z]+)\}/", function ($matches) use ($data) {
+            if (isset($data[$matches[1]])) {
+                return $data[$matches[1]];
+            }
+        }, $data['extend']);
+        return $result;
+    }
 
     /**
      * 刷新配置文件
