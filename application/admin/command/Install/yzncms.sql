@@ -308,6 +308,7 @@ CREATE TABLE `yzn_model_field` (
   `pattern` varchar(255) NOT NULL DEFAULT '' COMMENT '数据校验正则',
   `errortips` varchar(255) NOT NULL DEFAULT '' COMMENT '数据校验未通过的提示信息',
   `type` varchar(20) NOT NULL DEFAULT '' COMMENT '字段类型',
+  `extend` varchar(255) DEFAULT '' COMMENT '扩展信息',
   `setting` mediumtext NULL COMMENT '字段配置',
   `ifsystem` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否主表字段 1 是',
   `iscore` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否内部字段',
