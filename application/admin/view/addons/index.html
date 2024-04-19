@@ -494,6 +494,15 @@ layui.use(['yznTable','table','laytpl','yzn','notice','element','dropdown','form
                         install(name, version, true);
                     }
                 });
+            } else if (res && res.code === 401) {
+                yzn.cache.setStorage('yzncms_userinfo','');
+                layer.alert('登录已经失效，请重新登录后操作！', {
+                    title: '温馨提示',
+                    btn: ['立即登录'],
+                    yes: function (index, layero) {
+                        $(".btn-userinfo").trigger("click");
+                    },
+                });
             } else {
                 layer.alert(res.msg, {title: '温馨提示', icon: 0});
             }
