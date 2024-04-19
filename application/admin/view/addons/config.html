@@ -17,18 +17,18 @@
             {switch name="form.type"}
                 {case value="text"}
                 <div class="layui-input-block">
-                    <input type="text" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                    <input {$form.extend|raw} type="text" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                 </div>
                 {/case}
 
                 {case value="password"}
                 <div class="layui-input-block">
-                    <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                    <input {$form.extend|raw} type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                 </div>
                 {/case}
 
                 {case value="array"}
-                <dl class="layui-input-block fieldlist" data-name="config[{$form.name}]" data-id="{$form.name}">
+                <dl {$form.extend|raw} class="layui-input-block fieldlist" data-name="config[{$form.name}]" data-id="{$form.name}">
                     <dd>
                         <ins>键名</ins>
                         <ins>键值</ins>
@@ -56,18 +56,6 @@
                 </div>
                 {/case}
 
-                {case value="textarea"}
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$form.name}]">{$form.value}</textarea>
-                </div>
-                {/case}
-
-                {case value="password"}
-                <div class="layui-input-block">
-                    <input type="password" name="config[{$form.name}]" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
-                </div>
-                {/case}
-
                 {case value="radio"}
                 <div class="layui-input-block">
                     {foreach name="form.options" item="opt" key="opt_k"}
@@ -84,6 +72,12 @@
                         <option value="{$opt_k}" {eq name="form.value" value="$opt_k"}selected{/eq}>{$opt}</option>
                         {/foreach}
                     </select>
+                </div>
+                {/case}
+
+                {case value="textarea"}
+                <div class="layui-input-block">
+                    <textarea {$form.extend|raw} placeholder="请输入{$form.title}" class="layui-textarea" name="config[{$form.name}]">{$form.value}</textarea>
                 </div>
                 {/case}
 
@@ -110,7 +104,7 @@
 
                 {case value="Ueditor"}
                 <div class="layui-input-block">
-                    <script type="text/plain" class="js-ueditor" id="{$form.name}" name="config[{$form.name}]">{$form.value|raw}</script>
+                    <script {$form.extend|raw} type="text/plain" class="js-ueditor" id="{$form.name}" name="config[{$form.name}]">{$form.value|raw}</script>
                 </div>
                 {/case}
             {/switch}
