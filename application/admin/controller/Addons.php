@@ -146,6 +146,7 @@ class Addons extends Adminbase
         }
         $tips = [];
         foreach ($config as $index => &$item) {
+            $item['extend'] = $item['extend'] ?? '';
             if ($item['name'] == '__tips__') {
                 $tips = $item;
                 unset($config[$index]);
