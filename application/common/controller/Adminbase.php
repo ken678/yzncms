@@ -312,12 +312,9 @@ class Adminbase extends Base
         if (!empty($this->modelClass)) {
             $this->modelClass->alias($alias);
         }
-        $model = $this->modelClass;
-        $where = function ($query) use ($where, $alias, $bind, &$model) {
-            if (!empty($model)) {
-                $model->alias($alias);
-                //$model->bind($bind);
-            }
+        $where = function ($query) use ($where, $alias, $bind) {
+            $query->alias($alias);
+
             foreach ($where as $k => $v) {
                 if (is_array($v)) {
                     call_user_func_array([$query, 'where'], $v);
