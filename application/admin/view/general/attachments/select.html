@@ -30,7 +30,7 @@ layui.use(['yznTable','yzn','table','yznForm','yznUpload'], function() {
         id: 'dataTable',
         toolbar: ['refresh'
         , [{
-            html: '<button type="button" class="layui-btn layui-btn-sm faupload" data-multiple="false" data-type="{$mimetype}"><i class="layui-icon layui-icon-upload"></i> 上传</button>'
+            html: '<button type="button" class="layui-btn layui-btn-sm faupload" data-multiple="true" data-type="{$mimetype}"><i class="layui-icon layui-icon-upload"></i> 上传</button>'
         }]
         {if $Think.get.multiple == "true"}
         , [{
