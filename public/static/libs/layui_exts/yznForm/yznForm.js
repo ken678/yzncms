@@ -196,7 +196,7 @@ layui.define(['layer', 'form', 'yzn', 'table', 'notice', 'element','yznUpload'],
                                         }
                                     }
                                     inputObj.val(result).trigger("change");
-                                } else {
+                                } else if (input_id) {
                                     $("#" + input_id).val(data.url).trigger("change");
                                 }
                             }
