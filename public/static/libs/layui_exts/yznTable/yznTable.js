@@ -947,7 +947,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
             },
             image: function(data) {
                 var that = this;
-                that.imageWidth = that.imageWidth || 80;
+                that.imageWidth = that.imageWidth || 30;
                 that.imageHeight = that.imageHeight || 30;
                 that.imageSplit = that.imageSplit || ',';
                 that.imageJoin = that.imageJoin || ' ';
@@ -963,14 +963,14 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     return '';
                 } else {
                     var valuesHtml = [];
-                    valuesHtml.push('<img style="max-width: ' + that.imageWidth + 'px; max-height: ' + that.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                    valuesHtml.push('<img style="width: ' + that.imageWidth + 'px; height: ' + that.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
 
                     return valuesHtml.join(that.imageJoin);
                 }
             },
             images: function (data) {
                 var that = this;
-                that.imageWidth = that.imageWidth || 80;
+                that.imageWidth = that.imageWidth || 30;
                 that.imageHeight = that.imageHeight || 30;
                 that.imageSplit = that.imageSplit || ',';
                 that.imageJoin = that.imageJoin || ' ';
@@ -988,7 +988,7 @@ layui.define(['form', 'table', 'yzn', 'laydate', 'laytpl', 'element','notice'], 
                     var values = value.split(that.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + that.imageWidth + 'px; max-height: ' + that.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                        valuesHtml.push('<img style="width: ' + that.imageWidth + 'px; height: ' + that.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
                     });
                     return valuesHtml.join(that.imageJoin);
                 }
