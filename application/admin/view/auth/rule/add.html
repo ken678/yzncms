@@ -39,7 +39,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">图标</label>
         <div class="layui-input-block">
-            <input type="text" id="iconPicker" lay-filter="iconPicker" class="hide" name="row[icon]">
+            <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-hide" name="row[icon]">
         </div>
     </div>
     <div class="layui-form-item">
@@ -98,10 +98,6 @@ layui.use(['iconPicker', 'form', 'layer','yznForm'], function() {
         $ = layui.$,
         yznForm = layui.yznForm;
         yznForm.bindevent($("form.layui-form"));
-        iconPicker.render({
-            elem: '#iconPicker4',
-            type: 'fontClass'
-        });
 
         iconPicker.render({
             // 选择器，推荐使用input
