@@ -1,2 +1,0 @@
-<input id="{%fieldName%}-0" name="{%fieldName%}" type="radio" value="1" title="ON" {eq name="{%fieldValue%}" value="1" }checked{/eq} />
-<input id="{%fieldName%}-1" name="{%fieldName%}" type="radio" value="0" title="OFF" {eq name="{%fieldValue%}" value="0" }checked{/eq} />

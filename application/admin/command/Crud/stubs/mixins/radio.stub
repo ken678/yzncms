@@ -1,7 +1,0 @@
-
-    public function {%methodName%}($value, $data)
-    {
-        $value = $value ?: ($data['{%field%}'] ?? '');
-        $list = $this->{%listMethodName%}();
-        return $list[$value] ?? '';
-    }

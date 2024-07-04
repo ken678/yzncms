@@ -1,6 +1,0 @@
-.idea
-.vscode
-*.log
-composer.lock
-/runtime/*
-/templates/

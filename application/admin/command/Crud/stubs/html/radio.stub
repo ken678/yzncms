@@ -1,3 +1,0 @@
-{foreach name="{%fieldList%}" item="vo"}
-            <input id="{%fieldName%}-{$key}" name="{%fieldName%}" type="radio" value="{$key}" title="{$vo}" {in name="key" value="{%selectedValue%}"}checked{/in} />
-            {/foreach}
