@@ -188,6 +188,7 @@ class Addon extends Backend
      */
     public function install()
     {
+        $this->error('开发版本请使用根目录的插件压缩包本地安装，在线市场2.0正式版发布后方可使用');
         Adminlog::setTitle('插件安装');
         $name  = $this->request->param('name');
         $force = $this->request->param("force/d");
