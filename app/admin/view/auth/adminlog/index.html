@@ -1,0 +1,12 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">管理日志</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable" 
+        data-auth-delete="{:$auth->check('auth.adminlog/deletelog')}"
+        data-auth-detail="{:$auth->check('auth.adminlog/detail')}"
+        ></table>
+    </div>
+</div>
+{/block}

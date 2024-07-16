@@ -1,0 +1,82 @@
+{extend name="index_layout"/}
+{block name="main"}
+<style>
+    .profile-avatar-container {
+        position:relative;
+        width:100px;
+    }
+    .profile-avatar-container .profile-user-img{
+        width:88px;
+        height:88px;
+    }
+    .profile-avatar-container .profile-avatar-text {
+        display:none;
+    }
+    .profile-avatar-container:hover .profile-avatar-text {
+        display:block;
+        position:absolute;
+        height:100px;
+        width:100px;
+        background:#444;
+        opacity: .6;
+        color: #fff;
+        top:0;
+        left:0;
+        line-height: 100px;
+        text-align: center;
+    }
+    .profile-avatar-container button{
+        position:absolute;
+        top:0;left:0;width:100px;height:100px;opacity: 0;
+    }
+    .img-circle {
+    border-radius: 50%;
+}
+.profile-user-img {
+    margin: 0 auto;
+    width: 100px;
+    padding: 3px;
+    border: 3px solid #d2d6de;
+}
+</style>
+<div class="layui-card pd-20 no-shadow">
+    <div class="layui-card-header fly-title">
+        <h2>基本设置</h2>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-tab" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                <li lay-id="info"><a href="{:url('profile')}">我的资料</a></li>
+                <li class="layui-this" lay-id="pass"><a href="{:url('changepwd')}">密码</a></li>
+            </ul>
+            <div class="layui-tab-content">
+                <form id="changepwd-form" class="layui-form" method="post" style="width:450px;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">旧密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="oldpassword" required="" lay-verify="required" autocomplete="off" class="layui-input" lay-affix="eye">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">新密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="newpassword" required="" lay-verify="required" autocomplete="off" class="layui-input" lay-affix="eye">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">确认密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="renewpassword" required="" lay-verify="required" autocomplete="off" class="layui-input" lay-affix="eye">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn">确认修改</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

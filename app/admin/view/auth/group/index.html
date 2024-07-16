@@ -1,0 +1,14 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">角色管理</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"
+            data-auth-add="{:$auth->check('auth.group/add')}"
+            data-auth-edit="{:$auth->check('auth.group/edit')}"
+            data-auth-delete="{:$auth->check('auth.group/del')}" ></table>
+        </div>
+    </div>
+</div>
+{/block}

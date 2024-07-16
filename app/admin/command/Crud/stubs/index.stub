@@ -1,0 +1,16 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">{%tableComment%}</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"
+                data-auth-add="{:$auth->check('{%controllerUrl%}/add')}" 
+                data-auth-edit="{:$auth->check('{%controllerUrl%}/edit')}"
+                data-auth-delete="{:$auth->check('{%controllerUrl%}/del')}"
+                data-auth-recyclebin="{:$auth->check('{%controllerUrl%}/recyclebin')}"
+                ></table>
+        </div>
+    </div>
+</div>
+{/block}

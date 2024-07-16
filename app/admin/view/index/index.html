@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="common/meta" /}
+    <link href="__CDN__/assets/libs/pear/pear.css?v={$Think.config.site.version}" rel="stylesheet">
+</head>
+<!-- 结 构 代 码 -->
+
+<body class="layui-layout-body pear-admin">
+    <!-- 布 局 框 架 -->
+    <div class="layui-layout layui-layout-admin">
+        <!-- 顶 部 样 式 -->
+        <div class="layui-header">
+            <!-- 菜 单 顶 部 -->
+            <div class="layui-logo">
+                <!-- 图 标 -->
+                <div class="logo"><i class="layui-icon layui-icon-component"></i></div>
+                <!-- 标 题 -->
+                <span class="title">{$site.name}</span>
+            </div>
+            <!-- 顶 部 左 侧 功 能 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="collapse layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
+                <li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1" loading=600></a></li>
+            </ul>
+            <!-- 多 系 统 菜 单 -->
+            <div id="control" class="layui-layout-control"></div>
+            <!-- 顶 部 右 侧 菜 单 -->
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item layui-hide-xs"><a href="{$Think.ROOT_URL}" target="_blank" class="layui-icon layui-icon-website"></a></li>
+                <!-- <li class="layui-nav-item layui-hide-xs"><a href="#" class="menuSearch layui-icon layui-icon-search"></a></li> -->
+                <li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
+                <li class="layui-nav-item"><a href="javascript:;"><i class="iconfont icon-delete-bin-line" title="清空缓存"></i></a>
+                    <dl class="layui-nav-child" id="deletecache">
+                        <dd><a href="javascript:;" data-type="all">一键清理缓存<span class="layui-badge-dot"></span></a></dd>
+                        <hr>
+                        <dd><a href="javascript:;" data-type="data">清理数据缓存</a></dd>
+                        <!-- <dd><a href="javascript:;" data-type="template">清理模板缓存</a></dd> -->
+                        <dd><a href="javascript:;" data-type="addons">清理插件缓存</a></dd>
+                        <dd><a href="javascript:;" data-type="browser">清除浏览器缓存</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item user">
+                    <!-- 头 像 -->
+                    <a href="javascript:;"><img src="__CDN__/assets/img/avatar.png" class="layui-nav-img userAvatar" width="35" height="35">{$admin.username}</a>
+                    <!-- 功 能 菜 单 -->
+                    <dl class="layui-nav-child">
+                        <dd><a user-menu-url="{:url('general.profile/index')}" user-menu-id="3" user-menu-title="个人资料"><i class="iconfont icon-user-line"></i>&nbsp;个人资料</a></dd>
+                        <dd><a href="javascript:void(0);" class="logout"><i class="iconfont icon-logout-box-r-line"></i>&nbsp;注销登录</a></dd>
+                    </dl>
+                </li>
+                <!-- 主 题 配 置 -->
+                <li class="layui-nav-item setting"><a href="#" class="layui-icon layui-icon-more-vertical"></a></li>
+            </ul>
+        </div>
+        <!-- 侧 边 区 域 -->
+        <div class="layui-side layui-bg-black">
+            <!-- 菜 单 顶 部 -->
+            <div class="layui-logo">
+                <!-- 图 标 -->
+                <div class="logo"><i class="layui-icon layui-icon-component"></i></div>
+                <!-- 标 题 -->
+                <span class="title">{$site.name}</span>
+            </div>
+            <!-- 菜 单 内 容 -->
+            <div class="layui-side-scroll">
+                <div class="sider-search menuSearch">
+                    <div class="search-input">
+                        <span class="search-text">搜索菜单</span>
+                        <div class="search-icon"><i class="layui-icon layui-icon-search"></i></div>
+                    </div>
+                </div>
+                <div id="sideMenu"></div>
+            </div>
+        </div>
+        <!-- 视 图 页 面 -->
+        <div class="layui-body">
+            <!-- 内 容 页 面 -->
+            <div id="content"></div>
+        </div>
+        <!-- 页脚 -->
+        <div class="layui-footer layui-text">
+            <span class="left">
+                <strong>Copyright © 2017-{:date("Y")}&nbsp;<a href="https://www.yzncms.com/">YznCMS</a>.</strong>&nbsp;All rights reserved.
+            </span>
+            <span class="center"></span>
+            <span class="right">
+                <b>Version</b>&nbsp;{$Think.config.version.yzncms_version}
+            </span>
+        </div>
+        <!-- 遮 盖 层 -->
+        <div class="pear-cover"></div>
+        <!-- 加 载 动 画 -->
+        <div class="loader-main">
+            <!-- 动 画 对 象 -->
+            <div class="loader"></div>
+        </div>
+    </div>
+    <!-- 移 动 端 便 捷 操 作 -->
+    <div class="pear-collapsed-pe collapse">
+        <a href="#" class="layui-icon layui-icon-shrink-right"></a>
+    </div>
+    <!-- 依 赖 脚 本 -->
+    {include file="common/script" /}
+</body>
+
+</html>

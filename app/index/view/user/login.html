@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {include file="common/meta" /}
+<style>
+html,body{background: #f4f6f8;overflow-x: inherit;}
+</style>
+</head>
+
+<body>
+    <div id="mydiv">
+        <div class="login-main">
+            <div class="layui-elip">会员登录</div>
+            <form class="layui-form" action="{:url('login')}">
+                <!--@MemberRegisterFormBegin-->
+                <input type="hidden" name="forward" value="{$forward}" />
+                {:token_field()}
+                <div class="layui-form-item">
+                    <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                            <label class="layui-icon layui-icon-username"></label>
+                        </div>
+                        <input type="text" name="account" lay-verify="required" autocomplete="off" placeholder="账号/手机/邮箱" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                            <label class="layui-icon layui-icon-password"></label>
+                        </div>
+                        <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input" lay-affix="eye">
+                    </div>
+                </div>
+                <!--@CaptchaBegin-->
+                {eq name=":config('yzn.user_login_captcha')" value="1"}
+                <div class="layui-form-item">
+                    <div class="layui-input-wrap verify-box">
+                        <div class="layui-input-prefix">
+                            <label class="layui-icon layui-icon-vercode"></label>
+                        </div>
+                        <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
+                        <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
+                    </div>
+                </div>
+                {/eq}
+                <!--@CaptchaEnd-->
+                <div class="layui-form-item">
+                    <input type="checkbox" name="keeplogin" lay-skin="primary" title="保持会话" value="1" checked>
+                    <a href="{:url('forget')}" class="lay-user-jump-change lay-link" style="margin-top: 7px;">忘记密码？</a>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline login-btn">
+                        <button class="layui-btn" lay-submit>登录</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-trans layui-form-item lay-user-login-other">
+                        {:hook('sync_login')}
+                        <a href="{:url('register')}" class="lay-user-jump-change lay-link">注册帐号</a>
+                    </div>
+                </div>
+                <!--@MemberRegisterFormEnd-->
+            </form>
+        </div>
+    </div>
+    {include file="common/script" /}
+</body>
+
+</html>

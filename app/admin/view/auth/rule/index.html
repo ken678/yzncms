@@ -1,0 +1,23 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">菜单管理</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-table-tool-temp">
+        <button lay-event="btn-refresh" class="layui-btn layui-btn-sm yzn-btn-primary btn-refresh" data-table-refresh="currentTable"><i class="iconfont icon-loop-left-line"></i></button>
+        <button lay-event="btn-add" class="layui-btn layui-btn-sm {:$auth->check('auth.rule/add')?'':'layui-hide'}" href="{:url('add')}" title="添加"><i class="iconfont icon-add-line"></i>&nbsp;新增后台菜单</button>
+        <button class="layui-btn layui-btn-sm layui-btn-normal" id="openAll"><i class="iconfont icon-add-fill"></i>&nbsp;展开或折叠全部</button>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+    <button href='{:url("add")}?parentid={{ d.id }}' class="layui-btn layui-btn-xs layui-btn-normal btn-dialog {:$auth->check('auth.rule/add')?'':'layui-hide'}" title="添加">添加</button>
+    <button class="layui-btn layui-btn-xs {:$auth->check('auth.rule/edit')?'':'layui-hide'}" title="编辑" lay-event='btn-editone'><i class='iconfont icon-edit-2-line'></i></button>
+    <button class="layui-btn layui-btn-danger layui-btn-xs {:$auth->check('auth.rule/del')?'':'layui-hide'}" lay-event='btn-delone'><i class='iconfont icon-delete-bin-line'></i></button>
+</script>
+{/block}

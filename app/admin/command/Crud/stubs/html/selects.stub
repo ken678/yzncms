@@ -1,0 +1,1 @@
+<div class="form-selects" data-name="{%fieldName%}" data-id="{%field%}" data-value="{%selectedValue%}" data-list="{%fieldList%}"></div>

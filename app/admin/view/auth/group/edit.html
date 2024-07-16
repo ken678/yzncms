@@ -1,0 +1,47 @@
+{extend name="index_layout"/}
+{block name="main"}
+<form class="layui-form" method="post">
+    {:token_field()}
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级</label>
+        <div class="layui-input-block">
+            {:Form::select('row[parentid]',$groupdata,$data['parentid'],["lay-verify"=>"required","lay-filter"=>"parentid", 'data-id'=>$data['id'], 'data-pid'=>$data['parentid']])}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限组</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="权限组" class="layui-input" value="{$data.title}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea name="row[description]" placeholder="权限的相关描述" class="layui-textarea">{$data.description}</textarea>
+        </div>
+    </div>
+    <input type="hidden" name="row[rules]" value="{$data.rules}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[status]" value="1" title="正常" {eq name="data.status" value="1" }checked{/eq}>
+            <input type="radio" name="row[status]" value="0" title="禁用" {eq name="data.status" value="0" }checked{/eq}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="" title="选中全部" lay-filter="checkall">
+            <input type="checkbox" name="" title="展开全部" lay-filter="expandall">
+
+            <div id="treeview"></div>
+        </div>
+    </div>
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+{/block}

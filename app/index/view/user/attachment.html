@@ -1,0 +1,13 @@
+{extend name="index_layout"/}
+{block name="main"}
+<style type="text/css">
+.body { margin-top: 0;}
+.fly-header,.fly-aside,.fly-footer{display: none;}
+.fly-user-main>.fly-panel{width: 100%}
+.fly-user-main{width: 100%;margin: 0;    padding: 20px;}
+</style>
+<table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+<script type="text/html" id="barTool">
+    <a data-href='{{d.path}}' class="layui-btn layui-btn-danger layui-btn-xs btn-chooseone"><i class="iconfont icon-right"></i> 选择</a>
+</script>
+{/block}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {include file="common/meta" /}
+<style>
+html,body{background: #f4f6f8;overflow-x: inherit;}
+</style>
+</head>
+
+<body>
+    <div id="mydiv">
+        <div class="login-main">
+            <div class="layui-elip">密码忘记</div>
+            <form class="layui-form" action="{:url('forget')}">
+                {:token_field()}
+                <div class="layui-form-item">
+                    <div class="layui-input-wrap">
+                        <div class="layui-form-field-label">
+                            <input type="radio" name="type" value="email" title="通过邮箱" checked lay-filter="type" data-send-url="{:url('api/ems/send')}">
+                            <input type="radio" name="type" value="mobile" title="通过手机重置" lay-filter="type" data-send-url="{:url('api/sms/send')}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" data-type="email">
+                    <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                            <label class="layui-icon layui-icon-email"></label>
+                        </div>
+                        <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide" data-type="mobile">
+                    <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                            <label class="layui-icon layui-icon-cellphone" for="phone"></label>
+                        </div>
+                        <input type="text" name="mobile" lay-verify="" autocomplete="off" placeholder="手机号" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs7">
+                            <div class="layui-input-wrap">
+                                <div class="layui-input-prefix">
+                                     <label class="layui-icon layui-icon-vercode"></label>
+                                </div>
+                                <input type="text" name="captcha" lay-verify="required" autocomplete="off" placeholder="验证码" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-xs5">
+                            <div style="margin-left: 11px;">
+                                <button class="layui-btn btn-captcha layui-btn-primary layui-border-green" type="button" data-event="resetpwd" data-type="email" data-url="{:url('api/ems/send')}">获取验证码</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                    <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                            <label class="layui-icon layui-icon-password"></label>
+                        </div>
+                        <input type="password" name="newpassword" lay-verify="required" autocomplete="off" placeholder="新密码" class="layui-input" lay-affix="eye">
+                    </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline login-btn">
+                        <button class="layui-btn" lay-submit>确定</button>
+                    </div>
+                </div>
+                <div class="layui-trans layui-form-item layadmin-user-login-other">
+                    <a href="{:url('login')}" class="layadmin-user-jump-change lay-link">用已有帐号登入</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {include file="common/script" /}
+</body>
+
+</html>

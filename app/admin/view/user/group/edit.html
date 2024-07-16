@@ -1,0 +1,72 @@
+{extend name="index_layout"/}
+{block name="main"}
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员组名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[name]" lay-verify="required" autocomplete="off" placeholder="会员组名称" class="layui-input" value="{$data.name}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">积分小于</label>
+        <div class="layui-input-block">
+            <input type="number" name="row[point]" min="0" lay-verify="required" autocomplete="off" placeholder="积分小于" class="layui-input" value="{$data.point}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">星星数</label>
+        <div class="layui-input-block">
+            <input type="number" name="row[starnum]" min="0" max="99" lay-verify="required" autocomplete="off" placeholder="星星数" class="layui-input" value="{$data.starnum}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户权限</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="row[allowpost]" title="允许投稿" lay-skin="primary" value="1" {eq name="data.allowpost" value="1"}checked{/eq}>
+            <input type="checkbox" name="row[allowpostverify]" title="投稿不需审核" lay-skin="primary" value="1" {eq name="data.allowpostverify" value="1"}checked{/eq}>
+            <input type="checkbox" name="row[allowsendmessage]" title="允许发短消息" lay-skin="primary" value="1" {eq name="data.allowsendmessage" value="1"}checked{/eq}>
+            <input type="checkbox" name="row[allowattachment]" title="允许上传附件" lay-skin="primary" value="1" {eq name="data.allowattachment" value="1"}checked{/eq}>
+            <input type="checkbox" name="row[allowsearch]" title="搜索权限" lay-skin="primary" value="1" {eq name="data.allowsearch" value="1"}checked{/eq}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">最大短消息数</label>
+        <div class="layui-input-block">
+            <input type="number" name="row[allowmessage]" min="0" lay-verify="required" autocomplete="off" placeholder="最大短消息数" class="layui-input" value="{$data.allowmessage}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">日最大投稿数</label>
+        <div class="layui-input-block">
+            <input ttype="number" name="row[allowpostnum]" min="0" lay-verify="required" autocomplete="off" placeholder="日最大投稿数" class="layui-input" value="{$data.allowpostnum}">
+        </div>
+        <div class="layui-form-mid no-float layui-word-aux">0为不限制</div>
+    </div>
+    <div class="layui-form-item web_seo">
+        <label class="layui-form-label">用户组简介</label>
+        <div class="layui-input-block">
+            <textarea name="row[description]" placeholder="栏目简介" class="layui-textarea">{$data.description}</textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">用户组图标</label>
+        <div class="layui-input-block">
+            {:Form::image("row[icon]",$data['icon'])}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="row[status]" value="1" title="正常" {if $data.status==1}checked{/if}>
+            <input type="radio" name="row[status]" value="0" title="禁止" {if $data.status==0}checked{/if}>
+        </div>
+    </div>
+    <input type="hidden" name="row[id]" value="{$data.id}">
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+{/block}

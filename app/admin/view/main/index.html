@@ -1,0 +1,117 @@
+{extend name="index_layout"/}
+{block name="main"}
+{notempty name="default_pass"}
+<div class="alert alert-danger-light">
+    安全提示：超级管理员默认密码未修改，建议马上修改。
+</div>
+{/notempty}
+{if env('APP_DEBUG')}
+<div class="alert alert-danger-light">
+    安全提示：当前网站【调试模式】开启中，强烈建议在正式部署后关闭调试模式
+</div>
+{/if}
+{if preg_match('/\/admin\/|\/admin\.php/i', url())}
+<div class="alert alert-danger-light">
+    安全提示：为了你的后台安全，请勿将后台管理入口设置为admin或admin.php
+</div>
+{/if}
+<div class="alert alert-success-light">
+    <div id="nowTime"></div>
+</div>
+<div class="layui-row layui-col-space10 panel_box">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="https://www.kancloud.cn/ken678/yzncms2_0" target="_blank">
+            <div class="panel_icon yzn-bg-blue">
+                <i class="layui-icon layui-icon-read layui-anim"></i>
+            </div>
+            <div class="panel_word">
+                <span>文档</span>
+                <cite>使用手册</cite>
+            </div>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="https://gitee.com/ken678/YZNCMS" target="_blank">
+            <div class="panel_icon yzn-bg-orange">
+                <i class="layui-icon layui-icon-fonts-code layui-anim"></i>
+            </div>
+            <div class="panel_word">
+                <span>代码</span>
+                <cite>下载链接</cite>
+            </div>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="http://blog.yzncms.com" target="_blank">
+            <div class="panel_icon yzn-bg-green">
+                <i class="layui-icon layui-icon-survey layui-anim"></i>
+            </div>
+            <div class="panel_word">
+                <span>博客</span>
+                <cite>技术分享</cite>
+            </div>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;">
+            <div class="panel_icon yzn-bg-purple">
+                <i class="layui-icon layui-icon-log layui-anim"></i>
+            </div>
+            <div class="panel_word">
+                <span class="loginTime">
+                    <?php if($admin['last_login_time'] > 0) { echo $admin['last_login_time'];} else { echo '--';}?></span>
+                <cite>上次登录时间</cite>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-lg12 layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header" style="border-bottom: 1px solid #eee;">版本信息</div>
+            <div class="layui-card-body">
+                <table class="layui-table magt0" lay-even>
+                    <colgroup>
+                        <col width="10%">
+                        <col width="40%">
+                        <col width="10%">
+                        <col width="40%">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td>当前版本</td>
+                            <td class="version">yzncms v{$Think.config.version.yzncms_version}</td>
+                            <td>ThinkPHP版本</td>
+                            <td class="version">{:app()->version()}</td>
+                        </tr>
+                        <tr>
+                            <td>PHP 版本</td>
+                            <td>{$sys_info.phpv}</td>
+                            <td>数据库版本</td>
+                            <td>{$sys_info.mysql_version}</td>
+                        </tr>
+                        <tr>
+                            <td>服务器域名/IP</td>
+                            <td>{$sys_info.domain} [ {$sys_info.ip} ]</td>
+                            <td>服务器环境</td>
+                            <td class="server">{$sys_info.web_server}</td>
+                        </tr>
+                        <tr>
+                            <td>服务器时间</td>
+                            <td>{$sys_info.time}</td>
+                            <td>剩余空间</td>
+                            <td>{$sys_info.remaining_space}</td>
+                        </tr>
+                        <tr>
+                            <td>最大上传限制</td>
+                            <td>{$sys_info.fileupload}</td>
+                            <td>最大占用内存</td>
+                            <td>{$sys_info.memory_limit}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

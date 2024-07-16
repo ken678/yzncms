@@ -1,0 +1,14 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">VIP等级管理</div>
+    <div class="layui-card-body">
+        <div class="layui-form">
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"
+            data-auth-add="{:$auth->check('user.vip/add')}"
+            data-auth-edit="{:$auth->check('user.vip/edit')}"
+            data-auth-delete="{:$auth->check('user.vip/del')}" ></table>
+        </div>
+    </div>
+</div>
+{/block}

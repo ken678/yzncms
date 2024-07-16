@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{$site.name}</title>
+    <link href="__CDN__/assets/css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="mainbody">
+        <div class="container">
+            <h2><span>YznCMS</span></h2>
+            <h3>出色性能和优雅易用</h3>
+            <p class="desc">7年专注WEB应用开发<br>与2000+专业开发者一起快速开发</p>
+            <a href="{:url('index/user/index', [], false, true)}" class="rounded-pill btn btn-lg btn-primary">
+                <span>会员中心</span>
+            </a>
+        </div>
+    </div>
+    {:hook('page_footer')}
+    <div class="footer">
+        <div class="container">
+            <p>Copyright @ {$site.name} {:date('Y',time())} 版权所有 <a href="https://beian.miit.gov.cn" target="_blank">{$site.web_site_icp}</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

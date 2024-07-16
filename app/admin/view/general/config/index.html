@@ -1,0 +1,28 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                {volist name="$groupArray" id="vo"}
+                <li class="{if $key==$group}layui-this{/if}"><a href="{:url('index',['group'=>$key])}">{$vo}</a></li>
+                {/volist}
+            </ul>
+            <div class="layui-tab-content">
+                <table class="layui-hide" id="currentTable" lay-filter="currentTable" data-auth-add="{:$auth->check('general.config/add')}"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="barTool">
+    {{# if(d.type=='radio' || d.type=='select'){ }}
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}键：{:config('site.{{d.name}}')} 值：{:config('site.{{d.name}}_text')}{/literal}">代码调用</a>
+    {{# } else if(d.type=='checkbox' || d.type=='array' || d.type=='images' || d.type=='files' || d.type == 'selects'){ }}
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{volist name=&quot;:config('site.{{d.name}}')&quot; id='vo'}  键：{$key}  值：{$vo} <br> {/volist}{/literal}">代码调用</a>
+    {{# } else { }}
+    <a href='javascript:;' class="layui-btn layui-btn-xs copy" data-clipboard-text="{literal}{:config('site.{{d.name}}')}{/literal}">代码调用</a>
+    {{# } }}
+    <button  class="layui-btn layui-btn-xs {:$auth->check('general.config/edit')?'':'layui-hide'}" lay-event='btn-editone'><i class='iconfont icon-edit-2-line'></i></button>
+    <button  class="layui-btn layui-btn-danger layui-btn-xs {:$auth->check('general.config/del')?'':'layui-hide'}" lay-event='btn-delone'><i class='iconfont icon-delete-bin-line'></i></button>
+</script>
+{/block}

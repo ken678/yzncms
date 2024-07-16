@@ -1,0 +1,149 @@
+{extend name="index_layout"/}
+{block name="main"}
+<style type="text/css">
+.releasetips {position: relative;}
+.releasetips i {display: block;background: #f00;border-radius: 50%;width: 0.3em;height: 0.3em;top: 0px;right: -8px;position: absolute;box-shadow: 0px 0px 2px #f11414;}
+</style>
+<div class="alert alert-info-light">
+    <b>温馨提示</b><br>
+    1、插件在线安装，升级和购买需要注册YznCMS官网账号,请点击下方【会员信息】，点击【注册】按钮<br>
+    2、点击插件名称可查看详情，截图和日志等信息
+</div>
+{if $type=='online'}
+<div class="layui-tab layui-tab-card" lay-filter="tabswitch" style="box-shadow: none;">
+    <ul class="layui-tab-title nav-category">
+        <li class="layui-this" data-id="">全部</li>
+    </ul>
+</div>
+{/if}
+<input type="hidden" name="category_id" value="0">
+<div class="layui-card">
+    <div class="layui-card-header">插件管理</div>
+    <div class="layui-card-body">
+        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+    </div>
+</div>
+
+<script type="text/html" id="titleTpl">
+    <div>
+    {{#  if(d.url){ }}
+        {{#  if(d.name != 'recommend' ){ }}
+        <a href="javascript:;" data-url="{{d.url}}" lay-tips="查看插件介绍和帮助" title="插件详情" class="btn-dialog">{{= d.title }}</a>
+        {{#  } else { }}
+        <a href="{{= d.url}}" target="_blank" lay-tips="查看插件介绍和帮助">{{= d.title }}</a>
+        {{#  } }}
+    {{#  } else { }}
+        <a href="javascript:;">{{= d.title }}</a>
+    {{#  } }}
+    </div>
+</script>
+
+<script type="text/html" id="operateTpl">
+{{#  if(d.addon){ }}
+    {{# if(d.addon.version!=d.version){ }}
+        {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>1){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal" data-name="{{d.name}}" data-version="{{d.version}}" data-title="{{d.title}}"  data-value="{{= JSON.stringify(d.releaselist)}}" lay-event="upgrade">升级 <i class="layui-icon layui-icon-down"></i></a>
+        {{# }else if(typeof d.releaselist !="undefined" && d.releaselist.length>0){ }}
+        <a class="layui-btn layui-btn-xs layui-btn-normal btn-upgrade" data-name="{{d.name}}" data-version="{{d.version}}" data-title="{{d.title}}">升级</a>
+        {{#  } }}
+    {{#  } }}
+
+    {{#  if(d.addon.config == 1 ){ }}
+    <a class="layui-btn layui-btn-xs btn-dialog" href='{:url("config")}?name={{d.name}}' title="插件设置 -【{{d.title}}】">设置</a>
+    {{#  } }}
+
+    <a class="layui-btn layui-btn-xs layui-btn-danger btn-uninstall" data-name="{{d.name}}" data-status="{{d.addon.status}}"  data-title="确定卸载【{{d.title}}】，进行该操作？" confirm>卸载</a>
+{{#  } else { }}
+    {{# if(typeof d.releaselist !="undefined" && d.releaselist.length>1){ }}
+    <a class="layui-btn layui-btn-xs" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？"  data-value="{{= JSON.stringify(d.releaselist)}}" lay-event="install">安装 <i class="layui-icon layui-icon-down"></i></a>
+    {{# }else if(typeof d.releaselist !="undefined" && d.releaselist.length>0){ }}
+    <a class="layui-btn layui-btn-xs btn-install" data-name="{{d.name}}" data-version="{{d.version}}" data-title="确定安装【{{d.title}}】，进行该操作？">安装</a>
+    {{#  } }}
+
+    {{# if(d.button){ }}
+        <a href="{{d.url}}" class="layui-btn layui-btn-xs layui-btn-normal" target="_blank">
+            {{d.button}}
+        </a>
+    {{#  } }}
+{{#  } }}
+</script>
+
+<script id="statusTpl" type="text/html">
+{{#  if(d.addon){ }}
+    <input type="checkbox" value="{{= d.id }}" title="启用|禁用" lay-skin="switch" lay-filter="templet-status" data-name="{{d.name}}" data-action="{{= d.addon.status == 1 ? 'disable' : 'enable'}}" {{= d.addon.status == 1 ? "checked" : "" }}>
+{{#  } }} 
+</script>
+
+<script id="conflicttpl" type="text/html">
+    <div class="alert alert-danger-light">
+        <strong>温馨提示</strong><br>
+        此插件中发现和现有系统中部分文件发现冲突！以下文件将会被影响，请备份好相关文件后再继续操作
+    </div>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>文件</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# for(var i=0;i < d.list.conflictlist.length;i++){ }}
+        <tr>
+            <th scope="row">{{i+1}}</th>
+            <td>{{d.list.conflictlist[i]}}</td>
+        </tr>
+        {{#  }; }}
+        </tbody>
+    </table>
+</script>
+
+<script id="uninstalltpl" type="text/html">
+    <div class="">
+        <div class="">{{ d.title }}
+            <p class="text-danger">卸载将会删除所有插件文件且不可找回!!! </p>
+            {if env('APP_DEBUG')}
+            <p class="text-danger"><input type="checkbox" name="droptables" id="droptables" data-name="{{ d.name }}"/> 删除所有插件相关数据表且不可找回!!! </p>
+            {/if}
+            <p class="text-danger">如有重要数据请备份后再操作!!!</p>
+        </div>
+    </div>
+</script>
+
+<script id="logintpl" type="text/html">
+    <div>
+        <form class="layui-form">
+            <div class="alert alert-danger-light">
+                <strong>温馨提示</strong><br/>此处登录账号为<a href="https://www.yzncms.com" target="_blank">Yzncms官网账号</a>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-wrap">
+                    <div class="layui-input-prefix">
+                      <i class="layui-icon layui-icon-username"></i>
+                    </div>
+                    <input type="text" class="layui-input" id="inputAccount" value="" autocomplete="off" placeholder="你的手机号、用户名或邮箱">
+
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-wrap">
+                    <div class="layui-input-prefix">
+                      <i class="layui-icon layui-icon-password"></i>
+                    </div>
+                    <input type="password" class="layui-input" id="inputPassword" value="" autocomplete="off" lay-affix="eye" placeholder="你的密码">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script id="userinfotpl" type="text/html">
+    <div>
+        <form class="form-horizontal form-userinfo">
+            <div class="alert alert-dismissable alert-info-light">
+                <strong>温馨提示</strong><br/>你好！{{d.username}}<br />当前你已经登录，将同步保存你的购买记录
+            </div>
+        </form>
+    </div>
+</script>
+{/block}

@@ -1,0 +1,28 @@
+
+        recyclebin: function () {
+            // 初始化表格参数配置
+            Table.init = {
+                table_elem: '#currentTable',
+                table_render_id: 'currentTable',
+                restore_url: '{%controllerUrl%}/restore',
+                destroy_url: '{%controllerUrl%}/destroy',
+                multi_url: "{%controllerUrl%}/multi",
+            };
+
+            Table.render({
+                init: Table.init,
+                toolbar: ['refresh', 'restore', 'destroy'],
+                url: '{%controllerUrl%}/recyclebin' + location.search,
+                cols: [
+                    [
+                        { type: 'checkbox', fixed: 'left' },
+                        { field: 'id', width: 70, title: 'ID' },{%recyclebinTitleJs%}
+                        { field: '{%deleteTimeField%}', width: 160, title: '删除时间', search: 'range', templet: Table.formatter.datetime},
+                        { fixed: 'right', width: 140, title: '操作', templet: Table.formatter.tool,operat: ['restore','destroy']}
+                    ]
+                ],
+                page: {}
+            });
+
+            Table.api.bindevent();
+        },

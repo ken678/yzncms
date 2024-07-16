@@ -1,0 +1,75 @@
+{extend name="index_layout"/}
+{block name="main"}
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">等级</label>
+        <div class="layui-input-block">
+            <input type="number" lay-affix="number" name="row[level]" lay-verify="required" autocomplete="off" placeholder="等级" class="layui-input" value="{$data.level}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[title]" lay-verify="required" autocomplete="off" placeholder="名称" class="layui-input" value="{$data.title}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">天数</label>
+        <div class="layui-input-block">
+            <input type="number" lay-affix="number" name="row[days]" lay-verify="required" autocomplete="off" placeholder="天数" class="layui-input" value="{$data.days}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">价格</label>
+        <div class="layui-input-block">
+            <input type="amount" lay-affix="number" step="0.01"  name="row[amount]" lay-verify="required" autocomplete="off" placeholder="价格" class="layui-input" value="{$data.amount}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <table class="layui-form-field-label layui-table fieldlist" data-name="row[equity]" data-id="equity" data-template="equityTpl" data-tag="tr">
+                <tr>
+                    <td width="200">权益名称</td>
+                    <td width="200">权益高亮</td>
+                    <td width="70"></td>
+                </tr>
+                <tr><td colspan="3"><button type="button" class="layui-btn btn-append">追加</button></td></tr>
+            </table>
+            <textarea name="row[equity]" class="layui-textarea layui-hide">{$data.equity}</textarea>
+        </div>
+        <script type="text/html" id="equityTpl">
+            <tr class="layui-form-item rules-item">
+                {{# layui.each(d.lists, function(index, item) { }}
+                <td><input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="名称" value="{{item.row.key|| ''}}" /></td>
+                <td>
+                    <input type="radio" class="layui-input" name="{{item.name}}[{{item.index}}][high]" value="1" {{#  if(item.row.high == 1){ }}checked{{#  } }} title="是" lay-filter="fieldlist"/>
+                    <input type="radio" class="layui-input" name="{{item.name}}[{{item.index}}][high]" value="2" {{#  if(item.row.high != 1){ }}checked{{#  } }} title="否" lay-filter="fieldlist"/>
+                </td>
+                <td><button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close-fill"></i></button>
+                <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-drag-move-2-fill"></i></button></td>
+                {{# }); }}
+            </tr>
+        </script>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline">
+            <input type="text" name="row[listorder]" autocomplete="off" placeholder="显示排序" class="layui-input" value="{$data.listorder}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[status]" value="1" title="正常" {if $data.status==1}checked{/if}>
+            <input type="radio" name="row[status]" value="0" title="禁止" {if $data.status==0}checked{/if}>
+        </div>
+    </div>
+    <input type="hidden" name="row[id]" value="{$data.id}">
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+{/block}

@@ -1,0 +1,69 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card pd-20 no-shadow">
+    <div class="layui-card-header fly-title">
+        <h2>用户中心</h2>
+    </div>
+    <div class="layui-card-body">
+        <div class="fly-msg" style="margin-bottom: 20px;"> Hi，{$user.username}，你已是我们的正式会员。 </div>
+        <div class="layui-row layui-col-space20">
+            <div class="layui-col-md12">
+                <div class="fly-home fly-panel">
+                    <img src="{$user.avatar}" alt="{$user.username}">
+                    {if $user.vip}
+                    <i class="iconfont icon-vip1" title="VIP会员"></i>
+                    {/if}
+                    <h1>{$user.username}<font>({$user.email})</font>
+                    </h1>
+                    <p class="fly-home-sign">（{$user.motto|default='这个人懒得留下签名'}）</p>
+                    <p class="fly-home-info">
+                        <i class="iconfont icon-time-line"></i><span>{$user.reg_time} 加入</span>
+                    </p>
+                </div>
+            </div>
+            <div class="layui-row layui-col-space20 layui-card-box">
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            账户余额
+                        </div>
+                        <div class="layui-card-body">
+                            <p class="amount">{$user.amount}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            积分点数
+                        </div>
+                        <div class="layui-card-body">
+                            <p class="point">{$user.point}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            用户组
+                        </div>
+                        <div class="layui-card-body">
+                            <p class="groupname">{$user.group.name}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm6 layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            上次登录时间
+                        </div>
+                        <div class="layui-card-body">
+                            <p class="time">{$user.last_login_time}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

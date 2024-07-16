@@ -1,0 +1,3 @@
+{foreach name="{%fieldList%}" item="vo"}
+            <input id="{%fieldName%}-{$key}" lay-skin="primary" name="{%fieldName%}" type="checkbox" title="{$vo}" value="{$key}" {eq name="key" value="{%selectedValue%}"}checked{/eq} />
+            {/foreach}

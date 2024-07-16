@@ -1,0 +1,14 @@
+{extend name="index_layout"/}
+{block name="main"}
+<table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+<script type="text/html" id="barTool">
+    <a data-href='{{d.path}}' class="layui-btn layui-btn-danger layui-btn-xs btn-chooseone"><i class="iconfont icon-check-line"></i> 选择</a>
+</script>
+<script type="text/html" id="picTpl">
+    {{#  if(d.mime.indexOf("image") > -1){ }}
+    <img style="max-width:80px; max-height:30px;" src="{{d.path}}" data-image="{{d.name}}">
+  {{#  } else { }}
+    <img style="max-width:80px; max-height:30px;" src="{:url('admin/ajax/icon')}?suffix={{d.ext}}">
+  {{#  } }}
+</script>
+{/block}

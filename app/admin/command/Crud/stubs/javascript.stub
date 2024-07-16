@@ -1,0 +1,46 @@
+define(['jquery', 'backend', 'table', 'form'], function ($, Backend, Table, Form) {
+
+    var Controller = {
+        index: function () {
+            // 初始化表格参数配置
+            Table.init = {
+                table_elem: '#currentTable',
+                table_render_id: 'currentTable',
+                index_url: '{%controllerUrl%}/index' + location.search,
+                add_url: '{%controllerUrl%}/add',
+                edit_url: '{%controllerUrl%}/edit',
+                delete_url: '{%controllerUrl%}/del',
+                multi_url: '{%controllerUrl%}/multi',
+                recyclebin_url: '{%controllerUrl%}/recyclebin',
+            };
+
+            Table.render({
+                init: Table.init,
+                elem: Table.init.table_elem,
+                toolbar: [{%toolbar%}],
+                url: Table.init.index_url,
+                cols: [
+                    [
+                        {%javascriptList%}
+                    ]
+                ],
+                page: {}
+            });
+
+            // 为表格绑定事件
+            Table.api.bindevent();
+        },{%recyclebinJs%}
+        add: function () {
+            Controller.api.bindevent();
+        },
+        edit: function () {
+            Controller.api.bindevent();
+        },
+        api: {
+            bindevent: function () {
+                Form.api.bindevent($("form.layui-form"));
+            }
+        }
+    };
+    return Controller;
+});

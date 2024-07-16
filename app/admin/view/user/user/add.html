@@ -1,0 +1,93 @@
+{extend name="index_layout"/}
+{block name="main"}
+<form class="layui-form" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[username]" lay-verify="required" autocomplete="off" placeholder="用户名" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">昵称</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[nickname]" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[mobile]" lay-verify="required" autocomplete="off" placeholder="手机" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[email]" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="row[password]" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item web_list">
+        <label class="layui-form-label">会员组</label>
+        <div class="layui-input-block">
+            {:Form::select("row[group_id]",$groupCache,input('groupid',0),['placeholder' => '按会员组选择',"lay-verify"=>"required"])}
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="row[gender]" value="0" title="保密" checked>
+            <input type="radio" name="row[gender]" value="1" title="男">
+            <input type="radio" name="row[gender]" value="2" title="女">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">生日</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[birthday]" class="layui-input datetime" id="ID-laydate" placeholder="生日" value="" data-date-type="date" data-date="yyyy-MM-dd">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">个性签名</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入个性签名" name="row[motto]" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">积分点数</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[point]" lay-verify="required" autocomplete="off" placeholder="积分点数" class="layui-input" value="0">
+        </div>
+        <div class="layui-form-mid no-float layui-word-aux"> 请输入积分点数，积分点数将影响会员用户组</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">vip会员</label>
+        <div class="layui-input-block">
+            <input class="form-control layui-input selectpage" type="text" name="row[vip]" data-source="{:url('user.vip/index')}" data-field="title" value="">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">过期时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="row[overduedate]" class="layui-input datetime" id="overduedate">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="row[status]" value="1" title="正常" checked>
+            <input type="radio" name="row[status]" value="0" title="禁止">
+        </div>
+    </div>
+    <div class="layui-form-item layer-footer">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit>立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+{/block}

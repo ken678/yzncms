@@ -1,0 +1,39 @@
+{extend name="index_layout"/}
+{block name="main"}
+<div class="layui-card pd-20 no-shadow">
+    <div class="layui-card-header fly-title">
+        <h2>开通会员</h2>
+    </div>
+    <div class="layui-card-body">
+        {if $user.vip && $user.overduedate}
+        <div class="alert alert-warning-light"> 您当前VIP等级：v{$user.vip}，过期时间为：{$user.overduedate|date='Y-m-d H:i:s'} </div>
+        {/if}
+        <div class="alert alert-info-light">
+            请选择你需要购买或升级的VIP
+        </div>
+        <div class="layui-row layui-col-space20">
+            {foreach name="vipList" id="vo"}
+            <div class="layui-col-xs4">
+                <div class="vip-card">
+                    <div class="vip-header layui-bg-green">
+                        <span class="vip-plan">{$vo.title}&nbsp;<small>(v{$vo.level})</small></span>
+                        <span class="vip-sub">会员有效期{$vo.days}天</span>
+                    </div>
+                    <div class="vip-body">
+                        <h3>{$vo.amount}<i>元</i></h3>
+                        <ul>
+                            {foreach name="vo.equity|json_decode=###,true" id="item"}
+                            <li {if $item.high==1}style="color:#ff6f00;"{/if}>{$item.key}</li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                    <div class="vip-footer">
+                        <button type="button" class="layui-btn" data-id="{$vo.id}">立即{if $user.vip}续费{else}开通{/if}</button>
+                    </div>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{/block}
