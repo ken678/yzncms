@@ -16,12 +16,12 @@ declare (strict_types = 1);
 
 namespace app\common\controller;
 
-use think\App;
-use think\exception\ValidateException;
-use think\Validate;
-use think\facade\View;
 use app\common\library\traits\Jump;
 use app\common\middleware\ActionBegin;
+use think\App;
+use think\exception\ValidateException;
+use think\facade\View;
+use think\Validate;
 
 abstract class BaseController
 {
@@ -37,6 +37,12 @@ abstract class BaseController
      * @var \think\App
      */
     protected $app;
+
+    /**
+     * 视图实例
+     * @var \think\View
+     */
+    protected $view;
 
     /**
      * @var bool 验证失败是否抛出异常
@@ -64,7 +70,7 @@ abstract class BaseController
     {
         $this->app     = $app;
         $this->request = $this->app->request;
-        $this->view = $this->app->view;
+        $this->view    = $this->app->view;
 
         // 控制器初始化
         $this->initialize();
@@ -76,7 +82,7 @@ abstract class BaseController
 
     protected function fetch(string $template = '', array $vars = [])
     {
-        return View::fetch($template,$vars);
+        return View::fetch($template, $vars);
     }
 
     protected function assign(...$vars)
@@ -107,7 +113,7 @@ abstract class BaseController
      * @return array|string|true
      * @throws ValidateException
      */
-    protected function validate(array $data, string|array $validate, array $message = [], bool $batch = false)
+    protected function validate(array $data, string | array $validate, array $message = [], bool $batch = false)
     {
         if (is_array($validate)) {
             $v = new Validate();
