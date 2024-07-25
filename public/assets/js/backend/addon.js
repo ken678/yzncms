@@ -203,7 +203,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                         btn: ['登录', '注册'],
                         yes: function(index, layero) {
                             Yzn.api.ajax({
-                                url: Config.addon.api_url + '/member/login',
+                                url: Config.addon.api_url + '/user/login',
                                 type: 'post',
                                 data: {
                                     account: $("#inputAccount", layero).val(),
@@ -229,7 +229,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                                 }
                             };
                             $(document).on('keydown', this.checkEnterKey);
-                            $(".layui-layer-btn1", layero).prop("href", "https://www.yzncms.com/member/index/register.html").prop("target", "_blank");
+                            $(".layui-layer-btn1", layero).prop("href", "https://www.yzncms.com/index/user/register.html").prop("target", "_blank");
                         },
                         end: function() {
                             $(document).off('keydown', this.checkEnterKey);
@@ -237,7 +237,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                     });
                 } else {
                     Yzn.api.ajax({
-                        url: Config.addon.api_url + '/member/index',
+                        url: Config.addon.api_url + '/user/index',
                         data: {
                             uid: userinfo.id,
                             token: userinfo.token,
@@ -251,7 +251,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                             btn: ['退出登录', '关闭'],
                             yes: function() {
                                 Yzn.api.ajax({
-                                    url: Config.addon.api_url + '/member/logout',
+                                    url: Config.addon.api_url + '/user/logout',
                                     data: { uid: userinfo.id, token: userinfo.token }
                                 }, function(data, ret) {
                                     Yzn.cache.setStorage('yzncms_userinfo', '');
