@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 namespace app\common\library;
 
-use app\member\library\token\Driver;
+use app\common\library\token\Driver;
 use think\facade\Config;
 use think\facade\Env;
 use think\facade\Log;
