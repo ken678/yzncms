@@ -25,7 +25,7 @@ use think\facade\Validate;
 
 class User extends Api
 {
-    protected $noNeedLogin = [];
+    protected $noNeedLogin = ['login', 'register'];
     protected $noNeedRight = '*';
 
     public function initialize()
