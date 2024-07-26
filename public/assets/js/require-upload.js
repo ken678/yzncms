@@ -452,7 +452,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                 },
                 // AJAX异步上传
                 send: function (file, onUploadSuccess, onUploadError, onUploadComplete) {
-                    var index = layer.msg('上传中', {offset: 't', time: 0});
+                    var index = layer.msg('上传中', {offset: 't', time: 0, icon: 0});
                     var id = "dropzone-" + Dropzone.uuidv4();
                     $('<button type="button" id="' + id + '" class="btn btn-danger hidden faupload" />').appendTo("body");
                     $("#" + id).data("upload-complete", function (files) {
