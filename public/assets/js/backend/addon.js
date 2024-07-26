@@ -313,7 +313,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                     var area = [$(window).width() > 650 ? '650px' : '95%', $(window).height() > 710 ? '710px' : '95%'];
                     if (res && res.code === -2) {
                         Layer.closeAll();
-                        top.Yzn.api.open('立即支付', res.data.payurl, '', '', {
+                        top.Yzn.api.open(res.data.payurl,'立即支付',{
                             area: area,
                             end: function() {
                                 Yzn.api.ajax({
