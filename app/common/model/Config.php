@@ -82,6 +82,11 @@ class Config extends Model
                 case 'editor':
                     $newConfigs[$key] = htmlspecialchars_decode($value['value']);
                     break;
+                case 'markdown':
+                    $parser                     = new \util\Parser;
+                    $newConfigs[$key]           = $value['value'];
+                    $newConfigs[$key . '_text'] = $parser->makeHtml(htmlspecialchars_decode($value['value']));
+                    break;
                 default:
                     $newConfigs[$key] = $value['value'];
                     break;
