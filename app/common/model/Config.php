@@ -79,7 +79,7 @@ class Config extends Model
                 case 'images':
                     $newConfigs[$key] = empty($value['value']) ? [] : explode(',', $value['value']);
                     break;
-                case 'Ueditor':
+                case 'editor':
                     $newConfigs[$key] = htmlspecialchars_decode($value['value']);
                     break;
                 default:
