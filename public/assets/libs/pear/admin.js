@@ -1,19 +1,19 @@
 define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pearTheme'], function($, layui, pearTab,pearMenu,pearFrame,fullscreen,pearTheme) {
 		"use strict";
-		var element = layui.element,
+		const element = layui.element,
 		    form = layui.form;
 
 
-		var bodyFrame;
-		var sideMenu;
-		var bodyTab;
-		var config;
-		var logout = function() {};
-		var msgInstance;
-		var body = $('body');
+		let bodyFrame;
+		let sideMenu;
+		let bodyTab;
+		let config;
+		let logout = function() {};
+		let msgInstance;
+		const body = $('body');
 
 
-		var pearAdmin = {
+		const pearAdmin = {
 			render : function(initConfig) {
 				applyConfig(initConfig);
 			},
@@ -122,14 +122,14 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				if (option.theme.allowCustom === false) {
 					$(".setting").remove();
 				}
-				var colorId = localStorage.getItem("theme-color");
-				var currentColor = getColorById(colorId);
+				const colorId = localStorage.getItem("theme-color");
+				const currentColor = getColorById(colorId);
 				localStorage.setItem("theme-color", currentColor.id);
 				localStorage.setItem("theme-color-color", currentColor.color);
 				localStorage.setItem("theme-color-second", currentColor.second);
 				pearTheme.changeTheme(window, isAutoHead(config));
 
-				var menu = localStorage.getItem("theme-menu");
+				let menu = localStorage.getItem("theme-menu");
 				if (menu === null) {
 					menu = option.theme.defaultMenu;
 				} else {
@@ -137,7 +137,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 						menu = option.theme.defaultMenu;
 					}
 				}
-				var header = localStorage.getItem("theme-header");
+				let header = localStorage.getItem("theme-header");
 				if (header === null) {
 					header = option.theme.defaultHeader;
 				} else {
@@ -145,7 +145,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 						header = option.theme.defaultHeader;
 					}
 				}
-				var banner = localStorage.getItem("theme-banner");
+				let banner = localStorage.getItem("theme-banner");
 				if (banner === null) {
 					banner = option.theme.banner;
 				} else {
@@ -153,7 +153,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 						banner = option.theme.banner;
 					}
 				}
-				var autoHead = localStorage.getItem("auto-head");
+				let autoHead = localStorage.getItem("auto-head");
 				if (autoHead === null) {
 					autoHead = option.other.autoHead;
 				} else {
@@ -161,7 +161,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 						autoHead = option.other.autoHead;
 					}
 				}
-				var muiltTab = localStorage.getItem("muilt-tab");
+				let muiltTab = localStorage.getItem("muilt-tab");
 				if (muiltTab === null) {
 					muiltTab = option.tab.enable;
 				} else {
@@ -169,7 +169,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 						muiltTab = option.tab.enable;
 					}
 				}
-				var control = localStorage.getItem("control");
+				let control = localStorage.getItem("control");
 				if (control === null) {
 					control = option.menu.control;
 				} else {
@@ -178,7 +178,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 					}
 				}
 
-				var footer = localStorage.getItem("footer");
+				let footer = localStorage.getItem("footer");
 				if( footer === null) {
 					footer = option.other.footer;
 				}else{
@@ -200,8 +200,8 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			},
 
 			footer : function(footer){
-				var bodyDOM = $(".pear-admin .layui-body");
-				var footerDOM = $(".pear-admin .layui-footer");
+				const bodyDOM = $(".pear-admin .layui-body");
+				const footerDOM = $(".pear-admin .layui-footer");
 				if (footer === true || footer === "true") {
 					footerDOM.removeClass("close");
 					bodyDOM.css("bottom", footerDOM.outerHeight());
@@ -212,7 +212,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			},
 
 			bannerSkin : function(theme) {
-				var pearAdmin = $(".pear-admin");
+				const pearAdmin = $(".pear-admin");
 				pearAdmin.removeClass("banner-layout");
 				if (theme === true || theme === "true") {
 					pearAdmin.addClass("banner-layout");
@@ -228,14 +228,14 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			},
 
 			menuSkin : function(theme) {
-				var pearAdmin = $(".pear-admin .layui-side");
+				const pearAdmin = $(".pear-admin .layui-side");
 				pearAdmin.removeClass("light-theme");
 				pearAdmin.removeClass("dark-theme");
 				pearAdmin.addClass(theme);
 			},
 
 			headerSkin : function(theme) {
-				var pearAdmin = $(".pear-admin .layui-header");
+				const pearAdmin = $(".pear-admin .layui-header");
 				pearAdmin.removeClass("light-theme");
 				pearAdmin.removeClass("dark-theme");
 				pearAdmin.addClass(theme);
@@ -352,7 +352,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		};
 
 		function refresh() {
-			var refreshA = $(".refresh a");
+			const refreshA = $(".refresh a");
 			refreshA.removeClass("layui-icon-refresh-1");
 			refreshA.addClass("layui-anim");
 			refreshA.addClass("layui-anim-rotate");
@@ -371,9 +371,9 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 
 		function collapse() {
 			sideMenu.collapse();
-			var admin = $(".pear-admin");
-			var left = $(".layui-icon-spread-left")
-			var right = $(".layui-icon-shrink-right")
+			const admin = $(".pear-admin");
+			const left = $(".layui-icon-spread-left")
+			const right = $(".layui-icon-shrink-right")
 			if (admin.is(".pear-mini")) {
 				left.addClass("layui-icon-shrink-right")
 				left.removeClass("layui-icon-spread-left")
@@ -399,9 +399,9 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 
 		body.on("click", ".menuSearch", function () {
 			// 过滤菜单
-			var filterHandle = function (filterData, val) {
+			const filterHandle = function (filterData, val) {
 				if (!val) return [];
-				var filteredMenus = [];
+				const filteredMenus = [];
 				filterData = $.extend(true, {}, filterData);
 				$.each(filterData, function (index, item) {
 					if (item.childlist && item.childlist.length) {
@@ -421,17 +421,17 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			}
 
 			// 树转路径
-			var tiledHandle = function (data) {
-				var tiledMenus = [];
-				var treeTiled = function (data, content) {
-					var path = "";
-					var separator = " / ";
+			const tiledHandle = function (data) {
+				const tiledMenus = [];
+				const treeTiled = function (data, content) {
+					let path = "";
+					const separator = " / ";
 					// 上级路径
 					if (!content) content = "";
 					$.each(data, function (index, item) {
 						if (item.childlist && item.childlist.length) {
 							path += content + item.title + separator;
-							var childPath = treeTiled(item.childlist, path);
+							const childPath = treeTiled(item.childlist, path);
 							path += childPath;
 							if (!childPath) path = ""; // 重置路径
 						} else {
@@ -448,8 +448,8 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			}
 
 			// 创建搜索列表
-			var createList = function (data) {
-				var _listHtml = '';
+			const createList = function (data) {
+				let _listHtml = '';
 				$.each(data, function (index, item) {
 					_listHtml += '<li smenu-id="' + item.info.id + '" smenu-icon="' + item.info.icon + '" smenu-url="' + item.info.href + '" smenu-title="' + item.info.title + '" smenu-type="' + item.info.type + '">';
 					_listHtml += '  <span><i style="margin-right:10px" class=" ' + item.info.icon + '"></i>' + item.path + '</span>';
@@ -459,7 +459,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				return _listHtml;
 			}
 
-			var _html = [
+			const _html = [
 				'<div class="menu-search-content">',
 				'  <div class="layui-form menu-search-input-wrapper">',
 				'    <div class=" layui-input-wrap layui-input-wrap-prefix">',
@@ -488,43 +488,43 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				move: false,
 				content: _html,
 				success: function(layero,layeridx){
-					var $layer = layero;
-					var $content = $(layero).children('.layui-layer-content');
-					var $input = $(".menu-search-input-wrapper input");
-					var $noData = $(".menu-search-no-data");
-					var $list = $(".menu-search-list");
-					var menuData = sideMenu.option.data;
+					const $layer = layero;
+					const $content = $(layero).children('.layui-layer-content');
+					const $input = $(".menu-search-input-wrapper input");
+					const $noData = $(".menu-search-no-data");
+					const $list = $(".menu-search-list");
+					const menuData = sideMenu.option.data;
 
 
 					$layer.css("border-radius", "6px");
 					$input.off("focus").focus();
 					// 搜索菜单
 					$input.off("input").on("input", debounce(function(){
-						var keywords = $input.val().trim();
-						var filteredMenus = filterHandle(menuData, keywords);
+						const keywords = $input.val().trim();
+						const filteredMenus = filterHandle(menuData, keywords);
 
 						if(filteredMenus.length){
-							var tiledMenus = tiledHandle(filteredMenus);
-							var listHtml = createList(tiledMenus);
+							const tiledMenus = tiledHandle(filteredMenus);
+							const listHtml = createList(tiledMenus);
 							$noData.css("display", "none");
 							$list.html("").append(listHtml).children(":first").addClass("this")
 						}else{
 							$list.html("");
 							$noData.css("display", "flex");
 						}
-						var currentHeight = $(".menu-search-content").outerHeight()
+						const currentHeight = $(".menu-search-content").outerHeight()
 						$layer.css("height", currentHeight);
 						$content.css("height", currentHeight);
 					}, 500)
 					)
 					// 搜索列表点击事件
 					$list.off("click").on("click", "li", function () {
-						var menuId = $(this).attr("smenu-id");
-						var menuUrl = $(this).attr("smenu-url");
-						var menuIcon = $(this).attr("smenu-icon");
-						var menuTitle = $(this).attr("smenu-title");
-						var menuType = $(this).attr("smenu-type");
-						var openableWindow = menuType === "1" || menuType === 1;
+						const menuId = $(this).attr("smenu-id");
+						const menuUrl = $(this).attr("smenu-url");
+						const menuIcon = $(this).attr("smenu-icon");
+						const menuTitle = $(this).attr("smenu-title");
+						const menuType = $(this).attr("smenu-type");
+						const openableWindow = menuType === "1" || menuType === 1;
 
 						if(sideMenu.isCollapse){
 							collapse();
@@ -548,13 +548,14 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 					// 监听键盘事件
 					// Enter:13 Spacebar:32 UpArrow:38 DownArrow:40 Esc:27
 					$(document).off("keydown").keydown(function (e) {
+						const $menuSearchList = $(".menu-search-list li.this");
 						if (e.keyCode === 13 || e.keyCode === 32) {
 							e.preventDefault();
-							var menuId = $(".menu-search-list li.this").attr("smenu-id");
-							var menuUrl = $(".menu-search-list li.this").attr("smenu-url");
-							var menuTitle = $(".menu-search-list li.this").attr("smenu-title");
-							var menuType = $(".menu-search-list li.this").attr("smenu-type");
-							var openableWindow = menuType === "1" || menuType === 1;
+							const menuId = $menuSearchList.attr("smenu-id");
+							const menuUrl = $menuSearchList.attr("smenu-url");
+							const menuTitle = $menuSearchList.attr("smenu-title");
+							const menuType = $menuSearchList.attr("smenu-type");
+							const openableWindow = menuType === "1" || menuType === 1;
 							if (sideMenu.isCollapse) {
 								collapse();
 							}
@@ -567,8 +568,8 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 							layer.close(layeridx);
 						}else if(e.keyCode === 38){
 							e.preventDefault();
-							var prevEl = $(".menu-search-list li.this").prev();
-							$(".menu-search-list li.this").removeClass("this");
+							const prevEl = $menuSearchList.prev();
+							$menuSearchList.removeClass("this");
 							if(prevEl.length !== 0){
 								prevEl.addClass("this");
 							}else{
@@ -576,8 +577,8 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 							}
 						}else if(e.keyCode === 40){
 							e.preventDefault();
-							var nextEl = $(".menu-search-list li.this").next();
-							$(".menu-search-list li.this").removeClass("this");
+							const nextEl = $menuSearchList.next();
+							$menuSearchList.removeClass("this");
 							if(nextEl.length !== 0){
 								nextEl.addClass("this");
 							}else{
@@ -619,7 +620,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		});
 
 		body.on("click", ".setting", function() {
-			var menuItem =
+			const menuItem =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -633,14 +634,14 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: white;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
 				'</a>' +
 				'</li>';
-			var menuHtml =
+			const menuHtml =
 				'<div class="pearone-color">\n' +
 				'<div class="color-title">菜单风格</div>\n' +
 				'<div class="color-content">\n' +
 				'<ul>\n' + menuItem + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
-			var headItem =
+			const headItem =
 				'<li class="layui-this" data-select-header="light-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -654,14 +655,14 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
 				'</a>' +
 				'</li>';
-			var headHtml =
+			const headHtml =
 				'<div class="pearone-color">\n' +
 				'<div class="color-title">顶部风格</div>\n' +
 				'<div class="color-content">\n' +
 				'<ul>\n' + headItem + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
-			var moreItem =
+			const moreItem =
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="control" lay-filter="control" lay-skin="switch" lay-text="开|关"></div><span class="set-text">菜单</span></div>';
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="muilt-tab" lay-filter="muilt-tab" lay-skin="switch" lay-text="开|关"></div><span class="set-text">视图</span></div>';
@@ -671,7 +672,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="auto-head" lay-filter="auto-head" lay-skin="switch" lay-text="开|关"></div><span class="set-text">通色</span></div>';
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="footer" lay-filter="footer" lay-skin="switch" lay-text="开|关"></div><span class="set-text">页脚</span></div>';
-			var moreHtml = '<br><div class="pearone-color">\n' +
+			const moreHtml = '<br><div class="pearone-color">\n' +
 				'<div class="color-title">更多设置</div>\n' +
 				'<div class="color-content">\n' +
 				'<form class="layui-form">\n' + moreItem + '</form>\n' +
@@ -691,9 +692,9 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				content: menuHtml + headHtml + buildColorHtml() + moreHtml,
 				success: function(layero, index) {
 					form.render();
-					var color = localStorage.getItem("theme-color");
-					var menu = localStorage.getItem("theme-menu");
-					var header = localStorage.getItem("theme-header");
+					const color = localStorage.getItem("theme-color");
+					const menu = localStorage.getItem("theme-menu");
+					const header = localStorage.getItem("theme-header");
 					if (color !== "null") {
 						$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 						$("*[color-id='" + color + "']").addClass("layui-icon").addClass("layui-icon-ok");
@@ -707,7 +708,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 						$("[data-select-header='" + header + "']").addClass("layui-this");
 					}
 					$('#layui-layer-shade' + index).click(function() {
-						var $layero = $('#layui-layer' + index);
+						const $layero = $('#layui-layer' + index);
 						$layero.animate({
 							left: $layero.offset().left + $layero.width()
 						}, 200, function() {
@@ -765,7 +766,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		});
 
 		body.on('click', '[data-select-bgcolor]', function() {
-			var theme = $(this).attr('data-select-bgcolor');
+			const theme = $(this).attr('data-select-bgcolor');
 			$('[data-select-bgcolor]').removeClass("layui-this");
 			$(this).addClass("layui-this");
 			localStorage.setItem("theme-menu", theme);
@@ -773,7 +774,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		});
 
 		body.on('click', '[data-select-header]', function() {
-			var theme = $(this).attr('data-select-header');
+			const theme = $(this).attr('data-select-header');
 			$('[data-select-header]').removeClass("layui-this");
 			$(this).addClass("layui-this");
 			localStorage.setItem("theme-header", theme);
@@ -783,8 +784,8 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		body.on('click', '.select-color-item', function() {
 			$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 			$(this).addClass("layui-icon").addClass("layui-icon-ok");
-			var colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
-			var currentColor = getColorById(colorId);
+			const colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
+			const currentColor = getColorById(colorId);
 			localStorage.setItem("theme-color", currentColor.id);
 			localStorage.setItem("theme-color-color", currentColor.color);
 			localStorage.setItem("theme-color-second", currentColor.second);
@@ -800,8 +801,8 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		}
 
 		function getColorById(id) {
-			var color;
-			var flag = false;
+			let color;
+			let flag = false;
 			$.each(config.colors, function(i, value) {
 				if (value.id === id) {
 					color = value;
@@ -819,7 +820,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		}
 
 		function buildColorHtml() {
-			var colors = "";
+			let colors = "";
 			$.each(config.colors, function(i, value) {
 				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color +
 					";'></span>";
@@ -883,9 +884,9 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		},50));
 
 		function debounce(fn, awaitTime) {
-			var timerID = null
+			let timerID = null;
 			return function () {
-				var arg = arguments[0]
+				const arg = arguments[0];
 				if (timerID) {
 					clearTimeout(timerID)
 				}
