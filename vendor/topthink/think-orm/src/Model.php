@@ -709,7 +709,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
         }
 
         // 模型更新
-        $db = $this->db();
+        $db = $this->db(null);
 
         $db->transaction(function () use ($data, $allowFields, $db) {
             $this->key  = null;

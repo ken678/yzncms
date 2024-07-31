@@ -348,7 +348,8 @@ abstract class PDOConnection extends Connection
      */
     protected function getSchemaCacheKey(string $schema): string
     {
-        return $this->getConfig('hostname') . '_' . $this->getConfig('hostport') . '|' . $schema;
+        $hostname = $this->getConfig('hostname');
+        return (is_array($hostname)? $hostname[0] : $hostname) . '_' . $this->getConfig('hostport') . '|' . $schema;
     }
 
     /**
@@ -724,7 +725,10 @@ abstract class PDOConnection extends Connection
                 $key = $cacheItem->getKey();
 
                 if ($this->cache->has($key)) {
-                    return $this->cache->get($key);
+                    $data = $this->cache->get($key);
+                    if (null !== $data) {
+                        return $data;
+                    }
                 }
             }
         }
@@ -1228,7 +1232,10 @@ abstract class PDOConnection extends Connection
                 $key = $cacheItem->getKey();
 
                 if ($this->cache->has($key)) {
-                    return $this->cache->get($key);
+                    $data = $this->cache->get($key);
+                    if (null !== $data) {
+                        return $data;
+                    }
                 }
             }
         }
@@ -1329,7 +1336,10 @@ abstract class PDOConnection extends Connection
                 $name = $cacheItem->getKey();
 
                 if ($this->cache->has($name)) {
-                    return $this->cache->get($name);
+                    $data = $this->cache->get($name);
+                    if (null !== $data) {
+                        return $data;
+                    }
                 }
             }
         }
