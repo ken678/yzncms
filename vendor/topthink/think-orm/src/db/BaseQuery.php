@@ -1355,7 +1355,7 @@ abstract class BaseQuery
             $this->parsePkWhere($data);
         }
 
-        if (empty($this->options['where']) && empty($this->options['order']) && empty($this->options['sort'])) {
+        if (empty($this->options['where']) && empty($this->options['scope']) && empty($this->options['order']) && empty($this->options['sort'])) {
             $result = [];
         } else {
             $result = $this->connection->find($this);

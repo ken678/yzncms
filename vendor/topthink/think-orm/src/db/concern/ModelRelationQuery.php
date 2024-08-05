@@ -557,6 +557,9 @@ trait ModelRelationQuery
             }
 
             $jsonData = json_decode($result[$name], true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                continue;
+            }
 
             if (isset($withAttr[$name])) {
                 foreach ($withAttr[$name] as $key => $closure) {
