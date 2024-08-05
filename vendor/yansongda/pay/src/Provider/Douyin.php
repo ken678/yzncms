@@ -15,6 +15,7 @@ use Yansongda\Artful\Exception\ContainerException;
 use Yansongda\Artful\Exception\InvalidParamsException;
 use Yansongda\Artful\Exception\ServiceNotFoundException;
 use Yansongda\Artful\Plugin\AddPayloadBodyPlugin;
+use Yansongda\Artful\Plugin\AddRadarPlugin;
 use Yansongda\Artful\Plugin\ParserPlugin;
 use Yansongda\Artful\Plugin\StartPlugin;
 use Yansongda\Artful\Rocket;
@@ -23,32 +24,21 @@ use Yansongda\Pay\Event\CallbackReceived;
 use Yansongda\Pay\Event\MethodCalled;
 use Yansongda\Pay\Exception\Exception;
 use Yansongda\Pay\Pay;
-use Yansongda\Pay\Plugin\Wechat\AddRadarPlugin;
-use Yansongda\Pay\Plugin\Wechat\ResponsePlugin;
-use Yansongda\Pay\Plugin\Wechat\V3\AddPayloadSignaturePlugin;
-use Yansongda\Pay\Plugin\Wechat\V3\CallbackPlugin;
-use Yansongda\Pay\Plugin\Wechat\V3\VerifySignaturePlugin;
+use Yansongda\Pay\Plugin\Douyin\V1\Pay\AddPayloadSignaturePlugin;
+use Yansongda\Pay\Plugin\Douyin\V1\Pay\CallbackPlugin;
+use Yansongda\Pay\Plugin\Douyin\V1\Pay\ResponsePlugin;
 use Yansongda\Supports\Collection;
 use Yansongda\Supports\Str;
 
 /**
- * @method Collection|Rocket app(array $order)      APP 支付
- * @method Collection|Rocket mini(array $order)     小程序支付
- * @method Collection|Rocket mp(array $order)       公众号支付
- * @method Collection|Rocket scan(array $order)     扫码支付（摄像头，主动扫）
- * @method Collection|Rocket h5(array $order)       H5 支付
- * @method Collection|Rocket transfer(array $order) 帐户转账
+ * @method Collection|Rocket mini(array $order) 小程序支付
  */
-class Wechat implements ProviderInterface
+class Douyin implements ProviderInterface
 {
-    public const AUTH_TAG_LENGTH_BYTE = 16;
-
-    public const MCH_SECRET_KEY_LENGTH_BYTE = 32;
-
     public const URL = [
-        Pay::MODE_NORMAL => 'https://api.mch.weixin.qq.com/',
-        Pay::MODE_SANDBOX => 'https://api.mch.weixin.qq.com/sandboxnew/',
-        Pay::MODE_SERVICE => 'https://api.mch.weixin.qq.com/',
+        Pay::MODE_NORMAL => 'https://developer.toutiao.com/',
+        Pay::MODE_SANDBOX => 'https://open-sandbox.douyin.com/',
+        Pay::MODE_SERVICE => 'https://developer.toutiao.com/',
     ];
 
     /**
@@ -58,7 +48,7 @@ class Wechat implements ProviderInterface
      */
     public function __call(string $shortcut, array $params): null|Collection|MessageInterface|Rocket
     {
-        $plugin = '\Yansongda\Pay\Shortcut\Wechat\\'.Str::studly($shortcut).'Shortcut';
+        $plugin = '\Yansongda\Pay\Shortcut\Douyin\\'.Str::studly($shortcut).'Shortcut';
 
         return Artful::shortcut($plugin, ...$params);
     }
@@ -79,7 +69,7 @@ class Wechat implements ProviderInterface
      */
     public function query(array $order): Collection|Rocket
     {
-        Event::dispatch(new MethodCalled('wechat', __METHOD__, $order, null));
+        Event::dispatch(new MethodCalled('douyin', __METHOD__, $order, null));
 
         return $this->__call('query', [$order]);
     }
@@ -89,21 +79,15 @@ class Wechat implements ProviderInterface
      */
     public function cancel(array $order): Collection|Rocket
     {
-        throw new InvalidParamsException(Exception::PARAMS_METHOD_NOT_SUPPORTED, '参数异常: 微信不支持 cancel API');
+        throw new InvalidParamsException(Exception::PARAMS_METHOD_NOT_SUPPORTED, '参数异常: 抖音不支持 cancel API');
     }
 
     /**
-     * @throws ContainerException
      * @throws InvalidParamsException
-     * @throws ServiceNotFoundException
      */
     public function close(array $order): Collection|Rocket
     {
-        Event::dispatch(new MethodCalled('wechat', __METHOD__, $order, null));
-
-        $this->__call('close', [$order]);
-
-        return new Collection();
+        throw new InvalidParamsException(Exception::PARAMS_METHOD_NOT_SUPPORTED, '参数异常: 抖音不支持 close API');
     }
 
     /**
@@ -113,7 +97,7 @@ class Wechat implements ProviderInterface
      */
     public function refund(array $order): Collection|Rocket
     {
-        Event::dispatch(new MethodCalled('wechat', __METHOD__, $order, null));
+        Event::dispatch(new MethodCalled('douyin', __METHOD__, $order, null));
 
         return $this->__call('refund', [$order]);
     }
@@ -126,12 +110,9 @@ class Wechat implements ProviderInterface
     {
         $request = $this->getCallbackParams($contents);
 
-        Event::dispatch(new CallbackReceived('wechat', clone $request, $params, null));
+        Event::dispatch(new CallbackReceived('douyin', $request->all(), $params, null));
 
-        return $this->pay(
-            [CallbackPlugin::class],
-            ['_request' => $request, '_params' => $params]
-        );
+        return $this->pay([CallbackPlugin::class], $request->merge($params)->all());
     }
 
     public function success(): ResponseInterface
@@ -139,7 +120,7 @@ class Wechat implements ProviderInterface
         return new Response(
             200,
             ['Content-Type' => 'application/json'],
-            json_encode(['code' => 'SUCCESS', 'message' => '成功']),
+            json_encode(['err_no' => 0, 'err_tips' => 'success']),
         );
     }
 
@@ -148,24 +129,26 @@ class Wechat implements ProviderInterface
         return array_merge(
             [StartPlugin::class],
             $plugins,
-            [AddPayloadBodyPlugin::class, AddPayloadSignaturePlugin::class, AddRadarPlugin::class, VerifySignaturePlugin::class, ResponsePlugin::class, ParserPlugin::class],
+            [AddPayloadSignaturePlugin::class, AddPayloadBodyPlugin::class, AddRadarPlugin::class, ResponsePlugin::class, ParserPlugin::class],
         );
     }
 
-    protected function getCallbackParams(null|array|ServerRequestInterface $contents = null): ServerRequestInterface
+    protected function getCallbackParams(null|array|ServerRequestInterface $contents = null): Collection
     {
-        if (is_array($contents) && isset($contents['body'], $contents['headers'])) {
-            return new ServerRequest('POST', 'http://localhost', $contents['headers'], $contents['body']);
-        }
-
         if (is_array($contents)) {
-            return new ServerRequest('POST', 'http://localhost', [], json_encode($contents));
+            return Collection::wrap($contents);
         }
 
-        if ($contents instanceof ServerRequestInterface) {
-            return $contents;
+        if (!$contents instanceof ServerRequestInterface) {
+            $contents = ServerRequest::fromGlobals();
         }
 
-        return ServerRequest::fromGlobals();
+        $body = Collection::wrap($contents->getParsedBody());
+
+        if ($body->isNotEmpty()) {
+            return $body;
+        }
+
+        return Collection::wrapJson((string) $contents->getBody());
     }
 }

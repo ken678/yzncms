@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace think\db;
 
@@ -84,8 +84,8 @@ abstract class BaseQuery
      */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->connection   = $connection;
-        $this->prefix       = $this->connection->getConfig('prefix');
+        $this->connection = $connection;
+        $this->prefix     = $this->connection->getConfig('prefix');
     }
 
     /**
@@ -130,10 +130,10 @@ abstract class BaseQuery
 
         if ($this->model && method_exists($this->model, 'scope' . $method)) {
             // 动态调用命名范围
-            $method = 'scope' . $method;
+            $call = 'scope' . $method;
             array_unshift($args, $this);
 
-            call_user_func_array([$this->model, $method], $args);
+            $this->options['scope'][$method] = [$call, $args];
 
             return $this;
         }
@@ -346,7 +346,7 @@ abstract class BaseQuery
      *
      * @return array
      */
-    public function column(string|array $field, string $key = ''): array
+    public function column(string | array $field, string $key = ''): array
     {
         $result = $this->connection->column($this, $field, $key);
 
@@ -365,7 +365,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function union(string|array|Closure $union, bool $all = false)
+    public function union(string | array | Closure $union, bool $all = false)
     {
         $this->options['union']['type'] = $all ? 'UNION ALL' : 'UNION';
 
@@ -385,7 +385,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function unionAll(string|array|Closure $union)
+    public function unionAll(string | array | Closure $union)
     {
         return $this->union($union, true);
     }
@@ -397,7 +397,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function field(string|array|Raw|bool $field)
+    public function field(string | array | Raw | bool $field)
     {
         if (empty($field)) {
             return $this;
@@ -437,7 +437,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function withoutField(array|string $field)
+    public function withoutField(array | string $field)
     {
         if (empty($field)) {
             return $this;
@@ -470,7 +470,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function tableField(string|array|bool $field, string $tableName, string $prefix = '', string $alias = '')
+    public function tableField(string | array | bool $field, string $tableName, string $prefix = '', string $alias = '')
     {
         if (empty($field)) {
             return $this;
@@ -530,8 +530,8 @@ abstract class BaseQuery
     public function removeOption(string $option = '')
     {
         if ('' === $option) {
-            $this->options  = [];
-            $this->bind     = [];
+            $this->options = [];
+            $this->bind    = [];
         } elseif (isset($this->options[$option])) {
             unset($this->options[$option]);
         }
@@ -576,7 +576,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function table(string|array|Raw $table)
+    public function table(string | array | Raw $table)
     {
         if (is_string($table) && !str_contains($table, ')')) {
             $table = $this->tableStr($table);
@@ -595,20 +595,20 @@ abstract class BaseQuery
      *
      * @return array|string
      */
-    protected function tableStr(string $table): array|string
+    protected function tableStr(string $table): array | string
     {
         if (!str_contains($table, ',')) {
             // 单表
             if (str_contains($table, ' ')) {
                 [$item, $alias] = explode(' ', $table);
-                $table = [];
+                $table          = [];
                 $this->alias([$item => $alias]);
                 $table[$item] = $alias;
             }
         } else {
             // 多表
             $tables = explode(',', $table);
-            $table = [];
+            $table  = [];
 
             foreach ($tables as $item) {
                 $item = trim($item);
@@ -654,7 +654,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function order(string|array|Raw $field, string $order = '')
+    public function order(string | array | Raw $field, string $order = '')
     {
         if (empty($field)) {
             return $this;
@@ -707,7 +707,7 @@ abstract class BaseQuery
      *
      * @return Paginator
      */
-    public function paginate(int|array $listRows = null, int|bool $simple = false): Paginator
+    public function paginate(int | array $listRows = null, int | bool $simple = false): Paginator
     {
         if (is_int($simple)) {
             $total  = $simple;
@@ -715,18 +715,18 @@ abstract class BaseQuery
         }
 
         $defaultConfig = [
-            'query'     => [], //url额外参数
-            'fragment'  => '', //url锚点
-            'var_page'  => 'page', //分页变量
+            'query' => [], //url额外参数
+            'fragment' => '', //url锚点
+            'var_page' => 'page', //分页变量
             'list_rows' => 15, //每页数量
         ];
 
         if (is_array($listRows)) {
-            $config     = array_merge($defaultConfig, $listRows);
-            $listRows   = intval($config['list_rows']);
+            $config   = array_merge($defaultConfig, $listRows);
+            $listRows = intval($config['list_rows']);
         } else {
-            $config     = $defaultConfig;
-            $listRows   = intval($listRows ?: $config['list_rows']);
+            $config   = $defaultConfig;
+            $listRows = intval($listRows ?: $config['list_rows']);
         }
 
         $page           = isset($config['page']) ? (int) $config['page'] : Paginator::getCurrentPage($config['var_page']);
@@ -738,8 +738,8 @@ abstract class BaseQuery
 
             unset($this->options['order'], $this->options['cache'], $this->options['limit'], $this->options['page'], $this->options['field']);
 
-            $bind   = $this->bind;
-            $total  = $this->count();
+            $bind  = $this->bind;
+            $total = $this->count();
             if ($total > 0) {
                 $results = $this->options($options)->bind($bind)->page($page, $listRows)->select();
             } else {
@@ -750,10 +750,10 @@ abstract class BaseQuery
                 }
             }
         } elseif ($simple) {
-            $results    = $this->limit(($page - 1) * $listRows, $listRows + 1)->select();
-            $total      = null;
+            $results = $this->limit(($page - 1) * $listRows, $listRows + 1)->select();
+            $total   = null;
         } else {
-            $results    = $this->page($page, $listRows)->select();
+            $results = $this->page($page, $listRows)->select();
         }
 
         $this->removeOption('limit');
@@ -773,24 +773,24 @@ abstract class BaseQuery
      *
      * @return Paginator
      */
-    public function paginateX(int|array $listRows = null, string $key = null, string $sort = null): Paginator
+    public function paginateX(int | array $listRows = null, string $key = null, string $sort = null): Paginator
     {
         $defaultConfig = [
-            'query'     => [], //url额外参数
-            'fragment'  => '', //url锚点
-            'var_page'  => 'page', //分页变量
+            'query' => [], //url额外参数
+            'fragment' => '', //url锚点
+            'var_page' => 'page', //分页变量
             'list_rows' => 15, //每页数量
         ];
 
-        $config     = is_array($listRows) ? array_merge($defaultConfig, $listRows) : $defaultConfig;
-        $listRows   = is_int($listRows) ? $listRows : (int) $config['list_rows'];
-        $page       = isset($config['page']) ? (int) $config['page'] : Paginator::getCurrentPage($config['var_page']);
-        $page       = max($page, 1);
+        $config   = is_array($listRows) ? array_merge($defaultConfig, $listRows) : $defaultConfig;
+        $listRows = is_int($listRows) ? $listRows : (int) $config['list_rows'];
+        $page     = isset($config['page']) ? (int) $config['page'] : Paginator::getCurrentPage($config['var_page']);
+        $page     = max($page, 1);
 
         $config['path'] = $config['path'] ?? Paginator::getCurrentPath();
 
-        $key        = $key ?: $this->getPk();
-        $options    = $this->getOptions();
+        $key     = $key ?: $this->getPk();
+        $options = $this->getOptions();
 
         if (is_null($sort)) {
             $order = $options['order'] ?? '';
@@ -846,7 +846,7 @@ abstract class BaseQuery
      *
      * @return array
      */
-    public function more(int $limit, int|string $lastId = null, string $key = null, string $sort = null): array
+    public function more(int $limit, int | string $lastId = null, string $key = null, string $sort = null): array
     {
         $key = $key ?: $this->getPk();
 
@@ -901,12 +901,12 @@ abstract class BaseQuery
             return $this;
         }
 
-        if ($key instanceof \DateTimeInterface || $key instanceof \DateInterval || (is_int($key) && is_null($expire))) {
+        if ($key instanceof \DateTimeInterface  || $key instanceof \DateInterval  || (is_int($key) && is_null($expire))) {
             $expire = $key;
             $key    = true;
         }
 
-        $this->options['cache']     = [$key, $expire, $tag ?: $this->getTable()];
+        $this->options['cache'] = [$key, $expire, $tag ?: $this->getTable()];
         return $this;
     }
 
@@ -921,7 +921,7 @@ abstract class BaseQuery
      */
     public function cacheAlways($key = true, $expire = null, $tag = null)
     {
-        $this->options['cache_always']  = true;
+        $this->options['cache_always'] = true;
         return $this->cache($key, $expire, $tag);
     }
 
@@ -936,7 +936,7 @@ abstract class BaseQuery
      */
     public function cacheForce($key = true, $expire = null, $tag = null)
     {
-        $this->options['force_cache']  = true;
+        $this->options['force_cache'] = true;
 
         return $this->cache($key, $expire, $tag);
     }
@@ -948,7 +948,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function lock(bool|string $lock = false)
+    public function lock(bool | string $lock = false)
     {
         $this->options['lock'] = $lock;
 
@@ -966,7 +966,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function alias(array|string $alias)
+    public function alias(array | string $alias)
     {
         if (is_array($alias)) {
             $this->options['alias'] = $alias;
@@ -1031,8 +1031,8 @@ abstract class BaseQuery
      */
     public function json(array $json = [], bool $assoc = false)
     {
-        $this->options['json']          = $json;
-        $this->options['json_assoc']    = $assoc;
+        $this->options['json']       = $json;
+        $this->options['json_assoc'] = $assoc;
 
         return $this;
     }
@@ -1058,7 +1058,7 @@ abstract class BaseQuery
      *
      * @return $this
      */
-    public function pk(string|array|bool $pk)
+    public function pk(string | array | bool $pk)
     {
         $this->pk = $pk;
 
@@ -1383,6 +1383,9 @@ abstract class BaseQuery
      */
     public function parseOptions(): array
     {
+        // 执行全局查询范围
+        $this->scopeQuery();
+
         $options = $this->getOptions();
 
         // 获取数据表
@@ -1423,9 +1426,9 @@ abstract class BaseQuery
             // 根据页数计算limit
             [$page, $listRows] = $options['page'];
 
-            $page       = $page > 0 ? $page : 1;
-            $listRows   = $listRows ?: (is_numeric($options['limit']) ? $options['limit'] : 20);
-            $offset     = $listRows * ($page - 1);
+            $page     = $page > 0 ? $page : 1;
+            $listRows = $listRows ?: (is_numeric($options['limit']) ? $options['limit'] : 20);
+            $offset   = $listRows * ($page - 1);
 
             $options['limit'] = $offset . ',' . $listRows;
         }
@@ -1446,7 +1449,7 @@ abstract class BaseQuery
      */
     public function parseUpdateData(array &$data): bool
     {
-        $pk = $this->getPk();
+        $pk       = $this->getPk();
         $isUpdate = false;
         // 如果存在主键数据 则自动作为更新条件
         if (is_string($pk) && isset($data[$pk])) {

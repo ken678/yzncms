@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace think\db\concern;
 
@@ -41,7 +41,7 @@ trait WhereQuery
         }
 
         $pk = $this->getPk();
-        if ((is_null($condition) || '=' == $op) && is_string($pk) && $pk == $field ) {
+        if ((is_null($condition) || '=' == $op) && is_string($pk) && $pk == $field) {
             $this->options['key'] = is_null($condition) ? $op : $condition;
         }
 
@@ -61,7 +61,7 @@ trait WhereQuery
     protected function parseQueryWhere(BaseQuery $query): void
     {
         $this->options['where'] = $query->getOptions('where') ?? [];
-        $via = $query->getOptions('via');
+        $via                    = $query->getOptions('via');
 
         if ($via) {
             foreach ($this->options['where'] as $logic => &$where) {
@@ -285,7 +285,7 @@ trait WhereQuery
     public function whereColumn(string $field1, string $operator, string $field2 = null, string $logic = 'AND')
     {
         if (is_null($field2)) {
-            $field2 = $operator;
+            $field2   = $operator;
             $operator = '=';
         }
 
@@ -304,6 +304,20 @@ trait WhereQuery
     {
         if ($field) {
             $this->options['soft_delete'] = [$field, $condition];
+        }
+
+        return $this;
+    }
+
+    /**
+     * 包含软删除数据.
+     *
+     * @return $this
+     */
+    public function withTrashed()
+    {
+        if ($this->model) {
+            $this->options['soft_delete'] = null;
         }
 
         return $this;
@@ -340,7 +354,7 @@ trait WhereQuery
     {
         if (is_null($condition)) {
             $condition = $op;
-            $op = '=';
+            $op        = '=';
         }
 
         $this->options['where'][$logic][] = [new Raw($field), $op, $condition];
@@ -507,7 +521,7 @@ trait WhereQuery
 
         if (!empty($where)) {
             $this->options['where'][$logic] = isset($this->options['where'][$logic]) ?
-                array_merge($this->options['where'][$logic], $where) : $where;
+            array_merge($this->options['where'][$logic], $where) : $where;
         }
 
         return $this;

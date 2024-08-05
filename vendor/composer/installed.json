@@ -1745,17 +1745,17 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v3.0.17",
-            "version_normalized": "3.0.17.0",
+            "version": "v3.0.18",
+            "version_normalized": "3.0.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "3ed9e29f4efac20f0d0d7a192e1d350fd139a5a8"
+                "reference": "16401dd97d593867cf8c78cb8804458b03fb5241"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/3ed9e29f4efac20f0d0d7a192e1d350fd139a5a8",
-                "reference": "3ed9e29f4efac20f0d0d7a192e1d350fd139a5a8",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/16401dd97d593867cf8c78cb8804458b03fb5241",
+                "reference": "16401dd97d593867cf8c78cb8804458b03fb5241",
                 "shasum": ""
             },
             "require": {
@@ -1772,7 +1772,7 @@
             "suggest": {
                 "ext-mongodb": "provide mongodb support"
             },
-            "time": "2024-07-29T09:34:59+00:00",
+            "time": "2024-07-31T08:49:10+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1800,7 +1800,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v3.0.17"
+                "source": "https://github.com/top-think/think-orm/tree/v3.0.18"
             },
             "install-path": "../topthink/think-orm"
         },
@@ -2025,17 +2025,17 @@
         },
         {
             "name": "yansongda/pay",
-            "version": "v3.7.8",
-            "version_normalized": "3.7.8.0",
+            "version": "v3.7.9",
+            "version_normalized": "3.7.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/pay.git",
-                "reference": "b7cad54c295968a7bae855e91b259dd2cfccf151"
+                "reference": "2ea20b79f1210f8a5538df6ae54bd6c574a46a33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/pay/zipball/b7cad54c295968a7bae855e91b259dd2cfccf151",
-                "reference": "b7cad54c295968a7bae855e91b259dd2cfccf151",
+                "url": "https://api.github.com/repos/yansongda/pay/zipball/2ea20b79f1210f8a5538df6ae54bd6c574a46a33",
+                "reference": "2ea20b79f1210f8a5538df6ae54bd6c574a46a33",
                 "shasum": ""
             },
             "require": {
@@ -2045,8 +2045,8 @@
                 "ext-openssl": "*",
                 "ext-simplexml": "*",
                 "php": ">=8.0",
-                "yansongda/artful": "~1.1.0",
-                "yansongda/supports": "~4.0.9"
+                "yansongda/artful": "~1.1.1",
+                "yansongda/supports": "~4.0.10"
             },
             "conflict": {
                 "hyperf/framework": "<3.0"
@@ -2065,7 +2065,7 @@
                 "symfony/psr-http-message-bridge": "^2.1",
                 "symfony/var-dumper": "^5.1"
             },
-            "time": "2024-07-10T05:59:39+00:00",
+            "time": "2024-08-04T15:14:23+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
