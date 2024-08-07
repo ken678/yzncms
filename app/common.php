@@ -312,10 +312,10 @@ if (!function_exists('encrypt_password')) {
 if (!function_exists('genRandomString')) {
     /**
      * 产生一个指定长度的随机字符串,并返回给用户
-     * @param type $len 产生字符串的长度
-     * @return string   随机字符串
+     * @param int $len 产生字符串的长度
+     * @return string 随机字符串
      */
-    function genRandomString($len = 6)
+    function genRandomString(int $len = 6): string
     {
         $chars = [
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
@@ -507,7 +507,7 @@ if (!function_exists('sys_auth')) {
 }
 
 if (!function_exists('hsv2rgb')) {
-    function hsv2rgb($h, $s, $v)
+    function hsv2rgb($h, $s, $v): array
     {
         $r = $g = $b = 0;
 
