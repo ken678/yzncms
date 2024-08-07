@@ -295,15 +295,15 @@ if (!function_exists('to_guid_string')) {
 if (!function_exists('encrypt_password')) {
     /**
      * 对用户的密码进行加密
-     * @param $password
-     * @param $encrypt 传入加密串，在修改密码时做认证
-     * @param $fun 加密函数
-     * @return array/password
+     * @param string $password 明文密码
+     * @param string $encrypt 传入加密串，在修改密码时做认证
+     * @param string $fun 加密函数
+     * @return array|mixed
      */
-    function encrypt_password($password, $encrypt = '', $fun = 'md5')
+    function encrypt_password(string $password, string $encrypt = '', string $fun = 'md5'): mixed
     {
         $pwd             = [];
-        $pwd['encrypt']  = $encrypt ? $encrypt : genRandomString();
+        $pwd['encrypt']  = $encrypt ?: genRandomString();
         $pwd['password'] = $fun($fun($password) . $pwd['encrypt']);
         return $encrypt ? $pwd['password'] : $pwd;
     }
