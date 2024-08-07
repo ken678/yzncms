@@ -1002,7 +1002,7 @@ abstract class PDOConnection extends Connection
 
             if ($lastInsId) {
                 $pk = $query->getAutoInc();
-                if ($pk) {
+                if ($pk && is_string($pk)) {
                     $data[$pk] = $lastInsId;
                 }
             }
@@ -1276,14 +1276,14 @@ abstract class PDOConnection extends Connection
     /**
      * 得到某个字段的值
      *
-     * @param BaseQuery $query     查询对象
-     * @param string    $aggregate 聚合方法
-     * @param mixed     $field     字段名
-     * @param bool      $force     强制转为数字类型
+     * @param BaseQuery  $query     查询对象
+     * @param string     $aggregate 聚合方法
+     * @param string|Raw $field     字段名
+     * @param bool       $force     强制转为数字类型
      *
      * @return mixed
      */
-    public function aggregate(BaseQuery $query, string $aggregate, $field, bool $force = false, bool $one = true)
+    public function aggregate(BaseQuery $query, string $aggregate, string | Raw $field, bool $force = false)
     {
         if (is_string($field) && 0 === stripos($field, 'DISTINCT ')) {
             [$distinct, $field] = explode(' ', $field);
@@ -1291,7 +1291,7 @@ abstract class PDOConnection extends Connection
 
         $field = $aggregate . '(' . (!empty($distinct) ? 'DISTINCT ' : '') . $this->builder->parseKey($query, $field, true) . ') AS think_' . strtolower($aggregate);
 
-        $result = $this->value($query, $field, 0, $one);
+        $result = $this->value($query, $field, 0, false);
 
         return $force ? (float) $result : $result;
     }
@@ -1532,10 +1532,7 @@ abstract class PDOConnection extends Connection
         $this->startTrans();
 
         try {
-            $result = null;
-            if (is_callable($callback)) {
-                $result = $callback($this);
-            }
+            $result = $callback($this);
 
             $this->commit();
 
@@ -1770,7 +1767,7 @@ abstract class PDOConnection extends Connection
     {
         $pk = $query->getAutoInc();
 
-        if ($pk) {
+        if ($pk && is_string($pk)) {
             $type = $this->getFieldsBind($query->getTable())[$pk];
 
             if (self::PARAM_INT == $type) {
@@ -1930,10 +1927,7 @@ abstract class PDOConnection extends Connection
         }
 
         try {
-            $result = null;
-            if (is_callable($callback)) {
-                $result = $callback($this);
-            }
+            $result = $callback($this);
 
             foreach ($dbs as $db) {
                 $db->prepareXa($db->getUniqueXid('_' . $xid));

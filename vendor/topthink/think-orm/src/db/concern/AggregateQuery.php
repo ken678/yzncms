@@ -30,9 +30,9 @@ trait AggregateQuery
      *
      * @return mixed
      */
-    protected function aggregate(string $aggregate, string | Raw $field, bool $force = false, bool $one = false)
+    protected function aggregate(string $aggregate, string | Raw $field, bool $force = false)
     {
-        return $this->connection->aggregate($this, $aggregate, $field, $force, $one);
+        return $this->connection->aggregate($this, $aggregate, $field, $force);
     }
 
     /**
@@ -58,7 +58,7 @@ trait AggregateQuery
         }
 
         $options = $this->getOptions();
-        $cache   = $options['cache'] ?? null; // 使用 ?? 运算符简化
+        $cache   = $options['cache'] ?? null;
 
         if (isset($options['cache'])) {
             unset($options['cache']);
