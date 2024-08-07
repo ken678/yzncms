@@ -643,8 +643,11 @@ if (!function_exists('check_cors_request')) {
 if (!function_exists('xss_clean')) {
     /**
      * 清理XSS
+     * @param array|string $content
+     * @param bool $is_image
+     * @return bool|string|string[]
      */
-    function xss_clean($content, $is_image = false)
+    function xss_clean(array|string $content, bool $is_image = false)
     {
         return \app\common\library\Security::instance()->xss_clean($content, $is_image);
     }
