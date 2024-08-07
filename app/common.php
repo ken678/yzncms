@@ -213,7 +213,7 @@ if (!function_exists('parse_attr')) {
         if (strpos($value, ':')) {
             $value = [];
             foreach ($array as $val) {
-                list($k, $v) = explode(':', $val);
+                [$k, $v] = explode(':', $val);
                 $value[$k]   = $v;
             }
         } else {
@@ -566,7 +566,7 @@ if (!function_exists('letter_avatar')) {
     {
         $total           = unpack('L', hash('adler32', $text, true))[1];
         $hue             = $total % 360;
-        list($r, $g, $b) = hsv2rgb($hue / 360, 0.3, 0.9);
+        [$r, $g, $b] = hsv2rgb($hue / 360, 0.3, 0.9);
 
         $bg    = "rgb({$r},{$g},{$b})";
         $color = "#ffffff";
@@ -589,7 +589,7 @@ if (!function_exists('build_suffix_image')) {
         $suffix          = mb_substr(strtoupper($suffix), 0, 4);
         $total           = unpack('L', hash('adler32', $suffix, true))[1];
         $hue             = $total % 360;
-        list($r, $g, $b) = hsv2rgb($hue / 360, 0.3, 0.9);
+        [$r, $g, $b] = hsv2rgb($hue / 360, 0.3, 0.9);
 
         $background = $background ? $background : "rgb({$r},{$g},{$b})";
 
@@ -665,10 +665,10 @@ if (!function_exists('url_clean')) {
 if (!function_exists('check_url_allowed')) {
     /**
      * 检测URL是否允许范围内
-     * @param string $url URL
+     * @param  string  $url
      * @return bool
      */
-    function check_url_allowed($url = '')
+    function check_url_allowed(string $url = ''): bool
     {
         //允许的主机列表
         $allowedHostArr = [
