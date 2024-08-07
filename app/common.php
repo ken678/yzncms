@@ -259,11 +259,11 @@ if (!function_exists('human_date')) {
 if (!function_exists('format_bytes')) {
     /**
      * 格式化字节大小
-     * @param  number $size      字节数
-     * @param  string $delimiter 数字和单位分隔符
+     * @param float|int $size      字节数
+     * @param string $delimiter 数字和单位分隔符
      * @return string            格式化后的带单位的大小
      */
-    function format_bytes($size, $delimiter = '')
+    function format_bytes(float|int $size, string $delimiter = ''): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         for ($i = 0; $size >= 1024 && $i < 5; $i++) {
@@ -279,7 +279,7 @@ if (!function_exists('to_guid_string')) {
      * @param mixed $mix 变量
      * @return string
      */
-    function to_guid_string($mix)
+    function to_guid_string(mixed $mix): string
     {
         if (is_object($mix)) {
             return spl_object_hash($mix);
