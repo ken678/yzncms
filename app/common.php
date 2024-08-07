@@ -28,10 +28,10 @@ if (!function_exists('cdnurl')) {
     /**
      * 获取上传资源的CDN的地址
      * @param string  $url    资源相对地址
-     * @param boolean $domain 是否显示域名 或者直接传入域名
+     * @param string|bool $domain 是否显示域名 或者直接传入域名
      * @return string
      */
-    function cdnurl($url, $domain = false)
+    function cdnurl(string $url, string | bool $domain = false): string
     {
         $regex  = "/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i";
         $cdnurl = Config::get('upload.cdnurl');
