@@ -84,11 +84,12 @@ if (!function_exists('int_to_string')) {
 if (!function_exists('str_cut')) {
     /**
      * 字符截取
-     * @param $string 需要截取的字符串
+     * @param $sourcestr 需要截取的字符串
      * @param $length 长度
-     * @param $dot
+     * @param string $dot
+     * @return string
      */
-    function str_cut($sourcestr, $length, $dot = '...')
+    function str_cut($sourcestr, $length, string $dot = '...')
     {
         $returnstr  = '';
         $i          = 0;
@@ -168,9 +169,11 @@ if (!function_exists('list_sort_by')) {
 if (!function_exists('list_to_tree')) {
     /**
      * 把返回的数据集转换成Tree
-     * @param array $list   要转换的数据集
-     * @param string $pid   parent标记字段
-     * @param string $level level标记字段
+     * @param array $list 要转换的数据集
+     * @param string $pk
+     * @param string $pid parent标记字段
+     * @param string $child
+     * @param int $root
      * @return array
      * @author 麦当苗儿 <zuojiazi@vip.qq.com>
      */
@@ -368,10 +371,9 @@ if (!function_exists('getModel')) {
 if (!function_exists('http_down')) {
     /**
      * 下载远程文件，默认保存在temp下
-     * @param  string  $url      网址
-     * @param  string  $filename 保存文件名
-     * @param  integer $timeout  过期时间
-     * @param  bool $repalce     是否覆盖已存在文件
+     * @param string $url 网址
+     * @param string $filename 保存文件名
+     * @param integer $timeout 过期时间
      * @return string            本地文件名
      */
     function http_down($url, $filename = "", $timeout = 60)
@@ -448,10 +450,10 @@ if (!function_exists('safe_replace')) {
 if (!function_exists('sys_auth')) {
     /**
      * 字符串加密、解密函数
-     * @param    string    $txt        字符串
-     * @param    string    $operation  ENCODE为加密，DECODE为解密，可选参数，默认为ENCODE，
-     * @param    string    $key        密钥：数字、字母、下划线
-     * @param    string    $expiry     过期时间
+     * @param $string
+     * @param string $operation ENCODE为加密，DECODE为解密，可选参数，默认为ENCODE，
+     * @param string $key 密钥：数字、字母、下划线
+     * @param int $expiry 过期时间
      * @return    string
      */
     function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
