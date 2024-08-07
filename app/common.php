@@ -81,35 +81,6 @@ if (!function_exists('int_to_string')) {
     }
 }
 
-if (!function_exists('str2arr')) {
-    /**
-     * 字符串转换为数组，主要用于把分隔符调整到第二个参数
-     * @param  string $str  要分割的字符串
-     * @param  string $glue 分割符
-     * @return array
-     */
-    function str2arr($str, $glue = ',')
-    {
-        return explode($glue, $str);
-    }
-}
-
-if (!function_exists('arr2str')) {
-    /**
-     * 数组转换为字符串，主要用于把分隔符调整到第二个参数
-     * @param  array  $arr  要连接的数组
-     * @param  string $glue 分割符
-     * @return string
-     */
-    function arr2str($arr, $glue = ',')
-    {
-        if (is_string($arr)) {
-            return $arr;
-        }
-        return implode($glue, $arr);
-    }
-}
-
 if (!function_exists('str_cut')) {
     /**
      * 字符截取
