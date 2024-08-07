@@ -583,10 +583,10 @@ if (!function_exists('build_suffix_image')) {
     /**
      * 生成文件后缀图片
      * @param string $suffix 后缀
-     * @param null   $background
+     * @param ?string $background 背景颜色
      * @return string
      */
-    function build_suffix_image($suffix, $background = null)
+    function build_suffix_image(string $suffix, string $background = null): string
     {
         $suffix          = mb_substr(strtoupper($suffix), 0, 4);
         $total           = unpack('L', hash('adler32', $suffix, true))[1];
@@ -595,7 +595,7 @@ if (!function_exists('build_suffix_image')) {
 
         $background = $background ? $background : "rgb({$r},{$g},{$b})";
 
-        $icon = <<<EOT
+        return <<<EOT
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
             <path style="fill:#E2E5E7;" d="M128,0c-17.6,0-32,14.4-32,32v448c0,17.6,14.4,32,32,32h320c17.6,0,32-14.4,32-32V128L352,0H128z"/>
             <path style="fill:#B0B7BD;" d="M384,128h96L352,0v96C352,113.6,366.4,128,384,128z"/>
@@ -605,7 +605,6 @@ if (!function_exists('build_suffix_image')) {
             <g><text><tspan x="220" y="380" font-size="124" font-family="Verdana, Helvetica, Arial, sans-serif" fill="white" text-anchor="middle">{$suffix}</tspan></text></g>
         </svg>
 EOT;
-        return $icon;
     }
 }
 
