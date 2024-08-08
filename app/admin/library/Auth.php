@@ -250,9 +250,12 @@ class Auth extends \libs\Auth
 
     /**
      * 检验用户是否已经登陆
-     * @return boolean 失败返回false，成功返回当前登陆用户基本信息
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function isLogin()
+    public function isLogin(): bool
     {
         if ($this->logined) {
             return true;
