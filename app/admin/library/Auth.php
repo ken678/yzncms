@@ -215,9 +215,12 @@ class Auth extends \libs\Auth
 
     /**
      * 自动登录
-     * @return boolean
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function autologin()
+    public function autologin(): bool
     {
         $keeplogin = Cookie::get('keeplogin');
         if (!$keeplogin) {
