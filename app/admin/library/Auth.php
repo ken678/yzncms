@@ -30,7 +30,7 @@ class Auth extends \libs\Auth
     //当前登录会员详细信息
     protected $error      = '';
     protected $requestUri = '';
-    protected $logined    = false; //登录状态
+    protected bool $logined    = false; //登录状态
 
     public function __construct()
     {
@@ -89,7 +89,7 @@ class Auth extends \libs\Auth
 
     public function check($name, $uid = '', $mode = 'url', $relation = 'or')
     {
-        $uid = $uid ? $uid : $this->id;
+        $uid = $uid ?: $this->id;
         return parent::check($name, $uid, $mode, $relation);
     }
 
@@ -409,7 +409,7 @@ class Auth extends \libs\Auth
      */
     public function getError()
     {
-        return $this->error ? $this->error : '';
+        return $this->error ?: '';
     }
 
     /**
