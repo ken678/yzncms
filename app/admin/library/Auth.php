@@ -290,11 +290,11 @@ class Auth extends \libs\Auth
 
     /**
      * 检查当前用户是否超级管理员
-     * @return boolean
+     * @return bool
      */
-    public function isAdministrator()
+    public function isAdministrator(): bool
     {
-        return in_array('*', $this->getRuleIds()) ? true : false;
+        return in_array('*', $this->getRuleIds());
     }
 
     /**
