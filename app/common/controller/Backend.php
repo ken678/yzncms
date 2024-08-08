@@ -492,7 +492,7 @@ class Backend extends BaseController
             }
             if ($istree && !$primaryvalue) {
                 $tree = \util\Tree::instance();
-                $tree->init(collection($list)->toArray(), 'pid');
+                $tree->init($list, 'pid');
                 $list = $tree->getTreeList($tree->getTreeArray(0), $field);
                 if (!$ishtml) {
                     foreach ($list as &$item) {
