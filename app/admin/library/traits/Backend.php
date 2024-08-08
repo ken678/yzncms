@@ -15,7 +15,7 @@
 namespace app\admin\library\traits;
 
 use Exception;
-use think\exception\PDOException;
+use think\db\exception\PDOException;
 use think\exception\ValidateException;
 use think\facade\Db;
 
