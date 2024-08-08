@@ -160,9 +160,10 @@ class Auth extends \libs\Auth
      * 用户登录
      * @param string $username 用户名
      * @param string $password 密码
-     * @return bool|mixed
+     * @param int $keeptime
+     * @return bool
      */
-    public function login($username = '', $password = '', $keeptime = 0)
+    public function login(string $username = '', string $password = '', int $keeptime = 0): bool
     {
         $username = trim($username);
         $password = trim($password);
@@ -198,11 +199,11 @@ class Auth extends \libs\Auth
 
     /**
      * 刷新保持登录的Cookie
-     *
-     * @param int $keeptime
-     * @return  boolean
+     * @param $admin
+     * @param $keeptime
+     * @return bool
      */
-    protected function keeplogin($admin, $keeptime = 0)
+    protected function keeplogin($admin, $keeptime = 0): bool
     {
         if ($keeptime) {
             $expiretime = time() + $keeptime;
