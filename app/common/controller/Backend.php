@@ -230,12 +230,12 @@ class Backend extends BaseController
             if (!preg_match('/^[a-zA-Z0-9_\-\.]+$/', $k)) {
                 continue;
             }
-            $sym = isset($op[$k]) ? $op[$k] : '=';
+            $sym = $op[$k] ?? '=';
             if (stripos($k, ".") === false) {
                 $k = $aliasName . $k;
             }
             $v   = !is_array($v) ? trim($v) : $v;
-            $sym = strtoupper(isset($op[$k]) ? $op[$k] : $sym);
+            $sym = strtoupper($op[$k] ?? $sym);
             //null和空字符串特殊处理
             if (!is_array($v)) {
                 if (in_array(strtoupper($v), ['NULL', 'NOT NULL'])) {
@@ -337,7 +337,7 @@ class Backend extends BaseController
         $where = function ($query) use ($where, $alias, $bind) {
             $query->alias($alias);
 
-            foreach ($where as $k => $v) {
+            foreach ($where as $v) {
                 if (is_array($v)) {
                     call_user_func_array([$query, 'where'], $v);
                 } else {
@@ -427,7 +427,7 @@ class Backend extends BaseController
                     $query->where($searchfield, "like", "%" . reset($word) . "%");
                 } else {
                     $query->where(function ($query) use ($word, $searchfield) {
-                        foreach ($word as $index => $item) {
+                        foreach ($word as $item) {
                             $query->whereOr(function ($query) use ($item, $searchfield) {
                                 $query->where($searchfield, "like", "%{$item}%");
                             });
@@ -477,17 +477,17 @@ class Backend extends BaseController
                 ->page($page, $pagesize)
                 ->select();
 
-            foreach ($datalist as $index => $item) {
+            foreach ($datalist as $item) {
                 unset($item['password'], $item['salt']);
                 if ($this->selectpageFields == '*') {
                     $result = [
-                        $primarykey => isset($item[$primarykey]) ? $item[$primarykey] : '',
-                        $field      => isset($item[$field]) ? $item[$field] : '',
+                        $primarykey => $item[$primarykey] ?? '',
+                        $field      => $item[$field] ?? '',
                     ];
                 } else {
                     $result = array_intersect_key(($item instanceof Model ? $item->toArray() : (array) $item), array_flip($fields));
                 }
-                $result['pid'] = isset($item['pid']) ? $item['pid'] : (isset($item['parent_id']) ? $item['parent_id'] : 0);
+                $result['pid'] = $item['pid'] ?? (isset($item['parent_id']) ? $item['parent_id'] : 0);
                 $list[]        = $result;
             }
             if ($istree && !$primaryvalue) {
