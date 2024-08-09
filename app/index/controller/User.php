@@ -107,7 +107,7 @@ class User extends Frontend
             }
             $userInfo = $this->auth->login($account, $password);
             if ($userInfo) {
-                $this->success('登录成功！', $forward ? $forward : url('user/index'));
+                $this->success('登录成功！', $forward ?: url('user/index'));
             } else {
                 //登陆失败
                 $this->error($this->auth->getError() ?: '账号或者密码错误！', null, ['token' => $this->request->buildToken()]);
@@ -129,7 +129,7 @@ class User extends Frontend
     {
         $forward = $this->request->request('forward', '', 'url_clean');
         if ($this->auth->id) {
-            $this->success("您已经是登陆状态，无需注册！", $forward ? $forward : url("user/index"));
+            $this->success("您已经是登陆状态，无需注册！", $forward ?: url("user/index"));
         }
         if ($this->request->isPost()) {
             $extend = [];
