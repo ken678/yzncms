@@ -27,7 +27,7 @@ class Ajax extends Frontend
     /**
      * 生成后缀图标
      */
-    public function icon()
+    public function icon(): Response
     {
         $suffix                  = $this->request->request("suffix", 'file');
         $data                    = build_suffix_image($suffix);
@@ -36,8 +36,7 @@ class Ajax extends Frontend
         $header['Cache-Control'] = 'public';
         $header['Pragma']        = 'cache';
         $header['Expires']       = gmdate("D, d M Y H:i:s", time() + $offset) . " GMT";
-        $response                = Response::create($data)->header($header);
-        return $response;
+        return Response::create($data)->header($header);
     }
 
     /**
