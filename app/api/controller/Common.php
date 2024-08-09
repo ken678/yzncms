@@ -27,7 +27,6 @@ class Common extends Api
 
     public function initialize()
     {
-
         if (isset($_SERVER['HTTP_ORIGIN'])) {
             header('Access-Control-Expose-Headers: __token__'); //跨域让客户端获取到
         }
@@ -50,7 +49,6 @@ class Common extends Api
 
     /**
      * 上传文件
-     * @param File $file 文件流
      */
     public function upload()
     {
@@ -66,7 +64,7 @@ class Common extends Api
         }
         $chunkid = $this->request->post("chunkid");
         if ($chunkid) {
-            if (!config('upload.chunking')) {
+            if (!config::get('upload.chunking')) {
                 return json([
                     'code' => 0,
                     'msg'  => '未开启分片上传功能',
@@ -128,7 +126,6 @@ class Common extends Api
         switch ($from) {
             case 'editormd':
                 $file_input_name = 'editormd-image-file';
-                break;
                 break;
             default:
                 $file_input_name = 'file';
