@@ -17,7 +17,7 @@ namespace app\admin\controller\user;
 use app\admin\model\user\User as UserModel;
 use app\admin\model\user\UserGroup;
 use app\common\controller\Backend;
-use think\exception\PDOException;
+use think\db\exception\PDOException;
 use think\exception\ValidateException;
 
 class Group extends Backend
