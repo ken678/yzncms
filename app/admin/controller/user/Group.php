@@ -74,11 +74,7 @@ class Group extends Backend
                     $this->validateFailException(true)->validate($params, $validate);
                 }
                 $result = $row->save($params);
-            } catch (ValidateException $e) {
-                $this->error($e->getMessage());
-            } catch (PDOException $e) {
-                $this->error($e->getMessage());
-            } catch (\Exception $e) {
+            } catch (ValidateException | PDOException | \Exception $e) {
                 $this->error($e->getMessage());
             }
 
