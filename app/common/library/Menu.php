@@ -17,9 +17,9 @@
 namespace app\common\library;
 
 use app\admin\model\AuthRule as AuthRuleModel;
-use think\addons\Db;
 use think\addons\Service;
-use think\exception\PDOException;
+use think\db\exception\PDOException;
+use think\facade\Db;
 use util\Tree;
 
 class Menu
