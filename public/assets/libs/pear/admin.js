@@ -620,7 +620,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 		});
 
 		body.on("click", ".setting", function() {
-			const menuItem =
+			let menuItem =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -641,7 +641,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				'<ul>\n' + menuItem + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
-			const headItem =
+			let headItem =
 				'<li class="layui-this" data-select-header="light-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -662,7 +662,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				'<ul>\n' + headItem + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
-			const moreItem =
+			let moreItem =
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="control" lay-filter="control" lay-skin="switch" lay-text="开|关"></div><span class="set-text">菜单</span></div>';
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="muilt-tab" lay-filter="muilt-tab" lay-skin="switch" lay-text="开|关"></div><span class="set-text">视图</span></div>';
