@@ -137,7 +137,6 @@ class User extends Frontend
             //验证码
             if (!captcha_check($data['verify'])) {
                 $this->error('验证码输入错误！');
-                return false;
             }
             $rule = [
                 'username|用户名' => 'unique:user|require|alphaDash|length:3,20',
