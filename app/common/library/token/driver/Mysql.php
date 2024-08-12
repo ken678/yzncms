@@ -33,9 +33,9 @@ class Mysql extends Driver
     /**
      * 构造函数
      * @param array $options 参数
-     * @access public
+     * @throws \think\db\exception\DbException
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
         if (!empty($options)) {
             $this->options = array_merge($this->options, $options);
@@ -55,12 +55,12 @@ class Mysql extends Driver
 
     /**
      * 存储Token
-     * @param string $token   Token
-     * @param int    $user_id 会员ID
-     * @param int    $expire  过期时长,0表示无限,单位秒
-     * @return bool
+     * @param string $token Token
+     * @param int $user_id 会员ID
+     * @param int $expire 过期时长,0表示无限,单位秒
+     * @return true
      */
-    public function set(string $token, int $user_id, $expire = null)
+    public function set(string $token, int $user_id, $expire = null): bool
     {
         $expiretime = !is_null($expire) && $expire !== 0 ? time() + $expire : 0;
         $token      = $this->getEncryptedToken($token);
@@ -72,9 +72,12 @@ class Mysql extends Driver
     /**
      * 获取Token内的信息
      * @param string $token
-     * @return  array
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function get(string $token)
+    public function get(string $token): mixed
     {
         $this->handler->removeOption('where');
         $data = $this->handler->where('token', $this->getEncryptedToken($token))->find();
@@ -94,22 +97,26 @@ class Mysql extends Driver
 
     /**
      * 判断Token是否可用
-     * @param string $token   Token
-     * @param int    $user_id 会员ID
-     * @return  boolean
+     * @param string $token Token
+     * @param int $user_id 会员ID
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function check(string $token, int $user_id)
+    public function check(string $token, int $user_id): bool
     {
         $data = $this->get($token);
-        return $data && $data['user_id'] == $user_id ? true : false;
+        return $data && $data['user_id'] == $user_id;
     }
 
     /**
      * 删除Token
      * @param string $token
-     * @return  boolean
+     * @return true
+     * @throws \think\db\exception\DbException
      */
-    public function delete(string $token)
+    public function delete(string $token): bool
     {
         $this->handler->removeOption('where');
         $this->handler->where('token', $this->getEncryptedToken($token))->delete();
@@ -119,9 +126,10 @@ class Mysql extends Driver
     /**
      * 删除指定用户的所有Token
      * @param int $user_id
-     * @return  boolean
+     * @return true
+     * @throws \think\db\exception\DbException
      */
-    public function clear(int $user_id)
+    public function clear(int $user_id): bool
     {
         $this->handler->removeOption('where');
         $this->handler->where('user_id', $user_id)->delete();
