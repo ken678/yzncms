@@ -38,10 +38,9 @@ class Redis extends Driver
     /**
      * 构造函数
      * @param array $options 缓存参数
-     * @throws \BadFunctionCallException
-     * @access public
+     * @throws \RedisException
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
         if (!extension_loaded('redis')) {
             throw new \BadFunctionCallException('not support: redis');
@@ -70,7 +69,7 @@ class Redis extends Driver
      * @param string $token Token标识
      * @return string
      */
-    protected function getEncryptedToken(string $token)
+    protected function getEncryptedToken(string $token): string
     {
         $config = \think\facade\Config::get('token');
         return $this->options['tokenprefix'] . hash_hmac($config['hashalgo'], $token, $config['key']);
@@ -78,20 +77,21 @@ class Redis extends Driver
 
     /**
      * 获取会员的key
-     * @param $user_id
+     * @param int $user_id
      * @return string
      */
-    protected function getUserKey(int $user_id)
+    protected function getUserKey(int $user_id): string
     {
         return $this->options['userprefix'] . $user_id;
     }
 
     /**
      * 存储Token
-     * @param   string $token   Token
-     * @param   int    $user_id 会员ID
-     * @param   int    $expire  过期时长,0表示无限,单位秒
-     * @return bool
+     * @param string $token Token
+     * @param int $user_id 会员ID
+     * @param int $expire 过期时长,0表示无限,单位秒
+     * @return bool|\Redis
+     * @throws \RedisException
      */
     public function set(string $token, int $user_id, $expire = 0)
     {
@@ -114,10 +114,11 @@ class Redis extends Driver
 
     /**
      * 获取Token内的信息
-     * @param   string $token
-     * @return  array
+     * @param string $token $token
+     * @return array
+     * @throws \RedisException
      */
-    public function get(string $token)
+    public function get(string $token): array
     {
         $key   = $this->getEncryptedToken($token);
         $value = $this->handler->get($key);
@@ -129,29 +130,29 @@ class Redis extends Driver
         $expire     = $expire < 0 ? 365 * 86400 : $expire;
         $expiretime = time() + $expire;
         //解决使用redis方式储存token时api接口Token刷新与检测因expires_in拼写错误报错的BUG
-        $result = ['token' => $token, 'user_id' => $value, 'expiretime' => $expiretime, 'expires_in' => $expire];
-
-        return $result;
+        return ['token' => $token, 'user_id' => $value, 'expiretime' => $expiretime, 'expires_in' => $expire];
     }
 
     /**
      * 判断Token是否可用
-     * @param   string $token   Token
-     * @param   int    $user_id 会员ID
-     * @return  boolean
+     * @param string $token Token
+     * @param int $user_id 会员ID
+     * @return bool
+     * @throws \RedisException
      */
-    public function check(string $token, int $user_id)
+    public function check(string $token, int $user_id): bool
     {
         $data = self::get($token);
-        return $data && $data['user_id'] == $user_id ? true : false;
+        return $data && $data['user_id'] == $user_id;
     }
 
     /**
      * 删除Token
-     * @param   string $token
-     * @return  boolean
+     * @param string $token
+     * @return true
+     * @throws \RedisException
      */
-    public function delete(string $token)
+    public function delete(string $token): bool
     {
         $data = $this->get($token);
         if ($data) {
@@ -166,10 +167,11 @@ class Redis extends Driver
 
     /**
      * 删除指定用户的所有Token
-     * @param   int $user_id
-     * @return  boolean
+     * @param int $user_id
+     * @return true
+     * @throws \RedisException
      */
-    public function clear(int $user_id)
+    public function clear(int $user_id): bool
     {
         $keys = $this->handler->sMembers($this->getUserKey($user_id));
         $this->handler->del($this->getUserKey($user_id));
