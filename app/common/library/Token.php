@@ -47,7 +47,7 @@ class Token
         }
 
         if (true === $name || !isset(self::$instance[$name])) {
-            $class = false === strpos($type, '\\') ?
+            $class = !str_contains($type, '\\') ?
             '\\app\\common\\library\\token\\driver\\' . ucwords($type) :
             $type;
 
