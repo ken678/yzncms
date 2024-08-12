@@ -21,13 +21,15 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 var submitBtn = $("[lay-submit]", layform),
                     filter = submitBtn.attr('lay-filter');
 
+                $(".layer-footer [lay-submit],.fixed-footer [lay-submit],.normal-footer [lay-submit]", layform).removeClass("disabled");
+
                 //验证通过提交表单
                 form.on('submit(' + filter + ')', function(data) {
-                    submitBtn.addClass("disabled layui-disabled");
+                    submitBtn.addClass("disabled");
 
                     var submitResult = Form.api.submit(layform, function(data, ret) {
                         //that.holdSubmit(false);
-                        submitBtn.removeClass("disabled layui-disabled");
+                        submitBtn.removeClass("disabled");
                         if (false === $(this).triggerHandler("success.form", [data, ret])) {
                             return false;
                         }
@@ -49,7 +51,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                         if (false === $(this).triggerHandler("error.form", [data, ret])) {
                             return false;
                         }
-                        submitBtn.removeClass("disabled layui-disabled");
+                        submitBtn.removeClass("disabled");
                         if (typeof error === 'function') {
                             if (false === error.call($(this), data, ret)) {
                                 return false;
@@ -58,7 +60,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                     }, submit);
                     //如果提交失败则释放锁定
                     if (!submitResult) {
-                        submitBtn.removeClass("disabled layui-disabled");
+                        submitBtn.removeClass("disabled");
                     }
                     return false;
                 })
