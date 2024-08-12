@@ -76,7 +76,7 @@ class Auth
 
         return self::$instance;
     }
-
+    
     /**
      * 检查权限
      * @param array|string $name 需要验证的规则列表,支持逗号分隔的权限规则或索引数组
@@ -84,6 +84,9 @@ class Auth
      * @param string $mode 执行check的模式
      * @param string $relation 如果为 'or' 表示满足任一条规则即通过验证;如果为 'and'则表示需满足所有规则才能通过验证
      * @return bool 通过验证返回true;失败返回false
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function check(array|string $name, int $uid, string $mode = 'url', string $relation = 'or')
     {
@@ -132,10 +135,13 @@ class Auth
 
     /**
      * 根据用户id获取用户组,返回值为数组
-     * @param  int $uid      用户id
-     * @return array       用户所属的用户组 array(
+     * @param int $uid 用户id
+     * @return array|mixed 用户所属的用户组 array(
      *                                         array('uid'=>'用户id','group_id'=>'用户组id','title'=>'用户组名称','rules'=>'用户组拥有的规则id,多个,号隔开'),
      *                                         ...)
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getGroups(int $uid)
     {
@@ -156,7 +162,11 @@ class Auth
 
     /**
      * 获得权限列表
-     * @param integer $uid  用户id
+     * @param int $uid 用户id
+     * @return array|mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     protected function getAuthList(int $uid)
     {
