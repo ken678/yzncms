@@ -64,6 +64,13 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                     }
                     return false;
                 })
+
+                //自定义关闭按钮事件
+                layform.on("click", ".layer-close", function () {
+                    var index = parent.Layer.getFrameIndex(window.name);
+                    parent.Layer.close(index);
+                    return false;
+                });
             },
             faselect: function(layform) {
                 //绑定fachoose选择附件事件
