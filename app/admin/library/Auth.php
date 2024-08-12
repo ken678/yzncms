@@ -87,7 +87,7 @@ class Auth extends \libs\Auth
         return $childrenGroupIds;
     }
 
-    public function check($name, $uid = '', $mode = 'url', $relation = 'or')
+    public function check($name, $uid = '', $mode = 'url', $relation = 'or'): bool
     {
         $uid = $uid ?: $this->id;
         return parent::check($name, $uid, $mode, $relation);
@@ -138,7 +138,7 @@ class Auth extends \libs\Auth
         $this->requestUri = $uri;
     }
 
-    public function getGroups($uid = null)
+    public function getGroups($uid = null): array
     {
         $uid = is_null($uid) ? $this->id : $uid;
         return parent::getGroups($uid);
@@ -150,7 +150,7 @@ class Auth extends \libs\Auth
         return parent::getAuthList($uid);
     }
 
-    public function getRuleIds($uid = null)
+    public function getRuleIds($uid = null): array
     {
         $uid = is_null($uid) ? $this->id : $uid;
         return parent::getRuleIds($uid);
