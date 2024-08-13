@@ -79,7 +79,7 @@ class Tree
 
     /**
      * 得到子级数组
-     * @param int
+     * @param int $myid
      * @return array
      */
     public function getChild($myid)
@@ -137,7 +137,7 @@ class Tree
 
     /**
      * 得到当前位置父辈数组
-     * @param int
+     * @param int $myid
      * @return array
      */
     public function getParent($myid)
@@ -323,13 +323,10 @@ class Tree
     }
 
     /**
-     *
      * 获取树状数组
-     *
-     * @param  string  $myid  要查询的ID
-     * @param  string  $itemprefix  前缀
-     *
-     * @return string
+     * @param int $myid 要查询的ID
+     * @param string $itemprefix 前缀
+     * @return array
      */
     public function getTreeArray($myid, $itemprefix = '')
     {
@@ -339,7 +336,7 @@ class Tree
         $number = 1;
         if (is_array($child)) {
             $total = count($child);
-            foreach ($child as $id => $value) {
+            foreach ($child as $value) {
                 $j = $k = '';
                 if ($number == $total) {
                     $j .= $this->icon[2];
@@ -363,9 +360,10 @@ class Tree
     /**
      * 将getTreeArray的结果返回为二维数组
      * @param array $data
+     * @param string $field
      * @return array
      */
-    public function getTreeList($data = [], $field = 'name')
+    public function getTreeList(array $data = [], string $field = 'name'): array
     {
         $arr = [];
         foreach ($data as $k => $v) {
