@@ -166,16 +166,16 @@ class Date
      * 获取一个基于时间偏移的Unix时间戳
      *
      * @param string $type     时间类型，默认为day，可选minute,hour,day,week,month,quarter,year
-     * @param int    $offset   时间偏移量 默认为0，正数表示当前type之后，负数表示当前type之前
+     * @param int $offset   时间偏移量 默认为0，正数表示当前type之后，负数表示当前type之前
      * @param string $position 时间的开始或结束，默认为begin，可选前(begin,start,first,front)，end
-     * @param int    $year     基准年，默认为null，即以当前年为基准
-     * @param int    $month    基准月，默认为null，即以当前月为基准
-     * @param int    $day      基准天，默认为null，即以当前天为基准
-     * @param int    $hour     基准小时，默认为null，即以当前年小时基准
-     * @param int    $minute   基准分钟，默认为null，即以当前分钟为基准
-     * @return int 处理后的Unix时间戳
+     * @param ?int $year     基准年，默认为null，即以当前年为基准
+     * @param ?int $month    基准月，默认为null，即以当前月为基准
+     * @param ?int $day      基准天，默认为null，即以当前天为基准
+     * @param ?int $hour     基准小时，默认为null，即以当前年小时基准
+     * @param ?int $minute   基准分钟，默认为null，即以当前分钟为基准
+     * @return false|int 处理后的Unix时间戳
      */
-    public static function unixtime($type = 'day', $offset = 0, $position = 'begin', $year = null, $month = null, $day = null, $hour = null, $minute = null)
+    public static function unixtime(string $type = 'day', int $offset = 0, string $position = 'begin', int $year = null, int $month = null, int $day = null, int $hour = null, int $minute = null): false|int
     {
         $year     = is_null($year) ? date('Y') : $year;
         $month    = is_null($month) ? date('m') : $month;
