@@ -46,7 +46,7 @@ class Date
      * @return  int
      * @throws \Exception
      */
-    public static function offset(string $remote, string $local = null, int|string $now = null): int
+    public static function offset(string $remote, string $local = null, int | string $now = null): int
     {
         if ($local === null) {
             // Use the default timezone
@@ -131,13 +131,11 @@ class Date
 
     /**
      * 格式化 UNIX 时间戳为人易读的字符串
-     *
-     * @param    int  $remote  Unix 时间戳
-     * @param    mixed $local 本地时间
-     *
-     * @return    string    格式化的日期字符串
+     * @param int $remote  Unix 时间戳
+     * @param mixed $local 本地时间
+     * @return string    格式化的日期字符串
      */
-    public static function human($remote, $local = null)
+    public static function human(int $remote, $local = null): string
     {
         $time_diff = (is_null($local) || $local ? time() : $local) - $remote;
         $tense     = $time_diff < 0 ? '后' : '前';
