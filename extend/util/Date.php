@@ -232,9 +232,9 @@ class Date
      * 获取指定年月拥有的天数
      * @param int $month
      * @param int $year
-     * @return false|int|string
+     * @return int
      */
-    public static function days_in_month($month, $year)
+    public static function days_in_month(int $month, int $year): int
     {
         if (function_exists("cal_days_in_month")) {
             return cal_days_in_month(CAL_GREGORIAN, $month, $year);
