@@ -18,14 +18,14 @@ class File
 {
     /**
      * 创建目录
-     * @param $dir  目录名
-     * @return boolean true 成功， false 失败
+     * @param string $dir 目录名
+     * @return bool true 成功， false 失败
      */
-    public static function mk_dir($dir)
+    public static function mk_dir(string $dir): bool
     {
         $dir = rtrim($dir, '/') . '/';
         if (!is_dir($dir)) {
-            if (mkdir($dir, 0700, true) == false) {
+            if (!mkdir($dir, 0700, true)) {
                 return false;
             }
             return true;
@@ -35,10 +35,10 @@ class File
 
     /**
      * 读取文件内容
-     * @param $filename  文件名
-     * @return string 文件内容
+     * @param string $filename 文件名
+     * @return false|string
      */
-    public static function read_file($filename)
+    public static function read_file(string $filename): false|string
     {
         $content = '';
         if (function_exists('file_get_contents')) {
@@ -54,12 +54,12 @@ class File
 
     /**
      * 写文件
-     * @param $filename  文件名
-     * @param $writetext 文件内容
-     * @param $openmod  打开方式
-     * @return boolean true 成功, false 失败
+     * @param string $filename 文件名
+     * @param string $writetext 要写入的字符串
+     * @param string $openmod 打开方式
+     * @return bool
      */
-    public static function write_file($filename, $writetext, $openmod = 'w')
+    public static function write_file(string $filename, string $writetext, string $openmod = 'w'): bool
     {
         if (@$fp = fopen($filename, $openmod)) {
             flock($fp, 2);
@@ -73,10 +73,10 @@ class File
 
     /**
      * 删除目录
-     * @param $dirName      原目录
-     * @return boolean true 成功, false 失败
+     * @param string $dirName 原目录
+     * @return bool true 成功, false 失败
      */
-    public static function del_dir($dirName)
+    public static function del_dir(string $dirName): bool
     {
         if (!file_exists($dirName)) {
             return false;
@@ -99,11 +99,11 @@ class File
 
     /**
      * 复制目录
-     * @param $surDir   原目录
-     * @param $toDir    目标目录
-     * @return boolean true 成功, false 失败
+     * @param string $surDir 原目录
+     * @param string $toDir 目标目录
+     * @return bool true 成功, false 失败
      */
-    public static function copy_dir($surDir, $toDir)
+    public static function copy_dir(string $surDir, string $toDir): bool
     {
         $surDir = rtrim($surDir, '/') . '/';
         $toDir  = rtrim($toDir, '/') . '/';
@@ -132,14 +132,14 @@ class File
 
     /**
      * 列出目录
-     * @param $dir  目录名
-     * @return 目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
+     * @param string $dir 目录名
+     * @return array  目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
      */
-    public static function get_dirs($dir)
+    public static function get_dirs(string $dir): array
     {
         $dir          = rtrim($dir, '/') . '/';
         $dirArray[][] = null;
-        if (false != ($handle = opendir($dir))) {
+        if (($handle = opendir($dir))) {
             $i = 0;
             $j = 0;
             while (false !== ($file = readdir($handle))) {
@@ -163,7 +163,7 @@ class File
      * @param string $pattern
      * @return array
      */
-    public static function listFile($pathname, $pattern = '*')
+    public static function listFile(string $pathname, string $pattern = '*'): array
     {
         if (str_contains($pattern, '|')) {
             $patterns = explode('|', $pattern);
