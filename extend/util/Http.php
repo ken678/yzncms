@@ -26,7 +26,7 @@ class Http
      * @param array  $options 扩展参数
      * @return mixed|string
      */
-    public static function post($url, $params = [], $options = [])
+    public static function post(string $url, $params = [], $options = [])
     {
         $req = self::sendRequest($url, $params, 'POST', $options);
         return $req['ret'] ? $req['msg'] : '';
@@ -39,7 +39,7 @@ class Http
      * @param array  $options 扩展参数
      * @return mixed|string
      */
-    public static function get($url, $params = [], $options = [])
+    public static function get(string $url, $params = [], $options = [])
     {
         $req = self::sendRequest($url, $params, 'GET', $options);
         return $req['ret'] ? $req['msg'] : '';
@@ -53,7 +53,7 @@ class Http
      * @param mixed  $options CURL的参数
      * @return array
      */
-    public static function sendRequest($url, $params = [], $method = 'POST', $options = [])
+    public static function sendRequest(string $url, $params = [], string $method = 'POST', $options = [])
     {
         $method       = strtoupper($method);
         $protocol     = substr($url, 0, 5);
@@ -119,7 +119,7 @@ class Http
      * @param string $method 请求的方法
      * @return boolean TRUE
      */
-    public static function sendAsyncRequest($url, $params = [], $method = 'POST')
+    public static function sendAsyncRequest(string $url, $params = [], $method = 'POST')
     {
         $method = strtoupper($method);
         $method = $method == 'POST' ? 'POST' : 'GET';
@@ -168,10 +168,10 @@ class Http
     /**
      * 发送文件到客户端
      * @param string $file
-     * @param bool   $delaftersend
-     * @param bool   $exitaftersend
+     * @param bool $delaftersend
+     * @param bool $exitaftersend
      */
-    public static function sendToBrowser($file, $delaftersend = true, $exitaftersend = true)
+    public static function sendToBrowser(string $file, bool $delaftersend = true, bool $exitaftersend = true): void
     {
         if (file_exists($file) && is_readable($file)) {
             header('Content-Description: File Transfer');
