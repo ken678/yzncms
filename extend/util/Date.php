@@ -39,14 +39,14 @@ class Date
      * [!!] A list of time zones that PHP supports can be found at
      * <http://php.net/timezones>.
      *
-     * @param  string  $remote  timezone that to find the offset of
-     * @param  null  $local  timezone used as the baseline
-     * @param  mixed  $now  UNIX timestamp or date string
+     * @param string $remote  timezone that to find the offset of
+     * @param string|null $local  timezone used as the baseline
+     * @param int|string|null $now  UNIX timestamp or date string
      *
-     * @return  integer
+     * @return  int
      * @throws \Exception
      */
-    public static function offset($remote, $local = null, $now = null)
+    public static function offset(string $remote, string $local = null, int|string $now = null): int
     {
         if ($local === null) {
             // Use the default timezone
@@ -63,8 +63,7 @@ class Date
         $time_remote = new DateTime($now, $zone_remote);
         $time_local  = new DateTime($now, $zone_local);
         // Find the offset
-        $offset = $zone_remote->getOffset($time_remote) - $zone_local->getOffset($time_local);
-        return $offset;
+        return $zone_remote->getOffset($time_remote) - $zone_local->getOffset($time_local);
     }
 
     /**
