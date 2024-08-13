@@ -26,11 +26,12 @@ use util\Random;
 use util\Tree;
 
 class Auth extends \libs\Auth
+
 {
     //当前登录会员详细信息
-    protected $error      = '';
-    protected $requestUri = '';
-    protected bool $logined    = false; //登录状态
+    protected $error        = '';
+    protected $requestUri   = '';
+    protected bool $logined = false; //登录状态
 
     public function __construct()
     {
@@ -44,17 +45,18 @@ class Auth extends \libs\Auth
 
     /**
      * 取出当前管理员所拥有权限的分组.
-     *
      * @param bool $withself 是否包含当前所在的分组
-     *
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getChildrenGroupIds($withself = false)
+    public function getChildrenGroupIds(bool $withself = false)
     {
         //取出当前管理员所有的分组
         $groups   = $this->getGroups();
         $groupIds = [];
-        foreach ($groups as $k => $v) {
+        foreach ($groups as $v) {
             $groupIds[] = $v['id'];
         }
         $originGroupIds = $groupIds;
@@ -78,7 +80,7 @@ class Auth extends \libs\Auth
             $objList      = array_merge($objList, Tree::instance()->getTreeList($obj, 'title'));
         }
         $childrenGroupIds = [];
-        foreach ($objList as $k => $v) {
+        foreach ($objList as $v) {
             $childrenGroupIds[] = $v['id'];
         }
         if (!$withself) {
@@ -95,12 +97,13 @@ class Auth extends \libs\Auth
 
     /**
      * 取出当前管理员所拥有权限的管理员.
-     *
      * @param bool $withself 是否包含自身
-     *
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getChildrenAdminIds($withself = false)
+    public function getChildrenAdminIds(bool $withself = false)
     {
         $childrenAdminIds = [];
         if (!$this->isAdministrator()) {
@@ -313,8 +316,7 @@ class Auth extends \libs\Auth
      */
     public function getKeeploginKey($params, $keeptime, $expiretime)
     {
-        $key = md5(md5($params['id']) . md5($keeptime) . md5($expiretime) . $params['token'] . Config::get('token.key'));
-        return $key;
+        return md5(md5($params['id']) . md5($keeptime) . md5($expiretime) . $params['token'] . Config::get('token.key'));
     }
 
     /**
@@ -340,13 +342,11 @@ class Auth extends \libs\Auth
         if (!$arr) {
             return false;
         }
-
         $arr = array_map('strtolower', $arr);
         // 是否存在
         if (in_array(strtolower($request->action()), $arr) || in_array('*', $arr)) {
             return true;
         }
-
         // 没找到匹配
         return false;
     }
@@ -383,7 +383,7 @@ class Auth extends \libs\Auth
             ->column('name,parentid');
         $pidArr = array_unique(array_filter(array_column($ruleList, 'parentid')));
         foreach ($ruleList as $k => &$v) {
-            if (!in_array($v['name'], $userRule)) {
+            if (!in_array(strtolower($v['name']), $userRule)) {
                 unset($ruleList[$k]);
                 continue;
             }
