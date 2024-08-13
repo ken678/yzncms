@@ -59,27 +59,27 @@
         },
         {
             "name": "dasprid/enum",
-            "version": "1.0.5",
-            "version_normalized": "1.0.5.0",
+            "version": "1.0.6",
+            "version_normalized": "1.0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DASPRiD/Enum.git",
-                "reference": "6faf451159fb8ba4126b925ed2d78acfce0dc016"
+                "reference": "8dfd07c6d2cf31c8da90c53b83c026c7696dda90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/6faf451159fb8ba4126b925ed2d78acfce0dc016",
-                "reference": "6faf451159fb8ba4126b925ed2d78acfce0dc016",
+                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/8dfd07c6d2cf31c8da90c53b83c026c7696dda90",
+                "reference": "8dfd07c6d2cf31c8da90c53b83c026c7696dda90",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1 <9.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7 | ^8 | ^9",
+                "phpunit/phpunit": "^7 || ^8 || ^9 || ^10 || ^11",
                 "squizlabs/php_codesniffer": "*"
             },
-            "time": "2023-08-25T16:18:39+00:00",
+            "time": "2024-08-09T14:30:48+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -106,7 +106,7 @@
             ],
             "support": {
                 "issues": "https://github.com/DASPRiD/Enum/issues",
-                "source": "https://github.com/DASPRiD/Enum/tree/1.0.5"
+                "source": "https://github.com/DASPRiD/Enum/tree/1.0.6"
             },
             "install-path": "../dasprid/enum"
         },
@@ -1806,24 +1806,24 @@
         },
         {
             "name": "topthink/think-template",
-            "version": "v3.0.0",
-            "version_normalized": "3.0.0.0",
+            "version": "v3.0.1",
+            "version_normalized": "3.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-template.git",
-                "reference": "4352d2cf627abfb8b49f830686c25c02f59c23f2"
+                "reference": "672b131681a8a2c54e5bc2b56bfd4bc7cf674d08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-template/zipball/4352d2cf627abfb8b49f830686c25c02f59c23f2",
-                "reference": "4352d2cf627abfb8b49f830686c25c02f59c23f2",
+                "url": "https://api.github.com/repos/top-think/think-template/zipball/672b131681a8a2c54e5bc2b56bfd4bc7cf674d08",
+                "reference": "672b131681a8a2c54e5bc2b56bfd4bc7cf674d08",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0",
                 "psr/simple-cache": ">=1.0"
             },
-            "time": "2023-02-25T12:11:14+00:00",
+            "time": "2023-04-07T02:42:15+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1844,7 +1844,7 @@
             "description": "the php template engine",
             "support": {
                 "issues": "https://github.com/top-think/think-template/issues",
-                "source": "https://github.com/top-think/think-template/tree/v3.0.0"
+                "source": "https://github.com/top-think/think-template/tree/v3.0.1"
             },
             "install-path": "../topthink/think-template"
         },
