@@ -159,12 +159,13 @@ class File
 
     /**
      * 取得目录下面的文件信息
-     * @access public
-     * @param mixed $pathname 路径
+     * @param string $pathname 路径
+     * @param string $pattern
+     * @return array
      */
     public static function listFile($pathname, $pattern = '*')
     {
-        if (strpos($pattern, '|') !== false) {
+        if (str_contains($pattern, '|')) {
             $patterns = explode('|', $pattern);
         } else {
             $patterns[0] = $pattern;
@@ -222,10 +223,10 @@ class File
 
     /**
      * 统计文件夹大小
-     * @param $dir  目录名
-     * @return number 文件夹大小(单位 B)
+     * @param string $dir 目录名
+     * @return int 文件夹大小(单位 B)
      */
-    public static function get_size($dir)
+    public static function get_size(string $dir): int
     {
         $dirlist = opendir($dir);
         $dirsize = 0;
@@ -244,10 +245,10 @@ class File
 
     /**
      * 检测是否为空文件夹
-     * @param $dir  目录名
-     * @return boolean true 空， fasle 不为空
+     * @param string $dir 目录名
+     * @return bool true 空， fasle 不为空
      */
-    public static function empty_dir($dir)
+    public static function empty_dir(string $dir): bool
     {
         return (($files = @scandir($dir)) && count($files) <= 2);
     }
@@ -255,8 +256,9 @@ class File
     /**
      * 移除空目录
      * @param string $dir 目录
+     * @return void
      */
-    public static function remove_empty_folder($dir)
+    public static function remove_empty_folder(string $dir): void
     {
         try {
             $isDirEmpty = !(new \FilesystemIterator($dir))->valid();
@@ -265,60 +267,16 @@ class File
                 self::remove_empty_folder(dirname($dir));
             }
         } catch (\UnexpectedValueException $e) {
-
         } catch (\Exception $e) {
-
         }
-    }
-
-    /**
-     * 文件缓存与文件读取
-     * @param $name  文件名
-     * @param $value  文件内容,为空则获取缓存
-     * @param $path   文件所在目录,默认是当前应用的DATA目录
-     * @param $cached  是否缓存结果,默认缓存
-     * @return 返回缓存内容
-     */
-    public function cache($name, $value = '', $path = DATA_PATH, $cached = true)
-    {
-        static $_cache = array();
-        $filename      = $path . $name . '.php';
-        if ('' !== $value) {
-            if (is_null($value)) {
-                // 删除缓存
-                return false !== strpos($name, '*') ? array_map("unlink", glob($filename)) : unlink($filename);
-            } else {
-                // 缓存数据
-                $dir = dirname($filename);
-                // 目录不存在则创建
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0755, true);
-                }
-
-                $_cache[$name] = $value;
-                return file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($value, true) . ";?>"));
-            }
-        }
-        if (isset($_cache[$name]) && $cached == true) {
-            return $_cache[$name];
-        }
-
-        // 获取缓存数据
-        if (is_file($filename)) {
-            $value         = include $filename;
-            $_cache[$name] = $value;
-        } else {
-            $value = false;
-        }
-        return $value;
     }
 
     /**
      * 判断文件或文件夹是否可写.
-     * @param  string  $file  文件或目录
+     * @param string $file 文件或目录
      * @return bool
      */
-    public static function is_really_writable($file)
+    public static function is_really_writable(string $file): bool
     {
         if (DIRECTORY_SEPARATOR === '/') {
             return is_writable($file);
