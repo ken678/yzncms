@@ -1,4 +1,4 @@
-            <table class="layui-form-field-label layui-table fieldlist" data-name="{%fieldName%}" data-id="{%field%}" data-template="{%fieldName%}Tpl" data-tag="tr">
+            <table class="layui-form-field-label layui-table fieldlist" data-name="{%fieldName%}" data-id="{%field%}" data-template="{%field%}Tpl" data-tag="tr">
                 <tr>
                     {%theadList%}
                     <td width="90">操作</td>
@@ -8,7 +8,7 @@
                 </tr>
             </table>
             <textarea name="{%fieldName%}" class="layui-textarea layui-hide" cols="30" rows="5">{%fieldValue%}</textarea>
-            <script type="text/html" id="{%fieldName%}Tpl">
+            <script type="text/html" id="{%field%}Tpl">
                 <tr class="layui-form-item rules-item">
                     {{# layui.each(d.lists, function(index, item) { }}
                     {%tbodyList%}
