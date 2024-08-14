@@ -441,16 +441,19 @@ class Crud extends Command
         $modelName          = $table          = stripos($table, $prefix) === 0 ? substr($table, strlen($prefix)) : $table;
         $modelTableType     = 'table';
         $modelTableTypeName = $modelTableName = $modelName;
-        $modelTableInfo     = $dbconnect->query("SHOW TABLE STATUS LIKE '{$modelTableName}'", [], true);
-        if (!$modelTableInfo) {
-            $modelTableType = 'name';
-            $modelTableName = $prefix . $modelName;
+        $modelTableInfo     = null;
+        if (!$input->getOption('delete')) {
             $modelTableInfo = $dbconnect->query("SHOW TABLE STATUS LIKE '{$modelTableName}'", [], true);
             if (!$modelTableInfo) {
-                throw new Exception("table not found");
+                $modelTableType = 'name';
+                $modelTableName = $prefix . $modelName;
+                $modelTableInfo = $dbconnect->query("SHOW TABLE STATUS LIKE '{$modelTableName}'", [], true);
+                if (!$modelTableInfo) {
+                    throw new Exception("table not found");
+                }
             }
+            $modelTableInfo = $modelTableInfo[0];
         }
-        $modelTableInfo = $modelTableInfo[0];
 
         $relations = [];
         //检查关联表
