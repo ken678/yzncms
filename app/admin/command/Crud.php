@@ -1003,7 +1003,7 @@ class Crud extends Command
             $javascriptList = implode(",\n", array_filter($javascriptList));
 
             //表注释
-            $tableComment = $modelTableInfo['Comment'];
+            $tableComment = $modelTableInfo ? $modelTableInfo['Comment'] : '';
             $tableComment = mb_substr($tableComment, -1) == '表' ? mb_substr($tableComment, 0, -1) . '管理' : $tableComment;
 
             $data = [
