@@ -1138,17 +1138,15 @@ class Crud extends Command
             case 'int':
             case 'mediumint':
             case 'smallint':
+            case 'float':
+            case 'double':
+            case 'decimal':
             case 'tinyint':
                 $inputType = 'number';
                 break;
             case 'enum':
             case 'set':
                 $inputType = 'select';
-                break;
-            case 'decimal':
-            case 'double':
-            case 'float':
-                $inputType = 'number';
                 break;
             case 'longtext':
             case 'text':
