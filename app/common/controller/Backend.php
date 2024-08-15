@@ -20,6 +20,7 @@ use app\admin\library\Auth;
 use think\facade\Config;
 use think\facade\Event;
 use think\facade\Session;
+use think\Model;
 
 //定义是后台
 define('IN_ADMIN', true);
@@ -378,7 +379,6 @@ class Backend extends BaseController
     {
         //设置过滤方法
         $this->request->filter(['trim', 'strip_tags', 'htmlspecialchars']);
-
         //搜索关键词,客户端输入以空格分开,这里接收为数组
         $word = (array) $this->request->request("q_word/a");
         //当前页
@@ -410,11 +410,10 @@ class Backend extends BaseController
         foreach ($orderby as $k => $v) {
             $order[$v[0]] = $v[1];
         }
-        $field = $field ? $field : 'name';
+        $field = $field ?: 'name';
 
         //如果有primaryvalue,说明当前是初始化传值
         if ($primaryvalue !== null) {
-            //$where = [$primarykey => ['in', $primaryvalue]];
             $where    = [$primarykey => explode(',', $primaryvalue)];
             $pagesize = 99999;
         } else {
@@ -487,7 +486,7 @@ class Backend extends BaseController
                 } else {
                     $result = array_intersect_key(($item instanceof Model ? $item->toArray() : (array) $item), array_flip($fields));
                 }
-                $result['pid'] = $item['pid'] ?? (isset($item['parent_id']) ? $item['parent_id'] : 0);
+                $result['pid'] = $item['pid'] ?? ($item['parent_id'] ?? 0);
                 $list[]        = $result;
             }
             if ($istree && !$primaryvalue) {
