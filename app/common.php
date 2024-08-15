@@ -84,8 +84,8 @@ if (!function_exists('int_to_string')) {
 if (!function_exists('str_cut')) {
     /**
      * 字符截取
-     * @param $sourcestr 需要截取的字符串
-     * @param $length 长度
+     * @param string $sourcestr 需要截取的字符串
+     * @param int $length 长度
      * @param string $dot
      * @return string
      */
@@ -133,36 +133,33 @@ if (!function_exists('list_sort_by')) {
      * @access public
      * @param array $list   查询结果
      * @param string $field 排序的字段名
-     * @param array $sortby 排序类型
+     * @param string $sortby 排序类型
      * asc正向排序 desc逆向排序 nat自然排序
      * @return array
      */
-    function list_sort_by($list, $field, $sortby = 'asc')
+    function list_sort_by(array $list, string $field, string $sortby = 'asc'): array
     {
-        if (is_array($list)) {
-            $refer = $resultSet = [];
-            foreach ($list as $i => $data) {
-                $refer[$i] = &$data[$field];
-            }
-
-            switch ($sortby) {
-                case 'asc': // 正向排序
-                    asort($refer);
-                    break;
-                case 'desc': // 逆向排序
-                    arsort($refer);
-                    break;
-                case 'nat': // 自然排序
-                    natcasesort($refer);
-                    break;
-            }
-            foreach ($refer as $key => $val) {
-                $resultSet[] = &$list[$key];
-            }
-
-            return $resultSet;
+        $refer = $resultSet = [];
+        foreach ($list as $i => $data) {
+            $refer[$i] = &$data[$field];
         }
-        return false;
+
+        switch ($sortby) {
+            case 'asc': // 正向排序
+                asort($refer);
+                break;
+            case 'desc': // 逆向排序
+                arsort($refer);
+                break;
+            case 'nat': // 自然排序
+                natcasesort($refer);
+                break;
+        }
+        foreach ($refer as $key => $val) {
+            $resultSet[] = &$list[$key];
+        }
+
+        return $resultSet;
     }
 }
 
@@ -450,13 +447,13 @@ if (!function_exists('safe_replace')) {
 if (!function_exists('sys_auth')) {
     /**
      * 字符串加密、解密函数
-     * @param $string
+     * @param string $string
      * @param string $operation ENCODE为加密，DECODE为解密，可选参数，默认为ENCODE，
      * @param string $key 密钥：数字、字母、下划线
      * @param int $expiry 过期时间
-     * @return    string
+     * @return string
      */
-    function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0)
+    function sys_auth(string $string, string $operation = 'ENCODE', string $key = '', int $expiry = 0): string
     {
         $ckey_length = 4;
         $key         = md5($key != '' ? $key : Config::get('yzn.data_auth_key'));
@@ -592,7 +589,7 @@ if (!function_exists('build_suffix_image')) {
         $hue             = $total % 360;
         [$r, $g, $b] = hsv2rgb($hue / 360, 0.3, 0.9);
 
-        $background = $background ? $background : "rgb({$r},{$g},{$b})";
+        $background = $background ?: "rgb({$r},{$g},{$b})";
 
         return <<<EOT
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
