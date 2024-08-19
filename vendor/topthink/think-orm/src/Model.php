@@ -394,7 +394,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     {
         /** @var Query $query */
         $query = self::$db->connect($this->connection)
-            ->name($this->name . $this->suffix)
+            ->name($this->name)
             ->pk($this->pk);
 
         if (!empty($this->autoInc)) {
@@ -402,7 +402,9 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
         }
 
         if (!empty($this->table)) {
-            $query->table($this->table . $this->suffix);
+            $query->table($this->table);
+        } elseif (!empty($this->suffix)) {
+            $query->suffix($this->suffix);
         }
 
         $query->model($this)

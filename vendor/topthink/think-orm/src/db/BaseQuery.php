@@ -71,6 +71,13 @@ abstract class BaseQuery
     protected $prefix = '';
 
     /**
+     * 当前数据表后缀
+     *
+     * @var string
+     */
+    protected $suffix = '';
+
+    /**
      * 当前查询参数.
      *
      * @var array
@@ -155,7 +162,7 @@ abstract class BaseQuery
         if (isset($this->options['table'])) {
             $query->table($this->options['table']);
         } else {
-            $query->name($this->name);
+            $query->name($this->name)->suffix($this->suffix);
         }
 
         if (!empty($this->options['json'])) {
@@ -193,6 +200,20 @@ abstract class BaseQuery
     public function name(string $name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * 指定当前数据表后缀.
+     *
+     * @param string $suffix 后缀
+     *
+     * @return $this
+     */
+    public function suffix(string $suffix)
+    {
+        $this->suffix = $suffix;
 
         return $this;
     }
@@ -269,7 +290,7 @@ abstract class BaseQuery
 
         $name = $name ?: $this->name;
 
-        return $this->prefix . Str::snake($name);
+        return $this->prefix . Str::snake($name) . $this->suffix;
     }
 
     /**
@@ -1338,7 +1359,8 @@ abstract class BaseQuery
     /**
      * 查找单条记录.
      *
-     * @param mixed $data 主键数据
+     * @param mixed   $data 主键数据
+     * @param Closure $closure 闭包数据
      *
      * @throws Exception
      * @throws ModelNotFoundException
@@ -1346,9 +1368,11 @@ abstract class BaseQuery
      *
      * @return mixed
      */
-    public function find($data = null)
+    public function find($data = null, Closure $closure = null)
     {
-        if (!is_null($data)) {
+        if ($data instanceof Closure) {
+            $closure = $data;
+        } elseif (!is_null($data)) {
             // AR模式分析主键条件
             $this->parsePkWhere($data);
         }
@@ -1361,7 +1385,7 @@ abstract class BaseQuery
 
         // 数据处理
         if (empty($result)) {
-            return $this->resultToEmpty();
+            return $this->resultToEmpty($closure);
         }
 
         if (!empty($this->model)) {
