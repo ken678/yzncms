@@ -116,13 +116,6 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     protected static $initialized = [];
 
     /**
-     * 软删除字段默认值
-     *
-     * @var mixed
-     */
-    protected $defaultSoftDelete;
-
-    /**
      * 全局查询范围.
      *
      * @var array
@@ -135,6 +128,20 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
      * @var array
      */
     protected $change = [];
+
+    /**
+     * 数据表延迟写入的字段
+     *
+     * @var array
+     */
+    protected $lazyFields = [];
+
+    /**
+     * 软删除字段默认值
+     *
+     * @var mixed
+     */
+    protected $defaultSoftDelete;
 
     /**
      * Db对象
