@@ -16,6 +16,7 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 elem: Table.init.table_elem,
                 toolbar: '#toolbarDemo',
                 url: "auth.rule/index",
+                pk:'id',
                 tree: {
                     customName: {
                         children: 'childlist',
@@ -36,7 +37,20 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                         { width: 80, title: '图标', align: 'center', templet: "<div><i class='iconfont {{d.icon}}'></i></div>" },
                         { field: 'name', width: 200, title: '规则' },
                         { field: 'status', align: 'center', width: 120, title: '状态', unresize: true, templet: Table.formatter.switch, tips: "显示|隐藏" },
-                        { fixed: 'right', align: 'center', width: 140, title: '操作', toolbar: '#barTool' }
+                        {
+                            fixed: 'right', 
+                            width: 140,
+                            title: '操作',
+                            templet: Table.formatter.tool, 
+                            operat: [
+                                [{
+                                    text: '添加',
+                                    url: Table.init.add_url+'?parentid={id}',
+                                    auth:'add',
+                                    class: 'layui-btn layui-btn-xs layui-btn-normal btn-dialog',
+                                }],
+                                'edit', 'delete']
+                        }
                     ]
                 ], Table.init),
             });
