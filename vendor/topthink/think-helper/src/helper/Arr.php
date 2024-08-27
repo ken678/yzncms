@@ -637,9 +637,7 @@ class Arr
         $result = [];
         foreach ($arrays as $array) {
             foreach ($array as $key => $value) {
-                if (is_integer($key)) {
-                    $result[] = $value;
-                } elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
+                if (isset($result[$key]) && is_array($result[$key]) && is_array($value)) {
                     $result[$key] = self::mergeDeep(
                         $result[$key],
                         $value

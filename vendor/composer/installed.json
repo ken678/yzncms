@@ -1645,17 +1645,17 @@
         },
         {
             "name": "topthink/think-helper",
-            "version": "v3.1.7",
-            "version_normalized": "3.1.7.0",
+            "version": "v3.1.8",
+            "version_normalized": "3.1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-helper.git",
-                "reference": "84e64b79156db8b65d49dc5ea53303dee79335a3"
+                "reference": "612eea76eec2a22f41b0e24be27f49454e4fd5f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-helper/zipball/84e64b79156db8b65d49dc5ea53303dee79335a3",
-                "reference": "84e64b79156db8b65d49dc5ea53303dee79335a3",
+                "url": "https://api.github.com/repos/top-think/think-helper/zipball/612eea76eec2a22f41b0e24be27f49454e4fd5f5",
+                "reference": "612eea76eec2a22f41b0e24be27f49454e4fd5f5",
                 "shasum": ""
             },
             "require": {
@@ -1664,7 +1664,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
             },
-            "time": "2024-08-19T11:40:07+00:00",
+            "time": "2024-08-26T15:07:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1688,7 +1688,7 @@
             "description": "The ThinkPHP6 Helper Package",
             "support": {
                 "issues": "https://github.com/top-think/think-helper/issues",
-                "source": "https://github.com/top-think/think-helper/tree/v3.1.7"
+                "source": "https://github.com/top-think/think-helper/tree/v3.1.8"
             },
             "install-path": "../topthink/think-helper"
         },
