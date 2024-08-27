@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '69ff0b698b0f496c614b45ce85518e5fb69391e4',
+        'reference' => 'ab9b44ad2e25afed4e5a36bdd6bbc676f09a1973',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -170,12 +170,12 @@
             ),
         ),
         'psr/log' => array(
-            'pretty_version' => '3.0.0',
-            'version' => '3.0.0.0',
+            'pretty_version' => '3.0.1',
+            'version' => '3.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../psr/log',
             'aliases' => array(),
-            'reference' => 'fe5ea303b0887d5caefd3d431c3e61ad47037001',
+            'reference' => '79dff0b268932c640297f5208d6298f71855c03e',
             'dev_requirement' => false,
         ),
         'psr/simple-cache' => array(
@@ -247,7 +247,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '69ff0b698b0f496c614b45ce85518e5fb69391e4',
+            'reference' => 'ab9b44ad2e25afed4e5a36bdd6bbc676f09a1973',
             'dev_requirement' => false,
         ),
         'topthink/think-captcha' => array(
