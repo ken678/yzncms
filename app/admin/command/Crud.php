@@ -16,6 +16,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\command;
 
+use form\Form;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Option;
@@ -766,8 +767,8 @@ class Crud extends Command
                         }
                         $this->appendAttr($appendAttrList, $field);
 
-                        $formAddElement  = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
-                        $formEditElement = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
+                        $formAddElement  = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
                     } elseif ($inputType == 'datetime') {
                         $format    = "YYYY-MM-DD HH:mm:ss";
                         $phpFormat = "Y-m-d H:i:s";
@@ -804,13 +805,13 @@ class Crud extends Command
                                 break;
                         }
                         $defaultDateTime = "{:date('{$phpFormat}')}";
-                        $formAddElement  = \Form::datetime($fieldName, $defaultDateTime, $attrArr);
-                        $formEditElement = \Form::datetime($fieldName, ($fieldFunc ? "{:\$data.{$field}?{$fieldFunc}(\$data.{$field}):''}" : "{\$data.{$field}{$fieldFunc}}"), $attrArr);
+                        $formAddElement  = Form::datetime($fieldName, $defaultDateTime, $attrArr);
+                        $formEditElement = Form::datetime($fieldName, ($fieldFunc ? "{:\$data.{$field}?{$fieldFunc}(\$data.{$field}):''}" : "{\$data.{$field}{$fieldFunc}}"), $attrArr);
                     } elseif ($inputType == 'datetimerange') {
                         $attrArr['data-date-range'] = '-';
                         $defaultDateTime            = "";
-                        $formAddElement             = \Form::datetime($fieldName, $defaultDateTime, $attrArr);
-                        $formEditElement            = \Form::datetime($fieldName, $editValue, $attrArr);
+                        $formAddElement             = Form::datetime($fieldName, $defaultDateTime, $attrArr);
+                        $formEditElement            = Form::datetime($fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'checkbox' || $inputType == 'radio') {
                         unset($attrArr['lay-verify']);
                         $fieldName       = $inputType == 'checkbox' ? $fieldName .= "[]" : $fieldName;
@@ -826,27 +827,27 @@ class Crud extends Command
                         $this->appendAttr($appendAttrList, $field);
                         $defaultValue = $inputType == 'radio' && !$defaultValue ? key($itemArr) : $defaultValue;
 
-                        $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
-                        $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => \Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
+                        $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $this->getFieldListName($field), 'attrStr' => Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
                     } elseif ($inputType == 'textarea' && !$this->isMatchSuffix($field, $this->selectpagesSuffix) && !$this->isMatchSuffix($field, $this->imageField)) {
                         $cssClassArr[]    = $this->isMatchSuffix($field, $this->editorSuffix) ? $this->editorClass : '';
                         $attrArr['class'] = implode(' ', $cssClassArr);
                         $attrArr['rows']  = 5;
-                        $formAddElement   = \Form::textarea($fieldName, $defaultValue, $attrArr);
-                        $formEditElement  = \Form::textarea($fieldName, $editValue, $attrArr);
+                        $formAddElement   = Form::textarea($fieldName, $defaultValue, $attrArr);
+                        $formEditElement  = Form::textarea($fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'switch') {
-                        $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => \Form::attributes($attrArr), 'fieldValue' => $defaultValue]);
-                        $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => \Form::attributes($attrArr), 'fieldValue' => "data.{$field}"]);
+                        $formAddElement  = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => Form::attributes($attrArr), 'fieldValue' => $defaultValue]);
+                        $formEditElement = $this->getReplacedStub('html/' . $inputType, ['field' => $field, 'fieldName' => $fieldName, 'attrStr' => Form::attributes($attrArr), 'fieldValue' => "data.{$field}"]);
                     } elseif ($inputType == 'citypicker') {
                         $attrArr['class']       = implode(' ', $cssClassArr);
                         $attrArr['data-toggle'] = "city-picker";
-                        $formAddElement         = sprintf("<div class='control-relative'>%s</div>", \Form::input('text', $fieldName, $defaultValue, $attrArr));
-                        $formEditElement        = sprintf("<div class='control-relative'>%s</div>", \Form::input('text', $fieldName, $editValue, $attrArr));
+                        $formAddElement         = sprintf("<div class='control-relative'>%s</div>", Form::input('text', $fieldName, $defaultValue, $attrArr));
+                        $formEditElement        = sprintf("<div class='control-relative'>%s</div>", Form::input('text', $fieldName, $editValue, $attrArr));
                     } elseif ($inputType == 'tagsinput') {
                         $cssClassArr[]    = 'form-tags';
                         $attrArr['class'] = implode(' ', $cssClassArr);
-                        $formAddElement   = \Form::input('text', $fieldName, $defaultValue, $attrArr);
-                        $formEditElement  = \Form::input('text', $fieldName, $editValue, $attrArr);
+                        $formAddElement   = Form::input('text', $fieldName, $defaultValue, $attrArr);
+                        $formEditElement  = Form::input('text', $fieldName, $editValue, $attrArr);
                     } elseif ($inputType == 'fieldlist') {
                         $editValue    = "{\$data.{$field}|raw}";
                         $itemArr      = $this->getItemArray($itemArr, $field, $v['COLUMN_COMMENT']);
@@ -926,8 +927,8 @@ class Crud extends Command
                         if ('NULL' == $defaultValue || "''" == $defaultValue) {
                             $defaultValue = '';
                         }
-                        $formAddElement  = \Form::input($inputType, $fieldName, $defaultValue, $attrArr);
-                        $formEditElement = \Form::input($inputType, $fieldName, $editValue, $attrArr);
+                        $formAddElement  = Form::input($inputType, $fieldName, $defaultValue, $attrArr);
+                        $formEditElement = Form::input($inputType, $fieldName, $editValue, $attrArr);
                         //如果是图片或文件
                         if ($isUpload) {
                             $formAddElement  = $this->getImageUpload($field, $formAddElement);
