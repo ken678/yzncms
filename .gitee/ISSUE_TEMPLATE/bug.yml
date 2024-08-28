@@ -12,7 +12,7 @@ body:
             required: true
           - label: 我确认已在 [Issues](https://gitee.com/ken678/YZNCMS/issues ) 中搜索过类似的问题，但没有找到相关解决方案。
             required: true
-          - label: (未star严禁随意打勾)我已点击左上角【[star](https://gitee.com/ken678/YZNCMS/issues/I4KXPX )】进行关注，请作者快马加鞭处理。
+          - label: 我已点击左上角【[star](https://gitee.com/ken678/YZNCMS/issues/I4KXPX )】进行关注，请作者快马加鞭处理，注意：仅限star打勾，若未star随意打勾被加入黑名单。
             required: false
   - type: input
     attributes:
