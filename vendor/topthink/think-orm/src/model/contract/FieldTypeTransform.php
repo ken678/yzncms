@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
-namespace think\model\contracts;
+namespace think\model\contract;
 
 use think\Model;
 
@@ -13,5 +13,5 @@ interface FieldTypeTransform
     /**
      * @return static|mixed
      */
-    public static function set($value, Model $model): mixed;
+    public static function set($value, Model $model) : mixed;
 }

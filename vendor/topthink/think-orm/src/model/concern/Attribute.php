@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace think\model\concern;
 
@@ -19,7 +19,7 @@ use Stringable;
 use think\db\Raw;
 use think\helper\Str;
 use think\Model;
-use think\model\contracts\FieldTypeTransform;
+use think\model\contract\FieldTypeTransform;
 use think\model\Relation;
 
 /**
@@ -197,7 +197,7 @@ trait Attribute
      *
      * @return $this
      */
-    public function readOnly(array $field)
+    public function readonly(array $field)
     {
         $this->readonly = $field;
 
@@ -229,7 +229,7 @@ trait Attribute
      *
      * @return $this
      */
-    public function data(array|object $data, bool $set = false, array $allow = [])
+    public function data(array | object $data, bool $set = false, array $allow = [])
     {
         if ($data instanceof Model) {
             $data = $data->getData();
@@ -424,7 +424,7 @@ trait Attribute
         } elseif ($this->isRelationAttr($name)) {
             // 关联属性
             $this->relation[$name] = $value;
-            $this->with[$name] = true;
+            $this->with[$name]     = true;
         } elseif ((array_key_exists($name, $this->origin) || empty($this->origin)) && $value instanceof Stringable) {
             // 对象类型
             $value = $value->__toString();
@@ -443,7 +443,7 @@ trait Attribute
      *
      * @return mixed
      */
-    protected function writeTransform($value, string|array $type)
+    protected function writeTransform($value, string | array $type)
     {
         if (null === $value) {
             return;
@@ -499,10 +499,10 @@ trait Attribute
     {
         try {
             $relation = false;
-            $value = $this->getData($name);
+            $value    = $this->getData($name);
         } catch (InvalidArgumentException $e) {
             $relation = $this->isRelationAttr($name);
-            $value = null;
+            $value    = null;
         }
 
         return $this->getValue($name, $value, $relation);
@@ -519,7 +519,7 @@ trait Attribute
      *
      * @return mixed
      */
-    protected function getValue(string $name, $value, bool|string $relation = false)
+    protected function getValue(string $name, $value, bool | string $relation = false)
     {
         // 检测属性获取器
         $fieldName = $this->getRealFieldName($name);
@@ -611,7 +611,7 @@ trait Attribute
      *
      * @return mixed
      */
-    protected function readTransform($value, string|array $type)
+    protected function readTransform($value, string | array $type)
     {
         if (is_null($value)) {
             return;
@@ -668,11 +668,11 @@ trait Attribute
      *
      * @return $this
      */
-    public function withAttr(string|array $name, Closure $callback = null)
+    public function withFieldAttr(string | array $name, Closure $callback = null)
     {
         if (is_array($name)) {
             foreach ($name as $key => $val) {
-                $this->withAttr($key, $val);
+                $this->withFieldAttr($key, $val);
             }
         } else {
             $name = $this->getRealFieldName($name);

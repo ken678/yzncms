@@ -214,7 +214,7 @@ trait ModelRelationQuery
                 $field($this, $data[$key] ?? null, $data);
             } elseif ($this->model) {
                 // 检查字段是否有数据
-                if ($strict && (!isset($data[$field]) || empty($data[$field]))) {
+                if ($strict && (!isset($data[$field]) || (empty($data[$field]) && !in_array($data[$field], ['0', 0])))) {
                     continue;
                 }
 
@@ -675,7 +675,7 @@ trait ModelRelationQuery
 
         // 动态获取器
         if (!empty($this->options['with_attr'])) {
-            $result->withAttr($this->options['with_attr']);
+            $result->withFieldAttr($this->options['with_attr']);
         }
 
         foreach (['hidden', 'visible', 'append'] as $name) {

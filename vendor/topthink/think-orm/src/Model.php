@@ -43,6 +43,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
     use model\concern\RelationShip;
     use model\concern\ModelEvent;
     use model\concern\TimeStamp;
+    use model\concern\AutoWriteId;
     use model\concern\Conversion;
 
     /**
@@ -706,7 +707,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
         // 检查允许字段
         $allowFields = $this->checkAllowFields();
 
-        foreach ($this->relationWrite as $name => $val) {
+        foreach ($this->relationWrite as $val) {
             if (!is_array($val)) {
                 continue;
             }
@@ -759,25 +760,29 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
         }
 
         $this->checkData();
-        $data = $this->data;
 
-        // 时间戳自动写入
-        if ($this->autoWriteTimestamp) {
-            if ($this->createTime && !array_key_exists($this->createTime, $data)) {
-                $data[$this->createTime]       = $this->autoWriteTimestamp();
-                $this->data[$this->createTime] = $data[$this->createTime];
+        // 主键自动写入
+        if ($this->isAutoWriteId()) {
+            $pk = $this->getPk();
+            if (is_string($pk) && !isset($this->data[$pk])) {
+                $this->data[$pk] = $this->autoWriteId();
             }
+        }
 
-            if ($this->updateTime && !array_key_exists($this->updateTime, $data)) {
-                $data[$this->updateTime]       = $this->autoWriteTimestamp();
-                $this->data[$this->updateTime] = $data[$this->updateTime];
+        // 时间字段自动写入
+        if ($this->autoWriteTimestamp) {
+            foreach ([$this->createTime, $this->updateTime] as $field) {
+                if ($field && !array_key_exists($field, $this->data)) {
+                    $this->data[$field] = $this->autoWriteTimestamp();
+                }
             }
         }
 
         // 检查允许字段
         $allowFields = $this->checkAllowFields();
 
-        $db = $this->db();
+        $db   = $this->db();
+        $data = $this->data;
 
         $db->transaction(function () use ($data, $sequence, $allowFields, $db) {
             $result = $db->strict(false)
@@ -787,7 +792,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
                 ->insert($data, true);
 
             // 获取自动增长主键
-            if ($result) {
+            if ($result && !$this->isAutoWriteId()) {
                 $pk = $this->getPk();
 
                 if (is_string($pk) && (!isset($this->data[$pk]) || '' == $this->data[$pk])) {
