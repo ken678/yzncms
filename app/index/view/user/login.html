@@ -40,7 +40,7 @@ html,body{background: #f4f6f8;overflow-x: inherit;}
                             <label class="layui-icon layui-icon-vercode"></label>
                         </div>
                         <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
-                        <img id="verify" src="{:captcha_src()}" alt="验证码" class="captcha">
+                        <img id="verify" src="{:url('index/user/captcha')}" alt="验证码" class="captcha">
                     </div>
                 </div>
                 {/eq}
