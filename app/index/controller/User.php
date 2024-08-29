@@ -30,7 +30,7 @@ use think\facade\Event;
 
 class User extends Frontend
 {
-    protected $noNeedLogin = ['login', 'register', 'forget'];
+    protected $noNeedLogin = ['login', 'register', 'forget', 'captcha'];
     protected $noNeedRight = ['*'];
 
     public function initialize()
@@ -361,6 +361,12 @@ class User extends Frontend
     {
         $this->auth->logout();
         $this->success('注销成功！', url("user/login"));
+    }
+
+    //验证码
+    public function captcha()
+    {
+        return \think\captcha\facade\Captcha::create();
     }
 
     //附件列表页
