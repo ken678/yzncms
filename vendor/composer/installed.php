@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'c480c888daf3e50bc49f969187971c921d8d5833',
+        'reference' => '0e0aa199339843ce6abaa8f2e6d5589017d3e5eb',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -247,7 +247,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'c480c888daf3e50bc49f969187971c921d8d5833',
+            'reference' => '0e0aa199339843ce6abaa8f2e6d5589017d3e5eb',
             'dev_requirement' => false,
         ),
         'topthink/think-captcha' => array(
@@ -278,12 +278,12 @@
             'dev_requirement' => false,
         ),
         'topthink/think-orm' => array(
-            'pretty_version' => 'v3.0.24',
-            'version' => '3.0.24.0',
+            'pretty_version' => 'v3.0.25',
+            'version' => '3.0.25.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../topthink/think-orm',
             'aliases' => array(),
-            'reference' => '444afc97bc7cbc390503f7c57e46b0762be23f3c',
+            'reference' => 'fa37d041dab1fcdceeeaf7026d55436fcd2192a4',
             'dev_requirement' => false,
         ),
         'topthink/think-template' => array(

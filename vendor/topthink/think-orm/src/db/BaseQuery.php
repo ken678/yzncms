@@ -308,6 +308,20 @@ abstract class BaseQuery
     }
 
     /**
+     * 设置只读字段.
+     *
+     * @param array $fields 只读字段
+     *
+     * @return $this
+     */
+    public function readonly(array $fields)
+    {
+        $this->options['readonly_fields'] = $fields;
+
+        return $this;
+    }
+
+    /**
      * 获取最近一次查询的sql语句.
      *
      * @return string
@@ -352,8 +366,12 @@ abstract class BaseQuery
         $result = $this->connection->value($this, $field, $default);
 
         $array[$field] = $result;
-        $this->result($array);
 
+        if ($this->model) {
+            return $this->model->newInstance($array)->getAttr($field);
+        }
+
+        $this->result($array);
         return $array[$field];
     }
 
@@ -369,11 +387,25 @@ abstract class BaseQuery
     {
         $result = $this->connection->column($this, $field, $key);
 
-        if (count($result) != count($result, 1)) {
-            $this->resultSet($result, false);
+        if ($this->model) {
+            return array_map(function ($item) use ($field) {
+                if (is_array($item)) {
+                    return $this->model->newInstance($item)->toarray();
+                }
+                $array[$field] = $item;
+                return $this->model->newInstance($array)->getAttr($field);
+            }, $result);
         }
 
-        return $result;
+        return array_map(function ($item) use ($field) {
+            if (is_array($item)) {
+                $this->result($item);
+                return $item;
+            }
+            $array[$field] = $item;
+            $this->result($array);
+            return $array[$field];
+        }, $result);
     }
 
     /**
@@ -1271,9 +1303,18 @@ abstract class BaseQuery
             $this->where($this->model->getWhere());
         }
 
-        if (empty($this->options['where'])) {
+        if (empty($this->options['where']) && empty($this->options['scope'])) {
             // 如果没有任何更新条件则不执行
             throw new Exception('miss update condition');
+        }
+
+        // 检查只读字段
+        if (!empty($this->options['readonly_fields'])) {
+            foreach ($this->options['readonly_fields'] as $field) {
+                if (array_key_exists($field, $this->options['data'])) {
+                    unset($this->options['data'][$field]);
+                }
+            }
         }
 
         return $this->connection->update($this);
@@ -1299,7 +1340,7 @@ abstract class BaseQuery
             $this->where($this->model->getWhere());
         }
 
-        if (true !== $data && empty($this->options['where'])) {
+        if (true !== $data && empty($this->options['where']) && empty($this->options['scope'])) {
             // 如果条件为空 不进行删除操作 除非设置 1=1
             throw new Exception('delete without condition');
         }

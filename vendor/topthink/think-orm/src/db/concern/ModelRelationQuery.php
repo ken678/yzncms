@@ -142,7 +142,7 @@ trait ModelRelationQuery
     protected function scopeQuery()
     {
         if (!empty($this->options['scope'])) {
-            foreach ($this->options['scope'] as $name => $val) {
+            foreach ($this->options['scope'] as $val) {
                 [$call, $args] = $val;
                 call_user_func_array($call, $args);
             }
@@ -270,6 +270,19 @@ trait ModelRelationQuery
     {
         $this->options['default_model'] = $data;
 
+        return $this;
+    }
+
+    /**
+     * 设置关联模型的动态绑定
+     *
+     * @param array $attr 绑定数据
+     *
+     * @return $this
+     */
+    public function withBind(array $attr)
+    {
+        $this->options['bind_attr'] = $attr;
         return $this;
     }
 

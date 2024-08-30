@@ -419,6 +419,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
             ->json($this->json, $this->jsonAssoc)
             ->setFieldType(array_merge($this->schema, $this->jsonType))
             ->setKey($this->getKey())
+            ->readonly($this->readonly)
             ->lazyFields($this->lazyFields);
 
         // 软删除

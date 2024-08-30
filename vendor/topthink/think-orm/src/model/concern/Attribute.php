@@ -355,7 +355,7 @@ trait Attribute
         });
 
         // 只读字段不允许更新
-        foreach ($this->readonly as $key => $field) {
+        foreach ($this->readonly as $field) {
             if (array_key_exists($field, $data)) {
                 unset($data[$field]);
             }
@@ -418,7 +418,7 @@ trait Attribute
             if (is_null($value) && $array !== $this->data) {
                 return;
             }
-        } elseif (isset($this->type[$name])) {
+        } elseif (!in_array($name, $this->json) && isset($this->type[$name])) {
             // 类型转换
             $value = $this->writeTransform($value, $this->type[$name]);
         } elseif ($this->isRelationAttr($name)) {
@@ -548,7 +548,7 @@ trait Attribute
             }
 
             $value = $this->$method($value, $this->data);
-        } elseif (isset($this->type[$fieldName])) {
+        } elseif (!in_array($fieldName, $this->json) && isset($this->type[$fieldName])) {
             // 类型转换
             $value = $this->readTransform($value, $this->type[$fieldName]);
         } elseif ($this->autoWriteTimestamp && in_array($fieldName, [$this->createTime, $this->updateTime])) {
