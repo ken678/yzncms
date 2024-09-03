@@ -41,6 +41,10 @@ class Config extends Model
      */
     public static function refreshFile()
     {
+        //如果没有配置权限无法进行修改
+        if (!\app\admin\library\Auth::instance()->check('general/config/edit')) {
+            return false;
+        }
         $configs    = self::where('status', 1)->column('*', 'name');
         $newConfigs = [];
         foreach ($configs as $key => $value) {
