@@ -137,7 +137,7 @@ class Index extends Backend
                                 Db::commit();
                             } catch (\Exception $e) {
                                 Db::rollback();
-                                exception($e->getMessage());
+                                throw new \Exception($e->getMessage());
                             }
                         }
                     }
