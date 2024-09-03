@@ -41,7 +41,7 @@ class Config extends Model
      */
     public static function refreshFile()
     {
-        $configs    = self::where('status', 1)->column('value,type,options', 'name');
+        $configs    = self::where('status', 1)->column('*', 'name');
         $newConfigs = [];
         foreach ($configs as $key => $value) {
             if ($value['options'] != '') {
