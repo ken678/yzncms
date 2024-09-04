@@ -198,7 +198,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 var formEach = function() {
                     $("[data-favisible][data-favisible!='']", layform).each(function() {
                         var visible = $(this).data("favisible");
-                        var groupArr = visible.split(/\|\|/);
+                        var groupArr = visible ? visible.toString().split(/\|\|/) : [];
                         var success = 0;
                         $.each(groupArr, function(i, j) {
                             if (checkCondition(j)) {
