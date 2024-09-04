@@ -71,7 +71,7 @@ class Http
             } else {
                 $defaults[CURLOPT_CUSTOMREQUEST] = $method;
             }
-            $defaults[CURLOPT_POSTFIELDS] = $params;
+            $defaults[CURLOPT_POSTFIELDS] = is_array($params) && count(array_filter($params, 'is_array')) > 0 ? $query_string : $params;
         }
 
         $defaults[CURLOPT_HEADER]         = false;
@@ -82,7 +82,7 @@ class Http
         $defaults[CURLOPT_TIMEOUT]        = 10;
 
         // disable 100-continue
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Expect:']);
 
         if ('https' == $protocol) {
             $defaults[CURLOPT_SSL_VERIFYPEER] = false;
