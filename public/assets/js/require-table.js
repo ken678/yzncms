@@ -600,7 +600,7 @@ define(['jquery', 'layui'], function($, layui) {
             return html;
         },
         getItemField: function(item, field) {
-            var value = field.split('.').reduce((obj, key) => {
+            var value = field.split('.').reduce(function(obj, key) {
                 return (obj && obj[key]) || '';
             }, item);
             var escaped = item.LAY_COL.escape !== false && typeof value === 'string';
