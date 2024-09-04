@@ -67,8 +67,10 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
 
                 //自定义关闭按钮事件
                 layform.on("click", ".layer-close", function () {
-                    var index = parent.Layer.getFrameIndex(window.name);
-                    parent.Layer.close(index);
+                    if (window.name) {
+                        var index = parent.Layer.getFrameIndex(window.name);
+                        parent.Layer.close(index);
+                    }
                     return false;
                 });
             },
