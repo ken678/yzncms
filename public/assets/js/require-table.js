@@ -601,10 +601,11 @@ define(['jquery', 'layui'], function($, layui) {
         },
         getItemField: function(item, field) {
             var value = field.split('.').reduce(function(obj, key) {
-                return (obj && obj[key]) || '';
+                return obj && obj[key];
             }, item);
+
             var escaped = item.LAY_COL.escape !== false && typeof value === 'string';
-            return escaped ? layui.util.escape(value) : value;
+            return escaped ? layui.util.escape(value) : (value == null ? '' : value);
         },
         done: function (res, curr, count) {
             //初始化导入按钮
