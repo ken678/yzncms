@@ -160,7 +160,7 @@ class Crud extends Command
     /**
      * JSON后缀
      */
-    protected $jsonSuffix = ['json'];
+    protected $jsonSuffix = ['json', 'array'];
 
     /**
      * 标签后缀
@@ -851,7 +851,7 @@ class Crud extends Command
                     } elseif ($inputType == 'fieldlist') {
                         $editValue    = "{\$data.{$field}|raw}";
                         $itemArr      = $this->getItemArray($itemArr, $field, $v['COLUMN_COMMENT']);
-                        $templateName = !isset($itemArr['key']) && !isset($itemArr['value']) && count($itemArr) > 0 ? 'fieldlist-template' : 'fieldlist';
+                        $templateName = !isset($itemArr['key']) && count($itemArr) > 0 ? (isset($itemArr['value']) && count($itemArr) === 1 ? 'fieldlist-array' : 'fieldlist-template') : 'fieldlist';
                         $itemKey      = isset($itemArr['key']) ? ucfirst($itemArr['key']) : 'Key';
                         $itemValue    = isset($itemArr['value']) ? ucfirst($itemArr['value']) : 'Value';
                         $theadListArr = $tbodyListArr = [];
@@ -1346,7 +1346,7 @@ EOD;
         if ($content) {
             $this->fieldMaxLen = strlen($field) > $this->fieldMaxLen ? strlen($field) : $this->fieldMaxLen;
             $content           = str_replace('，', ',', $content);
-            if (stripos($content, ':') !== false && stripos($content, ',') && stripos($content, '=') !== false) {
+            if (stripos($content, ':') !== false && stripos($content, '=') !== false) {
                 list($fieldLang, $item) = explode(':', $content);
                 $itemArr                = [$field => $fieldLang];
                 foreach (explode(',', $item) as $v) {
@@ -1354,7 +1354,10 @@ EOD;
                     if (count($valArr) == 2) {
                         list($key, $value)            = $valArr;
                         $itemArr[$field . ' ' . $key] = $value;
-                        $this->fieldMaxLen            = strlen($field . ' ' . $key) > $this->fieldMaxLen ? strlen($field . ' ' . $key) : $this->fieldMaxLen;
+                        if ($this->headingFilterField == $field) {
+                            $itemArr['Set ' . $field . ' to ' . $key] = '设为' . $value;
+                        }
+                        $this->fieldMaxLen = strlen($field . ' ' . $key) > $this->fieldMaxLen ? strlen($field . ' ' . $key) : $this->fieldMaxLen;
                     }
                 }
             } else {
@@ -1624,7 +1627,7 @@ EOD;
     {
         $itemArr = [];
         $comment = str_replace('，', ',', $comment);
-        if (stripos($comment, ':') !== false && stripos($comment, ',') && stripos($comment, '=') !== false) {
+        if (stripos($comment, ':') !== false && stripos($comment, '=') !== false) {
             list($fieldLang, $item) = explode(':', $comment);
             $itemArr                = [];
             foreach (explode(',', $item) as $k => $v) {
