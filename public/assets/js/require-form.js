@@ -87,7 +87,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                         var url = $(this).data("url") ? $(this).data("url") : (typeof Backend !== 'undefined' ? "general.attachments/select" : "user/attachment");
                         parent.Yzn.api.open(url + "?element_id=" + $(this).attr("id") + "&multiple=" + multiple + "&mimetype=" + mimetype + "&admin_id=" + admin_id + "&user_id=" + user_id, '选择', {
                             callback: function(data) {
-                                var button = $("#" + $(that).attr("id"));
+                                var button = $(that);
                                 var maxcount = $(button).data("maxcount");
                                 var input_id = $(button).data("input-id") ? $(button).data("input-id") : "";
                                 maxcount = typeof maxcount !== "undefined" ? maxcount : 0;
