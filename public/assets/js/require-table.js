@@ -600,12 +600,13 @@ define(['jquery', 'layui'], function($, layui) {
             return html;
         },
         getItemField: function(item, field) {
-            var value = field.split('.').reduce(function(obj, key) {
-                return obj && obj[key];
+            var customValue = field.split('.').reduce(function(obj, key) {
+                return obj === null || obj === undefined ? '' : obj[key];
             }, item);
 
-            var escaped = item.LAY_COL.escape !== false && typeof value === 'string';
-            return escaped ? layui.util.escape(value) : (value == null ? '' : value);
+            return typeof customValue === 'string' ?
+                (item.LAY_COL.escape !== false ? layui.util.escape(customValue) : customValue) :
+                customValue;
         },
         done: function (res, curr, count) {
             //初始化导入按钮
