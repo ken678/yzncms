@@ -260,6 +260,15 @@ trait Conversion
                 $item[$key] = $this->getAttr($key);
             } elseif (!isset($hidden[$key]) && !$hasVisible) {
                 $item[$key] = $this->getAttr($key);
+            } elseif (in_array($key, $this->json)) {
+                foreach ($hidden[$key] as $name) {
+                    if (is_array($val)) {
+                        unset($val[$name]);
+                    } else {
+                        unset($val->$name);
+                    }
+                }
+                $item[$key] = $val;
             }
 
             if (isset($this->mapping[$key])) {

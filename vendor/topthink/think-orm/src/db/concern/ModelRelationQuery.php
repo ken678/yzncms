@@ -692,7 +692,7 @@ trait ModelRelationQuery
         }
 
         foreach (['hidden', 'visible', 'append'] as $name) {
-            if (!empty($this->options[$name])) {
+            if (isset($this->options[$name])) {
                 $result->$name($this->options[$name]);
             }
         }

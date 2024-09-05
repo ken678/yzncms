@@ -133,6 +133,13 @@ trait Attribute
     private $withAttr = [];
 
     /**
+     * 自动写入字段.
+     *
+     * @var array
+     */
+    protected $insert = [];
+
+    /**
      * 获取模型对象的主键.
      *
      * @return string|array
@@ -580,9 +587,9 @@ trait Attribute
 
         foreach ($this->withAttr[$name] as $key => $closure) {
             if ($this->jsonAssoc) {
-                $value[$key] = $closure($value[$key], $value);
+                $value[$key] = $closure($value[$key] ?? '', $value);
             } else {
-                $value->$key = $closure($value->$key, $value);
+                $value->$key = $closure($value->$key ?? '', $value);
             }
         }
 
