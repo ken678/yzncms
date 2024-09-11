@@ -370,7 +370,7 @@ class Auth extends \libs\Auth
 
     public function getSidebar($params = [])
     {
-        Event::trigger("admin_sidebar_begin", $params);
+        $params    = array_merge($params, ...Event::trigger("admin_sidebar_begin"));
         $colorArr  = ['red', 'orange', 'green', 'cyan', 'black', 'gray', 'blue'];
         $colorNums = count($colorArr);
         $badgeList = [];
