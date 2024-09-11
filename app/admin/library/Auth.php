@@ -20,6 +20,7 @@ use app\admin\model\AdminUser;
 use think\facade\Config;
 use think\facade\Cookie;
 use think\facade\Db;
+use think\facade\Event;
 use think\facade\Request;
 use think\facade\Session;
 use util\Random;
@@ -367,8 +368,30 @@ class Auth extends \libs\Auth
         return true;
     }
 
-    public function getSidebar()
+    public function getSidebar($params = [])
     {
+        Event::trigger("admin_sidebar_begin", $params);
+        $colorArr  = ['red', 'orange', 'green', 'cyan', 'black', 'gray', 'blue'];
+        $colorNums = count($colorArr);
+        $badgeList = [];
+        // 生成菜单的badge
+        foreach ($params as $k => $v) {
+            $url = $k;
+            if (is_array($v)) {
+                $nums  = $v[0] ?? 0;
+                $color = $v[1] ?? $colorArr[(is_numeric($nums) ? $nums : strlen($nums)) % $colorNums];
+                $class = $v[2] ?? 'layui-badge';
+            } else {
+                $nums  = $v;
+                $color = $colorArr[(is_numeric($nums) ? $nums : strlen($nums)) % $colorNums];
+                $class = 'layui-badge';
+            }
+            //必须nums大于0才显示
+            if ($nums) {
+                $badgeList[$url] = '<small class="' . $class . ' layui-bg-' . $color . '">' . $nums . '</small>';
+            }
+        }
+
         // 读取管理员当前拥有的权限节点
         $userRule = $this->getAuthList();
         // 必须将结果集转换为数组
@@ -394,6 +417,7 @@ class Auth extends \libs\Auth
             }
             $v['openType'] = $v['menutype']; //兼容前端
             $v['type']     = $v['ismenu']; //兼容前端
+            $v['badge']    = $badgeList[$v['name']] ?? '';
             $v['href']     = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $v['name'];
             $v['href']     = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : (string) url($v['href']);
         }
