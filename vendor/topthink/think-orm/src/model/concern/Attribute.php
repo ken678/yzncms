@@ -13,12 +13,14 @@ declare (strict_types = 1);
 
 namespace think\model\concern;
 
+use BackedEnum;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
 use think\db\Raw;
 use think\helper\Str;
 use think\Model;
+use think\model\contract\EnumTransform;
 use think\model\contract\FieldTypeTransform;
 use think\model\Relation;
 
@@ -110,6 +112,20 @@ trait Attribute
      * @var bool
      */
     protected $jsonAssoc = false;
+
+    /**
+     * Enum数据取出自动转换为name.
+     *
+     * @var bool
+     */
+    protected $enumReadName = false;
+
+    /**
+     * 严格检查Enum数据类型.
+     *
+     * @var bool
+     */
+    protected $enumStrict = false;
 
     /**
      * 是否严格字段大小写.
@@ -427,6 +443,9 @@ trait Attribute
             }
         } elseif (!in_array($name, $this->json) && isset($this->type[$name])) {
             // 类型转换
+            if ($this->enumStrict && is_subclass_of($this->type[$name], BackedEnum::class) && !($value instanceof BackedEnum)) {
+                throw new InvalidArgumentException('data type error: ' . $name . ' => ' . $this->type[$name]);
+            }
             $value = $this->writeTransform($value, $this->type[$name]);
         } elseif ($this->isRelationAttr($name)) {
             // 关联属性
@@ -470,6 +489,8 @@ trait Attribute
             if (str_contains($type, '\\') && class_exists($type)) {
                 if (is_subclass_of($type, FieldTypeTransform::class)) {
                     $value = $type::set($value, $model);
+                } elseif ($value instanceof BackedEnum) {
+                    $value = $value->value;
                 } elseif ($value instanceof Stringable) {
                     $value = $value->__toString();
                 }
@@ -643,6 +664,13 @@ trait Attribute
             if (str_contains($type, '\\') && class_exists($type)) {
                 if (is_subclass_of($type, FieldTypeTransform::class)) {
                     $value = $type::get($value, $model);
+                } elseif (is_subclass_of($type, BackedEnum::class)) {
+                    $value = $type::from($value);
+                    if (is_subclass_of($type, EnumTransform::class)) {
+                        $value = $value->value();
+                    } elseif ($model->enumReadName) {
+                        $value = $value->name;
+                    }
                 } else {
                     // 对象类型
                     $value = new $type($value);

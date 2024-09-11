@@ -261,14 +261,19 @@ trait Conversion
             } elseif (!isset($hidden[$key]) && !$hasVisible) {
                 $item[$key] = $this->getAttr($key);
             } elseif (in_array($key, $this->json)) {
-                foreach ($hidden[$key] as $name) {
-                    if (is_array($val)) {
-                        unset($val[$name]);
-                    } else {
-                        unset($val->$name);
+                if (isset($hidden[$key]) && is_array($hidden[$key])) {
+                    // 隐藏JSON属性
+                    foreach ($hidden[$key] as $name) {
+                        if (is_array($val)) {
+                            unset($val[$name]);
+                        } else {
+                            unset($val->$name);
+                        }
                     }
+                    $item[$key] = $val;
+                } elseif (!isset($hidden[$key])) {
+                    $item[$key] = $val;
                 }
-                $item[$key] = $val;
             }
 
             if (isset($this->mapping[$key])) {

@@ -410,7 +410,7 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
         }
 
         if (!empty($this->table)) {
-            $query->table($this->table);
+            $query->table($this->table . $this->suffix);
         } elseif (!empty($this->suffix)) {
             $query->suffix($this->suffix);
         }
@@ -781,9 +781,14 @@ abstract class Model implements JsonSerializable, ArrayAccess, Arrayable, Jsonab
 
         // 自动（使用修改器）写入字段
         if (!empty($this->insert)) {
-            foreach ($this->insert as $field) {
+            foreach ($this->insert as $name => $val) {
+                $field = is_string($name) ? $name : $val;
                 if (!isset($this->data[$field])) {
-                    $this->setAttr($field, null);
+                    if (is_string($name)) {
+                        $this->data[$name] = $val;
+                    } else {
+                        $this->setAttr($field, null);
+                    }
                 }
             }
         }
