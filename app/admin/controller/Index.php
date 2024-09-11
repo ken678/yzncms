@@ -42,7 +42,10 @@ class Index extends Backend
     public function index()
     {
         if ($this->request->isPost()) {
-            return json($this->auth->getSidebar());
+            return json($this->auth->getSidebar([
+                'auth.rule' => '菜单',
+                'addon'     => ['new', 'red', 'layui-badge'],
+            ]));
         }
         $this->assign('title', 'YZNCMS后台管理系统');
         return $this->fetch();
