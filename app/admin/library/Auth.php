@@ -419,7 +419,7 @@ class Auth extends \libs\Auth
             $v['type']     = $v['ismenu']; //兼容前端
             $v['badge']    = $badgeList[$v['name']] ?? '';
             $v['href']     = isset($v['url']) && $v['url'] ? $v['url'] : '/' . $v['name'];
-            $v['href']     = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : (string) url($v['href']);
+            $v['href']     = preg_match("/^((?:[a-z]+:)?\/\/|data:image\/)(.*)/i", $v['href']) ? $v['href'] : (string) url($v['href'], [], false);
         }
         $lastArr    = array_unique(array_filter(array_column($ruleList, 'parentid')));
         $pidDiffArr = array_diff($pidArr, $lastArr);
