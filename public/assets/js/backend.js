@@ -7,6 +7,33 @@
 define(['yzn'], function(Yzn) {
     var Backend = {
         api: {
+            //暂时不支持顶部菜单模式
+            sidebar: function (params) {
+                colorArr = ['red', 'orange', 'green', 'cyan', 'black', 'gray', 'blue'];
+                $colorNums = colorArr.length;
+                badgeList = {};
+                $.each(params, function (k, v) {
+                    $url = Yzn.api.fixurl(k);
+
+                    if ($.isArray(v)) {
+                        $nums = typeof v[0] !== 'undefined' ? v[0] : 0;
+                        $color = typeof v[1] !== 'undefined' ? v[1] : colorArr[(!isNaN($nums) ? $nums : $nums.length) % $colorNums];
+                        $class = typeof v[2] !== 'undefined' ? v[2] : 'layui-badge';
+                    } else {
+                        $nums = v;
+                        $color = colorArr[(!isNaN($nums) ? $nums : $nums.length) % $colorNums];
+                        $class = 'layui-badge';
+                    }
+                    //必须nums大于0才显示
+                    badgeList[$url] = $nums > 0 ? '<small class="' + $class + ' layui-bg-' + $color + '">' + $nums + '</small>' : '';
+                });
+                $.each(badgeList, function (k, v) {
+                    var anchor = top.window.$("#sideMenu a.site-demo-active[menu-url='" + k + "']");
+                    if (anchor) {
+                        top.window.$(".pull-right-container", anchor).replaceWith(v);
+                    }
+                });
+            },
             replaceids: function(elem, url) {
                 //如果有需要替换ids的
                 if (url.indexOf("{ids}") > -1) {
