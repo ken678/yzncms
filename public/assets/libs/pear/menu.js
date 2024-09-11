@@ -307,7 +307,7 @@ define(['jquery', 'layui'], function($, layui) {
 				content += '<a class="' + className + '" menu-type="' + item.type + '" menu-url="' + item.href + '" menu-id="' +
 					item.id +
 					'" menu-title="' + item.title + '"  href="' + href + '"  ' + target + '><i class="' + item.icon +
-					'"></i><span>' + item.title + '</span>' + item.badge + '</a>';
+					'"></i><span>' + item.title + '</span><div class="pull-right-container">' + item.badge + '</div></a>';
 			}
 			// 调 用 递 归 方 法 加 载 无 限 层 级 的 子 菜 单 
 			content += loadchild(item);
@@ -440,7 +440,7 @@ define(['jquery', 'layui'], function($, layui) {
 					// 创 建 菜 单 结 构
 					content += '<a ' + target + ' class="' + className + '" menu-type="' + note.type + '" menu-url="' + note.href +
 						'" menu-id="' + note.id + '" menu-title="' + note.title + '" menu-icon="' + note.icon + '" href="' + href +
-						'" ><i class="' + note.icon + '"></i><span>' + note.title + '</span>' + note.badge + '</a>';
+						'" ><i class="' + note.icon + '"></i><span>' + note.title + '</span><div class="pull-right-container">' + note.badge + '</div></a>';
 				}
 				// 加 载 子 项 目 录
 				content += loadchild(note);
