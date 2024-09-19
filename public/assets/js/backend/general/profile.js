@@ -1,4 +1,4 @@
-define(['jquery', 'table', 'form'], function($, Table, Form) {
+define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
     var Controller = {
         index: function() {
             Table.init = {
@@ -24,9 +24,18 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
 
             Table.api.bindevent();
 
+            // 给上传按钮添加上传成功事件
+            $("#faupload-avatar").data("upload-success", function (data) {
+                var url = Backend.api.cdnurl(data.url);
+                $(".profile-user-img").prop("src", url);
+                Toastr.success("上传成功！");
+            });
+
             // 给表单绑定事件
             Form.api.bindevent($("form#profile"), function() {
                 $("input[name='row[password]']").val('');
+                var url = Backend.api.cdnurl($("#c-avatar").val());
+                top.window.$(".layui-header .layui-layout-right .userAvatar").prop("src", url);
                 return true;
             });
         }
