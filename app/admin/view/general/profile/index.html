@@ -2,8 +2,40 @@
 {block name="main"}
 <style type="text/css">
 .admin-info {padding: 50px 20px 35px 20px; }
-.admin-info .photo {display: block; width: 130px; height: 130px; margin: 0 auto; border-radius: 50%; }
-.admin-info .photo img {display: block; width: 100%; height: 100%; border: none; border-radius: 50%; }
+.admin-info .profile-avatar-container { width: 112px; height: 112px; margin: 0 auto; position: relative;}
+.profile-avatar-container .profile-avatar-text {
+    display: none;
+}
+.profile-user-img {
+    margin: 0 auto;
+    width: 100px;
+    padding: 3px;
+    border: 3px solid #d2d6de;
+    border-radius: 50%;
+}
+.profile-avatar-container button {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 112px;
+    height: 112px;
+    opacity: 0;
+}
+.profile-avatar-container:hover .profile-avatar-text {
+    display: block;
+    position: absolute;
+    height: 112px;
+    width: 112px;
+    background: #444;
+    opacity: .6;
+    color: #fff;
+    top: 0;
+    left: 0;
+    line-height: 112px;
+    text-align: center;
+    border-radius: 50%;
+}
 .layui-user {display: block; width: 100%; height: 30px; line-height: 30px; text-align: center; padding-top: 15px; color: #333; font-size: 16px; }
 .login-time {display: block; width: 100%; height: 30px; line-height: 30px; text-align: center; font-size: 14px; color: #666777; }
 </style>
@@ -13,14 +45,17 @@
             <div class="layui-card-header">个人资料</div>
             <div class="layui-card-body">
                 <div class="admin-info">
-                    <div class="photo">
-                        <img id="avatar" src="__CDN__/assets/img/avatar.png">
+                    <div class="profile-avatar-container">
+                        <img class="profile-user-img img-responsive" src="{$admin.avatar|cdnurl}">
+                        <div class="profile-avatar-text">点击编辑</div>
+                        <button type="button" id="faupload-avatar" class="faupload" data-input-id="c-avatar">上传</button>
                     </div>
                     <h3 class="layui-user">{$admin.email}</h3>
                     <p class="login-time">上次登录：<?php if($admin['last_login_time'] > 0) { echo $admin['last_login_time'];} else { echo '--';}?></p>
                 </div>
                 <form id="profile" class="layui-form" method="post" action="{:url('update')}">
                     {:token_field()}
+                    <input type="hidden" id="c-avatar" name="row[avatar]" value="{$admin.avatar}"/>
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-inline">
