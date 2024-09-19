@@ -43,7 +43,7 @@
                 </li>
                 <li class="layui-nav-item user">
                     <!-- 头 像 -->
-                    <a href="javascript:;"><img src="__CDN__/assets/img/avatar.png" class="layui-nav-img userAvatar" width="35" height="35">{$admin.username}</a>
+                    <a href="javascript:;"><img src="{$admin.avatar|cdnurl}" class="layui-nav-img userAvatar" width="35" height="35">{$admin.username}</a>
                     <!-- 功 能 菜 单 -->
                     <dl class="layui-nav-child">
                         <dd><a user-menu-url="{:url('general.profile/index')}" user-menu-id="3" user-menu-title="个人资料"><i class="iconfont icon-user-line"></i>&nbsp;个人资料</a></dd>
