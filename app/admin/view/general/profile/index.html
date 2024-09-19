@@ -9,6 +9,7 @@
 .profile-user-img {
     margin: 0 auto;
     width: 100px;
+    height: 100px;
     padding: 3px;
     border: 3px solid #d2d6de;
     border-radius: 50%;
@@ -44,16 +45,16 @@
         <div class="layui-card">
             <div class="layui-card-header">个人资料</div>
             <div class="layui-card-body">
-                <div class="admin-info">
-                    <div class="profile-avatar-container">
-                        <img class="profile-user-img img-responsive" src="{$admin.avatar|cdnurl}">
-                        <div class="profile-avatar-text">点击编辑</div>
-                        <button type="button" id="faupload-avatar" class="faupload" data-input-id="c-avatar">上传</button>
-                    </div>
-                    <h3 class="layui-user">{$admin.email}</h3>
-                    <p class="login-time">上次登录：<?php if($admin['last_login_time'] > 0) { echo $admin['last_login_time'];} else { echo '--';}?></p>
-                </div>
                 <form id="profile" class="layui-form" method="post" action="{:url('update')}">
+                    <div class="admin-info">
+                        <div class="profile-avatar-container">
+                            <img class="profile-user-img" src="{$admin.avatar|cdnurl}">
+                            <div class="profile-avatar-text">点击编辑</div>
+                            <button type="button" id="faupload-avatar" class="faupload" data-input-id="c-avatar">上传</button>
+                        </div>
+                        <h3 class="layui-user">{$admin.email}</h3>
+                        <p class="login-time">上次登录：<?php if($admin['last_login_time'] > 0) { echo $admin['last_login_time'];} else { echo '--';}?></p>
+                    </div>
                     {:token_field()}
                     <input type="hidden" id="c-avatar" name="row[avatar]" value="{$admin.avatar}"/>
                     <div class="layui-form-item">
