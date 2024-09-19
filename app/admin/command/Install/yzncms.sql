@@ -16,6 +16,7 @@ CREATE TABLE `yzn_admin` (
   `roleid` tinyint(4) unsigned DEFAULT '0' COMMENT '规则ID',
   `encrypt` varchar(6) DEFAULT NULL COMMENT '加密因子',
   `nickname` varchar(16) NOT NULL COMMENT '昵称',
+  `avatar` varchar(255) DEFAULT '' COMMENT '头像',
   `last_login_time` int(10) unsigned DEFAULT NULL COMMENT '最后登录时间',
   `login_failure` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '失败次数',
   `create_time` int(10) unsigned DEFAULT NULL COMMENT '创建时间',
@@ -32,7 +33,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES (1, 'admin', 'ed2c3e92d29cafe07867876e189172c4', 1, 'Wo0bAa', 'Admin', 1546940765,0,1546940765,1546940765, '127.0.0.1', 'admin@admin.com', '', '',1);
+INSERT INTO `yzn_admin` VALUES (1, 'admin', 'ed2c3e92d29cafe07867876e189172c4', 1, 'Wo0bAa', 'Admin', '/assets/img/avatar.png',1546940765,0,1546940765,1546940765, '127.0.0.1', 'admin@admin.com', '', '',1);
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`
