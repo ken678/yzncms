@@ -212,7 +212,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                         }
                     });
                 }
-                layform.on("keyup change click configchange", "input,select", function() {
+                layform.on("keyup change click configchange", "input,textarea,select", function() {
                     formEach();
                 });
                 form.on('select', function(data) {
@@ -232,7 +232,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                     layform.find('.layui-hide,[data-favisible]').find('[lay-verify]').removeAttr('lay-verify');
                 }, 0);
 
-                $("input,select", layform).trigger("configchange");
+                $("input,textarea,select", layform).trigger("configchange");
             },
             fieldlist: function(layform) {
                 // 绑定fieldlist组件
