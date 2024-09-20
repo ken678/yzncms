@@ -17,12 +17,11 @@
 namespace app\common\controller;
 
 use app\common\library\Auth;
+use think\App;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
-use think\facade\Config;
 use think\Response;
 use think\Validate;
-use think\App;
 
 class Api
 {
@@ -114,7 +113,7 @@ class Api
 
         // token
         $token = $this->request->server('HTTP_TOKEN', (string) $this->request->request('token', \think\facade\Cookie::get('token')));
-        
+
         $path = str_replace('.', '/', $controllername) . '/' . $actionname;
         // 设置当前请求的URI
         $this->auth->setRequestUri($path);
@@ -194,7 +193,7 @@ class Api
             'data' => $data,
         ];
         // 如果未设置类型则自动判断
-        $type = $type ? $type : ($this->request->param(config('var_jsonp_handler')) ? 'jsonp' : $this->responseType);
+        $type = $type ?: $this->responseType;
 
         if (isset($header['statuscode'])) {
             $code = $header['statuscode'];
@@ -260,7 +259,7 @@ class Api
      * @return array|string|true
      * @throws ValidateException
      */
-    protected function validate(array $data, string|array $validate, array $message = [], bool $batch = false)
+    protected function validate(array $data, string | array $validate, array $message = [], bool $batch = false)
     {
         if (is_array($validate)) {
             $v = new Validate();
