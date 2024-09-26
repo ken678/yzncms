@@ -26,7 +26,7 @@ class ApiExceptionHandle extends Handle
     public function render($request, Throwable $e): Response
     {
         // 在生产环境下返回code信息
-        if (!env('app_debug')) {
+        if (!$this->app->isDebug()) {
             if ($e instanceof HttpResponseException) {
                 return $e->getResponse();
             }
