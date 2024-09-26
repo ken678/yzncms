@@ -54,8 +54,6 @@ class CommonInit
         if (Env::get('APP_DEBUG')) {
             // 如果是调试模式将version置为当前的时间戳可避免缓存
             Config::set(['version' => time()], 'site');
-            // 如果是开发模式那么将异常模板修改成官方的
-            Config::set(['exception_tmpl' => app()->getThinkPath() . 'tpl/think_exception.tpl'], 'app');
         }
     }
 }
