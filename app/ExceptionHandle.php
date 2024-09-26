@@ -7,6 +7,8 @@ use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
+use think\facade\Config;
+use think\facade\Env;
 use think\Response;
 use Throwable;
 
@@ -50,6 +52,10 @@ class ExceptionHandle extends Handle
      */
     public function render($request, Throwable $e): Response
     {
+        if ($this->app->env->get('APP_DEBUG')) {
+            // 如果是开发模式那么将异常模板修改成官方的
+            $this->app->config->set(['exception_tmpl' => $this->app->getThinkPath() . 'tpl/think_exception.tpl'], 'app');
+        }
         // 添加自定义异常处理机制
 
         // 其他错误交给系统处理
