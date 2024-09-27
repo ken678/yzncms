@@ -149,9 +149,6 @@ class Manager extends Backend
             Db::startTrans();
             try {
                 $this->validate($params, 'AdminUser.update');
-                /*if (!in_array($params['roleid'], $this->childrenGroupIds)) {
-                $this->error('没有权限操作！');
-                }*/
                 //密码为空，表示不修改密码
                 if (isset($params['password']) && $params['password']) {
                     $passwordinfo       = encrypt_password($params['password']); //对密码进行处理
@@ -162,6 +159,23 @@ class Manager extends Backend
                     unset($params['password'], $params['encrypt']);
                 }
                 $row->save($params);
+
+                // 先移除所有权限
+                AuthGroupAccess::where('uid', $row->id)->delete();
+
+                $group = explode(',', $this->request->param("group"));
+
+                // 过滤不允许的组别,避免越权
+                $group = array_intersect($this->childrenGroupIds, $group);
+                if (!$group) {
+                    throw new \Exception('父组别超出权限范围');
+                }
+
+                $dataset = [];
+                foreach ($group as $value) {
+                    $dataset[] = ['uid' => $row->id, 'group_id' => $value];
+                }
+                (new AuthGroupAccess())->saveAll($dataset);
                 Db::commit();
             } catch (ValidateException | \Exception $e) {
                 Db::rollback();
