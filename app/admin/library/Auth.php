@@ -161,6 +161,21 @@ class Auth extends \libs\Auth
     }
 
     /**
+     * 获取管理员所属于的分组ID
+     * @param int $uid
+     * @return array
+     */
+    public function getGroupIds($uid = null)
+    {
+        $groups   = $this->getGroups($uid);
+        $groupIds = [];
+        foreach ($groups as $K => $v) {
+            $groupIds[] = (int) $v['group_id'];
+        }
+        return $groupIds;
+    }
+
+    /**
      * 用户登录
      * @param string $username 用户名
      * @param string $password 密码
