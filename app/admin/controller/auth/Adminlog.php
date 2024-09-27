@@ -55,7 +55,7 @@ class Adminlog extends Backend
             [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
             $isAdministrator                       = $this->auth->isAdministrator();
             $childrenAdminIds                      = $this->childrenAdminIds;
-            $count                                 = $this->modelClass
+            $res                                   = $this->modelClass
                 ->where($where)
                 ->where(function ($query) use ($isAdministrator, $childrenAdminIds) {
                     if (!$isAdministrator) {
@@ -63,19 +63,9 @@ class Adminlog extends Backend
                     }
                 })
                 ->order($sort, $order)
-                ->count();
+                ->paginate($limit);
 
-            $data = $this->modelClass
-                ->where($where)
-                ->where(function ($query) use ($isAdministrator, $childrenAdminIds) {
-                    if (!$isAdministrator) {
-                        $query->where('admin_id', 'in', $childrenAdminIds);
-                    }
-                })
-                ->order($sort, $order)
-                ->page($page, $limit)
-                ->select();
-            $result = ["code" => 0, 'count' => $count, 'data' => $data];
+            $result = ["code" => 0, 'count' => $res->total(), 'data' => $res->items()];
             return json($result);
         }
         return $this->fetch();
