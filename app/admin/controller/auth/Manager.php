@@ -80,7 +80,7 @@ class Manager extends Backend
                 ->paginate($limit);
 
             foreach ($list as $k => &$v) {
-                $groups           = isset($adminGroupName[$v['id']]) ? $adminGroupName[$v['id']] : [];
+                $groups           = $adminGroupName[$v['id']] ?? [];
                 $v['groups']      = implode(',', array_keys($groups));
                 $v['groups_text'] = implode(',', array_values($groups));
             }
@@ -240,13 +240,12 @@ class Manager extends Backend
     public function get_group_list()
     {
         $keyValue = $this->request->param('keyValue');
-        $where    = [];
         if ($keyValue) {
             $groupList = AuthGroup::where('id', 'in', $keyValue)->select()->toArray();
             foreach ($groupList as $k => $v) {
                 $groupdata[] = ['id' => $v['id'], 'name' => $v['title']];
             }
-            return $result = ['count' => count($groupdata), 'data' => $groupdata];
+            return ['count' => count($groupdata), 'data' => $groupdata];
         }
         $groupList = AuthGroup::where('id', 'in', $this->childrenGroupIds)->select()->toArray();
         Tree::instance()->init($groupList);
@@ -257,7 +256,6 @@ class Manager extends Backend
                 $groupdata[] = ['id' => $v['id'], 'name' => $v['title']];
             }
         } else {
-            $result = [];
             $groups = $this->auth->getGroups();
             foreach ($groups as $m => $n) {
                 $childlist = Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['id']), 'title');
@@ -266,7 +264,7 @@ class Manager extends Backend
                 }
             }
         }
-        return $result = ['count' => count($groupdata), 'data' => $groupdata];
+        return ['count' => count($groupdata), 'data' => $groupdata];
     }
 
 }
