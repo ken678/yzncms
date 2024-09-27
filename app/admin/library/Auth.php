@@ -117,7 +117,7 @@ class Auth extends \libs\Auth
             }
         } else {
             //超级管理员拥有所有人的权限
-            $childrenAdminIds = Db::name('Admin')->column('id');
+            $childrenAdminIds = AdminUser::column('id');
         }
         if ($withself) {
             if (!in_array($this->id, $childrenAdminIds)) {
