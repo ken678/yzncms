@@ -25,7 +25,7 @@ class AdminUser extends Validate
         'password|密码'  => 'require|length:3,20|confirm',
         'email|邮箱'     => 'email|unique:admin',
         'mobile|手机'    => 'mobile|unique:admin',
-        'roleid|权限组'   => 'require',
+        'group|权限组'    => 'require',
     ];
 
     // 登录验证场景定义
