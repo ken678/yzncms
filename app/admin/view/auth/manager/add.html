@@ -3,6 +3,12 @@
 <form class="layui-form" method="post">
     {:token_field()}
     <div class="layui-form-item">
+        <label class="layui-form-label">所属组别</label>
+        <div class="layui-input-block">
+            <input class="form-control layui-input selectpage" type="text" name="row[group]" data-source="{:url('auth.manager/get_group_list')}" data-multiple="true" data-pagination="false" value="">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-block">
             <input type="text" name="row[username]" lay-verify="required" autocomplete="off" placeholder="用户名" class="layui-input">
@@ -36,12 +42,6 @@
         <label class="layui-form-label">真实姓名</label>
         <div class="layui-input-block">
             <input type="text" name="row[nickname]" autocomplete="off" placeholder="真实姓名" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">权限组</label>
-        <div class="layui-input-block">
-             {:Form::select('row[roleid]',$groupdata,'',["lay-verify"=>"required"])}
         </div>
     </div>
     <div class="layui-form-item">
