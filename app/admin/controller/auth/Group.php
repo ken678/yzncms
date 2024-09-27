@@ -16,6 +16,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\Controller\auth;
 
+use app\admin\model\AuthGroupAccess;
 use app\admin\model\AuthGroup as AuthGroupModel;
 use app\admin\model\AuthRule as AuthRuleModel;
 use app\common\controller\Backend;
@@ -173,6 +174,56 @@ class Group extends Backend
         }
         $this->assign("data", $row);
         return $this->fetch();
+    }
+
+    /**
+     * 删除
+     */
+    public function del()
+    {
+        if (false === $this->request->isPost()) {
+            $this->error('未知参数');
+        }
+        $ids = $this->request->param('id/a', null);
+        if (empty($ids)) {
+            $this->error('参数错误！');
+        }
+        if (!is_array($ids)) {
+            $ids = [0 => $ids];
+        }
+        if ($ids) {
+            $grouplist = $this->auth->getGroups();
+            $group_ids = array_map(function ($group) {
+                return $group['id'];
+            }, $grouplist);
+            // 移除掉当前管理员所在组别
+            $ids = array_diff($ids, $group_ids);
+
+            // 循环判断每一个组别是否可删除
+            $grouplist = $this->modelClass->where('id', 'in', $ids)->select()->toArray();
+            foreach ($grouplist as $k => $v) {
+                // 当前组别下有管理员
+                $groupone = AuthGroupAccess::where(['group_id' => $v['id']])->find();
+                if ($groupone) {
+                    $ids = array_diff($ids, [$v['id']]);
+                    continue;
+                }
+                // 当前组别下有子组别
+                $groupone = $this->modelClass->where(['parentid' => $v['id']])->find();
+                if ($groupone) {
+                    $ids = array_diff($ids, [$v['id']]);
+                    continue;
+                }
+            }
+            if (!$ids) {
+                $this->error('你不能删除含有子组和管理员的组');
+            }
+            $count = $this->modelClass->where('id', 'in', $ids)->delete();
+            if ($count) {
+                $this->success();
+            }
+        }
+        $this->error();
     }
 
     /**
