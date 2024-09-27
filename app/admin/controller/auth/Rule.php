@@ -65,10 +65,11 @@ class Rule extends Backend
                     $this->error($result);
                 }
                 try {
-                    $result = $this->modelClass->save($params);
+                    $this->modelClass->save($params);
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
+                Cache::delete('__menu__');
                 $this->success('新增成功');
             }
             $this->error('参数不能为空');
@@ -112,10 +113,11 @@ class Rule extends Backend
                     $this->error($result);
                 }
                 try {
-                    $result = $row->save($params);
+                    $row->save($params);
                 } catch (\Exception $e) {
                     $this->error($e->getMessage());
                 }
+                Cache::delete('__menu__');
                 $this->success('编辑成功');
             }
             $this->error('参数不能为空');
