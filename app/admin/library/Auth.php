@@ -19,7 +19,6 @@ namespace app\admin\library;
 use app\admin\model\AdminUser;
 use think\facade\Config;
 use think\facade\Cookie;
-use think\facade\Db;
 use think\facade\Event;
 use think\facade\Request;
 use think\facade\Session;
