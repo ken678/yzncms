@@ -37,8 +37,8 @@ class Manager extends Backend
         parent::initialize();
         $this->modelClass = new AdminUser;
 
-        $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
-        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
+        $this->childrenAdminIds = $this->auth->getChildrenAdminIds($this->auth->isAdministrator());
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds($this->auth->isAdministrator());
 
         $this->assignconfig("admin", ['id' => $this->auth->id]);
     }
