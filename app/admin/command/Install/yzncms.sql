@@ -13,7 +13,6 @@ CREATE TABLE `yzn_admin` (
   `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(20) DEFAULT NULL COMMENT '管理账号',
   `password` varchar(32) DEFAULT NULL COMMENT '管理密码',
-  `roleid` tinyint(4) unsigned DEFAULT '0' COMMENT '规则ID',
   `encrypt` varchar(6) DEFAULT NULL COMMENT '加密因子',
   `nickname` varchar(16) NOT NULL COMMENT '昵称',
   `avatar` varchar(255) DEFAULT '' COMMENT '头像',
@@ -33,7 +32,7 @@ CREATE TABLE `yzn_admin` (
 -- ----------------------------
 -- Records of yzn_admin
 -- ----------------------------
-INSERT INTO `yzn_admin` VALUES (1, 'admin', 'ed2c3e92d29cafe07867876e189172c4', 1, 'Wo0bAa', 'Admin', '/assets/img/avatar.png',1546940765,0,1546940765,1546940765, '127.0.0.1', 'admin@admin.com', '', '',1);
+INSERT INTO `yzn_admin` VALUES (1, 'admin', 'ed2c3e92d29cafe07867876e189172c4', 'Wo0bAa', 'Admin', '/assets/img/avatar.png',1546940765,0,1546940765,1546940765, '127.0.0.1', 'admin@admin.com', '', '',1);
 
 -- ----------------------------
 -- Table structure for `yzn_adminlog`
@@ -98,6 +97,22 @@ CREATE TABLE `yzn_auth_group` (
 -- ----------------------------
 INSERT INTO `yzn_auth_group` VALUES (1, 0, '超级管理员', '拥有所有权限', '*', 1);
 INSERT INTO `yzn_auth_group` VALUES (2, 1, '编辑', '编辑', '', 1);
+
+-- ----------------------------
+-- Table structure for yzn_auth_group_access
+-- ----------------------------
+CREATE TABLE `yzn_auth_group_access` (
+  `uid` mediumint(8) unsigned NOT NULL COMMENT '会员ID',
+  `group_id` mediumint(8) unsigned NOT NULL COMMENT '级别ID',
+  UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
+  KEY `uid` (`uid`),
+  KEY `group_id` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='权限分组表';
+
+-- ----------------------------
+-- Records of yzn_auth_group_access
+-- ----------------------------
+INSERT INTO `yzn_auth_group_access` VALUES (1, 1);
 
 -- ----------------------------
 -- Table structure for yzn_auth_rule
