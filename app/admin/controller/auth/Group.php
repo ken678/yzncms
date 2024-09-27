@@ -67,6 +67,7 @@ class Group extends Backend
         }
         $this->grouplist = $groupList;
         $this->groupdata = $groupName;
+        $this->assignconfig("admin", ['id' => $this->auth->id, 'group_ids' => $this->auth->getGroupIds()]);
         $this->assign('groupdata', $this->groupdata);
     }
 
@@ -79,7 +80,6 @@ class Group extends Backend
             $result = ["code" => 0, "count" => $total, "data" => $list];
             return json($result);
         } else {
-            $this->assignconfig("admin", ['roleid' => $this->auth->roleid]);
             return $this->fetch();
         }
     }
