@@ -42,11 +42,12 @@ class Auth
     protected $request;
     //默认配置
     protected array $config = [
-        'AUTH_ON'    => true, // 认证开关
-        'AUTH_TYPE'  => 1, // 认证方式，1为实时认证；2为登录认证。
+        'AUTH_ON' => true, // 认证开关
+        'AUTH_TYPE' => 1, // 认证方式，1为实时认证；2为登录认证。
         'AUTH_GROUP' => 'auth_group', // 用户组数据表名
-        'AUTH_RULE'  => 'auth_rule', // 权限规则表
-        'AUTH_USER'  => 'admin', // 用户信息表
+        'AUTH_GROUP_ACCESS' => 'auth_group_access', // 用户-用户组关系表
+        'AUTH_RULE' => 'auth_rule', // 权限规则表
+        'AUTH_USER' => 'admin', // 用户信息表
     ];
 
     /**
@@ -76,7 +77,7 @@ class Auth
 
         return self::$instance;
     }
-    
+
     /**
      * 检查权限
      * @param array|string $name 需要验证的规则列表,支持逗号分隔的权限规则或索引数组
@@ -88,7 +89,7 @@ class Auth
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function check(array|string $name, int $uid, string $mode = 'url', string $relation = 'or')
+    public function check(array | string $name, int $uid, string $mode = 'url', string $relation = 'or')
     {
         if (!$this->config['AUTH_ON']) {
             return true;
@@ -149,12 +150,12 @@ class Auth
         if (isset($groups[$uid])) {
             return $groups[$uid];
         }
-        $user_groups = Db::name($this->config['AUTH_USER'])
-            ->alias('a')
-            ->where('a.id', $uid)
-            ->where('g.status', 1)
-            ->join($this->config['AUTH_GROUP'] . ' g', "g.id = a.roleid")
-            ->field('a.id as uid,g.id,g.parentid,roleid,title,rules')
+        $user_groups = Db::name($this->config['AUTH_GROUP_ACCESS'])
+            ->alias('aga')
+            ->join($this->config['AUTH_GROUP'] . ' ag', 'aga.group_id = ag.id', 'LEFT')
+            ->field('aga.uid,aga.group_id,ag.id,ag.parentid,ag.title,ag.rules')
+            ->where('aga.uid', $uid)
+            ->where('ag.status', 1)
             ->select()->toArray();
         $groups[$uid] = $user_groups ?: [];
         return $groups[$uid];
