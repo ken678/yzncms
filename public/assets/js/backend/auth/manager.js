@@ -17,7 +17,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                     [
                         { field: 'id', width: 80, title: 'ID' },
                         { field: 'username', width: 120, title: '登录名', searchOp: 'like' },
-                        { field: 'groups', width: 120, title: '所属角色', search: false },
+                        { field: 'groups_text',  title: '所属角色', search: false,align: 'center', templet: Table.formatter.label },
                         { field: 'last_login_ip', title: '最后登录IP', searchOp: 'like' },
                         { field: 'last_login_time', width: 200, title: '最后登录时间', search: 'range' },
                         { field: 'email', width: 200, title: '邮箱', searchOp: 'like' },
