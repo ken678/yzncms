@@ -106,11 +106,20 @@ class Manager extends Backend
                 $passwordinfo       = encrypt_password($params['password']); //对密码进行处理
                 $params['password'] = $passwordinfo['password'];
                 $params['encrypt']  = $passwordinfo['encrypt'];
-
-                /*if (!in_array($params['roleid'], $this->childrenGroupIds)) {
-                throw new \Exception('没有权限操作！');
-                }*/
+                $params['avatar']   = '/assets/img/avatar.png'; //设置新管理员默认头像。
                 $this->modelClass->save($params);
+
+                $group = explode(',', $this->request->param("group"));
+                //过滤不允许的组别,避免越权
+                $group = array_intersect($this->childrenGroupIds, $group);
+                if (!$group) {
+                    throw new \Exception('父组别超出权限范围');
+                }
+                $dataset = [];
+                foreach ($group as $value) {
+                    $dataset[] = ['uid' => $this->modelClass->id, 'group_id' => $value];
+                }
+                (new AuthGroupAccess())->saveAll($dataset);
                 Db::commit();
             } catch (ValidateException | \Exception $e) {
                 Db::rollback();
@@ -180,8 +189,11 @@ class Manager extends Backend
             $this->error('请指定需要删除的用户ID！');
         }
         $ids = array_intersect($this->childrenAdminIds, array_filter($id));
-
-        $adminList = $this->modelClass->where('id', 'in', $ids)->where('roleid', 'in', $this->childrenGroupIds)->select();
+        // 避免越权删除管理员
+        $childrenGroupIds = $this->childrenGroupIds;
+        $adminList        = $this->modelClass->where('id', 'in', $ids)->where('id', 'in', function ($query) use ($childrenGroupIds) {
+            $query->name('auth_group_access')->where('group_id', 'in', $childrenGroupIds)->field('uid');
+        })->select();
         if ($adminList) {
             $deleteIds = [];
             foreach ($adminList as $k => $v) {
@@ -189,9 +201,13 @@ class Manager extends Backend
             }
             $deleteIds = array_values(array_diff($deleteIds, [$this->auth->id]));
             if ($deleteIds) {
+                Db::startTrans();
                 try {
                     $this->modelClass->destroy($deleteIds);
+                    AuthGroupAccess::where('uid', 'in', $deleteIds)->delete();
+                    Db::commit();
                 } catch (\Exception $e) {
+                    Db::rollback();
                     $this->error($e->getMessage());
                 }
                 $this->success("删除成功！");
