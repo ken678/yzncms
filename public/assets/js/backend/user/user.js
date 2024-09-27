@@ -20,7 +20,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                         { field: 'id', width: 90, title: '用户ID' },
                         { field: 'group.name', width: 110, title: '用户组' },
                         { field: 'username', width: 150, title: '用户名', templet: '<div>{{#  if(d.vip>0){ }} <span class="text-danger">[VIP]</span> {{#  } }}{{ d.username }}</div>', searchOp: 'like' },
-                        { field: 'nickname', width: 150, title: '昵称', searchOp: 'like' },
+                        { field: 'nickname', title: '昵称', searchOp: 'like' },
                         { field: 'avatar', width: 70, align: "center", title: '头像', search: false, templet: Table.formatter.image },
                         { field: 'mobile', width: 120, title: '手机', searchOp: 'like' },
                         { field: 'email',  width: 180,title: '邮箱', searchOp: 'like' },
