@@ -22,7 +22,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                         { field: 'last_login_time', width: 200, title: '最后登录时间', search: 'range' },
                         { field: 'email', width: 200, title: '邮箱', searchOp: 'like' },
                         { field: 'mobile', width: 200, title: '手机', searchOp: 'like' },
-                        { field: 'nickname', title: '真实姓名', searchOp: 'like' },
+                        { field: 'status', width: 80, title: '状态', templet: Table.formatter.status, selectList: { 0: '禁用', 1: '正常' }, search: false },
                         {
                             width: 100,
                             title: '操作',
