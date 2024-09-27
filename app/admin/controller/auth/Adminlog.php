@@ -32,8 +32,53 @@ class Adminlog extends Backend
     //删除一个月前的操作日志
     public function deletelog()
     {
-        AdminlogModel::where('create_time', '<= time', time() - (86400 * 30))->delete();
+        $isAdministrator  = $this->auth->isAdministrator();
+        $childrenAdminIds = $this->childrenAdminIds;
+        $where            = [];
+        if (!$isAdministrator) {
+            $where[] = ['admin_id', 'in', $childrenAdminIds];
+        }
+        AdminlogModel::where('create_time', '<= time', time() - (86400 * 30))->where($where)->delete();
         $this->success("删除日志成功！");
+    }
+
+    /**
+     * 查看
+     */
+    public function index()
+    {
+        if ($this->request->isAjax()) {
+            //如果发送的来源是Selectpage，则转发到Selectpage
+            if ($this->request->request('keyField')) {
+                return $this->selectpage();
+            }
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
+            $isAdministrator                       = $this->auth->isAdministrator();
+            $childrenAdminIds                      = $this->childrenAdminIds;
+            $count                                 = $this->modelClass
+                ->where($where)
+                ->where(function ($query) use ($isAdministrator, $childrenAdminIds) {
+                    if (!$isAdministrator) {
+                        $query->where('admin_id', 'in', $childrenAdminIds);
+                    }
+                })
+                ->order($sort, $order)
+                ->count();
+
+            $data = $this->modelClass
+                ->where($where)
+                ->where(function ($query) use ($isAdministrator, $childrenAdminIds) {
+                    if (!$isAdministrator) {
+                        $query->where('admin_id', 'in', $childrenAdminIds);
+                    }
+                })
+                ->order($sort, $order)
+                ->page($page, $limit)
+                ->select();
+            $result = ["code" => 0, 'count' => $count, 'data' => $data];
+            return json($result);
+        }
+        return $this->fetch();
     }
 
     /**
