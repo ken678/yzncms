@@ -108,8 +108,13 @@ class Auth extends \libs\Auth
     {
         $childrenAdminIds = [];
         if (!$this->isAdministrator()) {
-            $groupIds         = $this->getChildrenGroupIds(false);
-            $childrenAdminIds = Db::name('Admin')->where('roleid', 'in', $groupIds)->column('id');
+            $groupIds      = $this->getChildrenGroupIds(false);
+            $authGroupList = \app\admin\model\AuthGroupAccess::field('uid,group_id')
+                ->where('group_id', 'in', $groupIds)
+                ->select();
+            foreach ($authGroupList as $k => $v) {
+                $childrenAdminIds[] = $v['uid'];
+            }
         } else {
             //超级管理员拥有所有人的权限
             $childrenAdminIds = Db::name('Admin')->column('id');
