@@ -31,13 +31,13 @@ class AdminUser extends Validate
     // 登录验证场景定义
     public function sceneUpdate()
     {
-        return $this->only(['username', 'password', 'email', 'mobile', 'roleid'])
+        return $this->only(['username', 'password', 'email', 'mobile'])
             ->remove('password', 'require');
     }
 
     //定义验证场景
     protected $scene = [
-        'insert' => ['username', 'password', 'email', 'roleid', 'mobile'],
+        'insert' => ['username', 'password', 'email', 'mobile'],
 
     ];
 
