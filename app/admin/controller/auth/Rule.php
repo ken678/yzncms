@@ -107,8 +107,7 @@ class Rule extends Backend
                         $this->error('父级不能是它的子级');
                     }
                 }
-                $params['icon'] = $params['icon'] ? 'iconfont ' . $params['icon'] : '';
-                $result         = $this->validate($params, 'app\admin\validate\AuthRule');
+                $result = $this->validate($params, 'app\admin\validate\AuthRule');
                 if (true !== $result) {
                     $this->error($result);
                 }
