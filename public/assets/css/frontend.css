@@ -280,3 +280,10 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
     .layui-form-item .layui-input-inline+.layui-form-mid {margin-left: 0 !important;}
     .layui-form-item .layui-form-mid.no-float {margin-left: 0 !important;}
 }
+
+/*selectpage*/
+input.selectpage {color: transparent; pointer-events: none; }
+.sp_container {min-height: 36px; }
+.sp_container input.selectpage {color: inherit; pointer-events: inherit; padding-left: 12px; padding-right: 12px; }
+.sp_container .sp_element_box input.selectpage {padding-left: 0; padding-right: 0; }
+.sp_container .sp_element_box li:first-child input.selectpage {padding-left: 9px; padding-right: 9px; }
