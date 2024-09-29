@@ -127,7 +127,7 @@ class Rule extends Backend
         $tree->init($ruleList);
         $select_categorys = $tree->getTree(0, '', $row->parentid);
         $this->assign("select_categorys", $select_categorys);
-        $this->view->assign("data", $row);
+        $this->assign("data", $row);
         return $this->fetch();
     }
 
