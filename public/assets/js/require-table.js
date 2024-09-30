@@ -941,7 +941,7 @@ define(['jquery', 'layui'], function($, layui) {
                     var value = undefined;
                 }
                 var checked = value === that.checked ? 'checked' : '';
-                return laytpl('<input type="checkbox" name="' + that.field + '" value="' + data.id + '" lay-skin="switch" lay-text="' + that.tips + '" lay-filter="' + that.filter + '" ' + checked + ' >').render(data);
+                return laytpl('<input type="checkbox" name="' + that.field + '" value="' + data.id + '" lay-skin="switch" data-field="' + that.field + '" lay-text="' + that.tips + '" lay-filter="' + that.filter + '" ' + checked + ' >').render(data);
             },
             image: function(data) {
                 var that = this;
