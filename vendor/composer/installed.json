@@ -1059,23 +1059,23 @@
         },
         {
             "name": "psr/log",
-            "version": "3.0.1",
-            "version_normalized": "3.0.1.0",
+            "version": "3.0.2",
+            "version_normalized": "3.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "79dff0b268932c640297f5208d6298f71855c03e"
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/79dff0b268932c640297f5208d6298f71855c03e",
-                "reference": "79dff0b268932c640297f5208d6298f71855c03e",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0"
             },
-            "time": "2024-08-21T13:31:24+00:00",
+            "time": "2024-09-11T13:17:53+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1106,7 +1106,7 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/3.0.1"
+                "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "install-path": "../psr/log"
         },
@@ -2168,18 +2168,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/think-addons.git",
-                "reference": "fbf24d3a94299c5fac87df986257bf592a2f94c2"
+                "reference": "094fe6d453278510a3fd7360375600b850f4d9f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/think-addons/zipball/fbf24d3a94299c5fac87df986257bf592a2f94c2",
-                "reference": "fbf24d3a94299c5fac87df986257bf592a2f94c2",
+                "url": "https://api.github.com/repos/ken678/think-addons/zipball/094fe6d453278510a3fd7360375600b850f4d9f1",
+                "reference": "094fe6d453278510a3fd7360375600b850f4d9f1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0"
             },
-            "time": "2024-07-09T03:37:43+00:00",
+            "time": "2024-09-30T02:01:39+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

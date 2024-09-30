@@ -208,7 +208,7 @@ class Service
         }
 
         //备份冲突文件
-        if (config::get('yzn.backup_global_files')) {
+        if (Config::get('yzn.backup_global_files')) {
             $conflictFiles = self::getGlobalFiles($name, true);
             if ($conflictFiles) {
                 $zip = new ZipFile();
@@ -248,7 +248,7 @@ class Service
         }
 
         //插件纯净模式时将插件目录下的application、public和assets删除
-        if (config::get('yzn.addon_pure_mode')) {
+        if (Config::get('yzn.addon_pure_mode')) {
             // 删除插件目录已复制到全局的文件
             @File::del_dir($sourceAssetsDir);
             foreach (self::getCheckDirs() as $k => $dir) {
@@ -294,7 +294,7 @@ class Service
             self::noconflict($name);
         }
 
-        if (config::get('yzn.backup_global_files')) {
+        if (Config::get('yzn.backup_global_files')) {
             //仅备份修改过的文件
             $conflictFiles = self::getGlobalFiles($name, true);
             if ($conflictFiles) {
@@ -324,7 +324,7 @@ class Service
 
         //插件纯净模式时将原有的文件复制回插件目录
         //当无法获取全局文件列表时也将列表复制回插件目录
-        if (config::get('yzn.addon_pure_mode') || !$list) {
+        if (Config::get('yzn.addon_pure_mode') || !$list) {
             if ($config && isset($config['files']) && is_array($config['files'])) {
                 foreach ($config['files'] as $index => $item) {
                     //避免切换不同服务器后导致路径不一致
@@ -929,7 +929,7 @@ EOD;
      */
     protected static function getServerUrl()
     {
-        return config('yzn.api_url');
+        return Config::get('yzn.api_url');
     }
 
     /**
