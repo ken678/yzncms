@@ -753,7 +753,10 @@ class Crud extends Command
                         $attrArr['min'] = 0;
                     }
                     if ($inputType == 'select') {
-                        $templateName    = $v['DATA_TYPE'] == 'set' ? 'selects' : 'select';
+                        $templateName = $v['DATA_TYPE'] == 'set' ? 'selects' : 'select';
+                        if ($templateName == 'select') {
+                            $editValue = "\$data.{$field}";
+                        }
                         $fieldList       = $this->getFieldListName($field);
                         $attrArr['name'] = $fieldName;
 
@@ -768,7 +771,7 @@ class Crud extends Command
                         $this->appendAttr($appendAttrList, $field);
 
                         $formAddElement  = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => Form::attributes($attrArr), 'selectedValue' => $defaultValue]);
-                        $formEditElement = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => Form::attributes($attrArr), 'selectedValue' => "\$data.{$field}"]);
+                        $formEditElement = $this->getReplacedStub('html/' . $templateName, ['field' => $field, 'fieldName' => $fieldName, 'fieldList' => $fieldList, 'attrStr' => Form::attributes($attrArr), 'selectedValue' => $editValue]);
                     } elseif ($inputType == 'datetime') {
                         $format    = "YYYY-MM-DD HH:mm:ss";
                         $phpFormat = "Y-m-d H:i:s";
