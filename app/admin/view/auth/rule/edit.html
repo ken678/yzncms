@@ -5,8 +5,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">菜单</label>
         <div class="layui-input-block">
-            <input type="radio" name="row[ismenu]" value="1" title="是" {if $data.ismenu==1}checked{/if}>
-            <input type="radio" name="row[ismenu]" value="0" title="否" {if $data.ismenu==0}checked{/if}>
+            <input type="radio" name="row[ismenu]" value="1" title="是" {if $data.ismenu==1}checked{/if} lay-filter="ismenu">
+            <input type="radio" name="row[ismenu]" value="0" title="否" {if $data.ismenu==0}checked{/if} lay-filter="ismenu">
         </div>
     </div>
     <div class="layui-form-item">
@@ -33,7 +33,7 @@
     <div class="layui-form-item" data-type="menu">
         <label class="layui-form-label">URL</label>
         <div class="layui-input-block">
-            <input type="text" name="row[url]" autocomplete="off" placeholder="url" class="layui-input" value="{$data.url}">
+            <input type="text" name="row[url]" autocomplete="off" placeholder="一般情况下留空即可,如果是外部链接或相对链接请输入" class="layui-input" value="{$data.url}">
         </div>
     </div>
     <div class="layui-form-item">
