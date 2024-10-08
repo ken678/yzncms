@@ -300,7 +300,7 @@ define(['jquery', 'layui'], function($, layui) {
 			}
 			if (item.type == 0) {
 				// 创 建 目 录 结 构
-				content += '<a  href="javascript:;" menu-type="' + item.type + '" menu-id="' + item.id + '" href="' + href +
+				content += '<a ' + item.extend + ' href="javascript:;" menu-type="' + item.type + '" menu-id="' + item.id + '" href="' + href +
 					'" ' + target + '><i class="' + item.icon + '"></i><span>' + item.title +
 					'</span></a>';
 			} else if (item.type == 1) {
@@ -438,7 +438,7 @@ define(['jquery', 'layui'], function($, layui) {
 						'"><i class="' + note.icon + '"></i><span>' + note.title + '</span></a>';
 				} else if (note.type == 1) {
 					// 创 建 菜 单 结 构
-					content += '<a ' + target + ' class="' + className + '" menu-type="' + note.type + '" menu-url="' + note.href +
+					content += '<a ' + target + note.extend + ' class="' + className + '" menu-type="' + note.type + '" menu-url="' + note.href +
 						'" menu-id="' + note.id + '" menu-title="' + note.title + '" menu-icon="' + note.icon + '" href="' + href +
 						'" ><i class="' + note.icon + '"></i><span>' + note.title + '</span><div class="pull-right-container">' + note.badge + '</div></a>';
 				}
