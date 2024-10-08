@@ -12,7 +12,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
             config: {
                 container: document.body,
                 classname: '.plupload:not([initialized]),.faupload:not([initialized])',
-                previewtpl: '<li class="file-item thumbnail"><a href="javascript:;"><img data-image onerror="this.src=\'' + Yzn.api.fixurl("admin/ajax/icon") + '?suffix={{d.suffix}}\';this.onerror=null;"  data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">{{- d.data.multiple==true ? "<i class=\'iconfont icon-drag-move-2-fill move-picture\'></i>" : "" }} {{# if(Config.modulename === \'admin\'){ }}<i class="iconfont icon-crop-line btn-cropper" data-input-id="{{d.data.inputId}}"></i>{{#  } }} <i class="iconfont icon-delete-bin-line remove-picture"></i></div></a></li>',     
+                previewtpl: '<li class="file-item thumbnail"><a href="javascript:;"><img data-image onerror="this.src=\'' + Yzn.api.fixurl("ajax/icon") + '?suffix={{d.suffix}}\';this.onerror=null;"  data-original="{{d.url}}" src="{{d.url}}"><div class="file-panel">{{- d.data.multiple==true ? "<i class=\'iconfont icon-drag-move-2-fill move-picture\'></i>" : "" }} {{# if(Config.modulename === \'admin\'){ }}<i class="iconfont icon-crop-line btn-cropper" data-input-id="{{d.data.inputId}}"></i>{{#  } }} <i class="iconfont icon-delete-bin-line remove-picture"></i></div></a></li>',     
             },
             events: {
                 //初始化
