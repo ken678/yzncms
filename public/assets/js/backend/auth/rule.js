@@ -95,6 +95,16 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 });
 
                 Form.api.bindevent($("form.layui-form"));
+
+                layui.form.on('radio(ismenu)', function(data) {
+                    var ismenu = data.value == 1;
+                    $('div[data-type="menu"]').toggleClass("layui-hide", !ismenu);
+                    
+                });
+
+                $("input[name='row[ismenu]']:checked").next().trigger("click");
+
+
             }
         }
     };
