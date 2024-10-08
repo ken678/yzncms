@@ -207,7 +207,7 @@ if (!function_exists('parse_attr')) {
      * @param string $value 配置值
      * @return array|string
      */
-    function parse_attr($value = '')
+    function parse_attr(string $value = '')
     {
         $array = preg_split('/[,;\r\n]+/', trim($value, ",;\r\n"));
         if (strpos($value, ':')) {
@@ -226,10 +226,11 @@ if (!function_exists('parse_attr')) {
 if (!function_exists('time_format')) {
     /**
      * 时间戳格式化
-     * @param int $timestamp
+     * @param int|null $timestamp
+     * @param int $type
      * @return string 完整的时间显示
      */
-    function time_format($timestamp = null, $type = 0)
+    function time_format(?int $timestamp = null, int $type = 0)
     {
         if ($timestamp == 0) {
             return '';
