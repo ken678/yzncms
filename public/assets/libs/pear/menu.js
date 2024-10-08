@@ -304,7 +304,7 @@ define(['jquery', 'layui'], function($, layui) {
 					'" ' + target + '><i class="' + item.icon + '"></i><span>' + item.title +
 					'</span></a>';
 			} else if (item.type == 1) {
-				content += '<a class="' + className + '" menu-type="' + item.type + '" menu-url="' + item.href + '" menu-id="' +
+				content += '<a ' + item.extend + ' class="' + className + '" menu-type="' + item.type + '" menu-url="' + item.href + '" menu-id="' +
 					item.id +
 					'" menu-title="' + item.title + '"  href="' + href + '"  ' + target + '><i class="' + item.icon +
 					'"></i><span>' + item.title + '</span><div class="pull-right-container">' + item.badge + '</div></a>';
