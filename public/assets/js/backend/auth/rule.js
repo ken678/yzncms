@@ -97,7 +97,9 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 Form.api.bindevent($("form.layui-form"));
 
                 layui.form.on('radio(ismenu)', function(data) {
+                    var name = $("input[name='row[name]']");
                     var ismenu = data.value == 1;
+                    name.prop("placeholder", ismenu ? name.data("placeholder-menu") : name.data("placeholder-node"));
                     $('div[data-type="menu"]').toggleClass("layui-hide", !ismenu);
                     
                 });
