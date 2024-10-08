@@ -387,7 +387,7 @@ define(['jquery', 'layui'], function($, layui) {
 						'</span></a>';
 				} else if (note.type == 1) {
 					// 创 建 菜 单 结 构
-					content += '<a ' + target + ' class="' + className + '" menu-type="' + note.type + '" menu-url="' + note.href +
+					content += '<a ' + note.extend + target + ' class="' + className + '" menu-type="' + note.type + '" menu-url="' + note.href +
 						'" menu-id="' + note.id +
 						'" menu-title="' + note.title + '" href="' + href + '"><i class="' + note.icon +
 						'"></i><span>' + note.title + '</span><div class="pull-right-container">' + note.badge + '</div></a>';
