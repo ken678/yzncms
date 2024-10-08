@@ -345,7 +345,7 @@ define(['jquery', 'layui'], function($, layui) {
 			}
 			if (i === option.defaultMenu) {
 				controlItem = '<li pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +
-					'" class="layui-this layui-nav-item"><a href="'+ href +'" ' + target + '>' + item.title + '</a></li>';
+					'" class="layui-this layui-nav-item"><a ' + item.extend + ' href="'+ href +'" ' + target + '>' + item.title + '</a></li>';
 				menuItem = '<ul  pear-id="' + item.id + '" lay-filter="' + option.elem +
 					'" class="layui-nav arrow layui-nav-tree pear-nav-tree">';
 
