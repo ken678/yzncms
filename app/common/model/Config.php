@@ -83,13 +83,10 @@ class Config extends Model
                 case 'images':
                     $newConfigs[$key] = empty($value['value']) ? [] : explode(',', $value['value']);
                     break;
-                case 'editor':
-                    $newConfigs[$key] = htmlspecialchars_decode($value['value']);
-                    break;
                 case 'markdown':
                     $parser                     = new \util\Parser;
                     $newConfigs[$key]           = $value['value'];
-                    $newConfigs[$key . '_text'] = $parser->makeHtml(htmlspecialchars_decode($value['value']));
+                    $newConfigs[$key . '_text'] = $parser->makeHtml($value['value']);
                     break;
                 default:
                     $newConfigs[$key] = $value['value'];

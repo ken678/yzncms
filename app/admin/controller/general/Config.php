@@ -121,9 +121,6 @@ class Config extends Backend
                 if ($value['type'] == 'datetime') {
                     $value['value'] = empty($value['value']) ? date('Y-m-d H:i:s') : $value['value'];
                 }
-                if ($value['type'] == 'editor') {
-                    $value['value'] = htmlspecialchars_decode($value['value']);
-                }
                 if ($value['name'] == 'cdnurl') {
                     //cdnurl不支持在线修改
                     continue;

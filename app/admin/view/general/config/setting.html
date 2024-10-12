@@ -148,13 +148,13 @@
 
                                 {case value="editor"}
                                 <div class="layui-input-block">
-                                    <textarea {$vo.extend_html|raw} name="{$vo.fieldArr}[{$vo.name}]" id="editor-{$vo.name}" class="layui-textarea editor" rows="5">{$vo.value|raw}</textarea>
+                                    <textarea {$vo.extend_html|raw} name="{$vo.fieldArr}[{$vo.name}]" id="editor-{$vo.name}" class="layui-textarea editor" rows="5">{$vo.value}</textarea>
                                 </div>
                                 {/case}
 
                                 {case value="markdown"}
                                 <div class="layui-input-block">
-                                    <textarea {$vo.extend_html|raw} name="{$vo.fieldArr}[{$vo.name}]" id="markdown-{$vo.name}" class="layui-textarea markdown" rows="5">{$vo.value|raw}</textarea>
+                                    <textarea {$vo.extend_html|raw} name="{$vo.fieldArr}[{$vo.name}]" id="markdown-{$vo.name}" class="layui-textarea markdown" rows="5">{$vo.value}</textarea>
                                 </div>
                                 {/case}
 
