@@ -2168,18 +2168,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/think-addons.git",
-                "reference": "094fe6d453278510a3fd7360375600b850f4d9f1"
+                "reference": "0090676023e3d5f65cd3adc3085cb7eddb4eba6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/think-addons/zipball/094fe6d453278510a3fd7360375600b850f4d9f1",
-                "reference": "094fe6d453278510a3fd7360375600b850f4d9f1",
+                "url": "https://api.github.com/repos/ken678/think-addons/zipball/0090676023e3d5f65cd3adc3085cb7eddb4eba6a",
+                "reference": "0090676023e3d5f65cd3adc3085cb7eddb4eba6a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0"
             },
-            "time": "2024-09-30T02:01:39+00:00",
+            "time": "2024-10-15T01:38:15+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

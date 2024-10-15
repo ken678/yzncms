@@ -13,8 +13,6 @@ namespace think;
 use app\common\middleware\CommonInit;
 use think\facade\Cache;
 use think\facade\Config;
-use think\facade\Env;
-use think\facade\Event;
 use think\facade\Route;
 use think\helper\Str;
 use think\Service;
@@ -34,7 +32,7 @@ class AddonsService extends Service
         //注册插件事件
         $this->addon_event();
         //插件初始化
-        Event::trigger('addon_init');
+        $this->app->event->trigger('addon_init');
     }
 
     /**
@@ -42,7 +40,7 @@ class AddonsService extends Service
      */
     private function addon_event()
     {
-        $hooks = Env::get('APP_DEBUG') ? [] : Cache::get('hooks', []);
+        $hooks = $this->app->isDebug() ? [] : Cache::get('hooks', []);
         if (empty($hooks)) {
             $hooks = (array) Config::get('addons.hooks');
             // 初始化钩子
@@ -58,11 +56,11 @@ class AddonsService extends Service
             }
             Cache::set('hooks', $hooks);
         }
-        Event::listenEvents($hooks);
+        $this->app->event->listenEvents($hooks);
         //如果在插件中有定义app_init，则直接执行
         if (isset($hooks['app_init'])) {
             foreach ($hooks['app_init'] as $k => $v) {
-                Event::trigger('app_init', $v);
+                $this->app->invoke($v);
             }
         }
     }
