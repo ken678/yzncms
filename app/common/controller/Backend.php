@@ -22,9 +22,6 @@ use think\facade\Event;
 use think\facade\Session;
 use think\Model;
 
-//定义是后台
-define('IN_ADMIN', true);
-
 class Backend extends BaseController
 {
     //无需登录的方法,同时也就不需要鉴权了
