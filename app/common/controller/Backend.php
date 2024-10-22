@@ -89,22 +89,16 @@ class Backend extends BaseController
         $this->auth->setRequestUri($path);
         // 检测是否需要验证登录
         if (!$this->auth->match($this->noNeedLogin)) {
-
-            if (defined('UID')) {
-                return;
-            }
             if (!$this->auth->isLogin()) {
                 Event::trigger('admin_nologin', $this);
                 $url = Session::get('referer');
-                $url = $url ? $url : $this->request->url();
+                $url = $url ?: $this->request->url();
                 if (in_array($this->request->pathinfo(), ['/', 'index/index'])) {
                     $this->redirect('index/login', [], 302, ['referer' => $url]);
                     exit;
                 }
                 $this->error('请先登陆', (string) url('index/login', ['url' => $url]));
             }
-            define('UID', (int) $this->auth->id);
-
             // 是否是超级管理员
             define('IS_ROOT', $this->auth->isAdministrator());
 
