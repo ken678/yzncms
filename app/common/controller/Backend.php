@@ -93,8 +93,8 @@ class Backend extends BaseController
                 Event::trigger('admin_nologin', $this);
                 $url = Session::get('referer');
                 $url = $url ?: $this->request->url();
-                if (in_array($this->request->pathinfo(), ['/', 'index/index'])) {
-                    $this->redirect('index/login', 302, ['referer' => $url]);
+                if (in_array($this->request->pathinfo(), ['', '/', 'index/index'])) {
+                    $this->redirect((string) url('index/login'), 302, ['referer' => $url]);
                     exit;
                 }
                 $this->error('请先登陆', (string) url('index/login', ['url' => $url]));
