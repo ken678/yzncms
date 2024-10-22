@@ -108,7 +108,7 @@ class Backend extends BaseController
                 foreach ($arr as $val) {
                     //是否是IP段
                     if (strpos($val, '*')) {
-                        if (strpos($this->request->ip(), str_replace('.*', '', $val)) !== false) {
+                        if (str_contains($this->request->ip(), str_replace('.*', '', $val))) {
                             $this->error('403:你在IP禁止段内,禁止访问！');
                         }
                     } else {
