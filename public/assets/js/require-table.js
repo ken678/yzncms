@@ -469,7 +469,7 @@ define(['jquery', 'layui'], function($, layui) {
             })
 
             // 重置事件
-            $('[data-table-reset="' + tableId + '"]').on('click', function () {
+            $('button[data-table-reset="' + tableId + '"]').on('click', that.$commonsearch, function() {
                 var options = layui.table.getOptions(tableId);
                 $('[data-field] li', $('div[lay-filter="' + options.layFilter + '"]')).removeClass('layui-this');
                 $('[data-field] li:first', $('div[lay-filter="' + options.layFilter + '"]')).addClass('layui-this');
