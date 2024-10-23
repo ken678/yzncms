@@ -639,9 +639,10 @@ define(['jquery', 'layui'], function($, layui) {
             }
         },
         before: function(options){
-            const { filter, op } = Table.getQueryParams({}, Table.getSearchQuery(this, true));
-            options.where.filter = filter;
-            options.where.op = op;
+            //初始化搜索参数
+            var queryParams = Table.getQueryParams({}, Table.getSearchQuery(this, true));
+            options.where.filter = queryParams.filter;
+            options.where.op = queryParams.op;
         },
         toolbarEvents: {
             //监听头部工具栏-刷新
