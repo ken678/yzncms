@@ -46,6 +46,8 @@ define(['jquery', 'layui'], function($, layui) {
                 Table.listenToolEvent(options);
                 // 监听表格文本框编辑
                 Table.listenEditEvent(options, tableId);
+                // 监听tab切换
+                Table.listenTabShowEvent(options, tableId);
                 // 监听表格开关切换
                 Table.listenSwitch(options, tableId);
             },
@@ -126,6 +128,7 @@ define(['jquery', 'layui'], function($, layui) {
             options.elem = options.elem || options.init.table_elem;
             options.cols = options.cols || [];
             options.layFilter = options.id + '_LayFilter';
+            options.searchFieldsetId = 'searchFieldset_' + options.id;
             options.url = Yzn.api.fixurl(options.url || options.init.index_url);
             options.search = Yzn.api.parame(options.search, true);
             options.showSearch = Yzn.api.parame(options.showSearch, true);
@@ -575,6 +578,20 @@ define(['jquery', 'layui'], function($, layui) {
                 return false;
             })
         },
+        listenTabShowEvent: function(options, tableId) {
+            element.on('tab(' + options.layFilter + ')', function(data){
+                var field = $(this).closest("[data-field]").data("field");
+                var value = $(this).data("value");
+                var object = $("[name='" + field + "']", $('#' + options.searchFieldsetId));
+                if (object.prop('tagName') === "SELECT") {
+                    $("option[value='" + value + "']", object).prop("selected", true);
+                    form.render('select');
+                } else {
+                    object.val(value);
+                }
+                table.reload(tableId);
+            })
+        },
         listenSwitch: function(option, tableId) {
             var modifyReload = option.modifyReload || false;
             layui.form.on('switch(switchStatus)', function(obj) {
@@ -728,9 +745,7 @@ define(['jquery', 'layui'], function($, layui) {
             //监听头部工具栏-搜索点击
             'TABLE_SEARCH': function(obj, options) {
                 // 搜索表单的显示
-                tableId = options.init.table_render_id;
-                var searchFieldsetId = 'searchFieldset_' + tableId;
-                var _that = $("#" + searchFieldsetId);
+                var _that = $("#" + options.searchFieldsetId);
                 if (_that.hasClass("layui-hide")) {
                     _that.removeClass('layui-hide');
                 } else {
