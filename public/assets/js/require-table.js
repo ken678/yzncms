@@ -152,11 +152,6 @@ define(['jquery', 'layui'], function($, layui) {
             }
             options.searchInput = options.search ? Yzn.api.parame(options.searchInput, true) : false;
 
-            var tableDone = options.done || function() {};
-            options.done = function(res, curr, count) {
-                tableDone(res, curr, count);
-            };
-
             // 判断元素对象是否有嵌套的
             options.cols = Table.formatCols(options.cols, options.init);
 
