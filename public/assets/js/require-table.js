@@ -446,6 +446,16 @@ define(['jquery', 'layui'], function($, layui) {
 
             form.on('submit(' + tableId + '_filter)', function(data) {
                 var searchQuery = Table.getSearchQuery(that, true);
+                // 提交通用搜索时判断是否和Tabs筛选一致
+                var options = layui.table.getOptions(tableId);
+                var tabs = $('.layui-tab-title[data-field]', $('div[lay-filter="' + options.layFilter + '"]'));
+                var field = tabs.data("field");
+                var value = $("li.layui-this", tabs).data("value");
+                if (searchQuery.filter && typeof searchQuery.filter[field] !== 'undefined' && searchQuery.filter[field] != value) {
+                    $("li", tabs).removeClass("layui-this");
+                    $("li[data-value='" + searchQuery.filter[field] + "']", tabs).addClass("layui-this");
+                }
+
                 table.reload(tableId, {
                     page: {
                         curr: 1
