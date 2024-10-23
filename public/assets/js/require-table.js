@@ -178,11 +178,20 @@ define(['jquery', 'layui'], function($, layui) {
             options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
             options.toolbar = Table.renderToolbar(options);
 
+            options.before = options.before ?
+                (function(before) {
+                    return function() {
+                        Table.before.apply(this, arguments);
+                        before.apply(this, arguments);
+                    };
+                })(options.before) :
+                Table.before;
+
             options.done = options.done ?
                 (function(done) {
                     return function() {
-                        done.apply(this, arguments);
                         Table.done.apply(this, arguments);
+                        done.apply(this, arguments);
                     };
                 })(options.done) :
                 Table.done;
@@ -515,6 +524,25 @@ define(['jquery', 'layui'], function($, layui) {
             });
             return { op: op, filter: filter };
         },
+        getQueryParams: function (params, searchQuery, removeempty) {
+            params.filter = typeof params.filter === 'Object' ? params.filter : (params.filter ? JSON.parse(params.filter) : {});
+            params.op = typeof params.op === 'Object' ? params.op : (params.op ? JSON.parse(params.op) : {});
+
+            params.filter = $.extend({}, params.filter, searchQuery.filter);
+            params.op = $.extend({}, params.op, searchQuery.op);
+            //移除empty的值
+            if (removeempty) {
+                $.each(params.filter, function (i, j) {
+                    if ((j == '' || j == null || ($.isArray(j) && j.length == 0)) && !params.op[i].match(/null/i)) {
+                        delete params.filter[i];
+                        delete params.op[i];
+                    }
+                });
+            }
+            params.filter = JSON.stringify(params.filter);
+            params.op = JSON.stringify(params.op);
+            return params;
+        },
         listenCheckboxEvent: function(options) {
             table.on('checkbox(' + options.layFilter + ')', function(obj) {
                 //监听表格是否选中，多选按钮禁用恢复
@@ -609,6 +637,11 @@ define(['jquery', 'layui'], function($, layui) {
             if (btnImport.length > 0) {
                 btnImport.click();
             }
+        },
+        before: function(options){
+            const { filter, op } = Table.getQueryParams({}, Table.getSearchQuery(this, true));
+            options.where.filter = filter;
+            options.where.op = op;
         },
         toolbarEvents: {
             //监听头部工具栏-刷新
