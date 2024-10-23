@@ -451,9 +451,9 @@ define(['jquery', 'layui'], function($, layui) {
                 var tabs = $('.layui-tab-title[data-field]', $('div[lay-filter="' + options.layFilter + '"]'));
                 var field = tabs.data("field");
                 var value = $("li.layui-this", tabs).data("value");
-                if (searchQuery.filter && typeof searchQuery.filter[field] !== 'undefined' && searchQuery.filter[field] != value) {
+                if (data.field && typeof data.field[field] !== 'undefined' && data.field[field] != value) {
                     $("li", tabs).removeClass("layui-this");
-                    $("li[data-value='" + searchQuery.filter[field] + "']", tabs).addClass("layui-this");
+                    $("li[data-value='" + data.field[field] + "']", tabs).addClass("layui-this");
                 }
 
                 table.reload(tableId, {
