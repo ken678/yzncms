@@ -473,6 +473,9 @@ define(['jquery', 'layui'], function($, layui) {
                 var options = layui.table.getOptions(tableId);
                 $('[data-field] li', $('div[lay-filter="' + options.layFilter + '"]')).removeClass('layui-this');
                 $('[data-field] li:first', $('div[lay-filter="' + options.layFilter + '"]')).addClass('layui-this');
+                setTimeout(function() {
+                    table.reload(tableId);
+                }, 1);
             })
 
             //表格点击搜索
