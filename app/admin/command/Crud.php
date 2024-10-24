@@ -299,6 +299,7 @@ class Crud extends Command
             ->addOption('selectpagessuffix', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'automatically generate multiple selectpage component with suffix', null)
             ->addOption('editorclass', null, Option::VALUE_OPTIONAL, 'automatically generate editor class', null)
             ->addOption('sortfield', null, Option::VALUE_OPTIONAL, 'sort field', null)
+            ->addOption('headingfilterfield', null, Option::VALUE_OPTIONAL, 'heading filter field', null)
             ->addOption('ignorefields', null, Option::VALUE_OPTIONAL | Option::VALUE_IS_ARRAY, 'ignore fields', null)
             ->addOption('db', null, Option::VALUE_OPTIONAL, 'database config name', 'mysql')
             ->setDescription('Build CRUD controller and model from table');
@@ -374,6 +375,8 @@ class Crud extends Command
         $ignoreFields = $input->getOption('ignorefields');
         //排序字段
         $sortfield = $input->getOption('sortfield');
+        //顶部筛选过滤字段
+        $headingfilterfield = $input->getOption('headingfilterfield');
         //编辑器Class
         $editorclass = $input->getOption('editorclass');
 
@@ -421,6 +424,9 @@ class Crud extends Command
         }
         if ($sortfield) {
             $this->sortField = $sortfield;
+        }
+        if ($headingfilterfield) {
+            $this->headingFilterField = $headingfilterfield;
         }
 
         $this->reservedField = array_merge($this->reservedField, [$this->createTimeField, $this->updateTimeField, $this->deleteTimeField]);
@@ -709,6 +715,8 @@ class Crud extends Command
             $getEnumArr           = [];
             $controllerAssignList = [];
             $recyclebinHtml       = "";
+            $headingHtml          = "";
+            $headingEndHtml       = "";
 
             foreach ($columnList as $v) {
                 $field   = $v['COLUMN_NAME'];
@@ -958,6 +966,10 @@ class Crud extends Command
                         //构造JS列信息
                         $javascriptList[] = $this->getJsColumn($field, $v['DATA_TYPE'], $inputType && in_array($inputType, ['select', 'checkbox', 'radio']) ? '_text' : '', $itemArr);
                     }
+                    if ($this->headingFilterField && $this->headingFilterField == $field && $itemArr) {
+                        $headingHtml    = $this->getReplacedStub('html/heading-html', ['field' => $field, 'fieldName' => parse_name($field, 1, false)]);
+                        $headingEndHtml = "</div></div>";
+                    }
                     //排序方式,如果有指定排序字段,否则按主键排序
                     $order = $field == $this->sortField ? $this->sortField : $order;
                 }
@@ -1046,6 +1058,8 @@ class Crud extends Command
                 'visibleFieldList'        => $fields ? "\$row->visible(['" . implode("','", array_filter(in_array($priKey, explode(',', $fields)) ? explode(',', $fields) : explode(',', $priKey . ',' . $fields))) . "']);" : '',
                 'recyclebinHtml'          => $recyclebinHtml,
                 'recyclebinJs'            => '',
+                'headingHtml'             => $headingHtml,
+                'headingEndHtml'          => $headingEndHtml,
                 'deleteTimeField'         => $this->deleteTimeField,
                 'toolbar'                 => "'refresh', 'add','delete'",
             ];

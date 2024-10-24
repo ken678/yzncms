@@ -1,0 +1,8 @@
+    <div class="layui-tab layui-tab-card" lay-filter="currentTable_LayFilter">
+        <ul class="layui-tab-title" data-field="{%field%}">
+            <li class="{:$Request.get.{%field%} === null ? 'layui-this' : ''}" data-value="">全部</li>
+            {foreach name="{%fieldName%}List" item="vo"}
+            <li class="{:$Think.get.{%field%} === (string)$key ? 'layui-this' : ''}" data-value="{$key}">{$vo}</li>
+            {/foreach}
+        </ul>
+    <div class="layui-tab-content">
