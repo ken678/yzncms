@@ -279,7 +279,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 
 			closeTab : function(id) {
 				if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) {
-					pearTab.delTabByElem('content', id, function(currentId){
+					bodyTab.delTabByElem('content', id, function(currentId){
 						sideMenu.selectItem(currentId);
 					});
 				} else {
@@ -289,7 +289,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 
 			closeCurrentTab : function() {
 				if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) {
-					pearTab.delCurrentTabByElem('content', function(id){
+					bodyTab.delCurrentTabByElem('content', function(id){
 						sideMenu.selectItem(id);
 					});
 				} else {
@@ -299,7 +299,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			
 			closeOtherTab : function() {
 				if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) {
-					pearTab.delOtherTabByElem('content', function(id){
+					bodyTab.delOtherTabByElem('content', function(id){
 						sideMenu.selectItem(id);
 					});
 				} else {
@@ -309,7 +309,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			
 			closeAllTab : function() {
 				if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) {
-					pearTab.delAllTabByElem('content', function(id){
+					bodyTab.delAllTabByElem('content', function(id){
 						sideMenu.selectItem(id);
 					});
 				} else {
@@ -318,7 +318,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			},
 
 			changeTabTitle : function(id, title) {
-				pearTab.changeTabTitleById('content', id ,title);
+				bodyTab.changeTabTitleById('content', id ,title);
 			},
 			
 			changeIframe : function(id, title, url) {
