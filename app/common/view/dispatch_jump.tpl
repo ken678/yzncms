@@ -34,13 +34,13 @@
     <h1>{$msg}</h1>
     {if $url}
         <p class="jump">
-            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <span id="wait"><?php echo($wait);?></span>秒
+            页面将在 <span id="wait">{$wait}</span> 秒后自动跳转
         </p>
     {/if}
     <p class="clearfix">
         <a href="{$Think.ROOT_URL}" class="btn btn-grey">返回首页</a>
         {if $url}
-            <a href="{$url}" class="btn btn-primary">立即跳转</a>
+            <a id="href" href="{$url}" class="btn btn-primary">立即跳转</a>
         {/if}
     </p>
 </div>
@@ -50,11 +50,12 @@
 {if $url}
     <script type="text/javascript">
         (function () {
-            var wait = document.getElementById('wait');
+            var wait = document.getElementById('wait'),
+                href = document.getElementById('href').href;
             var interval = setInterval(function () {
                 var time = --wait.innerHTML;
                 if (time <= 0) {
-                    location.href = "{$url}";
+                    location.href = href;
                     clearInterval(interval);
                 }
             }, 1000);
