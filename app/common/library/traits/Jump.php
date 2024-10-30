@@ -129,7 +129,7 @@ trait Jump
      * @param  array $header 发送的Header信息
      * @return void
      */
-    protected function result($data, $code = 0, $msg = '', $type = '', array $header = [])
+    protected function result($data, $code = 0, $msg = '', string $type = '', array $header = [])
     {
         $result = [
             'code' => $code,
@@ -152,7 +152,7 @@ trait Jump
      * @param  array $with 隐式传参
      * @return void
      */
-    protected function redirect($url, $code = 302, $with = [])
+    protected function redirect($url, int $code = 302, $with = [])
     {
         $response = Response::create($url, 'redirect');
 
@@ -166,7 +166,7 @@ trait Jump
      * @access protected
      * @return string
      */
-    protected function getResponseType()
+    protected function getResponseType(): string
     {
         return $this->request->isJson() || $this->request->isAjax() ? 'json' : 'html';
     }
