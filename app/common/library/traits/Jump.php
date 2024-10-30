@@ -46,19 +46,19 @@ trait Jump
     /**
      * 操作成功跳转的快捷方法
      * @access protected
-     * @param  mixed $msg 提示信息
-     * @param  string $url 跳转的URL地址
-     * @param  mixed $data 返回的数据
-     * @param  integer $wait 跳转等待时间
-     * @param  array $header 发送的Header信息
+     * @param mixed $msg 提示信息
+     * @param string|null $url 跳转的URL地址
+     * @param mixed $data 返回的数据
+     * @param integer $wait 跳转等待时间
+     * @param array $header 发送的Header信息
      * @return void
      */
-    protected function success($msg = '', string $url = null, $data = '', int $wait = 3, array $header = [])
+    protected function success($msg = '', ?string $url = null, $data = '', int $wait = 3, array $header = [])
     {
         if (is_null($url) && isset($_SERVER["HTTP_REFERER"])) {
             $url = $_SERVER["HTTP_REFERER"];
         } elseif ($url) {
-            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : (string) $this->app->route->buildUrl($url);
+            $url = (strpos($url, '://') || str_starts_with($url, '/')) ? $url : (string) $this->app->route->buildUrl($url);
         }
 
         $result = [
@@ -84,19 +84,19 @@ trait Jump
     /**
      * 操作错误跳转的快捷方法
      * @access protected
-     * @param  mixed $msg 提示信息
-     * @param  string $url 跳转的URL地址
-     * @param  mixed $data 返回的数据
-     * @param  integer $wait 跳转等待时间
-     * @param  array $header 发送的Header信息
+     * @param mixed $msg 提示信息
+     * @param string|null $url 跳转的URL地址
+     * @param mixed $data 返回的数据
+     * @param integer $wait 跳转等待时间
+     * @param array $header 发送的Header信息
      * @return void
      */
-    protected function error($msg = '', string $url = null, $data = '', int $wait = 3, array $header = [])
+    protected function error($msg = '', ?string $url = null, $data = '', int $wait = 3, array $header = [])
     {
         if (is_null($url)) {
             $url = $this->request->isAjax() ? '' : 'javascript:history.back(-1);';
         } elseif ($url) {
-            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : (string) $this->app->route->buildUrl($url);
+            $url = (strpos($url, '://') || str_starts_with($url, '/')) ? $url : (string) $this->app->route->buildUrl($url);
         }
 
         $result = [
