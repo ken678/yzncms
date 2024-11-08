@@ -8,29 +8,30 @@
 <body class="body light-theme">
     <div class="fly-header">
         <div class="layui-container">
-            <a class="fly-logo" href="{:url('/')}">
-                <h2>{$site.name}</h2>
-            </a>
-            <ul class="layui-nav fly-nav layui-hide-xs">
-                <li class="layui-nav-item layui-this">
-                    <a href="{:url('/')}">首页</a>
-                </li>
-            </ul>
-            <ul class="layui-nav fly-nav-user">
-                <!-- 登入后的状态 -->
-                <li class="layui-nav-item">
-                    <a class="fly-nav-avatar" href="javascript:;">
-                        <img src="{$user.avatar}">
-                        <cite class="layui-hide-xs">{$user.username}</cite>
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="{:url('user/index')}"><i class="iconfont icon-user-3-line"></i>用户中心</a></dd>
-                        <dd><a href="{:url('user/profile')}"><i class="iconfont icon-settings-4-line"></i>基本设置</a></dd>
-                        <hr style="margin: 5px 0;">
-                        <dd><a href="{:url('user/logout')}" style="text-align: center;">退出</a></dd>
-                    </dl>
-                </li>
-            </ul>
+            <div class="fly-head">
+                <a class="fly-logo" href="{:url('/')}">
+                    <h2>{$site.name}</h2>
+                </a>
+                <div class="navbar-toggle"><i class="iconfont icon-menu-line"></i></div> 
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="layui-nav fly-nav layui-nav-right">
+                    <li class="layui-nav-item layui-this"><a href="{:url('/')}">首页</a></li>
+                    <li class="layui-nav-item fly-nav-user">
+                        <a class="fly-nav-avatar" href="javascript:;">
+                            <img src="{$user.avatar}">
+                            <cite class="layui-hide-xs">{$user.username}</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="{:url('user/index')}"><i class="iconfont icon-user-3-line"></i>用户中心</a></dd>
+                            <dd><a href="{:url('user/profile')}"><i class="iconfont icon-settings-4-line"></i>基本设置</a></dd>
+                            <hr style="margin: 5px 0;">
+                            <dd><a href="{:url('user/logout')}" style="text-align: center;">退出</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="layui-container fly-marginTop fly-user-main">
