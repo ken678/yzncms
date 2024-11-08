@@ -1284,7 +1284,7 @@ class Parser
         $str = implode("\n", $this->markLines($lines, $start + 1));
 
         return $isEmpty ? '' :
-        '<pre><code' . (!empty($lang) ? " class=\"{$lang}\"" : '')
+        '<pre><code' . (!empty($lang) ? " class=\"language-{$lang}\"" : '')
             . (!empty($rel) ? " rel=\"{$rel}\"" : '') . '>'
             . $str . '</code></pre>';
     }
