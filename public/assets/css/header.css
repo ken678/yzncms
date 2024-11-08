@@ -21,6 +21,7 @@
 .light-theme .fly-header .layui-nav {background-color: #fff;color: #555;}
 .light-theme .fly-header .navbar-toggle {color:#000 }
 .light-theme .fly-header .fly-logo h2{color: #333}
+.light-theme .fly-header .layui-nav .layui-this a {color: #16b777;}
 
 /* 底部 */
 .fly-footer {margin: 50px 0 0; padding: 20px 0 30px; line-height: 30px; text-align: center; color: #737573; border-top: 1px solid #e2e2e2;}
@@ -28,13 +29,13 @@
 .fly-footer a:hover{color: #777;}
 
 @media screen and (min-width: 768px) {
-    .fly-head{
+    .fly-header .fly-head{
         float: left;
     }
-    .navbar-toggle {
+    .fly-header .navbar-toggle {
         display: none;
     }
-    .navbar-collapse.layui-hide {
+    .fly-header .navbar-collapse.layui-hide {
         display: block !important;
     }
 }
