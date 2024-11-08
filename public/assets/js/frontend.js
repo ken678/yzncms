@@ -4,16 +4,16 @@ define(['yzn'], function(Yzn) {
         init: function() {
             var si = {};
             //发送验证码
-            $(document).on("click", ".btn-captcha", function (e) {
+            $(document).on("click", ".btn-captcha", function(e) {
                 var type = $(this).data("type") ? $(this).data("type") : 'mobile';
                 var btn = this;
-                Frontend.api.sendcaptcha = function (btn, type, data, callback) {
+                Frontend.api.sendcaptcha = function(btn, type, data, callback) {
                     $(btn).addClass("disabled", true).text("发送中...");
 
-                    Frontend.api.ajax({url: $(btn).data("url"), data: data}, function (data, ret) {
+                    Frontend.api.ajax({ url: $(btn).data("url"), data: data }, function(data, ret) {
                         clearInterval(si[type]);
                         var seconds = 60;
-                        si[type] = setInterval(function () {
+                        si[type] = setInterval(function() {
                             seconds--;
                             if (seconds <= 0) {
                                 clearInterval(si);
@@ -25,7 +25,7 @@ define(['yzn'], function(Yzn) {
                         if (typeof callback == 'function') {
                             callback.call(this, data, ret);
                         }
-                    }, function () {
+                    }, function() {
                         $(btn).removeClass("disabled").text('发送验证码');
                     });
                 };
@@ -33,27 +33,27 @@ define(['yzn'], function(Yzn) {
                     var element = $(this).data("input-id") ? $("#" + $(this).data("input-id")) : $("input[name='" + type + "']", $(this).closest("form"));
                     var text = type === 'email' ? '邮箱' : '手机号码';
                     if (element.val() === "") {
-                        Layer.msg(text + "不能为空！",{icon:2});
+                        Layer.msg(text + "不能为空！", { icon: 2 });
                         element.focus();
                         return false;
                     } else if (type === 'mobile' && !element.val().match(/^1[3-9]\d{9}$/)) {
-                        Layer.msg("请输入正确的" + text + "！",{icon:2});
+                        Layer.msg("请输入正确的" + text + "！", { icon: 2 });
                         element.focus();
                         return false;
                     } else if (type === 'email' && !element.val().match(/^[\w\+\-]+(\.[\w\+\-]+)*@[a-z\d\-]+(\.[a-z\d\-]+)*\.([a-z]{2,4})$/)) {
-                        Layer.msg("请输入正确的" + text + "！",{icon:2});
+                        Layer.msg("请输入正确的" + text + "！", { icon: 2 });
                         element.focus();
                         return false;
                     }
 
-                    var data = {event: $(btn).data("event")};
+                    var data = { event: $(btn).data("event") };
                     data[type] = element.val();
                     Frontend.api.sendcaptcha(btn, type, data);
 
                 } else {
-                    var data = {event: $(btn).data("event")};
-                    Frontend.api.sendcaptcha(btn, type, data, function (data, ret) {
-                        Layer.open({title: false, area: ["400px", "430px"], content: "<img src='" + data.image + "' width='400' height='400' /><div class='text-center panel-title'>扫一扫关注公众号获取验证码</div>", type: 1});
+                    var data = { event: $(btn).data("event") };
+                    Frontend.api.sendcaptcha(btn, type, data, function(data, ret) {
+                        Layer.open({ title: false, area: ["400px", "430px"], content: "<img src='" + data.image + "' width='400' height='400' /><div class='text-center panel-title'>扫一扫关注公众号获取验证码</div>", type: 1 });
                     });
                 }
                 return false;
@@ -71,6 +71,16 @@ define(['yzn'], function(Yzn) {
             }, function() {
                 Layer.closeAll('tips')
             })
+
+            //手机端顶部导航切换 
+            $(document).on("click", ".fly-header .navbar-toggle", (function() {
+                var $navbarCollapse = $('.navbar-collapse');
+                if ($navbarCollapse.hasClass('layui-hide')) {
+                    $navbarCollapse.removeClass('layui-hide');
+                } else {
+                    $navbarCollapse.addClass('layui-hide');
+                }
+            }));
 
 
             //手机设备的简单适配
