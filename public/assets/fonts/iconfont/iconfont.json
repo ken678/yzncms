@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24697890",
+      "name": "user-3-fill",
+      "font_class": "user-3-fill",
+      "unicode": "eae6",
+      "unicode_decimal": 60134
+    },
+    {
+      "icon_id": "24697893",
+      "name": "user-3-line",
+      "font_class": "user-3-line",
+      "unicode": "eae7",
+      "unicode_decimal": 60135
+    },
+    {
       "icon_id": "39249941",
       "name": "search-fill",
       "font_class": "search-fill",
