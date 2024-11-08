@@ -71,7 +71,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-nav a .icon-shouye, .nav a .icon-shezhi{top: 2px;}
 .fly-nav-user{position: absolute; top: 0; right: 0;}
 .fly-nav-user .iconfont{position: relative;}
-.fly-nav-avatar img{width: 36px; height: 36px; margin-left: 10px; border-radius: 100%;}
+.fly-nav-avatar img{width: 36px; height: 36px; margin-right: 10px; border-radius: 100%;}
 .fly-nav-avatar  .icon-vip1{font-size: 18px; top: 3px;}
 .fly-nav-avatar .fly-badge-vip{position: relative; margin-left: 10px;}
 .fly-nav-user .layui-nav-child a i{position: relative; top: 2px; margin-right: 10px; font-size: 20px;}
@@ -80,13 +80,12 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-header .layui-nav{padding: 0; background: none;}
 .fly-header .fly-nav a{padding: 0 25px 0 60px;}
 .fly-header .fly-nav-user li a{padding: 0 10px;}
-.fly-header .fly-nav-user li .fly-nav-avatar{padding-right: 0;}
+.fly-header .fly-nav-user li .fly-nav-avatar{padding-right: 25px;}
 .fly-header .fly-nav-user a.iconfont{color: #A9B7B7;}
 .fly-header>.layui-nav-item a{color: rgba(255,255,255,0.5);}
 .fly-header .layui-this a{color: #fff;}
 .fly-header .layui-nav .layui-this:after,
-.fly-header .layui-nav .layui-nav-bar,
-.fly-header .fly-nav-user .layui-nav-more{display: none !important;}
+.fly-header .layui-nav .layui-nav-bar{display: none !important;}
 .fly-header .fly-nav-user .layui-nav-child{left: auto; right: 0; width: 120px; min-width: 0;}
 
 /* 底部 */
@@ -171,6 +170,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .editor_tool .layui-form-checkbox {margin-right: 0px;}
 
 @media screen and (max-width: 768px) {
+  .fly-header .fly-nav-user .layui-nav-more{display: none !important;}
   .fly-panel .layui-card.pd-20 {padding: 12px !important;}
   .fly-user-main .fly-userinfo{display: none!important;}
   .fly-user-main .layui-nav.layui-nav-tree{height: 100%;z-index:9999}
