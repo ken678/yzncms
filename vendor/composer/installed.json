@@ -1745,17 +1745,17 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v3.0.29",
-            "version_normalized": "3.0.29.0",
+            "version": "v3.0.30",
+            "version_normalized": "3.0.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "db96895739cc0322ffd92de309ebdbb33d46cd2d"
+                "reference": "6d8bcc86c3f9aba5a92010c17b68aeb8ad05ad3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/db96895739cc0322ffd92de309ebdbb33d46cd2d",
-                "reference": "db96895739cc0322ffd92de309ebdbb33d46cd2d",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/6d8bcc86c3f9aba5a92010c17b68aeb8ad05ad3a",
+                "reference": "6d8bcc86c3f9aba5a92010c17b68aeb8ad05ad3a",
                 "shasum": ""
             },
             "require": {
@@ -1772,7 +1772,7 @@
             "suggest": {
                 "ext-mongodb": "provide mongodb support"
             },
-            "time": "2024-10-30T10:04:08+00:00",
+            "time": "2024-11-07T09:12:00+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1800,7 +1800,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v3.0.29"
+                "source": "https://github.com/top-think/think-orm/tree/v3.0.30"
             },
             "install-path": "../topthink/think-orm"
         },
@@ -2101,20 +2101,22 @@
         },
         {
             "name": "yansongda/supports",
-            "version": "v4.0.10",
-            "version_normalized": "4.0.10.0",
+            "version": "v4.0.11",
+            "version_normalized": "4.0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/supports.git",
-                "reference": "11cc73776e6d4d763a84c8c733f64820abdc44e5"
+                "reference": "c26a61c8bc2dbae6278693d8ec5d6771615e7674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/supports/zipball/11cc73776e6d4d763a84c8c733f64820abdc44e5",
-                "reference": "11cc73776e6d4d763a84c8c733f64820abdc44e5",
+                "url": "https://api.github.com/repos/yansongda/supports/zipball/c26a61c8bc2dbae6278693d8ec5d6771615e7674",
+                "reference": "c26a61c8bc2dbae6278693d8ec5d6771615e7674",
                 "shasum": ""
             },
             "require": {
+                "ext-ctype": "*",
+                "ext-mbstring": "*",
                 "php": ">=8.0"
             },
             "require-dev": {
@@ -2127,7 +2129,7 @@
                 "monolog/monolog": "Use logger",
                 "symfony/console": "Use stdout logger"
             },
-            "time": "2024-06-09T15:49:21+00:00",
+            "time": "2024-11-06T08:18:03+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

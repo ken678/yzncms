@@ -183,7 +183,7 @@ class HasMany extends Relation
         return $this->query->alias($aggregate . '_table')
             ->whereExp($aggregate . '_table.' . $this->foreignKey, '=' . $this->parent->getTable(true) . '.' . $this->localKey)
             ->fetchSql()
-            ->$aggregate($this->localKey);
+            ->$aggregate($field);
     }
 
     /**

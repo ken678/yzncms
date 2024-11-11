@@ -100,7 +100,7 @@ class BelongsTo extends OneToOne
         return $this->query
             ->whereExp($this->localKey, '=' . $this->parent->getTable(true) . '.' . $this->foreignKey)
             ->fetchSql()
-            ->$aggregate($this->localKey);
+            ->$aggregate($field);
     }
 
     /**

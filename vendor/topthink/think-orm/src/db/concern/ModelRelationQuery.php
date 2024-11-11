@@ -100,6 +100,20 @@ trait ModelRelationQuery
     }
 
     /**
+     * 设置模型的输出映射.
+     *
+     * @param array $mapping 映射列表
+     *
+     * @return $this
+     */
+    public function mapping(array $mapping)
+    {
+        $this->options['mapping'] = $mapping;
+
+        return $this;
+    }
+
+    /**
      * 添加查询范围.
      *
      * @param array|string|Closure $scope 查询范围定义
@@ -689,6 +703,10 @@ trait ModelRelationQuery
         // 动态获取器
         if (!empty($this->options['with_attr'])) {
             $result->withFieldAttr($this->options['with_attr']);
+        }
+
+        if (!empty($this->options['mapping'])) {
+            $result->mapping($this->options['mapping']);
         }
 
         foreach (['hidden', 'visible', 'append'] as $name) {

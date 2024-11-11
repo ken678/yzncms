@@ -93,7 +93,7 @@ trait ModelEvent
             }
 
             if (method_exists($observer, $call)) {
-                $result = call_user_func([$observer, $call], $this);
+                $result = $this->invoke([$observer, $call], [$this]);
             } elseif (is_object(self::$event) && method_exists(self::$event, 'trigger')) {
                 $result = self::$event->trigger(static::class . '.' . $event, $this);
                 $result = empty($result) ? true : end($result);
