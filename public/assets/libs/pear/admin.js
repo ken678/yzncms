@@ -338,17 +338,6 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 				}
 			},
 			
-			fullScreen : function() {
-				if ($(".fullScreen").hasClass("layui-icon-screen-restore")) {
-					screenFun(2).then(function() {
-						$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
-					});
-				} else {
-					screenFun(1).then(function() {
-						$(".fullScreen").eq(0).addClass("layui-icon-screen-restore");
-					});
-				}
-			},
 		};
 
 		function refresh() {
