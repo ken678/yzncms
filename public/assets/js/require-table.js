@@ -678,6 +678,7 @@ define(['jquery', 'layui'], function($, layui) {
         },
         before: function(options){
             //初始化搜索参数
+            this.$commonsearch = $(".table-search-fieldset");
             var queryParams = Table.getQueryParams({}, Table.getSearchQuery(this, true));
             options.where.filter = queryParams.filter;
             options.where.op = queryParams.op;
