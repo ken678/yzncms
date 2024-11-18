@@ -113,7 +113,7 @@ class Index extends Backend
             switch ($type) {
                 case 'all':
                 case 'data':
-                    File::del_dir(app()->getRuntimePath() . 'cache');
+                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'cache');
                     Cache::clear();
                     if ($type == 'data') {
                         break;
