@@ -118,6 +118,14 @@ class Index extends Backend
                     if ($type == 'data') {
                         break;
                     }
+                case 'template':
+                    // 模板缓存
+                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'admin' . DS . 'temp'); //后台
+                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'index' . DS . 'temp'); //前台
+                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'temp');
+                    if ($type == 'template') {
+                        break;
+                    }
                 case 'addons':
                     // 插件缓存
                     Service::refresh();
