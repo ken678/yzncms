@@ -108,21 +108,22 @@ class Index extends Backend
     //缓存更新
     public function cache()
     {
+        $runtimePath = app()->getRootPath() . 'runtime' . DS;
         try {
             $type = $this->request->request("type");
             switch ($type) {
                 case 'all':
                 case 'data':
-                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'cache');
+                    File::del_dir($runtimePath . 'cache');
                     Cache::clear();
                     if ($type == 'data') {
                         break;
                     }
                 case 'template':
                     // 模板缓存
-                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'admin' . DS . 'temp'); //后台
-                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'index' . DS . 'temp'); //前台
-                    File::del_dir(app()->getRootPath() . 'runtime' . DS . 'temp');
+                    File::del_dir($runtimePath . 'admin' . DS . 'temp'); //后台
+                    File::del_dir($runtimePath . 'index' . DS . 'temp'); //前台
+                    File::del_dir($runtimePath . 'temp');
                     if ($type == 'template') {
                         break;
                     }
