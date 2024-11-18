@@ -207,7 +207,7 @@ class Yzn extends Taglib
 
         }
         $parseStr .= 'if($cache):';
-        $parseStr .= 'Cache::set($cacheID, $' . $return . ', $cache);';
+        $parseStr .= '\think\facade\Cache::set($cacheID, $' . $return . ', $cache);';
         $parseStr .= 'endif;';
 
         //判断分页
