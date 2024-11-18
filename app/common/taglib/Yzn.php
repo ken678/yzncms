@@ -130,12 +130,12 @@ class Yzn extends Taglib
         //SQL语句
         $sql = "";
         if (isset($tag['sql'])) {
-            $tag['sql'] = $sql = str_replace(["think_", "yzn_"], Config::get('database.prefix'), strtolower($tag['sql']));
+            $tag['sql'] = $sql = str_replace(["think_", "yzn_"], Config::get('database.connections.mysql.prefix'), strtolower($tag['sql']));
         }
         //表名
         $table = "";
         if (isset($tag['table'])) {
-            $table = str_replace(Config::get('database.prefix'), '', $tag['table']);
+            $table = str_replace(Config::get('database.connections.mysql.prefix'), '', $tag['table']);
         }
         if (!isset($sql) && !isset($table)) {
             return false;
@@ -191,7 +191,7 @@ class Yzn extends Taglib
             $parseStr .= 'else: ';
             //判断是否变量传递
             if (substr(trim($sql), 0, 1) == '$') {
-                $parseStr .= ' $_sql = str_replace(array("think_", "yzn_"), config("database.prefix"),' . $sql . ');';
+                $parseStr .= ' $_sql = str_replace(array("think_", "yzn_"), config("database.connections.mysql.prefix"),' . $sql . ');';
             } else {
                 $parseStr .= ' $_sql = "' . str_replace('"', '\"', $sql) . '";';
             }
