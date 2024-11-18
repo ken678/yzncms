@@ -168,10 +168,10 @@ class Yzn extends Taglib
         $parseStr .= '$cache = ' . $cache . ';';
         if ($table) {
             $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
-            $parseStr .= 'if($cache && $_return = Cache::get($cacheID)):';
+            $parseStr .= 'if($cache && $_return = \think\facade\Cache::get($cacheID)):';
             $parseStr .= '$' . $return . ' = $_return;';
             $parseStr .= 'else: ';
-            $parseStr .= '$get_db = \think\Db::name(ucwords("' . $table . '"));';
+            $parseStr .= '$get_db = \think\facade\Db::name(ucwords("' . $table . '"));';
             if (isset($tag['order'])) {
                 $parseStr .= ' $get_db->order("' . $tag['order'] . '"); ';
             }
@@ -186,7 +186,7 @@ class Yzn extends Taglib
             $parseStr .= 'endif;';
         } else {
             $parseStr .= '$cacheID = to_guid_string(' . self::arr_to_html($tag) . ');';
-            $parseStr .= 'if($cache && $_return = Cache::get($cacheID)):';
+            $parseStr .= 'if($cache && $_return = \think\facade\Cache::get($cacheID)):';
             $parseStr .= '$' . $return . ' = $_return;';
             $parseStr .= 'else: ';
             //判断是否变量传递
@@ -197,11 +197,11 @@ class Yzn extends Taglib
             }
             if ($page) {
                 $parseStr .= '$_limit=((' . $page . ' - 1) * ' . $num . ') < 0 ? 0 : (' . $page . ' - 1) * ' . $num . ';';
-                $parseStr .= '$_count=count(\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . '"));';
-                $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT $_limit,' . $num . '");';
+                $parseStr .= '$_count=count(\think\facade\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . '"));';
+                $parseStr .= '$' . $return . '=\think\facade\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT $_limit,' . $num . '");';
                 $parseStr .= '$' . $return . '=\app\cms\paginator\Page::make($data,' . $num . ',' . $page . ',$_count,false,$config);';
             } else {
-                $parseStr .= '$' . $return . '=\think\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT ' . $num . '");';
+                $parseStr .= '$' . $return . '=\think\facade\Db::query($_sql."' . (isset($tag["order"]) ? " ORDER BY " . $tag["order"] : "") . ' LIMIT ' . $num . '");';
             }
             $parseStr .= 'endif;';
 
