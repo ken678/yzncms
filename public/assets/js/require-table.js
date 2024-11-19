@@ -181,27 +181,19 @@ define(['jquery', 'layui'], function($, layui) {
             options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
             options.toolbar = Table.renderToolbar(options);
 
-            options.before = options.before ?
-                (function(before) {
-                    return function() {
-                        Table.before.apply(this, arguments);
-                        before.apply(this, arguments);
-                    };
-                })(options.before) :
-                Table.before;
-
-            options.done = options.done ?
-                (function(done) {
-                    return function() {
-                        Table.done.apply(this, arguments);
-                        done.apply(this, arguments);
-                    };
-                })(options.done) :
-                Table.done;
-
+            options.before = Table.wrapEvent(options.before, Table.before);
+            options.done = Table.wrapEvent(options.done, Table.done);
 
             var newTable = table.render(options);
             return newTable;
+        },
+        wrapEvent: function(original, wrapper) {
+            return original
+                ? function () {
+                      wrapper.apply(this, arguments);
+                      original.apply(this, arguments);
+                  }
+                : wrapper;
         },
         renderToolbar: function(options) {
             var d = options.toolbar,
