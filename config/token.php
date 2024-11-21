@@ -15,26 +15,26 @@
 
 return [
     // 复合缓存类型
-    'type'     => 'complex',
-    'key'   => 'i3d6o32wo8fvs1fvdpwens', // i3d6o32wo8fvs1fvdpwens
+    'type'    => 'complex',
+    'key'     => 'i3d6o32wo8fvs1fvdpwens', // i3d6o32wo8fvs1fvdpwens
     'hashalgo' => 'ripemd160', // 加密方式
-    'expire'   => 0,
+    'expire' => 0,
     // 默认使用的缓存
-    'default'  => [
-        'type'   => 'Mysql', // 驱动方式
+    'default' => [
+        'type' => 'Mysql', // 驱动方式
     ],
     // 文件缓存
-    'Mysql'     => [
+    'Mysql'   => [
         'type'   => 'Mysql',
         'expire' => 0, // 缓存有效期 0表示永久缓存
     ],
     // redis缓存
-    'redis'    => [
+    'redis'   => [
         'type'     => 'redis',
         'host'     => '127.0.0.1',
         'port'     => 6379,
         'password' => '',
-        'select'      => 0,
-        'expire'   => 0,
+        'select'   => 1, //避免和缓存冲突
+        'expire' => 0,
     ],
 ];
