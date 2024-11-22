@@ -1,4 +1,4 @@
-# YznCMS 2.0 后台开发框架（开发版）
+# YznCMS 2.0 后台开发框架
 ### 系统基于ThinkPHP8.x后端+(Layui2.9.x+RequireJS)前端框架，承诺后台框架永久免费且商业授权无限制，更可移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/blob/master/LICENSE.txt)
@@ -13,11 +13,11 @@
 
 ## [环境要求]
 - WEB服务器：IIS/Apache/Nginx
-- PHP版本：php >= 8.0 (推荐8.1)
+- PHP版本：php >= 8.0 (推荐8.1+)
 - 数据库：MySQL >= 5.6 (需支持 innodb 引擎)
 
 ## [插件版权]
-- 插件可用于个人或企业自营网站或应用或为客户定制开发
+- 插件可用于个人或企业自营网站或为客户定制开发
 - 插件(包含免费和付费插件)禁止二次转售，复制和传播等形式分发插件源码
 - 插件不限制域名，不限授权期限，不限建站数量！
 
