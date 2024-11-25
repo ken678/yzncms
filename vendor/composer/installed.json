@@ -1590,23 +1590,23 @@
         },
         {
             "name": "topthink/think-captcha",
-            "version": "v3.0.10",
-            "version_normalized": "3.0.10.0",
+            "version": "v3.0.11",
+            "version_normalized": "3.0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-captcha.git",
-                "reference": "4673be9cd6e74845fd13c882a65809c697f79668"
+                "reference": "4f24f560a31011329e3d144732e5370d7676b3fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-captcha/zipball/4673be9cd6e74845fd13c882a65809c697f79668",
-                "reference": "4673be9cd6e74845fd13c882a65809c697f79668",
+                "url": "https://api.github.com/repos/top-think/think-captcha/zipball/4f24f560a31011329e3d144732e5370d7676b3fb",
+                "reference": "4f24f560a31011329e3d144732e5370d7676b3fb",
                 "shasum": ""
             },
             "require": {
                 "topthink/framework": "^6.0|^8.0"
             },
-            "time": "2024-08-13T03:20:19+00:00",
+            "time": "2024-11-22T12:59:35+00:00",
             "type": "library",
             "extra": {
                 "think": {
@@ -1640,7 +1640,7 @@
             "description": "captcha package for thinkphp",
             "support": {
                 "issues": "https://github.com/top-think/think-captcha/issues",
-                "source": "https://github.com/top-think/think-captcha/tree/v3.0.10"
+                "source": "https://github.com/top-think/think-captcha/tree/v3.0.11"
             },
             "install-path": "../topthink/think-captcha"
         },
@@ -2026,17 +2026,17 @@
         },
         {
             "name": "yansongda/pay",
-            "version": "v3.7.10",
-            "version_normalized": "3.7.10.0",
+            "version": "v3.7.11",
+            "version_normalized": "3.7.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/pay.git",
-                "reference": "0aea5b2ddcd3f017fc7e7124dd1d157b7810b16c"
+                "reference": "0c8bcb8f67b56fae6c852a5b3ec0a1793f5c8ddb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/pay/zipball/0aea5b2ddcd3f017fc7e7124dd1d157b7810b16c",
-                "reference": "0aea5b2ddcd3f017fc7e7124dd1d157b7810b16c",
+                "url": "https://api.github.com/repos/yansongda/pay/zipball/0c8bcb8f67b56fae6c852a5b3ec0a1793f5c8ddb",
+                "reference": "0c8bcb8f67b56fae6c852a5b3ec0a1793f5c8ddb",
                 "shasum": ""
             },
             "require": {
@@ -2066,7 +2066,7 @@
                 "symfony/psr-http-message-bridge": "^2.1",
                 "symfony/var-dumper": "^5.1"
             },
-            "time": "2024-09-11T03:25:00+00:00",
+            "time": "2024-11-23T03:29:59+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
