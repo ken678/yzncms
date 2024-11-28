@@ -1521,17 +1521,17 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v8.1.0",
-            "version_normalized": "8.1.0.0",
+            "version": "v8.1.1",
+            "version_normalized": "8.1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "d51fd2b96a8a5d030e08b4976dc6029684ad4403"
+                "reference": "d301115ea77f33745b8d6659c74740c34fe53e9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/d51fd2b96a8a5d030e08b4976dc6029684ad4403",
-                "reference": "d51fd2b96a8a5d030e08b4976dc6029684ad4403",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/d301115ea77f33745b8d6659c74740c34fe53e9b",
+                "reference": "d301115ea77f33745b8d6659c74740c34fe53e9b",
                 "shasum": ""
             },
             "require": {
@@ -1552,7 +1552,7 @@
                 "mockery/mockery": "^1.2",
                 "phpunit/phpunit": "^9.5"
             },
-            "time": "2024-11-21T05:43:58+00:00",
+            "time": "2024-11-26T05:57:55+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1584,7 +1584,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/framework/issues",
-                "source": "https://github.com/top-think/framework/tree/v8.1.0"
+                "source": "https://github.com/top-think/framework/tree/v8.1.1"
             },
             "install-path": "../topthink/framework"
         },

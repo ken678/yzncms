@@ -884,7 +884,7 @@ class Crud extends Command
                             $selectpageTable        = substr($field, 0, strripos($field, '_'));
                             $selectpageField        = '';
                             $selectpageController   = str_replace('_', '.', $selectpageTable);
-                            $attrArr['data-source'] = "admin/" . $selectpageController . "/index";
+                            $attrArr['data-source'] = $selectpageController . "/index";
                             //如果是类型表需要特殊处理下
                             if ($selectpageController == 'admin') {
                                 $attrArr['data-source'] = 'auth.manager/index';
