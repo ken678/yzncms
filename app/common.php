@@ -213,8 +213,8 @@ if (!function_exists('parse_attr')) {
         if (strpos($value, ':')) {
             $value = [];
             foreach ($array as $val) {
-                [$k, $v] = explode(':', $val);
-                $value[$k]   = $v;
+                [$k, $v]   = explode(':', $val);
+                $value[$k] = $v;
             }
         } else {
             $value = $array;
@@ -261,7 +261,7 @@ if (!function_exists('format_bytes')) {
      * @param string $delimiter 数字和单位分隔符
      * @return string            格式化后的带单位的大小
      */
-    function format_bytes(float|int $size, string $delimiter = ''): string
+    function format_bytes(float | int $size, string $delimiter = ''): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         for ($i = 0; $size >= 1024 && $i < 5; $i++) {
@@ -564,8 +564,8 @@ if (!function_exists('letter_avatar')) {
      */
     function letter_avatar(string $text): string
     {
-        $total           = unpack('L', hash('adler32', $text, true))[1];
-        $hue             = $total % 360;
+        $total       = unpack('L', hash('adler32', $text, true))[1];
+        $hue         = $total % 360;
         [$r, $g, $b] = hsv2rgb($hue / 360, 0.3, 0.9);
 
         $bg    = "rgb({$r},{$g},{$b})";
@@ -583,11 +583,11 @@ if (!function_exists('build_suffix_image')) {
      * @param ?string $background 背景颜色
      * @return string
      */
-    function build_suffix_image(string $suffix, string $background = null): string
+    function build_suffix_image(string $suffix, ?string $background = null): string
     {
-        $suffix          = mb_substr(strtoupper($suffix), 0, 4);
-        $total           = unpack('L', hash('adler32', $suffix, true))[1];
-        $hue             = $total % 360;
+        $suffix      = mb_substr(strtoupper($suffix), 0, 4);
+        $total       = unpack('L', hash('adler32', $suffix, true))[1];
+        $hue         = $total % 360;
         [$r, $g, $b] = hsv2rgb($hue / 360, 0.3, 0.9);
 
         $background = $background ?: "rgb({$r},{$g},{$b})";
@@ -644,7 +644,7 @@ if (!function_exists('xss_clean')) {
      * @param bool $is_image
      * @return bool|string|string[]
      */
-    function xss_clean(array|string $content, bool $is_image = false)
+    function xss_clean(array | string $content, bool $is_image = false)
     {
         return \app\common\library\Security::instance()->xss_clean($content, $is_image);
     }
