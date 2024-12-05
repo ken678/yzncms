@@ -27,8 +27,8 @@ use util\File;
 
 class Index extends Backend
 {
-    protected $noNeedLogin = ['login'];
-    protected $noNeedRight = ['index', 'cache', 'logout'];
+    protected $noNeedLogin = ['login', 'captcha'];
+    protected $noNeedRight = ['index', 'cache', 'logout', 'captcha'];
 
     //初始化
     protected function initialize()
@@ -162,5 +162,11 @@ class Index extends Backend
         }
         Event::trigger("wipecache_after");
         $this->success('清理缓存');
+    }
+
+    //验证码
+    public function captcha()
+    {
+        return \think\captcha\facade\Captcha::create();
     }
 }
