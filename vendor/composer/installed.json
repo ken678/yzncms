@@ -1746,17 +1746,17 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v3.0.31",
-            "version_normalized": "3.0.31.0",
+            "version": "v3.0.33",
+            "version_normalized": "3.0.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "b75d534d8fa01122a7197f65c868b19f52a69fbb"
+                "reference": "6e0ea679f7448ff9c8906606462505597681e22e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/b75d534d8fa01122a7197f65c868b19f52a69fbb",
-                "reference": "b75d534d8fa01122a7197f65c868b19f52a69fbb",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/6e0ea679f7448ff9c8906606462505597681e22e",
+                "reference": "6e0ea679f7448ff9c8906606462505597681e22e",
                 "shasum": ""
             },
             "require": {
@@ -1773,7 +1773,7 @@
             "suggest": {
                 "ext-mongodb": "provide mongodb support"
             },
-            "time": "2024-12-10T13:38:40+00:00",
+            "time": "2024-12-19T01:52:44+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1801,7 +1801,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v3.0.31"
+                "source": "https://github.com/top-think/think-orm/tree/v3.0.33"
             },
             "install-path": "../topthink/think-orm"
         },
