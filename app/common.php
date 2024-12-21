@@ -334,38 +334,6 @@ if (!function_exists('genRandomString')) {
     }
 }
 
-if (!function_exists('getModel')) {
-    /**
-     * 获取模型数据
-     * @param type $modelid 模型ID
-     * @param type $name 返回的字段，默认返回全部，数组
-     * @return boolean
-     */
-    function getModel($modelid, $name = '')
-    {
-        if (empty($modelid) || !is_numeric($modelid)) {
-            return false;
-        }
-        $key = 'getModel_' . $modelid;
-        /* 读取缓存数据 */
-        $cache = Cache::get($key);
-        if ($cache === 'false') {
-            return false;
-        }
-        if (empty($cache)) {
-            //读取数据
-            $cache = Db::name('Model')->find($modelid);
-            if (empty($cache)) {
-                Cache::set($key, 'false', 60);
-                return false;
-            } else {
-                Cache::set($key, $cache, 3600);
-            }
-        }
-        return is_null($name) ? $cache : $cache[$name];
-    }
-}
-
 if (!function_exists('http_down')) {
     /**
      * 下载远程文件，默认保存在temp下
