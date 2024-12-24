@@ -9,4 +9,5 @@ Thumbs.db
 /.settings
 /.buildpath
 /.project
+/addons/*
 node_modules
