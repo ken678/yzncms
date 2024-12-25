@@ -17,8 +17,8 @@
 - 数据库：MySQL >= 5.6 (需支持 innodb 引擎)
 
 ## [官方仓库]
-Gitee:https://gitee.com/ken678/YZNCMS
-GitHub:https://github.com/ken678/yzncms
+- Gitee：https://gitee.com/ken678/YZNCMS
+- GitHub：https://github.com/ken678/yzncms
 
 ## [插件版权]
 - 插件可用于个人或企业自营网站或为客户定制开发
