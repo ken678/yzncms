@@ -46,7 +46,7 @@ class Date
      * @return  int
      * @throws \Exception
      */
-    public static function offset(string $remote, string $local = null, int | string $now = null): int
+    public static function offset(string $remote, ?string $local = null, $now = null): int
     {
         if ($local === null) {
             // Use the default timezone
@@ -79,7 +79,7 @@ class Date
      * @return array    associative list of all outputs requested
      * @from https://github.com/kohana/ohanzee-helpers/blob/master/src/Date.php
      */
-    public static function span(int $remote, int $local = null, string $output = 'years,months,weeks,days,hours,minutes,seconds')
+    public static function span(int $remote, ?int $local = null, string $output = 'years,months,weeks,days,hours,minutes,seconds')
     {
         // Normalize output
         $output = trim(strtolower((string) $output));
@@ -175,7 +175,7 @@ class Date
      * @param ?int $minute   基准分钟，默认为null，即以当前分钟为基准
      * @return false|int 处理后的Unix时间戳
      */
-    public static function unixtime(string $type = 'day', int $offset = 0, string $position = 'begin', int $year = null, int $month = null, int $day = null, int $hour = null, int $minute = null): false | int
+    public static function unixtime(string $type = 'day', int $offset = 0, string $position = 'begin', ?int $year = null, ?int $month = null, ?int $day = null, ?int $hour = null, ?int $minute = null): false | int
     {
         $year     = is_null($year) ? date('Y') : $year;
         $month    = is_null($month) ? date('m') : $month;

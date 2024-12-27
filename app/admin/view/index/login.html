@@ -60,7 +60,7 @@
                                 <i class="layui-icon layui-icon-vercode"></i>
                             </div>
                             <input type="text" name="verify" lay-verify="required" placeholder="验证码" autocomplete="off" class="layui-input">
-                            <img id="verify" src="{:rtrim('__PUBLIC__', '/')}/index.php/captcha" alt="验证码" class="captcha">
+                            <img id="verify" src="{:url('admin/index/captcha')}" alt="验证码" class="captcha">
                         </div>
                     </div>
                     <!--@CaptchaEnd-->

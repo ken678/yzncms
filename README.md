@@ -2,7 +2,7 @@
 ### 系统基于ThinkPHP8.x后端+(Layui2.9.x+RequireJS)前端框架，承诺后台框架永久免费且商业授权无限制，更可移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/blob/master/LICENSE.txt)
-[![Version](https://img.shields.io/badge/YznCMS-2.0.0-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-2.0.1-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -15,6 +15,10 @@
 - WEB服务器：IIS/Apache/Nginx
 - PHP版本：php >= 8.0 (推荐8.1+)
 - 数据库：MySQL >= 5.6 (需支持 innodb 引擎)
+
+## [官方仓库]
+- Gitee：https://gitee.com/ken678/YZNCMS
+- GitHub：https://github.com/ken678/yzncms
 
 ## [插件版权]
 - 插件可用于个人或企业自营网站或为客户定制开发
@@ -76,6 +80,7 @@
 |地区管理|省市区三级联动|免费|
 |图片处理|支持图片裁剪、旋转、水印等功能，图片处理必备插件|免费|
 |频率限制|限定用户在一段时间内的访问次数，用于保护接口防爬防爆破|免费|
+|TinyMCE富文本编辑器|一款易用、且功能强大的所见即所得的富文本编辑器|免费|
 |评论插件|类似多说，一段JS即可调用的强大评论|付费|
 |会员推广|生成推广链接，后台生成邀请码注册|付费|
 |通用数据导出|支持任意表和关联表导出excel等格式|付费|

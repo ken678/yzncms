@@ -109,8 +109,6 @@ class Crud extends Command
         'auth_rule',
         'config',
         'field_type',
-        'model',
-        'model_field',
         'terms',
         'ems',
         'sms',

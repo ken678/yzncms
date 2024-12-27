@@ -21,7 +21,7 @@ define(['jquery', 'layui'], function($, layui) {
 		renderContent(option);
 		$("#" + option.elem).width(option.width);
 		$("#" + option.elem).height(option.height);
-		return new frame(option);
+		return new pearFrame(option);
 	}
 
 	pearFrame.prototype.changePage = function(url, loading) {
