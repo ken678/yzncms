@@ -29,5 +29,5 @@ return [
     //需要额外加载的标签库(须指定标签库名称)，多个以逗号分隔
     'taglib_pre_load'    => '',
     // 内置标签库名称(标签使用不必指定标签库名称),以逗号分隔 注意解析顺序
-    'taglib_build_in'    => 'cx,app\common\taglib\Yzn',
+    'taglib_build_in'    => 'cx',
 ];
