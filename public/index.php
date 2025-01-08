@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 // [ 应用入口文件 ]
-namespace think;
+use think\App;
 
 // 判断是否安装
 if (!is_file(__DIR__ . '/../app/admin/command/Install/install.lock')) {
