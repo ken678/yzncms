@@ -78,7 +78,7 @@ class Api
      */
     public function __construct(App $app)
     {
-        $this->request = is_null($app->request)?\think\facade\Request::instance() : $app->request;
+        $this->request = is_null($app->request) ? \think\facade\Request::instance() : $app->request;
 
         // 控制器初始化
         $this->initialize();
@@ -99,9 +99,6 @@ class Api
      */
     protected function initialize()
     {
-        //跨域请求检测
-        check_cors_request();
-
         //移除HTML标签
         $this->request->filter('trim,strip_tags,htmlspecialchars');
 
