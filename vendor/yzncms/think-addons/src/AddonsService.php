@@ -13,8 +13,8 @@ namespace think;
 use app\common\middleware\CommonInit;
 use think\facade\Cache;
 use think\facade\Config;
-use think\facade\Route;
 use think\helper\Str;
+use think\Route;
 use think\Service;
 
 class AddonsService extends Service
@@ -27,8 +27,6 @@ class AddonsService extends Service
         if (!is_dir(ADDON_PATH)) {
             @mkdir(ADDON_PATH, 0755, true);
         }
-        //注册插件路由
-        $this->addon_route();
         //注册插件事件
         $this->addon_event();
         //插件初始化
@@ -65,54 +63,47 @@ class AddonsService extends Service
         }
     }
 
-    /**
-     * 注册插件路由.
-     */
-    private function addon_route()
-    {
-        Route::rule('addons/:addon/[:controller]/[:action]', '\\think\\addons\\Route::execute')
-            ->middleware([CommonInit::class]);
-
-        //注册路由
-        $routeArr = (array) Config::get('addons.route');
-        $execute  = '\\think\\addons\\Route::execute';
-        foreach ($routeArr as $k => $v) {
-            if (is_array($v)) {
-                $domain = $v['domain'];
-                $drules = [];
-                foreach ($v['rule'] as $m => $n) {
-                    [$addon, $controller, $action] = explode('/', $n);
-                    $drules[$m]                    = [
-                        'addon'    => $addon, 'controller' => $controller, 'action' => $action,
-                        'indomain' => 1,
-                    ];
-                }
-                Route::domain($domain, function () use ($drules, $execute) {
-                    // 动态注册域名的路由规则
-                    foreach ($drules as $k => $rule) {
-                        Route::rule($k, $execute)
-                            ->middleware([CommonInit::class])
-                            ->name($k)
-                            ->completeMatch(true)
-                            ->append($rule);
-                    }
-                });
-            } else {
-                if (!$v) {
-                    continue;
-                }
-                [$addon, $controller, $action] = explode('/', $v);
-                Route::rule($k, $execute)
-                    ->middleware([CommonInit::class])
-                    ->name($k)
-                    ->completeMatch(true)
-                    ->append(['addon' => $addon, 'controller' => $controller, 'action' => $action]);
-            }
-        }
-    }
-
     public function boot()
     {
+        $this->registerRoutes(function (Route $route) {
+            $execute = '\\think\\addons\\Route::execute';
+            $route->rule("addons/:addon/[:controller]/[:action]", $execute)->middleware([CommonInit::class]);
 
+            //注册路由
+            $routeArr = (array) Config::get('addons.route');
+            foreach ($routeArr as $k => $v) {
+                if (is_array($v)) {
+                    $domain = $v['domain'];
+                    $drules = [];
+                    foreach ($v['rule'] as $m => $n) {
+                        [$addon, $controller, $action] = explode('/', $n);
+                        $drules[$m]                    = [
+                            'addon'    => $addon, 'controller' => $controller, 'action' => $action,
+                            'indomain' => 1,
+                        ];
+                    }
+                    $route->domain($domain, function () use ($drules, $route, $execute) {
+                        // 动态注册域名的路由规则
+                        foreach ($drules as $k => $rule) {
+                            $route->rule($k, $execute)
+                                ->middleware([CommonInit::class])
+                                ->name($k)
+                                ->completeMatch(true)
+                                ->append($rule);
+                        }
+                    });
+                } else {
+                    if (!$v) {
+                        continue;
+                    }
+                    [$addon, $controller, $action] = explode('/', $v);
+                    $route->rule($k, $execute)
+                        ->middleware([CommonInit::class])
+                        ->name($k)
+                        ->completeMatch(true)
+                        ->append(['addon' => $addon, 'controller' => $controller, 'action' => $action]);
+                }
+            }
+        });
     }
 }
