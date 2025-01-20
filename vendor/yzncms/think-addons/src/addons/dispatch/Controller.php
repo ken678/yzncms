@@ -129,7 +129,7 @@ class Controller extends Dispatch
         if (is_file($this->addonPath . 'event.php')) {
             $this->app->loadEvent(include $this->addonPath . 'event.php');
         }
-        if ($this->addonPath . 'middleware.php') {
+        if (is_file($this->addonPath . 'middleware.php')) {
             $this->app->middleware->import(include $this->addonPath . 'middleware.php', 'route');
         }
         if (is_file($this->addonPath . 'provider.php')) {
