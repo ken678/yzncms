@@ -527,7 +527,9 @@ class Crud extends Command
         $baseFileName = parse_name(array_pop($baseNameArr), 0);
         array_push($baseNameArr, $baseFileName);
         $controllerBaseName = strtolower(implode(DS, $baseNameArr));
-        $controllerUrl      = $this->getControllerUrl($moduleName, $baseNameArr);
+        //菜单控制器
+        $menuControllerUrl = strtolower(implode('/', $baseNameArr));
+        $controllerUrl     = strtolower(implode('.', $baseNameArr));
 
         //视图文件
         $viewArr   = $controllerArr;
@@ -581,8 +583,7 @@ class Crud extends Command
 
             //继续删除菜单
             if ($menu) {
-                //exec("php think menu -c {$controllerUrl} -d 1 -f 1");
-                \think\facade\Console::call('menu', ["--controller={$controllerUrl}", "--delete=1", "--force=1"]);
+                \think\facade\Console::call('menu', ["--controller={$menuControllerUrl}", "--delete=1", "--force=1"]);
             }
 
             $output->info("Delete Successed");
@@ -1139,8 +1140,7 @@ class Crud extends Command
         }
         //继续生成菜单
         if ($menu) {
-            //exec("php think menu -c {$controllerUrl}");
-            \think\facade\Console::call('menu', ["--controller={$controllerUrl}"]);
+            \think\facade\Console::call('menu', ["--controller={$menuControllerUrl}"]);
         }
 
         $output->info("Build Successed");
@@ -1476,28 +1476,6 @@ EOD;
         $appendAttrList[] = <<<EOD
         '{$field}_text'
 EOD;
-    }
-
-    /**
-     * 获取控制器URL
-     * @param string $moduleName
-     * @param array  $baseNameArr
-     * @return string
-     */
-    protected function getControllerUrl($moduleName, $baseNameArr)
-    {
-        for ($i = 0; $i < count($baseNameArr) - 1; $i++) {
-            $temp           = array_slice($baseNameArr, 0, $i + 1);
-            $temp[$i]       = ucfirst($temp[$i]);
-            $controllerFile = app()->getBasePath() . $moduleName . DS . 'controller' . DS . implode(DS, $temp) . '.php';
-            //检测父级目录同名控制器是否存在，存在则变更URL格式
-            if (is_file($controllerFile)) {
-                $baseNameArr = [implode('.', $baseNameArr)];
-                break;
-            }
-        }
-        $controllerUrl = strtolower(implode('/', $baseNameArr));
-        return $controllerUrl;
     }
 
     /**
