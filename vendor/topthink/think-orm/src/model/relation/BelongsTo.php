@@ -256,7 +256,7 @@ class BelongsTo extends OneToOne
 
                 // 设置关联属性
                 if ($relationModel instanceof Entity && !empty($this->bindAttr)) {
-                    $result->getEntity()->bindRelationAttr($relationModel, $this->bindAttr);
+                    $result->bindRelationAttr($relationModel, $this->bindAttr);
                 } else {
                     $result->setRelation($relation, $relationModel);
                     if (!empty($this->bindAttr)) {
@@ -309,7 +309,7 @@ class BelongsTo extends OneToOne
 
         // 设置关联属性
         if ($relationModel instanceof Entity && !empty($this->bindAttr)) {
-            $result->getEntity()->bindRelationAttr($relationModel, $this->bindAttr);
+            $result->bindRelationAttr($relationModel, $this->bindAttr);
         } else {
             $result->setRelation($relation, $relationModel);
             if (!empty($this->bindAttr)) {

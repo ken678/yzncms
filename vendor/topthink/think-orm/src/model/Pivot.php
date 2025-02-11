@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace think\model;
 
+use think\Entity;
 use think\Model;
 
 /**
@@ -65,8 +66,13 @@ class Pivot extends Model
     {
         $model = parent::newInstance($data, $where, $options);
 
-        $model->parent  = $this->parent;
-        $model->name    = $this->name;
+        if ($model instanceof Entity) {
+            $model->setParent($this->parent);
+            $model->setOption('table_name', $this->name);
+        } else {
+            $model->parent  = $this->parent;
+            $model->name    = $this->name;
+        }
 
         return $model;
     }
