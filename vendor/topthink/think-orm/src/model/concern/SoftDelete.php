@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2025 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2023 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -90,12 +90,9 @@ trait SoftDelete
 
         if ($name && !$force) {
             // 软删除
-            if ($this->entity) {
-                $this->exists()->withEvent(false)->save([$name => $this->autoWriteTimestamp()]);
-            } else {
-                $this->set($name, $this->autoWriteTimestamp());
-                $this->exists()->withEvent(false)->save();
-            }
+            $this->set($name, $this->autoWriteTimestamp());
+
+            $this->exists()->withEvent(false)->save();
 
             $this->withEvent(true);
         } else {
@@ -180,7 +177,7 @@ trait SoftDelete
         if (empty($where)) {
             $pk = $this->getPk();
             if (is_string($pk)) {
-                $where = [$pk => $this->getKey()];
+                $where[] = [$pk, '=', $this->getData($pk)];
             }
         }
 

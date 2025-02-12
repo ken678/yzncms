@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2025 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2023 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace think\model;
 
-use think\Entity;
 use think\Model;
 
 /**
@@ -66,13 +65,8 @@ class Pivot extends Model
     {
         $model = parent::newInstance($data, $where, $options);
 
-        if ($model instanceof Entity) {
-            $model->setParent($this->parent);
-            $model->setOption('table_name', $this->name);
-        } else {
-            $model->parent  = $this->parent;
-            $model->name    = $this->name;
-        }
+        $model->parent  = $this->parent;
+        $model->name    = $this->name;
 
         return $model;
     }
