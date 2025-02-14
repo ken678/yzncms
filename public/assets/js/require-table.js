@@ -33,6 +33,10 @@ define(['jquery', 'layui'], function($, layui) {
             disabledbtn: '.btn-disabled',
         },
         api: {
+            init(defaults) {
+                defaults = defaults ? defaults : init;
+                Table.init = defaults;
+            },
             bindevent: function(tableId) {
                 var tableId = tableId || Table.init.table_render_id;
                 var options = layui.table.getOptions(tableId);
