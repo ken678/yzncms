@@ -13,7 +13,7 @@
                     {:token_field()}
 
                     {volist name="fieldList" id="vo"}
-                    <div data-favisible="{$vo.visible|default=''}">
+                    <div data-favisible="{$vo.visible|default=''}" class="{if $vo.visible??''}layui-hide{/if}">
                         <div class="layui-form-item">
                             <label class="layui-form-label {if condition="isset($vo.ifrequire) AND $vo.ifrequire"}layui-form-item-required{/if}">{$vo.title}</label>
                             {switch name="vo.type"}
