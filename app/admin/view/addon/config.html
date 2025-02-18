@@ -11,7 +11,7 @@
     {/if}
 
     {foreach name="data['config']" item="form" key="o_key"}
-    <div data-favisible="{$form.visible|default=''}">
+    <div data-favisible="{$form.visible|default=''}" class="{if $form.visible??''}layui-hide{/if}">
         <div class="layui-form-item">
             <label class="layui-form-label">{$form.title}</label>
             {switch name="form.type"}
