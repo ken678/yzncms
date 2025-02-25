@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yansongda\Pay\Plugin\Wechat\V3\Marketing\Transfer;
 
 use Closure;
+use JetBrains\PhpStorm\Deprecated;
 use Yansongda\Artful\Contract\PluginInterface;
 use Yansongda\Artful\Exception\ContainerException;
 use Yansongda\Artful\Exception\InvalidConfigException;
@@ -26,6 +27,7 @@ use function Yansongda\Pay\get_wechat_type_key;
 /**
  * @see https://pay.weixin.qq.com/docs/merchant/apis/batch-transfer-to-balance/transfer-batch/initiate-batch-transfer.html
  */
+#[Deprecated(reason: '由于微信支付变更，自 v3.7.12 开始废弃, 并将在 v3.8.0 移除')]
 class CreatePlugin implements PluginInterface
 {
     /**
@@ -57,7 +59,7 @@ class CreatePlugin implements PluginInterface
                 '_url' => 'v3/transfer/batches',
                 'appid' => $payload->get('appid', $config[get_wechat_type_key($params)] ?? ''),
             ],
-            $this->normal($params, $config, $payload)
+            $this->normal($params, $payload)
         ));
 
         Logger::info('[Wechat][Marketing][Transfer][CreatePlugin] 插件装载完毕', ['rocket' => $rocket]);
@@ -72,13 +74,13 @@ class CreatePlugin implements PluginInterface
      * @throws DecryptException
      * @throws InvalidConfigException
      */
-    protected function normal(array $params, array $config, Collection $payload): array
+    protected function normal(array $params, Collection $payload): array
     {
         if (!$payload->has('transfer_detail_list.0.user_name')) {
             return [];
         }
 
-        return $this->encryptSensitiveData($params, $config, $payload);
+        return $this->encryptSensitiveData($params, $payload);
     }
 
     /**
@@ -88,7 +90,7 @@ class CreatePlugin implements PluginInterface
      * @throws InvalidParamsException
      * @throws ServiceNotFoundException
      */
-    protected function encryptSensitiveData(array $params, array $config, Collection $payload): array
+    protected function encryptSensitiveData(array $params, Collection $payload): array
     {
         $data['transfer_detail_list'] = $payload->get('transfer_detail_list', []);
         $data['_serial_no'] = get_wechat_serial_no($params);

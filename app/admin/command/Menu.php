@@ -73,7 +73,7 @@ class Menu extends Command
                     } else {
                         $controllerArr = [parse_name($item)];
                     }
-                    $item = str_replace('_', '\_', implode('/', $controllerArr));
+                    $item = str_replace('_', '\_', implode('.', $controllerArr));
                     if ($equal) {
                         $query->whereOr('name', 'eq', $item);
                     } else {

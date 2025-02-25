@@ -175,6 +175,7 @@ class User extends Frontend
                 }
                 $extend['ischeck_email'] = 1;
             }
+            $extend['nickname'] = $data['nickname'] ?? $data['username'];
             if ($this->auth->register($data['username'], $data['password'], $data['email'], $data['mobile'], $extend)) {
                 $this->success('会员注册成功！', $forward ? $forward : url('user/index'));
             } else {

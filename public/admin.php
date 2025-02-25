@@ -9,8 +9,8 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-// [ 应用入口文件 ]
-namespace think;
+// [ 后台入口文件 ]
+use think\App;
 
 // 判断是否安装
 if (!is_file(__DIR__ . '/../app/admin/command/Install/install.lock')) {

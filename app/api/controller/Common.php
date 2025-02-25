@@ -25,16 +25,6 @@ class Common extends Api
     protected $noNeedLogin = ['init', 'captcha'];
     protected $noNeedRight = '*';
 
-    public function initialize()
-    {
-        if (isset($_SERVER['HTTP_ORIGIN'])) {
-            header('Access-Control-Expose-Headers: __token__'); //跨域让客户端获取到
-        }
-        //跨域检测
-        check_cors_request();
-        parent::initialize();
-    }
-
     /**
      * 加载初始化
      *
@@ -56,9 +46,9 @@ class Common extends Api
         $from = $this->request->param("from");
         if ($dir == '') {
             return json([
-                'code'  => 0,
-                'msg'   => '没有指定上传目录',
-                'state' => '没有指定上传目录', //兼容百度
+                'code'    => 0,
+                'msg'     => '没有指定上传目录',
+                'state'   => '没有指定上传目录', //兼容百度
                 'message' => '没有指定上传目录', //兼容editormd
             ]);
         }
@@ -84,9 +74,9 @@ class Common extends Api
                     $attachment = $upload->merge($chunkid, $chunkcount, $filename, $dir, $from);
                 } catch (UploadException $e) {
                     return json([
-                        'code'  => 0,
-                        'msg'   => $e->getMessage(),
-                        'state' => $e->getMessage(), //兼容百度
+                        'code'    => 0,
+                        'msg'     => $e->getMessage(),
+                        'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
                 }
@@ -98,9 +88,9 @@ class Common extends Api
                     $upload->clean($chunkid);
                 } catch (UploadException $e) {
                     return json([
-                        'code'  => 0,
-                        'msg'   => $e->getMessage(),
-                        'state' => $e->getMessage(), //兼容百度
+                        'code'    => 0,
+                        'msg'     => $e->getMessage(),
+                        'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
                 }
@@ -113,9 +103,9 @@ class Common extends Api
                     $upload->chunk($chunkid, $chunkindex, $chunkcount);
                 } catch (UploadException $e) {
                     return json([
-                        'code'  => 0,
-                        'msg'   => $e->getMessage(),
-                        'state' => $e->getMessage(), //兼容百度
+                        'code'    => 0,
+                        'msg'     => $e->getMessage(),
+                        'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
                 }
@@ -139,9 +129,9 @@ class Common extends Api
             $attachment = $upload->upload($dir);
         } catch (UploadException | Exception $e) {
             return json([
-                'code'  => 0,
-                'msg'   => $e->getMessage(),
-                'state' => $e->getMessage(), //兼容百度
+                'code'    => 0,
+                'msg'     => $e->getMessage(),
+                'state'   => $e->getMessage(), //兼容百度
                 'message' => $e->getMessage(), //兼容editormd
             ]);
         }

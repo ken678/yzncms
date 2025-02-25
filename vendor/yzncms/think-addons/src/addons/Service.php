@@ -442,7 +442,7 @@ class Service
             try {
                 $zip->extractTo($newAddonDir);
             } catch (ZipException $e) {
-                @unlink($newAddonDir);
+                @File::del_dir($newAddonDir);
                 throw new Exception('无法解压缩文件');
             }
 

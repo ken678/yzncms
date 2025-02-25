@@ -1,11 +1,9 @@
 <?php
 
 return [
-    'autoload' => false,
-    'hooks'    => [
-    ],
-    'route'    => [
-    ],
-    'service'  => [
-    ],
+    'app_namespace' => 'addons',
+    'autoload'      => false,
+    'hooks'         => [],
+    'route'         => [],
+    'service'       => [],
 ];

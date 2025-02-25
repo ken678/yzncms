@@ -13,9 +13,7 @@
 // | 全局函数文件
 // +----------------------------------------------------------------------
 use think\App;
-use think\facade\Cache;
 use think\facade\Config;
-use think\facade\Db;
 use think\facade\Request;
 
 !defined('DS') && define('DS', DIRECTORY_SEPARATOR);
