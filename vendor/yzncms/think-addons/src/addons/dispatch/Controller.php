@@ -39,6 +39,12 @@ class Controller extends Dispatch
     private $addonName;
 
     /**
+     * 插件目录
+     * @var string
+     */
+    private $addonPath;
+
+    /**
      * 命名空间
      * @var string
      */
