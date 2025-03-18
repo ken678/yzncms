@@ -112,8 +112,8 @@ class ComposerStaticInitffa28be83109a2839afb98404bc826b6
             2 => __DIR__ . '/..' . '/topthink/think-helper/src',
             3 => __DIR__ . '/..' . '/topthink/think-orm/src',
             4 => __DIR__ . '/..' . '/topthink/think-template/src',
-            5 => __DIR__ . '/..' . '/topthink/think-validate/src',
-            6 => __DIR__ . '/..' . '/yzncms/think-addons/src',
+            5 => __DIR__ . '/..' . '/yzncms/think-addons/src',
+            6 => __DIR__ . '/..' . '/topthink/think-validate/src',
         ),
         'app\\' => 
         array (
