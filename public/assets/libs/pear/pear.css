@@ -140,7 +140,7 @@ html, body, .layui-layout {height: 100%; }
 .select-color .select-color-title {padding: 15px 0 0px 20px; margin-bottom: 4px; }
 .select-color .select-color-content {padding: 20px 0 0px 0px; margin-bottom: 4px; }
 .select-color .select-color-content .select-color-item {background-color: gray; width: 30px; height: 30px; border-radius: 3px; float: left; margin-left: 20px; color: white; font-size: 18px; text-align: center; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15); line-height: 30px; }
-.message .layui-tab-title li:not(:last-child) {border-right: 1px solid #eee; }
+.message .layui-tabs-header li:not(:last-child) {border-right: 1px solid #eee; }
 @media screen and (max-width: 450px) {
   .pearone-color .layui-form-item .layui-input-inline {float: left !important; width: 190px !important; margin: 0 10px 0 0!important; }
 }
@@ -230,34 +230,30 @@ html, body, .layui-layout {height: 100%; }
 
 /*tab.css*/
 .pear-tab {margin: 0px; overflow: hidden; height: 100% !important; }
-.pear-tab .layui-tab-content {height: calc(100% - 42px) !important; }
-.pear-tab .layui-tab-content .layui-tab-item {height: 100%; }
+.pear-tab .layui-tabs-body {height: calc(100% - 42px) !important; }
+.pear-tab .layui-tabs-body .layui-tabs-item {height: 100%; }
 .pear-tab-menu{box-shadow: 0 2px 8px #f0f1f2!important; border: 1px solid whitesmoke!important; border-radius: 4px!important; }
 .pear-tab-menu .item{height: 20px; padding-left: 18px; padding-top: 7px; padding-bottom: 7px; color: #333; font-size: 13.5px; line-height: 20px; cursor:pointer; }
 .pear-tab-menu .item:hover{background: #36b368; color: white; }
-.pear-tab .layui-tab-content {padding: 0px; }
-.pear-tab .layui-tab-title {border: none; border: 1px solid whitesmoke; background-color: white; }
-.pear-tab .layui-tab-title li {border-right: 1px solid whitesmoke; color: dimgray; font-size: 13.5px; }
-.pear-tab .layui-tab-title .layui-tab-bar {display: none; }
-.pear-tab .layui-tab-title .layui-this:after {display: none; }
-.pear-tab .layui-tab-title .pear-tab-active {display: inline-block; background-color: lightgray; width: 8px; height: 8px; border-radius: 30px; margin-right: 12px; }
-.pear-tab .layui-tab-title .layui-this .pear-tab-active {background-color: #5FB878; }
-.pear-tab .layui-tab-title .layui-tab-close:hover {background-color: white; line-height: 19px; color: gray; }
-.pear-tab .layui-tab-title .disable-close+.layui-tab-close {display: none; }
-.pear-tab .layui-tab-title .able-close+.layui-tab-close {display: inline-block; }
-.pear-tab .layui-tab-close{font-size: 13px; }
+.pear-tab .layui-tabs-body {padding: 0px; }
+.pear-tab .layui-tabs-header {border: none; border: 1px solid whitesmoke; background-color: white; }
+.pear-tab .layui-tabs-header li {border-right: 1px solid whitesmoke; color: dimgray; font-size: 13.5px; }
+.pear-tab .layui-tabs-header .layui-this:after {display: none; }
+.pear-tab .layui-tabs-header .pear-tab-active {display: inline-block; background-color: lightgray; width: 8px; height: 8px; border-radius: 30px; margin-right: 12px; }
+.pear-tab .layui-tabs-header .layui-this .pear-tab-active {background-color: #5FB878; }
+.pear-tab .layui-tabs-header .layui-tabs-close:hover {background-color: white; line-height: 19px; color: gray; }
+.pear-tab .layui-tabs-header .disable-close+.layui-tabs-close {display: none; }
+.pear-tab .layui-tabs-header .able-close+.layui-tabs-close {display: inline-block; }
+.pear-tab .layui-tabs-close{font-size: 13px; }
 .pear-tab .layui-tab-control>li {position: absolute; top: 0px; height: 40px; line-height: 40px; width: 40px; text-align: center; background-color: white; border-top: whitesmoke 1px solid; border-bottom: whitesmoke 1px solid; }
-.pear-tab .layui-tab-prev {left: 0px; border-right: whitesmoke 1px solid; }
-.pear-tab .layui-tab-next {right: 40px; border-left: 1px solid whitesmoke; }
 .pear-tab .layui-tab-tool {right: 0px; border-left: 1px solid whitesmoke; }
-.pear-tab .layui-tab-control .layui-tab-tool, .pear-tab .layui-tab-control .layui-tab-prev, .pear-tab .layui-tab-control .layui-tab-next {display: none; }
-.pear-tab.layui-tab-roll .layui-tab-control .layui-tab-prev, .pear-tab.layui-tab-roll .layui-tab-control .layui-tab-next {display: block; }
-.pear-tab.layui-tab-roll .layui-tab-control .layui-tab-next {right: 0px; border-right: 1px solid whitesmoke; }
-.pear-tab.layui-tab-roll .layui-tab-title {padding-left: 40px; padding-right: 40px; }
+.pear-tab .layui-tab-control .layui-tab-tool{display: none; }
+.pear-tab.layui-tab-roll .layui-tabs-header {padding-left: 40px; padding-right: 40px; }
 .pear-tab.layui-tab-tool .layui-tab-control .layui-tab-tool {display: block; }
-.pear-tab.layui-tab-tool .layui-tab-title {padding-left: 0px; padding-right: 40px; }
-.pear-tab.layui-tab-rollTool .layui-tab-title {padding-left: 40px; padding-right: 80px; }
-.pear-tab.layui-tab-rollTool .layui-tab-control .layui-tab-prev, .pear-tab.layui-tab-rollTool .layui-tab-control .layui-tab-next, .pear-tab.layui-tab-rollTool .layui-tab-control .layui-tab-tool {display: block; }
+.pear-tab.layui-tab-tool .layui-tabs-header {padding-left: 0px; padding-right: 40px; }
+.pear-tab.layui-tab-rollTool .layui-tab-control .layui-tab-tool {display: block; }
+.pear-tab.layui-tab-rollTool .layui-tabs-bar .layui-icon-next{right: 40px}
+.pear-tab.layui-tab-rollTool .layui-tabs-bar .layui-icon{box-shadow: none;}
 .pear-tab .layui-tab-tool .layui-nav {position: absolute; height: 43px !important; top: 0; width: 100%; height: 100%; padding: 0; background: 0 0; }
 .pear-tab .layui-tab-tool .layui-nav-item {height: 40px; }
 .pear-tab .layui-tab-tool .layui-nav-bar {display: none; }

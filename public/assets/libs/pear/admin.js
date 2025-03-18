@@ -49,7 +49,8 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 
 				if (isMuiltTab(param) === "true" || isMuiltTab(param) === true) {
 					bodyTab = pearTab.render({
-						elem: 'content',
+						container: 'content',
+						elem: 'contentTabs',
 						roll: true,
 						tool: true,
 						width: '100%',
@@ -71,7 +72,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 							if (param.tab.session) {
 								setTimeout(function() {
 									sideMenu.selectItem(id);
-									bodyTab.positionTab();
+									//bodyTab.positionTab();
 								}, 500)
 							}
 						}
@@ -81,7 +82,7 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 						if (!param.tab.keepState) {
 							bodyTab.refresh(false);
 						}
-						bodyTab.positionTab();
+						//bodyTab.positionTab();
 						sideMenu.selectItem(id);
 					})
 
