@@ -2002,24 +2002,24 @@
         },
         {
             "name": "topthink/think-view",
-            "version": "v2.0.4",
-            "version_normalized": "2.0.4.0",
+            "version": "v2.0.5",
+            "version_normalized": "2.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-view.git",
-                "reference": "e6a68e4179baf8d795700d62b710da86d7c3f783"
+                "reference": "b42009b98199b5a3833d3d6fd18c8a55aa511fad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-view/zipball/e6a68e4179baf8d795700d62b710da86d7c3f783",
-                "reference": "e6a68e4179baf8d795700d62b710da86d7c3f783",
+                "url": "https://api.github.com/repos/top-think/think-view/zipball/b42009b98199b5a3833d3d6fd18c8a55aa511fad",
+                "reference": "b42009b98199b5a3833d3d6fd18c8a55aa511fad",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0",
                 "topthink/think-template": "^3.0"
             },
-            "time": "2025-01-10T08:49:57+00:00",
+            "time": "2025-03-19T07:04:19+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2040,7 +2040,7 @@
             "description": "thinkphp template driver",
             "support": {
                 "issues": "https://github.com/top-think/think-view/issues",
-                "source": "https://github.com/top-think/think-view/tree/v2.0.4"
+                "source": "https://github.com/top-think/think-view/tree/v2.0.5"
             },
             "install-path": "../topthink/think-view"
         },

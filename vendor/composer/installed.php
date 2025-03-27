@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'e5c7a75702ab0dc7145eb40ad54d91e7ca992214',
+        'reference' => '246ec59c1647eb8cd502b5e7e79f90fc4266ae8e',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -247,7 +247,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'e5c7a75702ab0dc7145eb40ad54d91e7ca992214',
+            'reference' => '246ec59c1647eb8cd502b5e7e79f90fc4266ae8e',
             'dev_requirement' => false,
         ),
         'topthink/think-captcha' => array(
@@ -323,12 +323,12 @@
             'dev_requirement' => false,
         ),
         'topthink/think-view' => array(
-            'pretty_version' => 'v2.0.4',
-            'version' => '2.0.4.0',
+            'pretty_version' => 'v2.0.5',
+            'version' => '2.0.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../topthink/think-view',
             'aliases' => array(),
-            'reference' => 'e6a68e4179baf8d795700d62b710da86d7c3f783',
+            'reference' => 'b42009b98199b5a3833d3d6fd18c8a55aa511fad',
             'dev_requirement' => false,
         ),
         'yansongda/artful' => array(
