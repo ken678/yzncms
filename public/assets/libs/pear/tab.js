@@ -49,7 +49,8 @@ define(['jquery', 'layui'], function($, layui) {
 		$("#" + opt.container).html(tab);
 
 		tabs.render({
-			elem: '#'+ option.elem
+			elem: '#'+ option.elem,
+			closable: true
 		})
 		toolEvent(option);
 		$("#" + opt.container).width(opt.width);
