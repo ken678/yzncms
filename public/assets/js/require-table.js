@@ -33,7 +33,7 @@ define(['jquery', 'layui'], function($, layui) {
             disabledbtn: '.btn-disabled',
         },
         api: {
-            init(defaults) {
+            init: function(defaults) {
                 defaults = defaults ? defaults : init;
                 Table.init = defaults;
             },
