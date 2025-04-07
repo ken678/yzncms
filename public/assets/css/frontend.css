@@ -197,7 +197,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 }
 .layui-input[disabled], .layui-textarea[disabled] {background-color: #eee;}
 .layui-table .layui-btn+.layui-btn {margin-left: 5px;}
-.layui-form-label {width: 110px;}
+.layui-form-label {width: 140px;}
 .layui-input-block {margin-left: 140px;max-width:70%;}
 .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {border-color: #e6e6e6;}
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {background-color: #f2f2f2;}
