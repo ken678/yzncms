@@ -19,6 +19,7 @@
 .layui-btn-sm i {font-size: 14px !important;}
 code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f4; border-radius: 4px; }
 .childrenBody {padding: 15px;background-color: #F2F2F2;}
+.childrenBody.is-dialog{background-color:#fff}
 .is-dialog .layer-footer {display: none;}
 .panel_box{ margin-bottom:5px;}
 .panel{ text-align:center; height:90px;}
@@ -106,9 +107,9 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 
 /*tabs*/
 .layui-tabs-panel{}
-.layui-tabs-panel .layui-tabs-header{padding: 15px !important;padding-bottom: 0 !important;background: #e8edf0;border-color: #e8edf0;height: 55px}
+.layui-tabs-panel .layui-tabs-header{padding: 15px !important;padding-bottom: 0 !important;background: #e8edf0;height: 55px}
 .layui-tabs-panel .layui-tabs-header .layui-this:after{display: none;}
-.layui-tabs-panel .layui-tabs-header li{margin-right: 4px !important;color: #95a5a6;background-color: #d8e0e6;}
+.layui-tabs-panel .layui-tabs-header li{margin-right: 6px !important;color: #95a5a6;background-color: #d8e0e6;}
 .layui-tabs-panel .layui-tabs-header li:hover {color: #7b8a8b;background-color: #c9d4dc;}
 .layui-tabs-panel .layui-tabs-header li.layui-this{color: #7b8a8b;background-color: #ffffff;}
 .layui-tabs-panel .layui-tabs-header:after, .layui-tabs-panel .layui-tabs-scroll:after{display: none;}
