@@ -15,6 +15,7 @@
 .text-success {color: #46c37b; }
 .text-primary {color: #5c90d2; }
 .text-center {text-align: center !important; }
+.pb-20{padding-bottom: 20px}
 .layui-btn-sm i {font-size: 14px !important;}
 code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f4; border-radius: 4px; }
 .childrenBody {padding: 15px;background-color: #F2F2F2;}
@@ -102,6 +103,15 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {border-color: #e6e6e6;}
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {background-color: #f2f2f2;}
 .layui-elem-quote{background-color: #f2f2f2;}
+
+/*tabs*/
+.layui-tabs-panel{}
+.layui-tabs-panel .layui-tabs-header{padding: 15px !important;padding-bottom: 0 !important;background: #e8edf0;border-color: #e8edf0;height: 55px}
+.layui-tabs-panel .layui-tabs-header .layui-this:after{display: none;}
+.layui-tabs-panel .layui-tabs-header li{margin-right: 4px !important;color: #95a5a6;background-color: #d8e0e6;}
+ .layui-tabs-panel .layui-tabs-header li:hover {color: #7b8a8b;background-color: #c9d4dc;}
+ .layui-tabs-panel .layui-tabs-header li.layui-this{color: #7b8a8b;background-color: #ffffff;}
+.layui-tabs-panel .layui-tabs-header:after, .layui-tabs-panel .layui-tabs-scroll:after{display: none;}
 
 /*图片上传缩略图*/
 .file-item.thumbnail .file-panel {position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
