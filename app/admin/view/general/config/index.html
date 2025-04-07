@@ -1,14 +1,14 @@
 {extend name="index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-body">
-        <div class="layui-tab layui-tab-card">
-            <ul class="layui-tab-title">
-                {volist name="$groupArray" id="vo"}
-                <li class="{if $key==$group}layui-this{/if}"><a href="{:url('index',['group'=>$key])}">{$vo}</a></li>
-                {/volist}
-            </ul>
-            <div class="layui-tab-content">
+    <div class="layui-tabs layui-tabs-panel">
+        <ul class="layui-tabs-header">
+            {volist name="$groupArray" id="vo"}
+            <li class="{if $key==$group}layui-this{/if}"><a href="{:url('index',['group'=>$key])}">{$vo}</a></li>
+            {/volist}
+        </ul>
+        <div class="layui-tabs-body">
+            <div class="layui-card-body">
                 <table class="layui-hide" id="currentTable" lay-filter="currentTable" data-auth-add="{:$auth->check('general.config/add')}"></table>
             </div>
         </div>
