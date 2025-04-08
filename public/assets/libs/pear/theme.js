@@ -49,8 +49,6 @@ define(['jquery', 'layui'], function($, layui) {
 		style += '.layui-form-onswitch { border-color: ' + color + '; background-color: ' + color + ';}'
 		style += '.layui-form-radio>i:hover, .layui-form-radioed>i {color: ' + color + ';}'
 		style += '.layui-laypage .layui-laypage-curr .layui-laypage-em{background-color:'+ color +'!important}'
-		style += '.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{border-bottom: 3px solid '+color+'!important}'
-		style += '.layui-tab-brief>.layui-tab-title .layui-this{color:'+color+'!important}'
 		style += '.layui-progress-bar{background-color:'+color+'}';
 		style += '.layui-elem-quote{border-left: 5px solid '+ color +'}';
 		style += '.layui-timeline-axis{color:' + color + '}';
