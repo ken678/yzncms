@@ -182,11 +182,11 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                 })
             })
 
-            layui.element.on('tab(tabswitch)', function(data) {
+            layui.tabs.on(`afterChange(tabswitch)`, function(data) {
                 var value = $(this).data("id");
                 $('input[name="category_id"]').val(value);
                 table.reload(Table.init.table_render_id);
-            });
+            })
 
             // 会员信息
             $(document).on("click", ".btn-userinfo", function(e, name, version) {
