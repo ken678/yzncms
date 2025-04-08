@@ -9,18 +9,17 @@
     1、插件在线安装，升级和购买需要注册YznCMS官网账号,请点击下方【会员信息】，点击【注册】按钮<br>
     2、点击插件名称可查看详情，截图和日志等信息
 </div>
-{if $type=='online'}
-<div class="layui-tab layui-tab-card" lay-filter="tabswitch" style="box-shadow: none;">
-    <ul class="layui-tab-title nav-category">
-        <li class="layui-this" data-id="">全部</li>
-    </ul>
-</div>
-{/if}
 <input type="hidden" name="category_id" value="0">
 <div class="layui-card">
-    <div class="layui-card-header">插件管理</div>
-    <div class="layui-card-body">
-        <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+    <div class="layui-tabs layui-tabs-panel" id="tabswitch">
+        {if $type=='online'}
+        <ul class="layui-tabs-header nav-category">
+            <li class="layui-this" data-id="">全部</li>
+        </ul>
+        {/if}
+        <div class="layui-tabs-body">
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+        </div>
     </div>
 </div>
 
