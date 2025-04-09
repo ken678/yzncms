@@ -105,6 +105,13 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {background-color: #f2f2f2;}
 .layui-elem-quote{background-color: #f2f2f2;}
 
+/*表单label对齐*/
+.layui-form-label-top .layui-form-label{float: none;text-align: left;padding: 9px 0px;width: auto;}
+.layui-form-label-top .layui-input-inline {display: block;float: none;left: -3px;width: auto !important;margin: 0 0 10px 0 !important;}
+.layui-form-label-top .layui-input-block{margin-left: 0;max-width: 100%;}
+.layui-form-label-top .layui-form-mid.no-float {margin-left: 0 !important;}
+.layui-form-label-left .layui-form-label{text-align: left;}
+
 /*tabs*/
 .layui-tabs-panel{}
 .layui-tabs-panel .layui-tabs-header{padding: 15px !important;padding-bottom: 0 !important;background: #e8edf0;height: 55px}
