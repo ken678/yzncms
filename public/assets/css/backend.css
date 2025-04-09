@@ -106,7 +106,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-elem-quote{background-color: #f2f2f2;}
 
 /*表单label对齐*/
-.layui-form-label-top .layui-form-label{float: none;text-align: left;padding: 9px 0px;width: auto;}
+.layui-form-label-top .layui-form-label{float: none;text-align: left;padding: 0 0 9px 0;width: auto;}
 .layui-form-label-top .layui-input-inline {display: block;float: none;left: -3px;width: auto !important;margin: 0 0 10px 0 !important;}
 .layui-form-label-top .layui-input-block{margin-left: 0;max-width: 100%;}
 .layui-form-label-top .layui-form-mid.no-float {margin-left: 0 !important;}
@@ -135,7 +135,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .file-item.thumbnail .file-panel i.move-picture {cursor: move; }
 
 @media screen and (max-width: 768px) {
-    .layui-form-label {width: auto;float: none;text-align: left;padding: 9px 0px;}
+    .layui-form-label {width: auto;float: none;text-align: left;padding: 0 0 9px 0;}
     .layui-input-block {margin-left: 0;max-width:100%;}
     .layui-form-item .layui-input-inline {margin: 0 0 10px 0 !important;}
     .layui-form-item .layui-input-inline+.layui-form-mid {margin-left: 0 !important;}
