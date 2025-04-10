@@ -1,7 +1,6 @@
 define(['jquery', 'layui'], function($, layui) {
 	"use strict";
-	var $ = layui.jquery,
-		element = layui.element;
+	var element = layui.element;
 
 	var pearMenu = function (opt) {
 		this.option = opt;
