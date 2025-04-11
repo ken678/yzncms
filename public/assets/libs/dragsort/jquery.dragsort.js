@@ -67,6 +67,11 @@
 					if (e.which != 1 || $(e.target).is(opts.dragSelectorExclude) || $(e.target).closest(opts.dragSelectorExclude).length > 0 || !insideMoveableItem)
 						return;
 
+					// if not clicked on drag selector
+					if (!$(e.target).is(opts.dragSelector) && !$(e.target).closest(opts.dragSelector).length){
+						return;
+					}
+					
 					//prevents selection, stops issue on Fx where dragging hyperlink doesn't work and on IE where it triggers mousemove even though mouse hasn't moved,
 					//does also stop being able to click text boxes hence dragging on text boxes by default is disabled in dragSelectorExclude
 					e.preventDefault();
