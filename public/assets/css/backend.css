@@ -267,8 +267,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-elem-quote{background-color: #f2f2f2;}
 
 /*tabs*/
-.layui-tabs-panel{}
-.layui-tabs-panel .layui-tabs-header{padding: 15px !important;padding-bottom: 0 !important;background: #e8edf0;height: 55px}
+.layui-tabs-panel .layui-tabs-header{padding: 15px !important;padding-bottom: 0 !important;background: #e8edf0;}
 .layui-tabs-panel .layui-tabs-header .layui-this:after{display: none;}
 .layui-tabs-panel .layui-tabs-header li{margin-right: 6px !important;color: #95a5a6;background-color: #d8e0e6;}
 .layui-tabs-panel .layui-tabs-header li:hover {color: #7b8a8b;background-color: #c9d4dc;}
