@@ -182,7 +182,7 @@ ul.sp_element_box{
 ul.sp_element_box > li{
     list-style: none;
     padding: 0 5px;
-    margin: 3px 3px 0 0;
+    margin: 2px 3px 0 0;
     float: left;
     position: relative;
     box-sizing: content-box;
