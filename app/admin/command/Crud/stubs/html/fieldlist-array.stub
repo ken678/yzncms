@@ -7,10 +7,8 @@
 </dl>
 <script type="text/html" id="{%field%}Tpl">
     <dd class="layui-form-item rules-item">
-        {{# layui.each(d.lists, function(index, item) { }}
-            <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="值" value="{{item.value|| ''}}" />
+            <input type="text" class="layui-input" name="{{d.name}}[{{d.index}}][value]" placeholder="值" value="{{d.value|| ''}}" />
             <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close-fill"></i></button>
             <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-drag-move-2-fill"></i></button>
-        {{# }); }}
     </dd>
 </script>

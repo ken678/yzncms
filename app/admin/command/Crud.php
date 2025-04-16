@@ -868,7 +868,7 @@ class Crud extends Command
                         foreach ($itemArr as $index => $item) {
                             $item           = $this->langList[$this->mb_ucfirst($item)] ?? $item;
                             $theadListArr[] = "<td>" . $item . "</td>";
-                            $tbodyListArr[] = '<td><input type="text" name="{{item.name}}[{{item.index}}][' . $index . ']" class="layui-input" value="{{item.row.' . $index . '}}"/></td>';
+                            $tbodyListArr[] = '<td><input type="text" name="{{d.name}}[{{d.index}}][' . $index . ']" class="layui-input" value="{{d.row.' . $index . '}}"/></td>';
                         }
                         $colspan         = count($theadListArr) + 1;
                         $commonFields    = ['field' => $field, 'fieldName' => $fieldName, 'itemKey' => $itemKey, 'itemValue' => $itemValue, 'theadList' => implode("\n", $theadListArr), 'tbodyList' => implode("\n", $tbodyListArr), 'colspan' => $colspan];

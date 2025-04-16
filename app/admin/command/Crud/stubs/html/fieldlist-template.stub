@@ -10,12 +10,10 @@
             <textarea name="{%fieldName%}" class="layui-textarea layui-hide" cols="30" rows="5">{%fieldValue%}</textarea>
             <script type="text/html" id="{%field%}Tpl">
                 <tr class="layui-form-item rules-item">
-                    {{# layui.each(d.lists, function(index, item) { }}
                     {%tbodyList%}
                     <td>
                        <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close-fill"></i></button>
                        <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-drag-move-2-fill"></i></button>
                    </td>
-                   {{# }); }}
                 </tr>
             </script>
