@@ -302,10 +302,3 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 #treeview .jstree-children:before, #treeview .jstree-children:after {content: " "; display: table; }
 #treeview .jstree-children:after {clear: both; }
 #treeview .jstree-themeicon {display: none; }
-
-/*selectpage*/
-input.selectpage {color: transparent; pointer-events: none; }
-.sp_container {min-height: 36px; }
-.sp_container input.selectpage {color: inherit; pointer-events: inherit; padding-left: 12px; padding-right: 12px; }
-.sp_container .sp_element_box input.selectpage {padding-left: 0; padding-right: 0; }
-.sp_container .sp_element_box li:first-child input.selectpage {padding-left: 9px; padding-right: 9px; }
