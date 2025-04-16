@@ -39,15 +39,13 @@
         </div>
         <script type="text/html" id="equityTpl">
             <tr class="layui-form-item rules-item">
-                {{# layui.each(d.lists, function(index, item) { }}
-                <td><input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="名称" value="{{item.row.key|| ''}}" /></td>
+                <td><input type="text" class="layui-input" name="{{d.name}}[{{d.index}}][key]" placeholder="名称" value="{{d.row.key|| ''}}" /></td>
                 <td>
-                    <input type="radio" class="layui-input" name="{{item.name}}[{{item.index}}][high]" value="1" {{#  if(item.row.high == 1){ }}checked{{#  } }} title="是" lay-filter="fieldlist"/>
-                    <input type="radio" class="layui-input" name="{{item.name}}[{{item.index}}][high]" value="2" {{#  if(item.row.high != 1){ }}checked{{#  } }} title="否" lay-filter="fieldlist"/>
+                    <input type="radio" class="layui-input" name="{{d.name}}[{{d.index}}][high]" value="1" {{#  if(d.row.high == 1){ }}checked{{#  } }} title="是" lay-filter="fieldlist"/>
+                    <input type="radio" class="layui-input" name="{{d.name}}[{{d.index}}][high]" value="2" {{#  if(d.row.high != 1){ }}checked{{#  } }} title="否" lay-filter="fieldlist"/>
                 </td>
                 <td><button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close-fill"></i></button>
                 <button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-drag-move-2-fill"></i></button></td>
-                {{# }); }}
             </tr>
         </script>
     </div>

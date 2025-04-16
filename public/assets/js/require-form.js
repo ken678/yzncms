@@ -9,7 +9,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
 
     var Form = {
         config: {
-            fieldlisttpl:'<dd class="layui-form-item rules-item">{{# layui.each(d.lists, function(index, item) { }}<input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][key]" placeholder="键" value="{{item.key|| \'\'}}" /> <input type="text" class="layui-input" name="{{item.name}}[{{item.index}}][value]" placeholder="值" value="{{item.value|| \'\'}}" /> <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close-fill"></i></button><button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-drag-move-2-fill"></i></button>{{# }); }}</dd>'
+            fieldlisttpl:'<dd class="layui-form-item rules-item"><input type="text" class="layui-input" name="{{d.name}}[{{d.index}}][key]" placeholder="键" value="{{d.key|| \'\'}}" /> <input type="text" class="layui-input" name="{{d.name}}[{{d.index}}][value]" placeholder="值" value="{{d.value|| \'\'}}" /> <button type="button" class="layui-btn layui-btn-danger btn-remove layui-btn-xs"><i class="iconfont icon-close-fill"></i></button><button type="button" class="layui-btn btn-dragsort layui-btn-xs"><i class="iconfont icon-drag-move-2-fill"></i></button></dd>'
         },
         events: {
             bindevent: function(layform) {
@@ -305,9 +305,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                             row = row ? row : {};
                             row = typeof row.key === 'undefined' || typeof row.value === 'undefined' ? {key: '', value: ''} : row;
                             var options = container.data("fieldlist-options") || {};
-                            var vars = {
-                                lists: [{ 'index': index, 'name': name, 'data': data, 'options': options, 'key': row.key, 'value': row.value, 'row': row.value }]
-                            };
+                            var vars = {index: index, name: name, data: data, options: options, key: row.key, value: row.value, row: row.value};
                             var tpl = template ? $("#" + template).html() : Form.config.fieldlisttpl;
                             var html = layui.laytpl(tpl).render(vars);
                             var obj = $(html);
