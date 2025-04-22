@@ -26,7 +26,6 @@ use util\Random;
 use util\Tree;
 
 class Auth extends \libs\Auth
-
 {
     //当前登录会员详细信息
     protected $error        = '';
@@ -54,12 +53,10 @@ class Auth extends \libs\Auth
     public function getChildrenGroupIds(bool $withself = false)
     {
         //取出当前管理员所有的分组
-        $groups   = $this->getGroups();
-        $groupIds = [];
-        foreach ($groups as $v) {
-            $groupIds[] = $v['id'];
-        }
+        $groups         = $this->getGroups();
+        $groupIds       = array_column($groups, 'id');
         $originGroupIds = $groupIds;
+
         foreach ($groups as $k => $v) {
             if (in_array($v['parentid'], $originGroupIds)) {
                 $groupIds = array_diff($groupIds, [$v['id']]);
@@ -79,10 +76,8 @@ class Auth extends \libs\Auth
             $obj          = Tree::instance()->init($childrenList)->getTreeArray($v['parentid']);
             $objList      = array_merge($objList, Tree::instance()->getTreeList($obj, 'title'));
         }
-        $childrenGroupIds = [];
-        foreach ($objList as $v) {
-            $childrenGroupIds[] = $v['id'];
-        }
+        $childrenGroupIds = array_column($objList, 'id');
+
         if (!$withself) {
             $childrenGroupIds = array_diff($childrenGroupIds, $groupIds);
         }
@@ -107,13 +102,8 @@ class Auth extends \libs\Auth
     {
         $childrenAdminIds = [];
         if (!$this->isAdministrator()) {
-            $groupIds      = $this->getChildrenGroupIds(false);
-            $authGroupList = \app\admin\model\AuthGroupAccess::field('uid,group_id')
-                ->where('group_id', 'in', $groupIds)
-                ->select();
-            foreach ($authGroupList as $k => $v) {
-                $childrenAdminIds[] = $v['uid'];
-            }
+            $groupIds         = $this->getChildrenGroupIds(false);
+            $childrenAdminIds = \app\admin\model\AuthGroupAccess::where('group_id', 'in', $groupIds)->column('uid');
         } else {
             //超级管理员拥有所有人的权限
             $childrenAdminIds = AdminUser::column('id');

@@ -18,49 +18,57 @@
 <div class="alert alert-success-light">
     <div id="nowTime"></div>
 </div>
-<div class="layui-row layui-col-space10 panel_box">
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+<div class="layui-row layui-col-space10 panel_box mb-3">
+    <div class="panel text-center layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="https://www.kancloud.cn/ken678/yzncms2_0" target="_blank">
-            <div class="panel_icon yzn-bg-blue">
-                <i class="layui-icon layui-icon-read layui-anim"></i>
-            </div>
-            <div class="panel_word">
-                <span>文档</span>
-                <cite>使用手册</cite>
+            <div class="d-flex align-items-center">
+                <div class="panel_icon yzn-bg-blue">
+                    <i class="layui-icon layui-icon-read layui-anim"></i>
+                </div>
+                <div class="panel_word">
+                    <span>文档</span>
+                    <cite>使用手册</cite>
+                </div>
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+    <div class="panel text-center layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="https://gitee.com/ken678/YZNCMS" target="_blank">
-            <div class="panel_icon yzn-bg-orange">
-                <i class="layui-icon layui-icon-fonts-code layui-anim"></i>
-            </div>
-            <div class="panel_word">
-                <span>代码</span>
-                <cite>下载链接</cite>
+            <div class="d-flex align-items-center">
+                <div class="panel_icon yzn-bg-orange">
+                    <i class="layui-icon layui-icon-fonts-code layui-anim"></i>
+                </div>
+                <div class="panel_word">
+                    <span>代码</span>
+                    <cite>下载链接</cite>
+                </div>
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+    <div class="panel text-center layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="http://blog.yzncms.com" target="_blank">
-            <div class="panel_icon yzn-bg-green">
-                <i class="layui-icon layui-icon-survey layui-anim"></i>
-            </div>
-            <div class="panel_word">
-                <span>博客</span>
-                <cite>技术分享</cite>
+            <div class="d-flex align-items-center">
+                <div class="panel_icon yzn-bg-green">
+                    <i class="layui-icon layui-icon-survey layui-anim"></i>
+                </div>
+                <div class="panel_word">
+                    <span>博客</span>
+                    <cite>技术分享</cite>
+                </div>
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+    <div class="panel text-center layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="javascript:;">
-            <div class="panel_icon yzn-bg-purple">
-                <i class="layui-icon layui-icon-log layui-anim"></i>
-            </div>
-            <div class="panel_word">
-                <span class="loginTime">
-                    <?php if($admin['last_login_time'] > 0) { echo $admin['last_login_time'];} else { echo '--';}?></span>
-                <cite>上次登录时间</cite>
+            <div class="d-flex align-items-center">
+                <div class="panel_icon yzn-bg-purple">
+                    <i class="layui-icon layui-icon-log layui-anim"></i>
+                </div>
+                <div class="panel_word">
+                    <span class="loginTime layui-font-blue layui-font-16">
+                        <?php if($admin['last_login_time'] > 0) { echo $admin['last_login_time'];} else { echo '--';}?></span>
+                    <cite>上次登录时间</cite>
+                </div>
             </div>
         </a>
     </div>

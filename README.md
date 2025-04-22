@@ -2,7 +2,7 @@
 ### 系统基于ThinkPHP8.x后端+(Layui2.9.x+RequireJS)前端框架，承诺后台框架永久免费且商业授权无限制，更可移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/blob/master/LICENSE.txt)
-[![Version](https://img.shields.io/badge/YznCMS-2.0.2-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-2.0.3-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -81,6 +81,8 @@
 |图片处理|支持图片裁剪、旋转、水印等功能，图片处理必备插件|免费|
 |频率限制|限定用户在一段时间内的访问次数，用于保护接口防爬防爆破|免费|
 |TinyMCE富文本编辑器|一款易用、且功能强大的所见即所得的富文本编辑器|免费|
+|智能AI摘要|智阅点睛，一键洞见——基于AI大模型的智能摘要解决方案|免费|
+|页面水印|轻量级水印功能，确保系统保密性，安全性，降低数据泄密风险|免费|
 |评论插件|类似多说，一段JS即可调用的强大评论|付费|
 |会员推广|生成推广链接，后台生成邀请码注册|付费|
 |通用数据导出|支持任意表和关联表导出excel等格式|付费|
@@ -104,6 +106,7 @@
 |文档管理系统|一款针对IT团队开发的简单好用的文档管理系统|付费|
 |2FA双因子验证|双因子验证/双因素验证一种安全密码验证方式|付费|
 |聊天室系统|一款即时通信在线聊天系统|付费|
+|YznBBS社区|这是一款简单易用的轻量级社区|付费|
 
 ## [截图预览]
 ![输入图片说明](https://foruda.gitee.com/images/1694497052659798394/3f1a677d_555541.gif "YZNCMS后台管理系统")

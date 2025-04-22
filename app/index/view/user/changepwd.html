@@ -44,12 +44,12 @@
         <h2>基本设置</h2>
     </div>
     <div class="layui-card-body">
-        <div class="layui-tab" lay-filter="user">
-            <ul class="layui-tab-title" id="LAY_mine">
-                <li lay-id="info"><a href="{:url('profile')}">我的资料</a></li>
-                <li class="layui-this" lay-id="pass"><a href="{:url('changepwd')}">密码</a></li>
+        <div class="layui-tabs layui-tabs-card">
+            <ul class="layui-tabs-header">
+                <li><a href="{:url('profile')}">我的资料</a></li>
+                <li class="layui-this"><a href="{:url('changepwd')}">密码</a></li>
             </ul>
-            <div class="layui-tab-content">
+            <div class="layui-tabs-body">
                 <form id="changepwd-form" class="layui-form" method="post" style="width:450px;">
                     <div class="layui-form-item">
                         <label class="layui-form-label">旧密码</label>

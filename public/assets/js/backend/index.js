@@ -22,7 +22,7 @@ define(['jquery', 'form'], function($, Form) {
                         "index": {
                             "id": 0,
                             "href": Yzn.api.fixurl("main/index"),
-                            "title": "首页"
+                            "title": "控制台"
                         }
                     },
                     "theme": {

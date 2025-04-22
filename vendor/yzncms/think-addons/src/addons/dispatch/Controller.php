@@ -65,16 +65,20 @@ class Controller extends Dispatch
         // 命名空间
         $this->namespace = $app->addons->getNamespace();
 
-        $controller = strip_tags($this->request->route('controller'));
+        $action     = $this->request->route('action') ?: $this->rule->config('default_action');
+        $controller = $this->request->route('controller') ?: $this->rule->config('default_controller');
 
         // 获取控制器名和分层（目录）名
         if (str_contains($controller, '.')) {
-            $pos              = strrpos($controller, '.');
-            $this->controller = substr($controller, 0, $pos) . '.' . Str::studly(substr($controller, $pos + 1));
+            $pos        = strrpos($controller, '.');
+            $controller = substr($controller, 0, $pos) . '.' . Str::studly(substr($controller, $pos + 1));
         } else {
-            $this->controller = Str::studly($controller);
+            $controller = Str::studly($controller);
         }
-        $this->actionName = strip_tags($this->request->route('action'));
+
+        $this->actionName = strip_tags($action);
+        $this->controller = strip_tags($controller);
+
         // 设置插件命名空间
         $this->app->setNamespace($this->namespace . '\\' . $this->addonName);
 

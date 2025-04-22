@@ -6,7 +6,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">所属组别</label>
         <div class="layui-input-block">
-            <input class="form-control layui-input selectpage" type="text" name="group" data-source="{:url('auth.manager/get_group_list')}" data-multiple="true" data-pagination="false" value="{$groupids}">
+            <input class="form-control layui-input selectpage" type="text" name="group" data-source="{:url('auth.manager/get_group_list')}" data-multiple="true" data-pagination="false" data-escape="false" value="{$groupids}">
         </div>
     </div>
     <div class="layui-form-item">

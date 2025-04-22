@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.20
+ * @version     2.21
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -97,6 +97,10 @@
          * @type string
          */
         searchField: undefined,
+        /**
+         * escape content
+         */
+        escape: true,
         /**
          * Search type ('AND' or 'OR')
          * @type string
@@ -290,6 +294,25 @@
             };
         }
         this.option = option;
+    };
+
+
+    /**
+     * escape html
+     * @param text
+     * @returns {*|string}
+     */
+    SelectPage.prototype.escapeHTML = function (text) {
+        if (typeof text === 'string') {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;')
+                .replace(/`/g, '&#x60;');
+        }
+        return text;
     };
 
     /**
@@ -733,8 +756,8 @@
             self.prop.init_set = true;
             self.clearAll(self);
             $.each(data, function (i, row) {
-                var value = row[p.keyField];
-                var text = row[p.showField];
+                var value = p.escape ? self.escapeHTML(row[p.keyField]) : row[p.keyField];
+                var text = p.escape ? self.escapeHTML(row[p.showField]) : row[p.showField];
                 var item = {text: text, value: value};
                 if (!self.isAlreadySelected(self, item)) self.addNewTag(self, row, item);
             });
@@ -744,8 +767,8 @@
             self.prop.init_set = false;
         } else {
             var row = data[0];
-            var value = row[p.keyField];
-            var text = row[p.showField];
+            var value = p.escape ? self.escapeHTML(row[p.keyField]) : row[p.keyField];
+            var text = p.escape ? self.escapeHTML(row[p.showField]) : row[p.showField];
             self.elem.combo_input.val(text);
             self.elem.hidden.val(value);
             self.prop.prev_value = text;
@@ -1004,7 +1027,7 @@
         self.elem.results.empty().append(msgLi).show();
         self.calcResultsSize(self);
         self.setOpenStatus(self, true);
-        if(self.elem.control) self.elem.control.hide();
+        if (self.elem.control) self.elem.control.hide();
         if (self.option.pagination) self.elem.navi.hide();
     };
 
@@ -1078,6 +1101,7 @@
         if (now_value != self.prop.prev_value) {
             self.prop.prev_value = now_value;
             self.prop.first_show = false;
+            self.prop.current_page = 1;
 
             if (self.option.selectOnly) self.setButtonAttrDefault();
             if (!self.option.multiple && !now_value) {
@@ -1177,7 +1201,7 @@
         var q_word, val = $.trim(self.elem.combo_input.val());
         if (self.option.multiple) q_word = val;
         else {
-            if (val && val === self.prop.selected_text) q_word = '';
+            if (val && val == self.prop.selected_text) q_word = '';
             else q_word = val;
         }
         q_word = q_word.split(self.option.separator);
@@ -1578,7 +1602,7 @@
             var arr_candidate = json.candidate,
                 arr_primary_key = json.keyField,
                 keystr = el.hidden.val(),
-                keyArr = keystr ? keystr.split(',') : new Array(),
+                keyArr = keystr ? keystr.split(',') : [],
                 itemText = '';
             for (var i = 0; i < arr_candidate.length; i++) {
                 if (p.formatItem && $.isFunction(p.formatItem)) {
@@ -1586,9 +1610,11 @@
                         itemText = p.formatItem(json.originalResult[i]);
                     } catch (e) {
                         console.error('formatItem内容格式化函数内容设置不正确！');
-                        itemText = arr_candidate[i];
+                        itemText = p.escape ? self.escapeHTML(arr_candidate[i]) : arr_candidate[i];
                     }
-                } else itemText = arr_candidate[i];
+                } else {
+                    itemText = p.escape ? self.escapeHTML(arr_candidate[i]) : arr_candidate[i];
+                }
                 var list = $('<li>').html(itemText).attr({
                     pkey: arr_primary_key[i],
                     index: i
@@ -2193,7 +2219,7 @@
      * Get selected item raw data
      * @returns {any[]}
      */
-    function GetSelectedData () {
+    function GetSelectedData() {
         var results = [];
         this.each(function () {
             var $this = getPlugin(this), data = $this.data(SelectPage.dataKey);

@@ -8,9 +8,10 @@
 define(['jquery', 'layui'], function($, layui) {
     var table = layui.table,
         laydate = layui.laydate,
-        element = layui.element,
+        //element = layui.element,
         laytpl = layui.laytpl,
-        form = layui.form;
+        form = layui.form,
+        tabs = layui.tabs;
 
     var init = {
         table_elem: '#currentTable',
@@ -33,7 +34,7 @@ define(['jquery', 'layui'], function($, layui) {
             disabledbtn: '.btn-disabled',
         },
         api: {
-            init(defaults) {
+            init: function(defaults) {
                 defaults = defaults ? defaults : init;
                 Table.init = defaults;
             },
@@ -133,6 +134,7 @@ define(['jquery', 'layui'], function($, layui) {
             options.cols = options.cols || [];
             options.layFilter = options.id + '_LayFilter';
             options.searchFieldsetId = 'searchFieldset_' + options.id;
+            options.tabsId = 'tabs_' + options.id;
             options.url = Yzn.api.fixurl(options.url || options.init.index_url);
             options.search = Yzn.api.parame(options.search, true);
             options.showSearch = Yzn.api.parame(options.showSearch, true);
@@ -444,7 +446,7 @@ define(['jquery', 'layui'], function($, layui) {
                 var searchQuery = Table.getSearchQuery(that, true);
                 // 提交通用搜索时判断是否和Tabs筛选一致
                 var options = layui.table.getOptions(tableId);
-                var tabs = $('.layui-tab-title[data-field]', $('div[lay-filter="' + options.layFilter + '"]'));
+                var tabs = $('.layui-tabs-header[data-field]', $('div[id="' + options.tabsId + '"]'));
                 var field = tabs.data("field");
                 var value = $("li.layui-this", tabs).data("value");
                 if (data.field && typeof data.field[field] !== 'undefined' && data.field[field] != value) {
@@ -596,7 +598,7 @@ define(['jquery', 'layui'], function($, layui) {
             })
         },
         listenTabShowEvent: function(options, tableId) {
-            element.on('tab(' + options.layFilter + ')', function(data){
+            tabs.on('afterChange(' + options.tabsId + ')', function(data){
                 var field = $(this).closest("[data-field]").data("field");
                 var value = $(this).data("value");
                 var object = $("[name='" + field + "']", $('#' + options.searchFieldsetId));

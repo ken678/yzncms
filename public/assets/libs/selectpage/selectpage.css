@@ -176,13 +176,13 @@ ul.sp_element_box{
     margin-right: 24px;
     list-style: none;
     height: auto;
-    min-height: 25px;
+    min-height: 33px;
     font-size: 14px;
 }
 ul.sp_element_box > li{
     list-style: none;
     padding: 0 5px;
-    margin: 2px 3px 3px 0;
+    margin: 2px 3px 0 0;
     float: left;
     position: relative;
     box-sizing: content-box;
@@ -297,3 +297,15 @@ div.sp_result_area div.sp_pagination>ul>li.pageInfoBox>a:hover {background-color
 .sp-warning:before { content: "\e63c"; }
 .sp-previous:before { content: "\e65a"; }
 .sp-close:before { content: "\e600"; }
+
+input.selectpage {color: transparent; pointer-events: none; }
+.sp_container input.selectpage {
+  color: inherit;
+  pointer-events: inherit;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.sp_container .sp_element_box input.selectpage {
+  padding-left: 0;
+  padding-right: 0;
+}
