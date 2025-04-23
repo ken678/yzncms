@@ -213,7 +213,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-layer-yzn.layui-layer-border {border: none !important; box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3) !important; }
 .layui-layer-yzn.layui-layer-iframe {overflow: visible; }
 .layui-layer-yzn .layui-layer-moves {-webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; }
-.layui-layer-yzn .layui-layer-btn {text-align: center !important; padding: 10px !important; background: #ecf0f1; overflow: hidden; }
+.layui-layer-yzn .layui-layer-btn {text-align: center !important; padding: 10px 15px !important; background: #ecf0f1; overflow: hidden; }
 .layui-layer-yzn .layui-layer-btn a {background-color: #95a5a6; border-color: #95a5a6; color: #fff !important; height: 31px; margin-top: 0; border: 1px solid transparent; }
 .layui-layer-yzn .layui-layer-btn .layui-layer-btn0 {background-color: #1E9FFF; border-color: #1E9FFF; }
 .layui-layer-yzn .layui-layer-footer {padding: 8px 20px; background-color: #ecf0f1; height: auto; text-align: inherit !important; }
@@ -265,7 +265,7 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {background-color: #f2f2f2;}
 .layui-elem-quote{background-color: #f2f2f2;}
 
-/*tabs*/
+/*tabs和card*/
 .layui-tabs-panel .layui-tabs-header{padding: 15px !important;padding-bottom: 0 !important;background: #e8edf0;}
 .layui-tabs-panel .layui-tabs-header .layui-this:after{display: none;}
 .layui-tabs-panel .layui-tabs-header li{margin-right: 6px !important;color: #95a5a6;background-color: #d8e0e6;}
@@ -273,10 +273,10 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-tabs-panel .layui-tabs-header li.layui-this{color: #7b8a8b;background-color: #ffffff;}
 .layui-tabs-panel .layui-tabs-header:after, .layui-tabs-panel .layui-tabs-scroll:after{display: none;}
 .layui-tabs-panel .layui-tabs-body{padding: 16px 15px !important;}
-.layui-card-header{background:#e8edf0;border-bottom:none}
-.layui-card-body{padding: 16px 15px;}
 .layui-tabs-panel .layui-tabs-scroll .layui-tabs-header{padding: 0 !important}
 .layui-tabs-panel .layui-tabs-scroll .layui-tabs-header li{margin-left: 6px !important;margin-right: 0px !important;}
+.layui-card-header{background:#e8edf0;border-bottom:none}
+.layui-card-body{padding: 16px 15px;}
 
 /*图片上传缩略图*/
 .file-item.thumbnail .file-panel {position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
