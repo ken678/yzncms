@@ -664,7 +664,7 @@ define(['jquery', 'layui'], function($, layui) {
             }, item);
 
             return typeof customValue === 'string' ?
-                (item.LAY_COL.escape !== false ? layui.util.escape(customValue) : customValue) :
+                (item.LAY_COL && item.LAY_COL.escape !== false ? layui.util.escape(customValue) : customValue) :
                 customValue;
         },
         done: function (res, curr, count) {
