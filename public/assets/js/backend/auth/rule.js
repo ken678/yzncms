@@ -27,7 +27,6 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                         showIcon: false
                     }
                 },
-                escape: false,
                 // @todo 不直接使用yznTable.render(); 进行表格初始化, 需要使用 Table.formatCols(); 方法格式化`cols`列数据
                 cols: Table.formatCols([
                     [
