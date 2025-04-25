@@ -23,7 +23,7 @@ class Main extends Backend
     //欢迎首页
     public function index()
     {
-        if (IS_ROOT && $this->auth->password == encrypt_password('admin', $this->auth->encrypt)) {
+        if ($this->auth->password == encrypt_password('admin', $this->auth->encrypt)) {
             $this->assign('default_pass', 1);
         }
         $this->assign('sys_info', $this->get_sys_info());
