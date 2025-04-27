@@ -68,15 +68,13 @@ class Install
 
             // 连接install命令中指定的数据库
             Config::set(['connections' => $dbConfig['connections']], 'database');
-            $instance = Db::connect('mysql');
+            $connect = Db::connect('mysql');
 
             // 查询一次SQL,判断连接是否正常
-            $instance->execute("SELECT 1");
+            $connect->execute("SELECT 1");
 
-            $db = new PDO("{$config['type']}:dbname={$mysqlDatabase};host={$mysqlHostname}", $mysqlUsername, $mysqlPassword);
-            $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, 0);
             // 调用原生PDO对象进行批量查询
-            $db->exec($sql);
+            $connect->getPdo()->exec($sql);
         } catch (\PDOException $e) {
             throw new Exception($e->getMessage());
         }
@@ -146,12 +144,12 @@ class Install
         $newSalt       = substr(md5(uniqid(true)), 0, 6);
         $newPassword   = md5(md5($adminPassword) . $newSalt);
         $data          = ['username' => $adminUsername, 'email' => $adminEmail, 'password' => $newPassword, 'encrypt' => $newSalt];
-        $instance->name('admin')->where('username', 'admin')->update($data);
+        $connect->name('admin')->where('username', 'admin')->update($data);
 
         // 变更前台默认用户的密码,随机生成
         $newSalt     = substr(md5(uniqid(true)), 0, 6);
         $newPassword = md5(md5(Random::alnum(8)) . $newSalt);
-        $instance->name('user')->where('username', 'admin')->update(['password' => $newPassword, 'encrypt' => $newSalt]);
+        $connect->name('user')->where('username', 'admin')->update(['password' => $newPassword, 'encrypt' => $newSalt]);
 
         // 修改后台入口
         $adminName = '';
