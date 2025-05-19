@@ -66,8 +66,8 @@ class Index extends Backend
             $keeplogin = $this->request->post('keeplogin');
             $rule      = [
                 'verify|验证码'   => 'require|captcha',
-                'username|用户名' => 'require|alphaDash|length:3,20',
-                'password|密码'  => 'require|length:3,20',
+                'username|用户名' => 'require|alphaDash|length:3,30',
+                'password|密码'  => 'require|length:6,30',
                 '__token__'    => 'require|token',
             ];
             Adminlog::setTitle('登录');
