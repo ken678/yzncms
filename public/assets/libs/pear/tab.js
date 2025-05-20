@@ -165,57 +165,6 @@ define(['jquery', 'layui'], function($, layui) {
 		}
 	}
 
-	// 通过过滤 filter 标识, 新增标签页
-	pearTab.prototype.addTabOnlyByElem = function(elem, opt, time) {
-		var title = '';
-		if (opt.close) {
-			title += '<span class="pear-tab-active"></span><span class="able-close title">' + opt.title +
-				'</span><i class="layui-icon layui-unselect layui-tabs-close">ဆ</i>'
-		} else {
-			title += '<span class="pear-tab-active"></span><span class="disable-close title">' + opt.title +
-				'</span><i class="layui-icon layui-unselect layui-tabs-close">ဆ</i>'
-		}
-		if ($(".layui-tabs[lay-filter='" + elem + "'] .layui-tabs-header li[lay-id]").length <= 0) {
-			tabs.add(elem, {
-				title: title,
-				content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id +
-					'" scrolling="auto" frameborder="0" src="' +
-					opt.url + '" style="width:100%;height:100%;" allowfullscreen="true"></iframe>',
-				id: opt.id
-			});
-			if (time != false && time != 0) {
-				tabIframeLoading(elem, opt.id);
-			}
-			tabData.push(opt);
-			sessionStorage.setItem(elem + "-pear-tab-data", JSON.stringify(tabData));
-		} else {
-			var isData = false;
-			$.each($(".layui-tabs[lay-filter='" + elem + "'] .layui-tabs-header li[lay-id]"), function() {
-				if ($(this).attr("lay-id") == opt.id) {
-					isData = true;
-				}
-			})
-
-			if (isData == false) {
-				tabs.add(elem, {
-					title: title,
-					content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id +
-						'" scrolling="auto" frameborder="0" src="' +
-						opt.url + '" style="width:100%;height:100%;" allowfullscreen="true"></iframe>',
-					id: opt.id
-				});
-				if (time != false && time != 0) {
-					tabIframeLoading(elem, opt.id);
-				}
-				tabData.push(opt);
-				sessionStorage.setItem(elem + "-pear-tab-data", JSON.stringify(tabData));
-
-			}
-		}
-		sessionStorage.setItem(elem + "-pear-tab-data-current", opt.id);
-		tabs.change(elem, opt.id);
-	}
-
 	/** 添 加 唯 一 选 项 卡 */
 	pearTab.prototype.addTabOnly = function(opt, time) {
 		var title = '';

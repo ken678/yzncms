@@ -245,7 +245,7 @@ html, body, .layui-layout {height: 100%; }
 .pear-tab .layui-tabs-header .disable-close+.layui-tabs-close {display: none; }
 .pear-tab .layui-tabs-header .able-close+.layui-tabs-close {display: inline-block; }
 .pear-tab .layui-tabs-close{font-size: 13px; }
-.pear-tab .layui-tab-control>li {position: absolute; top: 0px; height: 40px; line-height: 40px; width: 40px; text-align: center; background-color: white; border-top: whitesmoke 1px solid; border-bottom: whitesmoke 1px solid; }
+.pear-tab .layui-tab-control>li {position: absolute; top: 0px; height: 38px; line-height: 38px; width: 40px; text-align: center; background-color: white; border-top: whitesmoke 1px solid; border-bottom: whitesmoke 1px solid; }
 .pear-tab .layui-tab-tool {right: 0px; border-left: 1px solid whitesmoke; }
 .pear-tab .layui-tab-control .layui-tab-tool{display: none; }
 .pear-tab.layui-tab-roll .layui-tabs-header {padding-left: 40px; padding-right: 40px; }

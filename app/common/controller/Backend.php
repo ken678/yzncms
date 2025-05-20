@@ -102,24 +102,26 @@ class Backend extends BaseController
             // 是否是超级管理员
             define('IS_ROOT', $this->auth->isAdministrator());
 
-            if (!IS_ROOT && config::get('site.admin_forbid_ip')) {
+            $forbiddenIps = config::get('site.admin_forbid_ip');
+            if ($forbiddenIps) {
+                $ip = $this->request->ip();
                 // 检查IP地址访问
-                $arr = explode(',', config::get('site.admin_forbid_ip'));
+                $arr = explode(',', $forbiddenIps);
                 foreach ($arr as $val) {
                     //是否是IP段
                     if (strpos($val, '*')) {
-                        if (str_contains($this->request->ip(), str_replace('.*', '', $val))) {
+                        if (str_contains($ip, str_replace('.*', '', $val))) {
                             $this->error('403:你在IP禁止段内,禁止访问！');
                         }
                     } else {
                         //不是IP段,用绝对匹配
-                        if ($this->request->ip() == $val) {
+                        if ($ip == $val) {
                             $this->error('403:IP地址绝对匹配,禁止访问！');
                         }
-
                     }
                 }
             }
+
             if (!IS_ROOT && !$this->auth->match($this->noNeedRight)) {
                 //检测访问权限
                 if (!$this->auth->check($path)) {

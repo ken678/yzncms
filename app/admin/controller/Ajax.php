@@ -91,7 +91,6 @@ class Ajax extends Backend
             return json([
                 'code'    => 0,
                 'msg'     => '没有指定上传目录',
-                'state'   => '没有指定上传目录', //兼容百度
                 'message' => '没有指定上传目录', //兼容editormd
             ]);
         }
@@ -119,7 +118,6 @@ class Ajax extends Backend
                     return json([
                         'code'    => 0,
                         'msg'     => $e->getMessage(),
-                        'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
                 }
@@ -133,7 +131,6 @@ class Ajax extends Backend
                     return json([
                         'code'    => 0,
                         'msg'     => $e->getMessage(),
-                        'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
                 }
@@ -148,7 +145,6 @@ class Ajax extends Backend
                     return json([
                         'code'    => 0,
                         'msg'     => $e->getMessage(),
-                        'state'   => $e->getMessage(), //兼容百度
                         'message' => $e->getMessage(), //兼容editormd
                     ]);
                 }
@@ -175,7 +171,6 @@ class Ajax extends Backend
             return json([
                 'code'    => 0,
                 'msg'     => $e->getMessage(),
-                'state'   => $e->getMessage(), //兼容百度
                 'message' => $e->getMessage(), //兼容editormd
             ]);
         }

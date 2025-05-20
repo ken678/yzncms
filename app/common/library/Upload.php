@@ -146,9 +146,8 @@ class Upload
                 'msg'     => $file_exists['name'] . '上传成功',
                 'id'      => $file_exists['id'],
                 'path'    => $file_exists['path'],
-                "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
-                "url"     => $file_exists['path'], // 返回的地址 兼容百度
                 "title"   => $file_exists['name'], // 附件名 兼容百度
+                "url"     => $file_exists['path'], // 返回的地址 兼容百度
                 "success" => 1, //兼容editormd
                 "message" => $file_exists['name'], // 附件名 兼容editormd
             ]);
@@ -218,7 +217,6 @@ class Upload
             'msg'     => $file_info['name'] . '上传成功',
             'id'      => $attachment->id,
             'path'    => $file_info['path'],
-            "state"   => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS" 兼容百度
             "url"     => $file_info['path'], // 返回的地址 兼容百度
             "title"   => $file_info['name'], // 附件名 兼容百度
             "success" => 1, //兼容editormd

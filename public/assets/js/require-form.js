@@ -23,6 +23,20 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
 
                 $(".layer-footer [lay-submit],.fixed-footer [lay-submit],.normal-footer [lay-submit]", layform).removeClass("disabled");
 
+                //自定义验证
+                form.verify({
+                    username: function(value, elem){
+                        if (!/^\w{3,30}$/.test(value)) {
+                            return '用户名只能由3-30位数字、字母、下划线组合';
+                        }
+                    },
+                    password: function(value, elem) {
+                        if (!/^[\S]{6,30}$/.test(value)) {
+                            return '密码长度必须在6-30位之间，不能包含空格';
+                        }
+                    }
+                })
+
                 //验证通过提交表单
                 form.on('submit(' + filter + ')', function(data) {
                     submitBtn.addClass("disabled");

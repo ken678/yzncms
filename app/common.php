@@ -44,41 +44,6 @@ if (!function_exists('cdnurl')) {
     }
 }
 
-if (!function_exists('int_to_string')) {
-    /**
-     * select返回的数组进行整数映射转换
-     *
-     * @param array $map  映射关系二维数组  array(
-     *                                          '字段名1'=>array(映射关系数组),
-     *                                          '字段名2'=>array(映射关系数组),
-     *                                           ......
-     *                                       )
-     * @author 朱亚杰 <zhuyajie@topthink.net>
-     * @return array
-     *
-     *  array(
-     *      array('id'=>1,'title'=>'标题','status'=>'1','status_text'=>'正常')
-     *      ....
-     *  )
-     *
-     */
-    function int_to_string(&$data, $map = ['status' => [1 => '正常', -1 => '删除', 0 => '禁用', 2 => '未审核', 3 => '草稿']])
-    {
-        if ($data === false || $data === null) {
-            return $data;
-        }
-        $data = (array) $data;
-        foreach ($data as $key => $row) {
-            foreach ($map as $col => $pair) {
-                if (isset($row[$col]) && isset($pair[$row[$col]])) {
-                    $data[$key][$col . '_text'] = $pair[$row[$col]];
-                }
-            }
-        }
-        return $data;
-    }
-}
-
 if (!function_exists('str_cut')) {
     /**
      * 字符截取
@@ -122,80 +87,6 @@ if (!function_exists('str_cut')) {
             $returnstr = $returnstr . $dot; //超过长度时在尾处加上省略号
         }
         return $returnstr;
-    }
-}
-
-if (!function_exists('list_sort_by')) {
-    /**
-     * 对查询结果集进行排序
-     * @access public
-     * @param array $list   查询结果
-     * @param string $field 排序的字段名
-     * @param string $sortby 排序类型
-     * asc正向排序 desc逆向排序 nat自然排序
-     * @return array
-     */
-    function list_sort_by(array $list, string $field, string $sortby = 'asc'): array
-    {
-        $refer = $resultSet = [];
-        foreach ($list as $i => $data) {
-            $refer[$i] = &$data[$field];
-        }
-
-        switch ($sortby) {
-            case 'asc': // 正向排序
-                asort($refer);
-                break;
-            case 'desc': // 逆向排序
-                arsort($refer);
-                break;
-            case 'nat': // 自然排序
-                natcasesort($refer);
-                break;
-        }
-        foreach ($refer as $key => $val) {
-            $resultSet[] = &$list[$key];
-        }
-
-        return $resultSet;
-    }
-}
-
-if (!function_exists('list_to_tree')) {
-    /**
-     * 把返回的数据集转换成Tree
-     * @param array $list 要转换的数据集
-     * @param string $pk
-     * @param string $pid parent标记字段
-     * @param string $child
-     * @param int $root
-     * @return array
-     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
-     */
-    function list_to_tree($list, $pk = 'id', $pid = 'parentid', $child = '_child', $root = 0)
-    {
-        // 创建Tree
-        $tree = [];
-        if (is_array($list)) {
-            // 创建基于主键的数组引用
-            $refer = [];
-            foreach ($list as $key => $data) {
-                $refer[$data[$pk]] = &$list[$key];
-            }
-            foreach ($list as $key => $data) {
-                // 判断是否存在parent
-                $parentId = $data[$pid];
-                if ($root == $parentId) {
-                    $tree[] = &$list[$key];
-                } else {
-                    if (isset($refer[$parentId])) {
-                        $parent           = &$refer[$parentId];
-                        $parent[$child][] = &$list[$key];
-                    }
-                }
-            }
-        }
-        return $tree;
     }
 }
 
@@ -568,38 +459,6 @@ if (!function_exists('build_suffix_image')) {
             <g><text><tspan x="220" y="380" font-size="124" font-family="Verdana, Helvetica, Arial, sans-serif" fill="white" text-anchor="middle">{$suffix}</tspan></text></g>
         </svg>
 EOT;
-    }
-}
-
-if (!function_exists('check_cors_request')) {
-    /**
-     * 跨域检测
-     */
-    function check_cors_request()
-    {
-        //跨域访问的时候才会存在此字段
-        if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN']) {
-            $info        = parse_url($_SERVER['HTTP_ORIGIN']);
-            $domainArr   = explode(',', Config::get('yzn.cors_request_domain'));
-            $domainArr[] = Request::host(true);
-            if (in_array("*", $domainArr) || in_array($_SERVER['HTTP_ORIGIN'], $domainArr) || (isset($info['host']) && in_array($info['host'], $domainArr))) {
-                header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
-            } else {
-                header('HTTP/1.1 403 Forbidden');
-                exit;
-            }
-            header('Access-Control-Allow-Credentials: true');
-            header('Access-Control-Max-Age: 86400');
-            if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
-                    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-                }
-                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
-                    header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
-                }
-                exit;
-            }
-        }
     }
 }
 
