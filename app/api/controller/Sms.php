@@ -37,11 +37,15 @@ class Sms extends Api
     {
         $mobile = $this->request->param("mobile");
         $event  = $this->request->param("event");
-        $event  = $event ? $event : 'register';
+        $event  = $event ?: 'register';
 
         if (!$mobile || !Validate::isMobile($mobile)) {
             $this->error('手机号不正确');
         }
+        if (!preg_match("/^[a-z0-9_\-]{3,30}\$/i", $event)) {
+            $this->error('事件名称错误');
+        }
+
         $last = Smslib::get($mobile, $event);
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
@@ -79,12 +83,19 @@ class Sms extends Api
     {
         $mobile  = $this->request->param("mobile");
         $event   = $this->request->param("event");
-        $event   = $event ? $event : 'register';
+        $event   = $event ?: 'register';
         $captcha = $this->request->param("captcha");
 
         if (!$mobile || !Validate::regex($mobile, "^1\d{10}$")) {
             $this->error('手机号不正确');
         }
+        if (!preg_match("/^[a-z0-9_\-]{3,30}\$/i", $event)) {
+            $this->error('事件名称错误');
+        }
+        if (!preg_match("/^[a-z0-9]{4,6}\$/i", $captcha)) {
+            $this->error('验证码格式错误');
+        }
+
         if ($event) {
             $userinfo = User::getByMobile($mobile);
             if ($event == 'register' && $userinfo) {
