@@ -1956,24 +1956,24 @@
         },
         {
             "name": "topthink/think-validate",
-            "version": "v3.0.5",
-            "version_normalized": "3.0.5.0",
+            "version": "v3.0.6",
+            "version_normalized": "3.0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-validate.git",
-                "reference": "f7dd85675270e9f8c0b04a13362133067629f53c"
+                "reference": "c6a7704fc991d3689408299822dbc2ba4ee3f79a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-validate/zipball/f7dd85675270e9f8c0b04a13362133067629f53c",
-                "reference": "f7dd85675270e9f8c0b04a13362133067629f53c",
+                "url": "https://api.github.com/repos/top-think/think-validate/zipball/c6a7704fc991d3689408299822dbc2ba4ee3f79a",
+                "reference": "c6a7704fc991d3689408299822dbc2ba4ee3f79a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0",
                 "topthink/think-container": ">=3.0"
             },
-            "time": "2025-03-05T06:11:48+00:00",
+            "time": "2025-05-23T04:10:45+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1997,7 +1997,7 @@
             "description": "think validate",
             "support": {
                 "issues": "https://github.com/top-think/think-validate/issues",
-                "source": "https://github.com/top-think/think-validate/tree/v3.0.5"
+                "source": "https://github.com/top-think/think-validate/tree/v3.0.6"
             },
             "install-path": "../topthink/think-validate"
         },
@@ -2124,17 +2124,17 @@
         },
         {
             "name": "yansongda/pay",
-            "version": "v3.7.14",
-            "version_normalized": "3.7.14.0",
+            "version": "v3.7.15",
+            "version_normalized": "3.7.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/pay.git",
-                "reference": "a000bd7dec9c98f64e70173559b9656702b21a79"
+                "reference": "c8eb54f93fcd481462929cb00f071a1fbc9e07ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/pay/zipball/a000bd7dec9c98f64e70173559b9656702b21a79",
-                "reference": "a000bd7dec9c98f64e70173559b9656702b21a79",
+                "url": "https://api.github.com/repos/yansongda/pay/zipball/c8eb54f93fcd481462929cb00f071a1fbc9e07ac",
+                "reference": "c8eb54f93fcd481462929cb00f071a1fbc9e07ac",
                 "shasum": ""
             },
             "require": {
@@ -2164,7 +2164,7 @@
                 "symfony/psr-http-message-bridge": "^2.1",
                 "symfony/var-dumper": "^5.1"
             },
-            "time": "2025-04-12T02:09:16+00:00",
+            "time": "2025-06-01T13:41:13+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
