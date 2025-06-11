@@ -1956,24 +1956,24 @@
         },
         {
             "name": "topthink/think-validate",
-            "version": "v3.0.6",
-            "version_normalized": "3.0.6.0",
+            "version": "v3.0.7",
+            "version_normalized": "3.0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-validate.git",
-                "reference": "c6a7704fc991d3689408299822dbc2ba4ee3f79a"
+                "reference": "85063f6d4ef8ed122f17a36179dc3e0949b30988"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-validate/zipball/c6a7704fc991d3689408299822dbc2ba4ee3f79a",
-                "reference": "c6a7704fc991d3689408299822dbc2ba4ee3f79a",
+                "url": "https://api.github.com/repos/top-think/think-validate/zipball/85063f6d4ef8ed122f17a36179dc3e0949b30988",
+                "reference": "85063f6d4ef8ed122f17a36179dc3e0949b30988",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0",
                 "topthink/think-container": ">=3.0"
             },
-            "time": "2025-05-23T04:10:45+00:00",
+            "time": "2025-06-11T05:51:40+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1997,7 +1997,7 @@
             "description": "think validate",
             "support": {
                 "issues": "https://github.com/top-think/think-validate/issues",
-                "source": "https://github.com/top-think/think-validate/tree/v3.0.6"
+                "source": "https://github.com/top-think/think-validate/tree/v3.0.7"
             },
             "install-path": "../topthink/think-validate"
         },
