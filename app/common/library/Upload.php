@@ -63,6 +63,11 @@ class Upload
 
     protected function checkExecutable()
     {
+        //禁止上传以.开头的文件
+        if (substr($this->fileInfo['name'], 0, 1) === '.') {
+            throw new UploadException('上传文件格式受限制');
+        }
+
         //禁止上传PHP和HTML文件
         if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html']) || in_array($this->fileInfo['suffix'], ['php', 'asp', 'exe', 'cmd', 'sh', 'bat', 'html', 'htm', 'phtml', 'phar']) || preg_match("/^php(.*)/i", $this->fileInfo['suffix'])) {
             throw new UploadException('上传文件格式受限制');
@@ -115,8 +120,7 @@ class Upload
             throw new UploadException('上传文件格式受限制');
         }
         //验证文件后缀
-        if ($this->config['mimetype'] === '*'
-            || in_array($this->fileInfo['suffix'], $mimetypeArr) || in_array('.' . $this->fileInfo['suffix'], $mimetypeArr)
+        if (in_array($this->fileInfo['suffix'], $mimetypeArr) || in_array('.' . $this->fileInfo['suffix'], $mimetypeArr)
             || in_array($typeArr[0] . "/*", $mimetypeArr) || (in_array($this->fileInfo['type'], $mimetypeArr) && stripos($this->fileInfo['type'], '/') !== false)) {
             return true;
         }
