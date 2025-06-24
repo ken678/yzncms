@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f445ad60a90e466a08b0bdd8bb5a3a45eeafdb9b',
+        'reference' => '06c388fe3f6bafb2e39589aea057c999d2ff21d4',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -247,7 +247,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f445ad60a90e466a08b0bdd8bb5a3a45eeafdb9b',
+            'reference' => '06c388fe3f6bafb2e39589aea057c999d2ff21d4',
             'dev_requirement' => false,
         ),
         'topthink/think-captcha' => array(
@@ -341,12 +341,12 @@
             'dev_requirement' => false,
         ),
         'yansongda/pay' => array(
-            'pretty_version' => 'v3.7.15',
-            'version' => '3.7.15.0',
+            'pretty_version' => 'v3.7.16',
+            'version' => '3.7.16.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../yansongda/pay',
             'aliases' => array(),
-            'reference' => 'c8eb54f93fcd481462929cb00f071a1fbc9e07ac',
+            'reference' => 'f24aea15bbfc2ec23b1201168d81f73a99433a8f',
             'dev_requirement' => false,
         ),
         'yansongda/supports' => array(

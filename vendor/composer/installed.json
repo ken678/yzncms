@@ -2124,17 +2124,17 @@
         },
         {
             "name": "yansongda/pay",
-            "version": "v3.7.15",
-            "version_normalized": "3.7.15.0",
+            "version": "v3.7.16",
+            "version_normalized": "3.7.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/pay.git",
-                "reference": "c8eb54f93fcd481462929cb00f071a1fbc9e07ac"
+                "reference": "f24aea15bbfc2ec23b1201168d81f73a99433a8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/pay/zipball/c8eb54f93fcd481462929cb00f071a1fbc9e07ac",
-                "reference": "c8eb54f93fcd481462929cb00f071a1fbc9e07ac",
+                "url": "https://api.github.com/repos/yansongda/pay/zipball/f24aea15bbfc2ec23b1201168d81f73a99433a8f",
+                "reference": "f24aea15bbfc2ec23b1201168d81f73a99433a8f",
                 "shasum": ""
             },
             "require": {
@@ -2164,7 +2164,7 @@
                 "symfony/psr-http-message-bridge": "^2.1",
                 "symfony/var-dumper": "^5.1"
             },
-            "time": "2025-06-01T13:41:13+00:00",
+            "time": "2025-06-12T05:51:47+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
