@@ -1,5 +1,5 @@
 # YznCMS 2.0 后台开发框架
-### 系统基于ThinkPHP8.x后端+(Layui2.9.x+RequireJS)前端框架，承诺后台框架永久免费且商业授权无限制，更可移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
+### 系统基于ThinkPHP8.x后端+(Layui2.11.x+RequireJS)前端框架，承诺后台框架永久免费且商业授权无限制，更可移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/blob/master/LICENSE.txt)
 [![Version](https://img.shields.io/badge/YznCMS-2.0.4-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
