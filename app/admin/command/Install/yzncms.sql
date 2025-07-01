@@ -153,6 +153,7 @@ INSERT INTO `yzn_auth_rule` VALUES (11, 1, 'general.config/setting', '网站设�
 INSERT INTO `yzn_auth_rule` VALUES (12, 28, 'auth.rule', '菜单管理', 'iconfont icon-list-unordered', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
 INSERT INTO `yzn_auth_rule` VALUES (13, 1, 'general.attachments', '附件管理', 'iconfont icon-attachment-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
 INSERT INTO `yzn_auth_rule` VALUES (14, 13, 'general.attachments/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (69, 13, 'general.attachments/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (15, 13, 'general.attachments/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (16, 13, 'general.attachments/getUrlFile', '图片本地化', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (17, 13, 'general.attachments/select', '图片选择', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);

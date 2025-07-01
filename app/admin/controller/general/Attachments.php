@@ -94,6 +94,32 @@ class Attachments extends Backend
         return $this->fetch();
     }
 
+    /**
+     * 归类
+     */
+    public function classify()
+    {
+        if (!$this->auth->check('general.attachment/edit')) {
+            \think\Hook::listen('admin_nopermission', $this);
+            $this->error('你没有权限访问');
+        }
+        if (!$this->request->isPost()) {
+            $this->error('参数不正确');
+        }
+        $category = $this->request->post('category', '');
+        $ids      = $this->request->param('id/a', null);
+        if ($ids && !is_array($ids)) {
+            $ids = [0 => $ids];
+        }
+        $categoryList = AttachmentModel::getCategoryList();
+        if ($category && !isset($categoryList[$category])) {
+            $this->error('指定的类别未找到');
+        }
+        $category = $category == 'unclassed' ? '' : $category;
+        AttachmentModel::where('id', 'in', $ids)->update(['category' => $category]);
+        $this->success();
+    }
+
     //附件删除
     public function del()
     {

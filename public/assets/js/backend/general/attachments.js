@@ -60,8 +60,8 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
                         yes: function(index, layero) {
                             var category = $("select[name='category']", layero).val();
                             Yzn.api.ajax({
-                                url: "general.attachment/classify",
-                                data: { 'ids': ids, 'category': category },
+                                url: "general.attachments/classify",
+                                data: { 'id': ids, 'category': category },
                             }, function(data) {
                                 layui.table.reload('currentTable');
                                 Layer.close(index);
