@@ -1,16 +1,35 @@
 {extend name="index_layout"/}
 {block name="main"}
 <div class="layui-card">
-    <div class="layui-card-header">附件管理</div>
-    <div class="layui-card-body">
-        <table class="layui-hide" id="currentTable" lay-filter="currentTable" data-auth-delete="{:$auth->check('general.attachments/del')}"></table>
+    <div class="layui-tabs layui-tabs-panel" id="tabs_currentTable">
+        <ul class="layui-tabs-header" data-field="category">
+            <li class="layui-this" data-value="">全部</li>
+            {foreach name="categoryList" item="vo"}
+            <li data-value="{$key}">{$vo}</li>
+            {/foreach}
+        </ul>
+        <div class="layui-tabs-body">
+             <table class="layui-hide" id="currentTable" lay-filter="currentTable" data-auth-delete="{:$auth->check('general.attachments/del')}"></table>
+        </div>
     </div>
 </div>
+
 <script type="text/html" id="picTpl">
   {{#  if(d.mime.indexOf("image") > -1){ }}
     <img style="max-width:80px; max-height:30px;" src="{{d.path}}" data-image="{{d.name}}">
   {{#  } else { }}
     <img style="max-width:80px; max-height:30px;" src="{:url('admin/ajax/icon')}?suffix={{d.ext}}">
   {{#  } }}
+</script>
+
+<script type="text/html" id="typeTpl">
+    <form class="layui-form">
+        <select name="category">
+            <option value="">请选择一个类别</option>
+            {foreach name="categoryList" id="item"}
+            <option value="{$key}">{$item}</option>
+            {/foreach}
+        </select>
+    </form>
 </script>
 {/block}

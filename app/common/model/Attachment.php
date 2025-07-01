@@ -25,4 +25,26 @@ class Attachment extends Model
     {
         return format_bytes($value);
     }
+
+    public function getCategoryAttr($value): string
+    {
+        return $value == '' ? 'unclassed' : $value;
+    }
+
+    public function setCategoryAttr($value)
+    {
+        return $value == 'unclassed' ? '' : $value;
+    }
+
+    /**
+     * 获取定义的附件类别列表
+     * @return array
+     */
+    public static function getCategoryList(): array
+    {
+        $data = config('site.attachmentcategory') ?? [];
+        // 添加未归类选项
+        $data['unclassed'] = '未归类';
+        return $data;
+    }
 }

@@ -13,28 +13,65 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
             Table.render({
                 init: Table.init,
                 elem: Table.init.table_elem,
-                toolbar: ['refresh', 'delete'],
+                toolbar: ['refresh', 'delete',, [{
+                    text: '归类',
+                    auth: 'edit',
+                    icon: 'iconfont icon-drag-move-2-fill',
+                    class: 'layui-btn layui-btn-sm layui-btn-normal btn-classify btn-disabled layui-btn-disabled',
+                    extend: '',
+                }]],
                 url: 'general.attachments/index',
                 lineStyle: 'height: 50px;',
                 cols: [
                     [
                         { type: 'checkbox', fixed: 'left' },
                         { field: 'id', width: 80, title: 'ID', sort: true },
+                        { field: 'category', width: 90, title: '类别', templet: Table.formatter.label, selectList: Config.categoryList, searchOp: 'in'},
                         { field: 'admin_id', width: 80, title: '用户', hide: true, addClass: "selectpage", extend: "data-source='auth.manager/index' data-field='username'" },
                         { field: 'name', title: '名称', searchOp: 'like' },
                         { field: 'path', width: 70, align: "center", title: '图片', search: false, templet: Controller.api.formatter.thumb },
                         { field: 'path', width: 450, align: "center", title: '物理路径', templet: '<div><a class="layui-btn layui-btn layui-btn-xs" href="{{d.path}}" target="_blank">{{d.path}}</a></div>', searchOp: 'like' },
                         { field: 'size', width: 100, title: '大小', sort: true },
-                        { field: 'ext', width: 100, title: '类型', searchOp: 'like' },
+                        { field: 'ext', width: 80, title: '类型', searchOp: 'like' },
                         { field: 'mime', title: 'Mime类型', selectList: { 'image/*': '图片', 'audio/*': '音频', 'video/*': '视频', 'text/*': '文档', 'application/*': '应用', 'zip,rar,7z,tar': '压缩包' }, extend: "lay-search lay-creatable" },
                         { field: 'driver', width: 90, title: '存储引擎', searchOp: 'like' },
-                        { field: 'create_time', width: 170, title: '上传时间', search: 'range' },
+                        { field: 'create_time', width: 160, title: '上传时间', search: 'range' },
                         { width: 60, title: '操作', templet: Table.formatter.tool, operat: ['delete'] }
                     ]
                 ],
                 page: {}
             });
 
+            $('body').on('click', '.btn-classify', function() {
+                var checkStatus = layui.table.checkStatus('currentTable'),
+                    ids = [],
+                    data = checkStatus.data;
+                if (data.length > 0) {
+                    $.each(data, function(i, v) {
+                        ids.push(v.id);
+                    });
+                    Layer.open({
+                        title: '归类',
+                        content: layui.laytpl($("#typeTpl").html()).render({}),
+                        area: ['300px', '250px'],
+                        success: function(){
+                            layui.form.render('select');
+                        },
+                        yes: function(index, layero) {
+                            var category = $("select[name='category']", layero).val();
+                            Yzn.api.ajax({
+                                url: "general.attachment/classify",
+                                data: { 'ids': ids, 'category': category },
+                            }, function(data) {
+                                layui.table.reload('currentTable');
+                                Layer.close(index);
+                            })
+                        },
+                    });
+                } else {
+                    Layer.msg("请选择需要归类的数据", { icon: 2 });
+                }
+            });
             Table.api.bindevent();
         },
         select: function() {

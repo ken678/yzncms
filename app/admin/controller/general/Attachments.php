@@ -28,6 +28,8 @@ class Attachments extends Backend
         parent::initialize();
         $this->modelClass = new AttachmentModel;
         $this->uploadUrl  = config('upload.cdnurl') . '/uploads/';
+        $this->assign("categoryList", AttachmentModel::getCategoryList());
+        $this->assignconfig("categoryList", AttachmentModel::getCategoryList());
     }
 
     /**
@@ -39,6 +41,9 @@ class Attachments extends Backend
             $mimetypeQuery = [];
             $allGet        = $this->request->request();
             $filterArr     = isset($allGet['filter']) ? (array) json_decode($allGet['filter'], true) : [];
+            if (isset($filterArr['category']) && $filterArr['category'] == 'unclassed') {
+                $filterArr['category'] = ',unclassed';
+            }
             if (isset($filterArr['mime']) && preg_match("/(\/|\,|\*)/", $filterArr['mime'])) {
                 $mimetype      = $filterArr['mime'];
                 $filterArr     = array_diff_key($filterArr, ['mime' => '']);

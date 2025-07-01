@@ -193,6 +193,8 @@ class Upload
             }
         }
         $this->file = $file;
+        $category   = request()->post('category', '');
+        $category   = array_key_exists($category, config('site.attachmentcategory') ?? []) ? $category : '';
         // 获取附件信息
         $auth      = Auth::instance();
         $file_info = [
@@ -200,6 +202,7 @@ class Upload
             'user_id'     => (int) $auth->id,
             'name'        => mb_substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
             'mime'        => $this->fileInfo['type'],
+            'category'    => $category,
             'path'        => cdnurl($uploadDir . $fileName),
             'ext'         => $this->fileInfo['suffix'],
             'size'        => $this->fileInfo['size'],
