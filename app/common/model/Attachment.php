@@ -21,6 +21,13 @@ class Attachment extends Model
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
+    public static function onBeforeInsert($row)
+    {
+        if (self::where('path', $row['path'])->where('driver', $row['driver'])->find()) {
+            return false;
+        }
+    }
+
     public function getSizeAttr($value)
     {
         return format_bytes($value);

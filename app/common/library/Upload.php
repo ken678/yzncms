@@ -143,20 +143,6 @@ class Upload
         $this->checkExecutable();
         $this->checkImage();
 
-        // 判断附件是否已存在
-        if ($file_exists = Attachment::getByMd5($this->file->hash('md5'))) {
-            return json([
-                'code'    => 1,
-                'msg'     => $file_exists['name'] . '上传成功',
-                'id'      => $file_exists['id'],
-                'path'    => $file_exists['path'],
-                "title"   => $file_exists['name'], // 附件名 兼容百度
-                "url"     => $file_exists['path'], // 返回的地址 兼容百度
-                "success" => 1, //兼容editormd
-                "message" => $file_exists['name'], // 附件名 兼容editormd
-            ]);
-        }
-
         // 附件上传钩子，用于第三方文件上传扩展
         if (config::get('site.upload_driver') != 'local') {
             $hook_result = Event::trigger('upload_after', ['dir' => $dir, 'file' => $this->file, 'from' => $from], true);
@@ -219,17 +205,7 @@ class Upload
 
         Event::trigger("upload_after", $attachment);
 
-        return json([
-            'code'    => 1,
-            'msg'     => $file_info['name'] . '上传成功',
-            'id'      => $attachment->id,
-            'path'    => $file_info['path'],
-            "url"     => $file_info['path'], // 返回的地址 兼容百度
-            "title"   => $file_info['name'], // 附件名 兼容百度
-            "success" => 1, //兼容editormd
-            "message" => $file_info['name'], // 附件名 兼容editormd
-        ]);
-
+        return $attachment;
     }
 
     /**

@@ -115,7 +115,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                                     var nums = value === '' ? 0 : value.split(/\,/).length;
                                     var files = data.url !== "" ? data.url.split(/\,/) : [];
                                     $.each(files, function(i, j) {
-                                        var url = Config.upload.fullmode ? Fast.api.cdnurl(j) : j;
+                                        var url = Config.upload.fullmode ? Yzn.api.cdnurl(j, true) : j;
                                         urlArr.push(url);
                                     });
                                     if (maxcount > 0) {
@@ -128,7 +128,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                                     var result = urlArr.join(",");
                                     inputObj.val(result).trigger("change");
                                 } else if (input_id) {
-                                    var url = Config.upload.fullmode ? Yzn.api.cdnurl(data.url) : data.url;
+                                    var url = Config.upload.fullmode ? Yzn.api.cdnurl(data.url, true) : data.url;
                                     $("#" + input_id).val(url).trigger("change").trigger("validate");
                                 }
                             }
