@@ -46,7 +46,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                                 onDomUploadSuccess = Upload.api.custom[onDomUploadSuccess];
                             }
                             if (typeof onDomUploadSuccess === 'function') {
-                                var result = onDomUploadSuccess.call(button, data, ret);
+                                var result = onDomUploadSuccess.call(button, data, ret, up, file);
                                 if (result === false)
                                     return;
                             }
@@ -54,7 +54,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                     }
 
                     if (typeof onUploadSuccess === 'function') {
-                        var result = onUploadSuccess.call(button, data, ret);
+                        var result = onUploadSuccess.call(button, data, ret, up, file);
                         if (result === false)
                             return;
                     }
@@ -71,7 +71,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                                 onDomUploadError = Upload.api.custom[onDomUploadError];
                             }
                             if (typeof onDomUploadError === 'function') {
-                                var result = onDomUploadError.call(button, data, ret);
+                                var result = onDomUploadError.call(button, data, ret, up, file);
                                 if (result === false)
                                     return;
                             }
@@ -79,7 +79,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                     }
 
                     if (typeof onUploadError === 'function') {
-                        var result = onUploadError.call(button, data, ret);
+                        var result = onUploadError.call(button, data, ret, up, file);
                         if (result === false) {
                             return;
                         }
