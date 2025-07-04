@@ -28,6 +28,8 @@ class Attachments extends Backend
         parent::initialize();
         $this->modelClass = new AttachmentModel;
         $this->uploadUrl  = config('upload.cdnurl') . '/uploads/';
+        $this->assign("categoryList", AttachmentModel::getCategoryList());
+        $this->assignconfig("categoryList", AttachmentModel::getCategoryList());
     }
 
     /**
@@ -39,6 +41,9 @@ class Attachments extends Backend
             $mimetypeQuery = [];
             $allGet        = $this->request->request();
             $filterArr     = isset($allGet['filter']) ? (array) json_decode($allGet['filter'], true) : [];
+            if (isset($filterArr['category']) && $filterArr['category'] == 'unclassed') {
+                $filterArr['category'] = ',unclassed';
+            }
             if (isset($filterArr['mime']) && preg_match("/(\/|\,|\*)/", $filterArr['mime'])) {
                 $mimetype      = $filterArr['mime'];
                 $filterArr     = array_diff_key($filterArr, ['mime' => '']);
@@ -87,6 +92,32 @@ class Attachments extends Backend
     public function cropper()
     {
         return $this->fetch();
+    }
+
+    /**
+     * 归类
+     */
+    public function classify()
+    {
+        if (!$this->auth->check('general.attachment/edit')) {
+            \think\Hook::listen('admin_nopermission', $this);
+            $this->error('你没有权限访问');
+        }
+        if (!$this->request->isPost()) {
+            $this->error('参数不正确');
+        }
+        $category = $this->request->post('category', '');
+        $ids      = $this->request->param('id/a', null);
+        if ($ids && !is_array($ids)) {
+            $ids = [0 => $ids];
+        }
+        $categoryList = AttachmentModel::getCategoryList();
+        if ($category && !isset($categoryList[$category])) {
+            $this->error('指定的类别未找到');
+        }
+        $category = $category == 'unclassed' ? '' : $category;
+        AttachmentModel::where('id', 'in', $ids)->update(['category' => $category]);
+        $this->success();
     }
 
     //附件删除

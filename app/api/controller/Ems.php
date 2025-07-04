@@ -37,11 +37,15 @@ class Ems extends Api
     {
         $email = $this->request->param("email");
         $event = $this->request->param("event");
-        $event = $event ? $event : 'register';
+        $event = $event ?: 'register';
 
         if (!$email || !Validate::isEmail($email)) {
             $this->error('邮箱格式不正确！');
         }
+        if (!preg_match("/^[a-z0-9_\-]{3,30}\$/i", $event)) {
+            $this->error('事件名称错误');
+        }
+
         $last = Emslib::get($email, $event);
         if ($last && time() - $last['create_time'] < 60) {
             $this->error('发送频繁');
@@ -74,8 +78,18 @@ class Ems extends Api
     {
         $email   = $this->request->param("email");
         $event   = $this->request->param("event");
-        $event   = $event ? $event : 'register';
+        $event   = $event ?: 'register';
         $captcha = $this->request->param("captcha");
+
+        if (!$email || !Validate::isEmail($email)) {
+            $this->error('邮箱格式不正确！');
+        }
+        if (!preg_match("/^[a-z0-9_\-]{3,30}\$/i", $event)) {
+            $this->error('事件名称错误');
+        }
+        if (!preg_match("/^[a-z0-9]{4,6}\$/i", $captcha)) {
+            $this->error('验证码格式错误');
+        }
 
         if ($event) {
             $userinfo = User::getByEmail($email);

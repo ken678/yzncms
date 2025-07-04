@@ -142,13 +142,13 @@ class Install
         $adminPassword = $adminPassword ? $adminPassword : Random::alnum(8);
         $adminEmail    = $adminEmail ? $adminEmail : "admin@admin.com";
         $newSalt       = substr(md5(uniqid(true)), 0, 6);
-        $newPassword   = md5(md5($adminPassword) . $newSalt);
+        $newPassword   = encrypt_password($adminPassword, $newSalt);
         $data          = ['username' => $adminUsername, 'email' => $adminEmail, 'password' => $newPassword, 'encrypt' => $newSalt];
         $connect->name('admin')->where('username', 'admin')->update($data);
 
         // 变更前台默认用户的密码,随机生成
         $newSalt     = substr(md5(uniqid(true)), 0, 6);
-        $newPassword = md5(md5(Random::alnum(8)) . $newSalt);
+        $newPassword = encrypt_password(Random::alnum(8), $newSalt);
         $connect->name('user')->where('username', 'admin')->update(['password' => $newPassword, 'encrypt' => $newSalt]);
 
         // 修改后台入口

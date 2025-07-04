@@ -45,20 +45,12 @@ class Common extends Api
         $dir  = $this->request->param("dir");
         $from = $this->request->param("from");
         if ($dir == '') {
-            return json([
-                'code'    => 0,
-                'msg'     => '没有指定上传目录',
-                'state'   => '没有指定上传目录', //兼容百度
-                'message' => '没有指定上传目录', //兼容editormd
-            ]);
+            $this->error('没有指定上传目录');
         }
         $chunkid = $this->request->post("chunkid");
         if ($chunkid) {
             if (!config::get('upload.chunking')) {
-                return json([
-                    'code' => 0,
-                    'msg'  => '未开启分片上传功能',
-                ]);
+                $this->error('未开启分片上传功能');
             }
             //分片
             $action     = $this->request->post("action");
@@ -73,28 +65,21 @@ class Common extends Api
                     $upload     = new UploadLib();
                     $attachment = $upload->merge($chunkid, $chunkcount, $filename, $dir, $from);
                 } catch (UploadException $e) {
-                    return json([
-                        'code'    => 0,
-                        'msg'     => $e->getMessage(),
-                        'state'   => $e->getMessage(), //兼容百度
-                        'message' => $e->getMessage(), //兼容editormd
-                    ]);
+                    $this->error($e->getMessage());
                 }
-                return $attachment;
+                $this->success('上传成功', [
+                    'url'     => $attachment->path,
+                    'fullurl' => cdnurl($attachment->path, true),
+                ]);
             } elseif ($method == 'clean') {
                 //删除冗余的分片文件
                 try {
                     $upload = new UploadLib();
                     $upload->clean($chunkid);
                 } catch (UploadException $e) {
-                    return json([
-                        'code'    => 0,
-                        'msg'     => $e->getMessage(),
-                        'state'   => $e->getMessage(), //兼容百度
-                        'message' => $e->getMessage(), //兼容editormd
-                    ]);
+                    $this->error($e->getMessage());
                 }
-                return json(['code' => 1]);
+                $this->success();
             } else {
                 //上传分片文件
                 $file = $this->request->file('file');
@@ -102,40 +87,25 @@ class Common extends Api
                     $upload = new UploadLib($file);
                     $upload->chunk($chunkid, $chunkindex, $chunkcount);
                 } catch (UploadException $e) {
-                    return json([
-                        'code'    => 0,
-                        'msg'     => $e->getMessage(),
-                        'state'   => $e->getMessage(), //兼容百度
-                        'message' => $e->getMessage(), //兼容editormd
-                    ]);
+                    $this->error($e->getMessage());
                 }
-                return json(['code' => 1]);
+                $this->success();
             }
         }
-        // 获取附件数据
-        switch ($from) {
-            case 'editormd':
-                $file_input_name = 'editormd-image-file';
-                break;
-            default:
-                $file_input_name = 'file';
-        }
-        $attachment = null;
 
+        $attachment = null;
         try {
             //默认普通上传文件
-            $file       = $this->request->file($file_input_name);
+            $file       = $this->request->file('file');
             $upload     = new UploadLib($file);
             $attachment = $upload->upload($dir);
         } catch (UploadException | Exception $e) {
-            return json([
-                'code'    => 0,
-                'msg'     => $e->getMessage(),
-                'state'   => $e->getMessage(), //兼容百度
-                'message' => $e->getMessage(), //兼容editormd
-            ]);
+            $this->error($e->getMessage());
         }
-        return $attachment;
+        $this->success('上传成功', [
+            'url'     => $attachment->path,
+            'fullurl' => cdnurl($attachment->path, true),
+        ]);
     }
 
 }

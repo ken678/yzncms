@@ -15,4 +15,9 @@ return [
     'admin_forbid_ip'     => '',
     'upload_driver'       => 'local',
     'upload_driver_text'  => '本地',
+    'attachmentcategory'  => [
+        'category1' => '分类1',
+        'category2' => '分类2',
+        'custom'    => '自定义',
+    ],
 ];

@@ -34,8 +34,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                             if ($(button).data("multiple") && inputObj.val() !== "") {
                                 urlArr.push(inputObj.val());
                             }
-                            var url = Config.upload.fullmode ? Yzn.api.cdnurl(data.url) : data.url;
-                            var url = data.url;
+                            var url = Config.upload.fullmode ? (data.fullurl ? data.fullurl : Yzn.api.cdnurl(data.url)) : data.url;
                             urlArr.push(url);
                             inputObj.val(urlArr.join(",")).trigger("change").trigger("validate");
                         }
@@ -46,7 +45,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                                 onDomUploadSuccess = Upload.api.custom[onDomUploadSuccess];
                             }
                             if (typeof onDomUploadSuccess === 'function') {
-                                var result = onDomUploadSuccess.call(button, data, ret);
+                                var result = onDomUploadSuccess.call(button, data, ret, up, file);
                                 if (result === false)
                                     return;
                             }
@@ -54,7 +53,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                     }
 
                     if (typeof onUploadSuccess === 'function') {
-                        var result = onUploadSuccess.call(button, data, ret);
+                        var result = onUploadSuccess.call(button, data, ret, up, file);
                         if (result === false)
                             return;
                     }
@@ -71,7 +70,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                                 onDomUploadError = Upload.api.custom[onDomUploadError];
                             }
                             if (typeof onDomUploadError === 'function') {
-                                var result = onDomUploadError.call(button, data, ret);
+                                var result = onDomUploadError.call(button, data, ret, up, file);
                                 if (result === false)
                                     return;
                             }
@@ -79,7 +78,7 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                     }
 
                     if (typeof onUploadError === 'function') {
-                        var result = onUploadError.call(button, data, ret);
+                        var result = onUploadError.call(button, data, ret, up, file);
                         if (result === false) {
                             return;
                         }
@@ -377,10 +376,11 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                                     }
                                     var suffix = /[\.]?([a-zA-Z0-9]+)$/.exec(j);
                                     suffix = suffix ? suffix[1] : 'file';
-                                    j = Config.upload.fullmode ? Yzn.api.cdnurl(j) : j;
+                                    var btnData = $(that).data();
+                                    var fullurl = typeof btnData.cdnurl !== 'undefined' ? Yzn.api.cdnurl(j, btnData.cdnurl) : Yzn.api.cdnurl(j);
+                                    j = Config.upload.fullmode ? fullurl : j;
                                     var value = (json && typeof json[i] !== 'undefined' ? json[i] : null);
-                                    var data = {url: j, fullurl: Yzn.api.cdnurl(j), data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix};
-                                    var data = {url: j, data: $(that).data(), key: i, index: i, value: value, row: value, suffix: suffix};
+                                    var data = {url: j, fullurl: fullurl, data: btnData, key: i, index: i, value: value, row: value, suffix: suffix};
                                     layui.laytpl(tpl ? $("#" + tpl).html() : Upload.config.previewtpl).render(data, function(html) {
                                         previewObj.append(html);
                                     });

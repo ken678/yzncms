@@ -63,6 +63,11 @@ class Upload
 
     protected function checkExecutable()
     {
+        //禁止上传以.开头的文件
+        if (substr($this->fileInfo['name'], 0, 1) === '.') {
+            throw new UploadException('上传文件格式受限制');
+        }
+
         //禁止上传PHP和HTML文件
         if (in_array($this->fileInfo['type'], ['text/x-php', 'text/html']) || in_array($this->fileInfo['suffix'], ['php', 'asp', 'exe', 'cmd', 'sh', 'bat', 'html', 'htm', 'phtml', 'phar']) || preg_match("/^php(.*)/i", $this->fileInfo['suffix'])) {
             throw new UploadException('上传文件格式受限制');
@@ -115,8 +120,7 @@ class Upload
             throw new UploadException('上传文件格式受限制');
         }
         //验证文件后缀
-        if ($this->config['mimetype'] === '*'
-            || in_array($this->fileInfo['suffix'], $mimetypeArr) || in_array('.' . $this->fileInfo['suffix'], $mimetypeArr)
+        if (in_array($this->fileInfo['suffix'], $mimetypeArr) || in_array('.' . $this->fileInfo['suffix'], $mimetypeArr)
             || in_array($typeArr[0] . "/*", $mimetypeArr) || (in_array($this->fileInfo['type'], $mimetypeArr) && stripos($this->fileInfo['type'], '/') !== false)) {
             return true;
         }
@@ -138,20 +142,6 @@ class Upload
         $this->checkMimetype();
         $this->checkExecutable();
         $this->checkImage();
-
-        // 判断附件是否已存在
-        if ($file_exists = Attachment::getByMd5($this->file->hash('md5'))) {
-            return json([
-                'code'    => 1,
-                'msg'     => $file_exists['name'] . '上传成功',
-                'id'      => $file_exists['id'],
-                'path'    => $file_exists['path'],
-                "title"   => $file_exists['name'], // 附件名 兼容百度
-                "url"     => $file_exists['path'], // 返回的地址 兼容百度
-                "success" => 1, //兼容editormd
-                "message" => $file_exists['name'], // 附件名 兼容editormd
-            ]);
-        }
 
         // 附件上传钩子，用于第三方文件上传扩展
         if (config::get('site.upload_driver') != 'local') {
@@ -189,6 +179,8 @@ class Upload
             }
         }
         $this->file = $file;
+        $category   = request()->post('category', '');
+        $category   = array_key_exists($category, config('site.attachmentcategory') ?? []) ? $category : '';
         // 获取附件信息
         $auth      = Auth::instance();
         $file_info = [
@@ -196,6 +188,7 @@ class Upload
             'user_id'     => (int) $auth->id,
             'name'        => mb_substr(htmlspecialchars(strip_tags($this->fileInfo['name'])), 0, 100),
             'mime'        => $this->fileInfo['type'],
+            'category'    => $category,
             'path'        => cdnurl($uploadDir . $fileName),
             'ext'         => $this->fileInfo['suffix'],
             'size'        => $this->fileInfo['size'],
@@ -212,17 +205,7 @@ class Upload
 
         Event::trigger("upload_after", $attachment);
 
-        return json([
-            'code'    => 1,
-            'msg'     => $file_info['name'] . '上传成功',
-            'id'      => $attachment->id,
-            'path'    => $file_info['path'],
-            "url"     => $file_info['path'], // 返回的地址 兼容百度
-            "title"   => $file_info['name'], // 附件名 兼容百度
-            "success" => 1, //兼容editormd
-            "message" => $file_info['name'], // 附件名 兼容editormd
-        ]);
-
+        return $attachment;
     }
 
     /**

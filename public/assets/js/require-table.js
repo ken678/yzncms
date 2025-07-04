@@ -108,19 +108,14 @@ define(['jquery', 'layui'], function($, layui) {
                 //自动添加id参数
                 url = !url.match(/(?=([?&]id=)|(\/id\/)|(\{id}))/i) ?
                     url + (url.match(/(\?|&)+/) ? "&id=" : "?id=") + '{id}' : url;
+
                 url = url.replace(/\{(.*?)\}/gi, function(matched) {
                     matched = matched.substring(1, matched.length - 1);
-                    if (matched.indexOf(".") !== -1) {
-                        var temp = data;
-                        var arr = matched.split(/\./);
-                        for (var i = 0; i < arr.length; i++) {
-                            if (typeof temp[arr[i]] !== 'undefined') {
-                                temp = temp[arr[i]];
-                            }
-                        }
-                        return typeof temp === 'object' ? '' : temp;
-                    }
-                    return data[matched];
+                    var temp = matched.split('.').reduce(function (obj, key) {
+                        return obj === null || obj === undefined ? '' : obj[key];
+                    }, data);
+                    temp = layui.util.escape(temp);
+                    return temp;
                 });
                 return url;
             },
@@ -725,11 +720,14 @@ define(['jquery', 'layui'], function($, layui) {
                 tableId = options.init.table_render_id;
                 var that = this;
                 var ids = Table.api.selectedids(tableId);
+                var confirm = $(that).data("confirm");
+                var message = typeof confirm === 'function' ? confirm.call(that, ids) : (typeof confirm !== 'undefined' ? confirm : '');
+
                 if (ids.length <= 0) {
                     Toastr.error('请勾选需要操作的数据');
                     return false;
                 }
-                Layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息', offset: 0, shadeClose: true, btn: ['确认', '取消'] },
+                Layer.confirm(message || '确定要删除选中的 ' + ids.length + ' 项吗？', { icon: 3, title: '提示信息', offset: 0, shadeClose: true, btn: ['确认', '取消'] },
                     function(index) {
                         Table.api.multi("del", ids, tableId, that);
                         Layer.close(index);
@@ -794,7 +792,7 @@ define(['jquery', 'layui'], function($, layui) {
                 if ($(window).width() < 480) {
                     top = left = undefined;
                 }
-                Layer.confirm('删除之后无法恢复，您确定要删除吗？', { icon: 3, title: '提示信息', offset: [top, left], shadeClose: true, btn: ['确认', '取消'] },
+                Layer.confirm($(this).data("confirm") || '确定要删除选中项?', { icon: 3, title: '提示信息', offset: [top, left], shadeClose: true, btn: ['确认', '取消'] },
                     function(index) {
                         Table.api.multi("del", data[options.pk], tableId, this);
                         Layer.close(index);

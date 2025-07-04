@@ -153,6 +153,7 @@ INSERT INTO `yzn_auth_rule` VALUES (11, 1, 'general.config/setting', '网站设�
 INSERT INTO `yzn_auth_rule` VALUES (12, 28, 'auth.rule', '菜单管理', 'iconfont icon-list-unordered', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
 INSERT INTO `yzn_auth_rule` VALUES (13, 1, 'general.attachments', '附件管理', 'iconfont icon-attachment-line', '', '', '', 1, NULL, '', 1691377129, 1691377129, 666, 1);
 INSERT INTO `yzn_auth_rule` VALUES (14, 13, 'general.attachments/index', '查看', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
+INSERT INTO `yzn_auth_rule` VALUES (69, 13, 'general.attachments/edit', '编辑', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (15, 13, 'general.attachments/del', '删除', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (16, 13, 'general.attachments/getUrlFile', '图片本地化', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (17, 13, 'general.attachments/select', '图片选择', '', '', '', '', 0, NULL, '', 1691377129, 1691377129, 0, 1);
@@ -242,6 +243,8 @@ INSERT INTO `yzn_config` VALUES (6, 'config_group', 'array', '配置分组', 'sy
 INSERT INTO `yzn_config` VALUES (7, 'theme', 'text', '主题风格', 'system', '', '', 1541752781, 1541756888, 1, 'default', '', '',1);
 INSERT INTO `yzn_config` VALUES (8, 'admin_forbid_ip', 'textarea', '后台禁止访问IP', 'system', '', '匹配IP段用\"*\"占位，如192.168.*.*，多个IP地址请用英文逗号\",\"分割', 1551244957, 1551244957, 1, '', '', '',2);
 INSERT INTO `yzn_config` VALUES (9, 'upload_driver', 'radio', '上传驱动', 'system', 'local:本地', '图片或文件上传驱动', 1541752781, 1552436085, 1, 'local', '', '',0);
+INSERT INTO `yzn_config` VALUES (10, 'attachmentcategory', 'array', '附件类别', 'system', '', '', 1751351438, 1751351438, 1, '{\"category1\":\"分类1\",\"category2\":\"分类2\",\"custom\":\"自定义\"}','', '', 5);
+
 -- ----------------------------
 -- Table structure for `yzn_field_type`
 -- ----------------------------

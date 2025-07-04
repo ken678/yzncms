@@ -32,6 +32,12 @@ class Api
     protected $request;
 
     /**
+     * 应用实例
+     * @var \think\App
+     */
+    protected $app;
+
+    /**
      * @var bool 验证失败是否抛出异常
      */
     protected $failException = true;
@@ -78,7 +84,8 @@ class Api
      */
     public function __construct(App $app)
     {
-        $this->request = is_null($app->request) ? \think\facade\Request::instance() : $app->request;
+        $this->app     = $app;
+        $this->request = is_null($this->app->request) ? \think\facade\Request::instance() : $this->app->request;
 
         // 控制器初始化
         $this->initialize();
@@ -104,7 +111,7 @@ class Api
 
         $this->auth = Auth::instance();
 
-        $modulename     = app()->http->getName();
+        $modulename     = $this->app->http->getName();
         $controllername = parse_name($this->request->controller(true));
         $actionname     = strtolower($this->request->action());
 
