@@ -135,7 +135,7 @@ CREATE TABLE `yzn_auth_rule` (
   `listorder` smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`) USING BTREE,
+  UNIQUE KEY `name` (`name`),
   KEY `parentid` (`parentid`),
   KEY `listorder` (`listorder`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT='节点表';
@@ -363,10 +363,10 @@ CREATE TABLE `yzn_user`  (
   `ischeck_mobile` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否验证过手机',
   `token` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT 'Token',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `username`(`username`) USING BTREE,
-  INDEX `email`(`email`) USING BTREE,
-  INDEX `mobile`(`mobile`) USING BTREE
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username`(`username`),
+  INDEX `email`(`email`),
+  INDEX `mobile`(`mobile`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -386,7 +386,7 @@ CREATE TABLE `yzn_user_amount_log`  (
   `after` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '变更后余额',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '备注',
   `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员余额变动表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -414,8 +414,8 @@ CREATE TABLE `yzn_user_group`  (
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态',
   `expand` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '拓展',
   `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员组' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员组' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of yzn_user_group
@@ -440,8 +440,8 @@ CREATE TABLE `yzn_user_point_log`  (
   `after` int(10) NOT NULL DEFAULT 0 COMMENT '变更后积分',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '备注',
   `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员积分变动表' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员积分变动表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of yzn_user_point_log
@@ -456,7 +456,7 @@ CREATE TABLE `yzn_user_token`  (
   `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '会员ID',
   `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   `expire_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '过期时间',
-  PRIMARY KEY (`token`) USING BTREE
+  PRIMARY KEY (`token`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员Token表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -473,8 +473,8 @@ CREATE TABLE `yzn_user_vip`  (
   `listorder` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
   `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'VIP组' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'VIP组' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of yzn_user_vip
