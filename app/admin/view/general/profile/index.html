@@ -50,7 +50,7 @@
                         <div class="profile-avatar-container">
                             <img class="profile-user-img" src="{$admin.avatar|cdnurl}">
                             <div class="profile-avatar-text">点击编辑</div>
-                            <button type="button" id="faupload-avatar" class="faupload" data-input-id="c-avatar">上传</button>
+                            <button type="button" id="faupload-avatar" class="faupload" data-mimetype="png,jpg,jpeg,gif" data-input-id="c-avatar">上传</button>
                         </div>
                         <h3 class="layui-user">{$admin.email}</h3>
                         <p class="login-time">上次登录：<?php if($admin['last_login_time'] > 0) { echo $admin['last_login_time'];} else { echo '--';}?></p>
