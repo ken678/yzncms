@@ -14,6 +14,9 @@
 // +----------------------------------------------------------------------
 namespace util;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 class File
 {
     /**
@@ -38,7 +41,7 @@ class File
      * @param string $filename 文件名
      * @return false|string
      */
-    public static function read_file(string $filename): false|string
+    public static function read_file(string $filename): false | string
     {
         $content = '';
         if (function_exists('file_get_contents')) {
@@ -72,29 +75,29 @@ class File
     }
 
     /**
-     * 删除目录
-     * @param string $dirName 原目录
-     * @return bool true 成功, false 失败
+     * 删除文件夹
+     * @param string $dirname  目录
+     * @param bool   $withself 是否删除自身
+     * @return boolean
      */
-    public static function del_dir(string $dirName): bool
+    public static function del_dir($dirname, $withself = true): bool
     {
-        if (!file_exists($dirName)) {
+        if (!is_dir($dirname)) {
             return false;
         }
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dirname, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
 
-        $dir = opendir($dirName);
-        while ($fileName = readdir($dir)) {
-            $file = $dirName . '/' . $fileName;
-            if ($fileName != '.' && $fileName != '..') {
-                if (is_dir($file)) {
-                    self::del_dir($file);
-                } else {
-                    unlink($file);
-                }
-            }
+        foreach ($files as $fileinfo) {
+            $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+            $todo($fileinfo->getRealPath());
         }
-        closedir($dir);
-        return rmdir($dirName);
+        if ($withself) {
+            @rmdir($dirname);
+        }
+        return true;
     }
 
     /**
