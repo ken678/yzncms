@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 namespace util;
 
+use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -80,7 +81,7 @@ class File
      * @param bool   $withself 是否删除自身
      * @return boolean
      */
-    public static function del_dir($dirname, $withself = true): bool
+    public static function del_dir(string $dirname, $withself = true): bool
     {
         if (!is_dir($dirname)) {
             return false;
@@ -105,7 +106,7 @@ class File
      * @param string $source 源文件夹
      * @param string $dest   目标文件夹
      */
-    public static function copy_dir($source, $dest)
+    public static function copy_dir(string $source, string $dest)
     {
 
         if (!is_dir($dest)) {
@@ -131,28 +132,27 @@ class File
     /**
      * 列出目录
      * @param string $dir 目录名
-     * @return array  目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
+     * @return array  目录数组。列出文件夹下内容，返回数组 $result['dir']:存文件夹；$result['file']：存文件
      */
     public static function get_dirs(string $dir): array
     {
-        $dir          = rtrim($dir, '/') . '/';
-        $dirArray[][] = null;
-        if (($handle = opendir($dir))) {
-            $i = 0;
-            $j = 0;
-            while (false !== ($file = readdir($handle))) {
-                if (is_dir($dir . $file)) {
-                    //判断是否文件夹
-                    $dirArray['dir'][$i] = $file;
-                    $i++;
-                } else {
-                    $dirArray['file'][$j] = $file;
-                    $j++;
-                }
-            }
-            closedir($handle);
+        $result = [
+            'dir'  => [],
+            'file' => [],
+        ];
+
+        if (!is_dir($dir)) {
+            return $result;
         }
-        return $dirArray;
+
+        $iterator = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
+
+        foreach ($iterator as $fileinfo) {
+            $type            = $fileinfo->isDir() ? 'dir' : 'file';
+            $result[$type][] = $fileinfo->getFilename();
+        }
+
+        return $result;
     }
 
     /**
