@@ -101,36 +101,31 @@ class File
     }
 
     /**
-     * 复制目录
-     * @param string $surDir 原目录
-     * @param string $toDir 目标目录
-     * @return bool true 成功, false 失败
+     * 复制文件夹
+     * @param string $source 源文件夹
+     * @param string $dest   目标文件夹
      */
-    public static function copy_dir(string $surDir, string $toDir): bool
+    public static function copy_dir($source, $dest)
     {
-        $surDir = rtrim($surDir, '/') . '/';
-        $toDir  = rtrim($toDir, '/') . '/';
-        if (!file_exists($surDir)) {
-            return false;
-        }
 
-        if (!file_exists($toDir)) {
-            self::mk_dir($toDir);
+        if (!is_dir($dest)) {
+            self::mk_dir($dest);
         }
-        $file = opendir($surDir);
-        while ($fileName = readdir($file)) {
-            $file1 = $surDir . '/' . $fileName;
-            $file2 = $toDir . '/' . $fileName;
-            if ($fileName != '.' && $fileName != '..') {
-                if (is_dir($file1)) {
-                    self::copy_dir($file1, $file2);
-                } else {
-                    copy($file1, $file2);
+        foreach (
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            ) as $item
+        ) {
+            if ($item->isDir()) {
+                $sontDir = $dest . DS . $iterator->getSubPathName();
+                if (!is_dir($sontDir)) {
+                    self::mk_dir($sontDir);
                 }
+            } else {
+                copy($item, $dest . DS . $iterator->getSubPathName());
             }
         }
-        closedir($file);
-        return true;
     }
 
     /**
