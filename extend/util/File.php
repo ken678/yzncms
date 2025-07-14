@@ -27,14 +27,11 @@ class File
      */
     public static function mk_dir(string $dir): bool
     {
-        $dir = rtrim($dir, '/') . '/';
-        if (!is_dir($dir)) {
-            if (!mkdir($dir, 0700, true)) {
-                return false;
-            }
+        if (is_dir($dir)) {
             return true;
         }
-        return true;
+
+        return mkdir($dir, 0755, true);
     }
 
     /**
@@ -81,7 +78,7 @@ class File
      * @param bool   $withself 是否删除自身
      * @return boolean
      */
-    public static function del_dir(string $dirname, $withself = true): bool
+    public static function del_dir(string $dirname, bool $withself = true): bool
     {
         if (!is_dir($dirname)) {
             return false;
