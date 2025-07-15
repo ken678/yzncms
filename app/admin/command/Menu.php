@@ -218,7 +218,7 @@ class Menu extends Command
             $icon      = (!isset($controllerArr[$key]) ? $controllerIcon : 'iconfont icon-list-unordered');
             $remark    = (!isset($controllerArr[$key]) ? $controllerRemark : '');
             $title     = $title ? $title : $v;
-            $rulemodel = $this->model->find(['name' => $name]);
+            $rulemodel = $this->model->where('name', $name)->find();
             if (!$rulemodel) {
                 $pid = $this->model
                     ->insertGetId([
