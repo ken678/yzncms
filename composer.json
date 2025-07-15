@@ -30,7 +30,7 @@
         "nelexa/zip": "^4.0",
         "endroid/qr-code": "^4.8",
         "yansongda/pay": "^3.7",
-        "yzncms/think-addons": "^2.1",
+        "yzncms/think-addons": "~2.2.0",
         "guzzlehttp/guzzle": "^7.8",
         "illuminate/container": "^9.52"
     },
