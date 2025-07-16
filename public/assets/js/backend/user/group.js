@@ -38,7 +38,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                             templet: Table.formatter.tool,
                             operat: [
                                 'edit',
-                                [{
+                                {
                                     class: 'layui-btn layui-btn-danger layui-btn-xs',
                                     hidden: function(row) {
                                         //为true隐藏按钮
@@ -49,7 +49,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                                     text: "",
                                     title: '',
                                     extend: "lay-event='btn-delone'",
-                                }]
+                                }
                             ]
                         }
                     ]

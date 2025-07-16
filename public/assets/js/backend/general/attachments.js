@@ -13,13 +13,13 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
             Table.render({
                 init: Table.init,
                 elem: Table.init.table_elem,
-                toolbar: ['refresh', 'delete',, [{
+                toolbar: ['refresh', 'delete', {
                     text: '归类',
                     auth: 'edit',
                     icon: 'iconfont icon-drag-move-2-fill',
                     class: 'layui-btn layui-btn-sm layui-btn-normal btn-classify btn-disabled layui-btn-disabled',
                     extend: '',
-                }]],
+                }],
                 url: 'general.attachments/index',
                 lineStyle: 'height: 50px;',
                 cols: [
