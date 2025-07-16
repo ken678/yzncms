@@ -627,13 +627,14 @@ define(['jquery', 'layui'], function($, layui) {
                 });
             });
         },
-        buildOperatHtml: function(row, j) {
+        buildOperatHtml: function(i, row, j) {
             var hidden, disable, url, classname, icon, text, title, refresh, confirm, extend,
-                dropdown, html;
+                dropdown, html, key;
             hidden = typeof j.hidden === 'function' ? j.hidden.call(Table, row, j) : (typeof j.hidden !== 'undefined' ? j.hidden : false);
             if (hidden) {
                 return '';
             }
+            key = row.LAY_COL.key;
             url = j.url ? j.url : '';
             url = typeof url === 'function' ? url.call(Table, row, j) : (url ? Yzn.api.fixurl(Table.api.toolSpliceUrl(url, row)) : 'javascript:;');
             classname = j.class ? j.class : '';
@@ -648,7 +649,7 @@ define(['jquery', 'layui'], function($, layui) {
             if (disable) {
                 classname = classname + ' disabled';
             }
-            html = '<a href="' + url + '" class="' + classname + '" ' + (confirm ? confirm + ' ' : '') + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-table="' + Table.init.table_render_id + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>';
+            html = '<a href="' + url + '" class="' + classname + '" ' + (confirm ? confirm + ' ' : '') + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-button-index="' + i + '" data-table-key="' + key + '" data-table="' + Table.init.table_render_id + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>';
             return html;
         },
         getItemField: function(item, field) {
@@ -825,77 +826,64 @@ define(['jquery', 'layui'], function($, layui) {
                 that.operat = that.operat || ['edit', 'delete'];
                 var elem = that.init.table_elem || init.table_elem;
                 var html = '';
-                $.each(that.operat, function(i, item) {
-                    if (typeof item === 'string') {
-                        switch (item) {
-                            case 'edit':
-                                var operat = {
-                                    class: 'layui-btn layui-btn-success layui-btn-xs',
-                                    field: 'id',
-                                    icon: 'iconfont icon-edit-2-line',
-                                    auth: 'edit',
-                                    text: "",
-                                    title: '编辑信息',
-                                    extend: "lay-event='btn-editone'"
-                                };
-                                if (Yzn.api.checkAuth(operat.auth, elem)) {
-                                    html += Table.buildOperatHtml(data, operat);
-                                }
-                                break;
-                            case 'restore':
-                                var operat = {
-                                    class: 'layui-btn layui-btn-xs btn-ajax',
-                                    field: 'id',
-                                    icon: 'iconfont icon-arrow-go-back-line',
-                                    auth: 'restore',
-                                    text: "还原",
-                                    title: '还原',
-                                    url: that.init.restore_url,
-                                    refresh: true,
-                                    extend: ""
-                                };
-                                if (Yzn.api.checkAuth(operat.auth, elem)) {
-                                    html += Table.buildOperatHtml(data, operat);
-                                }
-                                break;
-                            case 'destroy':
-                                var operat = {
-                                    class: 'layui-btn layui-btn-danger layui-btn-xs btn-ajax',
-                                    field: 'id',
-                                    icon: 'iconfont icon-close-fill',
-                                    auth: 'destroy',
-                                    text: "销毁",
-                                    title: '销毁',
-                                    url: that.init.destroy_url,
-                                    refresh: true,
-                                    extend: ""
-                                };
-                                if (Yzn.api.checkAuth(operat.auth, elem)) {
-                                    html += Table.buildOperatHtml(data, operat);
-                                }
-                                break;
-                            case 'delete':
-                                var operat = {
-                                    class: 'layui-btn layui-btn-danger layui-btn-xs',
-                                    field: 'id',
-                                    icon: 'iconfont icon-delete-bin-line',
-                                    auth: 'delete',
-                                    text: "",
-                                    title: '删除',
-                                    extend: "lay-event='btn-delone'"
-                                };
-                                if (Yzn.api.checkAuth(operat.auth, elem)) {
-                                    html += Table.buildOperatHtml(data, operat);
-                                }
-                                break;
-                        }
 
+                // 定义操作按钮配置
+                const buttonConfigs = {
+                    edit: {
+                        class: 'layui-btn layui-btn-success layui-btn-xs',
+                        field: 'id',
+                        icon: 'iconfont icon-edit-2-line',
+                        auth: 'edit',
+                        text: "",
+                        title: '编辑信息',
+                        extend: "lay-event='btn-editone'"
+                    },
+                    restore: {
+                        class: 'layui-btn layui-btn-xs btn-ajax',
+                        field: 'id',
+                        icon: 'iconfont icon-arrow-go-back-line',
+                        auth: 'restore',
+                        text: "还原",
+                        title: '还原',
+                        url: that.init.restore_url,
+                        refresh: true,
+                        extend: ""
+                    },
+                    destroy: {
+                        class: 'layui-btn layui-btn-danger layui-btn-xs btn-ajax',
+                        field: 'id',
+                        icon: 'iconfont icon-close-fill',
+                        auth: 'destroy',
+                        text: "销毁",
+                        title: '销毁',
+                        url: that.init.destroy_url,
+                        refresh: true,
+                        extend: ""
+                    },
+                    delete: {
+                        class: 'layui-btn layui-btn-danger layui-btn-xs',
+                        field: 'id',
+                        icon: 'iconfont icon-delete-bin-line',
+                        auth: 'delete',
+                        text: "",
+                        title: '删除',
+                        extend: "lay-event='btn-delone'"
+                    }
+                };
+
+                $.each(that.operat, function(i, item) {
+                    if (typeof item === 'string' && buttonConfigs[item]) {
+                        const config = buttonConfigs[item];
+                        if (Yzn.api.checkAuth(config.auth, elem)) {
+                            html += Table.buildOperatHtml(i, data, config);
+                        }
                     } else if (typeof item === 'object') {
                         if (Yzn.api.checkAuth(item.auth, elem)) {
-                            html += Table.buildOperatHtml(data, item);
+                            html += Table.buildOperatHtml(i, data, item);
                         }
                     }
                 });
+
                 return html;
             },
             status: function(data) {
