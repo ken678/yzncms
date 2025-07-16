@@ -12,6 +12,8 @@ return [
     'url_route_must'        => false,
     // 是否区分大小写
     'url_case_sensitive'    => false,
+    // 自动扫描子目录分组
+    'route_auto_group'      => false,
     // 合并路由规则
     'route_rule_merge'      => false,
     // 路由是否完全匹配
@@ -41,11 +43,13 @@ return [
     // 操作方法的参数绑定方式 route get param
     'action_bind_param'     => 'get',
     // 请求缓存规则 true为自动规则
-    'request_cache_key'     => false,
+    'request_cache_key'     => true,
     // 请求缓存有效期
     'request_cache_expire'  => null,
     // 全局请求缓存排除规则
     'request_cache_except'  => [],
     // 请求缓存的Tag
     'request_cache_tag'     => '',
+    // API版本header变量
+    'api_version'           => 'Api-Version',
 ];
