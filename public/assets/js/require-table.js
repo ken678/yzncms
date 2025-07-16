@@ -232,11 +232,9 @@ define(['jquery', 'layui'], function($, layui) {
                         toolbarHtml += '<a lay-event="btn-multi" class="layui-btn layui-btn-sm confirm layui-btn-danger layui-btn-disabled btn-disabled" href="javascript:;" data-url="' + init.destroy_url + '" data-action="destroy" data-table="' + tableId + '"><i class="iconfont icon-close-fill"></i> 销毁</a>\n';
                     }
                 } else if (typeof v === "object") {
-                    $.each(v, function(ii, vv) {
-                        if (Yzn.api.checkAuth(vv.auth, elem)) {
-                            toolbarHtml += Table.buildToolbarHtml(vv);
-                        }
-                    });
+                    if (Yzn.api.checkAuth(v.auth, elem)) {
+                        toolbarHtml += Table.buildToolbarHtml(v);
+                    }
                 }
             });
             if (searchInput) {
@@ -893,11 +891,9 @@ define(['jquery', 'layui'], function($, layui) {
                         }
 
                     } else if (typeof item === 'object') {
-                        $.each(item, function(i, operat) {
-                            if (Yzn.api.checkAuth(operat.auth, elem)) {
-                                html += Table.buildOperatHtml(data, operat);
-                            }
-                        });
+                        if (Yzn.api.checkAuth(item.auth, elem)) {
+                            html += Table.buildOperatHtml(data, item);
+                        }
                     }
                 });
                 return html;
