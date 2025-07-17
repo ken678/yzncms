@@ -82,7 +82,6 @@ class User extends Frontend
             //登录验证
             $account  = $this->request->param('account');
             $password = $this->request->param('password');
-            $verify   = $this->request->param('verify');
             $token    = $this->request->param('__token__');
 
             $rule = [
@@ -96,8 +95,9 @@ class User extends Frontend
                 '__token__' => $token,
             ];
             //验证码
-            if (config::get("yzn.user_login_captcha") && !captcha_check($verify)) {
-                $this->error('验证码错误！');
+            if (config::get("yzn.user_login_captcha")) {
+                $rule['verify|验证码'] = 'require|captcha';
+                $data['verify']           = $this->request->param('verify');
             }
             try {
                 $this->validate($data, $rule);
@@ -134,11 +134,9 @@ class User extends Frontend
         if ($this->request->isPost()) {
             $extend = [];
             $data   = $this->request->post();
-            //验证码
-            if (!captcha_check($data['verify'])) {
-                $this->error('验证码输入错误！');
-            }
+
             $rule = [
+                'verify|验证码'   => 'require|captcha',
                 'username|用户名' => 'unique:user|require|alphaDash|length:3,20',
                 'nickname|昵称'  => 'unique:user|length:3,20',
                 'mobile|手机'    => 'require|unique:user|mobile',
