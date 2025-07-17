@@ -54,8 +54,30 @@ define(['yzn'], function(Yzn) {
                 } else if (window.top.pearAdmin) {
                     window.top.pearAdmin.addTab(id, title, url);
                 }
-
-            }
+            },
+            gettablecolumnbutton: function (options) {
+                if (typeof options.table !== 'undefined' && typeof options.tableKey !== 'undefined' && typeof options.buttonIndex !== 'undefined') {
+                    var tableOptions = layui.table.getOptions(options.table);
+                    if (tableOptions) {
+                        var columnObj = null;
+                        $.each(tableOptions.cols, function (i, columns) {
+                            $.each(columns, function (j, column) {
+                                if (typeof column.key !== 'undefined' && column.key === options.tableKey) {
+                                    columnObj = column;
+                                    return false;
+                                }
+                            });
+                            if (columnObj) {
+                                return false;
+                            }
+                        });
+                        if (columnObj) {
+                            return columnObj['operat'][options.buttonIndex];
+                        }
+                    }
+                }
+                return null;
+            },
         },
         init: function() {
             //配置Toastr的参数
@@ -66,7 +88,10 @@ define(['yzn'], function(Yzn) {
                 var options = $.extend({}, $(that).data() || {});
                 var url = Backend.api.replaceids(that, $(that).data("url") || $(that).attr('href'));
                 var title = $(that).attr("title") || $(that).data("title") || $(that).data('original-title');
-
+                var button = Backend.api.gettablecolumnbutton(options);
+                if (button && typeof button.callback === 'function') {
+                    options.callback = button.callback;
+                }
                 if (typeof options.confirm !== 'undefined') {
                     Layer.confirm(options.confirm, function(index) {
                         Backend.api.open(url, title, options);
@@ -110,6 +135,15 @@ define(['yzn'], function(Yzn) {
                 var error = typeof options.error === 'function' ? options.error : null;
                 delete options.success;
                 delete options.error;
+                var button = Backend.api.gettablecolumnbutton(options);
+                if (button) {
+                    if (typeof button.success === 'function') {
+                        success = button.success;
+                    }
+                    if (typeof button.error === 'function') {
+                        error = button.error;
+                    }
+                }
 
                 //如果未设备成功的回调,设定了自动刷新的情况下自动进行刷新
                 if (!success && typeof options.table !== 'undefined' && typeof options.refresh !== 'undefined' && options.refresh) {
