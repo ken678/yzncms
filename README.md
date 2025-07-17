@@ -136,5 +136,5 @@
 ## [版权信息]  
 YznCMS遵循[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0.html)开源协议发布，并允许商业使用。  
 本项目包含的第三方源码和二进制文件之版权信息另行标注。  
-版权所有Copyright © 2017-2024 by Yzncms (https://www.yzncms.com)  
+版权所有Copyright © 2017-2025 by Yzncms (https://www.yzncms.com)  
 All rights reserved。
