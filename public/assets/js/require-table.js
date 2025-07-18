@@ -635,6 +635,7 @@ define(['jquery', 'layui'], function($, layui) {
                 return '';
             }
             key = row.LAY_COL.key;
+            index = row.LAY_INDEX;
             url = j.url ? j.url : '';
             url = typeof url === 'function' ? url.call(Table, row, j) : (url ? Yzn.api.fixurl(Table.api.toolSpliceUrl(url, row)) : 'javascript:;');
             classname = j.class ? j.class : '';
@@ -649,7 +650,7 @@ define(['jquery', 'layui'], function($, layui) {
             if (disable) {
                 classname = classname + ' disabled';
             }
-            html = '<a href="' + url + '" class="' + classname + '" ' + (confirm ? confirm + ' ' : '') + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-button-index="' + i + '" data-table-key="' + key + '" data-table="' + Table.init.table_render_id + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>';
+            html = '<a href="' + url + '" class="' + classname + '" ' + (confirm ? confirm + ' ' : '') + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-button-index="' + i + '" data-row-index="' + index + '" data-table-key="' + key + '" data-table="' + Table.init.table_render_id + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>';
             return html;
         },
         getItemField: function(item, field) {

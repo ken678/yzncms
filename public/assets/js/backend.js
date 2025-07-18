@@ -161,6 +161,28 @@ define(['yzn'], function(Yzn) {
                 }
                 return false;
             });
+            $(document).on('click', '.btn-click,.clickit', function (e) {
+                var that = this;
+                var options = $.extend({}, $(that).data() || {});
+                var row = {};
+                if (typeof options.table !== 'undefined') {
+                    var index = parseInt(options.rowIndex);
+                    var data = layui.table.getData(options.table)
+                    row = typeof data[index] !== 'undefined' ? data[index] : {};
+                }
+                var button = Backend.api.gettablecolumnbutton(options);
+                var click = typeof button.click === 'function' ? button.click : $.noop;
+
+                if (typeof options.confirm !== 'undefined') {
+                    Layer.confirm(options.confirm, function (index) {
+                        click.apply(that, [options, row, button]);
+                        Layer.close(index);
+                    });
+                } else {
+                    click.apply(that, [options, row, button]);
+                }
+                return false;
+            });
             // 放大图片
             $('body').on('click', '[data-image]', function() {
                 var title = $(this).attr('data-image'),
