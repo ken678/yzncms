@@ -354,7 +354,7 @@ define(['jquery', 'layui'], function($, layui) {
                 }
             });
             if (formHtml !== '') {
-                $(elem).before('<fieldset style="border:1px solid #ddd;" id="searchFieldset_' + tableId + '" class="table-search-fieldset ' + (searchFormVisible ? "" : "layui-hide") + '">\n' +
+                $(elem).before('<fieldset style="border:1px solid #ddd;margin:0;" id="searchFieldset_' + tableId + '" class="table-search-fieldset ' + (searchFormVisible ? "" : "layui-hide") + '">\n' +
                     '<legend>条件搜索</legend>\n' +
                     '<form class="layui-form layui-form-pane form-search form-commonsearch">\n' +
                     formHtml +
