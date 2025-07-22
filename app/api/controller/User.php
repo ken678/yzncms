@@ -142,12 +142,14 @@ class User extends Api
      */
     public function profile()
     {
-
-        $data = $this->request->only(['id', 'avatar', 'username', 'nickname', 'gender', 'birthday', 'motto']);
+        $user       = $this->auth->getUser();
+        $data       = $this->request->only(['avatar', 'username', 'nickname', 'gender', 'birthday', 'motto']);
+        $data['id'] = $user->id;
         //验证数据合法性
         $rule = [
-            'nickname|昵称' => 'length:3,20',
-            'birthday'    => 'date',
+            'username|用户名' => 'unique:user|alphaDash|length:3,20',
+            'nickname|昵称'  => 'unique:user|length:3,20',
+            'birthday|生日'  => 'date',
         ];
 
         try {
@@ -157,13 +159,6 @@ class User extends Api
             $this->error($e->getError());
         }
 
-        $user = $this->auth->getUser();
-        if (isset($data['nickname'])) {
-            $exists = \app\common\model\User::where('nickname', $data['nickname'])->where('id', '<>', $this->auth->id)->find();
-            if ($exists) {
-                $this->error('昵称已存在');
-            }
-        }
         $user->save($data);
         $this->success("基本信息修改成功！");
     }
@@ -174,7 +169,7 @@ class User extends Api
     public function changeemail()
     {
         $user    = $this->auth->getUser();
-        $email   = $this->request->post('email');
+        $email   = $this->request->param('email');
         $captcha = $this->request->param('captcha');
         if (!$email || !$captcha) {
             $this->error('参数不得为空！');
