@@ -420,13 +420,11 @@ CREATE TABLE `yzn_user_group`  (
 -- ----------------------------
 -- Records of yzn_user_group
 -- ----------------------------
-INSERT INTO `yzn_user_group` VALUES (1, '禁止访问', 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, '', '', '0', 10, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (2, '新手上路', 1, 1, 50, 100, 1, 1, 0, 0, 1, 0, 0, '', '', '', 8, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (4, '中级会员', 1, 3, 150, 500, 1, 1, 0, 1, 1, 0, 0, '', '', '', 6, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (5, '高级会员', 1, 5, 300, 999, 1, 1, 0, 1, 1, 0, 0, '', '', '', 5, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (6, '注册会员', 1, 2, 100, 150, 0, 1, 0, 0, 1, 0, 0, '', '', '', 7, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (7, '邮件认证', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '#000000', '', 4, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (8, '游客', 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '', '', '', 9, 1, '', 1713774138);
+INSERT INTO `yzn_user_group` VALUES (1, '注册会员', 1, 1, 0, 100, 1, 1, 0, 0, 1, 0, 0, '', '', '', 8, 1, '', 1713774138);
+INSERT INTO `yzn_user_group` VALUES (2, '初级会员', 1, 2, 50, 150, 0, 1, 0, 0, 1, 0, 0, '', '', '', 7, 1, '', 1713774138);
+INSERT INTO `yzn_user_group` VALUES (3, '中级会员', 1, 3, 100, 500, 1, 1, 0, 1, 1, 0, 0, '', '', '', 6, 1, '', 1713774138);
+INSERT INTO `yzn_user_group` VALUES (4, '高级会员', 1, 4, 300, 999, 1, 1, 0, 1, 1, 0, 0, '', '', '', 5, 1, '', 1713774138);
+
 
 -- ----------------------------
 -- Table structure for yzn_user_point_log
