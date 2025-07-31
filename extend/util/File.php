@@ -14,6 +14,10 @@
 // +----------------------------------------------------------------------
 namespace util;
 
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 class File
 {
     /**
@@ -23,14 +27,11 @@ class File
      */
     public static function mk_dir(string $dir): bool
     {
-        $dir = rtrim($dir, '/') . '/';
-        if (!is_dir($dir)) {
-            if (!mkdir($dir, 0700, true)) {
-                return false;
-            }
+        if (is_dir($dir)) {
             return true;
         }
-        return true;
+
+        return mkdir($dir, 0755, true);
     }
 
     /**
@@ -38,7 +39,7 @@ class File
      * @param string $filename 文件名
      * @return false|string
      */
-    public static function read_file(string $filename): false|string
+    public static function read_file(string $filename): false | string
     {
         $content = '';
         if (function_exists('file_get_contents')) {
@@ -72,89 +73,83 @@ class File
     }
 
     /**
-     * 删除目录
-     * @param string $dirName 原目录
-     * @return bool true 成功, false 失败
+     * 删除文件夹
+     * @param string $dirname  目录
+     * @param bool   $withself 是否删除自身
+     * @return boolean
      */
-    public static function del_dir(string $dirName): bool
+    public static function del_dir(string $dirname, bool $withself = true): bool
     {
-        if (!file_exists($dirName)) {
+        if (!is_dir($dirname)) {
             return false;
         }
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dirname, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
 
-        $dir = opendir($dirName);
-        while ($fileName = readdir($dir)) {
-            $file = $dirName . '/' . $fileName;
-            if ($fileName != '.' && $fileName != '..') {
-                if (is_dir($file)) {
-                    self::del_dir($file);
-                } else {
-                    unlink($file);
-                }
-            }
+        foreach ($files as $fileinfo) {
+            $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+            $todo($fileinfo->getRealPath());
         }
-        closedir($dir);
-        return rmdir($dirName);
+        if ($withself) {
+            @rmdir($dirname);
+        }
+        return true;
     }
 
     /**
-     * 复制目录
-     * @param string $surDir 原目录
-     * @param string $toDir 目标目录
-     * @return bool true 成功, false 失败
+     * 复制文件夹
+     * @param string $source 源文件夹
+     * @param string $dest   目标文件夹
      */
-    public static function copy_dir(string $surDir, string $toDir): bool
+    public static function copy_dir(string $source, string $dest)
     {
-        $surDir = rtrim($surDir, '/') . '/';
-        $toDir  = rtrim($toDir, '/') . '/';
-        if (!file_exists($surDir)) {
-            return false;
-        }
 
-        if (!file_exists($toDir)) {
-            self::mk_dir($toDir);
+        if (!is_dir($dest)) {
+            self::mk_dir($dest);
         }
-        $file = opendir($surDir);
-        while ($fileName = readdir($file)) {
-            $file1 = $surDir . '/' . $fileName;
-            $file2 = $toDir . '/' . $fileName;
-            if ($fileName != '.' && $fileName != '..') {
-                if (is_dir($file1)) {
-                    self::copy_dir($file1, $file2);
-                } else {
-                    copy($file1, $file2);
+        foreach (
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            ) as $item
+        ) {
+            if ($item->isDir()) {
+                $sontDir = $dest . DS . $iterator->getSubPathName();
+                if (!is_dir($sontDir)) {
+                    self::mk_dir($sontDir);
                 }
+            } else {
+                copy($item, $dest . DS . $iterator->getSubPathName());
             }
         }
-        closedir($file);
-        return true;
     }
 
     /**
      * 列出目录
      * @param string $dir 目录名
-     * @return array  目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
+     * @return array  目录数组。列出文件夹下内容，返回数组 $result['dir']:存文件夹；$result['file']：存文件
      */
     public static function get_dirs(string $dir): array
     {
-        $dir          = rtrim($dir, '/') . '/';
-        $dirArray[][] = null;
-        if (($handle = opendir($dir))) {
-            $i = 0;
-            $j = 0;
-            while (false !== ($file = readdir($handle))) {
-                if (is_dir($dir . $file)) {
-                    //判断是否文件夹
-                    $dirArray['dir'][$i] = $file;
-                    $i++;
-                } else {
-                    $dirArray['file'][$j] = $file;
-                    $j++;
-                }
-            }
-            closedir($handle);
+        $result = [
+            'dir'  => [],
+            'file' => [],
+        ];
+
+        if (!is_dir($dir)) {
+            return $result;
         }
-        return $dirArray;
+
+        $iterator = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
+
+        foreach ($iterator as $fileinfo) {
+            $type            = $fileinfo->isDir() ? 'dir' : 'file';
+            $result[$type][] = $fileinfo->getFilename();
+        }
+
+        return $result;
     }
 
     /**

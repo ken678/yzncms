@@ -1,8 +1,8 @@
-# YznCMS 2.0 后台开发框架
+# YznCMS 2.1 后台开发框架
 ### 系统基于ThinkPHP8.x后端+(Layui2.11.x+RequireJS)前端框架，承诺后台框架永久免费且商业授权无限制，更可移除前台版权信息，是个人和企业专享、高度自定义的理想后台管理系统选择。
 
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://gitee.com/ken678/YZNCMS/blob/master/LICENSE.txt)
-[![Version](https://img.shields.io/badge/YznCMS-2.0.5-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
+[![Version](https://img.shields.io/badge/YznCMS-2.1.0-brightgreen.svg)](https://gitee.com/ken678/YZNCMS/)
 [![star](https://gitee.com/ken678/YZNCMS/badge/star.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/stargazers)
 [![fork](https://gitee.com/ken678/YZNCMS/badge/fork.svg?theme=dark)](https://gitee.com/ken678/YZNCMS/members)
 
@@ -107,6 +107,7 @@
 |2FA双因子验证|双因子验证/双因素验证一种安全密码验证方式|付费|
 |聊天室系统|一款即时通信在线聊天系统|付费|
 |YznBBS社区|这是一款简单易用的轻量级社区|付费|
+|海报生成器|支持简单拖拽组件即可生成海报|付费|
 
 ## [截图预览]
 ![输入图片说明](https://foruda.gitee.com/images/1694497052659798394/3f1a677d_555541.gif "YZNCMS后台管理系统")
@@ -135,5 +136,5 @@
 ## [版权信息]  
 YznCMS遵循[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0.html)开源协议发布，并允许商业使用。  
 本项目包含的第三方源码和二进制文件之版权信息另行标注。  
-版权所有Copyright © 2017-2024 by Yzncms (https://www.yzncms.com)  
+版权所有Copyright © 2017-2025 by Yzncms (https://www.yzncms.com)  
 All rights reserved。

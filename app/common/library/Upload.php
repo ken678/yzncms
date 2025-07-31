@@ -145,7 +145,7 @@ class Upload
 
         // 附件上传钩子，用于第三方文件上传扩展
         if (config::get('site.upload_driver') != 'local') {
-            $hook_result = Event::trigger('upload_after', ['dir' => $dir, 'file' => $this->file, 'from' => $from], true);
+            $hook_result = Event::trigger('upload_cloud', ['dir' => $dir, 'file' => $this->file, 'from' => $from], true);
             if (false !== $hook_result) {
                 return $hook_result;
             }

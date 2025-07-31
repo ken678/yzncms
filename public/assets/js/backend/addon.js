@@ -31,7 +31,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
             Table.render({
                 init: Table.init,
                 toolbar: ['refresh',
-                    [{
+                    {
                         text: '本地安装',
                         url:"",
                         icon: 'iconfont icon-upload-fill',
@@ -54,7 +54,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                         icon: 'iconfont icon-user-line',
                         class: 'layui-btn layui-bg-black layui-btn-sm btn-userinfo',
                         extend: 'style="margin-left: 10px !important;"',
-                    }],
+                    },
                 ],
                 url: 'addon/index' + (Config.addon.type == "local" ? "?type=local" : ""),
                 css: '.layui-table-tool-temp{padding-right: 85px;}',

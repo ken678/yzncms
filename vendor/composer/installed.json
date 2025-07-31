@@ -1522,17 +1522,17 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v8.1.2",
-            "version_normalized": "8.1.2.0",
+            "version": "v8.1.3",
+            "version_normalized": "8.1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "8faec5c9b7a7f2a66ca3140a57e81bd6cd37567c"
+                "reference": "e4207e98b66f92d26097ed6efd535930cba90e8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/8faec5c9b7a7f2a66ca3140a57e81bd6cd37567c",
-                "reference": "8faec5c9b7a7f2a66ca3140a57e81bd6cd37567c",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/e4207e98b66f92d26097ed6efd535930cba90e8f",
+                "reference": "e4207e98b66f92d26097ed6efd535930cba90e8f",
                 "shasum": ""
             },
             "require": {
@@ -1554,7 +1554,7 @@
                 "mockery/mockery": "^1.2",
                 "phpunit/phpunit": "^9.5"
             },
-            "time": "2025-01-14T08:04:03+00:00",
+            "time": "2025-07-14T03:48:44+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1586,7 +1586,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/framework/issues",
-                "source": "https://github.com/top-think/framework/tree/v8.1.2"
+                "source": "https://github.com/top-think/framework/tree/v8.1.3"
             },
             "install-path": "../topthink/framework"
         },
@@ -1902,33 +1902,33 @@
         },
         {
             "name": "topthink/think-trace",
-            "version": "v1.6",
-            "version_normalized": "1.6.0.0",
+            "version": "v2.0",
+            "version_normalized": "2.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-trace.git",
-                "reference": "136cd5d97e8bdb780e4b5c1637c588ed7ca3e142"
+                "reference": "4ba6da2945b37931d61900a6e55dc02b05e5a63f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-trace/zipball/136cd5d97e8bdb780e4b5c1637c588ed7ca3e142",
-                "reference": "136cd5d97e8bdb780e4b5c1637c588ed7ca3e142",
+                "url": "https://api.github.com/repos/top-think/think-trace/zipball/4ba6da2945b37931d61900a6e55dc02b05e5a63f",
+                "reference": "4ba6da2945b37931d61900a6e55dc02b05e5a63f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.0",
-                "topthink/framework": "^6.0|^8.0"
+                "php": ">=8.0",
+                "topthink/framework": "^8.1"
             },
-            "time": "2023-02-07T08:36:32+00:00",
+            "time": "2025-06-12T09:18:19+00:00",
             "type": "library",
             "extra": {
                 "think": {
-                    "services": [
-                        "think\\trace\\Service"
-                    ],
                     "config": {
                         "trace": "src/config.php"
-                    }
+                    },
+                    "services": [
+                        "think\\trace\\Service"
+                    ]
                 }
             },
             "installation-source": "dist",
@@ -1950,7 +1950,7 @@
             "description": "thinkphp debug trace",
             "support": {
                 "issues": "https://github.com/top-think/think-trace/issues",
-                "source": "https://github.com/top-think/think-trace/tree/v1.6"
+                "source": "https://github.com/top-think/think-trace/tree/v2.0"
             },
             "install-path": "../topthink/think-trace"
         },
@@ -2047,17 +2047,17 @@
         },
         {
             "name": "yansongda/artful",
-            "version": "v1.1.2",
-            "version_normalized": "1.1.2.0",
+            "version": "v1.1.3",
+            "version_normalized": "1.1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/artful.git",
-                "reference": "bad726c6287aca219750823bff46f70287ec3995"
+                "reference": "ddc203ef34ab369a5a31df057a0fda697d3ed855"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/artful/zipball/bad726c6287aca219750823bff46f70287ec3995",
-                "reference": "bad726c6287aca219750823bff46f70287ec3995",
+                "url": "https://api.github.com/repos/yansongda/artful/zipball/ddc203ef34ab369a5a31df057a0fda697d3ed855",
+                "reference": "ddc203ef34ab369a5a31df057a0fda697d3ed855",
                 "shasum": ""
             },
             "require": {
@@ -2087,7 +2087,7 @@
                 "hyperf/pimple": "其它/无框架下使用 SDK，请安装，任选其一",
                 "illuminate/container": "其它/无框架下使用 SDK，请安装，任选其一"
             },
-            "time": "2025-01-09T12:39:39+00:00",
+            "time": "2025-07-24T09:39:17+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2124,17 +2124,17 @@
         },
         {
             "name": "yansongda/pay",
-            "version": "v3.7.16",
-            "version_normalized": "3.7.16.0",
+            "version": "v3.7.17",
+            "version_normalized": "3.7.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yansongda/pay.git",
-                "reference": "f24aea15bbfc2ec23b1201168d81f73a99433a8f"
+                "reference": "b8da0aac34880bf9422f643ca8d4b3764ddded7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yansongda/pay/zipball/f24aea15bbfc2ec23b1201168d81f73a99433a8f",
-                "reference": "f24aea15bbfc2ec23b1201168d81f73a99433a8f",
+                "url": "https://api.github.com/repos/yansongda/pay/zipball/b8da0aac34880bf9422f643ca8d4b3764ddded7f",
+                "reference": "b8da0aac34880bf9422f643ca8d4b3764ddded7f",
                 "shasum": ""
             },
             "require": {
@@ -2144,7 +2144,7 @@
                 "ext-openssl": "*",
                 "ext-simplexml": "*",
                 "php": ">=8.0",
-                "yansongda/artful": "~1.1.1",
+                "yansongda/artful": "~1.1.3",
                 "yansongda/supports": "~4.0.10"
             },
             "conflict": {
@@ -2164,7 +2164,7 @@
                 "symfony/psr-http-message-bridge": "^2.1",
                 "symfony/var-dumper": "^5.1"
             },
-            "time": "2025-06-12T05:51:47+00:00",
+            "time": "2025-07-24T10:23:39+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2264,23 +2264,23 @@
         },
         {
             "name": "yzncms/think-addons",
-            "version": "v2.1.2",
-            "version_normalized": "2.1.2.0",
+            "version": "v2.2.0",
+            "version_normalized": "2.2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ken678/think-addons.git",
-                "reference": "13c7c08c8bcdf85d49fffacb76abb22694ca47ec"
+                "reference": "834a4f576e8b8d7c8584dbf0679d59951f6444f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ken678/think-addons/zipball/13c7c08c8bcdf85d49fffacb76abb22694ca47ec",
-                "reference": "13c7c08c8bcdf85d49fffacb76abb22694ca47ec",
+                "url": "https://api.github.com/repos/ken678/think-addons/zipball/834a4f576e8b8d7c8584dbf0679d59951f6444f2",
+                "reference": "834a4f576e8b8d7c8584dbf0679d59951f6444f2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0"
             },
-            "time": "2025-03-07T03:29:00+00:00",
+            "time": "2025-07-15T03:16:11+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2305,7 +2305,7 @@
             "homepage": "https://github.com/ken678/think-addons",
             "support": {
                 "issues": "https://gitee.com/ken678/YZNCMS/issues",
-                "source": "https://github.com/ken678/think-addons/tree/v2.1.2"
+                "source": "https://github.com/ken678/think-addons/tree/v2.2.0"
             },
             "install-path": "../yzncms/think-addons"
         }

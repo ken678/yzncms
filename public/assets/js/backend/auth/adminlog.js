@@ -12,14 +12,14 @@ define(['jquery', 'table', 'form','layui'], function($, Table, Form,layui) {
             Table.render({
                 init: Table.init,
                 toolbar: ['refresh',
-                    [{
+                    {
                         text: '删除一个月前日志',
                         url: Table.init.delete_url,
                         auth: 'delete',
                         icon: 'iconfont icon-delete-bin-line',
                         class: 'layui-btn layui-btn-sm layui-btn-danger btn-ajax',
                         extend: 'data-refresh="true"',
-                    }]
+                    }
                 ],
                 url: 'auth.adminlog/index',
                 cols: [
@@ -43,13 +43,13 @@ define(['jquery', 'table', 'form','layui'], function($, Table, Form,layui) {
                             title: '操作',
                             templet: Table.formatter.tool,
                             operat: [
-                                [{
+                                {
                                     text: '详情',
                                     url: Table.init.detail_url,
                                     auth:'detail',
                                     icon: 'iconfont icon-zoom-in-line',
                                     class: 'layui-btn layui-btn-xs layui-btn-normal btn-dialog',
-                                }],
+                                },
                             ]
                         }
                     ]

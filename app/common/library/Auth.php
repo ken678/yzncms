@@ -291,8 +291,8 @@ class Auth
                 if ($user->overduedate < $time && intval($user->vip)) {
                     $user->vip = 0;
                 }
-                //检查用户积分，更新新用户组，除去邮箱认证、禁止访问、游客组用户、vip用户，如果该用户组不允许自助升级则不进行该操作
-                if ($user->point >= 0 && !in_array($user->group_id, ['1', '7', '8']) && empty($user->vip)) {
+                //检查用户积分，更新新用户组，除去vip用户，如果该用户组不允许自助升级则不进行该操作
+                if ($user->point >= 0 && empty($user->vip)) {
                     $check_groupid = $this->get_usergroup_bypoint($user->point);
                     if ($check_groupid != $user->group_id) {
                         $user->group_id = $check_groupid;
@@ -447,29 +447,17 @@ class Auth
      */
     public function get_usergroup_bypoint($point = 0)
     {
-        $groupid = 2;
+        $groupid = 1;
         if (empty($point)) {
             //新会员默认点数
             $point = Config::get('yzn.user_defualt_point') ?: 0;
         }
-        //获取会有组缓存
-        $grouplist = UserGroup::order('listorder desc')->select();
-        foreach ($grouplist as $k => $v) {
-            $grouppointlist[$k] = $v['point'];
-        }
-        //对数组进行逆向排序
-        arsort($grouppointlist);
-        //如果超出用户组积分设置则为积分最高的用户组
-        if ($point > max($grouppointlist)) {
-            $groupid = key($grouppointlist);
-        } else {
-            $tmp_k = key($grouppointlist);
-            foreach ($grouppointlist as $k => $v) {
-                if ($point >= $v) {
-                    $groupid = $tmp_k;
-                    break;
-                }
-                $tmp_k = $k;
+
+        $groups = UserGroup::order('point ASC')->column('point', 'id');
+
+        foreach ($groups as $key => $value) {
+            if ($point >= $value) {
+                $groupid = $key;
             }
         }
         return $groupid;

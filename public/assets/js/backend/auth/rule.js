@@ -42,12 +42,12 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                             title: '操作',
                             templet: Table.formatter.tool, 
                             operat: [
-                                [{
+                                {
                                     text: '添加',
                                     url: Table.init.add_url+'?parentid={id}',
                                     auth:'add',
                                     class: 'layui-btn layui-btn-xs layui-btn-normal btn-dialog',
-                                }],
+                                },
                                 'edit', 'delete']
                         }
                     ]

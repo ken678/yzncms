@@ -52,18 +52,24 @@ class Controller extends Dispatch
 
     public function init(App $app)
     {
-        parent::init($app);
+        $this->app = $app;
+        $this->doRouteAfter();
+        $this->parseDispatch();
+    }
+
+    protected function parseDispatch()
+    {
 
         //插件名
         $this->addonName = strip_tags($this->request->route('addon'));
         // 插件目录
-        $this->addonPath = $app->addons->getAddonPath();
+        $this->addonPath = $this->app->addons->getAddonPath();
         if (!is_dir($this->addonPath)) {
             throw new HttpException(404, 'addons not exists:' . $this->addonName);
         }
 
         // 命名空间
-        $this->namespace = $app->addons->getNamespace();
+        $this->namespace = $this->app->addons->getNamespace();
 
         $action     = $this->request->route('action') ?: $this->rule->config('default_action');
         $controller = $this->request->route('controller') ?: $this->rule->config('default_controller');

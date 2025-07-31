@@ -50,13 +50,13 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
             Table.render({
                 init: Table.init,
                 toolbar: ['refresh', 'delete',
-                    [{
+                    {
                         text: '审核通过',
                         auth: 'pass',
                         icon: 'iconfont icon-check-line',
                         class: 'layui-btn layui-btn-sm layui-btn-disabled btn-disabled',
                         extend: 'data-params="status=1" lay-event="btn-multi"',
-                    }],
+                    },
                 ],
                 url: 'user.user/userverify',
                 lineStyle: 'height: 45px;',
