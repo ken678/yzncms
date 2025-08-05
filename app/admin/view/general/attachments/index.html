@@ -24,7 +24,7 @@
 
 <script type="text/html" id="typeTpl">
     <form class="layui-form">
-        <select name="category">
+        <select name="category" lay-append-to="body" lay-append-position="fixed">
             <option value="">请选择一个类别</option>
             {foreach name="categoryList" id="item"}
             <option value="{$key}">{$item}</option>
@@ -32,9 +32,4 @@
         </select>
     </form>
 </script>
-<style type="text/css">
-.layui-layer-dialog .layui-layer-content {
-    overflow: inherit;
-}
-</style>
 {/block}
