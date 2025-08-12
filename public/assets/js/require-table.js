@@ -233,7 +233,7 @@ define(['jquery', 'layui'], function($, layui) {
                     }
                 } else if (typeof v === "object") {
                     if (Yzn.api.checkAuth(v.auth, elem)) {
-                        toolbarHtml += Table.buildToolbarHtml(v);
+                        toolbarHtml += Table.buildToolbarHtml(tableId, v);
                     }
                 }
             });
@@ -242,7 +242,7 @@ define(['jquery', 'layui'], function($, layui) {
             }
             return '<div>' + toolbarHtml + '</div>';
         },
-        buildToolbarHtml: function(j) {
+        buildToolbarHtml: function(tableId, j) {
             j.html = j.html || '';
             if (j.html !== '') {
                 return j.html;
@@ -263,7 +263,7 @@ define(['jquery', 'layui'], function($, layui) {
             url = url ? Yzn.api.fixurl(j.url) : 'javascript:;';
             extend = typeof j.extend !== 'undefined' ? j.extend : '';
 
-            html = '<a href="' + url + '" class="' + classname + '" ' + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-table="' + Table.init.table_render_id + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>\n';
+            html = '<a href="' + url + '" class="' + classname + '" ' + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-table="' + tableId + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>\n';
             return html;
         },
         renderSearch: function(cols, elem, tableId, searchFormVisible) {
@@ -627,7 +627,7 @@ define(['jquery', 'layui'], function($, layui) {
                 });
             });
         },
-        buildOperatHtml: function(i, row, j) {
+        buildOperatHtml: function(tableId, i, row, j) {
             var hidden, disable, url, classname, icon, text, title, refresh, confirm, extend,
                 dropdown, html, key;
             hidden = typeof j.hidden === 'function' ? j.hidden.call(Table, row, j) : (typeof j.hidden !== 'undefined' ? j.hidden : false);
@@ -650,7 +650,7 @@ define(['jquery', 'layui'], function($, layui) {
             if (disable) {
                 classname = classname + ' disabled';
             }
-            html = '<a href="' + url + '" class="' + classname + '" ' + (confirm ? confirm + ' ' : '') + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-button-index="' + i + '" data-row-index="' + index + '" data-table-key="' + key + '" data-table="' + Table.init.table_render_id + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>';
+            html = '<a href="' + url + '" class="' + classname + '" ' + (confirm ? confirm + ' ' : '') + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-button-index="' + i + '" data-row-index="' + index + '" data-table-key="' + key + '" data-table="' + tableId + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>';
             return html;
         },
         getItemField: function(item, field) {
@@ -826,6 +826,7 @@ define(['jquery', 'layui'], function($, layui) {
                 var that = this;
                 that.operat = that.operat || ['edit', 'delete'];
                 var elem = that.init.table_elem || init.table_elem;
+                var tableId = that.init.table_render_id || init.table_render_id;
                 var html = '';
 
                 // 定义操作按钮配置
@@ -876,11 +877,11 @@ define(['jquery', 'layui'], function($, layui) {
                     if (typeof item === 'string' && buttonConfigs[item]) {
                         const config = buttonConfigs[item];
                         if (Yzn.api.checkAuth(config.auth, elem)) {
-                            html += Table.buildOperatHtml(i, data, config);
+                            html += Table.buildOperatHtml(tableId, i, data, config);
                         }
                     } else if (typeof item === 'object') {
                         if (Yzn.api.checkAuth(item.auth, elem)) {
-                            html += Table.buildOperatHtml(i, data, item);
+                            html += Table.buildOperatHtml(tableId, i, data, item);
                         }
                     }
                 });
