@@ -8,7 +8,6 @@
 define(['jquery', 'layui'], function($, layui) {
     var table = layui.table,
         laydate = layui.laydate,
-        //element = layui.element,
         laytpl = layui.laytpl,
         form = layui.form,
         tabs = layui.tabs;
@@ -238,7 +237,7 @@ define(['jquery', 'layui'], function($, layui) {
                 }
             });
             if (searchInput) {
-                toolbarHtml += '<input id="layui-input-search" value="" placeholder="搜索" class="layui-input layui-hide-xs" style="display:inline-block;width:auto;float: right;\n' + 'margin:2px 25px 0 0;height:28px;">\n'
+                toolbarHtml += '<input id="layui-input-search-' + tableId + '" value="" placeholder="搜索" class="layui-input layui-hide-xs" style="display:inline-block;width:auto;float: right;\n' + 'margin:2px 25px 0 0;height:28px;">\n'
             }
             return '<div>' + toolbarHtml + '</div>';
         },
@@ -428,15 +427,14 @@ define(['jquery', 'layui'], function($, layui) {
             return cols;
         },
         listenTableSearch: function(tableId) {
-            var that = this;
-            that.$commonsearch = $(".table-search-fieldset");
+            var $commonsearch = $("#searchFieldset_" + tableId);
 
             require(['form'], function(Form) {
-                Form.api.bindevent(that.$commonsearch);
+                Form.api.bindevent($commonsearch);
             })
 
             form.on('submit(' + tableId + '_filter)', function(data) {
-                var searchQuery = Table.getSearchQuery(that, true);
+                var searchQuery = Table.getSearchQuery({ $commonsearch: $commonsearch }, true);
                 // 提交通用搜索时判断是否和Tabs筛选一致
                 var options = layui.table.getOptions(tableId);
                 var tabs = $('.layui-tabs-header[data-field]', $('div[id="' + options.tabsId + '"]'));
@@ -447,7 +445,7 @@ define(['jquery', 'layui'], function($, layui) {
                     $("li[data-value='" + data.field[field] + "']", tabs).addClass("layui-this");
                 }
 
-                table.reload(tableId, {
+                table.reloadData(tableId, {
                     page: {
                         curr: 1
                     },
@@ -460,12 +458,12 @@ define(['jquery', 'layui'], function($, layui) {
             })
 
             // 重置事件
-            $('button[data-table-reset="' + tableId + '"]').on('click', that.$commonsearch, function() {
+            $commonsearch.on('click', 'button[data-table-reset]', function() {
                 var options = layui.table.getOptions(tableId);
                 $('[data-field] li', $('div[lay-filter="' + options.layFilter + '"]')).removeClass('layui-this');
                 $('[data-field] li:first', $('div[lay-filter="' + options.layFilter + '"]')).addClass('layui-this');
                 setTimeout(function() {
-                    table.reload(tableId);
+                    table.reloadData(tableId);
                 }, 1);
             })
 
@@ -473,25 +471,25 @@ define(['jquery', 'layui'], function($, layui) {
             $(document).on("click", ".searchit", function() {
                 var value = $(this).data("value");
                 var field = $(this).data("field");
-                var obj = $("form [name='" + field + "']", that.$commonsearch);
+                var obj = $("form [name='" + field + "']", $commonsearch);
                 if (obj.length > 0) {
                     if (obj.is("select")) {
                         $("option[value='" + value + "']", obj).prop("selected", true);
                         form.render('select');
                     } else if (obj.length > 1) {
-                        $("form [name='" + field + "'][value='" + value + "']", that.$commonsearch).prop("checked", true);
+                        $("form [name='" + field + "'][value='" + value + "']", $commonsearch).prop("checked", true);
                     } else {
                         obj.val(value + "");
                     }
                     obj.trigger("change");
-                    $("form button[type='submit']", that.$commonsearch).trigger("click");
+                    $("form button[type='submit']", $commonsearch).trigger("click");
                 }
             });
             //快速搜索
-            $(document).on('blur', '#layui-input-search', function(event) {
+            $(document).on('blur', '#layui-input-search-' + tableId, function(event) {
                 var text = $(this).val();
-                table.reload(tableId, { where: { search: text } });
-                $('#layui-input-search').prop("value", $(this).val());
+                table.reloadData(tableId, { where: { search: text } });
+                $(this).prop("value", $(this).val());
                 return false
             })
         },
@@ -601,7 +599,7 @@ define(['jquery', 'layui'], function($, layui) {
                 } else {
                     object.val(value);
                 }
-                table.reload(tableId);
+                table.reloadData(tableId);
             })
         },
         listenSwitch: function(option, tableId) {
@@ -619,7 +617,7 @@ define(['jquery', 'layui'], function($, layui) {
                     data: data,
                 }, function(data, ret) {
                     if (modifyReload) {
-                        layui.table.reload(tableId);
+                        layui.table.reloadData(tableId);
                     }
                 }, function(data, ret) {
                     that.trigger('click');
@@ -671,7 +669,7 @@ define(['jquery', 'layui'], function($, layui) {
         },
         before: function(options){
             //初始化搜索参数
-            this.$commonsearch = $(".table-search-fieldset");
+            this.$commonsearch = $("#" + options.searchFieldsetId);
             var queryParams = Table.getQueryParams({}, Table.getSearchQuery(this, true));
             options.where.filter = queryParams.filter;
             options.where.op = queryParams.op;
@@ -755,7 +753,7 @@ define(['jquery', 'layui'], function($, layui) {
                             url: options.init.import_url,
                             data: {file: data.url},
                         }, function (data, ret) {
-                           table.reload(tableId);
+                           table.reloadData(tableId);
                         });
                     });
                 });
@@ -816,7 +814,7 @@ define(['jquery', 'layui'], function($, layui) {
                     data: data,
                 }, function(data, ret) {
                     if (modifyReload) {
-                        layui.table.reload(tableId);
+                        layui.table.reloadData(tableId);
                     }
                 });
             }
