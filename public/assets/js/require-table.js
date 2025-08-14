@@ -17,8 +17,6 @@ define(['jquery', 'layui'], function($, layui) {
         table_render_id: 'currentTable',
     };
 
-    var ColumnsForSearch = [];
-
     var Table = {
         config: {
             //refreshbtn: '.btn-refresh',
@@ -135,6 +133,7 @@ define(['jquery', 'layui'], function($, layui) {
             options.searchFormVisible = Yzn.api.parame(options.searchFormVisible, false);
             options.searchFormTpl = Yzn.api.parame(options.searchFormTpl || options.init.searchFormTpl, false);
             options.defaultToolbar = options.defaultToolbar || ['filter', 'print', 'exports'];
+            options.searchColumns = [];
             if (options.search && options.showSearch) {
                 options.defaultToolbar.push({
                     title: '搜索',
@@ -174,7 +173,7 @@ define(['jquery', 'layui'], function($, layui) {
 
             // 初始化表格搜索
             if (options.search === true && options.searchFormTpl === false) {
-                Table.renderSearch(options.cols, options.elem, options.id, options.searchFormVisible);
+                Table.renderSearch(options.cols, options.elem, options.id, options.searchFormVisible, options);
             }
 
             // 初始化表格左上方工具栏
@@ -265,7 +264,7 @@ define(['jquery', 'layui'], function($, layui) {
             html = '<a href="' + url + '" class="' + classname + '" ' + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-table="' + tableId + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>\n';
             return html;
         },
-        renderSearch: function(cols, elem, tableId, searchFormVisible) {
+        renderSearch: function(cols, elem, tableId, searchFormVisible,options) {
             // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
             cols = cols[0] || {};
             var newCols = [];
@@ -283,7 +282,7 @@ define(['jquery', 'layui'], function($, layui) {
                 d.extend = typeof d.extend === 'undefined' ? '' : d.extend;
                 d.addClass = typeof d.addClass === 'undefined' ? (typeof d.addclass === 'undefined' ? 'layui-input' : 'layui-input ' + d.addclass) : 'layui-input ' + d.addClass;
                 if (d.field !== false && d.search !== false) {
-                    ColumnsForSearch.push(d);
+                    options.searchColumns.push(d);
                     switch (d.search) {
                         case true:
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
@@ -434,7 +433,8 @@ define(['jquery', 'layui'], function($, layui) {
             })
 
             form.on('submit(' + tableId + '_filter)', function(data) {
-                var searchQuery = Table.getSearchQuery({ $commonsearch: $commonsearch }, true);
+                var options = layui.table.getOptions(tableId);
+                var searchQuery = Table.getSearchQuery(options, true);
                 // 提交通用搜索时判断是否和Tabs筛选一致
                 var options = layui.table.getOptions(tableId);
                 var tabs = $('.layui-tabs-header[data-field]', $('div[id="' + options.tabsId + '"]'));
@@ -503,7 +503,7 @@ define(['jquery', 'layui'], function($, layui) {
                 var obj = $("[name='" + name + "']", that.$commonsearch);
                 if (obj.length == 0)
                     return true;
-                var vObjCol = ColumnsForSearch[i];
+                var vObjCol = that.searchColumns[i];
                 var process = vObjCol && typeof vObjCol.process == 'function' ? vObjCol.process : null;
                 if (obj.length > 1) {
                     if (/BETWEEN$/.test(sym)) {
