@@ -420,12 +420,20 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                     require(['selectpage'], function() {
                         $('.selectpage', layform).selectPage({
                             eAjaxSuccess: function(data) {
-                                //console.log(data);
                                 data.list = typeof data.data !== 'undefined' ? data.data : [];
                                 data.totalRow = typeof data.count !== 'undefined' ? data.count : data.data.length;
                                 return data;
                             }
                         })
+                    })
+                    $(layform).on("reset", function () {
+                        setTimeout(function () {
+                            $(".selectpage", layform).each(function () {
+                                var selectpage = $(this).data("selectPageObject");
+                                selectpage.elem.hidden.val($(this).val());
+                                $(this).selectPageRefresh();
+                            });
+                        }, 1);
                     })
                 }
             },
