@@ -343,6 +343,12 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                             return obj;
                         };
                         var fieldlist = $(".fieldlist", layform);
+                        //表单重置
+                        layform.on("reset", function () {
+                            setTimeout(function () {
+                                fieldlist.trigger("fa.event.refreshfieldlist");
+                            });
+                        });
                         //监听文本框改变事件
                         $(document).on('change keyup changed', ".fieldlist input,.fieldlist textarea,.fieldlist select", function() {
                             var container = $(this).closest(".fieldlist");
