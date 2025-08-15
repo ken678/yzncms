@@ -623,11 +623,11 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
 
                 });
             },
-            xmSelect: function() {
+            xmSelect: function(layform) {
                 // 绑定下拉框多选组件
-                if ($('.layui-form .form-selects').length > 0) {
+                if ($('.form-selects', layform).length > 0) {
                     require(['xm-select'], function(xmSelect) {
-                        $('.layui-form .form-selects').each(function() {
+                        $('.form-selects', layform).each(function() {
                             var name = $(this).data("name");
                             var list = Array.isArray($(this).data("list")) || typeof $(this).data("list") === "object" ? $(this).data("list") : [];
                             var value = $(this).data("value");
@@ -643,7 +643,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                                 value = typeof value === "number" ? [value] : value.split(',')
                             }
                             xmSelect.render({
-                                el: document.querySelector('.form-selects'),
+                                el: this,
                                 initValue: value,
                                 name: name,
                                 data: newArr
@@ -745,7 +745,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 events.datetimepicker(form);
                 events.colorpicker(form);
                 events.cropper();
-                events.xmSelect();
+                events.xmSelect(form);
                 events.tagsinput(form);
                 events.favisible(form);
             }
