@@ -173,7 +173,7 @@ define(['jquery', 'layui'], function($, layui) {
 
             // 初始化表格搜索
             if (options.search === true && options.searchFormTpl === false) {
-                Table.renderSearch(options.cols, options.elem, options.id, options.searchFormVisible, options);
+                Table.renderSearch(options);
             }
 
             // 初始化表格左上方工具栏
@@ -264,11 +264,15 @@ define(['jquery', 'layui'], function($, layui) {
             html = '<a href="' + url + '" class="' + classname + '" ' + (refresh ? refresh + ' ' : '') + extend + ' title="' + title + '" data-table="' + tableId + '"><i class="' + icon + '"></i>' + (text ? ' ' + text : '') + '</a>\n';
             return html;
         },
-        renderSearch: function(cols, elem, tableId, searchFormVisible,options) {
+        renderSearch: function(options) {
             // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
-            cols = cols[0] || {};
+            var cols = options.cols[0] || {};
+            var elem = options.elem;
+            var tableId = options.id;
+            var searchFormVisible = options.searchFormVisible;
             var newCols = [];
             var formHtml = '';
+
             $.each(cols, function(i, d) {
                 d.field = d.field || false;
                 d.fieldAlias = Yzn.api.parame(d.fieldAlias, d.field);
@@ -667,12 +671,14 @@ define(['jquery', 'layui'], function($, layui) {
                 btnImport.click();
             }
         },
-        before: function(options){
-            //初始化搜索参数
-            this.$commonsearch = $("#" + options.searchFieldsetId);
-            var queryParams = Table.getQueryParams({}, Table.getSearchQuery(this, true));
-            options.where.filter = queryParams.filter;
-            options.where.op = queryParams.op;
+        before: function(options) {
+            if (options.search === true) {
+                //初始化搜索参数
+                this.$commonsearch = $("#" + options.searchFieldsetId);
+                var queryParams = Table.getQueryParams({}, Table.getSearchQuery(this, true));
+                options.where.filter = queryParams.filter;
+                options.where.op = queryParams.op;
+            }
         },
         toolbarEvents: {
             //监听头部工具栏-刷新
