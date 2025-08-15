@@ -27,7 +27,7 @@ require.config({
         'iconPicker': '../libs/iconPicker/iconPicker',
         'citypicker': '../libs/citypicker/js/city-picker.min',
         'citypicker-data': '../libs/citypicker/js/city-picker.data.min',
-        'tagsinput': '../libs/tagsinput/tagsinput.min',
+        'tagsinput': '../libs/tagsinput/tagsinput',
         'cxselect': '../libs/cxselect/jquery.cxselect',
     },
     // shim依赖配置
@@ -38,7 +38,7 @@ require.config({
         'addons': ['backend'],
         'jstree': ['css!../libs/jstree/themes/default/style.css'],
         'citypicker': ['citypicker-data', 'css!../libs/citypicker/css/city-picker.css'],
-        'tagsinput': ['css!../libs/tagsinput/tagsinput.min.css'],
+        'tagsinput': ['css!../libs/tagsinput/tagsinput.css'],
     },
     baseUrl: requirejs.s.contexts._.config.config.site.cdnurl + '/assets/js/', //资源基础路径
     map: {

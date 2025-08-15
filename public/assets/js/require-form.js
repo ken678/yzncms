@@ -460,7 +460,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                     require(['citypicker'], function() {
                         $(layform).on("reset", function() {
                             setTimeout(function() {
-                                $("[data-toggle='city-picker']").citypicker('refresh');
+                                $("[data-toggle='city-picker']", layform).citypicker('refresh');
                             }, 1);
                         });
                     })
@@ -556,13 +556,16 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
             tagsinput: function(layform) {
                 if ($(".form-tags", layform).length > 0) {
                     require(['tagsinput'], function() {
-                        $('.form-tags', layform).each(function() {
-                            $(this).tagsInput({
-                                width: 'auto',
-                                defaultText: $(this).data('remark') || '关键词回车确认',
-                                height: '26px',
-                            })
+                        $(".form-tags", layform).tagsInput({
+                            width: 'auto',
+                            defaultText: $(this).data('remark') || '关键词回车确认',
+                            height: '26px',
                         })
+                        layform.on("reset", function () {
+                            setTimeout(function () {
+                                $(".form-tags", layform).resetTags();
+                            }, 0);
+                        });
                     });
                 }
             },
