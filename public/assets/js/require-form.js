@@ -585,9 +585,9 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                     });
                 }
             },
-            cropper: function() {
+            cropper: function(layform) {
                 //裁剪图片
-                $(document).off('click', '.btn-cropper').on('click', '.btn-cropper', function() {
+                layform.off('click', '.btn-cropper').on('click', '.btn-cropper', function() {
                     var input = $("#" + $(this).data("input-id"));
                     var image = $(this).parent('.file-panel').prev('img').data('original');
                     var url = image;
@@ -744,7 +744,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 events.citypicker(form);
                 events.datetimepicker(form);
                 events.colorpicker(form);
-                events.cropper();
+                events.cropper(form);
                 events.xmSelect(form);
                 events.tagsinput(form);
                 events.favisible(form);
