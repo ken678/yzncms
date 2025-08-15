@@ -431,9 +431,10 @@ define(['jquery', 'layui'], function($, layui) {
         },
         listenTableSearch: function(tableId) {
             var $commonsearch = $("#searchFieldset_" + tableId);
+            var layForm = $("form.form-commonsearch", $commonsearch);
 
             require(['form'], function(Form) {
-                Form.api.bindevent($commonsearch);
+                Form.api.bindevent(layForm);
             })
 
             form.on('submit(' + tableId + '_filter)', function(data) {
@@ -462,7 +463,8 @@ define(['jquery', 'layui'], function($, layui) {
             })
 
             // 重置事件
-            $commonsearch.on('click', 'button[data-table-reset]', function() {
+            layForm.on('click', 'button[data-table-reset]', function() {
+                layForm[0].reset();
                 var options = layui.table.getOptions(tableId);
                 $('[data-field] li', $('div[lay-filter="' + options.layFilter + '"]')).removeClass('layui-this');
                 $('[data-field] li:first', $('div[lay-filter="' + options.layFilter + '"]')).addClass('layui-this');

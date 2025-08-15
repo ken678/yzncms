@@ -16,7 +16,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
 
             },
             validator: function(layform, success, error, submit) {
-                if (!layform.is("form"))
+                if (!layform.is("form") || layform.hasClass("form-commonsearch"))
                     return;
                 var submitBtn = $("[lay-submit]", layform),
                     filter = submitBtn.attr('lay-filter');
