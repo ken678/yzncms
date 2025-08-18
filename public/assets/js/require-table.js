@@ -184,8 +184,11 @@ define(['jquery', 'layui'], function($, layui) {
 
             options.before = Table.wrapEvent(options.before, Table.before);
             options.done = Table.wrapEvent(options.done, Table.done);
-
-            var newTable = table.render(options);
+            if(options.tree){
+                var newTable = layui.treeTable.render(options);
+            }else{
+                var newTable = table.render(options);
+            }
             return newTable;
         },
         wrapEvent: function(original, wrapper) {

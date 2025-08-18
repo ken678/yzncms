@@ -11,9 +11,10 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 delete_url: 'auth.rule/del',
             };
 
-            layui.treeTable.render({
+            Table.render({
                 init: Table.init,
                 elem: Table.init.table_elem,
+                tree:true,
                 toolbar: '#toolbarDemo',
                 url: "auth.rule/index",
                 pk:'id',
@@ -27,8 +28,7 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                         showIcon: false
                     }
                 },
-                // @todo 不直接使用yznTable.render(); 进行表格初始化, 需要使用 Table.formatCols(); 方法格式化`cols`列数据
-                cols: Table.formatCols([
+                cols: [
                     [
                         { field: 'listorder', width: 60, title: '排序', edit: 'text' },
                         { field: 'id', width: 60, title: 'ID' },
@@ -51,7 +51,7 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                                 'edit', 'delete']
                         }
                     ]
-                ], Table.init),
+                ],
             });
 
             $('body').on('click', '#openAll', function() {
