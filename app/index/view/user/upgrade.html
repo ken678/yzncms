@@ -15,7 +15,7 @@
             {foreach name="vipList" id="vo"}
             <div class="layui-col-md4">
                 <div class="vip-card">
-                    <div class="vip-header layui-bg-green">
+                    <div class="vip-header layui-bg-blue">
                         <span class="vip-plan">{$vo.title}&nbsp;<small>(v{$vo.level})</small></span>
                         <span class="vip-sub">会员有效期{$vo.days}天</span>
                     </div>
@@ -28,7 +28,7 @@
                         </ul>
                     </div>
                     <div class="vip-footer">
-                        <button type="button" class="layui-btn" data-id="{$vo.id}">立即{if $user.vip}续费{else}开通{/if}</button>
+                        <button type="button" class="layui-btn layui-bg-black" data-id="{$vo.id}">立即{if $user.vip}续费{else}开通{/if}</button>
                     </div>
                 </div>
             </div>
