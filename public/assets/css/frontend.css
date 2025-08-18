@@ -15,7 +15,7 @@
 .login-main .layui-elip{margin-bottom: 15px; }
 .login-main form .verify-box img {display: inline-block; margin-left: 2%; width: 36%; height: 38px; }
 .lay-user-jump-change {float: right; }
-.lay-link {color: #029789!important; }
+.lay-link {color: #1e9fff!important; }
 
 .lay-user-login-other>* {display: inline-block; vertical-align: middle; margin-right: 10px; font-size: 14px }
 .lay-user-login-other {font-size: 0; line-height: 38px; }
@@ -210,6 +210,10 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .layui-laypage .layui-laypage-curr .layui-laypage-em {background-color: #1e9fff;}
 .layui-laydate .layui-this, .layui-laydate .layui-this>div {background-color: #1e9fff !important;}
 .layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover {background-color: #fff !important;color: #1e9fff;}
+.layui-form-checked[lay-skin=primary]>i {border-color: #1e9fff !important;background-color: #1e9fff;}
+.layui-form-checkbox[lay-skin=primary]:hover>i {border-color: #1e9fff;}
+.layui-laydate-header i:hover, .layui-laydate-header span:hover {color: #1e9fff;}
+.layui-laydate-footer span:hover {color: #1e9fff;}
 
 /*图片上传缩略图*/
 .file-item.thumbnail .file-panel {position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
