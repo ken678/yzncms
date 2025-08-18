@@ -92,7 +92,7 @@
                         </div>
                         <div class="layui-form-mid" style="padding: 0!important;">
                             {eq name="user.ischeck_mobile" value="1"}
-                            <button class="layui-btn btn-change btn-change" type="button" data-type="changemobile" data-title="修改手机">修改</button>
+                            <button class="layui-btn btn-change" type="button" data-type="changemobile" data-title="修改手机">修改</button>
                             {else/}
                             <button class="layui-btn layui-btn-danger btn-change" type="button" data-type="actmobile" data-title="激活手机">激活</button>
                             {/eq}
@@ -129,7 +129,7 @@
                         {:hook("user_config")}
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn layui-bg-black">确认修改</button>
+                                <button class="layui-btn layui-bg-black" lay-submit lay-filter="profile-form">确认修改</button>
                             </div>
                         </div>
                 </form>
@@ -154,7 +154,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit>确认修改</button>
+                <button class="layui-btn" lay-submit lay-filter="actmobile">确认修改</button>
             </div>
         </div>
     </form>
@@ -176,7 +176,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit>确认修改</button>
+                <button class="layui-btn" lay-submit lay-filter="actemail">确认修改</button>
             </div>
         </div>
     </form>
@@ -197,7 +197,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit data-type="layui-form" data-pop="true" data-refresh="true">确认修改</button>
+                <button class="layui-btn" lay-submit lay-filter="changemobile">确认修改</button>
             </div>
         </div>
     </form>
@@ -218,7 +218,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit data-type="layui-form" data-pop="true" data-refresh="true">确认修改</button>
+                <button class="layui-btn" lay-submit lay-filter="changeemail">确认修改</button>
             </div>
         </div>
     </form>
