@@ -177,8 +177,10 @@ define(['jquery', 'layui'], function($, layui) {
             }
 
             // 初始化表格左上方工具栏
-            options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
-            options.toolbar = typeof options.toolbar === 'string' ? options.toolbar : Table.renderToolbar(options);
+            if(options.toolbar === 'default'){
+               options.toolbar = ['refresh', 'add', 'delete', 'export']; 
+            }
+            options.toolbar = typeof options.toolbar === 'object' ? Table.renderToolbar(options) : options.toolbar;
 
             options.before = Table.wrapEvent(options.before, Table.before);
             options.done = Table.wrapEvent(options.done, Table.done);
