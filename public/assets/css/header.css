@@ -1,7 +1,7 @@
 /*前台通用头部*/
 /* 头部 */
 .fly-header{position: fixed; left: 0; top: 0; z-index: 10000; width: 100%;border-bottom: 1px solid #404553; border-right: 1px solid #404553; border-radius: 0;background-color:#2f363c;}
-.fly-header .navbar-toggle {position: relative; float: right; padding: 9px 10px; margin-top: 10px;color:#fff }
+.fly-header .navbar-toggle {position: relative; float: right; padding: 9px 10px; margin-top: 5px;color:#fff }
 .fly-header .navbar-toggle i{font-size: 22px}
 .fly-header .fly-logo{float:left;}
 .fly-header .fly-logo h2{font-size: 21px;line-height: 60px;color: #fff;font-weight:normal;}
