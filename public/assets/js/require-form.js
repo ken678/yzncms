@@ -432,12 +432,16 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                             }
                         })
                     })
-                    $(layform).on("reset", function () {
-                        setTimeout(function () {
-                            $(".selectpage", layform).each(function () {
-                                var selectpage = $(this).data("selectPageObject");
-                                selectpage.elem.hidden.val($(this).val());
-                                $(this).selectPageRefresh();
+                    $(layform).on("reset", function() {
+                        setTimeout(function() {
+                            $(".selectpage", layform).each(function() {
+                                if ($(this).val()) {
+                                    var selectpage = $(this).data("selectPageObject");
+                                    selectpage.elem.hidden.val($(this).val());
+                                    $(this).selectPageRefresh();
+                                } else {
+                                    $(this).selectPageClear();
+                                }
                             });
                         }, 1);
                     })
