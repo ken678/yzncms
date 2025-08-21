@@ -12,12 +12,16 @@ define(['jquery', 'layui'], function($, layui) {
         form = layui.form,
         tabs = layui.tabs;
 
-    var init = {
-        table_elem: '#currentTable',
-        table_render_id: 'currentTable',
-    };
-
     var Table = {
+        extend: {
+            table_elem: '#currentTable',
+            table_render_id: 'currentTable',
+            add_url: "",
+            edit_url: "",
+            delete_url: "",
+            multi_url: '',
+            dragsort_url: '',
+        },
         config: {
             //refreshbtn: '.btn-refresh',
             //addbtn: '.btn-add',
@@ -29,12 +33,13 @@ define(['jquery', 'layui'], function($, layui) {
             //restoreallbtn: '.btn-restoreall',
             //destroyallbtn: '.btn-destroyall',
             disabledbtn: '.btn-disabled',
+            dragsortfield: 'listorder',
         },
         api: {
-            init: function(defaults) {
+            /*init: function(defaults) {
                 defaults = defaults ? defaults : init;
                 Table.init = defaults;
-            },
+            },*/
             bindevent: function(tableId) {
                 var tableId = tableId || Table.init.table_render_id;
                 var options = layui.table.getOptions(tableId);
@@ -118,7 +123,7 @@ define(['jquery', 'layui'], function($, layui) {
             },
         },
         render: function(options) {
-            options.init = options.init || init;
+            options.init = $.extend(true, {}, Table.extend, options.init);
             options.modifyReload = Yzn.api.parame(options.modifyReload, false);
             options.id = options.id || options.init.table_render_id;
             options.pk = options.pk || 'id';
@@ -677,6 +682,58 @@ define(['jquery', 'layui'], function($, layui) {
             if (btnImport.length > 0) {
                 btnImport.click();
             }
+            //拖拽
+            var options = this;
+            if(options.init.dragsort_url !== '' ){
+                var tbv = options.elem.next();
+                var tbody = tbv.find('.layui-table-main tbody');
+                var tableId = options.init.table_render_id;
+                require(['dragsort'], function () {
+                    tbody.dragsort({
+                        itemSelector: 'tr:visible',
+                        dragSelector: "a.btn-dragsort",
+                        dragEnd: function (a, b) {
+                            var element = $("a.btn-dragsort", this);
+                            var data = table.cache[tableId];
+                            var current = data[$(this).data("index")];
+                            var ids = $.map($("tr:visible", tbody), function (tr) {
+                                return data[$(tr).data("index")][options.pk];
+                            });
+                            var changeid = current[options.pk];
+                            var pid = typeof current.parentid != 'undefined' ? current.parentid : '';
+                            var params = {
+                                url: options.init.dragsort_url,
+                                data: {
+                                    ids: ids.join(','),
+                                    changeid: changeid,
+                                    pid: pid,
+                                    field: Table.config.dragsortfield,
+                                    orderway: options.sortOrder,
+                                    table: options.init.table,
+                                    pk: options.pk
+                                }
+                            };
+                            Yzn.api.ajax(params, function (data, ret) {
+                                var success = $(element).data("success") || $.noop;
+                                if (typeof success === 'function') {
+                                    if (false === success.call(element, data, ret)) {
+                                        return false;
+                                    }
+                                }
+                                table.reload(tableId);
+                            }, function (data, ret) {
+                                var error = $(element).data("error") || $.noop;
+                                if (typeof error === 'function') {
+                                    if (false === error.call(element, data, ret)) {
+                                        return false;
+                                    }
+                                }
+                                table.reload(tableId);
+                            });
+                        }
+                    })
+                })
+            }
         },
         before: function(options) {
             if (options.search === true) {
@@ -881,6 +938,17 @@ define(['jquery', 'layui'], function($, layui) {
                         text: "",
                         title: '删除',
                         extend: "lay-event='btn-delone'"
+                    },
+                    dragsort:{
+                        class: 'layui-btn layui-btn-xs layui-bg-black btn-dragsort',
+                        field: 'id',
+                        icon: 'iconfont icon-drag-move-2-fill',
+                        auth: 'weigh',
+                        text: "",
+                        title: '移动',
+                        url: that.init.dragsort_url,
+                        refresh: true,
+                        extend: ""
                     }
                 };
 

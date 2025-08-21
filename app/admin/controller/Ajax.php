@@ -20,6 +20,7 @@ use app\common\exception\UploadException;
 use app\common\library\Upload as UploadLib;
 use Exception;
 use think\facade\Db;
+use think\facade\Validate;
 use think\Response;
 
 class Ajax extends Backend
@@ -151,6 +152,71 @@ class Ajax extends Backend
             'fullurl' => cdnurl($attachment->path, true),
         ]);
 
+    }
+
+    //通用排序
+    public function weigh()
+    {
+        //排序的数组
+        $ids = $this->request->post("ids");
+        //拖动的记录ID
+        $changeid = $this->request->post("changeid");
+        //操作字段
+        $field = $this->request->post("field");
+        //操作的数据表
+        $table = $this->request->post("table");
+        if (!Validate::is($table, "alphaDash")) {
+            $this->error('表名规则错误');
+        }
+        //主键
+        $pk = $this->request->post("pk");
+        //排序的方式
+        $orderway = strtolower($this->request->post("orderway", ""));
+        $orderway = $orderway == 'asc' ? 'ASC' : 'DESC';
+        $sour     = $weighdata     = [];
+        $ids      = explode(',', $ids);
+        $prikey   = $pk && preg_match("/^[a-z0-9\-_]+$/i", $pk) ? $pk : (Db::name($table)->getPk() ?: 'id');
+        $parentid = $this->request->post("pid", "");
+        //限制更新的字段
+        $field = in_array($field, ['listorder']) ? $field : 'listorder';
+
+        // 如果设定了parentid的值,此时只匹配满足条件的ID,其它忽略
+        if ($parentid !== '') {
+            $hasids = [];
+            $list   = Db::name($table)->where($prikey, 'in', $ids)->where('parentid', 'in', $parentid)->field("{$prikey},parentid")->select();
+            foreach ($list as $k => $v) {
+                $hasids[] = $v[$prikey];
+            }
+            $ids = array_values(array_intersect($ids, $hasids));
+        }
+
+        $list = Db::name($table)->field("$prikey,$field")->where($prikey, 'in', $ids)->order($field, $orderway)->select();
+        foreach ($list as $k => $v) {
+            $sour[]                 = $v[$prikey];
+            $weighdata[$v[$prikey]] = $v[$field];
+        }
+        $position = array_search($changeid, $ids);
+        $desc_id  = $sour[$position] ?? end($sour); //移动到目标的ID值,取出所处改变前位置的值
+        $sour_id  = $changeid;
+        $weighids = [];
+        $temp     = array_values(array_diff_assoc($ids, $sour));
+        foreach ($temp as $m => $n) {
+            if ($n == $sour_id) {
+                $offset = $desc_id;
+            } else {
+                if ($sour_id == $temp[0]) {
+                    $offset = $temp[$m + 1] ?? $sour_id;
+                } else {
+                    $offset = $temp[$m - 1] ?? $sour_id;
+                }
+            }
+            if (!isset($weighdata[$offset])) {
+                continue;
+            }
+            $weighids[$n] = $weighdata[$offset];
+            Db::name($table)->where($prikey, $n)->update([$field => $weighdata[$offset]]);
+        }
+        $this->success('排序成功');
     }
 
 }
