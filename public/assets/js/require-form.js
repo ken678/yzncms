@@ -144,8 +144,8 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 var checkCondition = function(condition) {
                     var conditionArr = condition.split(/&&/);
                     var success = 0;
-                    var baseregex = /^([a-z0-9\_]+)([>|<|=|\!]=?)(.*)$/i,
-                        strregex = /^('|")(.*)('|")$/,
+                    var baseregex = /^([a-z0-9\_\[\]]+)([>|<|=|\!]=?)(.*)$/i, 
+                        strregex = /^('|")(.*)('|")$/, 
                         regregex = /^regex:(.*)$/;
 
                     var operator_result = {
@@ -163,9 +163,11 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                         }
                     };
 
+                    var $disabledElements = layform.find(':disabled').removeAttr('disabled');
                     var dataArr = layform.serializeArray(),
                         dataObj = {},
                         fieldName, fieldValue;
+                    $disabledElements.attr('disabled', 'disabled');
 
                     var field = layform.attr('data-field') || 'row';
                     $(dataArr).each(function(i, field) {
@@ -191,7 +193,15 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                                 operator = 'regex';
                                 value = regmatches[1];
                             }
-                            var chkname = field + "[" + name + "]";
+                            var chkname;
+                            if (name.match(/[\[\]]+/)) {
+                                chkname = name;
+                            } else {
+                                chkname = "row[" + name + "]";
+                                if (typeof dataObj[chkname] === 'undefined' && typeof dataObj[name] !== 'undefined') {
+                                    chkname = name;
+                                }
+                            }
                             if (typeof dataObj[chkname] === 'undefined') {
                                 return false;
                             }
