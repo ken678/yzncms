@@ -127,6 +127,7 @@ class Config extends Model
             'savekey'    => $uploadcfg['savekey'],
             'multipart'  => [],
             'multiple'   => $uploadcfg['multiple'],
+            'timeout'    => $uploadcfg['timeout'],
             'fullmode'   => $uploadcfg['fullmode'],
             'thumbstyle' => $uploadcfg['thumbstyle'],
             'storage'    => 'local',
