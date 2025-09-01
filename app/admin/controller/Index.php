@@ -55,7 +55,7 @@ class Index extends Backend
     public function login()
     {
         $url = $this->request->get('url', '', 'url_clean');
-        $url = $url ?: 'index/index';
+        $url = $url && !preg_match('/\/index\/(login|logout)$/', $url) ? $url : 'index/index';
         if ($this->auth->isLogin()) {
             $this->success("你已经登录，无需重复登录", $url);
         }
