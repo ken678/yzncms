@@ -37,11 +37,11 @@ return [
     'admin_login_unique'    => false,
     //是否开启IP变动检测
     'admin_loginip_check'   => false,
+    //是否开启后台自动日志记录
+    'admin_auto_record_log' => true,
+
     //允许跨域的域名,多个以,分隔
     'cors_request_domain'   => 'localhost,127.0.0.1',
-    //是否开启后台自动日志记录
-    'auto_record_admin_log' => true,
-
     //CDN地址
     'cdnurl'                => '',
     //API接口地址

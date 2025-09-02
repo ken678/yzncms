@@ -24,7 +24,7 @@ class AdminLog
     public function handle($request, \Closure $next)
     {
         $response = $next($request);
-        if (($request->isPost()) && Config::get('yzn.auto_record_admin_log')) {
+        if (($request->isPost()) && Config::get('yzn.admin_auto_record_log')) {
             AdminLogModel::record();
         }
         return $response;
