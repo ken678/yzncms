@@ -57,7 +57,9 @@ html,body{background: #f4f6f8;overflow-x: inherit;}
                 <div class="layui-form-item">
                     <div class="layui-trans layui-form-item lay-user-login-other">
                         {:hook('sync_login')}
+                        {if config('yzn.user_register')}
                         <a href="{:url('register')}" class="lay-user-jump-change lay-link">注册帐号</a>
+                        {/if}
                     </div>
                 </div>
                 <!--@MemberRegisterFormEnd-->

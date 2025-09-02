@@ -6,6 +6,8 @@
 return [
     //是否开启前台会员中心
     'user_center'           => true,
+    //是否开启用户注册
+    'user_register'         => true,
     //会员登录验证码
     'user_login_captcha'    => true,
     //会员注册手机验证码

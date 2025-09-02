@@ -127,6 +127,9 @@ class User extends Frontend
     //注册页面
     public function register()
     {
+        if (!config::get('yzn.user_register')) {
+            $this->error('会员注册已经关闭');
+        }
         $forward = $this->request->request('forward', '', 'url_clean');
         if ($this->auth->id) {
             $this->success("您已经是登陆状态，无需注册！", $forward ?: url("user/index"));
