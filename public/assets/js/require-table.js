@@ -621,12 +621,13 @@ define(['jquery', 'layui'], function($, layui) {
         listenSwitch: function(option, tableId) {
             var modifyReload = option.modifyReload || false;
             layui.form.on('switch(switchStatus)', function(obj) {
+                var checked = obj.elem.checked ? 1 : 0;
                 var that = $(this);
                 var url = $(this).attr('data-url') || option.init.multi_url;
                 var field = $(this).attr('data-field') || 'status';
                 var data = {
                     id: obj.value,
-                    param: field + '=' + (obj.elem.checked ? 1 : 0),
+                    param: field + '=' + checked,
                 };
                 Yzn.api.ajax({
                     url: url,
@@ -636,8 +637,7 @@ define(['jquery', 'layui'], function($, layui) {
                         layui.table.reloadData(tableId);
                     }
                 }, function(data, ret) {
-                    that.trigger('click');
-                    layui.form.render('checkbox');
+                    obj.elem.checked = !checked;
                 });
             });
         },

@@ -438,7 +438,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                 });
             };
 
-            var operate = function(name, action, force, success) {
+            var operate = function(name, action, force, success, error) {
                 Yzn.api.ajax({
                     url: 'addon/state',
                     data: { name: name, action: action, force: force ? 1 : 0 }
@@ -450,6 +450,9 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                     table.reload(Table.init.table_render_id);
                     return false;
                 }, function(data, res) {
+                    if (typeof error === "function") {
+                        error(res);
+                    }
                     if (res && res.code === -3) {
                         //插件目录发现影响全局的文件
                         Layer.open({
@@ -524,11 +527,12 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
 
             // 点击启用/禁用
             layui.form.on('switch(templet-status)', function(obj) {
+                var checked = obj.elem.checked ? 1 : 0;
                 var name = $(this).data("name");
                 var action = $(this).data("action");
-                $(this).trigger('click');
-                layui.form.render('checkbox');
-                operate(name, action, false);
+                operate(name, action, false, '', function(data, ret) {
+                    obj.elem.checked = !checked;
+                });
             })
 
             // 点击卸载
