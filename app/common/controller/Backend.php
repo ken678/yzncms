@@ -77,8 +77,11 @@ class Backend extends BaseController
         parent::initialize();
         $this->auth = Auth::instance();
 
-        $modulename     = app()->http->getName();
-        $controllername = parse_name($this->request->controller(true));
+        $modulename = app()->http->getName();
+        $controller = preg_replace_callback('/\.[A-Z]/', function ($d) {
+            return strtolower($d[0]);
+        }, $this->request->controller());
+        $controllername = parse_name($controller);
         $actionname     = strtolower($this->request->action());
 
         $path = $controllername . '/' . $actionname;
