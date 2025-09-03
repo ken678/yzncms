@@ -443,7 +443,7 @@ class Service
             // 判断新插件是否存在
             $newAddonDir = self::getAddonDir($name);
             if (!$force && is_dir($newAddonDir)) {
-                throw new Exception('插件已经存在');
+                throw new AddonException('插件已经存在', -1, ['name' => $name, 'title' => $config['title']]);
             }
 
             // 读取旧版本号
