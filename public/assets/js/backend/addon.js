@@ -108,6 +108,11 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                     if (count == -1) {
                         switch_local();
                     }
+                    $("#faupload-addon").data("params", function (files, xhr) {
+                        return {
+                            force: (files[0].force || false) ? 1 : 0
+                        };
+                    })
                     Upload.api.upload("#faupload-addon", function(data, ret) {
                         //上传完毕回调
                         var addon = data.addon;
@@ -134,7 +139,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                             });
                         });
                         return false;
-                    }, function(data, ret) {
+                    }, function(data, ret, up, file) {
                         if (ret.msg && ret.msg.match(/(login|登录)/g)) {
                             return Layer.alert(ret.msg, {
                                 title: '温馨提示',
@@ -143,6 +148,35 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                                     $(".btn-userinfo").trigger("click");
                                 }
                             });
+                        } else if (ret.code === -1) {
+                            Layer.confirm('确认升级<b>《' + data.title + '》</b>？<p class="text-danger">1、请务必做好代码和数据库备份！备份！备份！<br>2、升级后如出现冗余数据，请根据需要移除即可!<br>3、不建议在生产环境升级，请在本地完成升级测试</p>如有重要数据请备份后再操作！', { title: '温馨提示' },
+                                function(index, layero) {
+                                    up.removeFile(file);
+                                    file.force = true;
+                                    up.uploadFile(file);
+                                    Layer.close(index);
+                                });
+                            return false;
+                        } else if (ret && ret.code === -3) {
+                            //插件目录发现影响全局的文件
+                            Layer.open({
+                                content: layui.laytpl($("#conflicttpl").html()).render({ list: ret.data }),
+                                shade: 0.8,
+                                area: area,
+                                title: '温馨提示',
+                                btn: ['继续操作', '取消'],
+                                end: function() {
+
+                                },
+                                yes: function() {
+                                    up.removeFile(file);
+                                    file.force = true;
+                                    up.uploadFile(file);
+                                    Layer.close(index);
+                                }
+                            });
+                        } else {
+                            Layer.alert(ret.msg, { title: '温馨提示', icon: 0 });
                         }
                     })
                 }

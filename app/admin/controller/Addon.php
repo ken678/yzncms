@@ -279,7 +279,9 @@ class Addon extends Backend
         }
         $file = $this->request->file('file');
         try {
-            $info = Service::local($file);
+            $force  = $this->request->post("force");
+            $extend = [];
+            $info   = Service::local($file, $extend, $force);
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
