@@ -19,6 +19,7 @@ use app\common\library\Auth;
 use think\App;
 use think\facade\Config;
 use think\facade\Cookie;
+use think\facade\Lang;
 use think\facade\View;
 
 class Controller extends BaseController
@@ -53,7 +54,7 @@ class Controller extends BaseController
      */
     public function __construct(App $app)
     {
-        $this->request = app()->request;
+        $this->request = $app->request;
 
         //移除HTML标签
         $this->request->filter('trim,strip_tags,htmlspecialchars');
@@ -87,6 +88,14 @@ class Controller extends BaseController
         // 渲染配置到视图中
         $config = get_addon_config($this->addon);
         $this->assign("config", $config);
+
+        $lang = $this->app->lang->getLangSet();
+        $lang = preg_match("/^([a-zA-Z\-_]{2,10})\$/i", $lang) ? $lang : 'zh-cn';
+
+        // 加载系统语言包
+        Lang::load([
+            ADDON_PATH . $this->addon . DS . 'lang' . DS . $lang . '.php',
+        ]);
 
         // 设置替换字符串
         $cdnurl = Config::get('site.cdnurl');

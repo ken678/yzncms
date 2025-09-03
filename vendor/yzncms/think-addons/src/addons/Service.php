@@ -92,10 +92,11 @@ class Service
      * @param string $name   插件名称
      * @param boolean $force  是否覆盖
      * @param array   $extend 扩展参数
+     * @param string  $tmpFile 本地文件
      * @throws Exception
      * @return bool
      */
-    public static function install($name, $force = false, $extend = [])
+    public static function install($name, $force = false, $extend = [], $tmpFile = '')
     {
         if (!$name || (is_dir(ADDON_PATH . $name) && !$force)) {
             throw new Exception('插件已经存在');
@@ -103,13 +104,13 @@ class Service
         $extend['domain'] = request()->host(true);
 
         // 远程下载插件
-        $tmpFile = self::download($name, $extend);
+        $tmpFile = $tmpFile ?: self::download($name, $extend);
 
         $addonDir = self::getAddonDir($name);
 
         try {
             // 解压插件压缩包到插件目录
-            self::unzip($name);
+            self::unzip($name, $tmpFile);
             // 检查插件是否完整
             self::check($name);
             if (!$force) {
@@ -121,10 +122,15 @@ class Service
         } catch (Exception $e) {
             @File::del_dir($addonDir);
             throw new Exception($e->getMessage());
+        } finally {
+            // 移除临时文件
+            @unlink($tmpFile);
         }
 
         // 默认启用该插件
         $info = get_addon_info($name);
+
+        Db::startTrans();
         try {
             /*if ($info['status']) {
             $info['status'] = 0;
@@ -136,8 +142,10 @@ class Service
                 $addon = new $class();
                 $addon->install();
             }
+            Db::commit();
         } catch (Exception $e) {
             @File::del_dir($addonDir);
+            Db::rollback();
             throw new Exception($e->getMessage());
         }
         self::runSQL($name);
@@ -387,8 +395,10 @@ class Service
     /**
      * 离线安装
      * @param string $file 插件压缩包
+     * @param array  $extend 扩展参数
+     * @param string $force  是否覆盖
      */
-    public static function local($file)
+    public static function local($file, $extend = [], $force = false)
     {
         $addonsTempDir = self::getAddonsBackupDir();
         if (!$file || !$file instanceof \think\File) {
@@ -420,7 +430,7 @@ class Service
 
             $config = self::getInfoIni($zip);
             // 判断插件标识
-            $name = isset($config['name']) ? $config['name'] : '';
+            $name = $config['name'] ?? '';
             if (!$name) {
                 throw new Exception('插件info.ini文件不正确');
             }
@@ -432,40 +442,28 @@ class Service
 
             // 判断新插件是否存在
             $newAddonDir = self::getAddonDir($name);
-            if (is_dir($newAddonDir)) {
+            if (!$force && is_dir($newAddonDir)) {
                 throw new Exception('插件已经存在');
             }
 
-            //创建插件目录
-            @mkdir($newAddonDir, 0755, true);
-            // 解压到插件目录
-            try {
-                $zip->extractTo($newAddonDir);
-            } catch (ZipException $e) {
-                @File::del_dir($newAddonDir);
-                throw new Exception('无法解压缩文件');
+            // 读取旧版本号
+            $oldversion = '';
+            if (is_dir($newAddonDir)) {
+                $oldConfig  = parse_ini_file($newAddonDir . 'info.ini');
+                $oldversion = $oldConfig['version'] ?? '';
             }
 
-            try {
-                // 默认启用该插件
-                $info = get_addon_info($name);
-                /*if ($info['status']) {
-                $info['status'] = 0;
-                set_addon_info($name, $info);
-                }*/
-                // 执行安装脚本
-                $class = get_addon_class($name);
-                if (class_exists($class)) {
-                    $addon = new $class();
-                    $addon->install();
-                }
-            } catch (Exception $e) {
-                @File::del_dir($newAddonDir);
-                throw new Exception($e->getMessage());
+            $extend['oldversion'] = $oldversion;
+            $extend['version']    = $config['version'];
+
+            if (!$oldversion) {
+                // 新装模式
+                $info = self::install($name, $force, $extend, $tmpFile);
+            } else {
+                // 升级模式
+                $info = self::upgrade($name, $extend, $tmpFile);
             }
-            self::runSQL($name);
-            // 启用插件
-            //self::enable($name, true);
+
         } catch (AddonException $e) {
             throw new AddonException($e->getMessage(), $e->getCode(), $e->getData());
         } catch (Exception $e) {
@@ -473,7 +471,7 @@ class Service
         } finally {
             $zip->close();
             unset($uploadFile);
-            @unlink($tmpFile);
+            is_file($tmpFile) && unlink($tmpFile);
         }
         $info['config']   = get_addon_config($name) ? 1 : 0;
         $info['testdata'] = is_file(Service::getTestdataFile($name));
@@ -483,10 +481,11 @@ class Service
     /**
      * 升级插件
      *
-     * @param string $name   插件名称
-     * @param array  $extend 扩展参数
+     * @param string $name    插件名称
+     * @param array  $extend  扩展参数
+     * @param string $tmpFile 本地文件
      */
-    public static function upgrade($name, $extend = [])
+    public static function upgrade($name, $extend = [], $tmpFile = '')
     {
         $info = get_addon_info($name);
         if ($info['status'] == 1) {
@@ -497,8 +496,8 @@ class Service
             //备份配置
         }
 
-        // 远程下载插件
-        $tmpFile = self::download($name, $extend);
+        // 远程下载插件(如果为本地文件则使用本地文件)
+        $tmpFile = $tmpFile ? $tmpFile : self::download($name, $extend);
 
         // 备份插件文件
         self::backup($name);
@@ -513,7 +512,7 @@ class Service
 
         try {
             // 解压插件
-            self::unzip($name);
+            self::unzip($name, $tmpFile);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         } finally {
@@ -559,7 +558,7 @@ class Service
         self::refresh();
 
         //必须变更版本号
-        $info['version'] = isset($extend['version']) ? $extend['version'] : $info['version'];
+        $info['version'] = $extend['version'] ?? $info['version'];
 
         $info['config']    = get_addon_config($name) ? 1 : 0;
         $info['bootstrap'] = is_file(self::getBootstrapFile($name));
@@ -570,16 +569,17 @@ class Service
      * 解压插件
      *
      * @param string $name 插件名称
+     * @param string $file 文件路径
      * @return  string
      * @throws  Exception
      */
-    public static function unzip($name)
+    public static function unzip($name, $file = '')
     {
         if (!$name) {
             throw new Exception('参数不正确');
         }
         $addonsBackupDir = self::getAddonsBackupDir();
-        $file            = $addonsBackupDir . $name . '.zip';
+        $file            = $file ?: $addonsBackupDir . $name . '.zip';
 
         // 打开插件压缩包
         $zip = new ZipFile();
