@@ -56,14 +56,14 @@
             <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user" lay-shrink="all">
                 {:hook('user_sidenav_before')}
                 <li class="layui-nav-item {:check_nav_active('user/index')}">
-                    <a href="{:url('user/index')}"><i class="iconfont icon-user-3-line"></i>&nbsp;用户中心</a>
+                    <a href="{:url('user/index')}"><i class="iconfont icon-user-3-fill"></i>&nbsp;用户中心</a>
                 </li>
                 <li class="layui-nav-item {:check_nav_active('user/profile')}">
-                    <a href="{:url('user/profile')}"><i class="iconfont icon-settings-4-line"></i>&nbsp;基本设置</a>
+                    <a href="{:url('user/profile')}"><i class="iconfont icon-settings-4-fill"></i>&nbsp;基本设置</a>
                 </li>
                 {if config('yzn.user_allow_vip')}
                 <li class="layui-nav-item {:check_nav_active('user/upgrade')}">
-                    <a href="{:url('user/upgrade')}"><i class="iconfont icon-vip-line"></i>&nbsp;开通会员</a>
+                    <a href="{:url('user/upgrade')}"><i class="iconfont icon-vip-fill"></i>&nbsp;开通会员</a>
                 </li>
                 {/if}
                 {:hook('user_sidenav_after')}

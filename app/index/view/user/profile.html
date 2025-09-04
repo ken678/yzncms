@@ -1,37 +1,48 @@
 {extend name="index_layout"/}
 {block name="main"}
 <style>
-    .profile-avatar-container {
-        position:relative;
-        width:100px;
-    }
-    .profile-avatar-container .profile-user-img{
-        width:88px;
-        height:88px;
-    }
-    .profile-avatar-container .profile-avatar-text {
-        display:none;
-    }
-    .profile-avatar-container:hover .profile-avatar-text {
-        display:block;
-        position:absolute;
-        height:100px;
-        width:100px;
-        background:#444;
-        opacity: .6;
-        color: #fff;
-        top:0;
-        left:0;
-        line-height: 100px;
-        text-align: center;
-    }
-    .profile-avatar-container button{
-        position:absolute;
-        top:0;left:0;width:100px;height:100px;opacity: 0;
-    }
-    .img-circle {
+.profile-avatar-container {
+    position: relative;
+    width: 100px;
+}
+
+.profile-avatar-container .profile-user-img {
+    width: 88px;
+    height: 88px;
+}
+
+.profile-avatar-container .profile-avatar-text {
+    display: none;
+}
+
+.profile-avatar-container:hover .profile-avatar-text {
+    display: block;
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background: #444;
+    opacity: .6;
+    color: #fff;
+    top: 0;
+    left: 0;
+    line-height: 100px;
+    text-align: center;
+}
+
+.profile-avatar-container button {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+}
+
+.img-circle {
     border-radius: 50%;
 }
+
 .profile-user-img {
     margin: 0 auto;
     width: 100px;
@@ -39,17 +50,19 @@
     border: 3px solid #d2d6de;
 }
 
-    .change .layui-form-label {
-        width: 90px;
-        padding-left: 0;
-    }
-    .change .layui-form-item .layui-input-inline {
-        margin: 0 10px 0px 0px !important;
-        float: left;
-    }
-    .change .layui-input-block {
-        margin-left: 100px;
-    }
+.change .layui-form-label {
+    width: 85px;
+    padding-left: 0;
+}
+
+.change .layui-form-item .layui-input-inline {
+    margin: 0 10px 0px 0px !important;
+    float: left;
+}
+
+.change .layui-input-block {
+    margin-left: 100px;
+}
 </style>
 <div class="layui-card pd-20 no-shadow">
     <div class="layui-card-header fly-title">

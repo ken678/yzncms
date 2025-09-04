@@ -1,68 +1,58 @@
 {extend name="index_layout"/}
 {block name="main"}
-<div class="layui-card pd-20 no-shadow">
-    <div class="layui-card-header fly-title">
-        <h2>用户中心</h2>
+<div class="user-baseinfo">
+    <div class="layui-card full-width">
+        <div class="layui-card-header">
+            <h3>欢迎回来，{$user.username}！</h3>
+        </div>
+        <div class="layui-card-body">
+            您已是我们的正式会员，感谢您一直以来的支持！<br>
+            <a href="{:url('upgrade')}" class="layui-btn" style="margin-top:15px;"><i class="iconfont icon-rocket-2-line"></i>&nbsp;升级会员特权</a>
+        </div>
     </div>
-    <div class="layui-card-body">
-        <div class="fly-msg" style="margin-bottom: 20px;"> Hi，{$user.username}，你已是我们的正式会员。 </div>
-        <div class="layui-row layui-col-space20">
-            <div class="layui-col-md12">
-                <div class="fly-home fly-panel">
-                    <img src="{$user.avatar}" alt="{$user.username}">
-                    {if $user.vip}
-                    <i class="iconfont icon-vip1" title="VIP会员"></i>
-                    {/if}
-                    <h1>{$user.username}<font>({$user.email})</font>
-                    </h1>
-                    <p class="fly-home-sign">（{$user.motto|default='这个人懒得留下签名'}）</p>
-                    <p class="fly-home-info">
-                        <i class="iconfont icon-time-line"></i><span>{$user.reg_time} 加入</span>
-                    </p>
-                </div>
+
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <h3>账户信息</h3>
+        </div>
+        <div class="layui-card-body">
+            <div class="info-item">
+                <div class="info-label">用户名</div>
+                <div class="info-value">{$user.username}</div>
             </div>
-            <div class="layui-row layui-col-space20 layui-card-box">
-                <div class="layui-col-sm6 layui-col-md3">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            账户余额
-                        </div>
-                        <div class="layui-card-body">
-                            <p class="amount">{$user.amount}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-sm6 layui-col-md3">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            积分点数
-                        </div>
-                        <div class="layui-card-body">
-                            <p class="point">{$user.point}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-sm6 layui-col-md3">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            用户组
-                        </div>
-                        <div class="layui-card-body">
-                            <p class="groupname">{$user.group.name}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-sm6 layui-col-md3">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            上次登录时间
-                        </div>
-                        <div class="layui-card-body">
-                            <p class="time">{$user.last_login_time}</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="info-item">
+                <div class="info-label">电子邮箱</div>
+                <div class="info-value">{$user.email}</div>
             </div>
+            <div class="info-item">
+                <div class="info-label">用户组</div>
+                <div class="info-value">{$user.group.name}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">加入时间</div>
+                <div class="info-value">{$user.reg_time}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <h3>安全状态</h3>
+        </div>
+        <div class="layui-card-body">
+            <div class="info-item">
+                <div class="info-label">上次登录</div>
+                <div class="info-value">{$user.last_login_time}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">登录IP</div>
+                <div class="info-value">{$user.last_login_ip}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">账户安全</div>
+                <div class="info-value">中等</div>
+            </div>
+            <a href="{:url('changepwd')}" class="layui-btn layui-bg-orange layui-btn-fluid"><i class="iconfont icon-shield-user-line"></i>&nbsp;提升安全等级</a>
         </div>
     </div>
 </div>

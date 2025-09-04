@@ -3,6 +3,7 @@
 @import url("../fonts/iconfont/iconfont.css");
 @import url("./header.css");
 
+/*登录*/
 #mydiv{padding-top: 5%;}
 .login-main {margin: 0 auto;border: 1px solid #ddd;background: #fff;padding: 0 20px; width: 400px;
     -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box; 
@@ -35,40 +36,29 @@
         padding:15px;
     }
 }
-/* 全局 */
-.layui-container{max-width:1200px;}
+
+/*全局*/
 html,body{overflow-x: hidden;}
 .body{margin-top: 61px;}
-html{background-color: #ededed;}
+html{background-color: #f4f6f8;}
+.layui-container{max-width:1200px;}
 i{font-style: normal;}
 .layui-btn-sm i {font-size: 14px !important;}
 
-/* 辅助 */
+/*辅助*/
 a:hover{color: #009688; transition: all .3s;}
 pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid #009688;  background-color: #f8f8f8; font-family: Courier New;}
 
-.fly-main{width: 1079px; min-height: 600px; margin: 0 auto 15px;}
-.fly-msg{padding: 10px 15px; line-height: 24px;}
-.fly-msg{background-color:#f8f8f8; color:#666;border: 1px solid #eaeaea;}
-.fly-msg a{color:#4F99CF}
 .fly-marginTop{margin-top: 20px;}
 
-/* 图标 */
-.icon-vip1{position: relative; color: #FFB800;}
-
-/* 面板 */
-.fly-panel{border-radius: 2px; background-color: #fff; box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);}
-.fly-panel-title{position: relative; height: 50px; line-height: 50px; padding: 0 15px; border-bottom: 1px dotted #E9E9E9; color: #333; border-radius: 2px 2px 0 0; font-size: 14px;}
-.fly-panel-main{padding: 10px 15px;}
-.fly-panel-border{border: 1px solid #e6e6e6; box-shadow: none;}
-.fly-panel-border .fly-panel-title{border-bottom: 1px solid #e6e6e6;}
+/*面板*/
 .fly-panel .fly-title{border:none !important;margin-bottom: 6px;}
 .fly-panel .fly-title h2{color: #333;display: block;line-height: 44px;font-size: 18px;padding-left:15px;position: relative;font-weight: normal;}
 .fly-panel .fly-title h2:before {width: 3px;height: 18px;top: 50%;left: 0;margin-top: -9px;background: #1e9fff;content: "";display: block;position: absolute;border-radius: 2px;}
 .fly-panel .layui-card.pd-20{padding: 20px !important}
 .fly-panel .layui-card.no-shadow{box-shadow: none;}
 
-/* 用户中心 */
+/*用户中心*/
 .fly-user-main{position: relative; min-height: 600px;}
 .fly-user-main:after{clear: both;content: " ";display:block;}
 .fly-user-main>.layui-nav{}
@@ -81,39 +71,28 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .fly-user-main .fly-avatar-img i{align-items: center;background-color:#fff;border-radius: 50%;bottom: 0;display: flex;height: 22px;justify-content: center;position: absolute;right: 10px;width: 22px;}
 .fly-user-main .fly-username{display: block;font-size: 16px;font-weight: 700;padding: 10px 0;text-align: center;width: 100%;color:#fff}
 
-/* 个人主页 */
-.fly-home{position: relative; padding: 30px 0 30px; text-align: center;    border: 1px solid #eaeaea;background: #f8f8f8;}
-.fly-home img{width:120px; height:120px; border-radius:100%;}
-.fly-home h1{font-size:26px; line-height:2; margin-top:10px;}
-.fly-home h1 font{color: #666;font-size: 18px;}
-.fly-home h1 span{font-size:14px; color:#999;}
-.fly-home h1 .icon-nan{color:#4EBBF9}
-.fly-home h1 .icon-nv{color:#F581B1}
-.fly-home-sign{padding: 0 10px; color: #999; margin-top:8px;line-height: 1.5;}
-.fly-home .icon-vip1{display: inline-block; width: 24px; height: 24px; line-height: 24px; top: 45px; left: -15px; background-color: #FFB800; color: #fff; border-radius: 50%; font-size: 16px;}
-.fly-home-info i{padding-right: 5px; padding-left: 10px; color: #666;}
-.fly-home-info span{color: #999;}
-
-.layui-card-box .layui-card{background: #f8f8f8;border: 1px solid #eaeaea;}
-.layui-card-box .layui-card-header{border-bottom: 1px solid #eaeaea;}
-.layui-card-box .layui-card-body{background: #fff;font-size: 14px;}
+/*个人主页*/
+.user-baseinfo {display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.user-baseinfo .layui-card{margin-bottom: 0; }
+.user-baseinfo .layui-card h3{color:#2d3748; }
+.user-baseinfo .layui-card-body, .user-baseinfo .layui-card-header {padding: 15px 20px; }
+.user-baseinfo .full-width {grid-column: 1 / -1; }
+.user-baseinfo .info-item {margin-bottom: 12px; }
+.user-baseinfo .info-label {font-size: 13px; color: #718096; margin-bottom: 4px; }
+.user-baseinfo .info-value {font-size: 15px; font-weight: 600; color: #2d3748; }
 
 /*白色主题*/
 .light-theme .fly-user-main>.layui-nav{background-color: #fff;}
 .light-theme .layui-nav .layui-nav-item a{color:#000}
-.light-theme .layui-nav-tree .layui-nav-child dd.layui-this, .light-theme .layui-nav-tree .layui-nav-child dd.layui-this a, .light-theme .layui-nav-tree .layui-this, .light-theme .layui-nav-tree .layui-this>a, .light-theme .layui-nav-tree .layui-this>a:hover {color: #1e9fff;}
+.light-theme .layui-nav-tree .layui-this{background: #fff !important}
+.light-theme .layui-nav-tree .layui-nav-child dd.layui-this, .light-theme .layui-nav-tree .layui-nav-child dd.layui-this a, .light-theme .layui-nav-tree .layui-this>a, .light-theme .layui-nav-tree .layui-this>a:hover {font-weight: 700;border-left: 1px solid #1e9fff;}
 .light-theme .layui-nav-itemed>a,.light-theme .layui-nav-tree .layui-nav-title a,.light-theme .layui-nav-tree .layui-nav-title a:hover {color: #000 !important;}
-.light-theme .layui-nav-itemed>.layui-nav-child {background-color: rgb(250 250 250)!important;}
+.light-theme .layui-nav-itemed>.layui-nav-child {background-color: #fff !important;}
 .light-theme .layui-nav {background-color: #fff;}
 .light-theme .fly-user-main .fly-userinfo{background: #fff;}
 .light-theme .fly-user-main .fly-username{color:#000}
-
-/* 设置 */
-.avatar-add{position:relative; width:373px; height:373px; background-color:#F2F2F5;}
-.avatar-add .upload-img{position:absolute; left:50%; top:35px; margin:0 0 0 -56px;}
-.avatar-add img{position:absolute; left:50%; top:50%; width:168px; height:168px; margin:-50px 0 0 -84px; border-radius:100%;}
-.avatar-add .loading{display:none; position:absolute; width:100%; height:100%; left:0; top:0; padding: 0; background-color:#000; opacity:0.5; filter: Alpha(opacity=50);}
-.avatar-add p{position:absolute; top:70px; width:100%; margin-top: 10px;; font-size:12px; text-align:center; color:#999;}
+.light-theme .fly-user-main .layui-nav .layui-this a {background-color: rgba(30, 159, 255, 0.1) !important;color: #1e9fff !important;}
+.light-theme .fly-user-main .layui-nav .layui-nav-item a:hover{background-color: rgba(30, 159, 255, 0.05) !important;color: #1e9fff;}
 
 /*vip*/
 .vip-card{text-align: center; position: relative; background: rgba(112, 183, 255, .1); border-radius: 5px; overflow: hidden; box-shadow: 0 0 1.25rem rgba(31,45,61,.05); border: solid 2px #eee; transition: all .2s ease; }
@@ -125,13 +104,9 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .vip-card .vip-body  ul li {margin-bottom: 8px;color: #666;}
 .vip-card .vip-footer {padding-bottom: 25px}
 
-.layui-form-field-label{display: block; padding:3px 0px; font-weight: 400; line-height: 20px;position: relative;}
+/*表格*/
 .layui-table-tool .yzn-btn-primary{color: #fff; background-color: #2c3e50; }
 .layui-table-tool .layui-btn + .layui-btn {margin-left: 2px !important;}
-
-.editor_tool .layui-btn+.layui-btn {margin-left: 0px;}
-.editor_tool .layui-form-checkbox {margin-right: 0px;}
-
 
 @media screen and (max-width: 768px) {
   .fly-header .fly-nav-user .layui-nav-more{display: none !important;}
@@ -149,6 +124,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
   .site-mobile .site-tree-mobile{display: none !important;}
   .site-mobile .fly-user-main .fly-aside{left: 0;}
   .site-mobile .site-mobile-shade{content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,.9); z-index: 999;}
+  .user-baseinfo {grid-template-columns: 1fr;}
 }
 
 .text-danger {color: #d26a5c; }
@@ -202,18 +178,20 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .layui-tabs-header .layui-this, .layui-tabs-header li:hover {color: #1e9fff;}
 .layui-form-radio:hover>*, .layui-form-radioed, .layui-form-radioed>i {color: #1e9fff;}
 .layui-nav-tree .layui-nav-bar {background-color: #1e9fff;}
-.layui-input:focus, .layui-textarea:focus {border-color: #1e9fff !important;}
+.layui-input:focus:not(.layui-form-danger), .layui-textarea:focus:not(.layui-form-danger) {border-color: #1e9fff !important;}
 .layui-form-select dl dd.layui-this {color: #1e9fff;}
 .layui-btn{background: #1e9fff;}
 .layui-btn-primary {background: 0 0 !important;}
 .layui-btn-danger {background-color: #ff5722 !important;}
 .layui-laypage .layui-laypage-curr .layui-laypage-em {background-color: #1e9fff;}
 .layui-laydate .layui-this, .layui-laydate .layui-this>div {background-color: #1e9fff !important;}
-.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover {background-color: #fff !important;color: #1e9fff;}
 .layui-form-checked[lay-skin=primary]>i {border-color: #1e9fff !important;background-color: #1e9fff;}
 .layui-form-checkbox[lay-skin=primary]:hover>i {border-color: #1e9fff;}
 .layui-laydate-header i:hover, .layui-laydate-header span:hover {color: #1e9fff;}
 .layui-laydate-footer span:hover {color: #1e9fff;}
+.layui-nav-tree .layui-nav-child {background-color: #fff !important;}
+.layui-nav-tree .layui-nav-child a{color: #718096 !important}
+.layui-nav-tree .layui-nav-bar {display: none;}
 
 /*图片上传缩略图*/
 .file-item.thumbnail .file-panel {position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
