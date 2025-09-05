@@ -16,19 +16,19 @@
             <h3>账户信息</h3>
         </div>
         <div class="layui-card-body">
-            <div class="info-item">
+            <div class="info-item d-flex justify-content-between">
                 <div class="info-label">用户名</div>
                 <div class="info-value">{$user.username}</div>
             </div>
-            <div class="info-item">
+            <div class="info-item d-flex justify-content-between">
                 <div class="info-label">电子邮箱</div>
                 <div class="info-value">{$user.email}</div>
             </div>
-            <div class="info-item">
+            <div class="info-item d-flex justify-content-between">
                 <div class="info-label">用户组</div>
                 <div class="info-value">{$user.group.name}</div>
             </div>
-            <div class="info-item">
+            <div class="info-item d-flex justify-content-between">
                 <div class="info-label">加入时间</div>
                 <div class="info-value">{$user.reg_time}</div>
             </div>
@@ -40,19 +40,19 @@
             <h3>安全状态</h3>
         </div>
         <div class="layui-card-body">
-            <div class="info-item">
+            <div class="info-item d-flex justify-content-between">
                 <div class="info-label">上次登录</div>
                 <div class="info-value">{$user.last_login_time}</div>
             </div>
-            <div class="info-item">
+            <div class="info-item d-flex justify-content-between">
                 <div class="info-label">登录IP</div>
                 <div class="info-value">{$user.last_login_ip}</div>
             </div>
-            <div class="info-item">
+            <div class="info-item d-flex justify-content-between">
                 <div class="info-label">账户安全</div>
                 <div class="info-value">中等</div>
             </div>
-            <a href="{:url('changepwd')}" class="layui-btn layui-bg-orange layui-btn-fluid"><i class="iconfont icon-shield-user-fill"></i>&nbsp;提升安全等级</a>
+            <a href="{:url('changepwd')}" class="layui-btn layui-bg-orange layui-btn-fluid"><i class="iconfont icon-lock-fill"></i>&nbsp;提升安全等级</a>
         </div>
     </div>
 </div>
