@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 349449 */
-  src: url('iconfont.woff2?t=1731400891959') format('woff2'),
-       url('iconfont.woff?t=1731400891959') format('woff'),
-       url('iconfont.ttf?t=1731400891959') format('truetype');
+  src: url('iconfont.woff2?t=1757050169836') format('woff2'),
+       url('iconfont.woff?t=1757050169836') format('woff'),
+       url('iconfont.ttf?t=1757050169836') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,118 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-award-fill:before {
+  content: "\e72d";
+}
+
+.icon-award-line:before {
+  content: "\e72e";
+}
+
+.icon-calculator-line:before {
+  content: "\e732";
+}
+
+.icon-calculator-fill:before {
+  content: "\e733";
+}
+
+.icon-cloud-fill:before {
+  content: "\e734";
+}
+
+.icon-cloud-line:before {
+  content: "\e735";
+}
+
+.icon-slideshow-2-fill:before {
+  content: "\e750";
+}
+
+.icon-slideshow-3-line:before {
+  content: "\e755";
+}
+
+.icon-slideshow-3-fill:before {
+  content: "\e757";
+}
+
+.icon-slideshow-fill:before {
+  content: "\e758";
+}
+
+.icon-slideshow-2-line:before {
+  content: "\e761";
+}
+
+.icon-slideshow-line:before {
+  content: "\e7d5";
+}
+
+.icon-mic-line:before {
+  content: "\e917";
+}
+
+.icon-mic-fill:before {
+  content: "\e918";
+}
+
+.icon-moon-cloudy-fill:before {
+  content: "\e923";
+}
+
+.icon-moon-cloudy-line:before {
+  content: "\e924";
+}
+
+.icon-ping-pong-fill:before {
+  content: "\e972";
+}
+
+.icon-ping-pong-line:before {
+  content: "\e973";
+}
+
+.icon-run-fill:before {
+  content: "\e9d7";
+}
+
+.icon-run-line:before {
+  content: "\e9d8";
+}
+
+.icon-scissors-2-fill:before {
+  content: "\e9eb";
+}
+
+.icon-scissors-2-line:before {
+  content: "\e9ec";
+}
+
+.icon-scissors-fill:before {
+  content: "\e9ef";
+}
+
+.icon-scissors-line:before {
+  content: "\e9f0";
+}
+
+.icon-survey-fill:before {
+  content: "\ea8a";
+}
+
+.icon-survey-line:before {
+  content: "\ea8b";
+}
+
+.icon-task-fill:before {
+  content: "\eaa6";
+}
+
+.icon-task-line:before {
+  content: "\eaa7";
 }
 
 .icon-pause-fill:before {

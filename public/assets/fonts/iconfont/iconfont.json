@@ -6,6 +6,202 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24695700",
+      "name": "award-fill",
+      "font_class": "award-fill",
+      "unicode": "e72d",
+      "unicode_decimal": 59181
+    },
+    {
+      "icon_id": "24695701",
+      "name": "award-line",
+      "font_class": "award-line",
+      "unicode": "e72e",
+      "unicode_decimal": 59182
+    },
+    {
+      "icon_id": "24695731",
+      "name": "calculator-line",
+      "font_class": "calculator-line",
+      "unicode": "e732",
+      "unicode_decimal": 59186
+    },
+    {
+      "icon_id": "24695732",
+      "name": "calculator-fill",
+      "font_class": "calculator-fill",
+      "unicode": "e733",
+      "unicode_decimal": 59187
+    },
+    {
+      "icon_id": "24695741",
+      "name": "cloud-fill",
+      "font_class": "cloud-fill",
+      "unicode": "e734",
+      "unicode_decimal": 59188
+    },
+    {
+      "icon_id": "24695742",
+      "name": "cloud-line",
+      "font_class": "cloud-line",
+      "unicode": "e735",
+      "unicode_decimal": 59189
+    },
+    {
+      "icon_id": "24695845",
+      "name": "slideshow-2-fill",
+      "font_class": "slideshow-2-fill",
+      "unicode": "e750",
+      "unicode_decimal": 59216
+    },
+    {
+      "icon_id": "24695848",
+      "name": "slideshow-3-line",
+      "font_class": "slideshow-3-line",
+      "unicode": "e755",
+      "unicode_decimal": 59221
+    },
+    {
+      "icon_id": "24695849",
+      "name": "slideshow-3-fill",
+      "font_class": "slideshow-3-fill",
+      "unicode": "e757",
+      "unicode_decimal": 59223
+    },
+    {
+      "icon_id": "24695850",
+      "name": "slideshow-fill",
+      "font_class": "slideshow-fill",
+      "unicode": "e758",
+      "unicode_decimal": 59224
+    },
+    {
+      "icon_id": "24695851",
+      "name": "slideshow-2-line",
+      "font_class": "slideshow-2-line",
+      "unicode": "e761",
+      "unicode_decimal": 59233
+    },
+    {
+      "icon_id": "24695853",
+      "name": "slideshow-line",
+      "font_class": "slideshow-line",
+      "unicode": "e7d5",
+      "unicode_decimal": 59349
+    },
+    {
+      "icon_id": "24697159",
+      "name": "mic-line",
+      "font_class": "mic-line",
+      "unicode": "e917",
+      "unicode_decimal": 59671
+    },
+    {
+      "icon_id": "24697160",
+      "name": "mic-fill",
+      "font_class": "mic-fill",
+      "unicode": "e918",
+      "unicode_decimal": 59672
+    },
+    {
+      "icon_id": "24697194",
+      "name": "moon-cloudy-fill",
+      "font_class": "moon-cloudy-fill",
+      "unicode": "e923",
+      "unicode_decimal": 59683
+    },
+    {
+      "icon_id": "24697195",
+      "name": "moon-cloudy-line",
+      "font_class": "moon-cloudy-line",
+      "unicode": "e924",
+      "unicode_decimal": 59684
+    },
+    {
+      "icon_id": "24697329",
+      "name": "ping-pong-fill",
+      "font_class": "ping-pong-fill",
+      "unicode": "e972",
+      "unicode_decimal": 59762
+    },
+    {
+      "icon_id": "24697331",
+      "name": "ping-pong-line",
+      "font_class": "ping-pong-line",
+      "unicode": "e973",
+      "unicode_decimal": 59763
+    },
+    {
+      "icon_id": "24697478",
+      "name": "run-fill",
+      "font_class": "run-fill",
+      "unicode": "e9d7",
+      "unicode_decimal": 59863
+    },
+    {
+      "icon_id": "24697479",
+      "name": "run-line",
+      "font_class": "run-line",
+      "unicode": "e9d8",
+      "unicode_decimal": 59864
+    },
+    {
+      "icon_id": "24697505",
+      "name": "scissors-2-fill",
+      "font_class": "scissors-2-fill",
+      "unicode": "e9eb",
+      "unicode_decimal": 59883
+    },
+    {
+      "icon_id": "24697506",
+      "name": "scissors-2-line",
+      "font_class": "scissors-2-line",
+      "unicode": "e9ec",
+      "unicode_decimal": 59884
+    },
+    {
+      "icon_id": "24697508",
+      "name": "scissors-fill",
+      "font_class": "scissors-fill",
+      "unicode": "e9ef",
+      "unicode_decimal": 59887
+    },
+    {
+      "icon_id": "24697509",
+      "name": "scissors-line",
+      "font_class": "scissors-line",
+      "unicode": "e9f0",
+      "unicode_decimal": 59888
+    },
+    {
+      "icon_id": "24697749",
+      "name": "survey-fill",
+      "font_class": "survey-fill",
+      "unicode": "ea8a",
+      "unicode_decimal": 60042
+    },
+    {
+      "icon_id": "24697750",
+      "name": "survey-line",
+      "font_class": "survey-line",
+      "unicode": "ea8b",
+      "unicode_decimal": 60043
+    },
+    {
+      "icon_id": "24697782",
+      "name": "task-fill",
+      "font_class": "task-fill",
+      "unicode": "eaa6",
+      "unicode_decimal": 60070
+    },
+    {
+      "icon_id": "24697783",
+      "name": "task-line",
+      "font_class": "task-line",
+      "unicode": "eaa7",
+      "unicode_decimal": 60071
+    },
+    {
       "icon_id": "24697297",
       "name": "pause-fill",
       "font_class": "pause-fill",
