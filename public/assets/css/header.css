@@ -26,9 +26,10 @@
 .light-theme .fly-header .layui-nav .layui-this a {color: #1e9fff;}
 
 /* 底部 */
-.fly-footer {margin: 50px 0 0; padding: 20px 0 30px; line-height: 30px; text-align: center; color: #737573;}
-.fly-footer a{padding:0 6px; font-weight: 300; color: #333;}
-.fly-footer a:hover{color: #777;}
+.fly-footer {margin: 50px 0 0;}
+.fly-footer .copyright{background: #393939;line-height: 50px;text-align: center; color: #aaa;}
+.fly-footer .copyright a{padding:0 6px; font-weight: 300; color: #aaa;}
+.fly-footer .copyright a:hover{color: #fff;}
 
 @media screen and (min-width: 768px) {
     .fly-header .fly-head{
@@ -43,8 +44,6 @@
 }
 
 @media screen and (max-width: 768px) {
-  /* 顶边距 */
-  .fly-marginTop{margin-top: 15px;}
   /* 头部 */
   .fly-header .layui-container > .navbar-collapse{margin-right: -15px;
       margin-left: -15px;border-top:1px solid #f5f5f5;}
@@ -60,6 +59,6 @@
   .fly-header .layui-nav .layui-nav-item{line-height:50px;}
   .fly-header .layui-nav-child{top:50px;}
   /* 页脚 */
-  .fly-footer{margin-top: 0; border-top: none;}
+  .fly-footer{margin-top: 25px; border-top: none;}
 
 }

@@ -64,90 +64,83 @@
     margin-left: 100px;
 }
 </style>
-<div class="layui-card pd-20 no-shadow">
-    <div class="layui-card-header fly-title">
+<div class="layui-card pd-20">
+    <div class="layui-card-header fly-title d-flex justify-content-between align-items-center">
         <h2>基本设置</h2>
+        <a href="{:url('changepwd')}" class="layui-btn layui-btn-sm layui-bg-red"><i class="iconfont icon-lock-fill"></i>&nbsp;修改密码</a>
     </div>
     <div class="layui-card-body">
-        <div class="layui-tabs layui-tabs-card">
-            <ul class="layui-tabs-header">
-                <li class="layui-this"><a href="{:url('profile')}">我的资料</a></li>
-                <li><a href="{:url('changepwd')}">密码</a></li>
-            </ul>
-            <div class="layui-tabs-body">
-                <form id="profile-form" class="layui-form" method="post" style="width:450px;" action="{:url('api/user/profile')}">
-                    <input type="hidden" name="avatar" id="c-avatar" value="{:$user->getData('avatar')}" />
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <div class="profile-avatar-container">
-                                <img class="profile-user-img img-responsive img-circle" src="{$user.avatar}" alt="">
-                                <div class="profile-avatar-text img-circle">点击编辑</div>
-                                <button type="button" id="faupload-avatar" class="faupload" data-mimetype="png,jpg,jpeg,gif" data-input-id="c-avatar">上传</button>
-                            </div>
-                        </div>
+        <form id="profile-form" class="layui-form" method="post" style="width:450px;" action="{:url('api/user/profile')}">
+            <input type="hidden" name="avatar" id="c-avatar" value="{:$user->getData('avatar')}" />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <div class="profile-avatar-container">
+                        <img class="profile-user-img img-responsive img-circle" src="{$user.avatar}" alt="">
+                        <div class="profile-avatar-text img-circle">点击编辑</div>
+                        <button type="button" id="faupload-avatar" class="faupload" data-mimetype="png,jpg,jpeg,gif" data-input-id="c-avatar">上传</button>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">用户名</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="username" required="" lay-verify="required" autocomplete="off" value="{$user.username}" class="layui-input layui-disabled" disabled>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">昵称</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="nickname" required="" lay-verify="required" autocomplete="off" value="{$user.nickname}" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">手机</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="mobile" required="" lay-verify="phone" autocomplete="off" value="{$user.mobile}" class="layui-input layui-disabled" disabled>
-                        </div>
-                        <div class="layui-form-mid" style="padding: 0!important;">
-                            {eq name="user.ischeck_mobile" value="1"}
-                            <button class="layui-btn btn-change" type="button" data-type="changemobile" data-title="修改手机">修改</button>
-                            {else/}
-                            <button class="layui-btn layui-btn-danger btn-change" type="button" data-type="actmobile" data-title="激活手机">激活</button>
-                            {/eq}
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">邮箱</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" required="" lay-verify="email" autocomplete="off" value="{$user.email}" class="layui-input layui-disabled" disabled>
-                        </div>
-                        <div class="layui-form-mid" style="padding: 0!important;">
-                            {eq name="user.ischeck_email" value="1"}
-                            <button class="layui-btn btn-change" type="button" data-type="changeemail" data-title="修改邮箱">修改</button>
-                            {else/}
-                            <button class="layui-btn layui-btn-danger btn-change" type="button" data-type="actemail" data-title="激活邮箱">激活</button>
-                            {/eq}
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">性别</label>
-                        <div class="layui-input-block">
-                            <input type="radio" name="gender" value="0" title="保密" {if $user.gender==0}checked{/if}> <input type="radio" name="gender" value="1" title="男" {if $user.gender==1}checked{/if}> <input type="radio" name="gender" value="2" title="女" {if $user.gender==2}checked{/if}> </div> </div> <div class="layui-form-item">
-                            <label class="layui-form-label">生日</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="birthday" class="layui-input datetime" placeholder="生日" value="{$user.birthday}" data-date-type="date" data-date="yyyy-MM-dd">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">个性签名</label>
-                            <div class="layui-input-block">
-                                <textarea placeholder="请输入个性签名" name="motto" class="layui-textarea">{$user.motto}</textarea>
-                            </div>
-                        </div>
-                        {:hook("user_config")}
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button class="layui-btn layui-bg-black" lay-submit lay-filter="profile-form">确认修改</button>
-                            </div>
-                        </div>
-                </form>
+                </div>
             </div>
-        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" required="" lay-verify="required" autocomplete="off" value="{$user.username}" class="layui-input layui-disabled" disabled>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">昵称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="nickname" required="" lay-verify="required" autocomplete="off" value="{$user.nickname}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="mobile" required="" lay-verify="phone" autocomplete="off" value="{$user.mobile}" class="layui-input layui-disabled" disabled>
+                </div>
+                <div class="layui-form-mid" style="padding: 0!important;">
+                    {eq name="user.ischeck_mobile" value="1"}
+                    <button class="layui-btn btn-change" type="button" data-type="changemobile" data-title="修改手机">修改</button>
+                    {else/}
+                    <button class="layui-btn layui-btn-danger btn-change" type="button" data-type="actmobile" data-title="激活手机">激活</button>
+                    {/eq}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" required="" lay-verify="email" autocomplete="off" value="{$user.email}" class="layui-input layui-disabled" disabled>
+                </div>
+                <div class="layui-form-mid" style="padding: 0!important;">
+                    {eq name="user.ischeck_email" value="1"}
+                    <button class="layui-btn btn-change" type="button" data-type="changeemail" data-title="修改邮箱">修改</button>
+                    {else/}
+                    <button class="layui-btn layui-btn-danger btn-change" type="button" data-type="actemail" data-title="激活邮箱">激活</button>
+                    {/eq}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="gender" value="0" title="保密" {if $user.gender==0}checked{/if}> <input type="radio" name="gender" value="1" title="男" {if $user.gender==1}checked{/if}> <input type="radio" name="gender" value="2" title="女" {if $user.gender==2}checked{/if}> </div> </div> <div class="layui-form-item">
+                    <label class="layui-form-label">生日</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="birthday" class="layui-input datetime" placeholder="生日" value="{$user.birthday}" data-date-type="date" data-date="yyyy-MM-dd">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">个性签名</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入个性签名" name="motto" class="layui-textarea">{$user.motto}</textarea>
+                    </div>
+                </div>
+                {:hook("user_config")}
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-bg-black" lay-submit lay-filter="profile-form">确认修改</button>
+                    </div>
+                </div>
+        </form>
     </div>
 </div>
 <script type="text/html" id="actmobileTpl">

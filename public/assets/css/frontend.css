@@ -212,17 +212,15 @@ i{font-style: normal;}
 a:hover{color: #009688; transition: all .3s;}
 pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid #009688;  background-color: #f8f8f8; font-family: Courier New;}
 
-.fly-marginTop{margin-top: 20px;}
-
 /*面板大间距样式*/
-.fly-panel .fly-title{border:none !important;margin-bottom: 6px;}
+.fly-panel .fly-title{margin-bottom: 6px;}
 .fly-panel .fly-title h2{color: #333;display: block;line-height: 44px;font-size: 18px;padding-left:15px;position: relative;font-weight: normal;}
 .fly-panel .fly-title h2:before {width: 3px;height: 18px;top: 50%;left: 0;margin-top: -9px;background: #1e9fff;content: "";display: block;position: absolute;border-radius: 2px;}
 .fly-panel .layui-card.pd-20{padding: 20px !important}
 .fly-panel .layui-card.no-shadow{box-shadow: none;}
 
 /*用户中心*/
-.fly-user-main{position: relative; min-height: 600px;}
+.fly-user-main{position: relative; min-height: calc(100vh - 176px);margin-top: 15px}
 .fly-user-main:after{clear: both;content: " ";display:block;}
 .fly-user-main>.layui-nav{}
 .fly-user-main .fly-aside{width: 240px;float: left;}
