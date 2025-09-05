@@ -25,6 +25,7 @@
 
 @media screen and (max-width: 450px) {
     .layui-form-item .layui-input-inline {
+        left: 0;
         margin: 0 0 10px 0px;
     }
     .login-main .layui-elip {
@@ -270,8 +271,7 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .layui-table-tool .layui-btn + .layui-btn {margin-left: 2px !important;}
 
 @media screen and (max-width: 768px) {
-  .fly-header .fly-nav-user .layui-nav-more{display: none !important;}
-  .fly-panel .layui-card.pd-20 {padding: 12px !important;}
+  .fly-panel .layui-card.pd-20 {padding: 5px !important;}
   .fly-user-main .fly-userinfo{display: none!important;}
   .fly-user-main .layui-nav.layui-nav-tree{height: 100%;z-index:9999}
   .layui-form{width: 100%!important}
