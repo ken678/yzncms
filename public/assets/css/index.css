@@ -91,7 +91,7 @@ p {
     text-align: center;
     font-size: 60px;
     left: 0;
-    background-color: #009e3c;
+    background-color: #1e9fff;
     bottom: 5px;
     content: "";
     height: 20px;
@@ -116,8 +116,8 @@ p {
 #mainbody a{
     display: inline-block;
     margin-top: 40px;
-    border:1px solid #009e3c;
-    color: #009e3c;
+    border:1px solid #1e9fff;
+    color: #1e9fff;
     padding: 8px 16px;
     border-radius: 32px;
     font-size: 20px;
