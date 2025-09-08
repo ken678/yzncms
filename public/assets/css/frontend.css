@@ -270,24 +270,6 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .layui-table-tool .yzn-btn-primary{color: #fff; background-color: #2c3e50; }
 .layui-table-tool .layui-btn + .layui-btn {margin-left: 2px !important;}
 
-@media screen and (max-width: 768px) {
-  .fly-panel .layui-card.pd-20 {padding: 5px !important;}
-  .fly-user-main .fly-userinfo{display: none!important;}
-  .fly-user-main .layui-nav.layui-nav-tree{height: 100%;z-index:9999}
-  .layui-form{width: 100%!important}
-  .fly-user-main .fly-aside{position: absolute; left: 0; top: 50px; height: 100%;z-index: 9999;padding: 10px 0;}
-  .fly-user-main .fly-aside{left: -300px; transition: all .3s; -webkit-transition: all .3s;position: fixed;}
-  .fly-home h1 font {display: block;}
-  .fly-main{width: 100%;}
-  body .fly-user-main{width: auto;}
-  .fly-user-main>.fly-panel-user{width: auto;float:none; margin-left: 0; transition: all .3s; -webkit-transition: all .3s;}
-  .site-tree-mobile{display: block!important; position: fixed; z-index: 100000; bottom: 20px; left: 10px; width: 50px; height: 50px; line-height: 50px; border-radius: 2px; text-align: center; background-color: rgba(0,0,0,.7); color: #fff;}
-  .site-mobile .site-tree-mobile{display: none !important;}
-  .site-mobile .fly-user-main .fly-aside{left: 0;}
-  .site-mobile .site-mobile-shade{content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,.9); z-index: 999;}
-  .user-baseinfo {grid-template-columns: 1fr;}
-}
-
 .text-danger {color: #d26a5c; }
 .text-info {color: #70b9eb; }
 .text-warning {color: #f3b760; }
@@ -365,6 +347,21 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 .file-item.thumbnail .file-panel i.move-picture {cursor: move; }
 
 @media screen and (max-width: 768px) {
+    .layui-form{width: 100%!important}
+    .fly-panel .layui-card.pd-20 {padding: 5px !important;}
+    .fly-user-main{width: auto;}
+    .fly-user-main .fly-userinfo{display: none!important;}
+    .fly-user-main .layui-nav.layui-nav-tree{height: 100%;z-index:9999}
+    .fly-user-main .fly-aside{position: absolute; left: 0; top: 50px; height: 100%;z-index: 9999;padding: 10px 0;}
+    .fly-user-main .fly-aside{left: -300px; transition: all .3s; -webkit-transition: all .3s;position: fixed;}
+    .fly-user-main>.fly-panel-user{width: auto;float:none; margin-left: 0; transition: all .3s; -webkit-transition: all .3s;}
+    .user-baseinfo {grid-template-columns: 1fr;}
+
+    .site-tree-mobile{display: block!important; position: fixed; z-index: 100000; bottom: 20px; left: 10px; width: 50px; height: 50px; line-height: 50px; border-radius: 2px; text-align: center; background-color: rgba(0,0,0,.7); color: #fff;}
+    .site-mobile .site-tree-mobile{display: none !important;}
+    .site-mobile .fly-user-main .fly-aside{left: 0;}
+    .site-mobile .site-mobile-shade{content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,.9); z-index: 999;}
+
     .layui-form-label {width: auto;float: none;text-align: left;padding: 9px 0px;}
     .layui-input-block {margin-left: 0;max-width:100%;}
     .layui-form-item .layui-input-inline {margin: 0 0 10px 0 !important;}
