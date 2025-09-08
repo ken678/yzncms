@@ -26,8 +26,8 @@ define(['jquery', 'table', 'form','layui'], function($, Table, Form,layui) {
                     [
                         { field: 'id', width: 80, title: 'ID', sort: true },
                         { field: 'username', width: 120, title: '用户名' },
-                        { field: 'title', title: '标题', searchOp: 'like' },
-                        { field: 'url', title: '操作URL' },
+                        { field: 'title', minWidth: 150, title: '标题', searchOp: 'like' },
+                        { field: 'url', minWidth: 180, title: '操作URL' },
                         { field: 'ip', width: 120, title: 'IP' },
                         {
                             field: 'useragent',

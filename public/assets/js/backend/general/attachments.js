@@ -29,7 +29,7 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
                         { field: 'category', width: 90, title: '类别', templet: Table.formatter.label, selectList: Config.categoryList, searchOp: 'in'},
                         { field: 'admin_id', width: 80, title: '用户', hide: true, addClass: "selectpage", extend: "data-source='auth.manager/index' data-field='username'" },
                         { field: 'path', width: 70, align: "center", title: '图片', search: false, templet: Controller.api.formatter.thumb },
-                        { field: 'name', title: '文件名', searchOp: 'like' },
+                        { field: 'name', minWidth: 150, title: '文件名', searchOp: 'like' },
                         { field: 'imagewidth', width: 90, title: '宽度', sort: true},
                         { field: 'imageheight', width: 90, title: '高度', sort: true},
                         { field: 'path', width: 450, align: "center", title: '物理路径', hide:true, searchOp: 'like' },

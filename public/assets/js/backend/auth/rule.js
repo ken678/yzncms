@@ -32,7 +32,7 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                     [
                         { field: 'listorder', width: 60, title: '排序', edit: 'text' },
                         { field: 'id', width: 60, title: 'ID' },
-                        { field: 'title', align: 'left', title: '菜单名称', },
+                        { field: 'title', minWidth: 150, align: 'left', title: '菜单名称', },
                         { width: 80, title: '图标', align: 'center', templet: "<div><i class='iconfont {{d.icon}}'></i></div>" },
                         { field: 'name', width: 200, title: '规则' },
                         { field: 'status', align: 'center', width: 120, title: '状态', unresize: true, templet: Table.formatter.switch, tips: "显示|隐藏" },
