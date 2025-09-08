@@ -277,6 +277,9 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-tabs-panel .layui-tabs-scroll .layui-tabs-header li{margin-left: 6px !important;margin-right: 0px !important;}
 .layui-card-header{background:#e8edf0;border-bottom:none}
 .layui-card-body{padding: 16px;}
+/*还原card默认样式*/
+.layui-card.layui-card-default .layui-card-header {background: #fff;border-bottom: 1px solid #f8f8f8;}
+.layui-card.layui-card-default .layui-card-body {padding: 10px 15px;}
 
 /*图片上传缩略图*/
 .file-item.thumbnail .file-panel {position: absolute; width: 100%; height: 30px; line-height: 30px; left: 0; right: 0; top: -30px; background: rgba(0, 0, 0, 0.4); z-index: 3; transition: 400ms ease-in-out; -moz-transition: 400ms ease-in-out; -webkit-transition: 400ms ease-in-out; -o-transition: 400ms ease-in-out; }
