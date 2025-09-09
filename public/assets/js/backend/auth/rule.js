@@ -15,6 +15,7 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 init: Table.init,
                 elem: Table.init.table_elem,
                 tree:true,
+                search:false,
                 toolbar: '#toolbarDemo',
                 url: "auth.rule/index",
                 pk:'id',
