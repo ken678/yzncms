@@ -39,7 +39,7 @@ define(['jquery', 'table', 'form', 'jstree'], function($, Table, Form, undefined
                         { field: 'title', width: 200, align: 'left', title: '权限组',templet: function(d){
                             return layui.util.escape(d.title.toString()).replace(/(&|&amp;)nbsp;/g, '&nbsp;');
                         }},
-                        { field: 'description', title: '描述' },
+                        { field: 'description', minWidth: 150, title: '描述' },
                         { field: 'status', width: 80, title: '状态', templet: Table.formatter.status, selectList: { 0: '禁用', 1: '正常' }, search: false },
                         {
                             width: 100,

@@ -20,8 +20,8 @@ define(['jquery', 'table', 'form','layui','clipboard'], function($, Table, Form,
                 cols: [
                     [
                         { field: 'listorder', width: 70, title: '排序', edit: 'text' },
-                        { field: 'name', align: "left", title: '名称' },
-                        { field: 'title', align: "left", title: '标题' },
+                        { field: 'name', minWidth: 150, align: "left", title: '名称' },
+                        { field: 'title', minWidth: 150, align: "left", title: '标题' },
                         { field: 'ftitle', width: 150, title: '类型' },
                         { field: 'update_time', width: 200, title: '更新时间' },
                         { field: 'status', title: '状态', width: 100, unresize: true, templet: Table.formatter.switch },

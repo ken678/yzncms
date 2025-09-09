@@ -13,8 +13,8 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
                 cols: [
                     [
                         { field: 'id', width: 80, title: 'ID', sort: true },
-                        { field: 'title', title: '标题' },
-                        { field: 'url', title: '操作URL' },
+                        { field: 'title', minWidth: 150, title: '标题' },
+                        { field: 'url', minWidth: 180, title: '操作URL' },
                         { field: 'create_time', width: 180, title: '时间', search: 'range' },
                         { field: 'ip', width: 120, title: 'IP' },
                     ]
