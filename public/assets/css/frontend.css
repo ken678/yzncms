@@ -311,7 +311,6 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 /*重置layui样式*/
 .layui-btn-disabled, .layui-btn-disabled:active{pointer-events: none; }
 .layui-badge-rim, .layui-border, .layui-colla-content, .layui-colla-item, .layui-collapse, .layui-elem-field, .layui-form-pane .layui-form-item[pane], .layui-form-pane .layui-form-label, .layui-input, .layui-input-split, .layui-panel, .layui-quote-nm, .layui-select, .layui-tab-bar, .layui-tab-card, .layui-textarea {border-color: #dcdfe6;}
-.layui-input[disabled], .layui-textarea[disabled] {background-color: #eee;}
 .layui-table .layui-btn+.layui-btn {margin-left: 5px;}
 .layui-form-label {width: 110px;}
 .layui-input-block {margin-left: 140px;max-width:70%;}
