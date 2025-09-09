@@ -184,8 +184,8 @@ html, body, .layui-layout {height: 100%; }
 .pear-nav-tree .layui-nav-item a:hover {background-color: transparent; }
 .pear-nav-tree .layui-nav-more {margin-right: 5px; }
 .pear-nav-tree .layui-nav-bar {display: none; }
-.pear-nav-tree .layui-nav-item a .layui-badge-dot {float: right; right: 13px; }
-.pear-nav-tree .layui-nav-item a .layui-badge {float: right; right: 10px; }
+.pear-nav-tree .layui-nav-item a .layui-badge-dot {float: right; right: 13px;}
+.pear-nav-tree .layui-nav-item a .layui-badge {float: right; right: 10px; height: 22px;line-height: 22px;}
 
 /** 实 现 菜 单 隐 藏 */
 .pear-nav-mini {overflow: hidden; }

@@ -246,7 +246,7 @@ define(['jquery', 'layui'], function($, layui) {
                 }
             });
             if (searchInput) {
-                toolbarHtml += '<input id="layui-input-search-' + tableId + '" value="" placeholder="搜索" class="layui-input layui-hide-xs" style="display:inline-block;width:auto;float: right;\n' + 'margin:2px 25px 0 0;height:28px;">\n'
+                toolbarHtml += '<input id="layui-input-search-' + tableId + '" value="" placeholder="搜索" class="layui-input layui-hide-xs" style="display:inline-block;width:auto;float: right;\n' + 'margin:3px 25px 0 0;height:27px;">\n'
             }
             return '<div>' + toolbarHtml + '</div>';
         },

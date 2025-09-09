@@ -250,7 +250,6 @@ code {padding: 2px 4px; font-size: 90%; color: #c7254e; background-color: #f9f2f
 .layui-form-mid.no-float{float: none !important;margin-left: 140px !important;padding-bottom: 0 !important;}
 .layui-form-item-required:before {display: inline-block; margin-right: 4px; color: #f5222d; font-size: 14px; font-family: SimSun,sans-serif; line-height: 1; content: "*"; }
 .layui-form-item label.layui-form-label:after {content: ":"; position: relative; top: -.5px;margin-left: 2px;}
-.layui-badge {height: 22px;line-height: 22px;}
 
 /*重置layui样式*/
 .layui-btn-disabled, .layui-btn-disabled:active{pointer-events: none; }
