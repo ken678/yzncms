@@ -94,7 +94,9 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                     }
                 });
 
-                Form.api.bindevent($("form.layui-form"));
+                Form.api.bindevent($("form.layui-form"), function (data) {
+                    Yzn.api.refreshmenu();
+                });
 
                 layui.form.on('radio(ismenu)', function(data) {
                     var name = $("input[name='row[name]']");
