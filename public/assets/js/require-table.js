@@ -850,19 +850,20 @@ define(['jquery', 'layui'], function($, layui) {
             },
             //监听表格右侧工具-删除
             'btn-delone': function(obj, options) {
+                var that = this;
                 var tableId = options.init.table_render_id;
                 var data = obj.data;
-                var top = $(this).offset().top - $(window).scrollTop();
-                var left = $(this).offset().left - $(window).scrollLeft() - 260;
+                var top = $(that).offset().top - $(window).scrollTop();
+                var left = $(that).offset().left - $(window).scrollLeft() - 260;
                 if (top + 154 > $(window).height()) {
                     top = top - 154;
                 }
                 if (left < 0 || $(window).width() < 480) {
                     top = left = undefined;
                 }
-                Layer.confirm($(this).data("confirm") || '确定要删除选中项?', { icon: 3, title: '提示信息', offset: [top, left], shadeClose: true, btn: ['确认', '取消'] },
+                Layer.confirm($(that).data("confirm") || '确定要删除选中项?', { icon: 3, title: '提示信息', offset: [top, left], shadeClose: true, btn: ['确认', '取消'] },
                     function(index) {
-                        Table.api.multi("del", data[options.pk], tableId, this);
+                        Table.api.multi("del", data[options.pk], tableId, that);
                         Layer.close(index);
                     }
                 );
