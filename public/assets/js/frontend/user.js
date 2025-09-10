@@ -71,7 +71,7 @@ define(['jquery', 'frontend', 'form'], function($, Frontend, Form) {
 
         },
         upgrade: function() {
-            $(document).on("click", ".layui-btn", function(e) {
+            $(document).on("click", ".btn-upgrade", function(e) {
                 Yzn.api.ajax('user/upgrade?id=' + $(this).data("id"), function(data) {
                     Layer.msg("开通成功!", {
                         icon: 1,
