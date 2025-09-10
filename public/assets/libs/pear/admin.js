@@ -377,6 +377,10 @@ define(['jquery', 'layui','pearTab','pearMenu','pearFrame','pearFullscreen','pea
 			}
 		}
 
+		body.on('refresh', '.pear-menu', function () {
+           sideMenu.refresh();
+		})
+
 		body.on("click", ".logout", function() {
 			if (logout() && bodyTab) {
 				bodyTab.clear();

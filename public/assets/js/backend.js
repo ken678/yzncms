@@ -55,6 +55,9 @@ define(['yzn'], function(Yzn) {
                     window.top.pearAdmin.addTab(id, title, url);
                 }
             },
+            refreshmenu: function () {
+                top.window.$(".pear-menu").trigger("refresh");
+            },
             gettablecolumnbutton: function (options) {
                 if (typeof options.table !== 'undefined' && typeof options.tableKey !== 'undefined' && typeof options.buttonIndex !== 'undefined') {
                     var tableOptions = layui.table.getOptions(options.table);

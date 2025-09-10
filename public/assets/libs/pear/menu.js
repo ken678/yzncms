@@ -55,6 +55,24 @@ define(['jquery', 'layui'], function($, layui) {
         return new pearMenu(option);
 	}
 
+	pearMenu.prototype.refresh = function() {
+	    var option = this.option;
+	    if (option.async) {
+	        if (option.method === "GET") {
+	            getData(option.url).then(function(data) {
+	                option.data = data;
+	                renderMenu(option);
+	            });
+	        } else {
+	            postData(option.url).then(function(data) {
+	                option.data = data;
+	                renderMenu(option);
+	            });
+	        }
+	    }
+	    return this;
+	}
+
 	pearMenu.prototype.click = function (clickEvent) {
 		var _this = this;
 		//左侧子菜单点击

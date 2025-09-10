@@ -19,6 +19,7 @@ use app\common\controller\Backend;
 use think\addons\AddonException;
 use think\addons\Service;
 use think\Exception;
+use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Db;
 use think\facade\Env;
@@ -189,6 +190,7 @@ class Addon extends Backend
             $action = $action == 'enable' ? $action : 'disable';
             //调用启用、禁用的方法
             Service::$action($name, $force);
+            Cache::delete('__menu__');
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
@@ -223,6 +225,7 @@ class Addon extends Backend
                 'yzncms_version' => Config::get('version.yzncms_version'),
             ];
             $info = Service::install($name, $force, $extend);
+            Cache::delete('__menu__');
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (\Exception $e) {
@@ -321,6 +324,7 @@ class Addon extends Backend
             ];
             //调用更新的方法
             $info = Service::upgrade($name, $extend);
+            Cache::delete('__menu__');
         } catch (AddonException $e) {
             $this->result($e->getData(), $e->getCode(), $e->getMessage());
         } catch (Exception $e) {

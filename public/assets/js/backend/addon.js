@@ -339,10 +339,10 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                             } else {
                                 Layer.close(index);
                             }
-                            table.reload(Table.init.table_render_id);
                         },
                         icon: 1
                     });
+                    Controller.api.refresh();
                 }, function(data, res) {
                     var area = [$(window).width() > 650 ? '650px' : '95%', $(window).height() > 710 ? '710px' : '95%'];
                     if (res && res.code === -2) {
@@ -413,7 +413,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                     data: { name: name, force: force ? 1 : 0, droptables: droptables ? 1 : 0 }
                 }, function(data, res) {
                     Layer.closeAll();
-                    table.reload(Table.init.table_render_id);
+                    Controller.api.refresh();
                 }, function(data, res) {
                     if (res && res.code === -3) {
                         //插件目录发现影响全局的文件
@@ -464,7 +464,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                         version: version
                     }
                 }, function(data, ret) {
-                    table.reload(Table.init.table_render_id);
+                    Controller.api.refresh();
                     Layer.closeAll();
                 }, function(data, ret) {
                     Layer.alert(ret.msg, { title: '温馨提示' });
@@ -481,7 +481,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                     if (typeof success === 'function') {
                         success(res);
                     }
-                    table.reload(Table.init.table_render_id);
+                    Controller.api.refresh();
                     return false;
                 }, function(data, res) {
                     if (typeof error === "function") {
@@ -589,6 +589,12 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
         api: {
             bindevent: function() {
                 Form.api.bindevent($("form.layui-form"));
+            },
+            refresh: function () {
+                //刷新左侧边栏
+                Yzn.api.refreshmenu();
+                
+                table.reload(Table.init.table_render_id);
             }
         }
     };
