@@ -53,6 +53,14 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                         }
                     ]
                 ],
+                done: function(res, curr, count) {
+                    $($('.layui-btn[lay-event="btn-delone"]')).data("success", function (data, ret) {
+                        Yzn.api.refreshmenu();
+
+                        layui.table.reload(Table.init.table_render_id);
+                        return false;
+                    });
+                }
             });
 
             $('body').on('click', '#openAll', function() {
