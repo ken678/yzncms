@@ -15,6 +15,7 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
+use app\common\model\Attachment;
 use think\facade\Db;
 use util\Date;
 
@@ -43,7 +44,31 @@ class Main extends Backend
         foreach ($joinlist as $k => $v) {
             $userlist[$v['join_date']] = $v['nums'];
         }
-        $this->assign('sys_info', $this->get_sys_info());
+
+        $addonList         = get_addon_list();
+        $totalworkingaddon = 0;
+        $totaladdon        = count($addonList);
+        foreach ($addonList as $index => $item) {
+            if ($item['status']) {
+                $totalworkingaddon += 1;
+            }
+        }
+
+        $dbTableList = Db::query("SHOW TABLE STATUS");
+
+        $this->assign([
+            'sys_info'          => $this->get_sys_info(),
+            'totaladdon'        => $totaladdon,
+            'totalworkingaddon' => $totalworkingaddon,
+            'dbtablenums'       => count($dbTableList),
+            'dbsize'            => array_sum(array_map(function ($item) {
+                return $item['Data_length'] + $item['Index_length'];
+            }, $dbTableList)),
+            'attachmentnums'    => Attachment::count(),
+            'attachmentsize'    => Attachment::sum('size'),
+            'picturenums'       => Attachment::where('mime', 'like', 'image/%')->count(),
+            'picturesize'       => Attachment::where('mime', 'like', 'image/%')->sum('size'),
+        ]);
 
         $this->assignconfig('column', array_keys($userlist));
         $this->assignconfig('userdata', array_values($userlist));

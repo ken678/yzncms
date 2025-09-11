@@ -1,5 +1,10 @@
 {extend name="index_layout"/}
 {block name="main"}
+<style>
+.layui-card-body{min-height: 60px;}
+.layui-card-body i{font-size: 80px;line-height: 80px;position: absolute;right: 15px;top: 10px}
+.layui-card-body h2{font-size: 32px;color: #666;font-weight: normal;line-height:60px;height:60px;}
+</style>
 {notempty name="default_pass"}
 <div class="alert alert-danger-light">
     安全提示：超级管理员默认密码未修改，建议马上修改。
@@ -73,6 +78,90 @@
         </a>
     </div>
 </div>
+
+<div class="layui-row layui-col-space10 mb-3">
+    <div class="layui-col-md6 layui-col-lg3 layui-col-sm6">
+        <div class="layui-card">
+            <div class="layui-card-header d-flex justify-content-between align-items-center">
+               插件数量<span class="layui-badge layui-bg-cyan">实时</span>
+            </div>
+            <div class="layui-card-body">
+                <i class="iconfont icon-instance-line" style="color: rgba(255, 200, 200, 0.4);"></i>
+                <div class="layui-row">
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$totaladdon}</h2>
+                        <span>总插件数</span>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$totalworkingaddon}</h2>
+                        <span>运行中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-lg3 layui-col-sm6">
+        <div class="layui-card">
+            <div class="layui-card-header d-flex justify-content-between align-items-center">
+                数据库统计<span class="layui-badge layui-bg-cyan">实时</span>
+            </div>
+            <div class="layui-card-body">
+                <i class="iconfont icon-database-2-line" style="color:rgba(200, 227, 255, 0.4);"></i>
+                <div class="layui-row">
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$dbtablenums}</h2>
+                        <span>数据表数量</span>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$dbsize|format_bytes=###,'',0}</h2>
+                        <span>占用空间</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-lg3 layui-col-sm6">
+        <div class="layui-card">
+            <div class="layui-card-header d-flex justify-content-between align-items-center">
+                附件统计<span class="layui-badge layui-bg-cyan">实时</span>
+            </div>
+            <div class="layui-card-body">
+                <i class="iconfont icon-file-line" style="color:rgba(255, 233, 200, 0.4);"></i>
+                <div class="layui-row">
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$attachmentnums}</h2>
+                        <span>附件数量</span>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$attachmentsize|format_bytes=###,'',0}</h2>
+                        <span>附件大小</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6 layui-col-lg3 layui-col-sm6">
+        <div class="layui-card">
+            <div class="layui-card-header d-flex justify-content-between align-items-center">
+                图片统计<span class="layui-badge layui-bg-cyan">实时</span>
+            </div>
+            <div class="layui-card-body">
+                <i class="iconfont icon-image-line" style="color:rgba(200, 207, 255, 0.4);"></i>
+                <div class="layui-row">
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$picturenums}</h2>
+                        <span>图片数量</span>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-xs6">
+                        <h2>{$picturesize|format_bytes=###,'',0}</h2>
+                        <span>图片大小</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="layui-row layui-col-space10">
     <div class="layui-col-md7">
         <div id="echart" class="btn-refresh" style="height:455px;width:100%;"></div>
