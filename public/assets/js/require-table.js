@@ -36,10 +36,6 @@ define(['jquery', 'layui'], function($, layui) {
             dragsortfield: 'listorder',
         },
         api: {
-            /*init: function(defaults) {
-                defaults = defaults ? defaults : init;
-                Table.init = defaults;
-            },*/
             bindevent: function(tableId) {
                 var tableId = tableId || Table.init.table_render_id;
                 var options = layui.table.getOptions(tableId);
@@ -52,11 +48,11 @@ define(['jquery', 'layui'], function($, layui) {
                 //监听单元格元素事件（编辑和删除）
                 Table.listenToolEvent(options);
                 // 监听表格文本框编辑
-                Table.listenEditEvent(options, tableId);
+                Table.listenEditEvent(options);
                 // 监听tab切换
-                Table.listenTabShowEvent(options, tableId);
+                Table.listenTabShowEvent(options);
                 // 监听表格开关切换
-                Table.listenSwitch(options, tableId);
+                Table.listenSwitch(options);
             },
             // 批量操作请求
             multi: function(action, ids, tableId, element) {
@@ -598,13 +594,13 @@ define(['jquery', 'layui'], function($, layui) {
                 return false;
             })
         },
-        listenEditEvent: function(options, tableId) {
+        listenEditEvent: function(options) {
             table.on('edit(' + options.layFilter + ')', function(obj) {
                 Table.editEvents['edit'].call(this, obj, options)
                 return false;
             })
         },
-        listenTabShowEvent: function(options, tableId) {
+        listenTabShowEvent: function(options) {
             tabs.on('afterChange(' + options.tabsId + ')', function(data){
                 var field = $(this).closest("[data-field]").data("field");
                 var value = $(this).data("value");
@@ -615,15 +611,15 @@ define(['jquery', 'layui'], function($, layui) {
                 } else {
                     object.val(value);
                 }
-                table.reloadData(tableId);
+                table.reloadData(options.id);
             })
         },
-        listenSwitch: function(option, tableId) {
-            var modifyReload = option.modifyReload || false;
+        listenSwitch: function(options) {
+            var modifyReload = options.modifyReload || false;
             layui.form.on('switch(switchStatus)', function(obj) {
                 var checked = obj.elem.checked ? 1 : 0;
                 var that = $(this);
-                var url = $(this).attr('data-url') || option.init.multi_url;
+                var url = $(this).attr('data-url') || options.init.multi_url;
                 var field = $(this).attr('data-field') || 'status';
                 var data = {
                     id: obj.value,
@@ -634,7 +630,7 @@ define(['jquery', 'layui'], function($, layui) {
                     data: data,
                 }, function(data, ret) {
                     if (modifyReload) {
-                        layui.table.reloadData(tableId);
+                        layui.table.reloadData(options.id);
                     }
                 }, function(data, ret) {
                     obj.elem.checked = !checked;
