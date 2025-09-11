@@ -85,13 +85,13 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
             var multiple = Backend.api.query('multiple');
             multiple = multiple == 'true' ? true : false;
 
-            var toolbar = ['refresh', [{
+            var toolbar = ['refresh', {
                 html: '<button type="button" class="layui-btn layui-btn-sm faupload" data-multiple="true" data-mimetype="' + Config.mimetype + '"><i class="iconfont icon-upload-line"></i> 上传</button>'
-            }]];
+            }];
             if (multiple) {
-                toolbar.push([{
+                toolbar.push({
                     html: '&nbsp;<button class="layui-btn layui-btn-danger layui-btn-sm btn-choose-multi"><i class="iconfont icon-check-line"></i> 选择</button>'
-                }]);
+                });
             }
 
             Table.render({
@@ -123,6 +123,7 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
 
             table.on('checkbox', function(obj) {
                 var checkStatus = table.checkStatus('currentTable').data;
+                urlArr = [];
                 for (var i = 0; i < checkStatus.length; i++) {
                     urlArr.push(checkStatus[i]['path']);
                 }
