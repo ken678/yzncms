@@ -16,6 +16,7 @@ namespace app\admin\controller;
 
 use app\common\controller\Backend;
 use think\facade\Db;
+use util\Date;
 
 class Main extends Backend
 {
@@ -26,7 +27,26 @@ class Main extends Backend
         if ($this->auth->password == encrypt_password('admin', $this->auth->encrypt)) {
             $this->assign('default_pass', 1);
         }
+        $column    = [];
+        $starttime = Date::unixtime('day', -6);
+        $endtime   = Date::unixtime('day', 0, 'end');
+        $joinlist  = Db::name("user")
+            ->whereBetween('reg_time', [$starttime, $endtime])
+            ->field('COUNT(*) AS nums, DATE(FROM_UNIXTIME(reg_time)) AS join_date')
+            ->group('join_date')
+            ->select();
+        for ($time = $starttime; $time <= $endtime;) {
+            $column[] = date("Y-m-d", $time);
+            $time += 86400;
+        }
+        $userlist = array_fill_keys($column, 0);
+        foreach ($joinlist as $k => $v) {
+            $userlist[$v['join_date']] = $v['nums'];
+        }
         $this->assign('sys_info', $this->get_sys_info());
+
+        $this->assignconfig('column', array_keys($userlist));
+        $this->assignconfig('userdata', array_values($userlist));
         $this->assignconfig('username', $this->auth->username);
         return $this->fetch();
     }
@@ -49,8 +69,6 @@ class Main extends Backend
         $sys_info['domain']          = $_SERVER['HTTP_HOST']; //域名
         $sys_info['remaining_space'] = function_exists('disk_free_space') ? round((disk_free_space(".") / (1024 * 1024)), 2) . 'M' : '未知'; //剩余空间
         //$sys_info['user_ip'] = $_SERVER['REMOTE_ADDR']; //用户IP地址
-        $sys_info['beijing_time'] = gmdate("Y年n月j日 H:i:s", time() + 8 * 3600); //北京时间
-        $sys_info['time']         = date("Y年n月j日 H:i:s"); //服务器时间
         //$sys_info['web_directory'] = $_SERVER["DOCUMENT_ROOT"]; //网站目录
         $mysqlinfo                 = Db::query("SELECT VERSION() as version");
         $sys_info['mysql_version'] = $mysqlinfo[0]['version'];
