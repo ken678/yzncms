@@ -12,12 +12,12 @@ define(['jquery','echarts', 'echarts-theme'], function($,Echarts, undefined) {
                     subtext: ''
                 },
                 color: [
-                    "#18d1b1",
-                    "#3fb1e3",
-                    "#626c91",
-                    "#a0a7e6",
-                    "#c4ebad",
-                    "#96dee8"
+                    "#36a3f7",
+                    "#34bfa3",
+                    "#f6c532",
+                    "#f4516c",
+                    "#8c7ae6",
+                    "#00bcd4"
                 ],
                 tooltip: {
                     trigger: 'axis'
@@ -65,16 +65,36 @@ define(['jquery','echarts', 'echarts-theme'], function($,Echarts, undefined) {
                     name: '注册会员数',
                     type: 'line',
                     smooth: true,
-                    areaStyle: {
-                        normal: {}
+                    symbol: 'circle',
+                    symbolSize: 8,
+                    itemStyle: {
+                        color: '#36a3f7',
+                        borderColor: '#fff',
+                        borderWidth: 2
                     },
                     lineStyle: {
-                        normal: {
-                            width: 1.5
+                        width: 3,
+                        shadowColor: 'rgba(0,0,0,0.1)',
+                        shadowBlur: 10,
+                        shadowOffsetY: 5
+                    },
+                    areaStyle: {
+                        // 使用渐变色填充区域
+                        color: new Echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: 'rgba(54, 163, 247, 0.3)' },
+                            { offset: 1, color: 'rgba(54, 163, 247, 0.1)' }
+                        ])
+                    },
+                    // 添加悬停效果
+                    emphasis: {
+                        itemStyle: {
+                            color: '#fff',
+                            borderColor: '#36a3f7',
+                            borderWidth: 2 
                         }
                     },
                     data: Config.userdata
-                }]
+                }],
             };
 
             // 使用刚指定的配置项和数据显示图表。
