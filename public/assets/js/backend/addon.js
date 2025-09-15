@@ -94,7 +94,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                 ],
                 page: { limit: 20 },
                 before() {
-                    let userinfo = Yzn.cache.getStorage('yzncms_userinfo');
+                    let userinfo = Yzn.cache.get('yzncms_userinfo');
                     this.where.uid = userinfo ? userinfo.id : '';
                     this.where.token = userinfo ? userinfo.token : '';
                     this.where.category_id = $('input[name="category_id"]').val();
@@ -226,7 +226,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
             $(document).on("click", ".btn-userinfo", function(e, name, version) {
                 var that = this;
                 var area = [$(window).width() > 800 ? '500px' : '95%', $(window).height() > 600 ? '400px' : '95%'];
-                var userinfo = Yzn.cache.getStorage('yzncms_userinfo');
+                var userinfo = Yzn.cache.get('yzncms_userinfo');
                 if (!userinfo) {
                     Layer.open({
                         content: layui.laytpl($("#logintpl").html()).render({}),
@@ -244,7 +244,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                                     password: $("#inputPassword", layero).val(),
                                 }
                             }, function(data, ret) {
-                                Yzn.cache.setStorage('yzncms_userinfo', data.userinfo);
+                                Yzn.cache.set('yzncms_userinfo', data.userinfo);
                                 Layer.closeAll();
                                 Layer.alert(ret.msg, { title: '温馨提示', icon: 1 });
                                 return false;
@@ -288,11 +288,11 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                                     url: Config.addon.api_url + '/user/logout',
                                     data: { uid: userinfo.id, token: userinfo.token }
                                 }, function(data, ret) {
-                                    Yzn.cache.setStorage('yzncms_userinfo', '');
+                                    Yzn.cache.delete('yzncms_userinfo');
                                     Layer.closeAll();
                                     Layer.alert(ret.msg, { title: '温馨提示', icon: 0 });
                                 }, function(data, ret) {
-                                    Yzn.cache.setStorage('yzncms_userinfo', '');
+                                    Yzn.cache.delete('yzncms_userinfo');
                                     Layer.closeAll();
                                     Layer.alert(ret.msg, { title: '温馨提示', icon: 0 });
                                 });
@@ -300,7 +300,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                         });
                         return false;
                     }, function(data) {
-                        Yzn.cache.setStorage('yzncms_userinfo', '');
+                        Yzn.cache.delete('yzncms_userinfo');
                         $(that).trigger('click');
                         return false;
                     });
@@ -309,7 +309,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
             });
 
             var install = function(name, version, force) {
-                var userinfo = Yzn.cache.getStorage('yzncms_userinfo');
+                var userinfo = Yzn.cache.get('yzncms_userinfo');
                 var uid = userinfo ? userinfo.id : 0;
                 var token = userinfo ? userinfo.token : '';
                 Yzn.api.ajax({
@@ -392,7 +392,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                             }
                         });
                     } else if (res && res.code === 401) {
-                        Yzn.cache.setStorage('yzncms_userinfo', '');
+                        Yzn.cache.delete('yzncms_userinfo');
                         Layer.alert('登录已经失效，请重新登录后操作！', {
                             title: '温馨提示',
                             btn: ['立即登录'],
@@ -451,7 +451,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
             });
 
             var upgrade = function(name, version) {
-                var userinfo = Yzn.cache.getStorage('yzncms_userinfo');
+                var userinfo = Yzn.cache.get('yzncms_userinfo');
                 var uid = userinfo ? userinfo.id : 0;
                 var token = userinfo ? userinfo.token : '';
 
@@ -509,7 +509,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
             };
 
             var isLogin = function() {
-                var userinfo = Yzn.cache.getStorage('yzncms_userinfo');
+                var userinfo = Yzn.cache.get('yzncms_userinfo');
                 var uid = userinfo ? userinfo.id : 0;
 
                 if (parseInt(uid) === 0) {

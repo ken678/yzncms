@@ -317,27 +317,34 @@ define(['jquery', 'toastr', 'layui'], function ($, Toastr, layui) {
             layer: Layer
         },
         cache: {
-            setStorage: function(key, value) {
-                if (value != null && value !== "undefined") {
-                    layui.data(key, {
-                        key: key,
-                        value: value
-                    })
-                } else {
-                    layui.data(key, {
-                        key: key,
-                        remove: true
-                    })
-                }
+            table: 'yzncms',
+            setTable: function(name) {
+                this.table = name;
+                return this;
             },
-            getStorage: function(key) {
-                var array = layui.data(key);
-                if (array) {
-                    return array[key]
+            getTable: function() {
+                return this.table;
+            },
+            set: function(key, value) {
+                var param = { key: key };
+                if (value != null) {
+                    param.value = value;
                 } else {
-                    return false
+                    param.remove = true;
                 }
-            }
+                layui.data(this.table, param);
+                return this;
+            },
+            get: function(key) {
+                return layui.data(this.table)[key] || false;
+            },
+            delete: function(key) {
+                layui.data(this.table, {
+                    key: key,
+                    remove: true
+                });
+                return this;
+            },
         },
         init: function () {
             // jQuery兼容处理
