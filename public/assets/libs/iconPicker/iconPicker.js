@@ -41,8 +41,6 @@ define(['jquery', 'layui'], function($, layui) {
             data = {},
             // 唯一标识
             tmp = new Date().getTime(),
-            // 是否使用的class数据
-            isFontClass = opts.type === 'fontClass',
             // 初始化时input的值
             ORIGINAL_ELEM_VALUE = $(elem).val(),
             TITLE = 'layui-select-title',
@@ -92,18 +90,10 @@ define(['jquery', 'layui'], function($, layui) {
 
                 // 默认图标
                 if (ORIGINAL_ELEM_VALUE === '') {
-                    if (isFontClass) {
-                        ORIGINAL_ELEM_VALUE = '';//默认值
-                    } else {
-                        ORIGINAL_ELEM_VALUE = '&#xe617;';
-                    }
+                    ORIGINAL_ELEM_VALUE = '';//默认值
                 }
 
-                if (isFontClass) {
-                    oriIcon = '<i class="iconfont ' + ORIGINAL_ELEM_VALUE + '">';
-                } else {
-                    oriIcon += ORIGINAL_ELEM_VALUE;
-                }
+                oriIcon = '<i class="iconfont ' + ORIGINAL_ELEM_VALUE + '">';
                 oriIcon += '</i>';
 
                 var selectHtml = '<div class="layui-iconpicker layui-unselect layui-form-select" id="' + ICON_BODY + '">' +
@@ -199,13 +189,8 @@ define(['jquery', 'layui'], function($, layui) {
 
                     // 每个图标dom
                     var icon = '<div class="layui-iconpicker-icon-item" title="' + obj + '" ' + style + '>';
-                    if (isFontClass) {
-                        icon += '<i class="iconfont ' + obj + '"></i>';
-                    } else {
-                        icon += '<i class="iconfont">' + obj.replace('amp;', '') + '</i>';
-                    }
+                    icon += '<i class="iconfont ' + obj + '"></i>';
                     icon += '</div>';
-
                     icons.push(icon);
                 }
 
@@ -308,17 +293,10 @@ define(['jquery', 'layui'], function($, layui) {
                 a.event('click', item, function(e) {
                     var el = $(e.currentTarget).find('.iconfont'),
                         icon = '';
-                    if (isFontClass) {
-                        var clsArr = el.attr('class').split(/[\s\n]/),
-                            cls = clsArr[1],
-                            icon = cls;
-                        $('#' + TITLE_ID).find('.layui-iconpicker-item .iconfont').html('').attr('class', clsArr.join(' '));
-                    } else {
-                        var cls = el.html(),
-                            icon = cls;
-                        $('#' + TITLE_ID).find('.layui-iconpicker-item .iconfont').html(icon);
-                    }
-
+                    var clsArr = el.attr('class').split(/[\s\n]/),
+                        cls = clsArr[1],
+                        icon = 'iconfont ' + cls;
+                    $('#' + TITLE_ID).find('.layui-iconpicker-item .iconfont').html('').attr('class', clsArr.join(' '));
                     $('#' + ICON_BODY).removeClass(selected).addClass(unselect);
                     $(elem).val(icon).attr('value', icon);
                     // 回调
@@ -378,16 +356,12 @@ define(['jquery', 'layui'], function($, layui) {
      * @param filter lay-filter
      * @param iconName 图标名称，自动识别fontClass/unicode
      */
-    iconPicker.prototype.checkIcon = function(filter, iconName) {
+    iconPicker.checkIcon = function(filter, iconName) {
         var el = $('*[lay-filter=' + filter + ']'),
             p = el.next().find('.layui-iconpicker-item .iconfont'),
-            c = iconName;
+            c = 'iconfont ' + iconName;
 
-        if (c.indexOf('#xe') > 0) {
-            p.html(c);
-        } else {
-            p.html('').attr('class', 'iconfont ' + c);
-        }
+        p.html('').attr('class', c);
         el.attr('value', c).val(c);
     };
     return iconPicker;

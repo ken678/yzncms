@@ -60,7 +60,6 @@ class Rule extends Backend
                 if (!$params['ismenu'] && !$params['parentid']) {
                     $this->error('非菜单规则节点必须有父级');
                 }
-                $params['icon'] = $params['icon'] ? 'iconfont ' . $params['icon'] : '';
                 try {
                     $this->validate($params, 'app\admin\validate\AuthRule');
                     $this->modelClass->save($params);
