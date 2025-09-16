@@ -10,10 +10,4 @@ use think\Model;
 class Sms extends Model
 {
     protected $autoWriteTimestamp = false;
-
-    public function setIpAttr($value)
-    {
-        return request()->ip();
-    }
-
 }

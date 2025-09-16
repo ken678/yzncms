@@ -62,7 +62,8 @@ class Sms
     {
         $code   = is_null($code) ? Random::numeric(config('captcha.length')) : $code;
         $time   = time();
-        $sms    = SmsModel::create(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'create_time' => $time]);
+        $ip     = request()->ip();
+        $sms    = SmsModel::create(['event' => $event, 'mobile' => $mobile, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
         $result = Event::trigger('sms_send', $sms, true);
         if (!$result) {
             $sms->delete();

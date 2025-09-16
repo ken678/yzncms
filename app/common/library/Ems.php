@@ -62,7 +62,8 @@ class Ems
     {
         $code   = is_null($code) ? Random::numeric(config('captcha.length')) : $code;
         $time   = time();
-        $ems    = EmsModel::create(['event' => $event, 'email' => $email, 'code' => $code, 'create_time' => $time]);
+        $ip     = request()->ip();
+        $ems    = EmsModel::create(['event' => $event, 'email' => $email, 'code' => $code, 'ip' => $ip, 'create_time' => $time]);
         $result = Event::trigger('ems_send', $ems, true);
         if (!$result) {
             $ems->delete();
