@@ -30,7 +30,7 @@ class Addon extends Backend
     protected function initialize()
     {
         parent::initialize();
-        if (!$this->auth->isAdministrator() && in_array($this->request->action(), ['install', 'uninstall', 'local'])) {
+        if (!$this->auth->isAdministrator() && in_array($this->request->action(), ['install', 'uninstall', 'local', 'upgrade', 'testdata'])) {
             $this->error('非超级管理员禁止操作！');
         }
     }
