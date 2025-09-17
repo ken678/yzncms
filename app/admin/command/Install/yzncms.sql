@@ -191,8 +191,7 @@ INSERT INTO `yzn_auth_rule` VALUES (52, 51, 'user.user/index', '查看', '', '',
 INSERT INTO `yzn_auth_rule` VALUES (53, 51, 'user.user/add', '新增', '', '', '', '', 0, NULL, '', 1714295577, 1714295577, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (54, 51, 'user.user/edit', '编辑', '', '', '', '', 0, NULL, '', 1714295577, 1714295577, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (55, 51, 'user.user/del', '删除', '', '', '', '', 0, NULL, '', 1714295577, 1714295577, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (56, 51, 'user.user/pass', '审核', '', '', '', '', 0, NULL, '', 1714295577, 1714295577, 0, 1);
-INSERT INTO `yzn_auth_rule` VALUES (57, 50, 'user.user/userverify', '审核会员', 'iconfont icon-user-star-line', '', '', '', 1, NULL, '', 1714295577, 1714295577, 98, 1);
+INSERT INTO `yzn_auth_rule` VALUES (56, 51, 'user.user/multi', '批量更新', '', '', '', '', 0, NULL, '', 1714295577, 1714295577, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (58, 50, 'user.group', '会员组管理', 'iconfont icon-user-settings-line', '', '', '', 1, NULL, '', 1714295577, 1714295577, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (59, 58, 'user.group/index', '查看', '', '', '', '', 0, NULL, '', 1714295577, 1714295577, 0, 1);
 INSERT INTO `yzn_auth_rule` VALUES (60, 58, 'user.group/add', '新增', '', '', '', '', 0, NULL, '', 1714295577, 1714295577, 0, 1);

@@ -60,28 +60,6 @@ class User extends Backend
     }
 
     /**
-     * 审核会员
-     */
-    public function userverify()
-    {
-        if ($this->request->isAjax()) {
-            list($page, $limit, $where) = $this->buildTableParames();
-            $list                       = $this->modelClass
-                ->where($where)
-                ->where('status', '<>', 1)
-                ->page($page, $limit)->select();
-            $total = $this->modelClass
-                ->where($where)
-                ->where('status', '<>', 1)
-                ->count();
-            $result = ["code" => 0, "count" => $total, "data" => $list];
-            return json($result);
-
-        }
-        return $this->fetch();
-    }
-
-    /**
      * 会员增加
      */
     public function add()
@@ -159,23 +137,4 @@ class User extends Backend
         $this->success("删除成功！");
 
     }
-
-    /**
-     * 审核会员
-     */
-    public function pass()
-    {
-        $ids = $this->request->param('id/a', null);
-        if (empty($ids)) {
-            $this->error('请选择需要审核的会员！');
-        }
-        if (!is_array($ids)) {
-            $ids = [0 => $ids];
-        }
-        foreach ($ids as $uid) {
-            $info = UserModel::where('id', $uid)->update(['status' => 1]);
-        }
-        $this->success("审核成功！");
-    }
-
 }
