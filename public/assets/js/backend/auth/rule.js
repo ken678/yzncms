@@ -16,7 +16,13 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 elem: Table.init.table_elem,
                 tree:true,
                 search:false,
-                toolbar: '#toolbarDemo',
+                toolbar: ['refresh', 'add',
+                {
+                    text: '展开或折叠全部',
+                    icon: 'iconfont icon-add-fill',
+                    class: 'layui-btn layui-btn-sm',
+                    extend: 'id="openAll"',
+                }],
                 url: "auth.rule/index",
                 pk:'id',
                 tree: {
