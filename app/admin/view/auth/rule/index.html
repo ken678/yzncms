@@ -4,7 +4,12 @@
     <div class="layui-card-header">菜单管理</div>
     <div class="layui-card-body">
         <div class="layui-form">
-            <table class="layui-hide" id="currentTable" lay-filter="currentTable" data-auth-add="{:$auth->check('auth.rule/add')}" ></table>
+            <table class="layui-hide" id="currentTable" lay-filter="currentTable" 
+            data-auth-add="{:$auth->check('auth.rule/add')}"
+            data-auth-edit="{:$auth->check('auth.rule/edit')}"
+            data-auth-delete="{:$auth->check('auth.rule/del')}"
+            data-auth-multi="{:$auth->check('auth.rule/multi')}"
+            ></table>
         </div>
     </div>
 </div>

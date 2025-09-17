@@ -14,9 +14,14 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
             Table.render({
                 init: Table.init,
                 elem: Table.init.table_elem,
-                tree:true,
                 search:false,
-                toolbar: ['refresh', 'add',
+                toolbar: ['refresh', 'add', 'edit', 'delete', {
+                    text: '更多',
+                    auth: 'multi',
+                    icon: 'iconfont icon-more-line',
+                    class: 'layui-btn layui-btn-sm layui-btn-primary layui-border btn-disabled layui-btn-disabled',
+                    extend: 'id="dropdown-more"',
+                },
                 {
                     text: '展开或折叠全部',
                     icon: 'iconfont icon-add-fill',
@@ -37,6 +42,7 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 },
                 cols: [
                     [
+                        { type: 'checkbox', fixed: 'left' },
                         { field: 'listorder', width: 60, title: '排序', edit: 'text' },
                         { field: 'id', width: 60, title: 'ID' },
                         { field: 'title', minWidth: 150, align: 'left', title: '菜单名称', },
@@ -62,9 +68,36 @@ define(['jquery', 'table', 'form', 'iconPicker'], function($, Table, Form, iconP
                 done: function(res, curr, count) {
                     $('.layui-btn[lay-event="btn-delone"]').data("success", function (data, ret) {
                         Yzn.api.refreshmenu();
-
                         layui.table.reload(Table.init.table_render_id);
                         return false;
+                    });
+
+                    //更多操作
+                    layui.dropdown.render({
+                        elem: '#dropdown-more',
+                        data: [{
+                            title: '设置显示',
+                            templet: '<i class="iconfont icon-eye-line"></i>&nbsp;设置显示',
+                            params:'status=1'
+                        }, {
+                            title: '设置隐藏',
+                            templet: '<i class="iconfont icon-eye-close-line"></i>&nbsp;设置隐藏',
+                            params:'status=0'
+                        }],
+                        click: function(obj) {
+                            tableId = Table.init.table_render_id;
+                            var ids = Table.api.selectedids(tableId);
+                            if (ids.length <= 0) {
+                                Toastr.error('请勾选需要操作的数据');
+                                return false;
+                            }
+                            Yzn.api.ajax({ 
+                                url: Table.init.multi_url, 
+                                data: { id: ids, param: obj.params } 
+                            }, function(data, ret) {
+                                layui.table.reload(tableId);
+                            });
+                        }
                     });
                 }
             });
