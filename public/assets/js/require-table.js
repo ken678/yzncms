@@ -81,8 +81,14 @@ define(['jquery', 'layui'], function($, layui) {
             },
             // 获取选中的条目ID集合
             selectedids: function(tableId, current) {
-                var checkStatus = table.checkStatus(tableId),
-                    data = checkStatus.data;
+                var options = layui.table.getOptions(tableId);
+                var checkStatus;
+                if (options.tree) {
+                    checkStatus = layui.treeTable.checkStatus(tableId);
+                } else {
+                    checkStatus = table.checkStatus(tableId);
+                }
+                var data = checkStatus.data;
                 var ids = [];
                 $.each(data, function(i, v) {
                     ids.push(v.id);
@@ -91,8 +97,14 @@ define(['jquery', 'layui'], function($, layui) {
             },
             // 获取选中的数据
             selecteddata: function(tableId, current) {
-                var checkStatus = table.checkStatus(tableId),
-                    data = checkStatus.data;
+                var options = layui.table.getOptions(tableId);
+                var checkStatus;
+                if (options.tree) {
+                    checkStatus = layui.treeTable.checkStatus(tableId);
+                } else {
+                    checkStatus = table.checkStatus(tableId);
+                }
+                var data = checkStatus.data;
                 var arr = [];
                 $.each(data, function(i, v) {
                     arr.push(v);
@@ -571,7 +583,12 @@ define(['jquery', 'layui'], function($, layui) {
         listenCheckboxEvent: function(options) {
             table.on('checkbox(' + options.layFilter + ')', function(obj) {
                 //监听表格是否选中，多选按钮禁用恢复
-                var checkStatus = table.checkStatus(obj.config.id);
+                var checkStatus;
+                if (options.tree) {
+                    checkStatus = layui.treeTable.checkStatus(obj.config.id);
+                } else {
+                    checkStatus = table.checkStatus(obj.config.id);
+                }
                 $(Table.config.disabledbtn + '[data-table="' + options.id + '"]').toggleClass('layui-btn-disabled', !checkStatus.data.length);
                 return false;
             })
