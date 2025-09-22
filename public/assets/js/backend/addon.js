@@ -64,7 +64,7 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
                         { field: 'title', width: 200, title: '名称', templet: '#titleTpl' },
                         { field: 'name', width: 150, title: '标识' },
                         { field: 'description', minWidth:250, title: '描述' },
-                        { field: 'author', width: 90, title: '作者' },
+                        { field: 'author', width: 100, title: '作者' },
 
                         {
                             field: 'price',
