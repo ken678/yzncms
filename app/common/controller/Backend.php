@@ -485,7 +485,7 @@ class Backend extends BaseController
                 } else {
                     $result = array_intersect_key(($item instanceof Model ? $item->toArray() : (array) $item), array_flip($fields));
                 }
-                $result['pid'] = $item['pid'] ?? ($item['parent_id'] ?? 0);
+                $result['pid'] = $item['pid'] ?? ($item['parentid'] ?? 0);
                 //安全处理字符
                 $result = array_map(function ($value) {
                     return $value === null ? '' : htmlentities((string) $value);
