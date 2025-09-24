@@ -253,7 +253,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 });
                 //追加上忽略元素
                 setTimeout(function() {
-                    layform.find('.layui-hide,[data-favisible]').find('[lay-verify]').removeAttr('lay-verify');
+                    layform.find('.layui-hide[data-favisible]').find('[lay-verify]').removeAttr('lay-verify');
                 }, 0);
 
                 $("input,textarea,select", layform).trigger("configchange");

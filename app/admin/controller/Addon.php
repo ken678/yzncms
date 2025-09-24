@@ -110,7 +110,7 @@ class Addon extends Backend
             $this->error('配置不存在！');
         }
         if ($this->request->isPost()) {
-            $params = $this->request->post("config/a", [], 'trim');
+            $params = $this->request->post("row/a", [], 'trim');
             if ($params) {
                 foreach ($config as $k => &$v) {
                     if (isset($params[$v['name']])) {
