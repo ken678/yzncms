@@ -209,10 +209,28 @@ define(['yzn'], function(Yzn) {
             });
             var tips_index = 0;
             $(document).on('mouseenter', '[lay-tips]', function() {
-                tips_index = layer.tips($(this).attr('lay-tips'), this, {
-                    tips: 1,
+                var content = $(this).attr('lay-tips');
+                var direction = $(this).attr('lay-tips-direction') || 'top';
+                var bgColor = $(this).attr('lay-tips-bg');
+                var tipsMap = {
+                    'top': 1,
+                    'right': 2,
+                    'bottom': 3,
+                    'left': 4
+                };
+                var tipsDirection = tipsMap[direction] || 1;
+                var options = {
                     time: 0
-                });
+                };
+
+                // 如果有背景色，使用数组格式
+                if (bgColor) {
+                    options.tips = [tipsDirection, bgColor];
+                } else {
+                    options.tips = tipsDirection;
+                }
+                
+                tips_index = layer.tips(content, this, options);
             }).on('mouseleave', '[lay-tips]', function() {
                 layer.close(tips_index);
             });
