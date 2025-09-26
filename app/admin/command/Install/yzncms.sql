@@ -398,31 +398,20 @@ CREATE TABLE `yzn_user_group`  (
   `issystem` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否是系统组',
   `starnum` tinyint(2) UNSIGNED NOT NULL COMMENT '会员组星星数',
   `point` smallint(6) UNSIGNED NOT NULL COMMENT '积分范围',
-  `allowmessage` smallint(5) UNSIGNED NOT NULL DEFAULT 0 COMMENT '许允发短消息数量',
-  `allowvisit` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否允许访问',
-  `allowpost` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否允许发稿',
-  `allowpostverify` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否投稿不需审核',
-  `allowsearch` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否允许搜索',
-  `allowsendmessage` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '允许发送短消息',
-  `allowpostnum` smallint(5) UNSIGNED NOT NULL DEFAULT 0 COMMENT '每天允许发文章数',
-  `allowattachment` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否允许上传附件',
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户组图标',
-  `usernamecolor` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户名颜色',
-  `description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '描述',
   `listorder` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态',
-  `expand` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '拓展',
   `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(10) unsigned DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员组' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of yzn_user_group
 -- ----------------------------
-INSERT INTO `yzn_user_group` VALUES (1, '注册会员', 1, 1, 0, 100, 1, 1, 0, 0, 1, 0, 0, '', '', '', 8, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (2, '初级会员', 1, 2, 50, 150, 0, 1, 0, 0, 1, 0, 0, '', '', '', 7, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (3, '中级会员', 1, 3, 100, 500, 1, 1, 0, 1, 1, 0, 0, '', '', '', 6, 1, '', 1713774138);
-INSERT INTO `yzn_user_group` VALUES (4, '高级会员', 1, 4, 300, 999, 1, 1, 0, 1, 1, 0, 0, '', '', '', 5, 1, '', 1713774138);
+INSERT INTO `yzn_user_group` VALUES (1, '注册会员', 1, 1, 0, 8, 1, 1713774138, 1713774138);
+INSERT INTO `yzn_user_group` VALUES (2, '初级会员', 1, 2, 50, 7, 1, 1713774138, 1713774138);
+INSERT INTO `yzn_user_group` VALUES (3, '中级会员', 1, 3, 100, 6, 1, 1713774138, 1713774138);
+INSERT INTO `yzn_user_group` VALUES (4, '高级会员', 1, 4, 300, 5, 1, 1713774138, 1713774138);
 
 
 -- ----------------------------

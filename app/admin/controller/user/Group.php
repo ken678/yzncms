@@ -17,8 +17,6 @@ namespace app\admin\controller\user;
 use app\admin\model\user\User as UserModel;
 use app\admin\model\user\UserGroup;
 use app\common\controller\Backend;
-use think\db\exception\PDOException;
-use think\exception\ValidateException;
 
 class Group extends Backend
 {
@@ -45,48 +43,6 @@ class Group extends Backend
             return json($result);
         }
         return $this->fetch();
-    }
-
-    /**
-     * 会员组编辑
-     */
-    public function edit()
-    {
-        $id  = $this->request->param('id/d', 0);
-        $row = $this->modelClass->find($id);
-        if (!$row) {
-            $this->error('记录未找到');
-        }
-        if ($this->request->isPost()) {
-            $params                     = $this->request->post('row/a');
-            $params['allowpost']        = $params['allowpost'] ?? 0;
-            $params['allowpostverify']  = $params['allowpostverify'] ?? 0;
-            $params['allowsendmessage'] = $params['allowsendmessage'] ?? 0;
-            $params['allowattachment']  = $params['allowattachment'] ?? 0;
-            $params['allowsearch']      = $params['allowsearch'] ?? 0;
-
-            $result = false;
-            try {
-                //是否采用模型验证
-                if ($this->modelValidate) {
-                    $name     = str_replace("\\model\\", "\\validate\\", get_class($this->modelClass));
-                    $validate = is_bool($this->modelValidate) ? ($this->modelSceneValidate ? $name . '.edit' : $name) : $this->modelValidate;
-                    $this->validateFailException(true)->validate($params, $validate);
-                }
-                $result = $row->save($params);
-            } catch (ValidateException | PDOException | \Exception $e) {
-                $this->error($e->getMessage());
-            }
-
-            if ($result !== false) {
-                $this->success('修改成功');
-            } else {
-                $this->error('未更新任何行');
-            }
-        } else {
-            $this->assign("data", $row);
-            return $this->fetch();
-        }
     }
 
 }

@@ -18,6 +18,8 @@ use think\Model;
 
 class UserGroup extends Model
 {
+    protected $autoWriteTimestamp = true;
+
     public static function onbeforeDelete($row)
     {
         if ($row['issystem']) {

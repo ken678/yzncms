@@ -25,11 +25,6 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                         { field: 'count', width: 100, align: "center", title: '会员数' },
                         { field: 'starnum', width: 100, align: "center", title: '星星数' },
                         { field: 'point', width: 100, align: "center", title: '积分小于' },
-                        { field: 'allowattachment', width: 120, align: "center", title: '允许上传附件', templet: '#allowattachment' },
-                        { field: 'allowpost', width: 100, title: '投稿权限', align: "center", templet: '#allowpost' },
-                        { field: 'allowpostverify', width: 120, title: '投稿不需审核', align: "center", templet: '#allowpostverify' },
-                        { field: 'allowsearch', width: 100, title: '搜索权限', align: "center", templet: '#allowsearch' },
-                        { field: 'allowsendmessage', width: 100, title: '发短消息', align: "center", templet: '#allowsendmessage' },
                         { field: 'status', width: 80, title: '状态', templet: Table.formatter.status, selectList: { 0: '禁用', 1: '正常' }, search: false },
                         {
                             fixed: 'right',
