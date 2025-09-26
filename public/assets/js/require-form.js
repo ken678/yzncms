@@ -251,6 +251,11 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 form.on('radio', function(data) {
                     formEach();
                 });
+                layform.on('reset', function() {
+                    setTimeout(function() {
+                        formEach();
+                    }, 50);
+                });
                 //追加上忽略元素
                 setTimeout(function() {
                     form.verify({
