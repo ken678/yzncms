@@ -253,7 +253,18 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                 });
                 //追加上忽略元素
                 setTimeout(function() {
-                    layform.find('.layui-hide[data-favisible]').find('[lay-verify]').removeAttr('lay-verify');
+                    form.verify({
+                        required: function(value, elem) {
+                            if ($(elem).closest('.layui-hide[data-favisible]').is(':hidden')) {
+                              return;
+                            }
+
+                            if (!/[\S]+/.test(value) || value === undefined || value === null) {
+                                return '必填项不能为空';
+                            }
+                            
+                        }
+                    });
                 }, 0);
 
                 $("input,textarea,select", layform).trigger("configchange");
