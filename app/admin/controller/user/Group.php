@@ -14,7 +14,6 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller\user;
 
-use app\admin\model\user\User as UserModel;
 use app\admin\model\user\UserGroup;
 use app\common\controller\Backend;
 
@@ -34,12 +33,25 @@ class Group extends Backend
     public function index()
     {
         if ($this->request->isAjax()) {
-            $list = $this->modelClass->order(["listorder" => "DESC", "id" => "DESC"])->select();
-            foreach ($list as $k => $v) {
-                //统计会员总数
-                $list[$k]['count'] = UserModel::where("group_id", $v['id'])->count('id');
+            //如果发送的来源是Selectpage，则转发到Selectpage
+            if ($this->request->request('keyField')) {
+                return $this->selectpage();
             }
-            $result = ["code" => 0, "data" => $list];
+            [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
+
+            $count = $this->modelClass
+                ->withCount('user')
+                ->where($where)
+                ->order($sort, $order)
+                ->count();
+
+            $data = $this->modelClass
+                ->withCount('user')
+                ->where($where)
+                ->order($sort, $order)
+                ->page($page, $limit)
+                ->select();
+            $result = ["code" => 0, 'count' => $count, 'data' => $data];
             return json($result);
         }
         return $this->fetch();

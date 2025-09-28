@@ -26,4 +26,9 @@ class UserGroup extends Model
             throw new \Exception('系统用户组[' . $row['name'] . ']不能删除！');
         }
     }
+
+    public function user()
+    {
+        return $this->belongsTo('User', 'id', 'group_id');
+    }
 }
