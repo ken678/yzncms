@@ -112,8 +112,8 @@
 |在线升级|支持YznCMS主程序在线升级|付费|
 
 ## [截图预览]
-![输入图片说明](https://foruda.gitee.com/images/1694497052659798394/3f1a677d_555541.gif "YZNCMS后台管理系统")
-![输入图片说明](https://foruda.gitee.com/images/1694497169122838821/13d1e4fd_555541.png "YZNCMS后台管理系统")
+![输入图片说明](https://foruda.gitee.com/images/1759223051423042536/93d9fe83_555541.gif "YZNCMS后台管理系统")
+![输入图片说明](https://foruda.gitee.com/images/1759220102835422409/72631522_555541.png "YZNCMS后台管理系统")
 
 ## [友情捐赠]  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/175836_7cb23388_555541.jpeg "1547112799941_01.jpg")
