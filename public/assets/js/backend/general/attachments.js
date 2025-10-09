@@ -107,7 +107,11 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
                         { field: 'name', title: '名称' },
                         { field: 'path', width: 70, align: "center", title: '图片', search: false, templet: Controller.api.formatter.thumb },
                         { field: 'size', width: 100, title: '大小', sort: true },
-                        { field: 'mime', width: 120, title: 'Mime类型' },
+                        { field: 'mime', width: 120, title: 'Mime类型',searchOp:'LIKE %...%',
+                            process: function (value, arg) {
+                                return value.replace(/\*/g, '%');
+                            }
+                        },
                         { field: 'create_time', width: 160, title: '上传时间', search: 'range' },
                         { fixed: 'right', width: 85, title: '操作', toolbar: '#barTool' }
                     ]

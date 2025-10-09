@@ -143,6 +143,7 @@ define(['jquery', 'layui'], function($, layui) {
             options.url = Yzn.api.fixurl(options.url || options.init.index_url);
             options.search = Yzn.api.parame(options.search, true);
             options.showSearch = Yzn.api.parame(options.showSearch, true);
+            options.renderDefault = Yzn.api.parame(options.renderDefault, true);
             options.searchFormVisible = Yzn.api.parame(options.searchFormVisible, false);
             options.searchFormTpl = Yzn.api.parame(options.searchFormTpl || options.init.searchFormTpl, false);
             options.defaultToolbar = options.defaultToolbar || ['filter', 'print', 'exports'];
@@ -293,17 +294,21 @@ define(['jquery', 'layui'], function($, layui) {
 
             $.each(cols, function(i, d) {
                 d.field = d.field || false;
-                d.fieldAlias = Yzn.api.parame(d.fieldAlias, d.field);
-                d.title = d.title || d.field || '';
-                d.selectList = d.selectList || {};
                 d.search = Yzn.api.parame(d.search, true);
-                d.searchTip = d.searchTip || '请输入' + d.title || '';
-                d.searchValue = d.searchValue || '';
-                d.searchOp = d.searchOp || '=';
-                d.timeType = d.timeType || 'datetime';
-                d.extend = typeof d.extend === 'undefined' ? '' : d.extend;
-                d.addClass = typeof d.addClass === 'undefined' ? (typeof d.addclass === 'undefined' ? 'layui-input' : 'layui-input ' + d.addclass) : 'layui-input ' + d.addClass;
+
                 if (d.field !== false && d.search !== false) {
+                    var query = Yzn.api.query(d.field);
+                    var renderDefault = options.renderDefault && (typeof d.renderDefault == 'undefined' || d.renderDefault);
+                    d.searchValue = renderDefault && query ? query : (typeof d.searchValue === 'undefined' ? '' : d.searchValue);
+                    d.fieldAlias = Yzn.api.parame(d.fieldAlias, d.field);
+                    d.title = d.title || d.field || '';
+                    d.selectList = d.selectList || {};
+                    d.searchTip = d.searchTip || '请输入' + d.title || '';
+                    d.searchOp = d.searchOp || '=';
+                    d.timeType = d.timeType || 'datetime';
+                    d.extend = typeof d.extend === 'undefined' ? '' : d.extend;
+                    d.addClass = typeof d.addClass === 'undefined' ? (typeof d.addclass === 'undefined' ? 'layui-input' : 'layui-input ' + d.addclass) : 'layui-input ' + d.addClass;
+
                     options.searchColumns.push(d);
                     switch (d.search) {
                         case true:

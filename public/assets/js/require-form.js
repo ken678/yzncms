@@ -99,7 +99,7 @@ define(['jquery', 'layui', 'upload'], function($, layui, Upload) {
                         var user_id = $(this).data("user-id") ? $(this).data("user-id") : '';
                         mimetype = mimetype.replace(/\/\*/ig, '/');
                         var url = $(this).data("url") ? $(this).data("url") : (typeof Backend !== 'undefined' ? "general.attachments/select" : "user/attachment");
-                        parent.Yzn.api.open(url + "?element_id=" + $(this).attr("id") + "&multiple=" + multiple + "&mimetype=" + mimetype + "&admin_id=" + admin_id + "&user_id=" + user_id, '选择', {
+                        parent.Yzn.api.open(url + "?element_id=" + $(this).attr("id") + "&multiple=" + multiple + "&mime=" + mimetype + "&admin_id=" + admin_id + "&user_id=" + user_id, '选择', {
                             callback: function(data) {
                                 var button = $(that);
                                 var maxcount = $(button).data("maxcount");

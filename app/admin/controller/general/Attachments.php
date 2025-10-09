@@ -83,7 +83,7 @@ class Attachments extends Backend
         if ($this->request->isAjax()) {
             return $this->index();
         }
-        $mimetype = $this->request->get('mimetype/s', '');
+        $mimetype = $this->request->get('mime/s', '');
         $mimetype = substr($mimetype, -1) === '/' ? $mimetype . '*' : $mimetype;
         $this->assignconfig('mimetype', $mimetype);
         return $this->fetch();
