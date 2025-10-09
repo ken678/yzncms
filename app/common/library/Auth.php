@@ -174,7 +174,7 @@ class Auth
             $user        = User::create($params);
             $this->_user = User::find($user->id);
             //设置Token
-            $this->_token = Random::uuid();
+            $this->_token = Random::uuid($user->id);
             Token::set($this->_token, $user->id, $this->keeptime);
             //设置登录状态
             $this->_logined = true;
@@ -305,7 +305,7 @@ class Auth
                 $user->save();
 
                 $this->_user  = $user;
-                $this->_token = Random::uuid();
+                $this->_token = Random::uuid($user->id);
                 Token::set($this->_token, $user->id, $this->keeptime);
                 $this->_logined = true;
 
