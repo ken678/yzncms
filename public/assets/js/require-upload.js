@@ -451,10 +451,14 @@ define(['jquery', 'dropzone', 'layui'], function ($, Dropzone, layui) {
                     return Upload.api.upload(element, onUploadSuccess, onUploadError, onUploadComplete);
                 },
                 // AJAX异步上传
-                send: function (file, onUploadSuccess, onUploadError, onUploadComplete) {
+                send: function (file, onUploadSuccess, onUploadError, onUploadComplete, options) {
                     var index = layer.msg('上传中', {offset: 't', time: 0, icon: 0});
                     var id = "dropzone-" + Dropzone.uuidv4();
-                    $('<button type="button" id="' + id + '" class="btn btn-danger hidden faupload" />').appendTo("body");
+                    var button = $('<button type="button" id="' + id + '" class="btn btn-danger hidden faupload" />');
+                    if(options && typeof options === 'object'){
+                        button.data(options);
+                    }
+                    button.appendTo("body");
                     $("#" + id).data("upload-complete", function (files) {
                         layer.close(index);
                         Upload.list[id].removeAllFiles(true);
