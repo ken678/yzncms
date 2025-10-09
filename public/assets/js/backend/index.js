@@ -7,18 +7,18 @@ define(['jquery', 'form'], function($, Form) {
                     "menu": {
                         "data": Yzn.api.fixurl("index/index"),
                         "method": "POST",
-                        "accordion": true,
-                        "collapse": false,
-                        "control": false, //菜单模式 false 为常规菜单，true 为多系统菜单
+                        "accordion": true, // 是否开启手风琴效果
+                        "collapse": false, // 菜单是否默认收缩(折叠)
+                        "control": false, // 菜单模式: false为常规菜单，true为多系统菜单
                         "select": 0,
                         "async": true
                     },
                     "tab": {
-                        "enable": true,
+                        "enable": true, // 是否启用标签页功能
                         "keepState": true,
                         "session": true,
                         "preload": true,
-                        "max": "10",
+                        "max": "10", // 最大允许打开的标签页数量
                         "index": {
                             "id": 0,
                             "href": Yzn.api.fixurl("main/index"),
