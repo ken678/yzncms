@@ -125,13 +125,13 @@ define(['jquery', 'frontend', 'form'], function($, Frontend, Form) {
                 var multiple = Yzn.api.query('multiple');
                 multiple = multiple == 'true' ? true : false;
 
-                var toolbar = ['refresh', [{
+                var toolbar = ['refresh', {
                     html: '<button type="button" class="layui-btn layui-btn-sm faupload" data-multiple="true" data-mimetype="' + Config.mimetype + '"><i class="iconfont icon-upload-line"></i> 上传</button>'
-                }]];
+                }];
                 if (multiple) {
-                    toolbar.push([{
+                    toolbar.push({
                         html: '<button class="layui-btn layui-btn-danger layui-btn-sm btn-choose-multi"><i class="iconfont icon-check-line"></i> 选择</button>'
-                    }]);
+                    });
                 }
 
                 Table.init = {
@@ -142,14 +142,15 @@ define(['jquery', 'frontend', 'form'], function($, Frontend, Form) {
                 Table.render({
                     init: Table.init,
                     toolbar: toolbar,
+                    renderDefault: true,
                     elem: '#currentTable',
                     url: 'user/attachment',
                     lineStyle: 'height: 60px;',
                     cols: [
                         [
                             { type: 'checkbox', fixed: 'left', hide: (multiple ? false : true) },
-                            { field: 'id', width: 60, title: 'ID', sort: true },
-                            { field: 'name', title: '名称' },
+                            { field: 'id', width: 60, title: 'ID', sort: true, search: false },
+                            { field: 'name', title: '文件名' },
                             {
                                 field: 'path',
                                 width: 100,
@@ -166,7 +167,7 @@ define(['jquery', 'frontend', 'form'], function($, Frontend, Form) {
                                     return '<div style="width:70px;margin:0 auto;text-align:center;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;">' + html + '</div>';
                                 }
                             },
-                            { field: 'size', width: 100, title: '大小', sort: true },
+                            { field: 'size', width: 100, title: '大小', sort: true, search: false },
                             { field: 'mime', width: 100, title: 'Mime类型' },
                             { field: 'create_time', width: 160, title: '上传时间', search: 'range' },
                             { fixed: 'right', width: 70, title: '操作', toolbar: '#barTool' }

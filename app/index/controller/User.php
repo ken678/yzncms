@@ -376,45 +376,45 @@ class User extends Frontend
     {
         $this->request->filter('trim,strip_tags');
         if ($this->request->isAjax()) {
-            $page    = $this->request->param('page', 1);
-            $limit   = $this->request->param('limit', 15);
-            $filters = $this->request->param('filter', '{}');
-            $ops     = $this->request->param('op', '{}');
-            $filters = (array) json_decode($filters, true);
-            $ops     = (array) json_decode($ops, true);
-            $where   = [];
-            foreach ($filters as $key => $val) {
-                $op = isset($ops[$key]) && !empty($ops[$key]) ? $ops[$key] : '%*%';
-                switch (strtolower($op)) {
-                    case '=':
-                        $where[] = [$key, '=', $val];
-                        break;
-                    case '%*%':
-                        $where[] = [$key, 'LIKE', "%{$val}%"];
-                        break;
-                    case '*%':
-                        $where[] = [$key, 'LIKE', "{$val}%"];
-                        break;
-                    case '%*':
-                        $where[] = [$key, 'LIKE', "%{$val}"];
-                        break;
-                    case 'range':
-                        list($beginTime, $endTime) = explode(' - ', $val);
-                        $where[]                   = [$key, '>=', strtotime($beginTime)];
-                        $where[]                   = [$key, '<=', strtotime($endTime)];
-                        break;
-                    default:
-                        $where[] = [$key, $op, "%{$val}"];
+            $mimetypeQuery = [];
+            $where         = [];
+            $filter        = $this->request->request('filter');
+            $filterArr     = (array) json_decode($filter, true);
+            if (isset($filterArr['mime']) && preg_match("/(\/|\,|\*)/", $filterArr['mime'])) {
+                $this->request->get(['filter' => json_encode(array_diff_key($filterArr, ['mime' => '']))]);
+                $mimetypeQuery = function ($query) use ($filterArr) {
+                    $mimetypeArr = array_filter(explode(',', $filterArr['mime']));
+                    foreach ($mimetypeArr as $index => $item) {
+                        $query->whereOr('mime', 'like', '%' . str_replace("/*", "/", $item) . '%');
+                    }
                 };
-            };
+            } elseif (isset($filterArr['mime'])) {
+                $where[] = ['mime', 'like', '%' . $filterArr['mime'] . '%'];
+            }
+
+            if (isset($filterArr['name'])) {
+                $where[] = ['name', 'like', '%' . $filterArr['name'] . '%'];
+            }
+
+            if (isset($filterArr['create_time'])) {
+                $timeArr = explode(' - ', $filterArr['create_time']);
+                $where[] = ['create_time', 'between', [strtotime($timeArr[0]), strtotime($timeArr[1])]];
+            }
+            $search = $this->request->get('search');
+            if ($search) {
+                $where[] = ['name', 'like', '%' . $search . '%'];
+            }
+
+            $page  = $this->request->get("page/d", 1);
+            $limit = $this->request->get("limit/d", 0);
 
             $total = Attachment::where($where)
-                ->where($where)
+                ->where($mimetypeQuery)
                 ->where('user_id', $this->auth->id)
                 ->order('id', 'desc')
                 ->count();
             $list = Attachment::where($where)
-                ->where($where)
+                ->where($mimetypeQuery)
                 ->where('user_id', $this->auth->id)
                 ->page($page, $limit)
                 ->order('id', 'desc')
@@ -422,7 +422,7 @@ class User extends Frontend
             $result = ["code" => 0, "count" => $total, "data" => $list];
             return json($result);
         }
-        $mimetype = $this->request->param('mimetype', '');
+        $mimetype = $this->request->param('mime', '');
         $mimetype = substr($mimetype, -1) === '/' ? $mimetype . '*' : $mimetype;
         $this->assignconfig('mimetype', $mimetype);
         return $this->fetch();

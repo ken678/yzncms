@@ -97,6 +97,7 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
             Table.render({
                 init: Table.init,
                 elem: Table.init.table_elem,
+                renderDefault: true,
                 toolbar: toolbar,
                 url: 'general.attachments/index',
                 lineStyle: 'height: 50px;',
