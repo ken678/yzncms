@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "45745591",
+      "name": "filter-3-fill",
+      "font_class": "filter-3-fill",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "45745590",
+      "name": "filter-3-line",
+      "font_class": "filter-3-line",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "45745503",
+      "name": "filter-fill",
+      "font_class": "filter-fill",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "45745504",
+      "name": "filter-line",
+      "font_class": "filter-line",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "45745535",
+      "name": "filter-2-line",
+      "font_class": "filter-2-line",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "45745534",
+      "name": "filter-2-fill",
+      "font_class": "filter-2-fill",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
       "icon_id": "24695700",
       "name": "award-fill",
       "font_class": "award-fill",
