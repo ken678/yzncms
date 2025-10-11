@@ -48,7 +48,7 @@ define(['jquery', 'table', 'form', 'jstree'], function($, Table, Form, undefined
                                 if (Config.admin.group_ids.indexOf(parseInt(d.id)) > -1) {
                                     return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
                                 } else {
-                                    return Table.formatter.tool.call(this, d, this);
+                                    return Table.formatter.tool.call(this, d);
                                 }
                             },
                             operat: ['edit', 'delete']

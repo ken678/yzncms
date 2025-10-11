@@ -30,7 +30,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                                 if (d.id == Config.admin.id) {
                                     return '<a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-disabled">不可操作</a>';
                                 } else {
-                                    return Table.formatter.tool.call(this, d, this);
+                                    return Table.formatter.tool.call(this, d);
                                 }
                             },
                             operat: ['edit', 'delete']
