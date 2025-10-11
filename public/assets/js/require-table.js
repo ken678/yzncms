@@ -143,7 +143,7 @@ define(['jquery', 'layui'], function($, layui) {
             options.url = Yzn.api.fixurl(options.url || options.init.index_url);
             options.search = Yzn.api.parame(options.search, true);
             options.showSearch = Yzn.api.parame(options.showSearch, true);
-            options.renderDefault = Yzn.api.parame(options.renderDefault, true);
+            options.renderDefault = Yzn.api.parame(options.renderDefault, false);
             options.searchFormVisible = Yzn.api.parame(options.searchFormVisible, false);
             options.searchFormTpl = Yzn.api.parame(options.searchFormTpl || options.init.searchFormTpl, false);
             options.defaultToolbar = options.defaultToolbar || ['filter', 'print', 'exports'];
