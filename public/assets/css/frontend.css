@@ -245,10 +245,10 @@ pre{padding: 10px 15px; margin: 10px 0; font-size: 12px; border-left: 6px solid 
 
 /*白色主题*/
 .light-theme .fly-user-main>.layui-nav{background-color: #fff;}
-.light-theme .layui-nav .layui-nav-item a{color:#000}
+.light-theme .layui-nav .layui-nav-item a{color:#666}
 .light-theme .layui-nav-tree .layui-this{background: #fff !important}
 .light-theme .layui-nav-tree .layui-nav-child dd.layui-this, .light-theme .layui-nav-tree .layui-nav-child dd.layui-this a, .light-theme .layui-nav-tree .layui-this>a, .light-theme .layui-nav-tree .layui-this>a:hover {font-weight: 700;border-left: 1px solid #1e9fff;}
-.light-theme .layui-nav-itemed>a,.light-theme .layui-nav-tree .layui-nav-title a,.light-theme .layui-nav-tree .layui-nav-title a:hover {color: #000 !important;}
+.light-theme .layui-nav-itemed>a,.light-theme .layui-nav-tree .layui-nav-title a,.light-theme .layui-nav-tree .layui-nav-title a:hover {color: #666 !important;}
 .light-theme .layui-nav-itemed>.layui-nav-child {background-color: #fff !important;}
 .light-theme .layui-nav {background-color: #fff;}
 .light-theme .fly-user-main .fly-userinfo{background: #fff;}
