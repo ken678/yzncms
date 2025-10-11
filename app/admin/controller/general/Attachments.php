@@ -28,7 +28,9 @@ class Attachments extends Backend
         parent::initialize();
         $this->modelClass = new AttachmentModel;
         $this->uploadUrl  = config('upload.cdnurl') . '/uploads/';
+
         $this->assign("categoryList", AttachmentModel::getCategoryList());
+        $this->assignconfig("mimetypeList", AttachmentModel::getMimetypeList());
         $this->assignconfig("categoryList", AttachmentModel::getCategoryList());
     }
 

@@ -44,6 +44,23 @@ class Attachment extends Model
     }
 
     /**
+     * 获取Mimetype列表
+     * @return array
+     */
+    public static function getMimetypeList()
+    {
+        $data = [
+            "image/*"        => "图片",
+            "audio/*"        => "音频",
+            "video/*"        => "视频",
+            "text/*"         => "文档",
+            "application/*"  => "应用",
+            "zip,rar,7z,tar" => "压缩包",
+        ];
+        return $data;
+    }
+
+    /**
      * 获取定义的附件类别列表
      * @return array
      */

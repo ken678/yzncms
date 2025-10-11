@@ -35,7 +35,7 @@ define(['jquery', 'table', 'form', 'upload'], function($, Table, Form, Upload) {
                         { field: 'path', width: 450, align: "center", title: '物理路径', hide:true, searchOp: 'like' },
                         { field: 'size', width: 100, title: '大小', sort: true,search: 'between', searchTip: '文件大小' },
                         { field: 'ext', width: 80, title: '类型', searchOp: 'like' },
-                        { field: 'mime', width: 140, title: 'Mime类型', selectList: { 'image/*': '图片', 'audio/*': '音频', 'video/*': '视频', 'text/*': '文档', 'application/*': '应用', 'zip,rar,7z,tar': '压缩包' }, extend: "lay-search lay-creatable" },
+                        { field: 'mime', width: 140, title: 'Mime类型', selectList: Config.mimetypeList, extend: "lay-search lay-creatable" },
                         { field: 'driver', width: 90, title: '存储引擎', searchOp: 'like' },
                         { field: 'create_time', width: 170, title: '上传时间', search: 'range' },
                         { width: 60, title: '操作', templet: Table.formatter.tool, operat: ['delete'] }
