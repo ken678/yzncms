@@ -47,8 +47,6 @@ trait Backend
      */
     public function index()
     {
-        //设置过滤方法
-        $this->request->filter(['strip_tags', 'trim']);
         if ($this->request->isAjax()) {
             //如果发送的来源是Selectpage，则转发到Selectpage
             if ($this->request->request('keyField')) {
@@ -77,8 +75,6 @@ trait Backend
      */
     public function recyclebin()
     {
-        //设置过滤方法
-        $this->request->filter(['strip_tags', 'trim']);
         if ($this->request->isAjax()) {
             [$page, $limit, $where, $sort, $order] = $this->buildTableParames();
 
