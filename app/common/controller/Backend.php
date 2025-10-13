@@ -250,6 +250,7 @@ class Backend extends BaseController
                     $sym = '=';
                 }
             }
+            $sym = $this->getMappedOperator($sym);
 
             switch ($sym) {
                 case '=':
@@ -350,6 +351,22 @@ class Backend extends BaseController
             }
         };
         return [$page, $limit, $where, $sort, $order, $offset, $alias, $bind];
+    }
+
+    /**
+     * 解析操作符
+     */
+    protected function getMappedOperator($operator)
+    {
+        $operatorMap = [
+            'EQ'  => '=',
+            'NEQ' => '<>',
+            'GT'  => '>',
+            'EGT' => '>=',
+            'LT'  => '<',
+            'ELT' => '<=',
+        ];
+        return $operatorMap[$operator] ?? $operator;
     }
 
     /**

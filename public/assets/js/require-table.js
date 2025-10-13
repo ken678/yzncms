@@ -304,7 +304,7 @@ define(['jquery', 'layui'], function($, layui) {
                     d.title = d.title || d.field || '';
                     d.selectList = d.selectList || {};
                     d.searchTip = d.searchTip || '请输入' + d.title || '';
-                    d.searchOp = d.searchOp || '=';
+                    d.searchOp = d.searchOp || 'eq';
                     d.timeType = d.timeType || 'datetime';
                     d.extend = typeof d.extend === 'undefined' ? '' : d.extend;
                     d.addClass = typeof d.addClass === 'undefined' ? (typeof d.addclass === 'undefined' ? 'layui-input' : 'layui-input ' + d.addclass) : 'layui-input ' + d.addClass;
@@ -321,7 +321,6 @@ define(['jquery', 'layui'], function($, layui) {
                                 '</div>';
                             break;
                         case 'select':
-                            //d.searchOp = '=';
                             var selectHtml = '';
                             $.each(d.selectList, function(sI, sV) {
                                 var selected = '';
@@ -352,7 +351,7 @@ define(['jquery', 'layui'], function($, layui) {
                                 '</div>';
                             break;
                         case 'time':
-                            d.searchOp = '=';
+                            d.searchOp = 'eq';
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
                                 '<div class="layui-input-inline">\n' +
