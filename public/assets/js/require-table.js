@@ -350,15 +350,6 @@ define(['jquery', 'layui'], function($, layui) {
                                 '</div>\n' +
                                 '</div>';
                             break;
-                        case 'time':
-                            d.searchOp = 'eq';
-                            formHtml += '\t<div class="layui-form-item layui-inline">\n' +
-                                '<label class="layui-form-label">' + d.title + '</label>\n' +
-                                '<div class="layui-input-inline">\n' +
-                                '<input class="datetime ' + d.addClass + '" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '"  value="' + d.searchValue + '" placeholder="' + d.searchTip + '" ' + d.extend + '>\n' +
-                                '</div>\n' +
-                                '</div>';
-                            break;
                         case 'between':
                             d.searchOp = 'BETWEEN';
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
