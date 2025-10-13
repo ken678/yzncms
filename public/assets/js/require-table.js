@@ -355,11 +355,11 @@ define(['jquery', 'layui'], function($, layui) {
                             formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                 '<input type="hidden" class="operate" name="' + d.fieldAlias + '-operate" data-name="' + d.fieldAlias + '" value="' + d.searchOp + '" readonly>\n' +
                                 '<label class="layui-form-label">' + d.title + '</label>\n' +
-                                '<div class="layui-input-inline" style="width: 80px;">\n' +
+                                '<div class="layui-input-inline" style="width: 83px;">\n' +
                                 '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="' + d.addClass + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '<div class="layui-form-mid">-</div>\n' +
-                                '<div class="layui-input-inline" style="width: 80px;">\n' +
+                                '<div class="layui-input-inline" style="width: 83px;">\n' +
                                 '<input type="text" name="' + d.fieldAlias + '" id="' + d.fieldAlias + '-min" placeholder="' + d.searchTip + '" autocomplete="off" class="' + d.addClass + '" ' + d.extend + '>\n' +
                                 '</div>\n' +
                                 '</div>';
