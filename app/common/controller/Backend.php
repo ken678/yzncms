@@ -65,6 +65,8 @@ class Backend extends BaseController
     protected $modelValidate = false;
     //是否开启模型场景验证
     protected $modelSceneValidate = false;
+    //表查询参数预处理规则（用于 buildTableParames）
+    protected $tableParamsFilters = ['trim', 'strip_tags'];
 
     /*
      * 引入后台控制器的traits
@@ -179,11 +181,13 @@ class Backend extends BaseController
      */
     protected function buildTableParames($searchfields = null, $excludeFields = [], $relationSearch = null)
     {
+        //设置过滤方法
+        $this->request->filter($this->tableParamsFilters);
         $searchfields   = is_null($searchfields) ? $this->searchFields : $searchfields;
         $relationSearch = is_null($relationSearch) ? $this->relationSearch : $relationSearch;
         $search         = $this->request->get("search", '');
         $filter         = $this->request->get("filter", '');
-        $op             = $this->request->get("op", '', 'trim');
+        $op             = $this->request->get("op", '');
         $sort           = $this->request->get("sort", !empty($this->modelClass) && $this->modelClass->getPk() ? $this->modelClass->getPk() : 'id');
         $order          = $this->request->get("order", "DESC");
         $limit          = $this->request->get("limit/d", 999999);
