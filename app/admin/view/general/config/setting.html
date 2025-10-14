@@ -18,25 +18,25 @@
                         {switch name="vo.type"}
                             {case value="text"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
+                                <input {$vo.extend_html} type="text" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}">
                             </div>
                             {/case}
 
                             {case value="password"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} type="password" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}" lay-affix="eye">
+                                <input {$vo.extend_html} type="password" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" class="layui-input" value="{$vo.value}" lay-affix="eye">
                             </div>
                             {/case}
 
                             {case value="tags"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} type="text" name="{$vo.fieldArr}[{$vo.name}]" class="layui-input form-tags tags-{$vo.name}" value="{$vo.value}" data-remark="{$vo.remark|default='输入回车键确认'}">
+                                <input {$vo.extend_html} type="text" name="{$vo.fieldArr}[{$vo.name}]" class="layui-input form-tags tags-{$vo.name}" value="{$vo.value}" data-remark="{$vo.remark|default='输入回车键确认'}">
                             </div>
                             {/case}
 
                             {case value="number"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} type="number" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" lay-affix="number" class="layui-input" value="{$vo.value}">
+                                <input {$vo.extend_html} type="number" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" autocomplete="off" lay-affix="number" class="layui-input" value="{$vo.value}">
                             </div>
                             {/case}
 
@@ -47,7 +47,7 @@
                             {/case}
 
                             {case value="array"}
-                            <dl {$vo.extend_html|raw} class="layui-input-block fieldlist" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}">
+                            <dl {$vo.extend_html} class="layui-input-block fieldlist" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}">
                                 <dd>
                                     <ins>键名</ins>
                                     <ins>键值</ins>
@@ -85,20 +85,20 @@
 
                             {case value="selects"}
                             <div class="layui-input-block">
-                                <div {$vo.extend_html|raw} class="form-selects" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}" data-value="{$vo.value}" data-list="{$vo.options|json_encode}"></div>
+                                <div {$vo.extend_html} class="form-selects" data-name="{$vo.fieldArr}[{$vo.name}]" data-id="{$vo.name}" data-value="{$vo.value}" data-list="{$vo.options|json_encode}"></div>
                             </div>
                             {/case}
 
                             {case value="selectpage"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} class="form-control layui-input selectpage" type="text" name="{$vo.fieldArr}[{$vo.name}]" data-source="{$vo.options.url|url}" data-multiple="{$vo.options.multiple|default='false'}" data-field="{$vo.options.field|default='name'}" data-primary-key="{$vo.options.key|default='id'}" data-max-select-limit="{$vo.options.max|default='20'}" data-pagination="{$vo.options.pagination|default='true'}" data-page-size="{$vo.options.limit|default='10'}" data-order-by="{$vo.options.order|default='id'}"  value="{$vo.value}">
+                                <input {$vo.extend_html} class="form-control layui-input selectpage" type="text" name="{$vo.fieldArr}[{$vo.name}]" data-source="{$vo.options.url|url}" data-multiple="{$vo.options.multiple|default='false'}" data-field="{$vo.options.field|default='name'}" data-primary-key="{$vo.options.key|default='id'}" data-max-select-limit="{$vo.options.max|default='20'}" data-pagination="{$vo.options.pagination|default='true'}" data-page-size="{$vo.options.limit|default='10'}" data-order-by="{$vo.options.order|default='id'}"  value="{$vo.value}">
                             </div>
                             {/case}
 
                             {case value="color"}
                             <div class="layui-input-block">
                                 <div class="layui-input-inline" style="width: 120px;">
-                                    <input {$vo.extend_html|raw} type="text" name="{$vo.fieldArr}[{$vo.name}]" value="{$vo.value}" placeholder="请选择颜色" class="layui-input test-form-input" id="c-{$vo.name}">
+                                    <input {$vo.extend_html} type="text" name="{$vo.fieldArr}[{$vo.name}]" value="{$vo.value}" placeholder="请选择颜色" class="layui-input test-form-input" id="c-{$vo.name}">
                                 </div>
                                 <div class="layui-inline" style="left: -11px;">
                                     <div class="colorpicker" data-input-id="c-{$vo.name}"></div>
@@ -108,19 +108,19 @@
 
                             {case value="datetime"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} type="text" class="layui-input datetime" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}">
+                                <input {$vo.extend_html} type="text" class="layui-input datetime" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}">
                             </div>
                             {/case}
 
                             {case value="datetimerange"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} type="text" class="layui-input datetime" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}" data-date-range="-">
+                                <input {$vo.extend_html} type="text" class="layui-input datetime" name="{$vo.fieldArr}[{$vo.name}]" placeholder="请输入{$vo.title}" value="{$vo.value}" data-date-range="-">
                             </div>
                             {/case}
 
                             {case value="textarea"}
                             <div class="layui-input-block">
-                                <textarea {$vo.extend_html|raw} placeholder="请输入{$vo.title}" class="layui-textarea" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
+                                <textarea {$vo.extend_html} placeholder="请输入{$vo.title}" class="layui-textarea" name="{$vo.fieldArr}[{$vo.name}]">{$vo.value}</textarea>
                             </div>
                             {/case}
 
@@ -147,27 +147,27 @@
 
                             {case value="editor"}
                             <div class="layui-input-block">
-                                <textarea {$vo.extend_html|raw} name="{$vo.fieldArr}[{$vo.name}]" id="editor-{$vo.name}" class="layui-textarea editor" rows="5">{$vo.value}</textarea>
+                                <textarea {$vo.extend_html} name="{$vo.fieldArr}[{$vo.name}]" id="editor-{$vo.name}" class="layui-textarea editor" rows="5">{$vo.value}</textarea>
                             </div>
                             {/case}
 
                             {case value="markdown"}
                             <div class="layui-input-block">
-                                <textarea {$vo.extend_html|raw} name="{$vo.fieldArr}[{$vo.name}]" id="markdown-{$vo.name}" class="layui-textarea markdown" rows="5">{$vo.value}</textarea>
+                                <textarea {$vo.extend_html} name="{$vo.fieldArr}[{$vo.name}]" id="markdown-{$vo.name}" class="layui-textarea markdown" rows="5">{$vo.value}</textarea>
                             </div>
                             {/case}
 
                             {case value="city"}
                             <div class="layui-input-block">
-                                <input {$vo.extend_html|raw} type="text" autocomplete="on" class="layui-input" name="{$vo.fieldArr}[{$vo.name}]" id="{$vo.name}" value="{$vo.value}" data-toggle="city-picker" placeholder="请选择"/>
+                                <input {$vo.extend_html} type="text" autocomplete="on" class="layui-input" name="{$vo.fieldArr}[{$vo.name}]" id="{$vo.name}" value="{$vo.value}" data-toggle="city-picker" placeholder="请选择"/>
                             </div>
                             {/case}
 
                             {case value="custom"}
-                               {$vo.options|raw}
+                               {$vo.options}
                             {/case}
                         {/switch}
-                        {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark|raw}</div>{/if}
+                        {if $vo.remark}<div class="layui-form-mid no-float layui-word-aux">{$vo.remark}</div>{/if}
                     </div>
                 </div>
                 {/volist}

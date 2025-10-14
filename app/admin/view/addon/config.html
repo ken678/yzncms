@@ -7,7 +7,7 @@
             {if $data.tips.title}
             <b>{$data.tips.title}</b><br>
             {/if}
-            {$data.tips.value|raw}
+            {$data.tips.value}
         </div>
         {/if}
 
@@ -30,24 +30,24 @@
                         {switch name="form.type"}
                             {case value="text"}
                             <div class="layui-input-block">
-                                <input {$form.extend|raw} type="text" name="row[{$form.name}]" lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                                <input {$form.extend} type="text" name="row[{$form.name}]" lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                             </div>
                             {/case}
 
                             {case value="number"}
                             <div class="layui-input-block">
-                                <input {$form.extend|raw} type="number" name="row[{$form.name}]" lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" autocomplete="off" lay-affix="number" class="layui-input" value="{$form.value}">
+                                <input {$form.extend} type="number" name="row[{$form.name}]" lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" autocomplete="off" lay-affix="number" class="layui-input" value="{$form.value}">
                             </div>
                             {/case}
 
                             {case value="password"}
                             <div class="layui-input-block">
-                                <input {$form.extend|raw} type="password" name="row[{$form.name}]" lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
+                                <input {$form.extend} type="password" name="row[{$form.name}]" lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" autocomplete="off" class="layui-input" value="{$form.value}">
                             </div>
                             {/case}
 
                             {case value="array"}
-                            <dl {$form.extend|raw} class="layui-input-block fieldlist" data-name="row[{$form.name}]" data-id="{$form.name}">
+                            <dl {$form.extend} class="layui-input-block fieldlist" data-name="row[{$form.name}]" data-id="{$form.name}">
                                 <dd>
                                     <ins>键名</ins>
                                     <ins>键值</ins>
@@ -86,7 +86,7 @@
 
                             {case value="textarea"}
                             <div class="layui-input-block">
-                                <textarea {$form.extend|raw} lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" class="layui-textarea" name="row[{$form.name}]">{$form.value}</textarea>
+                                <textarea {$form.extend} lay-verify="{$form.rule ?? ''}" placeholder="请输入{$form.title}" class="layui-textarea" name="row[{$form.name}]">{$form.value}</textarea>
                             </div>
                             {/case}
 
@@ -113,11 +113,11 @@
 
                             {case value="editor"}
                             <div class="layui-input-block">
-                                <textarea {$form.extend|raw} name="row[{$form.name}]" id="editor-{$form.name}" class="layui-textarea editor" rows="5">{$form.value}</textarea>
+                                <textarea {$form.extend} name="row[{$form.name}]" id="editor-{$form.name}" class="layui-textarea editor" rows="5">{$form.value}</textarea>
                             </div>
                             {/case}
                         {/switch}
-                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip|raw}</div>{/if}
+                        {if isset($form.tip) && $form.tip}<div class="layui-form-mid no-float layui-word-aux">{$form.tip}</div>{/if}
                     </div>
                 </div>
                 {/if}
