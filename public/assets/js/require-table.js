@@ -627,7 +627,11 @@ define(['jquery', 'layui'], function($, layui) {
                 } else {
                     object.val(value);
                 }
-                table.reloadData(options.id);
+                table.reloadData(options.id,{
+                    page: {
+                        curr: 1 // 重置到第一页
+                    }
+                });
             })
         },
         listenSwitch: function(options) {
