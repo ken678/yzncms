@@ -505,7 +505,11 @@ define(['jquery', 'layui'], function($, layui) {
                 }
             });
             //快速搜索
-            $(document).on('blur', '#layui-input-search-' + tableId, function(event) {
+            $(document).on('blur keydown', '#layui-input-search-' + tableId, function(event) {
+                if (event.type === 'keydown' && event.keyCode !== 13) {
+                    return true;
+                }
+                
                 var text = $(this).val();
                 table.reloadData(tableId, { where: { search: text } });
                 $(this).prop("value", $(this).val());
