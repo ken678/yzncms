@@ -219,7 +219,11 @@ define(['jquery', 'backend', 'table', 'form', 'layui', 'upload'], function($, Ba
             layui.tabs.on(`afterChange(tabswitch)`, function(data) {
                 var value = $(this).data("id");
                 $('input[name="category_id"]').val(value);
-                table.reload(Table.init.table_render_id);
+                table.reload(Table.init.table_render_id,{
+                    page: {
+                        curr: 1 // 重置到第一页
+                    }
+                });
             })
 
             // 会员信息
