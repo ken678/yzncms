@@ -1014,7 +1014,7 @@ class Crud extends Command
             }
 
             //JS最后一列加上操作列
-            $javascriptList[] = str_repeat(" ", 15) . "{fixed: 'right',width:90,field: 'operate', title: '操作',templet: Table.formatter.tool,operat: ['edit','delete']}";
+            $javascriptList[] = str_repeat(" ", 15) . "{fixed: 'right',width:90,title: '操作',templet: Table.formatter.tool,operat: ['edit','delete']}";
 
             $addList        = implode("\n", array_filter($addList));
             $editList       = implode("\n", array_filter($editList));
