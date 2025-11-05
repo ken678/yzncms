@@ -627,7 +627,7 @@ define(['jquery', 'layui'], function($, layui) {
                 } else {
                     object.val(value);
                 }
-                table.reloadData(options.id,{
+                table.reload(options.id,{
                     page: {
                         curr: 1 // 重置到第一页
                     }
