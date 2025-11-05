@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24696607",
+      "name": "file-forbid-fill",
+      "font_class": "file-forbid-fill",
+      "unicode": "e826",
+      "unicode_decimal": 59430
+    },
+    {
+      "icon_id": "24696608",
+      "name": "file-forbid-line",
+      "font_class": "file-forbid-line",
+      "unicode": "e827",
+      "unicode_decimal": 59431
+    },
+    {
+      "icon_id": "24696615",
+      "name": "file-info-fill",
+      "font_class": "file-info-fill",
+      "unicode": "e829",
+      "unicode_decimal": 59433
+    },
+    {
+      "icon_id": "24696616",
+      "name": "file-info-line",
+      "font_class": "file-info-line",
+      "unicode": "e82a",
+      "unicode_decimal": 59434
+    },
+    {
+      "icon_id": "24696655",
+      "name": "file-unknow-fill",
+      "font_class": "file-unknow-fill",
+      "unicode": "e83e",
+      "unicode_decimal": 59454
+    },
+    {
+      "icon_id": "24696656",
+      "name": "file-unknow-line",
+      "font_class": "file-unknow-line",
+      "unicode": "e83f",
+      "unicode_decimal": 59455
+    },
+    {
+      "icon_id": "24696662",
+      "name": "file-warning-fill",
+      "font_class": "file-warning-fill",
+      "unicode": "e840",
+      "unicode_decimal": 59456
+    },
+    {
+      "icon_id": "24696663",
+      "name": "file-warning-line",
+      "font_class": "file-warning-line",
+      "unicode": "e841",
+      "unicode_decimal": 59457
+    },
+    {
       "icon_id": "45745591",
       "name": "filter-3-fill",
       "font_class": "filter-3-fill",
