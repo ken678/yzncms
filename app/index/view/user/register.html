@@ -28,7 +28,7 @@ html,body{background: #f4f6f8;overflow-x: inherit;}
                 {if config('yzn.user_mobile_verify')}
                 <div class="layui-form-item">
                     <div class="layui-row">
-                        <div class="layui-col-xs7">
+                        <div class="layui-col-xs6">
                             <div class="layui-input-wrap">
                                 <div class="layui-input-prefix">
                                     <label class="layui-icon layui-icon-vercode"></label>
@@ -36,7 +36,7 @@ html,body{background: #f4f6f8;overflow-x: inherit;}
                                 <input type="text" name="captcha_mobile" required="" lay-verify="required" autocomplete="off" value="" class="layui-input" placeholder="手机验证码">
                             </div>
                         </div>
-                        <div class="layui-col-xs5">
+                        <div class="layui-col-xs6">
                             <div style="margin-left: 11px;">
                                 <button class="layui-btn btn-captcha layui-btn-primary layui-border-blue" type="button" data-event="register" data-type="mobile" data-url="{:url('api/sms/send')}">获取验证码</button>
                             </div>
@@ -63,7 +63,7 @@ html,body{background: #f4f6f8;overflow-x: inherit;}
                 {if config('yzn.user_email_verify')}
                 <div class="layui-form-item">
                     <div class="layui-row">
-                        <div class="layui-col-xs7">
+                        <div class="layui-col-xs6">
                             <div class="layui-input-wrap">
                                 <div class="layui-input-prefix">
                                     <label class="layui-icon layui-icon-vercode"></label>
@@ -71,7 +71,7 @@ html,body{background: #f4f6f8;overflow-x: inherit;}
                                 <input type="text" name="captcha_email" required="" lay-verify="required" autocomplete="off" value="" class="layui-input" placeholder="邮箱验证码">
                             </div>
                         </div>
-                        <div class="layui-col-xs5">
+                        <div class="layui-col-xs6">
                             <div style="margin-left: 11px;">
                                 <button class="layui-btn btn-captcha layui-btn-primary layui-border-blue" type="button" data-event="register" data-type="email" data-url="{:url('api/ems/send')}">获取验证码</button>
                             </div>
