@@ -18,7 +18,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                 cols: [
                     [
                         { type: 'checkbox', fixed: 'left' },
-                        { field: 'id', width: 80, title: 'ID' },
+                        { field: 'id', width: 80, title: '等级' },
                         { field: 'listorder', width: 80, title: '排序', edit: 'text' },
                         { field: 'name', minWidth: 120, align: "left", title: '会员组名' },
                         { field: 'issystem', width: 100, title: '系统组', align: "center", templet: '#issystem' },
