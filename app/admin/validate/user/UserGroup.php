@@ -20,8 +20,7 @@ class UserGroup extends Validate
 {
     //定义验证规则
     protected $rule = [
-        'name|会员组名称'  => 'unique:user_group|require|chsDash|length:1,20',
-        'point|积分'    => 'require|number',
-        'starnum|星星数' => 'require|number|between:0,99',
+        'name|会员组名称' => 'unique:user_group|require|chsDash|length:1,20',
+        'point|积分'   => 'require|number',
     ];
 }

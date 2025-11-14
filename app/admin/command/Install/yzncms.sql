@@ -396,7 +396,6 @@ CREATE TABLE `yzn_user_group`  (
   `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '会员组id',
   `name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户组名称',
   `issystem` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否是系统组',
-  `starnum` tinyint(2) UNSIGNED NOT NULL COMMENT '会员组星星数',
   `point` smallint(6) UNSIGNED NOT NULL COMMENT '积分范围',
   `listorder` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态',
@@ -408,10 +407,10 @@ CREATE TABLE `yzn_user_group`  (
 -- ----------------------------
 -- Records of yzn_user_group
 -- ----------------------------
-INSERT INTO `yzn_user_group` VALUES (1, '注册会员', 1, 1, 0, 8, 1, 1713774138, 1713774138);
-INSERT INTO `yzn_user_group` VALUES (2, '初级会员', 1, 2, 50, 7, 1, 1713774138, 1713774138);
-INSERT INTO `yzn_user_group` VALUES (3, '中级会员', 1, 3, 100, 6, 1, 1713774138, 1713774138);
-INSERT INTO `yzn_user_group` VALUES (4, '高级会员', 1, 4, 300, 5, 1, 1713774138, 1713774138);
+INSERT INTO `yzn_user_group` VALUES (1, '注册会员', 1, 0, 8, 1, 1713774138, 1713774138);
+INSERT INTO `yzn_user_group` VALUES (2, '初级会员', 1, 50, 7, 1, 1713774138, 1713774138);
+INSERT INTO `yzn_user_group` VALUES (3, '中级会员', 1, 100, 6, 1, 1713774138, 1713774138);
+INSERT INTO `yzn_user_group` VALUES (4, '高级会员', 1, 300, 5, 1, 1713774138, 1713774138);
 
 
 -- ----------------------------
