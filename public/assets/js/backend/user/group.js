@@ -22,7 +22,7 @@ define(['jquery', 'table', 'form'], function($, Table, Form) {
                         { field: 'name', minWidth: 120, align: "left", title: '会员组名' },
                         { field: 'issystem', width: 100, title: '系统组', align: "center", templet: '#issystem' },
                         { field: 'user_count', width: 100, align: "center", title: '会员数' },
-                        { field: 'point', width: 100, align: "center", title: '积分小于' },
+                        { field: 'point', width: 100, align: "center", title: '所需积分' },
                         { field: 'create_time', width: 180, title: '创建时间', search: 'range' },
                         { field: 'status', width: 80, title: '状态', templet: Table.formatter.status, selectList: { 0: '禁用', 1: '正常' }, search: false },
                         {
