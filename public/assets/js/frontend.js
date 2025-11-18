@@ -8,7 +8,7 @@ define(['yzn'], function(Yzn) {
                 var type = $(this).data("type") ? $(this).data("type") : 'mobile';
                 var btn = this;
                 Frontend.api.sendcaptcha = function(btn, type, data, callback) {
-                    $(btn).addClass("disabled", true).text("发送中...");
+                    $(btn).addClass("layui-btn-disabled", true).text("发送中...");
 
                     Frontend.api.ajax({ url: $(btn).data("url"), data: data }, function(data, ret) {
                         clearInterval(si[type]);
@@ -17,16 +17,16 @@ define(['yzn'], function(Yzn) {
                             seconds--;
                             if (seconds <= 0) {
                                 clearInterval(si);
-                                $(btn).removeClass("disabled").text("发送验证码");
+                                $(btn).removeClass("layui-btn-disabled").text("发送验证码");
                             } else {
-                                $(btn).addClass("disabled").text(seconds + "秒后可再次发送");
+                                $(btn).addClass("layui-btn-disabled").text(seconds + "秒后可再次发送");
                             }
                         }, 1000);
                         if (typeof callback == 'function') {
                             callback.call(this, data, ret);
                         }
                     }, function() {
-                        $(btn).removeClass("disabled").text('发送验证码');
+                        $(btn).removeClass("layui-btn-disabled").text('发送验证码');
                     });
                 };
                 if (['mobile', 'email'].indexOf(type) > -1) {
